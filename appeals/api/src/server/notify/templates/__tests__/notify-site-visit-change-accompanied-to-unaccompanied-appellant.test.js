@@ -14,7 +14,8 @@ describe('site-visit-change-accompanied-to-unaccompanied-appellant.md', () => {
 				appeal_reference_number: 'MNO11223',
 				site_address: '66, Solitude Way',
 				lpa_reference: 'PLN-34567',
-				visit_date: '18 September 2025'
+				visit_date: '18 September 2025',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

@@ -19,4 +19,4 @@ The inspector will carry out the inspection on their own.
 We will contact you when the inspector makes a decision.
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

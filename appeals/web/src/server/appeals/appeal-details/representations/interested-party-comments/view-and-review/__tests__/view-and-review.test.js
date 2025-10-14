@@ -1,23 +1,23 @@
-import { jest } from '@jest/globals';
+import usersService from '#appeals/appeal-users/users-service.js';
 import {
+	activeDirectoryUsersData,
 	appealDataFullPlanning,
+	costsFolderInfoAppellantApplication,
 	documentFileInfo,
+	documentFileVersionsInfo,
 	documentFolderInfo,
 	documentRedactionStatuses,
 	interestedPartyCommentForReview,
 	interestedPartyCommentForView,
-	representationRejectionReasons,
-	activeDirectoryUsersData,
-	costsFolderInfoAppellantApplication,
-	documentFileVersionsInfo,
 	interestedPartyCommentsForReview,
-	interestedPartyCommentsForView
+	interestedPartyCommentsForView,
+	representationRejectionReasons
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
-import usersService from '#appeals/appeal-users/users-service.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -38,7 +38,7 @@ describe('interested-party-comments', () => {
 
 		nock('http://test/')
 			.get('/appeals/2/document-folders?path=representation/representationAttachments')
-			.reply(200, [{ folderId: 1234 }]);
+			.reply(200, [{ folderId: 1234, path: 'representation/attachments' }]);
 
 		nock('http://test/')
 			.get('/appeals/2/document-folders/1?repId=3670')
@@ -606,23 +606,9 @@ describe('interested-party-comments', () => {
 	describe('GET /add-document', () => {
 		beforeEach(() => {
 			nock('http://test/')
-				.get('/appeals/2')
-				.reply(200, {
-					...appealDataFullPlanning,
-					appealId: 2,
-					appealStatus: 'statements'
-				});
-			nock('http://test/')
 				.get('/appeals/2/reps/5')
 				.twice()
 				.reply(200, interestedPartyCommentForReview);
-			nock('http://test/')
-				.get('/appeals/2/document-folders?path=representation/representationAttachments')
-				.reply(200, [{ folderId: 1234, path: 'representation/attachments' }]);
-			nock('http://test/')
-				.get('/appeals/2/document-folders/1?repId=3670')
-				.reply(200, costsFolderInfoAppellantApplication)
-				.persist();
 		});
 
 		describe('GET /add-document', () => {

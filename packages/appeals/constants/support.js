@@ -14,6 +14,8 @@ export const CASE_OUTCOME_DISMISSED = 'dismissed';
 export const CASE_OUTCOME_SPLIT_DECISION = 'split decision';
 export const CASE_OUTCOME_INVALID = 'invalid';
 
+export const CHANGE_APPEAL_TYPE_INVALID_REASON = 'Wrong appeal type';
+
 export const DECISION_TYPE_INSPECTOR = 'inspector-decision';
 export const DECISION_TYPE_APPELLANT_COSTS = 'appellant-costs-decision';
 export const DECISION_TYPE_LPA_COSTS = 'lpa-costs-decision';
@@ -85,8 +87,9 @@ export const AUDIT_TRAIL_DOCUMENT_NAME_CHANGED =
 export const AUDIT_TRAIL_LPAQ_IMPORT_MSG = 'The LPA questionnaire was received';
 export const AUDIT_TRAIL_REP_IMPORT_MSG = '{replacement0} was received';
 export const AUDIT_TRAIL_PROGRESSED_TO_STATUS = 'Case progressed to {replacement0}';
-export const AUDIT_TRAIL_SUBMISSION_INCOMPLETE = '{replacement0} marked as incomplete';
-export const AUDIT_TRAIL_SUBMISSION_INVALID = 'Appeal reviewed as invalid';
+export const AUDIT_TRAIL_LPAQ_INCOMPLETE = '{replacement0} marked as incomplete';
+export const AUDIT_TRAIL_SUBMISSION_INCOMPLETE = '{replacement0} marked as incomplete:';
+export const AUDIT_TRAIL_SUBMISSION_INVALID = 'Appeal reviewed as invalid:';
 export const AUDIT_TRAIL_REMOVED_CASE_OFFICER =
 	'The case officer {replacement0} was removed from the team';
 export const AUDIT_TRAIL_REMOVED_INSPECTOR =
@@ -102,6 +105,10 @@ export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_ADDED = 'A neighbouring address wa
 export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_UPDATED = 'A neighbouring address was updated';
 export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_REMOVED = 'A neighbouring address was removed';
 export const AUDIT_TRAIL_SYSTEM_UUID = '00000000-0000-0000-0000-000000000000';
+export const AUDIT_TRIAL_APPELLANT_UUID = '00000000-0000-0000-0000-000000000001';
+export const AUDIT_TRAIL_LPA_UUID = '00000000-0000-0000-0000-000000000002';
+export const AUDIT_TRAIL_IP_UUID = '00000000-0000-0000-0000-000000000003';
+export const AUDIT_TRIAL_AUTOMATIC_EVENT_UUID = '00000000-0000-0000-0000-000000000004';
 export const AUDIT_TRAIL_SERVICE_USER_UPDATED =
 	'{replacement0} contact details updated to\n{replacement1}';
 export const AUDIT_TRAIL_SERVICE_USER_ADDRESS_UPDATED =
@@ -111,8 +118,14 @@ export const AUDIT_TRAIL_ADDRESS_UPDATED = 'Site address updated to\n{replacemen
 export const AUDIT_TRAIL_APPELLANT_CASE_UPDATED = 'Case updated';
 export const AUDIT_TRAIL_DEVELOPMENT_TYPE_UPDATED = 'Development type updated to {replacement0}';
 export const AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED = 'Site area updated to {replacement0} m²';
+export const AUDIT_TRAIL_HIGHWAY_LAND_UPDATED =
+	"'Is the appeal site on highway land?' updated to {replacement0}";
 export const AUDIT_TRAIL_IS_GREEN_BELT_UPDATED =
 	"'Is the site in a green belt?' updated to {replacement0}";
+export const AUDIT_TRAIL_LANDOWNER_PERMISSION_UPDATED =
+	"'Do you have the landowner's permission?' updated to {replacement0}";
+export const AUDIT_TRAIL_ADVERT_IN_POSITION_UPDATED =
+	"'Is the advertisement in position?' updated to {replacement0}'";
 export const AUDIT_TRAIL_SITE_OWNERSHIP_UPDATED =
 	"'Does the appellant own all of the land involved in the appeal?' updated to {replacement0}";
 export const AUDIT_TRAIL_KNOWS_OTHER_OWNERS_UPDATED =
@@ -212,8 +225,14 @@ export const AUDIT_TRAIL_DECISION_LETTER_UPDATED = 'Decision letter {replacement
 export const AUDIT_TRAIL_CORRECTION_NOTICE_ADDED = 'Correction notice added: {replacement0} ';
 export const AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED = 'Appellant costs decision issued';
 export const AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED = 'LPA costs decision issued';
+export const AUDIT_TRAIL_SITE_VISIT_CANCELLED = 'Site visit cancelled';
 
-export const AUDIT_TRAIL_ASSIGNED_TEAM_UPDATED = 'Case team updated';
+export const AUDIT_TRAIL_APPEAL_TYPE_TRANSFERRED = 'Appeal marked as {replacement0}';
+export const AUDIT_TRAIL_APPEAL_TYPE_UPDATED = 'Appeal type updated to {replacement0}';
+
+export const AUDIT_TRAIL_HORIZON_REFERENCE_UPDATED = 'Horizon reference updated';
+
+export const AUDIT_TRAIL_ASSIGNED_TEAM_UPDATED = 'Case team {replacement0} assigned';
 export const BANK_HOLIDAY_FEED_DIVISION_ENGLAND = 'england-and-wales';
 
 export const DATABASE_ORDER_BY_ASC = 'asc';
@@ -326,6 +345,9 @@ export const ERROR_LINKING_APPEALS =
 	'The appeals cannot be linked as the lead or child are already linked to other appeals.';
 export const ERROR_INVALID_EMAIL = 'must be a valid email';
 export const ERROR_INVALID_FILENAME = 'must be a valid filename';
+export const ERROR_INVALID_PROOF_OF_EVIDENCE_TYPE = 'must be either appellant or lpa';
+export const ERROR_ATTACHMENTS_REQUIRED = 'Attachments field is required';
+export const ERROR_ATTACHMENTS_EMPTY = 'Attachments must be a non-empty array';
 
 export const ERROR_INVALID_POSTCODE = 'needs to be a valid and include spaces';
 export const UK_POSTCODE_REGEX = /^([A-Za-z]{1,2}\d[A-Za-z\d]? ?\d[A-Za-z]{2}|GIR ?0A{2})$/gm;

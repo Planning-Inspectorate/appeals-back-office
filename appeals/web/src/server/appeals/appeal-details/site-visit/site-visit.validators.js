@@ -1,13 +1,13 @@
-import { createValidator } from '@pins/express';
-import { body } from 'express-validator';
 import {
-	createDateInputFieldsValidator,
-	createDateInputDateValidityValidator
+	createDateInputDateValidityValidator,
+	createDateInputFieldsValidator
 } from '#lib/validators/date-input.validator.js';
 import {
-	createTimeInputValidator,
-	createStartTimeBeforeEndTimeValidator
+	createStartTimeBeforeEndTimeValidator,
+	createTimeInputValidator
 } from '#lib/validators/time-input.validator.js';
+import { createValidator } from '@pins/express';
+import { body } from 'express-validator';
 import { siteVisitDateField } from './site-visits.constants.js';
 
 export const validateSiteVisitType = createValidator(
@@ -53,4 +53,13 @@ export const validateVisitStartTimeBeforeEndTime = createStartTimeBeforeEndTimeV
 				req.body['visit-end-time-minute'].length)
 		);
 	}
+);
+
+export const validateWhoMissedSiteVisit = createValidator(
+	body('whoMissedSiteVisitRadio')
+		.exists()
+		.withMessage('Select who missed the site visit')
+		.bail()
+		.notEmpty()
+		.withMessage('Select who missed the site visit')
 );

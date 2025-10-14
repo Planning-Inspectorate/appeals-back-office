@@ -1,12 +1,18 @@
 // @ts-nocheck
 
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { findStatusDate } from '#utils/mapping/map-dates.js';
-import { isCaseInvalid } from '#utils/case-invalid.js';
-import { mapDesignatedSiteNames } from '../shared/s20s78/questionnaire-fields.js';
 import { fullPlanningAppeal } from '#tests/appeals/mocks.js';
-import { mapCaseDates } from '../shared/s20s78/map-case-dates.js';
+import { isCaseInvalid } from '#utils/case-invalid.js';
+import { findStatusDate } from '#utils/mapping/map-dates.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+import { REP_ATTACHMENT_DOCTYPE } from '@pins/appeals/constants/documents.js';
+import {
+	APPEAL_CASE_STAGE,
+	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE
+} from '@planning-inspectorate/data-model';
+import { mapDesignatedSiteNames } from '../commands/questionnaire.mapper.js';
+import { mapDocumentEntity } from '../map-document-entity.js';
+import { mapCaseDates } from '../shared/s20s78/map-case-dates.js';
 
 describe('appeals generic mappers', () => {
 	test('map case validation date on invalid appeal', async () => {
@@ -177,7 +183,7 @@ describe('mapCaseDates', () => {
 					lpaProofsSubmittedDate: new Date('2025-03-06T09:12:33.334Z'),
 					lpaQuestionnairePublishedDate: new Date('2025-03-07T09:12:33.334Z'),
 					lpaQuestionnaireValidationOutcomeDate: new Date('2025-03-08T09:12:33.334Z'),
-					proofsOfEvidenceDueDate: new Date('2025-03-10T09:12:33.334Z'),
+					proofOfEvidenceAndWitnessesDueDate: new Date('2025-03-10T09:12:33.334Z'),
 					siteNoticesSentDate: new Date('2025-03-11T09:12:33.334Z'),
 					lpaStatementDueDate: new Date('2025-03-12T09:12:33.334Z'),
 					statementOfCommonGroundDueDate: new Date('2025-03-13T09:12:33.334Z'),
@@ -203,6 +209,10 @@ describe('mapCaseDates', () => {
 					{
 						representationType: APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
 						dateCreated: new Date('2025-03-19T09:12:33.334Z')
+					},
+					{
+						representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
+						dateCreated: new Date('2025-03-20T09:12:33.334Z')
 					}
 				],
 				appealStatus: [
@@ -228,9 +238,92 @@ describe('mapCaseDates', () => {
 			statementDueDate: '2025-03-12T09:12:33.334Z',
 			statementOfCommonGroundDueDate: '2025-03-13T09:12:33.334Z',
 			planningObligationDueDate: '2025-03-14T09:12:33.334Z',
-			proofsOfEvidenceDueDate: null,
-			siteNoticesSentDate: null,
-			lpaProofsSubmittedDate: null
+			proofsOfEvidenceDueDate: '2025-03-10T09:12:33.334Z',
+			lpaProofsSubmittedDate: '2025-03-19T09:12:33.334Z',
+			appellantProofsSubmittedDate: '2025-03-20T09:12:33.334Z',
+			siteNoticesSentDate: null
 		});
+	});
+});
+
+describe('map-document-entity', () => {
+	const internalRepDocType = REP_ATTACHMENT_DOCTYPE;
+	test.each([
+		{
+			desc: 'representationAttachments - APPELLANT_FINAL_COMMENT',
+			documentType: internalRepDocType,
+			representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT,
+			expected: APPEAL_DOCUMENT_TYPE.APPELLANT_FINAL_COMMENT
+		},
+		{
+			desc: 'representationAttachments - LPA_FINAL_COMMENT',
+			documentType: internalRepDocType,
+			representationType: APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT,
+			expected: APPEAL_DOCUMENT_TYPE.LPA_FINAL_COMMENT
+		},
+		{
+			desc: 'representationAttachments - APPELLANT_STATEMENT',
+			documentType: internalRepDocType,
+			representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT,
+			expected: APPEAL_DOCUMENT_TYPE.APPELLANT_STATEMENT
+		},
+		{
+			desc: 'representationAttachments - LPA_STATEMENT',
+			documentType: internalRepDocType,
+			representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
+			expected: APPEAL_DOCUMENT_TYPE.LPA_STATEMENT
+		},
+		{
+			desc: 'representationAttachments - COMMENT',
+			documentType: internalRepDocType,
+			representationType: APPEAL_REPRESENTATION_TYPE.COMMENT,
+			expected: APPEAL_DOCUMENT_TYPE.INTERESTED_PARTY_COMMENT
+		},
+		{
+			desc: 'representationAttachments - unknown type',
+			documentType: internalRepDocType,
+			representationType: 'SOMETHING_UNKNOWN',
+			expected: APPEAL_DOCUMENT_TYPE.UNCATEGORISED
+		},
+		{
+			desc: 'other documentType',
+			documentType: 'someOtherType',
+			representationType: null,
+			expected: 'someOtherType'
+		},
+		{
+			desc: 'documentType undefined',
+			documentType: undefined,
+			representationType: null,
+			expected: APPEAL_DOCUMENT_TYPE.UNCATEGORISED
+		}
+	])('handles document type: $desc', ({ documentType, representationType, expected }) => {
+		const doc = {
+			guid: 'doc-123',
+			caseId: 'case-456',
+			name: '123e4567-e89b-12d3-a456-426614174000_test.pdf',
+			case: { reference: 'REF-1', appealType: { key: 'D' } },
+			versions: [
+				{
+					version: 1,
+					originalFilename: 'test.pdf',
+					size: 1000,
+					mime: 'application/pdf',
+					documentURI: 'http://doc.uri',
+					fileMD5: 'md5hash',
+					dateCreated: new Date('2025-01-01T10:00:00.000Z'),
+					dateReceived: new Date('2025-01-01T11:00:00.000Z'),
+					lastModified: new Date('2025-01-01T12:00:00.000Z'),
+					documentType,
+					stage: APPEAL_CASE_STAGE.APPEAL_DECISION,
+					redactionStatus: { key: 'NOT_REDACTED' },
+					representation: representationType
+						? { representation: { representationType } }
+						: undefined
+				}
+			]
+		};
+		const result = mapDocumentEntity(doc);
+		expect(result.documentType).toBe(expected);
 	});
 });

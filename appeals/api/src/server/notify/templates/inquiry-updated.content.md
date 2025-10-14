@@ -18,4 +18,4 @@ We expect the inquiry to finish on the same day. If the inquiry needs
 more time, you will arrange the next steps on the day.
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

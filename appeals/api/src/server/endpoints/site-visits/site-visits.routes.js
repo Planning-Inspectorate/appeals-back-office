@@ -1,15 +1,21 @@
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
-import { postSiteVisit, getSiteVisitById, rearrangeSiteVisit } from './site-visits.controller.js';
-import checkLookupValueIsValidAndAddToRequest from '#middleware/check-lookup-value-is-valid-and-add-to-request.js';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import checkLookupValueIsValidAndAddToRequest from '#middleware/check-lookup-value-is-valid-and-add-to-request.js';
+import { ERROR_INVALID_SITE_VISIT_TYPE } from '@pins/appeals/constants/support.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import {
+	cancelSiteVisit,
+	getSiteVisitById,
+	postSiteVisit,
+	rearrangeSiteVisit
+} from './site-visits.controller.js';
+import { checkSiteVisitExists } from './site-visits.service.js';
+import {
+	deleteSiteVisitValidator,
 	getSiteVisitValidator,
 	patchSiteVisitValidator,
 	postSiteVisitValidator
 } from './site-visits.validators.js';
-import { ERROR_INVALID_SITE_VISIT_TYPE } from '@pins/appeals/constants/support.js';
-import { checkSiteVisitExists } from './site-visits.service.js';
 
 const router = createRouter();
 
@@ -104,6 +110,40 @@ router.patch(
 		ERROR_INVALID_SITE_VISIT_TYPE
 	),
 	asyncHandler(rearrangeSiteVisit)
+);
+router.delete(
+	'/:appealId/site-visits/:siteVisitId',
+	/*
+		#swagger.tags = ['Site Visits']
+		#swagger.path = '/appeals/{appealId}/site-visits/{siteVisitId}'
+		#swagger.description = 'Updates a single site visit by id'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.requestBody = {
+			in: 'body',
+			description: 'Site visit details to create',
+			schema: { $ref: '#/components/schemas/SiteVisitUpdateRequest' },
+			required: true
+		}
+		#swagger.responses[200] = {
+			description: 'Creates a single site visit by id',
+			schema: { $ref: '#/components/schemas/SiteVisitUpdateRequest' }
+		}
+		#swagger.responses[400] = {}
+		#swagger.responses[500] = {}
+	 */
+	deleteSiteVisitValidator,
+	checkAppealExistsByIdAndAddToRequest,
+	checkSiteVisitExists,
+	checkLookupValueIsValidAndAddToRequest(
+		'visitType',
+		'siteVisitType',
+		ERROR_INVALID_SITE_VISIT_TYPE
+	),
+	asyncHandler(cancelSiteVisit)
 );
 
 export { router as siteVisitRoutes };

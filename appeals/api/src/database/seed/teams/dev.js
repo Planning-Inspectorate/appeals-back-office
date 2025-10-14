@@ -9,24 +9,3 @@ export const teamsToCreate = [
 		email: 'ECAT@planninginspectorate.gov.uk'
 	}
 ];
-
-/**
- * @type {Record<string, number|null>}
- */
-export const lpaTeamAssignments = {
-	// Ops Test
-	Q9999: 1,
-	Q1111: null,
-
-	// DevTeam1
-	MAID: 2,
-	BARN: null,
-	WORT: 2,
-	DORS: 2,
-
-	// DevTeam2
-	BASI: 3,
-	WILT: 3,
-	WAVE: 3,
-	BRIS: 3
-};

@@ -1,7 +1,7 @@
-import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
+import { getAppealTypeByTypeId } from '#repositories/appeal-type.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import { isAppealTypeEnabled } from '#utils/feature-flags-appeal-types.js';
-import { getAppealTypeByTypeId } from '#repositories/appeal-type.repository.js';
+import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

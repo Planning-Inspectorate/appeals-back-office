@@ -1,8 +1,7 @@
 import featureFlags from '#common/feature-flags.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { radiosInput } from '#lib/mappers/components/page-components/radio.js';
-import { textSummaryListItem } from '#lib/mappers/index.js';
-import { simpleHtmlComponent } from '#lib/mappers/index.js';
+import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';

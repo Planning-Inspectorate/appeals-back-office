@@ -11,7 +11,7 @@ exports[`final-comments GET / should render the redact appellant final comments 
         <form method="POST" class="govuk-grid-column-two-thirds">
             <p class="govuk-body govuk-!-margin-bottom-0">Original final comments:</p>
             <div id="original-comment" class="govuk-inset-text govuk-!-margin-top-2">
-                <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
+                <div class="pins-show-more" data-label="Read more" data-mode="html">Awaiting final comments review</div>
             </div>
             <div class="govuk-button-group">
                 <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
@@ -48,7 +48,7 @@ exports[`final-comments GET / should render the redact lpa final comments page w
         <form method="POST" class="govuk-grid-column-two-thirds">
             <p class="govuk-body govuk-!-margin-bottom-0">Original final comments:</p>
             <div id="original-comment" class="govuk-inset-text govuk-!-margin-top-2">
-                <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
+                <div class="pins-show-more" data-label="Read more" data-mode="html">Awaiting final comments review</div>
             </div>
             <div class="govuk-button-group">
                 <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"

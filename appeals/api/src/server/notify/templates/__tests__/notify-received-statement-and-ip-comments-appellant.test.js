@@ -21,7 +21,8 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 				has_ip_comments: true,
 				what_happens_next:
 					'You need to [submit your final comments](/mock-front-office-url/appeals/ABC45678) by 01 January 2021.',
-				subject: 'Submit your final comments'
+				subject: 'Submit your final comments',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 		expectedTailContent = [
@@ -41,7 +42,7 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 	});
 	test('should call notify sendEmail with the correct data when there is both a statement and ip comments', async () => {
 		const expectedContent = [
-			'We have received the local planning authority’s questionnaire, all statements and comments from interested parties.',
+			"We have received the local planning authority's questionnaire, all statements and comments from interested parties.",
 			'You can [view this information in the appeals service](/mock-front-office-url/appeals/ABC45678).',
 			...expectedTailContent
 		].join('\n');
@@ -111,7 +112,7 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 		];
 
 		const expectedContent = [
-			'We have received the local planning authority’s questionnaire, all statements and comments from interested parties.',
+			"We have received the local planning authority's questionnaire, all statements and comments from interested parties.",
 			'You can [view this information in the appeals service](/mock-front-office-url/appeals/ABC45678).',
 			...expectedTailContentWithoutWhatHappensNext
 		].join('\n');
@@ -127,6 +128,28 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 			{
 				content: expectedContent,
 				subject: 'Submit your final comments: ABC45678'
+			}
+		);
+	});
+	test('should call notify sendEmail with the correct data when a hearing procedure', async () => {
+		const expectedContent = [
+			"We have received the local planning authority's questionnaire, all statements and comments from interested parties.",
+			'You can [view this information in the appeals service](/mock-front-office-url/appeals/ABC45678).',
+			...expectedTailContent
+		].join('\n');
+
+		notifySendData.personalisation.is_hearing_procedure = true;
+
+		await notifySend(notifySendData);
+		expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+			{
+				id: 'mock-appeal-generic-id'
+			},
+			'test@136s7.com',
+			{
+				content: expectedContent,
+				subject:
+					"We have received the local planning authority's questionnaire, all statements and comments from interested parties: ABC45678"
 			}
 		);
 	});

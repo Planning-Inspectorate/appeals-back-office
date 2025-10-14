@@ -1,7 +1,9 @@
-import config from '#environment/config.js';
+import { getAppellantCaseFromAppealId } from '#appeals/appeal-details/appellant-case/appellant-case.service.js';
 import { getLpaQuestionnaireFromId } from '#appeals/appeal-details/lpa-questionnaire/lpa-questionnaire.service.js';
 import { getSingularRepresentationByType } from '#appeals/appeal-details/representations/representations.service.js';
-import { getAppellantCaseFromAppealId } from '#appeals/appeal-details/appellant-case/appellant-case.service.js';
+import config from '#environment/config.js';
+import logger from '#lib/logger.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 const pdfServiceGenerateUrl = config.pdfServiceHost + '/generate-pdf';
 const FETCH_TIMEOUT_MS = 30000;
@@ -10,7 +12,7 @@ const FETCH_TIMEOUT_MS = 30000;
 
 // @ts-ignore
 async function generatePdfViaService(templateName, templateData, appealIdForLog, filenameInZip) {
-	console.log(`[DownloadAll] Requesting PDF: ${filenameInZip} (Template: ${templateName})`);
+	logger.info(`[DownloadAll] Requesting PDF: ${filenameInZip} (Template: ${templateName})`);
 	const controller = new AbortController();
 	const timeoutId = setTimeout(() => {
 		controller.abort();
@@ -56,15 +58,14 @@ async function generatePdfViaService(templateName, templateData, appealIdForLog,
  * @returns {Promise<*>}
  */
 export async function generateAllPdfs(currentAppealData, apiClient) {
-	const { appealId } = currentAppealData;
+	const { appealId, appealType } = currentAppealData;
 
-	// --- Step 1: Define a single source of truth for all tasks ---
-	const tasks = [
+	const hasTasks = [
 		{
 			filenameInZip: `LPA questionnaire ${currentAppealData.appealReference}.pdf`,
 			templateName: 'lpa-questionnaire-pdf',
 			async fetchData() {
-				console.log('[DownloadAll] Fetching data for: LPA Questionnaire');
+				logger.debug('[DownloadAll] Fetching data for: LPA Questionnaire');
 				const lpaQuestionnaireId = currentAppealData.lpaQuestionnaireId;
 				if (!lpaQuestionnaireId) return null;
 
@@ -75,8 +76,8 @@ export async function generateAllPdfs(currentAppealData, apiClient) {
 				);
 
 				if (rawData) {
-					console.log(
-						'[DEBUG] Raw EIA Schedule Value from API:',
+					logger.debug(
+						'[DownloadAll] Raw EIA Schedule Value from API:',
 						rawData.eiaEnvironmentalImpactSchedule
 					);
 				}
@@ -85,31 +86,36 @@ export async function generateAllPdfs(currentAppealData, apiClient) {
 			}
 		},
 		{
-			filenameInZip: `LPA statement ${currentAppealData.appealReference}.pdf`,
-			templateName: 'lpa-statement-pdf',
-			async fetchData() {
-				console.log('[DownloadAll] Fetching data for: LPA Statement');
-				const rawData = await getSingularRepresentationByType(apiClient, appealId, 'lpa_statement');
-				return rawData ? { lpaStatementData: { ...currentAppealData, ...rawData } } : null;
-			}
-		},
-		{
 			filenameInZip: `Appellant case ${currentAppealData.appealReference}.pdf`,
 			templateName: 'appellant-case-pdf',
 			async fetchData() {
-				console.log('[DownloadAll] Fetching data for: Appellant Case');
+				logger.debug('[DownloadAll] Fetching data for: Appellant Case');
 				const appellantCaseId = currentAppealData.appellantCaseId;
 				if (!appellantCaseId) return null;
 				const rawData = await getAppellantCaseFromAppealId(apiClient, appealId, appellantCaseId);
-				console.log('rawData getAppellantCaseFromAppealId', rawData);
+				logger.info('rawData getAppellantCaseFromAppealId', rawData);
 				return rawData ? { appellantCaseData: { ...currentAppealData, ...rawData } } : null;
+			}
+		}
+	];
+
+	// --- Step 1: Define a single source of truth for all tasks ---
+	const s78Tasks = [
+		...hasTasks,
+		{
+			filenameInZip: `LPA statement ${currentAppealData.appealReference}.pdf`,
+			templateName: 'lpa-statement-pdf',
+			async fetchData() {
+				logger.debug('[DownloadAll] Fetching data for: LPA Statement');
+				const rawData = await getSingularRepresentationByType(apiClient, appealId, 'lpa_statement');
+				return rawData ? { lpaStatementData: { ...currentAppealData, ...rawData } } : null;
 			}
 		},
 		{
 			filenameInZip: `Appellant final comments ${currentAppealData.appealReference}.pdf`,
 			templateName: 'appellant-final-comments-pdf',
 			async fetchData() {
-				console.log('[DownloadAll] Fetching data for: Appellant Final Comments');
+				logger.debug('[DownloadAll] Fetching data for: Appellant Final Comments');
 				const rawData = await getSingularRepresentationByType(
 					apiClient,
 					appealId,
@@ -124,7 +130,7 @@ export async function generateAllPdfs(currentAppealData, apiClient) {
 			filenameInZip: `LPA final comments ${currentAppealData.appealReference}.pdf`,
 			templateName: 'lpa-final-comments-pdf',
 			async fetchData() {
-				console.log('[DownloadAll] Fetching data for: LPA Final Comments');
+				logger.debug('[DownloadAll] Fetching data for: LPA Final Comments');
 				const rawData = await getSingularRepresentationByType(
 					apiClient,
 					appealId,
@@ -137,8 +143,8 @@ export async function generateAllPdfs(currentAppealData, apiClient) {
 			filenameInZip: `Interested party comments ${currentAppealData.appealReference}.pdf`,
 			templateName: 'ip-comments-pdf',
 			async fetchData() {
-				console.log('[DownloadAll] Fetching data for: Interested Party Comments');
-				const statuses = ['awaiting_review', 'valid', 'invalid'];
+				logger.debug('[DownloadAll] Fetching data for: Interested Party Comments');
+				const statuses = ['awaiting_review', 'valid', 'invalid', 'published'];
 				const promises = statuses.map((s) =>
 					apiClient
 						.get(`appeals/${appealId}/reps`, {
@@ -147,23 +153,31 @@ export async function generateAllPdfs(currentAppealData, apiClient) {
 						.json()
 						.catch(() => ({ items: [] }))
 				);
-				const [awaiting, accepted, rejected] = await Promise.all(promises);
-				if (!awaiting?.items?.length && !accepted?.items?.length && !rejected?.items?.length)
+				const [awaiting, accepted, rejected, published] = await Promise.all(promises);
+				if (
+					!awaiting?.items?.length &&
+					!accepted?.items?.length &&
+					!rejected?.items?.length &&
+					!published?.items?.length
+				)
 					return null;
 				return {
 					ipCommentsData: {
 						...currentAppealData,
 						awaitingReviewComments: awaiting.items,
 						acceptedComments: accepted.items,
-						rejectedComments: rejected.items
+						rejectedComments: rejected.items,
+						publishedComments: published.items
 					}
 				};
 			}
 		}
 	];
 
+	const tasks = appealType === APPEAL_TYPE.HOUSEHOLDER ? hasTasks : s78Tasks;
+
 	// --- Step 2: Fetch data and generate PDFs in parallel ---
-	console.log(`[DownloadAll] Starting to process ${tasks.length} PDF generation tasks.`);
+	logger.info(`[DownloadAll] Starting to process ${tasks.length} PDF generation tasks.`);
 	const generationPromises = tasks.map(async (task) => {
 		try {
 			const templateData = await task.fetchData();

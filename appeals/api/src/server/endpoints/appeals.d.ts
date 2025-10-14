@@ -147,6 +147,7 @@ interface UpdateAppealRequest {
 	inspector?: number | null;
 	agent?: number | null;
 	procedureTypeId?: number | null;
+	hearingStartTime?: string;
 }
 
 interface SingleAppellantCaseResponse {
@@ -231,6 +232,11 @@ interface SingleAppellantCaseResponse {
 	developmentType?: string | null;
 	typeOfPlanningApplication?: string | null;
 	numberOfResidencesNetChange?: number | null;
+	highwayLand?: boolean | null;
+	advertInPosition?: boolean | null;
+	landownerPermission?: boolean | null;
+	siteGridReferenceEasting?: string | null;
+	siteGridReferenceNothing?: string | null;
 }
 
 interface UpdateAppellantCaseRequest {
@@ -265,6 +271,11 @@ interface UpdateAppellantCaseRequest {
 	agriculturalHolding?: boolean | null;
 	tenantAgriculturalHolding?: boolean | null;
 	otherTenantsAgriculturalHolding?: boolean | null;
+	highwayLand?: boolean | null;
+	advertInPosition?: boolean | null;
+	landownerPermission?: boolean | null;
+	siteGridReferenceEasting?: string | null;
+	siteGridReferenceNothing?: string | null;
 }
 
 interface UpdateAppellantCaseValidationOutcome {
@@ -564,6 +575,7 @@ interface AppealListResponse {
 	appealReference: string;
 	appealSite: AppealSite;
 	appealStatus: string;
+	completedStateList: string[];
 	appealType?: string;
 	procedureType?: string;
 	createdAt: Date;
@@ -580,6 +592,11 @@ interface AppealListResponse {
 	awaitingLinkedAppeal: boolean | null;
 	costsDecision?: CostsDecision;
 	numberOfResidencesNetChange: number | null;
+	highwayLand?: boolean | null;
+	advertInPosition?: boolean | null;
+	landownerPermission?: boolean | null;
+	siteGridReferenceEasting?: string | null;
+	siteGridReferenceNothing?: string | null;
 }
 interface DocumentationSummary {
 	appellantCase?: DocumentationSummaryEntry;
@@ -938,7 +955,7 @@ type CreateInquiry = {
 	ipCommentsDueDate: Date | string;
 	statementOfCommonGroundDueDate: Date | string;
 	proofOfEvidenceAndWitnessesDueDate: Date | string;
-	planningObligationDueDate: Date | string;
+	planningObligationDueDate: Date | string | undefined;
 };
 
 type UpdateInquiry = {
@@ -1016,66 +1033,66 @@ type BankHolidayFeedDivisions =
 
 export {
 	AppealListResponse,
+	AppealRelationshipRequest,
 	AppealSite,
 	AppealTimetable,
 	AssignedUser,
 	BankHolidayFeedDivisions,
 	BankHolidayFeedEvents,
+	CancelHearing,
 	CreateAuditTrail,
 	CreateAuditTrailRequest,
+	CreateHearing,
+	CreateInquiry,
 	DocumentationSummary,
 	DocumentInfo,
 	DocumentVersionInfo,
 	FolderInfo,
-	ReasonOption,
+	GetAuditTrailsResponse,
+	GetCaseNoteResponse,
+	GetCaseNotesResponse,
+	HearingAddress,
+	HearingResponse,
 	IncompleteInvalidReasons,
 	IncompleteInvalidReasonsResponse,
-	LinkedAppeal,
+	InquiryAddress,
+	InquiryResponse,
 	LinkableAppealSummary,
-	RelatedAppeal,
+	LinkedAppeal,
 	ListedBuildingDetailsResponse,
 	LookupTables,
 	NotifyClient,
 	NotifyTemplate,
+	ReasonOption,
+	RelatedAppeal,
+	ServiceUserResponse,
+	SetAppealDecisionRequest,
+	SetInvalidAppealDecisionRequest,
 	SingleAddressResponse,
 	SingleAppealDetailsResponse,
 	SingleAppellantCaseResponse,
 	SingleAppellantResponse,
-	GetAuditTrailsResponse,
 	SingleLPAQuestionnaireResponse,
 	SingleSiteVisitDetailsResponse,
+	StateStub,
 	TimetableDeadlineDate,
 	UpdateAddressRequest,
+	UpdateAppealDecisionRequest,
 	UpdateAppealRequest,
 	UpdateAppellantCaseRequest,
 	UpdateAppellantCaseValidationOutcome,
 	UpdateAppellantCaseValidationOutcomeParams,
 	UpdateAppellantRequest,
-	UpdateDocumentsRequest,
-	UpdateDocumentFileNameRequest,
+	UpdateAsssignedTeamRequest,
+	UpdateAsssignedTeamResponse,
 	UpdateDocumentAvCheckRequest,
-	UpdateLPAQuestionnaireValidationOutcomeParams,
+	UpdateDocumentFileNameRequest,
+	UpdateDocumentsRequest,
+	UpdateHearing,
+	UpdateInquiry,
 	UpdateLPAQuestionnaireRequest,
+	UpdateLPAQuestionnaireValidationOutcomeParams,
 	UpdateTimetableRequest,
 	UsersToAssign,
-	ValidationOutcomeResponse,
-	SetAppealDecisionRequest,
-	SetInvalidAppealDecisionRequest,
-	AppealRelationshipRequest,
-	ServiceUserResponse,
-	GetCaseNotesResponse,
-	GetCaseNoteResponse,
-	StateStub,
-	HearingAddress,
-	CreateHearing,
-	UpdateHearing,
-	CancelHearing,
-	HearingResponse,
-	InquiryResponse,
-	CreateInquiry,
-	InquiryAddress,
-	UpdateAppealDecisionRequest,
-	UpdateInquiry,
-	UpdateAsssignedTeamRequest,
-	UpdateAsssignedTeamResponse
+	ValidationOutcomeResponse
 };

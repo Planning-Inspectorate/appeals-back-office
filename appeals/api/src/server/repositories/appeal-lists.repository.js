@@ -1,7 +1,7 @@
-import { getSkipValue } from '#utils/database-pagination.js';
 import { databaseConnector } from '#utils/database-connector.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { getSkipValue } from '#utils/database-pagination.js';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /**
  * @typedef {Awaited<ReturnType<getAllAppeals>>} DBAppeals
@@ -262,9 +262,15 @@ const buildAllAppealsWhereClause = (
 		...(!!appealTypeId && {
 			appealTypeId
 		}),
-		...(!!assignedTeamId && {
-			assignedTeamId
+		// Search for records where assignedTeamId is null
+		...(assignedTeamId === -1 && {
+			assignedTeamId: null
 		}),
+		// Otherwise, filter by assignedTeamId if provided and not zero
+		...(!!assignedTeamId &&
+			assignedTeamId !== -1 && {
+				assignedTeamId
+			}),
 		...(!!procedureTypeId && {
 			procedureTypeId
 		})
@@ -431,5 +437,6 @@ export default {
 	getAllAppealsCount,
 	getUserAppeals,
 	getAppealsStatusesInNationalList,
+	getAppealsStatusesInPersonalList,
 	getAppealsWithoutIncludes
 };

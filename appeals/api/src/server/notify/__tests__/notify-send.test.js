@@ -1,14 +1,14 @@
 // @ts-nocheck
-import { jest } from '@jest/globals';
-import mockFileSystem from 'mock-fs';
 import { notifySend } from '#notify/notify-send.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { jest } from '@jest/globals';
 import {
 	ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL,
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL
 } from '@pins/appeals/constants/support.js';
-import { fileURLToPath } from 'url';
+import mockFileSystem from 'mock-fs';
 import path from 'path';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
 

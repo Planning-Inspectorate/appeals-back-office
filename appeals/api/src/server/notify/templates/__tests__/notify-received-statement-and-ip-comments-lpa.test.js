@@ -25,12 +25,13 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 			recipientEmail,
 			personalisation: {
 				...basePersonalisation,
-				has_ip_comments: true
+				has_ip_comments: true,
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 
 		const expectedContent = [
-			'We’ve received comments from interested parties.',
+			"We've received comments from interested parties.",
 			'You can [view this information in the appeals service](/mock-front-office-url/manage-appeals/ABC45678).',
 			'# Appeal details',
 			'',
@@ -62,7 +63,8 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 			recipientEmail,
 			personalisation: {
 				...basePersonalisation,
-				has_ip_comments: false
+				has_ip_comments: false,
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 
@@ -100,12 +102,13 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 				...basePersonalisation,
 				has_ip_comments: true,
 				what_happens_next:
-					'You need to [submit your final comments](/mock-front-office-url/manage-appeals/ABC45678) by 01 January 2021.'
+					'You need to [submit your final comments](/mock-front-office-url/manage-appeals/ABC45678) by 01 January 2021.',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 
 		const expectedContent = [
-			'We’ve received comments from interested parties.',
+			"We've received comments from interested parties.",
 			'You can [view this information in the appeals service](/mock-front-office-url/manage-appeals/ABC45678).',
 			'# Appeal details',
 			'',
@@ -143,7 +146,8 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 				...basePersonalisation,
 				has_ip_comments: false,
 				what_happens_next:
-					'You need to [submit your final comments](/mock-front-office-url/manage-appeals/ABC45678) by 01 January 2021.'
+					'You need to [submit your final comments](/mock-front-office-url/manage-appeals/ABC45678) by 01 January 2021.',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 
@@ -171,6 +175,43 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 			{
 				content: expectedContent,
 				subject: 'Submit your final comments: ABC45678'
+			}
+		);
+	});
+
+	test('should call notify sendEmail with the correct data when a hearing procedure', async () => {
+		const notifySendData = {
+			doNotMockNotifySend: true,
+			templateName: 'received-statement-and-ip-comments-lpa',
+			notifyClient,
+			recipientEmail,
+			personalisation: {
+				...basePersonalisation,
+				is_hearing_procedure: true,
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+			}
+		};
+
+		const expectedContent = [
+			'We did not receive any comments from interested parties.',
+			'# Appeal details',
+			'',
+			'^Appeal reference number: ABC45678',
+			'Address: 10, Test Street',
+			'Planning application reference: 12345XYZ',
+			'',
+			'The Planning Inspectorate',
+			'caseofficers@planninginspectorate.gov.uk'
+		].join('\n');
+
+		await notifySend(notifySendData);
+
+		expect(notifyClient.sendEmail).toHaveBeenCalledWith(
+			{ id: 'mock-appeal-generic-id' },
+			recipientEmail,
+			{
+				content: expectedContent,
+				subject: "We've received all statements and comments: ABC45678"
 			}
 		);
 	});

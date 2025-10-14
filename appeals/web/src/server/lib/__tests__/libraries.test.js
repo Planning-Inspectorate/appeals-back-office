@@ -1,55 +1,55 @@
+import { paginationDefaultSettings } from '#appeals/appeal.constants.js';
+import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
+import {
+	mapAppealProcedureTypeToEventName,
+	mapStatusFilterLabel,
+	mapStatusText
+} from '#lib/appeal-status.js';
+import { linkedAppealStatus } from '#lib/appeals-formatter.js';
+import { convertFromBooleanToYesNo } from '#lib/boolean-formatter.js';
+import { addConditionalHtml } from '#lib/nunjucks-filters/add-conditional-html.js';
+import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
+import { stringIsValidPostcodeFormat } from '#lib/postcode.js';
+import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
+import { addInvisibleSpacesAfterRedactionCharacters } from '#lib/redaction-string-formatter.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { newLine2LineBreak, stringContainsDigitsOnly } from '#lib/string-utilities.js';
+import { is24HourTimeValid, timeIsBeforeTime } from '#lib/times.js';
+import {
+	addBackLinkQueryToUrl,
+	getBackLinkUrlFromQuery,
+	getOriginPathname,
+	isInternalUrl,
+	preserveQueryString,
+	safeRedirect,
+	stripQueryString
+} from '#lib/url-utilities.js';
+import { appellantCaseInvalidReasons, baseSession } from '#testing/app/fixtures/referencedata.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import httpMocks from 'node-mocks-http';
 import { addressToString, appealSiteToMultilineAddressStringHtml } from '../address-formatter.js';
 import { bodyToPayload } from '../body-formatter.js';
 import {
 	dateIsInTheFuture,
 	dateIsInThePast,
-	dateIsTodayOrInThePast,
-	dateIsValid,
-	dayMonthYearHourMinuteToISOString,
-	dayMonthYearHourMinuteToDisplayDate,
 	dateISOStringToDayMonthYearHourMinute,
 	dateISOStringToDisplayDate,
 	dateISOStringToDisplayTime24hr,
+	dateIsTodayOrInThePast,
+	dateIsValid,
+	dayMonthYearHourMinuteToDisplayDate,
+	dayMonthYearHourMinuteToISOString,
 	getDayFromISODate
 } from '../dates.js';
-import { appealShortReference } from '../nunjucks-filters/appeals.js';
-import { nameToString } from '../person-name-formatter.js';
-import { objectContainsAllKeys } from '../object-utilities.js';
 import { getIdByNameFromIdNamePairs } from '../id-name-pairs.js';
-import { convertFromBooleanToYesNo } from '#lib/boolean-formatter.js';
-import { addConditionalHtml } from '#lib/nunjucks-filters/add-conditional-html.js';
-import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
+import { appealShortReference } from '../nunjucks-filters/appeals.js';
+import { objectContainsAllKeys } from '../object-utilities.js';
+import { nameToString } from '../person-name-formatter.js';
 import {
-	mapReasonOptionsToCheckboxItemParameters,
-	getNotValidReasonsTextFromRequestBody
+	getNotValidReasonsTextFromRequestBody,
+	mapReasonOptionsToCheckboxItemParameters
 } from '../validation-outcome-reasons-formatter.js';
-import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
-import { timeIsBeforeTime, is24HourTimeValid } from '#lib/times.js';
-import { appellantCaseInvalidReasons, baseSession } from '#testing/app/fixtures/referencedata.js';
-import { stringContainsDigitsOnly } from '#lib/string-utilities.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { paginationDefaultSettings } from '#appeals/appeal.constants.js';
-import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
-import { linkedAppealStatus } from '#lib/appeals-formatter.js';
-import httpMocks from 'node-mocks-http';
-import {
-	getOriginPathname,
-	isInternalUrl,
-	safeRedirect,
-	addBackLinkQueryToUrl,
-	getBackLinkUrlFromQuery,
-	stripQueryString,
-	preserveQueryString
-} from '#lib/url-utilities.js';
-import { stringIsValidPostcodeFormat } from '#lib/postcode.js';
-import { addInvisibleSpacesAfterRedactionCharacters } from '#lib/redaction-string-formatter.js';
-import {
-	mapStatusText,
-	mapAppealProcedureTypeToEventName,
-	mapStatusFilterLabel
-} from '#lib/appeal-status.js';
-import { APPEAL_CASE_STATUS, APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 describe('Libraries', () => {
 	describe('addressFormatter', () => {
@@ -1060,6 +1060,19 @@ describe('Libraries', () => {
 				expect(stringContainsDigitsOnly('1 2')).toBe(false);
 			});
 		});
+
+		describe('newLine2LineBreak', () => {
+			it('should return text with line break', () => {
+				expect(newLine2LineBreak('This is a test.\nThis is a new line.')).toBe(
+					'This is a test.<br>This is a new line.'
+				);
+			});
+			it('should not return text with line break', () => {
+				expect(newLine2LineBreak('This is a test. This is a new line.')).toBe(
+					'This is a test. This is a new line.'
+				);
+			});
+		});
 	});
 
 	describe('session utilities', () => {
@@ -1792,32 +1805,21 @@ describe('appeal-status', () => {
 			});
 		}
 
-		it(`should return 'site_visit_ready_to_set_up' if appealStatus is 'event' and appealProcedureType is undefined`, () => {
-			expect(mapStatusText(APPEAL_CASE_STATUS.EVENT, APPEAL_TYPE.S78, undefined)).toBe(
-				'site_visit_ready_to_set_up'
-			);
-		});
-
-		it(`should return 'site_visit_ready_to_set_up' if appealStatus is 'event' appeal type is S20 and appealProcedureType is undefined`, () => {
-			expect(
-				mapStatusText(APPEAL_CASE_STATUS.EVENT, APPEAL_TYPE.PLANNED_LISTED_BUILDING, undefined)
-			).toBe('site_visit_ready_to_set_up');
-		});
-
-		it(`should return 'site_visit_ready_to_set_up' if appealStatus is 'event' and appealProcedureType is 'written'`, () => {
-			expect(
-				mapStatusText(APPEAL_CASE_STATUS.EVENT, APPEAL_TYPE.S78, APPEAL_CASE_PROCEDURE.WRITTEN)
-			).toBe('site_visit_ready_to_set_up');
-		});
-		it(`should return 'site_visit_ready_to_set_up' if appealStatus is 'event', appeal type is S20 and appealProcedureType is 'written'`, () => {
-			expect(
-				mapStatusText(
-					APPEAL_CASE_STATUS.EVENT,
-					APPEAL_TYPE.PLANNED_LISTED_BUILDING,
-					APPEAL_CASE_PROCEDURE.WRITTEN
-				)
-			).toBe('site_visit_ready_to_set_up');
-		});
+		it.each([
+			[APPEAL_TYPE.S78, undefined],
+			[APPEAL_TYPE.S78, APPEAL_CASE_PROCEDURE.WRITTEN],
+			[APPEAL_TYPE.PLANNED_LISTED_BUILDING, undefined],
+			[APPEAL_TYPE.PLANNED_LISTED_BUILDING, APPEAL_CASE_PROCEDURE.WRITTEN],
+			[APPEAL_TYPE.CAS_PLANNING, undefined],
+			[APPEAL_TYPE.CAS_PLANNING, APPEAL_CASE_PROCEDURE.WRITTEN]
+		])(
+			"should return 'site_visit_ready_to_set_up' if appealStatus is 'event', appeal type is %s and appealProcedureType is '%s'",
+			(appealType, procedureType) => {
+				expect(mapStatusText(APPEAL_CASE_STATUS.EVENT, appealType, procedureType)).toBe(
+					'site_visit_ready_to_set_up'
+				);
+			}
+		);
 
 		it(`should return 'hearing_ready_to_set_up' if appealStatus is 'event' and appealProcedureType is 'hearing'`, () => {
 			expect(
@@ -1831,40 +1833,21 @@ describe('appeal-status', () => {
 			).toBe('inquiry_ready_to_set_up');
 		});
 
-		it(`should return 'awaiting_site_visit' if appealStatus is 'awaiting_event' and appealProcedureType is undefined`, () => {
-			expect(mapStatusText(APPEAL_CASE_STATUS.AWAITING_EVENT, APPEAL_TYPE.S78, undefined)).toBe(
-				'awaiting_site_visit'
-			);
-		});
-
-		it(`should return 'awaiting_site_visit' if appealStatus is 'awaiting_event, event type is S20and appealProcedureType is undefined`, () => {
-			expect(
-				mapStatusText(
-					APPEAL_CASE_STATUS.AWAITING_EVENT,
-					APPEAL_TYPE.PLANNED_LISTED_BUILDING,
-					undefined
-				)
-			).toBe('awaiting_site_visit');
-		});
-
-		it(`should return 'awaiting_site_visit' if appealStatus is 'awaiting_event' and appealProcedureType is 'written'`, () => {
-			expect(
-				mapStatusText(
-					APPEAL_CASE_STATUS.AWAITING_EVENT,
-					APPEAL_TYPE.S78,
-					APPEAL_CASE_PROCEDURE.WRITTEN
-				)
-			).toBe('awaiting_site_visit');
-		});
-		it(`should return 'awaiting_site_visit' if appealStatus is 'awaiting_event', appeal type is S20 and appealProcedureType is 'written'`, () => {
-			expect(
-				mapStatusText(
-					APPEAL_CASE_STATUS.AWAITING_EVENT,
-					APPEAL_TYPE.PLANNED_LISTED_BUILDING,
-					APPEAL_CASE_PROCEDURE.WRITTEN
-				)
-			).toBe('awaiting_site_visit');
-		});
+		it.each([
+			[APPEAL_TYPE.S78, undefined],
+			[APPEAL_TYPE.S78, APPEAL_CASE_PROCEDURE.WRITTEN],
+			[APPEAL_TYPE.PLANNED_LISTED_BUILDING, undefined],
+			[APPEAL_TYPE.PLANNED_LISTED_BUILDING, APPEAL_CASE_PROCEDURE.WRITTEN],
+			[APPEAL_TYPE.CAS_PLANNING, undefined],
+			[APPEAL_TYPE.CAS_PLANNING, APPEAL_CASE_PROCEDURE.WRITTEN]
+		])(
+			"should return 'awaiting_site_visit' if appealStatus is 'awaiting_event', appeal type is %s and appealProcedureType is '%s'",
+			(appealType, procedureType) => {
+				expect(mapStatusText(APPEAL_CASE_STATUS.AWAITING_EVENT, appealType, procedureType)).toBe(
+					'awaiting_site_visit'
+				);
+			}
+		);
 
 		it(`should return 'awaiting_hearing' if appealStatus is 'awaiting_event' and appealProcedureType is 'hearing'`, () => {
 			expect(

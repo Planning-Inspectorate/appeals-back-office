@@ -2,8 +2,8 @@
 /** @typedef {import('express').Response} Response */
 
 import {
-	getAppealNotifications,
-	getAppealAuditNotifications
+	getAppealAuditNotifications,
+	getAppealNotifications
 } from '#repositories/appeal-notification.repository.js';
 
 /**

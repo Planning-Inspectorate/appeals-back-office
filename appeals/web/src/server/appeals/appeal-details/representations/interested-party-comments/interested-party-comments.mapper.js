@@ -1,13 +1,16 @@
-import { appealShortReference } from '#lib/appeals-formatter.js';
+import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { addressToString } from '#lib/address-formatter.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import { mapNotificationBannersFromSession, wrapComponents } from '#lib/mappers/index.js';
-import { addressInputs } from '#lib/mappers/index.js';
-import { simpleHtmlComponent } from '#lib/mappers/index.js';
+import {
+	addressInputs,
+	mapNotificationBannersFromSession,
+	simpleHtmlComponent,
+	wrapComponents
+} from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { highlightRedactedSections } from '#lib/redaction-string-formatter.js';
-import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /**

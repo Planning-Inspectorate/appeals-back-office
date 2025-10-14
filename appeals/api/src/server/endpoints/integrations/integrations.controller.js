@@ -1,20 +1,23 @@
-import { commandMappers } from '#mappers/integration/commands/index.js';
-import { broadcasters } from './integrations.broadcasters.js';
-import { integrationService } from './integrations.service.js';
-import { addDocumentAudit } from '#endpoints/documents/documents.service.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import { EventType } from '@pins/event-client';
+import { addDocumentAudit } from '#endpoints/documents/documents.service.js';
+import { commandMappers } from '#mappers/integration/commands/index.js';
+import { getAssignedTeam } from '#repositories/team.repository.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	AUDIT_TRAIL_APPELLANT_IMPORT_MSG,
-	AUDIT_TRAIL_LPAQ_IMPORT_MSG,
 	AUDIT_TRAIL_DOCUMENT_IMPORTED,
-	AUDIT_TRAIL_SYSTEM_UUID,
+	AUDIT_TRAIL_IP_UUID,
+	AUDIT_TRAIL_LPA_UUID,
+	AUDIT_TRAIL_LPAQ_IMPORT_MSG,
 	AUDIT_TRAIL_REP_IMPORT_MSG,
-	AUDIT_TRAIL_TEAM_ASSIGNED
+	AUDIT_TRAIL_SYSTEM_UUID,
+	AUDIT_TRAIL_TEAM_ASSIGNED,
+	AUDIT_TRIAL_APPELLANT_UUID
 } from '@pins/appeals/constants/support.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { EventType } from '@pins/event-client';
 import { APPEAL_REPRESENTATION_TYPE, SERVICE_USER_TYPE } from '@planning-inspectorate/data-model';
-import { getAssignedTeam } from '#repositories/team.repository.js';
+import { broadcasters } from './integrations.broadcasters.js';
+import { integrationService } from './integrations.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -52,7 +55,7 @@ export const importAppeal = async (req, res) => {
 	await createAuditTrail({
 		appealId: id,
 		details: AUDIT_TRAIL_APPELLANT_IMPORT_MSG,
-		azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID
+		azureAdUserId: AUDIT_TRIAL_APPELLANT_UUID
 	});
 
 	if (casedata.appeal.assignedTeamId) {
@@ -94,7 +97,7 @@ export const importAppeal = async (req, res) => {
 		documentVersions.map(async (document) => {
 			await Promise.all([
 				broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create),
-				writeDocumentAuditTrail(id, document)
+				writeDocumentAuditTrail(id, document, AUDIT_TRIAL_APPELLANT_UUID)
 			]);
 		})
 	);
@@ -128,7 +131,7 @@ export const importLpaqSubmission = async (req, res) => {
 	await createAuditTrail({
 		appealId: id,
 		details: AUDIT_TRAIL_LPAQ_IMPORT_MSG,
-		azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID
+		azureAdUserId: AUDIT_TRAIL_LPA_UUID
 	});
 
 	await Promise.all([
@@ -140,7 +143,7 @@ export const importLpaqSubmission = async (req, res) => {
 		documentVersions.map(async (document) => {
 			await Promise.all([
 				broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create),
-				writeDocumentAuditTrail(id, document)
+				writeDocumentAuditTrail(id, document, AUDIT_TRAIL_LPA_UUID)
 			]);
 		})
 	);
@@ -177,10 +180,26 @@ export const importRepresentation = async (req, res) => {
 			? 'ip_comment'
 			: representation.representationType;
 
+	let azureAdUserId;
+	switch (repType) {
+		case 'ip_comment':
+			azureAdUserId = AUDIT_TRAIL_IP_UUID;
+			break;
+		case 'appellant_final_comment':
+		case 'appellant_statement':
+			azureAdUserId = AUDIT_TRIAL_APPELLANT_UUID;
+			break;
+		case 'lpa_final_comment':
+		case 'lpa_statement':
+			azureAdUserId = AUDIT_TRAIL_LPA_UUID;
+			break;
+		default:
+			azureAdUserId = AUDIT_TRAIL_SYSTEM_UUID;
+	}
 	await createAuditTrail({
 		appealId,
 		details: stringTokenReplacement(AUDIT_TRAIL_REP_IMPORT_MSG, [repType]),
-		azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID
+		azureAdUserId: azureAdUserId
 	});
 
 	if (hasNewUser && rep.representedId && isIpComment) {
@@ -210,11 +229,12 @@ export const importRepresentation = async (req, res) => {
  *
  * @param {number} appealId
  * @param {{ fileName: string|null, documentGuid: string}} document
+ * @param {string} azureAdUserId
  */
-const writeDocumentAuditTrail = async (appealId, document) => {
+const writeDocumentAuditTrail = async (appealId, document, azureAdUserId) => {
 	const auditTrail = await createAuditTrail({
 		appealId: appealId,
-		azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID,
+		azureAdUserId: azureAdUserId,
 		details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_IMPORTED, [document.fileName || ''])
 	});
 

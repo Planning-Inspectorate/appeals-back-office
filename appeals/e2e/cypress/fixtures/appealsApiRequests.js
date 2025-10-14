@@ -1,3 +1,40 @@
+const validLpaQuestionnaireCommon = {
+	casedata: {
+		caseReference: '6000000',
+		nearbyCaseReferences: ['1000000'],
+		lpaQuestionnaireSubmittedDate: new Date(2024, 5, 1).toISOString(),
+		siteAccessDetails: ['Here it is'],
+		siteSafetyDetails: ['Fine'],
+		neighbouringSiteAddresses: [
+			{
+				neighbouringSiteAddressLine1: 'deserunt in irure do',
+				neighbouringSiteAddressLine2: 'string',
+				neighbouringSiteAddressTown: 'laboris ut enim et laborum',
+				neighbouringSiteAddressCounty: 'reprehenderit eu mollit Excepteur sit',
+				neighbouringSiteAddressPostcode: 'aliqua in qui ipsum',
+				neighbouringSiteAccessDetails: 'string',
+				neighbouringSiteSafetyDetails: 'magna proident incididunt in non'
+			}
+		],
+		reasonForNeighbourVisits: undefined
+	},
+}
+
+export const validLpaQuestionnaireHas = {
+	casedata: {
+		...validLpaQuestionnaireCommon.casedata,
+		caseType: 'W',
+		lpaStatement: 'cupidatat ipsum eu culpa',
+		isCorrectAppealType: true,
+		isGreenBelt: false,
+		inConservationArea: true,
+		newConditionDetails: 'cupidatat',
+		notificationMethod: ['notice', 'letter'],
+		affectedListedBuildingNumbers: ['1021466', '1021468'],
+		lpaCostsAppliedFor: false
+	},
+};
+
 const appealsApiRequests = {
 	caseSubmission: {
 		casedata: {
@@ -70,65 +107,47 @@ const appealsApiRequests = {
 	},
 	lpaqSubmission: {
 		casedata: {
-			caseReference: '6000000',
-			lpaQuestionnaireSubmittedDate: '2024-05-31T23:00:00.000Z',
-			lpaStatement: 'cupidatat ipsum eu culpa',
-			siteAccessDetails: ['Here it is'],
-			siteSafetyDetails: ['Fine'],
-			isCorrectAppealType: true,
-			isGreenBelt: false,
-			inConservationArea: true,
-			newConditionDetails: 'cupidatat',
-			notificationMethod: ['notice', 'letter'],
-			nearbyCaseReferences: ['1000000'],
-			neighbouringSiteAddresses: [
-				{
-					neighbouringSiteAddressLine1: 'deserunt in irure do',
-					neighbouringSiteAddressLine2: 'string',
-					neighbouringSiteAddressTown: 'laboris ut enim et laborum',
-					neighbouringSiteAddressCounty: 'reprehenderit eu mollit Excepteur sit',
-					neighbouringSiteAddressPostcode: 'aliqua in qui ipsum',
-					neighbouringSiteAccessDetails: 'string',
-					neighbouringSiteSafetyDetails: 'magna proident incididunt in non'
-				}
-			],
-			affectedListedBuildingNumbers: ['1021466', '1021468'],
-			lpaCostsAppliedFor: false,
-			// S78 fields
-			extraConditions: null,
-			isPublicRightOfWay: false,
+			...validLpaQuestionnaireCommon.casedata,
+			...validLpaQuestionnaireHas.casedata,
+			changedListedBuildingNumbers: [],
+			designatedSitesNames: ['cSAC', 'SAC', 'customVal1'],
 			affectsScheduledMonument: false,
-			hasProtectedSpecies: false,
 			isAonbNationalLandscape: null,
 			isGypsyOrTravellerSite: false,
+			isPublicRightOfWay: false,
+			eiaEnvironmentalImpactSchedule: null,
+			eiaDevelopmentDescription: null,
+			eiaSensitiveAreaDetails: '',
+			eiaColumnTwoThreshold: null,
+			eiaScreeningOpinion: null,
+			eiaRequiresEnvironmentalStatement: null,
+			eiaCompletedEnvironmentalStatement: null,
+			consultedBodiesDetails: null,
+			hasProtectedSpecies: false,
+			hasStatutoryConsultees: false,
 			hasInfrastructureLevy: false,
+			hasTreePreservationOrder: true, // new required field 
+			hasConsultationResponses: true, // new required field
+			hasEmergingPlan: true, // new required field 
+			hasSupplementaryPlanningDocs: true, // new required field 
 			isInfrastructureLevyFormallyAdopted: null,
 			infrastructureLevyAdoptedDate: null,
 			infrastructureLevyExpectedDate: null,
 			lpaProcedurePreference: 'hearing',
 			lpaProcedurePreferenceDetails: 'pref details lpa',
 			lpaProcedurePreferenceDuration: 3,
+			lpaFinalCommentDetails: '',
+			lpaAddedWitnesses: true, // new required field 
+			siteWithinSSSI: false,
 			reasonForNeighbourVisits: null,
-			changedListedBuildingNumbers: ['1021469', '1021470'],
-			designatedSitesNames: ['cSAC', 'SAC', 'customVal1', 'customVal2'],
-			eiaSensitiveAreaDetails: null,
-			consultedBodiesDetails: null,
-			eiaScreeningOpinion: null,
-			eiaColumnTwoThreshold: null,
-			eiaRequiresEnvironmentalStatement: null,
-			eiaEnvironmentalImpactSchedule: null,
-			eiaDevelopmentDescription: null,
-			eiaCompletedEnvironmentalStatement: null,
-			hasStatutoryConsultees: false,
 			importantInformation: null,
 			redeterminedIndicator: null,
-			dateCostsReportDespatched: null,
-			dateNotRecoveredOrDerecovered: null,
-			dateRecovered: null,
-			originalCaseDecisionDate: null,
-			targetDate: null,
-			siteNoticesSentDate: null,
-			siteWithinSSSI: false
+			dateCostsReportDespatched: '2023-07-27T20:30:00.000Z',
+			dateNotRecoveredOrDerecovered: '2023-07-27T20:30:00.000Z',
+			dateRecovered: '2023-07-27T20:30:00.000Z',
+			originalCaseDecisionDate: '2023-07-27T20:30:00.000Z',
+			targetDate: '2023-07-27T20:30:00.000Z',
+			siteNoticesSentDate: '2023-07-27T20:30:00.000Z',
 		}
 	},
 	interestedPartyComment: {

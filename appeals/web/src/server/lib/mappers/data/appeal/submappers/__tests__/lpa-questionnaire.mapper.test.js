@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { mapLpaQuestionnaire } from '#lib/mappers/data/appeal/submappers/lpa-questionnaire.mapper.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { mapLpaQuestionnaire } from '#lib/mappers/data/appeal/submappers/lpa-questionnaire.mapper.js';
 
 describe('lpa-questionnaire.mapper', () => {
 	let params;

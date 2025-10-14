@@ -1,7 +1,7 @@
+import { representationHasAddress } from '#lib/address-formatter.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
-import { representationHasAddress } from '#lib/address-formatter.js';
 
 export const validateStatus = createValidator(
 	body('status')

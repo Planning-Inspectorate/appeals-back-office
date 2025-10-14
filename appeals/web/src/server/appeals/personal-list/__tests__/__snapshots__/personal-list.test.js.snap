@@ -66,7 +66,7 @@ exports[`personal-list GET / should render a child status tag in the lead or chi
                         </td>
                         <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28524/lpa-questionnaire/25063?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30">Review LPA questionnaire<span class="govuk-visually-hidden"> for appeal 28524</span></a>
                         </td>
-                        <td class="govuk-table__cell">10 January 2025</td>
+                        <td class="govuk-table__cell"></td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong>
                         </td>
                     </tr>
@@ -193,7 +193,7 @@ exports[`personal-list GET / should render a lead status tag in the lead or chil
                         </td>
                         <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28524/lpa-questionnaire/25063?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30">Review LPA questionnaire<span class="govuk-visually-hidden"> for appeal 28524</span></a>
                         </td>
-                        <td class="govuk-table__cell">10 January 2025</td>
+                        <td class="govuk-table__cell"></td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong>
                         </td>
                     </tr>
@@ -335,7 +335,7 @@ exports[`personal-list GET / should render an empty cell in the lead or child co
                         </td>
                         <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28524/lpa-questionnaire/25063?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30">Review LPA questionnaire<span class="govuk-visually-hidden"> for appeal 28524</span></a>
                         </td>
-                        <td class="govuk-table__cell">10 January 2025</td>
+                        <td class="govuk-table__cell"></td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong>
                         </td>
                     </tr>
@@ -462,7 +462,7 @@ exports[`personal-list GET / should render the first page of the personal list w
                         </td>
                         <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28524/lpa-questionnaire/25063?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D5">Review LPA questionnaire<span class="govuk-visually-hidden"> for appeal 28524</span></a>
                         </td>
-                        <td class="govuk-table__cell">10 January 2025</td>
+                        <td class="govuk-table__cell"></td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong>
                         </td>
                     </tr>
@@ -533,7 +533,7 @@ role="banner" data-module="govuk-header">
                 </div><span>Planning Inspectorate</span>
             </div>
             <div class="pins-column--central">
-                <p class="pins-header-domainname govuk-!-margin-top-1">Casework Back Office System - Appeals</p>
+                <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
                 <nav class="govuk-header__navigation pins-header-navigation"
                 aria-label="Menu">
                     <ul class="govuk-header__navigation-list">
@@ -602,7 +602,7 @@ exports[`personal-list GET / should render the second page of the personal list 
                         <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/28513" aria-label="Appeal 6 0 2 8 5 1 3">6028513</a></strong>
                         </td>
                         <td class="govuk-table__cell"></td>
-                        <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28513/change-appeal-type/add-horizon-reference?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D2%26pageSize%3D1%26appealStatusFilter%3Dlpa_questionnaire">Update Horizon reference<span class="govuk-visually-hidden"> for appeal 28513</span></a>
+                        <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28513/change-appeal-type/add-horizon-reference?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D2%26pageSize%3D1%26appealStatusFilter%3Dlpa_questionnaire">Mark as transferred<span class="govuk-visually-hidden"> for appeal 28513</span></a>
                         </td>
                         <td class="govuk-table__cell"></td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Awaiting transfer</strong>
@@ -622,7 +622,8 @@ exports[`personal-list GET / should render the second page of the personal list 
                         <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/28525" aria-label="Appeal 6 0 2 8 5 2 5">6028525</a></strong>
                         </td>
                         <td class="govuk-table__cell"></td>
-                        <td class="govuk-table__cell action-required">Awaiting LPA update</td>
+                        <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28525/lpa-questionnaire/25064?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D2%26pageSize%3D1%26appealStatusFilter%3Dlpa_questionnaire">Update questionnaire<span class="govuk-visually-hidden"> for appeal 28525</span></a>
+                        </td>
                         <td class="govuk-table__cell">10 April 2025</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong>
                         </td>
@@ -727,7 +728,7 @@ exports[`personal-list GET / should render the second page of the personal list 
                         <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/28513" aria-label="Appeal 6 0 2 8 5 1 3">6028513</a></strong>
                         </td>
                         <td class="govuk-table__cell"></td>
-                        <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28513/change-appeal-type/add-horizon-reference?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D2%26pageSize%3D5">Update Horizon reference<span class="govuk-visually-hidden"> for appeal 28513</span></a>
+                        <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28513/change-appeal-type/add-horizon-reference?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D2%26pageSize%3D5">Mark as transferred<span class="govuk-visually-hidden"> for appeal 28513</span></a>
                         </td>
                         <td class="govuk-table__cell"></td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Awaiting transfer</strong>
@@ -747,7 +748,8 @@ exports[`personal-list GET / should render the second page of the personal list 
                         <td class="govuk-table__cell"><strong><a class="govuk-link" href="/appeals-service/appeal-details/28525" aria-label="Appeal 6 0 2 8 5 2 5">6028525</a></strong>
                         </td>
                         <td class="govuk-table__cell"></td>
-                        <td class="govuk-table__cell action-required">Awaiting LPA update</td>
+                        <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28525/lpa-questionnaire/25064?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D2%26pageSize%3D5">Update questionnaire<span class="govuk-visually-hidden"> for appeal 28525</span></a>
+                        </td>
                         <td class="govuk-table__cell">10 April 2025</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong>
                         </td>

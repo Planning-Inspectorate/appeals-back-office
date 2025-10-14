@@ -1,12 +1,12 @@
-import { isBefore } from 'date-fns';
 import {
-	dayMonthYearHourMinuteToISOString,
-	dateISOStringToDayMonthYearHourMinute
+	dateISOStringToDayMonthYearHourMinute,
+	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
 import logger from '#lib/logger.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { isBefore } from 'date-fns';
 import { updateValidDatePage } from './outcome-valid.mapper.js';
 import * as outcomeValidService from './outcome-valid.service.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getValidDate = async (request, response) => {
@@ -34,8 +34,9 @@ export const postValidDate = async (request, response) => {
 			let /** @type {import('@pins/express').ValidationErrors} */ errorMessage = {
 					'valid-date-day': {
 						location: 'body',
-						param: 'all-fields',
+						path: 'all-fields',
 						value: '',
+						type: 'field',
 						msg: 'The valid date must be a real date.'
 					}
 				};
@@ -65,8 +66,9 @@ export const postValidDate = async (request, response) => {
 			let /** @type {import('@pins/express').ValidationErrors} */ errorMessage = {
 					'valid-date-day': {
 						location: 'body',
-						param: 'all-fields',
+						path: 'all-fields',
 						value: '',
+						type: 'field',
 						msg: 'The valid date must be on or after the date the case was received.'
 					}
 				};

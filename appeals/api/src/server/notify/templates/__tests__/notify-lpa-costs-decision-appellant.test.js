@@ -14,7 +14,7 @@ describe('lpa-costs-decision-lpa.md', () => {
 				lpa_reference: '48269/APP/2021/1482',
 				appeal_reference_number: '134526',
 				site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-				front_office_url: 'mock-front-office-url'
+				front_office_url: '/mock-front-office-url'
 			}
 		};
 
@@ -29,7 +29,7 @@ describe('lpa-costs-decision-lpa.md', () => {
 			'',
 			'# Appeal costs decision',
 			'',
-			'[Sign in to our service](https://mock-front-office-url/manage-appeals/134526/appeal-details) to view the decision.',
+			'[Sign in to our service](/mock-front-office-url/manage-appeals/134526) to view the decision.',
 			'',
 			'We have also informed the appellant of the decision.',
 			'',

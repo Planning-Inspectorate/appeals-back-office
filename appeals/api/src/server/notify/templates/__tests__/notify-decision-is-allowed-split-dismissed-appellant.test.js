@@ -1,8 +1,7 @@
 // @ts-nocheck
 import { notifySend } from '#notify/notify-send.js';
-import { jest } from '@jest/globals';
 import { householdAppeal } from '#tests/appeals/mocks.js';
-import { cloneDeep } from 'lodash-es';
+import { jest } from '@jest/globals';
 
 const genericNotifySendData = {
 	doNotMockNotifySend: true,
@@ -35,7 +34,7 @@ const expectedContentRows = (replacementRows) => [
 	'',
 	'We have also informed the local planning authority of the decision.',
 	'',
-	'# The Planning Inspectorate’s role',
+	"# The Planning Inspectorate's role",
 	'',
 	'The Planning Inspectorate cannot change or revoke the decision. You can [challenge the decision in the High Court](https://www.gov.uk/appeal-planning-decision/if-you-think-the-appeal-decision-is-legally-incorrect) if you think the Planning Inspectorate made a legal mistake.',
 	'',
@@ -53,7 +52,8 @@ describe('decision-is-allowed-split-dismissed-appellant.md', () => {
 	});
 
 	test('should call notify sendEmail with the correct data', async () => {
-		const notifySendData = cloneDeep(genericNotifySendData);
+		const notifySendData = structuredClone({ ...genericNotifySendData, notifyClient: {} });
+		notifySendData.notifyClient.sendEmail = jest.fn();
 
 		const expectedContent = expectedContentRows(['We have made a decision on your appeal.']).join(
 			'\n'
@@ -74,12 +74,13 @@ describe('decision-is-allowed-split-dismissed-appellant.md', () => {
 	});
 
 	test('should call notify sendEmail with the correct data when a linked appeal', async () => {
-		const notifySendData = cloneDeep(genericNotifySendData);
+		const notifySendData = structuredClone({ ...genericNotifySendData, notifyClient: {} });
+		notifySendData.notifyClient.sendEmail = jest.fn();
 		notifySendData.personalisation.child_appeals = ['CHILD123', 'CHILD456', 'CHILD789'];
 
 		const expectedContent = expectedContentRows([
 			'We have made a decision on the following appeals:',
-			'- ABC45678',
+			'- ABC45678 (lead)',
 			'- CHILD123',
 			'- CHILD456',
 			'- CHILD789'

@@ -1,4 +1,5 @@
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { areIdParamsValid } from '#lib/validators/id-param.validator.js';
 import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
 import {
 	addChangedListedBuildingCheckAndConfirmPage,
@@ -10,8 +11,8 @@ import {
 } from './changed-listed-buildings.mapper.js';
 import {
 	addChangedListedBuilding,
-	removeChangedListedBuilding,
-	changeChangedListedBuilding
+	changeChangedListedBuilding,
+	removeChangedListedBuilding
 } from './changed-listed-buildings.service.js';
 
 /**
@@ -184,6 +185,10 @@ export const postRemoveChangedListedBuilding = async (request, response) => {
 
 	if (errors) {
 		return renderRemoveChangedListedBuilding(request, response);
+	}
+
+	if (!areIdParamsValid(appealId, listedBuildingId, lpaQuestionnaireId)) {
+		return response.status(400).render('app/400.njk');
 	}
 
 	if (!appealId || !listedBuildingId || !lpaQuestionnaireId) {

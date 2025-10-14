@@ -96,6 +96,28 @@ resource "azurerm_virtual_network_peering" "horizon_to_bo" {
   provider = azurerm.horizon
 }
 
+# peering test and staging environment
+resource "azurerm_virtual_network_peering" "stage_to_test_environment" {
+  # only deploy if in staging environment
+  count = var.environment == "staging" ? 1 : 0
+
+  name                      = "${local.org}-peer-${local.service_name}-test-abo--${var.environment}"
+  remote_virtual_network_id = data.azurerm_virtual_network.vnet_primary_test[0].id #test env vnet data source
+  resource_group_name       = azurerm_virtual_network.main.resource_group_name
+  virtual_network_name      = azurerm_virtual_network.main.name # staging env vnet
+}
+
+resource "azurerm_virtual_network_peering" "test_environment_to_stage" {
+  # only deploy if in staging environment
+  count = var.environment == "staging" ? 1 : 0
+
+  name                      = "${local.org}-peer-abo-test-to-${local.service_name}-${var.environment}"
+  remote_virtual_network_id = azurerm_virtual_network.main.id # staging env vnet
+  resource_group_name       = var.service_bus_shared.resource_group_name
+  virtual_network_name      = var.service_bus_shared.network_name # test env vnet data source
+}
+
+
 ## DNS Zones for Azure Services
 ## Private DNS Zones exist in the tooling subscription and are shared
 ## here we link them to the VNet

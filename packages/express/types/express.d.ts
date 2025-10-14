@@ -1,13 +1,13 @@
 import {
+	Request as ExpressRequest,
 	NextFunction,
 	ParamsDictionary,
-	Request as ExpressRequest,
 	Response
 } from 'express-serve-static-core';
-import { ValidationError } from 'express-validator';
+import { FieldValidationError } from 'express-validator';
 import { ParsedQs } from 'qs';
 
-export type ValidationErrors = Record<string, ValidationError>;
+export type ValidationErrors = Record<string, FieldValidationError>;
 
 declare global {
 	namespace Express {

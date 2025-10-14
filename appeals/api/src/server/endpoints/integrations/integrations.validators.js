@@ -1,8 +1,8 @@
+import BackOfficeAppError from '#utils/app-error.js';
+import { getCache, setCache } from '@pins/appeals/utils/cache-data.js';
+import { loadAllSchemas } from '@planning-inspectorate/data-model';
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
-import { loadAllSchemas } from '@planning-inspectorate/data-model';
-import BackOfficeAppError from '#utils/app-error.js';
-import { setCache, getCache } from '@pins/appeals/utils/cache-data.js';
 
 export const schemas = {
 	commands: {
@@ -16,6 +16,7 @@ export const schemas = {
 		appealHas: 'appeal-has',
 		appealS78: 'appeal-s78',
 		appealEvent: 'appeal-event',
+		appealAdvert: 'appeal-advert',
 		appealRepresentation: 'appeal-representation',
 		listedBuilding: 'listed-building',
 		appealEventEstimate: 'appeal-event-estimate'
@@ -44,7 +45,8 @@ export const validateFromSchema = async (schema, payload, isCommand = false) => 
 	const validator = ajv.getSchema(`${schema}.schema.json`);
 	if (!validator) {
 		throw new BackOfficeAppError(
-			`Trying to validate against schema '${schema}', which could not be loaded.`
+			`Trying to validate against schema '${schema}', which could not be loaded.`,
+			500
 		);
 	}
 	if (!validator(payload)) {

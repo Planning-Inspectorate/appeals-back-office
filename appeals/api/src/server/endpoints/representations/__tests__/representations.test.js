@@ -1,26 +1,27 @@
 // @ts-nocheck
+import { request } from '#tests/../app-test.js';
+import {
+	appealS20,
+	appealS78,
+	fullPlanningAppeal,
+	householdAppeal,
+	listedBuildingAppeal
+} from '#tests/appeals/mocks.js';
+import { azureAdUserId } from '#tests/shared/mocks.js';
+import { jest } from '@jest/globals';
 import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import { request } from '#tests/../app-test.js';
-import {
-	householdAppeal,
-	appealS78,
-	appealS20,
-	fullPlanningAppeal,
-	listedBuildingAppeal
-} from '#tests/appeals/mocks.js';
-import { jest } from '@jest/globals';
-import { cloneDeep } from 'lodash-es';
 import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
-import { azureAdUserId } from '#tests/shared/mocks.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 describe('/appeals/:id/reps', () => {
-	beforeEach(() => {});
+	beforeAll(() => {
+		jest.clearAllMocks();
+	});
 	afterEach(() => {
 		jest.clearAllMocks();
 	});
@@ -233,7 +234,8 @@ describe('/appeals/:id/reps', () => {
 					lpa_reference: appeal.applicationReference,
 					appeal_reference_number: appeal.reference,
 					reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
-					site_address: expectedSiteAddress
+					site_address: expectedSiteAddress,
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				};
 
 				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
@@ -323,7 +325,8 @@ describe('/appeals/:id/reps', () => {
 					lpa_reference: appeal.applicationReference,
 					appeal_reference_number: appeal.reference,
 					reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
-					site_address: expectedSiteAddress
+					site_address: expectedSiteAddress,
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				};
 
 				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
@@ -422,7 +425,8 @@ describe('/appeals/:id/reps', () => {
 					resubmit_comment_to_fo: true,
 					appeal_reference_number: mockAppeal.reference,
 					reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
-					site_address: expectedSiteAddress
+					site_address: expectedSiteAddress,
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				};
 
 				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
@@ -521,7 +525,8 @@ describe('/appeals/:id/reps', () => {
 					resubmit_comment_to_fo: false,
 					appeal_reference_number: mockAppeal.reference,
 					reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
-					site_address: expectedSiteAddress
+					site_address: expectedSiteAddress,
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				};
 
 				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
@@ -612,7 +617,8 @@ describe('/appeals/:id/reps', () => {
 					deadline_date: '',
 					appeal_reference_number: appeal.reference,
 					reasons: ['Supporting documents missing', 'Other: Provided documents were incomplete'],
-					site_address: expectedSiteAddress
+					site_address: expectedSiteAddress,
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				};
 
 				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
@@ -760,6 +766,12 @@ describe('/appeals/:id/reps', () => {
 
 		test('200 when representation with address and attachment is successfully created', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			const mockDocument = {
+				guid: '39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				name: 'test.pdf'
+			};
+
+			databaseConnector.document.findUnique.mockResolvedValue(mockDocument);
 
 			const response = await request
 				.post('/appeals/1/reps/comments')
@@ -768,6 +780,85 @@ describe('/appeals/:id/reps', () => {
 					ipAddress: { postCode: 'abc 123', addressLine1: 'line 1' },
 					redactionStatus: 'unredacted',
 					attachments: ['0']
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledWith(
+				'39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				1,
+				'Create'
+			);
+		});
+	});
+
+	describe('POST representation/:proofOfEvidenceType/proof-of-evidence', () => {
+		beforeEach(() => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+		});
+
+		test('400 when attachment guids is empty', async () => {
+			const response = await request
+				.post('/appeals/1/reps/lpa/proof-of-evidence')
+				.send({
+					attachments: []
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					attachments: 'Attachments must be a non-empty array'
+				}
+			});
+		});
+
+		test('400 when attachment guids does not exist', async () => {
+			const response = await request
+				.post('/appeals/1/reps/lpa/proof-of-evidence')
+				.send({})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					attachments: 'Attachments field is required'
+				}
+			});
+		});
+
+		test('400 when proof of evidence type is not valid', async () => {
+			const response = await request
+				.post('/appeals/1/reps/app/proof-of-evidence')
+				.send({
+					attachments: ['123-456-789']
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					proofOfEvidenceType: 'must be either appellant or lpa'
+				}
+			});
+		});
+
+		test('200 when representation is successfully created for LPA', async () => {
+			const response = await request
+				.post('/appeals/1/reps/lpa/proof-of-evidence')
+				.send({
+					attachments: ['12345-6789-12345']
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+		});
+
+		test('200 when representation is successfully created for appellant', async () => {
+			const response = await request
+				.post('/appeals/1/reps/appellant/proof-of-evidence')
+				.send({
+					attachments: ['12345-6789-12345']
 				})
 				.set('azureAdUserId', '732652365');
 
@@ -901,7 +992,18 @@ describe('/appeals/:id/reps', () => {
 			};
 			const mockDocument = {
 				guid: '39ad6cd8-60ab-43f0-a995-4854db8f12c6',
-				latestDocumentVersion: { version: 1 }
+				name: 'test.pdf',
+				caseId: 1,
+				latestDocumentVersion: { version: 1 },
+				versions: [
+					{
+						version: 1,
+						documentURI: 'http://example.com/test.pdf',
+						fileMD5: 'abc123',
+						dateCreated: new Date(),
+						dateReceived: new Date()
+					}
+				]
 			};
 
 			databaseConnector.document.findUnique.mockResolvedValue(mockDocument);
@@ -931,6 +1033,74 @@ describe('/appeals/:id/reps', () => {
 					}
 				}
 			});
+
+			expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledWith(
+				'39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				1,
+				'Create'
+			);
+		});
+
+		test('200 with new version updated', async () => {
+			const mockRepresentation = {
+				id: 1,
+				appealId: 1,
+				attachments: [{ documentGuid: 'b6f15730-2d7f-4fa0-8752-2d26a62474de', version: 2 }]
+			};
+			const mockUpdatedRepresentation = {
+				id: 1,
+				appealId: 1,
+				attachments: [{ documentGuid: '39ad6cd8-60ab-43f0-a995-4854db8f12c6', version: 2 }]
+			};
+			const mockDocument = {
+				guid: '39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				name: 'test.pdf',
+				caseId: 1,
+				latestDocumentVersion: { version: 2 },
+				versions: [
+					{
+						version: 2,
+						documentURI: 'http://example.com/test.pdf',
+						fileMD5: 'abc123',
+						dateCreated: new Date(),
+						dateReceived: new Date()
+					}
+				]
+			};
+
+			databaseConnector.document.findUnique.mockResolvedValue(mockDocument);
+			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.update.mockResolvedValue(mockUpdatedRepresentation);
+
+			const response = await request
+				.patch('/appeals/1/reps/1/attachments')
+				.send({ attachments: ['39ad6cd8-60ab-43f0-a995-4854db8f12c6'] })
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual(mockUpdatedRepresentation);
+
+			expect(databaseConnector.representation.update).toHaveBeenCalledWith({
+				where: { id: 1 },
+				data: {
+					attachments: {
+						connect: [
+							{
+								documentGuid_version: {
+									documentGuid: '39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+									version: 2
+								}
+							}
+						]
+					}
+				}
+			});
+
+			expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledWith(
+				'39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				2,
+				'Update'
+			);
 		});
 
 		test('500 when database operation fails', async () => {
@@ -957,11 +1127,11 @@ describe('/appeals/:id/reps', () => {
 		let mockS78Appeal;
 		let mockS20Appeal;
 		beforeEach(() => {
-			mockS78Appeal = cloneDeep({
+			mockS78Appeal = structuredClone({
 				...appealS78,
 				representations: appealS78.representations.filter((rep) => rep.status !== 'awaiting_review')
 			});
-			mockS20Appeal = cloneDeep({
+			mockS20Appeal = structuredClone({
 				...appealS20,
 				representations: appealS20.representations.filter((rep) => rep.status !== 'awaiting_review')
 			});
@@ -1087,9 +1257,10 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'received-statement-and-ip-comments-lpa'
@@ -1102,9 +1273,10 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
@@ -1135,9 +1307,21 @@ describe('/appeals/:id/reps', () => {
 				};
 
 				const childAppeals = [
-					{ type: CASE_RELATIONSHIP_LINKED, childId: 100 },
-					{ type: CASE_RELATIONSHIP_RELATED, childId: 200 },
-					{ type: CASE_RELATIONSHIP_LINKED, childId: 300 }
+					{
+						type: CASE_RELATIONSHIP_LINKED,
+						childId: 100,
+						child: { appealStatus: mockS78Appeal.appealStatus }
+					},
+					{
+						type: CASE_RELATIONSHIP_RELATED,
+						childId: 200,
+						child: { appealStatus: mockS78Appeal.appealStatus }
+					},
+					{
+						type: CASE_RELATIONSHIP_LINKED,
+						childId: 300,
+						child: { appealStatus: mockS78Appeal.appealStatus }
+					}
 				];
 
 				databaseConnector.appeal.findUnique.mockResolvedValue({
@@ -1173,9 +1357,10 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'received-statement-and-ip-comments-lpa'
@@ -1188,9 +1373,10 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
@@ -1200,7 +1386,7 @@ describe('/appeals/:id/reps', () => {
 
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
 					data: {
-						appealId: mockS78Appeal.id,
+						appealId: childAppeals[0].childId,
 						details: 'Case progressed to final_comments',
 						loggedAt: expect.any(Date),
 						userId: 1
@@ -1209,7 +1395,7 @@ describe('/appeals/:id/reps', () => {
 
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 					data: {
-						appealId: childAppeals[0].childId,
+						appealId: childAppeals[2].childId,
 						details: 'Case progressed to final_comments',
 						loggedAt: expect.any(Date),
 						userId: 1
@@ -1218,7 +1404,7 @@ describe('/appeals/:id/reps', () => {
 
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
 					data: {
-						appealId: childAppeals[2].childId,
+						appealId: mockS78Appeal.id,
 						details: 'Case progressed to final_comments',
 						loggedAt: expect.any(Date),
 						userId: 1
@@ -1286,9 +1472,10 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: false,
+						is_hearing_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'received-statement-and-ip-comments-lpa'
@@ -1301,9 +1488,10 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: false,
+						is_hearing_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
@@ -1361,9 +1549,10 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: false,
 						has_statement: true,
+						is_hearing_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'received-statement-and-ip-comments-lpa'
@@ -1376,9 +1565,10 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: false,
 						has_statement: true,
+						is_hearing_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
@@ -1434,9 +1624,10 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: false,
 						has_statement: false,
+						is_hearing_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'received-statement-and-ip-comments-lpa'
@@ -1449,9 +1640,10 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: false,
 						has_statement: false,
+						is_hearing_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
@@ -1511,9 +1703,10 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: mockS20Appeal.lpa.email,
 					templateName: 'received-statement-and-ip-comments-lpa'
@@ -1526,9 +1719,10 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: mockS20Appeal.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
@@ -1596,8 +1790,9 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: true,
 						what_happens_next: 'We will contact you when the hearing has been set up.',
-						subject: `We've received all statements and comments`
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'received-statement-and-ip-comments-lpa'
@@ -1610,8 +1805,9 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: true,
 						what_happens_next: 'We will contact you if we need any more information.',
-						subject: `We have received the local planning authority's questionnaire, all statements and comments from interested parties`
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
@@ -1678,8 +1874,9 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: true,
 						what_happens_next: 'We will contact you when the hearing has been set up.',
-						subject: `We've received all statements and comments`
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'received-statement-and-ip-comments-lpa'
@@ -1692,8 +1889,9 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: true,
 						what_happens_next: 'We will contact you if we need any more information.',
-						subject: `We have received the local planning authority's questionnaire, all statements and comments from interested parties`
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
@@ -1765,8 +1963,9 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: true,
 						what_happens_next: 'The hearing is on 31 January 2025.',
-						subject: `We've received all statements and comments`
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'received-statement-and-ip-comments-lpa'
@@ -1779,9 +1978,10 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: true,
 						what_happens_next:
 							'Your hearing is on 31 January 2025.\n\nWe will contact you if we need any more information.',
-						subject: `We have received the local planning authority's questionnaire, all statements and comments from interested parties`
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
@@ -1851,8 +2051,9 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: true,
 						what_happens_next: 'The hearing is on 31 January 2025.',
-						subject: `We've received all statements and comments`
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'received-statement-and-ip-comments-lpa'
@@ -1865,9 +2066,10 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: true,
 						what_happens_next:
 							'Your hearing is on 31 January 2025.\n\nWe will contact you if we need any more information.',
-						subject: `We have received the local planning authority's questionnaire, all statements and comments from interested parties`
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
@@ -1940,6 +2142,7 @@ describe('/appeals/:id/reps', () => {
 					lpa_reference: mockS78Appeal.applicationReference,
 					has_ip_comments: false,
 					has_statement: false,
+					is_hearing_procedure: false,
 					appeal_reference_number: mockS78Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
@@ -1973,7 +2176,8 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
-						what_happens_next: ''
+						what_happens_next: '',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'final-comments-done-appellant'
@@ -1984,7 +2188,8 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
-						what_happens_next: ''
+						what_happens_next: '',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'final-comments-done-lpa'
@@ -2008,6 +2213,7 @@ describe('/appeals/:id/reps', () => {
 					lpa_reference: mockS78Appeal.applicationReference,
 					has_ip_comments: false,
 					has_statement: false,
+					is_hearing_procedure: false,
 					appeal_reference_number: mockS78Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
@@ -2015,9 +2221,21 @@ describe('/appeals/:id/reps', () => {
 				};
 
 				const childAppeals = [
-					{ type: CASE_RELATIONSHIP_LINKED, childId: 100 },
-					{ type: CASE_RELATIONSHIP_RELATED, childId: 200 },
-					{ type: CASE_RELATIONSHIP_LINKED, childId: 300 }
+					{
+						type: CASE_RELATIONSHIP_LINKED,
+						childId: 100,
+						child: { appealStatus: mockS78Appeal.appealStatus }
+					},
+					{
+						type: CASE_RELATIONSHIP_RELATED,
+						childId: 200,
+						child: { appealStatus: mockS78Appeal.appealStatus }
+					},
+					{
+						type: CASE_RELATIONSHIP_LINKED,
+						childId: 300,
+						child: { appealStatus: mockS78Appeal.appealStatus }
+					}
 				];
 
 				databaseConnector.appeal.findUnique.mockResolvedValue({
@@ -2052,7 +2270,8 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
-						what_happens_next: ''
+						what_happens_next: '',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'final-comments-done-appellant'
@@ -2063,7 +2282,8 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
-						what_happens_next: ''
+						what_happens_next: '',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'final-comments-done-lpa'
@@ -2073,7 +2293,7 @@ describe('/appeals/:id/reps', () => {
 
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
 					data: {
-						appealId: mockS78Appeal.id,
+						appealId: childAppeals[0].childId,
 						details: 'Case progressed to event',
 						loggedAt: expect.any(Date),
 						userId: 1
@@ -2082,7 +2302,7 @@ describe('/appeals/:id/reps', () => {
 
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 					data: {
-						appealId: childAppeals[0].childId,
+						appealId: childAppeals[2].childId,
 						details: 'Case progressed to event',
 						loggedAt: expect.any(Date),
 						userId: 1
@@ -2091,7 +2311,7 @@ describe('/appeals/:id/reps', () => {
 
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
 					data: {
-						appealId: childAppeals[2].childId,
+						appealId: mockS78Appeal.id,
 						details: 'Case progressed to event',
 						loggedAt: expect.any(Date),
 						userId: 1
@@ -2125,6 +2345,7 @@ describe('/appeals/:id/reps', () => {
 					lpa_reference: mockS20Appeal.applicationReference,
 					has_ip_comments: false,
 					has_statement: false,
+					is_hearing_procedure: false,
 					appeal_reference_number: mockS20Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
@@ -2158,7 +2379,8 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
-						what_happens_next: ''
+						what_happens_next: '',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS20.appellant.email,
 					templateName: 'final-comments-done-appellant'
@@ -2169,7 +2391,8 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
-						what_happens_next: ''
+						what_happens_next: '',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS20.lpa.email,
 					templateName: 'final-comments-done-lpa'
@@ -2196,6 +2419,7 @@ describe('/appeals/:id/reps', () => {
 					lpa_reference: mockS20Appeal.applicationReference,
 					has_ip_comments: false,
 					has_statement: false,
+					is_hearing_procedure: false,
 					appeal_reference_number: mockS20Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
@@ -2220,7 +2444,8 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
-						what_happens_next: ''
+						what_happens_next: '',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: mockS20Appeal.agent.email,
 					templateName: 'final-comments-done-appellant'
@@ -2230,7 +2455,8 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
-						what_happens_next: ''
+						what_happens_next: '',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: mockS20Appeal.lpa.email,
 					templateName: 'final-comments-done-lpa'
@@ -2254,6 +2480,7 @@ describe('/appeals/:id/reps', () => {
 					lpa_reference: mockS78Appeal.applicationReference,
 					has_ip_comments: false,
 					has_statement: false,
+					is_hearing_procedure: false,
 					appeal_reference_number: mockS78Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
@@ -2285,7 +2512,8 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
-						user_type: 'local planning authority'
+						user_type: 'local planning authority',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: mockS78Appeal.appellant.email,
 					templateName: 'final-comments-none'
@@ -2296,7 +2524,8 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
-						user_type: 'appellant'
+						user_type: 'appellant',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: mockS78Appeal.lpa.email,
 					templateName: 'final-comments-none'
@@ -2320,6 +2549,7 @@ describe('/appeals/:id/reps', () => {
 					lpa_reference: mockS20Appeal.applicationReference,
 					has_ip_comments: false,
 					has_statement: false,
+					is_hearing_procedure: false,
 					appeal_reference_number: mockS20Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
@@ -2352,7 +2582,8 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
-						what_happens_next: ''
+						what_happens_next: '',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS20.appellant.email,
 					templateName: 'final-comments-done-appellant'
@@ -2364,7 +2595,8 @@ describe('/appeals/:id/reps', () => {
 					personalisation: {
 						...expectedEmailPayload,
 						user_type: 'appellant',
-						what_happens_next: ''
+						what_happens_next: '',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: mockS78Appeal.lpa.email,
 					templateName: 'final-comments-none'
@@ -2388,10 +2620,12 @@ describe('/appeals/:id/reps', () => {
 					lpa_reference: mockS20Appeal.applicationReference,
 					has_ip_comments: false,
 					has_statement: false,
+					is_hearing_procedure: false,
 					appeal_reference_number: mockS20Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
-					user_type: ''
+					user_type: '',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				};
 
 				databaseConnector.appeal.findUnique.mockResolvedValue(mockS20Appeal);
@@ -2421,7 +2655,8 @@ describe('/appeals/:id/reps', () => {
 					personalisation: {
 						...expectedEmailPayload,
 						what_happens_next: '',
-						user_type: 'local planning authority'
+						user_type: 'local planning authority',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: mockS78Appeal.appellant.email,
 					templateName: 'final-comments-none'
@@ -2432,7 +2667,8 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
-						what_happens_next: ''
+						what_happens_next: '',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS20.lpa.email,
 					templateName: 'final-comments-done-lpa'

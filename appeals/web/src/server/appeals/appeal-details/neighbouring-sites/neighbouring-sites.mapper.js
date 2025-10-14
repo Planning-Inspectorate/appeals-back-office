@@ -3,9 +3,11 @@ import {
 	appealSiteToMultilineAddressStringHtml
 } from '#lib/address-formatter.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
-import { addressInputs } from '#lib/mappers/index.js';
-import { yesNoInput } from '#lib/mappers/index.js';
+import {
+	addressInputs,
+	mapNotificationBannersFromSession,
+	yesNoInput
+} from '#lib/mappers/index.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal

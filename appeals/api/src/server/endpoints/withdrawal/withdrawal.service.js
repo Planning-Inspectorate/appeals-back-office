@@ -1,10 +1,11 @@
+import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
-import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
-import { notifySend } from '#notify/notify-send.js';
 import { getEventType } from '@pins/appeals/utils/event-type.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 
@@ -39,7 +40,8 @@ export const publishWithdrawal = async (
 		site_address: siteAddress,
 		withdrawal_date: formatDate(new Date(withdrawalRequestDate || ''), false),
 		event_type: eventType,
-		event_set: !!eventType
+		event_set: !!eventType,
+		team_email_address: await getTeamEmailFromAppealId(appeal.id)
 	};
 
 	if (recipientEmail) {

@@ -1,14 +1,14 @@
-import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
-import { dateInput, removeSummaryListActions } from '#lib/mappers/index.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { padNumberWithZero } from '#lib/string-utilities.js';
-import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { capitalize } from 'lodash-es';
 import {
-	dayMonthYearHourMinuteToISOString,
-	dateISOStringToDayMonthYearHourMinute
+	dateISOStringToDayMonthYearHourMinute,
+	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
 import { timeInput } from '#lib/mappers/components/page-components/time.js';
+import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
+import { dateInput, removeSummaryListActions } from '#lib/mappers/index.js';
+import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { padNumberWithZero } from '#lib/string-utilities.js';
+import { capitalize, upperCase } from 'lodash-es';
 import { siteVisitDateField } from './site-visits.constants.js';
 /**
  * @typedef {'unaccompanied'|'accompanied'|'accessRequired'} WebSiteVisitType
@@ -558,4 +558,177 @@ export function setPreviousVisitTypeIfChanged(updateOrCreateSiteVisitParameters,
 	) {
 		updateOrCreateSiteVisitParameters.previousVisitType = oldApiVisitType;
 	}
+}
+
+/**
+ * @param {string} appealId
+ * @param {string} appealReference
+ * @param {string|undefined} errorMessage
+ * @returns {PageContent}
+ */
+export function siteVisitMissedPage(appealId, appealReference, errorMessage) {
+	return {
+		title: 'Who missed the site visit?',
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}`,
+		preHeading: `Appeal ${appealShortReference(appealReference)} - record missed site visit`,
+		pageComponents: [
+			{
+				type: 'radios',
+				parameters: {
+					name: 'whoMissedSiteVisitRadio',
+					idPrefix: 'who-missed-site-visit-radio',
+					fieldset: {
+						legend: {
+							text: 'Who missed the site visit?',
+							isPageHeading: true,
+							classes: 'govuk-fieldset__legend--l'
+						}
+					},
+					items: [
+						{
+							value: 'appellant',
+							text: 'Appellant'
+							// checked: planningObligationStatus === 'appellant'
+						},
+						{
+							value: 'lpa',
+							text: 'LPA'
+							// checked: planningObligationStatus === 'lpa'
+						},
+						{
+							value: 'inspector',
+							text: 'Inspector'
+							// checked: planningObligationStatus === 'inspector'
+						}
+					],
+					errorMessage: errorMessage && { text: errorMessage }
+				}
+			}
+		]
+	};
+}
+
+/**
+ * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
+ * @param {string} emailTemplate
+ *
+ */
+export const cancelSiteVisitPage = (appealDetails, emailTemplate) => {
+	return {
+		title: 'Confirm that you want to cancel the site visit',
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
+		heading: 'Confirm that you want to cancel the site visit',
+		submitButtonProperties: {},
+		submitButtonText: 'Cancel site visit',
+		postPageComponents: [
+			{
+				type: 'html',
+				parameters: {
+					html: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealDetails.appealId}">Keep site visit</a>`
+				}
+			}
+		],
+		pageComponents: [
+			{
+				type: 'html',
+				parameters: {
+					html: `<p class="govuk-body">We will send an email to the appellant and LPA to tell them that we have cancelled the site visit.</p>`
+				}
+			},
+			{
+				type: 'details',
+				wrapperHtml: {
+					opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+					closing: '</div></div>'
+				},
+				parameters: {
+					summaryText: `Preview email to appellant`,
+					html: emailTemplate
+				}
+			},
+			{
+				type: 'details',
+				wrapperHtml: {
+					opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+					closing: '</div></div>'
+				},
+				parameters: {
+					summaryText: `Preview email to LPA`,
+					html: emailTemplate
+				}
+			}
+		]
+	};
+};
+/**
+ * @param {Appeal} appeal
+ * @param {string} appealReference
+ * @param {string} whoMissedSiteVisit
+ * @param {{renderedHtml:string}} emailPreview
+ * @returns {PageContent}
+ */
+export function siteVisitMissedPageCya(appeal, appealReference, whoMissedSiteVisit, emailPreview) {
+	/** @type {PageComponent} */
+	const summaryListComponent = {
+		type: 'summary-list',
+		parameters: {
+			rows: [
+				{
+					key: {
+						text: 'Who missed the site visit?'
+					},
+					value: {
+						text:
+							whoMissedSiteVisit === 'lpa'
+								? upperCase(whoMissedSiteVisit)
+								: capitalize(whoMissedSiteVisit)
+					},
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: `/appeals-service/appeal-details/${appeal.appealId}/site-visit/missed`,
+								visuallyHiddenText: 'Change who missed site visit'
+							}
+						]
+					}
+				}
+			]
+		}
+	};
+	/** @type {PageComponent} */
+	const emailPreviewComponent = {
+		type: 'details',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
+		parameters: {
+			summaryText: `Preview email to ${
+				whoMissedSiteVisit === 'lpa' ? upperCase(whoMissedSiteVisit) : whoMissedSiteVisit
+			}`,
+			html: emailPreview.renderedHtml
+		}
+	};
+
+	const pageComponents = [];
+	pageComponents.push(summaryListComponent);
+	if (whoMissedSiteVisit !== 'inspector') {
+		pageComponents.push(emailPreviewComponent);
+	}
+
+	const title = 'Check details and record missed site visit';
+	const pageContent = {
+		title,
+		heading: title,
+		backLinkUrl: `/appeals-service/appeal-details/${appeal.appealId}/site-visit/missed`,
+		preHeading: `Appeal ${appealShortReference(appealReference)}`,
+		pageComponents,
+		submitButtonText: 'Record missed site visit',
+
+		forceRenderSubmitButton: true
+	};
+
+	return pageContent;
 }

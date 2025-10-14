@@ -1,18 +1,18 @@
 import { createNewDocument } from '#app/components/file-uploader.component.js';
-import { appealShortReference } from '#lib/appeals-formatter.js';
-import { dayMonthYearHourMinuteToDisplayDate } from '#lib/dates.js';
-import logger from '#lib/logger.js';
-import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import config from '@pins/appeals.web/environment/config.js';
 import {
 	isValidRedactionStatus,
 	name as redactionStatusFieldName,
 	statusFormatMap
 } from '#appeals/appeal-details/representations/interested-party-comments/common/redaction-status.js';
 import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
-import { patchRepresentationAttachments } from '../../final-comments/final-comments.service.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
+import { dayMonthYearHourMinuteToDisplayDate } from '#lib/dates.js';
 import { clearEdits, editLink } from '#lib/edit-utilities.js';
+import logger from '#lib/logger.js';
+import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import config from '@pins/appeals.web/environment/config.js';
+import { patchRepresentationAttachments } from '../../document-attachments/attachments-service.js';
 
 /**
  * @param {import('@pins/express').Request} request
@@ -27,7 +27,8 @@ export const renderCheckYourAnswers = (request, response) => {
 				files: [{ name, blobStoreUrl }]
 			},
 			addDocument: { [redactionStatusFieldName]: redactionStatus, day, month, year }
-		}
+		},
+		locals: { pageContent }
 	} = request;
 	const baseUrl = request.baseUrl;
 
@@ -39,13 +40,15 @@ export const renderCheckYourAnswers = (request, response) => {
 
 	return renderCheckYourAnswersComponent(
 		{
-			title: 'Check details and add document',
-			heading: 'Check details and add document',
+			title:
+				pageContent?.checkYourAnswer?.pageHeadingTextOverride || 'Check details and add document',
+			heading:
+				pageContent?.checkYourAnswer?.pageHeadingTextOverride || 'Check details and add document',
 			preHeading: `Appeal ${appealShortReference(appealReference)}`,
 			backLinkUrl: `${baseUrl}/date-submitted`,
-			submitButtonText: 'Add document',
+			submitButtonText: pageContent?.checkYourAnswer?.submitButtonTextOverride || 'Add document',
 			responses: {
-				'Supporting document': {
+				[pageContent?.checkYourAnswer?.supportingDocumentTextOverride || 'Supporting document']: {
 					html: `<a class="govuk-link" download href="${blobStoreUrl ?? ''}">${name ?? ''}</a>`,
 					actions: {
 						Change: {
@@ -63,7 +66,7 @@ export const renderCheckYourAnswers = (request, response) => {
 						}
 					}
 				},
-				'Date submitted': {
+				[pageContent?.checkYourAnswer?.dateSubmittedTextOverride || 'Date submitted']: {
 					value: dayMonthYearHourMinuteToDisplayDate({ day, month, year }),
 					actions: {
 						Change: {
@@ -165,6 +168,14 @@ export const postCheckYourAnswers = async (request, response) => {
 			break;
 		case 'lpa_statement':
 			bannerDefinitionKey = 'lpaStatementDocumentAddedSuccess';
+			break;
+		case 'lpa_proofs_evidence':
+			nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+			bannerDefinitionKey = 'lpaProofOfEvidenceDocumentAddedSuccess';
+			break;
+		case 'appellant_proofs_evidence':
+			nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+			bannerDefinitionKey = 'appellantProofOfEvidenceDocumentAddedSuccess';
 			break;
 		default:
 			bannerDefinitionKey = 'finalCommentsDocumentAddedSuccess';

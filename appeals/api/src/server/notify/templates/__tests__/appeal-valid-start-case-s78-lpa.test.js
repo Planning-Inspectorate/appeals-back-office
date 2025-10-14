@@ -21,7 +21,8 @@ describe('appeal-valid-start-case-s78-lpa.md', () => {
 				questionnaire_due_date: '01 January 2025',
 				lpa_statement_deadline: '10 January 2025',
 				ip_comments_deadline: '20 January 2025',
-				final_comments_deadline: '30 January 2025'
+				final_comments_deadline: '30 January 2025',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',
@@ -104,7 +105,8 @@ describe('appeal-valid-start-case-s78-lpa.md', () => {
 				lpa_statement_deadline: '10 January 2025',
 				ip_comments_deadline: '20 January 2025',
 				final_comments_deadline: '30 January 2025',
-				child_appeals: ['656565']
+				child_appeals: ['656565'],
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',
@@ -189,7 +191,8 @@ describe('appeal-valid-start-case-s78-lpa.md', () => {
 				lpa_statement_deadline: '10 January 2025',
 				ip_comments_deadline: '20 January 2025',
 				final_comments_deadline: '30 January 2025',
-				child_appeals: ['111111', '222222', '333333', '444444', '555555']
+				child_appeals: ['111111', '222222', '333333', '444444', '555555'],
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',
@@ -280,7 +283,8 @@ describe('appeal-valid-start-case-s78-lpa.md', () => {
 				ip_comments_deadline: '20 January 2025',
 				final_comments_deadline: '30 January 2025',
 				statement_of_common_ground_deadline: '25 January 2025',
-				planning_obligation_deadline: '30 January 2025'
+				planning_obligation_deadline: '30 January 2025',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',
@@ -369,7 +373,8 @@ describe('appeal-valid-start-case-s78-lpa.md', () => {
 				lpa_statement_deadline: '10 January 2025',
 				ip_comments_deadline: '20 January 2025',
 				statement_of_common_ground_deadline: '25 January 2025',
-				planning_obligation_deadline: ''
+				planning_obligation_deadline: '',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',

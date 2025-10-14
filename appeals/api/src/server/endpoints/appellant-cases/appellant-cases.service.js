@@ -1,38 +1,39 @@
+import {
+	isOutcomeIncomplete,
+	isOutcomeInvalid,
+	isOutcomeValid
+} from '#utils/check-validation-outcome.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
 	ERROR_NO_RECIPIENT_EMAIL,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import {
-	isOutcomeIncomplete,
-	isOutcomeInvalid,
-	isOutcomeValid
-} from '#utils/check-validation-outcome.js';
 
-import appellantCaseRepository from '#repositories/appellant-case.repository.js';
-import transitionState from '../../state/transition-state.js';
-import appealRepository from '#repositories/appeal.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
-import formatDate from '@pins/appeals/utils/date-formatter.js';
-import { getFormattedReasons } from '#utils/email-formatter.js';
-import { camelToScreamingSnake, capitalizeFirstLetter } from '#utils/string-utils.js';
-import * as documentRepository from '#repositories/document.repository.js';
+import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { EventType } from '@pins/event-client';
 import { notifySend } from '#notify/notify-send.js';
+import appealRepository from '#repositories/appeal.repository.js';
+import appellantCaseRepository from '#repositories/appellant-case.repository.js';
+import * as documentRepository from '#repositories/document.repository.js';
+import auditApplicationDecisionMapper from '#utils/audit-application-decision-mapper.js';
+import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
+import { getFormattedReasons } from '#utils/email-formatter.js';
+import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
+import { allAppellantCaseOutcomesAreValid } from '#utils/is-awaiting-linked-appeal.js';
+import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { camelToScreamingSnake, capitalizeFirstLetter } from '#utils/string-utils.js';
 import {
 	APPEAL_DEVELOPMENT_TYPES,
 	PLANNING_OBLIGATION_STATUSES
 } from '@pins/appeals/constants/appellant-cases.constants.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import auditApplicationDecisionMapper from '#utils/audit-application-decision-mapper.js';
-import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
-import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
-import { allAppellantCaseOutcomesAreValid } from '#utils/is-awaiting-linked-appeal.js';
 import { AUDIT_TRAIL_SUBMISSION_INVALID } from '@pins/appeals/constants/support.js';
-import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
+import { EventType } from '@pins/event-client';
+import transitionState from '../../state/transition-state.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
 /** @typedef {import('express').Request} Request */
@@ -69,6 +70,7 @@ export const updateAppellantCaseValidationOutcome = async (
 ) => {
 	const { id: appealId } = appeal;
 	const { appealDueDate, incompleteReasons, invalidReasons } = data;
+	const teamEmail = await getTeamEmailFromAppealId(appealId);
 
 	await appellantCaseRepository.updateAppellantCaseValidationOutcome({
 		appealId,
@@ -119,7 +121,8 @@ export const updateAppellantCaseValidationOutcome = async (
 			feedback_link:
 				appeal.appealType.type === APPEAL_TYPE.S78
 					? 'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzg1SlNPQjA3V0FDNUFJTldHMlEzMDdMRS4u'
-					: 'https://forms.office.com/r/9U4Sq9rEff'
+					: 'https://forms.office.com/r/9U4Sq9rEff',
+			team_email_address: teamEmail
 		};
 		await notifySend({
 			azureAdUserId,
@@ -161,7 +164,8 @@ export const updateAppellantCaseValidationOutcome = async (
 					lpa_reference: appeal.applicationReference,
 					site_address: siteAddress,
 					due_date: formatDate(new Date(updatedDueDate), false),
-					reasons: incompleteReasonsList
+					reasons: incompleteReasonsList,
+					team_email_address: teamEmail
 				};
 
 				await notifySend({
@@ -187,7 +191,8 @@ export const updateAppellantCaseValidationOutcome = async (
 				appeal_reference_number: appeal.reference,
 				lpa_reference: appeal.applicationReference,
 				site_address: siteAddress,
-				reasons: invalidReasonsList
+				reasons: invalidReasonsList,
+				team_email_address: teamEmail
 			};
 			await notifySend({
 				azureAdUserId,
@@ -265,7 +270,10 @@ export function renderAuditTrailDetail(data) {
 				)?.label || data.developmentType
 			),
 		AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED: () => data.siteAreaSquareMetres,
+		AUDIT_TRAIL_HIGHWAY_LAND_UPDATED: () => (data.highwayLand ? 'Yes' : 'No'),
 		AUDIT_TRAIL_IS_GREEN_BELT_UPDATED: () => (data.isGreenBelt ? 'Yes' : 'No'),
+		AUDIT_TRAIL_ADVERT_IN_POSITION_UPDATED: () => (data.advertInPosition ? 'Yes' : 'No'),
+		AUDIT_TRAIL_LANDOWNER_PERMISSION_UPDATED: () => (data.landownerPermission ? 'Yes' : 'No'),
 		AUDIT_TRAIL_KNOWS_OTHER_OWNERS_UPDATED: () => data.knowsOtherOwners ?? 'No data',
 		AUDIT_TRAIL_SITE_ACCESS_DETAILS_UPDATED: () =>
 			data.siteAccessDetails ? `Yes\n${data.siteAccessDetails}` : 'No',

@@ -2,15 +2,14 @@
 /// <reference types="cypress"/>
 
 import { users } from '../../fixtures/users';
-import { happyPathHelper } from '../../support/happyPathHelper';
-import { tag } from '../../support/tag';
-import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { InquirySectionPage } from '../../page_objects/caseDetails/inquirySectionPage.js';
+import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+import { happyPathHelper } from '../../support/happyPathHelper';
 
 const caseDetailsPage = new CaseDetailsPage();
 const inquirySectionPage = new InquirySectionPage();
 
-let caseRef;
+let caseObj;
 
 describe('Date Validation', { testIsolation: false }, () => {
 	before(() => {
@@ -19,6 +18,12 @@ describe('Date Validation', { testIsolation: false }, () => {
 
 	beforeEach(() => {
 		inquirySectionPage.clearInquiryDateAndTime();
+	});
+
+	let appeal;
+
+	after(() => {
+		cy.deleteAppeals(appeal);
 	});
 
 	it('All fields are blank', () => {
@@ -249,13 +254,14 @@ describe('Date Validation', { testIsolation: false }, () => {
 		cy.login(users.appeals.caseAdmin);
 
 		cy.createCase({ caseType: 'W' }).then((ref) => {
-			caseRef = ref;
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
+			caseObj = ref;
+			appeal = caseObj;
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
-			happyPathHelper.reviewAppellantCase(caseRef);
+			happyPathHelper.reviewAppellantCase(caseObj);
 			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-			happyPathHelper.startS78InquiryCase(caseRef, 'inquiry');
+			happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');
 		});
 	};
 });

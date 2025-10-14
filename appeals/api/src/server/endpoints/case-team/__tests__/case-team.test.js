@@ -1,15 +1,20 @@
 // @ts-nocheck
-import { request } from '#tests/../app-test.js';
-import { jest } from '@jest/globals';
-import { azureAdUserId } from '#tests/shared/mocks.js';
-import { caseTeams } from '#tests/appeals/mocks.js';
-const { databaseConnector } = await import('#utils/database-connector.js');
-import { mocks } from '#tests/appeals/index.js';
 
+import { request } from '#tests/../app-test.js';
+import { mocks } from '#tests/appeals/index.js';
+import { caseTeams } from '#tests/appeals/mocks.js';
+import { azureAdUserId } from '#tests/shared/mocks.js';
+import { jest } from '@jest/globals';
+import { getTeamEmailFromAppealId } from '../case-team.service.js';
+const { databaseConnector } = await import('#utils/database-connector.js');
 const householdAppeal = mocks.householdAppeal;
 const teeamIdNumericErrorMessage = 'teamId must be a number equal to or greater than 0';
 const teamIdRequiredErrorMessage = 'teamId is required';
+
 describe('case team routes', () => {
+	beforeAll(() => {
+		jest.clearAllMocks();
+	});
 	afterEach(() => {
 		jest.clearAllMocks();
 	});
@@ -78,16 +83,21 @@ describe('case team routes', () => {
 
 			it(`returns error message when teamId is less than 0`, async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				databaseConnector.appeal.update.mockResolvedValue({ teamId: 1 });
+				databaseConnector.appeal.update.mockResolvedValue({ teamId: -1 });
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/case-team`)
-					.send({ teamId: 1 })
+					.send({ teamId: -1 })
 					.set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({ teamId: 1 });
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						teamId: 'teamId must be a number equal to or greater than 0'
+					}
+				});
 			});
+
 			it(`returns teamId of null when 0 is provided`, async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				databaseConnector.appeal.update.mockResolvedValue({ assignedTeamId: null });
@@ -104,6 +114,116 @@ describe('case team routes', () => {
 				});
 				expect(response.body).toEqual({ assignedTeamId: null });
 			});
+
+			it('returns valid assigned team Id when valid teamId is provided', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.appeal.update.mockResolvedValue({ assignedTeamId: 1 });
+				databaseConnector.team.findUnique.mockResolvedValue({ id: 1, name: 'Team 1' });
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}/case-team`)
+					.send({ teamId: 1 })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+					where: { id: householdAppeal.id },
+					data: { assignedTeamId: 1 }
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: householdAppeal.id,
+						details: 'Case team Team 1 assigned',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+				expect(response.body).toEqual({ assignedTeamId: 1 });
+			});
+
+			it('returns valid assigned team Id when valid teamId is provided and there are linked appeals', async () => {
+				const leadAppeal = structuredClone(householdAppeal);
+				leadAppeal.childAppeals = [
+					{ childId: 10, parentId: 1 },
+					{ childId: 20, parentId: 1 }
+				];
+				databaseConnector.appeal.findUnique.mockResolvedValue(leadAppeal);
+				databaseConnector.appealRelationship.findMany.mockResolvedValue(leadAppeal.childAppeals);
+				databaseConnector.appeal.update.mockResolvedValue({ assignedTeamId: 1 });
+
+				const response = await request
+					.patch(`/appeals/${leadAppeal.id}/case-team`)
+					.send({ teamId: 1 })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(3);
+
+				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(1, {
+					where: { id: leadAppeal.id },
+					data: { assignedTeamId: 1 }
+				});
+
+				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(2, {
+					where: { id: leadAppeal.childAppeals[0].childId },
+					data: { assignedTeamId: 1 }
+				});
+
+				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(3, {
+					where: { id: leadAppeal.childAppeals[1].childId },
+					data: { assignedTeamId: 1 }
+				});
+
+				expect(response.body).toEqual({ assignedTeamId: 1 });
+			});
 		});
+	});
+});
+
+describe('getTeamEmailFromAppealId', () => {
+	beforeAll(() => {
+		jest.clearAllMocks();
+	});
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
+	it('throws an error when the appeal is not found', async () => {
+		databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+		const result = await getTeamEmailFromAppealId(1);
+		expect(result).toBe('caseofficers@planninginspectorate.gov.uk');
+	});
+	it('returns default email when the appeal has no assigned team', async () => {
+		const appeal = { id: 1, assignedTeamId: null };
+		databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+
+		const result = await getTeamEmailFromAppealId(1);
+		expect(result).toBe('caseofficers@planninginspectorate.gov.uk');
+	});
+	it('returns default email when the team is not found', async () => {
+		const appeal = { id: 1, assignedTeamId: '1' };
+		databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+		databaseConnector.team.findUnique.mockResolvedValue(null);
+
+		const result = await getTeamEmailFromAppealId(1);
+		expect(result).toBe('caseofficers@planninginspectorate.gov.uk');
+	});
+	it('returns team email when team exists', async () => {
+		const appeal = { id: 1, assignedTeamId: '1' };
+		databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+		databaseConnector.team.findUnique.mockResolvedValue({ id: 1, email: 'testemail@email.com' });
+
+		const result = await getTeamEmailFromAppealId(1);
+		expect(result).toBe('testemail@email.com');
 	});
 });

@@ -1,27 +1,27 @@
+import usersService from '#appeals/appeal-users/users-service.js';
+import { gigabyte, kilobyte, megabyte } from '#appeals/appeal.constants.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import config from '@pins/appeals.web/environment/config.js';
-import { capitalize } from 'lodash-es';
 import {
 	dateISOStringToDayMonthYearHourMinute,
 	dateISOStringToDisplayDate,
 	dateISOStringToDisplayTime24hr,
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
-import { kilobyte, megabyte, gigabyte } from '#appeals/appeal.constants.js';
+import { folderIsAdditionalDocuments } from '#lib/documents.js';
 import {
-	mapNotificationBannersFromSession,
 	createNotificationBanner,
-	documentDateInput
+	documentDateInput,
+	mapNotificationBannersFromSession
 } from '#lib/mappers/index.js';
-import usersService from '#appeals/appeal-users/users-service.js';
-import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import { redactionStatusIdToName } from '#lib/redaction-statuses.js';
+import config from '@pins/appeals.web/environment/config.js';
 import {
 	APPEAL_REDACTED_STATUS,
 	APPEAL_VIRUS_CHECK_STATUS
 } from '@planning-inspectorate/data-model';
-import { folderIsAdditionalDocuments } from '#lib/documents.js';
+import { capitalize } from 'lodash-es';
 
 /**
  * @typedef {import('../appeal-details/appeal-details.types.js').WebAppeal} Appeal
@@ -863,6 +863,7 @@ export function mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEd
  * @param {string} [params.pageHeadingTextOverride]
  * @param {string} [params.addButtonTextOverride]
  * @param {string} [params.dateColumnLabelTextOverride]
+ * @param {string} [params.preHeadingTextOverride]
  * @returns {PageContent}
  */
 export function manageFolderPage({
@@ -873,8 +874,18 @@ export function manageFolderPage({
 	request,
 	pageHeadingTextOverride,
 	addButtonTextOverride,
-	dateColumnLabelTextOverride
+	dateColumnLabelTextOverride,
+	preHeadingTextOverride
 }) {
+	/** @type {PageComponent[]} */
+	let proofOfEvidenceSuccessBanner = [];
+	if (request.locals?.pageContent?.showSuccessBanner) {
+		proofOfEvidenceSuccessBanner = mapNotificationBannersFromSession(
+			request.session,
+			'viewProofOfEvidence',
+			request.currentAppeal.appealId
+		);
+	}
 	const notificationBanners = mapNotificationBannersFromSession(
 		request.session,
 		'manageFolder',
@@ -924,9 +935,10 @@ export function manageFolderPage({
 		title: 'Manage folder',
 		backLinkText: 'Back',
 		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.folderId.toString()),
-		preHeading: 'Manage folder',
+		preHeading: preHeadingTextOverride || 'Manage folder',
 		heading: pageHeadingTextOverride || mapManageFolderPageHeading(folder.path),
 		pageComponents: [
+			...proofOfEvidenceSuccessBanner,
 			...notificationBanners,
 			...errorSummaryPageComponents,
 			buttonComponent,

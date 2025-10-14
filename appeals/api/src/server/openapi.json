@@ -525,7 +525,75 @@
 				},
 				"requestBody": {
 					"in": "body",
-					"description": "Appeal and optional start date (defaults to the current date, if omitted)",
+					"description": "Appeal and optionally a start date (defaults to the current date, if omitted), procedure type, and hearing start time",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/StartCaseRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/StartCaseRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/appeal-timetables/notify-preview": {
+			"post": {
+				"tags": ["Appeal Timetables"],
+				"description": "Returns the rendered HTML of the emails that would be sent to the relevant parties",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Returns the rendered HTML of the emails that would be sent to the relevant parties",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StartCaseNotifyPreviewResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/StartCaseNotifyPreviewResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Appeal and optionally a start date (defaults to the current date, if omitted), procedure type, and hearing start time",
 					"required": true,
 					"content": {
 						"application/json": {
@@ -618,6 +686,75 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/appeal-timetables/calculate": {
+			"get": {
+				"tags": ["Appeal Timetables"],
+				"description": "Calculates the timetable that would result from starting this appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "startDate",
+						"in": "query",
+						"required": false,
+						"example": "2025-01-01",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "procedureType",
+						"in": "query",
+						"required": false,
+						"example": "written",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "The timetable that would result from starting this appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CalculateAppealTimetableResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/CalculateAppealTimetableResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
 		"/appeals/appeal-types": {
 			"get": {
 				"tags": ["Appeal Types"],
@@ -691,6 +828,51 @@
 							"application/xml": {
 								"schema": {
 									"$ref": "#/components/schemas/CaseTeams"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/case-team-email": {
+			"get": {
+				"tags": ["Case Team"],
+				"description": "Gets the case team from an appeal id",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Assigned case team for the appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TeamEmailResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/TeamEmailResponse"
 								}
 							}
 						}
@@ -1114,6 +1296,42 @@
 								"$ref": "#/components/schemas/ListedBuilding"
 							}
 						}
+					}
+				}
+			}
+		},
+		"/appeals/generate-appeals": {
+			"get": {
+				"tags": ["Test Data"],
+				"description": "Generates fake HAS or S78 appeals in the test environment",
+				"parameters": [
+					{
+						"name": "type",
+						"in": "query",
+						"required": false,
+						"example": "has",
+						"description": "Type of appeal to generate (has or s78)",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "count",
+						"in": "query",
+						"required": false,
+						"example": 100,
+						"description": "Number of appeals to generate",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful generation of test appeals"
+					},
+					"400": {
+						"description": "Invalid request parameters"
 					}
 				}
 			}
@@ -1922,6 +2140,70 @@
 			}
 		},
 		"/appeals/my-appeals": {
+			"get": {
+				"tags": ["Appeal Lists"],
+				"description": "Gets appeals assigned to the current user",
+				"parameters": [
+					{
+						"name": "status",
+						"in": "query",
+						"description": "The appeal status",
+						"example": "lpa_questionnaire_due",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "pageNumber",
+						"in": "query",
+						"description": "The pagination page number - required if pageSize is given",
+						"example": 1,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "pageSize",
+						"in": "query",
+						"description": "The pagination page size - required if pageNumber is given",
+						"example": 30,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Requested appeals",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AllAppeals"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/AllAppeals"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
+		"/appeals/personal-list": {
 			"get": {
 				"tags": ["Appeal Lists"],
 				"description": "Gets appeals assigned to the current user",
@@ -3261,6 +3543,80 @@
 						}
 					}
 				}
+			},
+			"delete": {
+				"tags": ["Site Visits"],
+				"description": "Updates a single site visit by id",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "siteVisitId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Creates a single site visit by id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SiteVisitUpdateRequest"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/SiteVisitUpdateRequest"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Site visit details to create",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SiteVisitUpdateRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/SiteVisitUpdateRequest"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/appeals/{appealId}/appeal-types": {
@@ -3355,6 +3711,53 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/appeal-resubmit-mark-invalid": {
+			"post": {
+				"tags": ["Appeal Type Change Request"],
+				"description": "Records a request to mark an appeal as invalid when due to be resubmitted",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"400": {
+						"description": "Bad Request"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Appeal type change request",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AppealTypeResubmitMarkInvalidRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/AppealTypeResubmitMarkInvalidRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/appeal-transfer-request": {
 			"post": {
 				"tags": ["Appeal Type Change Request"],
@@ -3443,6 +3846,53 @@
 						"application/xml": {
 							"schema": {
 								"$ref": "#/components/schemas/AppealTypeTransferConfirmationRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/appeal-update-request": {
+			"post": {
+				"tags": ["Appeal Type Change Request"],
+				"description": "Updates the appeal type",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"400": {
+						"description": "Bad Request"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Appeal type update request",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AppealTypeUpdateRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/AppealTypeUpdateRequest"
 							}
 						}
 					}
@@ -4468,6 +4918,75 @@
 				"parameters": [
 					{
 						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Create a Representation against an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateRepRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateRepRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/reps/{proofOfEvidenceType}/proof-of-evidence": {
+			"post": {
+				"tags": ["Representations"],
+				"description": "Create a representation",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "proofOfEvidenceType",
 						"in": "path",
 						"required": true,
 						"schema": {
@@ -5589,6 +6108,48 @@
 					},
 					"400": {
 						"description": "Bad Request"
+					}
+				}
+			}
+		},
+		"/appeals/delete-appeals": {
+			"delete": {
+				"tags": ["Test Utilities"],
+				"description": "A test endpoint to delete one or many appeals and their related data",
+				"parameters": [
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Appeal IDs to delete",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/DeleteAppealsRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/DeleteAppealsRequest"
+							}
+						}
 					}
 				}
 			}
@@ -6754,17 +7315,16 @@
 								"type": "string",
 								"example": "6000000"
 							},
-							"caseType": {
-								"type": "string",
-								"example": "D"
+							"nearbyCaseReferences": {
+								"type": "array",
+								"example": ["1000000"],
+								"items": {
+									"type": "string"
+								}
 							},
 							"lpaQuestionnaireSubmittedDate": {
 								"type": "string",
 								"example": "2024-05-31T23:00:00.000Z"
-							},
-							"lpaStatement": {
-								"type": "string",
-								"example": "cupidatat ipsum eu culpa"
 							},
 							"siteAccessDetails": {
 								"type": "array",
@@ -6776,36 +7336,6 @@
 							"siteSafetyDetails": {
 								"type": "array",
 								"example": ["Fine"],
-								"items": {
-									"type": "string"
-								}
-							},
-							"isCorrectAppealType": {
-								"type": "boolean",
-								"example": true
-							},
-							"isGreenBelt": {
-								"type": "boolean",
-								"example": false
-							},
-							"inConservationArea": {
-								"type": "boolean",
-								"example": true
-							},
-							"newConditionDetails": {
-								"type": "string",
-								"example": "cupidatat"
-							},
-							"notificationMethod": {
-								"type": "array",
-								"example": ["notice", "letter"],
-								"items": {
-									"type": "string"
-								}
-							},
-							"nearbyCaseReferences": {
-								"type": "array",
-								"example": ["1000000"],
 								"items": {
 									"type": "string"
 								}
@@ -6838,6 +7368,40 @@
 											"example": "magna proident incididunt in non"
 										}
 									}
+								}
+							},
+							"reasonForNeighbourVisits": {
+								"type": "undefined"
+							},
+							"caseType": {
+								"type": "string",
+								"example": "D"
+							},
+							"lpaStatement": {
+								"type": "string",
+								"example": "cupidatat ipsum eu culpa"
+							},
+							"isCorrectAppealType": {
+								"type": "boolean",
+								"example": true
+							},
+							"isGreenBelt": {
+								"type": "boolean",
+								"example": false
+							},
+							"inConservationArea": {
+								"type": "boolean",
+								"example": true
+							},
+							"newConditionDetails": {
+								"type": "string",
+								"example": "cupidatat"
+							},
+							"notificationMethod": {
+								"type": "array",
+								"example": ["notice", "letter"],
+								"items": {
+									"type": "string"
 								}
 							},
 							"affectedListedBuildingNumbers": {
@@ -7864,6 +8428,26 @@
 					"name": "AppealTypeChangeRequest"
 				}
 			},
+			"AppealTypeResubmitMarkInvalidRequest": {
+				"type": "object",
+				"properties": {
+					"newAppealTypeId": {
+						"type": "number",
+						"example": 32
+					},
+					"newAppealTypeFinalDate": {
+						"type": "string",
+						"example": "2024-02-02"
+					},
+					"appellantCaseId": {
+						"type": "number",
+						"example": 12
+					}
+				},
+				"xml": {
+					"name": "AppealTypeResubmitMarkInvalidRequest"
+				}
+			},
 			"AppealTypeTransferRequest": {
 				"type": "object",
 				"properties": {
@@ -7886,6 +8470,18 @@
 				},
 				"xml": {
 					"name": "AppealTypeTransferConfirmationRequest"
+				}
+			},
+			"AppealTypeUpdateRequest": {
+				"type": "object",
+				"properties": {
+					"newAppealTypeId": {
+						"type": "number",
+						"example": 32
+					}
+				},
+				"xml": {
+					"name": "AppealTypeUpdateRequest"
 				}
 			},
 			"AppealTypes": {
@@ -9132,6 +9728,26 @@
 					"numberOfResidencesNetChange": {
 						"type": "number",
 						"example": 0
+					},
+					"highwayLand": {
+						"type": "boolean",
+						"example": false
+					},
+					"advertInPosition": {
+						"type": "boolean",
+						"example": true
+					},
+					"landownerPermission": {
+						"type": "boolean",
+						"example": true
+					},
+					"siteGridReferenceEasting": {
+						"type": "string",
+						"example": "123456"
+					},
+					"siteGridReferenceNorthing": {
+						"type": "string",
+						"example": "654321"
 					}
 				},
 				"xml": {
@@ -9176,6 +9792,14 @@
 					"startDate": {
 						"type": "string",
 						"example": "2024-05-09"
+					},
+					"procedureType": {
+						"type": "string",
+						"example": "written"
+					},
+					"hearingStartTime": {
+						"type": "string",
+						"example": "2024-05-09T12:00:00.000Z"
 					}
 				},
 				"xml": {
@@ -9204,6 +9828,32 @@
 				},
 				"xml": {
 					"name": "StartCaseResponse"
+				}
+			},
+			"StartCaseNotifyPreviewResponse": {
+				"type": "object",
+				"properties": {
+					"appellant": {
+						"type": "object",
+						"properties": {
+							"renderedHtml": {
+								"type": "string",
+								"example": "Rendered HTML for appellant preview"
+							}
+						}
+					},
+					"lpa": {
+						"type": "object",
+						"properties": {
+							"renderedHtml": {
+								"type": "string",
+								"example": "Rendered HTML for LPA preview"
+							}
+						}
+					}
+				},
+				"xml": {
+					"name": "StartCaseNotifyPreviewResponse"
 				}
 			},
 			"SingleLPAQuestionnaireResponse": {
@@ -10389,6 +11039,26 @@
 					"numberOfResidencesNetChange": {
 						"type": "number",
 						"example": 0
+					},
+					"highwayLand": {
+						"type": "boolean",
+						"example": false
+					},
+					"advertInPosition": {
+						"type": "boolean",
+						"example": true
+					},
+					"landownerPermission": {
+						"type": "boolean",
+						"example": true
+					},
+					"siteGridReferenceEasting": {
+						"type": "string",
+						"example": "123456"
+					},
+					"siteGridReferenceNorthing": {
+						"type": "string",
+						"example": "654321"
 					}
 				},
 				"xml": {
@@ -11177,6 +11847,46 @@
 					"name": "UpdateAppealTimetableResponse"
 				}
 			},
+			"CalculateAppealTimetableResponse": {
+				"type": "object",
+				"properties": {
+					"finalCommentReviewDate": {
+						"type": "string",
+						"example": "2024-08-09T01:00:00.000Z"
+					},
+					"issueDeterminationDate": {
+						"type": "string",
+						"example": "2024-08-10T01:00:00.000Z"
+					},
+					"lpaQuestionnaireDueDate": {
+						"type": "string",
+						"example": "2024-08-11T01:00:00.000Z"
+					},
+					"statementReviewDate": {
+						"type": "string",
+						"example": "2024-08-12T01:00:00.000Z"
+					},
+					"statementOfCommonGroundDueDate": {
+						"type": "string",
+						"example": "2024-08-12T01:00:00.000Z"
+					},
+					"planningObligationDueDate": {
+						"type": "string",
+						"example": "2024-08-13T01:00:00.000Z"
+					},
+					"proofOfEvidenceAndWitnessesDueDate": {
+						"type": "string",
+						"example": "2024-08-14T01:00:00.000Z"
+					},
+					"startDate": {
+						"type": "string",
+						"example": "2024-08-09T01:00:00.000Z"
+					}
+				},
+				"xml": {
+					"name": "CalculateAppealTimetableResponse"
+				}
+			},
 			"AllDocumentRedactionStatusesResponse": {
 				"type": "object",
 				"properties": {
@@ -11439,6 +12149,18 @@
 				},
 				"xml": {
 					"name": "UpdateAsssignedTeamResponse"
+				}
+			},
+			"TeamEmailResponse": {
+				"type": "object",
+				"properties": {
+					"teamEmail": {
+						"type": "string",
+						"example": "email@email.com"
+					}
+				},
+				"xml": {
+					"name": "TeamEmailResponse"
 				}
 			},
 			"SingleLinkableAppealSummaryResponse": {
@@ -12203,6 +12925,17 @@
 					"teamId": {
 						"type": "string",
 						"example": "1"
+					}
+				}
+			},
+			"DeleteAppealsRequest": {
+				"type": "object",
+				"properties": {
+					"appealIds": {
+						"type": "array",
+						"items": {
+							"type": "number"
+						}
 					}
 				}
 			},
@@ -14290,6 +15023,7 @@
 						"type": "string",
 						"nullable": true,
 						"enum": [
+							"advertisement",
 							"full-appeal",
 							"householder-planning",
 							"listed-building",
@@ -14299,6 +15033,26 @@
 							"removal-or-variation-of-conditions",
 							"reserved-matters"
 						]
+					},
+					"highwayLand": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"advertInPosition": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"landownerPermission": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"siteGridReferenceEasting": {
+						"type": "string",
+						"nullable": true
+					},
+					"siteGridReferenceNorthing": {
+						"type": "string",
+						"nullable": true
 					},
 					"validation": {
 						"type": "object",
@@ -33473,6 +34227,7 @@
 						"type": "string",
 						"nullable": true,
 						"enum": [
+							"advertisement",
 							"full-appeal",
 							"householder-planning",
 							"listed-building",
@@ -33482,6 +34237,26 @@
 							"removal-or-variation-of-conditions",
 							"reserved-matters"
 						]
+					},
+					"highwayLand": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"advertInPosition": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"landownerPermission": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"siteGridReferenceEasting": {
+						"type": "string",
+						"nullable": true
+					},
+					"siteGridReferenceNorthing": {
+						"type": "string",
+						"nullable": true
 					},
 					"appellantCaseValidationOutcomeId": {
 						"type": "number",
@@ -33581,26 +34356,6 @@
 					},
 					"numberOfResidencesNetChange": {
 						"type": "number",
-						"nullable": true
-					},
-					"highwayLand": {
-						"type": "boolean",
-						"nullable": true
-					},
-					"advertInPosition": {
-						"type": "boolean",
-						"nullable": true
-					},
-					"landownerPermission": {
-						"type": "boolean",
-						"nullable": true
-					},
-					"siteGridReferenceEasting": {
-						"type": "string",
-						"nullable": true
-					},
-					"siteGridReferenceNorthing": {
-						"type": "string",
 						"nullable": true
 					}
 				}

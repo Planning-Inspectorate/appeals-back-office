@@ -8,7 +8,7 @@ Our inspector (or their representative) will now visit {{site_address}} at {{sta
 
 You, or someone else, must be at the site at the scheduled time to provide access for our inspector.
 
-Alternatively, and only if it is possible at the site, you can provide written consent for access for our inspector at caseofficers@planninginspectorate.gov.uk.
+Alternatively, and only if it is possible at the site, you can provide written consent for access for our inspector at {{team_email_address}}.
 
 Include our appeal reference number in any communication.
 
@@ -19,4 +19,4 @@ You cannot give the inspector any documents or discuss the appeal with them.
 The inspector will carry out the inspection on their own.
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

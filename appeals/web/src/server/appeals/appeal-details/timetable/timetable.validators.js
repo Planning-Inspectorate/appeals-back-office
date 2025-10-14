@@ -1,10 +1,10 @@
 import {
-	createDateInputFieldsValidator,
-	createDateInputDateValidityValidator,
-	createDateInputDateInFutureValidator,
 	createDateInputDateBusinessDayValidator,
-	extractAndProcessDateErrors,
-	createDateInputDateInFutureOfDateValidator
+	createDateInputDateInFutureOfDateValidator,
+	createDateInputDateInFutureValidator,
+	createDateInputDateValidityValidator,
+	createDateInputFieldsValidator,
+	extractAndProcessDateErrors
 } from '#lib/validators/date-input.validator.js';
 import { getIdText } from './timetable.mapper.js';
 
@@ -94,6 +94,10 @@ const validatorsMap = {
 	planningObligationDueDate: {
 		id: 'planning-obligation-due-date',
 		label: 'Planning obligation due date'
+	},
+	proofOfEvidenceAndWitnessesDueDate: {
+		id: 'proof-of-evidence-and-witnesses-due-date',
+		label: 'Proof of evidence and witnesses due date'
 	}
 };
 
@@ -103,7 +107,7 @@ const validatorsMap = {
  * @param {string} idText
  * @returns {string}
  */
-const buildSessionDate = (req, idText) => {
+export const buildSessionDate = (req, idText) => {
 	const updatedDueDateDay = parseInt(req.body[`${idText}-due-date-day`], 10);
 	const updatedDueDateMonth = parseInt(req.body[`${idText}-due-date-month`], 10);
 	const updatedDueDateYear = parseInt(req.body[`${idText}-due-date-year`], 10);
@@ -128,7 +132,8 @@ const getAllDateErrorExtractors = () => [
 	extractAndProcessDateErrors({ fieldNamePrefix: 'ip-comments-due-date' }),
 	extractAndProcessDateErrors({ fieldNamePrefix: 'final-comments-due-date' }),
 	extractAndProcessDateErrors({ fieldNamePrefix: 'statement-of-common-ground-due-date' }),
-	extractAndProcessDateErrors({ fieldNamePrefix: 'planning-obligation-due-date' })
+	extractAndProcessDateErrors({ fieldNamePrefix: 'planning-obligation-due-date' }),
+	extractAndProcessDateErrors({ fieldNamePrefix: 'proof-of-evidence-and-witnesses-due-date' })
 ];
 
 /**

@@ -15,4 +15,4 @@ There will be one {{event_type}} for all of the linked appeals.
 {% endif -%}
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

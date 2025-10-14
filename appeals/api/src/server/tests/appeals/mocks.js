@@ -3,16 +3,16 @@ import {
 	APPEAL_TYPE_SHORTHAND_HAS
 } from '@pins/appeals/constants/support.js';
 import has from './has.js';
-import s78 from './s78.js';
 import s20 from './s20.js';
+import s78 from './s78.js';
 
 import {
 	azureAdUserId,
-	validAppellantCaseOutcome,
-	incompleteAppellantCaseOutcome,
-	invalidAppellantCaseOutcome,
 	completeLPAQuestionnaireOutcome,
-	incompleteLPAQuestionnaireOutcome
+	incompleteAppellantCaseOutcome,
+	incompleteLPAQuestionnaireOutcome,
+	invalidAppellantCaseOutcome,
+	validAppellantCaseOutcome
 } from '#tests/shared/mocks.js';
 import {
 	APPEAL_CASE_STATUS,
@@ -57,6 +57,13 @@ export const auditTrails = [
 	},
 	{
 		details: 'Document blank.pdf (version 1) marked as requiring no redaction',
+		loggedAt: new Date('2024-03-25T23:59:59.999Z').toISOString(),
+		user: {
+			azureAdUserId
+		}
+	},
+	{
+		details: 'Description of development updated to\nlorem ipsum',
 		loggedAt: new Date('2024-03-25T23:59:59.999Z').toISOString(),
 		user: {
 			azureAdUserId
@@ -112,6 +119,7 @@ export const householdAppeal = {
 			valid: true
 		}
 	],
+	completedStateList: [],
 	addressId: 1,
 	lpa: {
 		name: 'Maidstone Borough Council',
@@ -149,7 +157,8 @@ export const householdAppeal = {
 		id: 2,
 		key: APPEAL_TYPE_SHORTHAND_HAS,
 		processCode: 'HAS',
-		type: 'Householder'
+		type: 'Householder',
+		changeAppealType: 'Householder'
 	},
 	appellantCase: {
 		id: 1,

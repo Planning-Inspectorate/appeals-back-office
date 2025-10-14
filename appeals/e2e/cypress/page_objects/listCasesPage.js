@@ -40,7 +40,7 @@ export class ListCasesPage extends Page {
 	}
 
 	clickAppealByRef(ref) {
-		cy.getByData(ref).click();
+		cy.getByData(ref.reference).click();
 	}
 
 	clickStartCaseBanner(text) {
@@ -53,14 +53,12 @@ export class ListCasesPage extends Page {
 	}
 
 	selectAppellantOutcome(outcome) {
-		this.clickAccordionByText('Documentation');
 		cy.contains(this.selectors.tableHeader, 'Appellant case');
 		this.clickAppealFromList(2); // TODO Change this to use clickAppealByRef()
 		this.selectRadioButtonByValue(outcome);
 	}
 
 	selectLpaqOutcome(outcome) {
-		this.clickAccordionByText('Documentation');
 		cy.contains(this.selectors.tableHeader, 'LPA Questionnaire');
 		this.clickAppealFromList(3); // TODO Change this to use clickAppealByRef()
 		this.selectRadioButtonByValue(outcome);
@@ -84,7 +82,6 @@ export class ListCasesPage extends Page {
 
 	// TODO Is this in use?
 	verifyValueIsBlank(position) {
-		this.clickAccordionByText('Case Team');
 		this.basePageElements
 			.summaryListValue()
 			.eq(position - 1)

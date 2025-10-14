@@ -1,13 +1,14 @@
-import { publishChildDecision, publishCostsDecision, publishDecision } from './decision.service.js';
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { isCurrentStatus } from '#utils/current-status.js';
 import {
+	CASE_RELATIONSHIP_LINKED,
 	DECISION_TYPE_APPELLANT_COSTS,
 	DECISION_TYPE_INSPECTOR,
 	DECISION_TYPE_LPA_COSTS,
 	ERROR_INVALID_APPEAL_STATE
 } from '@pins/appeals/constants/support.js';
-import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { isCurrentStatus } from '#utils/current-status.js';
+import { publishChildDecision, publishCostsDecision, publishDecision } from './decision.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -21,6 +22,8 @@ import { isCurrentStatus } from '#utils/current-status.js';
 export const postInspectorDecision = async (req, res) => {
 	const { appeal } = req;
 	const { decisions } = req.body;
+
+	const childAppeals = appeal.childAppeals || [];
 
 	if (
 		decisions.some(
@@ -52,12 +55,20 @@ export const postInspectorDecision = async (req, res) => {
 				switch (decisionType) {
 					case DECISION_TYPE_INSPECTOR: {
 						if (isChildAppeal) {
-							return publishChildDecision(
-								Number(decisionAppealId),
-								outcome,
-								documentDate,
-								azureAdUserId
-							);
+							const childAppeal = childAppeals.find(
+								(appeal) =>
+									appeal.type === CASE_RELATIONSHIP_LINKED && appeal.childId === decisionAppealId
+							)?.child;
+
+							if (childAppeal) {
+								return publishChildDecision(
+									childAppeal,
+									outcome,
+									documentDate,
+									azureAdUserId,
+									appeal
+								);
+							}
 						}
 						return publishDecision(
 							appeal,
@@ -90,7 +101,7 @@ export const postInspectorDecision = async (req, res) => {
 		)
 	);
 
-	const decision = results.find((result) => result !== null) ?? null;
+	const decision = results.find((result) => !!result?.documentType) ?? null;
 
 	return res.status(201).send(decision);
 };

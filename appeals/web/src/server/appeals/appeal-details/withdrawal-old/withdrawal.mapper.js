@@ -1,14 +1,14 @@
-import { capitalize } from 'lodash-es';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import {
-	mapNotificationBannersFromSession,
 	createNotificationBanner,
-	sortNotificationBanners,
-	dateInput
+	dateInput,
+	mapNotificationBannersFromSession,
+	sortNotificationBanners
 } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
+import { capitalize } from 'lodash-es';
 import {
 	folderPathToFolderNameText,
 	getDocumentsForVirusStatus,

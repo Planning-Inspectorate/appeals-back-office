@@ -3,11 +3,10 @@
 
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
-import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
-import { urlPaths } from '../../support/urlPaths.js';
-import { tag } from '../../support/tag';
+import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { tag } from '../../support/tag';
 
 const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
@@ -18,20 +17,29 @@ describe('Case History - Assign, validate, amend docs, update appellant case', (
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	it(
 		'view case history after assigning a case officer and validating a case',
 		{ tags: tag.smoke },
 		() => {
 			let dueDate = new Date();
+			let officer;
 
-			cy.createCase().then((caseRef) => {
-				happyPathHelper.assignCaseOfficer(caseRef);
-				happyPathHelper.reviewAppellantCase(caseRef);
-				caseDetailsPage.clickAccordionByButton('Case management');
-				caseDetailsPage.clickViewCaseHistory();
-				caseDetailsPage.verifyTableCellTextCaseHistory(
-					users.appeals.caseAdmin.email + ' was added to the team'
-				);
+			cy.createCase().then((caseObj) => {
+				appeal = caseObj;
+				happyPathHelper.assignCaseOfficer(caseObj);
+				happyPathHelper.reviewAppellantCase(caseObj);
+
+				caseDetailsPage.getCaseOfficer().then((name) => {
+					officer = name;
+					caseDetailsPage.clickViewCaseHistory();
+					caseDetailsPage.verifyTableCellTextCaseHistory(officer + ' was added to the team');
+				});
 				caseDetailsPage.verifyTableCellTextCaseHistory('Case progressed to validation');
 			});
 		}
@@ -43,14 +51,14 @@ describe('Case History - Assign, validate, amend docs, update appellant case', (
 		() => {
 			let dueDate = new Date();
 
-			cy.createCase().then((caseRef) => {
-				happyPathHelper.manageDocsAppellantCase(caseRef);
+			cy.createCase().then((caseObj) => {
+				appeal = caseObj;
+				happyPathHelper.manageDocsAppellantCase(caseObj);
 				caseDetailsPage.clickChangeSiteOwnership();
 				caseDetailsPage.selectRadioButtonByValue('Owns some of the land');
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.validateBannerMessage('Success', 'Site ownership updated');
 				caseDetailsPage.clickBackLink();
-				caseDetailsPage.clickAccordionByButton('Case management');
 				caseDetailsPage.clickViewCaseHistory();
 				caseDetailsPage.verifyTableCellTextCaseHistory(
 					`Document sample-file.doc uploaded (version 1, no redaction required)`

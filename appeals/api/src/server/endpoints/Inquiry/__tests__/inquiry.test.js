@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { request } from '../../../app-test.js';
 import { jest } from '@jest/globals';
+import { request } from '../../../app-test.js';
 
 import { fullPlanningAppeal as fullPlanningAppealData } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
@@ -112,7 +112,8 @@ describe('inquiry routes', () => {
 					inquiry_date: '1 January 2999',
 					inquiry_time: '1:00pm',
 					inquiry_address:
-						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom'
+						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				};
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
@@ -919,7 +920,7 @@ describe('inquiry routes', () => {
 				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
 			});
 
-			test('updates a single inquiry with no address', async () => {
+			test('updates a single inquiry with null address', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 				databaseConnector.inquiry.update.mockResolvedValue(inquiry);
 
@@ -933,6 +934,37 @@ describe('inquiry routes', () => {
 						address: {
 							disconnect: true
 						},
+						appeal: {
+							connect: {
+								id: fullPlanningAppeal.id
+							}
+						},
+						inquiryStartTime: '2999-01-02T12:00:00.000Z',
+						inquiryEndTime: undefined,
+						estimatedDays: 6
+					},
+					where: {
+						id: inquiry.id
+					},
+					include: {
+						address: true
+					}
+				});
+
+				expect(response.status).toEqual(201);
+			});
+
+			test('updates a single inquiry with no address', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				databaseConnector.inquiry.update.mockResolvedValue(inquiry);
+
+				const response = await request
+					.patch(`/appeals/${fullPlanningAppeal.id}/inquiry/${inquiry.id}`)
+					.send({ inquiryStartTime: '2999-01-02T12:00:00.000Z', estimatedDays: 6 })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.inquiry.update).toHaveBeenCalledWith({
+					data: {
 						appeal: {
 							connect: {
 								id: fullPlanningAppeal.id

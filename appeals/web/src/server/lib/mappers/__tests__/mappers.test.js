@@ -1,16 +1,16 @@
+import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
+import { mapRepresentationDocumentSummaryActionLink } from '#lib/representation-utilities.js';
+import { createAccountInfo } from '#testing/app/app.js';
 import {
 	appealData,
 	lpaQuestionnaireDataIncompleteOutcome
 } from '#testing/app/fixtures/referencedata.js';
-import { createAccountInfo } from '#testing/app/app.js';
+import { areIdsDefinedAndUnique } from '#testing/lib/testMappers.js';
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import { isEqual } from 'lodash-es';
 import { initialiseAndMapAppealData } from '../data/appeal/mapper.js';
 import { initialiseAndMapLPAQData } from '../data/lpa-questionnaire/mapper.js';
-import { areIdsDefinedAndUnique } from '#testing/lib/testMappers.js';
 import { mapPagination } from '../index.js';
-import { mapRepresentationDocumentSummaryActionLink } from '#lib/representation-utilities.js';
-import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
-import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
-import { isEqual } from 'lodash-es';
 
 /** @typedef {import('../../../app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 
@@ -265,6 +265,106 @@ describe('mapRepresentationDocumentSummaryActionLink', () => {
 				}
 			);
 			expect(link).toBe('');
+		});
+	});
+
+	describe('LPA proof of evidence links', () => {
+		it('should return "Review" link for LPA proof of evidence when awaiting review', () => {
+			const link = mapRepresentationDocumentSummaryActionLink(
+				baseRoute,
+				'received',
+				APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
+				'lpa-proofs-evidence',
+				// @ts-ignore
+				{
+					originalUrl: baseRoute
+				}
+			);
+			expect(link).toBe(
+				`<a href="${baseRoute}/proof-of-evidence/lpa?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="review-lpa-proofs-evidence" class="govuk-link">Review<span class="govuk-visually-hidden"> LPA proof of evidence</span></a>`
+			);
+		});
+
+		it('should return "View" link for LPA proof of evidence when incomplete', () => {
+			const link = mapRepresentationDocumentSummaryActionLink(
+				baseRoute,
+				'received',
+				APPEAL_REPRESENTATION_STATUS.INCOMPLETE,
+				'lpa-proofs-evidence',
+				// @ts-ignore
+				{
+					originalUrl: baseRoute
+				}
+			);
+			expect(link).toBe(
+				`<a href="${baseRoute}/proof-of-evidence/lpa?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="view-lpa-proofs-evidence" class="govuk-link">View<span class="govuk-visually-hidden"> LPA proof of evidence</span></a>`
+			);
+		});
+
+		it('should return "View" link for LPA proof of evidence when valid', () => {
+			const link = mapRepresentationDocumentSummaryActionLink(
+				baseRoute,
+				'received',
+				APPEAL_REPRESENTATION_STATUS.VALID,
+				'lpa-proofs-evidence',
+				// @ts-ignore
+				{
+					originalUrl: baseRoute
+				}
+			);
+			expect(link).toBe(
+				`<a href="${baseRoute}/proof-of-evidence/lpa?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="view-lpa-proofs-evidence" class="govuk-link">View<span class="govuk-visually-hidden"> LPA proof of evidence</span></a>`
+			);
+		});
+	});
+
+	describe('Appellant proof of evidence links', () => {
+		it('should return "Review" link for appellant proof of evidence when awaiting review', () => {
+			const link = mapRepresentationDocumentSummaryActionLink(
+				baseRoute,
+				'received',
+				APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
+				'appellant-proofs-evidence',
+				// @ts-ignore
+				{
+					originalUrl: baseRoute
+				}
+			);
+			expect(link).toBe(
+				`<a href="${baseRoute}/proof-of-evidence/appellant?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="review-appellant-proofs-evidence" class="govuk-link">Review<span class="govuk-visually-hidden"> Appellant proof of evidence</span></a>`
+			);
+		});
+
+		it('should return "View" link for appellant proof of evidence when incomplete', () => {
+			const link = mapRepresentationDocumentSummaryActionLink(
+				baseRoute,
+				'received',
+				APPEAL_REPRESENTATION_STATUS.INCOMPLETE,
+				'appellant-proofs-evidence',
+				// @ts-ignore
+				{
+					originalUrl: baseRoute
+				}
+			);
+			expect(link).toBe(
+				`<a href="${baseRoute}/proof-of-evidence/appellant?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="view-appellant-proofs-evidence" class="govuk-link">View<span class="govuk-visually-hidden"> Appellant proof of evidence</span></a>`
+			);
+		});
+
+		it('should return "View" link for appellant proof of evidence when valid', () => {
+			const link = mapRepresentationDocumentSummaryActionLink(
+				baseRoute,
+				'received',
+				APPEAL_REPRESENTATION_STATUS.VALID,
+				'appellant-proofs-evidence',
+				// @ts-ignore
+				{
+					originalUrl: baseRoute
+				}
+			);
+			expect(link).toBe(
+				`<a href="${baseRoute}/proof-of-evidence/appellant?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="view-appellant-proofs-evidence" class="govuk-link">View<span class="govuk-visually-hidden"> Appellant proof of evidence</span></a>`
+			);
 		});
 	});
 });

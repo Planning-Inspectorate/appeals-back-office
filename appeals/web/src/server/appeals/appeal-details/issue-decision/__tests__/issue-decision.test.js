@@ -1,8 +1,4 @@
 // @ts-nocheck
-import { parseHtml } from '@pins/platform';
-import nock from 'nock';
-import supertest from 'supertest';
-import { createTestEnvironment } from '#testing/index.js';
 import {
 	appealData,
 	documentFileInfo,
@@ -11,13 +7,17 @@ import {
 	fileUploadInfo,
 	inspectorDecisionData
 } from '#testing/appeals/appeals.js';
-import { cloneDeep } from 'lodash-es';
+import { createTestEnvironment } from '#testing/index.js';
 import {
 	CASE_OUTCOME_ALLOWED,
 	CASE_OUTCOME_DISMISSED,
 	CASE_OUTCOME_INVALID,
 	CASE_OUTCOME_SPLIT_DECISION
 } from '@pins/appeals/constants/support.js';
+import { parseHtml } from '@pins/platform';
+
+import nock from 'nock';
+import supertest from 'supertest';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -106,7 +106,7 @@ describe('issue-decision', () => {
 			let linkedAppealData;
 
 			beforeEach(() => {
-				linkedAppealData = cloneDeep(appealData);
+				linkedAppealData = structuredClone(appealData);
 				linkedAppealData.appealId = 3;
 				linkedAppealData.isParentAppeal = true;
 				linkedAppealData.linkedAppeals = [{ appealId: 4, appealReference: '351066' }];
@@ -189,6 +189,20 @@ describe('issue-decision', () => {
 			);
 		});
 
+		it('should require a reason if the decision is "Invalid"', async () => {
+			const response = await request
+				.post(`${baseUrl}/1/issue-decision/decision`)
+				.send({ decision: CASE_OUTCOME_INVALID, invalidReason: '' })
+				.expect(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Enter a reason</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<p id="invalid-reason-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a reason</p>'
+			);
+		});
+
 		it(`should redirect to the decision letter upload page, if the decision is 'Allowed'`, async () => {
 			const response = await request
 				.post(`${baseUrl}/1/issue-decision/decision`)
@@ -260,7 +274,7 @@ describe('issue-decision', () => {
 		let issueDecisionAppealData;
 
 		beforeEach(() => {
-			issueDecisionAppealData = cloneDeep(appealData);
+			issueDecisionAppealData = structuredClone(appealData);
 			issueDecisionAppealData.costs.appellantApplicationFolder.documents = [{}];
 			issueDecisionAppealData.costs.lpaApplicationFolder.documents = [{}];
 			nock.cleanAll();
@@ -422,7 +436,7 @@ describe('issue-decision', () => {
 		let issueDecisionAppealData;
 
 		beforeEach(() => {
-			issueDecisionAppealData = cloneDeep(appealData);
+			issueDecisionAppealData = structuredClone(appealData);
 			issueDecisionAppealData.costs.lpaApplicationFolder.documents = [{}];
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
@@ -641,7 +655,7 @@ describe('issue-decision', () => {
 		let issueDecisionAppealData;
 
 		beforeEach(() => {
-			issueDecisionAppealData = cloneDeep(appealData);
+			issueDecisionAppealData = structuredClone(appealData);
 			issueDecisionAppealData.costs.appellantApplicationFolder.documents = [{}];
 			issueDecisionAppealData.costs.lpaApplicationFolder.documents = [{}];
 			nock.cleanAll();
@@ -951,7 +965,7 @@ describe('issue-decision', () => {
 		let issueDecisionAppealData;
 
 		beforeEach(() => {
-			issueDecisionAppealData = cloneDeep(appealData);
+			issueDecisionAppealData = structuredClone(appealData);
 			issueDecisionAppealData.costs.lpaApplicationFolder.documents = [{}];
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
@@ -1015,7 +1029,7 @@ describe('issue-decision', () => {
 		let issueDecisionAppealData;
 
 		beforeEach(async () => {
-			issueDecisionAppealData = cloneDeep(appealData);
+			issueDecisionAppealData = structuredClone(appealData);
 			issueDecisionAppealData.costs.appellantApplicationFolder.documents = [{}];
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
@@ -1154,7 +1168,7 @@ describe('issue-decision', () => {
 		let issueDecisionAppealData;
 
 		beforeEach(() => {
-			issueDecisionAppealData = cloneDeep(appealData);
+			issueDecisionAppealData = structuredClone(appealData);
 			issueDecisionAppealData.costs.lpaApplicationFolder.documents = [{}];
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
@@ -1218,7 +1232,7 @@ describe('issue-decision', () => {
 		let issueDecisionAppealData;
 
 		beforeEach(async () => {
-			issueDecisionAppealData = cloneDeep(appealData);
+			issueDecisionAppealData = structuredClone(appealData);
 			issueDecisionAppealData.costs.lpaApplicationFolder.documents = [{}];
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
@@ -1332,7 +1346,7 @@ describe('issue-decision', () => {
 		let issueDecisionAppealData;
 
 		beforeEach(async () => {
-			issueDecisionAppealData = cloneDeep(appealData);
+			issueDecisionAppealData = structuredClone(appealData);
 			issueDecisionAppealData.decision.outcome = 'allowed';
 			issueDecisionAppealData.costs.appellantDecisionFolder.documents = [
 				{
@@ -1415,7 +1429,7 @@ describe('issue-decision', () => {
 		});
 
 		it('should render the view decision page for a linked lead appeal', async () => {
-			const issueDecisionLinkedLeadAppealData = cloneDeep(issueDecisionAppealData);
+			const issueDecisionLinkedLeadAppealData = structuredClone(issueDecisionAppealData);
 			issueDecisionLinkedLeadAppealData.isParentAppeal = true;
 			issueDecisionLinkedLeadAppealData.linkedAppeals = [
 				{ isChildAppeal: true, appealReference: 260153, inspectorDecision: 'Split decision' }
@@ -1451,7 +1465,7 @@ describe('issue-decision', () => {
 		});
 
 		it('should render the view decision page for a linked child appeal', async () => {
-			const issueDecisionLinkedChildAppealData = cloneDeep(appealData);
+			const issueDecisionLinkedChildAppealData = structuredClone(appealData);
 			issueDecisionLinkedChildAppealData.isChildAppeal = true;
 			issueDecisionLinkedChildAppealData.linkedAppeals = [{ isParentAppeal: true, appealId: 2 }];
 			nock('http://test/')

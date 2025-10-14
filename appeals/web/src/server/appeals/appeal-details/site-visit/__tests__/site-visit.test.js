@@ -1,17 +1,74 @@
 // @ts-nocheck
+import usersService from '#appeals/appeal-users/users-service.js';
+import {
+	activeDirectoryUsersData,
+	appealData,
+	siteVisitData
+} from '#testing/app/fixtures/referencedata.js';
+import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
-import { createTestEnvironment } from '#testing/index.js';
-import {
-	siteVisitData,
-	appealData,
-	activeDirectoryUsersData
-} from '#testing/app/fixtures/referencedata.js';
 import { getSiteVisitSuccessBannerTypeAndChangeType } from '../site-visit.mapper.js';
-import usersService from '#appeals/appeal-users/users-service.js';
-import { jest } from '@jest/globals';
+const template = {
+	renderedHtml: [
+		'We have cancelled the site visit.',
+		'',
+		'# Appeal details',
+		'',
+		'^Appeal reference number: ABC45678',
+		'Address: 10, Test Street',
+		'Planning application reference: 12345XYZ',
+		'',
+		'# What happens next',
+		'',
+		'We will contact you when we set up a new site visit.',
+		'',
+		'The Planning Inspectorate',
+		'caseofficers@planninginspectorate.gov.uk'
+	].join('\n')
+};
+const appellantEmailTemplate = {
+	renderedHtml: [
+		`<div class="pins-notify-preview-border">`,
+		`<h2>Appeal details</h2>`,
+		`<div class="govuk-inset-text">`,
+		`  Appeal reference number: 134526 <br>`,
+		`  Address: 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom<br>`,
+		`  Planning application reference: 48269/APP/2021/1482<br>`,
+		`</div>`,
+		`<h2>Appeal withdrawn</h2>`,
+		`We have withdrawn the appeal following your request on 01 January 2025.<br><br>`,
+		`<h2>What happens next</h2>`,
+		`We have closed the appeal and cancelled the site visit.<br><br>`,
+		`<h2>Feedback</h2>`,
+		`We welcome your feedback on our appeals process. Tell us on this short <a href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u" class="govuk-link">feedback form</a>.<br><br>`,
+		`The Planning Inspectorate<br><br>`,
+		`caseofficers@planninginspectorate.gov.uk<br><br>`,
+		`</div>`
+	].join('\n')
+};
 
+const lpaEmailTemplate = {
+	renderedHtml: [
+		`<div class="pins-notify-preview-border">`,
+		`We have withdrawn the appeal after the appellant's request.<br><br>`,
+		`<h2>Appeal details</h2>`,
+		`<div class="govuk-inset-text">`,
+		`  Appeal reference number: 234567 <br>`,
+		`  Address: 98 The Avenue, Leftfield, Maidstone, Kent, MD21 5YY, United Kingdom<br>`,
+		`  Planning application reference: 48269/APP/2021/1483<br>`,
+		`</div>`,
+		`<h2>What happens next</h2>`,
+		`We have closed the appeal and cancelled the site visit.<br><br>`,
+		`<h2>Feedback</h2>`,
+		`We welcome your feedback on our appeals process. Tell us on this short <a href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u" class="govuk-link">feedback form</a>.<br><br>`,
+		`The Planning Inspectorate<br><br>`,
+		`caseofficers@planninginspectorate.gov.uk<br><br>`,
+		`</div>`
+	].join('\n')
+};
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
  */
@@ -340,7 +397,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a real start time</a>');
+			expect(errorSummaryHtml).toContain('Start time hour must be 23 or less</a>');
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit start time minute is invalid', async () => {
@@ -366,7 +423,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a real start time</a>');
+			expect(errorSummaryHtml).toContain('Start time minute must be 59 or less</a>');
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit end time hour is invalid', async () => {
@@ -392,7 +449,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a real end time</a>');
+			expect(errorSummaryHtml).toContain('End time hour must be 23 or less</a>');
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit end time minute is invalid', async () => {
@@ -418,7 +475,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a real end time</a>');
+			expect(errorSummaryHtml).toContain('End time minute must be 59 or less</a>');
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit start time is not before end time', async () => {
@@ -914,7 +971,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a real start time</a>');
+			expect(errorSummaryHtml).toContain('Start time hour must be 23 or less</a>');
 		});
 
 		it('should re-render the manage visit page with the expected error message if visit start time minute is invalid', async () => {
@@ -940,7 +997,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a real start time</a>');
+			expect(errorSummaryHtml).toContain('Start time minute must be 59 or less</a>');
 		});
 
 		it('should re-render the manage visit page with the expected error message if visit end time hour is invalid', async () => {
@@ -966,7 +1023,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a real end time</a>');
+			expect(errorSummaryHtml).toContain('End time hour must be 23 or less</a>');
 		});
 
 		it('should re-render the manage visit page with the expected error message if visit end time minute is invalid', async () => {
@@ -992,7 +1049,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a real end time</a>');
+			expect(errorSummaryHtml).toContain('End time minute must be 59 or less</a>');
 		});
 
 		it('should re-render the manage visit page with the expected error message if visit start time is not before end time', async () => {
@@ -1158,6 +1215,47 @@ describe('site-visit', () => {
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 	});
+	describe('GET /site-visit/delete', () => {
+		it('should render the manage visit page', async () => {
+			nock('http://test/')
+				.post(`/appeals/notify-preview/site-visit-cancelled.content.md`)
+				.reply(200, template);
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
+			const response = await request.get(`${baseUrl}/1${siteVisitPath}/delete`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Confirm that you want to cancel the site visit</h1>');
+			expect(element.innerHTML).toContain('Preview email to appellant</span>');
+			expect(element.innerHTML).toContain('Preview email to LPA</span>');
+			expect(element.innerHTML).toContain('Cancel site visit</button>');
+			expect(element.innerHTML).toContain(
+				'href="/appeals-service/appeal-details/1">Keep site visit</a>'
+			);
+		});
+	});
+	describe('POST /site-visit/delete', () => {
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should delete site visit and redirect to appeal details screen', async () => {
+			nock('http://test/').delete('/appeals/1/site-visits/0').reply(200, {
+				siteVisitId: 1
+			});
+
+			let response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/delete`)
+				.send({ siteVisitId: 1 });
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+		});
+	});
 
 	describe('getSiteVisitSuccessBannerTypeAndChangeType', () => {
 		/** @type {WebAppeal} */
@@ -1239,6 +1337,170 @@ describe('site-visit', () => {
 			);
 			expect(result.bannerType).toBe('siteVisitNoChanges');
 			expect(result.changeType).toBe('unchanged');
+		});
+	});
+
+	describe('GET /site-visit/missed', () => {
+		it('should render the who missed the site visit page', async () => {
+			const response = await request.get(`${baseUrl}/1${siteVisitPath}/missed`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('- record missed site visit');
+			expect(element.innerHTML).toContain('Who missed the site visit?</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('id="who-missed-site-visit-radio"');
+			expect(unprettifiedElement.innerHTML).toContain('Appellant</label>');
+			expect(unprettifiedElement.innerHTML).toContain('id="who-missed-site-visit-radio-2"');
+			expect(unprettifiedElement.innerHTML).toContain('LPA</label>');
+			expect(unprettifiedElement.innerHTML).toContain('id="who-missed-site-visit-radio-3"');
+			expect(unprettifiedElement.innerHTML).toContain('Inspector</label>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+		});
+	});
+
+	describe('POST /site-visit/missed', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/1').reply(200, appealData);
+		});
+
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should re-render the who missed the site visit page with the expected error messages if required field is not populated', async () => {
+			const response = await request.post(`${baseUrl}/1${siteVisitPath}/missed`).send({
+				whoMissedSiteVisitRadio: ''
+			});
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			expect(element.innerHTML).toContain('Who missed the site visit?</h1>');
+			expect(element.innerHTML).toContain('who-missed-site-visit-radio-error');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Select who missed the site visit</a>');
+		});
+
+		it('should redirect to the who missed site visit CYA page if appellant radio button was selected', async () => {
+			const response = await request.post(`${baseUrl}/1${siteVisitPath}/missed`).send({
+				whoMissedSiteVisitRadio: 'appellant'
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/site-visit/missed/check'
+			);
+		});
+
+		it('should redirect to the who missed site visit CYA page if lpa radio button was selected', async () => {
+			const response = await request.post(`${baseUrl}/1${siteVisitPath}/missed`).send({
+				whoMissedSiteVisitRadio: 'lpa'
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/site-visit/missed/check'
+			);
+		});
+
+		it('should redirect to the who missed site visit CYA page if inspector radio button was selected', async () => {
+			const response = await request.post(`${baseUrl}/1${siteVisitPath}/missed`).send({
+				whoMissedSiteVisitRadio: 'inspector'
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/site-visit/missed/check'
+			);
+		});
+	});
+
+	describe('GET /site-visit/missed/check', () => {
+		/**
+		 * @type {import("superagent").Response}
+		 */
+		let whoMissedSiteVisitResponse;
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
+			nock('http://test/')
+				.post(`/appeals/notify-preview/record-missed-site-visit-appellant.content.md`)
+				.reply(200, appellantEmailTemplate);
+			nock('http://test/')
+				.post(`/appeals/notify-preview/record-missed-site-visit-lpa.content.md`)
+				.reply(200, lpaEmailTemplate);
+		});
+		afterEach(nock.cleanAll);
+		it('should render the who missed the site visit page for inspector', async () => {
+			const whoMissedSiteVisitRadio = 'inspector';
+			whoMissedSiteVisitResponse = await request.post(`${baseUrl}/1${siteVisitPath}/missed`).send({
+				whoMissedSiteVisitRadio
+			});
+			expect(whoMissedSiteVisitResponse.statusCode).toBe(302);
+			const response = await request.get(`${baseUrl}/1${siteVisitPath}/missed/check`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Check details and record missed site visit</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Inspector</dd>');
+			expect(unprettifiedElement.innerHTML).toContain('Change who missed site visit</span></a>');
+			expect(unprettifiedElement.innerHTML).toContain('Record missed site visit</button>');
+		});
+
+		it('should render the who missed the site visit page for appellant', async () => {
+			const whoMissedSiteVisitRadio = 'appellant';
+			whoMissedSiteVisitResponse = await request.post(`${baseUrl}/1${siteVisitPath}/missed`).send({
+				whoMissedSiteVisitRadio
+			});
+			expect(whoMissedSiteVisitResponse.statusCode).toBe(302);
+
+			const response = await request.get(`${baseUrl}/1${siteVisitPath}/missed/check`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Check details and record missed site visit</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appellant</dd>');
+			expect(unprettifiedElement.innerHTML).toContain('Change who missed site visit</span></a>');
+			expect(unprettifiedElement.innerHTML).toContain('Record missed site visit</button>');
+		});
+
+		it('should render the who missed the site visit page for lpa', async () => {
+			const whoMissedSiteVisitRadio = 'lpa';
+			whoMissedSiteVisitResponse = await request.post(`${baseUrl}/1${siteVisitPath}/missed`).send({
+				whoMissedSiteVisitRadio
+			});
+			expect(whoMissedSiteVisitResponse.statusCode).toBe(302);
+			const response = await request.get(`${baseUrl}/1${siteVisitPath}/missed/check`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Check details and record missed site visit</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('LPA</dd>');
+			expect(unprettifiedElement.innerHTML).toContain('Change who missed site visit</span></a>');
+			expect(unprettifiedElement.innerHTML).toContain('Record missed site visit</button>');
 		});
 	});
 });

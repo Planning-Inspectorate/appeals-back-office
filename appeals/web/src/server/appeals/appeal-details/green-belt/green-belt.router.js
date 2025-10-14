@@ -1,6 +1,6 @@
+import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controllers from './green-belt.controller.js';
-import { asyncHandler } from '@pins/express';
 
 const router = createRouter({ mergeParams: true });
 

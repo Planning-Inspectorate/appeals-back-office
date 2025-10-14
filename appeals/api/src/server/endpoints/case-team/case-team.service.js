@@ -1,7 +1,12 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import appealRepository from '#repositories/appeal.repository.js';
-import { AUDIT_TRAIL_ASSIGNED_TEAM_UPDATED } from '@pins/appeals/constants/support.js';
+import { getAssignedTeam } from '#repositories/team.repository.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import {
+	AUDIT_TRAIL_ASSIGNED_TEAM_UPDATED,
+	CASE_RELATIONSHIP_LINKED
+} from '@pins/appeals/constants/support.js';
 
 /**
  *
@@ -18,8 +23,53 @@ export const setAssignedTeamId = async (appealId, assignedTeamId, azureAdUserId)
 	await createAuditTrail({
 		appealId: appealId,
 		azureAdUserId: azureAdUserId,
-		details: AUDIT_TRAIL_ASSIGNED_TEAM_UPDATED
+		details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_TEAM_UPDATED, [
+			assignedTeamId ? (await getAssignedTeam(assignedTeamId))?.name || 'unknown' : 'unassigned'
+		])
 	});
 	await broadcasters.broadcastAppeal(appealId);
+
 	return result;
+};
+
+/**
+ *
+ * @param {number} appealId
+ * @returns {Promise<string>}
+ */
+export const getTeamEmailFromAppealId = async (appealId) => {
+	const DEFAULT_EMAIL = 'caseofficers@planninginspectorate.gov.uk';
+
+	const appeal = await appealRepository.getAppealById(appealId);
+	const teamId = appeal?.assignedTeamId;
+	if (!teamId) return DEFAULT_EMAIL;
+
+	const team = await getAssignedTeam(teamId);
+	return team?.email || DEFAULT_EMAIL;
+};
+
+/**
+ *
+ * @param {number} appealId
+ * @param {number|null} assignedTeamId
+ * @param {string|undefined} azureAdUserId
+ * @returns
+ */
+export const setAssignedTeamIdForLinkedAppeals = async (
+	appealId,
+	assignedTeamId,
+	azureAdUserId
+) => {
+	const linkedAppeals = await appealRepository.getLinkedAppealsById(
+		appealId,
+		CASE_RELATIONSHIP_LINKED
+	);
+	if (linkedAppeals?.length) {
+		await Promise.all(
+			linkedAppeals.map((linkedAppeal) =>
+				// @ts-ignore
+				setAssignedTeamId(linkedAppeal.childId, assignedTeamId, azureAdUserId)
+			)
+		);
+	}
 };

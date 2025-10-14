@@ -6,9 +6,10 @@
  * code will the switching logic for you.
  */
 
-import { formatExtendedDeadline, formatReasons, formatSiteAddress } from './utils.js';
+import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { notifySend } from '#notify/notify-send.js';
 import { getDetailsForCommentResubmission } from '@pins/appeals/utils/notify.js';
+import { formatExtendedDeadline, formatReasons, formatSiteAddress } from './utils.js';
 
 /**
  * @typedef {object} ServiceArgs
@@ -51,7 +52,8 @@ export const ipCommentRejection = async ({
 			site_address: siteAddress,
 			reasons,
 			deadline_date: resubmissionDueDate,
-			resubmit_comment_to_fo: resubmitToFO
+			resubmit_comment_to_fo: resubmitToFO,
+			team_email_address: await getTeamEmailFromAppealId(appeal.id)
 		};
 
 		await notifySend({
@@ -88,7 +90,8 @@ export const appellantFinalCommentRejection = async ({
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
-			reasons
+			reasons,
+			team_email_address: await getTeamEmailFromAppealId(appeal.id)
 		}
 	});
 };
@@ -117,7 +120,8 @@ export const lpaFinalCommentRejection = async ({
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
-			reasons
+			reasons,
+			team_email_address: await getTeamEmailFromAppealId(appeal.id)
 		}
 	});
 };
@@ -150,7 +154,8 @@ export const lpaStatementIncomplete = async ({
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
 			deadline_date: extendedDeadline,
-			reasons
+			reasons,
+			team_email_address: await getTeamEmailFromAppealId(appeal.id)
 		}
 	});
 };

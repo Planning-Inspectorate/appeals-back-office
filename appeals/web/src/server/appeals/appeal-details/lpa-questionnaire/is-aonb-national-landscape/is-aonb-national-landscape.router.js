@@ -1,5 +1,5 @@
-import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import * as controllers from './is-aonb-national-landscape.controller.js';
 import { validateAONB } from './is-aonb-national-landscape.validator.js';
 

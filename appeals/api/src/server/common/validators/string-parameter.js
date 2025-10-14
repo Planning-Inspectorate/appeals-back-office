@@ -1,12 +1,12 @@
-import { body } from 'express-validator';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	ERROR_CANNOT_BE_EMPTY_STRING,
 	ERROR_MAX_LENGTH_CHARACTERS,
 	ERROR_MUST_BE_STRING,
-	LENGTH_300,
-	LENGTH_1000
+	LENGTH_1000,
+	LENGTH_300
 } from '@pins/appeals/constants/support.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { body } from 'express-validator';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */
 

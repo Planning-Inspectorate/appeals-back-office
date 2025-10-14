@@ -1,15 +1,15 @@
 // @ts-nocheck
-import { parseHtml } from '@pins/platform';
-import nock from 'nock';
-import supertest from 'supertest';
+import { mapActionLinksForAppeal } from '#appeals/personal-list/personal-list.mapper.js';
 import {
+	appealDataToGetRequiredActions,
 	assignedAppealsPage1,
 	assignedAppealsPage2,
-	appealDataToGetRequiredActions,
 	baseAppealDataToGetRequiredActions
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
-import { mapActionLinksForAppeal } from '#appeals/personal-list/personal-list.mapper.js';
+import { parseHtml } from '@pins/platform';
+import nock from 'nock';
+import supertest from 'supertest';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -22,7 +22,7 @@ describe('personal-list', () => {
 	describe('GET /', () => {
 		it('should render the first page of the personal list with the expected content and pagination', async () => {
 			nock('http://test/')
-				.get('/appeals/my-appeals?pageNumber=1&pageSize=5')
+				.get('/appeals/personal-list?pageNumber=1&pageSize=5')
 				.reply(200, assignedAppealsPage1);
 
 			const response = await request.get(`${baseUrl}${'?pageNumber=1&pageSize=5'}`);
@@ -62,7 +62,7 @@ describe('personal-list', () => {
 
 		it('should render the second page of the personal list with the expected content and pagination', async () => {
 			nock('http://test/')
-				.get('/appeals/my-appeals?pageNumber=2&pageSize=5')
+				.get('/appeals/personal-list?pageNumber=2&pageSize=5')
 				.reply(200, assignedAppealsPage2);
 
 			const response = await request.get(`${baseUrl}${'?pageNumber=2&pageSize=5'}`);
@@ -101,7 +101,7 @@ describe('personal-list', () => {
 
 		it('should render the second page of the personal list with applied filter, the expected content and pagination', async () => {
 			nock('http://test/')
-				.get('/appeals/my-appeals?pageNumber=2&pageSize=1&status=lpa_questionnaire')
+				.get('/appeals/personal-list?pageNumber=2&pageSize=1&status=lpa_questionnaire')
 				.reply(200, assignedAppealsPage2);
 
 			const response = await request.get(
@@ -142,7 +142,7 @@ describe('personal-list', () => {
 
 		it('should render the header with navigation containing links to the personal list (with active modifier class), national list, and sign out route', async () => {
 			nock('http://test/')
-				.get('/appeals/my-appeals?pageNumber=1&pageSize=30')
+				.get('/appeals/personal-list?pageNumber=1&pageSize=30')
 				.reply(200, assignedAppealsPage1);
 
 			const response = await request.get(baseUrl);
@@ -164,7 +164,7 @@ describe('personal-list', () => {
 
 		it('should render a lead status tag in the lead or child column, for appeals linked as a parent', async () => {
 			nock('http://test/')
-				.get('/appeals/my-appeals?pageNumber=1&pageSize=30')
+				.get('/appeals/personal-list?pageNumber=1&pageSize=30')
 				.reply(200, assignedAppealsPage1);
 
 			const response = await request.get(`${baseUrl}${'?pageNumber=1&pageSize=30'}`);
@@ -182,7 +182,7 @@ describe('personal-list', () => {
 
 		it('should render a child status tag in the lead or child column, for appeals linked as a child', async () => {
 			nock('http://test/')
-				.get('/appeals/my-appeals?pageNumber=1&pageSize=30')
+				.get('/appeals/personal-list?pageNumber=1&pageSize=30')
 				.reply(200, assignedAppealsPage1);
 
 			const response = await request.get(`${baseUrl}${'?pageNumber=1&pageSize=30'}`);
@@ -200,7 +200,7 @@ describe('personal-list', () => {
 
 		it('should render an empty cell in the lead or child column, for appeals with no linked appeals (neither parent nor child)', async () => {
 			nock('http://test/')
-				.get('/appeals/my-appeals?pageNumber=1&pageSize=30')
+				.get('/appeals/personal-list?pageNumber=1&pageSize=30')
 				.reply(200, assignedAppealsPage1);
 
 			const response = await request.get(`${baseUrl}${'?pageNumber=1&pageSize=30'}`);
@@ -218,7 +218,7 @@ describe('personal-list', () => {
 
 		it('should render a message when there are no cases assigned to the user', async () => {
 			nock('http://test/')
-				.get('/appeals/my-appeals?pageNumber=1&pageSize=5')
+				.get('/appeals/personal-list?pageNumber=1&pageSize=5')
 				.reply(200, { items: [], totalItems: 0, page: 1, totalPages: 1, pageSize: 5 });
 
 			const response = await request.get(`${baseUrl}?pageNumber=1&pageSize=5`);
@@ -235,10 +235,10 @@ describe('personal-list', () => {
 		const lpaQuestionnaireId = 1;
 		const testCases = [
 			{
-				name: 'Update Horizon reference',
+				name: 'Mark as transferred',
 				requiredAction: 'addHorizonReference',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference?backUrl=%2Fappeals-service%2Fpersonal-list">Update Horizon reference<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference?backUrl=%2Fappeals-service%2Fpersonal-list">Mark as transferred<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				}
 			},
 			{
@@ -285,10 +285,11 @@ describe('personal-list', () => {
 				}
 			},
 			{
-				name: 'Awaiting LPA update',
+				name: 'Update questionnaire',
 				requiredAction: 'awaitingLpaUpdate',
 				expectedHtml: {
-					caseOfficer: 'Awaiting LPA update'
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}?backUrl=%2Fappeals-service%2Fpersonal-list">Update questionnaire<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`,
+					nonCaseOfficer: 'Update questionnaire'
 				}
 			},
 			{
@@ -393,8 +394,15 @@ describe('personal-list', () => {
 				}
 			},
 			{
-				name: 'Add number of residential units',
-				requiredAction: 'addResidencesNetChange',
+				name: 'Add number of residential units S78',
+				requiredAction: 'addResidencesNetChangeS78',
+				expectedHtml: {
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/residential-units/new?backUrl=%2Fappeals-service%2Fpersonal-list">Add number of residential units<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+				}
+			},
+			{
+				name: 'Add number of residential units S20',
+				requiredAction: 'addResidencesNetChangeS20',
 				expectedHtml: {
 					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/residential-units/new?backUrl=%2Fappeals-service%2Fpersonal-list">Add number of residential units<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				}

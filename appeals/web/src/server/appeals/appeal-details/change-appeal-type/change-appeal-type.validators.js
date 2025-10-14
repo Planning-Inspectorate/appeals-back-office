@@ -1,12 +1,11 @@
+import {
+	createDateInputDateBusinessDayValidator,
+	createDateInputDateInFutureValidator,
+	createDateInputDateValidityValidator,
+	createDateInputFieldsValidator
+} from '#lib/validators/date-input.validator.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
-import {
-	createDateInputFieldsValidator,
-	createDateInputDateValidityValidator,
-	createDateInputDateInFutureValidator,
-	createDateInputDateBusinessDayValidator
-} from '#lib/validators/date-input.validator.js';
-import { checkAppealReferenceExistsInHorizon } from './change-appeal-type.service.js';
 import { changeAppealTypeDateField } from './change-appeal-types.constants.js';
 
 export const validateAppealType = createValidator(
@@ -41,31 +40,14 @@ export const validateChangeAppealFinalDateIsBusinessDay =
 	createDateInputDateBusinessDayValidator(changeAppealTypeDateField);
 
 export const validateHorizonReference = createValidator(
-	body()
-		.custom(async (bodyFields, { req }) => {
-			if (!('horizon-reference' in bodyFields) || bodyFields['horizon-reference'].length === 0) {
-				return Promise.reject();
-			}
-
-			try {
-				const horizonReferenceValidationResult = await checkAppealReferenceExistsInHorizon(
-					req.apiClient,
-					bodyFields['horizon-reference']
-				);
-
-				if (horizonReferenceValidationResult.caseFound === false) {
-					return Promise.reject();
-				}
-
-				return horizonReferenceValidationResult.caseFound;
-			} catch (/** @type {any} */ error) {
-				if (error.response.statusCode === 500) {
-					req.body.problemWithHorizon = true;
-					return true; // avoids failing validation chain (scenario where Horizon is down is handled by rendering a special error page instead of a validation error)
-				}
-			}
-
-			return Promise.reject();
-		})
-		.withMessage('Enter a valid Horizon appeal reference')
+	body('horizon-reference')
+		.trim()
+		.notEmpty()
+		.withMessage('Enter a reference number')
+		.bail()
+		.isNumeric({ no_symbols: true })
+		.bail()
+		.withMessage('Reference number must only include numbers')
+		.isLength({ min: 7, max: 7 })
+		.withMessage('Reference number must be 7 characters')
 );

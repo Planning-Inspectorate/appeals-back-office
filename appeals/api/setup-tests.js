@@ -1,23 +1,29 @@
 // @ts-nocheck
-import { jest } from '@jest/globals';
 import config from '#config/config.js';
-import { NODE_ENV_PRODUCTION } from '@pins/appeals/constants/support.js';
 import notify from '#notify/notify-send.js';
+import { jest } from '@jest/globals';
+import { NODE_ENV_PRODUCTION } from '@pins/appeals/constants/support.js';
 
 const mockValidateBlob = jest.fn().mockResolvedValue(true);
 const mockRepGetById = jest.fn().mockResolvedValue({});
 const mockRepUpdateById = jest.fn().mockResolvedValue({});
 const mockRepGroupBy = jest.fn().mockResolvedValue([]);
-const mockRepFindMany = jest.fn().mockResolvedValue({});
+const mockRepFindMany = jest.fn().mockResolvedValue([]);
 const mockRepUpdateMany = jest.fn().mockResolvedValue({});
+const mockAppealRelationshipDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipAdd = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipRemove = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipFindMany = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipFindFirst = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipCreateMany = jest.fn().mockResolvedValue({});
 const mockAppealDecision = jest.fn().mockResolvedValue({});
+const mockAppealDecisionDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppealFindUnique = jest.fn().mockResolvedValue({});
 const mockAppealCreate = jest.fn().mockResolvedValue({});
+const mockAppealDeleteMany = jest.fn().mockResolvedValue({});
+const mockAppealNotificationDeleteMany = jest.fn().mockResolvedValue({});
+const mocklPAQuestionnaireDeleteMany = jest.fn().mockResolvedValue({});
+const mocklPAQuestionnaireFindMany = jest.fn().mockResolvedValue([]);
 const mocklPAQuestionnaireCreate = jest.fn().mockResolvedValue({});
 const mocklPAQuestionnaireUpdate = jest.fn().mockResolvedValue({});
 const mockAppealStatusFindMany = jest.fn().mockResolvedValue([]);
@@ -27,34 +33,40 @@ const mockAppealStatusFindFirst = jest.fn().mockResolvedValue({});
 const mockAppealStatusDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppealStatusUpdate = jest.fn().mockResolvedValue({});
 const mockAppealUpdate = jest.fn().mockResolvedValue({});
+const mockAppealUpdateMany = jest.fn().mockResolvedValue({});
 const mockAppealStatusCreateMany = jest.fn().mockResolvedValue({});
-const mockAppealFindMany = jest.fn().mockResolvedValue({});
+const mockAppealFindMany = jest.fn().mockResolvedValue([]);
 const mockAppealCount = jest.fn().mockResolvedValue(0);
 const mockAppealTimetableUpsert = jest.fn().mockResolvedValue(0);
 const mockAppealTimetableUpdate = jest.fn().mockResolvedValue(0);
+const mockAppealTimetableDeleteMany = jest.fn().mockResolvedValue({});
 const mockFolderCreate = jest.fn().mockResolvedValue({});
 const mockFolderUpdateMany = jest.fn().mockResolvedValue({});
 const mockDocumentFindUnique = jest.fn().mockResolvedValue({});
 const mockDocumentUpdate = jest.fn().mockResolvedValue({});
+const mockDocumentUpdateMany = jest.fn().mockResolvedValue({});
 const mockFolderFindUnique = jest.fn().mockResolvedValue({});
 const mockFolderFindFirst = jest.fn().mockResolvedValue({});
 const mockDocumentUpsert = jest.fn().mockResolvedValue({});
 const mockFolderFindMany = jest.fn().mockResolvedValue([]);
-const mockDocumentFindMany = jest.fn().mockResolvedValue({});
+const mockDocumentFindMany = jest.fn().mockResolvedValue([]);
 const mockDocumentCount = jest.fn().mockResolvedValue({});
 const mockDocumentFindFirst = jest.fn().mockResolvedValue({});
 const mockDocumentDelete = jest.fn().mockResolvedValue({});
+const mockDocumentDeleteMany = jest.fn().mockResolvedValue({});
 const mockDocumentCreate = jest.fn().mockResolvedValue({});
 const mockDocumentCreateMany = jest.fn().mockResolvedValue({});
 const mockDocumentVersionCreate = jest.fn().mockResolvedValue({});
 const mockDocumentVersionCreateMany = jest.fn().mockResolvedValue({});
 const mockDocumentVersionFindMany = jest.fn().mockResolvedValue({});
+const mockDocumentVersionDeleteMany = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataFindFirst = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataFindUnique = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataUpsert = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataUpdate = jest.fn().mockResolvedValue({});
 const mockDocumentAvScanFindFirst = jest.fn().mockResolvedValue({});
 const mockDocumentAvScanUpsert = jest.fn().mockResolvedValue({});
+const mockDocumentVersionAvScanDeleteMany = jest.fn().mockResolvedValue({});
 const mockAddressCreate = jest.fn().mockResolvedValue({});
 const mockAddressDelete = jest.fn().mockResolvedValue({});
 const mockAddressUpdate = jest.fn().mockResolvedValue({});
@@ -62,11 +74,14 @@ const mockAppellantCaseIncompleteReasonFindMany = jest.fn().mockResolvedValue({}
 const mockAppellantCaseIncompleteReasonsSelectedDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseIncompleteReasonsSelectedCreateMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseInvalidReasonFindMany = jest.fn().mockResolvedValue({});
+const mockAppellantCaseInvalidReasonFindUnique = jest.fn().mockResolvedValue({});
 const mockAppellantCaseInvalidReasonsSelectedDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseInvalidReasonsSelectedCreateMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseValidationOutcomeFindMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseValidationOutcomeFindUnique = jest.fn().mockResolvedValue({});
 const mockAppellantCaseUpdate = jest.fn().mockResolvedValue({});
+const mockAppellantCaseFindMany = jest.fn().mockResolvedValue([]);
+const mockAppellantCaseDeleteMany = jest.fn().mockResolvedValue({});
 const mockLPAQuestionnaireValidationOutcomeFindMany = jest.fn().mockResolvedValue({});
 const mockLPAQuestionnaireValidationOutcomeFindUnique = jest.fn().mockResolvedValue({});
 const mockLPAQuestionnaireIncompleteReasonFindUnique = jest.fn().mockResolvedValue({});
@@ -74,34 +89,45 @@ const mockLPAQuestionnaireIncompleteReasonFindMany = jest.fn().mockResolvedValue
 const mockLPAQuestionnaireIncompleteReasonsSelectedDeleteMany = jest.fn().mockResolvedValue({});
 const mockLPAQuestionnaireIncompleteReasonsSelectedCreateMany = jest.fn().mockResolvedValue({});
 const mockLPAQuestionnaireIncompleteReasonsSelectedUpdate = jest.fn().mockResolvedValue({});
+const mockLPAQuestionnaireIncompleteReasonTextDeleteMany = jest.fn().mockResolvedValue({});
 const mockSiteVisitCreate = jest.fn().mockResolvedValue({});
 const mockSiteVisitUpdate = jest.fn().mockResolvedValue({});
 const mockSiteVisitFindUnique = jest.fn().mockResolvedValue({});
+const mockSiteVisitDelete = jest.fn().mockResolvedValue({});
+const mockSiteVisitDeleteMany = jest.fn().mockResolvedValue({});
 const mockHearingCreate = jest.fn().mockResolvedValue({});
 const mockHearingUpdate = jest.fn().mockResolvedValue({});
 const mockHearingFindUnique = jest.fn().mockResolvedValue({});
 const mockHearingDelete = jest.fn().mockResolvedValue({});
+const mockHearingDeleteMany = jest.fn().mockResolvedValue({});
 const mockHearingEstimateCreate = jest.fn().mockResolvedValue({});
 const mockHearingEstimateUpdate = jest.fn().mockResolvedValue({});
 const mockHearingEstimateFindUnique = jest.fn().mockResolvedValue({});
 const mockHearingEstimateDelete = jest.fn().mockResolvedValue({});
+const mockHearingEstimateDeleteMany = jest.fn().mockResolvedValue({});
 const mockInquiryCreate = jest.fn().mockResolvedValue({});
 const mockInquiryUpdate = jest.fn().mockResolvedValue({});
 const mockInquiryFindUnique = jest.fn().mockResolvedValue({});
 const mockInquiryDelete = jest.fn().mockResolvedValue({});
+const mockInquiryDeleteMany = jest.fn().mockResolvedValue({});
 const mockInquiryEstimateCreate = jest.fn().mockResolvedValue({});
 const mockInquiryEstimateUpdate = jest.fn().mockResolvedValue({});
 const mockInquiryEstimateFindUnique = jest.fn().mockResolvedValue({});
 const mockInquiryEstimateDelete = jest.fn().mockResolvedValue({});
+const mockInquiryEstimateDeleteMany = jest.fn().mockResolvedValue({});
 const mockSiteVisitTypeFindUnique = jest.fn().mockResolvedValue({});
 const mockSiteVisitTypeFindMany = jest.fn().mockResolvedValue({});
 const mockSpecialismsFindUnique = jest.fn().mockResolvedValue({});
+const mockSpecialismsDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppealAllocationUpsert = jest.fn().mockResolvedValue({});
+const mockAppealAllocationDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppealSpecialismDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppealSpecialismCreateMany = jest.fn().mockResolvedValue({});
 const mockKnowledgeOfOtherLandownersFindMany = jest.fn().mockResolvedValue({});
 const mockLPANotificationMethodsFindMany = jest.fn().mockResolvedValue({});
+const mockLPANotificationMethodsSelectedDeleteMany = jest.fn().mockResolvedValue({});
 const mockLPADesignatedSitesFindMany = jest.fn().mockResolvedValue({});
+const mockLPADesignatedSitesSelectedDeleteMany = jest.fn().mockResolvedValue({});
 const mockProcedureTypeFindMany = jest.fn().mockResolvedValue({});
 const mockAppellantUpdate = jest.fn().mockResolvedValue({});
 const mockUserFindMany = jest.fn().mockResolvedValue({});
@@ -110,24 +136,32 @@ const mockAppellantCaseIncompleteReasonTextDeleteMany = jest.fn().mockResolvedVa
 const mockAppellantCaseIncompleteReasonTextCreateMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseInvalidReasonTextDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseInvalidReasonTextCreateMany = jest.fn().mockResolvedValue({});
-const mockLPAQuestionnaireIncompleteReasonTextDeleteMany = jest.fn().mockResolvedValue({});
 const mockLPAQuestionnaireIncompleteReasonTextCreateMany = jest.fn().mockResolvedValue({});
 const mockDocumentRedactionStatusFindMany = jest.fn().mockResolvedValue({});
 const mockAuditTrailFindMany = jest.fn().mockResolvedValue({});
 const mockAuditTrailCreate = jest.fn().mockResolvedValue({});
+const mockAuditTrailDeleteMany = jest.fn().mockResolvedValue({});
 const mockDocumentVersionAuditCreate = jest.fn().mockResolvedValue({});
+const mockDocumentVersionAuditDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppealTypes = jest.fn().mockResolvedValue({});
 const mockNeighbouringSites = jest.fn().mockResolvedValue({});
+const mockNeighbouringSitesDeleteMany = jest.fn().mockResolvedValue({});
 const mockListedBuildingSelected = jest.fn().mockResolvedValue({});
+const mockListedBuildingSelectedDeleteMany = jest.fn().mockResolvedValue({});
 const mockServiceUserUpdate = jest.fn().mockResolvedValue({});
 const mockServiceUserDelete = jest.fn().mockResolvedValue({});
 const mockServiceUserFindUnique = jest.fn().mockResolvedValue({});
 const mockServiceUserCreate = jest.fn().mockResolvedValue({});
+const mockCaseNotesDeleteMany = jest.fn().mockResolvedValue({});
 const mockCaseNotesFindMany = jest.fn().mockResolvedValue({});
 const mockCaseNotesFindUnique = jest.fn().mockResolvedValue({});
 const mockCaseNotesCreate = jest.fn().mockResolvedValue({});
 const mockRepresentationRejectionReasonFindMany = jest.fn().mockResolvedValue({});
+const mockRepresentationRejectionReasonsSelectedDeleteMany = jest.fn().mockResolvedValue({});
+const mockRepresentationRejectionReasonTextDeleteMany = jest.fn().mockResolvedValue({});
 const mockRepresentationCreate = jest.fn().mockResolvedValue({});
+const mockRepresentationDeleteMany = jest.fn().mockResolvedValue({});
+const mockRepresentationAttachmentDeleteMany = jest.fn().mockResolvedValue({});
 const mockRepresentationAttachmentCreateMany = jest.fn().mockResolvedValue({});
 const mockRepresentationCount = jest.fn().mockResolvedValue({});
 const mockLpaFindMany = jest.fn().mockResolvedValue({});
@@ -136,6 +170,10 @@ const mockTeamFindUnique = jest.fn().mockResolvedValue({});
 const mockTeamFindFirst = jest.fn().mockResolvedValue({});
 const mockTeamFindMany = jest.fn().mockResolvedValue({});
 const mockBlobStorageCopyFile = jest.fn().mockResolvedValue({});
+const mockPersonalListUpsert = jest.fn().mockResolvedValue({});
+const mockPersonalListCount = jest.fn().mockResolvedValue({});
+const mockPersonalListFindMany = jest.fn().mockResolvedValue({});
+const mockPersonalListDeleteMany = jest.fn().mockResolvedValue({});
 
 const mockNotifySend = jest.fn().mockImplementation(async (params) => {
 	const { doNotMockNotifySend = false, ...options } = params || {};
@@ -155,13 +193,15 @@ class MockPrismaClient {
 			updateMany: mockRepUpdateMany,
 			groupBy: mockRepGroupBy,
 			create: mockRepresentationCreate,
-			count: mockRepresentationCount
+			count: mockRepresentationCount,
+			deleteMany: mockRepresentationDeleteMany
 		};
 	}
 	get representationAttachment() {
 		return {
 			create: mockRepresentationCreate,
-			createMany: mockRepresentationAttachmentCreateMany
+			createMany: mockRepresentationAttachmentCreateMany,
+			deleteMany: mockRepresentationAttachmentDeleteMany
 		};
 	}
 
@@ -169,7 +209,8 @@ class MockPrismaClient {
 		return {
 			findMany: mockCaseNotesFindMany,
 			findUnique: mockCaseNotesFindUnique,
-			create: mockCaseNotesCreate
+			create: mockCaseNotesCreate,
+			deleteMany: mockCaseNotesDeleteMany
 		};
 	}
 
@@ -187,14 +228,17 @@ class MockPrismaClient {
 			update: mockAppealUpdate,
 			findMany: mockAppealFindMany,
 			count: mockAppealCount,
-			create: mockAppealCreate
+			create: mockAppealCreate,
+			deleteMany: mockAppealDeleteMany,
+			updateMany: mockAppealUpdateMany
 		};
 	}
 
 	get appealNotification() {
 		return {
 			findUnique: mockAppealFindUnique,
-			createMany: mockAppealCreate
+			createMany: mockAppealCreate,
+			deleteMany: mockAppealNotificationDeleteMany
 		};
 	}
 
@@ -204,7 +248,8 @@ class MockPrismaClient {
 			findFirst: mockAppealRelationshipFindFirst,
 			delete: mockAppealRelationshipRemove,
 			create: mockAppealRelationshipAdd,
-			createMany: mockAppealRelationshipCreateMany
+			createMany: mockAppealRelationshipCreateMany,
+			deleteMany: mockAppealRelationshipDeleteMany
 		};
 	}
 
@@ -229,14 +274,26 @@ class MockPrismaClient {
 	get appealTimetable() {
 		return {
 			upsert: mockAppealTimetableUpsert,
-			update: mockAppealTimetableUpdate
+			update: mockAppealTimetableUpdate,
+			deleteMany: mockAppealTimetableDeleteMany
+		};
+	}
+
+	get personalList() {
+		return {
+			upsert: mockPersonalListUpsert,
+			count: mockPersonalListCount,
+			findMany: mockPersonalListFindMany,
+			deleteMany: mockPersonalListDeleteMany
 		};
 	}
 
 	get lPAQuestionnaire() {
 		return {
 			create: mocklPAQuestionnaireCreate,
-			update: mocklPAQuestionnaireUpdate
+			update: mocklPAQuestionnaireUpdate,
+			findMany: mocklPAQuestionnaireFindMany,
+			deleteMany: mocklPAQuestionnaireDeleteMany
 		};
 	}
 
@@ -250,7 +307,9 @@ class MockPrismaClient {
 			update: mockDocumentUpdate,
 			upsert: mockDocumentUpsert,
 			createMany: mockDocumentCreateMany,
-			create: mockDocumentCreate
+			create: mockDocumentCreate,
+			deleteMany: mockDocumentDeleteMany,
+			updateMany: mockDocumentUpdateMany
 		};
 	}
 
@@ -262,20 +321,23 @@ class MockPrismaClient {
 			findFirst: mockDocumentMetdataFindFirst,
 			findUnique: mockDocumentMetdataFindUnique,
 			upsert: mockDocumentMetdataUpsert,
-			update: mockDocumentMetdataUpdate
+			update: mockDocumentMetdataUpdate,
+			deleteMany: mockDocumentVersionDeleteMany
 		};
 	}
 
 	get documentVersionAudit() {
 		return {
-			create: mockDocumentVersionAuditCreate
+			create: mockDocumentVersionAuditCreate,
+			deleteMany: mockDocumentVersionAuditDeleteMany
 		};
 	}
 
 	get documentVersionAvScan() {
 		return {
 			upsert: mockDocumentAvScanUpsert,
-			findUnique: mockDocumentAvScanFindFirst
+			findUnique: mockDocumentAvScanFindFirst,
+			deleteMany: mockDocumentVersionAvScanDeleteMany
 		};
 	}
 
@@ -297,7 +359,8 @@ class MockPrismaClient {
 
 	get appellantCaseInvalidReason() {
 		return {
-			findMany: mockAppellantCaseInvalidReasonFindMany
+			findMany: mockAppellantCaseInvalidReasonFindMany,
+			findUnique: mockAppellantCaseInvalidReasonFindUnique
 		};
 	}
 
@@ -310,7 +373,9 @@ class MockPrismaClient {
 
 	get appellantCase() {
 		return {
-			update: mockAppellantCaseUpdate
+			update: mockAppellantCaseUpdate,
+			findMany: mockAppellantCaseFindMany,
+			deleteMany: mockAppellantCaseDeleteMany
 		};
 	}
 
@@ -354,7 +419,9 @@ class MockPrismaClient {
 		return {
 			create: mockSiteVisitCreate,
 			update: mockSiteVisitUpdate,
-			findUnique: mockSiteVisitFindUnique
+			findUnique: mockSiteVisitFindUnique,
+			delete: mockSiteVisitDelete,
+			deleteMany: mockSiteVisitDeleteMany
 		};
 	}
 
@@ -363,7 +430,8 @@ class MockPrismaClient {
 			create: mockHearingCreate,
 			update: mockHearingUpdate,
 			findUnique: mockHearingFindUnique,
-			delete: mockHearingDelete
+			delete: mockHearingDelete,
+			deleteMany: mockHearingDeleteMany
 		};
 	}
 
@@ -372,7 +440,8 @@ class MockPrismaClient {
 			create: mockHearingEstimateCreate,
 			update: mockHearingEstimateUpdate,
 			findUnique: mockHearingEstimateFindUnique,
-			delete: mockHearingEstimateDelete
+			delete: mockHearingEstimateDelete,
+			deleteMany: mockHearingEstimateDeleteMany
 		};
 	}
 
@@ -381,7 +450,8 @@ class MockPrismaClient {
 			create: mockInquiryCreate,
 			update: mockInquiryUpdate,
 			findUnique: mockInquiryFindUnique,
-			delete: mockInquiryDelete
+			delete: mockInquiryDelete,
+			deleteMany: mockInquiryDeleteMany
 		};
 	}
 
@@ -390,7 +460,8 @@ class MockPrismaClient {
 			create: mockInquiryEstimateCreate,
 			update: mockInquiryEstimateUpdate,
 			findUnique: mockInquiryEstimateFindUnique,
-			delete: mockInquiryEstimateDelete
+			delete: mockInquiryEstimateDelete,
+			deleteMany: mockInquiryEstimateDeleteMany
 		};
 	}
 
@@ -403,7 +474,8 @@ class MockPrismaClient {
 
 	get specialism() {
 		return {
-			findMany: mockSpecialismsFindUnique
+			findMany: mockSpecialismsFindUnique,
+			deleteMany: mockSpecialismsDeleteMany
 		};
 	}
 
@@ -416,7 +488,8 @@ class MockPrismaClient {
 
 	get appealAllocation() {
 		return {
-			upsert: mockAppealAllocationUpsert
+			upsert: mockAppealAllocationUpsert,
+			deleteMany: mockAppealAllocationDeleteMany
 		};
 	}
 
@@ -432,9 +505,21 @@ class MockPrismaClient {
 		};
 	}
 
+	get lPANotificationMethodsSelected() {
+		return {
+			deleteMany: mockLPANotificationMethodsSelectedDeleteMany
+		};
+	}
+
 	get designatedSite() {
 		return {
 			findMany: mockLPADesignatedSitesFindMany
+		};
+	}
+
+	get designatedSiteSelected() {
+		return {
+			deleteMany: mockLPADesignatedSitesSelectedDeleteMany
 		};
 	}
 
@@ -487,13 +572,15 @@ class MockPrismaClient {
 	get auditTrail() {
 		return {
 			findMany: mockAuditTrailFindMany,
-			create: mockAuditTrailCreate
+			create: mockAuditTrailCreate,
+			deleteMany: mockAuditTrailDeleteMany
 		};
 	}
 
 	get inspectorDecision() {
 		return {
-			create: mockAppealDecision
+			create: mockAppealDecision,
+			deleteMany: mockAppealDecisionDeleteMany
 		};
 	}
 
@@ -501,7 +588,8 @@ class MockPrismaClient {
 		return {
 			create: mockNeighbouringSites,
 			update: mockNeighbouringSites,
-			findUnique: mockNeighbouringSites
+			findUnique: mockNeighbouringSites,
+			deleteMany: mockNeighbouringSitesDeleteMany
 		};
 	}
 
@@ -509,7 +597,8 @@ class MockPrismaClient {
 		return {
 			create: mockListedBuildingSelected,
 			update: mockListedBuildingSelected,
-			delete: mockListedBuildingSelected
+			delete: mockListedBuildingSelected,
+			deleteMany: mockListedBuildingSelectedDeleteMany
 		};
 	}
 
@@ -526,6 +615,18 @@ class MockPrismaClient {
 		return {
 			findMany: mockRepresentationRejectionReasonFindMany,
 			deleteMany: mockRepresentationRejectionReasonFindMany
+		};
+	}
+
+	get representationRejectionReasonText() {
+		return {
+			deleteMany: mockRepresentationRejectionReasonTextDeleteMany
+		};
+	}
+
+	get representationRejectionReasonsSelected() {
+		return {
+			deleteMany: mockRepresentationRejectionReasonsSelectedDeleteMany
 		};
 	}
 
@@ -551,6 +652,10 @@ class MockPrismaClient {
 			// or just an array of queries to run
 			return Promise.all(queries);
 		}
+	}
+
+	$disconnect() {
+		return Promise.resolve();
 	}
 }
 
@@ -631,6 +736,7 @@ jest.unstable_mockModule('./src/server/config/config.js', () => ({
 	default: {
 		...config,
 		NODE_ENV: NODE_ENV_PRODUCTION,
+		enableTestEndpoints: true,
 		govNotify: {
 			...config.govNotify,
 			testMailbox: '',
@@ -639,4 +745,17 @@ jest.unstable_mockModule('./src/server/config/config.js', () => ({
 			}
 		}
 	}
+}));
+
+const broadcastersMock = {
+	broadcastServiceUser: jest.fn(),
+	broadcastDocument: jest.fn(),
+	broadcastAppeal: jest.fn(),
+	broadcastEvent: jest.fn(),
+	broadcastEventEstimates: jest.fn(),
+	broadcastRepresentation: jest.fn()
+};
+global.mockBroadcasters = broadcastersMock;
+jest.unstable_mockModule('#endpoints/integrations/integrations.broadcasters.js', () => ({
+	broadcasters: broadcastersMock
 }));

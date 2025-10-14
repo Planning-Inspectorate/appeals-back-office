@@ -1,8 +1,8 @@
 import { loadEnvironment } from '@pins/platform';
-import schema from './schema.js';
-import { baseConfigFromEnvironment } from './base-config.js';
-import url from 'url';
 import path from 'path';
+import url from 'url';
+import { baseConfigFromEnvironment } from './base-config.js';
+import schema from './schema.js';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const webDir = path.join(__dirname, '..'); // web package root, where .env files live
@@ -59,13 +59,13 @@ export function loadConfig() {
 		FEATURE_FLAG_S20,
 		FEATURE_FLAG_CAS,
 		FEATURE_FLAG_CAS_ADVERT,
-		FEATURE_FLAG_ISSUE_DECISION,
-		FEATURE_FLAG_RE_ISSUE_DECISION,
 		FEATURE_FLAG_NOTIFY_CASE_HISTORY,
 		FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT,
 		FEATURE_FLAG_CHANGE_APPEAL_TYPE,
 		FEATURE_FLAG_PDF_DOWNLOAD,
 		FEATURE_FLAG_NET_RESIDENCE,
+		FEATURE_FLAG_NET_RESIDENCE_S20,
+		FEATURE_FLAG_HEARING_POST_MVP,
 		HORIZON_APPEAL_BASE_URL,
 		HTTP_PORT = 8080,
 		HTTPS_ENABLED,
@@ -82,7 +82,10 @@ export function loadConfig() {
 		RETRY_STATUS_CODES,
 		USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		FEATURE_FLAG_CANCEL_CASE,
-		FEATURE_FLAG_CHANGE_PROCEDURE_TYPE
+		FEATURE_FLAG_CHANGE_PROCEDURE_TYPE,
+		FEATURE_FLAG_AUTO_ASSIGN_TEAM,
+		FEATURE_FLAG_CANCEL_SITE_VISIT,
+		FEATURE_FLAG_PERSONAL_LIST
 	} = environment;
 
 	const config = {
@@ -144,15 +147,18 @@ export function loadConfig() {
 			featureFlagS20: FEATURE_FLAG_S20 === 'true',
 			featureFlagCAS: FEATURE_FLAG_CAS === 'true',
 			featureFlagCasAdvert: FEATURE_FLAG_CAS_ADVERT === 'true',
-			featureFlagIssueDecision: FEATURE_FLAG_ISSUE_DECISION === 'true',
-			featureFlagReIssueDecision: FEATURE_FLAG_RE_ISSUE_DECISION === 'true',
 			featureFlagNotifyCaseHistory: FEATURE_FLAG_NOTIFY_CASE_HISTORY === 'true',
 			featureFlagSimplifyTeamAssignment: FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT === 'true',
 			featureFlagChangeAppealType: FEATURE_FLAG_CHANGE_APPEAL_TYPE === 'true',
 			featureFlagPdfDownload: FEATURE_FLAG_PDF_DOWNLOAD === 'true',
 			featureFlagNetResidence: FEATURE_FLAG_NET_RESIDENCE === 'true',
+			featureFlagNetResidenceS20: FEATURE_FLAG_NET_RESIDENCE_S20 === 'true',
 			featureFlagCancelCase: FEATURE_FLAG_CANCEL_CASE === 'true',
-			featureFlagChangeProcedureType: FEATURE_FLAG_CHANGE_PROCEDURE_TYPE === 'true'
+			featureFlagChangeProcedureType: FEATURE_FLAG_CHANGE_PROCEDURE_TYPE === 'true',
+			featureFlagHearingPostMvp: FEATURE_FLAG_HEARING_POST_MVP === 'true',
+			featureFlagAutoAssignTeam: FEATURE_FLAG_AUTO_ASSIGN_TEAM === 'true',
+			featureFlagCancelSiteVisit: FEATURE_FLAG_CANCEL_SITE_VISIT === 'true',
+			featureFlagPersonalList: FEATURE_FLAG_PERSONAL_LIST === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		pdfServiceHost: PDF_SERVICE_HOST

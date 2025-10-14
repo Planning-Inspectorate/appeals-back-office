@@ -1,14 +1,14 @@
-import { parseHtml } from '@pins/platform';
-import supertest from 'supertest';
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import {
 	appealData,
+	appellantCaseDataInvalidOutcome,
 	appellantCaseDataNotValidated,
-	appellantCaseInvalidReasons,
-	appellantCaseDataInvalidOutcome
+	appellantCaseInvalidReasons
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { parseHtml } from '@pins/platform';
 import nock from 'nock';
-import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+import supertest from 'supertest';
 import { appellantEmailTemplate, lpaEmailTemplate } from '../invalid-appeal-data.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
@@ -284,6 +284,11 @@ describe('invalid-appeal', () => {
 		it('should render the invalid appeal check page', async () => {
 			await request.post(`${baseUrl}/invalid/new`).send({
 				invalidReason: invalidReasonsWithoutTextIds[0]
+			});
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
 			});
 			const response = await request.get(`${baseUrl}/invalid/check`);
 			const element = parseHtml(response.text);

@@ -1,12 +1,12 @@
-import { producers } from '#infrastructure/topics.js';
 import { eventClient } from '#infrastructure/event-client.js';
+import { producers } from '#infrastructure/topics.js';
 import {
 	createAppeal,
 	createOrUpdateLpaQuestionnaire,
 	createRepresentation
 } from '#repositories/integrations.repository.js';
-import { EventType } from '@pins/event-client';
 import BackOfficeAppError from '#utils/app-error.js';
+import { EventType } from '@pins/event-client';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
@@ -33,7 +33,10 @@ const importAppellantCase = async (
 	);
 
 	if (!result?.appeal) {
-		throw new BackOfficeAppError(`Failure importing appellant case. Appeal could not be created.`);
+		throw new BackOfficeAppError(
+			`Failure importing appellant case. Appeal could not be created.`,
+			400
+		);
 	} else {
 		return result;
 	}
@@ -57,7 +60,8 @@ const importLPAQuestionnaire = async (caseReference, data, documents, relatedRef
 
 	if (!result?.appeal) {
 		throw new BackOfficeAppError(
-			`Failure importing LPA questionnaire. Appeal with case reference '${caseReference}' does not exist.`
+			`Failure importing LPA questionnaire. Appeal with case reference '${caseReference}' does not exist.`,
+			400
 		);
 	} else {
 		return result;
@@ -76,7 +80,8 @@ const importRepresentation = async (appeal, data, attachments) => {
 
 	if (!result?.rep) {
 		throw new BackOfficeAppError(
-			`Failure importing Representation associated with case reference '${appeal.reference}'.`
+			`Failure importing Representation associated with case reference '${appeal.reference}'.`,
+			400
 		);
 	} else {
 		return result;

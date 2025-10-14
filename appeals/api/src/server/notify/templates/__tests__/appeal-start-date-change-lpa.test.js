@@ -18,7 +18,7 @@ describe('appeal-start-date-change-appellant.md', () => {
 				start_date: '01 January 2025',
 				procedure_type: 'a hearing',
 				questionnaire_due_date: '01 January 2025',
-				front_office_url: 'https://front-office-url.com'
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',

@@ -1,5 +1,5 @@
-import { isFolderInfo } from '#lib/ts-utilities.js';
 import { formatDocumentActionLink, formatDocumentValues } from '#lib/display-page-formatter.js';
+import { isFolderInfo } from '#lib/ts-utilities.js';
 
 /**
  * Returns the instructions for a document display field

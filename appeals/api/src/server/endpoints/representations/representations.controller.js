@@ -1,12 +1,16 @@
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import representationRepository from '#repositories/representation.repository.js';
+import BackOfficeAppError from '#utils/app-error.js';
+import { currentStatus } from '#utils/current-status.js';
+import { getPageCount } from '#utils/database-pagination.js';
+import { Prisma } from '#utils/db-client/index.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
-import representationRepository from '#repositories/representation.repository.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
-import * as representationService from './representations.service.js';
-import { formatRepresentation } from './representations.formatter.js';
 import {
 	DEFAULT_PAGE_NUMBER,
 	DEFAULT_PAGE_SIZE,
@@ -14,15 +18,11 @@ import {
 	ERROR_REP_ONLY_STATEMENT_INCOMPLETE,
 	ERROR_REP_PUBLISH_USING_ENDPOINT
 } from '@pins/appeals/constants/support.js';
-import { getPageCount } from '#utils/database-pagination.js';
-import { Prisma } from '#utils/db-client/index.js';
-import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
-import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
-import BackOfficeAppError from '#utils/app-error.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { notifyOnStatusChange } from './notify/index.js';
-import { currentStatus } from '#utils/current-status.js';
+import { formatRepresentation } from './representations.formatter.js';
+import * as representationService from './representations.service.js';
 import { getRepStatusAuditLogDetails } from './representations.service.js';
 
 /** @typedef {import('express').Request} Request */
@@ -156,7 +156,11 @@ export async function updateRepresentation(request, response) {
 
 	if (
 		status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE &&
-		existingRep.representationType !== APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
+		![
+			APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
+			APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
+			APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
+		].includes(existingRep.representationType)
 	) {
 		return response.status(400).send({ errors: { status: ERROR_REP_ONLY_STATEMENT_INCOMPLETE } });
 	}
@@ -202,7 +206,7 @@ export async function updateRepresentation(request, response) {
 }
 
 /**
- * @param {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment'} representationType
+ * @param {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment' | 'appellant_proofs_evidence' | 'lpa_proofs_evidence'} representationType
  * @returns {(req: Request, res: Response) => Promise<Response>}
  * */
 export const createRepresentation = (representationType) => async (req, res) => {
@@ -216,6 +220,25 @@ export const createRepresentation = (representationType) => async (req, res) => 
 	await broadcasters.broadcastRepresentation(rep.id, EventType.Create);
 	return res.status(201).send(rep);
 };
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export async function createRepresentationProofOfEvidence(req, res) {
+	const {
+		appeal,
+		params: { proofOfEvidenceType },
+		body: { attachments }
+	} = req;
+	const rep = await representationService.createRepresentationProofOfEvidence(
+		appeal,
+		proofOfEvidenceType,
+		attachments
+	);
+	return res.status(201).send(rep);
+}
 
 /**
  * @param {Request} req

@@ -1,25 +1,33 @@
+import {
+	dayMonthYearHourMinuteToDisplayDate,
+	dayMonthYearHourMinuteToISOString
+} from '#lib/dates.js';
 import logger from '#lib/logger.js';
+import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
+import { simpleHtmlComponent } from '#lib/mappers/index.js';
+import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
-	getAppealTypes,
-	postAppealChangeRequest,
-	postAppealTransferConfirmation,
-	getNoResubmitAppealRequestRedirectUrl,
-	postAppealTransferRequest,
-	changeAppealTransferAppealPage
-} from './change-appeal-type.service.js';
-import {
+	addHorizonReferencePage,
 	appealTypePage,
 	changeAppealFinalDatePage,
-	resubmitAppealPage,
-	addHorizonReferencePage,
+	changeAppealMarkAppealInvalidPage,
+	changeAppealTransferAppealPage,
+	checkDetailsAndUpdateAppealTypePage,
 	checkTransferPage,
 	invalidChangeAppealType,
-	changeAppealMarkAppealInvalidPage
+	resubmitAppealPage
 } from './change-appeal-type.mapper.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
-import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import {
+	getAppealTypes,
+	getChangeAppealTypes,
+	getNoResubmitAppealRequestRedirectUrl,
+	postAppealResubmitMarkInvalidRequest,
+	postAppealTransferConfirmation,
+	postAppealTransferRequest,
+	postAppealUpdateRequest
+} from './change-appeal-type.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -132,6 +140,12 @@ export const postResubmitAppeal = async (request, response) => {
 
 		const isResubmit = appealResubmit === 'true';
 
+		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
+		request.session.changeAppealType = {
+			...request.session.changeAppealType,
+			resubmit: isResubmit
+		};
+
 		if (!isResubmit) {
 			const redirectUrl = await getNoResubmitAppealRequestRedirectUrl(
 				request.apiClient,
@@ -140,12 +154,6 @@ export const postResubmitAppeal = async (request, response) => {
 			);
 			return response.redirect(redirectUrl);
 		}
-
-		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
-		request.session.changeAppealType = {
-			...request.session.changeAppealType,
-			resubmit: isResubmit
-		};
 
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/change-appeal-type/mark-appeal-invalid`
@@ -202,29 +210,18 @@ export const postChangeAppealFinalDate = async (request, response) => {
 		if (errors) {
 			return renderChangeAppealFinalDate(request, response);
 		}
-		const appealTypeId = parseInt(request.session.changeAppealType.appealTypeId, 10);
-
-		await postAppealChangeRequest(
-			request.apiClient,
-			appealId,
-			appealTypeId,
-			dayMonthYearHourMinuteToISOString({
-				year,
-				month,
-				day
-			})
-		);
 
 		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
-		request.session.changeAppealType = {};
+		request.session.changeAppealType = {
+			...request.session.changeAppealType,
+			day,
+			month,
+			year
+		};
 
-		addNotificationBannerToSession({
-			session: request.session,
-			bannerDefinitionKey: 'appealTypeChanged',
-			appealId
-		});
-
-		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/change-appeal-type/check-change-appeal-final-date`
+		);
 	} catch (error) {
 		logger.error(error);
 		return response.status(500).render('app/500.njk');
@@ -238,13 +235,36 @@ export const postChangeAppealFinalDate = async (request, response) => {
  */
 const renderChangeAppealFinalDate = async (request, response) => {
 	const { errors } = request;
+	let changeDay = '';
+	let changeMonth = '';
+	let changeYear = '';
+
+	// Present when the post request errors
 	const {
-		'change-appeal-final-date-day': changeDay,
-		'change-appeal-final-date-month': changeMonth,
-		'change-appeal-final-date-year': changeYear
+		'change-appeal-final-date-day': bodyChangeDay,
+		'change-appeal-final-date-month': bodyChangeMonth,
+		'change-appeal-final-date-year': bodyChangeYear
 	} = request.body;
 
+	// Present when navigating back to this page
+	/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
+	const {
+		day: sessionDay,
+		month: sessionMonth,
+		year: sessionYear
+	} = request.session.changeAppealType;
+
 	const appealData = request.currentAppeal;
+
+	if (bodyChangeDay && bodyChangeMonth && bodyChangeYear) {
+		changeDay = bodyChangeDay;
+		changeMonth = bodyChangeMonth;
+		changeYear = bodyChangeYear;
+	} else if (sessionDay && sessionMonth && sessionYear) {
+		changeDay = sessionDay;
+		changeMonth = sessionMonth;
+		changeYear = sessionYear;
+	}
 
 	const mappedPageContent = changeAppealFinalDatePage(
 		appealData,
@@ -277,13 +297,14 @@ const renderAddHorizonReference = async (request, response) => {
 	const { errors } = request;
 	const appealData = request.currentAppeal;
 	const horizonReference =
-		appealData.transferStatus?.transferredAppealReference ||
-		request.session.changeAppealType?.transferredAppealHorizonReference;
+		request.session.changeAppealType?.transferredAppealHorizonReference ||
+		appealData.transferStatus?.transferredAppealReference;
 
 	const mappedPageContent = addHorizonReferencePage(
 		appealData,
-		getBackLinkUrlFromQuery(request),
-		horizonReference
+		getSavedBackUrl(request, 'changeAppealType'),
+		horizonReference,
+		errors ? errors['horizon-reference'].msg : undefined
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
@@ -317,15 +338,15 @@ export const postAddHorizonReference = async (request, response) => {
 			});
 		}
 
-		if (errors) {
-			return renderAddHorizonReference(request, response);
-		}
-
 		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
 		request.session.changeAppealType = {
 			...request.session.changeAppealType,
 			transferredAppealHorizonReference: horizonReference
 		};
+
+		if (errors) {
+			return renderAddHorizonReference(request, response);
+		}
 
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/change-appeal-type/check-transfer`
@@ -386,12 +407,15 @@ export const postCheckTransfer = async (request, response) => {
 
 		const {
 			errors,
-			params: { appealId }
+			params: { appealId },
+			currentAppeal: { appealStatus }
 		} = request;
 
 		if (errors) {
 			return renderCheckTransfer(request, response);
 		}
+
+		const isAlreadyTransferred = appealStatus == APPEAL_CASE_STATUS.TRANSFERRED;
 
 		await postAppealTransferConfirmation(
 			request.apiClient,
@@ -404,7 +428,9 @@ export const postCheckTransfer = async (request, response) => {
 
 		addNotificationBannerToSession({
 			session: request.session,
-			bannerDefinitionKey: 'appealMarkedAsTransferred',
+			bannerDefinitionKey: isAlreadyTransferred
+				? 'horizonReferenceUpdated'
+				: 'appealMarkedAsTransferred',
 			appealId
 		});
 
@@ -422,24 +448,24 @@ export const postCheckTransfer = async (request, response) => {
 export const getMarkAppealInvalid = async (request, response) => {
 	const {
 		errors,
-		params: { appealId },
 		session: { changeAppealType }
 	} = request;
 	const appealData = request.currentAppeal;
-	const appealTypes = await getAppealTypes(request.apiClient);
-	const changeAppeal = appealTypes.find(
-		(appealType) => appealType.id === parseInt(changeAppealType.appealTypeId)
+	const { existingChangeAppealType, newChangeAppealType } = await getChangeAppealTypes(
+		request.apiClient,
+		appealData.appealType,
+		changeAppealType
 	);
 
-	if (!changeAppeal) {
-		logger.error('error');
+	if (!newChangeAppealType) {
+		logger.error('Unable to parse new change appeal type');
 		return response.status(500).render('app/500.njk');
 	}
 
 	const mappedPageContent = changeAppealMarkAppealInvalidPage(
-		appealId,
-		appealData.appealType.toLowerCase(),
-		changeAppeal.type
+		appealData,
+		existingChangeAppealType.toLowerCase(),
+		newChangeAppealType.toLowerCase()
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
@@ -469,12 +495,11 @@ export const postMarkAppealInvalid = (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getTransferAppeal = async (request, response) => {
-	const {
-		errors,
-		params: { appealId }
-	} = request;
+	const { errors } = request;
 
-	const mappedPageContent = changeAppealTransferAppealPage(appealId);
+	const appealData = request.currentAppeal;
+
+	const mappedPageContent = changeAppealTransferAppealPage(appealData);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -487,11 +512,183 @@ export const getTransferAppeal = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postTransferAppeal = async (request, response) => {
+	const { session } = request;
+
 	try {
 		const { appealId } = request.params;
 		const appealTypeId = parseInt(request.session.changeAppealType.appealTypeId, 10);
 
 		await postAppealTransferRequest(request.apiClient, appealId, appealTypeId);
+
+		addNotificationBannerToSession({
+			session,
+			bannerDefinitionKey: 'appealMarkedAsAwaitingTransfer',
+			appealId
+		});
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+	} catch (error) {
+		logger.error(error);
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getCheckChangeAppealFinalDate = async (request, response) => {
+	try {
+		const {
+			errors,
+			session: { changeAppealType }
+		} = request;
+		const appealData = request.currentAppeal;
+		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
+		const { day, month, year } = changeAppealType;
+
+		const { newChangeAppealType } = await getChangeAppealTypes(
+			request.apiClient,
+			appealData.appealType,
+			changeAppealType
+		);
+
+		const backLinkUrl = `/appeals-service/appeal-details/${appealData.appealId}/change-appeal-type/change-appeal-final-date`;
+		const formattedDate = dayMonthYearHourMinuteToDisplayDate({ day, month, year });
+		const formattedNewChangeAppealType = newChangeAppealType?.toLowerCase() || '';
+
+		/** @type {{ [key: string]: {value?: string, actions?: { [text: string]: { href: string, visuallyHiddenText: string } }} }} */
+		let responses = {
+			'Deadline to resubmit appeal': {
+				value: formattedDate,
+				actions: {
+					Change: {
+						href: backLinkUrl,
+						visuallyHiddenText: 'Deadline to resubmit appeal'
+					}
+				}
+			}
+		};
+
+		return renderCheckYourAnswersComponent(
+			{
+				title: 'Check details and mark appeal as invalid',
+				heading: 'Check details and mark appeal as invalid',
+				preHeading: `Appeal ${appealData.appealReference}`,
+				backLinkUrl,
+				submitButtonText: 'Mark appeal as invalid',
+				responses,
+				after: [
+					simpleHtmlComponent(
+						'p',
+						{ class: 'govuk-body' },
+						`We will send an email to the appellant to tell them that they need to resubmit a new ${formattedNewChangeAppealType} appeal by ${formattedDate}.`
+					)
+				]
+			},
+			response,
+			errors
+		);
+	} catch (error) {
+		logger.error(error);
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postCheckChangeAppealFinalDate = async (request, response) => {
+	try {
+		const { appealId } = request.params;
+		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
+		const { day, month, year } = request.session.changeAppealType;
+		const { errors } = request;
+		const { appellantCaseId } = request.currentAppeal;
+
+		if (errors) {
+			return renderChangeAppealFinalDate(request, response);
+		}
+		const appealTypeId = parseInt(request.session.changeAppealType.appealTypeId, 10);
+
+		await postAppealResubmitMarkInvalidRequest(
+			request.apiClient,
+			appealId,
+			appellantCaseId,
+			appealTypeId,
+			dayMonthYearHourMinuteToISOString({
+				year,
+				month,
+				day
+			})
+		);
+
+		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
+		request.session.changeAppealType = {};
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'issuedDecisionInvalid',
+			appealId
+		});
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+	} catch (error) {
+		logger.error(error);
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getUpdateAppeal = async (request, response) => {
+	try {
+		const appealData = request.currentAppeal;
+		const {
+			errors,
+			session: { changeAppealType }
+		} = request;
+		const { newChangeAppealType } = await getChangeAppealTypes(
+			request.apiClient,
+			appealData.appealType,
+			changeAppealType
+		);
+
+		if (!newChangeAppealType) {
+			logger.error('Unable to parse new change appeal type');
+			return response.status(500).render('app/500.njk');
+		}
+
+		return checkDetailsAndUpdateAppealTypePage(appealData, newChangeAppealType, response, errors);
+	} catch (error) {
+		logger.error(error);
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postUpdateAppeal = async (request, response) => {
+	try {
+		const { appealId } = request.params;
+		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
+		const { appealTypeId } = request.session.changeAppealType;
+
+		await postAppealUpdateRequest(request.apiClient, appealId, appealTypeId);
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'appealTypeUpdated',
+			appealId
+		});
+
+		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
+		request.session.changeAppealType = {};
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {

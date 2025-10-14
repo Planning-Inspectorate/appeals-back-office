@@ -1,28 +1,36 @@
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { textSummaryListItem, userHasPermission } from '#lib/mappers/index.js';
-import { isStatePassed } from '#lib/appeal-status.js';
-import { permissionNames } from '#environment/permissions.js';
-import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { baseUrl } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
+import { permissionNames } from '#environment/permissions.js';
+import { isStatePassed } from '#lib/appeal-status.js';
+import { textSummaryListItem, userHasPermission } from '#lib/mappers/index.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapCostsAppellantDecision = ({ appealDetails, currentRoute, session, request }) => {
 	const { appellantApplicationFolder, appellantWithdrawalFolder, appellantDecisionFolder } =
 		appealDetails.costs ?? {};
 
+	const appellantApplicationCount = appellantApplicationFolder?.documents?.length || 0;
+	const appellantWithdrawalCount = appellantWithdrawalFolder?.documents?.length || 0;
+
+	const isAppealWithdrawn = appealDetails.appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
+	const isAppealPassedAwaitingEvent = isStatePassed(
+		appealDetails,
+		APPEAL_CASE_STATUS.AWAITING_EVENT
+	);
+	const isAppealInRequiredState = isAppealWithdrawn || isAppealPassedAwaitingEvent;
+
 	if (
 		isChildAppeal(appealDetails) ||
-		!isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) ||
-		!appellantApplicationFolder?.documents?.length ||
-		appellantWithdrawalFolder?.documents?.length
+		!isAppealInRequiredState ||
+		appellantApplicationCount <= appellantWithdrawalCount
 	) {
 		return { id: 'appellant-costs-decision', display: {} };
 	}
 
 	const editable =
-		isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) &&
-		userHasPermission(permissionNames.setCaseOutcome, session);
+		isAppealInRequiredState && userHasPermission(permissionNames.setCaseOutcome, session);
 
 	const isIssued = appellantDecisionFolder?.documents?.length;
 

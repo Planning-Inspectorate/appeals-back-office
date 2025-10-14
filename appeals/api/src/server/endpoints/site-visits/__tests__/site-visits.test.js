@@ -1,9 +1,10 @@
 // @ts-nocheck
 import { jest } from '@jest/globals';
-import { request } from '../../../app-test.js';
 import {
+	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
 	AUDIT_TRAIL_SITE_VISIT_ARRANGED,
 	AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
+	CASE_RELATIONSHIP_LINKED,
 	DEFAULT_DATE_FORMAT_AUDIT_TRAIL,
 	ERROR_INVALID_SITE_VISIT_TYPE,
 	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
@@ -12,28 +13,31 @@ import {
 	ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCESS_REQUIRED,
 	ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCOMPANIED,
 	ERROR_START_TIME_MUST_BE_EARLIER_THAN_END_TIME,
-	SITE_VISIT_TYPE_UNACCOMPANIED,
-	SITE_VISIT_TYPE_ACCOMPANIED,
 	SITE_VISIT_TYPE_ACCESS_REQUIRED,
-	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
-	CASE_RELATIONSHIP_LINKED
+	SITE_VISIT_TYPE_ACCOMPANIED,
+	SITE_VISIT_TYPE_UNACCOMPANIED
 } from '@pins/appeals/constants/support.js';
+import { request } from '../../../app-test.js';
+import { formatAddressSingleLine } from '../../addresses/addresses.formatter.js';
 
-import { appealS78, householdAppeal as householdAppealData } from '#tests/appeals/mocks.js';
-import { casPlanningAppeal as casPlanningAppealData } from '#tests/appeals/mocks.js';
-import { fullPlanningAppeal as fullPlanningAppealData } from '#tests/appeals/mocks.js';
-import { listedBuildingAppeal as listedBuildingAppealData } from '#tests/appeals/mocks.js';
+import {
+	appealS78,
+	casPlanningAppeal as casPlanningAppealData,
+	fullPlanningAppeal as fullPlanningAppealData,
+	householdAppeal as householdAppealData,
+	listedBuildingAppeal as listedBuildingAppealData
+} from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { dateISOStringToDisplayDate, formatTime } from '@pins/appeals/utils/date-formatter.js';
 import { format, parseISO } from 'date-fns';
-import { formatTime, dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
 
-const { databaseConnector } = await import('../../../utils/database-connector.js');
 import {
 	fetchRescheduleTemplateIds,
 	fetchSiteVisitScheduleTemplateIds
 } from '../site-visits.service.js';
-import { cloneDeep } from 'lodash-es';
+
+const { databaseConnector } = await import('../../../utils/database-connector.js');
 
 describe('site visit routes', () => {
 	/** @type {typeof householdAppealData} */
@@ -251,10 +255,16 @@ describe('site visit routes', () => {
 			});
 
 			test('creates a site visit for linked appeals', async () => {
-				const siteVisit = cloneDeep({ ...householdAppeal.siteVisit, appealId: appealS78.id });
+				const siteVisit = structuredClone({ ...householdAppeal.siteVisit, appealId: appealS78.id });
 				const appealStatus = [{ status: 'event', valid: true }];
-				const childAppeals = [{ childId: 100, type: CASE_RELATIONSHIP_LINKED }];
-				const linkedLeadAppeal = cloneDeep({
+				const childAppeals = [
+					{
+						childId: 100,
+						type: CASE_RELATIONSHIP_LINKED,
+						child: { appealStatus }
+					}
+				];
+				const linkedLeadAppeal = structuredClone({
 					...appealS78,
 					siteVisit,
 					appealStatus,
@@ -303,7 +313,7 @@ describe('site visit routes', () => {
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 					data: {
-						appealId: linkedLeadAppeal.id,
+						appealId: childAppeals[0].childId,
 						details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['awaiting_event']),
 						loggedAt: expect.any(Date),
 						userId: linkedLeadAppeal.caseOfficer.id
@@ -311,7 +321,7 @@ describe('site visit routes', () => {
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
 					data: {
-						appealId: childAppeals[0].childId,
+						appealId: linkedLeadAppeal.id,
 						details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['awaiting_event']),
 						loggedAt: expect.any(Date),
 						userId: linkedLeadAppeal.caseOfficer.id
@@ -421,7 +431,8 @@ describe('site visit routes', () => {
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_time: formatTime(siteVisit.visitStartTime),
 							end_time: formatTime(siteVisit.visitEndTime),
-							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.agent.email
 					});
@@ -469,7 +480,8 @@ describe('site visit routes', () => {
 							inspector_name: '',
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_time: '11:00',
-							visit_date: '1 March 2022'
+							visit_date: '1 March 2022',
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.agent.email
 					});
@@ -485,7 +497,8 @@ describe('site visit routes', () => {
 							inspector_name: '',
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_time: '11:00',
-							visit_date: '1 March 2022'
+							visit_date: '1 March 2022',
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.lpa.email
 					});
@@ -536,7 +549,8 @@ describe('site visit routes', () => {
 							inspector_name: inspectorName,
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_time: '12:00',
-							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.agent.email
 					});
@@ -1347,7 +1361,8 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
-							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.agent.email
 					});
@@ -1419,7 +1434,8 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
-							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.agent.email
 					});
@@ -1435,7 +1451,8 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
-							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.lpa.email
 					});
@@ -1508,7 +1525,8 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: inspectorName,
 							lpa_reference: appeal.applicationReference,
-							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.agent.email
 					});
@@ -1580,7 +1598,8 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
-							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.agent.email
 					});
@@ -1596,7 +1615,8 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
-							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.lpa.email
 					});
@@ -1668,7 +1688,8 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
-							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.agent.email
 					});
@@ -1684,7 +1705,8 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
-							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.lpa.email
 					});
@@ -1756,7 +1778,8 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
-							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.agent.email
 					});
@@ -1772,7 +1795,8 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
-							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.lpa.email
 					});
@@ -1845,7 +1869,8 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: inspectorName,
 							lpa_reference: appeal.applicationReference,
-							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.agent.email
 					});
@@ -1861,7 +1886,8 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: inspectorName,
 							lpa_reference: appeal.applicationReference,
-							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.lpa.email
 					});
@@ -1933,7 +1959,8 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
-							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.agent.email
 					});
@@ -1949,7 +1976,8 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
-							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.lpa.email
 					});
@@ -2021,7 +2049,8 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
-							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.agent.email
 					});
@@ -2094,7 +2123,8 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
-							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.agent.email
 					});
@@ -2477,6 +2507,118 @@ describe('site visit routes', () => {
 				});
 
 				expect(mockNotifySend).not.toHaveBeenCalled();
+			});
+		});
+		describe('DELETE', () => {
+			test('deletes a site visit and moves the status back', async () => {
+				householdAppeal.appealStatus = [
+					{
+						id: 1,
+						status: 'event',
+						createdAt: '2025-09-18T10:07:15.406Z',
+						valid: false,
+						appealId: householdAppeal.id,
+						subStateMachineName: null,
+						compoundStateName: null
+					},
+					{
+						id: 2,
+						status: 'awaiting_event',
+						createdAt: '2025-09-18T10:07:22.069Z',
+						valid: true,
+						appealId: householdAppeal.id,
+						subStateMachineName: null,
+						compoundStateName: null
+					}
+				];
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique
+					.mockResolvedValueOnce(householdAppeal)
+					.mockResolvedValue({
+						...householdAppeal,
+						siteVisit: null
+					});
+				databaseConnector.appealStatus.findFirst.mockImplementationOnce(({ where: { status } }) => {
+					switch (status) {
+						case 'event':
+							return householdAppeal.appealStatus[0];
+						case 'awaiting_event':
+							return householdAppeal.appealStatus[1];
+						default:
+							return null;
+					}
+				});
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+				// @ts-ignore
+				databaseConnector.siteVisit.delete.mockResolvedValue(householdAppeal.siteVisit);
+				databaseConnector.appealStatus.deleteMany.mockResolvedValue();
+				databaseConnector.appealStatus.update.mockResolvedValue();
+				const response = await request
+					.delete(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
+					.send()
+					.set('azureAdUserId', azureAdUserId);
+				expect(databaseConnector.siteVisit.delete).toHaveBeenCalledWith({
+					where: { id: householdAppeal.siteVisit.id }
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: householdAppeal.id,
+						details: 'Site visit cancelled',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+				const siteAddress = householdAppeal.address
+					? formatAddressSingleLine(householdAppeal.address)
+					: 'Address not available';
+				const personalisation = {
+					appeal_reference_number: householdAppeal.reference,
+					lpa_reference: householdAppeal.applicationReference,
+					site_address: siteAddress,
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+				};
+
+				expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.appealStatus.update).toHaveBeenCalledTimes(1);
+
+				expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledWith({
+					where: {
+						appealId: householdAppeal.id,
+						createdAt: {
+							gt: '2025-09-18T10:07:15.406Z' //createdAt for the 'event' status
+						}
+					}
+				});
+
+				expect(databaseConnector.appealStatus.update).toHaveBeenCalledWith({
+					where: { id: 1 },
+					data: { valid: true }
+				});
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: personalisation,
+					recipientEmail: householdAppeal.agent.email,
+					templateName: 'site-visit-cancelled'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: personalisation,
+					recipientEmail: householdAppeal.lpa.email,
+					templateName: 'site-visit-cancelled'
+				});
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({ siteVisitId: 1 });
 			});
 		});
 	});

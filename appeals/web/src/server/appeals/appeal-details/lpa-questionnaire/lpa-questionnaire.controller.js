@@ -1,39 +1,40 @@
-import * as lpaQuestionnaireService from './lpa-questionnaire.service.js';
-import {
-	lpaQuestionnairePage,
-	checkAndConfirmPage,
-	mapWebValidationOutcomeToApiValidationOutcome,
-	getValidationOutcomeFromLpaQuestionnaire,
-	environmentServiceTeamReviewCasePage
-} from './lpa-questionnaire.mapper.js';
+import * as appealDetailsService from '#appeals/appeal-details/appeal-details.service.js';
+import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
+import { appealTypeToAppealCaseTypeMapper } from '#common/feature-flags-appeal-types.js';
 import logger from '#lib/logger.js';
+import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { uncapitalizeFirstLetter } from '#lib/string-utilities.js';
+import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
+import { DOCUMENT_FOLDER_DISPLAY_LABELS } from '@pins/appeals/constants/documents.js';
+import isFPA from '@pins/appeals/utils/is-fpa.js';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import {
-	renderDocumentUpload,
-	renderDocumentDetails,
-	postDocumentUpload,
+	postChangeDocumentDetails,
+	postChangeDocumentFileName,
+	postDeleteDocument,
 	postDocumentDetails,
-	renderUploadDocumentsCheckAndConfirm,
+	postDocumentUpload,
 	postUploadDocumentsCheckAndConfirm,
 	postUploadDocumentVersionCheckAndConfirm,
-	renderManageFolder,
-	renderManageDocument,
-	renderDeleteDocument,
 	renderChangeDocumentDetails,
-	postChangeDocumentDetails,
-	postDeleteDocument,
 	renderChangeDocumentFileName,
-	postChangeDocumentFileName
+	renderDeleteDocument,
+	renderDocumentDetails,
+	renderDocumentUpload,
+	renderManageDocument,
+	renderManageFolder,
+	renderUploadDocumentsCheckAndConfirm
 } from '../../appeal-documents/appeal-documents.controller.js';
-import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { DOCUMENT_FOLDER_DISPLAY_LABELS } from '@pins/appeals/constants/documents.js';
-import * as appealDetailsService from '#appeals/appeal-details/appeal-details.service.js';
-import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
-import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
-import { uncapitalizeFirstLetter } from '#lib/string-utilities.js';
+import {
+	checkAndConfirmPage,
+	environmentServiceTeamReviewCasePage,
+	getValidationOutcomeFromLpaQuestionnaire,
+	lpaQuestionnairePage,
+	mapWebValidationOutcomeToApiValidationOutcome
+} from './lpa-questionnaire.mapper.js';
+import * as lpaQuestionnaireService from './lpa-questionnaire.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -52,7 +53,6 @@ const renderLpaQuestionnaire = async (request, response, errors = null) => {
 		currentAppeal.appealId,
 		lpaQuestionnaireId
 	);
-
 	if (!lpaQuestionnaire) {
 		return response.status(404).render('app/404.njk');
 	}
@@ -100,7 +100,7 @@ export const postLpaQuestionnaire = async (request, response) => {
 		request.session.reviewOutcome = reviewOutcome;
 
 		if (reviewOutcome === 'complete') {
-			if (currentAppeal.appealType !== APPEAL_TYPE.HOUSEHOLDER) {
+			if (isFPA(appealTypeToAppealCaseTypeMapper(currentAppeal.appealType))) {
 				return response.redirect(
 					`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/environment-service-team-review-case`
 				);

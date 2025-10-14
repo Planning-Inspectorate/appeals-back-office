@@ -1,24 +1,24 @@
 // @ts-nocheck
-import { request } from '../../../app-test.js';
-import { jest } from '@jest/globals';
-import { azureAdUserId } from '#tests/shared/mocks.js';
 import {
-	householdAppeal,
 	casPlanningAppeal,
 	fullPlanningAppeal,
+	householdAppeal,
 	listedBuildingAppeal
 } from '#tests/appeals/mocks.js';
-import formatDate from '@pins/appeals/utils/date-formatter.js';
-import { add, sub } from 'date-fns';
+import { azureAdUserId } from '#tests/shared/mocks.js';
+import { jest } from '@jest/globals';
 import {
 	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
 	ERROR_MUST_NOT_BE_IN_FUTURE
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
 	recalculateDateIfNotBusinessDay,
 	setTimeInTimeZone
 } from '@pins/appeals/utils/business-days.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { add, sub } from 'date-fns';
+import { request } from '../../../app-test.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 describe('appeal withdrawal routes', () => {
@@ -107,7 +107,8 @@ describe('appeal withdrawal routes', () => {
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					withdrawal_date: formatDate(utcDate, false),
 					event_set: true,
-					event_type: 'site visit'
+					event_type: 'site visit',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				},
 				recipientEmail: 'test@136s7.com',
 				templateName: 'appeal-withdrawn-appellant'
@@ -122,7 +123,8 @@ describe('appeal withdrawal routes', () => {
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					withdrawal_date: formatDate(utcDate, false),
 					event_set: true,
-					event_type: 'site visit'
+					event_type: 'site visit',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				},
 				recipientEmail: 'maid@lpa-email.gov.uk',
 				templateName: 'appeal-withdrawn-lpa'

@@ -1,28 +1,24 @@
-import { addBusinessDays, isSameDay, isAfter, isBefore, isWeekend, parseISO } from 'date-fns';
-import fetch from 'node-fetch';
 import {
-	CONFIG_BANKHOLIDAYS_FEED_URL,
-	CONFIG_APPEAL_TIMETABLE,
-	BANK_HOLIDAY_FEED_DIVISION_ENGLAND
-} from '@pins/appeals/constants/support.js';
-import { formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
-import {
-	DEADLINE_HOUR,
-	DEADLINE_MINUTE,
 	DAYTIME_HOUR,
 	DAYTIME_MINUTE,
+	DEADLINE_HOUR,
+	DEADLINE_MINUTE,
 	DEFAULT_TIMEZONE
 } from '@pins/appeals/constants/dates.js';
-import { getCache, setCache } from './cache-data.js';
 import {
+	APPEAL_TYPE_SHORTHAND_FPA,
 	APPEAL_TYPE_SHORTHAND_HAS,
-	APPEAL_TYPE_SHORTHAND_FPA
-} from '@pins/appeals/constants/support.js';
-import isFPA from './is-fpa.js';
-import {
 	APPEAL_TYPE_SHORTHAND_HEARING,
-	APPEAL_TYPE_SHORTHAND_INQUIRY
+	APPEAL_TYPE_SHORTHAND_INQUIRY,
+	BANK_HOLIDAY_FEED_DIVISION_ENGLAND,
+	CONFIG_APPEAL_TIMETABLE,
+	CONFIG_BANKHOLIDAYS_FEED_URL
 } from '@pins/appeals/constants/support.js';
+import { addBusinessDays, isAfter, isBefore, isSameDay, isWeekend, parseISO } from 'date-fns';
+import { formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
+import fetch from 'node-fetch';
+import { getCache, setCache } from './cache-data.js';
+import isFPA from './is-fpa.js';
 
 /** @typedef {import('../types/appeal.js').BankHolidayFeedEvents } BankHolidayFeedEvents */
 /** @typedef {import('../types/appeal.js').BankHolidayFeedDivisions } BankHolidayFeedDivisions */
@@ -229,4 +225,4 @@ const calculateTimetable = async (appealType, startedAt, procedureType = 'writte
 	}
 };
 
-export { calculateTimetable, recalculateDateIfNotBusinessDay, setTimeInTimeZone, addDays };
+export { addDays, calculateTimetable, recalculateDateIfNotBusinessDay, setTimeInTimeZone };

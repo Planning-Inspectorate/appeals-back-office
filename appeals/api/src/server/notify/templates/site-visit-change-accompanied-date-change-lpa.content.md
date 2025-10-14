@@ -9,4 +9,4 @@ Our inspector (or their representative) will now visit {{site_address}} at {{sta
 You must be at the site at the scheduled time to accompany our inspector and the appellant.
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

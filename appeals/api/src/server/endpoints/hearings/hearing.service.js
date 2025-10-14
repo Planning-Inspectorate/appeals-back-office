@@ -1,13 +1,16 @@
-import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
-import hearingRepository from '#repositories/hearing.repository.js';
-import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
-import { notifySend } from '#notify/notify-send.js';
-import { ERROR_NO_RECIPIENT_EMAIL } from '@pins/appeals/constants/support.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-import { dateISOStringToDisplayDate, formatTime12h } from '@pins/appeals/utils/date-formatter.js';
+import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { EventType } from '@pins/event-client';
+import { notifySend } from '#notify/notify-send.js';
+import hearingRepository from '#repositories/hearing.repository.js';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
+import {
+	ERROR_FAILED_TO_SAVE_DATA,
+	ERROR_NO_RECIPIENT_EMAIL,
+	ERROR_NOT_FOUND
+} from '@pins/appeals/constants/support.js';
+import { dateISOStringToDisplayDate, formatTime12h } from '@pins/appeals/utils/date-formatter.js';
+import { EventType } from '@pins/event-client';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Hearing} Hearing */
@@ -63,7 +66,8 @@ const sendHearingDetailsNotifications = async (
 		hearing_time: formatTime12h(
 			typeof hearingStartTime === 'string' ? new Date(hearingStartTime) : hearingStartTime
 		),
-		hearing_address: address ? formatAddressSingleLine({ ...address, id: 0 }) : ''
+		hearing_address: address ? formatAddressSingleLine({ ...address, id: 0 }) : '',
+		team_email_address: await getTeamEmailFromAppealId(appeal.id)
 	};
 	await sendHearingNotifications(
 		notifyClient,
@@ -104,7 +108,8 @@ const sendHearingNotifications = async (
 				appeal_reference_number: appeal.reference,
 				site_address: appeal.address ? formatAddressSingleLine(appeal.address) : '',
 				lpa_reference: appeal.applicationReference ?? '',
-				...personalisation
+				...personalisation,
+				team_email_address: await getTeamEmailFromAppealId(appeal.id)
 			},
 			recipientEmail: email
 		});
@@ -226,4 +231,4 @@ const deleteHearing = async (deleteHearingData, notifyClient, appeal, azureAdUse
 	}
 };
 
-export { checkHearingExists, createHearing, updateHearing, deleteHearing };
+export { checkHearingExists, createHearing, deleteHearing, updateHearing };

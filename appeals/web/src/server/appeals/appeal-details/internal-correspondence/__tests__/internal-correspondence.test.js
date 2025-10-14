@@ -1,27 +1,27 @@
 // @ts-nocheck
-import { jest } from '@jest/globals';
-import { parseHtml } from '@pins/platform';
-import nock from 'nock';
-import supertest from 'supertest';
+import usersService from '#appeals/appeal-users/users-service.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import {
-	appealData,
-	documentRedactionStatuses,
-	fileUploadInfo,
-	documentFileInfo,
-	folderInfoCrossTeamCorrespondence,
-	folderInfoInspectorCorrespondence,
 	activeDirectoryUsersData,
+	appealData,
+	documentFileInfo,
 	documentFileVersionsInfo,
-	documentFileVersionsInfoNotChecked,
 	documentFileVersionsInfoChecked,
+	documentFileVersionsInfoNotChecked,
 	documentFileVersionsInfoVirusFound,
 	documentFolderInfo,
+	documentRedactionStatuses,
+	fileUploadInfo,
+	folderInfoCrossTeamCorrespondence,
+	folderInfoInspectorCorrespondence,
 	folderInfoMainPartyCorrespondence
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import usersService from '#appeals/appeal-users/users-service.js';
-import { cloneDeep, capitalize } from 'lodash-es';
+import { jest } from '@jest/globals';
+import { parseHtml } from '@pins/platform';
+import { capitalize } from 'lodash-es';
+import nock from 'nock';
+import supertest from 'supertest';
 import { documentNameFromCategory } from '../internal-correspondence.service';
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -599,7 +599,7 @@ describe('internal correspondence', () => {
 						value: 'a',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} date month must be a number`
+						)} date must be a real date`
 					},
 					{
 						value: '0',
@@ -1041,7 +1041,7 @@ describe('internal correspondence', () => {
 						value: 'a',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} date month must be a number`
+						)} date must be a real date`
 					},
 					{
 						value: '0',
@@ -2022,7 +2022,7 @@ describe('internal correspondence', () => {
 						value: 'a',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} date month must be a number`
+						)} date must be a real date`
 					},
 					{
 						value: '0',
@@ -2177,9 +2177,9 @@ describe('internal correspondence', () => {
 							{
 								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
 								receivedDate: {
-									day: '1',
-									month: '2',
-									year: '2023'
+									day: ' 1 ',
+									month: ' Feb ',
+									year: ' 2023 '
 								},
 								redactionStatus: 'unredacted'
 							}
@@ -2320,7 +2320,7 @@ describe('internal correspondence', () => {
 			});
 
 			it(`should render the delete document page with the expected content when there are multiple document versions (${correspondenceCategory})`, async () => {
-				const multipleVersionsDocument = cloneDeep(documentFileVersionsInfoChecked);
+				const multipleVersionsDocument = structuredClone(documentFileVersionsInfoChecked);
 				multipleVersionsDocument.allVersions.push(multipleVersionsDocument.allVersions[0]);
 
 				nock('http://test/')

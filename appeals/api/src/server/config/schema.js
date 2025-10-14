@@ -15,7 +15,15 @@ export default joi
 		useNotifyEmulator: joi.boolean(),
 		defaultApiVersion: joi.string(),
 		serviceBusOptions: joi.object({
-			hostname: joi.string().optional()
+			hostname: joi.string().optional(),
+			topicAppealHas: joi.string().optional(),
+			topicAppealS78: joi.string().optional(),
+			topicAppealDocument: joi.string().optional(),
+			topicAppealServiceUser: joi.string().optional(),
+			topicAppealEvent: joi.string().optional(),
+			topicAppealEventEstimate: joi.string().optional(),
+			topicDocumentMove: joi.string().optional(),
+			topicAppealRepresentation: joi.string().optional()
 		}),
 		msal: joi.object({
 			clientId: joi.string().optional(),

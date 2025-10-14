@@ -1,9 +1,9 @@
 // @ts-nocheck
 import { mapCaseProcedure } from '#lib/mappers/data/appeal/submappers/case-procedure.mapper.js';
-import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { jest } from '@jest/globals';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { DOCUMENT_STATUS_RECEIVED } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 describe('case-procedure.mapper', () => {
 	let params;
@@ -53,6 +53,50 @@ describe('case-procedure.mapper', () => {
 								visuallyHiddenText: 'Appeal procedure'
 							}
 						]
+					},
+					classes: 'appeal-case-procedure',
+					key: {
+						text: 'Appeal procedure'
+					},
+					value: {
+						text: 'hearing'
+					}
+				}
+			},
+			id: 'case-procedure'
+		});
+	});
+
+	it('Should not display change link if linked child appeal', () => {
+		params.appealDetails.isChildAppeal = true;
+		const result = mapCaseProcedure(params);
+		expect(result).toEqual({
+			display: {
+				summaryListItem: {
+					actions: {
+						items: []
+					},
+					classes: 'appeal-case-procedure',
+					key: {
+						text: 'Appeal procedure'
+					},
+					value: {
+						text: 'hearing'
+					}
+				}
+			},
+			id: 'case-procedure'
+		});
+	});
+
+	it('Should not display change link if linked lead appeal', () => {
+		params.appealDetails.isParentAppeal = true;
+		const result = mapCaseProcedure(params);
+		expect(result).toEqual({
+			display: {
+				summaryListItem: {
+					actions: {
+						items: []
 					},
 					classes: 'appeal-case-procedure',
 					key: {

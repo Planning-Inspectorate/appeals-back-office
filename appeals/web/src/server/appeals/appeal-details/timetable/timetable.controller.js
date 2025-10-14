@@ -1,18 +1,20 @@
-import logger from '#lib/logger.js';
-import { objectContainsAllKeys } from '#lib/object-utilities.js';
-import { setAppealTimetables } from './timetable.service.js';
-import {
-	mapEditTimetablePage,
-	getAppealTimetableTypes,
-	getTimetableTypeText
-} from './timetable.mapper.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { buildSessionDate } from '#appeals/appeal-details/timetable/timetable.validators.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
+import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { padNumberWithZero } from '#lib/string-utilities.js';
-import { zonedTimeToUtc } from 'date-fns-tz';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
+import { zonedTimeToUtc } from 'date-fns-tz';
+import {
+	getAppealTimetableTypes,
+	getIdText,
+	getTimetableTypeText,
+	mapEditTimetablePage
+} from './timetable.mapper.js';
+import { setAppealTimetables } from './timetable.service.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getEditTimetable = async (request, response) => {
@@ -26,10 +28,17 @@ export const getEditTimetable = async (request, response) => {
  */
 export const postEditTimetable = async (request, response) => {
 	const { appealId } = request.params;
-	const { errors } = request;
+	const { appellantCase } = request.locals;
+	const { errors, session, currentAppeal } = request;
 	if (errors) {
 		return renderEditTimetable(request, response);
 	}
+	let timetableTypes = getAppealTimetableTypes(currentAppeal, appellantCase);
+	session.appealTimetable = session.appealTimetable || {};
+	timetableTypes.forEach((timetableType) => {
+		const idText = getIdText(timetableType);
+		session.appealTimetable[timetableType] = buildSessionDate(request, idText);
+	});
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}/timetable/edit/check`);
 };

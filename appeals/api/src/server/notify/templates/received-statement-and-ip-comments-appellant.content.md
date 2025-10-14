@@ -1,7 +1,7 @@
 
 
 {% if has_statement and has_ip_comments -%}
-   We have received the local planning authority’s questionnaire, all statements and comments from interested parties.
+   We have received the local planning authority's questionnaire, all statements and comments from interested parties.
 {% elif has_statement -%}
    We have received a statement from the local planning authority.
 {% elif has_ip_comments -%}
@@ -29,4 +29,4 @@ You can [view this information in the appeals service]({{front_office_url}}/appe
 {% endif -%}
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

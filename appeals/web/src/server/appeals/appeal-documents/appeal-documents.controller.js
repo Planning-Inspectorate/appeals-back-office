@@ -1,46 +1,46 @@
-import logger from '#lib/logger.js';
-import {
-	getDocumentRedactionStatuses,
-	updateDocuments,
-	getFileVersionsInfo,
-	getFileInfo,
-	deleteDocument,
-	updateDocument
-} from './appeal.documents.service.js';
-import {
-	mapDocumentDetailsFormDataToAPIRequest,
-	addDocumentDetailsFormDataToFileUploadInfo,
-	addDocumentDetailsPage,
-	addDocumentsCheckAndConfirmPage,
-	manageFolderPage,
-	manageDocumentPage,
-	changeDocumentDetailsPage,
-	changeDocumentFileNamePage,
-	deleteDocumentPage,
-	documentUploadPage,
-	mapDocumentFileNameFormDataToAPIRequest
-} from './appeal-documents.mapper.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { isInternalUrl, safeRedirect } from '#lib/url-utilities.js';
-import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import {
 	createNewDocument,
 	createNewDocumentVersion
 } from '#app/components/file-uploader.component.js';
-import config from '@pins/appeals.web/environment/config.js';
-import { isFileUploadInfoItemArray } from '#lib/ts-utilities.js';
+import { permissionNames } from '#environment/permissions.js';
 import { getTodaysISOString } from '#lib/dates.js';
 import { folderIsAdditionalDocuments } from '#lib/documents.js';
-import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
+import logger from '#lib/logger.js';
 import { userHasPermission } from '#lib/mappers/index.js';
-import { permissionNames } from '#environment/permissions.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
+import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { isFileUploadInfoItemArray } from '#lib/ts-utilities.js';
+import { isInternalUrl, safeRedirect } from '#lib/url-utilities.js';
+import config from '@pins/appeals.web/environment/config.js';
+import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
+import {
+	addDocumentDetailsFormDataToFileUploadInfo,
+	addDocumentDetailsPage,
+	addDocumentsCheckAndConfirmPage,
+	changeDocumentDetailsPage,
+	changeDocumentFileNamePage,
+	deleteDocumentPage,
+	documentUploadPage,
+	manageDocumentPage,
+	manageFolderPage,
+	mapDocumentDetailsFormDataToAPIRequest,
+	mapDocumentFileNameFormDataToAPIRequest
+} from './appeal-documents.mapper.js';
+import {
+	deleteDocument,
+	getDocumentRedactionStatuses,
+	getFileInfo,
+	getFileVersionsInfo,
+	updateDocument,
+	updateDocuments
+} from './appeal.documents.service.js';
 
 /** @typedef {'all-fields-day' | 'day-month' | 'month-year' | 'day-year' | 'day' | 'month' | 'year'} DateFieldKey */
 
 /**
  * @param {import("@pins/express").ValidationErrors | undefined} errors
- * @returns {Record<string, { param: string; [key: string]: any; }> | undefined}
+ * @returns {Record<string, { path: string; [key: string]: any; }> | undefined}
  */
 export const mapErrorsForDocumentDates = (errors) => {
 	if (!errors) {
@@ -59,10 +59,10 @@ export const mapErrorsForDocumentDates = (errors) => {
 
 	return Object.entries(errors).reduce(
 		(/**@type {import("@pins/express").ValidationErrors} */ newErrors, [key, error]) => {
-			const { param } = error;
+			const { path } = error;
 
-			if (param in dateFields) {
-				const newKey = `${key}.${dateFields[/** @type {DateFieldKey} */ (param)]}`;
+			if (path in dateFields) {
+				const newKey = `${key}.${dateFields[/** @type {DateFieldKey} */ (path)]}`;
 				newErrors[newKey] = error;
 			} else {
 				newErrors[key] = error;
@@ -294,6 +294,7 @@ export const renderDocumentDetails = async ({
  * @param {string} [params.pageHeadingTextOverride]
  * @param {string} [params.addButtonTextOverride]
  * @param {string} [params.dateColumnLabelTextOverride]
+ * @param {string} [params.preHeadingTextOverride]
  */
 export const renderManageFolder = async ({
 	request,
@@ -303,7 +304,8 @@ export const renderManageFolder = async ({
 	addButtonUrl,
 	pageHeadingTextOverride,
 	addButtonTextOverride,
-	dateColumnLabelTextOverride
+	dateColumnLabelTextOverride,
+	preHeadingTextOverride
 }) => {
 	const { currentFolder, errors } = request;
 
@@ -319,7 +321,8 @@ export const renderManageFolder = async ({
 		request,
 		pageHeadingTextOverride,
 		addButtonTextOverride,
-		dateColumnLabelTextOverride
+		dateColumnLabelTextOverride,
+		preHeadingTextOverride
 	});
 
 	return response.status(200).render('appeals/documents/manage-folder.njk', {

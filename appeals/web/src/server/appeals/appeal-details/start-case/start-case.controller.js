@@ -1,19 +1,19 @@
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import featureFlags from '#common/feature-flags.js';
+import { dateISOStringToDisplayDate, getTodaysISOString } from '#lib/dates.js';
+import { getSessionValuesForAppeal } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { getBackLinkUrlFromQuery, preserveQueryString } from '#lib/url-utilities.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { recalculateDateIfNotBusinessDay } from '@pins/appeals/utils/business-days.js';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import {
-	startCasePage,
 	changeDatePage,
+	confirmProcedurePage,
 	selectProcedurePage,
-	confirmProcedurePage
+	startCasePage
 } from './start-case.mapper.js';
 import * as startCaseService from './start-case.service.js';
-import { getTodaysISOString } from '#lib/dates.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import featureFlags from '#common/feature-flags.js';
-import { FEATURE_FLAG_NAMES, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
-import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
-import { recalculateDateIfNotBusinessDay } from '@pins/appeals/utils/business-days.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getStartDate = async (request, response) => {
@@ -164,14 +164,15 @@ export const getSelectProcedure = async (request, response) => {
 const renderSelectProcedure = async (request, response) => {
 	const {
 		currentAppeal: { appealId, appealReference },
-		session,
 		errors
 	} = request;
+
+	const sessionValues = getSessionValuesForAppeal(request, 'startCaseAppealProcedure', appealId);
 
 	const mappedPageContent = selectProcedurePage(
 		appealReference,
 		request.query?.backUrl ? String(request.query?.backUrl) : '/',
-		session.startCaseAppealProcedure?.[appealId],
+		{ appealProcedure: sessionValues?.appealProcedure },
 		errors ? errors['appealProcedure']?.msg : undefined
 	);
 
@@ -193,22 +194,14 @@ export const postSelectProcedure = async (request, response) => {
 			return renderSelectProcedure(request, response);
 		}
 
-		const { session } = request;
+		const sessionValues = getSessionValuesForAppeal(request, 'startCaseAppealProcedure', appealId);
 
-		if (!session.startCaseAppealProcedure?.[appealId]?.appealProcedure) {
+		if (!sessionValues?.appealProcedure) {
+			logger.error('No appeal procedure found in session');
 			return response.status(500).render('app/500.njk');
 		}
 
-		if (
-			session.startCaseAppealProcedure?.[appealId]?.appealProcedure ===
-			APPEAL_CASE_PROCEDURE.INQUIRY
-		) {
-			return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/setup/date`);
-		}
-
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/start-case/select-procedure/check-and-confirm`
-		);
+		return response.redirect(preserveQueryString(request, redirectionTarget(request)));
 	} catch (error) {
 		logger.error(
 			error,
@@ -219,6 +212,44 @@ export const postSelectProcedure = async (request, response) => {
 
 		return response.status(500).render('app/500.njk');
 	}
+};
+
+/**
+ * @param {import('@pins/express').Request} request
+ */
+const useNewHearingRoute = (request) => {
+	const featureFlagOverrideForTests =
+		process.env.NODE_ENV === 'test' && request.headers['x-feature-flag-hearing-post-mvp'];
+
+	if (featureFlagOverrideForTests) {
+		return featureFlagOverrideForTests === 'true';
+	}
+
+	return featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.HEARING_POST_MVP);
+};
+
+/**
+ * @param {import('@pins/express').Request} request
+ */
+const redirectionTarget = (request) => {
+	const {
+		currentAppeal: { appealId }
+	} = request;
+
+	const sessionValues = getSessionValuesForAppeal(request, 'startCaseAppealProcedure', appealId);
+
+	if (sessionValues?.appealProcedure === APPEAL_CASE_PROCEDURE.INQUIRY) {
+		return `/appeals-service/appeal-details/${appealId}/inquiry/setup/date`;
+	}
+
+	if (
+		sessionValues?.appealProcedure === APPEAL_CASE_PROCEDURE.HEARING &&
+		useNewHearingRoute(request)
+	) {
+		return `/appeals-service/appeal-details/${appealId}/start-case/hearing`;
+	}
+
+	return `/appeals-service/appeal-details/${appealId}/start-case/select-procedure/check-and-confirm`;
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
@@ -234,18 +265,19 @@ export const getConfirmProcedure = async (request, response) => {
 const renderConfirmProcedure = async (request, response) => {
 	const {
 		currentAppeal: { appealId, appealReference },
-		session,
 		errors
 	} = request;
 
-	if (!session.startCaseAppealProcedure?.[appealId]?.appealProcedure) {
+	const sessionValues = getSessionValuesForAppeal(request, 'startCaseAppealProcedure', appealId);
+
+	if (!sessionValues?.appealProcedure) {
 		return response.status(500).render('app/500.njk');
 	}
 
 	const mappedPageContent = confirmProcedurePage(
 		appealId,
 		appealReference,
-		session.startCaseAppealProcedure?.[appealId]?.appealProcedure
+		sessionValues?.appealProcedure
 	);
 
 	return response.render('patterns/change-page.pattern.njk', {
@@ -261,9 +293,9 @@ export const postConfirmProcedure = async (request, response) => {
 			currentAppeal: { appealId }
 		} = request;
 
-		const { session } = request;
+		const sessionValues = getSessionValuesForAppeal(request, 'startCaseAppealProcedure', appealId);
 
-		if (!session.startCaseAppealProcedure?.[appealId]?.appealProcedure) {
+		if (!sessionValues?.appealProcedure) {
 			return response.status(500).render('app/500.njk');
 		}
 
@@ -271,7 +303,7 @@ export const postConfirmProcedure = async (request, response) => {
 			request.apiClient,
 			appealId,
 			getTodaysISOString(),
-			session.startCaseAppealProcedure?.[appealId]?.appealProcedure
+			sessionValues?.appealProcedure
 		);
 
 		addNotificationBannerToSession({
@@ -280,10 +312,7 @@ export const postConfirmProcedure = async (request, response) => {
 			appealId
 		});
 
-		if (
-			session.startCaseAppealProcedure?.[appealId]?.appealProcedure ===
-			APPEAL_CASE_PROCEDURE.HEARING
-		) {
+		if (sessionValues?.appealProcedure === APPEAL_CASE_PROCEDURE.HEARING) {
 			addNotificationBannerToSession({
 				session: request.session,
 				bannerDefinitionKey: 'timetableStarted',

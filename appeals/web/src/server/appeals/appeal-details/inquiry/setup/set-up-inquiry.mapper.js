@@ -1,8 +1,8 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateInput } from '#lib/mappers/components/page-components/date.js';
+import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
 import { timeInput } from '#lib/mappers/components/page-components/time.js';
 import { addressInputs } from '#lib/mappers/index.js';
-import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 
 import { addressToString } from '#lib/address-formatter.js';
@@ -11,11 +11,10 @@ import {
 	dateISOStringToDisplayTime12hr,
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
-import { textSummaryListItem } from '#lib/mappers/index.js';
-import { simpleHtmlComponent } from '#lib/mappers/index.js';
+import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
-import { capitalize, pick } from 'lodash-es';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import { capitalize, pick } from 'lodash-es';
 
 /**
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
@@ -71,9 +70,10 @@ export function inquiryDatePage(appealData, values, action) {
  * @param {Appeal} appealData
  * @param {string} action
  * @param {{inquiryEstimationYesNo: string, inquiryEstimationDays: number}} [values]
+ * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns {{backLinkUrl: string, title: string, pageComponents: {type: string, parameters: {name: string, fieldset: {legend: {classes: string, text: string, isPageHeading: boolean}}, idPrefix: string, items: [{conditional: {html: string}, text: string, value: string},{text: string, value: string}]}}[], preHeading: string}}
  */
-export function inquiryEstimationPage(appealData, action, values) {
+export function inquiryEstimationPage(appealData, action, errors, values) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const inquiryEstimationComponent = {
 		type: 'radios',
@@ -100,6 +100,7 @@ export function inquiryEstimationPage(appealData, action, values) {
 									id: 'inquiry-estimation-days',
 									name: 'inquiryEstimationDays',
 									value: values?.inquiryEstimationDays,
+									...(errors && { errorMessage: { text: errors.msg } }),
 									label: {
 										text: 'Expected number of days to carry out the inquiry',
 										classes: 'govuk-label--s'
@@ -130,7 +131,7 @@ export function inquiryEstimationPage(appealData, action, values) {
 			action === 'setup' ? 'set up' : 'change'
 		} inquiry`,
 		// @ts-ignore
-		pageComponents: [inquiryEstimationComponent]
+		pageComponents: [inquiryEstimationComponent, errors]
 	};
 }
 
@@ -184,6 +185,7 @@ export function addressDetailsPage(appealData, action, currentAddress, errors) {
  * @param {Appeal} appealDetails
  * @param {any} sessionValues
  * @param {'change' | 'setup'} action
+ * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse | undefined} appellantCase
  * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns Promise<PageContent>
  */
@@ -191,6 +193,7 @@ export const inquiryDueDatesPage = async (
 	appealDetails,
 	sessionValues,
 	action,
+	appellantCase,
 	errors = undefined
 ) => {
 	/**
@@ -206,6 +209,7 @@ export const inquiryDueDatesPage = async (
 		heading: `Timetable due dates`,
 		pageComponents: []
 	};
+
 	/**
 	 *
 	 * @type {string[]}
@@ -215,9 +219,12 @@ export const inquiryDueDatesPage = async (
 		'statementDueDate',
 		'ipCommentsDueDate',
 		'statementOfCommonGroundDueDate',
-		'proofOfEvidenceAndWitnessesDueDate',
-		'planningObligationDueDate'
+		'proofOfEvidenceAndWitnessesDueDate'
 	];
+
+	if (appellantCase?.planningObligation?.hasObligation) {
+		dueDateFields.push('planningObligationDueDate');
+	}
 
 	pageContent.pageComponents = dueDateFields.map((dateField) => {
 		const fieldType = getDueDateFieldNameAndID(dateField);
@@ -291,11 +298,12 @@ export const getDueDateFieldNameAndID = (dateField) => {
 /**
  * @param {string|number} appealId
  * @param {string} appealReference
+ * @param {boolean} hasObligation
  * @param {'setup'|'change'} action
  * @param {import('@pins/express').Session} session
  * @returns {PageContent}
  */
-export function confirmInquiryPage(appealId, appealReference, action, session) {
+export function confirmInquiryPage(appealId, appealReference, hasObligation, action, session) {
 	const procedureType = APPEAL_CASE_PROCEDURE.INQUIRY;
 	/**@type {PageComponent[]} */
 	const pageComponents = [
@@ -315,8 +323,11 @@ export function confirmInquiryPage(appealId, appealReference, action, session) {
 		}
 	];
 
-	pageComponents.push(...mapInquiryDetails(appealId, action, session.setUpInquiry));
-	pageComponents.push(...mapInquiryTimetableDue(appealId, action, session.setUpInquiry));
+	pageComponents.push(...mapInquiryDetails(appealId, action, session['setUpInquiry']?.[appealId]));
+
+	pageComponents.push(
+		...mapInquiryTimetableDue(appealId, action, hasObligation, session['setUpInquiry']?.[appealId])
+	);
 
 	// Add page footer
 	pageComponents.push(
@@ -360,7 +371,7 @@ export function confirmChangeInquiryPage(appealId, appealReference, action, sess
 			`We'll send an email to the appellant and LPA to tell them about the inquiry.`
 		)
 	];
-	const inquiry = action === 'setup' ? session.setUpInquiry : session.changeInquiry;
+	const inquiry = action === 'setup' ? session['setUpInquiry']?.[appealId] : session.changeInquiry;
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -501,10 +512,11 @@ export function mapInquiryDetails(appealId, action, values) {
 /**
  * @param {string|number} appealId
  * @param {string} action
+ * @param {boolean} hasObligation
  * @param {any} values
  * @returns {PageComponent[]}
  */
-export function mapInquiryTimetableDue(appealId, action, values) {
+export function mapInquiryTimetableDue(appealId, action, hasObligation, values) {
 	/**@type {PageComponent[]} */
 	const pageComponents = [
 		simpleHtmlComponent(
@@ -613,8 +625,11 @@ export function mapInquiryTimetableDue(appealId, action, values) {
 					})?.display.summaryListItem
 				]
 			}
-		},
-		{
+		}
+	];
+
+	if (hasObligation) {
+		pageComponents.push({
 			type: 'summary-list',
 			parameters: {
 				rows: [
@@ -633,7 +648,8 @@ export function mapInquiryTimetableDue(appealId, action, values) {
 					})?.display.summaryListItem
 				]
 			}
-		}
-	];
+		});
+	}
+
 	return pageComponents;
 }

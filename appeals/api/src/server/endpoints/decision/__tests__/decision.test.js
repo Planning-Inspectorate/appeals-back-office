@@ -1,41 +1,44 @@
 // @ts-nocheck
-import { request } from '../../../app-test.js';
-import { jest } from '@jest/globals';
-import { azureAdUserId } from '#tests/shared/mocks.js';
 import {
-	householdAppeal,
 	casPlanningAppeal,
 	fullPlanningAppeal,
+	householdAppeal,
 	listedBuildingAppeal
 } from '#tests/appeals/mocks.js';
-import { documentCreated } from '#tests/documents/mocks.js';
-import formatDate from '@pins/appeals/utils/date-formatter.js';
-import { add, sub } from 'date-fns';
+import { documentCreated, documentVersionCreated, savedFolder } from '#tests/documents/mocks.js';
+import { azureAdUserId } from '#tests/shared/mocks.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { jest } from '@jest/globals';
 import {
-	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
-	ERROR_MUST_NOT_BE_IN_FUTURE,
-	ERROR_CASE_OUTCOME_MUST_BE_ONE_OF,
-	ERROR_INVALID_APPEAL_STATE,
-	AUDIT_TRAIL_DECISION_ISSUED,
 	AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
+	AUDIT_TRAIL_CORRECTION_NOTICE_ADDED,
+	AUDIT_TRAIL_DECISION_ISSUED,
 	AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED,
 	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
-	DECISION_TYPE_INSPECTOR,
+	CASE_RELATIONSHIP_LINKED,
 	DECISION_TYPE_APPELLANT_COSTS,
+	DECISION_TYPE_INSPECTOR,
 	DECISION_TYPE_LPA_COSTS,
-	CASE_RELATIONSHIP_LINKED
+	ERROR_CASE_OUTCOME_MUST_BE_ONE_OF,
+	ERROR_INVALID_APPEAL_STATE,
+	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
+	ERROR_MUST_NOT_BE_IN_FUTURE
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
 	recalculateDateIfNotBusinessDay,
 	setTimeInTimeZone
 } from '@pins/appeals/utils/business-days.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { AUDIT_TRAIL_CORRECTION_NOTICE_ADDED } from '@pins/appeals/constants/support.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { add, sub } from 'date-fns';
+import { request } from '../../../app-test.js';
 import { sendNewDecisionLetter } from '../decision.service';
-import { cloneDeep } from 'lodash-es';
 const { databaseConnector } = await import('#utils/database-connector.js');
+
 describe('decision routes', () => {
+	beforeAll(() => {
+		jest.clearAllMocks();
+	});
 	beforeEach(() => {
 		// @ts-ignore
 		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
@@ -281,7 +284,9 @@ describe('decision routes', () => {
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
 				data: {
 					appealId: appeal.id,
-					details: AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
+					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
+						outcome[0].toUpperCase() + outcome.slice(1)
+					]),
 					loggedAt: expect.any(Date),
 					userId: appeal.caseOfficer.id
 				}
@@ -290,7 +295,7 @@ describe('decision routes', () => {
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 				data: {
 					appealId: appeal.id,
-					details: AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED,
+					details: AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
 					loggedAt: expect.any(Date),
 					userId: appeal.caseOfficer.id
 				}
@@ -299,9 +304,7 @@ describe('decision routes', () => {
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
 				data: {
 					appealId: appeal.id,
-					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
-						outcome[0].toUpperCase() + outcome.slice(1)
-					]),
+					details: AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED,
 					loggedAt: expect.any(Date),
 					userId: appeal.caseOfficer.id
 				}
@@ -320,7 +323,7 @@ describe('decision routes', () => {
 		});
 
 		test('returns 200 when only issuing appellant costs decisions', async () => {
-			const appeal = cloneDeep(householdAppeal);
+			const appeal = structuredClone(householdAppeal);
 			const correctAppealState = {
 				...appeal,
 				appealStatus: [
@@ -397,7 +400,7 @@ describe('decision routes', () => {
 		});
 
 		test('returns 200 when only issuing lpa costs decisions', async () => {
-			const appeal = cloneDeep(householdAppeal);
+			const appeal = structuredClone(householdAppeal);
 			const correctAppealState = {
 				...appeal,
 				appealStatus: [
@@ -479,7 +482,11 @@ describe('decision routes', () => {
 			const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
 			const outcome = 'allowed';
 			const childAppeal = {
-				appealId: 4,
+				child: {
+					id: 4,
+					reference: 'CHILD123'
+				},
+				childId: 4,
 				childRef: 'CHILD123',
 				inspectorDecision: outcome,
 				type: CASE_RELATIONSHIP_LINKED
@@ -503,6 +510,15 @@ describe('decision routes', () => {
 			// @ts-ignore
 			databaseConnector.inspectorDecision.create.mockResolvedValue({});
 
+			// @ts-ignore
+			databaseConnector.folder.findMany.mockResolvedValue([savedFolder]);
+			databaseConnector.document.create = jest.fn().mockImplementation(() => {
+				return documentCreated;
+			});
+			databaseConnector.documentVersion.create = jest
+				.fn()
+				.mockResolvedValue(documentVersionCreated);
+
 			const response = await request
 				.post(`/appeals/${appeal.id}/decision`)
 				.send({
@@ -514,7 +530,7 @@ describe('decision routes', () => {
 							documentGuid: documentCreated.guid
 						},
 						{
-							appealId: childAppeal.appealId,
+							appealId: childAppeal.childId,
 							decisionType: DECISION_TYPE_INSPECTOR,
 							outcome,
 							documentDate: utcDate.toISOString(),
@@ -524,6 +540,39 @@ describe('decision routes', () => {
 					]
 				})
 				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.document.create).toHaveBeenCalledWith({
+				data: {
+					caseId: childAppeal.childId,
+					folderId: 23,
+					guid: 'mock-uuid',
+					name: 'mydoc-1345264.pdf'
+				}
+			});
+
+			expect(databaseConnector.documentVersion.create).toHaveBeenCalledWith({
+				data: {
+					blobStorageContainer: 'document-service-uploads',
+					blobStoragePath: 'appeal/CHILD123/mock-uuid/v1/mydoc-1345264.pdf',
+					dateReceived: expect.any(Date),
+					documentGuid: 'mock-uuid',
+					documentType: 'appellantCostApplication',
+					documentURI:
+						'https://127.0.0.1:10000/document-service-uploads/appeal/CHILD123/mock-uuid/v1/mydoc-1345264.pdf',
+					draft: false,
+					fileName: 'mydoc-1345264.pdf',
+					isLateEntry: false,
+					lastModified: expect.any(Date),
+					mime: 'application/pdf',
+					originalFilename: 'mydoc-1345264.pdf',
+					published: false,
+					redactionStatusId: 1,
+					size: 14699,
+					stage: 'appeal-decision',
+					version: 1,
+					virusCheckStatus: 'affected'
+				}
+			});
 
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
@@ -561,7 +610,7 @@ describe('decision routes', () => {
 
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
 				data: {
-					appealId: childAppeal.appealId,
+					appealId: appeal.id,
 					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
 						outcome[0].toUpperCase() + outcome.slice(1)
 					]),
@@ -572,7 +621,7 @@ describe('decision routes', () => {
 
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 				data: {
-					appealId: childAppeal.appealId,
+					appealId: appeal.id,
 					details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['complete']),
 					loggedAt: expect.any(Date),
 					userId: appeal.caseOfficer.id
@@ -581,7 +630,7 @@ describe('decision routes', () => {
 
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
 				data: {
-					appealId: appeal.id,
+					appealId: childAppeal.childId,
 					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
 						outcome[0].toUpperCase() + outcome.slice(1)
 					]),
@@ -592,7 +641,7 @@ describe('decision routes', () => {
 
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(4, {
 				data: {
-					appealId: appeal.id,
+					appealId: childAppeal.childId,
 					details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['complete']),
 					loggedAt: expect.any(Date),
 					userId: appeal.caseOfficer.id
@@ -676,7 +725,8 @@ describe('decision routes', () => {
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 						front_office_url: 'https://appeal-planning-decision.service.gov.uk/appeals/1345264',
 						correction_notice_reason: correctionNotice,
-						decision_date: formatDate(decisionDate, false)
+						decision_date: formatDate(decisionDate, false),
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					}
 				});
 			});
@@ -732,7 +782,8 @@ describe('decision routes', () => {
 					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 					front_office_url: 'https://appeal-planning-decision.service.gov.uk/appeals/1345264',
 					correction_notice_reason: correctionNotice,
-					decision_date: formatDate(decisionDate, false)
+					decision_date: formatDate(decisionDate, false),
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				}
 			});
 		});

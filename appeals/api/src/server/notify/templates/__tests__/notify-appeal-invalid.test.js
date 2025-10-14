@@ -17,7 +17,8 @@ describe('appeal-invalid.md', () => {
 				reasons: [
 					'Appeal has not been submitted on time',
 					'Other: The appeal site address does not match'
-				]
+				],
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

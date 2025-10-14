@@ -7,7 +7,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
  * @property {string} preHeading
  * @property {string} heading
  * @property {string} submitButtonText
- * @property {{ [key: string]: {value?: string, html?: string, pageComponents?: PageComponent[], actions?: { [text: string]: { href: string, visuallyHiddenText: string } }} }} responses
+ * @property {{ [key: string]: {value?: string, html?: string, pageComponents?: PageComponent[], actions?: { [text: string]: { href: string, visuallyHiddenText: string, attributes?: Record<string, string> } }} }} responses
  * @property {PageComponent[]} [before]
  * @property {PageComponent[]} [after]
  */
@@ -47,7 +47,8 @@ export const checkYourAnswersComponent = ({
 								items: Object.entries(actions).map(([text, item]) => {
 									return {
 										html: `${text} <span class="govuk-visually-hidden">${item.visuallyHiddenText}</span>`,
-										href: item.href
+										href: item.href,
+										...(item.attributes && { attributes: item.attributes })
 									};
 								})
 							}

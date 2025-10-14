@@ -1,9 +1,9 @@
 // @ts-nocheck
-import { parseHtml } from '@pins/platform';
-import supertest from 'supertest';
-import { createTestEnvironment } from '#testing/index.js';
-import nock from 'nock';
 import { caseTeams } from '#testing/app/fixtures/referencedata.js';
+import { createTestEnvironment } from '#testing/index.js';
+import { parseHtml } from '@pins/platform';
+import nock from 'nock';
+import supertest from 'supertest';
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
@@ -110,6 +110,31 @@ describe('update-case-team', () => {
 
 				expect(element.innerHTML).toMatchSnapshot();
 				expect(element.innerHTML).toContain('temp4</dd>');
+				expect(element.innerHTML).toContain('Change team</span>');
+				expect(element.innerHTML).toContain('Update case team');
+			});
+		});
+
+		describe('GET Unassig team', () => {
+			beforeEach(async () => {
+				nock('http://test/').get('/appeals/1/case-team').reply(200, { assignedTeamId: 4 });
+				renderSelectPage = await request.get(`${baseUrl}/1${caseTeamPath}/edit`);
+				selectTeamResponse = await request.post(`${baseUrl}/1${caseTeamPath}/edit`).send({
+					'case-team': '0'
+				});
+				renderSelectPage = await request.get(`${baseUrl}/1${caseTeamPath}/edit`);
+			});
+			it('should display not assigned when unassign team is selected', async () => {
+				expect(renderSelectPage.statusCode).toBe(500);
+				expect(selectTeamResponse.statusCode).toBe(302);
+				const response = await request.get(`${baseUrl}/1${caseTeamPath}/edit/check`);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Not assigned');
+				expect(element.innerHTML).toContain(
+					'<br>This will remove the current case team from the appeal'
+				);
 				expect(element.innerHTML).toContain('Change team</span>');
 				expect(element.innerHTML).toContain('Update case team');
 			});

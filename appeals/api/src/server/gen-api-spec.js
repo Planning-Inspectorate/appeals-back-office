@@ -1,10 +1,10 @@
-import swaggerAutogen from 'swagger-autogen';
-import prettier from 'prettier';
-import { spec } from './swagger.js';
-import { generateApi } from 'swagger-typescript-api';
-import path from 'path';
-import url from 'url';
 import fs from 'fs/promises';
+import path from 'path';
+import prettier from 'prettier';
+import swaggerAutogen from 'swagger-autogen';
+import { generateApi } from 'swagger-typescript-api';
+import url from 'url';
+import { spec } from './swagger.js';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
@@ -57,7 +57,7 @@ async function formatWrite(filePath, content) {
 		throw new Error(`no prettier config for ${filePath}`);
 	}
 	options.filepath = filePath;
-	const formatted = prettier.format(content, options);
+	const formatted = await prettier.format(content, options);
 	await fs.writeFile(filePath, formatted);
 }
 

@@ -1,10 +1,7 @@
 // @ts-nocheck
-import { jest } from '@jest/globals';
 import * as folderRepository from '#repositories/folder.repository.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
-import { azureAdUserId, documentRedactionStatuses } from '#tests/shared/mocks.js';
 import {
-	folder,
 	addDocumentsRequest,
 	addDocumentVersionRequest,
 	blobInfo,
@@ -12,12 +9,15 @@ import {
 	documentUpdated,
 	documentVersionCreated,
 	documentVersionRetrieved,
+	folder,
 	savedFolder
 } from '#tests/documents/mocks.js';
+import { azureAdUserId, documentRedactionStatuses } from '#tests/shared/mocks.js';
+import { jest } from '@jest/globals';
+import { request } from '../../../app-test.js';
+import * as controller from '../documents.controller.js';
 import * as mappers from '../documents.mapper.js';
 import * as service from '../documents.service.js';
-import * as controller from '../documents.controller.js';
-import { request } from '../../../app-test.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 const { default: got } = await import('got');

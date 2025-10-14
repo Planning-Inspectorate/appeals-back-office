@@ -243,28 +243,14 @@ export interface QuestionnaireData {
 	casedata?: {
 		/** @example "6000000" */
 		caseReference?: string;
-		/** @example "D" */
-		caseType?: string;
+		/** @example ["1000000"] */
+		nearbyCaseReferences?: string[];
 		/** @example "2024-05-31T23:00:00.000Z" */
 		lpaQuestionnaireSubmittedDate?: string;
-		/** @example "cupidatat ipsum eu culpa" */
-		lpaStatement?: string;
 		/** @example ["Here it is"] */
 		siteAccessDetails?: string[];
 		/** @example ["Fine"] */
 		siteSafetyDetails?: string[];
-		/** @example true */
-		isCorrectAppealType?: boolean;
-		/** @example false */
-		isGreenBelt?: boolean;
-		/** @example true */
-		inConservationArea?: boolean;
-		/** @example "cupidatat" */
-		newConditionDetails?: string;
-		/** @example ["notice","letter"] */
-		notificationMethod?: string[];
-		/** @example ["1000000"] */
-		nearbyCaseReferences?: string[];
 		neighbouringSiteAddresses?: {
 			/** @example "deserunt in irure do" */
 			neighbouringSiteAddressLine1?: string;
@@ -279,6 +265,21 @@ export interface QuestionnaireData {
 			/** @example "magna proident incididunt in non" */
 			neighbouringSiteSafetyDetails?: string;
 		}[];
+		reasonForNeighbourVisits?: undefined;
+		/** @example "D" */
+		caseType?: string;
+		/** @example "cupidatat ipsum eu culpa" */
+		lpaStatement?: string;
+		/** @example true */
+		isCorrectAppealType?: boolean;
+		/** @example false */
+		isGreenBelt?: boolean;
+		/** @example true */
+		inConservationArea?: boolean;
+		/** @example "cupidatat" */
+		newConditionDetails?: string;
+		/** @example ["notice","letter"] */
+		notificationMethod?: string[];
 		/** @example ["10001","10002"] */
 		affectedListedBuildingNumbers?: string[];
 		/** @example false */
@@ -803,6 +804,15 @@ export interface AppealTypeChangeRequest {
 	newAppealTypeFinalDate?: string;
 }
 
+export interface AppealTypeResubmitMarkInvalidRequest {
+	/** @example 32 */
+	newAppealTypeId?: number;
+	/** @example "2024-02-02" */
+	newAppealTypeFinalDate?: string;
+	/** @example 12 */
+	appellantCaseId?: number;
+}
+
 export interface AppealTypeTransferRequest {
 	/** @example 32 */
 	newAppealTypeId?: number;
@@ -811,6 +821,11 @@ export interface AppealTypeTransferRequest {
 export interface AppealTypeTransferConfirmationRequest {
 	/** @example "76215416" */
 	newAppealReference?: string;
+}
+
+export interface AppealTypeUpdateRequest {
+	/** @example 32 */
+	newAppealTypeId?: number;
 }
 
 export type AppealTypes = {
@@ -1375,6 +1390,16 @@ export interface SingleAppellantCaseResponse {
 	};
 	/** @example 0 */
 	numberOfResidencesNetChange?: number;
+	/** @example false */
+	highwayLand?: boolean;
+	/** @example true */
+	advertInPosition?: boolean;
+	/** @example true */
+	landownerPermission?: boolean;
+	/** @example "123456" */
+	siteGridReferenceEasting?: string;
+	/** @example "654321" */
+	siteGridReferenceNorthing?: string;
 }
 
 export interface UpdateCaseTeamRequest {
@@ -1394,6 +1419,10 @@ export interface UpdateCaseTeamResponse {
 export interface StartCaseRequest {
 	/** @example "2024-05-09" */
 	startDate?: string;
+	/** @example "written" */
+	procedureType?: string;
+	/** @example "2024-05-09T12:00:00.000Z" */
+	hearingStartTime?: string;
 }
 
 export interface StartCaseResponse {
@@ -1405,6 +1434,17 @@ export interface StartCaseResponse {
 	lpaQuestionnaireDueDate?: string;
 	/** @example "2024-08-12" */
 	statementReviewDate?: string;
+}
+
+export interface StartCaseNotifyPreviewResponse {
+	appellant?: {
+		/** @example "Rendered HTML for appellant preview" */
+		renderedHtml?: string;
+	};
+	lpa?: {
+		/** @example "Rendered HTML for LPA preview" */
+		renderedHtml?: string;
+	};
 }
 
 export interface SingleLPAQuestionnaireResponse {
@@ -1923,6 +1963,16 @@ export interface UpdateAppellantCaseRequest {
 	appellantProcedurePreferenceWitnessCount?: number;
 	/** @example 0 */
 	numberOfResidencesNetChange?: number;
+	/** @example false */
+	highwayLand?: boolean;
+	/** @example true */
+	advertInPosition?: boolean;
+	/** @example true */
+	landownerPermission?: boolean;
+	/** @example "123456" */
+	siteGridReferenceEasting?: string;
+	/** @example "654321" */
+	siteGridReferenceNorthing?: string;
 }
 
 export type UpdateAppellantCaseResponse = object;
@@ -2254,6 +2304,25 @@ export interface UpdateAppealTimetableResponse {
 	proofOfEvidenceAndWitnessesDueDate?: string;
 }
 
+export interface CalculateAppealTimetableResponse {
+	/** @example "2024-08-09T01:00:00.000Z" */
+	finalCommentReviewDate?: string;
+	/** @example "2024-08-10T01:00:00.000Z" */
+	issueDeterminationDate?: string;
+	/** @example "2024-08-11T01:00:00.000Z" */
+	lpaQuestionnaireDueDate?: string;
+	/** @example "2024-08-12T01:00:00.000Z" */
+	statementReviewDate?: string;
+	/** @example "2024-08-12T01:00:00.000Z" */
+	statementOfCommonGroundDueDate?: string;
+	/** @example "2024-08-13T01:00:00.000Z" */
+	planningObligationDueDate?: string;
+	/** @example "2024-08-14T01:00:00.000Z" */
+	proofOfEvidenceAndWitnessesDueDate?: string;
+	/** @example "2024-08-09T01:00:00.000Z" */
+	startDate?: string;
+}
+
 export interface AllDocumentRedactionStatusesResponse {
 	/** @example 1 */
 	id?: number;
@@ -2356,6 +2425,11 @@ export interface LPAChangeRequest {
 export interface UpdateAsssignedTeamResponse {
 	/** @example 1 */
 	teamId?: number;
+}
+
+export interface TeamEmailResponse {
+	/** @example "email@email.com" */
+	teamEmail?: string;
 }
 
 export interface SingleLinkableAppealSummaryResponse {
@@ -2857,6 +2931,10 @@ export interface AppealStatusRollBackRequest {
 export interface UpdateAsssignedTeamRequest {
 	/** @example "1" */
 	teamId?: string;
+}
+
+export interface DeleteAppealsRequest {
+	appealIds?: number[];
 }
 
 export interface Address {
@@ -3894,6 +3972,7 @@ export type AppellantCase = {
 		| 'other-minor'
 		| null;
 	typeOfPlanningApplication?:
+		| 'advertisement'
 		| 'full-appeal'
 		| 'householder-planning'
 		| 'listed-building'
@@ -3903,6 +3982,11 @@ export type AppellantCase = {
 		| 'removal-or-variation-of-conditions'
 		| 'reserved-matters'
 		| null;
+	highwayLand?: boolean | null;
+	advertInPosition?: boolean | null;
+	landownerPermission?: boolean | null;
+	siteGridReferenceEasting?: string | null;
+	siteGridReferenceNorthing?: string | null;
 	validation?: {
 		outcome?: string | null;
 		incompleteReasons?: {
@@ -12186,6 +12270,7 @@ export interface AppellantCaseUpdateRequest {
 		| 'other-minor'
 		| null;
 	typeOfPlanningApplication?:
+		| 'advertisement'
 		| 'full-appeal'
 		| 'householder-planning'
 		| 'listed-building'
@@ -12195,6 +12280,11 @@ export interface AppellantCaseUpdateRequest {
 		| 'removal-or-variation-of-conditions'
 		| 'reserved-matters'
 		| null;
+	highwayLand?: boolean | null;
+	advertInPosition?: boolean | null;
+	landownerPermission?: boolean | null;
+	siteGridReferenceEasting?: string | null;
+	siteGridReferenceNorthing?: string | null;
 	appellantCaseValidationOutcomeId?: number | null;
 	validationOutcome?: {
 		id?: number;
@@ -12225,11 +12315,6 @@ export interface AppellantCaseUpdateRequest {
 	originalDevelopmentDescription?: string | null;
 	changedDevelopmentDescription?: string | null;
 	numberOfResidencesNetChange?: number | null;
-	highwayLand?: boolean | null;
-	advertInPosition?: boolean | null;
-	landownerPermission?: boolean | null;
-	siteGridReferenceEasting?: string | null;
-	siteGridReferenceNorthing?: string | null;
 }
 
 export interface LpaQuestionnaireUpdateRequest {

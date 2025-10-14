@@ -1,6 +1,6 @@
 import {
-	AUDIT_TRAIL_DECISION_LETTER_UPLOADED,
 	AUDIT_TRAIL_DECISION_LETTER_UPDATED,
+	AUDIT_TRAIL_DECISION_LETTER_UPLOADED,
 	AUDIT_TRAIL_DOCUMENT_DATE_CHANGED,
 	AUDIT_TRAIL_DOCUMENT_DELETED,
 	AUDIT_TRAIL_DOCUMENT_NAME_CHANGED,
@@ -14,16 +14,17 @@ import {
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
 
-import logger from '#utils/logger.js';
-import * as service from './documents.service.js';
-import * as documentRepository from '#repositories/document.repository.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import { formatDocument } from './documents.formatter.js';
+import { sendNewDecisionLetter } from '#endpoints/decision/decision.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import * as documentRepository from '#repositories/document.repository.js';
+import logger from '#utils/logger.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { updatePersonalList } from '#utils/update-personal-list.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
-import { sendNewDecisionLetter } from '#endpoints/decision/decision.service.js';
+import { formatDocument } from './documents.formatter.js';
+import * as service from './documents.service.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Folder} Folder */
 /** @typedef {import('@pins/appeals.api').Schema.AuditTrail} AuditTrail */
@@ -99,6 +100,8 @@ const addDocuments = async (req, res) => {
 
 	try {
 		const documentInfo = await service.addDocumentsToAppeal(req.body, appeal);
+
+		await updatePersonalList(appeal.id);
 
 		const auditTrails = await Promise.all(
 			documentInfo.documents.filter(Boolean).map(async (document) => {
@@ -475,14 +478,14 @@ const updateDocumentsAvCheckStatus = async (req, res) => {
 export {
 	addDocuments,
 	addDocumentVersion,
+	deleteDocumentVersion,
 	getDocument,
 	getDocumentAndVersions,
 	getFolder,
 	getFolders,
-	updateDocuments,
 	updateDocumentFileName,
-	updateDocumentsAvCheckStatus,
-	deleteDocumentVersion
+	updateDocuments,
+	updateDocumentsAvCheckStatus
 };
 
 /**

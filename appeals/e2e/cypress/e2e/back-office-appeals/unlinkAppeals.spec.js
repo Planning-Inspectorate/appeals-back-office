@@ -3,7 +3,6 @@
 
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
-import { urlPaths } from '../../support/urlPaths';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 
 const caseDetailsPage = new CaseDetailsPage();
@@ -14,18 +13,17 @@ describe('unlink appeals', () => {
 	});
 
 	it.skip('Unlink the only linked appeal from a child appeal', () => {
-		cy.createCase().then((caseRef) => {
-			cy.createCase().then((caseRefToLink) => {
-				happyPathHelper.assignCaseOfficer(caseRef);
-				caseDetailsPage.clickAccordionByButton('Overview');
+		cy.createCase().then((caseObj) => {
+			cy.createCase().then((caseObjToLink) => {
+				happyPathHelper.assignCaseOfficer(caseObj);
 				caseDetailsPage.clickAddLinkedAppeal();
-				caseDetailsPage.fillInput(caseRefToLink);
+				caseDetailsPage.fillInput(caseObjToLink);
 				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.selectRadioButtonByValue('Yes, make this the lead appeal for ' + caseRef);
+				caseDetailsPage.selectRadioButtonByValue('Yes, make this the lead appeal for ' + caseObj);
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.validateBannerMessage(
 					'Success',
-					'This appeal is now a child appeal of ' + caseRefToLink
+					'This appeal is now a child appeal of ' + caseObjToLink
 				);
 				caseDetailsPage.checkStatusOfCase('Child', 1);
 				caseDetailsPage.clickManageLinkedAppeals();
@@ -34,26 +32,25 @@ describe('unlink appeals', () => {
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.validateBannerMessage(
 					'Success',
-					'You have unlinked this appeal from appeal  ' + caseRef
+					'You have unlinked this appeal from appeal  ' + caseObj
 				);
 			});
 		});
 	});
 
 	it.skip('Unlink the only linked appeal from a lead appeal', () => {
-		cy.createCase().then((caseRef) => {
-			cy.createCase().then((caseRefToLinkAsLead) => {
-				cy.createCase().then((unlinkedCaseRefToLink) => {
-					happyPathHelper.assignCaseOfficer(caseRef);
-					caseDetailsPage.clickAccordionByButton('Overview');
+		cy.createCase().then((caseObj) => {
+			cy.createCase().then((caseObjToLinkAsLead) => {
+				cy.createCase().then((unlinkedcaseObjToLink) => {
+					happyPathHelper.assignCaseOfficer(caseObj);
 					caseDetailsPage.clickAddLinkedAppeal();
-					caseDetailsPage.fillInput(caseRefToLinkAsLead);
+					caseDetailsPage.fillInput(caseObjToLinkAsLead);
 					caseDetailsPage.clickButtonByText('Continue');
-					caseDetailsPage.selectRadioButtonByValue('Yes, this is a child appeal of ' + caseRef);
+					caseDetailsPage.selectRadioButtonByValue('Yes, this is a child appeal of ' + caseObj);
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage(
 						'Success',
-						'This appeal is now a lead appeal of ' + caseRefToLinkAsLead
+						'This appeal is now a lead appeal of ' + caseObjToLinkAsLead
 					);
 					caseDetailsPage.checkStatusOfCase('Lead', 1);
 					caseDetailsPage.clickManageLinkedAppeals();
@@ -62,7 +59,7 @@ describe('unlink appeals', () => {
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage(
 						'Success',
-						'You have unlinked this appeal from appeal  ' + caseRef
+						'You have unlinked this appeal from appeal  ' + caseObj
 					);
 				});
 			});
@@ -70,33 +67,32 @@ describe('unlink appeals', () => {
 	});
 
 	it.skip('unlink an appeal from a lead appeal that has more than 1 linked appeal', () => {
-		cy.createCase().then((caseRefToLinkAsLead) => {
-			cy.createCase().then((caseRefToLinkAsChild) => {
-				cy.createCase().then((caseRefToLinkAsSecondChild) => {
-					happyPathHelper.assignCaseOfficer(caseRefToLinkAsLead);
-					caseDetailsPage.clickAccordionByButton('Overview');
+		cy.createCase().then((caseObjToLinkAsLead) => {
+			cy.createCase().then((caseObjToLinkAsChild) => {
+				cy.createCase().then((caseObjToLinkAsSecondChild) => {
+					happyPathHelper.assignCaseOfficer(caseObjToLinkAsLead);
 					caseDetailsPage.clickAddLinkedAppeal();
-					caseDetailsPage.fillInput(caseRefToLinkAsChild);
+					caseDetailsPage.fillInput(caseObjToLinkAsChild);
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.selectRadioButtonByValue(
-						'Yes, this is a child appeal of ' + caseRefToLinkAsLead
+						'Yes, this is a child appeal of ' + caseObjToLinkAsLead
 					);
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage(
 						'Success',
-						'This appeal is now a child appeal of ' + caseRefToLinkAsLead
+						'This appeal is now a child appeal of ' + caseObjToLinkAsLead
 					);
 					caseDetailsPage.checkStatusOfCase('Lead', 1);
 					caseDetailsPage.clickAddLinkedAppeal();
-					caseDetailsPage.fillInput(caseRefToLinkAsSecondChild);
+					caseDetailsPage.fillInput(caseObjToLinkAsSecondChild);
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.selectRadioButtonByValue(
-						'Yes, this is a child appeal of ' + caseRefToLinkAsLead
+						'Yes, this is a child appeal of ' + caseObjToLinkAsLead
 					);
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage(
 						'Success',
-						'This appeal is now a child appeal of ' + caseRefToLinkAsLead
+						'This appeal is now a child appeal of ' + caseObjToLinkAsLead
 					);
 					caseDetailsPage.checkStatusOfCase('Lead', 1);
 					caseDetailsPage.clickManageLinkedAppeals();
@@ -105,7 +101,7 @@ describe('unlink appeals', () => {
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage(
 						'Success',
-						'You have unlinked this appeal from appeal  ' + caseRefToLinkAsLead
+						'You have unlinked this appeal from appeal  ' + caseObjToLinkAsLead
 					);
 				});
 			});

@@ -17,7 +17,8 @@ describe('correction-notice-decision.md', () => {
 				start_date: '01 January 2025',
 				existing_appeal_type: 'Householder',
 				correction_notice_reason: 'There has been a mistake - but we fixed it thanks',
-				decision_date: '01 January 2025'
+				decision_date: '01 January 2025',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',
@@ -41,7 +42,7 @@ describe('correction-notice-decision.md', () => {
 			'',
 			'[Sign in to our service](/mock-front-office-url/manage-appeals/134526) to view the decision letter dated 01 January 2025.',
 			'',
-			'# The Planning Inspectorate’s role',
+			"# The Planning Inspectorate's role",
 			'',
 			'The Planning Inspectorate cannot change or revoke the decision. Only the High Court can change this decision.',
 			'',

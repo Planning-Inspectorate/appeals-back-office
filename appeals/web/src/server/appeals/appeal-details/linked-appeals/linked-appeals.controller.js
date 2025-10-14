@@ -1,11 +1,11 @@
-import { postUnlinkRequest } from './linked-appeals.service.js';
-import {
-	manageLinkedAppealsPage,
-	unlinkAppealPage,
-	generateUnlinkAppealBackLinkUrl
-} from './linked-appeals.mapper.js';
-import { getAppealDetailsFromId } from '../appeal-details.service.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { getAppealDetailsFromId } from '../appeal-details.service.js';
+import {
+	generateUnlinkAppealBackLinkUrl,
+	manageLinkedAppealsPage,
+	unlinkAppealPage
+} from './linked-appeals.mapper.js';
+import { postUnlinkRequest } from './linked-appeals.service.js';
 
 /**
  *

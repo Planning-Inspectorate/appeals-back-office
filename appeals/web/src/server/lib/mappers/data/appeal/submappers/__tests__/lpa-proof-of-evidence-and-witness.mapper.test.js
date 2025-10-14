@@ -60,11 +60,38 @@ describe('mapLPAProofOfEvidence', () => {
 		expect(result).toEqual(expected);
 	});
 
+	it('should return correct table row when representation status is valid', () => {
+		data.appealDetails.documentationSummary.lpaProofOfEvidence.status = 'received';
+		data.appealDetails.documentationSummary.lpaProofOfEvidence.representationStatus = 'valid';
+		expected.display.tableItem[1].text = 'Completed';
+		expected.display.tableItem[2].text = '2 August 2025';
+		expected.display.tableItem[3].html = expect.stringContaining('LPA proof of evidence');
+
+		const result = mapLPAProofOfEvidence(data);
+
+		expect(result).toEqual(expected);
+	});
+
+	it('should return correct table row when representation status is incomplete', () => {
+		data.appealDetails.documentationSummary.lpaProofOfEvidence.status = 'received';
+		data.appealDetails.documentationSummary.lpaProofOfEvidence.representationStatus = 'incomplete';
+		expected.display.tableItem[1].text = 'Incomplete';
+		expected.display.tableItem[2].text = '2 August 2025';
+		expected.display.tableItem[3].html = expect.stringContaining('LPA proof of evidence');
+
+		const result = mapLPAProofOfEvidence(data);
+
+		expect(result).toEqual(expected);
+	});
+
 	it('should return correct table row when status is not received', () => {
 		data.appealDetails.documentationSummary.lpaProofOfEvidence.status = 'not_received';
-		expected.display.tableItem[1].text = 'Awaiting';
+		data.appealDetails.documentationSummary.lpaProofOfEvidence.representationStatus =
+			'awaiting_review';
+		expected.display.tableItem[1].text = 'Awaiting proof of evidence and witness';
 		expected.display.tableItem[2].text = '';
-		expected.display.tableItem[3].html = '';
+		expected.display.tableItem[3].html =
+			'<a href="/test/proof-of-evidence/lpa/add-representation?backUrl=%2Ftest" data-cy="add-lpa-proofs-evidence" class="govuk-link">Add<span class="govuk-visually-hidden"> LPA proof of evidence</span></a>';
 
 		const result = mapLPAProofOfEvidence(data);
 

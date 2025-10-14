@@ -1,15 +1,18 @@
 import { mapDate } from '#utils/mapping/map-dates.js';
 
+import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
+import { isValidAppealType, isValidVirusCheckStatus } from '#utils/mapping/map-enums.js';
+import {
+	APPEAL_REPRESENTATION_TYPE as INTERNAL_REPRESENTATION_TYPE,
+	ODW_SYSTEM_ID
+} from '@pins/appeals/constants/common.js';
+import { REP_ATTACHMENT_DOCTYPE } from '@pins/appeals/constants/documents.js';
 import {
 	APPEAL_CASE_STAGE,
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_ORIGIN,
 	APPEAL_REDACTED_STATUS
 } from '@planning-inspectorate/data-model';
-import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
-import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
-import { isValidAppealType, isValidVirusCheckStatus } from '#utils/mapping/map-enums.js';
-import { APPEAL_REPRESENTATION_TYPE as INTERNAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Document & {appeal:Appeal}} DocumentWithAppeal */
@@ -146,7 +149,7 @@ const mapOrigin = (stage) => {
  * @returns {string}
  */
 const mapDocumentType = (doc) => {
-	if (doc.documentType === 'representationAttachments') {
+	if (doc.documentType === REP_ATTACHMENT_DOCTYPE) {
 		const rep = doc.representation?.representation;
 		switch (rep?.representationType) {
 			case INTERNAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT:
@@ -157,8 +160,10 @@ const mapDocumentType = (doc) => {
 				return APPEAL_DOCUMENT_TYPE.APPELLANT_STATEMENT;
 			case INTERNAL_REPRESENTATION_TYPE.LPA_STATEMENT:
 				return APPEAL_DOCUMENT_TYPE.LPA_STATEMENT;
-			default:
+			case INTERNAL_REPRESENTATION_TYPE.COMMENT:
 				return APPEAL_DOCUMENT_TYPE.INTERESTED_PARTY_COMMENT;
+			default:
+				return APPEAL_DOCUMENT_TYPE.UNCATEGORISED;
 		}
 	}
 
@@ -171,7 +176,7 @@ const mapDocumentType = (doc) => {
  * @returns {string}
  */
 const mapStage = (doc) => {
-	if (doc.documentType === 'representationAttachments') {
+	if (doc.documentType === REP_ATTACHMENT_DOCTYPE) {
 		const rep = doc.representation?.representation;
 		switch (rep?.representationType) {
 			case INTERNAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT:

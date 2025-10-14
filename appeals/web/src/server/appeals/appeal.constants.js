@@ -1,5 +1,5 @@
 /**
- * @typedef {'appealDetails'|'appellantCase'|'lpaQuestionnaire'|'manageDocuments'|'manageFolder'|'manageRelatedAppeals'|'manageNeighbouringSites'|'ipComments'|'viewIpComment'|'reviewIpComment'|'lpaStatement'|'viewFinalComments'|'appealDecision'} ServicePageName
+ * @typedef {'appealDetails'|'appellantCase'|'lpaQuestionnaire'|'manageDocuments'|'manageFolder'|'manageRelatedAppeals'|'manageNeighbouringSites'|'ipComments'|'viewIpComment'|'reviewIpComment'|'lpaStatement'|'viewFinalComments'|'appealDecision'|'viewProofOfEvidence'} ServicePageName
  */
 
 export const paginationDefaultSettings = {

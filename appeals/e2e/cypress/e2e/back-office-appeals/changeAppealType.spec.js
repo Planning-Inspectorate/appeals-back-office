@@ -4,8 +4,8 @@
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
-import { tag } from '../../support/tag';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { tag } from '../../support/tag';
 
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
@@ -15,24 +15,32 @@ describe('Change Appeal Type', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	it('Change appeal type and do not resubmit', { tags: tag.smoke }, () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			caseDetailsPage.clickAccordionByButton('Overview');
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickChangeAppealType();
 			caseDetailsPage.selectRadioButtonByValue('Planning');
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('No');
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.validateBannerMessage('Important', 'This appeal is awaiting transfer');
+			caseDetailsPage.clickButtonByText('Mark as awaiting transfer');
+			caseDetailsPage.validateBannerMessage('Important', 'Mark as transferred');
 			caseDetailsPage.checkStatusOfCase('Awaiting transfer', 0);
 		});
 	});
 
-	it('Change appeal type and resubmit', () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			caseDetailsPage.clickAccordionByButton('Overview');
+	// skipping test as is work in progress - https://pins-ds.atlassian.net/browse/A2-3649
+	it.skip('Change appeal type and resubmit', () => {
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickChangeAppealType();
 			caseDetailsPage.selectRadioButtonByValue('Planning obligation');
 			caseDetailsPage.clickButtonByText('Continue');

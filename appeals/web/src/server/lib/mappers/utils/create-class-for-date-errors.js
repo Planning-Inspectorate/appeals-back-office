@@ -36,7 +36,7 @@ export const assembleClassesFromErrors = (errors, fieldName = 'date') => {
 	];
 
 	const hasAllFieldsError = fields.some(
-		(field) => errors[fieldName + field]?.param === 'all-fields'
+		(field) => errors[fieldName + field]?.path === 'all-fields'
 	);
 
 	if (hasAllFieldsError) {
@@ -48,9 +48,9 @@ export const assembleClassesFromErrors = (errors, fieldName = 'date') => {
 		if (errors[fieldName + field]) {
 			classes[field] += errorClass;
 
-			const param = errors[fieldName + field].param;
+			const path = errors[fieldName + field].path;
 			pairs.forEach(([field1, field2]) => {
-				if (param === `${field1}-${field2}`) {
+				if (path === `${field1}-${field2}`) {
 					classes[field1] += errorClass;
 					classes[field2] += errorClass;
 				}
@@ -77,9 +77,9 @@ export const assembleDocumentDateClassesFromErrors = (errors, fieldName = 'date'
 
 	if (!errors || !errors[fieldName]) return classes;
 
-	const { param } = errors[fieldName];
+	const { path } = errors[fieldName];
 
-	if (param?.startsWith('all-fields')) {
+	if (path?.startsWith('all-fields')) {
 		/** @type {DateField[]} */ (Object.keys(classes)).forEach((field) => {
 			classes[field] += errorClass;
 		});
@@ -89,7 +89,7 @@ export const assembleDocumentDateClassesFromErrors = (errors, fieldName = 'date'
 	/** @type {DateField[]} */
 	const fields = ['day', 'month', 'year'];
 	fields.forEach((field) => {
-		if (param === field) {
+		if (path === field) {
 			classes[field] += errorClass;
 		}
 	});
@@ -101,7 +101,7 @@ export const assembleDocumentDateClassesFromErrors = (errors, fieldName = 'date'
 		['month', 'year']
 	];
 	pairs.forEach(([field1, field2]) => {
-		if (param === `${field1}-${field2}`) {
+		if (path === `${field1}-${field2}`) {
 			classes[field1] += errorClass;
 			classes[field2] += errorClass;
 		}

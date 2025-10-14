@@ -1,6 +1,9 @@
 // @ts-nocheck
+import { appealS78, fullPlanningAppeal, householdAppeal } from '#tests/appeals/mocks.js';
+import { azureAdUserId } from '#tests/shared/mocks.js';
+import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
-import { request } from '../../../app-test.js';
 import {
 	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
 	CASE_RELATIONSHIP_LINKED,
@@ -12,14 +15,11 @@ import {
 	ERROR_MUST_BE_VALID_APPEAL_STATE,
 	ERROR_PAGENUMBER_AND_PAGESIZE_ARE_REQUIRED
 } from '@pins/appeals/constants/support.js';
-import { azureAdUserId } from '#tests/shared/mocks.js';
-import { householdAppeal, fullPlanningAppeal, appealS78 } from '#tests/appeals/mocks.js';
-import { getIdsOfReferencedAppeals, mapAppealToDueDate } from '../appeals.formatter.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { omit } from 'lodash-es';
+import { request } from '../../../app-test.js';
+import { getIdsOfReferencedAppeals } from '../appeals.formatter.js';
 import { mapAppealStatuses } from '../appeals.service.js';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
-import { cloneDeep, omit } from 'lodash-es';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 const lpas = [
@@ -60,18 +60,18 @@ const allAppeals = [householdAppeal, fullPlanningAppeal].map((appeal) => ({
 }));
 
 describe('appeals list routes', () => {
-	beforeEach(() => {
-		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
-		databaseConnector.appealStatus.findMany.mockResolvedValue(
-			statusesInNationalList.map((status) => ({ status }))
-		);
-		databaseConnector.lPA.findMany.mockResolvedValue(lpas);
-		databaseConnector.user.findMany.mockResolvedValue(inspectors.concat(caseOfficers));
-	});
 	afterEach(() => {
 		jest.clearAllMocks();
 	});
 	describe('/appeals', () => {
+		beforeEach(() => {
+			databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+			databaseConnector.appealStatus.findMany.mockResolvedValue(
+				statusesInNationalList.map((status) => ({ status }))
+			);
+			databaseConnector.lPA.findMany.mockResolvedValue(lpas);
+			databaseConnector.user.findMany.mockResolvedValue(inspectors.concat(caseOfficers));
+		});
 		describe('GET', () => {
 			test('gets appeals when not given pagination params or a search term', async () => {
 				databaseConnector.appeal.findMany
@@ -96,6 +96,7 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
+							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -152,6 +153,7 @@ describe('appeals list routes', () => {
 								postCode: fullPlanningAppeal.address.postcode
 							},
 							appealStatus: fullPlanningAppeal.appealStatus[0].status,
+							completedStateList: fullPlanningAppeal.completedStateList,
 							appealType: fullPlanningAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
@@ -271,6 +273,7 @@ describe('appeals list routes', () => {
 								postCode: fullPlanningAppeal.address.postcode
 							},
 							appealStatus: fullPlanningAppeal.appealStatus[0].status,
+							completedStateList: fullPlanningAppeal.completedStateList,
 							appealType: fullPlanningAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
@@ -386,6 +389,7 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
+							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -501,6 +505,7 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
+							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -616,6 +621,7 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
+							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -713,6 +719,7 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
+							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -812,6 +819,7 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
+							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -909,6 +917,7 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
+							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -964,6 +973,323 @@ describe('appeals list routes', () => {
 					statuses: ['assign_case_officer'],
 					statusesInNationalList
 				});
+			});
+
+			test('gets appeals when given a appealTypeId param', async () => {
+				databaseConnector.appeal.findMany
+					.mockResolvedValueOnce([householdAppeal])
+					.mockResolvedValueOnce(allAppeals);
+				databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+				databaseConnector.appealStatus.findMany.mockResolvedValue(
+					statusesInNationalList.map((status) => ({ status }))
+				);
+				databaseConnector.lPA.findMany.mockResolvedValue(lpas);
+				databaseConnector.user.findMany.mockResolvedValue(inspectors.concat(caseOfficers));
+				databaseConnector.appeal.count.mockResolvedValue(1);
+
+				const response = await request
+					.get('/appeals?appealTypeId=1')
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
+					expect.objectContaining({
+						where: {
+							appealType: {
+								key: { in: getEnabledAppealTypes() }
+							},
+							appealStatus: {
+								some: {
+									valid: true
+								}
+							},
+							appealTypeId: 1
+						}
+					})
+				);
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					itemCount: 1,
+					items: [
+						{
+							appealId: householdAppeal.id,
+							appealReference: householdAppeal.reference,
+							appealSite: {
+								addressLine1: householdAppeal.address.addressLine1,
+								addressLine2: householdAppeal.address.addressLine2,
+								town: householdAppeal.address.addressTown,
+								county: householdAppeal.address.addressCounty,
+								postCode: householdAppeal.address.postcode
+							},
+							appealStatus: householdAppeal.appealStatus[0].status,
+							completedStateList: householdAppeal.completedStateList,
+							appealType: householdAppeal.appealType.type,
+							awaitingLinkedAppeal: null,
+							createdAt: householdAppeal.caseCreatedDate.toISOString(),
+							localPlanningDepartment: householdAppeal.lpa.name,
+							dueDate: null,
+							documentationSummary: {
+								appellantCase: {
+									receivedAt: '2024-03-25T23:59:59.999Z',
+									status: 'received'
+								},
+								ipComments: {
+									status: 'not_received',
+									counts: {},
+									isRedacted: false
+								},
+								lpaQuestionnaire: {
+									receivedAt: '2024-06-24T00:00:00.000Z',
+									status: 'received'
+								},
+								lpaStatement: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								lpaFinalComments: {
+									receivedAt: null,
+									representationStatus: null,
+									status: 'not_received',
+									isRedacted: false
+								},
+								appellantFinalComments: {
+									receivedAt: null,
+									representationStatus: null,
+									status: 'not_received',
+									isRedacted: false
+								}
+							},
+							isParentAppeal: false,
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference,
+							procedureType: 'Written',
+							hasHearingAddress: true,
+							isHearingSetup: true,
+							numberOfResidencesNetChange: 5
+						}
+					],
+					lpas,
+					caseOfficers,
+					inspectors,
+					page: 1,
+					pageCount: 1,
+					pageSize: 30,
+					statuses: ['assign_case_officer'],
+					statusesInNationalList
+				});
+			});
+
+			test('gets appeals when given a procedure type id param', async () => {
+				databaseConnector.appeal.findMany
+					.mockResolvedValueOnce([householdAppeal])
+					.mockResolvedValueOnce(allAppeals);
+
+				databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+				databaseConnector.appealStatus.findMany.mockResolvedValue(
+					statusesInNationalList.map((status) => ({ status }))
+				);
+				databaseConnector.lPA.findMany.mockResolvedValue(lpas);
+				databaseConnector.user.findMany.mockResolvedValue(inspectors.concat(caseOfficers));
+				databaseConnector.appeal.count.mockResolvedValue(1);
+
+				const response = await request
+					.get('/appeals?procedureTypeId=1')
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
+					expect.objectContaining({
+						where: {
+							appealType: {
+								key: { in: getEnabledAppealTypes() }
+							},
+							appealStatus: {
+								some: {
+									valid: true
+								}
+							},
+							procedureTypeId: 1
+						}
+					})
+				);
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					itemCount: 1,
+					items: [
+						{
+							appealId: householdAppeal.id,
+							appealReference: householdAppeal.reference,
+							appealSite: {
+								addressLine1: householdAppeal.address.addressLine1,
+								addressLine2: householdAppeal.address.addressLine2,
+								town: householdAppeal.address.addressTown,
+								county: householdAppeal.address.addressCounty,
+								postCode: householdAppeal.address.postcode
+							},
+							appealStatus: householdAppeal.appealStatus[0].status,
+							completedStateList: householdAppeal.completedStateList,
+							appealType: householdAppeal.appealType.type,
+							awaitingLinkedAppeal: null,
+							createdAt: householdAppeal.caseCreatedDate.toISOString(),
+							localPlanningDepartment: householdAppeal.lpa.name,
+							dueDate: null,
+							documentationSummary: {
+								appellantCase: {
+									receivedAt: '2024-03-25T23:59:59.999Z',
+									status: 'received'
+								},
+								ipComments: {
+									status: 'not_received',
+									counts: {},
+									isRedacted: false
+								},
+								lpaQuestionnaire: {
+									receivedAt: '2024-06-24T00:00:00.000Z',
+									status: 'received'
+								},
+								lpaStatement: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								lpaFinalComments: {
+									receivedAt: null,
+									representationStatus: null,
+									status: 'not_received',
+									isRedacted: false
+								},
+								appellantFinalComments: {
+									receivedAt: null,
+									representationStatus: null,
+									status: 'not_received',
+									isRedacted: false
+								}
+							},
+							isParentAppeal: false,
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference,
+							procedureType: 'Written',
+							hasHearingAddress: true,
+							isHearingSetup: true,
+							numberOfResidencesNetChange: 5
+						}
+					],
+					lpas,
+					caseOfficers,
+					inspectors,
+					page: 1,
+					pageCount: 1,
+					pageSize: 30,
+					statuses: ['assign_case_officer'],
+					statusesInNationalList
+				});
+			});
+
+			test('gets appeals when given a assignedTeamId param', async () => {
+				databaseConnector.appeal.findMany
+					.mockResolvedValueOnce([householdAppeal])
+					.mockResolvedValueOnce(allAppeals);
+
+				const response = await request
+					.get('/appeals?assignedTeamId=1')
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
+					expect.objectContaining({
+						where: expect.objectContaining({
+							assignedTeamId: 1
+						})
+					})
+				);
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					itemCount: 1,
+					items: [
+						{
+							appealId: householdAppeal.id,
+							appealReference: householdAppeal.reference,
+							appealSite: {
+								addressLine1: householdAppeal.address.addressLine1,
+								addressLine2: householdAppeal.address.addressLine2,
+								town: householdAppeal.address.addressTown,
+								county: householdAppeal.address.addressCounty,
+								postCode: householdAppeal.address.postcode
+							},
+							appealStatus: householdAppeal.appealStatus[0].status,
+							completedStateList: householdAppeal.completedStateList,
+							appealType: householdAppeal.appealType.type,
+							awaitingLinkedAppeal: null,
+							createdAt: householdAppeal.caseCreatedDate.toISOString(),
+							localPlanningDepartment: householdAppeal.lpa.name,
+							dueDate: null,
+							documentationSummary: {
+								appellantCase: {
+									receivedAt: '2024-03-25T23:59:59.999Z',
+									status: 'received'
+								},
+								ipComments: {
+									status: 'not_received',
+									counts: {},
+									isRedacted: false
+								},
+								lpaQuestionnaire: {
+									receivedAt: '2024-06-24T00:00:00.000Z',
+									status: 'received'
+								},
+								lpaStatement: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								lpaFinalComments: {
+									receivedAt: null,
+									representationStatus: null,
+									status: 'not_received',
+									isRedacted: false
+								},
+								appellantFinalComments: {
+									receivedAt: null,
+									representationStatus: null,
+									status: 'not_received',
+									isRedacted: false
+								}
+							},
+							isParentAppeal: false,
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference,
+							procedureType: 'Written',
+							hasHearingAddress: true,
+							isHearingSetup: true,
+							numberOfResidencesNetChange: 5
+						}
+					],
+					lpas,
+					caseOfficers,
+					inspectors,
+					page: 1,
+					pageCount: 1,
+					pageSize: 30,
+					statuses: ['assign_case_officer'],
+					statusesInNationalList
+				});
+			});
+
+			test('gets unassigned teams when assignedTeamId param is -1', async () => {
+				databaseConnector.appeal.findMany
+					.mockResolvedValueOnce([householdAppeal])
+					.mockResolvedValueOnce(allAppeals);
+
+				const response = await request
+					.get('/appeals?assignedTeamId=-1')
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
+					expect.objectContaining({
+						where: expect.objectContaining({
+							assignedTeamId: null
+						})
+					})
+				);
+				expect(response.status).toEqual(200);
 			});
 
 			test('returns an error if pageNumber is given and pageSize is not given', async () => {
@@ -1108,547 +1434,139 @@ describe('appeals list routes', () => {
 			});
 		});
 	});
-});
 
-test('gets appeals when given a appealTypeId param', async () => {
-	databaseConnector.appeal.findMany
-		.mockResolvedValueOnce([householdAppeal])
-		.mockResolvedValueOnce(allAppeals);
-	databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
-	databaseConnector.appealStatus.findMany.mockResolvedValue(
-		statusesInNationalList.map((status) => ({ status }))
-	);
-	databaseConnector.lPA.findMany.mockResolvedValue(lpas);
-	databaseConnector.user.findMany.mockResolvedValue(inspectors.concat(caseOfficers));
-	databaseConnector.appeal.count.mockResolvedValue(1);
-
-	const response = await request.get('/appeals?appealTypeId=1').set('azureAdUserId', azureAdUserId);
-
-	expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
-		expect.objectContaining({
-			where: {
-				appealType: {
-					key: { in: getEnabledAppealTypes() }
-				},
-				appealStatus: {
-					some: {
-						valid: true
-					}
-				},
-				appealTypeId: 1
-			}
-		})
-	);
-	expect(response.status).toEqual(200);
-	expect(response.body).toEqual({
-		itemCount: 1,
-		items: [
-			{
-				appealId: householdAppeal.id,
-				appealReference: householdAppeal.reference,
-				appealSite: {
-					addressLine1: householdAppeal.address.addressLine1,
-					addressLine2: householdAppeal.address.addressLine2,
-					town: householdAppeal.address.addressTown,
-					county: householdAppeal.address.addressCounty,
-					postCode: householdAppeal.address.postcode
-				},
-				appealStatus: householdAppeal.appealStatus[0].status,
-				appealType: householdAppeal.appealType.type,
-				awaitingLinkedAppeal: null,
-				createdAt: householdAppeal.caseCreatedDate.toISOString(),
-				localPlanningDepartment: householdAppeal.lpa.name,
-				dueDate: null,
-				documentationSummary: {
-					appellantCase: {
-						receivedAt: '2024-03-25T23:59:59.999Z',
-						status: 'received'
-					},
-					ipComments: {
-						status: 'not_received',
-						counts: {},
-						isRedacted: false
-					},
-					lpaQuestionnaire: {
-						receivedAt: '2024-06-24T00:00:00.000Z',
-						status: 'received'
-					},
-					lpaStatement: {
-						status: 'not_received',
-						representationStatus: null,
-						isRedacted: false
-					},
-					lpaFinalComments: {
-						receivedAt: null,
-						representationStatus: null,
-						status: 'not_received',
-						isRedacted: false
-					},
-					appellantFinalComments: {
-						receivedAt: null,
-						representationStatus: null,
-						status: 'not_received',
-						isRedacted: false
-					}
-				},
-				isParentAppeal: false,
-				isChildAppeal: false,
-				planningApplicationReference: householdAppeal.applicationReference,
-				procedureType: 'Written',
-				hasHearingAddress: true,
-				isHearingSetup: true,
-				numberOfResidencesNetChange: 5
-			}
-		],
-		lpas,
-		caseOfficers,
-		inspectors,
-		page: 1,
-		pageCount: 1,
-		pageSize: 30,
-		statuses: ['assign_case_officer'],
-		statusesInNationalList
-	});
-});
-
-test('gets appeals when given a procedure type id param', async () => {
-	databaseConnector.appeal.findMany
-		.mockResolvedValueOnce([householdAppeal])
-		.mockResolvedValueOnce(allAppeals);
-
-	databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
-	databaseConnector.appealStatus.findMany.mockResolvedValue(
-		statusesInNationalList.map((status) => ({ status }))
-	);
-	databaseConnector.lPA.findMany.mockResolvedValue(lpas);
-	databaseConnector.user.findMany.mockResolvedValue(inspectors.concat(caseOfficers));
-	databaseConnector.appeal.count.mockResolvedValue(1);
-
-	const response = await request
-		.get('/appeals?procedureTypeId=1')
-		.set('azureAdUserId', azureAdUserId);
-
-	expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
-		expect.objectContaining({
-			where: {
-				appealType: {
-					key: { in: getEnabledAppealTypes() }
-				},
-				appealStatus: {
-					some: {
-						valid: true
-					}
-				},
-				procedureTypeId: 1
-			}
-		})
-	);
-	expect(response.status).toEqual(200);
-	expect(response.body).toEqual({
-		itemCount: 1,
-		items: [
-			{
-				appealId: householdAppeal.id,
-				appealReference: householdAppeal.reference,
-				appealSite: {
-					addressLine1: householdAppeal.address.addressLine1,
-					addressLine2: householdAppeal.address.addressLine2,
-					town: householdAppeal.address.addressTown,
-					county: householdAppeal.address.addressCounty,
-					postCode: householdAppeal.address.postcode
-				},
-				appealStatus: householdAppeal.appealStatus[0].status,
-				appealType: householdAppeal.appealType.type,
-				awaitingLinkedAppeal: null,
-				createdAt: householdAppeal.caseCreatedDate.toISOString(),
-				localPlanningDepartment: householdAppeal.lpa.name,
-				dueDate: null,
-				documentationSummary: {
-					appellantCase: {
-						receivedAt: '2024-03-25T23:59:59.999Z',
-						status: 'received'
-					},
-					ipComments: {
-						status: 'not_received',
-						counts: {},
-						isRedacted: false
-					},
-					lpaQuestionnaire: {
-						receivedAt: '2024-06-24T00:00:00.000Z',
-						status: 'received'
-					},
-					lpaStatement: {
-						status: 'not_received',
-						representationStatus: null,
-						isRedacted: false
-					},
-					lpaFinalComments: {
-						receivedAt: null,
-						representationStatus: null,
-						status: 'not_received',
-						isRedacted: false
-					},
-					appellantFinalComments: {
-						receivedAt: null,
-						representationStatus: null,
-						status: 'not_received',
-						isRedacted: false
-					}
-				},
-				isParentAppeal: false,
-				isChildAppeal: false,
-				planningApplicationReference: householdAppeal.applicationReference,
-				procedureType: 'Written',
-				hasHearingAddress: true,
-				isHearingSetup: true,
-				numberOfResidencesNetChange: 5
-			}
-		],
-		lpas,
-		caseOfficers,
-		inspectors,
-		page: 1,
-		pageCount: 1,
-		pageSize: 30,
-		statuses: ['assign_case_officer'],
-		statusesInNationalList
-	});
-});
-
-test('gets appeals when given a assignedTeamId param', async () => {
-	databaseConnector.appeal.findMany
-		.mockResolvedValueOnce([householdAppeal])
-		.mockResolvedValueOnce(allAppeals);
-
-	const response = await request
-		.get('/appeals?assignedTeamId=1')
-		.set('azureAdUserId', azureAdUserId);
-
-	expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
-		expect.objectContaining({
-			where: expect.objectContaining({
-				assignedTeamId: 1
-			})
-		})
-	);
-	expect(response.status).toEqual(200);
-	expect(response.body).toEqual({
-		itemCount: 1,
-		items: [
-			{
-				appealId: householdAppeal.id,
-				appealReference: householdAppeal.reference,
-				appealSite: {
-					addressLine1: householdAppeal.address.addressLine1,
-					addressLine2: householdAppeal.address.addressLine2,
-					town: householdAppeal.address.addressTown,
-					county: householdAppeal.address.addressCounty,
-					postCode: householdAppeal.address.postcode
-				},
-				appealStatus: householdAppeal.appealStatus[0].status,
-				appealType: householdAppeal.appealType.type,
-				awaitingLinkedAppeal: null,
-				createdAt: householdAppeal.caseCreatedDate.toISOString(),
-				localPlanningDepartment: householdAppeal.lpa.name,
-				dueDate: null,
-				documentationSummary: {
-					appellantCase: {
-						receivedAt: '2024-03-25T23:59:59.999Z',
-						status: 'received'
-					},
-					ipComments: {
-						status: 'not_received',
-						counts: {},
-						isRedacted: false
-					},
-					lpaQuestionnaire: {
-						receivedAt: '2024-06-24T00:00:00.000Z',
-						status: 'received'
-					},
-					lpaStatement: {
-						status: 'not_received',
-						representationStatus: null,
-						isRedacted: false
-					},
-					lpaFinalComments: {
-						receivedAt: null,
-						representationStatus: null,
-						status: 'not_received',
-						isRedacted: false
-					},
-					appellantFinalComments: {
-						receivedAt: null,
-						representationStatus: null,
-						status: 'not_received',
-						isRedacted: false
-					}
-				},
-				isParentAppeal: false,
-				isChildAppeal: false,
-				planningApplicationReference: householdAppeal.applicationReference,
-				procedureType: 'Written',
-				hasHearingAddress: true,
-				isHearingSetup: true,
-				numberOfResidencesNetChange: 5
-			}
-		],
-		lpas,
-		caseOfficers,
-		inspectors,
-		page: 1,
-		pageCount: 1,
-		pageSize: 30,
-		statuses: ['assign_case_officer'],
-		statusesInNationalList
-	});
-});
-describe('mapAppealToDueDate Tests', () => {
-	let mockAppeal = {
-		appealType: null,
-		id: 1,
-		address: null,
-		appellant: null,
-		agent: null,
-		lpa: null,
-		reference: 'APP/Q9999/D/21/33813',
-		caseExtensionDate: null,
-		caseCreatedDate: new Date('2023-01-01T00:00:00.000Z'),
-		appealStatus: [
-			{
-				id: 2648,
-				status: APPEAL_CASE_STATUS.READY_TO_START,
-				createdAt: new Date('2024-01-09T16:14:31.387Z'),
-				valid: true,
-				appealId: 496,
-				subStateMachineName: null,
-				compoundStateName: null
-			}
-		],
-		appealTimetable: null
-	};
-
-	beforeEach(() => {
-		mockAppeal = {
-			appellant: null,
-			agent: null,
-			address: null,
-			appealType: null,
-			id: 1,
-			lpa: null,
-			reference: 'APP/Q9999/D/21/33813',
-			caseExtensionDate: null,
-			caseCreatedDate: new Date('2023-01-01T00:00:00.000Z'),
-			appealStatus: [
-				{
-					id: 2648,
-					status: APPEAL_CASE_STATUS.READY_TO_START,
-					createdAt: new Date('2024-01-09T16:14:31.387Z'),
-					valid: true,
-					appealId: 496,
-					subStateMachineName: null,
-					compoundStateName: null
-				}
-			],
-			appealTimetable: null
-		};
-	});
-
-	test('maps STATE_TARGET_READY_TO_START status', async () => {
-		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.READY_TO_START;
-		// @ts-ignore
-		const dueDate = await mapAppealToDueDate(mockAppeal, 'Incomplete', new Date('2023-02-01'));
-		expect(dueDate).toEqual(new Date('2023-02-01'));
-	});
-
-	test('maps STATE_TARGET_READY_TO_START status with Incomplete status', async () => {
-		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.READY_TO_START;
-		const createdAtPlusFiveDate = new Date('2023-01-06T00:00:00.000Z');
-		// @ts-ignore
-		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toEqual(createdAtPlusFiveDate);
-	});
-
-	test('maps STATE_TARGET_LPA_QUESTIONNAIRE_DUE', async () => {
-		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE;
-
-		const createdAtPlusTenDate = new Date('2023-01-11T00:00:00.000Z');
-		// @ts-ignore
-		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toEqual(createdAtPlusTenDate);
-	});
-
-	test('maps STATE_TARGET_LPA_QUESTIONNAIRE_DUE status with appealTimetable lpaQuestionnaireDueDate', async () => {
-		let mockAppealWithTimetable = {
-			...mockAppeal,
-			appealTimetable: {
-				id: 1262,
-				appealId: 523,
-				lpaQuestionnaireDueDate: new Date('2023-03-01T00:00:00.000Z'),
-				issueDeterminationDate: null,
-				lpaStatementDueDate: null
-			}
-		};
-		mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE;
-
-		// @ts-ignore
-		const dueDate = await mapAppealToDueDate(mockAppealWithTimetable, '', null);
-		expect(dueDate).toEqual(new Date('2023-03-01T00:00:00.000Z'));
-	});
-
-	test('maps STATE_TARGET_ASSIGN_CASE_OFFICER', async () => {
-		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER;
-
-		const createdAtPlusFifteenDate = new Date('2023-01-16T00:00:00.000Z');
-		// @ts-ignore
-		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toEqual(createdAtPlusFifteenDate);
-	});
-
-	test('maps STATE_TARGET_ISSUE_DETERMINATION when site visit available', async () => {
-		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
-		mockAppeal.siteVisit = { visitDate: new Date('2023-02-01T00:00:00.000Z') };
-		const createdAtPlusFortyBusinessDays = new Date('2023-03-29T00:00:00.000Z');
-		// @ts-ignore
-		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toEqual(createdAtPlusFortyBusinessDays);
-	});
-
-	test('maps STATE_TARGET_ISSUE_DETERMINATION when site visit not available', async () => {
-		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
-
-		const createdAtPlusThirtyBusinessDays = new Date('2025-07-04T00:00:00.000Z');
-		mockAppeal.caseCreatedDate = new Date('2025-05-22T00:00:00.000Z');
-
-		// @ts-ignore
-		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toEqual(createdAtPlusThirtyBusinessDays);
-	});
-
-	test('maps STATE_TARGET_ISSUE_DETERMINATION status with appealTimetable issueDeterminationDate', async () => {
-		let mockAppealWithTimetable = {
-			...mockAppeal,
-			appealTimetable: {
-				id: 1262,
-				appealId: 523,
-				lpaQuestionnaireDueDate: null,
-				issueDeterminationDate: new Date('2023-03-01T00:00:00.000Z'),
-				lpaStatementDueDate: null
-			}
-		};
-		mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
-		mockAppealWithTimetable.caseCreatedDate = new Date('2025-05-22T00:00:00.000Z');
-		// @ts-ignore
-		const dueDate = await mapAppealToDueDate(mockAppealWithTimetable, '', null);
-		// dueDate.setDate(dueDate.getDate());
-		expect(dueDate).toEqual(new Date('2025-07-04T00:00:00.000Z'));
-	});
-
-	test('maps STATE_TARGET_STATEMENT_REVIEW', async () => {
-		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.STATEMENTS;
-
-		const createdAtPlusFiftyFiveDate = new Date('2023-02-25T00:00:00.000Z');
-		// @ts-ignore
-		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toEqual(createdAtPlusFiftyFiveDate);
-	});
-
-	test('maps STATE_TARGET_STATEMENT_REVIEW status with appealTimetable lpaStatementDueDate', async () => {
-		let mockAppealWithTimetable = {
-			...mockAppeal,
-			appealTimetable: {
-				id: 1262,
-				appealId: 523,
-				lpaQuestionnaireDueDate: null,
-				issueDeterminationDate: null,
-				lpaStatementDueDate: new Date('2023-03-01T00:00:00.000Z'),
-				resubmitAppealTypeDate: null
-			}
-		};
-		mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.STATEMENTS;
-
-		// @ts-ignore
-		const dueDate = await mapAppealToDueDate(mockAppealWithTimetable, '', null);
-		expect(dueDate).toEqual(new Date('2023-03-01T00:00:00.000Z'));
-	});
-
-	test('maps STATE_TARGET_FINAL_COMMENT_REVIEW', async () => {
-		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.FINAL_COMMENTS;
-
-		const createdAtPlusSixtyDate = new Date('2023-03-02T00:00:00.000Z');
-		// @ts-ignore
-		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toEqual(createdAtPlusSixtyDate);
-	});
-
-	test('handles STATE_TARGET_AWAITING_SITE_VISIT', async () => {
-		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.AWAITING_EVENT;
-		mockAppeal.siteVisit = { visitDate: new Date('2023-02-01T00:00:00.000Z') };
-		mockAppeal.procedureType = {
-			key: APPEAL_CASE_PROCEDURE.WRITTEN
-		};
-
-		// @ts-ignore
-		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toEqual(mockAppeal.siteVisit.visitDate);
-	});
-
-	test('handles STATE_TARGET_AWAITING_HEARING', async () => {
-		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.AWAITING_EVENT;
-		mockAppeal.hearing = { hearingStartTime: new Date('2023-02-01T00:00:00.000Z') };
-		mockAppeal.procedureType = {
-			key: APPEAL_CASE_PROCEDURE.HEARING
-		};
-
-		// @ts-ignore
-		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toEqual(mockAppeal.hearing.hearingStartTime);
-	});
-
-	describe('handles STATE_TARGET_SITE_VISIT', () => {
-		let mockAppealWithTimetable = {};
-
+	describe('/appeals/personal-list', () => {
 		beforeEach(() => {
-			mockAppealWithTimetable = {
-				...mockAppeal,
-				appealTimetable: {
-					id: 1262,
-					appealId: 523,
-					lpaQuestionnaireDueDate: new Date('2023-03-01T00:00:00.000Z')
-				}
-			};
-			mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.EVENT;
+			databaseConnector.personalList.findMany
+				.mockResolvedValueOnce([
+					{ appealId: 3, leadAppealId: 1, linkType: 'child', appeal: { id: 3 } },
+					{ appealId: 4, leadAppealId: 1, linkType: 'child', appeal: { id: 4 } }
+				])
+				.mockResolvedValueOnce([
+					{ appeal: { appealStatus: [{ status: 'assign_case_officer', valid: true }] } },
+					{ appeal: { appealStatus: [{ status: 'complete', valid: true }] } }
+				])
+				.mockResolvedValueOnce([
+					{ appealId: 1, leadAppealId: 1, linkType: 'parent', appeal: { id: 1 } },
+					{ appealId: 2, leadAppealId: 1, linkType: 'child', appeal: { id: 2 } },
+					{ appealId: 3, leadAppealId: 1, linkType: 'child', appeal: { id: 3 } },
+					{ appealId: 4, leadAppealId: 1, linkType: 'child', appeal: { id: 4 } }
+				]);
+			databaseConnector.personalList.count.mockResolvedValue(4);
 		});
-
-		test('when final comments due date does not exist', async () => {
-			// @ts-ignore
-			const dueDate = await mapAppealToDueDate(mockAppealWithTimetable, '', null);
-			expect(dueDate).toEqual(mockAppealWithTimetable.appealTimetable.lpaQuestionnaireDueDate);
+		describe('GET', () => {
+			test('returns a list of appeals for the user', async () => {
+				const response = await request
+					.get('/appeals/personal-list')
+					.set('azureAdUserId', azureAdUserId);
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					itemCount: 4,
+					items: [
+						{
+							appealId: 3,
+							appealSite: {
+								addressLine1: '',
+								postCode: ''
+							},
+							appealStatus: '',
+							completedStateList: householdAppeal.completedStateList,
+							localPlanningDepartment: '',
+							lpaQuestionnaireId: null,
+							documentationSummary: {
+								appellantCase: {
+									status: 'not_received'
+								},
+								lpaQuestionnaire: {
+									status: 'not_received'
+								},
+								ipComments: {
+									status: 'not_received',
+									counts: {},
+									isRedacted: false
+								},
+								lpaStatement: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								lpaFinalComments: {
+									status: 'not_received',
+									receivedAt: null,
+									representationStatus: null,
+									isRedacted: false
+								},
+								appellantFinalComments: {
+									status: 'not_received',
+									receivedAt: null,
+									representationStatus: null,
+									isRedacted: false
+								}
+							},
+							isParentAppeal: false,
+							isChildAppeal: true,
+							isHearingSetup: false,
+							hasHearingAddress: false,
+							awaitingLinkedAppeal: true,
+							costsDecision: null,
+							numberOfResidencesNetChange: null
+						},
+						{
+							appealId: 4,
+							appealSite: {
+								addressLine1: '',
+								postCode: ''
+							},
+							appealStatus: '',
+							completedStateList: householdAppeal.completedStateList,
+							localPlanningDepartment: '',
+							lpaQuestionnaireId: null,
+							documentationSummary: {
+								appellantCase: {
+									status: 'not_received'
+								},
+								lpaQuestionnaire: {
+									status: 'not_received'
+								},
+								ipComments: {
+									status: 'not_received',
+									counts: {},
+									isRedacted: false
+								},
+								lpaStatement: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								lpaFinalComments: {
+									status: 'not_received',
+									receivedAt: null,
+									representationStatus: null,
+									isRedacted: false
+								},
+								appellantFinalComments: {
+									status: 'not_received',
+									receivedAt: null,
+									representationStatus: null,
+									isRedacted: false
+								}
+							},
+							isParentAppeal: false,
+							isChildAppeal: true,
+							isHearingSetup: false,
+							hasHearingAddress: false,
+							awaitingLinkedAppeal: true,
+							costsDecision: null,
+							numberOfResidencesNetChange: null
+						}
+					],
+					statuses: ['assign_case_officer', 'complete'],
+					page: 1,
+					pageCount: 1,
+					pageSize: 30
+				});
+			});
 		});
-
-		test('when final comments due date does exist', async () => {
-			// @ts-ignore
-			mockAppealWithTimetable.appealTimetable.finalCommentsDueDate = new Date(
-				'2023-03-22T00:00:00.000Z'
-			);
-			const dueDate = await mapAppealToDueDate(mockAppealWithTimetable, '', null);
-			expect(dueDate).toEqual(mockAppealWithTimetable.appealTimetable.finalCommentsDueDate);
-		});
-	});
-
-	test('handles STATE_TARGET_COMPLETE', async () => {
-		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.COMPLETE;
-
-		// @ts-ignore
-		const dueDate = await mapAppealToDueDate(mockAppeal, '', null, {});
-		expect(dueDate).toBeNull();
-	});
-
-	test('handles unexpected status (default case)', async () => {
-		mockAppeal.appealStatus[0].status = 'unexpected_status';
-
-		// @ts-ignore
-		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toBeUndefined();
 	});
 });
 
@@ -1804,10 +1722,16 @@ describe('getRelevantLinkedAppealIds Tests', () => {
 
 describe('updateCompletedEvents', () => {
 	test('updates completed events', async () => {
-		const siteVisit = cloneDeep({ ...householdAppeal.siteVisit, appealId: appealS78.id });
+		const siteVisit = structuredClone({ ...householdAppeal.siteVisit, appealId: appealS78.id });
 		const appealStatus = [{ status: 'awaiting_event', valid: true }];
-		const childAppeals = [{ childId: 100, type: CASE_RELATIONSHIP_LINKED }];
-		const linkedLeadAppeal = cloneDeep({
+		const childAppeals = [
+			{
+				childId: 100,
+				type: CASE_RELATIONSHIP_LINKED,
+				child: { appealStatus }
+			}
+		];
+		const linkedLeadAppeal = structuredClone({
 			...appealS78,
 			siteVisit,
 			appealStatus,
@@ -1832,7 +1756,7 @@ describe('updateCompletedEvents', () => {
 
 		expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
 			data: {
-				appealId: linkedLeadAppeal.id,
+				appealId: childAppeals[0].childId,
 				details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['issue_determination']),
 				loggedAt: expect.any(Date),
 				userId: linkedLeadAppeal.caseOfficer.id
@@ -1841,7 +1765,7 @@ describe('updateCompletedEvents', () => {
 
 		expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 			data: {
-				appealId: childAppeals[0].childId,
+				appealId: linkedLeadAppeal.id,
 				details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['issue_determination']),
 				loggedAt: expect.any(Date),
 				userId: linkedLeadAppeal.caseOfficer.id

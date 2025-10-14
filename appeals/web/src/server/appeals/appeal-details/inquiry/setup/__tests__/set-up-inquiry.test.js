@@ -1,17 +1,37 @@
 // @ts-nocheck
 import { appealData } from '#testing/app/fixtures/referencedata.js';
+import { behavesLikeAddressForm } from '#testing/app/shared-examples/address-form.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
-import { behavesLikeAddressForm } from '#testing/app/shared-examples/address-form.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 
 describe('set up inquiry', () => {
-	beforeEach(installMockApi);
+	const appealId = 2;
+	const validData = {
+		planningObligation: {
+			hasObligation: true
+		}
+	};
+	beforeEach(() => {
+		installMockApi();
+		nock('http://test/')
+			.get(`/appeals/${appealId}`)
+			.reply(200, { ...appealData, appealId })
+			.persist();
+
+		nock('http://test/')
+			.get(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+			.reply(200, {
+				...validData
+			})
+			.persist();
+	});
+
 	afterEach(teardown);
 
 	describe('GET /inquiry/setup', () => {
@@ -28,23 +48,41 @@ describe('set up inquiry', () => {
 	});
 
 	describe('GET /inquiry/setup/date', () => {
-		const appealId = 2;
+		const appealId = 7;
+		const savedDate = {
+			'inquiry-date-day': '19',
+			'inquiry-date-month': '03',
+			'inquiry-date-year': '2026',
+			'inquiry-time-hour': '10',
+			'inquiry-time-minute': '00'
+		};
 
 		let pageHtml;
-
 		beforeAll(async () => {
+			// Mock API call for the appeal
 			nock('http://test/')
+				.persist()
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
 
+			// Save inquiry data for this appealId
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/date`).send(savedDate);
+
+			//fetch page
 			const response = await request.get(`${baseUrl}/${appealId}/inquiry/setup/date`);
 			pageHtml = parseHtml(response.text);
 		});
 
+		it('renders the saved inquiry date scoped by appealId', async () => {
+			expect(pageHtml.querySelector('input#inquiry-date-day').getAttribute('value')).toBe('19');
+			expect(pageHtml.querySelector('input#inquiry-date-month').getAttribute('value')).toBe('03');
+			expect(pageHtml.querySelector('input#inquiry-date-year').getAttribute('value')).toBe('2026');
+			expect(pageHtml.querySelector('input#inquiry-time-hour').getAttribute('value')).toBe('10');
+			expect(pageHtml.querySelector('input#inquiry-time-minute').getAttribute('value')).toBe('00');
+		});
 		it('should match the snapshot', () => {
 			expect(pageHtml.innerHTML).toMatchSnapshot();
 		});
-
 		it('should render the correct heading', () => {
 			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Inquiry date and time');
 		});
@@ -58,38 +96,6 @@ describe('set up inquiry', () => {
 		it('should render a Time field', () => {
 			expect(pageHtml.querySelector('input#inquiry-time-hour')).not.toBeNull();
 			expect(pageHtml.querySelector('input#inquiry-time-minute')).not.toBeNull();
-		});
-
-		it('should render any saved response', async () => {
-			nock('http://test/')
-				.get(`/appeals/${appealId}`)
-				.twice()
-				.reply(200, { ...appealData, appealId });
-
-			//set session data with post request
-			await request.post(`${baseUrl}/${appealId}/inquiry/setup/date`).send({
-				'inquiry-date-day': '01',
-				'inquiry-date-month': '02',
-				'inquiry-date-year': '3025',
-				'inquiry-time-hour': '12',
-				'inquiry-time-minute': '00'
-			});
-
-			const response = await request.get(`${baseUrl}/${appealId}/inquiry/setup/date`);
-
-			pageHtml = parseHtml(response.text);
-
-			expect(pageHtml.querySelector('input#inquiry-date-day').getAttribute('value')).toEqual('01');
-			expect(pageHtml.querySelector('input#inquiry-date-month').getAttribute('value')).toEqual(
-				'02'
-			);
-			expect(pageHtml.querySelector('input#inquiry-date-year').getAttribute('value')).toEqual(
-				'3025'
-			);
-			expect(pageHtml.querySelector('input#inquiry-time-hour').getAttribute('value')).toEqual('12');
-			expect(pageHtml.querySelector('input#inquiry-time-minute').getAttribute('value')).toEqual(
-				'00'
-			);
 		});
 	});
 
@@ -236,11 +242,12 @@ describe('set up inquiry', () => {
 
 			// set session data with post request
 			await request.post(`${baseUrl}/${appealId}/Inquiry/setup/estimation`).send({
-				inquiryEstimationYesNo: 'yes'
+				inquiryEstimationYesNo: 'yes',
+				inquiryEstimationDays: 8
 			});
 
 			const response = await request.get(`${baseUrl}/${appealId}/Inquiry/setup/estimation`);
-			pageHtml = parseHtml(response.text);
+			pageHtml = parseHtml(response.text, { skipPrettyPrint: true });
 		});
 
 		it('should match the snapshot', () => {
@@ -259,6 +266,15 @@ describe('set up inquiry', () => {
 
 		it('should render an input for inquiry estimation days', () => {
 			expect(pageHtml.querySelector('input[name="inquiryEstimationDays"]')).not.toBeNull();
+		});
+
+		it('should render correct values when session is set', () => {
+			expect(pageHtml.innerHTML).toContain(
+				`name="inquiryEstimationYesNo" type="radio" value="yes" checked`
+			);
+			expect(pageHtml.innerHTML).toContain(
+				`id="inquiry-estimation-days" name="inquiryEstimationDays" type="text" value="8"`
+			);
 		});
 	});
 
@@ -291,7 +307,9 @@ describe('set up inquiry', () => {
 		});
 
 		it('should return 400 on missing inquiryEstimationYesNo with appropriate error message', async () => {
-			const response = await request.post(`${baseUrl}/${appealId}/Inquiry/setup/address`).send({});
+			const response = await request
+				.post(`${baseUrl}/${appealId}/Inquiry/setup/estimation`)
+				.send({});
 
 			expect(response.statusCode).toBe(400);
 
@@ -302,7 +320,39 @@ describe('set up inquiry', () => {
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
 			expect(errorSummaryHtml).toContain(
-				'Select yes if you know the address of where the inquiry will take place'
+				'Select yes if you know the expected number of days to carry out the inquiry'
+			);
+		});
+
+		it('should return an appropriate error message when symbols are input', async () => {
+			const response = await request.post(`${baseUrl}/${appealId}/Inquiry/setup/estimation`).send({
+				inquiryEstimationYesNo: 'yes',
+				inquiryEstimationDays: '%%%----££££'
+			});
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter the number of days using numbers 0 to 99');
+		});
+
+		it('should return an appropriate error message when an incorrect number value is posted', async () => {
+			const response = await request.post(`${baseUrl}/${appealId}/Inquiry/setup/estimation`).send({
+				inquiryEstimationYesNo: 'yes',
+				inquiryEstimationDays: '0.1'
+			});
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain(
+				'Number of days must be a whole or half number, like 3 or 3.5'
 			);
 		});
 	});
@@ -474,9 +524,14 @@ describe('set up inquiry', () => {
 			url: `${baseUrl}/${appealId}/Inquiry/setup/address-details`
 		});
 	});
+
 	describe('GET /inquiry/setup/timetable-due-dates', () => {
 		const appealId = 2;
-
+		const validData = {
+			planningObligation: {
+				hasObligation: true
+			}
+		};
 		let pageHtml;
 
 		beforeAll(async () => {
@@ -484,11 +539,19 @@ describe('set up inquiry', () => {
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
 
+			nock('http://test/')
+				.get(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+				.reply(200, {
+					...validData
+				});
+
 			const response = await request.get(
-				`${baseUrl}/${appealId}/Inquiry/setup/timetable-due-dates`
+				`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates`
 			);
 			pageHtml = parseHtml(response.text);
 		});
+
+		afterEach(teardown);
 
 		it('should match the snapshot', () => {
 			expect(pageHtml.innerHTML).toMatchSnapshot();
@@ -547,20 +610,50 @@ describe('set up inquiry', () => {
 		});
 	});
 
-	describe('POST /inquiry/setup/timetable-due-dates', () => {
-		const appealId = 2;
-
-		beforeEach(() => {
+	describe('GET /inquiry/setup/timetable-due-dates when hasObligation is false', () => {
+		let pageHtml;
+		beforeAll(async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+				.reply(200, {
+					planningObligation: { hasObligation: false }
+				});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates`
+			);
+			pageHtml = parseHtml(response.text);
+		});
+
+		it('should not render a date input for planning obligation date when no planning obligation is present', () => {
+			expect(pageHtml.querySelector('input#planning-obligation-due-date-day')).toBeNull();
+			expect(pageHtml.querySelector('input#planning-obligation-due-date-month')).toBeNull();
+			expect(pageHtml.querySelector('input#planning-obligation-due-date-year')).toBeNull();
+		});
+	});
+
+	describe('POST /inquiry/setup/timetable-due-dates', () => {
+		beforeEach(async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+				.reply(200, {
+					...validData
+				});
 		});
 
 		it('should return 400 with an error when all fields are blank', async () => {
 			const appealId = 2;
 			// Use a clearly past date
 			const response = await request
-				.post(`${baseUrl}/${appealId}/Inquiry/setup/timetable-due-dates`)
+				.post(`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates`)
 				.send({});
 
 			expect(response.statusCode).toBe(400);
@@ -689,6 +782,11 @@ describe('set up inquiry', () => {
 		const estimationValue = {
 			inquiryEstimationDays: '10'
 		};
+		const validData = {
+			planningObligation: {
+				hasObligation: true
+			}
+		};
 
 		let pageHtml;
 
@@ -696,6 +794,12 @@ describe('set up inquiry', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+				.reply(200, {
+					...validData
+				});
 
 			// set session data with post requests to previous pages
 			await request.post(`${baseUrl}/${appealId}/start-case/select-procedure`).send({
@@ -756,7 +860,11 @@ describe('set up inquiry', () => {
 
 	describe('POST /inquiry/setup/check-details', () => {
 		const appealId = 1;
-
+		const validData = {
+			planningObligation: {
+				hasObligation: true
+			}
+		};
 		const dateValues = {
 			'inquiry-date-day': '01',
 			'inquiry-date-month': '02',
@@ -771,7 +879,6 @@ describe('set up inquiry', () => {
 			county: 'Slabshire',
 			postCode: 'X25 3YZ'
 		};
-
 		const estimationValue = {
 			inquiryEstimationDays: '10'
 		};
@@ -781,9 +888,18 @@ describe('set up inquiry', () => {
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
 
+			nock('http://test/')
+				.get(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+				.reply(200, {
+					...validData
+				})
+				.persist();
+
 			nock('http://test/').post(`/appeals/${appealId}/appeal-timetables`).reply(200);
 			nock('http://test/').post(`/appeals/${appealId}/inquiry-estimates`).reply(200);
 		});
+
+		afterEach(teardown);
 
 		it('should redirect to appeal details page after submission with address', async () => {
 			nock('http://test/')

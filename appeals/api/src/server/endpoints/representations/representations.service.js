@@ -1,31 +1,32 @@
+import config from '#config/config.js';
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { notifySend } from '#notify/notify-send.js';
 import addressRepository from '#repositories/address.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import neighbouringSitesRepository from '#repositories/neighbouring-sites.repository.js';
 import representationRepository from '#repositories/representation.repository.js';
 import serviceUserRepository from '#repositories/service-user.repository.js';
-import BackOfficeAppError from '#utils/app-error.js';
-import logger from '#utils/logger.js';
 import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
-import {
-	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
-	VALIDATION_OUTCOME_COMPLETE
-} from '@pins/appeals/constants/support.js';
-import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import BackOfficeAppError from '#utils/app-error.js';
+import { isCurrentStatus } from '#utils/current-status.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
+import logger from '#utils/logger.js';
+import { camelToScreamingSnake } from '#utils/string-utils.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE,
 	FEATURE_FLAG_NAMES
 } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import formatDate from '@pins/appeals/utils/date-formatter.js';
-import { notifySend } from '#notify/notify-send.js';
-import { EventType } from '@pins/event-client';
-import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { isCurrentStatus } from '#utils/current-status.js';
-import config from '#config/config.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
-import { camelToScreamingSnake } from '#utils/string-utils.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
+import {
+	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
+	VALIDATION_OUTCOME_COMPLETE
+} from '@pins/appeals/constants/support.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
+import { EventType } from '@pins/event-client';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
@@ -102,7 +103,7 @@ export const getRepStatusAuditLogDetails = (status, repType, redactedRep) => {
 
 /**
  * @typedef {Object} CreateRepresentationInput
- * @property {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment'} representationType
+ * @property {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment' | 'lpa_proofs_evidence' | 'appellant_proofs_evidence'} representationType
  * @property {{ firstName: string, lastName: string, email: string }} ipDetails
  * @property {{ addressLine1: string, addressLine2?: string, town: string, county?: string, postCode: string }} ipAddress
  * @property {string[]} attachments
@@ -152,6 +153,52 @@ export const createRepresentation = async (appealId, input) => {
 		}));
 
 		await representationRepository.addAttachments(representation.id, mappedDocuments);
+
+		for (const document of mappedDocuments) {
+			if (document?.documentGuid) {
+				await broadcasters.broadcastDocument(
+					document.documentGuid,
+					document.version,
+					document.version > 1 ? EventType.Update : EventType.Create
+				);
+			}
+		}
+	}
+
+	return representation;
+};
+
+/**
+ * @param {Appeal} appeal
+ * @param {string} proofOfEvidenceType
+ * @param {string[]} attachments
+ * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
+ * */
+export const createRepresentationProofOfEvidence = async (
+	appeal,
+	proofOfEvidenceType,
+	attachments
+) => {
+	const representation = await representationRepository.createRepresentation({
+		appealId: appeal.id,
+		representationType:
+			proofOfEvidenceType === 'lpa'
+				? APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE
+				: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
+		source: proofOfEvidenceType === 'lpa' ? 'lpa' : 'citizen',
+		dateCreated: new Date(),
+		representedId: appeal.appellantId
+	});
+
+	if (attachments.length > 0) {
+		const documents = await documentRepository.getDocumentsByIds(attachments);
+
+		const mappedDocuments = documents.map((d) => ({
+			documentGuid: d.guid,
+			version: d.latestDocumentVersion?.version ?? 1
+		}));
+
+		await representationRepository.addAttachments(representation.id, mappedDocuments);
 	}
 
 	return representation;
@@ -183,6 +230,17 @@ export const updateAttachments = async (repId, attachments) => {
 		repId,
 		mappedDocuments
 	);
+
+	for (const document of mappedDocuments) {
+		if (document?.documentGuid) {
+			await broadcasters.broadcastDocument(
+				document.documentGuid,
+				document.version,
+				document.version > 1 ? EventType.Update : EventType.Create
+			);
+		}
+	}
+
 	return updatedRepresentation;
 };
 
@@ -263,11 +321,10 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 		}
 	);
 
-	await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
-
 	if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
 		await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 	}
+	await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 
 	const finalCommentsDueDate = formatDate(
 		new Date(appeal.appealTimetable?.finalCommentsDueDate || ''),
@@ -280,15 +337,12 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 	const hasIpComments = result.some(
 		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
 	);
+	const isHearingProcedure = String(appeal.procedureType?.key) === APPEAL_CASE_PROCEDURE.HEARING;
 
 	try {
 		let whatHappensNextAppellant;
 		let whatHappensNextLpa;
-		let lpaSubject;
-		let appellantSubject;
-		if (String(appeal.procedureType?.key) === APPEAL_CASE_PROCEDURE.HEARING) {
-			lpaSubject = `We've received all statements and comments`;
-			appellantSubject = `We have received the local planning authority's questionnaire, all statements and comments from interested parties`;
+		if (isHearingProcedure) {
 			if (appeal.hearing?.hearingStartTime) {
 				whatHappensNextAppellant = `Your hearing is on ${formatDate(
 					appeal.hearing?.hearingStartTime,
@@ -303,8 +357,6 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 				whatHappensNextLpa = `We will contact you when the hearing has been set up.`;
 			}
 		} else {
-			lpaSubject = 'Submit your final comments';
-			appellantSubject = 'Submit your final comments';
 			whatHappensNextAppellant = `You need to [submit your final comments](${config.frontOffice.url}/appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
 			whatHappensNextLpa = `You need to [submit your final comments](${config.frontOffice.url}/manage-appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
 		}
@@ -314,11 +366,11 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 			notifyClient,
 			hasLpaStatement,
 			hasIpComments,
+			isHearingProcedure,
 			templateName: 'received-statement-and-ip-comments-lpa',
 			recipientEmail: appeal.lpa?.email,
 			finalCommentsDueDate,
 			whatHappensNext: whatHappensNextLpa,
-			subject: lpaSubject,
 			azureAdUserId
 		});
 
@@ -327,11 +379,11 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 			notifyClient,
 			hasLpaStatement,
 			hasIpComments,
+			isHearingProcedure,
 			templateName: 'received-statement-and-ip-comments-appellant',
 			recipientEmail: appeal.agent?.email || appeal.appellant?.email,
 			finalCommentsDueDate,
 			whatHappensNext: whatHappensNextAppellant,
-			subject: appellantSubject,
 			azureAdUserId
 		});
 	} catch (error) {
@@ -367,11 +419,10 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
 		}
 	);
 
-	await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
-
 	if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
 		await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 	}
+	await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 
 	try {
 		const hasLpaFinalComment = result.some(
@@ -409,7 +460,7 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
  * @property {string} [whatHappensNext]
  * @property {boolean} [hasLpaStatement]
  * @property {boolean} [hasIpComments]
- * @property {string} [subject]
+ * @property {boolean} [isHearingProcedure]
  * @property {string} [userTypeNoCommentSubmitted]
  * @property {string} azureAdUserId
  */
@@ -427,7 +478,7 @@ async function notifyPublished({
 	whatHappensNext = '',
 	hasLpaStatement = false,
 	hasIpComments = false,
-	subject = '',
+	isHearingProcedure = false,
 	userTypeNoCommentSubmitted = '',
 	azureAdUserId
 }) {
@@ -460,8 +511,9 @@ async function notifyPublished({
 			what_happens_next: whatHappensNext,
 			has_ip_comments: hasIpComments,
 			has_statement: hasLpaStatement,
-			...(subject ? { subject } : {}),
-			user_type: userTypeNoCommentSubmitted
+			is_hearing_procedure: isHearingProcedure,
+			user_type: userTypeNoCommentSubmitted,
+			team_email_address: await getTeamEmailFromAppealId(appeal.id)
 		}
 	});
 }

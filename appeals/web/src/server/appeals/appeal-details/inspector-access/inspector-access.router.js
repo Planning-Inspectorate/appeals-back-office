@@ -1,6 +1,6 @@
+import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controllers from './inspector-access.controller.js';
-import { asyncHandler } from '@pins/express';
 import * as validators from './inspector-access.validators.js';
 
 const router = createRouter({ mergeParams: true });

@@ -1,7 +1,7 @@
+import { getAttachmentList } from '#appeals/appeal-details/representations/common/document-attachment-list.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { summaryList } from './components/summary-list.js';
-import { getAttachmentList } from '#appeals/appeal-details/representations/common/document-attachment-list.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */

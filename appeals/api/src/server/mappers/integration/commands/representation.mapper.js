@@ -5,14 +5,14 @@
 /** @typedef {Omit<import('#db-client').Prisma.RepresentationCreateInput, 'appeal'> & {represented?: ServiceUserConnectInput|undefined}} RepresentationCreateInput */
 /** @typedef {import('#db-client').Prisma.DocumentVersionCreateInput} DocumentVersionCreateInput */
 
+import { serviceUserIdStartRange } from '#mappers/integration/map-service-user-entity.js';
+import { APPEAL_REPRESENTATION_TYPE as INTERNAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE
 } from '@planning-inspectorate/data-model';
-import { APPEAL_REPRESENTATION_TYPE as INTERNAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import { mapDocumentIn } from './document.mapper.js';
 import { mapServiceUserIn } from './service-user.mapper.js';
-import { serviceUserIdStartRange } from '#mappers/integration/map-service-user-entity.js';
 
 /**
  *
@@ -85,7 +85,10 @@ export const mapRepresentationType = (data) => {
 					? INTERNAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
 					: INTERNAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT;
 
-			case APPEAL_REPRESENTATION_TYPE.PROOFS_EVIDENCE: //TODO: missing user journey
+			case APPEAL_REPRESENTATION_TYPE.PROOFS_EVIDENCE:
+				return data.lpaCode
+					? INTERNAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE
+					: INTERNAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE;
 			default:
 				return APPEAL_REPRESENTATION_TYPE.COMMENT;
 		}

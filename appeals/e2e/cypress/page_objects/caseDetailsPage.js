@@ -1,9 +1,8 @@
 // @ts-nocheck
 
+import { formatDateAndTime } from '../support/utils/format';
 import { Page } from './basePage';
 import { DateTimeSection } from './dateTimeSection.js';
-import { formatDateAndTime } from '../support/utils/formatDateAndTime';
-import { forEach } from 'lodash';
 
 const dateTimeSection = new DateTimeSection();
 export class CaseDetailsPage extends Page {
@@ -62,7 +61,9 @@ export class CaseDetailsPage extends Page {
 		hearingBannerAddressLink: 'add-hearing-address',
 		pageHeading: 'h1',
 		changeInquiryDate: 'change-inquiry-date',
-		changeInquiryNumberOfDays: 'change-inquiry-expected-number-of-days'
+		changeInquiryNumberOfDays: 'change-inquiry-expected-number-of-days',
+		addAppellantWithdrawal: 'add-costs-appellant-withdrawal',
+		addLpaWithdrawal: 'add-costs-lpa-withdrawal'
 	};
 
 	fixturesPath = 'cypress/fixtures/';
@@ -103,6 +104,7 @@ export class CaseDetailsPage extends Page {
 		manageLinkedAppeals: () => cy.getByData(this._cyDataSelectors.manageLinkedAppeals),
 		manageNotifyingParties: () => cy.getByData(this._cyDataSelectors.manageNotifyingParties),
 		linkedAppeal: () => cy.get(`[data-cy^=${this._cyDataSelectors.linkedAppeal}]`),
+		linkedAppealValue: () => cy.get('.appeal-linked-appeals .govuk-summary-list__value'),
 		manageRelatedAppeals: () => cy.getByData(this._cyDataSelectors.manageRelatedAppeals),
 		uploadFile: () => cy.getByData(this._cyDataSelectors.uploadFile),
 		changeAppealType: () => cy.getByData(this._cyDataSelectors.changeAppealType),
@@ -144,10 +146,43 @@ export class CaseDetailsPage extends Page {
 		manageMainPartyCorrespondence: () =>
 			cy.getByData(this._cyDataSelectors.manageMainPartyCorrespondence),
 		decisionOutcomeText: () => cy.get('.govuk-inset-text'),
-		manageCostDecision: () =>
+		manageAppellantCostApplication: () =>
 			cy
 				.get('.govuk-table__row')
 				.contains('Appellant application')
+				.siblings()
+				.eq(1)
+				.children()
+				.first()
+				.children()
+				.first(), //Returns the manage link next in the Costs decsion row under costs section
+
+		manageAppellantCostWithdrawal: () =>
+			cy
+				.get('.govuk-table__row')
+				.contains('Appellant withdrawal')
+				.siblings()
+				.eq(1)
+				.children()
+				.first()
+				.children()
+				.first(), //Returns the manage link next in the Costs decsion row under costs section
+
+		manageLpaCostApplication: () =>
+			cy
+				.get('.govuk-table__row')
+				.contains('LPA application')
+				.siblings()
+				.eq(1)
+				.children()
+				.first()
+				.children()
+				.first(), //Returns the manage link next in the Costs decsion row under costs section
+
+		manageLpaCostWithdrawal: () =>
+			cy
+				.get('.govuk-table__row')
+				.contains('LPA withdrawal')
 				.siblings()
 				.eq(1)
 				.children()
@@ -189,7 +224,7 @@ export class CaseDetailsPage extends Page {
 		setUpTimetableHearingDate: () => cy.getByData(this._cyDataSelectors.setUpTimetableHearingDate),
 		timeTableRows: () => cy.get('.appeal-case-timetable dt'),
 		personalListFilterDropdown: () => cy.get('.govuk-select'),
-		caseDetailsSections: () => cy.get('.govuk-accordion__section-heading-text-focus'),
+		caseDetailsSections: () => cy.get('#main-content'),
 		pageHeading: () => cy.get(this._cyDataSelectors.pageHeading),
 		inquiryEstimatedDaysInput: () => cy.get('#inquiry-estimation-days'),
 		line1: () => cy.get('#address-line-1'),
@@ -199,11 +234,14 @@ export class CaseDetailsPage extends Page {
 		postcode: () => cy.get('#post-code'),
 		changeInquiryDate: () => cy.getByData(this._cyDataSelectors.changeInquiryDate),
 		changeInquiryExpectedDays: () => cy.getByData(this._cyDataSelectors.changeInquiryNumberOfDays),
-		relatedAppealValue: (caseRef) => cy.get(`[data-cy="related-appeal-${caseRef}"]`),
+		relatedAppealValue: (caseObj) => cy.get(`[data-cy="related-appeal-${caseObj}"]`),
 		estimatedPreparationTime: () => cy.get('#preparation-time'),
 		estimatedSittingTime: () => cy.get('#sitting-time'),
 		estimatedReportingTime: () => cy.get('#reporting-time'),
-		caseDetailsInquiryEstimateLink: () => cy.get('#addInquiryEstimates')
+		caseDetailsInquiryEstimateLink: () => cy.get('#addInquiryEstimates'),
+		caseOfficerValue: () => cy.get('.appeal-case-officer .govuk-summary-list__value'),
+		addAppellantWithdrawal: () => cy.getByData(this._cyDataSelectors.addAppellantWithdrawal),
+		addLpaWithdrawal: () => cy.getByData(this._cyDataSelectors.addLpaWithdrawal)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -213,8 +251,20 @@ export class CaseDetailsPage extends Page {
 		this.elements.viewLpaQuestionnaire().click();
 	}
 
-	clickManageDocsCostDecision() {
-		this.elements.manageCostDecision().click();
+	clickManageAppellantCostApplication() {
+		this.elements.manageAppellantCostApplication().click();
+	}
+
+	clickManageAppellanCostWithdrawal() {
+		this.elements.manageAppellantCostWithdrawal().click();
+	}
+
+	clickManageLpaCostApplication() {
+		this.elements.manageLpaCostApplication().click();
+	}
+
+	clickManageLpaCostWithdrawal() {
+		this.elements.manageLpaCostWithdrawal().click();
 	}
 
 	checkDocVersionNumber(versionNumber) {
@@ -267,22 +317,18 @@ export class CaseDetailsPage extends Page {
 	}
 
 	clickAssignCaseOfficer() {
-		this.clickAccordionByText('Team');
 		this.elements.assignCaseOfficer().click();
 	}
 
 	clickAssignInspector() {
-		this.clickAccordionByText('Team');
 		this.elements.assignInspector().click();
 	}
 
 	clickReviewAppellantCase() {
-		this.clickAccordionByButton('Documentation');
 		this.elements.reviewAppeallantCase().click();
 	}
 
 	clickSetUpSiteVisitType() {
-		this.clickAccordionByButton('Site');
 		this.elements.setUpSiteVisit().click();
 	}
 
@@ -317,12 +363,10 @@ export class CaseDetailsPage extends Page {
 	}
 
 	clickArrangeVisitTypeHasCaseTimetable() {
-		this.clickAccordionByText('Timetable');
 		this.elements.arrangeScheduleVisit().click();
 	}
 
 	clickChangeVisitTypeHasCaseTimetable() {
-		this.clickAccordionByText('Timetable');
 		this.elements.changeScheduleVisit().click();
 	}
 
@@ -390,16 +434,22 @@ export class CaseDetailsPage extends Page {
 		this.elements.addAppellantApplication().click();
 	}
 
+	clickAddAppellantWithdrawal() {
+		this.elements.addAppellantWithdrawal().click();
+	}
+
+	clickAddLpaWithdrawal() {
+		this.elements.addLpaWithdrawal().click();
+	}
+
 	clickChangeSiteOwnership() {
 		this.elements.changeSiteOwnership().click();
 	}
 
 	clickChangeLpaqDueDate() {
-		this.clickAccordionByText('Timetable');
 		this.elements.changeLpaqDueDate().click();
 	}
 	clickChangeStartDate() {
-		this.clickAccordionByText('Timetable');
 		this.elements.changeStartDate().click();
 	}
 
@@ -408,12 +458,10 @@ export class CaseDetailsPage extends Page {
 	}
 
 	clickChangeAppellant() {
-		this.clickAccordionByText('Contacts');
 		this.elements.changeAppellant().click();
 	}
 
 	clickChangeAgent() {
-		this.clickAccordionByText('Contacts');
 		this.elements.changeAgent().click();
 	}
 
@@ -472,13 +520,13 @@ export class CaseDetailsPage extends Page {
 		this.elements.costDecisionStatus().contains(text);
 	}
 
-	clickRemoveRelatedAppealByRef(caseRefToRelate) {
-		cy.log(caseRefToRelate);
-		cy.getByData('remove-appeal-' + caseRefToRelate).click();
+	clickRemoveRelatedAppealByRef(caseObjToRelate) {
+		cy.log(caseObjToRelate);
+		cy.getByData('remove-appeal-' + caseObjToRelate).click();
 	}
 
-	clickLinkedAppeal(caseRef) {
-		cy.getByData('linked-appeal-' + caseRef).click();
+	clickLinkedAppeal(caseObj) {
+		cy.getByData(this._cyDataSelectors.linkedAppeal + caseObj.reference).click();
 	}
 
 	clickRemoveFileUpload(fileName) {
@@ -503,8 +551,8 @@ export class CaseDetailsPage extends Page {
 		this.basePageElements.linkByText(text).click();
 	}
 
-	clickSiteVisitBanner(caseRef) {
-		this.elements.siteVisitBanner(caseRef).click();
+	clickSiteVisitBanner(caseObj) {
+		this.elements.siteVisitBanner(caseObj).click();
 	}
 
 	clickRowChangeLink(row) {
@@ -585,8 +633,8 @@ export class CaseDetailsPage extends Page {
 	 ************************ Verification ************************
 	 ****************************************************************/
 
-	assertRelatedAppealValue(caseRef) {
-		this.elements.relatedAppealValue(caseRef).should('be.visible');
+	assertRelatedAppealValue(caseObj) {
+		this.elements.relatedAppealValue(caseObj).should('be.visible');
 	}
 
 	checkAdditonalDocsAppellantCase(value) {
@@ -647,8 +695,19 @@ export class CaseDetailsPage extends Page {
 		this.elements.addLinkedAppeal().should('not.exist');
 	}
 
+	verifyNumberOfLinkedAppeals(num) {
+		this.elements.linkedAppeal().should('have.length', num);
+	}
+
 	checkViewDecisionLetterIsLink(text) {
 		this.elements.decisionOutcomeText().contains(this.basePageElements.link, text);
+	}
+
+	getCaseOfficer() {
+		return this.elements
+			.caseOfficerValue()
+			.invoke('text')
+			.then((text) => text.split('\n')[0].trim());
 	}
 
 	verifyAnswerSummaryValue(answer) {
@@ -724,8 +783,8 @@ export class CaseDetailsPage extends Page {
 			});
 	}
 
-	verifyAppealRefOnCaseDetails(caseRef) {
-		this.elements.getAppealRefCaseDetails().contains(caseRef);
+	verifyAppealRefOnCaseDetails(caseObj) {
+		this.elements.getAppealRefCaseDetails().contains(caseObj);
 	}
 
 	verifyCheckYourAnswers(label, value) {
@@ -801,8 +860,9 @@ export class CaseDetailsPage extends Page {
 		this.clickButtonByText('Update timetable due dates');
 	}
 
-	acceptLpaStatement(caseRef, updateAllocation, representation) {
-		cy.addRepresentation(caseRef, 'lpaStatement', null, representation).then((caseRef) => {
+	acceptLpaStatement(caseObj, updateAllocation, representation) {
+		cy.log('problem is here');
+		cy.addRepresentation(caseObj, 'lpaStatement', null, representation).then((caseObj) => {
 			cy.reload();
 		});
 		this.elements.lpaStatementReviewLink().click();
@@ -855,12 +915,16 @@ export class CaseDetailsPage extends Page {
 	};
 
 	verifyCaseDetailsSection = (expectedSections) => {
-		const actualSections = [];
 		this.elements
 			.caseDetailsSections()
-			.each(($el) => actualSections.push($el.text().trim()))
-			.then(() => expect(actualSections).to.deep.equal(expectedSections));
+			.find('h1.govuk-heading-l')
+			.should(($h1s) => {
+				const actual = [...$h1s].map((h) => h.textContent.replace(/\s+/g, ' ').trim());
+
+				expect(actual).to.deep.equal(expectedSections);
+			});
 	};
+
 	verifyAppealType(expectedAppealType) {
 		this.elements.appealType().should('contain', expectedAppealType);
 	}

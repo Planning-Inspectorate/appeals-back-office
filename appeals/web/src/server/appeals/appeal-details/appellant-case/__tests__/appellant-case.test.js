@@ -41,7 +41,7 @@ import {
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
-import { cloneDeep } from 'lodash-es';
+
 import nock from 'nock';
 import supertest from 'supertest';
 
@@ -93,6 +93,33 @@ describe('appellant-case', () => {
 			nock.cleanAll();
 		});
 
+		it('should render the appellant case page with the expected common Before you start content', async () => {
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
+
+			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appellant case</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Before you start</h2>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What type of application is your appeal about?'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Which local planning authority (LPA) do you want to appeal against?'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('What is the application reference number?');
+			expect(unprettifiedElement.innerHTML).toContain('Was your application granted or refused?');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What’s the date on the decision letter from the local planning authority?​'
+			);
+		});
+
 		it('should render the appellant case page with the expected content (Householder)', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
@@ -109,18 +136,11 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('1. Appellant details</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('2. Site details</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('3. Application details</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('4. Appeal details</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('5. Upload documents</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('4. Upload documents</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h2>');
 
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Are there other appeals linked to your development?</dt>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Which local planning authority (LPA) do you want to appeal against?</dt>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'What is the application reference number?</dt>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'What date did you submit your application?</dt>'
@@ -272,16 +292,9 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('1. Appellant details</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('2. Site details</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('3. Application details</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('4. Appeal details</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('5. Upload documents</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('4. Upload documents</h2>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Additional documents</h2>');
 
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Which local planning authority (LPA) do you want to appeal against?</dt>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'What is the application reference number?</dt>'
-			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'What date did you submit your application?</dt>'
 			);
@@ -324,6 +337,7 @@ describe('appellant-case', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Appellant case</h1>');
+
 			expect(unprettifiedElement.innerHTML).toContain('1. Appellant details</h2>');
 
 			expect(unprettifiedElement.innerHTML).toContain('2. Site details</h2>');
@@ -343,29 +357,18 @@ describe('appellant-case', () => {
 			);
 
 			expect(unprettifiedElement.innerHTML).toContain('3. Application details</h2>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Which local planning authority (LPA) do you want to appeal against?'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('What is the application reference number?');
 			expect(unprettifiedElement.innerHTML).toContain('What date did you submit your application?');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Are there other appeals linked to your development?'
+				'Agreement to change the description of the advertisement'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Was your application granted or refused?');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'What’s the date on the decision letter from the local planning authority?​'
+				'Are there other appeals linked to your development?'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Decision letter from the local planning authority'
 			);
 
-			expect(unprettifiedElement.innerHTML).toContain('4. Appeal details</h2>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'What type of application is your appeal about?'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Displaying an advertisement');
-
-			expect(unprettifiedElement.innerHTML).toContain('5. Upload documents</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('4. Upload documents</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Application form');
 			expect(unprettifiedElement.innerHTML).toContain('Appeal statement');
 			expect(unprettifiedElement.innerHTML).toContain('Application for an award of appeal costs');
@@ -4032,7 +4035,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence date month must be a number</a>'
+				'Agreement to change description evidence date must be a real date</a>'
 			);
 		});
 
@@ -4676,7 +4679,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence date month must be a number</a>'
+				'Agreement to change description evidence date must be a real date</a>'
 			);
 		});
 
@@ -5495,7 +5498,7 @@ describe('appellant-case', () => {
 		});
 
 		it('should render the delete document page with the expected content when there are multiple document versions', async () => {
-			const multipleVersionsDocument = cloneDeep(documentFileVersionsInfoChecked);
+			const multipleVersionsDocument = structuredClone(documentFileVersionsInfoChecked);
 			multipleVersionsDocument.allVersions.push(multipleVersionsDocument.allVersions[0]);
 
 			nock('http://test/')

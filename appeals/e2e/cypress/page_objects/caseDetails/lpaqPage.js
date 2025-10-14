@@ -1,7 +1,7 @@
 // @ts-nocheck
+import { Page } from '../basePage';
 import { CaseDetailsPage } from '../caseDetailsPage';
 import { ListCasesPage } from '../listCasesPage';
-import { Page } from '../basePage';
 
 const caseDetailsPage = new CaseDetailsPage();
 const listCasesPage = new ListCasesPage();
@@ -20,15 +20,15 @@ export class LpaqPage extends Page {
 
 	elements = {
 		addRelatedAppeal: () => cy.getByData(this._cyDataSelectors.addRelatedAppeals),
-		relatedAppealValue: (caseRef) => cy.get(`[data-cy="related-appeal-${caseRef}"]`)
+		relatedAppealValue: (caseObj) => cy.get(`[data-cy="related-appeal-${caseObj}"]`)
 	};
 	/********************************************************
 	 ******************** Navigation *************************
 	 *********************************************************/
 
-	navigateToLpaq(caseRef) {
+	navigateToLpaq(caseObj) {
 		caseDetailsPage.navigateToAppealsService();
-		listCasesPage.clickAppealByRef(caseRef);
+		listCasesPage.clickAppealByRef(caseObj);
 		caseDetailsPage.clickReviewLpaQuestionnaire(); // Assuming this exists
 	}
 
@@ -213,11 +213,17 @@ export class LpaqPage extends Page {
 		this.assertFieldLabelAndValue('Is the site in an area of outstanding natural beauty?', value);
 	}
 
-	assertDesignatedSites(value) {
-		this.assertFieldLabelAndValue(
-			'Is the development in, near or likely to affect any designated sites?',
-			value
-		);
+	assertDesignatedSites(values) {
+		cy.contains('Is the development in, near or likely to affect any designated sites?')
+			.siblings('.govuk-summary-list__value')
+			.invoke('text')
+			.then((text) => {
+				const normalized = text.replace(/\s+/g, ' ').trim();
+
+				values.forEach((line) => {
+					expect(normalized).to.include(line);
+				});
+			});
 	}
 
 	assertTreePreservationOrder(value) {

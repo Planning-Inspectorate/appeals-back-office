@@ -1,8 +1,8 @@
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
-import * as controller from './update-case-team.controller.js';
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { permissionNames } from '#environment/permissions.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
+import * as controller from './update-case-team.controller.js';
 import { validateCaseTeamSelection } from './update-case-team.validators.js';
 
 const router = createRouter({ mergeParams: true });

@@ -1,40 +1,44 @@
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
-import * as controller from './appellant-case.controller.js';
-import * as validators from './appellant-case.validators.js';
-import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
-import outcomeValidRouter from './outcome-valid/outcome-valid.router.js';
-import outcomeInvalidRouter from '../invalid-appeal/invalid-appeal.router.js';
-import outcomeIncompleteRouter from './outcome-incomplete/outcome-incomplete.router.js';
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
-import { validateAppeal } from '../appeal-details.middleware.js';
+import changeProcedureTypeRouter from '#appeals/appeal-details/change-procedure-type/change-procedure-type.router.js';
 import { permissionNames } from '#environment/permissions.js';
+import { extractAndProcessDocumentDateErrors } from '#lib/validators/date-input.validator.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import {
 	clearUncommittedFilesFromSession,
 	validateCaseDocumentId,
 	validateCaseFolderId
 } from '../../appeal-documents/appeal-documents.middleware.js';
-import lpaReferenceRouter from '../lpa-reference/lpa-reference.router.js';
+import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
+import { validateAppeal } from '../appeal-details.middleware.js';
+import changeLpaRouter from '../change-appeal-details/local-planning-authority/local-planning-authority.router.js';
+import greenBeltRouter from '../green-belt/green-belt.router.js';
 import inspectorAccessRouter from '../inspector-access/inspector-access.router.js';
-import serviceUserRouter from '../service-user/service-user.router.js';
+import outcomeInvalidRouter from '../invalid-appeal/invalid-appeal.router.js';
+import lpaReferenceRouter from '../lpa-reference/lpa-reference.router.js';
+import otherAppealsRouter from '../other-appeals/other-appeals.router.js';
 import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
+import serviceUserRouter from '../service-user/service-user.router.js';
 import siteAddressRouter from './address/address.router.js';
-import siteOwnershipRouter from './site-ownership/site-ownership.router.js';
+import advertisementDescriptionRouter from './advertisement-description/advertisement-description.router.js';
+import advertisementInPositionRouter from './advertisement-in-position/advertisement-in-position.router.js';
+import agriculturalHoldingRouter from './agricultural-holding/agricultural-holding.router.js';
+import * as controller from './appellant-case.controller.js';
+import * as validators from './appellant-case.validators.js';
+import applicationDecisionDateRouter from './application-decision-date/application-decision-date.router.js';
+import applicationDevelopmentTypeRouter from './application-development-type/application-development-type.router.js';
+import applicationOutcomeRouter from './application-outcome/application-outcome.router.js';
+import applicationSubmissionDateRouter from './application-submission-date/application-submission-date.router.js';
+import developmentDescriptionRouter from './development-description/development-description.router.js';
+import highwayLandRouter from './highway-land/highway-land.router.js';
+import landownerPermissionRouter from './landowner-permission/landowner-permission.router.js';
+import outcomeIncompleteRouter from './outcome-incomplete/outcome-incomplete.router.js';
+import outcomeValidRouter from './outcome-valid/outcome-valid.router.js';
 import ownersKnownRouter from './owners-known/owners-known.router.js';
 import planningObligationRouter from './planning-obligation/planning-obligation.router.js';
-import agriculturalHoldingRouter from './agricultural-holding/agricultural-holding.router.js';
-import otherAppealsRouter from '../other-appeals/other-appeals.router.js';
-import siteAreaRouter from './site-area/site-area.router.js';
-import applicationSubmissionDateRouter from './application-submission-date/application-submission-date.router.js';
-import applicationDecisionDateRouter from './application-decision-date/application-decision-date.router.js';
-import greenBeltRouter from '../green-belt/green-belt.router.js';
-import developmentDescriptionRouter from './development-description/development-description.router.js';
-import applicationOutcomeRouter from './application-outcome/application-outcome.router.js';
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
-import applicationDevelopmentTypeRouter from './application-development-type/application-development-type.router.js';
-import changeLpaRouter from '../change-appeal-details/local-planning-authority/local-planning-authority.router.js';
-import changeProcedureTypeRouter from '../change-appeal-procedure-type/change-appeal-procedure-type.router.js';
-import { extractAndProcessDocumentDateErrors } from '#lib/validators/date-input.validator.js';
+import siteAreaRouter from './site-area/site-area.router.js';
+import siteOwnershipRouter from './site-ownership/site-ownership.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -69,6 +73,12 @@ router.use(
 	inspectorAccessRouter
 );
 router.use(
+	'/landowner-permission',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	landownerPermissionRouter
+);
+router.use(
 	'/safety-risks',
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
@@ -85,6 +95,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	siteAddressRouter
+);
+router.use(
+	'/advertisement-in-position',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	advertisementInPositionRouter
 );
 router.use(
 	'/site-ownership',
@@ -166,6 +182,13 @@ router.use(
 );
 
 router.use(
+	'/advertisement-description',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	advertisementDescriptionRouter
+);
+
+router.use(
 	'/change-appeal-details/local-planning-authority',
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
@@ -177,6 +200,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	changeProcedureTypeRouter
+);
+
+router.use(
+	'/highway-land',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	highwayLandRouter
 );
 
 router

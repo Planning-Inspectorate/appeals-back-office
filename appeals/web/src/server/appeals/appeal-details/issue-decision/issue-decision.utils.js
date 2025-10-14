@@ -1,11 +1,9 @@
+import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
 import {
 	DECISION_TYPE_APPELLANT_COSTS,
 	DECISION_TYPE_INSPECTOR,
 	DECISION_TYPE_LPA_COSTS
 } from '@pins/appeals/constants/support.js';
-import { appealShortReference } from '#lib/appeals-formatter.js';
-import isLinkedAppeal, { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
-import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
 
 /**
  * @typedef {import('@pins/express/types/express.js').Request & {specificDecisionType?: string}} Request
@@ -130,15 +128,4 @@ export function issueDecisionBackUrl(currentAppeal, childAppealId, request) {
 		// @ts-ignore
 		currentAppeal.linkedAppeals[linkedAppealIndex - 1].appealId
 	}/decision`;
-}
-
-/**
- * @param {WebAppeal} currentAppeal
- * @param {string|undefined} [captionSuffix]
- * @returns {string}
- */
-export function preHeadingText(currentAppeal, captionSuffix = '') {
-	return `Appeal ${appealShortReference(currentAppeal.appealReference)}${
-		isLinkedAppeal(currentAppeal) ? (isChildAppeal(currentAppeal) ? ' (child)' : ' (lead)') : ''
-	}${captionSuffix ? ' - ' + captionSuffix : ''}`;
 }

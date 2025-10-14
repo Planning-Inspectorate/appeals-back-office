@@ -1,8 +1,8 @@
-import { body } from 'express-validator';
 import {
 	ERROR_CANNOT_BE_EMPTY_STRING,
 	ERROR_MUST_BE_NUMBER
 } from '@pins/appeals/constants/support.js';
+import { body } from 'express-validator';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */
 

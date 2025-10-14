@@ -1,7 +1,4 @@
-import { parseHtml } from '@pins/platform';
-import nock from 'nock';
-import supertest from 'supertest';
-import { createTestEnvironment } from '#testing/index.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
 	appealData,
 	documentFileInfo,
@@ -9,6 +6,10 @@ import {
 	linkableAppealSummaryBackOffice,
 	linkableAppealSummaryHorizon
 } from '#testing/appeals/appeals.js';
+import { createTestEnvironment } from '#testing/index.js';
+import { parseHtml } from '@pins/platform';
+import nock from 'nock';
+import supertest from 'supertest';
 
 const { app, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -206,6 +207,65 @@ describe('linked-appeals', () => {
 			expect(errorSummaryHtml).toContain('Enter a valid appeal reference</a>');
 		});
 
+		it('should re-render the add linked appeal reference page with the expected error message if the reference is the same as appeal being linked to', async () => {
+			const appealReference = '6000123';
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, { ...appealData, appealReference });
+			nock('http://test/')
+				.get(`/appeals/linkable-appeal/${testInvalidLinkableAppealReference}/linked`)
+				.reply(404);
+
+			const response = await request.post(linkedAppealsAddUrl).send({
+				'appeal-reference': appealShortReference(appealReference)
+			});
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			expect(element.innerHTML).toContain('Appeal reference</label></h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter a valid appeal reference</a>');
+		});
+
+		it.each([
+			['2', '2345678'],
+			['3', '3456789'],
+			['4', '4567890']
+		])(
+			'should re-render the add linked appeal reference page with the expected error message if the provided appeal reference is a horizon appeal (starting with %s)',
+			async (_, appealReference) => {
+				nock.cleanAll();
+				nock('http://test/').get('/appeals/1').reply(200, appealData);
+				nock('http://test/')
+					.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
+					.reply(200, linkableAppealSummaryBackOffice);
+
+				const response = await request.post(linkedAppealsAddUrl).send({
+					'appeal-reference': appealReference
+				});
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Appeal reference</label></h1>');
+
+				const errorSummaryHtml = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(errorSummaryHtml).toContain('There is a problem</h2>');
+				expect(errorSummaryHtml).toContain('Enter a valid appeal reference</a>');
+			}
+		);
+
 		it('should redirect to the check and confirm page if the reference was provided, a matching appeal was found, is unlinked, and the current appeal is already a lead', async () => {
 			nock.cleanAll();
 			nock('http://test/')
@@ -277,26 +337,6 @@ describe('linked-appeals', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toEqual(`Found. Redirecting to ${linkedAppealsAddUrl}/already-linked`);
-		});
-
-		it('should redirect to a drop out page if attempting to link to itself', async () => {
-			nock.cleanAll();
-			nock('http://test/')
-				.get('/appeals/1')
-				.reply(200, { ...appealData, appealReference: testValidLinkableAppealReference })
-				.persist();
-			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
-				.reply(200, linkableAppealSummaryBackOffice);
-
-			const addLinkedAppealReferenceResponse = await request.post(linkedAppealsAddUrl).send({
-				'appeal-reference': testValidLinkableAppealReference
-			});
-
-			expect(addLinkedAppealReferenceResponse.statusCode).toBe(302);
-			expect(addLinkedAppealReferenceResponse.text).toEqual(
-				`Found. Redirecting to ${linkedAppealsAddUrl}/already-linked`
-			);
 		});
 
 		it('should redirect to a drop out page if both appeals are already linked as lead appeals', async () => {

@@ -236,14 +236,14 @@ exports[`set up inquiry GET /inquiry/setup/date should match the snapshot 1`] = 
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="inquiry-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="inquiry-date-day" name="inquiry-date-day" type="text" value="" inputmode="numeric">
+                                            id="inquiry-date-day" name="inquiry-date-day" type="text" value="19" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="inquiry-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="inquiry-date-month" name="inquiry-date-month" type="text" value=""
+                                            id="inquiry-date-month" name="inquiry-date-month" type="text" value="03"
                                             inputmode="numeric">
                                         </div>
                                     </div>
@@ -251,7 +251,8 @@ exports[`set up inquiry GET /inquiry/setup/date should match the snapshot 1`] = 
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="inquiry-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
-                                            id="inquiry-date-year" name="inquiry-date-year" type="text" value="" inputmode="numeric">
+                                            id="inquiry-date-year" name="inquiry-date-year" type="text" value="2026"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -288,56 +289,7 @@ exports[`set up inquiry GET /inquiry/setup/date should match the snapshot 1`] = 
 </main>"
 `;
 
-exports[`set up inquiry GET /inquiry/setup/estimation should match the snapshot 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - set up inquiry</span>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Do you know the expected number of days to carry out the inquiry?</h1>
-                                </legend>
-                                <div class="govuk-radios" data-module="govuk-radios">
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="inquiry-estimation-yes-no" name="inquiryEstimationYesNo"
-                                        type="radio" value="yes" data-aria-controls="conditional-inquiry-estimation-yes-no">
-                                        <label class="govuk-label govuk-radios__label" for="inquiry-estimation-yes-no">Yes</label>
-                                    </div>
-                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                    id="conditional-inquiry-estimation-yes-no">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-label--s" for="inquiry-estimation-days">Expected number of days to carry out the inquiry</label>
-                                            <div class="govuk-input__wrapper">
-                                                <input class="govuk-input govuk-input--width-3" id="inquiry-estimation-days"
-                                                name="inquiryEstimationDays" type="text">
-                                                <div class="govuk-input__suffix" aria-hidden="true">Days</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="inquiry-estimation-yes-no-2" name="inquiryEstimationYesNo"
-                                        type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="inquiry-estimation-yes-no-2">No</label>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
+exports[`set up inquiry GET /inquiry/setup/estimation should match the snapshot 1`] = `"<main class="govuk-main-wrapper" id="main-content"><div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - set up inquiry</span></div></div><div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds"><div class="govuk-grid-row"><div class="govuk-grid-column-full"><form method="POST" novalidate="novalidate"><div class="govuk-form-group"><fieldset class="govuk-fieldset"><legend class="govuk-fieldset__legend govuk-fieldset__legend--l"><h1 class="govuk-fieldset__heading"> Do you know the expected number of days to carry out the inquiry?</h1></legend><div class="govuk-radios" data-module="govuk-radios"><div class="govuk-radios__item"><input class="govuk-radios__input" id="inquiry-estimation-yes-no" name="inquiryEstimationYesNo" type="radio" value="yes" checked data-aria-controls="conditional-inquiry-estimation-yes-no"><label class="govuk-label govuk-radios__label" for="inquiry-estimation-yes-no"> Yes</label></div><div class="govuk-radios__conditional" id="conditional-inquiry-estimation-yes-no"><div class="govuk-form-group"><label class="govuk-label govuk-label--s" for="inquiry-estimation-days"> Expected number of days to carry out the inquiry</label><div class="govuk-input__wrapper"><input class="govuk-input govuk-input--width-3" id="inquiry-estimation-days" name="inquiryEstimationDays" type="text" value="8"><div class="govuk-input__suffix" aria-hidden="true">Days</div></div></div></div><div class="govuk-radios__item"><input class="govuk-radios__input" id="inquiry-estimation-yes-no-2" name="inquiryEstimationYesNo" type="radio" value="no"><label class="govuk-label govuk-radios__label" for="inquiry-estimation-yes-no-2"> No</label></div></div></fieldset></div><button type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button"> Continue</button></form></div></div></div></div></main>"`;
 
 exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the snapshot 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">

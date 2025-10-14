@@ -1,12 +1,12 @@
+import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import {
 	createNotificationBanner,
 	mapRequiredActionToNotificationBannerKey
 } from '#lib/mappers/index.js';
-import { getRequiredActionsForAppeal } from './required-actions.js';
-import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
-import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
-import config from '../../../../../environment/config.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import config from '../../../../../environment/config.js';
+import { getRequiredActionsForAppeal } from './required-actions.js';
 
 /** @typedef {import('./required-actions.js').AppealRequiredAction} AppealRequiredAction */
 /** @typedef {import('../components/index.js').NotificationBannerDefinitionKey} NotificationBannerDefinitionKey */
@@ -255,6 +255,24 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 					request,
 					`/appeals-service/appeal-details/${appealDetails.appealId}/residential-units/new`
 				)}">Add number of residential units</a>`
+			});
+		}
+		case 'reviewLpaProofOfEvidence': {
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a class="govuk-link" data-cy="review-lpa-proof-of-evidence" href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/proof-of-evidence/lpa`
+				)}">Review LPA proof of evidence and witnesses</a>`
+			});
+		}
+		case 'reviewAppellantProofOfEvidence': {
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a class="govuk-link" data-cy="review-appellant-proof-of-evidence" href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/proof-of-evidence/appellant`
+				)}">Review appellant proof of evidence and witnesses</a>`
 			});
 		}
 	}

@@ -12,11 +12,56 @@ exports[`final-comments GET / should render the accept appellant final comments 
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original final comments</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">Awaiting final comments review</div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/appellant/redact?backUrl=/final-comments/appellant/accept">Redact<span class="govuk-visually-hidden"> Redact statement</span></a>
                     </dd>
                 </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+                    <dd class="govuk-summary-list__value">
+                        <ol class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
+                            <li><a class="govuk-link" href="/documents/4881/download/ed52cdc1-3cc2-462a-8623-c1ae256969d6/blank copy 5.pdf"
+                                target="_blank">blank copy 5.pdf</a>
+                            </li>
+                        </ol>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/appellant/manage-documents/135568/?backUrl=/final-comments/appellant/accept">Manage<span class="govuk-visually-hidden"> supporting documents</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/appellant/add-document/?backUrl=/final-comments/appellant/accept">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+                            </li>
+                        </ul>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decisions</dt>
+                    <dd class="govuk-summary-list__value">Accept final comments</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/appellant?backUrl=/appeals-service/appeal-details/2/final-comments/appellant/accept">Change</a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form action="" method="POST" novalidate>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Accept appellant final comments</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`final-comments GET / should render the accept appellant final comments page with the expected content when no comment 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and accept appellant final comments</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
                     <dd class="govuk-summary-list__value">
                         <ol class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
@@ -64,11 +109,56 @@ exports[`final-comments GET / should render the accept lpa final comments page w
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original final comments</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">Awaiting final comments review</div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/redact?backUrl=/final-comments/lpa/accept">Redact<span class="govuk-visually-hidden"> Redact statement</span></a>
                     </dd>
                 </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+                    <dd class="govuk-summary-list__value">
+                        <ol class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
+                            <li><a class="govuk-link" href="/documents/4881/download/ed52cdc1-3cc2-462a-8623-c1ae256969d6/blank copy 5.pdf"
+                                target="_blank">blank copy 5.pdf</a>
+                            </li>
+                        </ol>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/manage-documents/135568/?backUrl=/final-comments/lpa/accept">Manage<span class="govuk-visually-hidden"> supporting documents</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/add-document/?backUrl=/final-comments/lpa/accept">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+                            </li>
+                        </ul>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decisions</dt>
+                    <dd class="govuk-summary-list__value">Accept final comments</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa?backUrl=/appeals-service/appeal-details/2/final-comments/lpa/accept">Change</a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form action="" method="POST" novalidate>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Accept LPA final comments</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`final-comments GET / should render the accept lpa final comments page with the expected content when no comment 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and accept LPA final comments</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
                     <dd class="govuk-summary-list__value">
                         <ol class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">

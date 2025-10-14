@@ -3,35 +3,40 @@
 
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
-import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
-import { urlPaths } from '../../support/urlPaths.js';
-import { tag } from '../../support/tag';
+import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { tag } from '../../support/tag';
 
 const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 
-describe('add cost decision and redact', () => {
-	beforeEach(() => {
-		cy.login(users.appeals.caseAdmin);
-	});
+beforeEach(() => {
+	cy.login(users.appeals.caseAdmin);
+});
 
+let appeal;
+
+afterEach(() => {
+	cy.deleteAppeals(appeal);
+});
+
+describe('add cost decision and redact', () => {
 	let sampleFiles = caseDetailsPage.sampleFiles;
 
 	it('add costs decsion and redact', { tags: tag.smoke }, () => {
-		cy.createCase().then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
-			happyPathHelper.reviewLpaq(caseRef);
-			happyPathHelper.setupSiteVisitFromBanner(caseRef);
-			cy.simulateSiteVisit(caseRef).then((caseRef) => {
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
+			happyPathHelper.reviewLpaq(caseObj);
+			happyPathHelper.setupSiteVisitFromBanner(caseObj);
+			cy.simulateSiteVisit(caseObj).then((caseObj) => {
 				cy.reload();
 			});
-			caseDetailsPage.clickAccordionByButton('Overview');
 			caseDetailsPage.clickIssueAppellantCostsDecision();
 			caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
 			caseDetailsPage.clickButtonByText('Continue');
@@ -41,11 +46,11 @@ describe('add cost decision and redact', () => {
 	});
 
 	it('change the redaction status of a cost decsion', () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
-			caseDetailsPage.clickAccordionByButton('Costs');
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
 			caseDetailsPage.clickAddAppellantApplication();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
@@ -64,11 +69,11 @@ describe('add cost decision and redact', () => {
 	});
 
 	it('Upload new version and change filename', () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
-			caseDetailsPage.clickAccordionByButton('Costs');
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
 			caseDetailsPage.clickAddAppellantApplication();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');

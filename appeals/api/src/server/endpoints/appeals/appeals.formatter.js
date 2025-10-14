@@ -1,37 +1,22 @@
-import { countBy } from 'lodash-es';
-import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+import appealRepository from '#repositories/appeal.repository.js';
+import { calculateDueDate } from '#utils/calculate-due-date.js';
+import { completedStateList, currentStatus } from '#utils/current-status.js';
 import formatAddress from '#utils/format-address.js';
-import isFPA from '@pins/appeals/utils/is-fpa.js';
+import { formatCostsDecision } from '#utils/format-costs-decision.js';
 import {
 	formatAppellantCaseDocumentationStatus,
 	formatLpaQuestionnaireDocumentationStatus,
 	formatLpaStatementStatus
 } from '#utils/format-documentation-status.js';
-import { add, addBusinessDays } from 'date-fns';
-import {
-	APPEAL_CASE_PROCEDURE,
-	APPEAL_CASE_STAGE,
-	APPEAL_CASE_STATUS
-} from '@planning-inspectorate/data-model';
+import { isAwaitingLinkedAppeal } from '#utils/is-awaiting-linked-appeal.js';
+import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
-import { calculateIssueDecisionDeadline } from '#endpoints/appeals/appeals.service.js';
-import { currentStatus } from '#utils/current-status.js';
-import appealRepository from '#repositories/appeal.repository.js';
-import { isAwaitingLinkedAppeal } from '#utils/is-awaiting-linked-appeal.js';
-import { getFoldersForAppeal } from '#endpoints/documents/documents.service.js';
-
-const approxStageCompletion = {
-	STATE_TARGET_READY_TO_START: 5,
-	STATE_TARGET_LPA_QUESTIONNAIRE_DUE: 10,
-	STATE_TARGET_ASSIGN_CASE_OFFICER: 15,
-	STATE_TARGET_ISSUE_DETERMINATION: 30,
-	STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT: 40,
-	STATE_TARGET_STATEMENT_REVIEW: 55,
-	STATE_TARGET_FINAL_COMMENT_REVIEW: 60
-};
+import isFPA from '@pins/appeals/utils/is-fpa.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { countBy } from 'lodash-es';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Folder} Folder */
@@ -59,6 +44,7 @@ const formatAppeal = (appeal, linkedAppeals) => {
 		appealReference: appeal.reference,
 		appealSite: formatAddress(appeal.address),
 		appealStatus: currentStatus(appeal),
+		completedStateList: completedStateList(appeal),
 		appealType: appeal.appealType?.type,
 		procedureType: appeal.procedureType?.name,
 		createdAt: appeal.caseCreatedDate,
@@ -96,18 +82,14 @@ const formatMyAppeal = async ({
 		appealReference: appeal.reference,
 		appealSite: formatAddress(appeal.address),
 		appealStatus: currentStatus(appeal),
+		completedStateList: completedStateList(appeal),
 		appealType: appeal.appealType?.type,
 		procedureType: appeal.procedureType?.name,
 		createdAt: appeal.caseCreatedDate,
 		localPlanningDepartment: appeal.lpa?.name || '',
 		lpaQuestionnaireId: appeal.lpaQuestionnaire?.id || null,
 		documentationSummary: formatDocumentationSummary(appeal),
-		dueDate: await mapAppealToDueDate(
-			appeal,
-			appeal.appellantCase?.appellantCaseValidationOutcome?.name || '',
-			appeal.caseExtensionDate,
-			costsDecision
-		),
+		dueDate: await calculateDueDate(appeal, costsDecision),
 		appealTimetable: formatAppealTimetable(appeal),
 		isParentAppeal,
 		isChildAppeal,
@@ -121,37 +103,50 @@ const formatMyAppeal = async ({
 };
 
 /**
- * @param {DBAppeal | DBUserAppeal | Appeal} appeal
- * @returns {Promise<CostsDecision>}
- * */
-const formatCostsDecision = async (appeal) => {
-	const costsFolders = await getFoldersForAppeal(appeal.id, APPEAL_CASE_STAGE.COSTS);
-	const costsDecision = costsFolders.reduce((costsDecision, folder) => {
-		const costsType = folder.path.replace('costs/', '');
-		const hasDocuments = folder.documents?.filter((doc) => !doc.isDeleted).length > 0;
-		return { ...costsDecision, [costsType]: hasDocuments };
-	}, {});
-	const {
-		// @ts-ignore
-		appellantCostsApplication = false,
-		// @ts-ignore
-		appellantCostsWithdrawal = false,
-		// @ts-ignore
-		appellantCostsDecisionLetter = false,
-		// @ts-ignore
-		lpaCostsApplication = false,
-		// @ts-ignore
-		lpaCostsWithdrawal = false,
-		// @ts-ignore
-		lpaCostsDecisionLetter = false
-	} = (currentStatus(appeal) === APPEAL_CASE_STATUS.COMPLETE && costsDecision) || {};
+ *
+ * @param {Object} options
+ * @param {number} options.appealId
+ * @param {DBUserAppeal} options.appeal
+ * @param {Date} options.dueDate
+ * @param {String} options.linkType
+ * @param {Boolean} [options.awaitingLinkedAppeal]
+ * @returns {Promise<AppealListResponse>}
+ */
+const formatPersonalListItem = async ({
+	appealId,
+	appeal,
+	dueDate,
+	linkType,
+	awaitingLinkedAppeal = false
+}) => {
+	const { reference, lpaQuestionnaire, appellantCase, hearing, procedureType, appealType } = appeal;
+	const appealStatus = currentStatus(appeal);
+	const appealIsCompleteOrWithdrawn =
+		appealStatus === APPEAL_CASE_STATUS.COMPLETE || appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
 
-	const awaitingAppellantCostsDecision =
-		!appellantCostsDecisionLetter && appellantCostsApplication && !appellantCostsWithdrawal;
-	const awaitingLpaCostsDecision =
-		!lpaCostsDecisionLetter && lpaCostsApplication && !lpaCostsWithdrawal;
-
-	return { awaitingAppellantCostsDecision, awaitingLpaCostsDecision };
+	return {
+		appealId,
+		appealReference: reference,
+		appealSite: formatAddress(appeal.address),
+		appealStatus,
+		completedStateList: completedStateList(appeal),
+		appealType: appealType?.type,
+		procedureType: procedureType?.name,
+		createdAt: appeal.caseCreatedDate,
+		localPlanningDepartment: appeal.lpa?.name || '',
+		lpaQuestionnaireId: lpaQuestionnaire?.id ?? null,
+		documentationSummary: formatDocumentationSummary(appeal),
+		dueDate,
+		appealTimetable: formatAppealTimetable(appeal),
+		isParentAppeal: linkType === 'parent',
+		isChildAppeal: linkType === 'child',
+		planningApplicationReference: appeal.applicationReference,
+		isHearingSetup: !!hearing,
+		hasHearingAddress: !!hearing?.addressId,
+		awaitingLinkedAppeal,
+		costsDecision: appealIsCompleteOrWithdrawn ? await formatCostsDecision(appeal) : null,
+		numberOfResidencesNetChange: appellantCase?.numberOfResidencesNetChange ?? null
+	};
 };
 
 /**
@@ -180,7 +175,7 @@ const formatDocumentationSummary = (appeal) => {
 		appellantCase: {
 			status: formatAppellantCaseDocumentationStatus(appeal),
 			dueDate: appeal.caseExtensionDate && appeal.caseExtensionDate?.toISOString(),
-			receivedAt: appeal.caseCreatedDate.toISOString()
+			receivedAt: appeal.caseCreatedDate?.toISOString()
 		},
 		lpaQuestionnaire: {
 			status: formatLpaQuestionnaireDocumentationStatus(appeal),
@@ -246,110 +241,6 @@ function formatAppealTimetable(appeal) {
 		})
 	};
 }
-
-/**
- * Map each appeal to include a due date.
- * @param {DBAppeal | DBUserAppeal} appeal
- * @param {string} appellantCaseStatus
- * @param {Date | null} appellantCaseDueDate
- * @param {CostsDecision} costsDecision
- * @returns {Promise<Date | null | undefined>}
- */
-export const mapAppealToDueDate = async (
-	appeal,
-	appellantCaseStatus,
-	appellantCaseDueDate,
-	costsDecision
-) => {
-	switch (currentStatus(appeal)) {
-		case APPEAL_CASE_STATUS.READY_TO_START:
-			if (appellantCaseStatus === 'Incomplete' && appellantCaseDueDate) {
-				return new Date(appellantCaseDueDate);
-			}
-			return add(new Date(appeal.caseCreatedDate), {
-				days: approxStageCompletion.STATE_TARGET_READY_TO_START
-			});
-		case APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE:
-			if (appeal.appealTimetable?.lpaQuestionnaireDueDate) {
-				return new Date(appeal.appealTimetable?.lpaQuestionnaireDueDate);
-			}
-			return add(new Date(appeal.caseCreatedDate), {
-				days: approxStageCompletion.STATE_TARGET_LPA_QUESTIONNAIRE_DUE
-			});
-		case APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER:
-			return add(new Date(appeal.caseCreatedDate), {
-				days: approxStageCompletion.STATE_TARGET_ASSIGN_CASE_OFFICER
-			});
-		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION: {
-			if (appeal.siteVisit) {
-				return await calculateIssueDecisionDeadline(
-					new Date(appeal.siteVisit.visitEndTime || appeal.siteVisit.visitDate || 0),
-					approxStageCompletion.STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT
-				);
-			}
-			return await calculateIssueDecisionDeadline(
-				new Date(appeal.caseCreatedDate),
-				approxStageCompletion.STATE_TARGET_ISSUE_DETERMINATION
-			);
-		}
-		case APPEAL_CASE_STATUS.COMPLETE: {
-			if (costsDecision.awaitingAppellantCostsDecision || costsDecision.awaitingLpaCostsDecision) {
-				const appealStatus = appeal.appealStatus.find(
-					(state) => state.status === APPEAL_CASE_STATUS.COMPLETE
-				);
-				return addBusinessDays(new Date(appealStatus?.createdAt || ''), 5);
-			}
-			return null;
-		}
-		case APPEAL_CASE_STATUS.STATEMENTS: {
-			if (
-				appeal.appealTimetable?.lpaStatementDueDate &&
-				appeal.appealTimetable?.ipCommentsDueDate
-			) {
-				const lpaDate = new Date(appeal.appealTimetable.lpaStatementDueDate);
-				const ipDate = new Date(appeal.appealTimetable.ipCommentsDueDate);
-
-				return lpaDate < ipDate ? lpaDate : ipDate;
-			}
-			if (appeal.appealTimetable?.lpaStatementDueDate) {
-				return new Date(appeal.appealTimetable?.lpaStatementDueDate);
-			}
-			if (appeal.appealTimetable?.ipCommentsDueDate) {
-				return new Date(appeal.appealTimetable?.ipCommentsDueDate);
-			}
-			if (appeal.appealTimetable?.appellantStatementDueDate) {
-				return new Date(appeal.appealTimetable?.appellantStatementDueDate);
-			}
-			return add(new Date(appeal.caseCreatedDate), {
-				days: approxStageCompletion.STATE_TARGET_STATEMENT_REVIEW
-			});
-		}
-		case APPEAL_CASE_STATUS.FINAL_COMMENTS: {
-			if (appeal.appealTimetable?.finalCommentsDueDate) {
-				return new Date(appeal.appealTimetable?.finalCommentsDueDate);
-			}
-			return add(new Date(appeal.caseCreatedDate), {
-				days: approxStageCompletion.STATE_TARGET_FINAL_COMMENT_REVIEW
-			});
-		}
-		case APPEAL_CASE_STATUS.AWAITING_EVENT: {
-			if (appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.HEARING) {
-				return appeal.hearing ? new Date(appeal.hearing?.hearingStartTime || 0) : undefined;
-			}
-			return appeal.siteVisit ? new Date(appeal.siteVisit?.visitDate || 0) : undefined;
-		}
-		case APPEAL_CASE_STATUS.EVENT: {
-			return new Date(
-				appeal.appealTimetable?.finalCommentsDueDate ||
-					appeal.appealTimetable?.lpaQuestionnaireDueDate ||
-					0
-			);
-		}
-		default: {
-			return undefined;
-		}
-	}
-};
 
 /**
  * @param {AppealRelationship[]} otherAppeals
@@ -433,8 +324,9 @@ const formatLinkedAppealData = async function (
 
 export {
 	formatAppeal,
-	formatMyAppeal,
-	getIdsOfReferencedAppeals,
+	formatDocumentationSummary,
 	formatLinkedAppealData,
-	formatCostsDecision
+	formatMyAppeal,
+	formatPersonalListItem,
+	getIdsOfReferencedAppeals
 };

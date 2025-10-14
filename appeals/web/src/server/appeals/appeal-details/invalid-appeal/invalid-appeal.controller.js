@@ -1,22 +1,24 @@
+import { appealSiteToAddressString } from '#lib/address-formatter.js';
+import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
 import logger from '#lib/logger.js';
-import * as appellantCaseService from '../appellant-case/appellant-case.service.js';
+import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
+import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
+import { CHANGE_APPEAL_TYPE_INVALID_REASON } from '@pins/appeals/constants/support.js';
 import { mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters } from '../appellant-case/appellant-case.mapper.js';
+import * as appellantCaseService from '../appellant-case/appellant-case.service.js';
+import {
+	buildRejectionReasons,
+	rejectionReasonHtml
+} from '../representations/common/components/reject-reasons.js';
+import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import {
 	decisionInvalidConfirmationPage,
 	mapInvalidReasonPage,
 	viewInvalidAppealPage
 } from './invalid-appeal.mapper.js';
-import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
-import { objectContainsAllKeys } from '#lib/object-utilities.js';
-import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
-import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
-import { appealShortReference } from '#lib/appeals-formatter.js';
-import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
-import {
-	buildRejectionReasons,
-	rejectionReasonHtml
-} from '../representations/common/components/reject-reasons.js';
-import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import { getInvalidStatusCreatedDate } from './invalid-appeal.service.js';
 
 /**
@@ -61,10 +63,14 @@ const renderInvalidReason = async (request, response) => {
 		delete request.session.webAppellantCaseReviewOutcome;
 	}
 
-	if (invalidReasonOptions) {
+	const filteredReasonOptions = invalidReasonOptions.filter(
+		(reason) => reason.name !== CHANGE_APPEAL_TYPE_INVALID_REASON
+	);
+
+	if (filteredReasonOptions) {
 		const mappedInvalidReasonOptions = mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters(
 			'invalid',
-			invalidReasonOptions,
+			filteredReasonOptions,
 			body,
 			request.session.webAppellantCaseReviewOutcome,
 			appellantCaseResponse.validation,
@@ -175,21 +181,32 @@ export const getCheckPage = async (request, response) => {
 				request.apiClient,
 				webAppellantCaseReviewOutcome.validationOutcome
 			);
-		if (!reasonOptions) {
+
+		const filteredReasonOptions = reasonOptions.filter(
+			(reason) => reason.name !== CHANGE_APPEAL_TYPE_INVALID_REASON
+		);
+
+		if (!filteredReasonOptions) {
 			throw new Error('error retrieving invalid reason options');
 		}
 
 		const invalidReasons = buildRejectionReasons(
-			reasonOptions,
+			filteredReasonOptions,
 			webAppellantCaseReviewOutcome.reasons,
 			webAppellantCaseReviewOutcome.reasonsText
+		);
+
+		const { email: assignedTeamEmail } = await getTeamFromAppealId(
+			request.apiClient,
+			currentAppeal.appealId
 		);
 
 		const personalisation = {
 			appeal_reference_number: currentAppeal.appealReference,
 			lpa_reference: currentAppeal.planningApplicationReference || '',
 			site_address: appealSiteToAddressString(currentAppeal.appealSite),
-			reasons: invalidReasons
+			reasons: invalidReasons,
+			team_email_address: assignedTeamEmail
 		};
 
 		const { appellantTemplate, lpaTemplate } = await generateInvalidAppealNotifyPreviews(

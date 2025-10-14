@@ -11,12 +11,17 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	SECTION_78_HEARING: 'featureFlagS78Hearing',
 	SECTION_78_INQUIRY: 'featureFlagS78Inquiry',
 	SECTION_20: 'featureFlagS20',
+	NET_RESIDENCE: 'featureFlagNetResidence',
+	NET_RESIDENCE_S20: 'featureFlagNetResidenceS20',
 	CAS: 'featureFlagCAS',
 	CAS_ADVERT: 'featureFlagCasAdvert',
 	LINKED_APPEALS: 'featureFlagLinkedAppeals',
 	CHANGE_PROCEDURE_TYPE: 'featureFlagChangeProcedureType',
 	ADVERTISEMENT: 'featureFlagAdvertisement',
-	CHANGE_APPEAL_TYPE: 'featureFlagChangeAppealType'
+	CHANGE_APPEAL_TYPE: 'featureFlagChangeAppealType',
+	HEARING_POST_MVP: 'featureFlagHearingPostMvp',
+	AUTO_ASSIGN_TEAM: 'featureFlagAutoAssignTeam',
+	PERSONAL_LIST: 'featureFlagPersonalList'
 });
 
 export const APPEAL_TYPE = Object.freeze({

@@ -1,6 +1,6 @@
 // @ts-nocheck
+import { formatAsWholeNumber } from '../support/utils/format.js';
 import { Page } from './basePage';
-import { formatDateAndTime } from '../support/utils/formatDateAndTime';
 
 export class DateTimeSection extends Page {
 	// S E L E C T O R S
@@ -28,15 +28,16 @@ export class DateTimeSection extends Page {
 		withdrawalRequestDate: '#withdrawal-request-date-',
 		hearingDate: '#hearing-date-',
 		inquiryEstimationDays: '#inquiry-estimation-days',
-		lpaQuestionnaireDueDate: '#lpa-questionnaire-due-date-',
-		lpaStatementDueDate: '#statement-due-date-',
-		ipCommentsDueDate: '#ip-comments-due-date-',
-		finalCommentsDueDate: '#final-comments-due-date-',
-		statementOfCommonGroundDueDate: '#statement-of-common-ground-due-date-',
-		proofOfEvidenceAndWitnessesDueDate: '#proof-of-evidence-and-witnesses-due-date-',
+		lpaQuestionnaireDueDate: '#lpa-questionnaire-due',
+		lpaStatementDueDate: '#lpa-statement-due',
+		ipCommentsDueDate: '#ip-comments-due',
+		finalCommentsDueDate: '#final-comments-due',
+		statementOfCommonGroundDueDate: '#statement-of-common-ground-due',
+		proofOfEvidenceAndWitnessesDueDate: '#proof-of-evidence-and-witnesses-due',
 		inquiryDate: '#inquiry-date-',
 		inquiry: '#inquiry',
-		hearing: '#hearing'
+		hearing: '#hearing',
+		planningObligationDueDate: '#planning-obligation-due'
 	};
 
 	// E L E M E N T S
@@ -137,6 +138,47 @@ export class DateTimeSection extends Page {
 	enterHearingTime(hour, minute) {
 		this.#set(this.elements.enterHearingTimeHour(), hour);
 		this.#set(this.elements.enterHearingTimeMinute(), minute);
+	}
+
+	verifyPrepopulatedInquiryValues(expectedValues) {
+		this.#verifyPrepopulatedValues(this.selectorPrefix.inquiry, expectedValues);
+	}
+
+	#verifyPrepopulatedValues(dateSelector, expectedValues, includeTime = true) {
+		// verify date
+		cy.get(dateSelector + '-date-day')
+			.invoke('prop', 'value')
+			.then((text) => {
+				expect(formatAsWholeNumber(text)).to.equal(expectedValues.day);
+			});
+		cy.get(dateSelector + '-date-month')
+			.invoke('prop', 'value')
+			.then((text) => {
+				expect(formatAsWholeNumber(text)).to.equal(expectedValues.month);
+			});
+		cy.get(dateSelector + '-date-year')
+			.invoke('prop', 'value')
+			.then((text) => {
+				expect(formatAsWholeNumber(text)).to.equal(expectedValues.year);
+			});
+
+		// verify time
+		if (includeTime) {
+			cy.get(dateSelector + '-time-hour')
+				.invoke('prop', 'value')
+				.then((text) => {
+					expect(formatAsWholeNumber(text)).to.equal(expectedValues.hours);
+				});
+			cy.get(dateSelector + '-time-minute')
+				.invoke('prop', 'value')
+				.then((text) => {
+					expect(formatAsWholeNumber(text)).to.equal(expectedValues.minutes);
+				});
+		}
+	}
+
+	verifyPrepopulatedTimeTableDueDates(field, expectedValues) {
+		this.#verifyPrepopulatedValues(this.selectorPrefix[field], expectedValues, false);
 	}
 
 	// Private helper methods

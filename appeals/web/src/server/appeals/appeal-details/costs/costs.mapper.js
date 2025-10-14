@@ -1,5 +1,5 @@
-import { appealShortReference } from '#lib/appeals-formatter.js';
 import { addDocumentsCheckAndConfirmPage } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
 
 /**
  *

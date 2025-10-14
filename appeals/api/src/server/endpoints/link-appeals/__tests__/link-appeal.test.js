@@ -1,17 +1,18 @@
 // @ts-nocheck
+import { eventClient } from '#infrastructure/event-client.js';
 import { request } from '#tests/../app-test.js';
-import { jest } from '@jest/globals';
-import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal, linkedAppeals } from '#tests/appeals/mocks.js';
-import { linkedAppealRequest, linkedAppealLegacyRequest } from '#tests/linked-appeals/mocks.js';
+import { documentCreated, documentVersionCreated, savedFolder } from '#tests/documents/mocks.js';
+import { horizonGetCaseSuccessResponse } from '#tests/horizon/mocks.js';
+import { linkedAppealLegacyRequest, linkedAppealRequest } from '#tests/linked-appeals/mocks.js';
+import { azureAdUserId } from '#tests/shared/mocks.js';
+import { parseHorizonGetCaseResponse } from '#utils/mapping/map-horizon.js';
+import { jest } from '@jest/globals';
 import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED
 } from '@pins/appeals/constants/support.js';
-import { horizonGetCaseSuccessResponse } from '#tests/horizon/mocks.js';
-import { parseHorizonGetCaseResponse } from '#utils/mapping/map-horizon.js';
-import { cloneDeep } from 'lodash-es';
-import { documentCreated, documentVersionCreated, savedFolder } from '#tests/documents/mocks.js';
+import { EventType } from '@pins/event-client';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 const { default: got } = await import('got');
@@ -126,7 +127,7 @@ describe('appeal linked appeals routes', () => {
 			});
 
 			test('returns 201 when an internal appeal is linked', async () => {
-				const childAppeal = cloneDeep({ ...householdAppeal, id: 2, reference: '4567654' });
+				const childAppeal = structuredClone({ ...householdAppeal, id: 2, reference: '4567654' });
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValueOnce(householdAppeal);
 				// @ts-ignore
@@ -168,6 +169,17 @@ describe('appeal linked appeals routes', () => {
 						externalSource: false
 					}
 				});
+
+				expect(eventClient.sendEvents).toHaveBeenCalledWith(
+					'appeal-document-to-move',
+					[
+						{
+							importedURI: `https://127.0.0.1:10000/document-service-uploads/appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf`,
+							originalURI: `https://127.0.0.1:10000/document-service-uploads/appeal/6000001/27d0fda4-8a9a-4f5a-a158-68eaea676158/v1/mydoc.pdf`
+						}
+					],
+					EventType.Create
+				);
 
 				expect(databaseConnector.document.create).toHaveBeenCalledWith({
 					data: {
@@ -213,7 +225,8 @@ describe('appeal linked appeals routes', () => {
 						event_type: 'site visit',
 						lpa_reference: householdAppeal.applicationReference,
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						linked_before_lpa_questionnaire: true
+						linked_before_lpa_questionnaire: true,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: householdAppeal.agent.email,
 					templateName: 'link-appeal'
@@ -228,7 +241,8 @@ describe('appeal linked appeals routes', () => {
 						event_type: 'site visit',
 						lpa_reference: householdAppeal.applicationReference,
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						linked_before_lpa_questionnaire: true
+						linked_before_lpa_questionnaire: true,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: householdAppeal.agent.email,
 					templateName: 'link-appeal'

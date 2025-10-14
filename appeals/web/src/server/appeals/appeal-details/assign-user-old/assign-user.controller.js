@@ -1,13 +1,13 @@
-import logger from '#lib/logger.js';
-import usersService from '../../appeal-users/users-service.js';
 import config from '#environment/config.js';
-import { setAppealAssignee } from './assign-user.service.js';
-import {
-	assignOrUnassignUserCheckAndConfirmPage,
-	assignUserPage,
-	assignNewUserPage
-} from './assign-user.mapper.js';
+import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import usersService from '../../appeal-users/users-service.js';
+import {
+	assignNewUserPage,
+	assignOrUnassignUserCheckAndConfirmPage,
+	assignUserPage
+} from './assign-user.mapper.js';
+import { setAppealAssignee } from './assign-user.service.js';
 
 /**
  *

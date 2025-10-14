@@ -1,8 +1,8 @@
-import { Folder } from './folders-documents.js';
 import {
 	APPEAL_CASE_DECISION_OUTCOME,
 	APPEAL_VIRUS_CHECK_STATUS
 } from '@planning-inspectorate/data-model';
+import { Folder } from './folders-documents.js';
 
 const appealDecision = {
 	type: 'object',

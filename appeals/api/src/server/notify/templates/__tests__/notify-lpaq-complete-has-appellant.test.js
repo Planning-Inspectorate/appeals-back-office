@@ -13,12 +13,13 @@ describe('lpaq-complete-has-appellant.md', () => {
 			personalisation: {
 				appeal_reference_number: 'ABC45678',
 				site_address: '10, Test Street',
-				lpa_reference: '12345XYZ'
+				lpa_reference: '12345XYZ',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 
 		const expectedContent = [
-			'We have received the local planning authority’s questionnaire.',
+			"We have received the local planning authority's questionnaire.",
 			'',
 			'You can [view this information in the appeals service](/mock-front-office-url/appeals/ABC45678).',
 			'',

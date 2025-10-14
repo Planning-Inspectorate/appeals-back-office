@@ -1,44 +1,44 @@
-import { parseHtml } from '@pins/platform';
-import nock from 'nock';
-import supertest from 'supertest';
-import { jest } from '@jest/globals';
-import {
-	lpaQuestionnaireDataNotValidated,
-	lpaQuestionnaireDataIncompleteOutcome,
-	lpaQuestionnaireDataCompleteOutcome,
-	lpaQuestionnaireIncompleteReasons,
-	documentFolderInfo,
-	additionalDocumentsFolderInfo,
-	documentFileInfo,
-	documentFileVersionsInfo,
-	documentFileVersionsInfoNotChecked,
-	documentFileVersionsInfoVirusFound,
-	documentFileVersionsInfoChecked,
-	documentFileMultipleVersionsInfoWithLatestAsLateEntry,
-	documentRedactionStatuses,
-	activeDirectoryUsersData,
-	appealData,
-	notCheckedDocumentFolderInfoDocuments,
-	lpaQuestionnaireData,
-	fileUploadInfo,
-	lpaNotificationMethodsData,
-	text300Characters,
-	text301Characters,
-	designatedSiteNames,
-	lpaDesignatedSites
-} from '#testing/app/fixtures/referencedata.js';
-import { createTestEnvironment } from '#testing/index.js';
-import { textInputCharacterLimits } from '../../../appeal.constants.js';
 import usersService from '#appeals/appeal-users/users-service.js';
-import { cloneDeep } from 'lodash-es';
-import { addDays } from 'date-fns';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import {
-	APPEAL_VIRUS_CHECK_STATUS,
-	APPEAL_CASE_STATUS,
+	activeDirectoryUsersData,
+	additionalDocumentsFolderInfo,
+	appealData,
+	designatedSiteNames,
+	documentFileInfo,
+	documentFileMultipleVersionsInfoWithLatestAsLateEntry,
+	documentFileVersionsInfo,
+	documentFileVersionsInfoChecked,
+	documentFileVersionsInfoNotChecked,
+	documentFileVersionsInfoVirusFound,
+	documentFolderInfo,
+	documentRedactionStatuses,
+	fileUploadInfo,
+	lpaDesignatedSites,
+	lpaNotificationMethodsData,
+	lpaQuestionnaireData,
+	lpaQuestionnaireDataCompleteOutcome,
+	lpaQuestionnaireDataIncompleteOutcome,
+	lpaQuestionnaireDataNotValidated,
+	lpaQuestionnaireIncompleteReasons,
+	notCheckedDocumentFolderInfoDocuments,
+	text300Characters,
+	text301Characters
+} from '#testing/app/fixtures/referencedata.js';
+import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
+import { parseHtml } from '@pins/platform';
+import {
 	APPEAL_CASE_STAGE,
-	APPEAL_DOCUMENT_TYPE
+	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE,
+	APPEAL_VIRUS_CHECK_STATUS
 } from '@planning-inspectorate/data-model';
+import { addDays } from 'date-fns';
+
+import nock from 'nock';
+import supertest from 'supertest';
+import { textInputCharacterLimits } from '../../../appeal.constants.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -80,7 +80,34 @@ const appealDataCasPlanning = {
 	appealType: 'CAS planning'
 };
 
+const appealDataCasAdvert = {
+	...lpaqAppealData,
+	appealType: 'CAS advert'
+};
+
+const FieldTestCases = [
+	{
+		fieldName: 'eiaColumnTwoThreshold',
+		text: 'Does the development meet or exceed the threshold or criteria in column 2?',
+		cssClass: 'lpa-eia-column-two-threshold',
+		undefinedValue: 'Not answered'
+	},
+	{
+		fieldName: 'eiaRequiresEnvironmentalStatement',
+		text: 'Did your screening opinion say the development needed an environmental statement?',
+		cssClass: 'lpa-eia-requires-environmental-statement',
+		undefinedValue: 'Not answered'
+	},
+	{
+		fieldName: 'isInfrastructureLevyFormallyAdopted',
+		text: 'Is the community infrastructure levy formally adopted?',
+		cssClass: 'lpa-is-infrastructure-levy-formally-adopted',
+		undefinedValue: 'No documents'
+	}
+];
+
 describe('LPA Questionnaire review', () => {
+	beforeAll(teardown);
 	beforeEach(installMockApi);
 	afterEach(teardown);
 
@@ -759,6 +786,157 @@ describe('LPA Questionnaire review', () => {
 	});
 
 	describe('GET /', () => {
+		FieldTestCases.forEach(({ fieldName, text, cssClass, undefinedValue }) => {
+			describe(`${text} Field`, () => {
+				it(`should display "No" when ${fieldName} is false`, async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId: 2
+						});
+					nock('http://test/')
+						.get('/appeals/2/lpa-questionnaires/1')
+						.reply(200, {
+							...lpaQuestionnaireData,
+							lpaQuestionnaireId: 1,
+							[fieldName]: false
+						});
+
+					const response = await request.get(
+						'/appeals-service/appeal-details/2/lpa-questionnaire/1'
+					);
+					const element = parseHtml(response.text);
+					const fieldElementKey = element.querySelector(`.${cssClass} dt`);
+					const fieldElementValue = element.querySelector(`.${cssClass} dd`);
+					expect(fieldElementKey?.textContent).toContain(text);
+					expect(fieldElementValue?.textContent).toContain('No');
+				});
+
+				it(`should display "Yes" when ${fieldName} is true`, async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId: 2
+						});
+					nock('http://test/')
+						.get('/appeals/2/lpa-questionnaires/1')
+						.reply(200, {
+							...lpaQuestionnaireData,
+							lpaQuestionnaireId: 1,
+							[fieldName]: true
+						});
+
+					const response = await request.get(
+						'/appeals-service/appeal-details/2/lpa-questionnaire/1'
+					);
+					const element = parseHtml(response.text);
+
+					const fieldElementKey = element.querySelector(`.${cssClass} dt`);
+					const fieldElementValue = element.querySelector(`.${cssClass} dd`);
+					expect(fieldElementKey?.textContent).toContain(text);
+					expect(fieldElementValue?.textContent).toContain('Yes');
+				});
+
+				it(`should display ${undefinedValue} when ${fieldName} is undefined`, async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId: 2
+						});
+					nock('http://test/')
+						.get('/appeals/2/lpa-questionnaires/1')
+						.reply(200, {
+							...lpaQuestionnaireData,
+							lpaQuestionnaireId: 1,
+							[fieldName]: undefined
+						});
+
+					const response = await request.get(
+						'/appeals-service/appeal-details/2/lpa-questionnaire/1'
+					);
+					const element = parseHtml(response?.text);
+
+					const fieldElementKey = element.querySelector(`.${cssClass} dt`);
+					const fieldElementValue = element.querySelector(`.${cssClass} dd`);
+					expect(fieldElementKey?.textContent).toContain(text);
+					expect(fieldElementValue?.textContent).toContain(undefinedValue);
+				});
+
+				it(`should display ${undefinedValue} when ${fieldName} is null`, async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId: 2
+						});
+					nock('http://test/')
+						.get('/appeals/2/lpa-questionnaires/1')
+						.reply(200, {
+							...lpaQuestionnaireData,
+							lpaQuestionnaireId: 1,
+							[fieldName]: null
+						});
+
+					const response = await request.get(
+						'/appeals-service/appeal-details/2/lpa-questionnaire/1'
+					);
+					const element = parseHtml(response.text);
+					const fieldElementKey = element.querySelector(`.${cssClass} dt`);
+					const fieldElementValue = element.querySelector(`.${cssClass} dd`);
+					expect(fieldElementKey?.textContent).toContain(text);
+					expect(fieldElementValue?.textContent).toContain(undefinedValue);
+				});
+			});
+		});
+
+		it('should display the mapped EIA development description when value exists', async () => {
+			nock('http://test/')
+				.get('/appeals/2')
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2
+				});
+			nock('http://test/')
+				.get('/appeals/2/lpa-questionnaires/1')
+				.reply(200, {
+					...lpaQuestionnaireData,
+					lpaQuestionnaireId: 1,
+					eiaDevelopmentDescription: 'other-projects'
+				});
+
+			const response = await request.get('/appeals-service/appeal-details/2/lpa-questionnaire/1');
+			const element = parseHtml(response.text);
+
+			expect(element?.innerHTML).toContain('Description of development</dt>');
+			expect(element?.innerHTML).toContain('Other projects</dd>');
+		});
+		it('should display "No Data" when EIA development description is missing', async () => {
+			nock('http://test/')
+				.get('/appeals/2')
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2
+				});
+			nock('http://test/')
+				.get('/appeals/2/lpa-questionnaires/1')
+				.reply(200, {
+					...lpaQuestionnaireDataNotValidated,
+					lpaQuestionnaireId: 1,
+					eiaDevelopmentDescription: undefined
+				});
+
+			const response = await request.get('/appeals-service/appeal-details/2/lpa-questionnaire/1');
+			const element = parseHtml(response.text);
+
+			const fieldElementKey = element.querySelector(`.lpa-eia-development-description dt`);
+			const fieldElementValue = element.querySelector(`.lpa-eia-development-description dd`);
+			expect(fieldElementKey?.textContent).toContain('Description of development');
+			expect(fieldElementValue?.textContent).toContain('No Data');
+		});
+
 		it('should render the Householder LPA Questionnaire page with the expected content', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/2')
@@ -899,7 +1077,6 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).not.toContain('Plans, drawings and list of plans</dt>'); // here CAS differs from HAS
 			expect(element.innerHTML).toContain('Relevant policies from statutory development plan</dt>');
 			expect(element.innerHTML).toContain('Supplementary planning documents</dt>');
-			expect(element.innerHTML).toContain('Emerging plan relevant to appeal</dt>');
 
 			expect(element.innerHTML).toContain('5. Site access</h2>');
 			expect(element.innerHTML).toContain(
@@ -909,6 +1086,97 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain('Are there any potential safety risks?</dt>');
 
 			expect(element.innerHTML).toContain('6. Appeal process</h2>');
+			expect(element.innerHTML).toContain(
+				'Are there any other ongoing appeals next to, or close to the site?</dt>'
+			);
+			expect(element.innerHTML).toContain('Are there any new conditions?</dt>');
+
+			expect(element.innerHTML).toContain('Additional documents</h2>');
+		}, 10000);
+
+		it('should render the CAS advert LPA Questionnaire page with the expected content', async () => {
+			nock('http://test/')
+				.get('/appeals/3')
+				.reply(200, {
+					...appealDataCasAdvert,
+					appealId: 3
+				});
+			nock('http://test/')
+				.get('/appeals/3/lpa-questionnaires/1')
+				.reply(200, {
+					...lpaQuestionnaireDataNotValidated,
+					lpaQuestionnaireId: 1
+				});
+
+			const response = await request.get('/appeals-service/appeal-details/3/lpa-questionnaire/1');
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('LPA questionnaire</h1>');
+
+			expect(element.innerHTML).toContain('1. Constraints, designations and other issues</h2>');
+			expect(element.innerHTML).toContain('Is CAS advert the correct type of appeal?</dt>');
+			expect(element.innerHTML).toContain(
+				'Does the development affect the setting of listed buildings?</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'Would the development affect a scheduled monument?</dt>'
+			);
+			expect(element.innerHTML).toContain('Conservation area map and guidance</dt>');
+			expect(element.innerHTML).toContain('Would the development affect a protected species?</dt>');
+			expect(element.innerHTML).toContain('Green belt</dt>');
+			expect(element.innerHTML).toContain(
+				'Is the site in an area of outstanding natural beauty?</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'Is the development in, near or likely to affect any designated sites?</dt>'
+			);
+
+			expect(element.innerHTML).toContain('2. Notifying relevant parties</h2>');
+			expect(element.innerHTML).toContain('Who did you notify about this application?</dt>');
+			expect(element.innerHTML).toContain(
+				'How did you notify relevant parties about this application?</dt>'
+			);
+			expect(element.innerHTML).toContain('Site notice</dt>');
+			expect(element.innerHTML).toContain('Letter or email notification</dt>');
+			expect(element.innerHTML).toContain('Press advertisement</dt>');
+			expect(element.innerHTML).toContain('Appeal notification letter</dt>');
+
+			expect(element.innerHTML).toContain('3. Consultation responses and representations</h2>');
+			expect(element.innerHTML).toContain(
+				'Representations from members of the public or other parties</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'Did you consult all the relevant statutory consultees about the development?</dt>'
+			);
+
+			expect(element.innerHTML).toContain(
+				'4. Planning officer’s report and supplementary documents</h2>'
+			);
+			expect(element.innerHTML).toContain('Planning officer’s report</dt>');
+			expect(element.innerHTML).toContain('Relevant policies from statutory development plan</dt>');
+			expect(element.innerHTML).toContain('Supplementary planning documents</dt>');
+			expect(element.innerHTML).toContain('Emerging plan relevant to appeal</dt>');
+			expect(element.innerHTML).toContain('Other relevant policies</dt>');
+
+			expect(element.innerHTML).toContain('5. Site access</h2>');
+			expect(element.innerHTML).toContain(
+				'Might the inspector need access to the appellant’s land or property?</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'Might the inspector need to enter a neighbour’s land or property?</dt>'
+			);
+			expect(element.innerHTML).toContain('Address of the neighbour’s land or property</dt>');
+			expect(element.innerHTML).toContain('Are there any potential safety risks?</dt>');
+
+			expect(element.innerHTML).toContain('6. Appeal process</h2>');
+			expect(element.innerHTML).toContain(
+				'Which procedure do you think is most appropriate for this appeal?</dt>'
+			);
+			expect(element.innerHTML).toContain('Why would you prefer this procedure?</dt>');
+			expect(element.innerHTML).toContain(
+				'How many days would you expect the inquiry to last?</dt>'
+			);
 			expect(element.innerHTML).toContain(
 				'Are there any other ongoing appeals next to, or close to the site?</dt>'
 			);
@@ -1283,7 +1551,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render a notification banner when a file is unscanned', async () => {
 			//Create a document with virus scan still in progress
-			let updatedLPAQuestionnaireData = cloneDeep(lpaQuestionnaireDataIncompleteOutcome);
+			let updatedLPAQuestionnaireData = structuredClone(lpaQuestionnaireDataIncompleteOutcome);
 			updatedLPAQuestionnaireData.documents.conservationMap.documents.push(
 				notCheckedDocumentFolderInfoDocuments
 			);
@@ -1305,7 +1573,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render an error when a file has a virus', async () => {
 			//Create a document with failed virus check
-			let updatedLPAQuestionnaireData = cloneDeep(lpaQuestionnaireDataNotValidated);
+			let updatedLPAQuestionnaireData = structuredClone(lpaQuestionnaireDataNotValidated);
 			updatedLPAQuestionnaireData.documents.conservationMap.documents.push({
 				...notCheckedDocumentFolderInfoDocuments,
 				// @ts-ignore
@@ -2986,7 +3254,7 @@ describe('LPA Questionnaire review', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence date month must be a number</a>'
+				'Agreement to change description evidence date must be a real date</a>'
 			);
 		});
 
@@ -3168,24 +3436,27 @@ describe('LPA Questionnaire review', () => {
 		it('should send a patch request to the appeal documents endpoint and redirect to the lpa questionnaire page, if complete and valid document details were provided', async () => {
 			expect(addDocumentsResponse.statusCode).toBe(302);
 
-			const response = await request.post(`${baseUrl}/add-document-details/1`).send({
-				items: [
-					{
-						documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-						receivedDate: {
-							day: '1',
-							month: '2',
-							year: '2023'
-						},
-						redactionStatus: 2
-					}
-				]
-			});
+			const monthVariants = ['2', ' Feb ', 'February'];
+			for (const month of monthVariants) {
+				const response = await request.post(`${baseUrl}/add-document-details/1`).send({
+					items: [
+						{
+							documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+							receivedDate: {
+								day: '1',
+								month: month,
+								year: '2023'
+							},
+							redactionStatus: 2
+						}
+					]
+				});
 
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2864/check-your-answers'
-			);
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2864/check-your-answers'
+				);
+			}
 		});
 	});
 
@@ -3826,7 +4097,7 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should render the delete document page with the expected content when there are multiple document versions', async () => {
-			const multipleVersionsDocument = cloneDeep(documentFileVersionsInfoChecked);
+			const multipleVersionsDocument = structuredClone(documentFileVersionsInfoChecked);
 			multipleVersionsDocument.allVersions.push(multipleVersionsDocument.allVersions[0]);
 
 			nock('http://test/')

@@ -1,10 +1,16 @@
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { databaseConnector } from '#utils/database-connector.js';
-import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
+import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
+import logger from '#utils/logger.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import {
+	deleteAppealsInBatches,
+	getAppealReferencesByIds
+} from './delete-appeal-data/delete-appeal-data.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} InspectorDecision */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 /** @typedef {import('@pins/appeals.api').Schema.User} User */
@@ -147,6 +153,7 @@ const appealDetailsInclude = {
 
 /**
  * @param {number} id
+ * @param {boolean} [includeDetails]
  * @returns {Promise<Appeal|undefined>}
  */
 const getAppealById = async (id, includeDetails = true) => {
@@ -160,6 +167,24 @@ const getAppealById = async (id, includeDetails = true) => {
 	if (appeal) {
 		// @ts-ignore
 		return appeal;
+	}
+};
+
+/**
+ * @param {number} id
+ * @returns {Promise<AppealType|undefined>}
+ */
+const getAppealTypeById = async (id) => {
+	const appealType = await databaseConnector.appeal.findUnique({
+		where: {
+			id
+		},
+		select: { appealType: true }
+	});
+
+	if (appealType) {
+		// @ts-ignore
+		return appealType.appealType;
 	}
 };
 
@@ -197,7 +222,8 @@ const updateAppealById = (
 		inspector,
 		agent,
 		applicationReference,
-		procedureTypeId
+		procedureTypeId,
+		hearingStartTime
 	}
 ) =>
 	databaseConnector.appeal.update({
@@ -211,7 +237,16 @@ const updateAppealById = (
 			...(hasValueOrIsNull(inspector) && { inspectorUserId: inspector }),
 			...(hasValueOrIsNull(agent) && { agentId: agent }),
 			...(hasValueOrIsNull(procedureTypeId) && { procedureTypeId }),
-			caseUpdatedDate: new Date()
+			caseUpdatedDate: new Date(),
+			...(hearingStartTime && {
+				hearing: {
+					upsert: {
+						create: { hearingStartTime },
+						update: { hearingStartTime },
+						where: { appealId: id }
+					}
+				}
+			})
 		},
 		include: {
 			appealType: true,
@@ -358,6 +393,38 @@ const getLinkedAppeals = async (appealReference, relationshipType) => {
 
 /**
  *
+ * @param {number} appealId
+ * @param {string} relationshipType
+ * @returns {Promise<AppealRelationship[]>}
+ */
+const getLinkedAppealsById = async (appealId, relationshipType) => {
+	// ToDo Fix this typescript type
+	// @ts-ignore
+	return await databaseConnector.appealRelationship.findMany({
+		where: {
+			AND: [
+				{ type: relationshipType },
+				{
+					OR: [
+						{
+							parentId: {
+								equals: appealId
+							}
+						},
+						{
+							childId: {
+								equals: appealId
+							}
+						}
+					]
+				}
+			]
+		}
+	});
+};
+
+/**
+ *
  * @param {AppealRelationshipRequest} relation
  * @returns {Promise<AppealRelationship>}
  */
@@ -477,6 +544,15 @@ const getAppealsWithCompletedEvents = () =>
 	});
 
 /**
+ * @returns {PrismaPromise<{ id: number; }[]>}
+ */
+const getAppealIdsWithNoPersonalListEntries = () =>
+	databaseConnector.appeal.findMany({
+		select: { id: true },
+		where: { PersonalList: { is: null } }
+	});
+
+/**
  * @param {number} id
  * @param {number|null} assignedTeamId
  * @returns {PrismaPromise<import('#db-client').Appeal>}
@@ -492,9 +568,26 @@ const setAssignedTeamId = (id, assignedTeamId) => {
 	});
 };
 
+/**
+ * @param {number[]} appealIds
+ * @returns {Promise<void>}
+ */
+const deleteAppealsByIds = async (appealIds) => {
+	const appeals = await getAppealReferencesByIds(appealIds);
+
+	if (appeals.length === 0) {
+		logger.info('Nothing to delete.');
+		return;
+	}
+
+	await deleteAppealsInBatches(appeals);
+};
+
 export default {
 	getLinkedAppeals,
+	getLinkedAppealsById,
 	getAppealById,
+	getAppealTypeById,
 	getAppealByAppealReference,
 	updateAppealById,
 	setAppealDecision,
@@ -506,5 +599,7 @@ export default {
 	unlinkAppeal,
 	getAppealsByIds,
 	getAppealsWithCompletedEvents,
-	setAssignedTeamId
+	getAppealsWithNoPersonalListEntries: getAppealIdsWithNoPersonalListEntries,
+	setAssignedTeamId,
+	deleteAppealsByIds
 };

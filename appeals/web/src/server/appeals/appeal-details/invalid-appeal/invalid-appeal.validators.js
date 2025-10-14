@@ -1,7 +1,7 @@
-import { createValidator } from '@pins/express';
-import { body } from 'express-validator';
 import { createCheckboxTextItemsValidator } from '#lib/validators/checkbox-text-items.validator.js';
 import { LENGTH_1000 } from '@pins/appeals/constants/support.js';
+import { createValidator } from '@pins/express';
+import { body } from 'express-validator';
 
 export const validateInvalidReason = createValidator(
 	body('invalidReason')

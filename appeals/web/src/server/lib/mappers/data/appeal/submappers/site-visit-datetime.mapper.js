@@ -1,5 +1,6 @@
-import { textSummaryListItem } from '#lib/mappers/index.js';
+import config from '#environment/config.js';
 import { dateISOStringToDisplayDate, dateISOStringToDisplayTime12hr } from '#lib/dates.js';
+import { textSummaryListItem } from '#lib/mappers/index.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapSiteVisitDate = ({ appealDetails, userHasUpdateCasePermission }) =>
@@ -17,7 +18,7 @@ export const mapSiteVisitDate = ({ appealDetails, userHasUpdateCasePermission })
 export const mapSiteVisitStartTime = ({ appealDetails, userHasUpdateCasePermission }) =>
 	textSummaryListItem({
 		id: 'site-visit-start-time',
-		text: 'Start time',
+		text: config.featureFlags.featureFlagCancelSiteVisit ? 'Time' : 'Start time',
 		value: {
 			html: dateISOStringToDisplayTime12hr(appealDetails.siteVisit?.visitStartTime)
 		},

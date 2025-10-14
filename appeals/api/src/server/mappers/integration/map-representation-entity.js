@@ -6,14 +6,14 @@ import {
 	isValidSource
 } from '#utils/mapping/map-enums.js';
 import {
-	APPEAL_REPRESENTATION_TYPE as INTERNAL_REPRESENTATION_TYPE,
+	COMMENT_STATUS,
 	APPEAL_REPRESENTATION_STATUS as INTERNAL_REPRESENTATION_STATUS,
-	COMMENT_STATUS
+	APPEAL_REPRESENTATION_TYPE as INTERNAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
 
 import {
-	APPEAL_REPRESENTATION_TYPE,
-	APPEAL_REPRESENTATION_STATUS
+	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_REPRESENTATION_TYPE
 } from '@planning-inspectorate/data-model';
 import { serviceUserIdStartRange } from './map-service-user-entity.js';
 
@@ -120,9 +120,9 @@ const mapReasons = (data) => {
 	data.representationRejectionReasonsSelected
 		?.filter((reason) => reason.representationRejectionReason?.hasText === true)
 		.forEach((reason) => {
-			reason.representationRejectionReasonText.map((txt) =>
-				customReasons.push(`${reason.representationRejectionReason.name}: ${txt}`)
-			);
+			reason.representationRejectionReasonText.forEach((txt) => {
+				customReasons.push(`${reason.representationRejectionReason.name}: ${txt.text}`);
+			});
 		});
 
 	return {

@@ -1,20 +1,20 @@
-import { Router as createRouter } from 'express';
+import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import {
 	cancelHearing,
 	getHearingById,
 	postHearing,
 	rearrangeHearing
 } from './hearing.controller.js';
+import { checkHearingExists } from './hearing.service.js';
 import {
+	deleteHearingDateValidator,
+	deleteHearingParamsValidator,
 	getHearingValidator,
 	patchHearingValidator,
-	postHearingValidator,
-	deleteHearingParamsValidator,
-	deleteHearingDateValidator
+	postHearingValidator
 } from './hearing.validator.js';
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
-import { checkHearingExists } from './hearing.service.js';
 
 const router = createRouter();
 

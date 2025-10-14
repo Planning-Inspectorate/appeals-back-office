@@ -1,7 +1,5 @@
-import {
-	getAttachmentsFolder,
-	getInterestedPartyComment
-} from './interested-party-comments.service.js';
+import { areIdParamsValid } from '#lib/validators/id-param.validator.js';
+import { getInterestedPartyComment } from './interested-party-comments.service.js';
 
 /**
  * @type {import('express').RequestHandler}
@@ -10,6 +8,10 @@ import {
 export const validateComment = async (req, res, next) => {
 	const { appealId, commentId } = req.params;
 
+	if (!areIdParamsValid(appealId, commentId)) {
+		return res.status(400).render('app/400.njk');
+	}
+
 	try {
 		const representation = await getInterestedPartyComment(req.apiClient, appealId, commentId);
 		if (!representation || representation.representationType !== 'comment') {
@@ -17,8 +19,6 @@ export const validateComment = async (req, res, next) => {
 		}
 
 		req.currentRepresentation = representation;
-
-		req.currentFolder = await getAttachmentsFolder(req.apiClient, appealId);
 
 		next();
 	} catch (/** @type {any} */ error) {

@@ -1,12 +1,12 @@
-import {
-	APPEAL_CASE_TYPE,
-	APPEAL_CASE_PROCEDURE,
-	APPEAL_REDACTED_STATUS,
-	APPEAL_KNOWS_OTHER_OWNERS,
-	APPEAL_EVENT_TYPE
-} from '@planning-inspectorate/data-model';
 import { APPEAL_TYPE, APPEAL_TYPE_CHANGE_APPEALS } from '@pins/appeals/constants/common.js';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
+import {
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_CASE_TYPE,
+	APPEAL_EVENT_TYPE,
+	APPEAL_KNOWS_OTHER_OWNERS,
+	APPEAL_REDACTED_STATUS
+} from '@planning-inspectorate/data-model';
 import { importListedBuildingsDataset } from './seed-listed-buildings.js';
 /**
  * Static data required by the back-office service
@@ -254,46 +254,56 @@ export const appellantCaseValidationOutcomes = [
 /**
  * An array of appellant case incomplete reasons.
  *
- * @type {Pick<AppellantCaseIncompleteReason, 'name' | 'hasText'>[]}
+ * @type {Pick<AppellantCaseIncompleteReason, 'id' | 'name' | 'hasText'>[]}
  */
 export const appellantCaseIncompleteReasons = [
 	{
+		id: 1,
 		name: 'Appellant name is not the same on the application form and appeal form',
 		hasText: false
 	},
 	{
+		id: 2,
 		name: 'Attachments and/or appendices have not been included to the full statement of case',
 		hasText: true
 	},
 	{
+		id: 3,
 		name: "LPA's decision notice is missing",
 		hasText: false
 	},
 	{
+		id: 4,
 		name: "LPA's decision notice is incorrect or incomplete",
 		hasText: true
 	},
 	{
+		id: 5,
 		name: 'Documents and/or plans referred in the application form, decision notice and appeal covering letter are missing',
 		hasText: true
 	},
 	{
+		id: 6,
 		name: 'Agricultural holding certificate and declaration have not been completed on the appeal form',
 		hasText: false
 	},
 	{
+		id: 7,
 		name: 'The original application form is missing',
 		hasText: false
 	},
 	{
+		id: 8,
 		name: 'The original application form is incomplete',
 		hasText: true
 	},
 	{
+		id: 9,
 		name: 'Statement of case and ground of appeal are missing',
 		hasText: false
 	},
 	{
+		id: 10,
 		name: 'Other',
 		hasText: true
 	}
@@ -302,24 +312,33 @@ export const appellantCaseIncompleteReasons = [
 /**
  * An array of appellant case invalid reasons.
  *
- * @type {Pick<AppellantCaseInvalidReason, 'name' | 'hasText'>[]}
+ * @type {Pick<AppellantCaseInvalidReason, 'id' |'name' | 'hasText'>[]}
  */
 export const appellantCaseInvalidReasons = [
 	{
+		id: 1,
 		name: 'Appeal has not been submitted on time',
 		hasText: false
 	},
 	{
+		id: 2,
 		name: 'Documents have not been submitted on time',
 		hasText: false
 	},
 	{
+		id: 3,
 		name: 'The appellant does not have the right to appeal',
 		hasText: false
 	},
 	{
+		id: 4,
 		name: 'Other reason',
 		hasText: true
+	},
+	{
+		id: 5,
+		name: 'Wrong appeal type',
+		hasText: false
 	}
 ];
 
@@ -511,22 +530,12 @@ export const representationRejectionReasons = [
 		hasText: true
 	},
 	{
-		name: 'Includes personal or medical information',
+		name: 'Not complete',
 		representationType: 'lpa_proofs_evidence',
 		hasText: false
 	},
 	{
-		name: 'Includes inflammatory content',
-		representationType: 'lpa_proofs_evidence',
-		hasText: false
-	},
-	{
-		name: 'Not relevant to this appeal',
-		representationType: 'lpa_proofs_evidence',
-		hasText: false
-	},
-	{
-		name: 'Contains links to web pages',
+		name: 'Not relevant',
 		representationType: 'lpa_proofs_evidence',
 		hasText: false
 	},
@@ -627,8 +636,8 @@ export async function seedStaticData(databaseConnector) {
 	for (const appellantCaseInvalidReason of appellantCaseInvalidReasons) {
 		await databaseConnector.appellantCaseInvalidReason.upsert({
 			create: appellantCaseInvalidReason,
-			where: { name: appellantCaseInvalidReason.name },
-			update: {}
+			where: { id: appellantCaseInvalidReason.id },
+			update: { name: appellantCaseInvalidReason.name, hasText: appellantCaseInvalidReason.hasText }
 		});
 	}
 	for (const lpaQuestionnaireValidationOutcome of lpaQuestionnaireValidationOutcomes) {

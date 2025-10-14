@@ -1,21 +1,21 @@
 // @ts-nocheck
-import { parseHtml } from '@pins/platform';
-import supertest from 'supertest';
 import { createTestEnvironment } from '#testing/index.js';
+import { parseHtml } from '@pins/platform';
 import nock from 'nock';
+import supertest from 'supertest';
+import {
+	appealDataIssuedDecision,
+	documentFileInfo,
+	documentRedactionStatuses,
+	fileUploadInfo,
+	fileUploadInfo2,
+	template
+} from '../../../../../../../web/testing/app/fixtures/referencedata.js';
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 const oneThousdandAndOneCharacterString = 'a'.repeat(1001);
 const oneThousdandCharacterString = 'a'.repeat(1000);
-import {
-	appealDataIssuedDecision,
-	documentRedactionStatuses,
-	fileUploadInfo,
-	documentFileInfo,
-	fileUploadInfo2,
-	template
-} from '../../../../../../../web/testing/app/fixtures/referencedata.js';
 
 describe('update-decision-letter', () => {
 	/**
@@ -229,6 +229,14 @@ describe('update-decision-letter', () => {
 		afterEach(teardown);
 
 		it('should render the check your decision page', async () => {
+			nock('http://test/')
+				.get('/appeals/1/case-team-email')
+				.reply(200, {
+					id: 1,
+					email: 'caseofficers@planninginspectorate.gov.uk',
+					name: 'standard email'
+				})
+				.persist();
 			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
 			expect(correctionNoticeResponse.statusCode).toBe(302);
 

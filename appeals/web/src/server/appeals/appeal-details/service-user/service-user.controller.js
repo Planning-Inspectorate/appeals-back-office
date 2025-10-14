@@ -1,10 +1,10 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { capitalize } from 'lodash-es';
+import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 import { HTTPError } from 'got';
+import { capitalize } from 'lodash-es';
 import { changeServiceUserPage, removeServiceUserPage } from './service-user.mapper.js';
 import { assignServiceUser, removeServiceUser, updateServiceUser } from './service-user.service.js';
-import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

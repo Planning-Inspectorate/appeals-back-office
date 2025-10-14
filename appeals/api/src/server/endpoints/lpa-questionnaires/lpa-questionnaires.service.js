@@ -1,28 +1,29 @@
-import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
+import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
-import { recalculateDateIfNotBusinessDay } from '@pins/appeals/utils/business-days.js';
-import { isOutcomeComplete, isOutcomeIncomplete } from '#utils/check-validation-outcome.js';
+import * as documentRepository from '#repositories/document.repository.js';
+import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
 import transitionState from '#state/transition-state.js';
+import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
+import { isOutcomeComplete, isOutcomeIncomplete } from '#utils/check-validation-outcome.js';
+import { isCurrentStatus } from '#utils/current-status.js';
+import { getFormattedReasons } from '#utils/email-formatter.js';
+import { allLpaQuestionnaireOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
+import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
+import logger from '#utils/logger.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import {
-	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
+	AUDIT_TRAIL_LPAQ_INCOMPLETE,
 	ERROR_NO_RECIPIENT_EMAIL,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { recalculateDateIfNotBusinessDay } from '@pins/appeals/utils/business-days.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
-import { getFormattedReasons } from '#utils/email-formatter.js';
-import * as documentRepository from '#repositories/document.repository.js';
-import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
-import { notifySend } from '#notify/notify-send.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import logger from '#utils/logger.js';
-import { isCurrentStatus } from '#utils/current-status.js';
-import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
-import { allLpaQuestionnaireOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
-import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionnaireValidationOutcomeParams} UpdateLPAQuestionnaireValidationOutcomeParams */
@@ -107,7 +108,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 		createAuditTrail({
 			appealId,
 			azureAdUserId,
-			details: stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['LPA questionnaire'])
+			details: stringTokenReplacement(AUDIT_TRAIL_LPAQ_INCOMPLETE, ['LPA questionnaire'])
 		});
 	}
 
@@ -144,7 +145,8 @@ const updateLPAQuestionnaireValidationOutcome = async (
 				lpa_reference: lpaReference || '',
 				site_address: siteAddress,
 				due_date: formatDate(new Date(lpaQuestionnaireDueDate), false),
-				reasons: incompleteReasonsList
+				reasons: incompleteReasonsList,
+				team_email_address: await getTeamEmailFromAppealId(appeal.id)
 			};
 
 			await notifySend({
@@ -261,7 +263,8 @@ async function sendLpaqCompleteEmail(
 	const personalisation = {
 		...fields,
 		appeal_reference_number: appeal.reference,
-		lpa_reference: appeal.applicationReference || ''
+		lpa_reference: appeal.applicationReference || '',
+		team_email_address: await getTeamEmailFromAppealId(appeal.id)
 	};
 
 	await notifySend({

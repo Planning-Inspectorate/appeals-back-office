@@ -1,5 +1,57 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`site-visit GET /site-visit/delete should render the manage visit page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Confirm that you want to cancel the site visit</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <p class="govuk-body">We will send an email to the appellant and LPA to tell them that we have
+                            cancelled the site visit.</p>
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <details class="govuk-details">
+                                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                                    </summary>
+                                    <div class="govuk-details__text">We have cancelled the site visit. # Appeal details ^Appeal reference number:
+                                        ABC45678 Address: 10, Test Street Planning application reference: 12345XYZ
+                                        # What happens next We will contact you when we set up a new site visit.
+                                        The Planning Inspectorate caseofficers@planninginspectorate.gov.uk</div>
+                                </details>
+                            </div>
+                        </div>
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <details class="govuk-details">
+                                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
+                                    </summary>
+                                    <div class="govuk-details__text">We have cancelled the site visit. # Appeal details ^Appeal reference number:
+                                        ABC45678 Address: 10, Test Street Planning application reference: 12345XYZ
+                                        # What happens next We will contact you when we set up a new site visit.
+                                        The Planning Inspectorate caseofficers@planninginspectorate.gov.uk</div>
+                                </details>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Cancel site visit</button>
+                    </form>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><a class="govuk-link" href="/appeals-service/appeal-details/1">Keep site visit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`site-visit GET /site-visit/manage-visit should render the manage visit page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -124,6 +176,198 @@ exports[`site-visit GET /site-visit/manage-visit should render the manage visit 
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`site-visit GET /site-visit/missed should render the who missed the site visit page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - record missed site visit</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form action="" method="POST" novalidate>
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading"> Who missed the site visit?</h1>
+                        </legend>
+                        <div class="govuk-radios" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="who-missed-site-visit-radio" name="whoMissedSiteVisitRadio"
+                                type="radio" value="appellant">
+                                <label class="govuk-label govuk-radios__label" for="who-missed-site-visit-radio">Appellant</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="who-missed-site-visit-radio-2"
+                                name="whoMissedSiteVisitRadio" type="radio" value="lpa">
+                                <label class="govuk-label govuk-radios__label" for="who-missed-site-visit-radio-2">LPA</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="who-missed-site-visit-radio-3"
+                                name="whoMissedSiteVisitRadio" type="radio" value="inspector">
+                                <label class="govuk-label govuk-radios__label" for="who-missed-site-visit-radio-3">Inspector</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`site-visit GET /site-visit/missed/check should render the who missed the site visit page for appellant 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and record missed site visit</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who missed the site visit?</dt>
+                                <dd                                 class="govuk-summary-list__value">Appellant</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Change<span class="govuk-visually-hidden"> Change who missed site visit</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <details class="govuk-details">
+                                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                                    </summary>
+                                    <div class="govuk-details__text">
+                                        <div class="pins-notify-preview-border">
+                                            <h2>Appeal details</h2>
+                                            <div class="govuk-inset-text">Appeal reference number: 134526
+                                                <br>Address: 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom
+                                                <br>Planning application reference: 48269/APP/2021/1482
+                                                <br>
+                                            </div>
+                                            <h2>Appeal withdrawn</h2>We have withdrawn the appeal following your request on 01 January 2025.
+                                            <br>
+                                            <br>
+                                            <h2>What happens next</h2>We have closed the appeal and cancelled the site visit.
+                                            <br>
+                                            <br>
+                                            <h2>Feedback</h2>We welcome your feedback on our appeals process. Tell us on this short
+                                            <a                                             href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u"
+                                            class="govuk-link">feedback form</a>.
+                                                <br>
+                                                <br>The Planning Inspectorate
+                                                <br>
+                                                <br>caseofficers@planninginspectorate.gov.uk
+                                                <br>
+                                                <br>
+                                        </div>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Record missed site visit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`site-visit GET /site-visit/missed/check should render the who missed the site visit page for inspector 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and record missed site visit</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who missed the site visit?</dt>
+                                <dd                                 class="govuk-summary-list__value">Inspector</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Change<span class="govuk-visually-hidden"> Change who missed site visit</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Record missed site visit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`site-visit GET /site-visit/missed/check should render the who missed the site visit page for lpa 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and record missed site visit</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who missed the site visit?</dt>
+                                <dd                                 class="govuk-summary-list__value">LPA</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Change<span class="govuk-visually-hidden"> Change who missed site visit</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <details class="govuk-details">
+                                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
+                                    </summary>
+                                    <div class="govuk-details__text">
+                                        <div class="pins-notify-preview-border">We have withdrawn the appeal after the appellant's request.
+                                            <br>
+                                            <br>
+                                            <h2>Appeal details</h2>
+                                            <div class="govuk-inset-text">Appeal reference number: 234567
+                                                <br>Address: 98 The Avenue, Leftfield, Maidstone, Kent, MD21 5YY, United Kingdom
+                                                <br>Planning application reference: 48269/APP/2021/1483
+                                                <br>
+                                            </div>
+                                            <h2>What happens next</h2>We have closed the appeal and cancelled the site visit.
+                                            <br>
+                                            <br>
+                                            <h2>Feedback</h2>We welcome your feedback on our appeals process. Tell us on this short
+                                            <a                                             href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u"
+                                            class="govuk-link">feedback form</a>.
+                                                <br>
+                                                <br>The Planning Inspectorate
+                                                <br>
+                                                <br>caseofficers@planninginspectorate.gov.uk
+                                                <br>
+                                                <br>
+                                        </div>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Record missed site visit</button>
                     </form>
                 </div>
             </div>
@@ -1396,7 +1640,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-end-time-hour">Enter a real end time</a>
+                            <li><a href="#visit-end-time-hour">End time hour must be 23 or less</a>
                             </li>
                         </ul>
                     </div>
@@ -1518,7 +1762,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
-                                <p id="time-error" class="govuk-error-message">Enter a real end time</p>
+                                <p id="time-error" class="govuk-error-message">End time hour must be 23 or less</p>
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-end-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
@@ -1547,7 +1791,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-end-time-hour">Enter a real end time</a>
+                            <li><a href="#visit-end-time-hour">End time minute must be 59 or less</a>
                             </li>
                         </ul>
                     </div>
@@ -1669,7 +1913,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
-                                <p id="time-error" class="govuk-error-message">Enter a real end time</p>
+                                <p id="time-error" class="govuk-error-message">End time minute must be 59 or less</p>
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-end-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
@@ -1698,7 +1942,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-start-time-hour">Enter a real start time</a>
+                            <li><a href="#visit-start-time-hour">Start time hour must be 23 or less</a>
                             </li>
                         </ul>
                     </div>
@@ -1811,7 +2055,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                                <p id="time-error" class="govuk-error-message">Enter a real start time</p>
+                                <p id="time-error" class="govuk-error-message">Start time hour must be 23 or less</p>
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-start-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
@@ -2000,7 +2244,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-start-time-hour">Enter a real start time</a>
+                            <li><a href="#visit-start-time-hour">Start time minute must be 59 or less</a>
                             </li>
                         </ul>
                     </div>
@@ -2113,7 +2357,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                                <p id="time-error" class="govuk-error-message">Enter a real start time</p>
+                                <p id="time-error" class="govuk-error-message">Start time minute must be 59 or less</p>
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-start-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
@@ -2296,6 +2540,63 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             </div>
         </div>
     </div>
+    </div>
+</main>"
+`;
+
+exports[`site-visit POST /site-visit/missed should re-render the who missed the site visit page with the expected error messages if required field is not populated 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#who-missed-site-visit-radio">Select who missed the site visit</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - record missed site visit</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form action="" method="POST" novalidate>
+                <div class="govuk-form-group govuk-form-group--error">
+                    <fieldset class="govuk-fieldset" aria-describedby="who-missed-site-visit-radio-error">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading"> Who missed the site visit?</h1>
+                        </legend>
+                        <p id="who-missed-site-visit-radio-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select who missed the
+                            site visit</p>
+                        <div class="govuk-radios" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="who-missed-site-visit-radio" name="whoMissedSiteVisitRadio"
+                                type="radio" value="appellant">
+                                <label class="govuk-label govuk-radios__label" for="who-missed-site-visit-radio">Appellant</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="who-missed-site-visit-radio-2"
+                                name="whoMissedSiteVisitRadio" type="radio" value="lpa">
+                                <label class="govuk-label govuk-radios__label" for="who-missed-site-visit-radio-2">LPA</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="who-missed-site-visit-radio-3"
+                                name="whoMissedSiteVisitRadio" type="radio" value="inspector">
+                                <label class="govuk-label govuk-radios__label" for="who-missed-site-visit-radio-3">Inspector</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
     </div>
 </main>"
 `;
@@ -3352,7 +3653,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-end-time-hour">Enter a real end time</a>
+                            <li><a href="#visit-end-time-hour">End time hour must be 23 or less</a>
                             </li>
                         </ul>
                     </div>
@@ -3474,7 +3775,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
-                                <p id="time-error" class="govuk-error-message">Enter a real end time</p>
+                                <p id="time-error" class="govuk-error-message">End time hour must be 23 or less</p>
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-end-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
@@ -3503,7 +3804,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-end-time-hour">Enter a real end time</a>
+                            <li><a href="#visit-end-time-hour">End time minute must be 59 or less</a>
                             </li>
                         </ul>
                     </div>
@@ -3625,7 +3926,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
-                                <p id="time-error" class="govuk-error-message">Enter a real end time</p>
+                                <p id="time-error" class="govuk-error-message">End time minute must be 59 or less</p>
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-end-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
@@ -3654,7 +3955,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-start-time-hour">Enter a real start time</a>
+                            <li><a href="#visit-start-time-hour">Start time hour must be 23 or less</a>
                             </li>
                         </ul>
                     </div>
@@ -3767,7 +4068,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                                <p id="time-error" class="govuk-error-message">Enter a real start time</p>
+                                <p id="time-error" class="govuk-error-message">Start time hour must be 23 or less</p>
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-start-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
@@ -3956,7 +4257,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-start-time-hour">Enter a real start time</a>
+                            <li><a href="#visit-start-time-hour">Start time minute must be 59 or less</a>
                             </li>
                         </ul>
                     </div>
@@ -4069,7 +4370,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                                <p id="time-error" class="govuk-error-message">Enter a real start time</p>
+                                <p id="time-error" class="govuk-error-message">Start time minute must be 59 or less</p>
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-start-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"

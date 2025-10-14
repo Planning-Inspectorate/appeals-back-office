@@ -1,7 +1,6 @@
 import { addressToString } from '#lib/address-formatter.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { dateISOStringToDisplayTime12hr } from '#lib/dates.js';
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate, dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 import { dateInput } from '#lib/mappers/components/page-components/date.js';
 import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
 import { timeInput } from '#lib/mappers/components/page-components/time.js';
@@ -17,9 +16,10 @@ import { capitalize } from 'lodash-es';
  * @param {Appeal} appealData
  * @param {{ day?: string | number, month?: string | number, year?: string | number, hour?: string | number, minute?: string | number }} values
  * @param {string} backLinkUrl
+ * @param {{ title?: string, preHeading?: string, heading?: string }} [options]
  * @returns {PageContent}
  */
-export function hearingDatePage(appealData, values, backLinkUrl) {
+export function hearingDatePage(appealData, values, backLinkUrl, options = {}) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const date = { day: values.day || '', month: values.month || '', year: values.year || '' };
 	const time =
@@ -48,10 +48,10 @@ export function hearingDatePage(appealData, values, backLinkUrl) {
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Date and time - set up hearing - ${shortAppealReference}`,
+		title: options.title || `Date and time - set up hearing - ${shortAppealReference}`,
 		backLinkUrl,
-		preHeading: `Appeal ${shortAppealReference} - set up hearing`,
-		heading: 'Date and time',
+		preHeading: options.preHeading || `Appeal ${shortAppealReference} - set up hearing`,
+		heading: options.heading || 'Date and time',
 		pageComponents: [dateComponent, timeComponent]
 	};
 

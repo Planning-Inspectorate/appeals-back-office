@@ -1,10 +1,10 @@
-import logger from '#lib/logger.js';
-import config from '#environment/config.js';
-import { appealShortReference } from './nunjucks-filters/appeals.js';
 import { mapDocumentInfoVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import config from '#environment/config.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
-import { appealSiteToMultilineAddressStringHtml } from './address-formatter.js';
 import { SHOW_MORE_MAXIMUM_ROWS_BEFORE_HIDING } from '#lib/constants.js';
+import logger from '#lib/logger.js';
+import { appealSiteToMultilineAddressStringHtml } from './address-formatter.js';
+import { appealShortReference } from './nunjucks-filters/appeals.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Schema.Folder} Folder
@@ -376,12 +376,10 @@ export function generateHorizonAppealUrl(appealId) {
  */
 export const formatPlanningObligationStatus = (planningObligationStatus) => {
 	switch (planningObligationStatus) {
-		case 'not_started': // TODO (A2-173): replace with data model constants once those are available
+		case 'not started yet': // TODO (A2-173): replace with data model constants once those are available
 			return 'Not yet started';
 		case 'finalised': // TODO (A2-173): replace with data model constants once those are available
 			return 'Finalised';
-		case 'not-applicable': // TODO (A2-173): replace with data model constants once those are available
-			return 'Not applicable';
 		default:
 			return 'Not answered';
 	}

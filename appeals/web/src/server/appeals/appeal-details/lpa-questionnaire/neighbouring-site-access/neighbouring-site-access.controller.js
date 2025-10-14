@@ -1,8 +1,8 @@
 import logger from '#lib/logger.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
 import { changeNeighbouringSiteAccessPage } from './neighbouring-site-access.mapper.js';
 import { changeNeighbouringSiteAccess } from './neighbouring-site-access.service.js';
-import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

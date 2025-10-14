@@ -1,8 +1,8 @@
 // @ts-nocheck
 
+import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../caseDetailsPage';
 import { DateTimeSection } from '../dateTimeSection.js';
-import { users } from '../../fixtures/users';
 import { ListCasesPage } from '../listCasesPage';
 
 const listCasesPage = new ListCasesPage();
@@ -74,36 +74,35 @@ export class HearingSectionPage extends CaseDetailsPage {
 		this.basePageElements.xlHeader().contains('You cannot check these answers');
 		this.basePageElements.link().contains('appeal details');
 	}
-	navigateToHearingSection(caseRef) {
+	navigateToHearingSection(caseObj) {
 		cy.clearAllSessionStorage();
 		cy.clearAllCookies();
 		cy.login(users.appeals.caseAdmin);
 		caseDetailsPage.navigateToAppealsService();
-		listCasesPage.clickAppealByRef(caseRef);
-		caseDetailsPage.clickAccordionByButton('Hearing');
+		listCasesPage.clickAppealByRef(caseObj);
 	}
-	ensureHearingExists(caseRef, date) {
-		return cy.loadAppealDetails(caseRef).then((appealDetails) => {
+	ensureHearingExists(caseObj, date) {
+		return cy.loadAppealDetails(caseObj).then((appealDetails) => {
 			if (appealDetails.hearing === undefined) {
-				cy.addHearingDetails(caseRef, date).then((hearingDetails) => {
+				cy.addHearingDetails(caseObj, date).then((hearingDetails) => {
 					expect(hearingDetails.hearingStartTime).to.be.eq(date.toISOString());
 					expect(hearingDetails.hearingEndTime).to.be.eq(date.toISOString());
-					return cy.addHearingDetails(caseRef, date);
+					return cy.addHearingDetails(caseObj, date);
 				});
 			}
 		});
 	}
-	deleteHearingIfExists(caseRef) {
-		cy.log(`Checking for hearing with case reference: ${caseRef}`);
+	deleteHearingIfExists(caseObj) {
+		cy.log(`Checking for hearing with case reference: ${caseObj.reference}`);
 
-		cy.loadAppealDetails(caseRef).then((appealDetails) => {
+		cy.loadAppealDetails(caseObj).then((appealDetails) => {
 			cy.log('Appeal details:', appealDetails);
 
 			// More thorough check for hearing existence
 			if (appealDetails?.hearing?.hearingId) {
 				cy.log(`Hearing exists with ID: ${appealDetails.hearing.hearingId}, deleting...`);
 
-				cy.deleteHearing(caseRef).then((hearingDetails) => {
+				cy.deleteHearing(caseObj).then((hearingDetails) => {
 					expect(Number(hearingDetails.appealId)).to.equal(appealDetails.appealId);
 					expect(Number(hearingDetails.hearingId)).to.equal(appealDetails.hearing.hearingId);
 					cy.log('Hearing successfully deleted');
@@ -114,18 +113,17 @@ export class HearingSectionPage extends CaseDetailsPage {
 		});
 	}
 	verifyCaseHistory(hearingInformation) {
-		caseDetailsPage.clickAccordionByButton('Case management');
 		caseDetailsPage.clickViewCaseHistory();
 		hearingInformation.forEach((info) => {
 			caseDetailsPage.verifyTableCellTextCaseHistory(info);
 		});
 	}
 
-	verifyIssueDecision(caseRef) {
-		cy.simulateHearingElapsed(caseRef);
+	verifyIssueDecision(caseObj) {
+		cy.simulateHearingElapsed(caseObj);
 		cy.reload();
 		caseDetailsPage.validateBannerMessage('Important', 'Issue decision');
-		caseDetailsPage.clickIssueDecision(caseRef);
+		caseDetailsPage.clickIssueDecision(caseObj.reference);
 		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Allowed'));
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.uploadSampleFile(caseDetailsPage.sampleFiles.pdf);

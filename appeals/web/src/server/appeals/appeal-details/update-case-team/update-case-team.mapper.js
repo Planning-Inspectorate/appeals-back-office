@@ -110,5 +110,11 @@ export function checkAndConfirmPage(appealId, team, appealReference) {
  * @returns {string} The formatted team name and email.
  */
 export const mapTeamText = (team) => {
-	return team.email ? `${team.name}<br>${team.email}` : `${team.name}`;
+	const renderedText =
+		team.id === 0
+			? `Not assigned<br>This will remove the current case team from the appeal`
+			: team.email
+			? `${team.name}<br>${team.email}`
+			: `${team.name}`;
+	return renderedText;
 };

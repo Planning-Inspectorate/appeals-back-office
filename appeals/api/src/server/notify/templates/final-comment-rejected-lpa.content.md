@@ -11,8 +11,8 @@ We rejected your final comments because:
 
 # What happens next
 
-You can send different final comments to caseofficers@planninginspectorate.gov.uk. The case officer will decide whether to accept any new final comments.
+You can send different final comments to {{team_email_address}}. The case officer will decide whether to accept any new final comments.
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}
 

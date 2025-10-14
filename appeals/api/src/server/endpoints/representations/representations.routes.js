@@ -1,15 +1,16 @@
-import { Router as createRouter } from 'express';
+import { validateRepresentationsToPublish } from '#endpoints/representations/representations.middleware.js';
+import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkRepresentationExistsById } from '#middleware/check-representation-exists.js';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
+import * as controller from './representations.controller.js';
 import {
+	createRepresentationProofOfEvidenceValidator,
 	createRepresentationValidator,
 	getRepresentationRouteValidator,
 	getRepresentationUpdateValidator,
 	validateRejectionReasonsPayload
 } from './representations.validators.js';
-import * as controller from './representations.controller.js';
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
-import { checkRepresentationExistsById } from '#middleware/check-representation-exists.js';
-import { validateRepresentationsToPublish } from '#endpoints/representations/representations.middleware.js';
 
 const router = createRouter();
 
@@ -161,6 +162,33 @@ router.post(
 	checkAppealExistsByIdAndAddToRequest,
 	createRepresentationValidator,
 	asyncHandler(controller.createRepresentation('comment'))
+);
+
+router.post(
+	'/:appealId/reps/:proofOfEvidenceType/proof-of-evidence',
+	/*
+	#swagger.tags = ['Representations']
+	#swagger.path = '/appeals/{appealId}/reps/{proofOfEvidenceType}/proof-of-evidence'
+	#swagger.description = Create a representation
+	#swagger.parameters['azureAdUserId'] = {
+		in: 'header',
+		required: true,
+		example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+	}
+	#swagger.requestBody = {
+		in: 'body',
+		required: true,
+		schema: { $ref: '#/components/schemas/CreateRepRequest' },
+	}
+	#swagger.responses[201] = {
+		description: 'Create a Representation against an appeal',
+		schema: { $ref: '#/components/schemas/RepResponse' }
+	}
+	#swagger.responses[400] = {}
+ */
+	checkAppealExistsByIdAndAddToRequest,
+	createRepresentationProofOfEvidenceValidator,
+	asyncHandler(controller.createRepresentationProofOfEvidence)
 );
 
 router.patch(

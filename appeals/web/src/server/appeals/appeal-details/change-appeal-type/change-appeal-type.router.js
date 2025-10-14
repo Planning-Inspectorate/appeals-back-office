@@ -1,15 +1,16 @@
-import { Router as createRouter } from 'express';
+import { saveBackUrl } from '#lib/middleware/save-back-url.js';
+import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import * as controller from './change-appeal-type.controller.js';
 import * as validators from './change-appeal-type.validators.js';
-import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
 import { changeAppealTypeDateField } from './change-appeal-types.constants.js';
 
 const router = createRouter({ mergeParams: true });
 
 router
 	.route('/appeal-type')
-	.get(asyncHandler(controller.getAppealType))
+	.get(saveBackUrl('changeAppealType'), asyncHandler(controller.getAppealType))
 	.post(validators.validateAppealType, asyncHandler(controller.postAppealType));
 
 router
@@ -48,5 +49,15 @@ router
 	.route('/transfer-appeal')
 	.get(asyncHandler(controller.getTransferAppeal))
 	.post(asyncHandler(controller.postTransferAppeal));
+
+router
+	.route('/check-change-appeal-final-date')
+	.get(asyncHandler(controller.getCheckChangeAppealFinalDate))
+	.post(asyncHandler(controller.postCheckChangeAppealFinalDate));
+
+router
+	.route('/update-appeal')
+	.get(asyncHandler(controller.getUpdateAppeal))
+	.post(asyncHandler(controller.postUpdateAppeal));
 
 export default router;

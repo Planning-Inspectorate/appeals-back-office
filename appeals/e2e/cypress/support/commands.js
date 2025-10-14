@@ -2,17 +2,37 @@
 import { BrowserAuthData } from '../fixtures/browser-auth-data';
 import { appealsApiClient } from './appealsApiClient';
 
-//OVERWRITE
+// const cookiesToSet = ['domain', 'expiry', 'httpOnly', 'path', 'secure'];
+// Pick a stable auth cookie name if you know it; regex is a safe default.
+const AUTH_COOKIE_MATCH = /(Auth|\.AspNetCore|idsrv|x-ms-)/i;
 
-Cypress.Commands.overwrite('type', (originalFn, subject, text, options = {}) => {
-	options.delay = 0;
+function assertAuthCookiesExist() {
+	cy.getCookies().then((cookies) => {
+		const ok = cookies.some((c) => AUTH_COOKIE_MATCH.test(c.name));
+		expect(ok, 'at least one auth cookie present').to.be.true;
+	});
+}
 
-	return originalFn(subject, text, options);
-});
+// Checks we are authenticated by probing a known auth-only page.
+// Adjust PATH if your app uses a different landing route.
+function assertAuthenticated() {
+	const PATH = '/appeals-service/personal-list';
 
-//ADD
+	cy.request({
+		url: PATH,
+		failOnStatusCode: false, // don't fail the test on 302/404
+		followRedirect: false // so we can inspect Location header
+	}).then((res) => {
+		const location = res.headers?.location || '';
 
-const cookiesToSet = ['domain', 'expiry', 'httpOnly', 'path', 'secure'];
+		// Not bounced to Azure AD
+		expect(location, 'not redirected to AAD').not.to.include('login.microsoftonline.com');
+
+		// SPA backends may return 404 for client-routed paths; accept it.
+		// 200 = served page, 302 = in-app redirect, 404 = SPA not SSR'd but still auth OK
+		expect(res.status, 'authenticated status').to.be.oneOf([200, 302, 404]);
+	});
+}
 
 Cypress.Commands.add('clearCookiesFiles', () => {
 	cy.task('ClearAllCookies').then((cleared) => {
@@ -41,19 +61,11 @@ Cypress.Commands.add('validateDownloadedFile', (fileName) => {
 });
 
 Cypress.Commands.add('login', (user) => {
-	cy.task('CookiesFileExists', user.id).then((exists) => {
-		if (!exists) {
-			cy.log(`No cookies 🍪 found!\nLogging in as: ${user.id}`);
-			cy.loginWithPuppeteer(user);
-		} else {
-			cy.log(`Found some cookies! 🍪\nSetting cookies for: ${user.id}`);
-			setLocalCookies(user.id);
-		}
-	});
+	cy.loginSession(user);
 });
 
 Cypress.Commands.add('loginWithPuppeteer', (user) => {
-	var config = {
+	const config = {
 		username: user.email,
 		password: Cypress.env('PASSWORD'),
 		loginUrl: Cypress.config('baseUrl'),
@@ -71,13 +83,43 @@ Cypress.Commands.add('loginWithPuppeteer', (user) => {
 				secure: cookie.secure,
 				log: false
 			});
-			if (cookiesToSet.includes(cookie.name)) {
-				cy.getCookie(cookie.name).should('not.be.empty');
-			}
 		});
+
+		// Bind cookies to the app origin and verify we’re authenticated
+		cy.visit('/');
+		assertAuthenticated();
 	});
 
 	return;
+});
+
+Cypress.Commands.add('loginSession', (user) => {
+	if (!user?.id || !user?.email) {
+		throw new Error('loginSession: user must be an object with { id, email }');
+	}
+
+	const sessionKey = `azure:${Cypress.config('baseUrl')}:${user.id}`;
+
+	cy.session(
+		sessionKey,
+		() => {
+			cy.task('CookiesFileExists', user.id).then((exists) => {
+				if (!exists) {
+					cy.log(`No cookie file for ${user.id} → performing Azure sign-in`);
+					cy.loginWithPuppeteer(user);
+				} else {
+					cy.log(`Using cookie file for ${user.id}`);
+					setLocalCookies(user.id);
+				}
+			});
+		},
+		{
+			cacheAcrossSpecs: true,
+			validate() {
+				assertAuthenticated();
+			}
+		}
+	);
 });
 
 Cypress.Commands.add('getByData', (value) => {
@@ -85,58 +127,67 @@ Cypress.Commands.add('getByData', (value) => {
 });
 
 Cypress.Commands.add('createCase', (customValues) => {
-	return cy.wrap(null).then(async () => {
-		const appealRef = await appealsApiClient.caseSubmission(customValues);
-		cy.log('Generated case with ref ' + appealRef);
-		return appealRef;
-	});
-});
-
-Cypress.Commands.add('addLpaqSubmissionToCase', (reference) => {
-	return cy.wrap(null).then(async () => {
-		await appealsApiClient.lpqaSubmission(reference);
-		cy.log('Added LPA submission to case ref ' + reference);
-		return;
-	});
-});
-
-Cypress.Commands.add('simulateSiteVisit', (reference) => {
-	return cy.wrap(null).then(async () => {
-		await appealsApiClient.simulateSiteVisitElapsed(reference);
-		cy.log('Simulated site visit elapsed for case ref ' + reference);
-		return;
-	});
-});
-
-Cypress.Commands.add('simulateStatementsDeadlineElapsed', (reference) => {
-	return cy.wrap(null).then(async () => {
-		await appealsApiClient.simulateStatementsElapsed(reference);
-		return;
-	});
-});
-
-Cypress.Commands.add('simulateFinalCommentsDeadlineElapsed', (reference) => {
-	return cy.wrap(null).then(async () => {
-		await appealsApiClient.simulateFinalCommentsElapsed(reference);
-		cy.log('Simulated site visit elapsed for case ref ' + reference);
-		return;
-	});
-});
-
-Cypress.Commands.add(
-	'addRepresentation',
-	(reference, type, serviceUserId, representation = null) => {
-		return cy.wrap(null).then(async () => {
-			await appealsApiClient.addRepresentation(reference, type, serviceUserId, representation);
+	return cy.wrap(null).then(() => {
+		return appealsApiClient.caseSubmission(customValues).then((data) => {
+			const appealRef = data.reference;
+			const appealId = data.id;
+			cy.log(`Generated case with ref ${appealRef} and id ${appealId}`);
+			return { reference: appealRef, id: appealId };
 		});
-	}
-);
+	});
+});
 
-Cypress.Commands.add('loadAppealDetails', (reference) => {
+Cypress.Commands.add('addLpaqSubmissionToCase', (caseObj) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
+		await appealsApiClient.lpqaSubmission(caseObj.reference);
+		cy.log('Added LPA submission to case ref ' + caseObj.reference);
+		return;
+	});
+});
+
+Cypress.Commands.add('simulateSiteVisit', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.simulateSiteVisitElapsed(caseObj.reference);
+		cy.log('Simulated site visit elapsed for case ref ' + caseObj.reference);
+		return;
+	});
+});
+
+Cypress.Commands.add('simulateStatementsDeadlineElapsed', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.simulateStatementsElapsed(caseObj.reference);
+		return;
+	});
+});
+
+Cypress.Commands.add('simulateFinalCommentsDeadlineElapsed', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.simulateFinalCommentsElapsed(caseObj.reference);
+		cy.log('Simulated site visit elapsed for case ref ' + caseObj.reference);
+		return;
+	});
+});
+
+Cypress.Commands.add('addRepresentation', (caseObj, type, serviceUserId, representation = null) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.addRepresentation(
+			caseObj.reference,
+			type,
+			serviceUserId,
+			representation
+		);
+	});
+});
+
+Cypress.Commands.add('loadAppealDetails', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		const details = await appealsApiClient.loadCaseDetails(caseObj.reference);
 		return details;
 	});
+});
+
+Cypress.Commands.add('reloadUntilVirusCheckComplete', () => {
+	cy.reload();
 });
 
 Cypress.Commands.add('reloadUntilVirusCheckComplete', () => {
@@ -157,16 +208,17 @@ export function setLocalCookies(userId) {
 				secure: cookie.secure,
 				log: false
 			});
-			if (cookiesToSet.includes(cookie.name)) {
-				cy.getCookie(cookie.name).should('not.be.empty');
-			}
 		});
+
+		// Bind cookies and verify auth
+		cy.visit('/');
+		assertAuthenticated();
 	});
 }
 
 Cypress.Commands.add('setCurrentCookies', (cookies) => {
+	cy.clearCookies();
 	cookies.forEach((cookie) => {
-		cy.clearCookies();
 		cy.setCookie(cookie.name, cookie.value, {
 			domain: cookie.domain,
 			expiry: cookie.expiry,
@@ -174,8 +226,10 @@ Cypress.Commands.add('setCurrentCookies', (cookies) => {
 			path: cookie.path,
 			secure: cookie.secure
 		});
-		Cypress.Cookies.preserveOnce(cookie.name);
 	});
+
+	cy.visit('/');
+	assertAuthenticated();
 });
 
 Cypress.Commands.add('getBusinessActualDate', (date, days) => {
@@ -187,9 +241,9 @@ Cypress.Commands.add('getBusinessActualDate', (date, days) => {
 	});
 });
 
-Cypress.Commands.add('addAllocationLevelAndSpecialisms', (reference) => {
+Cypress.Commands.add('addAllocationLevelAndSpecialisms', (caseObj) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
+		const details = await appealsApiClient.loadCaseDetails(caseObj.reference);
 		const appealId = await details.appealId;
 		const specIds = await appealsApiClient.getSpecialisms();
 		const ids = specIds.map((item) => item.id);
@@ -197,24 +251,24 @@ Cypress.Commands.add('addAllocationLevelAndSpecialisms', (reference) => {
 	});
 });
 
-Cypress.Commands.add('addHearingDetails', (reference, date) => {
+Cypress.Commands.add('addHearingDetails', (caseObj, date) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
+		const details = await appealsApiClient.loadCaseDetails(caseObj.reference);
 		const appealId = await details.appealId;
 		return await appealsApiClient.addHearing(appealId, date);
 	});
 });
 
-Cypress.Commands.add('deleteHearing', (reference) => {
+Cypress.Commands.add('deleteHearing', (caseObj) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
+		const details = await appealsApiClient.loadCaseDetails(caseObj.reference);
 		const appealId = await details.appealId;
 		const hearingId = await details.hearing.hearingId;
 		return await appealsApiClient.deleteHearing(appealId, hearingId);
 	});
 });
 
-Cypress.Commands.add('checkNotifySent', (reference, expectedNotifies) => {
+Cypress.Commands.add('checkNotifySent', (caseObj, expectedNotifies) => {
 	// ensure input is always an array
 	const expected = [].concat(expectedNotifies);
 
@@ -232,7 +286,7 @@ Cypress.Commands.add('checkNotifySent', (reference, expectedNotifies) => {
 
 	return cy.wrap(null).then(async () => {
 		// returns an array of email objects sent for the given appeal
-		const sentNotifies = await appealsApiClient.getNotifyEmails(reference);
+		const sentNotifies = await appealsApiClient.getNotifyEmails(caseObj.reference);
 
 		// filter for expected notifies that were NOT found in the sent notfies array
 		const missingNotifies = expected.filter(
@@ -253,61 +307,117 @@ Cypress.Commands.add('checkNotifySent', (reference, expectedNotifies) => {
 	});
 });
 
-Cypress.Commands.add('updateAppealDetails', (reference, caseDetails) => {
+Cypress.Commands.add('updateAppealDetailsViaApi', (caseObj, caseDetails) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
+		const details = await appealsApiClient.loadCaseDetails(caseObj.reference);
 		const appealId = details.appealId;
 		const appellantCaseId = details.appellantCaseId;
 		return await appealsApiClient.updateAppealCases(appealId, appellantCaseId, caseDetails);
 	});
 });
 
-Cypress.Commands.add('updateTimeTableDetails', (reference, timeTableDetails) => {
+Cypress.Commands.add('updateTimeTableDetails', (caseObj, timeTableDetails) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
+		const details = await appealsApiClient.loadCaseDetails(caseObj.reference);
 		const appealId = await details.appealId;
 		const appealTimetableId = await details.appealTimetable.appealTimetableId;
 		return await appealsApiClient.updateTimeTable(appealId, appealTimetableId, timeTableDetails);
 	});
 });
 
-Cypress.Commands.add('simulateHearingElapsed', (reference) => {
+Cypress.Commands.add('simulateHearingElapsed', (caseObj) => {
 	return cy.wrap(null).then(async () => {
-		return appealsApiClient.simulateHearingElapsed(reference).then(() => {
-			cy.log(`Simulated hearing elapsed for case ref ${reference}`);
+		return appealsApiClient.simulateHearingElapsed(caseObj.reference).then(() => {
+			cy.log(`Simulated hearing elapsed for case ref ${caseObj.reference}`);
 		});
 	});
 });
 
-Cypress.Commands.add('navigateToAppealDetailsPage', (reference) => {
+Cypress.Commands.add('navigateToAppealDetailsPage', (caseObj) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
+		const details = await appealsApiClient.loadCaseDetails(caseObj.reference);
 		const appealId = await details.appealId;
 		cy.visit(`appeals-service/appeal-details/${appealId}`);
 	});
 });
 
-Cypress.Commands.add('addInquiryViaApi', (reference, date) => {
+Cypress.Commands.add('addInquiryViaApi', (caseObj, date, propertyOverrides = {}) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
+		const details = await appealsApiClient.loadCaseDetails(caseObj.reference);
 		const appealId = await details.appealId;
-		return await appealsApiClient.addInquiry(appealId, date);
+		return await appealsApiClient.addInquiry(appealId, date, propertyOverrides);
 	});
 });
 
-Cypress.Commands.add('addEstimateViaApi', (procedureType, reference, estimate = null) => {
+Cypress.Commands.add('addEstimateViaApi', (procedureType, caseObj, estimate = null) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
+		const details = await appealsApiClient.loadCaseDetails(caseObj.reference);
 		const appealId = await details.appealId;
 		console.log(estimate);
 		return await appealsApiClient.addEstimate(procedureType, appealId, estimate);
 	});
 });
 
-Cypress.Commands.add('deleteEstimateViaApi', (procedureType, reference) => {
+Cypress.Commands.add('deleteEstimateViaApi', (procedureType, caseObj) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
+		const details = await appealsApiClient.loadCaseDetails(caseObj.reference);
 		const appealId = await details.appealId;
 		return await appealsApiClient.deleteEstimate(procedureType, appealId);
+	});
+});
+
+Cypress.Commands.add('assignCaseOfficerViaApi', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		const details = await appealsApiClient.loadCaseDetails(caseObj.reference);
+		const appealId = await details.appealId;
+		return await appealsApiClient.assignCaseOfficer(appealId);
+	});
+});
+
+Cypress.Commands.add('deleteAppeals', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		const caseObjs = [].concat(caseObj);
+
+		const appealIds = [];
+
+		for (const obj of caseObjs) {
+			appealIds.push(obj.id);
+		}
+
+		cy.log(`Deleting case(s) ${appealIds}`);
+		return await appealsApiClient.deleteAppeals(appealIds);
+	});
+});
+
+Cypress.Commands.add('selectReasonOption', (optionLabel = null) => {
+	return cy.get('input[type="checkbox"]').then(($checkboxes) => {
+		// Helper function to get label text for a checkbox
+		const getLabelText = (checkbox) => Cypress.$(checkbox).siblings('label').text().trim();
+
+		// Filter checkboxes based on the selection logic
+		const targetCheckbox =
+			optionLabel === 'Other reason'
+				? $checkboxes.filter((i, elem) => getLabelText(elem) === 'Other reason')[0]
+				: $checkboxes.filter((i, elem) => getLabelText(elem) !== 'Other reason')[
+						Math.floor(
+							Math.random() *
+								$checkboxes.filter((i, elem) => getLabelText(elem) !== 'Other reason').length
+						)
+				  ];
+
+		// Validate target checkbox exists
+		if (!targetCheckbox) {
+			throw new Error(
+				optionLabel === 'Other reason'
+					? 'Checkbox with label "Other reason" not found'
+					: 'No eligible checkboxes available (excluding "Other reason")'
+			);
+		}
+
+		// Select checkbox and return label text
+		const selectedLabelText = getLabelText(targetCheckbox);
+		cy.wrap(targetCheckbox).click().should('be.checked');
+
+		return cy.wrap(selectedLabelText);
 	});
 });

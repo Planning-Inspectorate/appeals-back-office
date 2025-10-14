@@ -1,18 +1,18 @@
-import logger from '#utils/logger.js';
-import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
-import { createInquiry, updateInquiry } from './inquiry.service.js';
-import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import transitionState from '#state/transition-state.js';
-import { VALIDATION_OUTCOME_COMPLETE } from '@pins/appeals/constants/support.js';
+import { formatAddressForDb } from '#endpoints/addresses/addresses.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import transitionState from '#state/transition-state.js';
+import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
+import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
 import {
 	AUDIT_TRAIL_INQUIRY_ADDRESS_ADDED,
-	AUDIT_TRAIL_INQUIRY_SET_UP
+	AUDIT_TRAIL_INQUIRY_SET_UP,
+	ERROR_FAILED_TO_SAVE_DATA,
+	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
-import { formatAddressForDb } from '#endpoints/addresses/addresses.formatter.js';
+import { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { createInquiry, updateInquiry } from './inquiry.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -123,9 +123,9 @@ export const patchInquiry = async (req, res) => {
 				inquiryEndTime: undefined,
 				estimatedDays,
 				addressId,
-				...{
+				...(address !== undefined && {
 					address: address === null ? null : formatAddressForDb(address)
-				}
+				})
 			},
 			appeal
 		);

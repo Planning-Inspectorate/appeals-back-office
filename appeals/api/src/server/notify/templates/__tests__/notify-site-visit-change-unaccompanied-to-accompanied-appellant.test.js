@@ -15,7 +15,8 @@ describe('site-visit-change-unaccompanied-to-accompanied-appellant.md', () => {
 				site_address: '88, Inspector Rise',
 				lpa_reference: 'LPA-30303',
 				visit_date: '3 October 2025',
-				start_time: '10:45am'
+				start_time: '10:45am',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

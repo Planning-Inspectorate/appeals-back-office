@@ -15,7 +15,8 @@ describe('site-visit-change-unaccompanied-to-accompanied-lpa.md', () => {
 				site_address: '21, Appeal Avenue',
 				lpa_reference: 'LPA-40404',
 				visit_date: '6 October 2025',
-				start_time: '2:30pm'
+				start_time: '2:30pm',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

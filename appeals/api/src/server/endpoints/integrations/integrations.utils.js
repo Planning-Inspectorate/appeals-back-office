@@ -1,6 +1,5 @@
+import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import Path from 'node:path';
-import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
-import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppellantSubmissionCommand['documents'][number]} AppellantSubmissionDocument */
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.LPAQuestionnaireCommand['documents'][number]} LPAQuestionnaireCommandDocument */

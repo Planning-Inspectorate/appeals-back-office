@@ -1,39 +1,39 @@
 // @ts-nocheck
-import { jest } from '@jest/globals';
-import { parseHtml } from '@pins/platform';
-import nock from 'nock';
-import supertest from 'supertest';
+import usersService from '#appeals/appeal-users/users-service.js';
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+import { dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 import {
+	activeDirectoryUsersData,
 	appealData,
 	appealDataFullPlanning,
-	linkedAppeals,
-	linkableAppealSummaryBackOffice,
-	linkableAppealSummaryHorizon,
+	appellantFinalCommentsAwaitingReview,
+	caseNotes,
 	costsFolderInfoAppellantApplication,
-	costsFolderInfoLpaApplication,
 	costsFolderInfoDecision,
+	costsFolderInfoLpaApplication,
+	documentFileInfo,
+	documentFileVersionInfo,
+	documentRedactionStatuses,
+	fileUploadInfo,
+	finalCommentsForReview,
 	folderInfoCrossTeamCorrespondence,
 	folderInfoInspectorCorrespondence,
-	documentRedactionStatuses,
-	linkedAppealsWithExternalLead,
-	fileUploadInfo,
-	caseNotes,
-	activeDirectoryUsersData,
-	finalCommentsForReview,
-	appellantFinalCommentsAwaitingReview,
-	lpaFinalCommentsAwaitingReview,
 	folderInfoMainPartyCorrespondence,
-	documentFileVersionInfo,
-	documentFileInfo
+	linkableAppealSummaryBackOffice,
+	linkableAppealSummaryHorizon,
+	linkedAppeals,
+	linkedAppealsWithExternalLead,
+	lpaFinalCommentsAwaitingReview
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
-import usersService from '#appeals/appeal-users/users-service.js';
+import { jest } from '@jest/globals';
+import { APPEAL_REPRESENTATION_STATUS, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { parseHtml } from '@pins/platform';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { dateISOStringToDisplayTime12hr } from '#lib/dates.js';
-import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
-import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { addDays } from 'date-fns';
 import { omit } from 'lodash-es';
+import nock from 'nock';
+import supertest from 'supertest';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -70,6 +70,7 @@ const appealStatuses = [
 ];
 
 describe('appeal-details', () => {
+	beforeAll(teardown);
 	beforeEach(() => {
 		installMockApi();
 		installReadOnlyMockApi();
@@ -1404,66 +1405,82 @@ describe('appeal-details', () => {
 						resetMocks();
 					});
 
-					it('should render a "Add number of residential units" important notification banner a link to add residential units when numberOfResidencesNetChange has not been added', async () => {
-						nock('http://test/')
-							.get(`/appeals/${appealId}`)
-							.reply(200, {
-								...appealData,
-								appealId,
-								appealType: 'Planning appeal'
-							});
-						nock('http://test/')
-							.get(/appeals\/\d+\/appellant-cases\/\d+/)
-							.reply(200, {
-								planningObligation: { hasObligation: false },
-								numberOfResidencesNetChange: null
-							});
+					it.each(['Planning appeal', 'Planning listed building and conservation area appeal'])(
+						'should render a "Add number of residential units" important notification banner a link to add residential units when numberOfResidencesNetChange has not been added for %s',
+						async (appealType) => {
+							nock('http://test/')
+								.get(`/appeals/${appealId}`)
+								.reply(200, {
+									...appealData,
+									appealId,
+									appealType: appealType,
+									completedStateList: ['lpa_questionnaire']
+								});
+							nock('http://test/')
+								.get(/appeals\/\d+\/appellant-cases\/\d+/)
+								.reply(200, {
+									planningObligation: { hasObligation: false },
+									numberOfResidencesNetChange: null
+								});
 
-						const response = await request.get(`${baseUrl}/${appealId}`);
+							const response = await request.get(`${baseUrl}/${appealId}`);
 
-						expect(response.statusCode).toBe(200);
-						const notificationBannerElementHTML = parseHtml(response.text, {
-							rootElement: '.govuk-notification-banner'
-						}).innerHTML;
-						expect(notificationBannerElementHTML).toMatchSnapshot();
-						expect(notificationBannerElementHTML).toContain('Important</h3>');
-						expect(notificationBannerElementHTML).toContain(
-							`href="/appeals-service/appeal-details/${appealId}/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}"`
-						);
-						expect(notificationBannerElementHTML).toContain('data-cy="add-residences-net-change"');
-						expect(notificationBannerElementHTML).toContain('Add number of residential units</a>');
-					});
+							expect(response.statusCode).toBe(200);
+							const notificationBannerElementHTML = parseHtml(response.text, {
+								rootElement: '.govuk-notification-banner'
+							}).innerHTML;
+							expect(notificationBannerElementHTML).toMatchSnapshot();
+							expect(notificationBannerElementHTML).toContain('Important</h3>');
+							expect(notificationBannerElementHTML).toContain(
+								`href="/appeals-service/appeal-details/${appealId}/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}"`
+							);
+							expect(notificationBannerElementHTML).toContain(
+								'data-cy="add-residences-net-change"'
+							);
+							expect(notificationBannerElementHTML).toContain(
+								'Add number of residential units</a>'
+							);
+						}
+					);
 
-					it('should render a "Add number of residential units" important notification banner even when case is complete if numberOfResidencesNetChange has not been added', async () => {
-						nock('http://test/')
-							.get(`/appeals/${appealId}`)
-							.reply(200, {
-								...appealData,
-								appealId,
-								appealType: 'Planning appeal',
-								appealStatus: 'complete'
-							});
-						nock('http://test/')
-							.get(/appeals\/\d+\/appellant-cases\/\d+/)
-							.reply(200, {
-								planningObligation: { hasObligation: false },
-								numberOfResidencesNetChange: null
-							});
+					it.each(['Planning appeal', 'Planning listed building and conservation area appeal'])(
+						'should render a "Add number of residential units" important notification banner even when case is complete if numberOfResidencesNetChange has not been added for %s',
+						async (appealType) => {
+							nock('http://test/')
+								.get(`/appeals/${appealId}`)
+								.reply(200, {
+									...appealData,
+									appealId,
+									appealType: appealType,
+									appealStatus: 'complete',
+									completedStateList: ['lpa_questionnaire']
+								});
+							nock('http://test/')
+								.get(/appeals\/\d+\/appellant-cases\/\d+/)
+								.reply(200, {
+									planningObligation: { hasObligation: false },
+									numberOfResidencesNetChange: null
+								});
 
-						const response = await request.get(`${baseUrl}/${appealId}`);
+							const response = await request.get(`${baseUrl}/${appealId}`);
 
-						expect(response.statusCode).toBe(200);
-						const notificationBannerElementHTML = parseHtml(response.text, {
-							rootElement: '.govuk-notification-banner'
-						}).innerHTML;
-						expect(notificationBannerElementHTML).toMatchSnapshot();
-						expect(notificationBannerElementHTML).toContain('Important</h3>');
-						expect(notificationBannerElementHTML).toContain(
-							`href="/appeals-service/appeal-details/${appealId}/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}"`
-						);
-						expect(notificationBannerElementHTML).toContain('data-cy="add-residences-net-change"');
-						expect(notificationBannerElementHTML).toContain('Add number of residential units</a>');
-					});
+							expect(response.statusCode).toBe(200);
+							const notificationBannerElementHTML = parseHtml(response.text, {
+								rootElement: '.govuk-notification-banner'
+							}).innerHTML;
+							expect(notificationBannerElementHTML).toMatchSnapshot();
+							expect(notificationBannerElementHTML).toContain('Important</h3>');
+							expect(notificationBannerElementHTML).toContain(
+								`href="/appeals-service/appeal-details/${appealId}/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}"`
+							);
+							expect(notificationBannerElementHTML).toContain(
+								'data-cy="add-residences-net-change"'
+							);
+							expect(notificationBannerElementHTML).toContain(
+								'Add number of residential units</a>'
+							);
+						}
+					);
 
 					it('should not render a "Add number of residential units" important notification banner when appeal type is not S78', async () => {
 						nock.cleanAll();
@@ -2878,8 +2895,39 @@ describe('appeal-details', () => {
 					.persist();
 			});
 
-			it('should render a "Is there a net gain or loss of residential units?" row in the overview accordion for S78', async () => {
-				const appealId = 2;
+			it.each(['Planning appeal', 'Planning listed building and conservation area appeal'])(
+				'should render a "Is there a net gain or loss of residential units?" row in the overview accordion for %s',
+				async (appealType) => {
+					const appealId = 2;
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							completedStateList: ['lpa_questionnaire'],
+							appealType: appealType
+						});
+					nock('http://test/')
+						.get(/appeals\/\d+\/appellant-cases\/\d+/)
+						.reply(200, {
+							planningObligation: { hasObligation: false },
+							numberOfResidencesNetChange: null
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					const rowHtml = parseHtml(response.text, {
+						rootElement: '.appeal-net-residence-change',
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(rowHtml).toMatchSnapshot();
+					expect(rowHtml).toContain('Is there a net gain or loss of residential units?</dt>');
+					expect(rowHtml).toContain('Not provided</dd>');
+				}
+			);
+
+			it('should not render a "Is there a net gain or loss of residential units?" row in the overview accordion if a S78 linked child appeal', async () => {
 				nock('http://test/')
 					.get(`/appeals/${appealId}`)
 					.reply(200, {
@@ -2895,15 +2943,9 @@ describe('appeal-details', () => {
 					});
 
 				const response = await request.get(`${baseUrl}/${appealId}`);
-
-				const rowHtml = parseHtml(response.text, {
-					rootElement: '.appeal-net-residence-change',
-					skipPrettyPrint: true
-				}).innerHTML;
-
-				expect(rowHtml).toMatchSnapshot();
-				expect(rowHtml).toContain('Is there a net gain or loss of residential units?</dt>');
-				expect(rowHtml).toContain('Not provided</dd>');
+				expect(response.text).not.toContain(
+					'Is there a net gain or loss of residential units?</dt>'
+				);
 			});
 
 			it('should not render a "Is there a net gain or loss of residential units?" row in the overview accordion if not S78 appeal', async () => {
@@ -2927,103 +2969,115 @@ describe('appeal-details', () => {
 				);
 			});
 
-			it('should render net-residence-gain-or-loss row as "Net gain" in the overview accordion for S78 if numberOfResidencesNetChange has a positive value', async () => {
-				const appealId = 2;
-				nock('http://test/')
-					.get(`/appeals/${appealId}`)
-					.reply(200, {
-						...appealData,
-						appealId,
-						appealType: 'Planning appeal'
-					});
-				nock('http://test/')
-					.get(/appeals\/\d+\/appellant-cases\/\d+/)
-					.reply(200, {
-						planningObligation: { hasObligation: false },
-						numberOfResidencesNetChange: 1
-					});
+			it.each(['Planning appeal', 'Planning listed building and conservation area appeal'])(
+				'should render net-residence-gain-or-loss row as "Net gain" in the overview accordion for %s if numberOfResidencesNetChange has a positive value',
+				async (appealType) => {
+					const appealId = 2;
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealType: appealType
+						});
+					nock('http://test/')
+						.get(/appeals\/\d+\/appellant-cases\/\d+/)
+						.reply(200, {
+							planningObligation: { hasObligation: false },
+							numberOfResidencesNetChange: 1
+						});
 
-				const response = await request.get(`${baseUrl}/${appealId}`);
+					const response = await request.get(`${baseUrl}/${appealId}`);
 
-				const rowHtml = parseHtml(response.text, {
-					rootElement: '.appeal-net-residence-gain-or-loss',
-					skipPrettyPrint: true
-				}).innerHTML;
+					const rowHtml = parseHtml(response.text, {
+						rootElement: '.appeal-net-residence-gain-or-loss',
+						skipPrettyPrint: true
+					}).innerHTML;
 
-				expect(rowHtml).toMatchSnapshot();
-				expect(rowHtml).toContain('Net gain</dt>');
-				expect(rowHtml).toContain('1</dd>');
-			});
+					expect(rowHtml).toMatchSnapshot();
+					expect(rowHtml).toContain('Net gain</dt>');
+					expect(rowHtml).toContain('1</dd>');
+				}
+			);
 
-			it('should render net-residence-gain-or-loss row as "Net loss" in the overview accordion for S78 if numberOfResidencesNetChange has a negative value', async () => {
-				const appealId = 2;
-				nock('http://test/')
-					.get(`/appeals/${appealId}`)
-					.reply(200, {
-						...appealData,
-						appealId,
-						appealType: 'Planning appeal'
-					});
-				nock('http://test/')
-					.get(/appeals\/\d+\/appellant-cases\/\d+/)
-					.reply(200, {
-						planningObligation: { hasObligation: false },
-						numberOfResidencesNetChange: -1
-					});
+			it.each(['Planning appeal', 'Planning listed building and conservation area appeal'])(
+				'should render net-residence-gain-or-loss row as "Net loss" in the overview accordion for %s if numberOfResidencesNetChange has a negative value',
+				async (appealType) => {
+					const appealId = 2;
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealType: appealType
+						});
+					nock('http://test/')
+						.get(/appeals\/\d+\/appellant-cases\/\d+/)
+						.reply(200, {
+							planningObligation: { hasObligation: false },
+							numberOfResidencesNetChange: -1
+						});
 
-				const response = await request.get(`${baseUrl}/${appealId}`);
+					const response = await request.get(`${baseUrl}/${appealId}`);
 
-				const rowHtml = parseHtml(response.text, {
-					rootElement: '.appeal-net-residence-gain-or-loss',
-					skipPrettyPrint: true
-				}).innerHTML;
+					const rowHtml = parseHtml(response.text, {
+						rootElement: '.appeal-net-residence-gain-or-loss',
+						skipPrettyPrint: true
+					}).innerHTML;
 
-				expect(rowHtml).toMatchSnapshot();
-				expect(rowHtml).toContain('Net loss</dt>');
-				expect(rowHtml).toContain('1</dd>');
-			});
+					expect(rowHtml).toMatchSnapshot();
+					expect(rowHtml).toContain('Net loss</dt>');
+					expect(rowHtml).toContain('1</dd>');
+				}
+			);
 
-			it('should not render net-residence-gain-or-loss row in the overview accordion for S78 if numberOfResidencesNetChange is 0', async () => {
-				const appealId = 2;
-				nock('http://test/')
-					.get(`/appeals/${appealId}`)
-					.reply(200, {
-						...appealData,
-						appealId,
-						appealType: 'Planning appeal'
-					});
-				nock('http://test/')
-					.get(/appeals\/\d+\/appellant-cases\/\d+/)
-					.reply(200, {
-						planningObligation: { hasObligation: false },
-						numberOfResidencesNetChange: 0
-					});
+			it.each(['Planning appeal', 'Planning listed building and conservation area appeal'])(
+				'should not render net-residence-gain-or-loss row in the overview accordion for %s if numberOfResidencesNetChange is 0',
+				async (appealType) => {
+					const appealId = 2;
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealType: appealType
+						});
+					nock('http://test/')
+						.get(/appeals\/\d+\/appellant-cases\/\d+/)
+						.reply(200, {
+							planningObligation: { hasObligation: false },
+							numberOfResidencesNetChange: 0
+						});
 
-				const response = await request.get(`${baseUrl}/${appealId}`);
+					const response = await request.get(`${baseUrl}/${appealId}`);
 
-				expect(response.text).not.toContain('.appeal-net-residence-gain-or-loss');
-			});
+					expect(response.text).not.toContain('.appeal-net-residence-gain-or-loss');
+				}
+			);
 
-			it('should not render net-residence-gain-or-loss row in the overview accordion for S78 if numberOfResidencesNetChange is not given', async () => {
-				const appealId = 2;
-				nock('http://test/')
-					.get(`/appeals/${appealId}`)
-					.reply(200, {
-						...appealData,
-						appealId,
-						appealType: 'Planning appeal'
-					});
-				nock('http://test/')
-					.get(/appeals\/\d+\/appellant-cases\/\d+/)
-					.reply(200, {
-						planningObligation: { hasObligation: false },
-						numberOfResidencesNetChange: null
-					});
+			it.each(['Planning appeal', 'Planning listed building and conservation area appeal'])(
+				'should not render net-residence-gain-or-loss row in the overview accordion for %s if numberOfResidencesNetChange is not given',
+				async (appealType) => {
+					const appealId = 2;
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealType: appealType
+						});
+					nock('http://test/')
+						.get(/appeals\/\d+\/appellant-cases\/\d+/)
+						.reply(200, {
+							planningObligation: { hasObligation: false },
+							numberOfResidencesNetChange: null
+						});
 
-				const response = await request.get(`${baseUrl}/${appealId}`);
+					const response = await request.get(`${baseUrl}/${appealId}`);
 
-				expect(response.text).not.toContain('.appeal-net-residence-gain-or-loss');
-			});
+					expect(response.text).not.toContain('.appeal-net-residence-gain-or-loss');
+				}
+			);
 
 			it('should not render net-residence-gain-or-loss row in the overview accordion if appeal type is not S78', async () => {
 				const appealId = 2;
@@ -4755,7 +4809,7 @@ describe('appeal-details', () => {
 						expect(unprettifiedHTML).not.toContain('Site</span></h2>');
 					} else {
 						// eslint-disable-next-line jest/no-conditional-expect
-						expect(unprettifiedHTML).toContain('Site</span></h2>');
+						expect(unprettifiedHTML).toContain('Site</h1>');
 					}
 				})
 			);
@@ -4818,7 +4872,7 @@ describe('appeal-details', () => {
 						expect(unprettifiedHTML).not.toContain('Site</span></h2>');
 					} else {
 						// eslint-disable-next-line jest/no-conditional-expect
-						expect(unprettifiedHTML).toContain('Site</span></h2>');
+						expect(unprettifiedHTML).toContain('Site</h1>');
 					}
 				})
 			);
@@ -4863,7 +4917,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+				expect(unprettifiedHTML).toContain('Hearing</h1>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -4908,7 +4962,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+				expect(unprettifiedHTML).toContain('Hearing</h1>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -4971,7 +5025,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+				expect(unprettifiedHTML).toContain('Hearing</h1>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -5074,7 +5128,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+				expect(unprettifiedHTML).toContain('Hearing</h1>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -5154,7 +5208,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+				expect(unprettifiedHTML).toContain('Hearing</h1>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -5208,7 +5262,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+				expect(unprettifiedHTML).toContain('Hearing</h1>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -5249,7 +5303,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+				expect(unprettifiedHTML).toContain('Hearing</h1>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -5362,9 +5416,11 @@ describe('appeal-details', () => {
 
 		describe('Appellant costs decision', () => {
 			appealStatuses
-				.filter(({ statusPassedEvent }) => statusPassedEvent)
+				.filter(
+					({ appealStatus, statusPassedEvent }) => statusPassedEvent || appealStatus === 'withdrawn'
+				)
 				.forEach(({ appealStatus }) => {
-					it(`should render a row in the case overview accordion, if the appeal status is "issue_determination" or after (${appealStatus})`, async () => {
+					it(`should render a row in the case overview accordion, if the appeal status is "issue_determination", "withdrawn" or after (${appealStatus})`, async () => {
 						const appealId = 2;
 
 						nock('http://test/')
@@ -5400,9 +5456,12 @@ describe('appeal-details', () => {
 				});
 
 			appealStatuses
-				.filter(({ statusPassedEvent }) => !statusPassedEvent)
+				.filter(
+					({ appealStatus, statusPassedEvent }) =>
+						!statusPassedEvent && appealStatus !== 'withdrawn'
+				)
 				.forEach(({ appealStatus }) => {
-					it(`should not render a row in the case overview accordion , if the appeal status is before "issue_determination" (${appealStatus})`, async () => {
+					it(`should not render a row in the case overview accordion , if the appeal status is before "issue_determination" or "withdrawn" (${appealStatus})`, async () => {
 						const appealId = 2;
 
 						nock('http://test/')
@@ -5429,9 +5488,11 @@ describe('appeal-details', () => {
 
 		describe('LPA costs decision', () => {
 			appealStatuses
-				.filter(({ statusPassedEvent }) => statusPassedEvent)
+				.filter(
+					({ appealStatus, statusPassedEvent }) => statusPassedEvent || appealStatus === 'withdrawn'
+				)
 				.forEach(({ appealStatus }) => {
-					it(`should render a row in the case overview accordion, if the appeal status is "issue_determination" or after (${appealStatus})`, async () => {
+					it(`should render a row in the case overview accordion, if the appeal status is "issue_determination", "withdrawn" or after (${appealStatus})`, async () => {
 						const appealId = 2;
 
 						nock('http://test/')
@@ -5467,9 +5528,12 @@ describe('appeal-details', () => {
 				});
 
 			appealStatuses
-				.filter(({ statusPassedEvent }) => !statusPassedEvent)
+				.filter(
+					({ appealStatus, statusPassedEvent }) =>
+						!statusPassedEvent && appealStatus !== 'withdrawn'
+				)
 				.forEach(({ appealStatus }) => {
-					it(`should not render a row in the case overview accordion , if the appeal status is before "issue_determination" (${appealStatus})`, async () => {
+					it(`should not render a row in the case overview accordion , if the appeal status is before "issue_determination" or "withdrawn" (${appealStatus})`, async () => {
 						const appealId = 2;
 
 						nock('http://test/')
@@ -5553,7 +5617,7 @@ describe('appeal-details', () => {
 				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
-				expect(unprettifiedHTML).toContain('Site</span></h2>');
+				expect(unprettifiedHTML).toContain('Site</h1>');
 			});
 
 			for (const procedureType of [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING]) {
@@ -5617,7 +5681,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-inquiry-section">');
-				expect(unprettifiedHTML).toContain('Inquiry</span></h2>');
+				expect(unprettifiedHTML).toContain('Inquiry</h1>');
 
 				const inquirySectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-inquiry-section'
@@ -5672,7 +5736,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-inquiry-section">');
-				expect(unprettifiedHTML).toContain('Inquiry</span></h2>');
+				expect(unprettifiedHTML).toContain('Inquiry</h1>');
 
 				const inquirySectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-inquiry-section'
@@ -5764,7 +5828,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-inquiry-section">');
-				expect(unprettifiedHTML).toContain('Inquiry</span></h2>');
+				expect(unprettifiedHTML).toContain('Inquiry</h1>');
 
 				const inquirySectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-inquiry-section'
@@ -5830,7 +5894,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-inquiry-section">');
-				expect(unprettifiedHTML).toContain('Inquiry</span></h2>');
+				expect(unprettifiedHTML).toContain('Inquiry</h1>');
 
 				const inquirySectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-inquiry-section'
@@ -5917,6 +5981,117 @@ describe('appeal-details', () => {
 
 				expect(cancelSection).toBeNull();
 			});
+		});
+	});
+	describe('Site visit section', () => {
+		const appealId = appealData.appealId.toString();
+		const futureDate = addDays(new Date(), 1).toISOString();
+		const todayDate = new Date().toISOString();
+
+		beforeEach(() => {
+			nock.cleanAll();
+			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/')
+				.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
+				.reply(200, appellantFinalCommentsAwaitingReview);
+			nock('http://test/')
+				.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
+				.reply(200, lpaFinalCommentsAwaitingReview);
+			nock('http://test/')
+				.get(/appeals\/\d+\/appellant-cases\/\d+/)
+				.reply(200, { planningObligation: { hasObligation: false } });
+		});
+
+		it('should render the site visit section with correct link after site visit data has passed and decision has not been issued', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData });
+			const response = await request.get(`${baseUrl}/${appealId}`);
+
+			const siteSection = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '#site-visit-section'
+			}).innerHTML;
+			expect(siteSection).toContain('Site</h1>');
+			expect(siteSection).toContain('Record missed site visit</a>');
+		});
+		it('should render the site visit section with no links after site visit data has passed and decision has been issued', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, completedStateList: ['issue_determination'] });
+			const response = await request.get(`${baseUrl}/${appealId}`);
+
+			const siteSection = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '#site-visit-section'
+			}).innerHTML;
+			expect(siteSection).toContain('Site</h1>');
+			expect(siteSection).not.toContain('Cancel site visit</a>');
+			expect(siteSection).not.toContain('Record missed site visit</a>');
+		});
+
+		it('should render the site visit section with correct link before site visit', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealData,
+					siteVisit: {
+						siteVisitId: 0,
+						visitDate: futureDate,
+						visitEndTime: futureDate,
+						visitStartTime: futureDate,
+						visitType: 'Accompanied'
+					}
+				});
+			const response = await request.get(`${baseUrl}/${appealId}`);
+
+			const siteSection = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '#site-visit-section'
+			}).innerHTML;
+			expect(siteSection).toContain('Site</h1>');
+			expect(siteSection).toContain('Cancel site visit</a>');
+		});
+		it('should render the site visit section with correct links on site visit date', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealData,
+					siteVisit: {
+						siteVisitId: 0,
+						visitDate: todayDate,
+						visitEndTime: todayDate,
+						visitStartTime: todayDate,
+						visitType: 'Accompanied'
+					}
+				});
+			const response = await request.get(`${baseUrl}/${appealId}`);
+
+			const siteSection = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '#site-visit-section'
+			}).innerHTML;
+			expect(siteSection).toContain('Site</h1>');
+			expect(siteSection).toContain('Cancel site visit</a>');
+			expect(siteSection).toContain('Record missed site visit</a>');
+		});
+
+		it('should render no links when site visit is not set up', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealData,
+					siteVisit: {}
+				});
+			const response = await request.get(`${baseUrl}/${appealId}`);
+
+			const siteSection = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '#site-visit-section'
+			}).innerHTML;
+			expect(siteSection).toContain('Site</h1>');
+			expect(siteSection).not.toContain('Cancel site visit</a>');
+			expect(siteSection).not.toContain('Record missed site visit</a>');
 		});
 	});
 

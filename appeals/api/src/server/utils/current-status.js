@@ -21,3 +21,11 @@ export const currentStatus = (appeal) => {
 export const isCurrentStatus = (appeal, status) => {
 	return currentStatus(appeal) === status;
 };
+
+/**
+ * @param {DBAppeal | DBUserAppeal | Appeal} appeal
+ * @returns {string[]}
+ */
+export const completedStateList = (appeal) => {
+	return appeal?.appealStatus?.filter((item) => !item?.valid).map((item) => item?.status) ?? [];
+};

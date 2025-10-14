@@ -1,6 +1,6 @@
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { mapDate, findStatusDate } from '#utils/mapping/map-dates.js';
 import { isCaseInvalid } from '#utils/case-invalid.js';
+import { findStatusDate, mapDate } from '#utils/mapping/map-dates.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.AppealStatus} AppealStatus */
@@ -45,7 +45,6 @@ export const mapCaseDates = (data) => {
 		transferredCaseClosedDate: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.CLOSED),
 		caseDecisionOutcomeDate: mapDate(appeal.inspectorDecision?.caseDecisionOutcomeDate),
 		caseDecisionPublishedDate: null,
-		caseCompletedDate: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.COMPLETE),
-		appellantProofsSubmittedDate: null //TODO: S78HI
+		caseCompletedDate: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.COMPLETE)
 	};
 };

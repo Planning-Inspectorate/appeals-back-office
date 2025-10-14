@@ -11,9 +11,9 @@ import {
 	validAppellantCaseCASPlanning,
 	validAppellantCaseS20,
 	validAppellantCaseS78,
-	validLpaQuestionnaire,
 	validLpaQuestionnaireCASPlanning,
-	validLpaQuestionnaireIngestion,
+	validLpaQuestionnaireHas,
+	validLpaQuestionnaireIngestionHas,
 	validLpaQuestionnaireIngestionS20,
 	validLpaQuestionnaireIngestionS78,
 	validLpaQuestionnaireS20,
@@ -287,7 +287,7 @@ describe('/appeals/lpaq-submission', () => {
 	});
 	describe('POST invalid LPA submission', () => {
 		test('invalid LPA response payload: no appeal', async () => {
-			const { casedata, ...invalidPayload } = validLpaQuestionnaire;
+			const { casedata, ...invalidPayload } = validLpaQuestionnaireHas;
 			const response = await request.post('/appeals/lpaq-submission').send(invalidPayload);
 
 			expect(casedata).not.toBeUndefined();
@@ -295,7 +295,7 @@ describe('/appeals/lpaq-submission', () => {
 		});
 
 		test('invalid LPA response payload: no caseReference', async () => {
-			const { caseReference, ...invalidPayload } = validLpaQuestionnaire.casedata;
+			const { caseReference, ...invalidPayload } = validLpaQuestionnaireHas.casedata;
 			const payload = { casedata: { ...invalidPayload }, documents: [] };
 			const response = await request.post('/appeals/lpaq-submission').send(payload);
 
@@ -304,7 +304,7 @@ describe('/appeals/lpaq-submission', () => {
 		});
 
 		test('invalid LPA response payload: no lpaCostsAppliedFor', async () => {
-			const { lpaCostsAppliedFor, ...invalidPayload } = validLpaQuestionnaire.casedata;
+			const { lpaCostsAppliedFor, ...invalidPayload } = validLpaQuestionnaireHas.casedata;
 			const payload = { casedata: { ...invalidPayload }, documents: [] };
 			const response = await request.post('/appeals/lpaq-submission').send(payload);
 
@@ -313,7 +313,7 @@ describe('/appeals/lpaq-submission', () => {
 		});
 
 		test('invalid LPA response payload: no isGreenBelt', async () => {
-			const { isGreenBelt, ...invalidPayload } = validLpaQuestionnaire.casedata;
+			const { isGreenBelt, ...invalidPayload } = validLpaQuestionnaireHas.casedata;
 			const payload = { casedata: { ...invalidPayload }, documents: [] };
 			const response = await request.post('/appeals/lpaq-submission').send(payload);
 
@@ -323,8 +323,8 @@ describe('/appeals/lpaq-submission', () => {
 	});
 	describe('POST valid LPA submission', () => {
 		test.each([
-			['HAS', validLpaQuestionnaireIngestion, validLpaQuestionnaire],
-			['CAS_PLANNING', validLpaQuestionnaireIngestion, validLpaQuestionnaireCASPlanning],
+			['HAS', validLpaQuestionnaireIngestionHas, validLpaQuestionnaireHas],
+			['CAS_PLANNING', validLpaQuestionnaireIngestionHas, validLpaQuestionnaireCASPlanning],
 			['S78', validLpaQuestionnaireIngestionS78, validLpaQuestionnaireS78],
 			['S20', validLpaQuestionnaireIngestionS20, validLpaQuestionnaireS20]
 		])(
@@ -347,7 +347,13 @@ describe('/appeals/lpaq-submission', () => {
 				const response = await request.post('/appeals/lpaq-submission').send(payload);
 
 				expect(databaseConnector.appeal.findUnique).toHaveBeenCalledWith({
-					where: { reference: '6000000' }
+					include: {
+						appealStatus: true,
+						appealType: true
+					},
+					where: {
+						reference: '6000000'
+					}
 				});
 				expect(databaseConnector.appeal.update).toHaveBeenCalledWith(ingestion);
 
@@ -793,7 +799,7 @@ const createIntegrationMocks = (/** @type {*} */ appealIngestionInput) => {
 	// @ts-ignore
 	databaseConnector.document.createMany.mockResolvedValue([
 		docIngestionInput,
-		...validLpaQuestionnaire.documents
+		...validLpaQuestionnaireHas.documents
 	]);
 	// @ts-ignore
 	databaseConnector.documentVersion.findMany.mockResolvedValue([

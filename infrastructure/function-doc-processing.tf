@@ -1,6 +1,6 @@
 module "function_doc_processing" {
   #checkov:skip=CKV_TF_1: Use of commit hash are not required for our Terraform modules
-  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-function-app?ref=1.49"
+  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-function-app?ref=1.53"
 
   resource_group_name = azurerm_resource_group.primary.name
   location            = module.primary_region.location
@@ -36,7 +36,13 @@ module "function_doc_processing" {
     # Function env variables
     API_HOST                = module.app_api.default_site_hostname
     BO_BLOB_CONTAINER       = azurerm_storage_container.appeal_documents.name
-    BO_BLOB_STORAGE_ACCOUNT = azurerm_storage_account.documents.primary_blob_endpoint # TODO: replace with custom domain
+    BO_BLOB_STORAGE_ACCOUNT = azurerm_storage_account.documents.primary_blob_endpoint # TODO: replace with custom
+
+    # Service bus topic
+    SB_TOPIC_NAME_DOCUMENT_MOVE = azurerm_servicebus_topic.appeal_document_to_move.name
+
+    # service bus subscriptions
+    SB_SUBSCRIPTION_NAME_DOCUMENT_MOVE = azurerm_servicebus_subscription.document_to_move.name
   }
 }
 

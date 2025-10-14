@@ -1,24 +1,25 @@
+import {
+	prepareRejectionReasons,
+	rejectionReasonHtml
+} from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
+import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { addBusinessDays, dateISOStringToDisplayDate } from '#lib/dates.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
+import { simpleHtmlComponent } from '#lib/mappers/index.js';
+import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { newLine2LineBreak } from '#lib/string-utilities.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
+import { capitalize } from 'lodash-es';
 import { mapRejectionReasonOptionsToCheckboxItemParameters } from '../../common/render-select-rejection-reasons.js';
-import { rejectLpaStatementPage, setNewDatePage } from './incomplete.mapper.js';
+import { mapRejectionReasonPayload } from '../../representations.mapper.js';
 import {
 	getRepresentationRejectionReasonOptions,
+	representationIncomplete,
 	updateRejectionReasons
 } from '../../representations.service.js';
-import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
-import { simpleHtmlComponent } from '#lib/mappers/index.js';
-import { dateISOStringToDisplayDate, addBusinessDays } from '#lib/dates.js';
-import { capitalize } from 'lodash-es';
-import {
-	rejectionReasonHtml,
-	prepareRejectionReasons
-} from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { representationIncomplete } from '../../representations.service.js';
-import { mapRejectionReasonPayload } from '../../representations.mapper.js';
-import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { rejectLpaStatementPage, setNewDatePage } from './incomplete.mapper.js';
 
 const statusFormatMap = {
 	[COMMENT_STATUS.INCOMPLETE]: 'Statement incomplete'
@@ -173,7 +174,7 @@ export const renderCheckYourAnswers = async (
 						{
 							type: 'show-more',
 							parameters: {
-								text: currentRepresentation.originalRepresentation,
+								html: newLine2LineBreak(currentRepresentation.originalRepresentation),
 								labelText: 'Statement'
 							}
 						}

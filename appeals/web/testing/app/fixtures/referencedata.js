@@ -1577,33 +1577,38 @@ export const appealTypesData = [
 		type: 'Householder',
 		shorthand: 'HAS',
 		key: 'D',
-		enabled: true
+		enabled: true,
+		changeAppealType: 'Householder'
 	},
 	{
 		id: 75,
 		type: 'Planning appeal',
 		shorthand: 'FPA',
 		key: 'W',
-		enabled: false
+		enabled: false,
+		changeAppealType: 'Planning'
 	},
 	{
 		id: 77,
 		type: 'Planning listed building and conservation area appeal',
 		shorthand: 'S20',
 		key: 'Y',
-		enabled: false
+		enabled: false,
+		changeAppealType: 'Planning listed building and conservation area'
 	},
 	{
 		id: 78,
 		type: 'CAS advert',
 		key: 'ZA',
-		enabled: false
+		enabled: false,
+		changeAppealType: 'Commercial advertisement (CAS)'
 	},
 	{
 		id: 79,
 		type: 'CAS planning',
 		key: 'ZP',
-		enabled: false
+		enabled: false,
+		changeAppealType: 'Commercial planning (CAS)'
 	}
 ];
 
@@ -3779,6 +3784,27 @@ export const representationRejectionReasons = [
 	}
 ];
 
+export const lpaProofOfEvidenceIncompleteReasons = [
+	{
+		id: 1,
+		name: 'Not complete',
+		representationType: 'lpa_proofs_evidence',
+		hasText: false
+	},
+	{
+		id: 2,
+		name: 'Not relevant',
+		representationType: 'lpa_proofs_evidence',
+		hasText: false
+	},
+	{
+		id: 3,
+		name: 'Other reason',
+		representationType: 'lpa_proofs_evidence',
+		hasText: true
+	}
+];
+
 export const shareRepsResponseFinalComment = {
 	id: 1,
 	appealId: 1,
@@ -4113,11 +4139,83 @@ export const appealDataToGetRequiredActions = {
 		appealType: 'Planning appeal',
 		awaitingLinkedAppeal: true
 	},
-	addResidencesNetChange: {
+	addResidencesNetChangeS78: {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+		completedStateList: ['lpa_questionnaire'],
 		appealType: 'Planning appeal',
 		numberOfResidencesNetChange: null
+	},
+	addResidencesNetChangeS20: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+		completedStateList: ['lpa_questionnaire'],
+		appealType: 'Planning listed building and conservation area appeal',
+		numberOfResidencesNetChange: null
+	},
+	reviewLpaProofOfEvidenceComplete: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+		documentationSummary: {
+			lpaProofOfEvidence: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			},
+			appellantProofOfEvidence: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
+			}
+		}
+	},
+	reviewAppellantProofOfEvidenceComplete: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+		documentationSummary: {
+			lpaProofOfEvidence: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
+			},
+			appellantProofOfEvidence: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			}
+		}
+	},
+	reviewLpaProofOfEvidenceIncomplete: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+		documentationSummary: {
+			lpaProofOfEvidence: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			},
+			appellantProofOfEvidence: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+			}
+		}
+	},
+	reviewAppellantProofOfEvidenceIncomplete: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+		documentationSummary: {
+			lpaProofOfEvidence: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+			},
+			appellantProofOfEvidence: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			}
+		}
 	}
 };
 

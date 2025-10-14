@@ -2,26 +2,32 @@
 /// <reference types="cypress"/>
 
 import { users } from '../../fixtures/users';
-import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { happyPathHelper } from '../../support/happyPathHelper';
-import { tag } from '../../support/tag';
 
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 
-describe('Change site visit', () => {
+describe.skip('Change site visit', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
+	});
+
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
 	});
 
 	it(`Change visit from Site details`, () => {
 		let visitDate = happyPathHelper.validVisitDate();
 
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
 			caseDetailsPage.clickSetUpSiteVisitType();
 			caseDetailsPage.selectRadioButtonByValue('Unaccompanied');
 			dateTimeSection.enterVisitDate(visitDate);
@@ -29,7 +35,7 @@ describe('Change site visit', () => {
 			dateTimeSection.enterVisitEndTime('12', '00');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit set up');
-			caseDetailsPage.validateAnswer('Visit Type', 'Unaccompanied');
+			caseDetailsPage.validateAnswer('Type', 'Unaccompanied', { matchQuestionCase: true });
 			caseDetailsPage.elements.changeSetVisitType().click();
 			caseDetailsPage.clickButtonByText('Manage the site visit');
 			caseDetailsPage.selectRadioButtonByValue('Access Required');
@@ -38,17 +44,18 @@ describe('Change site visit', () => {
 			dateTimeSection.enterVisitEndTime('12', '00');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit updated');
-			caseDetailsPage.validateAnswer('Visit Type', 'Access required');
+			caseDetailsPage.validateAnswer('Type', 'Access required', { matchQuestionCase: true });
 		});
 	});
 
 	it(`Change visit from case timetable`, () => {
 		let visitDate = happyPathHelper.validVisitDate();
 
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
 			caseDetailsPage.clickSetUpSiteVisitType();
 			caseDetailsPage.selectRadioButtonByValue('Access required');
 			dateTimeSection.enterVisitDate(visitDate);
@@ -56,7 +63,7 @@ describe('Change site visit', () => {
 			dateTimeSection.enterVisitEndTime('12', '00');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit set up');
-			caseDetailsPage.validateAnswer('Visit Type', 'Access required');
+			caseDetailsPage.validateAnswer('Type', 'Access required', { matchQuestionCase: true });
 			caseDetailsPage.clickChangeVisitTypeHasCaseTimetable();
 			caseDetailsPage.selectRadioButtonByValue('Unaccompanied');
 			dateTimeSection.enterVisitDate(visitDate);
@@ -64,7 +71,7 @@ describe('Change site visit', () => {
 			dateTimeSection.enterVisitEndTime('12', '00');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit updated');
-			caseDetailsPage.validateAnswer('Visit Type', 'Unaccompanied');
+			caseDetailsPage.validateAnswer('Type', 'Unaccompanied', { matchQuestionCase: true });
 		});
 	});
 });

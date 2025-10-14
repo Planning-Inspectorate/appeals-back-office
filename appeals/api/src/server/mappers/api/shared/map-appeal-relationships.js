@@ -2,13 +2,13 @@
 /** @typedef {import('@pins/appeals.api').Api.AppealRelationship} AppealRelationship */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
 
+import { isFeatureActive } from '#utils/feature-flags.js';
+import { isAwaitingLinkedAppeal } from '#utils/is-awaiting-linked-appeal.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED
 } from '@pins/appeals/constants/support.js';
-import { isAwaitingLinkedAppeal } from '#utils/is-awaiting-linked-appeal.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /**
  *
@@ -110,7 +110,7 @@ const mapLinkedAppeal = (relationship, isParentAppeal) => {
 		appealReference,
 		externalSource: externalSource === true,
 		linkingDate: linkingDate.toISOString(),
-		appealType: `${appealType?.type} (${appealType?.key})`,
+		appealType: appealType?.type,
 		externalAppealType,
 		externalId,
 		isParentAppeal,

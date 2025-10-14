@@ -1,6 +1,6 @@
-import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
-import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -57,7 +57,7 @@ export function generateProofOfEvidenceSummaryList(appealId, proofOfEvidence) {
 				items: [
 					{
 						text: 'Change',
-						href: `/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceTypePath}/change/${proofOfEvidence.attachments?.[0]?.documentVersion?.document?.folderId}`,
+						href: `/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceTypePath}/manage-documents/${proofOfEvidence.attachments?.[0]?.documentVersion?.document?.folderId}`,
 						visuallyHiddenText: 'proof of evidence and witnesses'
 					}
 				]

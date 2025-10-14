@@ -1,7 +1,8 @@
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { isAppealTypeEnabled } from '#common/feature-flags-appeal-types.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
+/** @typedef {import('#appeals/personal-list/personal-list.mapper').PersonalListAppeal} PersonalListAppeal */
 
 /**
  * @param {string} appealStatus
@@ -10,11 +11,7 @@ import { capitalizeFirstLetter } from '#lib/string-utilities.js';
  * @returns {string}
  * */
 export function mapStatusText(appealStatus, appealType, appealProcedureType) {
-	if (
-		![APPEAL_TYPE.HOUSEHOLDER, APPEAL_TYPE.S78, APPEAL_TYPE.PLANNED_LISTED_BUILDING].includes(
-			appealType
-		)
-	) {
+	if (!isAppealTypeEnabled(appealType)) {
 		return appealStatus;
 	}
 
@@ -50,7 +47,7 @@ export function mapAppealProcedureTypeToEventName(appealProcedureType) {
 /**
  * Returns true if the given state was previously passed through.
  *
- * @param {WebAppeal} appeal
+ * @param {WebAppeal|PersonalListAppeal} appeal
  * @param {string} state
  * @returns {boolean}
  * */

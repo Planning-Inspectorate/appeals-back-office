@@ -1,5 +1,5 @@
-import { errorMessage } from './error-message.js';
 import { kebabCase } from '../../lib/nunjucks-filters/index.js';
+import { errorMessage } from './error-message.js';
 
 /**
  * Map keyed errors to an array compatible with govuk error summary.

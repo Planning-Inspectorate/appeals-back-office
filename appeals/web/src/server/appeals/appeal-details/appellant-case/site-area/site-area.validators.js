@@ -1,6 +1,6 @@
+import { createTextInputValidator } from '#lib/validators/text-input-validator.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
-import { createTextInputValidator } from '#lib/validators/text-input-validator.js';
 
 export const validateSiteArea = createValidator(
 	createTextInputValidator(

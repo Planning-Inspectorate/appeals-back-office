@@ -1,10 +1,9 @@
 import { mapRepresentationEntity } from '#mappers/integration/map-representation-entity.js';
 import {
-	APPEAL_REPRESENTATION_TYPE,
-	APPEAL_REPRESENTATION_STATUS
+	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
-import { schemas } from '../integrations.validators.js';
-import { validateFromSchema } from '../integrations.validators.js';
+import { schemas, validateFromSchema } from '../integrations.validators.js';
 
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealRepresentation} AppealRepresentation */
 
@@ -55,6 +54,11 @@ const reasons = [
 		id: 6,
 		name: 'Received after deadline',
 		hasText: false
+	},
+	{
+		id: 7,
+		name: 'other_reason',
+		hasText: true
 	}
 ];
 
@@ -108,6 +112,10 @@ describe('representation mapper', () => {
 			{
 				lpa: null,
 				representatonType: APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
+			},
+			{
+				lpa: null,
+				representatonType: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
 			}
 		]) {
 			test(`Mapping citizen source: ${source}`, async () => {
@@ -133,6 +141,10 @@ describe('representation mapper', () => {
 			{
 				lpa: { lpaCode: 'XXXX' },
 				representatonType: APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
+			},
+			{
+				lpa: { lpaCode: 'XXXX' },
+				representatonType: APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE
 			}
 		]) {
 			test(`Mapping lpa source: ${source}`, async () => {
@@ -150,6 +162,44 @@ describe('representation mapper', () => {
 				expect(validationResult).toBe(true);
 			});
 		}
+
+		test('Mapping rejection reasons', async () => {
+			const mapped = mapRepresentationEntity({
+				...mockRepresentation,
+				representationRejectionReasonsSelected: [
+					{
+						// @ts-ignore
+						representationRejectionReason: {
+							name: 'Contains links to web pages',
+							hasText: false
+						}
+					},
+					{
+						// @ts-ignore
+						representationRejectionReason: {
+							name: 'other_reason',
+							hasText: true
+						},
+						representationRejectionReasonText: [
+							// @ts-ignore
+							{ text: 'Custom rejection reason text' }
+						]
+					}
+				]
+			});
+
+			expect(mapped?.invalidOrIncompleteDetails).toEqual(['Contains links to web pages']);
+			expect(mapped?.otherInvalidOrIncompleteDetails).toEqual([
+				'other_reason: Custom rejection reason text'
+			]);
+
+			const validationResult = await validateFromSchema(
+				schemas.events.appealRepresentation,
+				// @ts-ignore
+				mapped
+			);
+			expect(validationResult).toBe(true);
+		});
 	});
 
 	describe('unsuccessfull representation mapping', () => {

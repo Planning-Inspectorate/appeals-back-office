@@ -1,12 +1,12 @@
-import logger from '#lib/logger.js';
-import config from '#environment/config.js';
+import { getTeamList } from '#appeals/appeal-details/update-case-team/update-case-team.service.js';
 import usersService from '#appeals/appeal-users/users-service.js';
+import config from '#environment/config.js';
+import logger from '#lib/logger.js';
+import { mapPagination } from '#lib/mappers/index.js';
+import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
+import { stripQueryString } from '#lib/url-utilities.js';
 import { nationalListPage } from './national-list.mapper.js';
 import { getAppealProcedureTypes, getAppeals, getAppealTypes } from './national-list.service.js';
-import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
-import { mapPagination } from '#lib/mappers/index.js';
-import { stripQueryString } from '#lib/url-utilities.js';
-import { getTeamList } from '#appeals/appeal-details/update-case-team/update-case-team.service.js';
 
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
 
@@ -31,6 +31,7 @@ export const getCaseOfficers = async (
  */
 export const viewNationalList = async (request, response) => {
 	const { originalUrl, query, session } = request;
+	delete session.changeAppealType;
 
 	const appealStatusFilter = query.appealStatusFilter && String(query.appealStatusFilter);
 	const inspectorStatusFilter = query.inspectorStatusFilter && String(query.inspectorStatusFilter);

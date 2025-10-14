@@ -1,7 +1,7 @@
 // @ts-nocheck
 /* eslint-disable jest/expect-expect */
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { appealData } from '#testing/app/fixtures/referencedata.js';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { getRequiredActionsForAppeal } from '../required-actions.js';
 
 describe('required actions', () => {
@@ -70,19 +70,23 @@ describe('required actions', () => {
 			).toEqual(['issueDecision']);
 		});
 
-		it('should return "addResidencesNetChange" if number of residences net change has not been provided and is S78', () => {
-			expect(
-				getRequiredActionsForAppeal(
-					{
-						...appealData,
-						appealType: 'Planning appeal',
-						appealStatus: APPEAL_CASE_STATUS.COMPLETE,
-						numberOfResidencesNetChange: null
-					},
-					'detail'
-				)
-			).toEqual(['addResidencesNetChange']);
-		});
+		it.each(['Planning appeal', 'Planning listed building and conservation area appeal'])(
+			'should return "addResidencesNetChange" if number of residences net change has not been provided and is %s',
+			(appealType) => {
+				expect(
+					getRequiredActionsForAppeal(
+						{
+							...appealData,
+							appealType: appealType,
+							appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+							completedStateList: ['lpa_questionnaire'],
+							numberOfResidencesNetChange: null
+						},
+						'detail'
+					)
+				).toEqual(['addResidencesNetChange']);
+			}
+		);
 
 		describe('when appeal status is "VALIDATION"', () => {
 			const appealDataWithValidationStatus = {
@@ -1189,6 +1193,28 @@ describe('required actions', () => {
 						'detail'
 					)
 				).toEqual(['arrangeSiteVisit']);
+			});
+		});
+
+		describe('when appeal status is "WITHDRAWN"', () => {
+			it('should return cost decisions', () => {
+				const appealDataWithWithdrawnStatus = {
+					...appealData,
+					appealStatus: APPEAL_CASE_STATUS.WITHDRAWN,
+					costsDecision: {
+						awaitingAppellantCostsDecision: true,
+						awaitingLpaCostsDecision: true
+					}
+				};
+
+				expect(
+					getRequiredActionsForAppeal(
+						{
+							...appealDataWithWithdrawnStatus
+						},
+						'detail'
+					)
+				).toEqual(['issueAppellantCostsDecision', 'issueLpaCostsDecision']);
 			});
 		});
 	});

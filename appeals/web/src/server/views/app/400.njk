@@ -1,0 +1,11 @@
+{% extends "app/layouts/app-two-column.layout.njk" %}
+
+{% set pageTitle = 'Bad request' %}
+{% set heading = 'Sorry, there is a problem with your request' %}
+
+{% block pageContent %}
+    <p class="govuk-body">The page you are looking for cannot be displayed because of a problem with the web address.</p>
+    <p class="govuk-body">
+        <a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if the problem persists.
+    </p>
+{% endblock %}

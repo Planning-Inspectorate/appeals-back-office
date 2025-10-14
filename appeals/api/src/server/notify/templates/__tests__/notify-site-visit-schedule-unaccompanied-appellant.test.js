@@ -13,7 +13,8 @@ describe('site-visit-schedule-unaccompanied-appellant.md', () => {
 			personalisation: {
 				appeal_reference_number: 'CCC33445',
 				site_address: '61, Viewpoint Hill',
-				lpa_reference: 'PLAN-98765'
+				lpa_reference: 'PLAN-98765',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

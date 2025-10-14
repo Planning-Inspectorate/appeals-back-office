@@ -60,4 +60,4 @@ We will send you another email when we set up the hearing.
 
 {% endif -%}
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

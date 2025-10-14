@@ -1,6 +1,17 @@
-import appealRepository from '#repositories/appeal.repository.js';
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { appealDetailService } from '#endpoints/appeal-details/appeal-details.service.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import {
+	getTeamEmailFromAppealId,
+	setAssignedTeamId
+} from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { notifySend } from '#notify/notify-send.js';
+import appealRepository from '#repositories/appeal.repository.js';
+import { getAppealFromHorizon } from '#utils/horizon-gateway.js';
+import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { updatePersonalList } from '#utils/update-personal-list.js';
 import {
 	AUDIT_TRAIL_APPEAL_LINK_ADDED,
 	AUDIT_TRAIL_APPEAL_LINK_REMOVED,
@@ -10,17 +21,12 @@ import {
 	CASE_RELATIONSHIP_RELATED,
 	ERROR_LINKING_APPEALS
 } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
 import {
 	canLinkAppeals,
 	checkAppealsStatusBeforeLPAQ,
 	duplicateFiles
 } from './link-appeals.service.js';
-import { getAppealFromHorizon } from '#utils/horizon-gateway.js';
-import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { notifySend } from '#notify/notify-send.js';
-import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -74,6 +80,12 @@ export const linkAppeal = async (req, res) => {
 
 	if (result) {
 		await duplicateFiles(childAppeal, parentAppeal, APPEAL_CASE_STAGE.COSTS);
+		const azureAdUserId = req.get('azureAdUserId') || '';
+		await setAssignedTeamId(childAppeal.id, parentAppeal.assignedTeamId || null, azureAdUserId);
+		const caseOfficer = parentAppeal.caseOfficer?.azureAdUserId || null;
+		const inspector = parentAppeal.inspector?.azureAdUserId || null;
+		await appealDetailService.assignUser(childAppeal, { caseOfficer }, azureAdUserId);
+		await appealDetailService.assignUser(childAppeal, { inspector }, azureAdUserId);
 	}
 
 	const siteAddress = currentAppeal.address
@@ -93,13 +105,18 @@ export const linkAppeal = async (req, res) => {
 		lpa_reference: currentAppeal.applicationReference || '',
 		site_address: siteAddress,
 		event_type: 'site visit',
-		linked_before_lpa_questionnaire: linkedBeforeLPAQ
+		linked_before_lpa_questionnaire: linkedBeforeLPAQ,
+		team_email_address: await getTeamEmailFromAppealId(currentAppeal.id)
 	};
 
 	const appellantEmail = currentAppeal.agent?.email || currentAppeal.appellant?.email;
 	const lpaEmail = currentAppeal.lpa?.email || '';
 
 	await Promise.all([
+		await updatePersonalList(parentAppeal.id),
+
+		await updatePersonalList(childAppeal.id),
+
 		notifySend({
 			templateName: 'link-appeal',
 			notifyClient,

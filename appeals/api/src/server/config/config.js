@@ -1,7 +1,7 @@
 import { loadEnvironment } from '@pins/platform';
+import path from 'node:path';
 import url from 'node:url';
 import schema from './schema.js';
-import path from 'node:path';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const apiDir = path.join(__dirname, '..', '..', '..'); // api package root, where .env files live
@@ -22,7 +22,17 @@ const { value, error } = schema.validate({
 	useNotifyEmulator: environment.NOTIFY_SEND_MAIL_EMULATOR || false,
 	defaultApiVersion: environment.DEFAULT_API_VERSION || '1',
 	serviceBusOptions: {
-		hostname: environment.SERVICE_BUS_HOSTNAME
+		hostname: environment.SERVICE_BUS_HOSTNAME,
+		topicAppealHas: environment.SB_TOPIC_NAME_APPEAL_HAS || 'appeal-has',
+		topicAppealS78: environment.SB_TOPIC_NAME_APPEAL_S78 || 'appeal-s78',
+		topicAppealDocument: environment.SB_TOPIC_NAME_APPEAL_DOCUMENT || 'appeal-document',
+		topicAppealServiceUser: environment.SB_TOPIC_NAME_APPEAL_SERVICE_USER || 'appeal-service-user',
+		topicAppealEvent: environment.SB_TOPIC_NAME_APPEAL_EVENT || 'appeal-event',
+		topicAppealEventEstimate:
+			environment.SB_TOPIC_NAME_APPEAL_EVENT_ESTIMATE || 'appeal-event-estimate',
+		topicDocumentMove: environment.SB_TOPIC_NAME_DOCUMENT_MOVE || 'appeal-document-to-move',
+		topicAppealRepresentation:
+			environment.SB_TOPIC_NAME_APPEAL_REPRESENTATION || 'appeal-representation'
 	},
 	msal: {
 		clientId: environment.AUTH_CLIENT_BACKEND_API_ID,
@@ -47,11 +57,19 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_CAS_ADVERT && environment.FEATURE_FLAG_CAS_ADVERT === 'true',
 		featureFlagNetResidence:
 			environment.FEATURE_FLAG_NET_RESIDENCE && environment.FEATURE_FLAG_NET_RESIDENCE === 'true',
+		featureFlagNetResidenceS20:
+			environment.FEATURE_FLAG_NET_RESIDENCE_S20 &&
+			environment.FEATURE_FLAG_NET_RESIDENCE_S20 === 'true',
 		featureFlagAdvertisement:
 			environment.FEATURE_FLAG_ADVERTISEMENT && environment.FEATURE_FLAG_ADVERTISEMENT === 'true',
 		featureFlagChangeAppealType:
 			environment.FEATURE_FLAG_CHANGE_APPEAL_TYPE &&
-			environment.FEATURE_FLAG_CHANGE_APPEAL_TYPE === 'true'
+			environment.FEATURE_FLAG_CHANGE_APPEAL_TYPE === 'true',
+		featureFlagHearingPostMvp:
+			environment.FEATURE_FLAG_HEARING_POST_MVP &&
+			environment.FEATURE_FLAG_HEARING_POST_MVP === 'true',
+		featureFlagPersonalList:
+			environment.FEATURE_FLAG_PERSONAL_LIST && environment.FEATURE_FLAG_PERSONAL_LIST === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	enableTestEndpoints:

@@ -1,12 +1,12 @@
-import { apiMappers } from './api/index.js';
-import { integrationMappers } from './integration/index.js';
-import { contextEnum } from './context-enum.js';
+import mergeMaps from '#utils/merge-maps.js';
 import {
 	APPEAL_CASE_STAGE,
 	APPEAL_CASE_TYPE,
 	APPEAL_DOCUMENT_TYPE
 } from '@planning-inspectorate/data-model';
-import mergeMaps from '#utils/merge-maps.js';
+import { apiMappers } from './api/index.js';
+import { contextEnum } from './context-enum.js';
+import { integrationMappers } from './integration/index.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
@@ -63,6 +63,10 @@ function createDataMap(mappingRequest) {
 		case APPEAL_CASE_TYPE.W: {
 			const s78 = createMap(apiMappers.apiS78Mappers, mappingRequest);
 			return mergeMaps(caseData, s78);
+		}
+		case APPEAL_CASE_TYPE.ZA: {
+			const casAdvert = createMap(apiMappers.apiCasAdvertMappers, mappingRequest);
+			return mergeMaps(caseData, casAdvert);
 		}
 		default:
 			return caseData;
@@ -221,11 +225,15 @@ function createFoldersLayout(folders, context) {
 			const repsFinalCommentsFolders = folders.filter((f) =>
 				f.path.startsWith(APPEAL_CASE_STAGE.FINAL_COMMENTS)
 			);
+			const repsProofsEvidenceFolders = folders.filter((f) =>
+				f.path.startsWith(APPEAL_CASE_STAGE.EVIDENCE)
+			);
 
 			return {
 				...repsIpCommentsFolders,
 				...repsStatementsFolders,
-				...repsFinalCommentsFolders
+				...repsFinalCommentsFolders,
+				...repsProofsEvidenceFolders
 			};
 		}
 		default: {

@@ -1,27 +1,27 @@
 import {
-	validAppellantCase,
-	validLpaQuestionnaire,
-	validRepresentationIp
-} from '#tests/integrations/mocks.js';
-import { createRepRequest, repUpdateRequest, repResponse } from '#tests/representations/mocks.js';
-import {
-	folder,
 	addDocumentsRequest,
 	addDocumentVersionRequest,
-	blobInfo,
-	documentVersionDetails,
-	documentDetails,
 	auditTrailUserInfo,
+	blobInfo,
+	documentDetails,
 	documentVersionAuditEntry,
+	documentVersionDetails,
+	folder,
 	folderWithDocs
 } from '#tests/documents/mocks.js';
 import {
-	linkedAppealRequest,
+	validAppellantCase,
+	validLpaQuestionnaireHas,
+	validRepresentationIp
+} from '#tests/integrations/mocks.js';
+import {
 	linkedAppealLegacyRequest,
-	relatedAppealRequest,
+	linkedAppealRequest,
 	relatedAppealLegacyRequest,
+	relatedAppealRequest,
 	unlinkAppealRequest
 } from '#tests/linked-appeals/mocks.js';
+import { createRepRequest, repResponse, repUpdateRequest } from '#tests/representations/mocks.js';
 import {
 	SITE_VISIT_TYPE_ACCESS_REQUIRED,
 	SITE_VISIT_TYPE_ACCOMPANIED,
@@ -97,7 +97,7 @@ export const spec = {
 			...validAppellantCase
 		},
 		QuestionnaireData: {
-			...validLpaQuestionnaire
+			...validLpaQuestionnaireHas
 		},
 		RepresentationData: {
 			...validRepresentationIp
@@ -150,11 +150,19 @@ export const spec = {
 			newAppealTypeId: 32,
 			newAppealTypeFinalDate: '2024-02-02'
 		},
+		AppealTypeResubmitMarkInvalidRequest: {
+			newAppealTypeId: 32,
+			newAppealTypeFinalDate: '2024-02-02',
+			appellantCaseId: 12
+		},
 		AppealTypeTransferRequest: {
 			newAppealTypeId: 32
 		},
 		AppealTypeTransferConfirmationRequest: {
 			newAppealReference: '76215416'
+		},
+		AppealTypeUpdateRequest: {
+			newAppealTypeId: 32
 		},
 		AppealTypes: [
 			{
@@ -522,7 +530,12 @@ export const spec = {
 				details: 'The site is behind a tall hedge',
 				isVisible: false
 			},
-			numberOfResidencesNetChange: 0
+			numberOfResidencesNetChange: 0,
+			highwayLand: false,
+			advertInPosition: true,
+			landownerPermission: true,
+			siteGridReferenceEasting: '123456',
+			siteGridReferenceNorthing: '654321'
 		},
 		UpdateCaseTeamRequest: {
 			caseOfficer: '13de469c-8de6-4908-97cd-330ea73df618',
@@ -533,13 +546,23 @@ export const spec = {
 			inspector: 'f7ea429b-65d8-4c44-8fc2-7f1a34069855'
 		},
 		StartCaseRequest: {
-			startDate: '2024-05-09'
+			startDate: '2024-05-09',
+			procedureType: 'written',
+			hearingStartTime: '2024-05-09T12:00:00.000Z'
 		},
 		StartCaseResponse: {
 			finalCommentReviewDate: '2024-08-09',
 			issueDeterminationDate: '2024-08-10',
 			lpaQuestionnaireDueDate: '2024-08-11',
 			statementReviewDate: '2024-08-12'
+		},
+		StartCaseNotifyPreviewResponse: {
+			appellant: {
+				renderedHtml: 'Rendered HTML for appellant preview'
+			},
+			lpa: {
+				renderedHtml: 'Rendered HTML for LPA preview'
+			}
 		},
 		SingleLPAQuestionnaireResponse: {
 			affectsListedBuildingDetails: [
@@ -676,7 +699,12 @@ export const spec = {
 			appellantProcedurePreferenceDetails: 'Reason for preference',
 			appellantProcedurePreferenceDuration: 3,
 			appellantProcedurePreferenceWitnessCount: 2,
-			numberOfResidencesNetChange: 0
+			numberOfResidencesNetChange: 0,
+			highwayLand: false,
+			advertInPosition: true,
+			landownerPermission: true,
+			siteGridReferenceEasting: '123456',
+			siteGridReferenceNorthing: '654321'
 		},
 		UpdateAppellantCaseResponse: {},
 		UpdateLPAQuestionnaireRequest: {
@@ -892,6 +920,16 @@ export const spec = {
 			planningObligationDueDate: '2024-08-13T01:00:00.000Z',
 			proofOfEvidenceAndWitnessesDueDate: '2024-08-14T01:00:00.000Z'
 		},
+		CalculateAppealTimetableResponse: {
+			finalCommentReviewDate: '2024-08-09T01:00:00.000Z',
+			issueDeterminationDate: '2024-08-10T01:00:00.000Z',
+			lpaQuestionnaireDueDate: '2024-08-11T01:00:00.000Z',
+			statementReviewDate: '2024-08-12T01:00:00.000Z',
+			statementOfCommonGroundDueDate: '2024-08-12T01:00:00.000Z',
+			planningObligationDueDate: '2024-08-13T01:00:00.000Z',
+			proofOfEvidenceAndWitnessesDueDate: '2024-08-14T01:00:00.000Z',
+			startDate: '2024-08-09T01:00:00.000Z'
+		},
 		AllDocumentRedactionStatusesResponse: {
 			id: 1,
 			name: 'Document redaction status'
@@ -973,6 +1011,9 @@ export const spec = {
 
 		UpdateAsssignedTeamResponse: {
 			teamId: 1
+		},
+		TeamEmailResponse: {
+			teamEmail: 'email@email.com'
 		}
 	},
 	'@definitions': {
@@ -1742,6 +1783,17 @@ export const spec = {
 				teamId: {
 					type: 'string',
 					example: '1'
+				}
+			}
+		},
+		DeleteAppealsRequest: {
+			type: 'object',
+			properties: {
+				appealIds: {
+					type: 'array',
+					items: {
+						type: 'number'
+					}
 				}
 			}
 		},

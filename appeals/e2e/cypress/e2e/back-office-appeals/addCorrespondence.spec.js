@@ -3,9 +3,8 @@
 
 import { users } from '../../fixtures/users.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
-import { ListCasesPage } from '../../page_objects/listCasesPage.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection.js';
-import { urlPaths } from '../../support/urlPaths.js';
+import { ListCasesPage } from '../../page_objects/listCasesPage.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 
 const listCasesPage = new ListCasesPage();
@@ -17,13 +16,19 @@ describe('Add correspondence', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	let sampleFiles = caseDetailsPage.sampleFiles;
 
 	it('Add cross-team correspondence', () => {
 		const uploadDate = new Date();
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			caseDetailsPage.clickAccordionByButton('Case management');
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickAddCrossTeamCorrespondence();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
@@ -38,9 +43,9 @@ describe('Add correspondence', () => {
 
 	it('Add inspector correspondence', () => {
 		const uploadDate = new Date();
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			caseDetailsPage.clickAccordionByButton('Case management');
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickAddInspectorCorrespondence();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
@@ -55,9 +60,9 @@ describe('Add correspondence', () => {
 
 	it('Add main party correspondence', () => {
 		const uploadDate = new Date();
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			caseDetailsPage.clickAccordionByButton('Case management');
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickAddMainPartyCorrespondence();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');

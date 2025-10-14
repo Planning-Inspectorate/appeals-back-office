@@ -1,12 +1,13 @@
-import config from '#environment/config.js';
+import { isNetResidencesAppealType } from '#common/net-residences-appeal-types.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapNetResidenceGainOrLoss = ({
 	appealDetails,
 	appellantCase,
-	userHasUpdateCasePermission
+	userHasUpdateCasePermission,
+	request
 }) => {
 	const netChange = appellantCase?.numberOfResidencesNetChange;
 	const id = 'net-residence-gain-or-loss';
@@ -14,8 +15,7 @@ export const mapNetResidenceGainOrLoss = ({
 	if (
 		netChange == null ||
 		netChange === 0 ||
-		!config.featureFlags.featureFlagNetResidence ||
-		appealDetails.appealType !== APPEAL_TYPE.S78
+		!isNetResidencesAppealType(appealDetails.appealType)
 	) {
 		return { id, display: {} };
 	}
@@ -31,7 +31,10 @@ export const mapNetResidenceGainOrLoss = ({
 		id,
 		text,
 		value: netChange == null ? 'Not provided' : Math.abs(netChange).toString(),
-		link: `/appeals-service/appeal-details/${appealDetails.appealId}/residential-units/new`,
+		link: addBackLinkQueryToUrl(
+			request,
+			`/appeals-service/appeal-details/${appealDetails.appealId}/residential-units/new`
+		),
 		editable: userHasUpdateCasePermission,
 		actionText: 'Change',
 		classes: 'appeal-net-residence-gain-or-loss'

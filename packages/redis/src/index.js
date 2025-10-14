@@ -1,7 +1,8 @@
-import { createClient } from 'redis';
-import RedisStore from 'connect-redis';
 import { DistributedCachePlugin } from '@azure/msal-node';
 import { parseRedisConnectionString } from '@pins/platform';
+//@ts-ignore
+import { RedisStore } from 'connect-redis';
+import { createClient } from 'redis';
 import { MSALCacheClient } from './msal-cache-client.js';
 import { PartitionManager } from './partition-manager.js';
 
@@ -39,6 +40,7 @@ export class RedisClient {
 		this.client.connect().catch(onError);
 
 		// dev note: this may 'error' in vscode, but tscheck is all OK
+		//@ts-ignore
 		this.store = new RedisStore({ client: this.client });
 
 		this.get = this.client.get;

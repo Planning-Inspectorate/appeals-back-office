@@ -4,8 +4,8 @@
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
-import { urlPaths } from '../../support/urlPaths';
 import { tag } from '../../support/tag';
+import { urlPaths } from '../../support/urlPaths';
 
 const listCasesPage = new ListCasesPage();
 const caseDetailsPage = new CaseDetailsPage();
@@ -15,16 +15,24 @@ describe('Assign user to case', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		if (!appeal) return; // <-- no-op if nothing was created
+		cy.deleteAppeals(appeal);
+	});
+
 	const viewports = [{ name: 'ipad-mini' }, { name: 'samsung-note9' }];
 
 	it(
 		'Case officer should be able to assign themselves to a case using name search',
 		{ tags: tag.smoke },
 		() => {
-			cy.createCase().then((caseRef) => {
+			cy.createCase().then((caseObj) => {
+				appeal = caseObj;
 				console.log(users.appeals);
 				cy.visit(urlPaths.appealsList);
-				listCasesPage.clickAppealByRef(caseRef);
+				listCasesPage.clickAppealByRef(caseObj);
 				caseDetailsPage.clickAssignCaseOfficer();
 				caseDetailsPage.searchForCaseOfficer('case');
 				caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
@@ -39,9 +47,10 @@ describe('Assign user to case', () => {
 		'Inspector should be able to assign themselves to a case using name search',
 		{ tags: tag.smoke },
 		() => {
-			cy.createCase().then((caseRef) => {
+			cy.createCase().then((caseObj) => {
+				appeal = caseObj;
 				cy.visit(urlPaths.appealsList);
-				listCasesPage.clickAppealByRef(caseRef);
+				listCasesPage.clickAppealByRef(caseObj);
 				caseDetailsPage.clickAssignInspector();
 				caseDetailsPage.searchForCaseOfficer('Mctester');
 				caseDetailsPage.chooseSummaryListValue(users.appeals.inspector.email);
@@ -53,9 +62,10 @@ describe('Assign user to case', () => {
 	);
 
 	it('Case officer should be able to change assigned user', () => {
-		cy.createCase().then((caseRef) => {
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			cy.visit(urlPaths.appealsList);
-			listCasesPage.clickAppealByRef(caseRef);
+			listCasesPage.clickAppealByRef(caseObj);
 			caseDetailsPage.clickAssignCaseOfficer();
 			caseDetailsPage.searchForCaseOfficer('case');
 			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
@@ -66,9 +76,10 @@ describe('Assign user to case', () => {
 	});
 
 	it('Inspector should be able to change assigned user', () => {
-		cy.createCase().then((caseRef) => {
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			cy.visit(urlPaths.appealsList);
-			listCasesPage.clickAppealByRef(caseRef);
+			listCasesPage.clickAppealByRef(caseObj);
 			caseDetailsPage.clickAssignInspector();
 			caseDetailsPage.searchForCaseOfficer('case');
 			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
@@ -79,9 +90,10 @@ describe('Assign user to case', () => {
 	});
 
 	it.skip('Case officer should be able to remove assigned user', () => {
-		cy.createCase().then((caseRef) => {
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			cy.visit(urlPaths.appealsList);
-			listCasesPage.clickAppealByRef(caseRef);
+			listCasesPage.clickAppealByRef(caseObj);
 			caseDetailsPage.clickAssignCaseOfficer();
 			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
 			caseDetailsPage.clickLinkByText('Remove');
@@ -95,9 +107,10 @@ describe('Assign user to case', () => {
 	});
 
 	it.skip('Inspector should be able to remove assigned user', () => {
-		cy.createCase().then((caseRef) => {
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			cy.visit(urlPaths.appealsList);
-			listCasesPage.clickAppealByRef(caseRef);
+			listCasesPage.clickAppealByRef(caseObj);
 			caseDetailsPage.clickAssignInspector();
 			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
 			caseDetailsPage.clickLinkByText('Remove');
@@ -121,7 +134,7 @@ describe('Assign user to case', () => {
 				cy.viewport(1200, 800);
 				listCasesPage.basePageElements.serviceHeader().should(($elWide) => {
 					expect($elWide.height()).to.be.lessThan(initialHeight * 1.5);
-					expect($elWide.text()).to.contains('Casework Back Office System - Appeals');
+					expect($elWide.text()).to.contains('Manage appeals');
 					expect($elWide[0].scrollWidth).to.be.lte($elWide[0].clientWidth);
 				});
 			});

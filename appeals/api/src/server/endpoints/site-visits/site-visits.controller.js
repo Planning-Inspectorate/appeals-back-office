@@ -1,16 +1,22 @@
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import {
-	ERROR_FAILED_TO_SAVE_DATA,
-	VALIDATION_OUTCOME_COMPLETE
-} from '@pins/appeals/constants/support.js';
-import logger from '#utils/logger.js';
-import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
-import { formatSiteVisit } from './site-visits.formatter.js';
-import { createSiteVisit, updateSiteVisit } from './site-visits.service.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
+import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
+import logger from '#utils/logger.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import {
+	ERROR_FAILED_TO_SAVE_DATA,
+	VALIDATION_OUTCOME_COMPLETE,
+	VALIDATION_OUTCOME_INCOMPLETE
+} from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { formatSiteVisit } from './site-visits.formatter.js';
+import {
+	createSiteVisit,
+	createSiteVisitForLinkedChildAppeals,
+	deleteSiteVisit as deleteSiteVisitService,
+	updateSiteVisit
+} from './site-visits.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -73,17 +79,19 @@ const postSiteVisit = async (req, res) => {
 
 	try {
 		await createSiteVisit(azureAdUserId, siteVisitData, notifyClient);
+		if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
+			await createSiteVisitForLinkedChildAppeals(azureAdUserId, siteVisitData, notifyClient);
+		}
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
 	}
 
 	if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT)) {
-		await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
-
 		if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
 			await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 		}
+		await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 	}
 
 	return res.status(201).send({
@@ -162,5 +170,37 @@ const rearrangeSiteVisit = async (req, res) => {
 		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
 	}
 };
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+const cancelSiteVisit = async (req, res) => {
+	const { params, appeal, notifyClient } = req;
+	const siteVisitId = Number(params.siteVisitId);
 
-export { postSiteVisit, getSiteVisitById, rearrangeSiteVisit };
+	const azureAdUserId = req.get('azureAdUserId') || '';
+	try {
+		// @ts-ignore
+		const result = await deleteSiteVisitService(
+			siteVisitId,
+			appeal,
+			notifyClient,
+			String(azureAdUserId)
+		);
+		if (!result) {
+			return res.status(404).send({ errors: { body: 'Site visit deletion failed' } });
+		}
+
+		await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_INCOMPLETE);
+
+		return res.send({
+			siteVisitId
+		});
+	} catch (error) {
+		logger.error(error);
+		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
+	}
+};
+
+export { cancelSiteVisit, getSiteVisitById, postSiteVisit, rearrangeSiteVisit };

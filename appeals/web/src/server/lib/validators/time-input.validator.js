@@ -1,7 +1,7 @@
+import { timeIsBeforeTime } from '#lib/times.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 import { capitalize } from 'lodash-es';
-import { timeIsBeforeTime } from '#lib/times.js';
 
 /**
  * @typedef {import('express-validator').ValidationChain} ValidationChain
@@ -29,17 +29,29 @@ export const createTimeInputValidator = (
 				const minute = req.body[`${fieldNamePrefix}-minute`]?.trim();
 				hour = hour?.trim();
 
-				if (!hour || !minute) {
+				if (!hour && !minute) {
 					throw new Error(`Enter the ${messageFieldNamePrefix}`);
+				}
+				if (!hour) {
+					throw new Error(`${capitalize(messageFieldNamePrefix || '')} must include an hour`);
+				}
+				if (!minute) {
+					throw new Error(`${capitalize(messageFieldNamePrefix || '')} must include a minute`);
 				}
 				if (!/^\d+$/.test(hour) || !/^\d+$/.test(minute)) {
 					const error = new Error(`Enter a ${messageFieldNamePrefix} using numbers 0 to 9`);
 					throw error;
 				}
 				const [hourNum, minuteNum] = [parseInt(hour, 10), parseInt(minute, 10)];
-				if (minuteNum < 0 || minuteNum > 59 || hourNum < 0 || hourNum > 23) {
+				if ((minuteNum < 0 || minuteNum > 59) && (hourNum < 0 || hourNum > 23)) {
 					const error = new Error(`Enter a real ${messageFieldNamePrefix}`);
 					throw error;
+				}
+				if (hourNum > 23) {
+					throw new Error(`${capitalize(messageFieldNamePrefix || '')} hour must be 23 or less`);
+				}
+				if (minuteNum > 59) {
+					throw new Error(`${capitalize(messageFieldNamePrefix || '')} minute must be 59 or less`);
 				}
 				return true;
 			})

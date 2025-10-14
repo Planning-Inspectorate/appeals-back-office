@@ -31,6 +31,9 @@ const renderChangeDevelopmentDescription = async (request, response) => {
 		appellantCaseData,
 		request.session.developmentDescription
 	);
+
+	delete request.session.developmentDescription;
+
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContents,
 		errors

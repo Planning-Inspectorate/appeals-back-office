@@ -48,6 +48,33 @@ export async function postAppealChangeRequest(
  *
  * @param {import('got').Got} apiClient
  * @param {string} appealId
+ * @param {number} appellantCaseId
+ * @param {number} appealTypeId
+ * @param {string|null} appealTypeFinalDate
+ * @returns {Promise<import('./change-appeal-type.types.js').ChangeAppealTypeRequest>}
+ */
+export async function postAppealResubmitMarkInvalidRequest(
+	apiClient,
+	appealId,
+	appellantCaseId,
+	appealTypeId,
+	appealTypeFinalDate
+) {
+	return await apiClient
+		.post(`appeals/${appealId}/appeal-resubmit-mark-invalid`, {
+			json: {
+				newAppealTypeId: appealTypeId,
+				newAppealTypeFinalDate: appealTypeFinalDate,
+				appellantCaseId
+			}
+		})
+		.json();
+}
+
+/**
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
  * @param {number} appealTypeId
  * @returns {Promise<import('./change-appeal-type.types.js').ChangeAppealTypeRequest>}
  */
@@ -80,15 +107,6 @@ export async function postAppealTransferConfirmation(
 
 /**
  * @param {import('got').Got} apiClient
- * @param {string} horizonReference
- * @returns {Promise<{caseFound: boolean}>}
- */
-export async function checkAppealReferenceExistsInHorizon(apiClient, horizonReference) {
-	return await apiClient.get(`appeals/transferred-appeal/${horizonReference}`).json();
-}
-
-/**
- * @param {import('got').Got} apiClient
  * @param {string} appealTypeId
  * @param {string} appealId
  * @returns {Promise<string>}
@@ -108,29 +126,34 @@ export async function getNoResubmitAppealRequestRedirectUrl(apiClient, appealTyp
 
 /**
  *
- * @param {string} appealId
- * @returns
+ * @param {import('got').Got} apiClient
+ * @param {string} appealType
+ * @param {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} changeAppealType
  */
-export function changeAppealTransferAppealPage(appealId) {
-	/** @type {PageComponent} */
-	const textComponent = {
-		type: 'html',
-		parameters: {
-			html: `
-            <p class="govuk-body">At this moment, this new service only supports some appeal types.<p>
-            <p class="govuk-body">You need to transfer the case to Horizon, then add the Horizon reference number to this case.<p>
-        `
-		}
-	};
+export async function getChangeAppealTypes(apiClient, appealType, changeAppealType) {
+	const appealTypes = await getAppealTypes(apiClient);
 
-	const pageContent = {
-		title: 'You must transfer this case to Horizon',
-		backLinkUrl: `/appeals-service/appeal-details/${appealId}/change-appeal-type/resubmit`,
-		preHeading: `Appeal ${appealId}`,
-		heading: 'You must transfer this case to Horizon',
-		pageComponents: [textComponent],
-		submitButtonText: 'Mark as awaiting transfer'
-	};
+	const existingChangeAppealType =
+		appealTypes.find((types) => types.type === appealType)?.changeAppealType ?? appealType;
 
-	return pageContent;
+	const newChangeAppealType = appealTypes.find(
+		(appealType) => appealType.id === changeAppealType.appealTypeId
+	)?.changeAppealType;
+
+	return { existingChangeAppealType, newChangeAppealType };
+}
+
+/**
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @param {number} appealTypeId
+ * @returns {Promise<void>}
+ */
+export async function postAppealUpdateRequest(apiClient, appealId, appealTypeId) {
+	return await apiClient
+		.post(`appeals/${appealId}/appeal-update-request`, {
+			json: { newAppealTypeId: appealTypeId }
+		})
+		.json();
 }

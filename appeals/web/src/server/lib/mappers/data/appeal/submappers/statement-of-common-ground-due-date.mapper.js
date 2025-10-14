@@ -1,7 +1,7 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
-import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapStatementOfCommonGroundDueDate = ({

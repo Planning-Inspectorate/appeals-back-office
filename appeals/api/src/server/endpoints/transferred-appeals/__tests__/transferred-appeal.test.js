@@ -1,12 +1,12 @@
 // @ts-nocheck
-import { jest } from '@jest/globals';
-import { request } from '../../../app-test.js';
+import {
+	horizonGetCaseNotFoundResponse,
+	horizonGetCaseSuccessResponse
+} from '#tests/horizon/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { parseHorizonGetCaseResponse } from '#utils/mapping/map-horizon.js';
-import {
-	horizonGetCaseSuccessResponse,
-	horizonGetCaseNotFoundResponse
-} from '#tests/horizon/mocks.js';
+import { jest } from '@jest/globals';
+import { request } from '../../../app-test.js';
 
 const { default: got } = await import('got');
 

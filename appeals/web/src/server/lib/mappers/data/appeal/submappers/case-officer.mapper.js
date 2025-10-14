@@ -1,9 +1,11 @@
-import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
-import { textSummaryListItem } from '#lib/mappers/index.js';
 import config from '#environment/config.js';
+import { textSummaryListItem } from '#lib/mappers/index.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapCaseOfficer = ({
+	appealDetails,
 	currentRoute,
 	skipAssignedUsersData,
 	caseOfficerUser,
@@ -34,7 +36,7 @@ export const mapCaseOfficer = ({
 			html: caseOfficerRowValue
 		},
 		link: `${currentRoute}/${caseOfficerRoute}`,
-		editable: userHasUpdateCasePermission,
+		editable: !isChildAppeal(appealDetails) && Boolean(userHasUpdateCasePermission),
 		classes: 'appeal-case-officer',
 		actionText: caseOfficerUser ? 'Change' : 'Assign'
 	});

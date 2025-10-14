@@ -1,7 +1,12 @@
+import { isNetResidencesAppealType } from '#common/net-residences-appeal-types.js';
 import config from '#environment/config.js';
+import { isStatePassed } from '#lib/appeal-status.js';
 import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
-import { APPEAL_REPRESENTATION_STATUS, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_PROOF_OF_EVIDENCE_STATUS,
+	APPEAL_REPRESENTATION_STATUS
+} from '@pins/appeals/constants/common.js';
 import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	DOCUMENT_STATUS_RECEIVED,
@@ -10,7 +15,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
-/** @typedef {'addHorizonReference'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'} AppealRequiredAction */
+/** @typedef {'addHorizonReference'|'awaitingEvent'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'} AppealRequiredAction */
 
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
@@ -39,6 +44,9 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			break;
 		case APPEAL_CASE_STATUS.AWAITING_TRANSFER:
 			actions.push('addHorizonReference');
+			break;
+		case APPEAL_CASE_STATUS.AWAITING_EVENT:
+			actions.push('awaitingEvent');
 			break;
 		case APPEAL_CASE_STATUS.EVENT:
 			if (
@@ -259,7 +267,8 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			}
 			break;
 		}
-		case APPEAL_CASE_STATUS.COMPLETE: {
+		case APPEAL_CASE_STATUS.COMPLETE:
+		case APPEAL_CASE_STATUS.WITHDRAWN: {
 			if (appealDetails.costsDecision?.awaitingAppellantCostsDecision) {
 				actions.push('issueAppellantCostsDecision');
 			}
@@ -273,12 +282,44 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 	}
 
 	if (
-		config.featureFlags.featureFlagNetResidence &&
-		appealDetails.appealType === APPEAL_TYPE.S78 &&
+		isStatePassed(appealDetails, APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE) &&
+		isNetResidencesAppealType(appealDetails.appealType) &&
 		appealDetails.numberOfResidencesNetChange === null &&
-		!isChildAppeal(appealDetails)
+		!isChildAppeal(appealDetails) &&
+		appealDetails.appealStatus &&
+		![
+			APPEAL_CASE_STATUS.INVALID,
+			APPEAL_CASE_STATUS.WITHDRAWN,
+			APPEAL_CASE_STATUS.TRANSFERRED
+		].includes(appealDetails.appealStatus)
 	) {
 		actions.push('addResidencesNetChange');
+	}
+
+	//TODO: This POE banner management should be moved into the POE state section once it is ready
+	const lpaProofOfEvidenceDone = [
+		APPEAL_REPRESENTATION_STATUS.VALID,
+		APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+	].includes(appealDetails.documentationSummary?.lpaProofOfEvidence?.representationStatus);
+	const appellantProofOfEvidenceDone = [
+		APPEAL_REPRESENTATION_STATUS.VALID,
+		APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+	].includes(appealDetails.documentationSummary?.appellantProofOfEvidence?.representationStatus);
+	const lpaProofOfEvidenceReceived =
+		appealDetails.documentationSummary?.lpaProofOfEvidence?.status ===
+		APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED;
+	const appellantProofOfEvidenceReceived =
+		appealDetails.documentationSummary?.appellantProofOfEvidence?.status ===
+		APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED;
+
+	if (lpaProofOfEvidenceDone && !appellantProofOfEvidenceDone && appellantProofOfEvidenceReceived) {
+		actions.push('reviewAppellantProofOfEvidence');
+	} else if (
+		!lpaProofOfEvidenceDone &&
+		appellantProofOfEvidenceDone &&
+		lpaProofOfEvidenceReceived
+	) {
+		actions.push('reviewLpaProofOfEvidence');
 	}
 
 	return actions;

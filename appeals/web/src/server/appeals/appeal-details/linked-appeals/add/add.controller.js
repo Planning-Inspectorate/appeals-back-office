@@ -1,22 +1,22 @@
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
 import { HTTPError } from 'got';
-import { linkAppealToBackOfficeAppeal, linkAppealToLegacyAppeal } from './add.service.js';
 import {
-	addLinkedAppealPage,
 	addLinkedAppealCheckAndConfirmPage,
+	addLinkedAppealPage,
 	alreadyLinkedPage,
 	changeLeadAppealPage,
 	invalidCaseStatusPage
 } from './add.mapper.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
-import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
+import { linkAppealToBackOfficeAppeal, linkAppealToLegacyAppeal } from './add.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderAddLinkedAppealReference = (request, response) => {
-	const { errors, session } = request;
+	const { errors, session, body } = request;
 
 	const appealDetails = request.currentAppeal;
 
@@ -24,7 +24,8 @@ export const renderAddLinkedAppealReference = (request, response) => {
 		appealDetails,
 		session.linkableAppeal?.linkableAppealSummary,
 		getBackLinkUrlFromQuery(request),
-		errors?.['appeal-reference'].msg
+		errors?.['appeal-reference'].msg,
+		body?.['appeal-reference'] || null
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
@@ -48,7 +49,7 @@ export const postAddLinkedAppeal = (request, response) => {
 		params: { appealId }
 	} = request;
 
-	if (request.body.linkConflict || request.body.linkSelf) {
+	if (request.body.linkConflict) {
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/linked-appeals/add/already-linked`
 		);

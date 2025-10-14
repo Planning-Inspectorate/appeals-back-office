@@ -1,5 +1,6 @@
-import { jest } from '@jest/globals';
+import usersService from '#appeals/appeal-users/users-service.js';
 import {
+	activeDirectoryUsersData,
 	allocationDetailsData,
 	appealDataFullPlanning,
 	costsFolderInfoAppellantApplication,
@@ -8,16 +9,15 @@ import {
 	documentFolderInfo,
 	documentRedactionStatuses,
 	finalCommentsForReview,
-	lpaStatementAwaitingReview,
+	getAppealRepsResponse,
 	interestedPartyCommentForReview,
-	activeDirectoryUsersData,
-	getAppealRepsResponse
+	lpaStatementAwaitingReview
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
-import usersService from '#appeals/appeal-users/users-service.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);

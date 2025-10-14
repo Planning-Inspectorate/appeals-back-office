@@ -1,19 +1,19 @@
-import { Router } from 'express';
-import { createYesNoRadioValidator } from '#lib/validators/radio.validator.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
+import { createYesNoRadioValidator } from '#lib/validators/radio.validator.js';
+import { Router } from 'express';
 import {
 	validateAllocationLevel,
 	validateAllocationSpecialisms
 } from '../allocation/allocation.validator.js';
 import {
-	renderAllocationCheck,
-	renderAllocationLevel,
-	renderAllocationSpecialisms,
-	renderConfirm,
+	postAcceptStatement,
 	postAllocationCheck,
 	postAllocationLevel,
 	postAllocationSpecialisms,
-	postAcceptStatement
+	renderAllocationCheck,
+	renderAllocationLevel,
+	renderAllocationSpecialisms,
+	renderConfirm
 } from './valid.controller.js';
 
 const router = Router({ mergeParams: true });

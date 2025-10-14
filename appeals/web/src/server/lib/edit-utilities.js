@@ -3,6 +3,7 @@ import { addQueryParamsToUrl, stripQueryString } from './url-utilities.js';
 /**
  * Returns the session values for the given key, or the /edit key if editing.
  * Also sets the /edit values if they do not yet exist when editing.
+ * Use getSessionValuesForAppeal if scoped to an appeal.
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {string} sessionKey
  * @returns {Record<string, string>}
@@ -21,6 +22,28 @@ export const getSessionValues = (request, sessionKey) => {
 };
 
 /**
+ * Returns the session values for the given key, or the /edit key if editing,
+ * scoped to the given appeal id. Also sets the /edit values if they do not
+ * yet exist when editing.
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} sessionKey
+ * @param {string} appealId
+ * @returns {Record<string, string>}
+ */
+export const getSessionValuesForAppeal = (request, sessionKey, appealId) => {
+	const { query, session } = request;
+	const editEntrypoint = query.editEntrypoint;
+	if (editEntrypoint) {
+		const editKey = `${sessionKey}/edit`;
+		if (!session[editKey]) {
+			session[editKey] = session[sessionKey] || {};
+		}
+		return session[editKey]?.[appealId] || {};
+	}
+	return session[sessionKey]?.[appealId] || {};
+};
+
+/**
  * Adds an editEntrypoint query param to the URL pointing to itself, indicating that the
  * user has started editing at that point.
  * @param {string} baseUrl - The base URL path
@@ -33,19 +56,23 @@ export const editLink = (baseUrl, slug) => {
 };
 
 /**
- * Saves any edited values to the main session key and deletes the /edit key.
+ * Saves any edited values to the main session key if editing, and deletes the /edit key.
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {string} sessionKey
  */
 export const applyEdits = (request, sessionKey) => {
-	const { session } = request;
+	const { query, session } = request;
 	const editKey = `${sessionKey}/edit`;
 	if (session[editKey]) {
+		const editValues = session[editKey];
+		delete session[editKey];
+		if (!query.editEntrypoint) {
+			return;
+		}
 		session[sessionKey] = {
 			...session[sessionKey],
-			...session[editKey]
+			...editValues
 		};
-		delete session[editKey];
 	}
 };
 

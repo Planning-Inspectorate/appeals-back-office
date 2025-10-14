@@ -10,4 +10,4 @@ Start date: {{start_date}}
 [Find out your responsibilities in the appeal process](http://www.gov.uk/government/publications/planning-appeals-procedural-guide/procedural-guide-planning-appeals-england).
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

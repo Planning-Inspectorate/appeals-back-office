@@ -1,6 +1,6 @@
 module "function_refdata_import" {
   #checkov:skip=CKV_TF_1: Use of commit hash are not required for our Terraform modules
-  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-function-app?ref=1.49"
+  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-function-app?ref=1.53"
 
   resource_group_name = azurerm_resource_group.primary.name
   location            = module.primary_region.location
@@ -35,6 +35,12 @@ module "function_refdata_import" {
     ServiceBusConnection__fullyQualifiedNamespace = local.service_bus_hostname
     # Function env variables
     API_HOST = module.app_api.default_site_hostname
+
+    # Service bus topic
+    SB_TOPIC_NAME_LISTED_BUILDING = azurerm_servicebus_topic.listed_building.name
+
+    # service bus subscriptions
+    SB_SUBSCRIPTION_NAME_LISTED_BUILDING = azurerm_servicebus_subscription.odw_listed_building_sub.name
   }
 }
 

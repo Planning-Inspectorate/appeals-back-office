@@ -1,30 +1,28 @@
-import logger from '#utils/logger.js';
-import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
-import { formatHearing } from './hearing.formatter.js';
-import { createHearing, deleteHearing, updateHearing } from './hearing.service.js';
-import hearingRepository from '#repositories/hearing.repository.js';
-import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import transitionState from '#state/transition-state.js';
-import {
-	VALIDATION_OUTCOME_COMPLETE,
-	VALIDATION_OUTCOME_CANCEL
-} from '@pins/appeals/constants/support.js';
-import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { AUDIT_TRAIL_HEARING_SET_UP } from '@pins/appeals/constants/support.js';
-import { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
-import {
-	AUDIT_TRAIL_HEARING_ADDRESS_ADDED,
-	AUDIT_TRAIL_HEARING_DATE_UPDATED,
-	AUDIT_TRAIL_HEARING_ADDRESS_UPDATED,
-	AUDIT_TRAIL_HEARING_CANCELLED
-} from '@pins/appeals/constants/support.js';
 import {
 	formatAddressForDb,
 	formatAddressSingleLine
 } from '#endpoints/addresses/addresses.formatter.js';
-import { VALIDATION_OUTCOME_INCOMPLETE } from '@pins/appeals/constants/support.js';
+import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import hearingRepository from '#repositories/hearing.repository.js';
+import transitionState from '#state/transition-state.js';
+import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
+import logger from '#utils/logger.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import {
+	AUDIT_TRAIL_HEARING_ADDRESS_ADDED,
+	AUDIT_TRAIL_HEARING_ADDRESS_UPDATED,
+	AUDIT_TRAIL_HEARING_CANCELLED,
+	AUDIT_TRAIL_HEARING_DATE_UPDATED,
+	AUDIT_TRAIL_HEARING_SET_UP,
+	ERROR_FAILED_TO_SAVE_DATA,
+	VALIDATION_OUTCOME_CANCEL,
+	VALIDATION_OUTCOME_COMPLETE,
+	VALIDATION_OUTCOME_INCOMPLETE
+} from '@pins/appeals/constants/support.js';
+import { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { formatHearing } from './hearing.formatter.js';
+import { createHearing, deleteHearing, updateHearing } from './hearing.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

@@ -1,12 +1,12 @@
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
-import * as controller from './set-up-inquiry.controller.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
+import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
+import { createNotEmptyBodyValidator } from '#lib/validators/generic.validator.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
+import { dateFieledName } from './inquiry.constants.js';
 import * as validators from './set-up-inquiry-validators.js';
 import { runDueDateDaysValidator } from './set-up-inquiry-validators.js';
-import { createNotEmptyBodyValidator } from '#lib/validators/generic.validator.js';
-import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
-import { dateFieledName } from './inquiry.constants.js';
+import * as controller from './set-up-inquiry.controller.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -20,7 +20,7 @@ router
 		extractAndProcessDateErrors({
 			fieldNamePrefix: dateFieledName
 		}),
-		saveBodyToSession('setUpInquiry'),
+		saveBodyToSession('setUpInquiry', { scopeToAppeal: true }),
 		asyncHandler(controller.postInquiryDate)
 	);
 
@@ -30,7 +30,7 @@ router
 	.post(
 		validators.validateYesNoInput,
 		validators.validateEstimationInput,
-		saveBodyToSession('setUpInquiry'),
+		saveBodyToSession('setUpInquiry', { scopeToAppeal: true }),
 		asyncHandler(controller.postInquiryEstimation)
 	);
 
@@ -39,7 +39,7 @@ router
 	.get(asyncHandler(controller.getInquiryAddress))
 	.post(
 		validators.validateAddressKnown,
-		saveBodyToSession('setUpInquiry'),
+		saveBodyToSession('setUpInquiry', { scopeToAppeal: true }),
 		asyncHandler(controller.postInquiryAddress)
 	);
 
@@ -48,7 +48,7 @@ router
 	.get(asyncHandler(controller.getInquiryAddressDetails))
 	.post(
 		validators.validateInquiryAddress,
-		saveBodyToSession('setUpInquiry'),
+		saveBodyToSession('setUpInquiry', { scopeToAppeal: true }),
 		asyncHandler(controller.postInquiryAddressDetails)
 	);
 
@@ -58,9 +58,10 @@ router
 	.post(
 		createNotEmptyBodyValidator('whole-page::Enter timetable due dates'),
 		runDueDateDaysValidator,
-		saveBodyToSession('setUpInquiry'),
+		saveBodyToSession('setUpInquiry', { scopeToAppeal: true }),
 		asyncHandler(controller.postInquiryDueDates)
 	);
+
 router
 	.route('/check-details')
 	.get(asyncHandler(controller.getInquiryCheckDetails))

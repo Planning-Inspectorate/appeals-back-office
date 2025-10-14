@@ -4,8 +4,8 @@
 /** @typedef {RequestDate} ReqBody */
 
 import { applyEdits } from '#lib/edit-utilities.js';
-import { dateSubmitted } from '../add-document.mapper.js';
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
+import { dateSubmitted } from '../add-document.mapper.js';
 
 const getBackLinkUrl = backLinkGenerator('addDocument');
 
@@ -24,9 +24,15 @@ export const renderDateSubmittedFactory =
 			`${baseUrl}/check-your-answers`
 		);
 
+		const pageHeadingTextOverride =
+			// @ts-ignore
+			request.locals?.pageContent?.dateSubmitted?.pageHeadingTextOverride;
+
 		const value = getValue(request);
 
-		const pageContent = dateSubmitted(request.currentAppeal, request.errors, value, backLinkUrl);
+		const pageContent = dateSubmitted(request.currentAppeal, request.errors, value, backLinkUrl, {
+			pageHeadingTextOverride
+		});
 
 		return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 			errors: request.errors,

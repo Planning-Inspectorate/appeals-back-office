@@ -1,30 +1,30 @@
 // @ts-nocheck
-import { parseHtml } from '@pins/platform';
-import nock from 'nock';
-import supertest from 'supertest';
-import { jest } from '@jest/globals';
-import { createTestEnvironment } from '#testing/index.js';
+import usersService from '#appeals/appeal-users/users-service.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import {
+	activeDirectoryUsersData,
 	appealData,
 	costsFolderInfoAppellantApplication,
-	costsFolderInfoAppellantWithdrawal,
 	costsFolderInfoAppellantCorrespondence,
-	costsFolderInfoLpaApplication,
-	costsFolderInfoLpaWithdrawal,
-	costsFolderInfoLpaCorrespondence,
+	costsFolderInfoAppellantWithdrawal,
 	costsFolderInfoDecision,
+	costsFolderInfoLpaApplication,
+	costsFolderInfoLpaCorrespondence,
+	costsFolderInfoLpaWithdrawal,
 	documentFileInfo,
-	documentRedactionStatuses,
-	activeDirectoryUsersData,
 	documentFileVersionsInfo,
+	documentFileVersionsInfoChecked,
 	documentFileVersionsInfoNotChecked,
 	documentFileVersionsInfoVirusFound,
-	documentFileVersionsInfoChecked,
+	documentRedactionStatuses,
 	fileUploadInfo
 } from '#testing/app/fixtures/referencedata.js';
-import usersService from '#appeals/appeal-users/users-service.js';
-import { capitalize, cloneDeep, upperCase } from 'lodash-es';
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
+import { parseHtml } from '@pins/platform';
+import { capitalize, upperCase } from 'lodash-es';
+import nock from 'nock';
+import supertest from 'supertest';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -475,7 +475,7 @@ describe('costs', () => {
 								value: 'a',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} date month must be a number`
+								} costs ${costsDocumentType} date must be a real date`
 							},
 							{
 								value: '0',
@@ -1018,7 +1018,7 @@ describe('costs', () => {
 								value: 'a',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} date month must be a number`
+								} costs ${costsDocumentType} date must be a real date`
 							},
 							{
 								value: '0',
@@ -1676,7 +1676,7 @@ describe('costs', () => {
 					});
 
 					it(`should render the delete document page with the expected content when there are multiple document versions (${costsCategory} ${costsDocumentType})`, async () => {
-						const multipleVersionsDocument = cloneDeep(documentFileVersionsInfoChecked);
+						const multipleVersionsDocument = structuredClone(documentFileVersionsInfoChecked);
 						multipleVersionsDocument.allVersions.push(multipleVersionsDocument.allVersions[0]);
 
 						nock('http://test/')
@@ -2160,7 +2160,7 @@ describe('costs', () => {
 
 				const testCases = [
 					{ value: '', expectedError: 'Received date must include a month' },
-					{ value: 'a', expectedError: 'Received date month must be a number' },
+					{ value: 'a', expectedError: 'Received date must be a real date' },
 					{ value: '0', expectedError: 'Received date month must be between 1 and 12' },
 					{ value: '13', expectedError: 'Received date month must be between 1 and 12' }
 				];
@@ -2450,7 +2450,7 @@ describe('costs', () => {
 
 				const testCases = [
 					{ value: '', expectedError: 'Received date must include a month' },
-					{ value: 'a', expectedError: 'Received date month must be a number' },
+					{ value: 'a', expectedError: 'Received date must be a real date' },
 					{ value: '0', expectedError: 'Received date month must be between 1 and 12' },
 					{ value: '13', expectedError: 'Received date month must be between 1 and 12' }
 				];
@@ -2555,9 +2555,7 @@ describe('costs', () => {
 				expect(errorSummaryElement.innerHTML).toContain('date must be a real date');
 			});
 
-			it(`should send a patch request to the appeal documents endpoint and redirect to the check and confirm page, if complete and valid document details were provided`, async () => {
-				expect(addDocumentsResponse.statusCode).toBe(302);
-
+			it('should send a patch request to the appeal documents endpoint and redirect to the check and confirm page, when month is a number, if complete and valid document details were provided', async () => {
 				const response = await request
 					.post(`${baseUrl}/1/costs/decision/add-document-details/${costsFolder.folderId}/1`)
 					.send({
@@ -2575,7 +2573,52 @@ describe('costs', () => {
 					});
 
 				expect(response.statusCode).toBe(302);
+				expect(response.text).toEqual(
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/decision/check-and-confirm/${costsFolder.folderId}/1`
+				);
+			});
 
+			it('should send a patch request to the appeal documents endpoint and redirect to the check and confirm page, when month is an abbreviation, if complete and valid document details were provided', async () => {
+				const response = await request
+					.post(`${baseUrl}/1/costs/decision/add-document-details/${costsFolder.folderId}/1`)
+					.send({
+						items: [
+							{
+								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+								receivedDate: {
+									day: '3',
+									month: 'Feb',
+									year: '2023'
+								},
+								redactionStatus: 2
+							}
+						]
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toEqual(
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/decision/check-and-confirm/${costsFolder.folderId}/1`
+				);
+			});
+
+			it('should send a patch request to the appeal documents endpoint and redirect to the check and confirm page, when month is a full name, if complete and valid document details were provided', async () => {
+				const response = await request
+					.post(`${baseUrl}/1/costs/decision/add-document-details/${costsFolder.folderId}/1`)
+					.send({
+						items: [
+							{
+								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+								receivedDate: {
+									day: '3',
+									month: 'February',
+									year: '2023'
+								},
+								redactionStatus: 2
+							}
+						]
+					});
+
+				expect(response.statusCode).toBe(302);
 				expect(response.text).toEqual(
 					`Found. Redirecting to /appeals-service/appeal-details/1/costs/decision/check-and-confirm/${costsFolder.folderId}/1`
 				);
@@ -3069,7 +3112,7 @@ describe('costs', () => {
 			});
 
 			it(`should render the delete document page with the expected content when there are multiple document versions`, async () => {
-				const multipleVersionsDocument = cloneDeep(documentFileVersionsInfoChecked);
+				const multipleVersionsDocument = structuredClone(documentFileVersionsInfoChecked);
 				multipleVersionsDocument.allVersions.push(multipleVersionsDocument.allVersions[0]);
 
 				nock('http://test/')

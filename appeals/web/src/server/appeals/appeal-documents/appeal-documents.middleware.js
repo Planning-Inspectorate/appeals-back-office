@@ -1,4 +1,4 @@
-import { getFolder, getFileInfo } from './appeal.documents.service.js';
+import { getFileInfo, getFolder } from './appeal.documents.service.js';
 
 /**
  * @type {import("express").RequestHandler}

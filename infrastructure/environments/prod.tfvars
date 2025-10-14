@@ -1,6 +1,6 @@
 apps_config = {
   app_service_plan_sku       = "P1v3"
-  functions_node_version     = 20
+  functions_node_version     = 22
   functions_service_plan_sku = "P1v3"
   node_environment           = "production"
   private_endpoint_enabled   = true
@@ -39,16 +39,19 @@ apps_config = {
     featureFlagS20                    = true
     featureFlagCAS                    = false
     featureFlagCasAdvert              = false
-    featureFlagIssueDecision          = false
-    featureFlagReIssueDecision        = false
     featureFlagNotifyCaseHistory      = true
-    featureFlagSimplifyTeamAssignment = false
+    featureFlagSimplifyTeamAssignment = true
     featureFlagChangeAppealType       = false
     featureFlagPdfDownload            = true
-    featureFlagNetResidence           = false
-    featureFlagCancelCase             = false
+    featureFlagNetResidence           = true
+    featureFlagNetResidenceS20        = false
+    featureFlagCancelCase             = true
     featureFlagChangeProcedureType    = false
     featureFlagAdvertisement          = false
+    featureFlagHearingPostMvp         = true
+    featureFlagAutoAssignTeam         = true
+    featureFlagCancelSiteVisit        = false
+    featureFlagPersonalList           = true
   }
 
   use_system_test_bc_for_change_lpa = false

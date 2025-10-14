@@ -1,11 +1,12 @@
 import { databaseConnector } from '../../server/utils/database-connector.js';
 import { seedStaticData } from './data-static.js';
-import { seedLPAs } from './seed-lpas.js';
 import { localPlanningDepartmentList } from './LPAs/training.js';
-import { teamsToCreate, lpaTeamAssignments } from './teams/training.js';
+import { seedLPAs } from './seed-lpas.js';
 import { seedTeams } from './seed-teams.js';
-import { mapLpasToTeams } from './map-lpa-and-teams.js';
+import { teamsToCreate } from './teams/training.js';
 
+/** @typedef {import('#utils/db-client/index.js').Prisma.TeamCreateInput} Team */
+/** @typedef {Record<string, number|null>} lpaTeamAssignments */
 /**
  * Seed the training database with the required static data
  *
@@ -16,8 +17,7 @@ const seedTraining = async () => {
 	try {
 		await seedStaticData(databaseConnector);
 		await seedTeams(databaseConnector, teamsToCreate);
-		const mappedLPAs = mapLpasToTeams(localPlanningDepartmentList, lpaTeamAssignments);
-		await seedLPAs(databaseConnector, mappedLPAs);
+		await seedLPAs(databaseConnector, localPlanningDepartmentList);
 	} catch (error) {
 		console.error(error);
 		throw error;

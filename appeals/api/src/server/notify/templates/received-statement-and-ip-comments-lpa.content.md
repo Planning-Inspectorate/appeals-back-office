@@ -1,5 +1,5 @@
 {% if has_ip_comments -%}
-   We’ve received comments from interested parties.
+   We've received comments from interested parties.
 {% else -%}
    We did not receive any comments from interested parties.
 {% endif -%}
@@ -18,4 +18,4 @@ You can [view this information in the appeals service]({{front_office_url}}/mana
 {% endif -%}
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

@@ -10,9 +10,12 @@ export const mapEiaDevelopmentDescription = ({
 	textSummaryListItem({
 		id: 'eia-development-description',
 		text: 'Description of development',
-		value: lpaQuestionnaireData.eiaDevelopmentDescription
-			? eiaDescriptions[lpaQuestionnaireData.eiaDevelopmentDescription]
-			: 'Not applicable',
+		value:
+			lpaQuestionnaireData.eiaDevelopmentDescription &&
+			eiaDescriptions[lpaQuestionnaireData.eiaDevelopmentDescription]
+				? eiaDescriptions[lpaQuestionnaireData.eiaDevelopmentDescription]
+				: 'No Data',
 		link: `${currentRoute}/eia-development-description/change`,
-		editable: userHasUpdateCase
+		editable: userHasUpdateCase,
+		classes: 'lpa-eia-development-description'
 	});

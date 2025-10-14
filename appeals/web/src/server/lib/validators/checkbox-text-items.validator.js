@@ -1,6 +1,6 @@
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
-import { body } from 'express-validator';
 import { createValidator } from '@pins/express';
+import { body } from 'express-validator';
 
 /**
  * Creates a validator middleware for checkbox text items.
@@ -54,7 +54,7 @@ export const createCheckboxTextItemsValidator = (checkboxIdsBodyKey) => {
  * @returns {boolean}
  * @throws {Error} If textItem is empty.
  */
-const textItemCustomValidator = (textItem) => {
+export const textItemCustomValidator = (textItem) => {
 	if (typeof textItem !== 'string' || textItem.trim().length === 0) {
 		throw new Error('Enter a reason');
 	}

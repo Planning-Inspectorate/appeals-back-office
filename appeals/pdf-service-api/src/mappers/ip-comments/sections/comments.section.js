@@ -1,10 +1,10 @@
+import standardFilters from 'nunjucks/src/filters.js';
+import { formatDate } from '../../../lib/nunjucks-filters/format-date.js';
 import {
 	formatBulletedList,
 	formatDocumentData,
 	formatReason
 } from '../../../lib/nunjucks-filters/index.js';
-import { formatDate } from '../../../lib/nunjucks-filters/format-date.js';
-import standardFilters from 'nunjucks/src/filters.js';
 const { nl2br, safe } = standardFilters;
 
 function mapComment(ipComment) {
@@ -14,6 +14,12 @@ function mapComment(ipComment) {
 		name: attachment.documentVersion.fileName
 	}));
 
+	let dateFormat = 'd MMMM yyyy, HH:mm';
+	// Only display the time if it's not midnight
+	if (new Date(created).getTime().toString().endsWith('00000')) {
+		dateFormat = 'd MMMM yyyy';
+	}
+
 	return {
 		items: [
 			{
@@ -22,7 +28,7 @@ function mapComment(ipComment) {
 			},
 			{
 				key: 'Date received',
-				text: formatDate(created, 'd MMMM yyyy, HH:mm')
+				text: formatDate(created, dateFormat)
 			},
 			{
 				key: 'Comment',

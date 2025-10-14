@@ -1,14 +1,14 @@
-import { parseHtml } from '@pins/platform';
-import nock from 'nock';
-import supertest from 'supertest';
-import { createTestEnvironment } from '#testing/index.js';
 import {
 	appealData,
 	documentFileInfo,
-	withdrawalRequestData,
 	documentRedactionStatuses,
-	fileUploadInfo
+	fileUploadInfo,
+	withdrawalRequestData
 } from '#testing/appeals/appeals.js';
+import { createTestEnvironment } from '#testing/index.js';
+import { parseHtml } from '@pins/platform';
+import nock from 'nock';
+import supertest from 'supertest';
 import { appellantEmailTemplate, lpaEmailTemplate } from '../withdrawl-test-data.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
@@ -86,6 +86,11 @@ describe('withdrawal', () => {
 		beforeEach(async () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -108,6 +113,11 @@ describe('withdrawal', () => {
 			const response = await request.get(
 				`${baseUrl}/${mockAppealId}${withdrawalPath}${checkYourAnswersPath}`
 			);
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();

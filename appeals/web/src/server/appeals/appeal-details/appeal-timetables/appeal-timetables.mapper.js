@@ -1,7 +1,7 @@
-import { dateISOStringToDisplayDate, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
-import { capitalize } from 'lodash-es';
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { dateISOStringToDayMonthYearHourMinute, dateISOStringToDisplayDate } from '#lib/dates.js';
 import { dateInput } from '#lib/mappers/index.js';
+import { capitalize } from 'lodash-es';
 import { dueDateFieledName } from './appeal-timetable.constants.js';
 
 /**
@@ -91,13 +91,13 @@ export const mapUpdateDueDatePage = (appealTimetables, timetableType, appealDeta
  * @param { number } updatedDueDateDay
  * @param { string } apiError
  * @returns {import("@pins/express").ValidationErrors | undefined}
-
  */
 export const apiErrorMapper = (updatedDueDateDay, apiError) => ({
 	'due-date-day': {
 		value: String(updatedDueDateDay),
 		msg: `Date ${apiError}`,
-		param: '',
+		type: 'field',
+		path: '',
 		location: 'body'
 	}
 });

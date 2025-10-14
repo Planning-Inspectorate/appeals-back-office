@@ -5,7 +5,7 @@
 {%- if child_appeals.length > 1 %}
 
 We have made a decision on the following appeals:
-- {{ appeal_reference_number }}
+- {{ appeal_reference_number }} (lead)
 {%- for child_appeal in child_appeals %}
 - {{ child_appeal }}
 {%- endfor %}
@@ -18,7 +18,7 @@ We have made a decision on this appeal.
 
 We have also informed the appellant of the decision.
 
-# The Planning Inspectorate’s role
+# The Planning Inspectorate's role
 
 The Planning Inspectorate cannot change or revoke the decision. You can [challenge the decision in the High Court](https://www.gov.uk/appeal-planning-decision/if-you-think-the-appeal-decision-is-legally-incorrect) if you think the Planning Inspectorate made a legal mistake.
 

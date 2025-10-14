@@ -1,9 +1,4 @@
-trigger:
-  branches:
-    include:
-      # trigger for merge queue branches
-      - gh-readonly-queue/*
-
+trigger: none
 
 pr:
   branches:

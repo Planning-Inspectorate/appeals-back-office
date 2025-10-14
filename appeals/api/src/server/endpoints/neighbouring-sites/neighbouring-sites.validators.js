@@ -1,21 +1,21 @@
-import { composeMiddleware } from '@pins/express';
-import { validationErrorHandler } from '#middleware/error-handler.js';
-import {
-	validateStringParameter,
-	validateRequiredStringParameter,
-	validateStringParameterAllowingEmpty
-} from '#common/validators/string-parameter.js';
-import validateRegex from '#common/validators/regex-parameter.js';
 import {
 	validateNumberParameter,
 	validateRequiredNumberParameter
 } from '#common/validators/number-parameter.js';
+import validateRegex from '#common/validators/regex-parameter.js';
+import {
+	validateRequiredStringParameter,
+	validateStringParameter,
+	validateStringParameterAllowingEmpty
+} from '#common/validators/string-parameter.js';
+import { validationErrorHandler } from '#middleware/error-handler.js';
 import {
 	ERROR_INVALID_POSTCODE,
-	UK_POSTCODE_REGEX,
+	LENGTH_250,
 	LENGTH_8,
-	LENGTH_250
+	UK_POSTCODE_REGEX
 } from '@pins/appeals/constants/support.js';
+import { composeMiddleware } from '@pins/express';
 
 const createNeighbouringSiteValidator = composeMiddleware(
 	validateRequiredStringParameter('addressLine1', LENGTH_250),
@@ -46,6 +46,6 @@ const deleteNeighbouringSiteValidator = composeMiddleware(
 
 export {
 	createNeighbouringSiteValidator,
-	updateNeighbouringSiteValidator,
-	deleteNeighbouringSiteValidator
+	deleteNeighbouringSiteValidator,
+	updateNeighbouringSiteValidator
 };

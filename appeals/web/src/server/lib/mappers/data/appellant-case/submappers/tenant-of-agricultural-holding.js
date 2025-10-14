@@ -10,7 +10,7 @@ export const mapTenantOfAgriculturalHolding = ({
 		id: 'tenant-of-agricultural-holding',
 		text: 'Are you a tenant of the agricultural holding?',
 		value: appellantCaseData.agriculturalHolding?.isTenant,
-		defaultText: 'No data',
+		defaultText: 'Not answered',
 		link: `${currentRoute}/agricultural-holding/tenant/change`,
 		editable: userHasUpdateCase
 	});

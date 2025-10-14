@@ -1,9 +1,9 @@
-import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
-import * as controller from './linked-appeals.controller.js';
-import * as validators from './linked-appeals.validators.js';
-import { initialiseLinkedAppealsSession } from './linked-appeals.middleware.js';
+import { Router as createRouter } from 'express';
 import addRouter from './add/add.router.js';
+import * as controller from './linked-appeals.controller.js';
+import { initialiseLinkedAppealsSession } from './linked-appeals.middleware.js';
+import * as validators from './linked-appeals.validators.js';
 
 const router = createRouter({ mergeParams: true });
 

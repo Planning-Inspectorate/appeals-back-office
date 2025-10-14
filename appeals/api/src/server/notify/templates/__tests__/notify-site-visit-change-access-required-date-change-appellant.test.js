@@ -15,7 +15,8 @@ describe('site-visit-change-access-required-date-change-appellant.md', () => {
 				site_address: '22, Example Lane',
 				lpa_reference: 'REF-67890',
 				visit_date: '12 June 2025',
-				start_time: '10:30am'
+				start_time: '10:30am',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

@@ -1,9 +1,9 @@
 import logger from '#lib/logger.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { HTTPError } from 'got';
 import { getAppellantCaseFromAppealId } from '../appellant-case.service.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { changeApplicationOutcome } from './application-outcome.service.js';
 import { changeApplicationOutcomePage } from './application-outcome.mapper.js';
+import { changeApplicationOutcome } from './application-outcome.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

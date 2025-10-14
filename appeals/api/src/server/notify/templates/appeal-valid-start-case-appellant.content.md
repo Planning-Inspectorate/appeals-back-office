@@ -6,7 +6,7 @@ We started your appeal on {{start_date}}.
 
 # Next steps
 
-We’ve asked {{local_planning_authority}} to complete a questionnaire about your appeal. They will send you a copy of their completed questionnaire.
+We've asked {{local_planning_authority}} to complete a questionnaire about your appeal. They will send you a copy of their completed questionnaire.
 
 We will arrange for an inspector to visit the address. You may need to attend the visit.
 
@@ -21,4 +21,4 @@ You may have to pay costs if you:
 [Find out more about appeal costs](https://www.gov.uk/claim-planning-appeal-costs).
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}
