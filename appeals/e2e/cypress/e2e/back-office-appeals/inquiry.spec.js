@@ -163,10 +163,13 @@ it('Can start case as inquiry with address and estimated days', () => {
 
 	// Verify timetable rows
 	caseDetailsPage.verifyTimeTableRows(timeTableRows);
-	overviewSectionPage.verifyCaseOverviewDetails(overviewDetails);
-
 	// Verify order of sections
 	caseDetailsPage.verifyCaseDetailsSection(expectedCaseDetailsSections);
+	//review and accept lpaq
+	happyPathHelper.reviewS78Lpaq(caseObj);
+
+	// verify case overview details
+	overviewSectionPage.verifyCaseOverviewDetails(overviewDetails);
 });
 
 it('Can start case as inquiry without address or estimated days', () => {
