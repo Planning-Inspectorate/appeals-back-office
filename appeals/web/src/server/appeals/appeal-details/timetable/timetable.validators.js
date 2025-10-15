@@ -97,7 +97,9 @@ const validatorsMap = {
 	},
 	proofOfEvidenceAndWitnessesDueDate: {
 		id: 'proof-of-evidence-and-witnesses-due-date',
-		label: 'Proof of evidence and witnesses due date'
+		label: 'Proof of evidence and witnesses due date',
+		idToCompare: 'ip-comments-due-date',
+		labelToCompare: 'Interested party comments due date'
 	}
 };
 
