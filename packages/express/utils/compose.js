@@ -37,9 +37,11 @@ export const composeMiddleware = (...middleware) => {
 			} else {
 				/** @type {RequestHandler} */ (requestHandler)(req, res, next);
 			}
+			return;
 		};
 
 		goToNextHandler(...handlerArguments);
+		return;
 	};
 
 	return requestHandlers[0].length === 4

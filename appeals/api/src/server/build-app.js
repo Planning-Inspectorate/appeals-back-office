@@ -58,7 +58,7 @@ const buildApp = (
 		})
 	);
 
-	app.all('*', (req, res, next) => {
+	app.use((req, res, next) => {
 		next(new BackOfficeAppError(`Method is not allowed`, 405));
 	});
 

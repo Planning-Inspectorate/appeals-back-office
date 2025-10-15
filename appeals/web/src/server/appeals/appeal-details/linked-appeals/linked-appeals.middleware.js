@@ -2,4 +2,5 @@
 export function initialiseLinkedAppealsSession(request, _, next) {
 	request.session.linkableAppeal ??= {};
 	next();
+	return;
 }

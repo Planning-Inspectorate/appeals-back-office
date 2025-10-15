@@ -119,8 +119,7 @@ const allLinkedAppealsHaveSameAppealStatus = (appeal, linkedAppeals) => {
 		if (linkedAppeal.child && linkedAppeal.parent) {
 			return (
 				//@ts-ignore
-				includesStatus(linkedAppeal.child, appealStatus) &&
-				//@ts-ignore
+				includesStatus(linkedAppeal.child, appealStatus) && //@ts-ignore
 				includesStatus(linkedAppeal.parent, appealStatus)
 			);
 		}

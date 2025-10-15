@@ -39,6 +39,7 @@ export async function startMsalAuthentication(request, response) {
 	// Generate – and then redirect to – a url where the user will authenticate
 	// against MSAL using their PINS account.
 	response.redirect(await authService.getAuthCodeUrl({ nonce }, request.session.id));
+	return;
 }
 
 /**
@@ -91,6 +92,7 @@ export async function completeMsalAuthentication(request, response) {
 		pino.error('Authentication failed – MSAL was unable to generate authentication code.');
 		response.redirect('/unauthenticated');
 	}
+	return;
 }
 
 /**
@@ -116,6 +118,7 @@ export async function handleSignout(req, response) {
 
 	response.setHeader('Clear-Site-Data', '*');
 	response.clearCookie('connect.sid', { path: '/' }).redirect(config.msal.logoutUri);
+	return;
 }
 
 /** @typedef {import('../auth/auth-session.service').SessionWithAuth} SessionWithAuth */
