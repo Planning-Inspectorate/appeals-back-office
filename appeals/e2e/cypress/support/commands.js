@@ -126,6 +126,13 @@ Cypress.Commands.add('getByData', (value) => {
 	return cy.get(`[data-cy="${value}"]`);
 });
 
+Cypress.Commands.add('elementExists', (selector) => {
+	return cy.get('body').then(($body) => {
+		const hasElement = $body.find(selector).length > 0;
+		return cy.wrap(hasElement);
+	});
+});
+
 Cypress.Commands.add('createCase', (customValues) => {
 	return cy.wrap(null).then(() => {
 		return appealsApiClient.caseSubmission(customValues).then((data) => {
