@@ -18,7 +18,7 @@ import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
  */
 
 /**
- * @typedef {'lpaQuestionnaireDueDate' | 'ipCommentsDueDate' | 'lpaStatementDueDate' | 'finalCommentsDueDate' | 'statementOfCommonGroundDueDate' | 'planningObligationDueDate'} AppealTimetableType
+ * @typedef {'lpaQuestionnaireDueDate' | 'ipCommentsDueDate' | 'lpaStatementDueDate' | 'finalCommentsDueDate' | 'statementOfCommonGroundDueDate' | 'planningObligationDueDate' | 'proofOfEvidenceAndWitnessesDueDate' } AppealTimetableType
  */
 
 /**
@@ -131,16 +131,16 @@ export const getTimetableTypes = (appealType, hasObligation, newProcedureType) =
 			if (newProcedureType.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN) {
 				validAppealTimetableType.push('finalCommentsDueDate');
 			}
-			if (newProcedureType.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING) {
+			if (
+				newProcedureType.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY ||
+				newProcedureType.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING
+			) {
 				validAppealTimetableType.push('statementOfCommonGroundDueDate');
 				if (hasObligation) {
 					validAppealTimetableType.push('planningObligationDueDate');
 				}
-			}
-			if (newProcedureType.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
-				validAppealTimetableType.push('statementOfCommonGroundDueDate');
-				if (hasObligation) {
-					validAppealTimetableType.push('planningObligationDueDate');
+				if (newProcedureType.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
+					validAppealTimetableType.push('proofOfEvidenceAndWitnessesDueDate');
 				}
 			}
 			break;
