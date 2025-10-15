@@ -452,6 +452,12 @@ exports[`LPA Questionnaire review GET / should render the CAS advert LPA Questio
                                     data-cy="change-has-protected-species">Change<span class="govuk-visually-hidden"> Would the development affect a protected species? (1. Constraints, designations and other issues)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the site in an area of special control of advertisements?</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/lpa-questionnaire/1/area-special-control/change"
+                                    data-cy="change-area-special-control">Change<span class="govuk-visually-hidden"> Is the site in an area of special control of advertisements? (1. Constraints, designations and other issues)</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Green belt</dt>
                             <dd class="govuk-summary-list__value"></dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/lpa-questionnaire/1/green-belt/change/lpa"

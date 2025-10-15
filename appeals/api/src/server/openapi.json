@@ -10990,6 +10990,18 @@
 					"preserveGrantLoan": {
 						"type": "boolean",
 						"example": true
+					},
+					"isSiteInAreaOfSpecialControlAdverts": {
+						"type": "boolean",
+						"example": true
+					},
+					"wasApplicationRefusedDueToHighwayOrTraffic": {
+						"type": "boolean",
+						"example": true
+					},
+					"didAppellantSubmitCompletePhotosAndPlans": {
+						"type": "boolean",
+						"example": true
 					}
 				},
 				"xml": {
@@ -20271,6 +20283,18 @@
 						"nullable": true
 					},
 					"preserveGrantLoan": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"isSiteInAreaOfSpecialControlAdverts": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"wasApplicationRefusedDueToHighwayOrTraffic": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"didAppellantSubmitCompletePhotosAndPlans": {
 						"type": "boolean",
 						"nullable": true
 					},
@@ -34547,6 +34571,18 @@
 						"nullable": true
 					},
 					"preserveGrantLoan": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"isSiteInAreaOfSpecialControlAdverts": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"wasApplicationRefusedDueToHighwayOrTraffic": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"didAppellantSubmitCompletePhotosAndPlans": {
 						"type": "boolean",
 						"nullable": true
 					},

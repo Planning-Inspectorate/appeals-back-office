@@ -394,6 +394,9 @@ interface SingleLPAQuestionnaireResponse {
 	consultedBodiesDetails: string | null;
 	reasonForNeighbourVisits: string | null;
 	preserveGrantLoan?: boolean;
+	isSiteInAreaOfSpecialControlAdverts?: boolean;
+	wasApplicationRefusedDueToHighwayOrTraffic?: boolean;
+	didAppellantSubmitCompletePhotosAndPlans?: boolean;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -428,6 +431,9 @@ interface UpdateLPAQuestionnaireRequest {
 	consultedBodiesDetails: string | null;
 	reasonForNeighbourVisits: string | null;
 	preserveGrantLoan?: boolean;
+	isSiteInAreaOfSpecialControlAdverts?: boolean;
+	wasApplicationRefusedDueToHighwayOrTraffic?: boolean;
+	didAppellantSubmitCompletePhotosAndPlans?: boolean;
 }
 
 interface UpdateLPAQuestionnaireValidationOutcomeParams {

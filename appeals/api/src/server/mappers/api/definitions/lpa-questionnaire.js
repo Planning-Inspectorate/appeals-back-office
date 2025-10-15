@@ -109,6 +109,18 @@ const updateableFields = {
 		type: 'boolean',
 		nullable: true
 	},
+	isSiteInAreaOfSpecialControlAdverts: {
+		type: 'boolean',
+		nullable: true
+	},
+	wasApplicationRefusedDueToHighwayOrTraffic: {
+		type: 'boolean',
+		nullable: true
+	},
+	didAppellantSubmitCompletePhotosAndPlans: {
+		type: 'boolean',
+		nullable: true
+	},
 	designatedSiteNames: {
 		type: 'array',
 		items: {
