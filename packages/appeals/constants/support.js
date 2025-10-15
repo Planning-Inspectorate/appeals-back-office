@@ -193,6 +193,8 @@ export const AUDIT_TRAIL_LPAQ_REASON_FOR_NEIGHBOUR_VISITS_UPDATED =
 	'Inspector needs neighbouring site access changed';
 export const AUDIT_TRAIL_LPAQ_DESIGNATED_SITE_NAMES_UPDATED =
 	'In, near or likely to effect designated sites changed';
+export const AUDIT_TRAIL_LPAQ_IS_SITE_IN_AREA_OF_SPECIAL_CONTROL_ADVERTS_UPDATED =
+	'‘Is the site in an area of special control of advertisements?’ updated to {replacement0}';
 export const AUDIT_TRAIL_TEAM_ASSIGNED = 'Case team {replacement0} assigned';
 
 export const AUDIT_TRAIL_LISTED_BUILDING_ADDED = 'A listed building was added';
