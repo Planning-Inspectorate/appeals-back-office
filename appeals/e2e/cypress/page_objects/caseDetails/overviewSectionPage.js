@@ -62,16 +62,11 @@ export class OverviewSectionPage extends CaseDetailsPage {
 				expect(text).to.equal(expectedValues.relatedAppeals);
 			});
 
-		// net residence is possibly optional row
-		cy.elementExists(this.overviewSectionSelectors.netGainResidential).then((exists) => {
-			if (exists) {
-				this.overviewSectionElements
-					.netGainResidential()
-					.invoke('prop', 'innerText')
-					.then((text) => {
-						expect(text).to.equal(expectedValues.netGainResidential);
-					});
-			}
-		});
+		this.overviewSectionElements
+			.netGainResidential()
+			.invoke('prop', 'innerText')
+			.then((text) => {
+				expect(text).to.equal(expectedValues.netGainResidential);
+			});
 	};
 }
