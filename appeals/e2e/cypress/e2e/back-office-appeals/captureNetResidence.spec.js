@@ -1,12 +1,10 @@
 // @ts-nocheck
 /// <reference types="cypress"/>
-
 import { users } from '../../fixtures/users';
 import { NetResidencePage } from '../../page_objects/caseDetails/netResidencePage.js';
 import { OverviewSectionPage } from '../../page_objects/caseDetails/overviewSectionPage.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { happyPathHelper } from '../../support/happyPathHelper';
-
 const caseDetailsPage = new CaseDetailsPage();
 const netResidencePage = new NetResidencePage();
 const overviewSectionPage = new OverviewSectionPage();
@@ -33,7 +31,6 @@ describe('Capture Net Residences', () => {
 		relatedAppeals: 'No',
 		netGainResidential: 'Not provided'
 	};
-
 	it('Net Residence - Net Gain', () => {
 		overviewSectionPage.verifyCaseOverviewDetails(overviewDetails);
 		netResidencePage.clickAddNetResidence();
@@ -44,7 +41,6 @@ describe('Capture Net Residences', () => {
 		netResidencePage.verifyNetResidenceValue('Net gain');
 		netResidencePage.verifyNetResidenceNumber('5');
 	});
-
 	it('Net Residence - Net Loss', () => {
 		overviewSectionPage.verifyCaseOverviewDetails(overviewDetails);
 		netResidencePage.clickAddNetResidence();
@@ -55,7 +51,6 @@ describe('Capture Net Residences', () => {
 		netResidencePage.verifyNetResidenceValue('Net loss');
 		netResidencePage.verifyNetResidenceNumber('5');
 	});
-
 	it('Net Residence - No Change', () => {
 		overviewSectionPage.verifyCaseOverviewDetails(overviewDetails);
 		netResidencePage.clickAddNetResidence();
@@ -64,7 +59,6 @@ describe('Capture Net Residences', () => {
 		caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added');
 		netResidencePage.verifyNetResidenceValue('No change to number of residential units');
 	});
-
 	const setupTestCase = () => {
 		cy.login(users.appeals.caseAdmin);
 
