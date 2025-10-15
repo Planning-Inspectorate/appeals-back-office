@@ -1,6 +1,7 @@
 import { convertFromBooleanToYesNo } from '#lib/boolean-formatter.js';
 import { SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING } from '#lib/constants.js';
 import { buildHtmSpan } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { newLine2LineBreak } from '#lib/string-utilities.js';
 
 /**
  *
@@ -136,7 +137,7 @@ const formatAnswerAndDetails = (answer, details, withShowMore, showMoreLabelText
 					{
 						type: 'show-more',
 						parameters: {
-							text: details,
+							html: newLine2LineBreak(details),
 							labelText: showMoreLabelText || ''
 						}
 					}
@@ -144,7 +145,7 @@ const formatAnswerAndDetails = (answer, details, withShowMore, showMoreLabelText
 			};
 		} else {
 			return {
-				html: `${formattedAnswer}<br>${buildHtmSpan(details || '')}`
+				html: `${formattedAnswer}<br>${buildHtmSpan(newLine2LineBreak(details || ''))}`
 			};
 		}
 	} else {
