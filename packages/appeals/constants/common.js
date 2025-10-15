@@ -20,8 +20,7 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	ADVERTISEMENT: 'featureFlagAdvertisement',
 	CHANGE_APPEAL_TYPE: 'featureFlagChangeAppealType',
 	HEARING_POST_MVP: 'featureFlagHearingPostMvp',
-	AUTO_ASSIGN_TEAM: 'featureFlagAutoAssignTeam',
-	PERSONAL_LIST: 'featureFlagPersonalList'
+	AUTO_ASSIGN_TEAM: 'featureFlagAutoAssignTeam'
 });
 
 export const APPEAL_TYPE = Object.freeze({

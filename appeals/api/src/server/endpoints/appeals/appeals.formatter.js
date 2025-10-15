@@ -1,5 +1,3 @@
-import appealRepository from '#repositories/appeal.repository.js';
-import { calculateDueDate } from '#utils/calculate-due-date.js';
 import { completedStateList, currentStatus } from '#utils/current-status.js';
 import formatAddress from '#utils/format-address.js';
 import { formatCostsDecision } from '#utils/format-costs-decision.js';
@@ -8,7 +6,6 @@ import {
 	formatLpaQuestionnaireDocumentationStatus,
 	formatLpaStatementStatus
 } from '#utils/format-documentation-status.js';
-import { isAwaitingLinkedAppeal } from '#utils/is-awaiting-linked-appeal.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
@@ -59,46 +56,6 @@ const formatAppeal = (appeal, linkedAppeals) => {
 		hasHearingAddress: !!appeal.hearing?.addressId,
 		awaitingLinkedAppeal: null,
 		numberOfResidencesNetChange: appeal.appellantCase?.numberOfResidencesNetChange || null
-	};
-};
-
-/**
- * @param {Object} options
- * @param {DBUserAppeal} options.appeal
- * @param {Boolean} [options.isParentAppeal]
- * @param {Boolean} [options.isChildAppeal]
- * @param {Boolean} [options.awaitingLinkedAppeal]
- * @returns {Promise<AppealListResponse>}
- */
-const formatMyAppeal = async ({
-	appeal,
-	isParentAppeal = false,
-	isChildAppeal = false,
-	awaitingLinkedAppeal = false
-}) => {
-	const costsDecision = await formatCostsDecision(appeal);
-	return {
-		appealId: appeal.id,
-		appealReference: appeal.reference,
-		appealSite: formatAddress(appeal.address),
-		appealStatus: currentStatus(appeal),
-		completedStateList: completedStateList(appeal),
-		appealType: appeal.appealType?.type,
-		procedureType: appeal.procedureType?.name,
-		createdAt: appeal.caseCreatedDate,
-		localPlanningDepartment: appeal.lpa?.name || '',
-		lpaQuestionnaireId: appeal.lpaQuestionnaire?.id || null,
-		documentationSummary: formatDocumentationSummary(appeal),
-		dueDate: await calculateDueDate(appeal, costsDecision),
-		appealTimetable: formatAppealTimetable(appeal),
-		isParentAppeal,
-		isChildAppeal,
-		planningApplicationReference: appeal.applicationReference,
-		isHearingSetup: !!appeal.hearing,
-		hasHearingAddress: !!appeal.hearing?.addressId,
-		awaitingLinkedAppeal,
-		costsDecision,
-		numberOfResidencesNetChange: appeal.appellantCase?.numberOfResidencesNetChange ?? null
 	};
 };
 
@@ -272,61 +229,9 @@ const getIdsOfReferencedAppeals = (otherAppeals, currentAppealRef) => {
 	return relevantIds;
 };
 
-/**
- *
- * @param {DBUserAppeal} appeal
- * @param {AppealRelationship[]} linkedAppeals
- * @param {boolean} isParentAppeal
- * @param {boolean} isChildAppeal
- * @returns {Promise<*[]|[{appeal, isParentAppeal, isChildAppeal, awaitingLinkedAppeal}]>}
- */
-const formatLinkedAppealData = async function (
-	appeal,
-	linkedAppeals,
-	isParentAppeal,
-	isChildAppeal
-) {
-	// Do not add child appeals here as they will be grouped with their parent appeals below
-	const myAppealData = isChildAppeal
-		? []
-		: [{ appeal, isParentAppeal, isChildAppeal, awaitingLinkedAppeal: false }];
-	if (isParentAppeal) {
-		const childAppeals = isChildAppeal
-			? []
-			: await Promise.all(
-					linkedAppeals.map(async (linkedAppeal) => {
-						if (linkedAppeal.childId) {
-							const childAppeal = await appealRepository.getAppealById(
-								Number(linkedAppeal.childId)
-							);
-							return {
-								// @ts-ignore
-								appeal: childAppeal,
-								isParentAppeal: false,
-								// @ts-ignore
-								isChildAppeal: true
-							};
-						}
-					})
-			  );
-		if (childAppeals?.length) {
-			// @ts-ignore
-			myAppealData.push(...childAppeals);
-		}
-	}
-	return myAppealData
-		.filter((appealData) => appealData)
-		.map((appealData) => ({
-			...appealData,
-			awaitingLinkedAppeal: isAwaitingLinkedAppeal(appealData.appeal, myAppealData)
-		}));
-};
-
 export {
 	formatAppeal,
 	formatDocumentationSummary,
-	formatLinkedAppealData,
-	formatMyAppeal,
 	formatPersonalListItem,
 	getIdsOfReferencedAppeals
 };
