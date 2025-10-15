@@ -1,4 +1,5 @@
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
+import changeProcedureTypeRouter from '#appeals/appeal-details/change-procedure-type/change-procedure-type.router.js';
 import { permissionNames } from '#environment/permissions.js';
 import { extractAndProcessDocumentDateErrors } from '#lib/validators/date-input.validator.js';
 import { asyncHandler } from '@pins/express';
@@ -11,7 +12,6 @@ import {
 import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
 import { validateAppeal } from '../appeal-details.middleware.js';
 import changeLpaRouter from '../change-appeal-details/local-planning-authority/local-planning-authority.router.js';
-import changeProcedureTypeRouter from '../change-appeal-procedure-type/change-appeal-procedure-type.router.js';
 import greenBeltRouter from '../green-belt/green-belt.router.js';
 import inspectorAccessRouter from '../inspector-access/inspector-access.router.js';
 import outcomeInvalidRouter from '../invalid-appeal/invalid-appeal.router.js';

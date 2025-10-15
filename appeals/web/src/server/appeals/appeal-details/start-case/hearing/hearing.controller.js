@@ -1,4 +1,4 @@
-import { appealProcedureToLabelText } from '#appeals/appeal-details/change-appeal-procedure-type/check-and-confirm/check-and-confirm.mapper.js';
+import { appealProcedureToLabelText } from '#appeals/appeal-details/change-procedure-type/change-procedure-check-and-confirm/change-procedure-check-and-confirm.mapper.js';
 import { sessionValuesToDateTime } from '#appeals/appeal-details/hearing/setup/set-up-hearing.controller.js';
 import { hearingDatePage } from '#appeals/appeal-details/hearing/setup/set-up-hearing.mapper.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';

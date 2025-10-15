@@ -56,8 +56,9 @@ describe('calculateDueDate Tests', () => {
 	test('maps STATE_TARGET_READY_TO_START status', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.READY_TO_START;
 		mockAppeal.caseExtensionDate = new Date('2023-02-01');
+		mockAppeal.appellantCase = { appellantCaseValidationOutcome: { name: 'Incomplete' } };
 		// @ts-ignore
-		const dueDate = await calculateDueDate(mockAppeal, 'Incomplete');
+		const dueDate = await calculateDueDate(mockAppeal);
 		expect(dueDate).toEqual(new Date('2023-02-01'));
 	});
 
@@ -238,10 +239,35 @@ describe('calculateDueDate Tests', () => {
 
 	test('handles STATE_TARGET_COMPLETE', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.COMPLETE;
+		mockAppeal.appellantCase = { numberOfResidencesNetChange: 5 };
 
 		// @ts-ignore
 		const dueDate = await calculateDueDate(mockAppeal, '', {});
 		expect(dueDate).toBeNull();
+	});
+
+	describe('handles WITHDRAWN', () => {
+		test('return null where costs decisions do not exist', async () => {
+			const mockCostDecision = {
+				awaitingAppellantCostsDecision: false,
+				awaitingLpaCostsDecision: false
+			};
+			mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.WITHDRAWN;
+
+			expect(await calculateDueDate(mockAppeal, mockCostDecision)).toBeNull();
+		});
+
+		test('returns dueDate where costs decisions exist', async () => {
+			const createdAtPlusFiveDate = new Date('2024-01-16T16:14:31.387Z');
+			const mockCostDecision = {
+				awaitingAppellantCostsDecision: true,
+				awaitingLpaCostsDecision: true
+			};
+			mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.WITHDRAWN;
+
+			const dueDate = await calculateDueDate(mockAppeal, mockCostDecision);
+			expect(dueDate).toEqual(createdAtPlusFiveDate);
+		});
 	});
 
 	test('handles unexpected status (default case)', async () => {

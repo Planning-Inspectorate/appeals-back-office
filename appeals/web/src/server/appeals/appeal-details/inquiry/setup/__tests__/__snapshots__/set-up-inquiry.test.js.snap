@@ -236,14 +236,14 @@ exports[`set up inquiry GET /inquiry/setup/date should match the snapshot 1`] = 
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="inquiry-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="inquiry-date-day" name="inquiry-date-day" type="text" value="" inputmode="numeric">
+                                            id="inquiry-date-day" name="inquiry-date-day" type="text" value="19" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="inquiry-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="inquiry-date-month" name="inquiry-date-month" type="text" value=""
+                                            id="inquiry-date-month" name="inquiry-date-month" type="text" value="03"
                                             inputmode="numeric">
                                         </div>
                                     </div>
@@ -251,7 +251,8 @@ exports[`set up inquiry GET /inquiry/setup/date should match the snapshot 1`] = 
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="inquiry-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
-                                            id="inquiry-date-year" name="inquiry-date-year" type="text" value="" inputmode="numeric">
+                                            id="inquiry-date-year" name="inquiry-date-year" type="text" value="2026"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>

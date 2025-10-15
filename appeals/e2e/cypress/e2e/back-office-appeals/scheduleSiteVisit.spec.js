@@ -15,16 +15,23 @@ describe('Schedule site visit', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	const visitTypeTestCases = ['Accompanied', 'Access required', 'Unaccompanied'];
 
 	visitTypeTestCases.forEach((visitType, index) => {
 		it(`Arrange ${visitType} visit from Site details`, { tags: tag.smoke }, () => {
 			let visitDate = happyPathHelper.validVisitDate();
 
-			cy.createCase().then((caseRef) => {
-				happyPathHelper.assignCaseOfficer(caseRef);
-				happyPathHelper.reviewAppellantCase(caseRef);
-				happyPathHelper.startCase(caseRef);
+			cy.createCase().then((caseObj) => {
+				appeal = caseObj;
+				happyPathHelper.assignCaseOfficer(caseObj);
+				happyPathHelper.reviewAppellantCase(caseObj);
+				happyPathHelper.startCase(caseObj);
 				caseDetailsPage.clickSetUpSiteVisitType();
 				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(visitType));
 				dateTimeSection.enterVisitDate(visitDate);
@@ -39,10 +46,11 @@ describe('Schedule site visit', () => {
 		it(`Arrange ${visitType} site visit with time from case timetable`, () => {
 			let visitDate = happyPathHelper.validVisitDate();
 
-			cy.createCase().then((caseRef) => {
-				happyPathHelper.assignCaseOfficer(caseRef);
-				happyPathHelper.reviewAppellantCase(caseRef);
-				happyPathHelper.startCase(caseRef);
+			cy.createCase().then((caseObj) => {
+				appeal = caseObj;
+				happyPathHelper.assignCaseOfficer(caseObj);
+				happyPathHelper.reviewAppellantCase(caseObj);
+				happyPathHelper.startCase(caseObj);
 				caseDetailsPage.clickArrangeVisitTypeHasCaseTimetable();
 				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(visitType));
 				dateTimeSection.enterVisitDate(visitDate);
@@ -56,10 +64,11 @@ describe('Schedule site visit', () => {
 	});
 
 	it('should show an error when visit type is not selected', () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
 			caseDetailsPage.clickSetUpSiteVisitType();
 
 			// Don’t select a radio button
@@ -78,10 +87,11 @@ describe('Schedule site visit', () => {
 	// end time only required for access required
 	// no times required for unnaccompanied visits
 	it('should show a sucess banner when a past date is entered for the site visit', () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
 			caseDetailsPage.clickSetUpSiteVisitType();
 			caseDetailsPage.selectRadioButtonByValue('Unaccompanied');
 
@@ -98,10 +108,11 @@ describe('Schedule site visit', () => {
 	});
 
 	it('should show an error when the start time is after the end time', () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
 			caseDetailsPage.clickSetUpSiteVisitType();
 			caseDetailsPage.selectRadioButtonByValue('Unaccompanied');
 

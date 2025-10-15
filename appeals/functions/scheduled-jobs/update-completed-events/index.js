@@ -2,17 +2,18 @@ import { postUpdateCompletedEvents } from './back-office-api-client.js';
 
 /**
  *
- * @param {import('@azure/functions').Context} context
+ * @type {import('@azure/functions').TimerHandler}
  */
-export default async function (context) {
-	context.log.info('Updating appeals with completed events');
+export default async function (_, context) {
+	context.info('Updating appeals with completed events');
 
 	try {
 		await postUpdateCompletedEvents();
 	} catch (err) {
-		context.log.info('Update failed');
+		context.info('Update failed');
 		throw err;
 	}
 
-	context.log.info('Successfully updated appeals with completed events');
+	context.info('Successfully updated appeals with completed events');
+	return {};
 }

@@ -1,8 +1,13 @@
 import { databaseConnector } from '#utils/database-connector.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
+import logger from '#utils/logger.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import {
+	deleteAppealsInBatches,
+	getAppealReferencesByIds
+} from './delete-appeal-data/delete-appeal-data.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
@@ -539,6 +544,15 @@ const getAppealsWithCompletedEvents = () =>
 	});
 
 /**
+ * @returns {PrismaPromise<{ id: number; }[]>}
+ */
+const getAppealIdsWithNoPersonalListEntries = () =>
+	databaseConnector.appeal.findMany({
+		select: { id: true },
+		where: { PersonalList: { is: null } }
+	});
+
+/**
  * @param {number} id
  * @param {number|null} assignedTeamId
  * @returns {PrismaPromise<import('#db-client').Appeal>}
@@ -552,6 +566,21 @@ const setAssignedTeamId = (id, assignedTeamId) => {
 			id
 		}
 	});
+};
+
+/**
+ * @param {number[]} appealIds
+ * @returns {Promise<void>}
+ */
+const deleteAppealsByIds = async (appealIds) => {
+	const appeals = await getAppealReferencesByIds(appealIds);
+
+	if (appeals.length === 0) {
+		logger.info('Nothing to delete.');
+		return;
+	}
+
+	await deleteAppealsInBatches(appeals);
 };
 
 export default {
@@ -570,5 +599,7 @@ export default {
 	unlinkAppeal,
 	getAppealsByIds,
 	getAppealsWithCompletedEvents,
-	setAssignedTeamId
+	getAppealsWithNoPersonalListEntries: getAppealIdsWithNoPersonalListEntries,
+	setAssignedTeamId,
+	deleteAppealsByIds
 };

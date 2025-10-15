@@ -2,7 +2,6 @@ import { mapVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.
 import config from '#environment/config.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { dateISOStringToDisplayDate, getOriginalAndLatestLetterDatesObject } from '#lib/dates.js';
-import { generateDecisionDocumentDownloadHtml } from '#lib/mappers/data/appeal/common.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { toSentenceCase } from '#lib/string-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
@@ -78,9 +77,7 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 		if (appealDetails.decision?.outcome) {
 			insetTextRows.push(`Decision: ${toSentenceCase(appealDetails.decision.outcome)}`);
 			insetTextRows.push(
-				letterDateObject.latestFileVersion &&
-					letterDateObject.latestFileVersion?.version > 1 &&
-					config.featureFlags.featureFlagReIssueDecision
+				letterDateObject.latestFileVersion && letterDateObject.latestFileVersion?.version > 1
 					? `Decision issued on ${letterDateObject.originalLetterDate} (updated on ${letterDateObject.latestLetterDate})`
 					: `Decision issued on ${letterDateObject.latestLetterDate}`
 			);
@@ -109,11 +106,7 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 		}
 
 		if (appealDetails.decision?.outcome || hasCostsAppellantDecision || hasCostsLpaDecision) {
-			if (config.featureFlags.featureFlagIssueDecision) {
-				insetTextRows.push(getViewDecisionLink(appealDetails.appealId, request));
-			} else {
-				insetTextRows.push(getViewDecisionLinkOld(appealDetails));
-			}
+			insetTextRows.push(getViewDecisionLink(appealDetails.appealId, request));
 		}
 
 		const html =
@@ -184,20 +177,6 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 
 	// @ts-ignore
 	return statusTagsComponentGroup;
-};
-
-/**
- * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
- * @returns {string}
- */
-const getViewDecisionLinkOld = (appealDetails) => {
-	const decisionDownloadHtml = generateDecisionDocumentDownloadHtml(appealDetails, 'View decision');
-
-	if (decisionDownloadHtml.includes('Virus')) {
-		return `<span class="govuk-body">View decision </span>${decisionDownloadHtml}`;
-	}
-
-	return decisionDownloadHtml;
 };
 
 /**

@@ -1,6 +1,7 @@
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { validateCaseNoteTextArea } from '#appeals/appeal-details/appeals-details.validator.js';
 import { postCaseNote } from '#appeals/appeal-details/case-notes/case-notes.controller.js';
+import changeAppealProcedureTypeRouter from '#appeals/appeal-details/change-procedure-type/change-procedure-type.router.js';
 import { clearUncommittedFilesFromSession } from '#appeals/appeal-documents/appeal-documents.middleware.js';
 import config from '#environment/config.js';
 import { permissionNames } from '#environment/permissions.js';
@@ -21,7 +22,6 @@ import assignUserRouter from './assign-user/assign-user.router.js';
 import { auditRouter } from './audit/audit.router.js';
 import cancelAppealRouter from './cancel/cancel.router.js';
 import changeAppealDetailsRouter from './change-appeal-details/change-appeal-details.router.js';
-import changeAppealProcedureTypeRouter from './change-appeal-procedure-type/change-appeal-procedure-type.router.js';
 import changeAppealTypeMiddleware from './change-appeal-type.middleware.js';
 import costsRouter from './costs/costs.router.js';
 import environmentalAssessmentRouter from './environmental-assessment/environmental-assessment.router.js';
@@ -30,7 +30,6 @@ import inquiryRouter from './inquiry/inquiry.router.js';
 import inspectorAccessRouter from './inspector-access/inspector-access.router.js';
 import internalCorrespondenceRouter from './internal-correspondence/internal-correspondence.router.js';
 import invalidAppealRouter from './invalid-appeal/invalid-appeal.router.js';
-import issueDecisionOldRouter from './issue-decision-old/issue-decision.router.js';
 import issueDecisionRouter from './issue-decision/issue-decision.router.js';
 import linkedAppealsRouter from './linked-appeals/linked-appeals.router.js';
 import lpaQuestionnaireRouter from './lpa-questionnaire/lpa-questionnaire.router.js';
@@ -51,6 +50,7 @@ import updateCaseTeamRouter from './update-case-team/update-case-team.router.js'
 import updateDecisionLetterRouter from './update-decision-letter/update-decision-letter.router.js';
 import withdrawalRouterOld from './withdrawal-old/withdrawal.router.js';
 import withdrawalRouter from './withdrawal/withdrawal.router.js';
+
 const router = createRouter();
 
 router
@@ -108,7 +108,7 @@ router.use(
 	'/:appealId/issue-decision',
 	validateAppeal,
 	assertUserHasPermission(permissionNames.viewCaseList),
-	config.featureFlags.featureFlagIssueDecision ? issueDecisionRouter : issueDecisionOldRouter
+	issueDecisionRouter
 );
 router.use(
 	'/:appealId/change-appeal-type',

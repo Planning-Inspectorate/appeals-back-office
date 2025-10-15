@@ -1,6 +1,6 @@
 module "app_web" {
   #checkov:skip=CKV_TF_1: Use of commit hash are not required for our Terraform modules
-  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-app-service?ref=1.49"
+  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-app-service?ref=1.53"
 
   resource_group_name = azurerm_resource_group.primary.name
   location            = module.primary_region.location
@@ -90,8 +90,6 @@ module "app_web" {
     FEATURE_FLAG_S20                      = var.apps_config.featureFlags.featureFlagS20
     FEATURE_FLAG_CAS                      = var.apps_config.featureFlags.featureFlagCAS
     FEATURE_FLAG_CAS_ADVERT               = var.apps_config.featureFlags.featureFlagCasAdvert
-    FEATURE_FLAG_ISSUE_DECISION           = var.apps_config.featureFlags.featureFlagIssueDecision
-    FEATURE_FLAG_RE_ISSUE_DECISION        = var.apps_config.featureFlags.featureFlagReIssueDecision
     FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT = var.apps_config.featureFlags.featureFlagSimplifyTeamAssignment
     FEATURE_FLAG_CHANGE_APPEAL_TYPE       = var.apps_config.featureFlags.featureFlagChangeAppealType
     FEATURE_FLAG_PDF_DOWNLOAD             = var.apps_config.featureFlags.featureFlagPdfDownload
@@ -103,6 +101,7 @@ module "app_web" {
     FEATURE_FLAG_HEARING_POST_MVP         = var.apps_config.featureFlags.featureFlagHearingPostMvp
     FEATURE_FLAG_AUTO_ASSIGN_TEAM         = var.apps_config.featureFlags.featureFlagAutoAssignTeam
     FEATURE_FLAG_CANCEL_SITE_VISIT        = var.apps_config.featureFlags.featureFlagCancelSiteVisit
+    FEATURE_FLAG_PERSONAL_LIST            = var.apps_config.featureFlags.featureFlagPersonalList
 
     #change LPA
     USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA = var.apps_config.use_system_test_bc_for_change_lpa

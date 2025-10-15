@@ -110,23 +110,30 @@ const timetableItems = [
 	}
 ];
 
-let caseRef;
+let caseObj;
 
 const setupTestCase = () => {
 	cy.login(users.appeals.caseAdmin);
 	cy.createCase({ caseType: 'W', planningObligation: true }).then((ref) => {
-		caseRef = ref;
-		cy.addLpaqSubmissionToCase(caseRef);
-		happyPathHelper.assignCaseOfficer(caseRef);
+		caseObj = ref;
+		appeal = caseObj;
+		cy.addLpaqSubmissionToCase(caseObj);
+		happyPathHelper.assignCaseOfficer(caseObj);
 		caseDetailsPage.checkStatusOfCase('Validation', 0);
-		happyPathHelper.reviewAppellantCase(caseRef);
+		happyPathHelper.reviewAppellantCase(caseObj);
 		caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-		happyPathHelper.startS78InquiryCase(caseRef, 'inquiry');
+		happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');
 		dateTimeSection.clearInquiryDateAndTime();
 	});
 };
 beforeEach(() => {
 	setupTestCase();
+});
+
+let appeal;
+
+afterEach(() => {
+	cy.deleteAppeals(appeal);
 });
 
 it('Can start case as inquiry with address and estimated days', () => {
@@ -156,7 +163,6 @@ it('Can start case as inquiry with address and estimated days', () => {
 
 	// Verify timetable rows
 	caseDetailsPage.verifyTimeTableRows(timeTableRows);
-
 	overviewSectionPage.verifyCaseOverviewDetails(overviewDetails);
 
 	// Verify order of sections
@@ -223,11 +229,11 @@ it('Can update inquiry date', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		inquiryDate.setHours(14);
-		cy.addInquiryViaApi(caseRef, inquiryDate);
+		cy.addInquiryViaApi(caseObj, inquiryDate);
 
 		// find case and open inqiiry section
 		cy.visit(urlPaths.appealsList);
-		listCasesPage.clickAppealByRef(caseRef);
+		listCasesPage.clickAppealByRef(caseObj);
 
 		// generate new date and update it in inquiry
 		cy.getBusinessActualDate(new Date(), 25).then((newInquiryDate) => {
@@ -255,11 +261,11 @@ it('Can update inquiry time', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		inquiryDate.setHours(14);
-		cy.addInquiryViaApi(caseRef, inquiryDate);
+		cy.addInquiryViaApi(caseObj, inquiryDate);
 
 		// find case and open inqiiry section
 		cy.visit(urlPaths.appealsList);
-		listCasesPage.clickAppealByRef(caseRef);
+		listCasesPage.clickAppealByRef(caseObj);
 
 		// generate new date with upfdated time value and update it in inquiry
 		const newInquiryDate = new Date(inquiryDate);
@@ -286,11 +292,11 @@ it('Can update inquiry time', () => {
 it('Can update inquiry estimated days when already set - using do you know link', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-		cy.addInquiryViaApi(caseRef, inquiryDate);
+		cy.addInquiryViaApi(caseObj, inquiryDate);
 
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
-		listCasesPage.clickAppealByRef(caseRef);
+		listCasesPage.clickAppealByRef(caseObj);
 
 		// change inquiry estimated days
 		const newEstimatedDays = estimatedInquiryDays;
@@ -319,11 +325,11 @@ it('Can update inquiry estimated days when already set - using do you know link'
 it('Can update inquiry estimated days when already set - using estimated days link', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-		cy.addInquiryViaApi(caseRef, inquiryDate);
+		cy.addInquiryViaApi(caseObj, inquiryDate);
 
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
-		listCasesPage.clickAppealByRef(caseRef);
+		listCasesPage.clickAppealByRef(caseObj);
 
 		// change inquiry estimated days
 		const newEstimatedDays = estimatedInquiryDays;
@@ -351,11 +357,11 @@ it('Can update inquiry estimated days when not already set', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		// setting estimate days to '0' has effect of 'No' in inquiry UI
-		cy.addInquiryViaApi(caseRef, inquiryDate, { estimatedDays: '0' });
+		cy.addInquiryViaApi(caseObj, inquiryDate, { estimatedDays: '0' });
 
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
-		listCasesPage.clickAppealByRef(caseRef);
+		listCasesPage.clickAppealByRef(caseObj);
 
 		// change inquiry estimated days
 		const newEstimatedDays = estimatedInquiryDays;
@@ -384,11 +390,11 @@ it('Can update inquiry estimated days when not already set', () => {
 it('Can update inquiry address', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-		cy.addInquiryViaApi(caseRef, inquiryDate);
+		cy.addInquiryViaApi(caseObj, inquiryDate);
 
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
-		listCasesPage.clickAppealByRef(caseRef);
+		listCasesPage.clickAppealByRef(caseObj);
 
 		// change inquiry address
 		inquirySectionPage.clickChangeLink(inquirySectionPage.inquirySectionLinks.address);
@@ -411,11 +417,11 @@ it('Can update inquiry address', () => {
 it('Can update answer from CYA page - change address', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-		cy.addInquiryViaApi(caseRef, inquiryDate);
+		cy.addInquiryViaApi(caseObj, inquiryDate);
 
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
-		listCasesPage.clickAppealByRef(caseRef);
+		listCasesPage.clickAppealByRef(caseObj);
 
 		// change inquiry address to reach cya page
 		const newAddress = {
@@ -441,11 +447,11 @@ it('Can update answer from CYA page - change address', () => {
 
 it('should not accept invalid input - inquiry Estimate', () => {
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-		cy.addInquiryViaApi(caseRef, inquiryDate);
+		cy.addInquiryViaApi(caseObj, inquiryDate);
 	});
 
 	cy.visit(urlPaths.appealsList);
-	listCasesPage.clickAppealByRef(caseRef);
+	listCasesPage.clickAppealByRef(caseObj);
 	caseDetailsPage.clickInquiryEstimateLink();
 
 	// Test empty fields
@@ -476,11 +482,11 @@ it('should not accept invalid input - inquiry Estimate', () => {
 it('should add inquiry Estimates', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-		cy.addInquiryViaApi(caseRef, inquiryDate);
+		cy.addInquiryViaApi(caseObj, inquiryDate);
 	});
 
 	cy.visit(urlPaths.appealsList);
-	listCasesPage.clickAppealByRef(caseRef);
+	listCasesPage.clickAppealByRef(caseObj);
 	caseDetailsPage.clickInquiryEstimateLink();
 
 	// Add initial estimates and verify
@@ -523,7 +529,7 @@ it('should add inquiry Estimates', () => {
 		inquirySectionPage.verifyInquiryEstimate(`${type}-time`, updatedEstimates[`${type}Time`]);
 	});
 
-	cy.loadAppealDetails(caseRef).then((appealDetails) => {
+	cy.loadAppealDetails(caseObj).then((appealDetails) => {
 		const { preparationTime, sittingTime, reportingTime } = appealDetails?.inquiryEstimate || {};
 		expect(preparationTime).to.eq(updatedEstimates.preparationTime);
 		expect(sittingTime).to.eq(updatedEstimates.sittingTime);

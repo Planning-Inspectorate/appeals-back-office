@@ -1,8 +1,11 @@
 import { calculateIssueDecisionDeadline } from '#endpoints/appeals/appeals.service.js';
 import { currentStatus } from '#utils/current-status.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { add, addBusinessDays } from 'date-fns';
 
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
 /** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
 /** @typedef {DBAppeals[0]} DBAppeal */
@@ -19,16 +22,33 @@ const approxStageCompletion = {
 };
 
 /**
+ *
+ * @param {string | null | undefined } appealType
+ * @returns boolean
+ */
+const isNetResidencesAppealType = (appealType) => {
+	return (
+		(isFeatureActive(FEATURE_FLAG_NAMES.NET_RESIDENCE) && appealType === APPEAL_TYPE.S78) ||
+		(isFeatureActive(FEATURE_FLAG_NAMES.NET_RESIDENCE_S20) &&
+			appealType === APPEAL_TYPE.PLANNED_LISTED_BUILDING)
+	);
+};
+
+/**
  * Map each appeal to include a due date.
- * @param {DBAppeal | DBUserAppeal} appeal
- * @param {string} appellantCaseStatus
- * @param {CostsDecision} [costsDecision]
+ * @param {DBAppeal | DBUserAppeal | Appeal} appeal
+ * @param {CostsDecision | null} [costsDecision]
  * @returns {Promise<Date | null | undefined>}
  */
-export const calculateDueDate = async (appeal, appellantCaseStatus, costsDecision) => {
+export const calculateDueDate = async (appeal, costsDecision) => {
+	// @ts-ignore
+	const isChildAppeal = !!appeal.parentAppeals?.length;
 	switch (currentStatus(appeal)) {
 		case APPEAL_CASE_STATUS.READY_TO_START:
-			if (appellantCaseStatus === 'Incomplete' && appeal.caseExtensionDate) {
+			if (
+				appeal.appellantCase?.appellantCaseValidationOutcome?.name === 'Incomplete' &&
+				appeal.caseExtensionDate
+			) {
 				return new Date(appeal.caseExtensionDate);
 			}
 			return add(new Date(appeal.caseCreatedDate), {
@@ -45,6 +65,8 @@ export const calculateDueDate = async (appeal, appellantCaseStatus, costsDecisio
 			return add(new Date(appeal.caseCreatedDate), {
 				days: approxStageCompletion.STATE_TARGET_ASSIGN_CASE_OFFICER
 			});
+		case APPEAL_CASE_STATUS.VALIDATION:
+			return new Date(appeal.caseCreatedDate);
 		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION: {
 			if (appeal.siteVisit) {
 				return await calculateIssueDecisionDeadline(
@@ -66,6 +88,13 @@ export const calculateDueDate = async (appeal, appellantCaseStatus, costsDecisio
 					(state) => state.status === APPEAL_CASE_STATUS.COMPLETE
 				);
 				return addBusinessDays(new Date(appealStatus?.createdAt || ''), 5);
+			}
+			if (
+				appeal.appellantCase?.numberOfResidencesNetChange === null &&
+				isNetResidencesAppealType(appeal.appealType?.type) &&
+				!isChildAppeal
+			) {
+				return new Date();
 			}
 			return null;
 		}
@@ -118,6 +147,18 @@ export const calculateDueDate = async (appeal, appellantCaseStatus, costsDecisio
 				(state) => state.status === APPEAL_CASE_STATUS.AWAITING_TRANSFER
 			);
 			return addBusinessDays(new Date(appealStatus?.createdAt || ''), 5);
+		}
+		case APPEAL_CASE_STATUS.WITHDRAWN: {
+			if (
+				costsDecision?.awaitingAppellantCostsDecision ||
+				costsDecision?.awaitingLpaCostsDecision
+			) {
+				const appealStatus = appeal.appealStatus.find(
+					(state) => state.status === APPEAL_CASE_STATUS.WITHDRAWN
+				);
+				return addBusinessDays(new Date(appealStatus?.createdAt || ''), 5);
+			}
+			return null;
 		}
 		default: {
 			return undefined;

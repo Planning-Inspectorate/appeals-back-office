@@ -17,6 +17,7 @@ export const viewAppealDetails = async (request, response) => {
 	}
 	session.currentAppeal = currentAppeal;
 	delete session.reviewOutcome;
+	delete session.changeAppealType;
 
 	const appealCaseNotes = await getAppealCaseNotes(
 		request.apiClient,

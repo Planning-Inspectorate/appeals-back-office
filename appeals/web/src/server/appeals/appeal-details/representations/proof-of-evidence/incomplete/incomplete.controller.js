@@ -74,7 +74,6 @@ export const postReasons = async (request, response) => {
 		params: { appealId, proofOfEvidenceType },
 		errors
 	} = request;
-
 	if (errors) {
 		return renderReasons(request, response);
 	}
@@ -149,7 +148,7 @@ export const renderConfirm = async (
 					html: attachmentsList?.length ? attachmentsList : undefined,
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceType}/change/${folderId}/?backUrl=/proof-of-evidence/${proofOfEvidenceType}/incomplete/confirm`,
+							href: `/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceType}/manage-documents/${folderId}/?backUrl=/proof-of-evidence/${proofOfEvidenceType}/incomplete/confirm`,
 							visuallyHiddenText: 'supporting documents'
 						}
 					}

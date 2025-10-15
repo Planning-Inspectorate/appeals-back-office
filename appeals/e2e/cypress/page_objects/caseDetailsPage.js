@@ -62,7 +62,9 @@ export class CaseDetailsPage extends Page {
 		hearingBannerAddressLink: 'add-hearing-address',
 		pageHeading: 'h1',
 		changeInquiryDate: 'change-inquiry-date',
-		changeInquiryNumberOfDays: 'change-inquiry-expected-number-of-days'
+		changeInquiryNumberOfDays: 'change-inquiry-expected-number-of-days',
+		addAppellantWithdrawal: 'add-costs-appellant-withdrawal',
+		addLpaWithdrawal: 'add-costs-lpa-withdrawal'
 	};
 
 	fixturesPath = 'cypress/fixtures/';
@@ -147,10 +149,43 @@ export class CaseDetailsPage extends Page {
 		manageMainPartyCorrespondence: () =>
 			cy.getByData(this._cyDataSelectors.manageMainPartyCorrespondence),
 		decisionOutcomeText: () => cy.get('.govuk-inset-text'),
-		manageCostDecision: () =>
+		manageAppellantCostApplication: () =>
 			cy
 				.get('.govuk-table__row')
 				.contains('Appellant application')
+				.siblings()
+				.eq(1)
+				.children()
+				.first()
+				.children()
+				.first(), //Returns the manage link next in the Costs decsion row under costs section
+
+		manageAppellantCostWithdrawal: () =>
+			cy
+				.get('.govuk-table__row')
+				.contains('Appellant withdrawal')
+				.siblings()
+				.eq(1)
+				.children()
+				.first()
+				.children()
+				.first(), //Returns the manage link next in the Costs decsion row under costs section
+
+		manageLpaCostApplication: () =>
+			cy
+				.get('.govuk-table__row')
+				.contains('LPA application')
+				.siblings()
+				.eq(1)
+				.children()
+				.first()
+				.children()
+				.first(), //Returns the manage link next in the Costs decsion row under costs section
+
+		manageLpaCostWithdrawal: () =>
+			cy
+				.get('.govuk-table__row')
+				.contains('LPA withdrawal')
 				.siblings()
 				.eq(1)
 				.children()
@@ -202,12 +237,14 @@ export class CaseDetailsPage extends Page {
 		postcode: () => cy.get('#post-code'),
 		changeInquiryDate: () => cy.getByData(this._cyDataSelectors.changeInquiryDate),
 		changeInquiryExpectedDays: () => cy.getByData(this._cyDataSelectors.changeInquiryNumberOfDays),
-		relatedAppealValue: (caseRef) => cy.get(`[data-cy="related-appeal-${caseRef}"]`),
+		relatedAppealValue: (caseObj) => cy.get(`[data-cy="related-appeal-${caseObj}"]`),
 		estimatedPreparationTime: () => cy.get('#preparation-time'),
 		estimatedSittingTime: () => cy.get('#sitting-time'),
 		estimatedReportingTime: () => cy.get('#reporting-time'),
 		caseDetailsInquiryEstimateLink: () => cy.get('#addInquiryEstimates'),
-		caseOfficerValue: () => cy.get('.appeal-case-officer .govuk-summary-list__value')
+		caseOfficerValue: () => cy.get('.appeal-case-officer .govuk-summary-list__value'),
+		addAppellantWithdrawal: () => cy.getByData(this._cyDataSelectors.addAppellantWithdrawal),
+		addLpaWithdrawal: () => cy.getByData(this._cyDataSelectors.addLpaWithdrawal)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -217,8 +254,20 @@ export class CaseDetailsPage extends Page {
 		this.elements.viewLpaQuestionnaire().click();
 	}
 
-	clickManageDocsCostDecision() {
-		this.elements.manageCostDecision().click();
+	clickManageAppellantCostApplication() {
+		this.elements.manageAppellantCostApplication().click();
+	}
+
+	clickManageAppellanCostWithdrawal() {
+		this.elements.manageAppellantCostWithdrawal().click();
+	}
+
+	clickManageLpaCostApplication() {
+		this.elements.manageLpaCostApplication().click();
+	}
+
+	clickManageLpaCostWithdrawal() {
+		this.elements.manageLpaCostWithdrawal().click();
 	}
 
 	checkDocVersionNumber(versionNumber) {
@@ -388,6 +437,14 @@ export class CaseDetailsPage extends Page {
 		this.elements.addAppellantApplication().click();
 	}
 
+	clickAddAppellantWithdrawal() {
+		this.elements.addAppellantWithdrawal().click();
+	}
+
+	clickAddLpaWithdrawal() {
+		this.elements.addLpaWithdrawal().click();
+	}
+
 	clickChangeSiteOwnership() {
 		this.elements.changeSiteOwnership().click();
 	}
@@ -470,13 +527,13 @@ export class CaseDetailsPage extends Page {
 		this.elements.costDecisionStatus().contains(text);
 	}
 
-	clickRemoveRelatedAppealByRef(caseRefToRelate) {
-		cy.log(caseRefToRelate);
-		cy.getByData('remove-appeal-' + caseRefToRelate).click();
+	clickRemoveRelatedAppealByRef(caseObjToRelate) {
+		cy.log(caseObjToRelate);
+		cy.getByData('remove-appeal-' + caseObjToRelate).click();
 	}
 
-	clickLinkedAppeal(caseRef) {
-		cy.getByData(this._cyDataSelectors.linkedAppeal + caseRef).click();
+	clickLinkedAppeal(caseObj) {
+		cy.getByData(this._cyDataSelectors.linkedAppeal + caseObj.reference).click();
 	}
 
 	clickRemoveFileUpload(fileName) {
@@ -501,8 +558,8 @@ export class CaseDetailsPage extends Page {
 		this.basePageElements.linkByText(text).click();
 	}
 
-	clickSiteVisitBanner(caseRef) {
-		this.elements.siteVisitBanner(caseRef).click();
+	clickSiteVisitBanner(caseObj) {
+		this.elements.siteVisitBanner(caseObj).click();
 	}
 
 	clickRowChangeLink(row) {
@@ -583,8 +640,8 @@ export class CaseDetailsPage extends Page {
 	 ************************ Verification ************************
 	 ****************************************************************/
 
-	assertRelatedAppealValue(caseRef) {
-		this.elements.relatedAppealValue(caseRef).should('be.visible');
+	assertRelatedAppealValue(caseObj) {
+		this.elements.relatedAppealValue(caseObj).should('be.visible');
 	}
 
 	checkAdditonalDocsAppellantCase(value) {
@@ -743,8 +800,8 @@ export class CaseDetailsPage extends Page {
 			});
 	}
 
-	verifyAppealRefOnCaseDetails(caseRef) {
-		this.elements.getAppealRefCaseDetails().contains(caseRef);
+	verifyAppealRefOnCaseDetails(caseObj) {
+		this.elements.getAppealRefCaseDetails().contains(caseObj);
 	}
 
 	verifyCheckYourAnswers(label, value) {
@@ -820,8 +877,9 @@ export class CaseDetailsPage extends Page {
 		this.clickButtonByText('Update timetable due dates');
 	}
 
-	acceptLpaStatement(caseRef, updateAllocation, representation) {
-		cy.addRepresentation(caseRef, 'lpaStatement', null, representation).then((caseRef) => {
+	acceptLpaStatement(caseObj, updateAllocation, representation) {
+		cy.log('problem is here');
+		cy.addRepresentation(caseObj, 'lpaStatement', null, representation).then((caseObj) => {
 			cy.reload();
 		});
 		this.elements.lpaStatementReviewLink().click();

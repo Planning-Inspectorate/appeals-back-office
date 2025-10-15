@@ -176,7 +176,7 @@ describe('change-appeal-type', () => {
 			);
 		});
 
-		it('should redirect to update appeal page if the required field is equal to no and the appeal type is in CBOS', async () => {
+		it('should redirect to update appeal page if the required field is equal to no and the appeal type is in Manage appeals', async () => {
 			nock('http://test/')
 				.get('/appeals/appeal-types?filterEnabled=true')
 				.reply(200, appealTypesData);
@@ -197,7 +197,7 @@ describe('change-appeal-type', () => {
 			);
 		});
 
-		it('should redirect to transfer appeal page if the required field is equal to no and appeal type is not in CBOS', async () => {
+		it('should redirect to transfer appeal page if the required field is equal to no and appeal type is not in Manage appeals', async () => {
 			nock('http://test/')
 				.get('/appeals/appeal-types?filterEnabled=true')
 				.reply(200, appealTypesData);
@@ -612,14 +612,26 @@ describe('change-appeal-type', () => {
 	});
 
 	describe('GET /change-appeal-type/check-change-appeal-final-date', () => {
+		const appellantEmailTemplate = {
+			renderedHtml: '<p>This is the email content</p>'
+		};
 		beforeEach(async () => {
 			// Ensure changeAppealType is set in session
 			await request.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`).send({
 				appealType: 1
 			});
+			nock('http://test/')
+				.post(`/appeals/notify-preview/appeal-type-change-non-has.content.md`)
+				.reply(200, appellantEmailTemplate);
 		});
 
 		it('should render the check change appeal final date page', async () => {
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
+
 			const response = await request.get(
 				`${baseUrl}/1${changeAppealTypePath}${checkChangeAppealFinalDatePath}`
 			);

@@ -1,8 +1,8 @@
-import { getFoldersForAppeal } from '#endpoints/documents/documents.service.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import { calculateDueDate } from '#utils/calculate-due-date.js';
-import { currentStatus } from '#utils/current-status.js';
+import { completedStateList, currentStatus } from '#utils/current-status.js';
 import formatAddress from '#utils/format-address.js';
+import { formatCostsDecision } from '#utils/format-costs-decision.js';
 import {
 	formatAppellantCaseDocumentationStatus,
 	formatLpaQuestionnaireDocumentationStatus,
@@ -15,7 +15,7 @@ import {
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
 import isFPA from '@pins/appeals/utils/is-fpa.js';
-import { APPEAL_CASE_STAGE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { countBy } from 'lodash-es';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
@@ -44,6 +44,7 @@ const formatAppeal = (appeal, linkedAppeals) => {
 		appealReference: appeal.reference,
 		appealSite: formatAddress(appeal.address),
 		appealStatus: currentStatus(appeal),
+		completedStateList: completedStateList(appeal),
 		appealType: appeal.appealType?.type,
 		procedureType: appeal.procedureType?.name,
 		createdAt: appeal.caseCreatedDate,
@@ -81,17 +82,14 @@ const formatMyAppeal = async ({
 		appealReference: appeal.reference,
 		appealSite: formatAddress(appeal.address),
 		appealStatus: currentStatus(appeal),
+		completedStateList: completedStateList(appeal),
 		appealType: appeal.appealType?.type,
 		procedureType: appeal.procedureType?.name,
 		createdAt: appeal.caseCreatedDate,
 		localPlanningDepartment: appeal.lpa?.name || '',
 		lpaQuestionnaireId: appeal.lpaQuestionnaire?.id || null,
 		documentationSummary: formatDocumentationSummary(appeal),
-		dueDate: await calculateDueDate(
-			appeal,
-			appeal.appellantCase?.appellantCaseValidationOutcome?.name || '',
-			costsDecision
-		),
+		dueDate: await calculateDueDate(appeal, costsDecision),
 		appealTimetable: formatAppealTimetable(appeal),
 		isParentAppeal,
 		isChildAppeal,
@@ -105,37 +103,50 @@ const formatMyAppeal = async ({
 };
 
 /**
- * @param {DBAppeal | DBUserAppeal | Appeal} appeal
- * @returns {Promise<CostsDecision>}
- * */
-const formatCostsDecision = async (appeal) => {
-	const costsFolders = await getFoldersForAppeal(appeal.id, APPEAL_CASE_STAGE.COSTS);
-	const costsDecision = costsFolders.reduce((costsDecision, folder) => {
-		const costsType = folder.path.replace('costs/', '');
-		const hasDocuments = folder.documents?.filter((doc) => !doc.isDeleted).length > 0;
-		return { ...costsDecision, [costsType]: hasDocuments };
-	}, {});
-	const {
-		// @ts-ignore
-		appellantCostsApplication = false,
-		// @ts-ignore
-		appellantCostsWithdrawal = false,
-		// @ts-ignore
-		appellantCostsDecisionLetter = false,
-		// @ts-ignore
-		lpaCostsApplication = false,
-		// @ts-ignore
-		lpaCostsWithdrawal = false,
-		// @ts-ignore
-		lpaCostsDecisionLetter = false
-	} = (currentStatus(appeal) === APPEAL_CASE_STATUS.COMPLETE && costsDecision) || {};
+ *
+ * @param {Object} options
+ * @param {number} options.appealId
+ * @param {DBUserAppeal} options.appeal
+ * @param {Date} options.dueDate
+ * @param {String} options.linkType
+ * @param {Boolean} [options.awaitingLinkedAppeal]
+ * @returns {Promise<AppealListResponse>}
+ */
+const formatPersonalListItem = async ({
+	appealId,
+	appeal,
+	dueDate,
+	linkType,
+	awaitingLinkedAppeal = false
+}) => {
+	const { reference, lpaQuestionnaire, appellantCase, hearing, procedureType, appealType } = appeal;
+	const appealStatus = currentStatus(appeal);
+	const appealIsCompleteOrWithdrawn =
+		appealStatus === APPEAL_CASE_STATUS.COMPLETE || appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
 
-	const awaitingAppellantCostsDecision =
-		!appellantCostsDecisionLetter && appellantCostsApplication && !appellantCostsWithdrawal;
-	const awaitingLpaCostsDecision =
-		!lpaCostsDecisionLetter && lpaCostsApplication && !lpaCostsWithdrawal;
-
-	return { awaitingAppellantCostsDecision, awaitingLpaCostsDecision };
+	return {
+		appealId,
+		appealReference: reference,
+		appealSite: formatAddress(appeal.address),
+		appealStatus,
+		completedStateList: completedStateList(appeal),
+		appealType: appealType?.type,
+		procedureType: procedureType?.name,
+		createdAt: appeal.caseCreatedDate,
+		localPlanningDepartment: appeal.lpa?.name || '',
+		lpaQuestionnaireId: lpaQuestionnaire?.id ?? null,
+		documentationSummary: formatDocumentationSummary(appeal),
+		dueDate,
+		appealTimetable: formatAppealTimetable(appeal),
+		isParentAppeal: linkType === 'parent',
+		isChildAppeal: linkType === 'child',
+		planningApplicationReference: appeal.applicationReference,
+		isHearingSetup: !!hearing,
+		hasHearingAddress: !!hearing?.addressId,
+		awaitingLinkedAppeal,
+		costsDecision: appealIsCompleteOrWithdrawn ? await formatCostsDecision(appeal) : null,
+		numberOfResidencesNetChange: appellantCase?.numberOfResidencesNetChange ?? null
+	};
 };
 
 /**
@@ -164,7 +175,7 @@ const formatDocumentationSummary = (appeal) => {
 		appellantCase: {
 			status: formatAppellantCaseDocumentationStatus(appeal),
 			dueDate: appeal.caseExtensionDate && appeal.caseExtensionDate?.toISOString(),
-			receivedAt: appeal.caseCreatedDate.toISOString()
+			receivedAt: appeal.caseCreatedDate?.toISOString()
 		},
 		lpaQuestionnaire: {
 			status: formatLpaQuestionnaireDocumentationStatus(appeal),
@@ -313,8 +324,9 @@ const formatLinkedAppealData = async function (
 
 export {
 	formatAppeal,
-	formatCostsDecision,
+	formatDocumentationSummary,
 	formatLinkedAppealData,
 	formatMyAppeal,
+	formatPersonalListItem,
 	getIdsOfReferencedAppeals
 };

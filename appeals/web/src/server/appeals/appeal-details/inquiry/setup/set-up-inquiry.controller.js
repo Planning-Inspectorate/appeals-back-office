@@ -4,6 +4,7 @@ import {
 	getTodaysISOString
 } from '#lib/dates.js';
 import logger from '#lib/logger.js';
+import { resolveAppealId } from '#lib/resolveAppealId.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { isEmpty, isEqual, pick } from 'lodash-es';
 import {
@@ -116,8 +117,8 @@ const sessionValuesToDateTime = (sessionValues) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getInquiryDate = async (request, response) => {
-	const sessionValues = request.session['setUpInquiry'] || {};
-
+	const id = resolveAppealId(request);
+	const sessionValues = request.session['setUpInquiry']?.[id] || {};
 	return renderInquiryDate(request, response, 'setup', sessionValuesToDateTime(sessionValues));
 };
 
@@ -155,11 +156,13 @@ export const renderInquiryDate = async (request, response, action, values) => {
  */
 export const postInquiryDate = async (request, response) => {
 	if (request.errors) {
+		const id = resolveAppealId(request);
+		const sessionValues = request.session['setUpInquiry']?.[id];
 		return renderInquiryDate(
 			request,
 			response,
 			'setup',
-			sessionValuesToDateTime(request.session['setUpInquiry'] || {})
+			sessionValuesToDateTime(sessionValues || {})
 		);
 	}
 
@@ -192,7 +195,9 @@ export const postChangeInquiryDate = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getInquiryEstimation = async (request, response) => {
-	return renderInquiryEstimation(request, response, 'setup', request.session.setUpInquiry || {});
+	const id = resolveAppealId(request);
+	const sessionValues = request.session['setUpInquiry']?.[id] || {};
+	return renderInquiryEstimation(request, response, 'setup', sessionValues || {});
 };
 
 /**
@@ -228,7 +233,8 @@ export const renderInquiryEstimation = async (request, response, action, values)
  */
 export const postInquiryEstimation = async (request, response) => {
 	if (request.errors) {
-		const sessionValues = request.session.setUpInquiry || {};
+		const id = resolveAppealId(request);
+		const sessionValues = request.session['setUpInquiry']?.[id] || {};
 
 		return renderInquiryEstimation(request, response, 'setup', sessionValues);
 	}
@@ -257,7 +263,9 @@ export const postChangeInquiryEstimation = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getInquiryAddress = async (request, response) => {
-	return renderInquiryAddress(request, response, 'setup', request.session.setUpInquiry || {});
+	const id = resolveAppealId(request);
+	const sessionValues = request.session['setUpInquiry']?.[id] || {};
+	return renderInquiryAddress(request, response, 'setup', sessionValues || {});
 };
 
 /**
@@ -306,9 +314,9 @@ export const postInquiryAddress = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getInquiryAddressDetails = async (request, response) => {
-	const values = request.session['setUpInquiry'] || {};
-
-	return renderInquiryAddressDetails(request, response, values, 'setup');
+	const id = resolveAppealId(request);
+	const sessionValues = request.session['setUpInquiry']?.[id] || {};
+	return renderInquiryAddressDetails(request, response, sessionValues, 'setup');
 };
 
 /**
@@ -334,8 +342,9 @@ export const renderInquiryAddressDetails = async (request, response, values, act
  */
 export const postInquiryAddressDetails = async (request, response) => {
 	if (request.errors) {
-		const values = request.session['setUpInquiry'] || {};
-		return renderInquiryAddressDetails(request, response, values, 'setup');
+		const id = resolveAppealId(request);
+		const sessionValues = request.session['setUpInquiry']?.[id] || {};
+		return renderInquiryAddressDetails(request, response, sessionValues, 'setup');
 	}
 
 	const { appealId } = request.currentAppeal;
@@ -350,9 +359,9 @@ export const postInquiryAddressDetails = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getInquiryDueDates = async (request, response) => {
-	const values = request.session['setUpInquiry'] || {};
-
-	return renderInquiryDueDates(request, response, 'setup', values);
+	const id = resolveAppealId(request);
+	const sessionValues = request.session['setUpInquiry']?.[id] || {};
+	return renderInquiryDueDates(request, response, 'setup', sessionValues);
 };
 
 /**
@@ -360,8 +369,9 @@ export const getInquiryDueDates = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getChangeInquiryDueDates = async (request, response) => {
-	const values = request.session['changeInquiry'] || {};
-	return renderInquiryDueDates(request, response, 'change', values);
+	const id = resolveAppealId(request);
+	const sessionValues = request.session['setUpInquiry']?.[id] || {};
+	return renderInquiryDueDates(request, response, 'change', sessionValues);
 };
 
 /**
@@ -395,8 +405,9 @@ export const renderInquiryDueDates = async (request, response, action, values) =
  */
 export const postInquiryDueDates = async (request, response) => {
 	if (request.errors) {
-		const values = request.session['setUpInquiry'] || {};
-		return renderInquiryDueDates(request, response, 'setup', values);
+		const id = resolveAppealId(request);
+		const sessionValues = request.session['setUpInquiry']?.[id] || {};
+		return renderInquiryDueDates(request, response, 'setup', sessionValues);
 	}
 
 	const { appealId } = request.currentAppeal;
@@ -521,6 +532,7 @@ export const getInquiryCheckDetails = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
+
 export const getChangeInquiryCheckDetails = async (request, response) => {
 	const {
 		currentAppeal: { appealId, appealReference },
@@ -552,7 +564,8 @@ export const postInquiryCheckDetails = async (request, response) => {
 		} = request;
 
 		const { session } = request;
-		const inquiry = session.setUpInquiry;
+
+		const inquiry = request.session['setUpInquiry']?.[appealId];
 
 		if (!inquiry) {
 			return renderAlreadySubmittedError(request, response);
@@ -564,7 +577,7 @@ export const postInquiryCheckDetails = async (request, response) => {
 
 		const appellantCase = await addAppellantCaseToLocals(request);
 
-		// Create Inquiry
+		//Create Inquiry
 		await createInquiry(request, {
 			...buildInquiryRequest(inquiry, appellantCase?.planningObligation?.hasObligation),
 			startDate: getTodaysISOString()
@@ -582,7 +595,8 @@ export const postInquiryCheckDetails = async (request, response) => {
 			appealId
 		});
 
-		delete request.session.setUpInquiry;
+		delete request.session['setUpInquiry']?.[appealId];
+
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(
@@ -601,6 +615,7 @@ export const postInquiryCheckDetails = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
+
 export const postChangeInquiryCheckDetails = async (request, response) => {
 	try {
 		const {

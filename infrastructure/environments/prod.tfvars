@@ -39,8 +39,6 @@ apps_config = {
     featureFlagS20                    = true
     featureFlagCAS                    = false
     featureFlagCasAdvert              = false
-    featureFlagIssueDecision          = true
-    featureFlagReIssueDecision        = true
     featureFlagNotifyCaseHistory      = true
     featureFlagSimplifyTeamAssignment = true
     featureFlagChangeAppealType       = false
@@ -50,9 +48,10 @@ apps_config = {
     featureFlagCancelCase             = true
     featureFlagChangeProcedureType    = false
     featureFlagAdvertisement          = false
-    featureFlagHearingPostMvp         = false
+    featureFlagHearingPostMvp         = true
     featureFlagAutoAssignTeam         = true
     featureFlagCancelSiteVisit        = false
+    featureFlagPersonalList           = true
   }
 
   use_system_test_bc_for_change_lpa = false

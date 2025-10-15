@@ -34,6 +34,16 @@ export const mapCaseDates = (data) => {
 			appeal.representations?.find(
 				(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
 			)?.dateCreated ?? null
+		),
+		appellantProofsSubmittedDate: mapDate(
+			appeal.representations?.find(
+				(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
+			)?.dateCreated ?? null
+		),
+		lpaProofsSubmittedDate: mapDate(
+			appeal.representations?.find(
+				(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE
+			)?.dateCreated ?? null
 		)
 	};
 
@@ -51,9 +61,8 @@ export const mapCaseDates = (data) => {
 		...representationDates,
 		statementOfCommonGroundDueDate: mapDate(appeal.appealTimetable?.statementOfCommonGroundDueDate),
 		planningObligationDueDate: mapDate(appeal.appealTimetable?.planningObligationDueDate),
+		proofsOfEvidenceDueDate: mapDate(appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate),
 		//TODO:
-		lpaProofsSubmittedDate: null,
-		proofsOfEvidenceDueDate: null,
 		siteNoticesSentDate: null
 	};
 };

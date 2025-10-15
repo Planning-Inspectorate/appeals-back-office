@@ -307,6 +307,9 @@ export const getBulkDocumentDownload = async (
  * @param {string} filename
  * @returns {*}
  */
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
 const buildZipFileName = (caseId, filename) => {
 	const timestampTokens = new Date().toISOString().split('T');
 	const dateString = timestampTokens[0].replaceAll('-', '');
@@ -322,18 +325,25 @@ const buildZipFileName = (caseId, filename) => {
  * @param {string} caseId
  * @returns {Promise<*>}
  */
-const getRepresentationAttachmentFullNames = async (apiClient, caseId) => {
+
+export const getRepresentationAttachmentFullNames = async (apiClient, caseId) => {
 	const representations = await getRepresentationAttachments(apiClient, caseId);
 	const fullAttachmentNames = {};
 	const statusCounts = {};
+
 	// @ts-ignore
 	representations?.items?.forEach((representation) => {
+		// Skip comments with invalid status
+		if (representation.representationType === 'comment' && representation.status === 'invalid') {
+			return; // Skip this representation
+		}
 		let representationStatus = representation.status;
 		if (representation.status === 'valid') {
 			representationStatus = 'accepted';
 		} else if (representation.status === 'invalid') {
 			representationStatus = 'rejected';
 		}
+
 		// Keep a count of each representation type and status so that we can give each ip comment a unique folder name
 		const statusCountKey = `${representation.representationType}-${representation.status}`;
 		// @ts-ignore
@@ -341,6 +351,7 @@ const getRepresentationAttachmentFullNames = async (apiClient, caseId) => {
 			// @ts-ignore
 			statusCounts[statusCountKey] = 0;
 		}
+
 		const representationType =
 			representation.representationType === 'comment'
 				? `Interested party comments/${toSentenceCase(
@@ -348,6 +359,7 @@ const getRepresentationAttachmentFullNames = async (apiClient, caseId) => {
 						// @ts-ignore
 				  )}/Comment ${++statusCounts[statusCountKey]}`
 				: toSentenceCase(representation.representationType).replace('Lpa', 'LPA');
+
 		// @ts-ignore
 		representation.attachments.forEach((attachment) => {
 			const { document } = attachment.documentVersion || {};
@@ -370,27 +382,61 @@ export const getBulkFileInfo = async (apiClient, caseId) => {
 		apiClient,
 		caseId
 	);
+	// @ts-ignore
 	const folders = await getAllCaseFolders(apiClient, caseId);
-	return folders
-		?.filter(
-			(folder) => folder.documents?.length && !folder.path.startsWith(APPEAL_CASE_STAGE.INTERNAL)
-		)
-		.flatMap((folder) => {
-			const folderPath = folder.path
-				.split('/')
-				.map((folderName) => camelCaseToWords(folderName.trim()).replace('Lpa', 'LPA'))
-				.join('/');
-			return folder.documents.map((document) => {
-				const { blobStorageContainer, blobStoragePath, documentURI } =
-					document.latestDocumentVersion;
-				return {
-					fullName:
-						// @ts-ignore
-						representationAttachmentFullNames[document.guid] || `${folderPath}/${document.name}`,
-					blobStorageContainer,
-					blobStoragePath,
-					documentURI
-				};
-			});
-		});
+
+	return (
+		folders
+			?.filter(
+				// @ts-ignore
+				(folder) => folder.documents?.length && !folder.path.startsWith(APPEAL_CASE_STAGE.INTERNAL)
+			)
+			// @ts-ignore
+			.flatMap((folder) => {
+				const folderPath = folder.path
+					.split('/')
+					// @ts-ignore
+					.map((folderName) => camelCaseToWords(folderName.trim()).replace('Lpa', 'LPA'))
+					.join('/');
+
+				// @ts-ignore
+				return folder.documents
+					.map((document) => {
+						const { blobStorageContainer, blobStoragePath, documentURI } =
+							document.latestDocumentVersion;
+
+						// If this is in Representation Attachments folder, only include if it's mapped
+						if (folderPath === 'Representation/Representation Attachments') {
+							// @ts-ignore
+							if (representationAttachmentFullNames[document.guid]) {
+								return {
+									// @ts-ignore
+									fullName: representationAttachmentFullNames[document.guid],
+									blobStorageContainer,
+									blobStoragePath,
+									documentURI
+								};
+							} else {
+								// Skip unmapped representation attachments
+								// @ts-ignore
+
+								return null;
+							}
+						} else {
+							// For other folders, include all documents
+							return {
+								// @ts-ignore
+								fullName:
+									// @ts-ignore
+									representationAttachmentFullNames[document.guid] ||
+									`${folderPath}/${document.name}`,
+								blobStorageContainer,
+								blobStoragePath,
+								documentURI
+							};
+						}
+					})
+					.filter(Boolean); // Remove null entries
+			})
+	);
 };

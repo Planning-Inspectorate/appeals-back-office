@@ -79,6 +79,7 @@ describe('required actions', () => {
 							...appealData,
 							appealType: appealType,
 							appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+							completedStateList: ['lpa_questionnaire'],
 							numberOfResidencesNetChange: null
 						},
 						'detail'
@@ -1192,6 +1193,28 @@ describe('required actions', () => {
 						'detail'
 					)
 				).toEqual(['arrangeSiteVisit']);
+			});
+		});
+
+		describe('when appeal status is "WITHDRAWN"', () => {
+			it('should return cost decisions', () => {
+				const appealDataWithWithdrawnStatus = {
+					...appealData,
+					appealStatus: APPEAL_CASE_STATUS.WITHDRAWN,
+					costsDecision: {
+						awaitingAppellantCostsDecision: true,
+						awaitingLpaCostsDecision: true
+					}
+				};
+
+				expect(
+					getRequiredActionsForAppeal(
+						{
+							...appealDataWithWithdrawnStatus
+						},
+						'detail'
+					)
+				).toEqual(['issueAppellantCostsDecision', 'issueLpaCostsDecision']);
 			});
 		});
 	});

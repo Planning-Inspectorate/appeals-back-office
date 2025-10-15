@@ -155,7 +155,10 @@ router
 router
 	.route('/view-decision')
 	.get(
-		assertUserHasPermission(permissionNames.setCaseOutcome),
+		assertUserHasPermission(
+			permissionNames.viewCaseDetails,
+			permissionNames.viewAssignedCaseDetails
+		),
 		asyncHandler(controller.renderViewDecision)
 	);
 

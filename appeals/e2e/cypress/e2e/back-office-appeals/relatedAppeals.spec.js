@@ -19,14 +19,21 @@ describe('related appeals', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let cases = [];
+
+	afterEach(() => {
+		cy.deleteAppeals(cases);
+	});
+
 	it('relate an unrelated appeal to an unrelated appeal', () => {
-		cy.createCase().then((caseRef) => {
-			cy.createCase().then((caseRefToLink) => {
-				happyPathHelper.assignCaseOfficer(caseRef);
+		cy.createCase().then((caseObj) => {
+			cy.createCase().then((caseObjToLink) => {
+				cases = [caseObj, caseObjToLink];
+				happyPathHelper.assignCaseOfficer(caseObj);
 				caseDetailsPage.clickAddRelatedAppeals();
-				caseDetailsPage.fillInput(caseRefToLink);
+				caseDetailsPage.fillInput(caseObjToLink.reference);
 				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
+				caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseObj.reference);
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.validateBannerMessage('Success', 'Related appeal added');
 			});
@@ -34,20 +41,25 @@ describe('related appeals', () => {
 	});
 
 	it('relate an unrelated appeal to a related appeal', () => {
-		cy.createCase().then((caseRef) => {
-			cy.createCase().then((firstCaseRefToLink) => {
-				cy.createCase().then((secondCaseRefToLink) => {
-					happyPathHelper.assignCaseOfficer(caseRef);
+		cy.createCase().then((caseObj) => {
+			cy.createCase().then((firstcaseObjToLink) => {
+				cy.createCase().then((secondcaseObjToLink) => {
+					cases = [caseObj, firstcaseObjToLink, secondcaseObjToLink];
+					happyPathHelper.assignCaseOfficer(caseObj);
 					caseDetailsPage.clickAddRelatedAppeals();
-					caseDetailsPage.fillInput(firstCaseRefToLink);
+					caseDetailsPage.fillInput(firstcaseObjToLink.reference);
 					caseDetailsPage.clickButtonByText('Continue');
-					caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
+					caseDetailsPage.selectRadioButtonByValue(
+						'Yes, relate this appeal to ' + caseObj.reference
+					);
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage('Success', 'Related appeal added');
 					caseDetailsPage.clickAddRelatedAppeals();
-					caseDetailsPage.fillInput(secondCaseRefToLink);
+					caseDetailsPage.fillInput(secondcaseObjToLink.reference);
 					caseDetailsPage.clickButtonByText('Continue');
-					caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
+					caseDetailsPage.selectRadioButtonByValue(
+						'Yes, relate this appeal to ' + caseObj.reference
+					);
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage('Success', 'Related appeal added');
 				});
@@ -61,30 +73,32 @@ describe('related appeals', () => {
 				? horizonTestAppeals.horizonAppealTest
 				: horizonTestAppeals.horizonAppealMock;
 
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
+		cy.createCase().then((caseObj) => {
+			cases = [caseObj];
+			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickAddRelatedAppeals();
 			caseDetailsPage.fillInput(horizonAppealId);
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
+			caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseObj.reference);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.validateBannerMessage('Success', 'Related appeal added');
 		});
 	});
 
 	it('Relate a case in “validation” status to a case in “validation” status', () => {
-		cy.createCase().then((caseRef) => {
-			cy.createCase().then((caseRefToLink) => {
+		cy.createCase().then((caseObj) => {
+			cy.createCase().then((caseObjToLink) => {
+				cases = [caseObj, caseObjToLink];
 				//progress to be related appeal to validation
-				happyPathHelper.assignCaseOfficer(caseRefToLink); //move case to validation
+				happyPathHelper.assignCaseOfficer(caseObjToLink); //move case to validation
 				caseDetailsPage.checkStatusOfCase('Validation', 0);
 				//related appeal in validation status
-				happyPathHelper.assignCaseOfficer(caseRef);
+				happyPathHelper.assignCaseOfficer(caseObj);
 				caseDetailsPage.checkStatusOfCase('Validation', 0);
 				caseDetailsPage.clickAddRelatedAppeals();
-				caseDetailsPage.fillInput(caseRefToLink);
+				caseDetailsPage.fillInput(caseObjToLink.reference);
 				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
+				caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseObj.reference);
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.validateBannerMessage('Success', 'Related appeal added');
 			});
@@ -92,22 +106,23 @@ describe('related appeals', () => {
 	});
 
 	it('Relate a case in “validation” status to a case in “final comments” status', () => {
-		cy.createCase().then((caseRef) => {
-			cy.createCase({ caseType: 'W' }).then((caseRefToLink) => {
+		cy.createCase().then((caseObj) => {
+			cy.createCase({ caseType: 'W' }).then((caseObjToLink) => {
+				cases = [caseObj, caseObjToLink];
 				//progress to be related appeal to final comments
-				cy.addLpaqSubmissionToCase(caseRefToLink);
-				happyPathHelper.assignCaseOfficer(caseRefToLink);
-				happyPathHelper.reviewAppellantCase(caseRefToLink);
-				happyPathHelper.startS78Case(caseRefToLink, 'written');
-				happyPathHelper.reviewLPaStatement(caseRefToLink);
+				cy.addLpaqSubmissionToCase(caseObjToLink);
+				happyPathHelper.assignCaseOfficer(caseObjToLink);
+				happyPathHelper.reviewAppellantCase(caseObjToLink);
+				happyPathHelper.startS78Case(caseObjToLink, 'written');
+				happyPathHelper.reviewLPaStatement(caseObjToLink);
 				caseDetailsPage.checkStatusOfCase('Final comments', 0);
 				//related appeal in validation status
-				happyPathHelper.assignCaseOfficer(caseRef);
+				happyPathHelper.assignCaseOfficer(caseObj);
 				caseDetailsPage.checkStatusOfCase('Validation', 0);
 				caseDetailsPage.clickAddRelatedAppeals();
-				caseDetailsPage.fillInput(caseRefToLink);
+				caseDetailsPage.fillInput(caseObjToLink.reference);
 				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
+				caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseObj.reference);
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.validateBannerMessage('Success', 'Related appeal added');
 			});
@@ -115,22 +130,23 @@ describe('related appeals', () => {
 	});
 
 	it('Relate a case in “validation” status to a case in “ready to set up hearing” status', () => {
-		cy.createCase().then((caseRef) => {
-			cy.createCase({ caseType: 'W' }).then((caseRefToLink) => {
+		cy.createCase().then((caseObj) => {
+			cy.createCase({ caseType: 'W' }).then((caseObjToLink) => {
+				cases = [caseObj, caseObjToLink];
 				//progress to be related appeal to final comments
-				cy.addLpaqSubmissionToCase(caseRefToLink);
-				happyPathHelper.assignCaseOfficer(caseRefToLink);
-				happyPathHelper.reviewAppellantCase(caseRefToLink);
-				happyPathHelper.startS78Case(caseRefToLink, 'hearing');
-				happyPathHelper.reviewLPaStatement(caseRefToLink);
+				cy.addLpaqSubmissionToCase(caseObjToLink);
+				happyPathHelper.assignCaseOfficer(caseObjToLink);
+				happyPathHelper.reviewAppellantCase(caseObjToLink);
+				happyPathHelper.startS78Case(caseObjToLink, 'hearing');
+				happyPathHelper.reviewLPaStatement(caseObjToLink);
 				caseDetailsPage.checkStatusOfCase('Hearing ready to set up', 0);
 				//related appeal in validation status
-				happyPathHelper.assignCaseOfficer(caseRef);
+				happyPathHelper.assignCaseOfficer(caseObj);
 				caseDetailsPage.checkStatusOfCase('Validation', 0);
 				caseDetailsPage.clickAddRelatedAppeals();
-				caseDetailsPage.fillInput(caseRefToLink);
+				caseDetailsPage.fillInput(caseObjToLink.reference);
 				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
+				caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseObj.reference);
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.validateBannerMessage('Success', 'Related appeal added');
 			});
@@ -138,28 +154,29 @@ describe('related appeals', () => {
 	});
 
 	it('Relate a case in “issue decision status” to “Issue decision” status', () => {
-		cy.createCase().then((caseRef) => {
-			cy.createCase().then((caseRefToLink) => {
+		cy.createCase().then((caseObj) => {
+			cy.createCase().then((caseObjToLink) => {
+				cases = [caseObj, caseObjToLink];
 				//progress to be related appeal to issue decision
-				cy.addLpaqSubmissionToCase(caseRefToLink);
-				happyPathHelper.assignCaseOfficer(caseRefToLink);
-				happyPathHelper.reviewAppellantCase(caseRefToLink);
-				happyPathHelper.startCase(caseRefToLink);
-				happyPathHelper.reviewLpaq(caseRefToLink);
-				happyPathHelper.progressSiteVisit(caseRefToLink);
+				cy.addLpaqSubmissionToCase(caseObjToLink);
+				happyPathHelper.assignCaseOfficer(caseObjToLink);
+				happyPathHelper.reviewAppellantCase(caseObjToLink);
+				happyPathHelper.startCase(caseObjToLink);
+				happyPathHelper.reviewLpaq(caseObjToLink);
+				happyPathHelper.progressSiteVisit(caseObjToLink);
 				caseDetailsPage.checkStatusOfCase('Issue decision', 0);
 				//progress to be related appeal to issue decision
-				cy.addLpaqSubmissionToCase(caseRef);
-				happyPathHelper.assignCaseOfficer(caseRef);
-				happyPathHelper.reviewAppellantCase(caseRef);
-				happyPathHelper.startCase(caseRef);
-				happyPathHelper.reviewLpaq(caseRef);
-				happyPathHelper.progressSiteVisit(caseRef);
+				cy.addLpaqSubmissionToCase(caseObj);
+				happyPathHelper.assignCaseOfficer(caseObj);
+				happyPathHelper.reviewAppellantCase(caseObj);
+				happyPathHelper.startCase(caseObj);
+				happyPathHelper.reviewLpaq(caseObj);
+				happyPathHelper.progressSiteVisit(caseObj);
 				caseDetailsPage.checkStatusOfCase('Issue decision', 0);
 				caseDetailsPage.clickAddRelatedAppeals();
-				caseDetailsPage.fillInput(caseRefToLink);
+				caseDetailsPage.fillInput(caseObjToLink.reference);
 				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
+				caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseObj.reference);
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.validateBannerMessage('Success', 'Related appeal added');
 			});
@@ -167,27 +184,28 @@ describe('related appeals', () => {
 	});
 
 	it('Relate a case in “Statement” status to “Issue decision” status', () => {
-		cy.createCase({ caseType: 'W' }).then((caseRef) => {
-			cy.createCase().then((caseRefToLink) => {
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			cy.createCase().then((caseObjToLink) => {
+				cases = [caseObj, caseObjToLink];
 				//progress to be related appeal to issue decision
-				cy.addLpaqSubmissionToCase(caseRefToLink);
-				happyPathHelper.assignCaseOfficer(caseRefToLink);
-				happyPathHelper.reviewAppellantCase(caseRefToLink);
-				happyPathHelper.startCase(caseRefToLink);
-				happyPathHelper.reviewLpaq(caseRefToLink);
-				happyPathHelper.progressSiteVisit(caseRefToLink);
+				cy.addLpaqSubmissionToCase(caseObjToLink);
+				happyPathHelper.assignCaseOfficer(caseObjToLink);
+				happyPathHelper.reviewAppellantCase(caseObjToLink);
+				happyPathHelper.startCase(caseObjToLink);
+				happyPathHelper.reviewLpaq(caseObjToLink);
+				happyPathHelper.progressSiteVisit(caseObjToLink);
 				caseDetailsPage.checkStatusOfCase('Issue decision', 0);
 				//progress to be related appeal to issue decision
-				cy.addLpaqSubmissionToCase(caseRef);
-				happyPathHelper.assignCaseOfficer(caseRef);
-				happyPathHelper.reviewAppellantCase(caseRef);
-				happyPathHelper.startS78Case(caseRef, 'written');
-				happyPathHelper.reviewS78Lpaq(caseRef);
+				cy.addLpaqSubmissionToCase(caseObj);
+				happyPathHelper.assignCaseOfficer(caseObj);
+				happyPathHelper.reviewAppellantCase(caseObj);
+				happyPathHelper.startS78Case(caseObj, 'written');
+				happyPathHelper.reviewS78Lpaq(caseObj);
 				caseDetailsPage.checkStatusOfCase('Statements', 0);
 				caseDetailsPage.clickAddRelatedAppeals();
-				caseDetailsPage.fillInput(caseRefToLink);
+				caseDetailsPage.fillInput(caseObjToLink.reference);
 				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
+				caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseObj.reference);
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.validateBannerMessage('Success', 'Related appeal added');
 			});
@@ -195,66 +213,69 @@ describe('related appeals', () => {
 	});
 
 	it('Relating a case from the "appellant case" page', () => {
-		cy.createCase().then((caseRef) => {
+		cy.createCase().then((caseObj) => {
 			cy.createCase().then((relatedCase) => {
+				cases = [caseObj, relatedCase];
 				happyPathHelper.assignCaseOfficer(relatedCase);
-				happyPathHelper.assignCaseOfficer(caseRef);
+				happyPathHelper.assignCaseOfficer(caseObj);
 
 				//navigate to appellant case
 				caseDetailsPage.clickReviewAppellantCase();
 				appellantCasePage.clickAddRelatedAppeals();
 
 				//related appeals
-				appellantCasePage.fillInput(relatedCase);
+				appellantCasePage.fillInput(relatedCase.reference);
 				appellantCasePage.clickButtonByText('Continue');
 				appellantCasePage.selectRadioButtonByValue('yes');
 				appellantCasePage.clickButtonByText('Continue');
 
 				//appellant case
-				caseDetailsPage.assertRelatedAppealValue(relatedCase);
+				caseDetailsPage.assertRelatedAppealValue(relatedCase.reference);
 				appellantCasePage.validateBannerMessage('Success', 'Related appeal added');
 				appellantCasePage.clickBackLink();
 
 				//case details
-				caseDetailsPage.assertRelatedAppealValue(relatedCase);
+				caseDetailsPage.assertRelatedAppealValue(relatedCase.reference);
 			});
 		});
 	});
 
 	it('Relating a case from the "LPAQ" page', () => {
-		cy.createCase().then((caseRef) => {
+		cy.createCase().then((caseObj) => {
 			cy.createCase().then((relatedCase) => {
+				cases = [caseObj, relatedCase];
 				happyPathHelper.assignCaseOfficer(relatedCase);
-				happyPathHelper.assignCaseOfficer(caseRef);
-				happyPathHelper.reviewAppellantCase(caseRef);
-				happyPathHelper.startCase(caseRef);
-				cy.addLpaqSubmissionToCase(caseRef);
-				happyPathHelper.reviewLpaq(caseRef);
+				happyPathHelper.assignCaseOfficer(caseObj);
+				happyPathHelper.reviewAppellantCase(caseObj);
+				happyPathHelper.startCase(caseObj);
+				cy.addLpaqSubmissionToCase(caseObj);
+				happyPathHelper.reviewLpaq(caseObj);
 
 				//navigate to LPAQ
 				caseDetailsPage.clickViewLpaQuestionnaire();
 
 				//related appeals
 				lpaqPage.clickAddRelatedAppeals();
-				lpaqPage.fillInput(relatedCase);
+				lpaqPage.fillInput(relatedCase.reference);
 				lpaqPage.clickButtonByText('Continue');
 				lpaqPage.selectRadioButtonByValue('yes');
 				lpaqPage.clickButtonByText('Continue');
 
 				//LPAQ details
-				caseDetailsPage.assertRelatedAppealValue(relatedCase);
+				caseDetailsPage.assertRelatedAppealValue(relatedCase.reference);
 				lpaqPage.validateBannerMessage('Success', 'Related appeal added');
 				lpaqPage.clickBackLink();
 
 				//case details
-				caseDetailsPage.assertRelatedAppealValue(relatedCase);
+				caseDetailsPage.assertRelatedAppealValue(relatedCase.reference);
 			});
 		});
 	});
 
 	it('related appeals error messaging', () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
+		cy.createCase().then((caseObj) => {
+			cases = [caseObj];
+			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickAddRelatedAppeals();
 
 			caseDetailsPage.clickButtonByText('Continue');

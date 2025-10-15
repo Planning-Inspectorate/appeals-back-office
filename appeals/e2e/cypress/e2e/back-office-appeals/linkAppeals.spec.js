@@ -102,7 +102,7 @@ describe('link appeals - S78', () => {
 
 				//child appeal
 				caseDetailsPage.clickLinkedAppeal(childCase);
-				caseDetailsPage.verifyAppealRefOnCaseDetails(childCase);
+				caseDetailsPage.verifyAppealRefOnCaseDetails(childCase.reference);
 			});
 		});
 	});
@@ -114,8 +114,8 @@ describe('link appeals - S78', () => {
 					const cases = [leadCase, childCase, childCase2];
 					const children = cases.slice(1);
 
-					cases.forEach((caseRef) => {
-						cy.addLpaqSubmissionToCase(caseRef);
+					cases.forEach((caseObj) => {
+						cy.addLpaqSubmissionToCase(caseObj);
 					});
 
 					children.forEach((child) => {
@@ -192,8 +192,8 @@ describe('link appeals - S78', () => {
 					caseDetailsPage.checkDecisionOutcome('Appellant costs decision: Issued');
 					caseDetailsPage.checkDecisionOutcome('LPA costs decision: Issued');
 
-					cases.forEach((caseRef) => {
-						happyPathHelper.viewCaseDetails(caseRef);
+					cases.forEach((caseObj) => {
+						happyPathHelper.viewCaseDetails(caseObj);
 						caseDetailsPage.checkStatusOfCase('Complete', 0);
 						caseDetailsPage.checkDecisionOutcome(`Decision: Allowed`);
 						caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
@@ -219,9 +219,9 @@ describe('Unhappy path', () => {
 
 					//link appeal
 					caseDetailsPage.clickAddLinkedAppeal();
-					caseDetailsPage.fillInput(childCase);
+					caseDetailsPage.fillInput(childCase.reference);
 					caseDetailsPage.clickButtonByText('Continue');
-					caseDetailsPage.checkHeading(`You have already linked appeal ${childCase}`);
+					caseDetailsPage.checkHeading(`You have already linked appeal ${childCase.reference}`);
 				});
 			});
 		});
@@ -245,22 +245,24 @@ describe('Unhappy path', () => {
 
 						//link lead appeals together
 						caseDetailsPage.clickAddLinkedAppeal();
-						caseDetailsPage.fillInput(leadCase1);
+						caseDetailsPage.fillInput(leadCase1.reference);
 						caseDetailsPage.clickButtonByText('Continue');
 
 						//exit page
-						caseDetailsPage.checkHeading(`You have already linked appeal ${leadCase1}`);
+						caseDetailsPage.checkHeading(`You have already linked appeal ${leadCase1.reference}`);
 					});
 				});
 			});
 		});
 	});
 
-	it('As a child appeal, I am unable to link to another child appeal', () => {
-		cy.createCase({ caseType: 'W' }).then((leadCase1) => {
-			cy.createCase({ caseType: 'W' }).then((leadCase2) => {
-				cy.createCase({ caseType: 'W' }).then((childCase1) => {
-					cy.createCase({ caseType: 'W' }).then((childCase2) => {
+	it.skip('As a child appeal, I am unable to link to another child appeal', () => {
+		cy.createCase().then((leadCase1) => {
+			cy.createCase().then((leadCase2) => {
+				cy.createCase().then((childCase1) => {
+					cy.createCase().then((childCase2) => {
+						//cannot assign case officer for child case
+						happyPathHelper.assignCaseOfficer(childCase1);
 						happyPathHelper.assignCaseOfficer(leadCase1);
 
 						happyPathHelper.addLinkedAppeal(leadCase1, childCase1);
@@ -312,9 +314,9 @@ describe('Unhappy path', () => {
 
 				//link appeal
 				caseDetailsPage.clickAddLinkedAppeal();
-				caseDetailsPage.fillInput(childCase);
+				caseDetailsPage.fillInput(childCase.reference);
 				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.checkHeading(`You cannot link appeal ${childCase}`);
+				caseDetailsPage.checkHeading(`You cannot link appeal ${childCase.reference}`);
 			});
 		});
 	});

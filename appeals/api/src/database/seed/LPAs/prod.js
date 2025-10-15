@@ -483,7 +483,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'A3010',
 		name: 'Bassetlaw District Council',
-		email: 'planning.appeal@bassetlaw.gov.uk',
+		email: 'planningappeals@bassetlaw.gov.uk',
 		teamId: 17 // North3
 	},
 	{
@@ -561,7 +561,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'Q0505',
 		name: 'Cambridge City Council',
-		email: 'asappeals@cambridge.gov.uk',
+		email: 'appeals@greatercambridgeplanning.org',
 		teamId: 18 // North4
 	},
 	{
@@ -610,7 +610,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'A1910',
 		name: 'Dacorum Borough Council',
 		email: 'planning@dacorum.gov.uk',
-		teamId: 12 // East2
+		teamId: 13 // East3
 	},
 	{
 		lpaCode: 'N1350',
@@ -951,7 +951,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'Q3060',
 		name: 'Nottingham City Council',
-		email: 'development.control@nottinghamcity.gov.uk',
+		email: 'planningappeals@nottinghamcity.gov.uk',
 		teamId: 17 // North3
 	},
 	{
@@ -1041,7 +1041,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'P3040',
 		name: 'Rushcliffe Borough Council',
-		email: 'developmentcontrol@rushcliffe.gov.uk',
+		email: 'planningappealsadmin@rushcliffe.gov.uk',
 		teamId: 17 // North3
 	},
 	{

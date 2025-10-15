@@ -40,7 +40,7 @@ export class ListCasesPage extends Page {
 	}
 
 	clickAppealByRef(ref) {
-		cy.getByData(ref).click();
+		cy.getByData(ref.reference).click();
 	}
 
 	clickStartCaseBanner(text) {

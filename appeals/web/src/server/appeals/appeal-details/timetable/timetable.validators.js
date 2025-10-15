@@ -94,6 +94,10 @@ const validatorsMap = {
 	planningObligationDueDate: {
 		id: 'planning-obligation-due-date',
 		label: 'Planning obligation due date'
+	},
+	proofOfEvidenceAndWitnessesDueDate: {
+		id: 'proof-of-evidence-and-witnesses-due-date',
+		label: 'Proof of evidence and witnesses due date'
 	}
 };
 
@@ -128,7 +132,8 @@ const getAllDateErrorExtractors = () => [
 	extractAndProcessDateErrors({ fieldNamePrefix: 'ip-comments-due-date' }),
 	extractAndProcessDateErrors({ fieldNamePrefix: 'final-comments-due-date' }),
 	extractAndProcessDateErrors({ fieldNamePrefix: 'statement-of-common-ground-due-date' }),
-	extractAndProcessDateErrors({ fieldNamePrefix: 'planning-obligation-due-date' })
+	extractAndProcessDateErrors({ fieldNamePrefix: 'planning-obligation-due-date' }),
+	extractAndProcessDateErrors({ fieldNamePrefix: 'proof-of-evidence-and-witnesses-due-date' })
 ];
 
 /**

@@ -189,6 +189,20 @@ describe('issue-decision', () => {
 			);
 		});
 
+		it('should require a reason if the decision is "Invalid"', async () => {
+			const response = await request
+				.post(`${baseUrl}/1/issue-decision/decision`)
+				.send({ decision: CASE_OUTCOME_INVALID, invalidReason: '' })
+				.expect(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Enter a reason</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<p id="invalid-reason-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a reason</p>'
+			);
+		});
+
 		it(`should redirect to the decision letter upload page, if the decision is 'Allowed'`, async () => {
 			const response = await request
 				.post(`${baseUrl}/1/issue-decision/decision`)

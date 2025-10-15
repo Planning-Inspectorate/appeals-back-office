@@ -1,6 +1,6 @@
 module "app_api" {
   #checkov:skip=CKV_TF_1: Use of commit hash are not required for our Terraform modules
-  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-app-service?ref=1.49"
+  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-app-service?ref=1.53"
 
   resource_group_name = azurerm_resource_group.primary.name
   location            = module.primary_region.location
@@ -76,6 +76,18 @@ module "app_api" {
     FEATURE_FLAG_ADVERTISEMENT      = var.apps_config.featureFlags.featureFlagAdvertisement
     FEATURE_FLAG_CHANGE_APPEAL_TYPE = var.apps_config.featureFlags.featureFlagChangeAppealType
     FEATURE_FLAG_HEARING_POST_MVP   = var.apps_config.featureFlags.featureFlagHearingPostMvp
+    FEATURE_FLAG_PERSONAL_LIST      = var.apps_config.featureFlags.featureFlagPersonalList
+
+    # service bus topics
+    SB_TOPIC_NAME_APPEAL_HAS            = var.sb_topic_names.events.appeal_has
+    SB_TOPIC_NAME_APPEAL_S78            = var.sb_topic_names.events.appeal_s78
+    SB_TOPIC_NAME_APPEAL_DOCUMENT       = var.sb_topic_names.events.document
+    SB_TOPIC_NAME_APPEAL_SERVICE_USER   = var.sb_topic_names.events.service_user
+    SB_TOPIC_NAME_APPEAL_EVENT          = var.sb_topic_names.events.event
+    SB_TOPIC_NAME_APPEAL_EVENT_ESTIMATE = var.sb_topic_names.events.appeal_event_estimate
+    SB_TOPIC_NAME_DOCUMENT_MOVE         = var.sb_topic_names.events.document_to_move
+    SB_TOPIC_NAME_APPEAL_REPRESENTATION = var.sb_topic_names.events.appeal_representation
+
   }
 
   providers = {
@@ -93,7 +105,7 @@ resource "azurerm_role_assignment" "app_api_secrets_user" {
 
 ## RBAC for service bus
 resource "azurerm_role_assignment" "app_api_service_bus" {
-  scope                = azurerm_servicebus_namespace.main.id
+  scope                = local.service_bus.id
   role_definition_name = "Azure Service Bus Data Sender"
   principal_id         = module.app_api.principal_id
 }
@@ -107,7 +119,7 @@ resource "azurerm_role_assignment" "app_api_staging_secrets_user" {
 
 ## RBAC for service bus (staging slot)
 resource "azurerm_role_assignment" "app_api_staging_service_bus" {
-  scope                = azurerm_servicebus_namespace.main.id
+  scope                = local.service_bus.id
   role_definition_name = "Azure Service Bus Data Sender"
   principal_id         = module.app_api.staging_principal_id
 }

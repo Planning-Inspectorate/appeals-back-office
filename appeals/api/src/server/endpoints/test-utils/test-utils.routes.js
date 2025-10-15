@@ -1,12 +1,14 @@
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import {
+	deleteAppeals,
 	retrieveNotifyEmails,
 	simulateFinalCommentsElapsed,
 	simulateHearingElapsed,
 	simulateSiteVisitElapsed,
 	simulateStatementsElapsed
 } from './test-utils.controller.js';
+import { deleteAppealsParamsValidator } from './test-utils.validators.js';
 
 const router = createRouter();
 
@@ -93,6 +95,30 @@ router.post(
 		#swagger.responses[400] = {}
 	 */
 	asyncHandler(simulateHearingElapsed)
+);
+
+router.delete(
+	'/delete-appeals',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/delete-appeals'
+		#swagger.description = 'A test endpoint to delete one or many appeals and their related data'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.requestBody = {
+			in: 'body',
+			description: 'Appeal IDs to delete',
+			schema: { $ref: '#/components/schemas/DeleteAppealsRequest' },
+			required: true
+		}
+		#swagger.responses[200] = {}
+		#swagger.responses[400] = {}
+	 */
+	deleteAppealsParamsValidator,
+	asyncHandler(deleteAppeals)
 );
 
 export { router as testUtilsRoutes };

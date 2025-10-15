@@ -6,6 +6,7 @@ parameters:
     values:
       - Dev
       - Test
+      - Staging
       - Training
       - Prod
   - name: purge
@@ -25,7 +26,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.17.0
+      ref: refs/tags/release/3.24.0
 
 variables:
   - template: variables/environments/${{ lower(parameters.environment )}}.yml@templates
@@ -51,6 +52,9 @@ jobs:
                 if [[ $ENVIRONMENT == "training" ]]; then
                   echo "Name: pins-kv-appeals-bo-train (env: $ENVIRONMENT)"
                   echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-train"
+                elif [[ $ENVIRONMENT == "staging" ]]; then
+                  echo "Name: pins-kv-appeals-bo-stage (env: $ENVIRONMENT)"
+                  echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-stage"
                 else
                   echo "Name: pins-kv-appeals-bo-$ENVIRONMENT (env: $ENVIRONMENT)"
                   echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-$ENVIRONMENT"

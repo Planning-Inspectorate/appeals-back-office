@@ -36,7 +36,7 @@ export function generateCASAdvertComponents(
 
 		// remove the site area row
 		const siteAreaIndex = rows.findIndex(
-			(/** @type {{ key: {text: string}; }} */ row) => row.key.text === 'appeal-site-area'
+			(/** @type {{ classes: string} }} */ row) => row.classes === 'appeal-site-area'
 		);
 		if (siteAreaIndex !== -1) {
 			rows.splice(siteAreaIndex, 1);

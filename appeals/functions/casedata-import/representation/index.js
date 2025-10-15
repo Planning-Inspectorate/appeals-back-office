@@ -4,27 +4,27 @@ import api from './back-office-api-client.js';
 
 /**
  *
- * @param {import('@azure/functions').Context} context
- * @param {*} msg
+ * @type {import('@azure/functions').ServiceBusTopicHandler}
  */
-export default async function (context, msg) {
+export default async function (msg, context) {
 	context.log('Representation import command');
 
-	const applicationProperties = context?.bindingData?.applicationProperties;
+	const applicationProperties = context?.triggerMetadata?.applicationProperties;
 
 	const hasType =
 		Boolean(applicationProperties) &&
 		Object.prototype.hasOwnProperty.call(applicationProperties, 'type');
 	if (!hasType) {
-		context.log.warn('Ignoring invalid message, no type');
-		return;
+		context.warn('Ignoring invalid message, no type');
+		return {};
 	}
 
+	// @ts-ignore
 	const type = applicationProperties?.type;
 
 	if (type !== EventType.Create) {
-		context.log.warn(`Ignoring invalid message, unsupported type '${type}'`);
-		return;
+		context.warn(`Ignoring invalid message, unsupported type '${type}'`);
+		return {};
 	}
 
 	try {
@@ -32,16 +32,18 @@ export default async function (context, msg) {
 
 		const { id } = res;
 
-		context.log.info(`Representation added to appeal ID: ${id}`);
+		context.info(`Representation added to appeal ID: ${id}`);
 	} catch (e) {
 		if (e instanceof HTTPError) {
-			context.log.error('Error creating Representation', {
+			context.error('Error creating Representation', {
 				message: e.message,
 				body: e.response?.body
 			});
 		} else {
-			context.log.error('Error creating Representation', e);
+			context.error('Error creating Representation', e);
 		}
 		throw e;
 	}
+
+	return {};
 }

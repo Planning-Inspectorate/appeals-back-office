@@ -14,17 +14,23 @@ export const mapCostsAppellantDecision = ({ appealDetails, currentRoute, session
 	const appellantApplicationCount = appellantApplicationFolder?.documents?.length || 0;
 	const appellantWithdrawalCount = appellantWithdrawalFolder?.documents?.length || 0;
 
+	const isAppealWithdrawn = appealDetails.appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
+	const isAppealPassedAwaitingEvent = isStatePassed(
+		appealDetails,
+		APPEAL_CASE_STATUS.AWAITING_EVENT
+	);
+	const isAppealInRequiredState = isAppealWithdrawn || isAppealPassedAwaitingEvent;
+
 	if (
 		isChildAppeal(appealDetails) ||
-		!isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) ||
+		!isAppealInRequiredState ||
 		appellantApplicationCount <= appellantWithdrawalCount
 	) {
 		return { id: 'appellant-costs-decision', display: {} };
 	}
 
 	const editable =
-		isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) &&
-		userHasPermission(permissionNames.setCaseOutcome, session);
+		isAppealInRequiredState && userHasPermission(permissionNames.setCaseOutcome, session);
 
 	const isIssued = appellantDecisionFolder?.documents?.length;
 

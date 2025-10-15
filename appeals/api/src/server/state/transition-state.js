@@ -5,10 +5,12 @@ import appealRepository from '#repositories/appeal.repository.js';
 import { currentStatus } from '#utils/current-status.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { updatePersonalList } from '#utils/update-personal-list.js';
 import {
 	APPEAL_TYPE_SHORTHAND_FPA,
 	APPEAL_TYPE_SHORTHAND_HAS,
 	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
+	AUDIT_TRIAL_AUTOMATIC_EVENT_UUID,
 	CASE_RELATIONSHIP_LINKED,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
@@ -70,8 +72,11 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 
 	if (isStatePassed(appeal, newState)) {
 		await appealStatusRepository.rollBackAppealStatusTo(appealId, newState);
+	} else {
+		await appealStatusRepository.updateAppealStatusByAppealId(appealId, newState);
 	}
-	await appealStatusRepository.updateAppealStatusByAppealId(appealId, newState);
+
+	if (newState === 'issue_determination') azureAdUserId = AUDIT_TRIAL_AUTOMATIC_EVENT_UUID;
 
 	createAuditTrail({
 		appealId,
@@ -87,7 +92,11 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 				appeal.hearing &&
 				appeal.hearing?.addressId))
 	) {
-		transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+		await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+	}
+
+	if (!appeal.parentAppeals?.length) {
+		await updatePersonalList(appealId);
 	}
 
 	stateMachineService.stop();

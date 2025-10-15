@@ -260,6 +260,107 @@ describe('Timetable', () => {
 					expect(element.innerHTML).toContain('name="planning-obligation-due-date-year"');
 					expect(element.innerHTML).toContain('Continue</button>');
 				});
+
+				it(`should render correct "Timetable due dates" page for ${appealType} type inquiry appeal without planning obligation`, async () => {
+					const appealData = {
+						...baseAppealData,
+						appealStatus: 'lpa_questionnaire',
+						appealTimetable: {
+							appealTimetableId: 1
+						},
+						appealType: appealType,
+						documentationSummary: {
+							lpaQuestionnaire: {
+								status: 'received',
+								dueDate: '2024-10-11T10:27:06.626Z',
+								receivedAt: '2024-08-02T10:27:06.626Z',
+								representationStatus: 'awaiting_review'
+							}
+						},
+						procedureType: 'Inquiry'
+					};
+
+					nock('http://test/').get('/appeals/1').reply(200, appealData);
+					nock('http://test/')
+						.get('/appeals/1/appellant-cases/0')
+						.reply(200, { planningObligation: { hasObligation: false } });
+
+					const response = await request.get(`${baseUrl}/edit`);
+					const element = parseHtml(response.text);
+
+					expect(element.innerHTML).toMatchSnapshot();
+					expect(element.innerHTML).toContain('name="lpa-statement-due-date-day"');
+					expect(element.innerHTML).toContain('name="lpa-statement-due-date-month"');
+					expect(element.innerHTML).toContain('name="lpa-statement-due-date-year"');
+					expect(element.innerHTML).toContain('name="ip-comments-due-date-day"');
+					expect(element.innerHTML).toContain('name="ip-comments-due-date-month"');
+					expect(element.innerHTML).toContain('name="ip-comments-due-date-year"');
+					expect(element.innerHTML).toContain('name="statement-of-common-ground-due-date-day"');
+					expect(element.innerHTML).toContain('name="statement-of-common-ground-due-date-month"');
+					expect(element.innerHTML).toContain('name="statement-of-common-ground-due-date-year"');
+					expect(element.innerHTML).toContain(
+						'name="proof-of-evidence-and-witnesses-due-date-day"'
+					);
+					expect(element.innerHTML).toContain(
+						'name="proof-of-evidence-and-witnesses-due-date-month"'
+					);
+					expect(element.innerHTML).toContain(
+						'name="proof-of-evidence-and-witnesses-due-date-year"'
+					);
+					expect(element.innerHTML).toContain('Continue</button>');
+				});
+
+				it(`should render correct "Timetable due dates" page for ${appealType} type inquiry appeal with planning obligation`, async () => {
+					const appealData = {
+						...baseAppealData,
+						appealStatus: 'lpa_questionnaire',
+						appealTimetable: {
+							appealTimetableId: 1
+						},
+						appealType: appealType,
+						documentationSummary: {
+							lpaQuestionnaire: {
+								status: 'received',
+								dueDate: '2024-10-11T10:27:06.626Z',
+								receivedAt: '2024-08-02T10:27:06.626Z',
+								representationStatus: 'awaiting_review'
+							}
+						},
+						procedureType: 'Inquiry'
+					};
+
+					nock('http://test/').get('/appeals/1').reply(200, appealData);
+					nock('http://test/')
+						.get('/appeals/1/appellant-cases/0')
+						.reply(200, { planningObligation: { hasObligation: true } });
+
+					const response = await request.get(`${baseUrl}/edit`);
+					const element = parseHtml(response.text);
+
+					expect(element.innerHTML).toMatchSnapshot();
+					expect(element.innerHTML).toContain('name="lpa-statement-due-date-day"');
+					expect(element.innerHTML).toContain('name="lpa-statement-due-date-month"');
+					expect(element.innerHTML).toContain('name="lpa-statement-due-date-year"');
+					expect(element.innerHTML).toContain('name="ip-comments-due-date-day"');
+					expect(element.innerHTML).toContain('name="ip-comments-due-date-month"');
+					expect(element.innerHTML).toContain('name="ip-comments-due-date-year"');
+					expect(element.innerHTML).toContain('name="statement-of-common-ground-due-date-day"');
+					expect(element.innerHTML).toContain('name="statement-of-common-ground-due-date-month"');
+					expect(element.innerHTML).toContain('name="statement-of-common-ground-due-date-year"');
+					expect(element.innerHTML).toContain('name="planning-obligation-due-date-day"');
+					expect(element.innerHTML).toContain('name="planning-obligation-due-date-month"');
+					expect(element.innerHTML).toContain('name="planning-obligation-due-date-year"');
+					expect(element.innerHTML).toContain(
+						'name="proof-of-evidence-and-witnesses-due-date-day"'
+					);
+					expect(element.innerHTML).toContain(
+						'name="proof-of-evidence-and-witnesses-due-date-month"'
+					);
+					expect(element.innerHTML).toContain(
+						'name="proof-of-evidence-and-witnesses-due-date-year"'
+					);
+					expect(element.innerHTML).toContain('Continue</button>');
+				});
 			}
 		);
 	});
@@ -907,6 +1008,252 @@ describe('Timetable', () => {
 				});
 			}
 		);
+
+		describe.each([APPEAL_TYPE.S78, APPEAL_TYPE.PLANNED_LISTED_BUILDING])(
+			'S78 and S20 inquiry',
+			(appealType) => {
+				const appealData = {
+					...baseAppealData,
+					appealTimetable: {
+						appealTimetableId: 1
+					},
+					appealType: appealType,
+					appealStatus: 'lpa_questionnaire',
+					procedureType: 'Inquiry'
+				};
+
+				beforeEach(() => {
+					nock.cleanAll();
+					nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+					nock('http://test/')
+						.get('/appeals/1/appellant-cases/0')
+						.reply(200, { planningObligation: { hasObligation: true } })
+						.persist();
+					nock('http://test/')
+						.post(`/appeals/validate-business-date`)
+						.reply(200, { result: true })
+						.persist();
+				});
+				afterEach(() => {
+					nock.cleanAll();
+				});
+				const baseValidHearingPayloadParts = {
+					'lpa-questionnaire-due-date': { day: '01', month: '10', year: '2050' },
+					'lpa-statement-due-date': { day: '02', month: '10', year: '2050' },
+					'ip-comments-due-date': { day: '03', month: '10', year: '2050' },
+					'statement-of-common-ground-due-date': { day: '04', month: '10', year: '2050' },
+					'planning-obligation-due-date': { day: '05', month: '10', year: '2050' },
+					'proof-of-evidence-and-witnesses-due-date': { day: '06', month: '10', year: '2050' }
+				};
+
+				/**
+				 * @returns {{
+				 * 'lpa-questionnaire-due-date-day': string,
+				 * 'lpa-questionnaire-due-date-month': string,
+				 * 'lpa-questionnaire-due-date-year': string,
+				 * 'lpa-statement-due-date-day': string,
+				 * 'lpa-statement-due-date-month': string,
+				 * 'lpa-statement-due-date-year': string,
+				 * 'ip-comments-due-date-day': string,
+				 * 'ip-comments-due-date-month': string,
+				 * 'ip-comments-due-date-year': string,
+				 * 'statement-of-common-ground-due-date-day': string,
+				 * 'statement-of-common-ground-due-date-month': string,
+				 * 'statement-of-common-ground-due-date-year': string,
+				 * 'planning-obligation-due-date-day': string,
+				 * 'planning-obligation-due-date-month': string,
+				 * 'planning-obligation-due-date-year': string,
+				 * 'proof-of-evidence-and-witnesses-due-date-day': string,
+				 * 'proof-of-evidence-and-witnesses-due-date-month': string,
+				 * 'proof-of-evidence-and-witnesses-due-date-year': string
+				 * }}
+				 */
+				const getBaseValidHearingPayload = () => ({
+					'lpa-questionnaire-due-date-day':
+						baseValidHearingPayloadParts['lpa-questionnaire-due-date'].day,
+					'lpa-questionnaire-due-date-month':
+						baseValidHearingPayloadParts['lpa-questionnaire-due-date'].month,
+					'lpa-questionnaire-due-date-year':
+						baseValidHearingPayloadParts['lpa-questionnaire-due-date'].year,
+					'lpa-statement-due-date-day': baseValidHearingPayloadParts['lpa-statement-due-date'].day,
+					'lpa-statement-due-date-month':
+						baseValidHearingPayloadParts['lpa-statement-due-date'].month,
+					'lpa-statement-due-date-year':
+						baseValidHearingPayloadParts['lpa-statement-due-date'].year,
+					'ip-comments-due-date-day': baseValidHearingPayloadParts['ip-comments-due-date'].day,
+					'ip-comments-due-date-month': baseValidHearingPayloadParts['ip-comments-due-date'].month,
+					'ip-comments-due-date-year': baseValidHearingPayloadParts['ip-comments-due-date'].year,
+					'statement-of-common-ground-due-date-day':
+						baseValidHearingPayloadParts['statement-of-common-ground-due-date'].day,
+					'statement-of-common-ground-due-date-month':
+						baseValidHearingPayloadParts['statement-of-common-ground-due-date'].month,
+					'statement-of-common-ground-due-date-year':
+						baseValidHearingPayloadParts['statement-of-common-ground-due-date'].year,
+					'planning-obligation-due-date-day':
+						baseValidHearingPayloadParts['planning-obligation-due-date'].day,
+					'planning-obligation-due-date-month':
+						baseValidHearingPayloadParts['planning-obligation-due-date'].month,
+					'planning-obligation-due-date-year':
+						baseValidHearingPayloadParts['planning-obligation-due-date'].year,
+					'proof-of-evidence-and-witnesses-due-date-day':
+						baseValidHearingPayloadParts['proof-of-evidence-and-witnesses-due-date'].day,
+					'proof-of-evidence-and-witnesses-due-date-month':
+						baseValidHearingPayloadParts['proof-of-evidence-and-witnesses-due-date'].month,
+					'proof-of-evidence-and-witnesses-due-date-year':
+						baseValidHearingPayloadParts['proof-of-evidence-and-witnesses-due-date'].year
+				});
+
+				const timetableTypes = [
+					{
+						id: 'lpa-questionnaire',
+						label: 'LPA questionnaire'
+					},
+					{
+						id: 'lpa-statement',
+						label: 'Statements'
+					},
+					{
+						id: 'ip-comments',
+						label: 'Interested party comments'
+					},
+					{
+						id: 'statement-of-common-ground',
+						label: 'Statement of common ground'
+					},
+					{
+						id: 'planning-obligation',
+						label: 'Planning obligation'
+					},
+					{
+						id: 'proof-of-evidence-and-witnesses',
+						label: 'Proof of evidence and witnesses'
+					}
+				];
+
+				const testCases = [
+					{
+						name: 'missing day',
+						payload: (/** @type {string} */ id) => ({
+							[`${id}-due-date-month`]: '10',
+							[`${id}-due-date-year`]: '2050'
+						}),
+						expectedError: (/** @type {string} */ label) => `${label} due date must include a day`
+					},
+					{
+						name: 'missing month',
+						payload: (/** @type {string} */ id) => ({
+							[`${id}-due-date-day`]: '10',
+							[`${id}-due-date-year`]: '2050'
+						}),
+						expectedError: (/** @type {string} */ label) => `${label} due date must include a month`
+					},
+					{
+						name: 'missing year',
+						payload: (/** @type {string} */ id) => ({
+							[`${id}-due-date-day`]: '10',
+							[`${id}-due-date-month`]: '12'
+						}),
+						expectedError: (/** @type {string} */ label) => `${label} due date must include a year`
+					},
+					{
+						name: 'not a real date',
+						payload: (/** @type {string} */ id) => ({
+							[`${id}-due-date-day`]: '29',
+							[`${id}-due-date-month`]: '2',
+							[`${id}-due-date-year`]: '3000'
+						}),
+						expectedError: (/** @type {string} */ label) => `${label} due date must be a real date`
+					},
+					{
+						name: 'must be in the future',
+						payload: (/** @type {string} */ id) => ({
+							[`${id}-due-date-day`]: '25',
+							[`${id}-due-date-month`]: '2',
+							[`${id}-due-date-year`]: '1950'
+						}),
+						expectedError: (/** @type {string} */ label) =>
+							`The ${label.toLowerCase()} due date must be in the future`
+					}
+				];
+
+				timetableTypes.forEach(({ id: currentFieldId, label }) => {
+					describe(`${label}`, () => {
+						it.each(testCases)(
+							'should re-render edit timetable page with $name error for ' + label,
+							async (testCase) => {
+								const payloadForTest = getBaseValidHearingPayload();
+
+								// Define the keys for the field under test
+								const dayKey = /** @type {keyof typeof payloadForTest} */ (
+									`${currentFieldId}-due-date-day`
+								);
+								const monthKey = /** @type {keyof typeof payloadForTest} */ (
+									`${currentFieldId}-due-date-month`
+								);
+								const yearKey = /** @type {keyof typeof payloadForTest} */ (
+									`${currentFieldId}-due-date-year`
+								);
+
+								// Remove the valid parts for the field under test, so it can be replaced by the error-inducing parts
+								// Check if keys exist before deleting (though they should, given the structure)
+								if (dayKey in payloadForTest) delete payloadForTest[dayKey];
+								if (monthKey in payloadForTest) delete payloadForTest[monthKey];
+								if (yearKey in payloadForTest) delete payloadForTest[yearKey];
+
+								// Apply the specific error-inducing payload for the current field
+								const errorInducingParts = testCase.payload(currentFieldId);
+								for (const key in errorInducingParts) {
+									if (Object.prototype.hasOwnProperty.call(errorInducingParts, key)) {
+										// Cast 'key' to tell TypeScript it's a valid key for payloadForTest
+										payloadForTest[/** @type {keyof typeof payloadForTest} */ (key)] =
+											errorInducingParts[key];
+									}
+								}
+
+								const response = await request.post(`${baseUrl}/edit`).send(payloadForTest);
+								const element = parseHtml(response.text);
+
+								expect(element.innerHTML).toMatchSnapshot();
+								expect(element.innerHTML).toContain(
+									'<h2 class="govuk-error-summary__title"> There is a problem</h2>'
+								);
+								expect(element.querySelector('.govuk-error-summary__list li a')?.innerHTML).toBe(
+									testCase.expectedError(label)
+								);
+							}
+						);
+					});
+				});
+
+				it('should redirect to the timetable CYA page if required due dates are present in the request body', async () => {
+					const response = await request.post(`${baseUrl}/edit`).send({
+						'lpa-questionnaire-due-date-day': '10',
+						'lpa-questionnaire-due-date-month': '10',
+						'lpa-questionnaire-due-date-year': '2050',
+						'lpa-statement-due-date-day': '10',
+						'lpa-statement-due-date-month': '10',
+						'lpa-statement-due-date-year': '2050',
+						'ip-comments-due-date-day': '10',
+						'ip-comments-due-date-month': '10',
+						'ip-comments-due-date-year': '2050',
+						'statement-of-common-ground-due-date-day': '10',
+						'statement-of-common-ground-due-date-month': '10',
+						'statement-of-common-ground-due-date-year': '2050',
+						'planning-obligation-due-date-day': '10',
+						'planning-obligation-due-date-month': '10',
+						'planning-obligation-due-date-year': '2050',
+						'proof-of-evidence-and-witnesses-due-date-day': '10',
+						'proof-of-evidence-and-witnesses-due-date-month': '10',
+						'proof-of-evidence-and-witnesses-due-date-year': '2050'
+					});
+
+					expect(response.statusCode).toBe(302);
+					expect(response.text).toBe(
+						'Found. Redirecting to /appeals-service/appeal-details/1/timetable/edit/check'
+					);
+				});
+			}
+		);
 	});
 
 	describe('GET /edit/check', () => {
@@ -1309,5 +1656,67 @@ describe('Timetable', () => {
 				});
 			}
 		);
+	});
+
+	describe('POST /edit/check', () => {
+		describe('S78 inquiry', () => {
+			const appealData = {
+				...baseAppealData,
+				appealTimetable: {
+					appealTimetableId: 1
+				},
+				appealType: APPEAL_TYPE.S78,
+				appealStatus: 'lpa_questionnaire',
+				procedureType: 'Inquiry'
+			};
+
+			beforeEach(() => {
+				nock.cleanAll();
+				nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, { planningObligation: { hasObligation: false } })
+					.persist();
+			});
+
+			afterEach(() => {
+				nock.cleanAll();
+			});
+
+			it('should update the timetable due dates via the API', async () => {
+				const apiCall = nock('http://test/')
+					.patch('/appeals/1/appeal-timetables/1', {
+						lpaStatementDueDate: '2030-10-13T23:00:00.000Z',
+						ipCommentsDueDate: '2030-10-14T23:00:00.000Z',
+						statementOfCommonGroundDueDate: '2030-10-16T23:00:00.000Z',
+						proofOfEvidenceAndWitnessesDueDate: '2030-10-18T23:00:00.000Z'
+					})
+					.reply(200, {})
+					.persist();
+
+				await request.post(`${baseUrl}/edit`).send({
+					'lpa-statement-due-date-day': '14',
+					'lpa-statement-due-date-month': '10',
+					'lpa-statement-due-date-year': '2030',
+					'ip-comments-due-date-day': '15',
+					'ip-comments-due-date-month': '10',
+					'ip-comments-due-date-year': '2030',
+					'statement-of-common-ground-due-date-day': '17',
+					'statement-of-common-ground-due-date-month': '10',
+					'statement-of-common-ground-due-date-year': '2030',
+					'planning-obligation-due-date-day': '18',
+					'planning-obligation-due-date-month': '10',
+					'planning-obligation-due-date-year': '2030',
+					'proof-of-evidence-and-witnesses-due-date-day': '19',
+					'proof-of-evidence-and-witnesses-due-date-month': '10',
+					'proof-of-evidence-and-witnesses-due-date-year': '2030'
+				});
+				const response = await request.post(`${baseUrl}/edit/check`);
+
+				expect(response.statusCode).toBe(302);
+				expect(response.headers.location).toBe('/appeals-service/appeal-details/1');
+				expect(apiCall.isDone()).toBe(true);
+			});
+		});
 	});
 });

@@ -5,7 +5,7 @@ import {
 	householdAppeal,
 	listedBuildingAppeal
 } from '#tests/appeals/mocks.js';
-import { documentCreated } from '#tests/documents/mocks.js';
+import { documentCreated, documentVersionCreated, savedFolder } from '#tests/documents/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
@@ -31,10 +31,10 @@ import {
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { add, sub } from 'date-fns';
-
 import { request } from '../../../app-test.js';
 import { sendNewDecisionLetter } from '../decision.service';
 const { databaseConnector } = await import('#utils/database-connector.js');
+
 describe('decision routes', () => {
 	beforeAll(() => {
 		jest.clearAllMocks();
@@ -284,7 +284,9 @@ describe('decision routes', () => {
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
 				data: {
 					appealId: appeal.id,
-					details: AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
+					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
+						outcome[0].toUpperCase() + outcome.slice(1)
+					]),
 					loggedAt: expect.any(Date),
 					userId: appeal.caseOfficer.id
 				}
@@ -293,7 +295,7 @@ describe('decision routes', () => {
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 				data: {
 					appealId: appeal.id,
-					details: AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED,
+					details: AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
 					loggedAt: expect.any(Date),
 					userId: appeal.caseOfficer.id
 				}
@@ -302,9 +304,7 @@ describe('decision routes', () => {
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
 				data: {
 					appealId: appeal.id,
-					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
-						outcome[0].toUpperCase() + outcome.slice(1)
-					]),
+					details: AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED,
 					loggedAt: expect.any(Date),
 					userId: appeal.caseOfficer.id
 				}
@@ -482,7 +482,11 @@ describe('decision routes', () => {
 			const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
 			const outcome = 'allowed';
 			const childAppeal = {
-				appealId: 4,
+				child: {
+					id: 4,
+					reference: 'CHILD123'
+				},
+				childId: 4,
 				childRef: 'CHILD123',
 				inspectorDecision: outcome,
 				type: CASE_RELATIONSHIP_LINKED
@@ -506,6 +510,15 @@ describe('decision routes', () => {
 			// @ts-ignore
 			databaseConnector.inspectorDecision.create.mockResolvedValue({});
 
+			// @ts-ignore
+			databaseConnector.folder.findMany.mockResolvedValue([savedFolder]);
+			databaseConnector.document.create = jest.fn().mockImplementation(() => {
+				return documentCreated;
+			});
+			databaseConnector.documentVersion.create = jest
+				.fn()
+				.mockResolvedValue(documentVersionCreated);
+
 			const response = await request
 				.post(`/appeals/${appeal.id}/decision`)
 				.send({
@@ -517,7 +530,7 @@ describe('decision routes', () => {
 							documentGuid: documentCreated.guid
 						},
 						{
-							appealId: childAppeal.appealId,
+							appealId: childAppeal.childId,
 							decisionType: DECISION_TYPE_INSPECTOR,
 							outcome,
 							documentDate: utcDate.toISOString(),
@@ -527,6 +540,39 @@ describe('decision routes', () => {
 					]
 				})
 				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.document.create).toHaveBeenCalledWith({
+				data: {
+					caseId: childAppeal.childId,
+					folderId: 23,
+					guid: 'mock-uuid',
+					name: 'mydoc-1345264.pdf'
+				}
+			});
+
+			expect(databaseConnector.documentVersion.create).toHaveBeenCalledWith({
+				data: {
+					blobStorageContainer: 'document-service-uploads',
+					blobStoragePath: 'appeal/CHILD123/mock-uuid/v1/mydoc-1345264.pdf',
+					dateReceived: expect.any(Date),
+					documentGuid: 'mock-uuid',
+					documentType: 'appellantCostApplication',
+					documentURI:
+						'https://127.0.0.1:10000/document-service-uploads/appeal/CHILD123/mock-uuid/v1/mydoc-1345264.pdf',
+					draft: false,
+					fileName: 'mydoc-1345264.pdf',
+					isLateEntry: false,
+					lastModified: expect.any(Date),
+					mime: 'application/pdf',
+					originalFilename: 'mydoc-1345264.pdf',
+					published: false,
+					redactionStatusId: 1,
+					size: 14699,
+					stage: 'appeal-decision',
+					version: 1,
+					virusCheckStatus: 'affected'
+				}
+			});
 
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
@@ -564,7 +610,7 @@ describe('decision routes', () => {
 
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
 				data: {
-					appealId: childAppeal.appealId,
+					appealId: appeal.id,
 					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
 						outcome[0].toUpperCase() + outcome.slice(1)
 					]),
@@ -575,7 +621,7 @@ describe('decision routes', () => {
 
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 				data: {
-					appealId: childAppeal.appealId,
+					appealId: appeal.id,
 					details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['complete']),
 					loggedAt: expect.any(Date),
 					userId: appeal.caseOfficer.id
@@ -584,7 +630,7 @@ describe('decision routes', () => {
 
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
 				data: {
-					appealId: appeal.id,
+					appealId: childAppeal.childId,
 					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
 						outcome[0].toUpperCase() + outcome.slice(1)
 					]),
@@ -595,7 +641,7 @@ describe('decision routes', () => {
 
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(4, {
 				data: {
-					appealId: appeal.id,
+					appealId: childAppeal.childId,
 					details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['complete']),
 					loggedAt: expect.any(Date),
 					userId: appeal.caseOfficer.id

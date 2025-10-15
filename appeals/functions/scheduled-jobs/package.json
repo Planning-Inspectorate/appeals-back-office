@@ -2,11 +2,13 @@
   "name": "@pins/functions-bo-appeals-scheduled-jobs",
   "version": "1.0.0",
   "description": "Azure Function to handle time-based events",
+  "main": "src/app.js",
   "scripts": {
     "start": "func start"
   },
   "type": "module",
   "dependencies": {
+    "@azure/functions": "^4.0.0",
     "@pins/event-client": "^0.0.0",
     "@pins/platform": "^0.0.0",
     "dotenv": "*",

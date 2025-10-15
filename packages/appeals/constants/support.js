@@ -14,6 +14,8 @@ export const CASE_OUTCOME_DISMISSED = 'dismissed';
 export const CASE_OUTCOME_SPLIT_DECISION = 'split decision';
 export const CASE_OUTCOME_INVALID = 'invalid';
 
+export const CHANGE_APPEAL_TYPE_INVALID_REASON = 'Wrong appeal type';
+
 export const DECISION_TYPE_INSPECTOR = 'inspector-decision';
 export const DECISION_TYPE_APPELLANT_COSTS = 'appellant-costs-decision';
 export const DECISION_TYPE_LPA_COSTS = 'lpa-costs-decision';
@@ -103,6 +105,10 @@ export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_ADDED = 'A neighbouring address wa
 export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_UPDATED = 'A neighbouring address was updated';
 export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_REMOVED = 'A neighbouring address was removed';
 export const AUDIT_TRAIL_SYSTEM_UUID = '00000000-0000-0000-0000-000000000000';
+export const AUDIT_TRIAL_APPELLANT_UUID = '00000000-0000-0000-0000-000000000001';
+export const AUDIT_TRAIL_LPA_UUID = '00000000-0000-0000-0000-000000000002';
+export const AUDIT_TRAIL_IP_UUID = '00000000-0000-0000-0000-000000000003';
+export const AUDIT_TRIAL_AUTOMATIC_EVENT_UUID = '00000000-0000-0000-0000-000000000004';
 export const AUDIT_TRAIL_SERVICE_USER_UPDATED =
 	'{replacement0} contact details updated to\n{replacement1}';
 export const AUDIT_TRAIL_SERVICE_USER_ADDRESS_UPDATED =
@@ -221,7 +227,10 @@ export const AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED = 'Appellant costs deci
 export const AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED = 'LPA costs decision issued';
 export const AUDIT_TRAIL_SITE_VISIT_CANCELLED = 'Site visit cancelled';
 
+export const AUDIT_TRAIL_APPEAL_TYPE_TRANSFERRED = 'Appeal marked as {replacement0}';
 export const AUDIT_TRAIL_APPEAL_TYPE_UPDATED = 'Appeal type updated to {replacement0}';
+
+export const AUDIT_TRAIL_HORIZON_REFERENCE_UPDATED = 'Horizon reference updated';
 
 export const AUDIT_TRAIL_ASSIGNED_TEAM_UPDATED = 'Case team {replacement0} assigned';
 export const BANK_HOLIDAY_FEED_DIVISION_ENGLAND = 'england-and-wales';

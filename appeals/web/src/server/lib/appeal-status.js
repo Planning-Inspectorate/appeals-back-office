@@ -2,6 +2,7 @@ import { isAppealTypeEnabled } from '#common/feature-flags-appeal-types.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
+/** @typedef {import('#appeals/personal-list/personal-list.mapper').PersonalListAppeal} PersonalListAppeal */
 
 /**
  * @param {string} appealStatus
@@ -46,7 +47,7 @@ export function mapAppealProcedureTypeToEventName(appealProcedureType) {
 /**
  * Returns true if the given state was previously passed through.
  *
- * @param {WebAppeal} appeal
+ * @param {WebAppeal|PersonalListAppeal} appeal
  * @param {string} state
  * @returns {boolean}
  * */

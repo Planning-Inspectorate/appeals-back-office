@@ -6,6 +6,7 @@ import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-co
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
+import { CHANGE_APPEAL_TYPE_INVALID_REASON } from '@pins/appeals/constants/support.js';
 import { mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters } from '../appellant-case/appellant-case.mapper.js';
 import * as appellantCaseService from '../appellant-case/appellant-case.service.js';
 import {
@@ -62,10 +63,14 @@ const renderInvalidReason = async (request, response) => {
 		delete request.session.webAppellantCaseReviewOutcome;
 	}
 
-	if (invalidReasonOptions) {
+	const filteredReasonOptions = invalidReasonOptions.filter(
+		(reason) => reason.name !== CHANGE_APPEAL_TYPE_INVALID_REASON
+	);
+
+	if (filteredReasonOptions) {
 		const mappedInvalidReasonOptions = mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters(
 			'invalid',
-			invalidReasonOptions,
+			filteredReasonOptions,
 			body,
 			request.session.webAppellantCaseReviewOutcome,
 			appellantCaseResponse.validation,
@@ -176,12 +181,17 @@ export const getCheckPage = async (request, response) => {
 				request.apiClient,
 				webAppellantCaseReviewOutcome.validationOutcome
 			);
-		if (!reasonOptions) {
+
+		const filteredReasonOptions = reasonOptions.filter(
+			(reason) => reason.name !== CHANGE_APPEAL_TYPE_INVALID_REASON
+		);
+
+		if (!filteredReasonOptions) {
 			throw new Error('error retrieving invalid reason options');
 		}
 
 		const invalidReasons = buildRejectionReasons(
-			reasonOptions,
+			filteredReasonOptions,
 			webAppellantCaseReviewOutcome.reasons,
 			webAppellantCaseReviewOutcome.reasonsText
 		);

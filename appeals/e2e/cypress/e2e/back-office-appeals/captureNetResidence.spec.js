@@ -11,13 +11,26 @@ const caseDetailsPage = new CaseDetailsPage();
 const netResidencePage = new NetResidencePage();
 const overviewSectionPage = new OverviewSectionPage();
 
+<<<<<<< test/A2-3797-capture-net-residence
 let caseRef;
+=======
+let caseObj;
+>>>>>>> main
 
 describe('Capture Net Residences', () => {
 	beforeEach(() => {
 		setupTestCase();
 	});
 
+<<<<<<< test/A2-3797-capture-net-residence
+=======
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
+>>>>>>> main
 	const overviewDetails = {
 		appealType: 'Planning appeal',
 		applicationReference: '123',
@@ -63,11 +76,20 @@ describe('Capture Net Residences', () => {
 		cy.login(users.appeals.caseAdmin);
 
 		cy.createCase({ caseType: 'W' }).then((ref) => {
+<<<<<<< test/A2-3797-capture-net-residence
 			caseRef = ref;
 			happyPathHelper.viewCaseDetails(caseRef);
 			happyPathHelper.assignCaseOfficer(caseRef);
 			happyPathHelper.reviewAppellantCase(caseRef);
 			happyPathHelper.startS78Case(caseRef, 'written');
+=======
+			caseObj = ref;
+			appeal = caseObj;
+			happyPathHelper.viewCaseDetails(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startS78Case(caseObj, 'written');
+>>>>>>> main
 		});
 	};
 });

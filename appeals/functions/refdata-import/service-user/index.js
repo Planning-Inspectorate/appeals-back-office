@@ -3,28 +3,28 @@ import { HTTPError } from 'got';
 import api from './back-office-api-client.js';
 
 /**
- *
- * @param {import('@azure/functions').Context} context
- * @param {*} msg
+ * This appears to be unused and the api endpoint does not exist
+ * @type {import('@azure/functions').ServiceBusTopicHandler}
  */
-export default async function (context, msg) {
-	context.log('Service user import command', msg);
+export default async function (msg, context) {
+	context.info('Service user import command', msg);
 
-	const applicationProperties = context?.bindingData?.applicationProperties;
+	const applicationProperties = context?.triggerMetadata?.applicationProperties;
 
 	const hasType =
 		Boolean(applicationProperties) &&
 		Object.prototype.hasOwnProperty.call(applicationProperties, 'type');
 	if (!hasType) {
-		context.log.warn('Ignoring invalid message, no type', msg);
-		return;
+		context.warn('Ignoring invalid message, no type', msg);
+		return {};
 	}
 
+	// @ts-ignore
 	const type = applicationProperties?.type;
 
 	if (type !== EventType.Create && type !== EventType.Update) {
-		context.log.warn(`Ignoring invalid message, unsupported type '${type}'`, msg);
-		return;
+		context.warn(`Ignoring invalid message, unsupported type '${type}'`, msg);
+		return {};
 	}
 
 	try {
@@ -32,16 +32,18 @@ export default async function (context, msg) {
 
 		const { id } = res;
 
-		context.log.info(`Service user created: ${id}`);
+		context.info(`Service user created: ${id}`);
 	} catch (e) {
 		if (e instanceof HTTPError) {
-			context.log.error('Error creating service user', {
+			context.error('Error creating service user', {
 				message: e.message,
 				body: e.response?.body
 			});
 		} else {
-			context.log.error('Error creating service user', e);
+			context.error('Error creating service user', e);
 		}
 		throw e;
 	}
+
+	return {};
 }

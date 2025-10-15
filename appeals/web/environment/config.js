@@ -59,8 +59,6 @@ export function loadConfig() {
 		FEATURE_FLAG_S20,
 		FEATURE_FLAG_CAS,
 		FEATURE_FLAG_CAS_ADVERT,
-		FEATURE_FLAG_ISSUE_DECISION,
-		FEATURE_FLAG_RE_ISSUE_DECISION,
 		FEATURE_FLAG_NOTIFY_CASE_HISTORY,
 		FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT,
 		FEATURE_FLAG_CHANGE_APPEAL_TYPE,
@@ -86,7 +84,8 @@ export function loadConfig() {
 		FEATURE_FLAG_CANCEL_CASE,
 		FEATURE_FLAG_CHANGE_PROCEDURE_TYPE,
 		FEATURE_FLAG_AUTO_ASSIGN_TEAM,
-		FEATURE_FLAG_CANCEL_SITE_VISIT
+		FEATURE_FLAG_CANCEL_SITE_VISIT,
+		FEATURE_FLAG_PERSONAL_LIST
 	} = environment;
 
 	const config = {
@@ -148,8 +147,6 @@ export function loadConfig() {
 			featureFlagS20: FEATURE_FLAG_S20 === 'true',
 			featureFlagCAS: FEATURE_FLAG_CAS === 'true',
 			featureFlagCasAdvert: FEATURE_FLAG_CAS_ADVERT === 'true',
-			featureFlagIssueDecision: FEATURE_FLAG_ISSUE_DECISION === 'true',
-			featureFlagReIssueDecision: FEATURE_FLAG_RE_ISSUE_DECISION === 'true',
 			featureFlagNotifyCaseHistory: FEATURE_FLAG_NOTIFY_CASE_HISTORY === 'true',
 			featureFlagSimplifyTeamAssignment: FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT === 'true',
 			featureFlagChangeAppealType: FEATURE_FLAG_CHANGE_APPEAL_TYPE === 'true',
@@ -160,7 +157,8 @@ export function loadConfig() {
 			featureFlagChangeProcedureType: FEATURE_FLAG_CHANGE_PROCEDURE_TYPE === 'true',
 			featureFlagHearingPostMvp: FEATURE_FLAG_HEARING_POST_MVP === 'true',
 			featureFlagAutoAssignTeam: FEATURE_FLAG_AUTO_ASSIGN_TEAM === 'true',
-			featureFlagCancelSiteVisit: FEATURE_FLAG_CANCEL_SITE_VISIT === 'true'
+			featureFlagCancelSiteVisit: FEATURE_FLAG_CANCEL_SITE_VISIT === 'true',
+			featureFlagPersonalList: FEATURE_FLAG_PERSONAL_LIST === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		pdfServiceHost: PDF_SERVICE_HOST

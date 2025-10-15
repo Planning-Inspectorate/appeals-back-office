@@ -29,7 +29,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		}
 	];
 	const futureDate = { years: 1, days: 10 };
-	let caseRef;
+	let caseObj;
 
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
@@ -42,13 +42,20 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		}).as('timetableCheck');
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	it('should change due dates when case status is lpa_questionnaire', () => {
 		cy.createCase({
 			caseType: 'W'
-		}).then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startS78Case(caseRef, 'written');
+		}).then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startS78Case(caseObj, 'written');
 			verifyDateChanges(0);
 		});
 	});
@@ -56,10 +63,11 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 	it('should not accept current date when case status is lpa_questionnaire', () => {
 		cy.createCase({
 			caseType: 'W'
-		}).then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startS78Case(caseRef, 'written');
+		}).then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startS78Case(caseObj, 'written');
 			caseDetailsPage.checkTimetableDueDatesAndChangeLinks(timetableItems);
 			caseDetailsPage.clickRowChangeLink(timetableItems[0].row);
 			caseDetailsPage.changeTimetableDates(timetableItems, new Date(), 7);
@@ -72,10 +80,11 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 	it('should not accept non business date when case status is lpa_questionnaire', () => {
 		cy.createCase({
 			caseType: 'W'
-		}).then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startS78Case(caseRef, 'written');
+		}).then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startS78Case(caseObj, 'written');
 			caseDetailsPage.checkTimetableDueDatesAndChangeLinks(timetableItems);
 			caseDetailsPage.clickRowChangeLink(timetableItems[0].row);
 			const nextYear = new Date().getFullYear() + 1;
@@ -92,12 +101,13 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		cy.clearAllSessionStorage();
 		cy.createCase({
 			caseType: 'W'
-		}).then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startS78Case(caseRef, 'written');
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.reviewS78Lpaq(caseRef);
+		}).then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startS78Case(caseObj, 'written');
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.reviewS78Lpaq(caseObj);
 			timetableItems[0].editable = false; // lpa questionare date is not editable in statements status
 			verifyDateChanges(1);
 		});
@@ -106,12 +116,13 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 	it('should not accept current date when case status is statements', () => {
 		cy.createCase({
 			caseType: 'W'
-		}).then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startS78Case(caseRef, 'written');
-			happyPathHelper.reviewS78Lpaq(caseRef);
+		}).then((caseObj) => {
+			appeal = caseObj;
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startS78Case(caseObj, 'written');
+			happyPathHelper.reviewS78Lpaq(caseObj);
 			timetableItems[0].editable = false; // lpa questionare date is not editable in statements status
 			caseDetailsPage.checkTimetableDueDatesAndChangeLinks(timetableItems);
 			caseDetailsPage.clickRowChangeLink(timetableItems[1].row);
@@ -125,12 +136,13 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 	it('should not accept non business date when case status is statements', () => {
 		cy.createCase({
 			caseType: 'W'
-		}).then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startS78Case(caseRef, 'written');
-			happyPathHelper.reviewS78Lpaq(caseRef);
+		}).then((caseObj) => {
+			appeal = caseObj;
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startS78Case(caseObj, 'written');
+			happyPathHelper.reviewS78Lpaq(caseObj);
 			timetableItems[0].editable = false; // lpa questionare date is not editable in statements status
 			caseDetailsPage.checkTimetableDueDatesAndChangeLinks(timetableItems);
 			caseDetailsPage.clickRowChangeLink(timetableItems[1].row);
@@ -146,21 +158,22 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		cy.clearAllSessionStorage();
 		cy.createCase({
 			caseType: 'W'
-		}).then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startS78Case(caseRef, 'written');
-			happyPathHelper.reviewS78Lpaq(caseRef);
+		}).then((caseObj) => {
+			appeal = caseObj;
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startS78Case(caseObj, 'written');
+			happyPathHelper.reviewS78Lpaq(caseObj);
 			caseDetailsPage.navigateToAppealsService();
-			listCasesPage.clickAppealByRef(caseRef);
-			happyPathHelper.addThirdPartyComment(caseRef, true);
+			listCasesPage.clickAppealByRef(caseObj);
+			happyPathHelper.addThirdPartyComment(caseObj, true);
 			caseDetailsPage.clickBackLink();
-			happyPathHelper.addThirdPartyComment(caseRef, false);
+			happyPathHelper.addThirdPartyComment(caseObj, false);
 			caseDetailsPage.clickBackLink();
 
-			happyPathHelper.addLpaStatement(caseRef);
-			cy.simulateStatementsDeadlineElapsed(caseRef);
+			happyPathHelper.addLpaStatement(caseObj);
+			cy.simulateStatementsDeadlineElapsed(caseObj);
 			cy.reload();
 
 			caseDetailsPage.basePageElements.bannerLink().click();

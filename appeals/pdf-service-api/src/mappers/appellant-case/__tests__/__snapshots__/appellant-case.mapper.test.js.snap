@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`mapAppellantCaseData should map appellant case data 1`] = `
+exports[`mapAppellantCaseData should map appellant case data for a householder appeal 1`] = `
 {
   "details": {
     "appealReference": "6000073",
@@ -14,6 +14,192 @@ exports[`mapAppellantCaseData should map appellant case data 1`] = `
     "localPlanningDepartment": "Maidstone Borough Council",
   },
   "sections": [
+    {
+      "heading": "Before you start",
+      "items": [
+        {
+          "html": "Maidstone Borough Council",
+          "key": "Local planning authority",
+        },
+        {
+          "key": "What type of application is your appeal about?",
+          "text": "Householder appeal",
+        },
+        {
+          "key": "Was your application granted or refused?",
+          "text": "Refused",
+        },
+        {
+          "key": "What’s the date on the decision letter from the local planning authority?",
+          "text": "3 June 2025",
+        },
+        {
+          "key": "Are you claiming costs as part of your appeal?",
+          "text": "Not answered",
+        },
+        {
+          "key": "What is the application reference number?",
+          "text": "44377/APP/3/218453",
+        },
+        {
+          "key": "What date did you submit your application?",
+          "text": "22 May 2025",
+        },
+      ],
+    },
+    {
+      "heading": "Appellant details",
+      "items": [
+        {
+          "html": "Sophie Skinner<br />test4@example.com",
+          "key": "Appellant details",
+        },
+        {
+          "html": "Lee Thornton<br />Lee Thornton Ltd<br />test1@example.com",
+          "key": "Agent details",
+        },
+      ],
+    },
+    {
+      "heading": "Site details",
+      "items": [
+        {
+          "html": "Copthalls, Clevedon Road, West Hill, BS48 1PN",
+          "key": "What is the address of the appeal site?",
+        },
+        {
+          "key": "What is the area of the appeal site?",
+          "text": "30.9 m²",
+        },
+        {
+          "key": "Is the appeal site in a green belt?",
+          "text": "No",
+        },
+        {
+          "key": "Does the appellant own all of the land involved in the appeal?",
+          "text": "Fully owned",
+        },
+        {
+          "key": "Does the appellant know who owns the land involved in the appeal?",
+          "text": "Some",
+        },
+        {
+          "key": "Will an inspector need to access your land or property?",
+          "text": "No",
+        },
+        {
+          "key": "Are there any health and safety issues on the appeal site?",
+          "text": "No",
+        },
+      ],
+    },
+    {
+      "heading": "Application details",
+      "items": [
+        {
+          "key": "What date did you submit your application?",
+          "text": "22 May 2025",
+        },
+        {
+          "key": "Enter the description of development that you submitted in your application",
+          "text": "Lorem ipsum",
+        },
+        {
+          "key": "Are there other appeals linked to your development?",
+          "text": "No",
+        },
+        {
+          "html": "No documents",
+          "key": "Decision letter from the local planning authority",
+        },
+      ],
+    },
+    undefined,
+    {
+      "heading": "Upload documents",
+      "items": [
+        {
+          "html": "No documents",
+          "key": "Application form",
+        },
+        {
+          "html": "No documents",
+          "key": "Agreement to change the description of development",
+        },
+        {
+          "html": "No documents",
+          "key": "Appellant statement",
+        },
+        {
+          "html": "No documents",
+          "key": "Draft statement of common ground",
+        },
+        {
+          "html": "No documents",
+          "key": "Application for an award of appeal costs",
+        },
+      ],
+    },
+    {
+      "heading": "Additional documents",
+      "items": [
+        {
+          "html": "No documents",
+          "key": "",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`mapAppellantCaseData should map appellant case data for a s78 appeal 1`] = `
+{
+  "details": {
+    "appealReference": "6000073",
+    "appealSite": {
+      "addressId": 72,
+      "addressLine1": "Copthalls",
+      "addressLine2": "Clevedon Road",
+      "postCode": "BS48 1PN",
+      "town": "West Hill",
+    },
+    "localPlanningDepartment": "Maidstone Borough Council",
+  },
+  "sections": [
+    {
+      "heading": "Before you start",
+      "items": [
+        {
+          "html": "Maidstone Borough Council",
+          "key": "Local planning authority",
+        },
+        {
+          "key": "What type of application is your appeal about?",
+          "text": "Full appeal",
+        },
+        {
+          "key": "Was your application granted or refused?",
+          "text": "Refused",
+        },
+        {
+          "key": "What’s the date on the decision letter from the local planning authority?",
+          "text": "3 June 2025",
+        },
+        {
+          "key": "Are you claiming costs as part of your appeal?",
+          "text": "Not answered",
+        },
+        {
+          "key": "What is the application reference number?",
+          "text": "44377/APP/3/218453",
+        },
+        {
+          "key": "What date did you submit your application?",
+          "text": "22 May 2025",
+        },
+      ],
+    },
     {
       "heading": "Appellant details",
       "items": [
@@ -76,14 +262,6 @@ exports[`mapAppellantCaseData should map appellant case data 1`] = `
       "heading": "Application details",
       "items": [
         {
-          "html": "Maidstone Borough Council",
-          "key": "Which local planning authority (LPA) do you want to appeal against?",
-        },
-        {
-          "key": "What is the application reference number?",
-          "text": "44377/APP/3/218453",
-        },
-        {
           "key": "What date did you submit your application?",
           "text": "22 May 2025",
         },
@@ -96,14 +274,6 @@ exports[`mapAppellantCaseData should map appellant case data 1`] = `
           "text": "No",
         },
         {
-          "key": "Was your application granted or refused?",
-          "text": "Refused",
-        },
-        {
-          "key": "What’s the date on the decision letter from the local planning authority?",
-          "text": "3 June 2025",
-        },
-        {
           "key": "Development type",
           "text": "Major retail services",
         },
@@ -112,10 +282,6 @@ exports[`mapAppellantCaseData should map appellant case data 1`] = `
     {
       "heading": "Appeal details",
       "items": [
-        {
-          "key": "What type of application is your appeal about?",
-          "text": "Planning appeal",
-        },
         {
           "key": "How would you prefer us to decide your appeal?",
           "text": "Hearing",
@@ -160,6 +326,10 @@ exports[`mapAppellantCaseData should map appellant case data 1`] = `
         {
           "html": "No documents",
           "key": "Planning obligation",
+        },
+        {
+          "html": "No documents",
+          "key": "Draft statement of common ground",
         },
         {
           "html": "No documents",

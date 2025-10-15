@@ -16,18 +16,25 @@ describe('add supporting documents', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	let sampleFiles = caseDetailsPage.sampleFiles;
 
 	it('upload and manage LPA documemnts ', () => {
 		cy.createCase({
 			caseType: 'W'
-		}).then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
+		}).then((caseObj) => {
+			appeal = caseObj;
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
-			happyPathHelper.reviewAppellantCase(caseRef);
+			happyPathHelper.reviewAppellantCase(caseObj);
 			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-			happyPathHelper.startS78Case(caseRef, 'written');
+			happyPathHelper.startS78Case(caseObj, 'written');
 			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 			caseDetailsPage.clickLinkByText('Review');
 			caseDetailsPage.clickIndividualLinkWhenMultiple('Additional documents', 'Add');
@@ -58,17 +65,18 @@ describe('add supporting documents', () => {
 	it('upload and manage IP Comments documemnts ', () => {
 		cy.createCase({
 			caseType: 'W'
-		}).then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
+		}).then((caseObj) => {
+			appeal = caseObj;
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
-			happyPathHelper.reviewAppellantCase(caseRef);
+			happyPathHelper.reviewAppellantCase(caseObj);
 			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-			happyPathHelper.startS78Case(caseRef, 'written');
+			happyPathHelper.startS78Case(caseObj, 'written');
 			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
-			happyPathHelper.reviewS78Lpaq(caseRef);
+			happyPathHelper.reviewS78Lpaq(caseObj);
 			caseDetailsPage.checkStatusOfCase('Statements', 0);
-			happyPathHelper.addThirdPartyComment(caseRef, true);
+			happyPathHelper.addThirdPartyComment(caseObj, true);
 			cy.contains('.govuk-tabs__tab', 'Accepted').click();
 			caseDetailsPage.clickLinkByText('View');
 			caseDetailsPage.clickLinkByText('Manage');
@@ -89,29 +97,30 @@ describe('add supporting documents', () => {
 	it('upload and manage Final Comments documemnts ', () => {
 		cy.createCase({
 			caseType: 'W'
-		}).then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
+		}).then((caseObj) => {
+			appeal = caseObj;
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
-			happyPathHelper.reviewAppellantCase(caseRef);
+			happyPathHelper.reviewAppellantCase(caseObj);
 			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-			happyPathHelper.startS78Case(caseRef, 'written');
+			happyPathHelper.startS78Case(caseObj, 'written');
 			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
-			happyPathHelper.reviewS78Lpaq(caseRef);
+			happyPathHelper.reviewS78Lpaq(caseObj);
 			caseDetailsPage.checkStatusOfCase('Statements', 0);
-			happyPathHelper.addThirdPartyComment(caseRef, true);
+			happyPathHelper.addThirdPartyComment(caseObj, true);
 			caseDetailsPage.clickBackLink();
-			happyPathHelper.addLpaStatement(caseRef);
-			cy.simulateStatementsDeadlineElapsed(caseRef);
+			happyPathHelper.addLpaStatement(caseObj);
+			cy.simulateStatementsDeadlineElapsed(caseObj);
 			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.basePageElements.bannerLink().click();
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.checkStatusOfCase('Final comments', 0);
-			cy.loadAppealDetails(caseRef).then((appealData) => {
+			cy.loadAppealDetails(caseObj).then((appealData) => {
 				const serviceUserId = ((appealData?.appellant?.serviceUserId ?? 0) + 200000000).toString();
-				happyPathHelper.addAppellantFinalComment(caseRef, serviceUserId);
+				happyPathHelper.addAppellantFinalComment(caseObj, serviceUserId);
 			});
-			cy.simulateFinalCommentsDeadlineElapsed(caseRef);
+			cy.simulateFinalCommentsDeadlineElapsed(caseObj);
 			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.basePageElements.bannerLink().click();
 			caseDetailsPage.clickButtonByText('Share final comments');

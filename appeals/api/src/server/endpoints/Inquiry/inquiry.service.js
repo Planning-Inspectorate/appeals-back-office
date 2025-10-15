@@ -218,7 +218,7 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 };
 
 /**
- * @param {UpdateInquiry} updateInquiryData
+ * @param {UpdateInquiry | Omit<UpdateInquiry, 'address'>} updateInquiryData
  * @param {Appeal} appeal
  * @returns {Promise<void>}
  */
@@ -228,7 +228,7 @@ const updateInquiry = async (updateInquiryData, appeal) => {
 		const inquiryId = updateInquiryData.inquiryId;
 		const inquiryStartTime = updateInquiryData.inquiryStartTime;
 		const inquiryEndTime = updateInquiryData.inquiryEndTime;
-		const address = updateInquiryData.address;
+		const address = 'address' in updateInquiryData ? updateInquiryData.address : undefined;
 		const addressId = updateInquiryData.addressId;
 		const estimatedDays = updateInquiryData.estimatedDays;
 
@@ -243,7 +243,7 @@ const updateInquiry = async (updateInquiryData, appeal) => {
 			inquiryStartTime,
 			inquiryEndTime,
 			addressId,
-			address,
+			...(address !== undefined && { address }),
 			estimatedDays
 		};
 

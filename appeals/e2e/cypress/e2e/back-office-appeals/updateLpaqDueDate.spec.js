@@ -16,11 +16,18 @@ describe('Update LPAQ Due date', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	it('change lpaq due date from timetable', () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
 			caseDetailsPage.clickChangeLpaqDueDate();
 			cy.getBusinessActualDate(new Date(), 28).then((futureDate) => {
 				dateTimeSection.enterLpaqDate(futureDate);
@@ -28,16 +35,17 @@ describe('Update LPAQ Due date', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Update timetable due dates');
 			caseDetailsPage.validateBannerMessage('Success', 'Timetable due dates updated');
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.reviewLpaq(caseRef);
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.reviewLpaq(caseObj);
 		});
 	});
 
 	it('change S78 lpaq due date from timetable', () => {
-		cy.createCase({ caseType: 'W' }).then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startS78Case(caseRef, 'written');
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startS78Case(caseObj, 'written');
 			caseDetailsPage.clickChangeLpaqDueDate();
 			cy.getBusinessActualDate(new Date(), 28).then((futureDate) => {
 				dateTimeSection.enterLpaqDate(futureDate);
@@ -45,8 +53,8 @@ describe('Update LPAQ Due date', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Update timetable due dates');
 			caseDetailsPage.validateBannerMessage('Success', 'Timetable due dates updated');
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.reviewS78Lpaq(caseRef);
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.reviewS78Lpaq(caseObj);
 		});
 	});
 });

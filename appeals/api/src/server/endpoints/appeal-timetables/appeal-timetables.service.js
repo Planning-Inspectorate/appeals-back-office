@@ -10,6 +10,7 @@ import transitionState from '#state/transition-state.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { updatePersonalList } from '#utils/update-personal-list.js';
 import {
 	FEATURE_FLAG_NAMES,
 	PROCEDURE_TYPE_ID_MAP,
@@ -42,6 +43,7 @@ import {
 	APPEAL_CASE_TYPE
 } from '@planning-inspectorate/data-model';
 import { mapValues } from 'lodash-es';
+
 const environment = loadEnvironment(process.env.NODE_ENV);
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
@@ -71,6 +73,22 @@ const checkAppealTimetableExists = async (req, res, next) => {
 };
 
 /**
+ * Map appeal type to template value
+ * @param {string | undefined | null} appealType
+ * @returns {string}
+ */
+const appealTypeMap = (appealType) => {
+	switch (appealType) {
+		case 'W':
+			return '-s78-';
+		case 'Y':
+			return '-s78-';
+		default:
+			return '-';
+	}
+};
+
+/**
  *
  * @param {Appeal} appeal
  * @param {string} startDate
@@ -92,13 +110,6 @@ const getStartCaseNotifyParams = async (
 	procedureType,
 	hearingStartTime
 ) => {
-	/** @type {Record<string, string>} */
-	const appealTypeMap = {
-		D: '-',
-		W: '-s78-',
-		Y: '-s78-',
-		ZP: '-'
-	};
 	const hearingSuffix = hearingStartTime ? '-hearing' : '';
 
 	const { type = '', key: appealTypeKey = 'D' } = appeal.appealType || {};
@@ -106,11 +117,11 @@ const getStartCaseNotifyParams = async (
 
 	const appellantTemplate = appeal.caseStartedDate
 		? 'appeal-start-date-change-appellant'
-		: `appeal-valid-start-case${[appealTypeMap[appealTypeKey]]}appellant${hearingSuffix}`;
+		: `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}appellant${hearingSuffix}`;
 
 	const lpaTemplate = appeal.caseStartedDate
 		? 'appeal-start-date-change-lpa'
-		: `appeal-valid-start-case${[appealTypeMap[appealTypeKey]]}lpa${hearingSuffix}`;
+		: `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}lpa${hearingSuffix}`;
 
 	const appellantEmail = appeal.appellant?.email || appeal.agent?.email;
 	const lpaEmail = appeal.lpa?.email || '';
@@ -490,6 +501,8 @@ const updateAppealTimetable = async (appeal, body, notifyClient, azureAdUserId) 
 					dateISOStringToDisplayDate(processedBody[key])
 				]);
 		});
+
+		await updatePersonalList(appeal.id);
 
 		await createAuditTrail({
 			appealId: appeal.id,

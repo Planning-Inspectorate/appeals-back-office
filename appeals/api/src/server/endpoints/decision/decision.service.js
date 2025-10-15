@@ -2,11 +2,13 @@ import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatte
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { duplicateFiles } from '#endpoints/link-appeals/link-appeals.service.js';
 import { getRepresentations } from '#endpoints/representations/representations.service.js';
 import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { updatePersonalList } from '#utils/update-personal-list.js';
 import {
 	AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
 	AUDIT_TRAIL_CORRECTION_NOTICE_ADDED,
@@ -20,6 +22,7 @@ import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { loadEnvironment } from '@pins/platform';
 import {
 	APPEAL_CASE_DECISION_OUTCOME,
+	APPEAL_CASE_STAGE,
 	APPEAL_CASE_STATUS
 } from '@planning-inspectorate/data-model';
 
@@ -110,13 +113,22 @@ export const publishDecision = async (
 
 /**
  *
- * @param {Number} appealId
+ * @param {Appeal} childAppeal
  * @param {string} outcome
  * @param {Date} documentDate
  * @param {string} azureAdUserId
+ * @param {Appeal} leadAppeal
  * @returns
  */
-export const publishChildDecision = async (appealId, outcome, documentDate, azureAdUserId) => {
+export const publishChildDecision = async (
+	childAppeal,
+	outcome,
+	documentDate,
+	azureAdUserId,
+	leadAppeal
+) => {
+	const { id: appealId } = childAppeal;
+
 	const result = await appealRepository.setAppealDecision(appealId, {
 		documentDate,
 		version: 1,
@@ -124,6 +136,8 @@ export const publishChildDecision = async (appealId, outcome, documentDate, azur
 	});
 
 	if (result) {
+		await duplicateFiles(leadAppeal, childAppeal, APPEAL_CASE_STAGE.APPEAL_DECISION);
+
 		await createAuditTrail({
 			appealId,
 			azureAdUserId: azureAdUserId,
@@ -163,6 +177,8 @@ export const publishCostsDecision = async (
 		throw new Error('Unable to parse decision type for cost decision details.');
 	}
 	const { recipientEmailTemplate, lpaEmailTemplate, auditTrailDetails } = costDecisionDetails;
+
+	await updatePersonalList(appeal.id);
 
 	if (!skipNotifies) {
 		const personalisation = {

@@ -575,6 +575,7 @@ interface AppealListResponse {
 	appealReference: string;
 	appealSite: AppealSite;
 	appealStatus: string;
+	completedStateList: string[];
 	appealType?: string;
 	procedureType?: string;
 	createdAt: Date;
