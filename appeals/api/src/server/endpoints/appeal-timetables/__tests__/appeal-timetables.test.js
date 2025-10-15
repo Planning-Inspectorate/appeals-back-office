@@ -1273,8 +1273,8 @@ describe('appeal timetables routes', () => {
 							site_visit: false,
 							costs_info: false,
 							statement_of_common_ground_due_date: '10 July 2024',
-							hearing_date: '10 Jul 2024',
-							hearing_time: '14:45',
+							hearing_date: '10 July 2024',
+							hearing_time: '2:45pm',
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.appellant.email,
@@ -1301,8 +1301,8 @@ describe('appeal timetables routes', () => {
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
 							statement_of_common_ground_due_date: '10 July 2024',
-							hearing_date: '10 Jul 2024',
-							hearing_time: '14:45',
+							hearing_date: '10 July 2024',
+							hearing_time: '2:45pm',
 							...personalisation,
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
