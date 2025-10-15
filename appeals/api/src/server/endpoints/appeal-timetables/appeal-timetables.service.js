@@ -34,7 +34,7 @@ import {
 } from '@pins/appeals/utils/business-days.js';
 import formatDate, {
 	dateISOStringToDisplayDate,
-	formatTime
+	formatTime12h
 } from '@pins/appeals/utils/date-formatter.js';
 import { loadEnvironment } from '@pins/platform';
 import {
@@ -178,8 +178,8 @@ const getStartCaseNotifyParams = async (
 					costs_info:
 						procedureType === APPEAL_CASE_PROCEDURE.WRITTEN || procedureType === undefined,
 					...(hearingStartTime && {
-						hearing_date: formatDate(new Date(hearingStartTime)),
-						hearing_time: formatTime(hearingStartTime)
+						hearing_date: formatDate(new Date(hearingStartTime), false),
+						hearing_time: formatTime12h(hearingStartTime)
 					})
 				}
 			}
@@ -203,8 +203,8 @@ const getStartCaseNotifyParams = async (
 						)
 					}),
 					...(hearingStartTime && {
-						hearing_date: formatDate(new Date(hearingStartTime)),
-						hearing_time: formatTime(hearingStartTime)
+						hearing_date: formatDate(new Date(hearingStartTime), false),
+						hearing_time: formatTime12h(hearingStartTime)
 					})
 				}
 			}
