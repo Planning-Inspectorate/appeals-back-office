@@ -65,3 +65,13 @@ export class FileUploader extends Page {
 		});
 	}
 }
+
+export class ManageDocument extends Page {
+	manageDocumentelements = {
+		documentRow: () => cy.get('.govuk-table__body .govuk-table__row')
+	};
+
+	verifyNumberOfDocuments = (num) => {
+		this.manageDocumentelements.documentRow().should('have.length', num);
+	};
+}
