@@ -6,9 +6,7 @@ import logger from './server/utils/logger.js';
 
 initNotify();
 
-if (config.featureFlags.featureFlagPersonalList) {
-	refreshPersonalList();
-}
+refreshPersonalList();
 
 app.listen(config.PORT, () => {
 	logger.info(`Server is live at http://localhost:${config.PORT}`);
