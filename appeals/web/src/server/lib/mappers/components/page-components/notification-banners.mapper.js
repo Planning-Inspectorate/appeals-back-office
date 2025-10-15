@@ -112,7 +112,8 @@ export const notificationBannerDefinitions = {
 			'lpaQuestionnaire',
 			'lpaStatement',
 			'viewFinalComments',
-			'viewIpComment'
+			'viewIpComment',
+			'manageFolder'
 		],
 		text: 'Document removed'
 	},
@@ -354,12 +355,12 @@ export const notificationBannerDefinitions = {
 	},
 	appellantProofOfEvidenceDocumentAddedSuccess: {
 		type: 'success',
-		pages: ['viewProofOfEvidence'],
+		pages: ['viewProofOfEvidence', 'manageFolder'],
 		text: 'Appellant proof of evidence and witnesses added'
 	},
 	lpaProofOfEvidenceDocumentAddedSuccess: {
 		type: 'success',
-		pages: ['viewProofOfEvidence'],
+		pages: ['viewProofOfEvidence', 'manageFolder'],
 		text: 'LPA proof of evidence and witnesses added'
 	},
 	updateLpaStatement: {
