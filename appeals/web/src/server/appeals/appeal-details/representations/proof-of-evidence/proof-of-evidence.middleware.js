@@ -76,4 +76,5 @@ export const addPageContentToLocals = async (req, _res, next) => {
 		showSuccessBanner: true
 	};
 	next();
+	return;
 };

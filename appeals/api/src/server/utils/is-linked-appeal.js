@@ -13,8 +13,7 @@ export const isLinkedAppeal = (appeal) => {
 	}
 	return (
 		// @ts-ignore
-		appeal.parentAppeals?.some((linkedAppeal) => linkedAppeal.type === CASE_RELATIONSHIP_LINKED) ||
-		// @ts-ignore
+		appeal.parentAppeals?.some((linkedAppeal) => linkedAppeal.type === CASE_RELATIONSHIP_LINKED) || // @ts-ignore
 		appeal.childAppeals?.some((linkedAppeal) => linkedAppeal.type === CASE_RELATIONSHIP_LINKED)
 	);
 };

@@ -68,19 +68,19 @@ router.route('/').get(viewHomepage);
 router.route('/auth/signout').get(handleSignout);
 
 router
-	.route('/documents/:caseId/bulk-download/:filename?')
+	.route('/documents/:caseId/bulk-download{/:filename}')
 	.get(addApiClientToRequest, validateAppeal, asyncHandler(getBulkDocumentDownload));
 
 router
-	.route('/documents/:caseId/download/:guid/:filename?')
+	.route('/documents/:caseId/download/:guid{/:filename}')
 	.get(addApiClientToRequest, asyncHandler(getDocumentDownload));
 
 router
-	.route('/documents/:caseId/download/:guid/:version/:filename?')
+	.route('/documents/:caseId/download/:guid/:version{/:filename}')
 	.get(addApiClientToRequest, asyncHandler(getDocumentDownloadByVersion));
 
 router
-	.route('/documents/:caseReference/download-uncommitted/:guid/:filename/:version?')
+	.route('/documents/:caseReference/download-uncommitted/:guid/:filename{/:version}')
 	.get(asyncHandler(getUncommittedDocumentDownload));
 
 router.route('/documents/delete-uncommitted/:guid').delete(
