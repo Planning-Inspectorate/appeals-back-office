@@ -3,14 +3,24 @@
 import { CaseDetailsPage } from '../caseDetailsPage';
 
 export class OverviewSectionPage extends CaseDetailsPage {
+	overviewSectionSelectors = {
+		...this.selectors, // inherit parent selectors
+		applicationReference: '.appeal-lpa-reference .govuk-summary-list__value',
+		appealProcedure: '.appeal-case-procedure .govuk-summary-list__value',
+		allocationLevel: '.appeal-allocation-details .govuk-summary-list__value',
+		linkedAppeals: '.appeal-linked-appeals .govuk-summary-list__value',
+		relatedAppeals: '.appeal-other-appeals .govuk-summary-list__value',
+		netGainResidential: '.appeal-net-residence-change .govuk-summary-list__value'
+	};
+
 	overviewSectionElements = {
 		...this.elements, // Inherit parent elements
-		applicationReference: () => cy.get('.appeal-lpa-reference .govuk-summary-list__value'),
-		appealProcedure: () => cy.get('.appeal-case-procedure .govuk-summary-list__value'),
-		allocationLevel: () => cy.get('.appeal-allocation-details .govuk-summary-list__value'),
-		linkedAppeals: () => cy.get('.appeal-linked-appeals .govuk-summary-list__value'),
-		relatedAppeals: () => cy.get('.appeal-other-appeals .govuk-summary-list__value'),
-		netGainResidential: () => cy.get('.appeal-net-residence-change .govuk-summary-list__value')
+		applicationReference: () => cy.get(this.overviewSectionSelectors.applicationReference),
+		appealProcedure: () => cy.get(this.overviewSectionSelectors.appealProcedure),
+		allocationLevel: () => cy.get(this.overviewSectionSelectors.allocationLevel),
+		linkedAppeals: () => cy.get(this.overviewSectionSelectors.linkedAppeals),
+		relatedAppeals: () => cy.get(this.overviewSectionSelectors.relatedAppeals),
+		netGainResidential: () => cy.get(this.overviewSectionSelectors.netGainResidential)
 	};
 
 	verifyCaseOverviewDetails = (expectedValues) => {
@@ -51,6 +61,7 @@ export class OverviewSectionPage extends CaseDetailsPage {
 			.then((text) => {
 				expect(text).to.equal(expectedValues.relatedAppeals);
 			});
+
 		this.overviewSectionElements
 			.netGainResidential()
 			.invoke('prop', 'innerText')
