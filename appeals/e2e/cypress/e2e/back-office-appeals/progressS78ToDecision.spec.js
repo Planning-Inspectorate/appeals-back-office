@@ -28,10 +28,17 @@ describe('Progress S78 to decision', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	it(`Completes a S78 appeal to decision`, { tags: tag.smoke }, () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.checkStatusOfCase('Validation', 0);

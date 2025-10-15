@@ -46,6 +46,7 @@ export const mapChangeTimetablePage = (
 	procedureType,
 	errors = undefined
 ) => {
+	const newProcedureType = session.appealProcedure;
 	const timetableTypes = getTimetableTypes(
 		appealDetails.appealType,
 		appellantCase.planningObligation?.hasObligation ?? false,
@@ -57,12 +58,12 @@ export const mapChangeTimetablePage = (
 		title: `Timetable due dates`,
 		backLinkUrl:
 			procedureType === APPEAL_CASE_PROCEDURE?.WRITTEN
-				? `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-procedure-type/${procedureType}/change-selected-procedure-type`
+				? `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-procedure-type/${newProcedureType}/change-selected-procedure-type`
 				: procedureType === APPEAL_CASE_PROCEDURE?.HEARING && session.dateKnown === 'yes'
-				? `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-procedure-type/${procedureType}/date`
+				? `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-procedure-type/${newProcedureType}/date`
 				: procedureType === APPEAL_CASE_PROCEDURE?.HEARING && session.dateKnown === 'no'
-				? `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-procedure-type/${procedureType}/change-event-date-known`
-				: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-procedure-type/${procedureType}/address-details`,
+				? `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-procedure-type/${newProcedureType}/change-event-date-known`
+				: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-procedure-type/${newProcedureType}/address-details`,
 		preHeading: `Appeal ${appealShortReference(
 			appealDetails.appealReference
 		)} - update appeal procedure`,

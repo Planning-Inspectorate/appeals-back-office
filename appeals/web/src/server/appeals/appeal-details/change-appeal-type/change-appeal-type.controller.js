@@ -1,3 +1,6 @@
+import { getTeamFromAppealId } from '#appeals/appeal-details/update-case-team/update-case-team.service.js';
+import { appealSiteToAddressString } from '#lib/address-formatter.js';
+import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import {
 	dayMonthYearHourMinuteToDisplayDate,
 	dayMonthYearHourMinuteToISOString
@@ -7,6 +10,7 @@ import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-co
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { uncapitalizeFirstLetter } from '#lib/string-utilities.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
 	addHorizonReferencePage,
@@ -541,21 +545,28 @@ export const getCheckChangeAppealFinalDate = async (request, response) => {
 	try {
 		const {
 			errors,
-			session: { changeAppealType }
+			session: { changeAppealType },
+			currentAppeal,
+			apiClient
 		} = request;
-		const appealData = request.currentAppeal;
+
 		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
 		const { day, month, year } = changeAppealType;
 
-		const { newChangeAppealType } = await getChangeAppealTypes(
-			request.apiClient,
-			appealData.appealType,
+		const { existingChangeAppealType, newChangeAppealType } = await getChangeAppealTypes(
+			apiClient,
+			currentAppeal.appealType,
 			changeAppealType
 		);
 
-		const backLinkUrl = `/appeals-service/appeal-details/${appealData.appealId}/change-appeal-type/change-appeal-final-date`;
+		const backLinkUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/change-appeal-type/change-appeal-final-date`;
 		const formattedDate = dayMonthYearHourMinuteToDisplayDate({ day, month, year });
-		const formattedNewChangeAppealType = newChangeAppealType?.toLowerCase() || '';
+		const formattedNewChangeAppealType = newChangeAppealType
+			? uncapitalizeFirstLetter(newChangeAppealType)
+			: '';
+		const formattedExistingChangeAppealType = existingChangeAppealType
+			? uncapitalizeFirstLetter(existingChangeAppealType)
+			: '';
 
 		/** @type {{ [key: string]: {value?: string, actions?: { [text: string]: { href: string, visuallyHiddenText: string } }} }} */
 		let responses = {
@@ -570,11 +581,32 @@ export const getCheckChangeAppealFinalDate = async (request, response) => {
 			}
 		};
 
+		const { email: assignedTeamEmail } = await getTeamFromAppealId(
+			apiClient,
+			currentAppeal.appealId
+		);
+
+		const personalisation = {
+			appeal_reference_number: currentAppeal.appealReference,
+			existing_appeal_type: formattedExistingChangeAppealType,
+			lpa_reference: currentAppeal.planningApplicationReference || '',
+			site_address: appealSiteToAddressString(currentAppeal.appealSite),
+			due_date: formattedDate,
+			appeal_type: formattedNewChangeAppealType,
+			team_email_address: assignedTeamEmail
+		};
+
+		const appellantTemplate = await generateNotifyPreview(
+			apiClient,
+			'appeal-type-change-non-has.content.md',
+			personalisation
+		);
+
 		return renderCheckYourAnswersComponent(
 			{
 				title: 'Check details and mark appeal as invalid',
 				heading: 'Check details and mark appeal as invalid',
-				preHeading: `Appeal ${appealData.appealReference}`,
+				preHeading: `Appeal ${currentAppeal.appealReference}`,
 				backLinkUrl,
 				submitButtonText: 'Mark appeal as invalid',
 				responses,
@@ -582,8 +614,19 @@ export const getCheckChangeAppealFinalDate = async (request, response) => {
 					simpleHtmlComponent(
 						'p',
 						{ class: 'govuk-body' },
-						`We will send an email to the appellant to tell them that they need to resubmit a new ${formattedNewChangeAppealType} appeal by ${formattedDate}.`
-					)
+						`We will send an email to the appellant to tell them that they need to resubmit a new ${formattedNewChangeAppealType.toLowerCase()} appeal by ${formattedDate}.`
+					),
+					{
+						type: 'details',
+						wrapperHtml: {
+							opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+							closing: '</div></div>'
+						},
+						parameters: {
+							summaryText: `Preview email to appellant`,
+							html: appellantTemplate.renderedHtml
+						}
+					}
 				]
 			},
 			response,

@@ -17,6 +17,12 @@ describe('Case History - Assign, validate, amend docs, update appellant case', (
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	it(
 		'view case history after assigning a case officer and validating a case',
 		{ tags: tag.smoke },
@@ -25,6 +31,7 @@ describe('Case History - Assign, validate, amend docs, update appellant case', (
 			let officer;
 
 			cy.createCase().then((caseObj) => {
+				appeal = caseObj;
 				happyPathHelper.assignCaseOfficer(caseObj);
 				happyPathHelper.reviewAppellantCase(caseObj);
 
@@ -45,6 +52,7 @@ describe('Case History - Assign, validate, amend docs, update appellant case', (
 			let dueDate = new Date();
 
 			cy.createCase().then((caseObj) => {
+				appeal = caseObj;
 				happyPathHelper.manageDocsAppellantCase(caseObj);
 				caseDetailsPage.clickChangeSiteOwnership();
 				caseDetailsPage.selectRadioButtonByValue('Owns some of the land');

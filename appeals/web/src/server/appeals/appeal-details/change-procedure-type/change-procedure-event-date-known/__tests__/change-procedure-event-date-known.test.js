@@ -30,6 +30,7 @@ describe('GET /change-appeal-procedure-type/hearing/change-event-date-known', ()
 				...appealDataWithoutStartDate,
 				appealStatus: 'lpa_questionnaire',
 				appealType: 'Planning appeal',
+				procedureType: 'hearing',
 				documentationSummary: {
 					lpaQuestionnaire: {
 						status: 'not received'
@@ -71,6 +72,7 @@ describe('POST /change-appeal-procedure-type/hearing/change-event-date-known', (
 				...appealDataWithoutStartDate,
 				appealStatus: 'lpa_questionnaire',
 				appealType: 'Planning appeal',
+				procedureType: 'hearing',
 				documentationSummary: {
 					lpaQuestionnaire: {
 						status: 'not received'
@@ -80,7 +82,7 @@ describe('POST /change-appeal-procedure-type/hearing/change-event-date-known', (
 
 		nock('http://test/')
 			.get('/appeals/1/appellant-cases/0')
-			.reply(200, { planningObligation: { hasObligation: false } });
+			.reply(200, { planningObligation: { hasObligation: false }, procedureType: 'hearing' });
 
 		const response = await request
 			.post(
@@ -104,6 +106,7 @@ describe('POST /change-appeal-procedure-type/hearing/change-event-date-known', (
 				...appealDataWithoutStartDate,
 				appealStatus: 'lpa_questionnaire',
 				appealType: 'Planning appeal',
+				procedureType: 'hearing',
 				documentationSummary: {
 					lpaQuestionnaire: {
 						status: 'not received'
@@ -113,7 +116,7 @@ describe('POST /change-appeal-procedure-type/hearing/change-event-date-known', (
 
 		nock('http://test/')
 			.get('/appeals/1/appellant-cases/0')
-			.reply(200, { planningObligation: { hasObligation: false } });
+			.reply(200, { planningObligation: { hasObligation: false }, procedureType: 'hearing' });
 
 		const response = await request
 			.post(

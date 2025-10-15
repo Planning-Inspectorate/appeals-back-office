@@ -21,10 +21,9 @@ export const getChangeInquiryAddressKnown = async (request, response) => {
  */
 export const renderChangeInquiryAddressKnown = async (request, response, action, values) => {
 	const { errors } = request;
-
 	const appealDetails = request.currentAppeal;
-
-	const mappedPageContent = await changeAddressKnownPage(appealDetails, action, values);
+	const newProcedureType = request.session.changeProcedureType.appealProcedure;
+	const mappedPageContent = changeAddressKnownPage(appealDetails, action, newProcedureType, values);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -41,15 +40,16 @@ export const postChangeInquiryAddressKnown = async (request, response) => {
 		return renderChangeInquiryAddressKnown(request, response, 'change');
 	}
 
-	const { appealId, procedureType } = request.params;
+	const { appealId } = request.params;
+	const newProcedureType = request.session.changeProcedureType.appealProcedure;
 
 	if (request.body.addressKnown === 'yes') {
 		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${procedureType.toLowerCase()}/address-details`
+			`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/address-details`
 		);
 	}
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${procedureType.toLowerCase()}/change-timetable`
+		`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-timetable`
 	);
 };

@@ -17,10 +17,17 @@ describe('Review appellant case', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	it('Validate appellant case', { tags: tag.smoke }, () => {
 		let dueDate = new Date();
 
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickReviewAppellantCase();
 			caseDetailsPage.selectRadioButtonByValue('Valid');
@@ -35,6 +42,7 @@ describe('Review appellant case', () => {
 
 	it('Invalidate appellant case', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickReviewAppellantCase();
 			caseDetailsPage.selectRadioButtonByValue('Invalid');
@@ -53,6 +61,7 @@ describe('Review appellant case', () => {
 		dueDate.setDate(dueDate.getDate() + 28);
 
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickReviewAppellantCase();
 			caseDetailsPage.selectRadioButtonByValue('Incomplete');
@@ -74,6 +83,7 @@ describe('Review appellant case', () => {
 		dueDate.setDate(dueDate.getDate() + 28);
 
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickReviewAppellantCase();
 			caseDetailsPage.selectRadioButtonByValue('Incomplete');

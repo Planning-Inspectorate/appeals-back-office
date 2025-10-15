@@ -22,8 +22,16 @@ describe('Review LPAQ', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
+
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	it('Complete LPAQ', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
@@ -39,6 +47,7 @@ describe('Review LPAQ', () => {
 
 	it('incomplete LPAQ', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
@@ -62,6 +71,7 @@ describe('Review LPAQ', () => {
 
 	it('incomplete LPAQ add another', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
@@ -86,6 +96,7 @@ describe('Review LPAQ', () => {
 	});
 	it('Validate fields and answers in LPAQfor householder appeal', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
@@ -137,6 +148,7 @@ describe('Review LPAQ', () => {
 	it('Validate fields and answers in LPAQ for s78 appeal', { tags: tag.smoke }, () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			cy.addLpaqSubmissionToCase(caseObj);
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startS78Case(caseObj, 'written');
@@ -219,6 +231,7 @@ describe('Review LPAQ', () => {
 		{ tags: tag.smoke },
 		() => {
 			cy.createCase({ caseType: 'Y' }).then((caseObj) => {
+				appeal = caseObj;
 				cy.addLpaqSubmissionToCase(caseObj);
 				happyPathHelper.assignCaseOfficer(caseObj);
 				happyPathHelper.reviewAppellantCase(caseObj);

@@ -13,14 +13,14 @@ import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 /**
  * @param {string} appealReference
  * @param {string} backLinkUrl
- * @param {{appealProcedure: string}} [storedSessionData]
+ * @param {{appealProcedure: string}} [sessionValues]
  * @param {string|undefined} errorMessage
  * @returns {PageContent}
  */
 export const selectProcedurePage = (
 	appealReference,
 	backLinkUrl,
-	storedSessionData,
+	sessionValues,
 	errorMessage = undefined
 ) => {
 	const dataMappers = [
@@ -46,8 +46,7 @@ export const selectProcedurePage = (
 			radioItems.push({
 				value: item.case,
 				text: appealProcedureToLabelText(item.case),
-				checked:
-					storedSessionData?.appealProcedure && storedSessionData?.appealProcedure === item.case
+				checked: sessionValues?.appealProcedure && sessionValues?.appealProcedure === item.case
 			});
 		}
 	});

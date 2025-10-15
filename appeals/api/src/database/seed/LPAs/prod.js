@@ -483,7 +483,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'A3010',
 		name: 'Bassetlaw District Council',
-		email: 'planning.appeal@bassetlaw.gov.uk',
+		email: 'planningappeals@bassetlaw.gov.uk',
 		teamId: 17 // North3
 	},
 	{
@@ -1041,7 +1041,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'P3040',
 		name: 'Rushcliffe Borough Council',
-		email: 'developmentcontrol@rushcliffe.gov.uk',
+		email: 'planningappealsadmin@rushcliffe.gov.uk',
 		teamId: 17 // North3
 	},
 	{

@@ -26,6 +26,12 @@ describe('Remove doc from upload page', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	const setupInquiry = (caseObj, inquiryDate) => {
 		// require case to be started as inquiry to access appellant POE evidence e.g.
 		cy.addInquiryViaApi(caseObj, inquiryDate);
@@ -37,6 +43,7 @@ describe('Remove doc from upload page', () => {
 	let sampleFiles = caseDetailsPage.sampleFiles;
 	it('add a doc and then remove on file upload page', () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
@@ -54,6 +61,7 @@ describe('Remove doc from upload page', () => {
 
 	it('remove a doc when not the last version', () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
@@ -78,6 +86,7 @@ describe('Remove doc from upload page', () => {
 
 	it('remove the last version of the document', () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
@@ -94,6 +103,7 @@ describe('Remove doc from upload page', () => {
 	it('can upload lpa proof of evidence and witness to inquiry case', { tags: tag.smoke }, () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+				appeal = caseObj;
 				// require case to be started as inquiry to access appellant POE evidence
 				setupInquiry(caseObj, inquiryDate);
 
@@ -130,6 +140,7 @@ describe('Remove doc from upload page', () => {
 		() => {
 			cy.createCase({ caseType: 'W' }).then((caseObj) => {
 				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+					appeal = caseObj;
 					// require case to be started as inquiry to access appellant POE evidence
 					setupInquiry(caseObj, inquiryDate);
 
@@ -154,6 +165,7 @@ describe('Remove doc from upload page', () => {
 	it('can mark lpa proof of evidence as incomplete and select reason', { tags: tag.smoke }, () => {
 		cy.createCase({ caseType: 'W' }).then((caseRef) => {
 			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+				appeal = caseObj;
 				// require case to be started as inquiry to access appellant POE evidence
 				setupInquiry(caseRef, inquiryDate);
 
@@ -197,6 +209,7 @@ describe('Remove doc from upload page', () => {
 		() => {
 			cy.createCase({ caseType: 'W' }).then((caseRef) => {
 				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+					appeal = caseObj;
 					// require case to be started as inquiry to access appellant POE evidence
 					setupInquiry(caseRef, inquiryDate);
 
@@ -241,6 +254,7 @@ describe('Remove doc from upload page', () => {
 		() => {
 			cy.createCase({ caseType: 'W' }).then((caseRef) => {
 				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+					appeal = caseObj;
 					// require case to be started as inquiry to access appellant POE evidence
 					setupInquiry(caseRef, inquiryDate);
 

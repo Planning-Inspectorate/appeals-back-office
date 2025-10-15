@@ -15,8 +15,15 @@ describe('Change Appeal Type', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	it('Change appeal type and do not resubmit', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickChangeAppealType();
 			caseDetailsPage.selectRadioButtonByValue('Planning');
@@ -32,6 +39,7 @@ describe('Change Appeal Type', () => {
 	// skipping test as is work in progress - https://pins-ds.atlassian.net/browse/A2-3649
 	it.skip('Change appeal type and resubmit', () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickChangeAppealType();
 			caseDetailsPage.selectRadioButtonByValue('Planning obligation');

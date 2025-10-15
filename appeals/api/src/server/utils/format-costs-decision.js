@@ -19,6 +19,10 @@ export const formatCostsDecision = async (appeal) => {
 		const documentCount = folder.documents?.filter((doc) => !doc.isDeleted).length;
 		return { ...costsDecision, [costsType]: documentCount };
 	}, {});
+	const appealStatus = currentStatus(appeal);
+	const appealIsCompleteOrWithdrawn =
+		appealStatus === APPEAL_CASE_STATUS.COMPLETE || appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
+
 	const {
 		// @ts-ignore
 		appellantCostsApplication = 0,
@@ -32,7 +36,7 @@ export const formatCostsDecision = async (appeal) => {
 		lpaCostsWithdrawal = 0,
 		// @ts-ignore
 		lpaCostsDecisionLetter = 0
-	} = (currentStatus(appeal) === APPEAL_CASE_STATUS.COMPLETE && costsDecision) || {};
+	} = (appealIsCompleteOrWithdrawn && costsDecision) || {};
 
 	const awaitingAppellantCostsDecision =
 		appellantCostsDecisionLetter === 0 && appellantCostsApplication > appellantCostsWithdrawal;

@@ -1,3 +1,4 @@
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { formatSentenceCase } from '../../../lib/nunjucks-filters/index.js';
 
 export function appealDetailsSection(templateData) {
@@ -5,8 +6,13 @@ export function appealDetailsSection(templateData) {
 		appellantProcedurePreference,
 		appellantProcedurePreferenceDetails,
 		appellantProcedurePreferenceDuration,
-		appellantProcedurePreferenceWitnessCount
+		appellantProcedurePreferenceWitnessCount,
+		appealType
 	} = templateData;
+
+	const isHASAppeal = appealType === APPEAL_TYPE.HOUSEHOLDER;
+
+	if (isHASAppeal) return;
 
 	return {
 		heading: 'Appeal details',

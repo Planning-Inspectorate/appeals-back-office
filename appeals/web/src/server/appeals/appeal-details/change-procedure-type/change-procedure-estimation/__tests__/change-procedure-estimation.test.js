@@ -9,14 +9,14 @@ const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 
-describe('set up inquiry', () => {
+describe('change procedure estimation', () => {
 	const appealId = 2;
 
 	beforeEach(() => {
 		installMockApi();
 		nock('http://test/')
 			.get(`/appeals/${appealId}`)
-			.reply(200, { ...appealData, appealId })
+			.reply(200, { ...appealData, appealId, procedureType: 'inquiry' })
 			.persist();
 	});
 
@@ -33,15 +33,25 @@ describe('set up inquiry', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
 				.twice()
-				.reply(200, { ...appealData, appealId });
+				.reply(200, {
+					...appealData,
+					appealId,
+					procedureType: 'inquiry'
+				});
+
+			appealData.procedureType = 'inquiry';
 
 			// set session data with post request
-			await request.post(`${baseUrl}/${appealId}/Inquiry/setup/estimation`).send({
-				inquiryEstimationYesNo: 'yes',
-				inquiryEstimationDays: 8
-			});
+			await request
+				.post(`${baseUrl}/${appealId}/change-appeal-procedure-type/Inquiry/estimation`)
+				.send({
+					estimationYesNo: 'yes',
+					estimationDays: 8
+				});
 
-			const response = await request.get(`${baseUrl}/${appealId}/Inquiry/setup/estimation`);
+			const response = await request.get(
+				`${baseUrl}/${appealId}/change-appeal-procedure-type/Inquiry/estimation`
+			);
 			pageHtml = parseHtml(response.text, { skipPrettyPrint: true });
 		});
 
@@ -56,19 +66,19 @@ describe('set up inquiry', () => {
 		});
 
 		it('should render a radio button for inquiry estimation', () => {
-			expect(pageHtml.querySelector('input[name="inquiryEstimationYesNo"]')).not.toBeNull();
+			expect(pageHtml.querySelector('input[name="estimationYesNo"]')).not.toBeNull();
 		});
 
 		it('should render an input for inquiry estimation days', () => {
-			expect(pageHtml.querySelector('input[name="inquiryEstimationDays"]')).not.toBeNull();
+			expect(pageHtml.querySelector('input[name="estimationDays"]')).not.toBeNull();
 		});
 
 		it('should render correct values when session is set', () => {
 			expect(pageHtml.innerHTML).toContain(
-				`name="inquiryEstimationYesNo" type="radio" value="yes" checked`
+				`name="estimationYesNo" type="radio" value="yes" checked`
 			);
 			expect(pageHtml.innerHTML).toContain(
-				`id="inquiry-estimation-days" name="inquiryEstimationDays" type="text" value="8"`
+				`id="estimation-days" name="estimationDays" type="text" value="8"`
 			);
 		});
 	});
@@ -86,7 +96,7 @@ describe('set up inquiry', () => {
 			const response = await request
 				.post(`${baseUrl}/${appealId}/change-appeal-procedure-type/inquiry/estimation`)
 				.send({
-					inquiryEstimationYesNo: 'no'
+					estimationYesNo: 'no'
 				});
 
 			expect(response.statusCode).toBe(302);
@@ -99,8 +109,8 @@ describe('set up inquiry', () => {
 			const response = await request
 				.post(`${baseUrl}/${appealId}/change-appeal-procedure-type/inquiry/estimation`)
 				.send({
-					inquiryEstimationYesNo: 'yes',
-					inquiryEstimationDays: 12
+					estimationYesNo: 'yes',
+					estimationDays: 12
 				});
 
 			expect(response.statusCode).toBe(302);
@@ -131,8 +141,8 @@ describe('set up inquiry', () => {
 			const response = await request
 				.post(`${baseUrl}/${appealId}/change-appeal-procedure-type/inquiry/estimation`)
 				.send({
-					inquiryEstimationYesNo: 'yes',
-					inquiryEstimationDays: '%%%----££££'
+					estimationYesNo: 'yes',
+					estimationDays: '%%%----££££'
 				});
 
 			const errorSummaryHtml = parseHtml(response.text, {
@@ -148,8 +158,8 @@ describe('set up inquiry', () => {
 			const response = await request
 				.post(`${baseUrl}/${appealId}/change-appeal-procedure-type/inquiry/estimation`)
 				.send({
-					inquiryEstimationYesNo: 'yes',
-					inquiryEstimationDays: '0.1'
+					estimationYesNo: 'yes',
+					estimationDays: '0.1'
 				});
 
 			const errorSummaryHtml = parseHtml(response.text, {

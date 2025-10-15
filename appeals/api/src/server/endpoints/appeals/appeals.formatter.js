@@ -1,6 +1,6 @@
 import appealRepository from '#repositories/appeal.repository.js';
 import { calculateDueDate } from '#utils/calculate-due-date.js';
-import { currentStatus } from '#utils/current-status.js';
+import { completedStateList, currentStatus } from '#utils/current-status.js';
 import formatAddress from '#utils/format-address.js';
 import { formatCostsDecision } from '#utils/format-costs-decision.js';
 import {
@@ -44,6 +44,7 @@ const formatAppeal = (appeal, linkedAppeals) => {
 		appealReference: appeal.reference,
 		appealSite: formatAddress(appeal.address),
 		appealStatus: currentStatus(appeal),
+		completedStateList: completedStateList(appeal),
 		appealType: appeal.appealType?.type,
 		procedureType: appeal.procedureType?.name,
 		createdAt: appeal.caseCreatedDate,
@@ -81,6 +82,7 @@ const formatMyAppeal = async ({
 		appealReference: appeal.reference,
 		appealSite: formatAddress(appeal.address),
 		appealStatus: currentStatus(appeal),
+		completedStateList: completedStateList(appeal),
 		appealType: appeal.appealType?.type,
 		procedureType: appeal.procedureType?.name,
 		createdAt: appeal.caseCreatedDate,
@@ -119,11 +121,15 @@ const formatPersonalListItem = async ({
 }) => {
 	const { reference, lpaQuestionnaire, appellantCase, hearing, procedureType, appealType } = appeal;
 	const appealStatus = currentStatus(appeal);
+	const appealIsCompleteOrWithdrawn =
+		appealStatus === APPEAL_CASE_STATUS.COMPLETE || appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
+
 	return {
 		appealId,
 		appealReference: reference,
 		appealSite: formatAddress(appeal.address),
 		appealStatus,
+		completedStateList: completedStateList(appeal),
 		appealType: appealType?.type,
 		procedureType: procedureType?.name,
 		createdAt: appeal.caseCreatedDate,
@@ -138,8 +144,7 @@ const formatPersonalListItem = async ({
 		isHearingSetup: !!hearing,
 		hasHearingAddress: !!hearing?.addressId,
 		awaitingLinkedAppeal,
-		costsDecision:
-			appealStatus === APPEAL_CASE_STATUS.COMPLETE ? await formatCostsDecision(appeal) : null,
+		costsDecision: appealIsCompleteOrWithdrawn ? await formatCostsDecision(appeal) : null,
 		numberOfResidencesNetChange: appellantCase?.numberOfResidencesNetChange ?? null
 	};
 };

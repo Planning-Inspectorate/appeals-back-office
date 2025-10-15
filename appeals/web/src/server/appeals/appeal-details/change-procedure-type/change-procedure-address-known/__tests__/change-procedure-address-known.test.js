@@ -81,6 +81,8 @@ describe('Change to  inquiry', () => {
 				.reply(200, { ...appealData, appealId, procedureType: 'inquiry' });
 		});
 
+		appealData.procedureType = 'inquiry';
+
 		it('should redirect to /change-appeal-procedure-type/inquiry/change-timetable when answering no', async () => {
 			const response = await request.post(`${baseUrl}/${appealId}/Inquiry/setup/address`).send({
 				addressKnown: 'no'

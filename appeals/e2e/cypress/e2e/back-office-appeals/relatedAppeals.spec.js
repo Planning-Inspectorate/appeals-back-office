@@ -19,9 +19,16 @@ describe('related appeals', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let cases = [];
+
+	afterEach(() => {
+		cy.deleteAppeals(cases);
+	});
+
 	it('relate an unrelated appeal to an unrelated appeal', () => {
 		cy.createCase().then((caseObj) => {
 			cy.createCase().then((caseObjToLink) => {
+				cases = [caseObj, caseObjToLink];
 				happyPathHelper.assignCaseOfficer(caseObj);
 				caseDetailsPage.clickAddRelatedAppeals();
 				caseDetailsPage.fillInput(caseObjToLink.reference);
@@ -37,6 +44,7 @@ describe('related appeals', () => {
 		cy.createCase().then((caseObj) => {
 			cy.createCase().then((firstcaseObjToLink) => {
 				cy.createCase().then((secondcaseObjToLink) => {
+					cases = [caseObj, firstcaseObjToLink, secondcaseObjToLink];
 					happyPathHelper.assignCaseOfficer(caseObj);
 					caseDetailsPage.clickAddRelatedAppeals();
 					caseDetailsPage.fillInput(firstcaseObjToLink.reference);
@@ -66,6 +74,7 @@ describe('related appeals', () => {
 				: horizonTestAppeals.horizonAppealMock;
 
 		cy.createCase().then((caseObj) => {
+			cases = [caseObj];
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickAddRelatedAppeals();
 			caseDetailsPage.fillInput(horizonAppealId);
@@ -79,6 +88,7 @@ describe('related appeals', () => {
 	it('Relate a case in “validation” status to a case in “validation” status', () => {
 		cy.createCase().then((caseObj) => {
 			cy.createCase().then((caseObjToLink) => {
+				cases = [caseObj, caseObjToLink];
 				//progress to be related appeal to validation
 				happyPathHelper.assignCaseOfficer(caseObjToLink); //move case to validation
 				caseDetailsPage.checkStatusOfCase('Validation', 0);
@@ -98,6 +108,7 @@ describe('related appeals', () => {
 	it('Relate a case in “validation” status to a case in “final comments” status', () => {
 		cy.createCase().then((caseObj) => {
 			cy.createCase({ caseType: 'W' }).then((caseObjToLink) => {
+				cases = [caseObj, caseObjToLink];
 				//progress to be related appeal to final comments
 				cy.addLpaqSubmissionToCase(caseObjToLink);
 				happyPathHelper.assignCaseOfficer(caseObjToLink);
@@ -121,6 +132,7 @@ describe('related appeals', () => {
 	it('Relate a case in “validation” status to a case in “ready to set up hearing” status', () => {
 		cy.createCase().then((caseObj) => {
 			cy.createCase({ caseType: 'W' }).then((caseObjToLink) => {
+				cases = [caseObj, caseObjToLink];
 				//progress to be related appeal to final comments
 				cy.addLpaqSubmissionToCase(caseObjToLink);
 				happyPathHelper.assignCaseOfficer(caseObjToLink);
@@ -144,6 +156,7 @@ describe('related appeals', () => {
 	it('Relate a case in “issue decision status” to “Issue decision” status', () => {
 		cy.createCase().then((caseObj) => {
 			cy.createCase().then((caseObjToLink) => {
+				cases = [caseObj, caseObjToLink];
 				//progress to be related appeal to issue decision
 				cy.addLpaqSubmissionToCase(caseObjToLink);
 				happyPathHelper.assignCaseOfficer(caseObjToLink);
@@ -173,6 +186,7 @@ describe('related appeals', () => {
 	it('Relate a case in “Statement” status to “Issue decision” status', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			cy.createCase().then((caseObjToLink) => {
+				cases = [caseObj, caseObjToLink];
 				//progress to be related appeal to issue decision
 				cy.addLpaqSubmissionToCase(caseObjToLink);
 				happyPathHelper.assignCaseOfficer(caseObjToLink);
@@ -201,6 +215,7 @@ describe('related appeals', () => {
 	it('Relating a case from the "appellant case" page', () => {
 		cy.createCase().then((caseObj) => {
 			cy.createCase().then((relatedCase) => {
+				cases = [caseObj, relatedCase];
 				happyPathHelper.assignCaseOfficer(relatedCase);
 				happyPathHelper.assignCaseOfficer(caseObj);
 
@@ -228,6 +243,7 @@ describe('related appeals', () => {
 	it('Relating a case from the "LPAQ" page', () => {
 		cy.createCase().then((caseObj) => {
 			cy.createCase().then((relatedCase) => {
+				cases = [caseObj, relatedCase];
 				happyPathHelper.assignCaseOfficer(relatedCase);
 				happyPathHelper.assignCaseOfficer(caseObj);
 				happyPathHelper.reviewAppellantCase(caseObj);
@@ -258,6 +274,7 @@ describe('related appeals', () => {
 
 	it('related appeals error messaging', () => {
 		cy.createCase().then((caseObj) => {
+			cases = [caseObj];
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickAddRelatedAppeals();
 

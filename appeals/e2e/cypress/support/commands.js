@@ -376,18 +376,16 @@ Cypress.Commands.add('assignCaseOfficerViaApi', (caseObj) => {
 
 Cypress.Commands.add('deleteAppeals', (caseObj) => {
 	return cy.wrap(null).then(async () => {
-		const appealRefs = [].concat(caseObj.reference);
+		const caseObjs = [].concat(caseObj);
 
-		const appealsArray = [];
+		const appealIds = [];
 
-		for (const appeal of appealRefs) {
-			const details = await appealsApiClient.loadCaseDetails(appeal);
-			const appealId = details.appealId;
-			appealsArray.push(appealId);
+		for (const obj of caseObjs) {
+			appealIds.push(obj.id);
 		}
 
-		cy.log(`Deleting cases ${appealRefs}`);
-		return await appealsApiClient.deleteAppeals(appealsArray);
+		cy.log(`Deleting case(s) ${appealIds}`);
+		return await appealsApiClient.deleteAppeals(appealIds);
 	});
 });
 

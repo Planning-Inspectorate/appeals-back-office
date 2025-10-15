@@ -11,6 +11,8 @@ export interface AppealSummary {
 	appealId: number;
 	appealReference: string;
 	appealStatus: string;
+	completedStateList: string[];
+	appealSiteId: number;
 	appealSite: Address;
 	appealType: string;
 	procedureType?: string | undefined;
