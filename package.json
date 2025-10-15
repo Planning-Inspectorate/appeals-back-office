@@ -9,6 +9,9 @@
 	"engines": {
 		"node": ">=22.0.0 <= 22.14.0"
 	},
+	"overrides": {
+		"@opentelemetry/api": "1.9.0"
+	},
 	"scripts": {
 		"build": "turbo run build",
 		"build:release": "turbo run build:release",
@@ -36,6 +39,7 @@
 		"@badeball/cypress-cucumber-preprocessor": "23.2.0",
 		"@planning-inspectorate/data-model": "^1.18.0",
 		"cypress": "15.3.0",
+		"domelementtype": "^2.3.0",
 		"got": "^12.5.2",
 		"joi": "^17.7.0",
 		"node-cache": "^5.1.2",
