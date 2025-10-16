@@ -1258,6 +1258,7 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: true,
 						has_statement: true,
 						is_hearing_procedure: false,
+						is_inquiry_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -1274,6 +1275,7 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: true,
 						has_statement: true,
 						is_hearing_procedure: false,
+						is_inquiry_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -1358,6 +1360,7 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: true,
 						has_statement: true,
 						is_hearing_procedure: false,
+						is_inquiry_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -1374,6 +1377,7 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: true,
 						has_statement: true,
 						is_hearing_procedure: false,
+						is_inquiry_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -1473,6 +1477,7 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: true,
 						has_statement: false,
 						is_hearing_procedure: false,
+						is_inquiry_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -1489,6 +1494,7 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: true,
 						has_statement: false,
 						is_hearing_procedure: false,
+						is_inquiry_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -1550,6 +1556,7 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: false,
 						has_statement: true,
 						is_hearing_procedure: false,
+						is_inquiry_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -1566,6 +1573,7 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: false,
 						has_statement: true,
 						is_hearing_procedure: false,
+						is_inquiry_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -1625,6 +1633,7 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: false,
 						has_statement: false,
 						is_hearing_procedure: false,
+						is_inquiry_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -1641,6 +1650,7 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: false,
 						has_statement: false,
 						is_hearing_procedure: false,
+						is_inquiry_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -1704,6 +1714,7 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: true,
 						has_statement: true,
 						is_hearing_procedure: false,
+						is_inquiry_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -1720,6 +1731,7 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: true,
 						has_statement: true,
 						is_hearing_procedure: false,
+						is_inquiry_procedure: false,
 						what_happens_next:
 							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -1791,6 +1803,7 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: true,
 						has_statement: true,
 						is_hearing_procedure: true,
+						is_inquiry_procedure: false,
 						what_happens_next: 'We will contact you when the hearing has been set up.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
@@ -1806,6 +1819,7 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: true,
 						has_statement: true,
 						is_hearing_procedure: true,
+						is_inquiry_procedure: false,
 						what_happens_next: 'We will contact you if we need any more information.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
@@ -1875,6 +1889,7 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: true,
 						has_statement: true,
 						is_hearing_procedure: true,
+						is_inquiry_procedure: false,
 						what_happens_next: 'We will contact you when the hearing has been set up.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
@@ -1890,6 +1905,7 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: true,
 						has_statement: true,
 						is_hearing_procedure: true,
+						is_inquiry_procedure: false,
 						what_happens_next: 'We will contact you if we need any more information.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
@@ -1964,6 +1980,7 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: true,
 						has_statement: true,
 						is_hearing_procedure: true,
+						is_inquiry_procedure: false,
 						what_happens_next: 'The hearing is on 31 January 2025.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
@@ -1979,6 +1996,7 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: true,
 						has_statement: true,
 						is_hearing_procedure: true,
+						is_inquiry_procedure: false,
 						what_happens_next:
 							'Your hearing is on 31 January 2025.\n\nWe will contact you if we need any more information.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -2052,6 +2070,7 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: true,
 						has_statement: true,
 						is_hearing_procedure: true,
+						is_inquiry_procedure: false,
 						what_happens_next: 'The hearing is on 31 January 2025.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
@@ -2067,12 +2086,98 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: true,
 						has_statement: true,
 						is_hearing_procedure: true,
+						is_inquiry_procedure: false,
 						what_happens_next:
 							'Your hearing is on 31 January 2025.\n\nWe will contact you if we need any more information.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
+				});
+			});
+
+			test('sends notify emails to LPA and appellant when ip comments and statements are not received', async () => {
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => mockS20Appeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedEmailPayload = {
+					lpa_reference: mockS20Appeal.applicationReference,
+					final_comments_deadline: '4 December 2024',
+					has_ip_comments: false,
+					has_statement: false,
+					is_hearing_procedure: false,
+					is_inquiry_procedure: true,
+					appeal_reference_number: mockS20Appeal.reference,
+					site_address: expectedSiteAddress,
+					user_type: '',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...mockS20Appeal,
+					procedureType: {
+						key: 'inquiry'
+					},
+					appealTimetable: {
+						...mockS20Appeal.appealTimetable,
+						...{
+							proofOfEvidenceAndWitnessesDueDate: '2025-12-13'
+						}
+					}
+				});
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'statements' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						is_inquiry_procedure: true,
+						what_happens_next:
+							'You need to [submit your proof of evidence and witnesses](/mock-front-office-url/manage-appeals/6000002) by 13 December 2025.',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					},
+					recipientEmail: mockS78Appeal.lpa.email,
+					templateName: 'not-received-statement-and-ip-comments'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						is_inquiry_procedure: true,
+						what_happens_next:
+							'You need to [submit your proof of evidence and witnesses](/mock-front-office-url/appeals/6000002) by 13 December 2025.',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					},
+					recipientEmail: appealS20.appellant.email,
+					templateName: 'not-received-statement-and-ip-comments'
 				});
 			});
 		});
@@ -2143,6 +2248,7 @@ describe('/appeals/:id/reps', () => {
 					has_ip_comments: false,
 					has_statement: false,
 					is_hearing_procedure: false,
+					is_inquiry_procedure: false,
 					appeal_reference_number: mockS78Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
@@ -2214,6 +2320,7 @@ describe('/appeals/:id/reps', () => {
 					has_ip_comments: false,
 					has_statement: false,
 					is_hearing_procedure: false,
+					is_inquiry_procedure: false,
 					appeal_reference_number: mockS78Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
@@ -2346,6 +2453,7 @@ describe('/appeals/:id/reps', () => {
 					has_ip_comments: false,
 					has_statement: false,
 					is_hearing_procedure: false,
+					is_inquiry_procedure: false,
 					appeal_reference_number: mockS20Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
@@ -2420,6 +2528,7 @@ describe('/appeals/:id/reps', () => {
 					has_ip_comments: false,
 					has_statement: false,
 					is_hearing_procedure: false,
+					is_inquiry_procedure: false,
 					appeal_reference_number: mockS20Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
@@ -2481,6 +2590,7 @@ describe('/appeals/:id/reps', () => {
 					has_ip_comments: false,
 					has_statement: false,
 					is_hearing_procedure: false,
+					is_inquiry_procedure: false,
 					appeal_reference_number: mockS78Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
@@ -2550,6 +2660,7 @@ describe('/appeals/:id/reps', () => {
 					has_ip_comments: false,
 					has_statement: false,
 					is_hearing_procedure: false,
+					is_inquiry_procedure: false,
 					appeal_reference_number: mockS20Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
@@ -2621,6 +2732,7 @@ describe('/appeals/:id/reps', () => {
 					has_ip_comments: false,
 					has_statement: false,
 					is_hearing_procedure: false,
+					is_inquiry_procedure: false,
 					appeal_reference_number: mockS20Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
