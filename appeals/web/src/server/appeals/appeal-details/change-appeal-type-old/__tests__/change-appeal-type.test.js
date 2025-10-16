@@ -27,7 +27,7 @@ describe('change-appeal-type', () => {
 	describe('GET /change-appeal-type/appeal-type', () => {
 		it('should render the appeal type page', async () => {
 			const response = await request
-				.get(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`)
+				.get(`${baseUrl}/1${changeAppealTypePath}${appealTypePath}`)
 				.set('Appeal-Change-Type', 'true');
 			const element = parseHtml(response.text);
 
@@ -43,7 +43,7 @@ describe('change-appeal-type', () => {
 	describe('POST /change-appeal-type/appeal-type', () => {
 		it('should redirect to the resubmit page if all required field is populated', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`)
+				.post(`${baseUrl}/1${changeAppealTypePath}${appealTypePath}`)
 				.set('Appeal-Change-Type', 'true')
 				.send({
 					appealType: 1
@@ -58,7 +58,7 @@ describe('change-appeal-type', () => {
 
 		it('should re-render the appeal type page with an error message if required field is missing', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`)
+				.post(`${baseUrl}/1${changeAppealTypePath}${appealTypePath}`)
 				.set('Appeal-Change-Type', 'true')
 				.send({
 					appealType: ''
@@ -82,7 +82,7 @@ describe('change-appeal-type', () => {
 	describe('GET /change-appeal-type/resubmit', () => {
 		it('should render the resubmit page', async () => {
 			const response = await request
-				.get(`${baseUrl}/1${changeAppealTypePath}/${resubmitPath}`)
+				.get(`${baseUrl}/1${changeAppealTypePath}${resubmitPath}`)
 				.set('Appeal-Change-Type', 'true');
 			const element = parseHtml(response.text);
 
@@ -106,7 +106,7 @@ describe('change-appeal-type', () => {
 	describe('POST /change-appeal-type/resubmit', () => {
 		it('should redirect to the final date page the required field is equal to yes', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${changeAppealTypePath}/${resubmitPath}`)
+				.post(`${baseUrl}/1${changeAppealTypePath}${resubmitPath}`)
 				.send({
 					appealResubmit: true
 				})
@@ -121,7 +121,7 @@ describe('change-appeal-type', () => {
 
 		it('should re-render the resubmit page with an error message if required field is missing', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${changeAppealTypePath}/${resubmitPath}`)
+				.post(`${baseUrl}/1${changeAppealTypePath}${resubmitPath}`)
 				.send({
 					appealResubmit: ''
 				})
@@ -151,7 +151,7 @@ describe('change-appeal-type', () => {
 	describe('GET /change-appeal-type/change-appeal-final-date', () => {
 		it('should render the final date page', async () => {
 			const response = await request
-				.get(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+				.get(`${baseUrl}/1${changeAppealTypePath}${changeAppealFinalDatePath}`)
 				.set('Appeal-Change-Type', 'true');
 			const element = parseHtml(response.text);
 
@@ -188,14 +188,14 @@ describe('change-appeal-type', () => {
 
 		it('should redirect to the appeal details page when the required dates fields are populated and valid', async () => {
 			await request
-				.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`)
+				.post(`${baseUrl}/1${changeAppealTypePath}${appealTypePath}`)
 				.send({ appealType: 1 });
 			await request
-				.post(`${baseUrl}/1${changeAppealTypePath}/${resubmitPath}`)
+				.post(`${baseUrl}/1${changeAppealTypePath}${resubmitPath}`)
 				.send({ appealResubmit: true });
 
 			const response = await request
-				.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+				.post(`${baseUrl}/1${changeAppealTypePath}${changeAppealFinalDatePath}`)
 				.set('Appeal-Change-Type', 'true')
 				.send({
 					'change-appeal-final-date-day': 11,
@@ -209,7 +209,7 @@ describe('change-appeal-type', () => {
 
 	it('should re-render the final date page with an error message if required field is missing', async () => {
 		const response = await request
-			.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+			.post(`${baseUrl}/1${changeAppealTypePath}${changeAppealFinalDatePath}`)
 			.set('Appeal-Change-Type', 'true')
 			.send({});
 
@@ -230,7 +230,7 @@ describe('change-appeal-type', () => {
 
 	it('should re-render the final date page with an error message if the provided date day is invalid', async () => {
 		const response = await request
-			.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+			.post(`${baseUrl}/1${changeAppealTypePath}${changeAppealFinalDatePath}`)
 			.set('Appeal-Change-Type', 'true')
 			.send({
 				'change-appeal-final-date-day': 32,
@@ -257,7 +257,7 @@ describe('change-appeal-type', () => {
 
 	it('should re-render the final date page with an error message if the provided date month is invalid', async () => {
 		const response = await request
-			.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+			.post(`${baseUrl}/1${changeAppealTypePath}${changeAppealFinalDatePath}`)
 			.set('Appeal-Change-Type', 'true')
 			.send({
 				'change-appeal-final-date-day': 1,
@@ -284,7 +284,7 @@ describe('change-appeal-type', () => {
 
 	it('should re-render the final date page with an error message if the provided date year is invalid', async () => {
 		const response = await request
-			.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+			.post(`${baseUrl}/1${changeAppealTypePath}${changeAppealFinalDatePath}`)
 			.set('Appeal-Change-Type', 'true')
 			.send({
 				'change-appeal-final-date-day': 11,
@@ -311,7 +311,7 @@ describe('change-appeal-type', () => {
 
 	it('should re-render the final date page with an error message if an invalid date was provided', async () => {
 		const response = await request
-			.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+			.post(`${baseUrl}/1${changeAppealTypePath}${changeAppealFinalDatePath}`)
 			.set('Appeal-Change-Type', 'true')
 			.send({
 				'change-appeal-final-date-day': 29,
@@ -345,7 +345,7 @@ describe('change-appeal-type', () => {
 
 		for (const variant of monthVariants) {
 			const response = await request
-				.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+				.post(`${baseUrl}/1${changeAppealTypePath}${changeAppealFinalDatePath}`)
 				.set('Appeal-Change-Type', 'true')
 				.send({
 					'change-appeal-final-date-day': 4,

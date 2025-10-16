@@ -396,7 +396,7 @@ exports[`issue-decision GET /issue-decision/check-your-appellant-costs-decision 
                         <dd                         class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/APP/Q9999/D/21/351062/download-uncommitted/2/test-document-appellant.pdf"
                             target="_blank">test-document-appellant.pdf</a>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/issue-appellant-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-appellant-costs-decision">Change<span class="govuk-visually-hidden"> appellant cost decision letter</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/issue-appellant-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-appellant-costs-decision">Change<span class="govuk-visually-hidden"> appellant cost decision letter</span></a>
                             </dd>
                     </div>
                 </dl>
@@ -421,43 +421,43 @@ exports[`issue-decision GET /issue-decision/check-your-decision Linked appeals s
                 <dl class="govuk-summary-list">
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision for lead appeal 351062</dt>
                         <dd                         class="govuk-summary-list__value">Allowed</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> decision for lead appeal 351062</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> decision for lead appeal 351062</span></a>
                             </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision for child appeal 351066</dt>
                         <dd                         class="govuk-summary-list__value">Split decision</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/2/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> decision for child appeal 351066</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/2/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> decision for child appeal 351066</span></a>
                             </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
                         <dd class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.pdf"
                             target="_blank">test-document.pdf</a>
                         </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> decision letter</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> decision letter</span></a>
                         </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you want to issue the appellant&#39;s costs decision?</dt>
                         <dd                         class="govuk-summary-list__value">Yes</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/appellant-costs-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> appellant cost decision</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/appellant-costs-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> appellant cost decision</span></a>
                             </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant costs decision letter</dt>
                         <dd                         class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/APP/Q9999/D/21/351062/download-uncommitted/2/test-document-appellant.pdf"
                             target="_blank">test-document-appellant.pdf</a>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/appellant-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> appellant cost decision letter</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/appellant-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> appellant cost decision letter</span></a>
                             </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you want to issue the LPA&#39;s costs decision?</dt>
                         <dd                         class="govuk-summary-list__value">Yes</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/lpa-costs-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> lpa cost decision</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/lpa-costs-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> lpa cost decision</span></a>
                             </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA costs decision letter</dt>
                         <dd                         class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/APP/Q9999/D/21/351062/download-uncommitted/3/test-document-lpa.pdf"
                             target="_blank">test-document-lpa.pdf</a>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/lpa-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> lpa costs decision letter</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/lpa-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> lpa costs decision letter</span></a>
                             </dd>
                     </div>
                 </dl>
@@ -482,38 +482,38 @@ exports[`issue-decision GET /issue-decision/check-your-decision Single appeal sh
                 <dl class="govuk-summary-list">
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                         <dd class="govuk-summary-list__value">Allowed</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> decision</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> decision</span></a>
                         </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
                         <dd class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.pdf"
                             target="_blank">test-document.pdf</a>
                         </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> decision letter</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> decision letter</span></a>
                         </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you want to issue the appellant&#39;s costs decision?</dt>
                         <dd                         class="govuk-summary-list__value">Yes</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/appellant-costs-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> appellant cost decision</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/appellant-costs-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> appellant cost decision</span></a>
                             </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant costs decision letter</dt>
                         <dd                         class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/APP/Q9999/D/21/351062/download-uncommitted/2/test-document-appellant.pdf"
                             target="_blank">test-document-appellant.pdf</a>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/appellant-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> appellant cost decision letter</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/appellant-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> appellant cost decision letter</span></a>
                             </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you want to issue the LPA&#39;s costs decision?</dt>
                         <dd                         class="govuk-summary-list__value">Yes</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/lpa-costs-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> lpa cost decision</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/lpa-costs-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> lpa cost decision</span></a>
                             </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA costs decision letter</dt>
                         <dd                         class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/APP/Q9999/D/21/351062/download-uncommitted/3/test-document-lpa.pdf"
                             target="_blank">test-document-lpa.pdf</a>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/lpa-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> lpa costs decision letter</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/lpa-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> lpa costs decision letter</span></a>
                             </dd>
                     </div>
                 </dl>
@@ -540,7 +540,7 @@ exports[`issue-decision GET /issue-decision/check-your-lpa-costs-decision should
                         <dd                         class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/APP/Q9999/D/21/351062/download-uncommitted/2/test-document-lpa.pdf"
                             target="_blank">test-document-lpa.pdf</a>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/issue-lpa-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-lpa-costs-decision">Change<span class="govuk-visually-hidden"> lpa costs decision letter</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/issue-lpa-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-lpa-costs-decision">Change<span class="govuk-visually-hidden"> lpa costs decision letter</span></a>
                             </dd>
                     </div>
                 </dl>

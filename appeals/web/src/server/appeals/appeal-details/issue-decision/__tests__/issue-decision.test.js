@@ -74,7 +74,7 @@ describe('issue-decision', () => {
 	describe('GET /decision', () => {
 		describe('Single appeal', () => {
 			it(`should render the 'what is the decision' page with the expected content`, async () => {
-				const response = await request.get(`${baseUrl}/1${issueDecisionPath}/${decisionPath}`);
+				const response = await request.get(`${baseUrl}/1${issueDecisionPath}${decisionPath}`);
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
@@ -251,7 +251,7 @@ describe('issue-decision', () => {
 	describe('GET /decision-letter-upload', () => {
 		it('should render the decision letter upload page with a file upload component', async () => {
 			const response = await request.get(
-				`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`
+				`${baseUrl}/1${issueDecisionPath}${decisionLetterUploadPath}`
 			);
 			const element = parseHtml(response.text);
 
@@ -289,7 +289,7 @@ describe('issue-decision', () => {
 
 		it('should render a 500 error page if upload-info is not present in the request body', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${decisionLetterUploadPath}`)
 				.send({});
 
 			expect(response.statusCode).toBe(500);
@@ -305,7 +305,7 @@ describe('issue-decision', () => {
 
 		it('should render a 500 error page if request body upload-info is in an incorrect format', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${decisionLetterUploadPath}`)
 				.send({
 					'upload-info': ''
 				});
@@ -323,7 +323,7 @@ describe('issue-decision', () => {
 
 		it('should redirect to the appellant cost decision page if upload-info is present in the request body and in the correct format', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${decisionLetterUploadPath}`)
 				.send({
 					'upload-info': fileUploadInfo
 				});
@@ -411,7 +411,7 @@ describe('issue-decision', () => {
 	describe('GET /appellant-costs-decision-letter-upload', () => {
 		it('should render the decision letter upload page with a file upload component', async () => {
 			const response = await request.get(
-				`${baseUrl}/1${issueDecisionPath}/${appellantCostsDecisionLetterUploadPath}`
+				`${baseUrl}/1${issueDecisionPath}${appellantCostsDecisionLetterUploadPath}`
 			);
 			const element = parseHtml(response.text);
 
@@ -450,7 +450,7 @@ describe('issue-decision', () => {
 
 		it('should render a 500 error page if upload-info is not present in the request body', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${appellantCostsDecisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${appellantCostsDecisionLetterUploadPath}`)
 				.send({});
 
 			expect(response.statusCode).toBe(500);
@@ -466,7 +466,7 @@ describe('issue-decision', () => {
 
 		it('should render a 500 error page if request body upload-info is in an incorrect format', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${appellantCostsDecisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${appellantCostsDecisionLetterUploadPath}`)
 				.send({
 					'upload-info': ''
 				});
@@ -484,14 +484,14 @@ describe('issue-decision', () => {
 
 		it('should redirect to the appellant cost decision page if upload-info is present in the request body and in the correct format', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${appellantCostsDecisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${appellantCostsDecisionLetterUploadPath}`)
 				.send({
 					'upload-info': fileUploadInfo
 				});
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/issue-decision/lpa-costs-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fappellant-costs-decision-letter-upload'
+				'Found. Redirecting to /appeals-service/appeal-details/1/issue-decision/lpa-costs-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fappellant-costs-decision-letter-upload'
 			);
 		});
 	});
@@ -572,7 +572,7 @@ describe('issue-decision', () => {
 	describe('GET /lpa-costs-decision-letter-upload', () => {
 		it('should render the decision letter upload page with a file upload component', async () => {
 			const response = await request.get(
-				`${baseUrl}/1${issueDecisionPath}/${lpaCostsDecisionLetterUploadPath}`
+				`${baseUrl}/1${issueDecisionPath}${lpaCostsDecisionLetterUploadPath}`
 			);
 			const element = parseHtml(response.text);
 
@@ -605,7 +605,7 @@ describe('issue-decision', () => {
 
 		it('should render a 500 error page if upload-info is not present in the request body', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${lpaCostsDecisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${lpaCostsDecisionLetterUploadPath}`)
 				.send({});
 
 			expect(response.statusCode).toBe(500);
@@ -621,7 +621,7 @@ describe('issue-decision', () => {
 
 		it('should render a 500 error page if request body upload-info is in an incorrect format', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${lpaCostsDecisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${lpaCostsDecisionLetterUploadPath}`)
 				.send({
 					'upload-info': ''
 				});
@@ -639,7 +639,7 @@ describe('issue-decision', () => {
 
 		it('should redirect to the lpa cost decision page if upload-info is present in the request body and in the correct format', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${lpaCostsDecisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${lpaCostsDecisionLetterUploadPath}`)
 				.send({
 					'upload-info': fileUploadInfo
 				});
@@ -678,7 +678,7 @@ describe('issue-decision', () => {
 					.send({ decision: CASE_OUTCOME_ALLOWED });
 
 				uploadDecisionLetterResponse = await request
-					.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`)
+					.post(`${baseUrl}/1${issueDecisionPath}${decisionLetterUploadPath}`)
 					.send({
 						'upload-info':
 							'[{"name": "test-document.pdf", "GUID": "1", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "caseDecisionLetter", "size": 1, "stage": "appellant-case"}]'
@@ -689,7 +689,7 @@ describe('issue-decision', () => {
 					.send({ appellantCostsDecision: 'true' });
 
 				uploadAppellantCostsDecisionLetterResponse = await request
-					.post(`${baseUrl}/1${issueDecisionPath}/${appellantCostsDecisionLetterUploadPath}`)
+					.post(`${baseUrl}/1${issueDecisionPath}${appellantCostsDecisionLetterUploadPath}`)
 					.send({
 						'upload-info':
 							'[{"name": "test-document-appellant.pdf", "GUID": "2", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "appellantCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
@@ -700,7 +700,7 @@ describe('issue-decision', () => {
 					.send({ lpaCostsDecision: 'true' });
 
 				uploadLpaCostsDecisionLetterResponse = await request
-					.post(`${baseUrl}/1${issueDecisionPath}/${lpaCostsDecisionLetterUploadPath}`)
+					.post(`${baseUrl}/1${issueDecisionPath}${lpaCostsDecisionLetterUploadPath}`)
 					.send({
 						'upload-info':
 							'[{"name": "test-document-lpa.pdf", "GUID": "3", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "lpaCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
@@ -716,7 +716,7 @@ describe('issue-decision', () => {
 				expect(uploadLpaCostsDecisionLetterResponse.statusCode).toBe(302);
 
 				const response = await request.get(
-					`${baseUrl}/1${issueDecisionPath}/${checkYourDecisionPath}`
+					`${baseUrl}/1${issueDecisionPath}${checkYourDecisionPath}`
 				);
 				const element = parseHtml(response.text);
 
@@ -774,7 +774,7 @@ describe('issue-decision', () => {
 					.send({ decision: 'split decision' });
 
 				uploadDecisionLetterResponse = await request
-					.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`)
+					.post(`${baseUrl}/1${issueDecisionPath}${decisionLetterUploadPath}`)
 					.send({
 						'upload-info':
 							'[{"name": "test-document.pdf", "GUID": "1", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "caseDecisionLetter", "size": 1, "stage": "appellant-case"}]'
@@ -785,7 +785,7 @@ describe('issue-decision', () => {
 					.send({ appellantCostsDecision: 'true' });
 
 				uploadAppellantCostsDecisionLetterResponse = await request
-					.post(`${baseUrl}/1${issueDecisionPath}/${appellantCostsDecisionLetterUploadPath}`)
+					.post(`${baseUrl}/1${issueDecisionPath}${appellantCostsDecisionLetterUploadPath}`)
 					.send({
 						'upload-info':
 							'[{"name": "test-document-appellant.pdf", "GUID": "2", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "appellantCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
@@ -796,7 +796,7 @@ describe('issue-decision', () => {
 					.send({ lpaCostsDecision: 'true' });
 
 				uploadLpaCostsDecisionLetterResponse = await request
-					.post(`${baseUrl}/1${issueDecisionPath}/${lpaCostsDecisionLetterUploadPath}`)
+					.post(`${baseUrl}/1${issueDecisionPath}${lpaCostsDecisionLetterUploadPath}`)
 					.send({
 						'upload-info':
 							'[{"name": "test-document-lpa.pdf", "GUID": "3", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "lpaCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
@@ -815,7 +815,7 @@ describe('issue-decision', () => {
 				expect(uploadLpaCostsDecisionLetterResponse.statusCode).toBe(302);
 
 				const response = await request.get(
-					`${baseUrl}/1${issueDecisionPath}/${checkYourDecisionPath}`
+					`${baseUrl}/1${issueDecisionPath}${checkYourDecisionPath}`
 				);
 				const element = parseHtml(response.text);
 
@@ -874,7 +874,7 @@ describe('issue-decision', () => {
 
 		it('should render a 500 error page if no decision files are sent', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${checkYourDecisionPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${checkYourDecisionPath}`)
 				.send({});
 
 			expect(response.statusCode).toBe(500);
@@ -890,7 +890,7 @@ describe('issue-decision', () => {
 
 		it('should redirect to the case details page', async () => {
 			uploadDecisionLetterResponse = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${decisionLetterUploadPath}`)
 				.send({
 					'upload-info':
 						'[{"name": "test-document.pdf", "GUID": "1", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "caseDecisionLetter", "size": 1, "stage": "appellant-case"}]'
@@ -901,7 +901,7 @@ describe('issue-decision', () => {
 				.send({ appellantCostsDecision: 'true' });
 
 			uploadAppellantCostsDecisionLetterResponse = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${appellantCostsDecisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${appellantCostsDecisionLetterUploadPath}`)
 				.send({
 					'upload-info':
 						'[{"name": "test-document-appellant.pdf", "GUID": "2", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "appellantCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
@@ -912,7 +912,7 @@ describe('issue-decision', () => {
 				.send({ lpaCostsDecision: 'true' });
 
 			uploadLpaCostsDecisionLetterResponse = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${lpaCostsDecisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${lpaCostsDecisionLetterUploadPath}`)
 				.send({
 					'upload-info':
 						'[{"name": "test-document-lpa.pdf", "GUID": "3", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "lpaCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
@@ -926,7 +926,7 @@ describe('issue-decision', () => {
 			expect(uploadLpaCostsDecisionLetterResponse.statusCode).toBe(302);
 
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${checkYourDecisionPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${checkYourDecisionPath}`)
 				.send({});
 
 			expect(response.statusCode).toBe(302);
@@ -937,7 +937,7 @@ describe('issue-decision', () => {
 	describe('GET /issue-appellant-costs-decision-letter-upload', () => {
 		it('should render the decision letter upload page with a file upload component', async () => {
 			const response = await request.get(
-				`${baseUrl}/1${issueDecisionPath}/${issueAppellantCostsDecisionLetterUploadPath}`
+				`${baseUrl}/1${issueDecisionPath}${issueAppellantCostsDecisionLetterUploadPath}`
 			);
 			const element = parseHtml(response.text);
 
@@ -979,7 +979,7 @@ describe('issue-decision', () => {
 
 		it('should render a 500 error page if upload-info is not present in the request body', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${issueAppellantCostsDecisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${issueAppellantCostsDecisionLetterUploadPath}`)
 				.send({});
 
 			expect(response.statusCode).toBe(500);
@@ -995,7 +995,7 @@ describe('issue-decision', () => {
 
 		it('should render a 500 error page if request body upload-info is in an incorrect format', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${issueAppellantCostsDecisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${issueAppellantCostsDecisionLetterUploadPath}`)
 				.send({
 					'upload-info': ''
 				});
@@ -1013,14 +1013,14 @@ describe('issue-decision', () => {
 
 		it('should redirect to the check your appellant cost decision page if upload-info is present in the request body and in the correct format', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${issueAppellantCostsDecisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${issueAppellantCostsDecisionLetterUploadPath}`)
 				.send({
 					'upload-info': fileUploadInfo
 				});
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/issue-decision/check-your-appellant-costs-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fissue-appellant-costs-decision-letter-upload'
+				'Found. Redirecting to /appeals-service/appeal-details/1/issue-decision/check-your-appellant-costs-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fissue-appellant-costs-decision-letter-upload'
 			);
 		});
 	});
@@ -1041,7 +1041,7 @@ describe('issue-decision', () => {
 				.persist();
 
 			uploadAppellantCostsDecisionLetterResponse = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${appellantCostsDecisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${appellantCostsDecisionLetterUploadPath}`)
 				.send({
 					'upload-info':
 						'[{"name": "test-document-appellant.pdf", "GUID": "2", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "appellantCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
@@ -1054,7 +1054,7 @@ describe('issue-decision', () => {
 			expect(uploadAppellantCostsDecisionLetterResponse.statusCode).toBe(302);
 
 			const response = await request.get(
-				`${baseUrl}/1${issueDecisionPath}/${checkYourAppellantCostsDecisionPath}`
+				`${baseUrl}/1${issueDecisionPath}${checkYourAppellantCostsDecisionPath}`
 			);
 			const element = parseHtml(response.text);
 
@@ -1106,7 +1106,7 @@ describe('issue-decision', () => {
 
 		it('should render a 500 error page if no decision files are sent', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${checkYourDecisionPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${checkYourDecisionPath}`)
 				.send({});
 
 			expect(response.statusCode).toBe(500);
@@ -1122,7 +1122,7 @@ describe('issue-decision', () => {
 
 		it('should redirect to the case details page', async () => {
 			uploadAppellantCostsDecisionLetterResponse = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${issueAppellantCostsDecisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${issueAppellantCostsDecisionLetterUploadPath}`)
 				.send({
 					'upload-info':
 						'[{"name": "test-document-appellant.pdf", "GUID": "2", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "appellantCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
@@ -1131,7 +1131,7 @@ describe('issue-decision', () => {
 			expect(uploadAppellantCostsDecisionLetterResponse.statusCode).toBe(302);
 
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${checkYourAppellantCostsDecisionPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${checkYourAppellantCostsDecisionPath}`)
 				.send({});
 
 			expect(response.statusCode).toBe(302);
@@ -1142,7 +1142,7 @@ describe('issue-decision', () => {
 	describe('GET /issue-lpa-costs-decision-letter-upload', () => {
 		it('should render the decision letter upload page with a file upload component', async () => {
 			const response = await request.get(
-				`${baseUrl}/1${issueDecisionPath}/${issueLpaCostsDecisionLetterUploadPath}`
+				`${baseUrl}/1${issueDecisionPath}${issueLpaCostsDecisionLetterUploadPath}`
 			);
 			const element = parseHtml(response.text);
 
@@ -1182,7 +1182,7 @@ describe('issue-decision', () => {
 
 		it('should render a 500 error page if upload-info is not present in the request body', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${issueLpaCostsDecisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${issueLpaCostsDecisionLetterUploadPath}`)
 				.send({});
 
 			expect(response.statusCode).toBe(500);
@@ -1198,7 +1198,7 @@ describe('issue-decision', () => {
 
 		it('should render a 500 error page if request body upload-info is in an incorrect format', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${issueLpaCostsDecisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${issueLpaCostsDecisionLetterUploadPath}`)
 				.send({
 					'upload-info': ''
 				});
@@ -1216,7 +1216,7 @@ describe('issue-decision', () => {
 
 		it('should redirect to the lpa cost decision page if upload-info is present in the request body and in the correct format', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${issueLpaCostsDecisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${issueLpaCostsDecisionLetterUploadPath}`)
 				.send({
 					'upload-info': fileUploadInfo
 				});
@@ -1244,7 +1244,7 @@ describe('issue-decision', () => {
 				.persist();
 
 			uploadLpaCostsDecisionLetterResponse = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${lpaCostsDecisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${lpaCostsDecisionLetterUploadPath}`)
 				.send({
 					'upload-info':
 						'[{"name": "test-document-lpa.pdf", "GUID": "2", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "lpaCostsDecisionLetter", "size": 1, "stage": "lpa-case"}]'
@@ -1257,7 +1257,7 @@ describe('issue-decision', () => {
 			expect(uploadLpaCostsDecisionLetterResponse.statusCode).toBe(302);
 
 			const response = await request.get(
-				`${baseUrl}/1${issueDecisionPath}/${checkYourLpaCostsDecisionPath}`
+				`${baseUrl}/1${issueDecisionPath}${checkYourLpaCostsDecisionPath}`
 			);
 			const element = parseHtml(response.text);
 
@@ -1309,7 +1309,7 @@ describe('issue-decision', () => {
 
 		it('should render a 500 error page if no decision files are sent', async () => {
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${checkYourDecisionPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${checkYourDecisionPath}`)
 				.send({});
 
 			expect(response.statusCode).toBe(500);
@@ -1325,7 +1325,7 @@ describe('issue-decision', () => {
 
 		it('should redirect to the case details page', async () => {
 			uploadLpaCostsDecisionLetterResponse = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${issueLpaCostsDecisionLetterUploadPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${issueLpaCostsDecisionLetterUploadPath}`)
 				.send({
 					'upload-info':
 						'[{"name": "test-document-lpa.pdf", "GUID": "2", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "lpaCostsDecisionLetter", "size": 1, "stage": "lpa-case"}]'
@@ -1334,7 +1334,7 @@ describe('issue-decision', () => {
 			expect(uploadLpaCostsDecisionLetterResponse.statusCode).toBe(302);
 
 			const response = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${checkYourLpaCostsDecisionPath}`)
+				.post(`${baseUrl}/1${issueDecisionPath}${checkYourLpaCostsDecisionPath}`)
 				.send({});
 
 			expect(response.statusCode).toBe(302);
@@ -1379,7 +1379,7 @@ describe('issue-decision', () => {
 
 		it('should render the view decision page', async () => {
 			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
-			const response = await request.get(`${baseUrl}/1${issueDecisionPath}/${viewDecisionPath}`);
+			const response = await request.get(`${baseUrl}/1${issueDecisionPath}${viewDecisionPath}`);
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span>');
@@ -1405,7 +1405,7 @@ describe('issue-decision', () => {
 			nock('http://test/')
 				.get('/appeals/1/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
 				.reply(200, documentFileVersionInfo);
-			const response = await request.get(`${baseUrl}/1${issueDecisionPath}/${viewDecisionPath}`);
+			const response = await request.get(`${baseUrl}/1${issueDecisionPath}${viewDecisionPath}`);
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span>');
@@ -1440,7 +1440,7 @@ describe('issue-decision', () => {
 				.reply(200, issueDecisionLinkedLeadAppealData)
 				.persist();
 
-			const response = await request.get(`${baseUrl}/1${issueDecisionPath}/${viewDecisionPath}`);
+			const response = await request.get(`${baseUrl}/1${issueDecisionPath}${viewDecisionPath}`);
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062 (lead)</span>');
@@ -1476,7 +1476,7 @@ describe('issue-decision', () => {
 				.get('/appeals/2/document-folders?path=appeal-decision/caseDecisionLetter')
 				.reply(200, [{ caseId: 2, documents: [{ name: 'case-decision-letter.pdf', id: '1234' }] }])
 				.persist();
-			const response = await request.get(`${baseUrl}/1${issueDecisionPath}/${viewDecisionPath}`);
+			const response = await request.get(`${baseUrl}/1${issueDecisionPath}${viewDecisionPath}`);
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062 (child)</span>');
