@@ -297,7 +297,7 @@ describe('mapRepresentationDocumentSummaryActionLink', () => {
 				}
 			);
 			expect(link).toBe(
-				`<a href="${baseRoute}/proof-of-evidence/lpa?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="view-lpa-proofs-evidence" class="govuk-link">View<span class="govuk-visually-hidden"> LPA proof of evidence</span></a>`
+				`<a href="${baseRoute}/proof-of-evidence/lpa/manage-documents?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="view-lpa-proofs-evidence" class="govuk-link">View<span class="govuk-visually-hidden"> LPA proof of evidence</span></a>`
 			);
 		});
 
@@ -313,7 +313,7 @@ describe('mapRepresentationDocumentSummaryActionLink', () => {
 				}
 			);
 			expect(link).toBe(
-				`<a href="${baseRoute}/proof-of-evidence/lpa?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="view-lpa-proofs-evidence" class="govuk-link">View<span class="govuk-visually-hidden"> LPA proof of evidence</span></a>`
+				`<a href="${baseRoute}/proof-of-evidence/lpa/manage-documents?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="view-lpa-proofs-evidence" class="govuk-link">View<span class="govuk-visually-hidden"> LPA proof of evidence</span></a>`
 			);
 		});
 	});
@@ -347,7 +347,7 @@ describe('mapRepresentationDocumentSummaryActionLink', () => {
 				}
 			);
 			expect(link).toBe(
-				`<a href="${baseRoute}/proof-of-evidence/appellant?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="view-appellant-proofs-evidence" class="govuk-link">View<span class="govuk-visually-hidden"> Appellant proof of evidence</span></a>`
+				`<a href="${baseRoute}/proof-of-evidence/appellant/manage-documents?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="view-appellant-proofs-evidence" class="govuk-link">View<span class="govuk-visually-hidden"> Appellant proof of evidence</span></a>`
 			);
 		});
 
@@ -363,7 +363,7 @@ describe('mapRepresentationDocumentSummaryActionLink', () => {
 				}
 			);
 			expect(link).toBe(
-				`<a href="${baseRoute}/proof-of-evidence/appellant?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="view-appellant-proofs-evidence" class="govuk-link">View<span class="govuk-visually-hidden"> Appellant proof of evidence</span></a>`
+				`<a href="${baseRoute}/proof-of-evidence/appellant/manage-documents?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="view-appellant-proofs-evidence" class="govuk-link">View<span class="govuk-visually-hidden"> Appellant proof of evidence</span></a>`
 			);
 		});
 	});

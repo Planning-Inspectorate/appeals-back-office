@@ -167,11 +167,11 @@ describe('Manage docs on lpa case', () => {
 			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 				appeal = caseObj;
 				// require case to be started as inquiry to access appellant POE evidence
-				setupInquiry(caseRef, inquiryDate);
+				setupInquiry(caseObj, inquiryDate);
 
 				// find case and open inquiry section
 				cy.visit(urlPaths.appealsList);
-				listCasesPage.clickAppealByRef(caseRef);
+				listCasesPage.clickAppealByRef(caseObj);
 
 				// navigate to file upload view, upload file and verify uploaded
 				documentationSectionPage.selectAddDocument('lpa-proofs-evidence');
@@ -211,11 +211,11 @@ describe('Manage docs on lpa case', () => {
 				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 					appeal = caseObj;
 					// require case to be started as inquiry to access appellant POE evidence
-					setupInquiry(caseRef, inquiryDate);
+					setupInquiry(caseObj, inquiryDate);
 
 					// find case and open inquiry section
 					cy.visit(urlPaths.appealsList);
-					listCasesPage.clickAppealByRef(caseRef);
+					listCasesPage.clickAppealByRef(caseObj);
 
 					// navigate to file upload view, upload file and verify uploaded
 					documentationSectionPage.selectAddDocument('lpa-proofs-evidence');
@@ -256,11 +256,11 @@ describe('Manage docs on lpa case', () => {
 				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 					appeal = caseObj;
 					// require case to be started as inquiry to access appellant POE evidence
-					setupInquiry(caseRef, inquiryDate);
+					setupInquiry(caseObj, inquiryDate);
 
 					// find case and open inquiry section
 					cy.visit(urlPaths.appealsList);
-					listCasesPage.clickAppealByRef(caseRef);
+					listCasesPage.clickAppealByRef(caseObj);
 
 					// navigate to file upload view, upload file and verify uploaded
 					documentationSectionPage.selectAddDocument('lpa-proofs-evidence');

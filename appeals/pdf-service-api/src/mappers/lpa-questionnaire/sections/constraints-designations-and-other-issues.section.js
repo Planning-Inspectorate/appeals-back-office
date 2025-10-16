@@ -1,3 +1,4 @@
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	formatDocumentData,
 	formatList,
@@ -20,7 +21,8 @@ export function constraintsDesignationsAndOtherIssuesSection(templateData) {
 		isAonbNationalLandscape,
 		designatedSiteNames = [],
 		isGypsyOrTravellerSite,
-		preserveGrantLoan
+		preserveGrantLoan,
+		appealType
 	} = templateData;
 
 	const {
@@ -30,6 +32,8 @@ export function constraintsDesignationsAndOtherIssuesSection(templateData) {
 		historicEnglandConsultation
 	} = templateData.documents || {};
 
+	const isHASAppeal = appealType === APPEAL_TYPE.HOUSEHOLDER;
+
 	const changedListedBuildingList = listedBuildingDetails
 		.filter(({ affectsListedBuilding = false }) => !affectsListedBuilding)
 		.map(mapBuildingData);
@@ -38,7 +42,7 @@ export function constraintsDesignationsAndOtherIssuesSection(templateData) {
 		.filter(({ affectsListedBuilding = false }) => affectsListedBuilding)
 		.map(mapBuildingData);
 
-	const designatedSiteNameList = designatedSiteNames.map((site) => site.name || 'Unnamed site');
+	const designatedSiteNameList = designatedSiteNames?.map((site) => site.name || 'Unnamed site');
 
 	return {
 		heading: 'Constraints, designations and other issues',
@@ -47,10 +51,15 @@ export function constraintsDesignationsAndOtherIssuesSection(templateData) {
 				key: 'Is planning appeal the correct type of appeal?',
 				text: formatYesNo(isCorrectAppealType)
 			},
-			{
-				key: 'Does the development change a listed building?',
-				html: formatList(changedListedBuildingList, 'No')
-			},
+			// does not appear for householder
+			...(!isHASAppeal
+				? [
+						{
+							key: 'Does the development change a listed building?',
+							html: formatList(changedListedBuildingList, 'No')
+						}
+				  ]
+				: []),
 			{
 				key: 'Does the development affect the setting of listed buildings?',
 				html: formatList(affectedListedBuildingList, 'No')
@@ -59,42 +68,57 @@ export function constraintsDesignationsAndOtherIssuesSection(templateData) {
 				key: 'Was a grant or loan made to preserve the listed building at the appeal site?',
 				text: formatYesNo(preserveGrantLoan)
 			},
-			{
-				key: 'Would the development affect a scheduled monument?',
-				text: formatYesNo(affectsScheduledMonument)
-			},
+			// does not appear for householder
+			...(!isHASAppeal
+				? [
+						{
+							key: 'Would the development affect a scheduled monument?',
+							text: formatYesNo(affectsScheduledMonument)
+						}
+				  ]
+				: []),
 			{
 				key: 'Conservation area map and guidance',
 				html: formatDocumentData(conservationMap)
 			},
-			{
-				key: 'Would the development affect a protected species?',
-				text: formatYesNo(hasProtectedSpecies)
-			},
+			// does not appear for householder
+			...(!isHASAppeal
+				? [
+						{
+							key: 'Would the development affect a protected species?',
+							text: formatYesNo(hasProtectedSpecies)
+						}
+				  ]
+				: []),
 			{
 				key: 'Green belt',
 				text: formatYesNo(isGreenBelt)
 			},
-			{
-				key: 'Is the site in an area of outstanding natural beauty?',
-				text: formatYesNo(isAonbNationalLandscape)
-			},
-			{
-				key: 'Is the development in, near or likely to affect any designated sites?',
-				html: formatYesNoDetails(designatedSiteNameList)
-			},
-			{
-				key: 'Tree preservation order',
-				html: formatDocumentData(treePreservationPlan)
-			},
-			{
-				key: 'Does the development relate to anyone claiming to be a Gypsy or Traveller?',
-				text: formatYesNo(isGypsyOrTravellerSite)
-			},
-			{
-				key: 'Definitive map and statement extract',
-				html: formatDocumentData(definitiveMapStatement)
-			},
+			// does not appear for householder
+			...(!isHASAppeal
+				? [
+						{
+							key: 'Is the site in an area of outstanding natural beauty?',
+							text: formatYesNo(isAonbNationalLandscape)
+						},
+						{
+							key: 'Is the development in, near or likely to affect any designated sites?',
+							html: formatYesNoDetails(designatedSiteNameList)
+						},
+						{
+							key: 'Tree preservation order',
+							html: formatDocumentData(treePreservationPlan)
+						},
+						{
+							key: 'Does the development relate to anyone claiming to be a Gypsy or Traveller?',
+							text: formatYesNo(isGypsyOrTravellerSite)
+						},
+						{
+							key: 'Definitive map and statement extract',
+							html: formatDocumentData(definitiveMapStatement)
+						}
+				  ]
+				: []),
 			{
 				key: 'Historic England consultation',
 				html: formatDocumentData(historicEnglandConsultation)

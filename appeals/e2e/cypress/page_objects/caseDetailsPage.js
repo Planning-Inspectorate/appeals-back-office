@@ -47,8 +47,7 @@ export class CaseDetailsPage extends Page {
 		changeSiteOwnership: 'change-site-ownership',
 		changeLpaqDueDate: 'change-lpa-questionnaire-due-date',
 		changeStartDate: 'change-start-case-date',
-		startAppealWithdrawal: 'start-appeal-withdrawal',
-		viewAppealWithdrawal: 'view-appeal-withdrawal',
+		startAppealCancel: 'start-appeal-cancel',
 		changeAppellant: 'change-appellant',
 		changeAgent: 'change-agent',
 		setupSiteVisitBanner: 'set-up-site-visit-banner',
@@ -128,11 +127,9 @@ export class CaseDetailsPage extends Page {
 			cy.get(`.appeal-${timeTableRow} > .govuk-summary-list__value`),
 		getTimetableChangeLink: (timeTableRow) =>
 			cy.get(`.appeal-${timeTableRow} > .govuk-summary-list__actions`),
-		startAppealWithdrawal: () => cy.getByData(this._cyDataSelectors.startAppealWithdrawal),
 		getAppealRefCaseDetails: () => cy.get('.govuk-caption-l'),
 		removeFileUpload: () => cy.get('Button').contains('Remove'),
 		fileUploadRow: () => cy.get('.govuk-heading-s'),
-		viewAppealWithdrawal: () => cy.getByData(this._cyDataSelectors.viewAppealWithdrawal),
 		caseNotes: () => cy.get('.govuk-details__summary-text'),
 		inputCaseNotes: () => cy.get('textArea'),
 		checkCaseNoteAdded: () => cy.get('section'),
@@ -456,8 +453,8 @@ export class CaseDetailsPage extends Page {
 		this.elements.changeStartDate().click();
 	}
 
-	clickStartAppealWithdrawal() {
-		this.elements.startAppealWithdrawal().click();
+	clickStartAppealCancel() {
+		this.elements.startAppealCancel().click();
 	}
 
 	clickChangeAppellant() {
@@ -473,10 +470,6 @@ export class CaseDetailsPage extends Page {
 			.uploadFile()
 			.click()
 			.selectFile(this.fixturesPath + fileName, { action: 'drag-drop' }, { force: true });
-	}
-
-	clickViewAppealWithdrawal() {
-		this.elements.viewAppealWithdrawal().click();
 	}
 
 	inputAppellantEmailAddress(text) {
@@ -655,16 +648,6 @@ export class CaseDetailsPage extends Page {
 	checkFileNameRemoved(fileName) {
 		let savedFile = cy.get('p').contains(fileName);
 		savedFile.should('not.exist');
-	}
-
-	checkAnswerWithdrawalRequest(rowName, rowAnswer) {
-		let answer = this.basePageElements
-			.summaryListKey()
-			.contains(rowName)
-			.next()
-			.children()
-			.invoke('prop', 'textContent');
-		answer.should('eq', rowAnswer);
 	}
 
 	checkAnswerRedactionStatus(rowName, rowAnswer) {

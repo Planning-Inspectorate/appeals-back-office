@@ -15,7 +15,10 @@ import {
 	createSiteVisit,
 	createSiteVisitForLinkedChildAppeals,
 	deleteSiteVisit as deleteSiteVisitService,
-	updateSiteVisit
+	getMissedSiteVisit,
+	recordMissedSiteVisit,
+	updateSiteVisit,
+	updateWhenSiteVisitMissed
 } from './site-visits.service.js';
 
 /** @typedef {import('express').Request} Request */
@@ -50,6 +53,13 @@ const postSiteVisit = async (req, res) => {
 	} = req;
 
 	const appealId = Number(params.appealId);
+	const missedSiteVisit = await getMissedSiteVisit(appealId);
+
+	if (missedSiteVisit) {
+		req.body.siteVisitId = missedSiteVisit.id;
+		return rearrangeMissedSiteVisit(req, res);
+	}
+
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	const notifyClient = req.notifyClient;
 	const siteAddress = appeal.address
@@ -175,6 +185,63 @@ const rearrangeSiteVisit = async (req, res) => {
  * @param {Response} res
  * @returns {Promise<Response>}
  */
+const rearrangeMissedSiteVisit = async (req, res) => {
+	const {
+		body: { visitDate, visitEndTime, visitStartTime, inspectorName = '', siteVisitId },
+		params,
+
+		visitType,
+		appeal
+	} = req;
+	const appealId = Number(params.appealId);
+	const azureAdUserId = String(req.get('azureAdUserId'));
+	const notifyClient = req.notifyClient;
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+
+	const appellantEmail = String(appeal.agent?.email || appeal.appellant?.email || '');
+	const lpaEmail = appeal.lpa?.email || '';
+	const visitTypeName = visitType.name;
+
+	/** @type {*} */
+	const updateSiteVisitData = {
+		siteVisitId: Number(siteVisitId),
+		appealId: Number(appealId),
+		visitDate: isNaN(new Date(visitDate).getTime()) ? undefined : new Date(visitDate),
+		visitEndTime: isNaN(new Date(visitEndTime).getTime()) ? undefined : new Date(visitEndTime),
+		visitStartTime: isNaN(new Date(visitStartTime).getTime())
+			? undefined
+			: new Date(visitStartTime),
+		visitType,
+		appellantEmail,
+		lpaEmail,
+		appealReferenceNumber: appeal.reference,
+		lpaReference: appeal.applicationReference || '',
+		inspectorName,
+		siteAddress
+	};
+
+	try {
+		// @ts-ignore
+		await updateWhenSiteVisitMissed(azureAdUserId, updateSiteVisitData, notifyClient);
+
+		return res.send({
+			visitDate,
+			visitEndTime,
+			visitStartTime,
+			visitType: visitTypeName
+		});
+	} catch (error) {
+		logger.error(error);
+		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
+	}
+};
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
 const cancelSiteVisit = async (req, res) => {
 	const { params, appeal, notifyClient } = req;
 	const siteVisitId = Number(params.siteVisitId);
@@ -202,5 +269,48 @@ const cancelSiteVisit = async (req, res) => {
 		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
 	}
 };
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+const postSiteVisitMissed = async (req, res) => {
+	const {
+		params,
+		appeal,
+		notifyClient,
+		body: { whoMissedSiteVisit }
+	} = req;
 
-export { cancelSiteVisit, getSiteVisitById, postSiteVisit, rearrangeSiteVisit };
+	const siteVisitId = Number(params.siteVisitId);
+
+	const azureAdUserId = req.get('azureAdUserId') || '';
+	try {
+		// @ts-ignore
+		const result = await recordMissedSiteVisit(
+			siteVisitId,
+			appeal,
+			notifyClient,
+			String(azureAdUserId),
+			whoMissedSiteVisit
+		);
+		if (!result) {
+			return res.status(404).send({ errors: { body: 'Record missed site visit failed' } });
+		}
+
+		return res.send({
+			siteVisitId
+		});
+	} catch (error) {
+		logger.error(error);
+		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
+	}
+};
+
+export {
+	cancelSiteVisit,
+	getSiteVisitById,
+	postSiteVisit,
+	postSiteVisitMissed,
+	rearrangeSiteVisit
+};

@@ -1,3 +1,4 @@
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	formatDocumentData,
 	formatSentenceCase,
@@ -11,8 +12,13 @@ export function environmentalImpactAssessmentSection(templateData) {
 		eiaColumnTwoThreshold,
 		eiaRequiresEnvironmentalStatement,
 		eiaDevelopmentDescription,
-		eiaSensitiveAreaDetails
+		eiaSensitiveAreaDetails,
+		appealType
 	} = templateData;
+
+	const isHASAppeal = appealType === APPEAL_TYPE.HOUSEHOLDER;
+
+	if (isHASAppeal) return;
 
 	const {
 		eiaEnvironmentalStatement,

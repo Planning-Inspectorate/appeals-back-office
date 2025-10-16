@@ -1,6 +1,569 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`mapLpaQuestionnaireData should map LPA questionnaire data correctly 1`] = `
+exports[`mapLpaQuestionnaireData should map householder LPA questionnaire data correctly 1`] = `
+{
+  "details": {
+    "affectsScheduledMonument": null,
+    "agent": {
+      "email": "test1@example.com",
+      "firstName": "Lee",
+      "lastName": "Thornton",
+      "organisationName": "Lee Thornton Ltd",
+      "phoneNumber": null,
+      "serviceUserId": 105,
+    },
+    "appealId": 72,
+    "appealReference": "6000072",
+    "appealSite": {
+      "addressId": 72,
+      "addressLine1": "Copthalls",
+      "addressLine2": "Clevedon Road",
+      "postCode": "BS48 1PN",
+      "town": "West Hill",
+    },
+    "appealStatus": "final_comments",
+    "appealTimetable": {
+      "appealTimetableId": 37,
+      "appellantStatementDueDate": null,
+      "caseResubmissionDueDate": null,
+      "finalCommentsDueDate": null,
+      "ipCommentsDueDate": null,
+      "lpaQuestionnaireDueDate": "2025-01-10T23:59:00.000Z",
+      "lpaStatementDueDate": null,
+      "planningObligationDueDate": null,
+      "s106ObligationDueDate": null,
+      "statementOfCommonGroundDueDate": null,
+    },
+    "appealType": "Householder",
+    "appellant": {
+      "email": "test4@example.com",
+      "firstName": "Sophie",
+      "lastName": "Skinner",
+      "organisationName": null,
+      "phoneNumber": null,
+      "serviceUserId": 106,
+    },
+    "appellantCaseId": 72,
+    "completedStateList": [],
+    "consultedBodiesDetails": null,
+    "costs": {
+      "appellantApplicationFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3587,
+        "path": "costs/appellantCostsApplication",
+      },
+      "appellantCorrespondenceFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3589,
+        "path": "costs/appellantCostsCorrespondence",
+      },
+      "appellantDecisionFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3593,
+        "path": "costs/appellantCostsDecisionLetter",
+      },
+      "appellantWithdrawalFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3588,
+        "path": "costs/appellantCostsWithdrawal",
+      },
+      "lpaApplicationFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3590,
+        "path": "costs/lpaCostsApplication",
+      },
+      "lpaCorrespondenceFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3592,
+        "path": "costs/lpaCostsCorrespondence",
+      },
+      "lpaDecisionFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3594,
+        "path": "costs/lpaCostsDecisionLetter",
+      },
+      "lpaWithdrawalFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3591,
+        "path": "costs/lpaCostsWithdrawal",
+      },
+    },
+    "costsAppliedFor": false,
+    "createdAt": "2025-07-03T15:13:55.967Z",
+    "decision": {
+      "folderId": 3599,
+      "path": "appeal-decision/caseDecisionLetter",
+    },
+    "documentationSummary": {
+      "appellantCase": {
+        "dueDate": null,
+        "receivedAt": "2025-07-03T15:13:55.967Z",
+        "status": "Valid",
+      },
+      "lpaQuestionnaire": {
+        "dueDate": "2025-01-10T23:59:00.000Z",
+        "receivedAt": "2023-05-08T23:00:00.000Z",
+        "status": "received",
+      },
+    },
+    "documents": {
+      "appealNotification": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3585,
+        "path": "lpa-questionnaire/appealNotification",
+      },
+      "communityInfrastructureLevy": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3575,
+        "path": "lpa-questionnaire/communityInfrastructureLevy",
+      },
+      "conservationMap": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3568,
+        "path": "lpa-questionnaire/conservationMap",
+      },
+      "consultationResponses": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3578,
+        "path": "lpa-questionnaire/consultationResponses",
+      },
+      "definitiveMapStatement": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3574,
+        "path": "lpa-questionnaire/definitiveMapStatement",
+      },
+      "developmentPlanPolicies": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3572,
+        "path": "lpa-questionnaire/developmentPlanPolicies",
+      },
+      "eiaEnvironmentalStatement": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3579,
+        "path": "lpa-questionnaire/eiaEnvironmentalStatement",
+      },
+      "eiaScopingOpinion": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3581,
+        "path": "lpa-questionnaire/eiaScopingOpinion",
+      },
+      "eiaScreeningDirection": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3582,
+        "path": "lpa-questionnaire/eiaScreeningDirection",
+      },
+      "eiaScreeningOpinion": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3580,
+        "path": "lpa-questionnaire/eiaScreeningOpinion",
+      },
+      "emergingPlan": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3577,
+        "path": "lpa-questionnaire/emergingPlan",
+      },
+      "historicEnglandConsultation": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3586,
+        "path": "lpa-questionnaire/historicEnglandConsultation",
+      },
+      "lpaCaseCorrespondence": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3583,
+        "path": "lpa-questionnaire/lpaCaseCorrespondence",
+      },
+      "otherPartyRepresentations": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3569,
+        "path": "lpa-questionnaire/otherPartyRepresentations",
+      },
+      "otherRelevantPolicies": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3584,
+        "path": "lpa-questionnaire/otherRelevantPolicies",
+      },
+      "planningOfficerReport": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3570,
+        "path": "lpa-questionnaire/planningOfficerReport",
+      },
+      "plansDrawings": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3571,
+        "path": "lpa-questionnaire/plansDrawings",
+      },
+      "supplementaryPlanning": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3576,
+        "path": "lpa-questionnaire/supplementaryPlanning",
+      },
+      "whoNotified": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3564,
+        "path": "lpa-questionnaire/whoNotified",
+      },
+      "whoNotifiedLetterToNeighbours": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3566,
+        "path": "lpa-questionnaire/whoNotifiedLetterToNeighbours",
+      },
+      "whoNotifiedPressAdvert": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3567,
+        "path": "lpa-questionnaire/whoNotifiedPressAdvert",
+      },
+      "whoNotifiedSiteNotice": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3565,
+        "path": "lpa-questionnaire/whoNotifiedSiteNotice",
+      },
+    },
+    "eiaColumnTwoThreshold": null,
+    "eiaDevelopmentDescription": null,
+    "eiaEnvironmentalImpactSchedule": null,
+    "eiaRequiresEnvironmentalStatement": null,
+    "eiaScreeningRequired": null,
+    "eiaSensitiveAreaDetails": null,
+    "environmentalAssessment": {
+      "caseId": 72,
+      "documents": [],
+      "folderId": 3563,
+      "path": "appellant-case/environmentalAssessment",
+    },
+    "extraConditions": null,
+    "hasExtraConditions": false,
+    "hasInfrastructureLevy": null,
+    "hasProtectedSpecies": null,
+    "healthAndSafety": {
+      "details": "There may be no mobile reception at the site",
+      "hasIssues": true,
+    },
+    "infrastructureLevyAdoptedDate": null,
+    "infrastructureLevyExpectedDate": null,
+    "inspectorAccess": {
+      "appellantCase": {
+        "details": null,
+        "isRequired": false,
+      },
+      "lpaQuestionnaire": {
+        "details": "There is a tall hedge around the site which obstructs the view of the site",
+        "isRequired": true,
+      },
+    },
+    "internalCorrespondence": {
+      "crossTeam": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3595,
+        "path": "internal/crossTeamCorrespondence",
+      },
+      "inspector": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3596,
+        "path": "internal/inspectorCorrespondence",
+      },
+      "mainParty": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3597,
+        "path": "internal/mainPartyCorrespondence",
+      },
+    },
+    "isAonbNationalLandscape": null,
+    "isChildAppeal": false,
+    "isConservationArea": true,
+    "isCorrectAppealType": true,
+    "isGreenBelt": true,
+    "isGypsyOrTravellerSite": null,
+    "isInfrastructureLevyFormallyAdopted": null,
+    "isParentAppeal": false,
+    "linkedAppeals": [],
+    "listedBuildingDetails": [
+      {
+        "affectsListedBuilding": false,
+        "grade": "II",
+        "id": 157,
+        "listEntry": "1021469",
+        "name": "FIVE LORDS FARMHOUSE",
+      },
+      {
+        "affectsListedBuilding": false,
+        "grade": "II",
+        "id": 158,
+        "listEntry": "1021470",
+        "name": "PENLEIGH MILL",
+      },
+      {
+        "affectsListedBuilding": true,
+        "grade": "II",
+        "id": 159,
+        "listEntry": "1021472",
+        "name": "PENLEIGH FARMHOUSE",
+      },
+      {
+        "affectsListedBuilding": true,
+        "grade": "II*",
+        "id": 160,
+        "listEntry": "1021473",
+        "name": "CHURCH OF HOLY TRINITY",
+      },
+    ],
+    "localPlanningDepartment": "Maidstone Borough Council",
+    "lpaEmailAddress": "maid@lpa-email.gov.uk",
+    "lpaNotificationMethods": [
+      {
+        "name": "Letter/email to interested parties",
+      },
+      {
+        "name": "A press advert",
+      },
+    ],
+    "lpaProcedurePreference": null,
+    "lpaProcedurePreferenceDetails": null,
+    "lpaProcedurePreferenceDuration": null,
+    "lpaQuestionnaireId": 40,
+    "lpaStatement": null,
+    "neighbouringSites": [],
+    "otherAppeals": [],
+    "planningApplicationReference": "44377/APP/3/218453",
+    "procedureType": "Written",
+    "reasonForNeighbourVisits": null,
+    "receivedAt": "2023-05-08T23:00:00.000Z",
+    "siteAccessRequired": {
+      "details": "There is a tall hedge around the site which obstructs the view of the site",
+      "isRequired": true,
+    },
+    "startedAt": "2025-01-03T16:13:52.867Z",
+    "stateList": [
+      {
+        "completed": true,
+        "key": "assign_case_officer",
+      },
+      {
+        "completed": true,
+        "key": "validation",
+      },
+      {
+        "completed": true,
+        "key": "ready_to_start",
+      },
+      {
+        "completed": true,
+        "key": "lpa_questionnaire",
+      },
+      {
+        "completed": false,
+        "key": "event",
+      },
+      {
+        "completed": false,
+        "key": "awaiting_event",
+      },
+      {
+        "completed": false,
+        "key": "issue_determination",
+      },
+      {
+        "completed": false,
+        "key": "awaiting_transfer",
+      },
+      {
+        "completed": false,
+        "key": "invalid",
+      },
+      {
+        "completed": false,
+        "key": "transferred",
+      },
+      {
+        "completed": false,
+        "key": "closed",
+      },
+      {
+        "completed": false,
+        "key": "withdrawn",
+      },
+      {
+        "completed": false,
+        "key": "complete",
+      },
+    ],
+    "submittedAt": "2023-05-08T23:00:00.000Z",
+    "validAt": "2024-09-03T15:13:52.867Z",
+    "withdrawal": {
+      "withdrawalFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3555,
+        "path": "appellant-case/appellantCaseWithdrawalLetter",
+      },
+    },
+  },
+  "sections": [
+    {
+      "heading": "Constraints, designations and other issues",
+      "items": [
+        {
+          "key": "Is planning appeal the correct type of appeal?",
+          "text": "Yes",
+        },
+        {
+          "html": "1021472 - PENLEIGH FARMHOUSE - Grade (II)<br>1021473 - CHURCH OF HOLY TRINITY - Grade (II*)",
+          "key": "Does the development affect the setting of listed buildings?",
+        },
+        {
+          "key": "Was a grant or loan made to preserve the listed building at the appeal site?",
+          "text": "Not answered",
+        },
+        {
+          "html": "No documents",
+          "key": "Conservation area map and guidance",
+        },
+        {
+          "key": "Green belt",
+          "text": "Yes",
+        },
+        {
+          "html": "No documents",
+          "key": "Historic England consultation",
+        },
+      ],
+    },
+    undefined,
+    {
+      "heading": "Notifying relevant parties",
+      "items": [
+        {
+          "html": "No documents",
+          "key": "Who did you notify about this application?",
+        },
+        {
+          "html": "Letter/email to interested parties<br>A press advert",
+          "key": "How did you notify relevant parties about this application?",
+        },
+        {
+          "html": "No documents",
+          "key": "Site notice",
+        },
+        {
+          "html": "No documents",
+          "key": "Letter or email notification",
+        },
+        {
+          "html": "No documents",
+          "key": "Press advertisement",
+        },
+        {
+          "html": "No documents",
+          "key": "Appeal notification letter",
+        },
+      ],
+    },
+    {
+      "heading": "Consultation responses and representations",
+      "items": [
+        {
+          "html": "No documents",
+          "key": "Representations from members of the public or other parties",
+        },
+      ],
+    },
+    {
+      "heading": "Planning officer's report and supplementary documents",
+      "items": [
+        {
+          "html": "No documents",
+          "key": "Planning officer's report",
+        },
+        {
+          "key": "Plans, drawings and list of plans",
+          "text": "No documents",
+        },
+        {
+          "html": "No documents",
+          "key": "Relevant policies from statutory development plan",
+        },
+        {
+          "html": "No documents",
+          "key": "Supplementary planning documents",
+        },
+        {
+          "html": "No documents",
+          "key": "Emerging plan relevant to appeal",
+        },
+      ],
+    },
+    {
+      "heading": "Site access",
+      "items": [
+        {
+          "html": "Yes<br>There is a tall hedge around the site which obstructs the view of the site",
+          "key": "Might the inspector need access to the appellant’s land or property?",
+        },
+        {
+          "html": "Yes<br>There may be no mobile reception at the site",
+          "key": "Are there any potential safety risks?",
+        },
+      ],
+    },
+    {
+      "heading": "Appeal process",
+      "items": [
+        {
+          "html": "No",
+          "key": "Are there any other ongoing appeals next to, or close to the site?",
+        },
+        {
+          "html": "No",
+          "key": "Are there any new conditions?",
+        },
+      ],
+    },
+    {
+      "heading": "Additional documents (LPA case correspondence)",
+      "items": [
+        {
+          "html": "No documents",
+          "key": "Additional documents",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`mapLpaQuestionnaireData should map s78 LPA questionnaire data correctly 1`] = `
 {
   "details": {
     "affectsScheduledMonument": false,

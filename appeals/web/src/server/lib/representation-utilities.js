@@ -57,8 +57,12 @@ export function mapRepresentationDocumentSummaryActionLink(
 		'lpa-statement': `${currentRoute}/lpa-statement`,
 		'lpa-final-comments': `${currentRoute}/final-comments/lpa`,
 		'appellant-final-comments': `${currentRoute}/final-comments/appellant`,
-		'appellant-proofs-evidence': `${currentRoute}/proof-of-evidence/appellant`,
-		'lpa-proofs-evidence': `${currentRoute}/proof-of-evidence/lpa`
+		'appellant-proofs-evidence': reviewRequired
+			? `${currentRoute}/proof-of-evidence/appellant`
+			: `${currentRoute}/proof-of-evidence/appellant/manage-documents`,
+		'lpa-proofs-evidence': reviewRequired
+			? `${currentRoute}/proof-of-evidence/lpa`
+			: `${currentRoute}/proof-of-evidence/lpa/manage-documents`
 	};
 
 	return `<a href="${addBackLinkQueryToUrl(request, hrefs[representationType])}" data-cy="${

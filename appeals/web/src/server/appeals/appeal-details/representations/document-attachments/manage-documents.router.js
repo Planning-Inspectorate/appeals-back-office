@@ -17,6 +17,13 @@ router.param('folderId', (req, res, next) => {
 });
 
 router
+	.route('/')
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.goToManageDocuments)
+	);
+
+router
 	.route('/:folderId/')
 	.get(
 		assertUserHasPermission(permissionNames.updateCase),

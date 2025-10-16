@@ -63,6 +63,18 @@ export const getManageFolder = async (request, response) => {
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
+export const goToManageDocuments = async (request, response) => {
+	const { currentFolder } = request;
+	const baseUrl = request.baseUrl;
+
+	if (!currentFolder) {
+		return response.status(404).render('app/404');
+	}
+
+	return response.redirect(`${baseUrl}/${currentFolder.folderId}`);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
 export const getManageDocument = async (request, response) => {
 	const baseUrl = request.baseUrl;
 
@@ -110,10 +122,19 @@ export const getChangeDocumentVersionDetails = async (request, response) => {
 	});
 };
 
-/** @type {import('@pins/express').RequestHandler<Response>} */
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
 export const postDeleteDocumentPage = async (request, response) => {
 	const baseUrl = request.baseUrl;
-	const basePath = baseUrl.split('/').slice(0, -1).join('/');
+	const trimUrlOnDocumentDelete = request.locals?.pageContent?.trimUrlOnDocumentDelete ?? true;
+
+	let basePath = baseUrl;
+	if (trimUrlOnDocumentDelete) {
+		basePath = baseUrl.split('/').slice(0, -1).join('/');
+	}
 
 	await postDeleteDocument({
 		request,
