@@ -170,9 +170,8 @@ describe('Start case', () => {
 				dateTimeSection.enterHearingTime(date.getHours(), date.getMinutes());
 				caseDetailsPage.clickButtonByText('Continue');
 
-				// TODO: Update to standard date format after resolving Bug A2-4636
 				// Set exact time and date format for assertions
-				const expectedDateTime = formatDateAndTime(date, true);
+				const expectedDateTime = formatDateAndTime(date);
 				cyaSection.verifyPreviewEmail('appellant', true, expectedDateTime);
 				cyaSection.verifyPreviewEmail('lpa', true, expectedDateTime);
 				caseDetailsPage.clickButtonByText('Start case');
