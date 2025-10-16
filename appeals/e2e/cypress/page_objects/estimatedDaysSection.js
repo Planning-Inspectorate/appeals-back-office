@@ -7,6 +7,7 @@ export class EstimatedDaysSection extends CaseDetailsPage {
 
 	selectors = {
 		inquiryEstimatedDaysInput: '#inquiry-estimation-days',
+		estimatedDaysInput: '#estimation-days',
 		radio: '.govuk-radios__item'
 	};
 
@@ -14,6 +15,7 @@ export class EstimatedDaysSection extends CaseDetailsPage {
 
 	elements = {
 		inquiryEstimatedDaysInput: () => cy.get(this.selectors.inquiryEstimatedDaysInput),
+		estimatedDaysInput: () => cy.get(this.selectors.estimatedDaysInput),
 		radioButton: () => cy.get(this.selectors.radio)
 	};
 
@@ -26,6 +28,11 @@ export class EstimatedDaysSection extends CaseDetailsPage {
 
 	enterEstimatedInquiryDays(estimatedInquiryDays) {
 		this.elements.inquiryEstimatedDaysInput().clear().type(estimatedInquiryDays.toString());
+	}
+
+	// used when updating procedure type
+	enterEstimatedDays(estimatedDays) {
+		this.elements.estimatedDaysInput().clear().type(estimatedDays.toString());
 	}
 
 	selectEstimatedDaysOption(option) {

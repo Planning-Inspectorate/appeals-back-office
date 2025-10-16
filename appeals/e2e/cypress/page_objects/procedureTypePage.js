@@ -62,4 +62,10 @@ export class ProcedureTypePage extends CaseDetailsPage {
 	verifyHeader(sectionHeader) {
 		this.elements.getAppealRefCaseDetails().should('contain.text', sectionHeader);
 	}
+
+	verifyprocedurePageHeader(reference, type) {
+		const procedureTypeCaption = `Appeal ${reference} - ${type}`;
+
+		this.elements.getAppealRefCaseDetails().should('contain.text', procedureTypeCaption);
+	}
 }

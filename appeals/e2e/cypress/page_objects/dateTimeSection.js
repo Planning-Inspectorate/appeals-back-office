@@ -35,6 +35,7 @@ export class DateTimeSection extends Page {
 		statementOfCommonGroundDueDate: '#statement-of-common-ground-due',
 		proofOfEvidenceAndWitnessesDueDate: '#proof-of-evidence-and-witnesses-due',
 		inquiryDate: '#inquiry-date-',
+		eventDate: '#event-date-',
 		inquiry: '#inquiry',
 		hearing: '#hearing',
 		planningObligationDueDate: '#planning-obligation-due'
@@ -96,6 +97,11 @@ export class DateTimeSection extends Page {
 
 	enterInquiryDate(date) {
 		this.#setAllDateFields(this.selectorPrefix.inquiryDate, date);
+	}
+
+	// used when updating procedure type
+	enterEventDate(date) {
+		this.#setAllDateFields(this.selectorPrefix.eventDate, date);
 	}
 
 	setInquiryDate(day, month, year) {
