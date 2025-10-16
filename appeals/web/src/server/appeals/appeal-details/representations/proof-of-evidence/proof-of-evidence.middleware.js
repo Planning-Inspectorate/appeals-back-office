@@ -73,7 +73,7 @@ export const addPageContentToLocals = async (req, _res, next) => {
 			supportingDocumentTextOverride: 'Proof of evidence and witnesses',
 			dateSubmittedTextOverride: 'Date received'
 		},
-		showSuccessBanner: true
+		trimUrlOnDocumentDelete: false
 	};
 	next();
 	return;

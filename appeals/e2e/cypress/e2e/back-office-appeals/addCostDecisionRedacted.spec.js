@@ -57,7 +57,7 @@ describe('add cost decision and redact', () => {
 			caseDetailsPage.selectRadioButtonByValue('Redacted');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.clickManageDocsCostDecision();
+			caseDetailsPage.clickManageAppellantCostApplication();
 			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickChangeRedactionStatus();
@@ -80,7 +80,7 @@ describe('add cost decision and redact', () => {
 			caseDetailsPage.selectRadioButtonByValue('Redacted');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.clickManageDocsCostDecision();
+			caseDetailsPage.clickManageAppellantCostApplication();
 			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('upload a new version');
@@ -89,7 +89,7 @@ describe('add cost decision and redact', () => {
 			caseDetailsPage.selectRadioButtonByValue('Unredacted');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.clickManageDocsCostDecision();
+			caseDetailsPage.clickManageAppellantCostApplication();
 			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.checkDocVersionNumber('2');

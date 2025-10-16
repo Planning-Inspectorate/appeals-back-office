@@ -86,6 +86,10 @@ router
 	.get(
 		assertUserHasPermission(permissionNames.setEvents),
 		asyncHandler(controller.getSiteVisitMissedCya)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.setEvents),
+		asyncHandler(controller.postSiteVisitMissedCya)
 	);
 
 export default router;

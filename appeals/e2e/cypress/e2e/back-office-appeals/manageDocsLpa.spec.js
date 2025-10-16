@@ -21,7 +21,7 @@ const reviewEvidenceSection = new ReviewEvidenceSection();
 const evidenceReasonsSection = new EvidenceReasonsSection();
 const documentationSectionPage = new DocumentationSectionPage();
 
-describe('Remove doc from upload page', () => {
+describe('Manage docs on lpa case', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
@@ -163,15 +163,15 @@ describe('Remove doc from upload page', () => {
 	);
 
 	it('can mark lpa proof of evidence as incomplete and select reason', { tags: tag.smoke }, () => {
-		cy.createCase({ caseType: 'W' }).then((caseRef) => {
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 				appeal = caseObj;
 				// require case to be started as inquiry to access appellant POE evidence
-				setupInquiry(caseRef, inquiryDate);
+				setupInquiry(caseObj, inquiryDate);
 
 				// find case and open inquiry section
 				cy.visit(urlPaths.appealsList);
-				listCasesPage.clickAppealByRef(caseRef);
+				listCasesPage.clickAppealByRef(caseObj);
 
 				// navigate to file upload view, upload file and verify uploaded
 				documentationSectionPage.selectAddDocument('lpa-proofs-evidence');
@@ -207,15 +207,15 @@ describe('Remove doc from upload page', () => {
 		'can mark lpa proof of evidence as incomplete and select other reason',
 		{ tags: tag.smoke },
 		() => {
-			cy.createCase({ caseType: 'W' }).then((caseRef) => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
 				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 					appeal = caseObj;
 					// require case to be started as inquiry to access appellant POE evidence
-					setupInquiry(caseRef, inquiryDate);
+					setupInquiry(caseObj, inquiryDate);
 
 					// find case and open inquiry section
 					cy.visit(urlPaths.appealsList);
-					listCasesPage.clickAppealByRef(caseRef);
+					listCasesPage.clickAppealByRef(caseObj);
 
 					// navigate to file upload view, upload file and verify uploaded
 					documentationSectionPage.selectAddDocument('lpa-proofs-evidence');
@@ -252,15 +252,15 @@ describe('Remove doc from upload page', () => {
 		'can mark appellant proof of evidence as incomplete - proceed without select reason',
 		{ tags: tag.smoke },
 		() => {
-			cy.createCase({ caseType: 'W' }).then((caseRef) => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
 				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 					appeal = caseObj;
 					// require case to be started as inquiry to access appellant POE evidence
-					setupInquiry(caseRef, inquiryDate);
+					setupInquiry(caseObj, inquiryDate);
 
 					// find case and open inquiry section
 					cy.visit(urlPaths.appealsList);
-					listCasesPage.clickAppealByRef(caseRef);
+					listCasesPage.clickAppealByRef(caseObj);
 
 					// navigate to file upload view, upload file and verify uploaded
 					documentationSectionPage.selectAddDocument('lpa-proofs-evidence');

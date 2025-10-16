@@ -76,7 +76,6 @@ module "app_api" {
     FEATURE_FLAG_ADVERTISEMENT      = var.apps_config.featureFlags.featureFlagAdvertisement
     FEATURE_FLAG_CHANGE_APPEAL_TYPE = var.apps_config.featureFlags.featureFlagChangeAppealType
     FEATURE_FLAG_HEARING_POST_MVP   = var.apps_config.featureFlags.featureFlagHearingPostMvp
-    FEATURE_FLAG_PERSONAL_LIST      = var.apps_config.featureFlags.featureFlagPersonalList
 
     # service bus topics
     SB_TOPIC_NAME_APPEAL_HAS            = var.sb_topic_names.events.appeal_has
