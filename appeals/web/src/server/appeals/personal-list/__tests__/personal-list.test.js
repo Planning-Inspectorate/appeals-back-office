@@ -29,7 +29,8 @@ describe('personal-list', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Cases assigned to you</h1>');
+			expect(element.innerHTML).toContain('Your appeals</h1>');
+			expect(element.innerHTML).toContain('View another case officer’s appeals</a>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -69,12 +70,13 @@ describe('personal-list', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Cases assigned to you</h1>');
+			expect(element.innerHTML).toContain('Your appeals</h1>');
+			expect(element.innerHTML).toContain('View another case officer’s appeals</a>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Filters</span>');
-			expect(unprettifiedElement.innerHTML).toContain('Show cases with status</label>');
+			expect(unprettifiedElement.innerHTML).toContain('Show cases with status');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="all"');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="awaiting_transfer"');
 			expect(unprettifiedElement.innerHTML).toContain('<option value="event"');
@@ -110,7 +112,8 @@ describe('personal-list', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Cases assigned to you</h1>');
+			expect(element.innerHTML).toContain('Your appeals</h1>');
+			expect(element.innerHTML).toContain('View another case officer’s appeals</a>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -171,7 +174,8 @@ describe('personal-list', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Cases assigned to you</h1>');
+			expect(element.innerHTML).toContain('Your appeals</h1>');
+			expect(element.innerHTML).toContain('View another case officer’s appeals</a>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -189,7 +193,8 @@ describe('personal-list', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Cases assigned to you</h1>');
+			expect(element.innerHTML).toContain('Your appeals</h1>');
+			expect(element.innerHTML).toContain('View another case officer’s appeals</a>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -207,7 +212,8 @@ describe('personal-list', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Cases assigned to you</h1>');
+			expect(element.innerHTML).toContain('Your appeals</h1>');
+			expect(element.innerHTML).toContain('View another case officer’s appeals</a>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -225,7 +231,9 @@ describe('personal-list', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('There are currently no cases assigned to you.</h1>');
+			expect(element.innerHTML).toContain('You are not assigned to any appeals</h1>');
+			expect(element.innerHTML).toContain('View another case officer’s appeals</a>');
+
 			expect(element.innerHTML).toContain('Search all cases</a>');
 		});
 	});

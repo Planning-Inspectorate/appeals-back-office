@@ -7,7 +7,7 @@ import supertest from 'supertest';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
-const baseUrl = '/appeals-service';
+const baseUrl = '/appeals-service/personal-list';
 
 describe('search-case-officer', () => {
 	beforeEach(() => {
@@ -31,6 +31,24 @@ describe('search-case-officer', () => {
 		});
 
 		it('should re-render the search case officer page with the expected error message if a CO is not provided', async () => {
+			const response = await request.post(`${baseUrl}/search-case-officer`).send({
+				user: ''
+			});
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Case officer</label></h1>');
+
+			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHTML).toContain('Enter a case officer</a>');
+		});
+
+		it('should re-render the search case officer page with the expected error message if a CO is not provided2', async () => {
 			const response = await request.post(`${baseUrl}/search-case-officer`).send({
 				user: ''
 			});
