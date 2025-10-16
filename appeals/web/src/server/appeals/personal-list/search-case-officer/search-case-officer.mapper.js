@@ -2,16 +2,16 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import config from '#environment/config.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { capitalize } from 'lodash-es';
-
-/** @typedef {import('../../app/auth/auth.service').AccountInfo} AccountInfo */
+/** @typedef {import('#app/auth/auth.service.js').AccountInfo} AccountInfo */
 
 /**
  * @return {Promise<PageContent>}
- * @param session {import('../../app/auth/auth-session.service.js').SessionWithAuth}
+ * @param session {import('#app/auth/auth-session.service.js').SessionWithAuth}
  * @param {import('@pins/express').ValidationErrors | undefined} errors
+ * @param {string} backLinkUrl
  */
 
-export async function searchCaseOfficerPage(session, errors) {
+export async function searchCaseOfficerPage(session, backLinkUrl, errors) {
 	const userTypeText = 'case officer';
 	const users = await usersService.getUsersByRole(
 		config.referenceData.appeals.caseOfficerGroupId,
@@ -27,7 +27,6 @@ export async function searchCaseOfficerPage(session, errors) {
 				text: `${user.name} (${user.email})`
 			}))
 	];
-
 	/** @type {PageComponent} */
 	const selectSearchPageComponent = {
 		type: 'select',
@@ -71,7 +70,7 @@ export async function searchCaseOfficerPage(session, errors) {
 	const pageContent = {
 		title: `Search for case officer by name or email address`,
 		backLinkText: 'Back',
-		backLinkUrl: `/appeals-service/personal-list`,
+		backLinkUrl: backLinkUrl,
 		pageComponents: [selectSearchPageComponent, searchButtonPageComponent]
 	};
 
