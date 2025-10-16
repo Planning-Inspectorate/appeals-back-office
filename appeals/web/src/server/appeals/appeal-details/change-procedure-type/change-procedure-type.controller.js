@@ -35,6 +35,7 @@ import { isEmpty, pick } from 'lodash-es';
  * @property {string|undefined} [finalCommentsDueDate]
  * @property {string|undefined} [statementOfCommonGroundDueDate]
  * @property {string|undefined} [planningObligationDueDate]
+ * @property {string|undefined} [proofOfEvidenceAndWitnessesDueDate]
  */
 
 /**
