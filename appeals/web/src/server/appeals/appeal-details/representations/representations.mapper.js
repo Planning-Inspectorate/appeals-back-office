@@ -2,6 +2,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { ensureArray } from '#lib/array-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { APPEAL_REPRESENTATION_STATUS, COMMENT_STATUS } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -167,6 +168,22 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 					}
 			  };
 
+	/** @type {PageComponent} */
+	const warningComponent =
+		appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY && valueTexts.length === 0
+			? {
+					type: 'warning-text',
+					parameters: {
+						text: 'Do not progress to proof of evidence and witnesses if you are awaiting any late statements or interested party comments.'
+					}
+			  }
+			: {
+					type: 'warning-text',
+					parameters: {
+						text: 'Do not confirm until you have reviewed all of the supporting documents and redacted any sensitive information.'
+					}
+			  };
+
 	let heading;
 	const hearingIsSetUp = Boolean(appeal.hearing?.hearingStartTime && appeal.hearing?.address);
 
@@ -174,6 +191,8 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 		heading = 'Progress to awaiting hearing';
 	} else if (appeal.procedureType === 'Hearing') {
 		heading = 'Progress to hearing ready to set up';
+	} else if (appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
+		heading = 'Progress to proof of evidence and witnesses';
 	} else if (valueTexts.length > 0) {
 		heading = 'Share IP comments and statements';
 	} else {
@@ -185,17 +204,14 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appeal.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading,
-		pageComponents: [
-			textComponent,
-			{
-				type: 'warning-text',
-				parameters: {
-					text: 'Do not confirm until you have reviewed all of the supporting documents and redacted any sensitive information.'
-				}
-			}
-		],
+		pageComponents: [textComponent, warningComponent],
 		submitButtonProperties: {
-			text: valueTexts.length > 0 ? 'Confirm' : 'Progress case'
+			text:
+				valueTexts.length > 0
+					? 'Confirm'
+					: appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY
+					? 'Progress to proof of evidence and witnesses'
+					: 'Progress case'
 		}
 	};
 }

@@ -2,7 +2,7 @@ import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dat
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { finalCommentsSharePage, statementAndCommentsSharePage } from './representations.mapper.js';
 import { publishRepresentations } from './representations.service.js';
 
@@ -56,6 +56,11 @@ export async function postShareRepresentations(request, response) {
 						currentAppeal.hearing?.hearingStartTime && currentAppeal.hearing.address
 					);
 					return hearingIsSetUp ? 'progressedToAwaitingHearing' : 'progressedToHearingReadyToSetUp';
+				} else if (
+					publishedReps.length === 0 &&
+					currentAppeal.procedureType.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY
+				) {
+					return 'progressedToProofOfEvidenceAndWitnesses';
 				} else if (publishedReps.length > 0) {
 					return 'commentsAndLpaStatementShared';
 				} else {
