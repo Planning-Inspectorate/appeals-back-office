@@ -109,7 +109,7 @@ export const getCheckAndConfirm = async (request, response) => {
 						textSummaryListItem({
 							id: `${newProcedureType}-date-known`,
 							text: `Do you know the date and time of the ${newProcedureType}?`,
-							value: sessionValues.dateKnown ? 'Yes' : 'No',
+							value: sessionValues.dateKnown.toLowerCase() === 'yes' ? 'Yes' : 'No',
 							link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-event-date-known`,
 							editable: true,
 							cypressDataName: `change-${newProcedureType}-date-known`
