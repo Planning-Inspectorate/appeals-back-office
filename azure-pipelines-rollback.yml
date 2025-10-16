@@ -1,0 +1,81 @@
+parameters:
+  - name: rollbackAPI
+    displayName: Rollback the Appeals BO API
+    type: boolean
+    default: false
+  - name: rollbackAppealsPDF
+    displayName: Rollback the Appeals BO PDF Generator
+    type: boolean
+    default: false
+  - name: rollbackWeb
+    displayName: Rollback the Appeals BO web app
+    type: boolean
+    default: false
+  - name: region
+    displayName: Region
+    type: string
+    values:
+      - UK West
+      - UK South
+    default: UK South
+
+pr: none
+trigger: none
+
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      endpoint: Planning-Inspectorate
+      name: Planning-Inspectorate/common-pipeline-templates
+      ref: refs/tags/release/3.24.0
+extends:
+  template: stages/wrapper_cd.yml@templates
+  parameters:
+    variableGroupPrefix: 'cd'
+    environments:
+      - name: Dev
+      - name: Test
+        dependsOn:
+          - Dev
+      - name: Staging
+        dependsOn:
+          - Test
+      - name: Training
+        dependsOn:
+          - Test
+      - name: Prod
+        dependsOn:
+          - Training
+    globalVariables:
+      - template: .azure/pipelines/azure-pipelines-variables.yml@self
+    deploymentStages:
+      - name: Rollback
+        deploymentJobs:
+          - name: Rollback Appeals API
+            condition: ${{ eq(parameters.rollbackAPI, true) }}
+            steps:
+              - template: ../steps/azure_web_app_slot_swap.yml
+                parameters:
+                  appName: pins-app-appeals-bo-api-$(ENVIRONMENT)
+                  appResourceGroup: $(resourceGroup)
+                  appStagingSlotName: staging
+                  appTargetSlotName: production
+          - name: Rollback Appeals PDF Generator
+            condition: ${{ eq(parameters.rollbackAppealsPDF, true) }}
+            steps:
+              - template: ../steps/azure_web_app_slot_swap.yml
+                parameters:
+                  appName: pins-app-appeals-bo-pdf-$(ENVIRONMENT)
+                  appResourceGroup: $(resourceGroup)
+                  appStagingSlotName: staging
+                  appTargetSlotName: production
+          - name: Rollback Appeals Web
+            condition: ${{ eq(parameters.rollbackWeb, true) }}
+            steps:
+              - template: ../steps/azure_web_app_slot_swap.yml
+                parameters:
+                  appName: pins-app-appeals-bo-web-$(ENVIRONMENT)
+                  appResourceGroup: $(resourceGroup)
+                  appStagingSlotName: staging
+                  appTargetSlotName: production
