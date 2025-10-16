@@ -131,7 +131,7 @@ export const activeDirectoryUsersData = [
 ];
 
 export const appealsNationalList = {
-	itemCount: 2,
+	itemCount: 5,
 	items: [
 		{
 			appealId: 1,
@@ -169,6 +169,60 @@ export const appealsNationalList = {
 			dueDate: null,
 			isParentAppeal: false,
 			isChildAppeal: false
+		},
+		{
+			appealId: 3,
+			appealReference: 'APP/Q9999/D/21/129285',
+			appealSite: {
+				addressLine1: '19 Beauchamp Road',
+				town: 'Bristol',
+				postCode: 'BS7 8LQ'
+			},
+			appealStatus: 'assign_case_officer',
+			appealType: 'Householder',
+			createdAt: '2023-04-17T09:49:22.057Z',
+			localPlanningDepartment: 'Dorset Council',
+			appellantCaseStatus: '',
+			lpaQuestionnaireStatus: '',
+			dueDate: null,
+			isParentAppeal: false,
+			isChildAppeal: false
+		},
+		{
+			appealId: 4,
+			appealReference: 'APP/Q9999/D/21/129285',
+			appealSite: {
+				addressLine1: '19 Beauchamp Road',
+				town: 'Bristol',
+				postCode: 'BS7 8LQ'
+			},
+			appealStatus: 'validation',
+			appealType: 'Householder',
+			createdAt: '2023-04-17T09:49:22.057Z',
+			localPlanningDepartment: 'Dorset Council',
+			appellantCaseStatus: '',
+			lpaQuestionnaireStatus: '',
+			dueDate: null,
+			isParentAppeal: false,
+			isChildAppeal: false
+		},
+		{
+			appealId: 5,
+			appealReference: 'APP/Q9999/D/21/129285',
+			appealSite: {
+				addressLine1: 'Test Beauchamp Road',
+				town: 'Bristol',
+				postCode: 'BS7 8LQ'
+			},
+			appealStatus: 'validation',
+			appealType: 'Householder',
+			createdAt: '2023-04-17T09:49:22.057Z',
+			localPlanningDepartment: 'Dorset Council',
+			appellantCaseStatus: '',
+			lpaQuestionnaireStatus: '',
+			dueDate: null,
+			isParentAppeal: false,
+			isChildAppeal: false
 		}
 	],
 	statuses: [
@@ -176,7 +230,8 @@ export const appealsNationalList = {
 		'ready_to_start',
 		'lpa_questionnaire',
 		'issue_determination',
-		'complete'
+		'complete',
+		'validation'
 	],
 	statusesInNationalList: [
 		'assign_case_officer',

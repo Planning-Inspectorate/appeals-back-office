@@ -161,7 +161,9 @@ describe('national-list', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('2 results for BS7 8LQ</h2>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`${appealsNationalList.items.length} results for BS7 8LQ</h2>`
+			);
 		});
 
 		it('should render national list - search term - no result', async () => {
@@ -435,6 +437,74 @@ describe('national-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain('<option value="1" selected');
 			expect(unprettifiedElement.innerHTML).toContain('Apply filters</button>');
 			expect(unprettifiedElement.innerHTML).toContain('Clear filters</a>');
+		});
+
+		it('should only render appeals with status "assign_case_officer" when filter applied', async () => {
+			const filteredItems = appealsNationalList.items.filter(
+				(item) => item.appealStatus === 'assign_case_officer'
+			);
+
+			const assignCaseOfficerAppealsStatus = {
+				...appealsNationalList,
+				itemCount: filteredItems.length, // ✅ FIXED
+				items: filteredItems,
+				page: 1,
+				pageCount: 1,
+				pageSize: 30
+			};
+
+			nock('http://test/')
+				.get('/appeals?pageNumber=1&pageSize=30&status=assign_case_officer')
+				.reply(200, assignCaseOfficerAppealsStatus);
+
+			const response = await request.get(`${baseUrl}?appealStatusFilter=assign_case_officer`);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			for (const appeal of assignCaseOfficerAppealsStatus.items) {
+				expect(appeal.appealStatus).toBe('assign_case_officer');
+			}
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<h2 class="govuk-heading-m">${filteredItems.length} result${
+					filteredItems.length > 1 ? 's' : ''
+				} (filters applied)</h2>`
+			);
+		});
+
+		it('should only render appeals with status "validation" when filter applied', async () => {
+			const filteredItems = appealsNationalList.items.filter(
+				(item) => item.appealStatus === 'validation'
+			);
+
+			const validationAppealsStatus = {
+				...appealsNationalList,
+				itemCount: filteredItems.length,
+				items: filteredItems,
+				page: 1,
+				pageCount: 1,
+				pageSize: 30
+			};
+
+			nock('http://test/')
+				.get('/appeals?pageNumber=1&pageSize=30&status=validation')
+				.reply(200, validationAppealsStatus);
+
+			const response = await request.get(`${baseUrl}?appealStatusFilter=validation`);
+			const element = parseHtml(response.text);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			for (const appeal of validationAppealsStatus.items) {
+				expect(appeal.appealStatus).toBe('validation');
+			}
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<h2 class="govuk-heading-m">${filteredItems.length} result${
+					filteredItems.length > 1 ? 's' : ''
+				} (filters applied)</h2>`
+			);
 		});
 	});
 });

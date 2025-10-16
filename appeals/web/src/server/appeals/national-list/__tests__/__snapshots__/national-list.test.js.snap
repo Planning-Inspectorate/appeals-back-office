@@ -1,5 +1,367 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`national-list GET / should only render appeals with status "assign_case_officer" when filter applied 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Search all cases</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form method="GET">
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
+                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
+                        (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm" name="searchTerm"
+                    type="text" value="" data-cy="search-term">
+                </div>
+                <div class="govuk-button-group">
+                    <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
+                    id="filters-submit">Search</button>
+                </div>
+            </form>
+            <div class="govuk-section-break--visible govuk-!-margin-top-2 govuk-!-margin-bottom-6"></div>
+        </div>
+    </div>
+    <div class="govuk-grid-row govuk-!-padding-left-3">
+        <h2 class="govuk-heading-m">1 result (filters applied)</h2>
+    </div>
+    <div class="govuk-grid-row govuk-!-padding-left-3">
+        <div class="govuk-grid-column-full">
+            <details class="govuk-details">
+                <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Filters</span>
+                </summary>
+                <div class="govuk-details__text">
+                    <form method="GET">
+                        <h2 class="govuk-heading-m">Filter</h2>
+                        <div class="govuk-button-group">
+                            <button type="submit" class="govuk-button" data-module="govuk-button"
+                            data-cy="filter-submit" id="filters-submit">Apply filters</button><a class="govuk-link" href="/appeals-service/all-cases"
+                            data-cy="filter-clear">Clear filters</a>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="appeal-type-filter">Appeal type</label>
+                            <select class="govuk-select" id="appeal-type-filter"
+                            name="appealTypeFilter" data-cy="filter-by-appeal">
+                                <option value="all">All</option>
+                                <option value="66">Householder</option>
+                                <option value="75">Planning appeal</option>
+                                <option value="77">Planning listed building and conservation area appeal</option>
+                                <option                                 value="78">CAS advert</option>
+                                    <option value="79">CAS planning</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="appeal-procedure-filter">Appeal procedure</label>
+                            <select class="govuk-select" id="appeal-procedure-filter"
+                            name="appealProcedureFilter" data-cy="filter-by-appeal-procedure">
+                                <option value="all">All</option>
+                                <option value="1">Written</option>
+                                <option value="2">Hearing</option>
+                                <option value="3">Inquiry</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="appeal-status-filter">Case status</label>
+                            <select class="govuk-select" id="appeal-status-filter"
+                            name="appealStatusFilter" data-cy="filter-by-case-status">
+                                <option value="all">All</option>
+                                <option value="assign_case_officer" selected>Assign case officer</option>
+                                <option value="final_comments">Final comments</option>
+                                <option value="invalid">Invalid</option>
+                                <option value="issue_determination">Issue decision</option>
+                                <option value="lpa_questionnaire">LPA questionnaire</option>
+                                <option value="ready_to_start">Ready to start</option>
+                                <option value="statements">Statements</option>
+                                <option value="validation">Validation</option>
+                                <option value="withdrawn">Withdrawn</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="inspector-status-filter">Inspector status</label>
+                            <select class="govuk-select" id="inspector-status-filter"
+                            name="inspectorStatusFilter" data-cy="filter-by-inspector-status">
+                                <option value="all">All</option>
+                                <option value="assigned">Assigned</option>
+                                <option value="unassigned">Unassigned</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="localPlanningAuthorityFilter">Local planning authority</label>
+                            <select class="govuk-select" id="localPlanningAuthorityFilter"
+                            name="localPlanningAuthorityFilter" data-cy="filter-by-local-planning-authority">
+                                <option value="all">All</option>
+                                <option value="1">Test LPA</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="caseOfficerFilter">Case officer</label>
+                            <select class="govuk-select" id="caseOfficerFilter"
+                            name="caseOfficerFilter" data-cy="filter-by-case-officer">
+                                <option value="all">All</option>
+                                <option value="1">Doe, Jane</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="case-team-filter">Case team</label>
+                            <select class="govuk-select" id="case-team-filter" name="caseTeamFilter"
+                            data-cy="filter-by-case-team">
+                                <option value="all">All</option>
+                                <option value="-1">Not assigned</option>
+                                <option value="1">temp</option>
+                                <option value="2">temp2</option>
+                                <option value="3">temp3</option>
+                                <option value="4">temp4</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="inspectorFilter">Inspector</label>
+                            <select class="govuk-select" id="inspectorFilter" name="inspectorFilter"
+                            data-cy="filter-by-inspector">
+                                <option value="all">All</option>
+                                <option value="0">Smith, John</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <div class="govuk-checkboxes govuk-checkboxes--small" data-cy="filter-by-green-belt"
+                            data-module="govuk-checkboxes">
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="greenBeltFilter" name="greenBeltFilter"
+                                    type="checkbox" value="yes">
+                                    <label class="govuk-label govuk-checkboxes__label" for="greenBeltFilter">Green belt</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </details>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <table class="govuk-table govuk-table--small-text-until-tablet govuk-table--case-list">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Appeal reference</th>
+                        <th scope="col" class="govuk-table__header">Planning application reference</th>
+                        <th scope="col" class="govuk-table__header">Site address</th>
+                        <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
+                        <th scope="col" class="govuk-table__header">Appeal type</th>
+                        <th scope="col" class="govuk-table__header">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/3" aria-label="Appeal 1 2 9 2 8 5"
+                            data-cy="129285">129285</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
+                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Assign case officer</strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`national-list GET / should only render appeals with status "validation" when filter applied 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Search all cases</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form method="GET">
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
+                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
+                        (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm" name="searchTerm"
+                    type="text" value="" data-cy="search-term">
+                </div>
+                <div class="govuk-button-group">
+                    <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
+                    id="filters-submit">Search</button>
+                </div>
+            </form>
+            <div class="govuk-section-break--visible govuk-!-margin-top-2 govuk-!-margin-bottom-6"></div>
+        </div>
+    </div>
+    <div class="govuk-grid-row govuk-!-padding-left-3">
+        <h2 class="govuk-heading-m">2 results (filters applied)</h2>
+    </div>
+    <div class="govuk-grid-row govuk-!-padding-left-3">
+        <div class="govuk-grid-column-full">
+            <details class="govuk-details">
+                <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Filters</span>
+                </summary>
+                <div class="govuk-details__text">
+                    <form method="GET">
+                        <h2 class="govuk-heading-m">Filter</h2>
+                        <div class="govuk-button-group">
+                            <button type="submit" class="govuk-button" data-module="govuk-button"
+                            data-cy="filter-submit" id="filters-submit">Apply filters</button><a class="govuk-link" href="/appeals-service/all-cases"
+                            data-cy="filter-clear">Clear filters</a>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="appeal-type-filter">Appeal type</label>
+                            <select class="govuk-select" id="appeal-type-filter"
+                            name="appealTypeFilter" data-cy="filter-by-appeal">
+                                <option value="all">All</option>
+                                <option value="66">Householder</option>
+                                <option value="75">Planning appeal</option>
+                                <option value="77">Planning listed building and conservation area appeal</option>
+                                <option                                 value="78">CAS advert</option>
+                                    <option value="79">CAS planning</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="appeal-procedure-filter">Appeal procedure</label>
+                            <select class="govuk-select" id="appeal-procedure-filter"
+                            name="appealProcedureFilter" data-cy="filter-by-appeal-procedure">
+                                <option value="all">All</option>
+                                <option value="1">Written</option>
+                                <option value="2">Hearing</option>
+                                <option value="3">Inquiry</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="appeal-status-filter">Case status</label>
+                            <select class="govuk-select" id="appeal-status-filter"
+                            name="appealStatusFilter" data-cy="filter-by-case-status">
+                                <option value="all">All</option>
+                                <option value="assign_case_officer">Assign case officer</option>
+                                <option value="final_comments">Final comments</option>
+                                <option value="invalid">Invalid</option>
+                                <option value="issue_determination">Issue decision</option>
+                                <option value="lpa_questionnaire">LPA questionnaire</option>
+                                <option value="ready_to_start">Ready to start</option>
+                                <option value="statements">Statements</option>
+                                <option value="validation" selected>Validation</option>
+                                <option value="withdrawn">Withdrawn</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="inspector-status-filter">Inspector status</label>
+                            <select class="govuk-select" id="inspector-status-filter"
+                            name="inspectorStatusFilter" data-cy="filter-by-inspector-status">
+                                <option value="all">All</option>
+                                <option value="assigned">Assigned</option>
+                                <option value="unassigned">Unassigned</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="localPlanningAuthorityFilter">Local planning authority</label>
+                            <select class="govuk-select" id="localPlanningAuthorityFilter"
+                            name="localPlanningAuthorityFilter" data-cy="filter-by-local-planning-authority">
+                                <option value="all">All</option>
+                                <option value="1">Test LPA</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="caseOfficerFilter">Case officer</label>
+                            <select class="govuk-select" id="caseOfficerFilter"
+                            name="caseOfficerFilter" data-cy="filter-by-case-officer">
+                                <option value="all">All</option>
+                                <option value="1">Doe, Jane</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="case-team-filter">Case team</label>
+                            <select class="govuk-select" id="case-team-filter" name="caseTeamFilter"
+                            data-cy="filter-by-case-team">
+                                <option value="all">All</option>
+                                <option value="-1">Not assigned</option>
+                                <option value="1">temp</option>
+                                <option value="2">temp2</option>
+                                <option value="3">temp3</option>
+                                <option value="4">temp4</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="inspectorFilter">Inspector</label>
+                            <select class="govuk-select" id="inspectorFilter" name="inspectorFilter"
+                            data-cy="filter-by-inspector">
+                                <option value="all">All</option>
+                                <option value="0">Smith, John</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <div class="govuk-checkboxes govuk-checkboxes--small" data-cy="filter-by-green-belt"
+                            data-module="govuk-checkboxes">
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="greenBeltFilter" name="greenBeltFilter"
+                                    type="checkbox" value="yes">
+                                    <label class="govuk-label govuk-checkboxes__label" for="greenBeltFilter">Green belt</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </details>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <table class="govuk-table govuk-table--small-text-until-tablet govuk-table--case-list">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Appeal reference</th>
+                        <th scope="col" class="govuk-table__header">Planning application reference</th>
+                        <th scope="col" class="govuk-table__header">Site address</th>
+                        <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
+                        <th scope="col" class="govuk-table__header">Appeal type</th>
+                        <th scope="col" class="govuk-table__header">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/4" aria-label="Appeal 1 2 9 2 8 5"
+                            data-cy="129285">129285</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
+                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Validation</strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/5" aria-label="Appeal 1 2 9 2 8 5"
+                            data-cy="129285">129285</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Test Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
+                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Validation</strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`national-list GET / should render national list - 10 pages - all page indexes in one row 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -176,6 +538,48 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                         </td>
                         <td class="govuk-table__cell">Householder</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Issue decision</strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/3" aria-label="Appeal 1 2 9 2 8 5"
+                            data-cy="129285">129285</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
+                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Assign case officer</strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/4" aria-label="Appeal 1 2 9 2 8 5"
+                            data-cy="129285">129285</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
+                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Validation</strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/5" aria-label="Appeal 1 2 9 2 8 5"
+                            data-cy="129285">129285</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Test Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
+                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Validation</strong>
                         </td>
                     </tr>
                 </tbody>
@@ -402,6 +806,48 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                         </td>
                         <td class="govuk-table__cell">Householder</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Issue decision</strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/3" aria-label="Appeal 1 2 9 2 8 5"
+                            data-cy="129285">129285</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
+                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Assign case officer</strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/4" aria-label="Appeal 1 2 9 2 8 5"
+                            data-cy="129285">129285</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
+                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Validation</strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/5" aria-label="Appeal 1 2 9 2 8 5"
+                            data-cy="129285">129285</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Test Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
+                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Validation</strong>
                         </td>
                     </tr>
                 </tbody>
@@ -1126,6 +1572,48 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Issue decision</strong>
                         </td>
                     </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/3" aria-label="Appeal 1 2 9 2 8 5"
+                            data-cy="129285">129285</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
+                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Assign case officer</strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/4" aria-label="Appeal 1 2 9 2 8 5"
+                            data-cy="129285">129285</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
+                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Validation</strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/5" aria-label="Appeal 1 2 9 2 8 5"
+                            data-cy="129285">129285</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Test Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
+                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Validation</strong>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -1666,7 +2154,7 @@ exports[`national-list GET / should render national list - search term 1`] = `
         </div>
     </div>
     <div class="govuk-grid-row govuk-!-padding-left-3">
-        <h2 class="govuk-heading-m">2 results for BS7 8LQ</h2>
+        <h2 class="govuk-heading-m">5 results for BS7 8LQ</h2>
     </div>
     <div class="govuk-grid-row govuk-!-padding-left-3">
         <div class="govuk-grid-column-full">
@@ -1820,6 +2308,48 @@ exports[`national-list GET / should render national list - search term 1`] = `
                         </td>
                         <td class="govuk-table__cell">Householder</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Issue decision</strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/3" aria-label="Appeal 1 2 9 2 8 5"
+                            data-cy="129285">129285</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
+                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Assign case officer</strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/4" aria-label="Appeal 1 2 9 2 8 5"
+                            data-cy="129285">129285</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
+                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Validation</strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/5" aria-label="Appeal 1 2 9 2 8 5"
+                            data-cy="129285">129285</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Test Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
+                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Validation</strong>
                         </td>
                     </tr>
                 </tbody>
@@ -2005,6 +2535,48 @@ exports[`national-list GET / should render the header with navigation containing
                         </td>
                         <td class="govuk-table__cell">Householder</td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Issue decision</strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/3" aria-label="Appeal 1 2 9 2 8 5"
+                            data-cy="129285">129285</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
+                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Assign case officer</strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/4" aria-label="Appeal 1 2 9 2 8 5"
+                            data-cy="129285">129285</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
+                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Validation</strong>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/5" aria-label="Appeal 1 2 9 2 8 5"
+                            data-cy="129285">129285</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Test Beauchamp Road, Bristol, BS7 8LQ</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
+                        </td>
+                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Validation</strong>
                         </td>
                     </tr>
                 </tbody>
