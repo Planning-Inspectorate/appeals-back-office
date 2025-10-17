@@ -48,9 +48,10 @@ export const stateMachineErrorHandler = (error, request, response, next) => {
 		/** @type {Object<string, string>} */ const errorMessage = {};
 
 		errorMessage[caseType] = error.message;
-		return response.status(409).send({
+		response.status(409).send({
 			errors: errorMessage
 		});
+		return;
 	} else {
 		next(error);
 	}

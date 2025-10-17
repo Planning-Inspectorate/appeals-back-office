@@ -16,8 +16,16 @@ Due by {{lpa_statement_deadline}}.
 ## Interested party comments
 Due by {{ip_comments_deadline}}.
 
+{% if statement_of_common_ground_deadline -%}
 ## Statement of common ground
-Due by {{statement_of_common_ground_due_date}}.
+Due by {{statement_of_common_ground_deadline}}.
+
+{% endif -%}
+{% if planning_obligation_deadline -%}
+## Planning obligation
+Due by {{planning_obligation_deadline}}.
+
+{% endif -%}
 
 # Hearing details
 
