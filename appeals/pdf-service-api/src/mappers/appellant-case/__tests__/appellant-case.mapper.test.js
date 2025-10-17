@@ -13,4 +13,10 @@ describe('mapAppellantCaseData', () => {
 
 		expect(result).toMatchSnapshot();
 	});
+
+	it('should map appellant case data for a s20 appeal', () => {
+		const result = mapAppellantCaseData(mockAppellantCaseData.appellantCaseDataS20);
+
+		expect(result).toMatchSnapshot();
+	});
 });

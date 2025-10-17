@@ -64,10 +64,15 @@ export function constraintsDesignationsAndOtherIssuesSection(templateData) {
 				key: 'Does the development affect the setting of listed buildings?',
 				html: formatList(affectedListedBuildingList, 'No')
 			},
-			{
-				key: 'Was a grant or loan made to preserve the listed building at the appeal site?',
-				text: formatYesNo(preserveGrantLoan)
-			},
+			// only appears for s20 listed buildings appeals
+			...([APPEAL_TYPE.PLANNED_LISTED_BUILDING].includes(appealType)
+				? [
+						{
+							key: 'Was a grant or loan made to preserve the listed building at the appeal site?',
+							text: formatYesNo(preserveGrantLoan)
+						}
+				  ]
+				: []),
 			// does not appear for householder
 			...(!isHASAppeal
 				? [
@@ -119,10 +124,15 @@ export function constraintsDesignationsAndOtherIssuesSection(templateData) {
 						}
 				  ]
 				: []),
-			{
-				key: 'Historic England consultation',
-				html: formatDocumentData(historicEnglandConsultation)
-			}
+			// only appears for s20 listed buildings appeals
+			...([APPEAL_TYPE.PLANNED_LISTED_BUILDING].includes(appealType)
+				? [
+						{
+							key: 'Historic England consultation',
+							html: formatDocumentData(historicEnglandConsultation)
+						}
+				  ]
+				: [])
 		]
 	};
 }
