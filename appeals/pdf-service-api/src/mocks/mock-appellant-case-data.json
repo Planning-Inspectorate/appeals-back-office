@@ -713,5 +713,391 @@
 				"documents": []
 			}
 		}
+	},
+	"appellantCaseDataS20": {
+		"appealId": 72,
+		"appealReference": "6000073",
+		"planningApplicationReference": "44377/APP/3/218453",
+		"localPlanningDepartment": "Maidstone Borough Council",
+		"procedureType": "Written",
+		"createdAt": "2025-07-03T15:13:55.967Z",
+		"validAt": "2024-09-03T15:13:52.867Z",
+		"startedAt": "2025-01-03T16:13:52.867Z",
+		"appealSite": {
+			"addressId": 72,
+			"addressLine1": "Copthalls",
+			"addressLine2": "Clevedon Road",
+			"town": "West Hill",
+			"postCode": "BS48 1PN"
+		},
+		"appealType": "Planning listed building and conservation area appeal",
+		"agent": {
+			"serviceUserId": 105,
+			"firstName": "Lee",
+			"lastName": "Thornton",
+			"organisationName": "Lee Thornton Ltd",
+			"email": "test1@example.com",
+			"phoneNumber": null
+		},
+		"appellant": {
+			"serviceUserId": 106,
+			"firstName": "Sophie",
+			"lastName": "Skinner",
+			"organisationName": null,
+			"email": "test4@example.com",
+			"phoneNumber": null
+		},
+		"linkedAppeals": [],
+		"otherAppeals": [],
+		"isChildAppeal": false,
+		"isParentAppeal": false,
+		"appealStatus": "final_comments",
+		"appealTimetable": {
+			"appealTimetableId": 37,
+			"lpaQuestionnaireDueDate": "2025-01-10T23:59:00.000Z",
+			"caseResubmissionDueDate": null,
+			"ipCommentsDueDate": "2025-02-07T23:59:00.000Z",
+			"appellantStatementDueDate": "2025-02-07T23:59:00.000Z",
+			"lpaStatementDueDate": "2025-02-07T23:59:00.000Z",
+			"finalCommentsDueDate": "2025-02-21T23:59:00.000Z",
+			"s106ObligationDueDate": "2025-02-21T23:59:00.000Z",
+			"statementOfCommonGroundDueDate": null,
+			"planningObligationDueDate": null
+		},
+		"documentationSummary": {
+			"appellantCase": {
+				"status": "Valid",
+				"dueDate": null,
+				"receivedAt": "2025-07-03T15:13:55.967Z"
+			},
+			"lpaQuestionnaire": {
+				"status": "received",
+				"dueDate": "2025-01-10T23:59:00.000Z",
+				"receivedAt": "2023-05-08T23:00:00.000Z"
+			},
+			"ipComments": {
+				"status": "received",
+				"receivedAt": "2025-07-03T15:14:00.000Z",
+				"counts": {
+					"awaiting_review": 5,
+					"invalid": 4,
+					"valid": 1
+				},
+				"isRedacted": false
+			},
+			"lpaStatement": {
+				"status": "received",
+				"receivedAt": "2025-07-03T15:14:00.031Z",
+				"representationStatus": "valid",
+				"isRedacted": false
+			},
+			"lpaFinalComments": {
+				"status": "received",
+				"receivedAt": "2025-07-03T15:14:00.065Z",
+				"representationStatus": "awaiting_review"
+			},
+			"appellantFinalComments": {
+				"status": "received",
+				"receivedAt": "2025-07-03T15:14:00.044Z",
+				"representationStatus": "awaiting_review"
+			}
+		},
+		"stateList": [
+			{
+				"key": "assign_case_officer",
+				"completed": true
+			},
+			{
+				"key": "validation",
+				"completed": true
+			},
+			{
+				"key": "ready_to_start",
+				"completed": true
+			},
+			{
+				"key": "lpa_questionnaire",
+				"completed": true
+			},
+			{
+				"key": "statements",
+				"completed": true
+			},
+			{
+				"key": "final_comments",
+				"completed": false
+			},
+			{
+				"key": "event",
+				"completed": false
+			},
+			{
+				"key": "evidence",
+				"completed": false
+			},
+			{
+				"key": "awaiting_event",
+				"completed": false
+			},
+			{
+				"key": "issue_determination",
+				"completed": false
+			},
+			{
+				"key": "awaiting_transfer",
+				"completed": false
+			},
+			{
+				"key": "invalid",
+				"completed": false
+			},
+			{
+				"key": "transferred",
+				"completed": false
+			},
+			{
+				"key": "closed",
+				"completed": false
+			},
+			{
+				"key": "withdrawn",
+				"completed": false
+			},
+			{
+				"key": "complete",
+				"completed": false
+			}
+		],
+		"completedStateList": [],
+		"decision": {
+			"folderId": 3599,
+			"path": "appeal-decision/caseDecisionLetter"
+		},
+		"neighbouringSites": [],
+		"withdrawal": {
+			"withdrawalFolder": {
+				"folderId": 3555,
+				"path": "appellant-case/appellantCaseWithdrawalLetter",
+				"documents": [],
+				"caseId": 72
+			}
+		},
+		"appellantCaseId": 72,
+		"lpaQuestionnaireId": 40,
+		"healthAndSafety": {
+			"details": null,
+			"hasIssues": false
+		},
+		"inspectorAccess": {
+			"appellantCase": {
+				"details": null,
+				"isRequired": false
+			},
+			"lpaQuestionnaire": {
+				"details": "There is a tall hedge around the site which obstructs the view of the site",
+				"isRequired": true
+			}
+		},
+		"eiaScreeningRequired": null,
+		"lpaEmailAddress": "maid@lpa-email.gov.uk",
+		"environmentalAssessment": {
+			"caseId": 72,
+			"folderId": 3563,
+			"path": "appellant-case/environmentalAssessment",
+			"documents": []
+		},
+		"costs": {
+			"appellantApplicationFolder": {
+				"caseId": 72,
+				"folderId": 3587,
+				"path": "costs/appellantCostsApplication",
+				"documents": []
+			},
+			"appellantWithdrawalFolder": {
+				"caseId": 72,
+				"folderId": 3588,
+				"path": "costs/appellantCostsWithdrawal",
+				"documents": []
+			},
+			"appellantCorrespondenceFolder": {
+				"caseId": 72,
+				"folderId": 3589,
+				"path": "costs/appellantCostsCorrespondence",
+				"documents": []
+			},
+			"lpaApplicationFolder": {
+				"caseId": 72,
+				"folderId": 3590,
+				"path": "costs/lpaCostsApplication",
+				"documents": []
+			},
+			"lpaWithdrawalFolder": {
+				"caseId": 72,
+				"folderId": 3591,
+				"path": "costs/lpaCostsWithdrawal",
+				"documents": []
+			},
+			"lpaCorrespondenceFolder": {
+				"caseId": 72,
+				"folderId": 3592,
+				"path": "costs/lpaCostsCorrespondence",
+				"documents": []
+			},
+			"appellantDecisionFolder": {
+				"caseId": 72,
+				"folderId": 3593,
+				"path": "costs/appellantCostsDecisionLetter",
+				"documents": []
+			},
+			"lpaDecisionFolder": {
+				"caseId": 72,
+				"folderId": 3594,
+				"path": "costs/lpaCostsDecisionLetter",
+				"documents": []
+			}
+		},
+		"internalCorrespondence": {
+			"crossTeam": {
+				"caseId": 72,
+				"folderId": 3595,
+				"path": "internal/crossTeamCorrespondence",
+				"documents": []
+			},
+			"inspector": {
+				"caseId": 72,
+				"folderId": 3596,
+				"path": "internal/inspectorCorrespondence",
+				"documents": []
+			},
+			"mainParty": {
+				"caseId": 72,
+				"folderId": 3597,
+				"path": "internal/mainPartyCorrespondence",
+				"documents": []
+			}
+		},
+		"validation": {
+			"outcome": "Valid"
+		},
+		"applicant": {
+			"firstName": "Sophie",
+			"surname": "Skinner"
+		},
+		"isAppellantNamedOnApplication": false,
+		"applicationDate": "2025-05-22T15:13:52.864Z",
+		"applicationDecision": "refused",
+		"applicationDecisionDate": "2025-06-03T15:13:52.864Z",
+		"hasAdvertisedAppeal": true,
+		"enforcementNotice": null,
+		"appellantCostsAppliedFor": null,
+		"floorSpaceSquareMetres": 9.7,
+		"siteAreaSquareMetres": 30.9,
+		"isGreenBelt": false,
+		"siteOwnership": {
+			"areAllOwnersKnown": null,
+			"knowsOtherLandowners": "Some",
+			"ownersInformed": null,
+			"ownsAllLand": true,
+			"ownsSomeLand": null
+		},
+		"siteAccessRequired": {
+			"details": null,
+			"isRequired": false
+		},
+		"developmentDescription": {
+			"details": "lorem ipsum",
+			"isChanged": false
+		},
+		"typeOfPlanningApplication": "full-appeal",
+		"appellantProcedurePreference": "hearing",
+		"appellantProcedurePreferenceDetails": "Need for a detailed examination",
+		"appellantProcedurePreferenceDuration": 1,
+		"appellantProcedurePreferenceWitnessCount": 1,
+		"planningObligation": {
+			"hasObligation": true,
+			"status": "not_started"
+		},
+		"developmentType": "major-retail-services",
+		"agriculturalHolding": null,
+		"documents": {
+			"appellantCaseCorrespondence": {
+				"caseId": 72,
+				"folderId": 3556,
+				"path": "appellant-case/appellantCaseCorrespondence",
+				"documents": []
+			},
+			"appellantCaseWithdrawalLetter": {
+				"caseId": 72,
+				"folderId": 3555,
+				"path": "appellant-case/appellantCaseWithdrawalLetter",
+				"documents": []
+			},
+			"appellantStatement": {
+				"caseId": 72,
+				"folderId": 3551,
+				"path": "appellant-case/appellantStatement",
+				"documents": []
+			},
+			"applicationDecisionLetter": {
+				"caseId": 72,
+				"folderId": 3553,
+				"path": "appellant-case/applicationDecisionLetter",
+				"documents": []
+			},
+			"changedDescription": {
+				"caseId": 72,
+				"folderId": 3554,
+				"path": "appellant-case/changedDescription",
+				"documents": []
+			},
+			"designAccessStatement": {
+				"caseId": 72,
+				"folderId": 3557,
+				"path": "appellant-case/designAccessStatement",
+				"documents": []
+			},
+			"environmentalAssessment": {
+				"caseId": 72,
+				"folderId": 3563,
+				"path": "appellant-case/environmentalAssessment",
+				"documents": []
+			},
+			"newPlansDrawings": {
+				"caseId": 72,
+				"folderId": 3559,
+				"path": "appellant-case/newPlansDrawings",
+				"documents": []
+			},
+			"originalApplicationForm": {
+				"caseId": 72,
+				"folderId": 3552,
+				"path": "appellant-case/originalApplicationForm",
+				"documents": []
+			},
+			"otherNewDocuments": {
+				"caseId": 72,
+				"folderId": 3562,
+				"path": "appellant-case/otherNewDocuments",
+				"documents": []
+			},
+			"ownershipCertificate": {
+				"caseId": 72,
+				"folderId": 3561,
+				"path": "appellant-case/ownershipCertificate",
+				"documents": []
+			},
+			"planningObligation": {
+				"caseId": 72,
+				"folderId": 3560,
+				"path": "appellant-case/planningObligation",
+				"documents": []
+			},
+			"plansDrawings": {
+				"caseId": 72,
+				"folderId": 3558,
+				"path": "appellant-case/plansDrawings",
+				"documents": []
+			}
+		}
 	}
 }
