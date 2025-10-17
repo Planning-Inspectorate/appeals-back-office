@@ -932,4 +932,8 @@ export class CaseDetailsPage extends Page {
 	checkHeading = (expectedText) => {
 		this.elements.pageHeading().should('have.text', expectedText);
 	};
+
+	verifyChangeLinkIsDisplayed = (row) => {
+		this.elements.rowChangeLink(row).should('be.visible');
+	};
 }
