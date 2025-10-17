@@ -117,7 +117,6 @@ const setupTestCase = () => {
 	cy.createCase({ caseType: 'W', planningObligation: true }).then((ref) => {
 		caseObj = ref;
 		appeal = caseObj;
-		cy.addLpaqSubmissionToCase(caseObj);
 		happyPathHelper.assignCaseOfficer(caseObj);
 		caseDetailsPage.checkStatusOfCase('Validation', 0);
 		happyPathHelper.reviewAppellantCase(caseObj);
@@ -137,6 +136,7 @@ afterEach(() => {
 });
 
 it('Can start case as inquiry with address and estimated days', () => {
+	cy.addLpaqSubmissionToCase(caseObj);
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		dateTimeSection.enterInquiryDate(inquiryDate);
 		dateTimeSection.enterInquiryTime('12', '00');
@@ -234,7 +234,7 @@ it('Can update inquiry date', () => {
 		inquiryDate.setHours(14);
 		cy.addInquiryViaApi(caseObj, inquiryDate);
 
-		// find case and open inqiiry section
+		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseObj);
 
@@ -266,11 +266,11 @@ it('Can update inquiry time', () => {
 		inquiryDate.setHours(14);
 		cy.addInquiryViaApi(caseObj, inquiryDate);
 
-		// find case and open inqiiry section
+		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseObj);
 
-		// generate new date with upfdated time value and update it in inquiry
+		// generate new date with updated time value and update it in inquiry
 		const newInquiryDate = new Date(inquiryDate);
 		newInquiryDate.setTime(inquiryDate.getTime() + 2 * 60 * 60 * 1000);
 
@@ -537,5 +537,69 @@ it('should add inquiry Estimates', () => {
 		expect(preparationTime).to.eq(updatedEstimates.preparationTime);
 		expect(sittingTime).to.eq(updatedEstimates.sittingTime);
 		expect(reportingTime).to.eq(updatedEstimates.reportingTime);
+	});
+});
+
+it('should update inquiry timetable dates from case details page', () => {
+	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
+		// Create case and setup initial timetable
+		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+
+		// find case and open inquiry section
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseObj);
+
+		const timetableItemsWithNewSelector = timetableItems.map((item) => ({
+			...item,
+			row: item.row.replace('statement-due-date', 'lpa-statement-due-date')
+		}));
+
+		inquirySectionPage.verifyInquiryTimetableRowChangeLinkVisible(timetableItemsWithNewSelector);
+
+		caseDetailsPage.clickRowChangeLink('lpa-questionnaire-due-date');
+
+		// update timetable dates
+		cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
+			inquirySectionPage.enterTimetableDueDates(timetableItemsWithNewSelector, startDate, 7);
+		});
+
+		// Submit changes
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Update timetable due dates');
+
+		// Verify results
+		caseDetailsPage.validateBannerMessage('Success', 'Timetable due dates updated');
+
+		cy.loadAppealDetails(caseObj).then((appealDetails) => {
+			const timetable = appealDetails?.appealTimetable;
+			inquirySectionPage.verifyFieldsUpdated([
+				{ field: 'Valid date', value: formatDateAndTime(new Date(appealDetails.validAt)).date },
+				{ field: 'Start date', value: formatDateAndTime(new Date(appealDetails.startedAt)).date },
+				{
+					field: 'LPA questionnaire due',
+					value: formatDateAndTime(new Date(timetable.lpaQuestionnaireDueDate)).date
+				},
+				{
+					field: 'LPA statement due',
+					value: formatDateAndTime(new Date(timetable.lpaStatementDueDate)).date
+				},
+				{
+					field: 'Interested party comments due',
+					value: formatDateAndTime(new Date(timetable.ipCommentsDueDate)).date
+				},
+				{
+					field: 'Statement of common ground due',
+					value: formatDateAndTime(new Date(timetable.statementOfCommonGroundDueDate)).date
+				},
+				{
+					field: 'Planning obligation due',
+					value: formatDateAndTime(new Date(timetable.planningObligationDueDate)).date
+				},
+				{
+					field: 'Proof of evidence and witness due',
+					value: formatDateAndTime(new Date(timetable.proofOfEvidenceAndWitnessesDueDate)).date
+				}
+			]);
+		});
 	});
 });
