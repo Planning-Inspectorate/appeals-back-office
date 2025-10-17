@@ -171,8 +171,8 @@ export class InquirySectionPage extends CaseDetailsPage {
 			.and('contain.text', expectedText);
 	}
 
-	enterTimetableDueDates(timetableItems, startDate) {
-		caseDetailsPage.enterTimeTableDueDatesCaseStart(timetableItems, startDate, 7);
+	enterTimetableDueDates(timetableItems, startDate, intervalDays = 7) {
+		caseDetailsPage.enterTimeTableDueDatesCaseStart(timetableItems, startDate, intervalDays);
 		return timetableItems;
 	}
 

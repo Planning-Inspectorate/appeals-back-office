@@ -117,9 +117,18 @@ const setupTestCase = () => {
 	cy.createCase({ caseType: 'W', planningObligation: true }).then((ref) => {
 		caseObj = ref;
 		appeal = caseObj;
-		happyPathHelper.assignCaseOfficer(caseObj);
-		caseDetailsPage.checkStatusOfCase('Validation', 0);
-		happyPathHelper.reviewAppellantCase(caseObj);
+		happyPathHelper.viewCaseDetails(caseObj);
+
+		// Assign Case Officer Via API
+		cy.assignCaseOfficerViaApi(caseObj);
+
+		// Validate Appeal Via API
+		cy.getBusinessActualDate(new Date(), 0).then((date) => {
+			cy.updateAppealDetailsViaApi(caseObj, { validationOutcome: 'valid', validAt: date });
+		});
+
+		cy.reload();
+
 		caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 		happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');
 		dateTimeSection.clearInquiryDateAndTime();
@@ -132,7 +141,7 @@ beforeEach(() => {
 let appeal;
 
 afterEach(() => {
-	cy.deleteAppeals(appeal);
+	// cy.deleteAppeals(appeal);
 });
 
 it('Can start case as inquiry with address and estimated days', () => {
@@ -600,6 +609,47 @@ it('should update inquiry timetable dates from case details page', () => {
 					value: formatDateAndTime(new Date(timetable.proofOfEvidenceAndWitnessesDueDate)).date
 				}
 			]);
+		});
+	});
+});
+
+it('should validate inquiry timetable chronology', () => {
+	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
+		// Create case and setup initial timetable
+		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+
+		// find case and open inquiry section
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseObj);
+
+		const timetableItemsWithNewSelector = timetableItems.map((item) => ({
+			...item,
+			row: item.row.replace('statement-due-date', 'lpa-statement-due-date')
+		}));
+
+		caseDetailsPage.clickRowChangeLink('lpa-questionnaire-due-date');
+
+		// update timetable dates
+		cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((timeTableDate) => {
+			inquirySectionPage.enterTimetableDueDates(timetableItemsWithNewSelector, timeTableDate, 0);
+
+			// Submit changes
+			caseDetailsPage.clickButtonByText('Continue');
+			const formatDate = formatDateAndTime(timeTableDate).date;
+
+			// verify error message
+			inquirySectionPage.verifyErrorMessages({
+				messages: [
+					`Statements due date must be after the LPA questionnaire due date on ${formatDate}`,
+					`Interested party comments due date must be after the LPA questionnaire due date on ${formatDate}`,
+					`Proof of evidence and witnesses due date must be after the Interested party comments due date on ${formatDate}`
+				],
+				fields: [
+					'lpa-statement-due-date-day',
+					'ip-comments-due-date-day',
+					'proof-of-evidence-and-witnesses-due-date-day'
+				]
+			});
 		});
 	});
 });
