@@ -78,16 +78,13 @@ describe('Schedule site visit', () => {
 
 	it('should show an error when visit type is not selected', () => {
 		caseDetailsPage.clickSetUpSiteVisitType();
-
 		// Don’t select a radio button
 		cy.getBusinessActualDate(new Date(), 28).then((visitDate) => {
 			dateTimeSection.enterVisitDate(visitDate);
 		});
 		dateTimeSection.enterVisitStartTime('08', '00');
 		dateTimeSection.enterVisitEndTime('12', '00');
-
 		caseDetailsPage.clickButtonByText('Confirm');
-
 		caseDetailsPage.validateErrorMessage('Select visit type');
 		caseDetailsPage.validateInLineErrorMessage('Select visit type');
 	});
@@ -98,31 +95,24 @@ describe('Schedule site visit', () => {
 	it('should show a sucess banner when a past date is entered for the site visit', () => {
 		caseDetailsPage.clickSetUpSiteVisitType();
 		caseDetailsPage.selectRadioButtonByValue('Unaccompanied');
-
 		cy.getBusinessActualDate(new Date(), -28).then((pastDate) => {
 			dateTimeSection.enterVisitDate(pastDate);
 		});
-
 		dateTimeSection.enterVisitStartTime('08', '00');
 		dateTimeSection.enterVisitEndTime('12', '00');
-
 		caseDetailsPage.clickButtonByText('Confirm');
-
 		caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit set up');
 	});
 
 	it('should show an error when the start time is after the end time', () => {
 		caseDetailsPage.clickSetUpSiteVisitType();
 		caseDetailsPage.selectRadioButtonByValue('Unaccompanied');
-
 		cy.getBusinessActualDate(new Date(), 28).then((visitDate) => {
 			dateTimeSection.enterVisitDate(visitDate);
 		});
 		dateTimeSection.enterVisitStartTime('15', '00'); // 3:00 PM
 		dateTimeSection.enterVisitEndTime('14', '00'); // 2:00 PM
-
 		caseDetailsPage.clickButtonByText('Confirm');
-
 		caseDetailsPage.validateErrorMessage('Start time must be before end time');
 		caseDetailsPage.validateInLineErrorMessage('Start time must be before end time');
 	});
