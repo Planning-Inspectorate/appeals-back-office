@@ -16,21 +16,25 @@ const fileUploader = new FileUploader();
 const document = fileUploader.sampleFiles.document;
 const withdrawalDate = new Date();
 
-let caseRef;
+let appeal;
 
 const setupTestCase = () => {
 	cy.login(users.appeals.caseAdmin);
 	cy.createCase().then((ref) => {
-		caseRef = ref;
-		happyPathHelper.assignCaseOfficer(caseRef);
-		happyPathHelper.reviewAppellantCase(caseRef);
-		happyPathHelper.startCase(caseRef);
+		appeal = ref;
+		happyPathHelper.assignCaseOfficer(appeal);
+		happyPathHelper.reviewAppellantCase(appeal);
+		happyPathHelper.startCase(appeal);
 	});
 };
 
 describe('Cancel an appeal', () => {
 	beforeEach(() => {
 		setupTestCase();
+	});
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
 	});
 
 	it('Withdraw appeal', () => {
