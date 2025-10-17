@@ -31,6 +31,7 @@ export const viewHomepage = async (request, response) => {
 export function handleHeadHealthCheck(_, response) {
 	// no-op - HEAD mustn't return a body
 	response.sendStatus(200);
+	return;
 }
 
 /** @type {import('express').RequestHandler} */
@@ -40,9 +41,11 @@ export function handleHeathCheck(_, response) {
 		uptime: process.uptime(),
 		commit: config.gitSha
 	});
+	return;
 }
 
 /** @type {import('express').RequestHandler} */
 export function viewUnauthenticatedError(_, response) {
 	response.status(401).render('app/401.njk');
+	return;
 }

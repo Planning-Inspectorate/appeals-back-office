@@ -46,6 +46,11 @@ jobs:
             SPEC: cypress/e2e/back-office-appeals/**/*.spec.js
 
     steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "22.x"
+        displayName: "Install Node.js"
+        
       - task: ShellScript@2
         inputs:
           scriptPath: 'appeals/e2e/install-chromium.sh'

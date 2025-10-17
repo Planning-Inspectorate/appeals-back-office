@@ -396,6 +396,8 @@ export function changeAppealTransferAppealPage(appealDetails) {
  *
  * @param {Appeal} appealDetails
  * @param {string} newChangeAppealType
+ * @param {string} appellantEmailTemplate
+ * @param {string} lpaEmailTemplate
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns
@@ -403,6 +405,8 @@ export function changeAppealTransferAppealPage(appealDetails) {
 export function checkDetailsAndUpdateAppealTypePage(
 	appealDetails,
 	newChangeAppealType,
+	appellantEmailTemplate,
+	lpaEmailTemplate,
 	response,
 	errors
 ) {
@@ -443,7 +447,29 @@ export function checkDetailsAndUpdateAppealTypePage(
 					'p',
 					{ class: 'govuk-body' },
 					`We will send an email to the relevant parties to tell them that the appeal type has changed.`
-				)
+				),
+				{
+					type: 'details',
+					wrapperHtml: {
+						opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+						closing: '</div></div>'
+					},
+					parameters: {
+						summaryText: `Preview email to appellant`,
+						html: appellantEmailTemplate
+					}
+				},
+				{
+					type: 'details',
+					wrapperHtml: {
+						opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+						closing: '</div></div>'
+					},
+					parameters: {
+						summaryText: `Preview email to LPA`,
+						html: lpaEmailTemplate
+					}
+				}
 			]
 		},
 		response,

@@ -78,4 +78,5 @@ export const getMsalClient = (sessionId) => {
 export const msalMiddleware = (req, _, next) => {
 	config.msal.redirectUri = `${req.protocol}://${config.appHostname}${config.authRedirectPath}`;
 	next();
+	return;
 };

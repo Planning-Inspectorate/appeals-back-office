@@ -17,6 +17,7 @@ export const addAppellantCaseToLocals = async (req, _res, next) => {
 		next(error);
 	}
 	next();
+	return;
 };
 
 /**
@@ -37,4 +38,5 @@ export const runTimetableValidators = async (req, res, next) => {
 		validator(req, res, runNext);
 	};
 	runNext();
+	return;
 };

@@ -566,6 +566,24 @@ exports[`change-appeal-type GET /change-appeal-type/update-appeal should render 
                 type has changed.</p>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
+                    <details class="govuk-details">
+                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                        </summary>
+                        <div class="govuk-details__text"></div>
+                    </details>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <details class="govuk-details">
+                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
+                        </summary>
+                        <div class="govuk-details__text"></div>
+                    </details>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">
                         <button type="submit" class="govuk-button" data-module="govuk-button">Update appeal type</button>
                     </form>

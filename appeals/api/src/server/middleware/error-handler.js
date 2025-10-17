@@ -48,7 +48,7 @@ export const stateMachineErrorHandler = (error, request, response, next) => {
 		/** @type {Object<string, string>} */ const errorMessage = {};
 
 		errorMessage[caseType] = error.message;
-		response.status(409).send({
+		return response.status(409).send({
 			errors: errorMessage
 		});
 	} else {
@@ -78,6 +78,7 @@ const validationErrorHandlerTemplate = (request, response, next, status) => {
  */
 export const validationErrorHandlerMissing = (request, response, next) => {
 	validationErrorHandlerTemplate(request, response, next, 404);
+	return;
 };
 
 /**
@@ -85,6 +86,7 @@ export const validationErrorHandlerMissing = (request, response, next) => {
  */
 export const validationErrorHandler = (request, response, next) => {
 	validationErrorHandlerTemplate(request, response, next, 400);
+	return;
 };
 
 /**
@@ -92,4 +94,5 @@ export const validationErrorHandler = (request, response, next) => {
  */
 export const validationErrorHandlerUnauthorised = (request, response, next) => {
 	validationErrorHandlerTemplate(request, response, next, 403);
+	return;
 };

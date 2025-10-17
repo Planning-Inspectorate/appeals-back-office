@@ -12,6 +12,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { composeMiddleware } from '@pins/express';
 import { body, param } from 'express-validator';
+const ALLOWED_MISSED_SITE_VISIT_VALUE = ['lpa', 'inspector', 'appellant'];
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */
 
@@ -28,6 +29,28 @@ const validateSiteVisitType = (isRequired = false) => {
 
 	validator.isString().withMessage(ERROR_INVALID_SITE_VISIT_TYPE);
 
+	return validator;
+};
+/**
+ * @param {boolean} isRequired
+ * @returns {ValidationChain}
+ */
+const validateWhoMissedSiteVisit = (isRequired = false) => {
+	const validator = body('whoMissedSiteVisit');
+
+	if (!isRequired) {
+		validator.optional();
+	}
+
+	validator
+		.isString()
+		.withMessage(ERROR_INVALID_SITE_VISIT_TYPE)
+		.custom((value) => {
+			if (!ALLOWED_MISSED_SITE_VISIT_VALUE.includes(value)) {
+				throw new Error('must be one of LPA, INSPECTOR, or APPELLANT');
+			}
+			return true;
+		});
 	return validator;
 };
 
@@ -65,6 +88,13 @@ const postSiteVisitValidator = composeMiddleware(
 	validateDateParameter({ parameterName: 'visitStartTime' }),
 	validateDateParameter({ parameterName: 'visitEndTime' }),
 	validateTimeRangeParameters('visitStartTime', 'visitEndTime'),
+	validationErrorHandler
+);
+
+const postRecordSiteVisitMissedValidator = composeMiddleware(
+	validateIdParameter('appealId'),
+	validateIdParameter('siteVisitId'),
+	validateWhoMissedSiteVisit(true),
 	validationErrorHandler
 );
 
@@ -110,5 +140,6 @@ export {
 	deleteSiteVisitValidator,
 	getSiteVisitValidator,
 	patchSiteVisitValidator,
+	postRecordSiteVisitMissedValidator,
 	postSiteVisitValidator
 };

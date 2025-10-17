@@ -22,9 +22,9 @@ import {
 	VALIDATION_OUTCOME_INVALID
 } from '@pins/appeals/constants/support.js';
 import { addDays, setTimeInTimeZone } from '@pins/appeals/utils/business-days.js';
+import { formatAppealTypeForNotify } from '@pins/appeals/utils/change-appeal-type.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { formatAppealTypeForNotify } from './change-appeal-type.util.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('express').Request} Request */
