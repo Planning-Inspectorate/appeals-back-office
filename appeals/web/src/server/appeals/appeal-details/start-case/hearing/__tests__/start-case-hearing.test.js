@@ -569,7 +569,7 @@ describe('start case hearing flow', () => {
 				questionnaire_due_date: '1 February 2025',
 				lpa_statement_deadline: '1 March 2025',
 				ip_comments_deadline: '1 April 2025',
-				statement_of_common_ground_due_date: '1 May 2025',
+				statement_of_common_ground_deadline: '1 May 2025',
 				hearing_date: '',
 				hearing_time: '',
 				procedure_type: 'a hearing',
