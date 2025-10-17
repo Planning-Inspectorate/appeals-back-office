@@ -226,6 +226,10 @@ const rearrangeMissedSiteVisit = async (req, res) => {
 		// @ts-ignore
 		await updateWhenSiteVisitMissed(azureAdUserId, updateSiteVisitData, notifyClient);
 
+		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT)) {
+			await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+		}
+
 		return res.send({
 			visitDate,
 			visitEndTime,
@@ -259,7 +263,9 @@ const cancelSiteVisit = async (req, res) => {
 			return res.status(404).send({ errors: { body: 'Site visit deletion failed' } });
 		}
 
-		await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_INCOMPLETE);
+		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.AWAITING_EVENT)) {
+			await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_INCOMPLETE);
+		}
 
 		return res.send({
 			siteVisitId
@@ -296,6 +302,10 @@ const postSiteVisitMissed = async (req, res) => {
 		);
 		if (!result) {
 			return res.status(404).send({ errors: { body: 'Record missed site visit failed' } });
+		}
+
+		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.AWAITING_EVENT)) {
+			await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_INCOMPLETE);
 		}
 
 		return res.send({
