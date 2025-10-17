@@ -148,6 +148,42 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 			expect(unprettifiedHtml).toContain('Update appeal procedure</button>');
 		});
 
+		it('should render the check details page with the expected content for hearing procedure type with no event date known', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealStatus: 'lpa_questionnaire',
+					appealType: 'Planning appeal',
+					procedureType: 'hearing'
+				});
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, {
+					planningObligation: { hasObligation: true },
+					procedureType: 'hearing'
+				});
+
+			const response = await request
+				.get(
+					`/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/check-and-confirm`
+				)
+				.send({ dateKnown: 'no' });
+
+			expect(response.statusCode).toBe(200);
+
+			const html = parseHtml(response.text).innerHTML;
+
+			expect(html).toMatchSnapshot();
+
+			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+			expect(unprettifiedHtml).toContain(
+				'<dt class="govuk-summary-list__key"> Do you know the date and time of the hearing?</dt>'
+			);
+			expect(unprettifiedHtml).toContain('<dd class="govuk-summary-list__value"> No</dd>');
+		});
+
 		it('should render the check details page with the expected content for hearing procedure type without planning obligation if an appeal procedure is found in the session', async () => {
 			nock('http://test/')
 				.get('/appeals/1')
