@@ -676,6 +676,20 @@ describe('change-appeal-type', () => {
 	});
 
 	describe('GET /change-appeal-type/update-appeal', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
+			nock('http://test/')
+				.post('/appeals/notify-preview/appeal-type-change-in-manage-appeals-appellant.content.md')
+				.reply(200, { renderedHtml: '' });
+			nock('http://test/')
+				.post('/appeals/notify-preview/appeal-type-change-in-manage-appeals-lpa.content.md')
+				.reply(200, { renderedHtml: '' });
+		});
+
 		it('should render the check details and update appeal page', async () => {
 			// Ensure change appeal type is set in session
 			await request.post(`${baseUrl}/1${changeAppealTypePath}${appealTypePath}`).send({
