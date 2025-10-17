@@ -12,7 +12,6 @@ const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 const fileUploader = new FileUploader();
-
 const document = fileUploader.sampleFiles.document;
 const withdrawalDate = new Date();
 
