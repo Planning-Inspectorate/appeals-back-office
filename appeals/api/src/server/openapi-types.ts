@@ -1910,6 +1910,12 @@ export interface SingleLPAQuestionnaireResponse {
 	reasonForNeighbourVisits?: string;
 	/** @example true */
 	preserveGrantLoan?: boolean;
+	/** @example true */
+	isSiteInAreaOfSpecialControlAdverts?: boolean;
+	/** @example true */
+	wasApplicationRefusedDueToHighwayOrTraffic?: boolean;
+	/** @example true */
+	didAppellantSubmitCompletePhotosAndPlans?: boolean;
 }
 
 export interface UpdateAppellantCaseRequest {
@@ -6881,6 +6887,9 @@ export type LpaQuestionnaire = {
 	consultedBodiesDetails?: string | null;
 	reasonForNeighbourVisits?: string | null;
 	preserveGrantLoan?: boolean | null;
+	isSiteInAreaOfSpecialControlAdverts?: boolean | null;
+	wasApplicationRefusedDueToHighwayOrTraffic?: boolean | null;
+	didAppellantSubmitCompletePhotosAndPlans?: boolean | null;
 	designatedSiteNames?:
 		| {
 				id: number;
@@ -12350,6 +12359,9 @@ export interface LpaQuestionnaireUpdateRequest {
 	consultedBodiesDetails?: string | null;
 	reasonForNeighbourVisits?: string | null;
 	preserveGrantLoan?: boolean | null;
+	isSiteInAreaOfSpecialControlAdverts?: boolean | null;
+	wasApplicationRefusedDueToHighwayOrTraffic?: boolean | null;
+	didAppellantSubmitCompletePhotosAndPlans?: boolean | null;
 	designatedSiteNames?:
 		| {
 				id: number;

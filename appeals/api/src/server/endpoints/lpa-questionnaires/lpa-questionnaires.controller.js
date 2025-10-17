@@ -7,6 +7,7 @@ import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.reposito
 import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
 import { allLpaQuestionnaireOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
 import logger from '#utils/logger.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { camelToScreamingSnake } from '#utils/string-utils.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import { updateLPAQuestionnaireValidationOutcome } from './lpa-questionnaires.service.js';
@@ -67,7 +68,10 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			consultedBodiesDetails,
 			reasonForNeighbourVisits,
 			designatedSiteNames,
-			preserveGrantLoan
+			preserveGrantLoan,
+			isSiteInAreaOfSpecialControlAdverts,
+			wasApplicationRefusedDueToHighwayOrTraffic,
+			didAppellantSubmitCompletePhotosAndPlans
 		},
 		params,
 		validationOutcome
@@ -121,22 +125,34 @@ const updateLPAQuestionnaireById = async (req, res) => {
 					consultedBodiesDetails,
 					reasonForNeighbourVisits,
 					designatedSiteNames,
-					preserveGrantLoan
+					preserveGrantLoan,
+					isSiteInAreaOfSpecialControlAdverts,
+					wasApplicationRefusedDueToHighwayOrTraffic,
+					didAppellantSubmitCompletePhotosAndPlans
 			  });
 
 		const updatedProperties = Object.keys(body).filter((key) => body[key] !== undefined);
 
+		/** @type {Record<string, ()=> string>} */
+		const auditTrailParameters = {
+			AUDIT_TRAIL_LPAQ_IS_SITE_IN_AREA_OF_SPECIAL_CONTROL_ADVERTS_UPDATED: () =>
+				body.isSiteInAreaOfSpecialControlAdverts ? 'Yes' : 'No'
+		};
+
 		// Make sure we only create unique audit trail details for properties that have changed.
 		const auditTrailDetails = [
 			...new Set(
-				updatedProperties.map(
-					(updatedProperty) =>
-						CONSTANTS[`AUDIT_TRAIL_LPAQ_${camelToScreamingSnake(updatedProperty)}_UPDATED`] ||
-						CONSTANTS.AUDIT_TRAIL_LPAQ_UPDATED
-				)
+				updatedProperties.map((updatedProperty) => {
+					const constantKey = `AUDIT_TRAIL_LPAQ_${camelToScreamingSnake(updatedProperty)}_UPDATED`;
+					if (!Object.hasOwn(CONSTANTS, constantKey)) return CONSTANTS.AUDIT_TRAIL_LPAQ_UPDATED;
+					if (CONSTANTS[constantKey].includes('{replacement'))
+						return stringTokenReplacement(CONSTANTS[constantKey], [
+							auditTrailParameters[constantKey]()
+						]);
+					return CONSTANTS[constantKey];
+				})
 			)
 		];
-
 		await Promise.all(
 			auditTrailDetails.map((details) =>
 				createAuditTrail({

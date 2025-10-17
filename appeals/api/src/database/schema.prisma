@@ -470,6 +470,11 @@ model LPAQuestionnaire {
   historicEnglandConsultation Boolean?
   preserveGrantLoan           Boolean?
 
+  //Cas adverts fields 
+  isSiteInAreaOfSpecialControlAdverts        Boolean?
+  wasApplicationRefusedDueToHighwayOrTraffic Boolean?
+  didAppellantSubmitCompletePhotosAndPlans   Boolean?
+
   @@index([isGreenBelt])
 }
 

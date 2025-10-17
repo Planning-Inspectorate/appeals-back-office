@@ -29,6 +29,7 @@ import { mapReviewOutcome } from './submappers/map-review-outcome.js';
 import { mapSiteAccess } from './submappers/map-site-access.js';
 import { mapSiteNotice } from './submappers/map-site-notice.js';
 import { mapSiteWithinGreenBelt } from './submappers/map-site-within-green-belt.js';
+import { mapSpecialControlOfAdvertisement } from './submappers/map-special-control-of-advertisements.js';
 import { mapSupplementaryPlanning } from './submappers/map-supplementary-planning.js';
 
 export const submaps = {
@@ -37,6 +38,7 @@ export const submaps = {
 	affectsScheduledMonument: mapAffectsScheduledMonument,
 	conservationAreaMap: mapConservationAreaMap,
 	hasProtectedSpecies: mapHasProtectedSpecies,
+	specialControlOfAdvertisment: mapSpecialControlOfAdvertisement,
 	siteWithinGreenBelt: mapSiteWithinGreenBelt,
 	isAonbNationalLandscape: mapIsAonbNationalLandscape,
 	inNearOrLikelyToAffectDesignatedSites: mapInNearOrLikelyToAffectDesignatedSites,

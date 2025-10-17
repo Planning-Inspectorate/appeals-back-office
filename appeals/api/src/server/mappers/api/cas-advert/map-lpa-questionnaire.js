@@ -38,7 +38,12 @@ export const mapCasAdvertLpaQuestionnaire = (data) => {
 			lpaProcedurePreferenceDetails: lpaQuestionnaire.lpaProcedurePreferenceDetails,
 			lpaProcedurePreferenceDuration: lpaQuestionnaire.lpaProcedurePreferenceDuration,
 			consultedBodiesDetails: lpaQuestionnaire.consultedBodiesDetails,
-			reasonForNeighbourVisits: lpaQuestionnaire.reasonForNeighbourVisits
+			reasonForNeighbourVisits: lpaQuestionnaire.reasonForNeighbourVisits,
+			isSiteInAreaOfSpecialControlAdverts: lpaQuestionnaire.isSiteInAreaOfSpecialControlAdverts,
+			wasApplicationRefusedDueToHighwayOrTraffic:
+				lpaQuestionnaire.wasApplicationRefusedDueToHighwayOrTraffic,
+			didAppellantSubmitCompletePhotosAndPlans:
+				lpaQuestionnaire.didAppellantSubmitCompletePhotosAndPlans
 		};
 	}
 };

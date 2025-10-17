@@ -1,3 +1,4 @@
+import { areIdParamsValid } from '#lib/validators/id-param.validator.js';
 import { getAppealDetailsFromId } from './appeal-details.service.js';
 
 /**
@@ -6,6 +7,10 @@ import { getAppealDetailsFromId } from './appeal-details.service.js';
  */
 export const validateAppeal = async (req, res, next) => {
 	const { appealId, caseId } = req.params;
+
+	if (!areIdParamsValid(appealId)) {
+		return res.status(400).render('app/400.njk');
+	}
 
 	try {
 		const appeal = await getAppealDetailsFromId(req.apiClient, appealId || caseId);

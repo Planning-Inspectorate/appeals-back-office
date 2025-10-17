@@ -52,6 +52,9 @@ const updateLPAQuestionnaireById = (id, data) => {
 				consultedBodiesDetails: data.consultedBodiesDetails,
 				reasonForNeighbourVisits: data.reasonForNeighbourVisits,
 				preserveGrantLoan: data.preserveGrantLoan,
+				isSiteInAreaOfSpecialControlAdverts: data.isSiteInAreaOfSpecialControlAdverts,
+				wasApplicationRefusedDueToHighwayOrTraffic: data.wasApplicationRefusedDueToHighwayOrTraffic,
+				didAppellantSubmitCompletePhotosAndPlans: data.didAppellantSubmitCompletePhotosAndPlans,
 				...processDesignatedSites(id, data, transaction)
 			}
 		})
