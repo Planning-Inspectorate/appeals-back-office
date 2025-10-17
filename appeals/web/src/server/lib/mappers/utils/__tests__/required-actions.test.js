@@ -392,6 +392,31 @@ describe('required actions', () => {
 						)
 					).toEqual(['shareIpCommentsAndLpaStatement', 'updateLpaStatement']);
 				});
+
+				it('should return "progressFromStatements" if ip comments due date and statements due date have both passed, and there are no ip comments or lpa statement awaiting review, and there are no ip comments or lpa statement to share and the procedure is inquiry', () => {
+					expect(
+						getRequiredActionsForAppeal({
+							...appealDataWithBothDueDatesPassed,
+							procedureType: 'Inquiry',
+							documentationSummary: {
+								...appealDataWithStatementsStatus.documentationSummary,
+								ipComments: {
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
+								},
+								lpaStatement: {
+									status: 'not_received',
+									receivedAt: null,
+									representationStatus: null
+								}
+							}
+						})
+					).toEqual(['progressToProofOfEvidenceAndWitnesses']);
+				});
 			});
 
 			describe('reviewIpComments', () => {
