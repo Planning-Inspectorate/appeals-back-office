@@ -261,6 +261,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 			},
 			[APPEAL_CASE_STATUS.ISSUE_DETERMINATION]: {
 				on: {
+					[VALIDATION_OUTCOME_INCOMPLETE]: { target: APPEAL_CASE_STATUS.EVENT },
 					[APPEAL_CASE_STATUS.COMPLETE]: { target: APPEAL_CASE_STATUS.COMPLETE },
 					[APPEAL_CASE_STATUS.CLOSED]: { target: APPEAL_CASE_STATUS.CLOSED },
 					[APPEAL_CASE_STATUS.AWAITING_TRANSFER]: {
