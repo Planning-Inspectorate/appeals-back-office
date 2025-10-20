@@ -310,6 +310,8 @@ describe('appeal-valid-start-case-s78-appellant.md', () => {
 				lpa_statement_deadline: '10 January 2025',
 				ip_comments_deadline: '20 January 2025',
 				final_comments_deadline: '30 January 2025',
+				statement_of_common_ground_deadline: '15 January 2025',
+				planning_obligation_deadline: '20 January 2025',
 				we_will_email_when: [
 					'to let you know when you can view information from other parties in the appeals service',
 					'when we set up your hearing'
@@ -347,6 +349,14 @@ describe('appeal-valid-start-case-s78-appellant.md', () => {
 			'Due by 10 January 2025.',
 			'',
 			'## Interested party comments',
+			'',
+			'Due by 20 January 2025.',
+			'',
+			'## Statement of common ground',
+			'',
+			'Due by 15 January 2025.',
+			'',
+			'## Planning obligation',
 			'',
 			'Due by 20 January 2025.',
 			'',
