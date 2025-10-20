@@ -419,7 +419,8 @@ describe('personal-list', () => {
 				name: 'Awaiting proof of evidence and witnesses',
 				requiredAction: 'awaitingProofOfEvidenceAndWitnesses',
 				expectedHtml: {
-					caseOfficer: 'Awaiting proof of evidence and witnesses'
+					caseOfficer:
+						'Awaiting proof of evidence and witnesses<br><a class="govuk-link" href="/appeals-service/appeal-details/1/proof-of-evidence/appellant?backUrl=%2Fappeals-service%2Fpersonal-list">Review appellant proof of evidence and witnesses</a>'
 				}
 			}
 		];
