@@ -27,19 +27,25 @@ export class AllCases extends Page {
 	 ********************************************************/
 
 	verifyPlanningApplicationRef(caseObj, expectedText) {
-		this.elements.planningApplicationRef(caseObj).contains(expectedText);
+		this.elements
+			.planningApplicationRef(caseObj)
+			.invoke('text')
+			.then((text) => {
+				const cleanedText = text.replace(/[\n\t]/g, '').trim();
+				expect(cleanedText).to.eq(expectedText);
+			});
 	}
 
 	verifySiteAdress(caseObj, expectedText) {
-		this.elements.siteAddress(caseObj).contains(expectedText);
+		this.elements.siteAddress(caseObj).should('have.text', expectedText);
 	}
 
 	verifyLocalPlanningAuthority(caseObj, expectedText) {
-		this.elements.localPlanningAuthority(caseObj).contains(expectedText);
+		this.elements.localPlanningAuthority(caseObj).should('have.text', expectedText);
 	}
 
 	verifyappealType(caseObj, expectedText) {
-		this.elements.appealType(caseObj).contains(expectedText);
+		this.elements.appealType(caseObj).should('have.text', expectedText);
 	}
 
 	verifyStatus(caseObj, expectedText, index = 0) {
