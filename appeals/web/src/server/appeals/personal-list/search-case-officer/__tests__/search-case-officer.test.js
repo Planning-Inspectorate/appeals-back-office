@@ -7,7 +7,7 @@ import supertest from 'supertest';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
-const baseUrl = '/appeals-service';
+const baseUrl = '/appeals-service/personal-list';
 
 describe('search-case-officer', () => {
 	beforeEach(() => {

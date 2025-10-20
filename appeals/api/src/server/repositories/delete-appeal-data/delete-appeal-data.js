@@ -37,8 +37,6 @@ export async function deleteAppealsInBatches(appeals) {
 	} catch (error) {
 		logger.error(error);
 		throw error;
-	} finally {
-		await databaseConnector.$disconnect();
 	}
 }
 
