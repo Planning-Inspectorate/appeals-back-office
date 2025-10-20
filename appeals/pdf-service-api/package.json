@@ -13,6 +13,7 @@
 		"start": "node ./src/main.js",
 		"start:dev": "nodemon -e .js,.json,.yml,.yaml ./ | pino-pretty -tlc",
 		"test": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --logHeapUsage --ci",
+    "test:update": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest -u --logHeapUsage --ci",
 		"test:watch": "jest --watchAll --runInBand"
 	},
 	"dependencies": {
@@ -31,7 +32,7 @@
 		"puppeteer-core": "*"
 	},
 	"devDependencies": {
-		"@types/express": "^5.0.1",
+		"@types/express": "^5.0.3",
 		"jest": "*",
 		"jest-junit": "*",
 		"nodemon": "*"

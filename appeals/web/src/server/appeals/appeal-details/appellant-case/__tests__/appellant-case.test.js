@@ -2178,7 +2178,7 @@ describe('appellant-case', () => {
 		it('should re-render the update date page with the expected error message if no date was provided', async () => {
 			// post to incomplete reason page controller is necessary to set required data in the session
 			const incompleteReasonPostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
+				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
 					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
 					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
@@ -2214,7 +2214,7 @@ describe('appellant-case', () => {
 		it('should re-render the update date page with the expected error message if provided date is not in the future', async () => {
 			// post to incomplete reason page controller is necessary to set required data in the session
 			const incompleteReasonPostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
+				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
 					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
 					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
@@ -2261,7 +2261,7 @@ describe('appellant-case', () => {
 		it('should re-render the update date page with the expected error message if an invalid day was provided', async () => {
 			// post to incomplete reason page controller is necessary to set required data in the session
 			const incompleteReasonPostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
+				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
 					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
 					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
@@ -2346,7 +2346,7 @@ describe('appellant-case', () => {
 		it('should re-render the update date page with the expected error message if an invalid month was provided', async () => {
 			// post to incomplete reason page controller is necessary to set required data in the session
 			const incompleteReasonPostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
+				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
 					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
 					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
@@ -2431,7 +2431,7 @@ describe('appellant-case', () => {
 		it('should re-render the update date page with the expected error message if an invalid year was provided', async () => {
 			// post to incomplete reason page controller is necessary to set required data in the session
 			const incompleteReasonPostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
+				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
 					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
 					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
@@ -2496,7 +2496,7 @@ describe('appellant-case', () => {
 		it('should re-render the update date page with the expected error message if an invalid date was provided', async () => {
 			// post to incomplete reason page controller is necessary to set required data in the session
 			const incompleteReasonPostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
+				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
 					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
 					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
@@ -2535,7 +2535,7 @@ describe('appellant-case', () => {
 		it('should redirect to the check and confirm page if a valid date was provided', async () => {
 			// post to incomplete reason page controller is necessary to set required data in the session
 			const incompleteReasonPostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
+				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
 					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
 					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
@@ -2599,7 +2599,7 @@ describe('appellant-case', () => {
 		it('should render the check your answers page with the expected content if outcome is "invalid" and required data is present in the session', async () => {
 			// post to invalid reason page controller is necessary to set required data in the session
 			const invalidReasonPostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}/${invalidOutcomePagePath}`)
+				.post(`${baseUrl}/1${appellantCasePagePath}${invalidOutcomePagePath}`)
 				.send({
 					invalidReason: [invalidReasonsWithTextIds[0], invalidReasonsWithTextIds[1]],
 					[`invalidReason-${invalidReasonsWithTextIds[0]}`]: 'test reason text 1',
@@ -2635,7 +2635,7 @@ describe('appellant-case', () => {
 		it('should render the check your answers page with the expected content if outcome is "incomplete" and required data is present in the session', async () => {
 			// post to incomplete reason page controller is necessary to set required data in the session
 			const incompleteReasonPostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
+				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
 					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
 					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: [
@@ -2696,7 +2696,7 @@ describe('appellant-case', () => {
 		it('should send a patch request to the appellant-cases API endpoint and redirect to the appeal details page, if posted outcome was "invalid"', async () => {
 			// post to invalid reason page controller is necessary to set required data in the session
 			const invalidReasonPostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}/${invalidOutcomePagePath}`)
+				.post(`${baseUrl}/1${appellantCasePagePath}${invalidOutcomePagePath}`)
 				.send({
 					invalidReason: invalidReasonsWithoutTextIds[0]
 				});
@@ -2719,7 +2719,7 @@ describe('appellant-case', () => {
 		it('should send a patch request to the appellant-cases API endpoint and redirect to the appeal details page, if posted outcome was "incomplete"', async () => {
 			// post to incomplete reason page controller is necessary to set required data in the session
 			const incompleteReasonPostResponse = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}/${incompleteOutcomePagePath}`)
+				.post(`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`)
 				.send({
 					incompleteReason: incompleteReasonsWithoutTextIds[0]
 				});

@@ -14,4 +14,5 @@ export function handleValidationError(request, response, next) {
 	} else {
 		next();
 	}
+	return;
 }

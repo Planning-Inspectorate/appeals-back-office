@@ -152,7 +152,7 @@ const getStartCaseNotifyParams = async (
 		lpa_statement_deadline: formatDate(new Date(timetable.lpaStatementDueDate || ''), false),
 		ip_comments_deadline: formatDate(new Date(timetable.ipCommentsDueDate || ''), false),
 		final_comments_deadline: formatDate(new Date(timetable.finalCommentsDueDate || ''), false),
-		statement_of_common_ground_due_date: formatDate(
+		statement_of_common_ground_deadline: formatDate(
 			new Date(timetable.statementOfCommonGroundDueDate || ''),
 			false
 		),

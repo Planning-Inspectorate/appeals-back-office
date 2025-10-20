@@ -10,10 +10,12 @@ export const registerAuthLocals = (req, res, next) => {
 	}
 	res.locals.isAuthenticated = isAuthenticated;
 	next();
+	return;
 };
 
 /** @type {import('express').RequestHandler} */
 export const clearAuthenticationData = ({ session }, _, next) => {
 	authSession.destroyAuthenticationData(session);
 	next();
+	return;
 };

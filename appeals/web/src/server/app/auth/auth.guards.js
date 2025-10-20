@@ -72,6 +72,7 @@ export function assertIsUnauthenticated({ session }, response, next) {
 	} else {
 		response.redirect(`/`);
 	}
+	return;
 }
 
 /**

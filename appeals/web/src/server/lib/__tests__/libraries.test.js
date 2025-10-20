@@ -1362,6 +1362,7 @@ describe('url-utilities', () => {
 					host: 'localhost'
 				}
 			});
+			// @ts-ignore
 			expect(isInternalUrl(url, request)).toBe(true);
 		});
 
@@ -1377,6 +1378,7 @@ describe('url-utilities', () => {
 				}
 			});
 
+			// @ts-ignore
 			expect(isInternalUrl(url, request)).toBe(true);
 		});
 
@@ -1390,6 +1392,7 @@ describe('url-utilities', () => {
 					host: 'localhost'
 				}
 			});
+			// @ts-ignore
 			expect(isInternalUrl(url, request)).toBe(true);
 		});
 
@@ -1403,6 +1406,7 @@ describe('url-utilities', () => {
 					host: 'localhost'
 				}
 			});
+			// @ts-ignore
 			expect(isInternalUrl(url, request)).toBe(false);
 		});
 
@@ -1416,6 +1420,7 @@ describe('url-utilities', () => {
 					host: 'localhost'
 				}
 			});
+			// @ts-ignore
 			expect(isInternalUrl(url, request)).toBe(false);
 		});
 
@@ -1429,6 +1434,7 @@ describe('url-utilities', () => {
 					host: 'localhost'
 				}
 			});
+			// @ts-ignore
 			expect(isInternalUrl(url, request)).toBe(true);
 		});
 	});
@@ -1445,6 +1451,7 @@ describe('url-utilities', () => {
 				originalUrl: '/appeals-service/all-cases'
 			});
 
+			// @ts-ignore
 			const result = getOriginPathname(request);
 
 			expect(result).toBe('/appeals-service/all-cases');
@@ -1461,6 +1468,7 @@ describe('url-utilities', () => {
 				originalUrl: '/appeals-service/all-cases?search=test'
 			});
 
+			// @ts-ignore
 			const result = getOriginPathname(request);
 
 			expect(result).toBe('/appeals-service/all-cases');
@@ -1477,6 +1485,7 @@ describe('url-utilities', () => {
 				originalUrl: '/appeals-service/all-cases#section1'
 			});
 
+			// @ts-ignore
 			const result = getOriginPathname(request);
 
 			expect(result).toBe('/appeals-service/all-cases');
@@ -1493,6 +1502,7 @@ describe('url-utilities', () => {
 				originalUrl: '/appeals-service/all-cases'
 			});
 
+			// @ts-ignore
 			const result = getOriginPathname(request);
 
 			expect(result).toBe('/appeals-service/all-cases');
@@ -1509,6 +1519,7 @@ describe('url-utilities', () => {
 				originalUrl: '/appeals-service/all-cases'
 			});
 
+			// @ts-ignore
 			const result = getOriginPathname(request);
 
 			expect(result).toBe('/appeals-service/all-cases');
@@ -1525,6 +1536,7 @@ describe('url-utilities', () => {
 				originalUrl: ''
 			});
 
+			// @ts-ignore
 			const result = getOriginPathname(request);
 
 			expect(result).toBe('/');
@@ -1546,6 +1558,7 @@ describe('url-utilities', () => {
 			const response = httpMocks.createResponse();
 			const url = '/appeals-service/new-case';
 
+			// @ts-ignore
 			safeRedirect(request, response, url);
 
 			expect(response._getRedirectUrl()).toBe('/appeals-service/new-case');
@@ -1565,6 +1578,7 @@ describe('url-utilities', () => {
 			const response = httpMocks.createResponse();
 			const url = 'https://external-phishing-url.com';
 
+			// @ts-ignore
 			safeRedirect(request, response, url);
 
 			expect(response._getRedirectUrl()).toBe('/');
@@ -1584,6 +1598,7 @@ describe('url-utilities', () => {
 			const response = httpMocks.createResponse();
 			const url = '//localhost/appeals-service/new-case';
 
+			// @ts-ignore
 			safeRedirect(request, response, url);
 
 			expect(response._getRedirectUrl()).toBe('//localhost/appeals-service/new-case');
@@ -1603,6 +1618,7 @@ describe('url-utilities', () => {
 			const response = httpMocks.createResponse();
 			const url = '://bad.url';
 
+			// @ts-ignore
 			safeRedirect(request, response, url);
 
 			expect(response._getRedirectUrl()).toBe('/');
@@ -1622,6 +1638,7 @@ describe('url-utilities', () => {
 			const response = httpMocks.createResponse();
 			const url = '';
 
+			// @ts-ignore
 			safeRedirect(request, response, url);
 
 			expect(response._getRedirectUrl()).toBe('/');

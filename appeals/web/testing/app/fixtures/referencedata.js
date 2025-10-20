@@ -4155,7 +4155,7 @@ export const appealDataToGetRequiredActions = {
 	},
 	reviewLpaProofOfEvidenceComplete: {
 		...baseAppealDataToGetRequiredActions,
-		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+		appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
 		documentationSummary: {
 			lpaProofOfEvidence: {
 				status: DOCUMENT_STATUS_RECEIVED,
@@ -4171,7 +4171,7 @@ export const appealDataToGetRequiredActions = {
 	},
 	reviewAppellantProofOfEvidenceComplete: {
 		...baseAppealDataToGetRequiredActions,
-		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+		appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
 		documentationSummary: {
 			lpaProofOfEvidence: {
 				status: DOCUMENT_STATUS_RECEIVED,
@@ -4187,7 +4187,7 @@ export const appealDataToGetRequiredActions = {
 	},
 	reviewLpaProofOfEvidenceIncomplete: {
 		...baseAppealDataToGetRequiredActions,
-		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+		appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
 		documentationSummary: {
 			lpaProofOfEvidence: {
 				status: DOCUMENT_STATUS_RECEIVED,
@@ -4203,7 +4203,7 @@ export const appealDataToGetRequiredActions = {
 	},
 	reviewAppellantProofOfEvidenceIncomplete: {
 		...baseAppealDataToGetRequiredActions,
-		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+		appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
 		documentationSummary: {
 			lpaProofOfEvidence: {
 				status: DOCUMENT_STATUS_RECEIVED,
@@ -4214,6 +4214,45 @@ export const appealDataToGetRequiredActions = {
 				status: DOCUMENT_STATUS_RECEIVED,
 				receivedAt: pastDate,
 				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			}
+		}
+	},
+	awaitingProofOfEvidenceAndWitnesses: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
+		documentationSummary: {
+			lpaProofOfEvidence: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+			},
+			appellantProofOfEvidence: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			}
+		}
+	},
+	progressToProofOfEvidenceAndWitnessesComplete: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+		documentationSummary: {
+			ipComments: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				counts: {
+					awaiting_review: 0,
+					valid: 0,
+					published: 0
+				}
+			},
+			lpaStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				counts: {
+					awaiting_review: 0,
+					valid: 0,
+					published: 0
+				}
 			}
 		}
 	}

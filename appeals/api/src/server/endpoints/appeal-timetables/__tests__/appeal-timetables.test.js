@@ -695,7 +695,7 @@ describe('appeal timetables routes', () => {
 									'when you can view information from other parties in the appeals service.',
 								site_visit: true,
 								costs_info: true,
-								statement_of_common_ground_due_date: '',
+								statement_of_common_ground_deadline: '',
 								team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 							},
 							recipientEmail: appeal.appellant.email,
@@ -727,7 +727,7 @@ describe('appeal timetables routes', () => {
 								questionnaire_due_date: '12 June 2024',
 								site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 								start_date: '5 June 2024',
-								statement_of_common_ground_due_date: '',
+								statement_of_common_ground_deadline: '',
 								...additionalPersonalisation,
 								team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 							},
@@ -786,7 +786,7 @@ describe('appeal timetables routes', () => {
 									'when you can view information from other parties in the appeals service.',
 								site_visit: true,
 								costs_info: true,
-								statement_of_common_ground_due_date: '',
+								statement_of_common_ground_deadline: '',
 								team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 							},
 							recipientEmail: appeal.appellant.email,
@@ -818,7 +818,7 @@ describe('appeal timetables routes', () => {
 								questionnaire_due_date: '12 June 2024',
 								site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 								start_date: '5 June 2024',
-								statement_of_common_ground_due_date: '',
+								statement_of_common_ground_deadline: '',
 								...additionalPersonalisation,
 								team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 							},
@@ -922,7 +922,7 @@ describe('appeal timetables routes', () => {
 								'when you can view information from other parties in the appeals service.',
 							site_visit: true,
 							costs_info: true,
-							statement_of_common_ground_due_date: '',
+							statement_of_common_ground_deadline: '',
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.appellant.email,
@@ -954,7 +954,7 @@ describe('appeal timetables routes', () => {
 							questionnaire_due_date: '10 June 2024',
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '3 June 2024', // the following working day
-							statement_of_common_ground_due_date: '',
+							statement_of_common_ground_deadline: '',
 							...additionalPersonalisation,
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -1010,7 +1010,7 @@ describe('appeal timetables routes', () => {
 							'when you can view information from other parties in the appeals service.',
 						site_visit: true,
 						costs_info: true,
-						statement_of_common_ground_due_date: '',
+						statement_of_common_ground_deadline: '',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appeal.appellant.email,
@@ -1036,7 +1036,7 @@ describe('appeal timetables routes', () => {
 						questionnaire_due_date: '12 June 2024',
 						site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 						start_date: '5 June 2024',
-						statement_of_common_ground_due_date: '',
+						statement_of_common_ground_deadline: '',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appeal.lpa.email,
@@ -1132,7 +1132,7 @@ describe('appeal timetables routes', () => {
 							],
 							site_visit: false,
 							costs_info: false,
-							statement_of_common_ground_due_date: '10 July 2024',
+							statement_of_common_ground_deadline: '10 July 2024',
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.appellant.email,
@@ -1159,7 +1159,7 @@ describe('appeal timetables routes', () => {
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
 							...personalisation,
-							statement_of_common_ground_due_date: '10 July 2024',
+							statement_of_common_ground_deadline: '10 July 2024',
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.lpa.email,
@@ -1272,7 +1272,7 @@ describe('appeal timetables routes', () => {
 							],
 							site_visit: false,
 							costs_info: false,
-							statement_of_common_ground_due_date: '10 July 2024',
+							statement_of_common_ground_deadline: '10 July 2024',
 							hearing_date: '10 July 2024',
 							hearing_time: '2:45pm',
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -1300,7 +1300,7 @@ describe('appeal timetables routes', () => {
 							questionnaire_due_date: '12 June 2024',
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
-							statement_of_common_ground_due_date: '10 July 2024',
+							statement_of_common_ground_deadline: '10 July 2024',
 							hearing_date: '10 July 2024',
 							hearing_time: '2:45pm',
 							...personalisation,
@@ -1392,7 +1392,7 @@ describe('appeal timetables routes', () => {
 							],
 							site_visit: false,
 							costs_info: false,
-							statement_of_common_ground_due_date: '10 July 2024',
+							statement_of_common_ground_deadline: '10 July 2024',
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.appellant.email,
@@ -1418,7 +1418,7 @@ describe('appeal timetables routes', () => {
 							questionnaire_due_date: '12 June 2024',
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
-							statement_of_common_ground_due_date: '10 July 2024',
+							statement_of_common_ground_deadline: '10 July 2024',
 							...personalisation,
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -1512,7 +1512,7 @@ describe('appeal timetables routes', () => {
 							],
 							site_visit: false,
 							costs_info: false,
-							statement_of_common_ground_due_date: '10 July 2024',
+							statement_of_common_ground_deadline: '10 July 2024',
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.appellant.email,
@@ -1538,7 +1538,7 @@ describe('appeal timetables routes', () => {
 							questionnaire_due_date: '12 June 2024',
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
-							statement_of_common_ground_due_date: '10 July 2024',
+							statement_of_common_ground_deadline: '10 July 2024',
 							...personalisation,
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},

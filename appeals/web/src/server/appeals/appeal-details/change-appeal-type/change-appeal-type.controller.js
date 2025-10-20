@@ -27,6 +27,7 @@ import {
 	getAppealTypes,
 	getChangeAppealTypes,
 	getNoResubmitAppealRequestRedirectUrl,
+	getUpdateAppealRequest,
 	postAppealResubmitMarkInvalidRequest,
 	postAppealTransferConfirmation,
 	postAppealTransferRequest,
@@ -689,23 +690,24 @@ export const postCheckChangeAppealFinalDate = async (request, response) => {
  */
 export const getUpdateAppeal = async (request, response) => {
 	try {
-		const appealData = request.currentAppeal;
 		const {
 			errors,
-			session: { changeAppealType }
+			session: { changeAppealType },
+			apiClient,
+			currentAppeal
 		} = request;
-		const { newChangeAppealType } = await getChangeAppealTypes(
-			request.apiClient,
-			appealData.appealType,
-			changeAppealType
+
+		const { newChangeAppealType, appellantEmailTemplate, lpaEmailTemplate } =
+			await getUpdateAppealRequest(apiClient, currentAppeal, changeAppealType);
+
+		return checkDetailsAndUpdateAppealTypePage(
+			currentAppeal,
+			newChangeAppealType,
+			appellantEmailTemplate,
+			lpaEmailTemplate,
+			response,
+			errors
 		);
-
-		if (!newChangeAppealType) {
-			logger.error('Unable to parse new change appeal type');
-			return response.status(500).render('app/500.njk');
-		}
-
-		return checkDetailsAndUpdateAppealTypePage(appealData, newChangeAppealType, response, errors);
 	} catch (error) {
 		logger.error(error);
 		return response.status(500).render('app/500.njk');
