@@ -20,10 +20,9 @@ const baseUrl = '/appeals-service/appeal-details';
 describe('representations', () => {
 	afterEach(teardown);
 	describe('GET /share', () => {
-		let appealWithStatments;
 		const numIpComments = 1;
-		beforeEach(() => {
-			appealWithStatments = {
+		it('should contain link to interested-party-comments#valid', async () => {
+			const appealWithStatments = {
 				...appealData,
 				appealStatus: 'statements',
 				documentationSummary: {
@@ -35,9 +34,6 @@ describe('representations', () => {
 				}
 			};
 			nock('http://test/').get('/appeals/1').reply(200, appealWithStatments);
-		});
-
-		it('should contain link to interested-party-comments#valid', async () => {
 			const response = await request.get(`${baseUrl}/1/share`);
 			const element = parseHtml(response.text);
 
@@ -45,6 +41,33 @@ describe('representations', () => {
 			expect(element.innerHTML).toContain('Share IP comments and statements</h1>');
 			expect(element.innerHTML).toContain(
 				`<a href="/appeals-service/appeal-details/1/interested-party-comments?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare#valid"`
+			);
+		});
+
+		it('should contain correct content if inquiry and proof of evidence and no ip comment or statement to share', async () => {
+			const appealWithStatments = {
+				...appealData,
+				procedureType: 'inquiry',
+				appealStatus: 'statements',
+				documentationSummary: {}
+			};
+			nock('http://test/').get('/appeals/1').reply(200, appealWithStatments);
+			const response = await request.get(`${baseUrl}/1/share`);
+			const snapshotResponse = parseHtml(response.text);
+			const textResponse = parseHtml(response.text, {
+				skipPrettyPrint: true
+			});
+
+			expect(snapshotResponse.innerHTML).toMatchSnapshot();
+			expect(textResponse.innerHTML).toContain('Progress to proof of evidence and witnesses</h1>');
+			expect(textResponse.innerHTML).toContain(
+				`<div class="govuk-grid-column-two-thirds">There are no interested party comments or statements to share.`
+			);
+			expect(textResponse.innerHTML.toString()).toContain(
+				`Warning</span> Do not progress to proof of evidence and witnesses if you are awaiting any late statements or interested party comments.</strong>`
+			);
+			expect(textResponse.innerHTML).toContain(
+				`Progress to proof of evidence and witnesses</button>`
 			);
 		});
 	});

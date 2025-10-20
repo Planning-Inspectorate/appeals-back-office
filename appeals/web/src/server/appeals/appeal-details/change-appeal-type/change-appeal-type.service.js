@@ -1,3 +1,8 @@
+import { appealSiteToAddressString } from '#lib/address-formatter.js';
+import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
+import { formatAppealTypeForNotify } from '@pins/appeals/utils/change-appeal-type.js';
+import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
+
 /**
  *
  * @param {import('got').Got} apiClient
@@ -141,6 +146,51 @@ export async function getChangeAppealTypes(apiClient, appealType, changeAppealTy
 	)?.changeAppealType;
 
 	return { existingChangeAppealType, newChangeAppealType };
+}
+
+/**
+ *
+ * @param {import('got').Got} apiClient
+ * @param {*} appeal
+ * @param {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} changeAppealType
+ */
+export async function getUpdateAppealRequest(apiClient, appeal, changeAppealType) {
+	const { existingChangeAppealType, newChangeAppealType } = await getChangeAppealTypes(
+		apiClient,
+		appeal.appealType,
+		changeAppealType
+	);
+
+	if (!newChangeAppealType) {
+		throw new Error('Unable to parse new change appeal type');
+	}
+
+	const { email: assignedTeamEmail } = await getTeamFromAppealId(apiClient, appeal.appealId);
+
+	const personalisation = {
+		appeal_reference_number: appeal.appealReference,
+		site_address: appealSiteToAddressString(appeal.appealSite),
+		lpa_reference: appeal.planningApplicationReference,
+		team_email_address: assignedTeamEmail,
+		existing_appeal_type: formatAppealTypeForNotify(existingChangeAppealType),
+		new_appeal_type: formatAppealTypeForNotify(newChangeAppealType)
+	};
+
+	const appellantTemplateName = 'appeal-type-change-in-manage-appeals-appellant.content.md';
+	const appellantTemplate = await generateNotifyPreview(
+		apiClient,
+		appellantTemplateName,
+		personalisation
+	);
+
+	const lpaTemplateName = 'appeal-type-change-in-manage-appeals-lpa.content.md';
+	const lpaTemplate = await generateNotifyPreview(apiClient, lpaTemplateName, personalisation);
+
+	return {
+		newChangeAppealType,
+		appellantEmailTemplate: appellantTemplate.renderedHtml,
+		lpaEmailTemplate: lpaTemplate.renderedHtml
+	};
 }
 
 /**

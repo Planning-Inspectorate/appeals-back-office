@@ -1,5 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`representations GET /share should contain correct content if inquiry and proof of evidence and no ip comment or statement to share 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Progress to proof of evidence and witnesses</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">There are no interested party comments or statements to share.
+            <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Do not progress to proof
+                    of evidence and witnesses if you are awaiting any late statements or interested
+                    party comments.</strong>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Progress to proof of evidence and witnesses</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`representations GET /share should contain link to interested-party-comments#valid 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">

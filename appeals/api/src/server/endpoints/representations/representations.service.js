@@ -331,6 +331,11 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 		false
 	);
 
+	const proofOfEvidenceDueDate = formatDate(
+		new Date(appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate || ''),
+		false
+	);
+
 	const hasLpaStatement = result.some(
 		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
 	);
@@ -338,6 +343,8 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
 	);
 	const isHearingProcedure = String(appeal.procedureType?.key) === APPEAL_CASE_PROCEDURE.HEARING;
+
+	const isInquiryProcedure = String(appeal.procedureType?.key) === APPEAL_CASE_PROCEDURE.INQUIRY;
 
 	try {
 		let whatHappensNextAppellant;
@@ -356,9 +363,20 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 				whatHappensNextAppellant = `We will contact you if we need any more information.`;
 				whatHappensNextLpa = `We will contact you when the hearing has been set up.`;
 			}
+		} else if (isInquiryProcedure) {
+			whatHappensNextAppellant = `You need to [submit your proof of evidence and witnesses](${config.frontOffice.url}/appeals/${appeal.reference}) by ${proofOfEvidenceDueDate}.`;
+			whatHappensNextLpa = `You need to [submit your proof of evidence and witnesses](${config.frontOffice.url}/manage-appeals/${appeal.reference}) by ${proofOfEvidenceDueDate}.`;
 		} else {
 			whatHappensNextAppellant = `You need to [submit your final comments](${config.frontOffice.url}/appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
 			whatHappensNextLpa = `You need to [submit your final comments](${config.frontOffice.url}/manage-appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
+		}
+
+		let lpaTemplate = 'received-statement-and-ip-comments-lpa';
+		let appellantTemplate = 'received-statement-and-ip-comments-appellant';
+
+		if (isInquiryProcedure && !hasLpaStatement && !hasIpComments) {
+			lpaTemplate = 'not-received-statement-and-ip-comments';
+			appellantTemplate = 'not-received-statement-and-ip-comments';
 		}
 
 		await notifyPublished({
@@ -367,7 +385,8 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 			hasLpaStatement,
 			hasIpComments,
 			isHearingProcedure,
-			templateName: 'received-statement-and-ip-comments-lpa',
+			isInquiryProcedure,
+			templateName: lpaTemplate,
 			recipientEmail: appeal.lpa?.email,
 			finalCommentsDueDate,
 			whatHappensNext: whatHappensNextLpa,
@@ -380,7 +399,8 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 			hasLpaStatement,
 			hasIpComments,
 			isHearingProcedure,
-			templateName: 'received-statement-and-ip-comments-appellant',
+			isInquiryProcedure,
+			templateName: appellantTemplate,
 			recipientEmail: appeal.agent?.email || appeal.appellant?.email,
 			finalCommentsDueDate,
 			whatHappensNext: whatHappensNextAppellant,
@@ -461,6 +481,7 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
  * @property {boolean} [hasLpaStatement]
  * @property {boolean} [hasIpComments]
  * @property {boolean} [isHearingProcedure]
+ * @property {boolean} [isInquiryProcedure]
  * @property {string} [userTypeNoCommentSubmitted]
  * @property {string} azureAdUserId
  */
@@ -479,6 +500,7 @@ async function notifyPublished({
 	hasLpaStatement = false,
 	hasIpComments = false,
 	isHearingProcedure = false,
+	isInquiryProcedure = false,
 	userTypeNoCommentSubmitted = '',
 	azureAdUserId
 }) {
@@ -512,6 +534,7 @@ async function notifyPublished({
 			has_ip_comments: hasIpComments,
 			has_statement: hasLpaStatement,
 			is_hearing_procedure: isHearingProcedure,
+			is_inquiry_procedure: isInquiryProcedure,
 			user_type: userTypeNoCommentSubmitted,
 			team_email_address: await getTeamEmailFromAppealId(appeal.id)
 		}

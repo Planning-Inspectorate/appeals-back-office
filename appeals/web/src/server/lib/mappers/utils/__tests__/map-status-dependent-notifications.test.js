@@ -161,6 +161,12 @@ describe('mapStatusDependentNotifications', () => {
 			requiredAction: 'reviewAppellantProofOfEvidenceIncomplete',
 			expectedContainedHtml: `<a class="govuk-link" data-cy="review-appellant-proof-of-evidence" href="/appeals-service/appeal-details/${mockAppealData.appealId}/proof-of-evidence/appellant?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Review appellant proof of evidence and witnesses</a>`,
 			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
+			bannerKey: 'progressToProofOfEvidenceAndWitnesses',
+			requiredAction: 'progressToProofOfEvidenceAndWitnessesComplete',
+			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F1" class="govuk-heading-s govuk-notification-banner__link">Progress to proof of evidence and witnesses</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		}
 	];
 

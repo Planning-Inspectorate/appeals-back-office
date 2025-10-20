@@ -275,5 +275,14 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 				)}">Review appellant proof of evidence and witnesses</a>`
 			});
 		}
+		case 'progressToProofOfEvidenceAndWitnesses': {
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
+				)}" class="govuk-heading-s govuk-notification-banner__link">Progress to proof of evidence and witnesses</a>`
+			});
+		}
 	}
 }
