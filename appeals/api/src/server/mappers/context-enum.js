@@ -3,5 +3,6 @@ export const contextEnum = Object.freeze({
 	appealDetails: 'appealDetails',
 	appellantCase: 'appellantCase',
 	lpaQuestionnaire: 'lpaQuestionnaire',
-	representations: 'representations'
+	representations: 'representations',
+	appealDetailsMinimal: 'appealDetailsMinimal'
 });

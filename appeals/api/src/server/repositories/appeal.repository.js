@@ -20,11 +20,19 @@ import {
 /** @typedef {import('@pins/appeals.api').Appeals.SetAppealDecisionRequest} SetAppealDecisionRequest */
 /** @typedef {import('@pins/appeals.api').Appeals.SetInvalidAppealDecisionRequest} SetInvalidAppealDecisionRequest */
 /** @typedef {import('@pins/appeals.api').Appeals.AppealRelationshipRequest } AppealRelationshipRequest */
+/** @typedef {{ include: Record<string, boolean | PartialInclude>, where?: Record<string, any> }} PartialInclude */
+/** @typedef {Record<string, boolean | PartialInclude>} AppealIncludes */
 /**
  * @typedef {import('#db-client').Prisma.PrismaPromise<T>} PrismaPromise
  * @template T
  */
 
+/** @type {AppealIncludes} */
+const minimalInclude = {
+	appealType: true
+}
+
+/** @type {AppealIncludes} */
 const linkedAppealsInclude = isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)
 	? {
 			appealType: true,
@@ -37,6 +45,7 @@ const linkedAppealsInclude = isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)
 			appealType: true
 	  };
 
+/** @type {AppealIncludes} */
 const appealDetailsInclude = {
 	address: true,
 	procedureType: true,
@@ -157,15 +166,21 @@ const appealDetailsInclude = {
 
 /**
  * @param {number} id
- * @param {boolean} [includeDetails]
+ * @param {AppealIncludes | null} [appealIncludes]
  * @returns {Promise<Appeal|undefined>}
  */
-const getAppealById = async (id, includeDetails = true) => {
+const getAppealById = async (id, appealIncludes) => {
+	const includeDetails = appealIncludes === undefined
+		? appealDetailsInclude
+		: appealIncludes === null
+		? minimalInclude
+		: { ...minimalInclude, ...appealIncludes };
+
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: {
 			id
 		},
-		include: includeDetails ? appealDetailsInclude : null
+		include: includeDetails
 	});
 	if (appeal) {
 		// @ts-ignore

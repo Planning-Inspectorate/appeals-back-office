@@ -15,10 +15,11 @@ import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
  */
 export const checkAppealExistsByIdAndAddToRequest = async (req, res, next) => {
 	const {
-		params: { appealId }
+		params: { appealId },
+		query: { minimal }
 	} = req;
 
-	const appeal = await appealRepository.getAppealById(Number(appealId));
+	const appeal = await appealRepository.getAppealById(Number(appealId), minimal === 'true' ? null : undefined);
 
 	if (!appeal || !isAppealTypeEnabled(appeal.appealType?.key || '')) {
 		return res.status(404).send({ errors: { appealId: ERROR_NOT_FOUND } });
@@ -26,6 +27,21 @@ export const checkAppealExistsByIdAndAddToRequest = async (req, res, next) => {
 
 	req.appeal = appeal;
 	next();
+};
+
+/**
+ * @param {string} appealIncludes
+ * @returns {import('#repositories/appeal.repository.js').AppealIncludes}
+ */
+const parseIncludes = (appealIncludes) => {
+	/** @type {import('#repositories/appeal.repository.js').AppealIncludes} */
+	let result = {};
+
+	appealIncludes.split(',').forEach(item => {
+		result[item] = true;
+	});
+
+	return result;
 };
 
 /**
@@ -60,7 +76,7 @@ export const checkAppealExistsById = async (req, res, next) => {
 		params: { appealId }
 	} = req;
 
-	const appeal = await appealRepository.getAppealById(Number(appealId), false);
+	const appeal = await appealRepository.getAppealById(Number(appealId), null);
 	const appealType = appeal?.appealType?.key
 		? appeal?.appealType?.key
 		: (await getAppealTypeByTypeId(Number(appeal?.appealTypeId)))?.key;

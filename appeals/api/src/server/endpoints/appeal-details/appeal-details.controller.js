@@ -17,11 +17,8 @@ import { appealDetailService } from './appeal-details.service.js';
  */
 const getAppeal = async (req, res) => {
 	const { appeal } = req;
-
-	const result = await appealDetailService.loadAndFormatAppeal({
-		appeal,
-		context: /** @type {keyof contextEnum} */ (contextEnum.appealDetails)
-	});
+	const context = contextEnum[req.query.minimal === 'true' ? 'appealDetailsMinimal' : 'appealDetails'];
+	const result = await appealDetailService.loadAndFormatAppeal({ appeal, context });
 
 	if (!result) {
 		return res.status(404).end();

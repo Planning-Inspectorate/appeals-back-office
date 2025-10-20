@@ -24,6 +24,14 @@ router.get(
 			required: true,
 			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 		}
+		#swagger.parameters['minimal'] = {
+			in: 'query',
+			description: 'If true, returns only a minimal appeal details response with no unnecassary relationships',
+			example: 'true',
+			schema: {
+				type: 'boolean'
+			}
+		}
 		#swagger.responses[200] = {
 			description: 'Gets a single appeal by ID',
 			schema: { $ref: '#/components/schemas/Appeal' }

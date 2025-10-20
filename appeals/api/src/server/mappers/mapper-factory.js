@@ -50,11 +50,14 @@ export const mapCase = ({
  * @returns {Map<string, *>}
  */
 function createDataMap(mappingRequest) {
-	const { appeal } = mappingRequest;
+	const { appeal, context } = mappingRequest;
+
+	if (context === contextEnum.appealDetailsMinimal) {
+		// TODO: return smol map;
+	}
 
 	const caseData = createMap(apiMappers.apiSharedMappers, mappingRequest);
 
-	//TODO: add maps for specific appeal types for UI
 	switch (appeal.appealType?.key) {
 		case APPEAL_CASE_TYPE.Y: {
 			const s20 = createMap(apiMappers.apiS20Mappers, mappingRequest);
