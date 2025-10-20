@@ -537,7 +537,7 @@ export function checkAndConfirmPage(appealData, request) {
 				`${baseRoute}/issue-${specificDecisionType}-letter-upload`
 			)}`;
 		} else {
-			backUrl = `${baseRoute}/decision`;
+			backUrl = `${baseRoute}/decision-letter-upload`;
 		}
 	}
 
