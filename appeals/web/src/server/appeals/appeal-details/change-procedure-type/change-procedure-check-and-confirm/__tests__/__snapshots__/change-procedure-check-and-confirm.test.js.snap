@@ -20,7 +20,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <h3 class="govuk-heading-m">Hearing details</h3>
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the date and time of the hearing?</dt>
-                    <dd                     class="govuk-summary-list__value">Yes</dd>
+                    <dd                     class="govuk-summary-list__value">No</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-event-date-known"
                             data-cy="change-hearing-date-known">Change<span class="govuk-visually-hidden"> Do you know the date and time of the hearing?</span></a>
                         </dd>
