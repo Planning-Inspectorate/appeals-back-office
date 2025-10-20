@@ -34,10 +34,6 @@ exports[`mapAppellantCaseData should map appellant case data for a householder a
           "text": "3 June 2025",
         },
         {
-          "key": "Are you claiming costs as part of your appeal?",
-          "text": "Not answered",
-        },
-        {
           "key": "What is the application reference number?",
           "text": "44377/APP/3/218453",
         },
@@ -84,12 +80,12 @@ exports[`mapAppellantCaseData should map appellant case data for a householder a
           "text": "Some",
         },
         {
+          "html": "No",
           "key": "Will an inspector need to access your land or property?",
-          "text": "No",
         },
         {
+          "html": "No",
           "key": "Are there any health and safety issues on the appeal site?",
-          "text": "No",
         },
       ],
     },
@@ -105,8 +101,8 @@ exports[`mapAppellantCaseData should map appellant case data for a householder a
           "text": "Lorem ipsum",
         },
         {
+          "html": "No",
           "key": "Are there other appeals linked to your development?",
-          "text": "No",
         },
         {
           "html": "No documents",
@@ -187,10 +183,6 @@ exports[`mapAppellantCaseData should map appellant case data for a s20 appeal 1`
           "text": "3 June 2025",
         },
         {
-          "key": "Are you claiming costs as part of your appeal?",
-          "text": "Not answered",
-        },
-        {
           "key": "What is the application reference number?",
           "text": "44377/APP/3/218453",
         },
@@ -237,12 +229,12 @@ exports[`mapAppellantCaseData should map appellant case data for a s20 appeal 1`
           "text": "Some",
         },
         {
+          "html": "No",
           "key": "Will an inspector need to access your land or property?",
-          "text": "No",
         },
         {
+          "html": "No",
           "key": "Are there any health and safety issues on the appeal site?",
-          "text": "No",
         },
       ],
     },
@@ -258,8 +250,8 @@ exports[`mapAppellantCaseData should map appellant case data for a s20 appeal 1`
           "text": "Lorem ipsum",
         },
         {
+          "html": "No",
           "key": "Are there other appeals linked to your development?",
-          "text": "No",
         },
         {
           "key": "Development type",
@@ -392,10 +384,6 @@ exports[`mapAppellantCaseData should map appellant case data for a s78 appeal 1`
           "text": "3 June 2025",
         },
         {
-          "key": "Are you claiming costs as part of your appeal?",
-          "text": "Not answered",
-        },
-        {
           "key": "What is the application reference number?",
           "text": "44377/APP/3/218453",
         },
@@ -454,12 +442,12 @@ exports[`mapAppellantCaseData should map appellant case data for a s78 appeal 1`
           "text": "No",
         },
         {
+          "html": "No",
           "key": "Will an inspector need to access your land or property?",
-          "text": "No",
         },
         {
+          "html": "No",
           "key": "Are there any health and safety issues on the appeal site?",
-          "text": "No",
         },
       ],
     },
@@ -475,8 +463,8 @@ exports[`mapAppellantCaseData should map appellant case data for a s78 appeal 1`
           "text": "Lorem ipsum",
         },
         {
+          "html": "No",
           "key": "Are there other appeals linked to your development?",
-          "text": "No",
         },
         {
           "key": "Development type",

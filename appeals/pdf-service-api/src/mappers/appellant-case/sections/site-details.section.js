@@ -2,11 +2,22 @@ import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	formatAddress,
 	formatSentenceCase,
-	formatYesNo
+	formatYesNo,
+	formatYesNoDetails
 } from '../../../lib/nunjucks-filters/index.js';
 
 function formatArea(area) {
 	return area ? `${area} m²` : 'N/A';
+}
+
+function formatSiteAccessDetails(siteAccessRequired) {
+	const { isRequired, details } = siteAccessRequired;
+	return isRequired ? formatYesNoDetails(details) : 'No';
+}
+
+function formatHealthAndSafetyDetails(healthAndSafety) {
+	const { hasIssues, details } = healthAndSafety;
+	return hasIssues ? formatYesNoDetails(details) : 'No';
 }
 
 export function siteDetailsSection(templateData) {
@@ -57,11 +68,11 @@ export function siteDetailsSection(templateData) {
 				: []),
 			{
 				key: 'Will an inspector need to access your land or property?',
-				text: formatYesNo(siteAccessRequired?.isRequired)
+				html: formatSiteAccessDetails(siteAccessRequired)
 			},
 			{
 				key: 'Are there any health and safety issues on the appeal site?',
-				text: formatYesNo(healthAndSafety?.hasIssues)
+				html: formatHealthAndSafetyDetails(healthAndSafety)
 			}
 		]
 	};
