@@ -11,6 +11,9 @@ if (config.APPLICATIONINSIGHTS_CONNECTION_STRING) {
 		appInsights
 			.setup(config.APPLICATIONINSIGHTS_CONNECTION_STRING)
 			.setAutoCollectConsole(true, true)
+			.setAutoDependencyCorrelation(true)
+			.setAutoCollectRequests(true)
+			.setAutoCollectDependencies(true)
 			.setSendLiveMetrics(true)
 			.start();
 	} catch (err) {

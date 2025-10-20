@@ -1,4 +1,5 @@
 import { PrismaClient } from '#db-client';
+import { initialisePrismaInstrumentation } from './prisma-instrumentation.js';
 
 /** @type {PrismaClient} */
 let prismaClient;
@@ -11,6 +12,7 @@ function createPrismaClient() {
 		prismaClient = new PrismaClient();
 	}
 
+	initialisePrismaInstrumentation();
 	return prismaClient;
 }
 
