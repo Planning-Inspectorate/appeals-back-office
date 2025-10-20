@@ -406,6 +406,13 @@ describe('personal-list', () => {
 				expectedHtml: {
 					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/residential-units/new?backUrl=%2Fappeals-service%2Fpersonal-list">Add number of residential units<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				}
+			},
+			{
+				name: 'Awaiting proof of evidence and witnesses',
+				requiredAction: 'awaitingProofOfEvidenceAndWitnesses',
+				expectedHtml: {
+					caseOfficer: 'Awaiting proof of evidence and witnesses'
+				}
 			}
 		];
 

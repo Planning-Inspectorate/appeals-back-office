@@ -467,6 +467,27 @@ function mapRequiredActionToPersonalListActionHtml(
 				`/appeals-service/appeal-details/${appealId}/residential-units/new`
 			)}">Add number of residential units<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
+		case 'progressToProofOfEvidenceAndWitnesses': {
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/share`
+			)}">Progress to proof of evidence and witnesses</a>`;
+		}
+		case 'awaitingProofOfEvidenceAndWitnesses': {
+			return 'Awaiting proof of evidence and witnesses';
+		}
+		case 'reviewLpaProofOfEvidence': {
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/proof-of-evidence/lpa`
+			)}">Review LPA proof of evidence and witnesses</a>`;
+		}
+		case 'reviewAppellantProofOfEvidence': {
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/proof-of-evidence/appellant`
+			)}">Review appellant proof of evidence and witnesses</a>`;
+		}
 		default: {
 			return '';
 		}
