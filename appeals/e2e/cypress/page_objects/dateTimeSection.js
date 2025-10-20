@@ -33,7 +33,7 @@ export class DateTimeSection extends Page {
 		ipCommentsDueDate: '#ip-comments-due',
 		finalCommentsDueDate: '#final-comments-due',
 		statementOfCommonGroundDueDate: '#statement-of-common-ground-due',
-		proofOfEvidenceAndWitnessesDueDate: '#proof-of-evidence-and-witnesses-due',
+		proofOfEvidenceAndWitnessesDueDate: '#proof-of-evidence-and-witnesses-due-date-',
 		inquiryDate: '#inquiry-date-',
 		eventDate: '#event-date-',
 		inquiry: '#inquiry',
@@ -74,6 +74,9 @@ export class DateTimeSection extends Page {
 
 	enterLpaqDate(date) {
 		this.#setAllDateFields(this.selectorPrefix.lpaqDate, date);
+	}
+	enterProofOfEvidenceAndWitnessesDueDate(date) {
+		this.#setAllDateFields(this.selectorPrefix.proofOfEvidenceAndWitnessesDueDate, date);
 	}
 	enterWithdrawalRequestDate(date) {
 		this.#setAllDateFields(this.selectorPrefix.withdrawalRequestDate, date);

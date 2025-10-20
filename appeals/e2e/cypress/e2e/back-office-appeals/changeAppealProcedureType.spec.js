@@ -61,21 +61,19 @@ describe('change appeal procedure types', () => {
 	let appeal;
 
 	afterEach(() => {
-		//cy.deleteAppeals(appeal);
+		cy.deleteAppeals(appeal);
 	});
 
 	it('should change appeal procedure type - hearing to inquiry', () => {
 		happyPathHelper.startS78Case(caseObj, 'hearing');
-		//happyPathHelper.reviewS78Lpaq(caseObj);
-
 		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 		const writtenDetails = { ...overviewDetails, appealProcedure: 'Hearing' };
-		//overviewSectionPage.verifyCaseOverviewDetails(writtenDetails);
+		overviewSectionPage.verifyCaseOverviewDetails(writtenDetails, false);
 
 		overviewSectionPage.clickRowChangeLink('case-procedure');
 
-		procedureTypePage.verifyprocedurePageHeader(caseObj.reference, 'update appeal procedure');
+		procedureTypePage.verifyProcedurePageHeader(caseObj.reference, 'update appeal procedure');
 		procedureTypePage.selectProcedureType('inquiry');
 
 		// enter inquiry date
@@ -94,7 +92,7 @@ describe('change appeal procedure types', () => {
 			addressSection.enterAddress(inquiryAddress);
 			addressSection.clickButtonByText('Continue');
 
-			// verify previous date values are prepopulated
+			// verify previous date values are prepopulated for timetable
 			cy.loadAppealDetails(caseObj).then((appealDetails) => {
 				//procedureTypePage.verifyHeader(procedureTypeCaption());
 				const appealTimetable = appealDetails?.appealTimetable;
@@ -117,14 +115,44 @@ describe('change appeal procedure types', () => {
 				);
 
 				// enter POE date
-				dateTimeSection;
+				const proofOfEvidenceDate = new Date(lpaStatementDueDate);
+				proofOfEvidenceDate.setFullYear(lpaStatementDueDate.getFullYear() + 1);
+				dateTimeSection.enterProofOfEvidenceAndWitnessesDueDate(proofOfEvidenceDate);
+
+				// proceed to cya page and check answers
+				dateTimeSection.clickButtonByText('Continue');
+
+				cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Inquiry');
+				cyaSection.verifyCheckYourAnswers(
+					'LPA questionnaire due',
+					formatDateAndTime(lpaQuestionnaireDueDate).date
+				);
+				cyaSection.verifyCheckYourAnswers(
+					'Statements due',
+					formatDateAndTime(lpaStatementDueDate).date
+				);
+				cyaSection.verifyCheckYourAnswers(
+					'Statement of common ground due',
+					formatDateAndTime(ipCommentsDueDate).date
+				);
+				cyaSection.verifyCheckYourAnswers(
+					'Proof of evidence and witnesses due',
+					formatDateAndTime(proofOfEvidenceDate).date
+				);
 			});
-
-			// proceed to cya page and check answers
-			dateTimeSection.clickButtonByText('Continue');
-
-			cyaSection.verifyCheckYourAnswers('LPA questionnaire due', 'some date');
 		});
+	});
+
+	it('change appeal procedure type - should not allow change procedure after lpaq', () => {
+		happyPathHelper.startS78Case(caseObj, 'hearing');
+		happyPathHelper.reviewS78Lpaq(caseObj);
+		caseDetailsPage.checkStatusOfCase('Statements', 0);
+
+		// should not be able to see change procedure link
+		overviewSectionPage.checkElementVisibility(
+			overviewSectionPage.overviewSectionSelectors.changeProcedureType,
+			false
+		);
 	});
 
 	// A2-3934 (Ticket is blocked due to post hearing mvp updates)
@@ -268,6 +296,10 @@ describe('change appeal procedure types', () => {
 		cy.createCase({ caseType: 'W' }).then((ref) => {
 			caseObj = ref;
 			appeal = caseObj;
+
+			// Assign Case Officer Via API
+			cy.assignCaseOfficerViaApi(caseObj);
+
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
