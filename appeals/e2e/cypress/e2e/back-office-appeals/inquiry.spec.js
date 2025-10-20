@@ -551,7 +551,7 @@ it('should add inquiry Estimates', () => {
 
 it('should update inquiry timetable dates from case details page', () => {
 	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
-		// Create case and setup initial timetable
+		// Setup initial timetable
 		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
 
 		// find case and open inquiry section
@@ -615,7 +615,7 @@ it('should update inquiry timetable dates from case details page', () => {
 
 it('should validate inquiry timetable chronology', () => {
 	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
-		// Create case and setup initial timetable
+		// Setup initial timetable
 		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
 
 		// find case and open inquiry section
@@ -650,6 +650,53 @@ it('should validate inquiry timetable chronology', () => {
 					'proof-of-evidence-and-witnesses-due-date-day'
 				]
 			});
+		});
+	});
+});
+
+it('should show business day validation errors for all timetable fields', () => {
+	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
+		// Setup initial timetable
+		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+
+		// find case and open inquiry section
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseObj);
+
+		const timetableItemsWithNewSelector = timetableItems.map((item) => ({
+			...item,
+			row: item.row.replace('statement-due-date', 'lpa-statement-due-date')
+		}));
+
+		caseDetailsPage.clickRowChangeLink('lpa-questionnaire-due-date');
+
+		// update timetable dates
+		const nextYear = new Date().getFullYear() + 2;
+		const nonBusinessDate = new Date(nextYear, 0, 1);
+		inquirySectionPage.enterTimetableDueDates(timetableItemsWithNewSelector, nonBusinessDate, 0);
+
+		// Submit changes
+		caseDetailsPage.clickButtonByText('Continue');
+		const formatDate = formatDateAndTime(nonBusinessDate).date;
+
+		// verify error message
+		inquirySectionPage.verifyErrorMessages({
+			messages: [
+				'The lpa questionnaire due date must be a business day',
+				'The statements due date must be a business day',
+				'The interested party comments due date must be a business day',
+				'The statement of common ground due date must be a business day',
+				'The planning obligation due date must be a business day',
+				'The proof of evidence and witnesses due date must be a business day'
+			],
+			fields: [
+				'lpa-statement-due-date-day',
+				'lpa-statement-due-date-day',
+				'ip-comments-due-date-day',
+				'statement-of-common-ground-due-date-day',
+				'planning-obligation-due-date-day',
+				'proof-of-evidence-and-witnesses-due-date-day'
+			]
 		});
 	});
 });
