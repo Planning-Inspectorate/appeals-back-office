@@ -151,6 +151,7 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 		it('should render the check details page with the expected content for hearing procedure type with no event date known', async () => {
 			nock('http://test/')
 				.get('/appeals/1')
+				.twice()
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealStatus: 'lpa_questionnaire',
@@ -159,16 +160,21 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 				});
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
+				.twice()
 				.reply(200, {
 					planningObligation: { hasObligation: true },
 					procedureType: 'hearing'
 				});
 
-			const response = await request
-				.get(
-					`/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/check-and-confirm`
+			await request
+				.post(
+					'/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-event-date-known'
 				)
 				.send({ dateKnown: 'no' });
+
+			const response = await request.get(
+				'/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/check-and-confirm'
+			);
 
 			expect(response.statusCode).toBe(200);
 
