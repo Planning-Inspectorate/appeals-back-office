@@ -1,4 +1,3 @@
-import { getSessionValuesForAppeal } from '#lib/edit-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import { getBackLinkUrl } from '../change-procedure-type.controller.js';
 import { dateKnownPage } from './change-procedure-event-date-known.mapper.js';
@@ -21,11 +20,7 @@ export const renderEventDateKnown = async (request, response) => {
 	const { errors } = request;
 	const appealDetails = request.currentAppeal;
 	const backLinkUrl = getBackLinkUrl(request, 'change-selected-procedure-type');
-	const sessionValues = getSessionValuesForAppeal(
-		request,
-		'changeProcedureType',
-		appealDetails.appealId
-	);
+	const sessionValues = request.session.changeProcedureType;
 	const newProcedureType = request.session.changeProcedureType.appealProcedure;
 	const mappedPageContent = dateKnownPage(
 		appealDetails,
