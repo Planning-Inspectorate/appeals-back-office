@@ -135,7 +135,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'U1620',
 		name: 'Gloucester City Council',
-		email: 'Development.Control@gloucester.gov.uk',
+		email: 'business.support@gloucester.gov.uk',
 		teamId: 8 // West2
 	},
 	{
