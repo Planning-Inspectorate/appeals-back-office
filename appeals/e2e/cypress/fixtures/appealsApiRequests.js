@@ -126,10 +126,10 @@ const appealsApiRequests = {
 			hasProtectedSpecies: false,
 			hasStatutoryConsultees: false,
 			hasInfrastructureLevy: false,
-			hasTreePreservationOrder: true, // new required field 
+			hasTreePreservationOrder: true, // new required field
 			hasConsultationResponses: true, // new required field
-			hasEmergingPlan: true, // new required field 
-			hasSupplementaryPlanningDocs: true, // new required field 
+			hasEmergingPlan: true, // new required field
+			hasSupplementaryPlanningDocs: true, // new required field
 			isInfrastructureLevyFormallyAdopted: null,
 			infrastructureLevyAdoptedDate: null,
 			infrastructureLevyExpectedDate: null,
@@ -137,7 +137,7 @@ const appealsApiRequests = {
 			lpaProcedurePreferenceDetails: 'pref details lpa',
 			lpaProcedurePreferenceDuration: 3,
 			lpaFinalCommentDetails: '',
-			lpaAddedWitnesses: true, // new required field 
+			lpaAddedWitnesses: true, // new required field
 			siteWithinSSSI: false,
 			reasonForNeighbourVisits: null,
 			importantInformation: null,
@@ -224,7 +224,20 @@ const appealsApiRequests = {
 		preparationTime: 1.5,
 		sittingTime: 0.5,
 		reportingTime: 2
-	}
+	},
+	appellantProofOfEvidence: {
+		caseReference: '6000000',
+		representation: 'Hello, not about cheese but still a rep of some kind (Appellant Proof Of Evidence)',
+		representationType: 'proofs_evidence',
+		representationSubmittedDate: '2025-10-21T13:48:35.847Z',
+	},
+	lpaProofOfEvidence: {
+		caseReference: '6000000',
+		representation: 'Hello, not about cheese but still a rep of some kind (LPA Appellant Proof Of Evidence)',
+		representationType: 'proofs_evidence',
+		representationSubmittedDate: '2025-10-21T13:48:35.847Z',
+		lpaCode: 'Q9999'
+	},
 };
 
 const documentsApiRequest = {
@@ -310,6 +323,36 @@ const documentsApiRequest = {
 					dateCreated: '2024-03-01T13:48:35.847Z',
 					documentId: '001',
 					documentType: 'appellantFinalComment',
+					documentURI:
+						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+					filename: 'img1.jpg',
+					mime: 'image/jpeg',
+					originalFilename: 'oimg.jpg',
+					size: 10293
+				}
+			]
+		},
+		appellantProofOfEvidence: {
+			documents: [
+				{
+					dateCreated: '2024-03-01T13:48:35.847Z',
+					documentId: '001',
+					documentType: 'appellantProofOfEvidence',
+					documentURI:
+						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+					filename: 'img1.jpg',
+					mime: 'image/jpeg',
+					originalFilename: 'oimg.jpg',
+					size: 10293
+				}
+			]
+		},
+		lpaProofOfEvidence: {
+			documents: [
+				{
+					dateCreated: '2024-03-01T13:48:35.847Z',
+					documentId: '001',
+					documentType: 'lpaProofOfEvidence',
 					documentURI:
 						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
 					filename: 'img1.jpg',

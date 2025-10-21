@@ -2,6 +2,7 @@
 /// <reference types="cypress"/>
 
 import { users } from '../../fixtures/users';
+import { DocumentationSectionPage } from '../../page_objects/caseDetails/documentationSectionPage';
 import { InquirySectionPage } from '../../page_objects/caseDetails/inquirySectionPage';
 import { OverviewSectionPage } from '../../page_objects/caseDetails/overviewSectionPage.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
@@ -18,6 +19,7 @@ const listCasesPage = new ListCasesPage();
 const inquirySectionPage = new InquirySectionPage();
 const overviewSectionPage = new OverviewSectionPage();
 const cyaSection = new CYASection();
+const documentationSectionPage = new DocumentationSectionPage();
 
 const previousInquiryAddress = {
 	line1: '1 Grove Cottage',
@@ -698,5 +700,56 @@ it('should show business day validation errors for all timetable fields', () => 
 				'proof-of-evidence-and-witnesses-due-date-day'
 			]
 		});
+	});
+});
+
+it('should accept LPA POE for inquiry', () => {
+	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
+		// Set up inquiry case with LPA questionnaire
+		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+		cy.addLpaqSubmissionToCase(caseObj);
+
+		// Navigate to case details and verify initial state
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseObj);
+		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+		cy.reload();
+
+		// Process LPAQ review and move to statements phase
+		happyPathHelper.reviewS78Lpaq(caseObj);
+		caseDetailsPage.checkStatusOfCase('Statements', 0);
+
+		// Submit third-party representations
+		happyPathHelper.addThirdPartyComment(caseObj, true);
+		caseDetailsPage.clickBackLink();
+		happyPathHelper.addThirdPartyComment(caseObj, false);
+		caseDetailsPage.clickBackLink();
+
+		// Complete LPA statement and advance past deadline
+		happyPathHelper.addLpaStatement(caseObj);
+		cy.simulateStatementsDeadlineElapsed(caseObj);
+		cy.reload();
+
+		// Finalise statements and transition to evidence stage
+		caseDetailsPage.basePageElements.bannerLink().click();
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.checkStatusOfCase('Evidence', 0);
+
+		// Process LPA proof of evidence submission (FO) via Api
+		inquirySectionPage.addProofOfEvidenceViaApi(caseObj, 'lpaProofOfEvidence');
+
+		// TODO: verify review banner is displayed Bug: A2-4859
+
+		// Complete the evidence review workflow
+		documentationSectionPage.navigateToAddProofOfEvidenceReview('lpa-proofs-evidence');
+		caseDetailsPage.selectRadioButtonByValue('Complete');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Accept LPA proof of evidence and witnesses');
+
+		// Verify successful acceptance
+		caseDetailsPage.validateBannerMessage(
+			'Success',
+			'LPA proof of evidence and witnesses accepted'
+		);
 	});
 });
