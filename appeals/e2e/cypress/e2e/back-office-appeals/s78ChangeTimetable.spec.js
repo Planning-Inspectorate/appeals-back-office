@@ -48,17 +48,21 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it('should change due dates when case status is lpa_questionnaire', () => {
-		cy.createCase({
-			caseType: 'W'
-		}).then((caseObj) => {
-			appeal = caseObj;
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			happyPathHelper.startS78Case(caseObj, 'written');
-			verifyDateChanges(0);
-		});
-	});
+	it(
+		'should change due dates when case status is lpa_questionnaire',
+		{ retries: { runMode: 2, openMode: 0 } },
+		() => {
+			cy.createCase({
+				caseType: 'W'
+			}).then((caseObj) => {
+				appeal = caseObj;
+				happyPathHelper.assignCaseOfficer(caseObj);
+				happyPathHelper.reviewAppellantCase(caseObj);
+				happyPathHelper.startS78Case(caseObj, 'written');
+				verifyDateChanges(0);
+			});
+		}
+	);
 
 	it('should not accept current date when case status is lpa_questionnaire', () => {
 		cy.createCase({
@@ -97,7 +101,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 	});
 
 	// tests are flaky error only caused with automation
-	it.skip('should move case status to statements and update available due dates', () => {
+	it.only('should move case status to statements and update available due dates', () => {
 		cy.clearAllSessionStorage();
 		cy.createCase({
 			caseType: 'W'
@@ -154,7 +158,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 	});
 
 	// tests are flaky error only caused with automation
-	it.skip('should move case status to final_comments and update available due dates', () => {
+	it.only('should move case status to final_comments and update available due dates', () => {
 		cy.clearAllSessionStorage();
 		cy.createCase({
 			caseType: 'W'

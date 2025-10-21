@@ -329,7 +329,7 @@ export class CaseDetailsPage extends Page {
 	}
 
 	clickSetUpSiteVisitType() {
-		this.elements.setUpSiteVisit().click();
+		this.clickButtonByText('Set up site visit');
 	}
 
 	clickReadyToStartCase() {

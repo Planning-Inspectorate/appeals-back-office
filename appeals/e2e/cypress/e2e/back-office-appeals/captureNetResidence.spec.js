@@ -28,7 +28,7 @@ describe('Capture Net Residences', () => {
 		appealProcedure: 'Written',
 		allocationLevel: 'No allocation level for this appeal',
 		linkedAppeals: 'No linked appeals',
-		relatedAppeals: 'No',
+		relatedAppeals: '1000000',
 		netGainResidential: 'Not provided'
 	};
 	it('Net Residence - Net Gain', () => {
@@ -65,10 +65,12 @@ describe('Capture Net Residences', () => {
 		cy.createCase({ caseType: 'W' }).then((ref) => {
 			caseObj = ref;
 			appeal = caseObj;
+			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.viewCaseDetails(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startS78Case(caseObj, 'written');
+			happyPathHelper.reviewS78Lpaq(caseObj);
 		});
 	};
 });
