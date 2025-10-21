@@ -8,7 +8,7 @@ import { getAppealDetailsFromId } from './appeal-details.service.js';
 export const validateAppeal = async (req, res, next) => {
 	const { appealId, caseId } = req.params;
 
-	if (!areIdParamsValid(appealId)) {
+	if (!areIdParamsValid(appealId || caseId)) {
 		return res.status(400).render('app/400.njk');
 	}
 
