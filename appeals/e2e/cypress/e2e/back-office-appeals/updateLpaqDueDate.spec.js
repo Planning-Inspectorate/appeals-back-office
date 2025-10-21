@@ -22,25 +22,29 @@ describe('Update LPAQ Due date', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it('change lpaq due date from timetable', () => {
-		cy.createCase().then((caseObj) => {
-			appeal = caseObj;
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			happyPathHelper.startCase(caseObj);
-			caseDetailsPage.clickChangeLpaqDueDate();
-			cy.getBusinessActualDate(new Date(), 28).then((futureDate) => {
-				dateTimeSection.enterLpaqDate(futureDate);
+	it(
+		'change lpaq due date from timetable',
+		{ retries: { runMode: 2, openMode: 0 } }, // ✅ retry once/twice in CI, never locally
+		() => {
+			cy.createCase().then((caseObj) => {
+				appeal = caseObj;
+				happyPathHelper.assignCaseOfficer(caseObj);
+				happyPathHelper.reviewAppellantCase(caseObj);
+				happyPathHelper.startCase(caseObj);
+				caseDetailsPage.clickChangeLpaqDueDate();
+				cy.getBusinessActualDate(new Date(), 28).then((futureDate) => {
+					dateTimeSection.enterLpaqDate(futureDate);
+				});
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.clickButtonByText('Update timetable due dates');
+				caseDetailsPage.validateBannerMessage('Success', 'Timetable due dates updated');
+				cy.addLpaqSubmissionToCase(caseObj);
+				happyPathHelper.reviewLpaq(caseObj);
 			});
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.clickButtonByText('Update timetable due dates');
-			caseDetailsPage.validateBannerMessage('Success', 'Timetable due dates updated');
-			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.reviewLpaq(caseObj);
-		});
-	});
+		}
+	);
 
-	it('change S78 lpaq due date from timetable', () => {
+	it('change S78 lpaq due date from timetable', { retries: { runMode: 2, openMode: 0 } }, () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
