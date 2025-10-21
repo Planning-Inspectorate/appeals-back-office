@@ -1,4 +1,3 @@
-import logger from '#utils/logger.js';
 import { databaseConnector } from '../../server/utils/database-connector.js';
 import { localPlanningDepartmentList } from './LPAs/training.js';
 
@@ -10,7 +9,7 @@ async function deleteTestRecords() {
 
 	const appeals = await getAppealsFromLpaCodes(lpaCodes);
 	if (appeals.length === 0) {
-		logger.info('Nothing to delete.');
+		console.log('Nothing to delete.');
 		return;
 	}
 
@@ -30,7 +29,7 @@ export async function deleteAppealsInBatches(appeals) {
 			noIterations !== 0 && eachIteration < noIterations;
 			eachIteration++
 		) {
-			logger.info(`Running batch - ${eachIteration + 1} of ${noIterations}`);
+			console.log(`Running batch - ${eachIteration + 1} of ${noIterations}`);
 
 			const batchedAppeals = appeals.splice(0, BATCH_SIZE);
 
@@ -51,7 +50,7 @@ export async function deleteAppealsInBatches(appeals) {
 			);
 		}
 	} catch (error) {
-		logger.error(error);
+		console.error(error);
 		throw error;
 	} finally {
 		await databaseConnector.$disconnect();
