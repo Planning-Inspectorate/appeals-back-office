@@ -1,5 +1,5 @@
 import {
-	deleteAppealsInBatches,
+	// deleteAppealsInBatches,
 	getAppealsFromLpaCodes
 } from '#repositories/delete-appeal-data/delete-appeal-data.js';
 import logger from '#utils/logger.js';
@@ -10,8 +10,6 @@ import { localPlanningDepartmentList } from './LPAs/training.js';
  */
 
 async function deleteTestRecords() {
-	process.env.NODE_ENV = '';
-
 	const lpaCodes = localPlanningDepartmentList.map((lpa) => lpa.lpaCode);
 
 	const appeals = await getAppealsFromLpaCodes(lpaCodes);
@@ -20,7 +18,9 @@ async function deleteTestRecords() {
 		return;
 	}
 
-	await deleteAppealsInBatches(appeals);
+	console.log(appeals);
+
+	// await deleteAppealsInBatches(appeals);
 }
 
 await deleteTestRecords();
