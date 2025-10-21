@@ -1,7 +1,9 @@
+// import { databaseConnector } from '../../server/utils/database-connector.js';
 import {
 	// deleteAppealsInBatches,
 	getAppealsFromLpaCodes
-} from '#repositories/delete-appeal-data/delete-appeal-data.js';
+} from '../../server/repositories/delete-appeal-data/delete-appeal-data.js';
+// } from '#repositories/delete-appeal-data/delete-appeal-data.js';
 import logger from '#utils/logger.js';
 import { localPlanningDepartmentList } from './LPAs/training.js';
 
