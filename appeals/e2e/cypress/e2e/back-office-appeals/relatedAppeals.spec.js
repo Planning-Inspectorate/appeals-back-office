@@ -153,7 +153,7 @@ describe('related appeals', () => {
 		});
 	});
 
-	it.only('Relate a case in “issue decision status” to “Issue decision” status', () => {
+	it('Relate a case in “issue decision status” to “Issue decision” status', () => {
 		cy.createCase().then((caseObj) => {
 			cy.createCase().then((caseObjToLink) => {
 				cases = [caseObj, caseObjToLink];
@@ -183,7 +183,7 @@ describe('related appeals', () => {
 		});
 	});
 
-	it.only('Relate a case in “Statement” status to “Issue decision” status', () => {
+	it('Relate a case in “Statement” status to “Issue decision” status', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			cy.createCase().then((caseObjToLink) => {
 				cases = [caseObj, caseObjToLink];

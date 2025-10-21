@@ -101,7 +101,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 	});
 
 	// tests are flaky error only caused with automation
-	it.only('should move case status to statements and update available due dates', () => {
+	it('should move case status to statements and update available due dates', () => {
 		cy.clearAllSessionStorage();
 		cy.createCase({
 			caseType: 'W'
@@ -158,7 +158,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 	});
 
 	// tests are flaky error only caused with automation
-	it.only('should move case status to final_comments and update available due dates', () => {
+	it('should move case status to final_comments and update available due dates', () => {
 		cy.clearAllSessionStorage();
 		cy.createCase({
 			caseType: 'W'
