@@ -221,4 +221,16 @@ export class InquirySectionPage extends CaseDetailsPage {
 				};
 			});
 	};
+
+	// Simulate a FO appellant/LAP adding Proof of Evidence via API
+	addProofOfEvidenceViaApi(caseObj, representationType) {
+		let serviceUserId = null;
+		if (representationType === '') {
+			cy.loadAppealDetails(caseObj).then((appealData) => {
+				serviceUserId = ((appealData?.appellant?.serviceUserId ?? 0) + 200000000).toString();
+			});
+		}
+		cy.addRepresentation(caseObj, representationType, serviceUserId);
+		cy.reload();
+	}
 }
