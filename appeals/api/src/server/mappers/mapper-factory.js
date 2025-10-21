@@ -15,7 +15,7 @@ import { integrationMappers } from './integration/index.js';
 /** @typedef {import('@pins/appeals.api').Api.LpaQuestionnaire} LpaQuestionnaireDTO */
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealHASCase} AppealHASCase */
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealS78Case} AppealS78Case */
-/** @typedef {AppealDTO|AppellantCaseDto|LpaQuestionnaireDTO|AppealHASCase|AppealS78Case} MapResult */
+/** @typedef {AppealDTO|AppellantCaseDto|LpaQuestionnaireDTO|AppealHASCase|AppealS78Case|Appeal} MapResult */
 /** @typedef {import('@pins/appeals.api').Api.Folder} Folder */
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
 /** @typedef {{ appeal: Appeal, appealTypes?: AppealType[]|undefined, linkedAppeals?: *[]|undefined, costsDecision?: CostsDecision|undefined, context?: keyof contextEnum }} MappingRequest */
@@ -36,6 +36,10 @@ export const mapCase = ({
 		return;
 	}
 
+	if (context === contextEnum.appealDetailsMinimal) {
+		return appeal;
+	}
+
 	const caseMap =
 		context === contextEnum.broadcast
 			? createIntegrationMap({ appeal, context })
@@ -50,11 +54,7 @@ export const mapCase = ({
  * @returns {Map<string, *>}
  */
 function createDataMap(mappingRequest) {
-	const { appeal, context } = mappingRequest;
-
-	if (context === contextEnum.appealDetailsMinimal) {
-		// TODO: return smol map;
-	}
+	const { appeal } = mappingRequest;
 
 	const caseData = createMap(apiMappers.apiSharedMappers, mappingRequest);
 
