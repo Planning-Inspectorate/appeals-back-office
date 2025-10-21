@@ -77,7 +77,8 @@ const getPersonalList = async (req, res) => {
 	const pageNumber = Number(query.pageNumber) || DEFAULT_PAGE_NUMBER;
 	const pageSize = Number(query.pageSize) || DEFAULT_PAGE_SIZE;
 	const status = query.status ? String(query.status) : undefined;
-	const azureUserId = req.get('azureAdUserId');
+	const caseOfficerId = query.caseOfficerId ? query?.caseOfficerId.toString() : '';
+	const azureUserId = caseOfficerId || req.get('azureAdUserId');
 
 	if (!azureUserId) {
 		return res.status(401).send({ errors: { azureUserId: ERROR_CANNOT_BE_EMPTY_STRING } });
