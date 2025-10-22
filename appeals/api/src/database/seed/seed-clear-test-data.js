@@ -1,3 +1,4 @@
+import { getAppealsFromLpaCodes } from '#repositories/delete-appeal-data/delete-appeal-data.js';
 import { databaseConnector } from '../../server/utils/database-connector.js';
 import { localPlanningDepartmentList } from './LPAs/training.js';
 
@@ -537,31 +538,31 @@ const getDocuments = async (appealIDs) => {
 	return documents.map((_) => _.guid);
 };
 
-/**
- * @param {string[]} lpaCodes
- * @returns {Promise<{id: number, reference: string}[]>}
- */
-export const getAppealsFromLpaCodes = async (lpaCodes) => {
-	const appeals = await databaseConnector.appeal.findMany({
-		where: {
-			lpa: {
-				lpaCode: {
-					in: lpaCodes
-				}
-			}
-		},
-		select: {
-			id: true,
-			reference: true
-		}
-	});
+// /**
+//  * @param {string[]} lpaCodes
+//  * @returns {Promise<{id: number, reference: string}[]>}
+//  */
+// export const getAppealsFromLpaCodes = async (lpaCodes) => {
+// 	const appeals = await databaseConnector.appeal.findMany({
+// 		where: {
+// 			lpa: {
+// 				lpaCode: {
+// 					in: lpaCodes
+// 				}
+// 			}
+// 		},
+// 		select: {
+// 			id: true,
+// 			reference: true
+// 		}
+// 	});
 
-	return appeals.map((appeal) => {
-		return {
-			id: appeal.id,
-			reference: appeal.reference
-		};
-	});
-};
+// 	return appeals.map((appeal) => {
+// 		return {
+// 			id: appeal.id,
+// 			reference: appeal.reference
+// 		};
+// 	});
+// };
 
 await deleteTestRecords();
