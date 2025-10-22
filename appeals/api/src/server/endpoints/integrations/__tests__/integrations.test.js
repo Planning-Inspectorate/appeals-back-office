@@ -1,6 +1,7 @@
 import { request } from '#tests/../app-test.js';
 import {
 	appealIngestionInput,
+	appealIngestionInputCasAdverts,
 	appealIngestionInputCasPlanning,
 	appealIngestionInputS20,
 	appealIngestionInputS20Written,
@@ -8,6 +9,7 @@ import {
 	appealIngestionInputS78Written,
 	docIngestionInput,
 	validAppellantCase,
+	validAppellantCaseCASAdverts,
 	validAppellantCaseCASPlanning,
 	validAppellantCaseS20,
 	validAppellantCaseS78,
@@ -109,7 +111,8 @@ describe('/appeals/case-submission', () => {
 			['HAS', appealIngestionInput, validAppellantCase, { id: 1 }],
 			['CAS_PLANNING', appealIngestionInputCasPlanning, validAppellantCaseCASPlanning, { id: 1 }],
 			['S78', appealIngestionInputS78, validAppellantCaseS78, { name: 'Major Casework Officer' }],
-			['S20', appealIngestionInputS20, validAppellantCaseS20, { name: 'Major Casework Officer' }]
+			['S20', appealIngestionInputS20, validAppellantCaseS20, { name: 'Major Casework Officer' }],
+			['CAS_ADVERTS', appealIngestionInputCasAdverts, validAppellantCaseCASAdverts, { id: 1 }]
 		])(
 			'POST valid %s appellant case payload and create appeal',
 			async (_, appealIngestionInput, validAppellantCase, expectedTeamQueryParam) => {
