@@ -26,6 +26,32 @@ exports[`representations GET /share should contain correct content if inquiry an
 </main>"
 `;
 
+exports[`representations GET /share should contain correct content if inquiry and proof of evidence and status is set to "EVIDENCE" and no proof of evidence to share 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Progress to inquiry</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">There are no proof of evidence and witnesses to share.</p>
+            <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Do not progress to inquiry
+                    if you are awaiting any late proof of evidence and witnesses.</strong>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Progress to inquiry</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`representations GET /share should contain link to interested-party-comments#valid 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">

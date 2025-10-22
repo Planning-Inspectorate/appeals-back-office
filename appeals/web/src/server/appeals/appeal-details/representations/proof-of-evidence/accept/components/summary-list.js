@@ -28,7 +28,7 @@ export const summaryList = (
 					items: [
 						{
 							text: 'Change',
-							href: `/appeals-service/appeal-details/${appealDetails.appealId}/proof-of-evidence/${proofOfEvidenceType}/change/${proofOfEvidence.attachments?.[0]?.documentVersion?.document?.folderId}/?backUrl=/proof-of-evidence/${proofOfEvidenceType}/accept`,
+							href: `/appeals-service/appeal-details/${appealDetails.appealId}/proof-of-evidence/${proofOfEvidenceType}/manage-documents/${proofOfEvidence.attachments?.[0]?.documentVersion?.document?.folderId}/?backUrl=/proof-of-evidence/${proofOfEvidenceType}/accept`,
 							visuallyHiddenText: 'proof of evidence and witnesses'
 						}
 					]

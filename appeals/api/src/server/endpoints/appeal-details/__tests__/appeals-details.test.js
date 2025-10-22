@@ -221,14 +221,14 @@ const s78AppealDto = {
 			isRedacted: false
 		},
 		appellantProofOfEvidence: {
-			status: 'not_received',
-			receivedAt: null,
-			representationStatus: null
+			status: 'received',
+			receivedAt: '2024-11-27T15:08:55.704Z',
+			representationStatus: 'awaiting_review'
 		},
 		lpaProofOfEvidence: {
-			status: 'not_received',
-			receivedAt: null,
-			representationStatus: null
+			status: 'received',
+			receivedAt: '2024-11-27T15:08:55.711Z',
+			representationStatus: 'awaiting_review'
 		}
 	},
 	healthAndSafety: {
