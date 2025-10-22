@@ -10,6 +10,7 @@ import {
 	APPEAL_CASE_STATUS,
 	APPEAL_DOCUMENT_TYPE
 } from '@planning-inspectorate/data-model';
+import { mapAppellantCaseIn } from '../commands/appellant-case.mapper.js';
 import { mapDesignatedSiteNames } from '../commands/questionnaire.mapper.js';
 import { mapDocumentEntity } from '../map-document-entity.js';
 import { mapCaseDates } from '../shared/s20s78/map-case-dates.js';
@@ -325,5 +326,157 @@ describe('map-document-entity', () => {
 		};
 		const result = mapDocumentEntity(doc);
 		expect(result.documentType).toBe(expected);
+	});
+});
+
+describe('mapAppellantCaseIn', () => {
+	test.each([
+		{
+			desc: 'minimal input',
+			input: { casedata: {} },
+			expected: {
+				applicationDate: undefined,
+				applicationDecision: undefined,
+				applicationDecisionDate: undefined,
+				caseSubmittedDate: undefined,
+				caseSubmissionDueDate: undefined,
+				siteAccessDetails: null,
+				siteSafetyDetails: null,
+				siteAreaSquareMetres: undefined,
+				floorSpaceSquareMetres: undefined,
+				siteGridReferenceEasting: undefined,
+				siteGridReferenceNorthing: undefined,
+				ownsAllLand: undefined,
+				ownsSomeLand: undefined,
+				hasAdvertisedAppeal: undefined,
+				appellantCostsAppliedFor: undefined,
+				originalDevelopmentDescription: undefined,
+				changedDevelopmentDescription: undefined,
+				ownersInformed: undefined,
+				isGreenBelt: undefined,
+				typeOfPlanningApplication: undefined,
+				numberOfResidencesNetChange: undefined
+			}
+		},
+		{
+			desc: 'common fields',
+			input: {
+				casedata: {
+					applicationDate: '2025-10-22T00:00:00.000Z',
+					applicationDecision: 'refused',
+					applicationDecisionDate: '2025-10-22T00:00:00.000Z',
+					caseSubmittedDate: '2025-10-22T00:00:00.000Z',
+					caseSubmissionDueDate: '2025-10-22T00:00:00.000Z',
+					siteAreaSquareMetres: 12,
+					floorSpaceSquareMetres: 13,
+					siteGridReferenceEasting: '012345',
+					siteGridReferenceNorthing: '678910',
+					ownsAllLand: true,
+					ownsSomeLand: true,
+					advertisedAppeal: true,
+					appellantCostsAppliedFor: true,
+					originalDevelopmentDescription: 'test',
+					changedDevelopmentDescription: 'test 2',
+					ownersInformed: true,
+					isGreenBelt: true,
+					typeOfPlanningApplication: 'full',
+					numberOfResidencesNetChange: 123
+				}
+			},
+			expected: {
+				applicationDate: '2025-10-22T00:00:00.000Z',
+				applicationDecision: 'refused',
+				applicationDecisionDate: '2025-10-22T00:00:00.000Z',
+				caseSubmittedDate: '2025-10-22T00:00:00.000Z',
+				caseSubmissionDueDate: '2025-10-22T00:00:00.000Z',
+				siteAreaSquareMetres: 12,
+				floorSpaceSquareMetres: 13,
+				siteGridReferenceEasting: '012345',
+				siteGridReferenceNorthing: '678910',
+				ownsAllLand: true,
+				ownsSomeLand: true,
+				hasAdvertisedAppeal: true,
+				appellantCostsAppliedFor: true,
+				originalDevelopmentDescription: 'test',
+				changedDevelopmentDescription: 'test 2',
+				ownersInformed: true,
+				isGreenBelt: true,
+				typeOfPlanningApplication: 'full',
+				numberOfResidencesNetChange: 123,
+				siteAccessDetails: null,
+				siteSafetyDetails: null
+			}
+		},
+		{
+			desc: 'S20 case',
+			input: { casedata: { caseType: 'Y', knowsAllOwners: 'yes', knowsOtherOwners: 'no' } },
+			expected: expect.objectContaining({
+				knowsAllOwners: { connect: { key: 'yes' } },
+				knowsOtherOwners: { connect: { key: 'no' } }
+			})
+		},
+		{
+			desc: 'S78 case',
+			input: {
+				casedata: {
+					caseType: 'W',
+					agriculturalHolding: true,
+					tenantAgriculturalHolding: false,
+					otherTenantsAgriculturalHolding: true,
+					informedTenantsAgriculturalHolding: false
+				}
+			},
+			expected: expect.objectContaining({
+				agriculturalHolding: true,
+				tenantAgriculturalHolding: false,
+				otherTenantsAgriculturalHolding: true,
+				informedTenantsAgriculturalHolding: false
+			})
+		},
+		{
+			desc: 'CAS adverts case (ZA)',
+			input: {
+				casedata: {
+					caseType: 'ZA',
+					isAdvertInPosition: true,
+					isSiteOnHighwayLand: false,
+					hasLandownersPermission: true
+				}
+			},
+			expected: expect.objectContaining({
+				advertInPosition: true,
+				highwayLand: false,
+				landownerPermission: true
+			})
+		},
+		{
+			desc: 'Adverts case (H)',
+			input: {
+				casedata: {
+					caseType: 'H',
+					isAdvertInPosition: true,
+					isSiteOnHighwayLand: false,
+					hasLandownersPermission: true
+				}
+			},
+			expected: expect.objectContaining({
+				advertInPosition: true,
+				highwayLand: false,
+				landownerPermission: true
+			})
+		},
+		{
+			desc: 'siteAccessDetails and siteSafetyDetails arrays',
+			input: {
+				casedata: { siteAccessDetails: ['access1', 'access2'], siteSafetyDetails: ['safety1'] }
+			},
+			expected: expect.objectContaining({
+				siteAccessDetails: 'access1',
+				siteSafetyDetails: 'safety1'
+			})
+		}
+	])('mapAppellantCaseIn: $desc', ({ input, expected }) => {
+		const result = mapAppellantCaseIn(input);
+		expect(result).toEqual(expected);
 	});
 });

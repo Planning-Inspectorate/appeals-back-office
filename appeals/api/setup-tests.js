@@ -679,6 +679,7 @@ jest.unstable_mockModule('#db-client', () => ({
 }));
 
 const mockSendEvents = jest.fn();
+global.mockSendEvents = mockSendEvents;
 
 jest.unstable_mockModule('./src/server/infrastructure/event-client.js', () => ({
 	eventClient: {
@@ -739,6 +740,7 @@ jest.unstable_mockModule('./src/server/config/config.js', () => ({
 		...config,
 		NODE_ENV: NODE_ENV_PRODUCTION,
 		enableTestEndpoints: true,
+		serviceBusEnabled: true,
 		govNotify: {
 			...config.govNotify,
 			testMailbox: '',

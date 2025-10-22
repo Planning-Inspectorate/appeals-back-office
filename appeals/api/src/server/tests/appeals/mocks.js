@@ -104,6 +104,7 @@ export const appealS20 = {
 
 export const householdAppeal = {
 	caseCreatedDate: new Date('2024-03-25T23:59:59.999Z'),
+	caseUpdatedDate: new Date('2024-03-25T23:59:59.999Z'),
 	id: 1,
 	assignedTeamId: 1,
 	reference: '1345264',
@@ -271,7 +272,8 @@ export const householdAppeal = {
 		lpaNotificationMethods: [
 			{
 				lpaNotificationMethod: {
-					name: 'A site notice'
+					name: 'A site notice',
+					key: 'notice'
 				}
 			}
 		],
@@ -315,7 +317,11 @@ export const fullPlanningAppeal = {
 		isAgriculturalHoldingTenant: true,
 		isDevelopmentDescriptionStillCorrect: false,
 		newDevelopmentDescription: 'A new extension has been added at the back',
-		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
+		appellantProcedurePreference: 'hearing',
+		appellantProcedurePreferenceDetails: 'Reason for preference',
+		appellantProcedurePreferenceDuration: 5,
+		appellantProcedurePreferenceWitnessCount: 1
 	},
 	representations: []
 };
