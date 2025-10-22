@@ -666,7 +666,10 @@ export const spec = {
 				incompleteReasons: ['Documents or information are missing', 'Policies are missing', 'Other']
 			},
 			reasonForNeighbourVisits: 'The inspector needs to access the neighbouring site',
-			preserveGrantLoan: true
+			preserveGrantLoan: true,
+			isSiteInAreaOfSpecialControlAdverts: true,
+			wasApplicationRefusedDueToHighwayOrTraffic: true,
+			didAppellantSubmitCompletePhotosAndPlans: true
 		},
 		UpdateAppellantCaseRequest: {
 			appealDueDate: '2024-12-13',

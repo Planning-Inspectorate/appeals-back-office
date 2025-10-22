@@ -36,12 +36,17 @@ import extraConditionsRouter from './extra-conditions/extra-conditions.router.js
 import hasProtectedSpeciesRouter from './has-protected-species/has-protected-species.router.js';
 import isAonbNationalLandscapeRouter from './is-aonb-national-landscape/is-aonb-national-landscape.router.js';
 import isGypsyOrTravellerSiteRouter from './is-gypsy-or-traveller-site/is-gypsy-or-traveller-site.router.js';
+import { validateLpaQuestionnaireId } from './lpa-questionnaire.middleware.js';
 import neighbouringSiteAccessRouter from './neighbouring-site-access/neighbouring-site-access.router.js';
 import notificationMethodsRouter from './notification-methods/notification-methods.router.js';
 import preserveGrantLoanRouter from './preserve-grant-loan/preserve-grant-loan.router.js';
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
+import specialControlOfAdvertisementRouter from './special-control-of-advertisement/special-control-of-advertisement.router.js';
 
 const router = createRouter({ mergeParams: true });
+router.param('lpaQuestionnaireId', (req, res, next) => {
+	validateLpaQuestionnaireId(req, res, next);
+});
 
 router.use(
 	'/:lpaQuestionnaireId/neighbouring-sites',
@@ -224,6 +229,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	preserveGrantLoanRouter
+);
+router.use(
+	'/:lpaQuestionnaireId/area-special-control',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	specialControlOfAdvertisementRouter
 );
 
 router

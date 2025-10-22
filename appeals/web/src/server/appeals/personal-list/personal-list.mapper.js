@@ -54,6 +54,11 @@ export function personalListPage(
 	const account = /** @type {AccountInfo} */ (authSession.getAccount(session));
 	const userGroups = account?.idTokenClaims?.groups ?? [];
 	const isCaseOfficer = userGroups.includes(config.referenceData.appeals.caseOfficerGroupId);
+	const urlToSearchCaseOfficer = addBackLinkQueryToUrl(
+		request,
+		'personal-list/search-case-officer'
+	);
+
 	const filterItemsArray = ['all', ...(appealsAssignedToCurrentUser?.statuses || [])]
 		.map((appealStatus) => ({
 			text: mapStatusFilterLabel(appealStatus),
@@ -213,12 +218,25 @@ export function personalListPage(
 		}
 	};
 
+	/** @type {PageComponent} */
+	const searchOtherCOLink = {
+		type: 'html',
+		parameters: {
+			html: `${`<a class="govuk-link" href=${urlToSearchCaseOfficer} data-cy="change-case-officer">View another case officer’s appeals</a>`}
+                <div class=" govuk-!-margin-top-2 govuk-!-margin-bottom-6"></div>`
+		}
+	};
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Personal list',
-		heading: 'Cases assigned to you',
+		heading: 'Your appeals',
 		pageComponents: []
 	};
+
+	config.featureFlags.featureFlagSearchCaseOfficer
+		? pageContent.pageComponents?.push(searchOtherCOLink)
+		: null;
 
 	if (
 		appealsAssignedToCurrentUser &&
@@ -227,7 +245,7 @@ export function personalListPage(
 	) {
 		pageContent.pageComponents?.push(filterComponent, casesComponent);
 	} else {
-		pageContent.heading = 'There are currently no cases assigned to you.';
+		pageContent.heading = 'You are not assigned to any appeals';
 		pageContent.pageComponents?.push(searchAllCasesButton);
 	}
 
@@ -466,6 +484,27 @@ function mapRequiredActionToPersonalListActionHtml(
 				request,
 				`/appeals-service/appeal-details/${appealId}/residential-units/new`
 			)}">Add number of residential units<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+		}
+		case 'progressToProofOfEvidenceAndWitnesses': {
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/share`
+			)}">Progress to proof of evidence and witnesses</a>`;
+		}
+		case 'awaitingProofOfEvidenceAndWitnesses': {
+			return 'Awaiting proof of evidence and witnesses';
+		}
+		case 'reviewLpaProofOfEvidence': {
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/proof-of-evidence/lpa`
+			)}">Review LPA proof of evidence and witnesses</a>`;
+		}
+		case 'reviewAppellantProofOfEvidence': {
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/proof-of-evidence/appellant`
+			)}">Review appellant proof of evidence and witnesses</a>`;
 		}
 		default: {
 			return '';

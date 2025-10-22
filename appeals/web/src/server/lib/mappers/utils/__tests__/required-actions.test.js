@@ -1242,5 +1242,225 @@ describe('required actions', () => {
 				).toEqual(['issueAppellantCostsDecision', 'issueLpaCostsDecision']);
 			});
 		});
+
+		describe('when appeal status is "EVIDENCE"', () => {
+			const appealDataWithStatementsStatus = {
+				...appealData,
+				appealStatus: APPEAL_CASE_STATUS.EVIDENCE
+			};
+			it('should return "awaitingProofOfEvidenceAndWitnesses" if LPA proof of evidence is not received', () => {
+				expect(
+					getRequiredActionsForAppeal(
+						{
+							...appealDataWithStatementsStatus,
+							appealTimetable: {
+								...appealDataWithStatementsStatus.appealTimetable,
+								proofOfEvidenceAndWitnessesDueDate: futureDate
+							},
+							documentationSummary: {
+								...appealDataWithStatementsStatus.documentationSummary,
+								lpaProofOfEvidence: {
+									status: 'not_received',
+									counts: {
+										awaiting_review: 1,
+										valid: 0,
+										published: 0
+									}
+								},
+								appellantProofOfEvidence: {
+									status: 'received',
+									counts: {
+										awaiting_review: 1,
+										valid: 0,
+										published: 0
+									}
+								}
+							}
+						},
+						'detail'
+					)
+				).toContain('awaitingProofOfEvidenceAndWitnesses');
+			});
+
+			it('should return "awaitingProofOfEvidenceAndWitnesses" if appellant proof of evidence is not received', () => {
+				expect(
+					getRequiredActionsForAppeal(
+						{
+							...appealDataWithStatementsStatus,
+							appealTimetable: {
+								...appealDataWithStatementsStatus.appealTimetable,
+								proofOfEvidenceAndWitnessesDueDate: futureDate
+							},
+							documentationSummary: {
+								...appealDataWithStatementsStatus.documentationSummary,
+								lpaProofOfEvidence: {
+									status: 'received',
+									counts: {
+										awaiting_review: 1,
+										valid: 0,
+										published: 0
+									}
+								},
+								appellantProofOfEvidence: {
+									status: 'not_received',
+									counts: {
+										awaiting_review: 1,
+										valid: 0,
+										published: 0
+									}
+								}
+							}
+						},
+						'detail'
+					)
+				).toContain('awaitingProofOfEvidenceAndWitnesses');
+			});
+
+			it('should return "awaitingProofOfEvidenceAndWitnesses" if both LPA and appellant proof of evidence is not received', () => {
+				expect(
+					getRequiredActionsForAppeal(
+						{
+							...appealDataWithStatementsStatus,
+							appealTimetable: {
+								...appealDataWithStatementsStatus.appealTimetable,
+								proofOfEvidenceAndWitnessesDueDate: futureDate
+							},
+							documentationSummary: {
+								...appealDataWithStatementsStatus.documentationSummary,
+								lpaProofOfEvidence: {
+									status: 'not_received',
+									counts: {
+										awaiting_review: 1,
+										valid: 0,
+										published: 0
+									}
+								},
+								appellantProofOfEvidence: {
+									status: 'not_received',
+									counts: {
+										awaiting_review: 1,
+										valid: 0,
+										published: 0
+									}
+								}
+							}
+						},
+						'detail'
+					)
+				).toContain('awaitingProofOfEvidenceAndWitnesses');
+			});
+
+			it('should return not return "awaitingProofOfEvidenceAndWitnesses" if both LPA and appellant proof of evidence are received', () => {
+				expect(
+					getRequiredActionsForAppeal(
+						{
+							...appealDataWithStatementsStatus,
+							appealTimetable: {
+								...appealDataWithStatementsStatus.appealTimetable,
+								proofOfEvidenceAndWitnessesDueDate: futureDate
+							},
+							documentationSummary: {
+								...appealDataWithStatementsStatus.documentationSummary,
+								lpaProofOfEvidence: {
+									status: 'received',
+									counts: {
+										awaiting_review: 1,
+										valid: 0,
+										published: 0
+									}
+								},
+								appellantProofOfEvidence: {
+									status: 'received',
+									counts: {
+										awaiting_review: 1,
+										valid: 0,
+										published: 0
+									}
+								}
+							}
+						},
+						'detail'
+					).length
+				).toBe(0);
+			});
+
+			it('should return "awaitingProofOfEvidenceAndWitnesses" and "reviewAppellantProofOfEvidence" if LPA POE is received and reviewed but appelant POE is not reviewed', () => {
+				const result = getRequiredActionsForAppeal(
+					{
+						...appealDataWithStatementsStatus,
+						appealTimetable: {
+							...appealDataWithStatementsStatus.appealTimetable,
+							proofOfEvidenceAndWitnessesDueDate: futureDate
+						},
+						documentationSummary: {
+							...appealDataWithStatementsStatus.documentationSummary,
+							lpaProofOfEvidence: {
+								status: 'received',
+								representationStatus: 'valid',
+								counts: {
+									awaiting_review: 1,
+									valid: 1,
+									published: 0
+								}
+							},
+							appellantProofOfEvidence: {
+								status: 'not_received',
+								counts: {
+									awaiting_review: 1,
+									valid: 0,
+									published: 0
+								}
+							}
+						}
+					},
+					'detail'
+				);
+				expect(result).toEqual(
+					expect.arrayContaining([
+						'awaitingProofOfEvidenceAndWitnesses',
+						'reviewAppellantProofOfEvidence'
+					])
+				);
+			});
+
+			it('should return "awaitingProofOfEvidenceAndWitnesses" and "reviewLpaProofOfEvidence" if appellant POE is received and reviewed but appelant POE is not reviewed', () => {
+				const result = getRequiredActionsForAppeal(
+					{
+						...appealDataWithStatementsStatus,
+						appealTimetable: {
+							...appealDataWithStatementsStatus.appealTimetable,
+							proofOfEvidenceAndWitnessesDueDate: futureDate
+						},
+						documentationSummary: {
+							...appealDataWithStatementsStatus.documentationSummary,
+							lpaProofOfEvidence: {
+								status: 'not_received',
+								counts: {
+									awaiting_review: 1,
+									valid: 1,
+									published: 0
+								}
+							},
+							appellantProofOfEvidence: {
+								status: 'received',
+								representationStatus: 'valid',
+								counts: {
+									awaiting_review: 1,
+									valid: 0,
+									published: 0
+								}
+							}
+						}
+					},
+					'detail'
+				);
+				expect(result).toEqual(
+					expect.arrayContaining([
+						'awaitingProofOfEvidenceAndWitnesses',
+						'reviewLpaProofOfEvidence'
+					])
+				);
+			});
+		});
 	});
 });

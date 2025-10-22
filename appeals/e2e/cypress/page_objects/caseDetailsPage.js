@@ -329,7 +329,7 @@ export class CaseDetailsPage extends Page {
 	}
 
 	clickSetUpSiteVisitType() {
-		this.elements.setUpSiteVisit().click();
+		this.clickButtonByText('Set up site visit');
 	}
 
 	clickReadyToStartCase() {
@@ -931,5 +931,9 @@ export class CaseDetailsPage extends Page {
 
 	checkHeading = (expectedText) => {
 		this.elements.pageHeading().should('have.text', expectedText);
+	};
+
+	verifyChangeLinkIsDisplayed = (row) => {
+		this.elements.rowChangeLink(row).should('be.visible');
 	};
 }

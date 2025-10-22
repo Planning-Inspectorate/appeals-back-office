@@ -121,6 +121,12 @@ export const calculateDueDate = async (appeal, costsDecision) => {
 				days: approxStageCompletion.STATE_TARGET_STATEMENT_REVIEW
 			});
 		}
+		case APPEAL_CASE_STATUS.EVIDENCE: {
+			if (appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate) {
+				return new Date(appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate);
+			}
+			return null;
+		}
 		case APPEAL_CASE_STATUS.FINAL_COMMENTS: {
 			if (appeal.appealTimetable?.finalCommentsDueDate) {
 				return new Date(appeal.appealTimetable?.finalCommentsDueDate);

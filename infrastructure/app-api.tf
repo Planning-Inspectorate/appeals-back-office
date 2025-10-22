@@ -64,18 +64,20 @@ module "app_api" {
     GOV_NOTIFY_APPEAL_GENERIC_ID = var.apps_config.integrations.notify_template_ids.appeal_generic_id
 
     #feature flags
-    FEATURE_FLAG_S78_WRITTEN        = var.apps_config.featureFlags.featureFlagS78Written
-    FEATURE_FLAG_S78_HEARING        = var.apps_config.featureFlags.featureFlagS78Hearing
-    FEATURE_FLAG_S78_INQUIRY        = var.apps_config.featureFlags.featureFlagS78Inquiry
-    FEATURE_FLAG_LINKED_APPEALS     = var.apps_config.featureFlags.featureFlagLinkedAppeals
-    FEATURE_FLAG_S20                = var.apps_config.featureFlags.featureFlagS20
-    FEATURE_FLAG_CAS                = var.apps_config.featureFlags.featureFlagCAS
-    FEATURE_FLAG_CAS_ADVERT         = var.apps_config.featureFlags.featureFlagCasAdvert
-    FEATURE_FLAG_NET_RESIDENCE      = var.apps_config.featureFlags.featureFlagNetResidence
-    FEATURE_FLAG_NET_RESIDENCE_S20  = var.apps_config.featureFlags.featureFlagNetResidenceS20
-    FEATURE_FLAG_ADVERTISEMENT      = var.apps_config.featureFlags.featureFlagAdvertisement
-    FEATURE_FLAG_CHANGE_APPEAL_TYPE = var.apps_config.featureFlags.featureFlagChangeAppealType
-    FEATURE_FLAG_HEARING_POST_MVP   = var.apps_config.featureFlags.featureFlagHearingPostMvp
+    FEATURE_FLAG_S78_WRITTEN         = var.apps_config.featureFlags.featureFlagS78Written
+    FEATURE_FLAG_S78_HEARING         = var.apps_config.featureFlags.featureFlagS78Hearing
+    FEATURE_FLAG_S78_INQUIRY         = var.apps_config.featureFlags.featureFlagS78Inquiry
+    FEATURE_FLAG_LINKED_APPEALS      = var.apps_config.featureFlags.featureFlagLinkedAppeals
+    FEATURE_FLAG_S20                 = var.apps_config.featureFlags.featureFlagS20
+    FEATURE_FLAG_CAS                 = var.apps_config.featureFlags.featureFlagCAS
+    FEATURE_FLAG_CAS_ADVERT          = var.apps_config.featureFlags.featureFlagCasAdvert
+    FEATURE_FLAG_NET_RESIDENCE       = var.apps_config.featureFlags.featureFlagNetResidence
+    FEATURE_FLAG_NET_RESIDENCE_S20   = var.apps_config.featureFlags.featureFlagNetResidenceS20
+    FEATURE_FLAG_ADVERTISEMENT       = var.apps_config.featureFlags.featureFlagAdvertisement
+    FEATURE_FLAG_CHANGE_APPEAL_TYPE  = var.apps_config.featureFlags.featureFlagChangeAppealType
+    FEATURE_FLAG_HEARING_POST_MVP    = var.apps_config.featureFlags.featureFlagHearingPostMvp
+    FEATURE_FLAG_SEARCH_CASE_OFFICER = var.apps_config.featureFlags.featureFlagSearchCaseOfficer
+
 
     # service bus topics
     SB_TOPIC_NAME_APPEAL_HAS            = var.sb_topic_names.events.appeal_has

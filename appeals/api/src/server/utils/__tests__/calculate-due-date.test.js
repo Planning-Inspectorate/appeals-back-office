@@ -270,6 +270,31 @@ describe('calculateDueDate Tests', () => {
 		});
 	});
 
+	describe('handles EVIDENCE', () => {
+		let mockAppealWithTimetable = {};
+
+		beforeEach(() => {
+			mockAppealWithTimetable = {
+				...mockAppeal,
+				appealTimetable: {
+					id: 1262,
+					appealId: 523,
+					proofOfEvidenceAndWitnessesDueDate: new Date('2023-03-01T00:00:00.000Z')
+				}
+			};
+			mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.EVIDENCE;
+		});
+		test('return null where proof of evidence due date do not exist', async () => {
+			mockAppealWithTimetable.appealTimetable.proofOfEvidenceAndWitnessesDueDate = null;
+			expect(await calculateDueDate(mockAppealWithTimetable, '')).toBeNull();
+		});
+
+		test('return dueDate where proof of evidence due date exists', async () => {
+			const dueDate = await calculateDueDate(mockAppealWithTimetable, '');
+			expect(dueDate).toEqual(new Date('2023-03-01T00:00:00.000Z'));
+		});
+	});
+
 	test('handles unexpected status (default case)', async () => {
 		mockAppeal.appealStatus[0].status = 'unexpected_status';
 

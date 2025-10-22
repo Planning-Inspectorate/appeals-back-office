@@ -1,12 +1,11 @@
 import { formatDate } from '../../../lib/nunjucks-filters/format-date.js';
-import { formatSentenceCase, formatYesNo } from '../../../lib/nunjucks-filters/index.js';
+import { formatSentenceCase } from '../../../lib/nunjucks-filters/index.js';
 
 export function beforeYouStartSection(templateData) {
 	const {
 		localPlanningDepartment,
 		planningApplicationReference,
 		applicationDate,
-		appellantCostsAppliedFor,
 		applicationDecision,
 		applicationDecisionDate,
 		typeOfPlanningApplication
@@ -31,10 +30,11 @@ export function beforeYouStartSection(templateData) {
 				key: 'What’s the date on the decision letter from the local planning authority?',
 				text: formatDate(applicationDecisionDate)
 			},
-			{
-				key: 'Are you claiming costs as part of your appeal?',
-				text: formatYesNo(appellantCostsAppliedFor)
-			},
+			// Being removed from BYS in BO
+			// {
+			// 	key: 'Are you claiming costs as part of your appeal?',
+			// 	text: formatYesNo(appellantCostsAppliedFor)
+			// },
 			{ key: 'What is the application reference number?', text: planningApplicationReference },
 			{ key: 'What date did you submit your application?', text: formatDate(applicationDate) }
 		]

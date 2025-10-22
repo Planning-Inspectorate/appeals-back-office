@@ -10,7 +10,6 @@ export const generateCasAdvertLpaQuestionnaireComponents = (
 	mappedLPAQData,
 	mappedAppealDetails
 ) => {
-	console.log(mappedLPAQData);
 	/** @type {PageComponent[]} */
 	const pageComponents = [];
 
@@ -36,6 +35,7 @@ export const generateCasAdvertLpaQuestionnaireComponents = (
 				mappedLPAQData.lpaq?.affectsScheduledMonument?.display.summaryListItem,
 				mappedLPAQData.lpaq?.conservationAreaMap?.display.summaryListItem,
 				mappedLPAQData.lpaq?.hasProtectedSpecies?.display.summaryListItem,
+				mappedLPAQData.lpaq?.specialControlOfAdvertisment?.display.summaryListItem,
 				mappedLPAQData.lpaq?.siteWithinGreenBelt?.display.summaryListItem,
 				mappedLPAQData.lpaq?.isAonbNationalLandscape?.display.summaryListItem,
 				mappedLPAQData.lpaq?.inNearOrLikelyToAffectDesignatedSites?.display.summaryListItem

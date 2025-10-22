@@ -349,6 +349,10 @@ export class Page {
 		cy.visit(urlPaths.appealsList);
 	}
 
+	navigateToPersonalList() {
+		cy.visit(urlPaths.personalList);
+	}
+
 	goToFolderDocumentPage() {
 		this.basePageElements.projectManagement().click();
 	}
