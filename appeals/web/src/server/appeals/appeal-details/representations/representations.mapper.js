@@ -288,3 +288,80 @@ export function finalCommentsSharePage(appeal, request, backUrl) {
 
 	return pageContent;
 }
+
+/**
+ * @param {Appeal} appeal
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string | undefined} backUrl
+ * @returns {PageContent}
+ * */
+export function proofOfEvidenceSharePage(appeal, request, backUrl) {
+	const hasValidAppellantProofOfEvidence =
+		appeal.documentationSummary.appellantProofOfEvidence?.representationStatus ===
+		COMMENT_STATUS.VALID;
+	const hasValidLpaProofOfEvidence =
+		appeal.documentationSummary.lpaProofOfEvidence?.representationStatus === COMMENT_STATUS.VALID;
+
+	const infoText = (() => {
+		const appellantProofOfEvidenceLink = `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+			request,
+			`/appeals-service/appeal-details/${appeal.appealId}/proof-of-evidence/appellant`
+		)}">appellant final comments</a>`;
+		const lpaProofOfEvidenceLink = `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+			request,
+			`/appeals-service/appeal-details/${appeal.appealId}/proof-of-evidence/lpa`
+		)}">LPA final comments</a>`;
+
+		if (hasValidAppellantProofOfEvidence && hasValidLpaProofOfEvidence) {
+			return `We’ll share ${appellantProofOfEvidenceLink} and ${lpaProofOfEvidenceLink} with the relevant parties.`;
+		}
+
+		if (hasValidAppellantProofOfEvidence && !hasValidLpaProofOfEvidence) {
+			return `We’ll share ${appellantProofOfEvidenceLink} with the relevant parties.`;
+		}
+
+		if (!hasValidAppellantProofOfEvidence && hasValidLpaProofOfEvidence) {
+			return `We’ll share ${lpaProofOfEvidenceLink} with the relevant parties.`;
+		}
+
+		return `There are no proof of evidence and witnesses to share.`;
+	})();
+
+	const hasItemsToShare = hasValidLpaProofOfEvidence || hasValidAppellantProofOfEvidence;
+	const title = hasItemsToShare
+		? 'Confirm that you want to share proof of evidence'
+		: 'Progress to inquiry';
+	const warningText = hasItemsToShare
+		? 'Do not share until you have reviewed all of the supporting documents and redacted any sensitive information.'
+		: 'Do not progress to inquiry if you are awaiting any late proof of evidence and witnesses.';
+	const submitButtonText = hasItemsToShare
+		? 'Share proof of evidence and witnesses'
+		: 'Progress to inquiry';
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appeal.appealId}`,
+		preHeading: `Appeal ${appealShortReference(appeal.appealReference)}`,
+		heading: title,
+		pageComponents: [
+			{
+				type: 'html',
+				parameters: {
+					html: `<p class="govuk-body">${infoText}</p>`
+				}
+			},
+			{
+				type: 'warning-text',
+				parameters: {
+					text: warningText
+				}
+			}
+		],
+		submitButtonProperties: {
+			text: submitButtonText
+		}
+	};
+
+	return pageContent;
+}

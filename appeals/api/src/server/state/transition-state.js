@@ -2,10 +2,15 @@ import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.j
 import { mapCompletedStateList } from '#mappers/api/shared/map-completed-state-list.js';
 import appealStatusRepository from '#repositories/appeal-status.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
+import representationRepository from '#repositories/representation.repository.js';
 import { currentStatus } from '#utils/current-status.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
+import {
+	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_REPRESENTATION_TYPE
+} from '@pins/appeals/constants/common.js';
 import {
 	APPEAL_TYPE_SHORTHAND_FPA,
 	APPEAL_TYPE_SHORTHAND_HAS,
@@ -30,6 +35,7 @@ import createStateMachine from './create-state-machine.js';
  */
 const transitionState = async (appealId, azureAdUserId, trigger) => {
 	const appeal = await appealRepository.getAppealById(appealId);
+
 	if (!appeal) {
 		throw new Error(`no appeal exists with ID: ${appealId}`);
 	}
@@ -90,9 +96,42 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 		((procedureKey === APPEAL_CASE_PROCEDURE.WRITTEN && appeal.siteVisit) ||
 			(procedureKey === APPEAL_CASE_PROCEDURE.HEARING &&
 				appeal.hearing &&
-				appeal.hearing?.addressId))
+				appeal.hearing?.addressId) ||
+			(procedureKey === APPEAL_CASE_PROCEDURE.INQUIRY &&
+				appeal.inquiry &&
+				appeal.inquiry?.addressId))
 	) {
 		await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+	}
+
+	if (
+		newState === APPEAL_CASE_STATUS.EVIDENCE &&
+		[APPEAL_TYPE_SHORTHAND_FPA].includes(appealTypeKey) &&
+		procedureKey === APPEAL_CASE_PROCEDURE.INQUIRY
+	) {
+		const evidenceRepresentations = await representationRepository.getRepresentations(appealId, {
+			representationType: [
+				APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
+				APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
+			]
+		});
+		const appellantProofOfEvidenceRep = evidenceRepresentations.comments.find(
+			(r) => r.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
+		);
+		const lpaProofOfEvidenceRep = evidenceRepresentations.comments.find(
+			(r) => r.representationType === APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE
+		);
+
+		if (
+			[APPEAL_REPRESENTATION_STATUS.VALID, APPEAL_REPRESENTATION_STATUS.INCOMPLETE].includes(
+				lpaProofOfEvidenceRep?.status
+			) &&
+			[APPEAL_REPRESENTATION_STATUS.VALID, APPEAL_REPRESENTATION_STATUS.INCOMPLETE].includes(
+				appellantProofOfEvidenceRep?.status
+			)
+		) {
+			await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+		}
 	}
 
 	if (!appeal.parentAppeals?.length) {

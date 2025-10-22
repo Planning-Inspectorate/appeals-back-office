@@ -306,7 +306,8 @@ export async function publish(req, res) {
 	/** @type {Record<string, import('./representations.service.js').PublishFunction>} */
 	const handlers = {
 		[APPEAL_CASE_STATUS.STATEMENTS]: representationService.publishLpaStatements,
-		[APPEAL_CASE_STATUS.FINAL_COMMENTS]: representationService.publishFinalComments
+		[APPEAL_CASE_STATUS.FINAL_COMMENTS]: representationService.publishFinalComments,
+		[APPEAL_CASE_STATUS.EVIDENCE]: representationService.publishProofOfEvidence
 	};
 
 	const azureAdUserId = req.get('azureAdUserId');
@@ -333,7 +334,8 @@ export async function publish(req, res) {
 		/** @type {Record<string, string>} */
 		const replacements = {
 			[APPEAL_CASE_STATUS.STATEMENTS]: 'Statements and IP comments',
-			[APPEAL_CASE_STATUS.FINAL_COMMENTS]: 'Final comments'
+			[APPEAL_CASE_STATUS.FINAL_COMMENTS]: 'Final comments',
+			[APPEAL_CASE_STATUS.EVIDENCE]: 'Proof of evidence and witnesses'
 		};
 
 		const replacement = replacements[currentAppealStatus];

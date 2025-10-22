@@ -4220,6 +4220,10 @@ export const appealDataToGetRequiredActions = {
 	awaitingProofOfEvidenceAndWitnesses: {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
+		appealTimetable: {
+			appealTimetableId: 1053,
+			proofOfEvidenceAndWitnessesDueDate: futureDate
+		},
 		documentationSummary: {
 			lpaProofOfEvidence: {
 				status: DOCUMENT_STATUS_NOT_RECEIVED,
@@ -4237,6 +4241,33 @@ export const appealDataToGetRequiredActions = {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
 		procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+		documentationSummary: {
+			ipComments: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				counts: {
+					awaiting_review: 0,
+					valid: 0,
+					published: 0
+				}
+			},
+			lpaStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				counts: {
+					awaiting_review: 0,
+					valid: 0,
+					published: 0
+				}
+			}
+		}
+	},
+	progressToInquiry: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
+		procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+		appealTimetable: {
+			appealTimetableId: 1053,
+			proofOfEvidenceAndWitnessesDueDate: pastDate
+		},
 		documentationSummary: {
 			ipComments: {
 				status: DOCUMENT_STATUS_RECEIVED,

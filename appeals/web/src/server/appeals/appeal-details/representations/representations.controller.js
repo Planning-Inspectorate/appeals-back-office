@@ -3,7 +3,11 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { finalCommentsSharePage, statementAndCommentsSharePage } from './representations.mapper.js';
+import {
+	finalCommentsSharePage,
+	proofOfEvidenceSharePage,
+	statementAndCommentsSharePage
+} from './representations.mapper.js';
 import { publishRepresentations } from './representations.service.js';
 
 /** @type {import('@pins/express').RequestHandler<{}>} */
@@ -28,6 +32,20 @@ export function renderShareRepresentations(request, response) {
 				}
 
 				return finalCommentsSharePage(currentAppeal, request, getBackLinkUrlFromQuery(request));
+			}
+			case APPEAL_CASE_STATUS.EVIDENCE: {
+				const proofOfEvidenceDueDate =
+					currentAppeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate;
+
+				if (
+					!proofOfEvidenceDueDate ||
+					!dateIsInThePast(dateISOStringToDayMonthYearHourMinute(proofOfEvidenceDueDate))
+				) {
+					throw new Error(
+						'Proof of evidence and witnesses cannot be shared before the due date has passed'
+					);
+				}
+				return proofOfEvidenceSharePage(currentAppeal, request, getBackLinkUrlFromQuery(request));
 			}
 			default:
 				throw new Error(
@@ -74,6 +92,14 @@ export async function postShareRepresentations(request, response) {
 				).length > 0
 					? 'finalCommentsShared'
 					: 'caseProgressed';
+			case APPEAL_CASE_STATUS.EVIDENCE:
+				return publishedReps.filter(
+					(rep) =>
+						rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE ||
+						rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
+				).length > 0
+					? 'proofOfEvidenceShared'
+					: 'progressedToInquiry';
 		}
 	})();
 
