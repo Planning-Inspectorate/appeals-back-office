@@ -571,3 +571,7 @@ const getDocuments = async (appealIDs) => {
 
 	return documents.map((_) => _.guid);
 };
+
+export default {
+	getAppealsFromLpaCodes
+};

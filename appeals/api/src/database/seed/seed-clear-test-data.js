@@ -1,5 +1,6 @@
-// import { getAppealsFromLpaCodes } from '#repositories/delete-appeal-data/delete-appeal-data.js';
-import { getAppealsFromLpaCodes } from '../../server/repositories/delete-appeal-data/delete-appeal-data.js';
+import appealDataFns from '#repositories/delete-appeal-data/delete-appeal-data.js';
+// import neighbouringSitesRepository from '#repositories/neighbouring-sites.repository.js';
+// import { getAppealsFromLpaCodes } from '../../server/repositories/delete-appeal-data/delete-appeal-data.js';
 import { databaseConnector } from '../../server/utils/database-connector.js';
 import { localPlanningDepartmentList } from './LPAs/training.js';
 
@@ -9,13 +10,13 @@ import { localPlanningDepartmentList } from './LPAs/training.js';
 async function deleteTestRecords() {
 	const lpaCodes = localPlanningDepartmentList.map((lpa) => lpa.lpaCode);
 
-	const appeals = await getAppealsFromLpaCodes(lpaCodes);
+	const appeals = await appealDataFns.getAppealsFromLpaCodes(lpaCodes);
 	if (appeals.length === 0) {
 		console.log('Nothing to delete.');
 		return;
 	}
 
-	await deleteAppealsInBatches(appeals);
+	// await deleteAppealsInBatches(appeals);
 }
 
 /**
