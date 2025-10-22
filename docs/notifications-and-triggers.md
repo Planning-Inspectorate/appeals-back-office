@@ -232,6 +232,42 @@ The following notifications are sent from the back-office using these [Notify Te
 - **Notify Template:** [site-visit-schedule-unaccompanied-appellant](../appeals/api/src/server/notify/templates/site-visit-schedule-unaccompanied-appellant.content.md)
 - **Trigger:** A site visit is not set up and the CO sets up an unaccompanied site visit. Confirming the change from the ‘Check details and set up site visit’ page triggers this email.
 
+### Site visit cancellation
+
+- **Appeal type:** all
+- **Notify Template:** [site-visit-cancelled](../appeals/api/src/server/notify/templates/site-visit-cancelled.content.md)
+- **Trigger:** The CO cancels the site visit. Confirming from the 'Confirm that you want to cancel the site visit' page using the 'Cancel site visit' button triggers this email.
+
+### Missed site visit appellant
+
+- **Appeal type:** all
+- **Notify Template:** [record-missed-site-visit-appellant](../appeals/api/src/server/notify/templates/record-missed-site-visit-appellant.content.md)
+- **Trigger:** The CO records that the site visit has been missed by the appellant. Confirming from the 'Check details and record missed site visit' page using the 'Record missed site visit' button triggers this email.
+
+### Missed site visit LPA
+
+- **Appeal type:** all
+- **Notify Template:** [record-missed-site-visit-lpa](../appeals/api/src/server/notify/templates/record-missed-site-visit-lpa.content.md)
+- **Trigger:** The CO records that the site visit has been missed by the LPA. Confirming from the 'Check details and record missed site visit' page using the 'Record missed site visit' button triggers this email.
+
+### Rearrange missed site visit to unaccompanied appellant
+
+- **Appeal type:** all
+- **Notify Template:** [missed-site-visit-rearranged-unaccompanied-appellant](../appeals/api/src/server/notify/templates/missed-site-visit-rearranged-unaccompanied-appellant.content.md)
+- **Trigger:** Having had a site visit cancelled (of any type) when a new unaccompanied site visit is set up this email is sent. Confirming on the 'Schedule site visit' page triggers this email.
+
+### Rearrange missed site visit appellant
+
+- **Appeal type:** all
+- **Notify Template:** [missed-site-visit-rearranged-appellant](../appeals/api/src/server/notify/templates/missed-site-visit-rearranged-appellant.content.md)
+- **Trigger:** Having had a site visit cancelled (of any type) when a new access required or accompanied site visit is set up this email is sent. Confirming on the 'Schedule site visit' page triggers this email.
+
+### Rearrange missed site visit LPA
+
+- **Appeal type:** all
+- **Notify Template:** [missed-site-visit-rearranged-lpa](../appeals/api/src/server/notify/templates/missed-site-visit-rearranged-lpa.content.md)
+- **Trigger:** Having had a site visit cancelled (of any type) when a new accompanied site visit is set up this email is sent. Confirming on the 'Schedule site visit' page triggers this email.
+
 ## Final comments
 
 ### Final comments done appellant
