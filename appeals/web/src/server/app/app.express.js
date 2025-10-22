@@ -26,15 +26,19 @@ app.use(installRequestLocalsMiddleware());
 app.locals = locals;
 
 app.use((request, response, next) => {
-	const { req, statusCode } = response;
-
-	// don't log any HEAD requests, or requests for static assets
-	if (
-		req.method !== 'HEAD' &&
-		!/((\bfonts\b)|(\bimages\b)|(\bstyles\b)|(\bscripts\b))/.test(req.originalUrl)
-	) {
-		pino.info(`[WEB] ${req.method} ${req.originalUrl.toString()} (Response code: ${statusCode})`);
-	}
+	response.once('finish', () => {
+		// don't log any HEAD requests, or requests for static assets
+		if (
+			request.method !== 'HEAD' &&
+			!/((\bfonts\b)|(\bimages\b)|(\bstyles\b)|(\bscripts\b))/.test(request.originalUrl)
+		) {
+			pino.info(
+				`[WEB] ${request.method} ${request.originalUrl.toString()} (Response code: ${
+					response.statusCode
+				})`
+			);
+		}
+	});
 
 	next();
 });
