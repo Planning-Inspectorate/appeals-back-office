@@ -1,7 +1,4 @@
-import {
-	deleteAppealsInBatches,
-	getAppealsFromLpaCodes
-} from '#repositories/delete-appeal-data/delete-appeal-data.js';
+import appealDataFns from '#repositories/delete-appeal-data/delete-appeal-data.js';
 import logger from '#utils/logger.js';
 import { localPlanningDepartmentList } from './LPAs/training.js';
 
@@ -12,13 +9,13 @@ import { localPlanningDepartmentList } from './LPAs/training.js';
 async function deleteTestRecords() {
 	const lpaCodes = localPlanningDepartmentList.map((lpa) => lpa.lpaCode);
 
-	const appeals = await getAppealsFromLpaCodes(lpaCodes);
+	const appeals = await appealDataFns.getAppealsFromLpaCodes(lpaCodes);
 	if (appeals.length === 0) {
 		logger.info('Nothing to delete.');
 		return;
 	}
 
-	await deleteAppealsInBatches(appeals);
+	await appealDataFns.deleteAppealsInBatches(appeals);
 }
 
 await deleteTestRecords();
