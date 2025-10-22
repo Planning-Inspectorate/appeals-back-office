@@ -3,7 +3,11 @@ import { dateISOStringToDisplayDate, getTodaysISOString } from '#lib/dates.js';
 import { getSessionValuesForAppeal } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { getBackLinkUrlFromQuery, preserveQueryString } from '#lib/url-utilities.js';
+import {
+	addBackLinkQueryToUrl,
+	getBackLinkUrlFromQuery,
+	preserveQueryString
+} from '#lib/url-utilities.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { recalculateDateIfNotBusinessDay } from '@pins/appeals/utils/business-days.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
@@ -239,7 +243,10 @@ const redirectionTarget = (request) => {
 	const sessionValues = getSessionValuesForAppeal(request, 'startCaseAppealProcedure', appealId);
 
 	if (sessionValues?.appealProcedure === APPEAL_CASE_PROCEDURE.INQUIRY) {
-		return `/appeals-service/appeal-details/${appealId}/inquiry/setup/date`;
+		return addBackLinkQueryToUrl(
+			request,
+			`/appeals-service/appeal-details/${appealId}/inquiry/setup/date`
+		);
 	}
 
 	if (

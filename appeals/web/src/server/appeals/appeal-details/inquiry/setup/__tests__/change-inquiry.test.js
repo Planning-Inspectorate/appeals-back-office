@@ -83,6 +83,19 @@ describe('change inquiry', () => {
 			expect(pageHtml.querySelector('input#inquiry-time-minute')).not.toBeNull();
 		});
 
+		it('should have a back link to the original page if specified', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealWithInquiry, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/inquiry/change/date?backUrl=/my-cases`
+			);
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe('/my-cases');
+		});
+
 		it('should have a back link to the CYA page if editing', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
@@ -350,6 +363,53 @@ describe('change inquiry', () => {
 				html.querySelector('input[name="addressKnown"][value="no"]')?.getAttribute('checked')
 			).toBeDefined();
 		});
+
+		it('should have a back link to the previous page', async () => {
+			nock('http://test/')
+				.persist()
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealWithInquiry, appealId });
+
+			const response = await request.get(`${baseUrl}/${appealId}/inquiry/change/address`);
+			const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/change/estimation`
+			);
+		});
+
+		it('should have a back link to the CYA page if editing', async () => {
+			nock('http://test/')
+				.persist()
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealWithInquiry, appealId });
+
+			const queryString = `?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Faddress`;
+			const response = await request.get(
+				`${baseUrl}/${appealId}/inquiry/change/address${queryString}`
+			);
+			const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/change/check-details`
+			);
+		});
+
+		it('should have a back link to the previous page if editing began on another page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealWithInquiry, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/inquiry/change/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Festimation`
+			);
+
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/change/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Festimation`
+			);
+		});
 	});
 
 	describe('POST /inquiry/change/address', () => {
@@ -444,35 +504,49 @@ describe('change inquiry', () => {
 			);
 		});
 
-		it('should have a back link to the CYA page if editing this page', async () => {
+		it('should have a back link to the previous page', async () => {
 			nock('http://test/')
+				.persist()
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealWithInquiry, appealId });
 
-			const response = await request.get(
-				`${baseUrl}/${appealId}/inquiry/change/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Faddress`
-			);
+			const response = await request.get(`${baseUrl}/${appealId}/inquiry/change/address-details`);
+			const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
 
-			const html = parseHtml(response.text, { rootElement: 'body' });
-
-			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
-				`${baseUrl}/${appealId}/inquiry/change/estimation`
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/change/address`
 			);
 		});
 
-		it('should have a back link to the date page if editing began on a previous page', async () => {
+		it('should have a back link to the CYA page if editing', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealWithInquiry, appealId });
+
+			const queryString = `?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Faddress-details`;
+			const response = await request.get(
+				`${baseUrl}/${appealId}/inquiry/change/address-details${queryString}`
+			);
+			const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/change/check-details`
+			);
+		});
+
+		it('should have a back link to the previous page if editing began on another page', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealWithInquiry, appealId });
 
 			const response = await request.get(
-				`${baseUrl}/${appealId}/inquiry/change/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Fdate`
+				`${baseUrl}/${appealId}/inquiry/change/address-details?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Faddress`
 			);
 
 			const html = parseHtml(response.text, { rootElement: 'body' });
 
 			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
-				`${baseUrl}/${appealId}/inquiry/change/estimation`
+				`${baseUrl}/${appealId}/inquiry/change/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Faddress`
 			);
 		});
 

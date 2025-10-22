@@ -11,6 +11,7 @@ import {
 	dateISOStringToDisplayTime12hr,
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
+import { editLink } from '#lib/edit-utilities.js';
 import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
@@ -23,10 +24,10 @@ import { capitalize, pick } from 'lodash-es';
 /**
  * @param {Appeal} appealData
  * @param {{ day?: string | number, month?: string | number, year?: string | number, hour?: string | number, minute?: string | number }} values
- * @param {'setup' | 'change'} action
+ * @param {string} backLinkUrl
  * @returns {PageContent}
  */
-export function inquiryDatePage(appealData, values, action) {
+export function inquiryDatePage(appealData, values, backLinkUrl) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const date = { day: values.day || '', month: values.month || '', year: values.year || '' };
 	const time =
@@ -56,10 +57,7 @@ export function inquiryDatePage(appealData, values, action) {
 	/** @type {PageContent} */
 	return {
 		title: `Date and time - set up inquiry - ${shortAppealReference}`,
-		backLinkUrl:
-			action === 'setup'
-				? `/appeals-service/appeal-details/${appealData.appealId}/start-case/select-procedure`
-				: `/appeals-service/appeal-details/${appealData.appealId}/inquiry/change/check-details`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference} - start case`,
 		heading: 'Inquiry date and time',
 		pageComponents: [dateComponent, timeComponent]
@@ -69,11 +67,12 @@ export function inquiryDatePage(appealData, values, action) {
 /**
  * @param {Appeal} appealData
  * @param {string} action
- * @param {{inquiryEstimationYesNo: string, inquiryEstimationDays: number}} [values]
+ * @param {string} backLinkUrl
+ * @param {Record<string, string>} [values]
  * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns {{backLinkUrl: string, title: string, pageComponents: {type: string, parameters: {name: string, fieldset: {legend: {classes: string, text: string, isPageHeading: boolean}}, idPrefix: string, items: [{conditional: {html: string}, text: string, value: string},{text: string, value: string}]}}[], preHeading: string}}
  */
-export function inquiryEstimationPage(appealData, action, errors, values) {
+export function inquiryEstimationPage(appealData, action, backLinkUrl, errors, values) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const inquiryEstimationComponent = {
 		type: 'radios',
@@ -126,7 +125,7 @@ export function inquiryEstimationPage(appealData, action, errors, values) {
 	/** @type {PageContent} */
 	return {
 		title: `Appeal - ${shortAppealReference} ${action === 'setup' ? 'start' : 'update'} case`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/inquiry/${action}/date`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference} - ${
 			action === 'setup' ? 'set up' : 'change'
 		} inquiry`,
@@ -137,11 +136,11 @@ export function inquiryEstimationPage(appealData, action, errors, values) {
 
 /**
  * @param {Appeal} appealData
- * @param {string} action
- * @param {{ addressKnown: string }} [values]
+ * @param {string} backLinkUrl
+ * @param {Record<string, string>} [values]
  * @returns {PageContent}
  */
-export function addressKnownPage(appealData, action, values) {
+export function addressKnownPage(appealData, backLinkUrl, values) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	const addressKnownComponent = yesNoInput({
@@ -149,13 +148,13 @@ export function addressKnownPage(appealData, action, values) {
 		id: 'address-known',
 		legendText: 'Do you know the address of where the inquiry will take place?',
 		legendIsPageHeading: true,
-		value: values?.addressKnown
+		value: values?.addressKnown ?? ''
 	});
 
 	/** @type {PageContent} */
 	return {
 		title: `Address - start case - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/inquiry/${action}/estimation`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference} - start case`,
 		pageComponents: [addressKnownComponent]
 	};
@@ -163,28 +162,28 @@ export function addressKnownPage(appealData, action, values) {
 
 /**
  * @param {Appeal} appealData
- * @param {import('@pins/appeals').Address} currentAddress
- * @param {'setup' | 'change'} action
+ * @param {string} backLinkUrl
+ * @param {Record<string, string>} values
  * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
-export function addressDetailsPage(appealData, action, currentAddress, errors) {
+export function addressDetailsPage(appealData, backLinkUrl, values = {}, errors) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
 	return {
 		title: `Address - start case - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/inquiry/${action}/address`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Inquiry address',
-		pageComponents: addressInputs({ address: currentAddress, errors })
+		pageComponents: addressInputs({ address: values, errors })
 	};
 }
 
 /**
  * @param {Appeal} appealDetails
- * @param {any} sessionValues
- * @param {'change' | 'setup'} action
+ * @param {Record<string, string>} sessionValues
+ * @param {string} backLinkUrl
  * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse | undefined} appellantCase
  * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns Promise<PageContent>
@@ -192,7 +191,7 @@ export function addressDetailsPage(appealData, action, currentAddress, errors) {
 export const inquiryDueDatesPage = async (
 	appealDetails,
 	sessionValues,
-	action,
+	backLinkUrl,
 	appellantCase,
 	errors = undefined
 ) => {
@@ -201,10 +200,7 @@ export const inquiryDueDatesPage = async (
 	 */
 	let pageContent = {
 		title: `Timetable due dates`,
-		backLinkUrl:
-			sessionValues?.addressKnown === 'yes'
-				? `/appeals-service/appeal-details/${appealDetails.appealId}/inquiry/${action}/address-details`
-				: `/appeals-service/appeal-details/${appealDetails.appealId}/inquiry/${action}/address`,
+		backLinkUrl,
 		preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 		heading: `Timetable due dates`,
 		pageComponents: []
@@ -405,6 +401,7 @@ export function mapInquiryDetails(appealId, action, values) {
 	const date = dateISOStringToDisplayDate(dateTime);
 	const time = dateISOStringToDisplayTime12hr(dateTime);
 	const address = pick(values, ['addressLine1', 'addressLine2', 'town', 'county', 'postCode']);
+
 	/**@type {PageComponent[]} */
 	const pageComponents = [
 		simpleHtmlComponent(
@@ -422,7 +419,7 @@ export function mapInquiryDetails(appealId, action, values) {
 						id: 'inquiry-date',
 						text: 'Inquiry date',
 						value: date,
-						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/date`,
+						link: editLink(`/appeals-service/appeal-details/${appealId}/inquiry/${action}/date`),
 						editable: true
 					})?.display.summaryListItem
 				]
@@ -436,7 +433,7 @@ export function mapInquiryDetails(appealId, action, values) {
 						id: 'inquiry-time',
 						text: 'Inquiry time',
 						value: time,
-						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/date`,
+						link: editLink(`/appeals-service/appeal-details/${appealId}/inquiry/${action}/date`),
 						editable: true
 					})?.display.summaryListItem
 				]
@@ -450,7 +447,9 @@ export function mapInquiryDetails(appealId, action, values) {
 						id: 'inquiry-expected-number-of-days',
 						text: 'Do you know the expected number of days to carry out the inquiry?',
 						value: capitalize(values.inquiryEstimationYesNo),
-						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/estimation`,
+						link: editLink(
+							`/appeals-service/appeal-details/${appealId}/inquiry/${action}/estimation`
+						),
 						editable: true
 					})?.display.summaryListItem
 				]
@@ -467,7 +466,9 @@ export function mapInquiryDetails(appealId, action, values) {
 						id: 'expected-number-of-days',
 						text: 'Expected number of days to carry out the inquiry',
 						value: `${values.inquiryEstimationDays} days`,
-						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/estimation`,
+						link: editLink(
+							`/appeals-service/appeal-details/${appealId}/inquiry/${action}/estimation`
+						),
 						editable: true
 					})?.display.summaryListItem
 				]
@@ -483,7 +484,7 @@ export function mapInquiryDetails(appealId, action, values) {
 					id: 'inquiry-address-known',
 					text: 'Do you know the address of where the inquiry will take place?',
 					value: capitalize(values.addressKnown),
-					link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/address`,
+					link: editLink(`/appeals-service/appeal-details/${appealId}/inquiry/${action}/address`),
 					editable: true
 				})?.display.summaryListItem
 			]
@@ -499,7 +500,9 @@ export function mapInquiryDetails(appealId, action, values) {
 						id: 'inquiry-address',
 						text: 'Address of where the inquiry will take place',
 						value: { html: addressToString(address, '<br>') },
-						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/address-details`,
+						link: editLink(
+							`/appeals-service/appeal-details/${appealId}/inquiry/${action}/address-details`
+						),
 						editable: true
 					})?.display.summaryListItem
 				]
