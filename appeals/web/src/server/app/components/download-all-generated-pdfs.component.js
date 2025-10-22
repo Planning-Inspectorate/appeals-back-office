@@ -100,7 +100,9 @@ export async function generateAllPdfs(currentAppealData, apiClient) {
 	];
 
 	// --- Step 1: Define a single source of truth for all tasks ---
-	const s78Tasks = [
+
+	// folders are the same for s20 and s78
+	const s78s20Tasks = [
 		...hasTasks,
 		{
 			filenameInZip: `LPA statement ${currentAppealData.appealReference}.pdf`,
@@ -174,7 +176,7 @@ export async function generateAllPdfs(currentAppealData, apiClient) {
 		}
 	];
 
-	const tasks = appealType === APPEAL_TYPE.HOUSEHOLDER ? hasTasks : s78Tasks;
+	const tasks = appealType === APPEAL_TYPE.HOUSEHOLDER ? hasTasks : s78s20Tasks;
 
 	// --- Step 2: Fetch data and generate PDFs in parallel ---
 	logger.info(`[DownloadAll] Starting to process ${tasks.length} PDF generation tasks.`);
