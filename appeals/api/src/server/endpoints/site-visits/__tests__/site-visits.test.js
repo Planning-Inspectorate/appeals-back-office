@@ -877,66 +877,286 @@ describe('site visit routes', () => {
 			});
 		});
 		describe('POST rearrange site visit', () => {
-			beforeEach(() => {
-				databaseConnector.siteVisit.findFirst.mockResolvedValue(householdAppeal.siteVisit);
-			});
-			test('updates a site visit without updating the status', async () => {
-				const { siteVisit } = householdAppeal;
+			describe('status tests', () => {
+				beforeEach(() => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+					databaseConnector.siteVisit.findFirst.mockResolvedValue(householdAppeal.siteVisit);
+					databaseConnector.siteVisitType.findUnique.mockResolvedValue(
+						householdAppeal.siteVisit.siteVisitType
+					);
+					databaseConnector.appealStatus.updateMany.mockResolvedValue();
+					databaseConnector.appealStatus.create.mockResolvedValue();
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
+				});
+				afterEach(() => {
+					databaseConnector.appeal.findUnique.mockClear();
+					databaseConnector.siteVisit.findFirst.mockClear();
+					databaseConnector.siteVisitType.findUnique.mockClear();
+					databaseConnector.appealStatus.updateMany.mockClear();
+					databaseConnector.appealStatus.create.mockClear();
+					databaseConnector.user.upsert.mockClear();
+				});
+				test('updates a site visit and updates the status when status is event', async () => {
+					const { siteVisit } = householdAppeal;
+					householdAppeal.appealStatus[0].status = 'event';
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+					const response = await request
+						.post(`/appeals/${householdAppeal.id}/site-visits`)
+						.send({
+							visitDate: '2023-07-12T00:00:00.000Z',
+							visitEndTime: '2023-07-12T18:00:00.000Z',
+							visitStartTime: '2023-07-12T17:00:00.000Z',
+							visitType: householdAppeal.siteVisit.siteVisitType.name
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				const response = await request
-					.post(`/appeals/${householdAppeal.id}/site-visits`)
-					.send({
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalled();
+
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({
 						visitDate: '2023-07-12T00:00:00.000Z',
 						visitEndTime: '2023-07-12T18:00:00.000Z',
 						visitStartTime: '2023-07-12T17:00:00.000Z',
-						visitType: householdAppeal.siteVisit.siteVisitType.name
-					})
-					.set('azureAdUserId', azureAdUserId);
+						visitType: siteVisit.siteVisitType.name
+					});
 
-				expect(databaseConnector.siteVisit.update).toHaveBeenCalled();
+					expect(databaseConnector.appealStatus.updateMany).toHaveBeenCalledTimes(1);
+					expect(databaseConnector.appealStatus.create).toHaveBeenCalledTimes(1);
 
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					visitDate: '2023-07-12T00:00:00.000Z',
-					visitEndTime: '2023-07-12T18:00:00.000Z',
-					visitStartTime: '2023-07-12T17:00:00.000Z',
-					visitType: siteVisit.siteVisitType.name
+					expect(databaseConnector.appealStatus.updateMany).toHaveBeenCalledWith({
+						where: { appealId: householdAppeal.id },
+						data: { valid: false }
+					});
+
+					expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith({
+						data: {
+							appealId: householdAppeal.id,
+							createdAt: expect.any(Date),
+							status: 'awaiting_event',
+							valid: true
+						}
+					});
+
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+						data: {
+							appealId: householdAppeal.id,
+							details: 'Case progressed to awaiting_event',
+							loggedAt: expect.any(Date),
+							userId: 1
+						}
+					});
 				});
 
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				test('updates a site visit and keeps the same status when status is lpa questionnaire', async () => {
+					const { siteVisit } = householdAppeal;
+					householdAppeal.appealStatus[0].status = 'lpa_questionnaire';
 
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-					notifyClient: expect.any(Object),
-					templateName: 'missed-site-visit-rearranged-appellant',
-					personalisation: {
-						appeal_reference_number: householdAppeal.reference,
-						lpa_reference: householdAppeal.applicationReference,
-						site_address: `${householdAppeal.address.addressLine1}, ${householdAppeal.address.addressLine2}, ${householdAppeal.address.addressTown}, ${householdAppeal.address.addressCounty}, ${householdAppeal.address.postcode}, ${householdAppeal.address.addressCountry}`,
-						start_time: '18:00',
-						visit_date: '12 July 2023',
-						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
-					},
-					recipientEmail: householdAppeal.agent.email
+					const response = await request
+						.post(`/appeals/${householdAppeal.id}/site-visits`)
+						.send({
+							visitDate: '2023-07-12T00:00:00.000Z',
+							visitEndTime: '2023-07-12T18:00:00.000Z',
+							visitStartTime: '2023-07-12T17:00:00.000Z',
+							visitType: householdAppeal.siteVisit.siteVisitType.name
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalled();
+
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({
+						visitDate: '2023-07-12T00:00:00.000Z',
+						visitEndTime: '2023-07-12T18:00:00.000Z',
+						visitStartTime: '2023-07-12T17:00:00.000Z',
+						visitType: siteVisit.siteVisitType.name
+					});
+
+					expect(databaseConnector.appealStatus.updateMany).toHaveBeenCalledTimes(0);
+					expect(databaseConnector.appealStatus.create).toHaveBeenCalledTimes(0);
 				});
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-					notifyClient: expect.any(Object),
-					templateName: 'missed-site-visit-rearranged-lpa',
-					personalisation: {
-						appeal_reference_number: householdAppeal.reference,
-						lpa_reference: householdAppeal.applicationReference,
-						site_address: `${householdAppeal.address.addressLine1}, ${householdAppeal.address.addressLine2}, ${householdAppeal.address.addressTown}, ${householdAppeal.address.addressCounty}, ${householdAppeal.address.postcode}, ${householdAppeal.address.addressCountry}`,
-						start_time: '18:00',
-						visit_date: '12 July 2023',
-						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
-					},
-					recipientEmail: householdAppeal.lpa.email
+			});
+
+			describe('notify tests', () => {
+				beforeEach(() => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+					databaseConnector.siteVisit.findFirst.mockResolvedValue(householdAppeal.siteVisit);
+					databaseConnector.appealStatus.updateMany.mockResolvedValue();
+					databaseConnector.appealStatus.create.mockResolvedValue();
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
+				});
+				afterEach(() => {
+					databaseConnector.appeal.findUnique.mockClear();
+					databaseConnector.siteVisit.findFirst.mockClear();
+					databaseConnector.siteVisitType.findUnique.mockClear();
+					databaseConnector.appealStatus.updateMany.mockClear();
+					databaseConnector.appealStatus.create.mockClear();
+					databaseConnector.user.upsert.mockClear();
+				});
+				test('updates a site visit to access required and sends the correct notify', async () => {
+					const siteVisitType = {
+						id: 1,
+						name: 'Access required',
+						key: 'site_visit_access_required'
+					};
+					householdAppeal.appealStatus[0].status = 'event';
+
+					databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisitType);
+
+					const response = await request
+						.post(`/appeals/${householdAppeal.id}/site-visits`)
+						.send({
+							visitDate: '2023-07-12T00:00:00.000Z',
+							visitEndTime: '2023-07-12T18:00:00.000Z',
+							visitStartTime: '2023-07-12T17:00:00.000Z',
+							visitType: siteVisitType.name
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalled();
+
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({
+						visitDate: '2023-07-12T00:00:00.000Z',
+						visitEndTime: '2023-07-12T18:00:00.000Z',
+						visitStartTime: '2023-07-12T17:00:00.000Z',
+						visitType: siteVisitType.name
+					});
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.any(Object),
+						templateName: 'missed-site-visit-rearranged-appellant',
+						personalisation: {
+							appeal_reference_number: householdAppeal.reference,
+							lpa_reference: householdAppeal.applicationReference,
+							site_address: `${householdAppeal.address.addressLine1}, ${householdAppeal.address.addressLine2}, ${householdAppeal.address.addressTown}, ${householdAppeal.address.addressCounty}, ${householdAppeal.address.postcode}, ${householdAppeal.address.addressCountry}`,
+							start_time: '18:00',
+							visit_date: '12 July 2023',
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+						},
+						recipientEmail: householdAppeal.agent.email
+					});
+				});
+
+				test('updates a site visit to accompanied and sends the correct notify', async () => {
+					const siteVisitType = {
+						id: 2,
+						name: 'Accompanied',
+						key: 'site_visit_accompanied'
+					};
+					householdAppeal.appealStatus[0].status = 'event';
+
+					databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisitType);
+
+					const response = await request
+						.post(`/appeals/${householdAppeal.id}/site-visits`)
+						.send({
+							visitDate: '2023-07-12T00:00:00.000Z',
+							visitEndTime: '2023-07-12T18:00:00.000Z',
+							visitStartTime: '2023-07-12T17:00:00.000Z',
+							visitType: siteVisitType.name
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalled();
+
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({
+						visitDate: '2023-07-12T00:00:00.000Z',
+						visitEndTime: '2023-07-12T18:00:00.000Z',
+						visitStartTime: '2023-07-12T17:00:00.000Z',
+						visitType: siteVisitType.name
+					});
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.any(Object),
+						templateName: 'missed-site-visit-rearranged-appellant',
+						personalisation: {
+							appeal_reference_number: householdAppeal.reference,
+							lpa_reference: householdAppeal.applicationReference,
+							site_address: `${householdAppeal.address.addressLine1}, ${householdAppeal.address.addressLine2}, ${householdAppeal.address.addressTown}, ${householdAppeal.address.addressCounty}, ${householdAppeal.address.postcode}, ${householdAppeal.address.addressCountry}`,
+							start_time: '18:00',
+							visit_date: '12 July 2023',
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+						},
+						recipientEmail: householdAppeal.agent.email
+					});
+
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.any(Object),
+						templateName: 'missed-site-visit-rearranged-lpa',
+						personalisation: {
+							appeal_reference_number: householdAppeal.reference,
+							lpa_reference: householdAppeal.applicationReference,
+							site_address: `${householdAppeal.address.addressLine1}, ${householdAppeal.address.addressLine2}, ${householdAppeal.address.addressTown}, ${householdAppeal.address.addressCounty}, ${householdAppeal.address.postcode}, ${householdAppeal.address.addressCountry}`,
+							start_time: '18:00',
+							visit_date: '12 July 2023',
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+						},
+						recipientEmail: householdAppeal.lpa.email
+					});
+				});
+
+				test('updates a site visit to unaccompanied and sends the correct notify', async () => {
+					const siteVisitType = {
+						id: 3,
+						name: 'Unaccompanied',
+						key: 'site_visit_unaccompanied'
+					};
+					householdAppeal.appealStatus[0].status = 'event';
+
+					databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisitType);
+
+					const response = await request
+						.post(`/appeals/${householdAppeal.id}/site-visits`)
+						.send({
+							visitDate: '2023-07-12T00:00:00.000Z',
+							visitEndTime: '2023-07-12T18:00:00.000Z',
+							visitStartTime: '2023-07-12T17:00:00.000Z',
+							visitType: siteVisitType.name
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalled();
+
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({
+						visitDate: '2023-07-12T00:00:00.000Z',
+						visitEndTime: '2023-07-12T18:00:00.000Z',
+						visitStartTime: '2023-07-12T17:00:00.000Z',
+						visitType: siteVisitType.name
+					});
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.any(Object),
+						templateName: 'missed-site-visit-rearranged-unaccompanied-appellant',
+						personalisation: {
+							appeal_reference_number: householdAppeal.reference,
+							lpa_reference: householdAppeal.applicationReference,
+							site_address: `${householdAppeal.address.addressLine1}, ${householdAppeal.address.addressLine2}, ${householdAppeal.address.addressTown}, ${householdAppeal.address.addressCounty}, ${householdAppeal.address.postcode}, ${householdAppeal.address.addressCountry}`,
+							start_time: '18:00',
+							visit_date: '12 July 2023',
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+						},
+						recipientEmail: householdAppeal.agent.email
+					});
 				});
 			});
 		});
@@ -2577,7 +2797,26 @@ describe('site visit routes', () => {
 			});
 		});
 		describe('DELETE', () => {
-			test('deletes a site visit and moves the status back', async () => {
+			beforeEach(() => {
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+				// @ts-ignore
+				databaseConnector.siteVisit.delete.mockResolvedValue(householdAppeal.siteVisit);
+				// @ts-ignore
+				databaseConnector.appealStatus.deleteMany.mockResolvedValue();
+				// @ts-ignore
+				databaseConnector.appealStatus.update.mockResolvedValue();
+			});
+			afterEach(() => {
+				databaseConnector.user.upsert.mockReset();
+				databaseConnector.siteVisit.delete.mockReset();
+				databaseConnector.appealStatus.deleteMany.mockReset();
+				databaseConnector.appealStatus.update.mockReset();
+			});
+			test('deletes a site visit and moves the status back if the status is awaiting_event', async () => {
 				householdAppeal.appealStatus = [
 					{
 						id: 1,
@@ -2616,15 +2855,7 @@ describe('site visit routes', () => {
 							return null;
 					}
 				});
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
-				// @ts-ignore
-				databaseConnector.siteVisit.delete.mockResolvedValue(householdAppeal.siteVisit);
-				databaseConnector.appealStatus.deleteMany.mockResolvedValue();
-				databaseConnector.appealStatus.update.mockResolvedValue();
+
 				const response = await request
 					.delete(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
 					.send()
@@ -2686,6 +2917,655 @@ describe('site visit routes', () => {
 				});
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({ siteVisitId: 1 });
+
+				databaseConnector.appeal.findUnique.mockReset();
+				databaseConnector.appealStatus.findFirst.mockReset();
+			});
+			test('deletes a site visit and keeps the status if the status is LPAQ', async () => {
+				householdAppeal.appealStatus[0] = 'lpa_questionnaire';
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique
+					.mockResolvedValueOnce(householdAppeal)
+					.mockResolvedValue({
+						...householdAppeal,
+						siteVisit: null
+					});
+
+				const response = await request
+					.delete(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
+					.send()
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.siteVisit.delete).toHaveBeenCalledWith({
+					where: { id: householdAppeal.siteVisit.id }
+				});
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: householdAppeal.id,
+						details: 'Site visit cancelled',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+
+				const siteAddress = householdAppeal.address
+					? formatAddressSingleLine(householdAppeal.address)
+					: 'Address not available';
+				const personalisation = {
+					appeal_reference_number: householdAppeal.reference,
+					lpa_reference: householdAppeal.applicationReference,
+					site_address: siteAddress,
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+				};
+
+				expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledTimes(0);
+				expect(databaseConnector.appealStatus.update).toHaveBeenCalledTimes(0);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: personalisation,
+					recipientEmail: householdAppeal.agent.email,
+					templateName: 'site-visit-cancelled'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: personalisation,
+					recipientEmail: householdAppeal.lpa.email,
+					templateName: 'site-visit-cancelled'
+				});
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({ siteVisitId: 1 });
+
+				databaseConnector.appeal.findUnique.mockReset();
+			});
+		});
+	});
+
+	describe('/:appealId/site-visits/:siteVisitId/missed', () => {
+		describe('POST', () => {
+			describe('current status is awaiting_event', () => {
+				beforeEach(() => {
+					householdAppeal.appealStatus = [
+						{
+							id: 1,
+							status: 'event',
+							createdAt: '2025-09-18T10:07:15.406Z',
+							valid: false,
+							appealId: householdAppeal.id,
+							subStateMachineName: null,
+							compoundStateName: null
+						},
+						{
+							id: 2,
+							status: 'awaiting_event',
+							createdAt: '2025-09-18T10:07:22.069Z',
+							valid: true,
+							appealId: householdAppeal.id,
+							subStateMachineName: null,
+							compoundStateName: null
+						}
+					];
+
+					// @ts-ignore
+					databaseConnector.appeal.findUnique
+						.mockResolvedValueOnce(householdAppeal)
+						.mockResolvedValue({
+							...householdAppeal,
+							siteVisit: null
+						});
+					// @ts-ignore
+					databaseConnector.appealStatus.findFirst.mockImplementationOnce(
+						({ where: { status } }) => {
+							switch (status) {
+								case 'event':
+									return householdAppeal.appealStatus[0];
+								case 'awaiting_event':
+									return householdAppeal.appealStatus[1];
+								default:
+									return null;
+							}
+						}
+					);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
+					// @ts-ignore
+					databaseConnector.appealStatus.deleteMany.mockResolvedValue();
+					// @ts-ignore
+					databaseConnector.appealStatus.update.mockResolvedValue();
+					jest.useFakeTimers().setSystemTime(new Date('2025-10-01T10:00:00.000Z'));
+				});
+				afterEach(() => {
+					// reset the mocks
+					databaseConnector.appeal.findUnique.mockReset();
+					databaseConnector.appealStatus.findFirst.mockReset();
+					databaseConnector.user.upsert.mockReset();
+					databaseConnector.appealStatus.deleteMany.mockReset();
+					databaseConnector.appealStatus.update.mockReset();
+					jest.useRealTimers();
+				});
+				test('record a missed site visit for an appellant and moves the status back from awaiting_event to event', async () => {
+					const response = await request
+						.post(
+							`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}/missed`
+						)
+						.send({ whoMissedSiteVisit: 'appellant' })
+						.set('azureAdUserId', azureAdUserId);
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
+						where: { id: householdAppeal.siteVisit.id },
+						data: { whoMissedSiteVisit: 'appellant' }
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+					expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+						data: {
+							appealId: householdAppeal.id,
+							details: 'Appellant missed the site visit',
+							loggedAt: expect.any(Date),
+							userId: 1
+						}
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+						data: {
+							appealId: householdAppeal.id,
+							details: 'Case progressed to event',
+							loggedAt: expect.any(Date),
+							userId: 1
+						}
+					});
+
+					const siteAddress = householdAppeal.address
+						? formatAddressSingleLine(householdAppeal.address)
+						: 'Address not available';
+					const personalisation = {
+						appeal_reference_number: householdAppeal.reference,
+						lpa_reference: householdAppeal.applicationReference,
+						site_address: siteAddress,
+						visit_date: dateISOStringToDisplayDate(householdAppeal.siteVisit.visitDate),
+						start_time: formatTime(householdAppeal.siteVisit.visitStartTime),
+						'5_day_deadline': dateISOStringToDisplayDate(new Date('2025-10-08T10:00:00.000Z')),
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					};
+
+					expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledTimes(1);
+					expect(databaseConnector.appealStatus.update).toHaveBeenCalledTimes(1);
+
+					expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledWith({
+						where: {
+							appealId: householdAppeal.id,
+							createdAt: {
+								gt: '2025-09-18T10:07:15.406Z' //createdAt for the 'event' status
+							}
+						}
+					});
+
+					expect(databaseConnector.appealStatus.update).toHaveBeenCalledWith({
+						where: { id: 1 },
+						data: { valid: true }
+					});
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: personalisation,
+						recipientEmail: householdAppeal.appellant.email,
+						templateName: 'record-missed-site-visit-appellant'
+					});
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({ siteVisitId: 1 });
+				});
+
+				test('record a missed site visit for an LPA and moves the status back from awaiting_event to event', async () => {
+					const response = await request
+						.post(
+							`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}/missed`
+						)
+						.send({ whoMissedSiteVisit: 'lpa' })
+						.set('azureAdUserId', azureAdUserId);
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
+						where: { id: householdAppeal.siteVisit.id },
+						data: { whoMissedSiteVisit: 'lpa' }
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+					expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+						data: {
+							appealId: householdAppeal.id,
+							details: 'LPA missed the site visit',
+							loggedAt: expect.any(Date),
+							userId: 1
+						}
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+						data: {
+							appealId: householdAppeal.id,
+							details: 'Case progressed to event',
+							loggedAt: expect.any(Date),
+							userId: 1
+						}
+					});
+
+					const siteAddress = householdAppeal.address
+						? formatAddressSingleLine(householdAppeal.address)
+						: 'Address not available';
+					const personalisation = {
+						appeal_reference_number: householdAppeal.reference,
+						lpa_reference: householdAppeal.applicationReference,
+						site_address: siteAddress,
+						visit_date: dateISOStringToDisplayDate(householdAppeal.siteVisit.visitDate),
+						start_time: formatTime(householdAppeal.siteVisit.visitStartTime),
+						'5_day_deadline': dateISOStringToDisplayDate(new Date('2025-10-08T10:00:00.000Z')), // 5 business days later
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					};
+
+					expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledTimes(1);
+					expect(databaseConnector.appealStatus.update).toHaveBeenCalledTimes(1);
+
+					expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledWith({
+						where: {
+							appealId: householdAppeal.id,
+							createdAt: {
+								gt: '2025-09-18T10:07:15.406Z' //createdAt for the 'event' status
+							}
+						}
+					});
+
+					expect(databaseConnector.appealStatus.update).toHaveBeenCalledWith({
+						where: { id: 1 },
+						data: { valid: true }
+					});
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: personalisation,
+						recipientEmail: householdAppeal.lpa.email,
+						templateName: 'record-missed-site-visit-lpa'
+					});
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({ siteVisitId: 1 });
+				});
+			});
+			describe('current status is before the event set up', () => {
+				beforeEach(() => {
+					householdAppeal.appealStatus = [
+						{
+							id: 1,
+							status: 'lpa_questionnaire',
+							createdAt: '2025-09-18T10:07:15.406Z',
+							valid: true,
+							appealId: householdAppeal.id,
+							subStateMachineName: null,
+							compoundStateName: null
+						}
+					];
+
+					// @ts-ignore
+					databaseConnector.appeal.findUnique
+						.mockResolvedValueOnce(householdAppeal)
+						.mockResolvedValue({
+							...householdAppeal,
+							siteVisit: null
+						});
+					// @ts-ignore
+					databaseConnector.appealStatus.findFirst.mockImplementationOnce(
+						({ where: { status } }) => {
+							switch (status) {
+								case 'lpa_questionnaire':
+									return householdAppeal.appealStatus[0];
+								default:
+									return null;
+							}
+						}
+					);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
+					// @ts-ignore
+					databaseConnector.appealStatus.deleteMany.mockResolvedValue();
+					// @ts-ignore
+					databaseConnector.appealStatus.update.mockResolvedValue();
+					jest.useFakeTimers().setSystemTime(new Date('2025-10-01T10:00:00.000Z'));
+				});
+				afterEach(() => {
+					// reset the mocks
+					databaseConnector.appeal.findUnique.mockReset();
+					databaseConnector.appealStatus.findFirst.mockReset();
+					databaseConnector.user.upsert.mockReset();
+					databaseConnector.appealStatus.deleteMany.mockReset();
+					databaseConnector.appealStatus.update.mockReset();
+					jest.useRealTimers();
+				});
+				test('record a missed site visit for an appellant and the status remains the same', async () => {
+					const response = await request
+						.post(
+							`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}/missed`
+						)
+						.send({ whoMissedSiteVisit: 'appellant' })
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
+						where: { id: householdAppeal.siteVisit.id },
+						data: { whoMissedSiteVisit: 'appellant' }
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+						data: {
+							appealId: householdAppeal.id,
+							details: 'Appellant missed the site visit',
+							loggedAt: expect.any(Date),
+							userId: 1
+						}
+					});
+
+					const siteAddress = householdAppeal.address
+						? formatAddressSingleLine(householdAppeal.address)
+						: 'Address not available';
+					const personalisation = {
+						appeal_reference_number: householdAppeal.reference,
+						lpa_reference: householdAppeal.applicationReference,
+						site_address: siteAddress,
+						visit_date: dateISOStringToDisplayDate(householdAppeal.siteVisit.visitDate),
+						start_time: formatTime(householdAppeal.siteVisit.visitStartTime),
+						'5_day_deadline': dateISOStringToDisplayDate(new Date('2025-10-08T10:00:00.000Z')),
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					};
+
+					expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledTimes(0);
+					expect(databaseConnector.appealStatus.update).toHaveBeenCalledTimes(0);
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: personalisation,
+						recipientEmail: householdAppeal.appellant.email,
+						templateName: 'record-missed-site-visit-appellant'
+					});
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({ siteVisitId: 1 });
+				});
+
+				test('record a missed site visit for an LPA and the status remains the same', async () => {
+					const response = await request
+						.post(
+							`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}/missed`
+						)
+						.send({ whoMissedSiteVisit: 'lpa' })
+						.set('azureAdUserId', azureAdUserId);
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
+						where: { id: householdAppeal.siteVisit.id },
+						data: { whoMissedSiteVisit: 'lpa' }
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+						data: {
+							appealId: householdAppeal.id,
+							details: 'LPA missed the site visit',
+							loggedAt: expect.any(Date),
+							userId: 1
+						}
+					});
+
+					const siteAddress = householdAppeal.address
+						? formatAddressSingleLine(householdAppeal.address)
+						: 'Address not available';
+					const personalisation = {
+						appeal_reference_number: householdAppeal.reference,
+						lpa_reference: householdAppeal.applicationReference,
+						site_address: siteAddress,
+						visit_date: dateISOStringToDisplayDate(householdAppeal.siteVisit.visitDate),
+						start_time: formatTime(householdAppeal.siteVisit.visitStartTime),
+						'5_day_deadline': dateISOStringToDisplayDate(new Date('2025-10-08T10:00:00.000Z')), // 5 business days later
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					};
+
+					expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledTimes(0);
+					expect(databaseConnector.appealStatus.update).toHaveBeenCalledTimes(0);
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: personalisation,
+						recipientEmail: householdAppeal.lpa.email,
+						templateName: 'record-missed-site-visit-lpa'
+					});
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({ siteVisitId: 1 });
+				});
+			});
+			describe('current status is after the event', () => {
+				beforeEach(() => {
+					householdAppeal.appealStatus = [
+						{
+							id: 1,
+							status: 'event',
+							createdAt: '2025-09-18T10:07:15.406Z',
+							valid: false,
+							appealId: householdAppeal.id,
+							subStateMachineName: null,
+							compoundStateName: null
+						},
+						{
+							id: 2,
+							status: 'awaiting_event',
+							createdAt: '2025-09-18T10:07:22.069Z',
+							valid: false,
+							appealId: householdAppeal.id,
+							subStateMachineName: null,
+							compoundStateName: null
+						},
+						{
+							id: 3,
+							status: 'issue_determination',
+							createdAt: '2025-09-20T10:07:22.069Z',
+							valid: true,
+							appealId: householdAppeal.id,
+							subStateMachineName: null,
+							compoundStateName: null
+						}
+					];
+
+					// @ts-ignore
+					databaseConnector.appeal.findUnique
+						.mockResolvedValueOnce(householdAppeal)
+						.mockResolvedValue({
+							...householdAppeal,
+							siteVisit: null
+						});
+					// @ts-ignore
+					databaseConnector.appealStatus.findFirst.mockImplementation(({ where: { status } }) => {
+						switch (status) {
+							case 'event':
+								return householdAppeal.appealStatus[0];
+							case 'awaiting_event':
+								return householdAppeal.appealStatus[1];
+							case 'issue_determination':
+								return householdAppeal.appealStatus[2];
+							default:
+								return null;
+						}
+					});
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
+					// @ts-ignore
+					databaseConnector.appealStatus.deleteMany.mockResolvedValue();
+					// @ts-ignore
+					databaseConnector.appealStatus.update.mockResolvedValue();
+
+					jest.useFakeTimers().setSystemTime(new Date('2025-10-01T10:00:00.000Z'));
+				});
+				afterEach(() => {
+					// reset the mocks
+					databaseConnector.appeal.findUnique.mockReset();
+					databaseConnector.appealStatus.findFirst.mockReset();
+					databaseConnector.user.upsert.mockReset();
+					databaseConnector.appealStatus.deleteMany.mockReset();
+					databaseConnector.appealStatus.update.mockReset();
+					jest.useRealTimers();
+				});
+				test('record a missed site visit for an appellant and moves the status back from issue_determination to event', async () => {
+					const response = await request
+						.post(
+							`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}/missed`
+						)
+						.send({ whoMissedSiteVisit: 'appellant' })
+						.set('azureAdUserId', azureAdUserId);
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
+						where: { id: householdAppeal.siteVisit.id },
+						data: { whoMissedSiteVisit: 'appellant' }
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+					expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+						data: {
+							appealId: householdAppeal.id,
+							details: 'Appellant missed the site visit',
+							loggedAt: expect.any(Date),
+							userId: 1
+						}
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+						data: {
+							appealId: householdAppeal.id,
+							details: 'Case progressed to event',
+							loggedAt: expect.any(Date),
+							userId: 1
+						}
+					});
+
+					const siteAddress = householdAppeal.address
+						? formatAddressSingleLine(householdAppeal.address)
+						: 'Address not available';
+					const personalisation = {
+						appeal_reference_number: householdAppeal.reference,
+						lpa_reference: householdAppeal.applicationReference,
+						site_address: siteAddress,
+						visit_date: dateISOStringToDisplayDate(householdAppeal.siteVisit.visitDate),
+						start_time: formatTime(householdAppeal.siteVisit.visitStartTime),
+						'5_day_deadline': dateISOStringToDisplayDate(new Date('2025-10-08T10:00:00.000Z')),
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					};
+
+					expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledTimes(1);
+					expect(databaseConnector.appealStatus.update).toHaveBeenCalledTimes(1);
+
+					expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledWith({
+						where: {
+							appealId: householdAppeal.id,
+							createdAt: {
+								gt: '2025-09-18T10:07:15.406Z' //createdAt for the 'event' status
+							}
+						}
+					});
+
+					expect(databaseConnector.appealStatus.update).toHaveBeenCalledWith({
+						where: { id: 1 },
+						data: { valid: true }
+					});
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: personalisation,
+						recipientEmail: householdAppeal.appellant.email,
+						templateName: 'record-missed-site-visit-appellant'
+					});
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({ siteVisitId: 1 });
+				});
+
+				test('record a missed site visit for an LPA and moves the status back from issue_determination to event', async () => {
+					const response = await request
+						.post(
+							`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}/missed`
+						)
+						.send({ whoMissedSiteVisit: 'lpa' })
+						.set('azureAdUserId', azureAdUserId);
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
+						where: { id: householdAppeal.siteVisit.id },
+						data: { whoMissedSiteVisit: 'lpa' }
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+					expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+						data: {
+							appealId: householdAppeal.id,
+							details: 'LPA missed the site visit',
+							loggedAt: expect.any(Date),
+							userId: 1
+						}
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+						data: {
+							appealId: householdAppeal.id,
+							details: 'Case progressed to event',
+							loggedAt: expect.any(Date),
+							userId: 1
+						}
+					});
+
+					const siteAddress = householdAppeal.address
+						? formatAddressSingleLine(householdAppeal.address)
+						: 'Address not available';
+					const personalisation = {
+						appeal_reference_number: householdAppeal.reference,
+						lpa_reference: householdAppeal.applicationReference,
+						site_address: siteAddress,
+						visit_date: dateISOStringToDisplayDate(householdAppeal.siteVisit.visitDate),
+						start_time: formatTime(householdAppeal.siteVisit.visitStartTime),
+						'5_day_deadline': dateISOStringToDisplayDate(new Date('2025-10-08T10:00:00.000Z')),
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					};
+
+					expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledTimes(1);
+					expect(databaseConnector.appealStatus.update).toHaveBeenCalledTimes(1);
+
+					expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledWith({
+						where: {
+							appealId: householdAppeal.id,
+							createdAt: {
+								gt: '2025-09-18T10:07:15.406Z' //createdAt for the 'event' status
+							}
+						}
+					});
+
+					expect(databaseConnector.appealStatus.update).toHaveBeenCalledWith({
+						where: { id: 1 },
+						data: { valid: true }
+					});
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: personalisation,
+						recipientEmail: householdAppeal.lpa.email,
+						templateName: 'record-missed-site-visit-lpa'
+					});
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({ siteVisitId: 1 });
+				});
 			});
 		});
 	});

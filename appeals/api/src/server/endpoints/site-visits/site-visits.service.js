@@ -289,6 +289,9 @@ const updateWhenSiteVisitMissed = async (azureAdUserId, updateSiteVisitData, not
 		};
 
 		const appealId = Number(updateSiteVisitData.appealId);
+		const notifyTemplateIds = fetchRearrangeMissedSiteVisitTemplateIds(
+			updateSiteVisitData.visitType.name
+		);
 
 		const result = await siteVisitRepository.updateSiteVisitById(
 			updateSiteVisitData.siteVisitId,
@@ -325,30 +328,33 @@ const updateWhenSiteVisitMissed = async (azureAdUserId, updateSiteVisitData, not
 			team_email_address: await getTeamEmailFromAppealId(appealId)
 		};
 
-		try {
-			await notifySend({
-				azureAdUserId,
-				templateName: 'missed-site-visit-rearranged-appellant',
-				notifyClient,
-				recipientEmail: updateSiteVisitData.appellantEmail,
-				personalisation: emailVariables
-			});
-		} catch (error) {
-			throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+		if (notifyTemplateIds.appellant && updateSiteVisitData.appellantEmail) {
+			try {
+				await notifySend({
+					azureAdUserId,
+					templateName: notifyTemplateIds.appellant,
+					notifyClient,
+					recipientEmail: updateSiteVisitData.appellantEmail,
+					personalisation: emailVariables
+				});
+			} catch (error) {
+				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+			}
 		}
 
-		try {
-			await notifySend({
-				azureAdUserId,
-				templateName: 'missed-site-visit-rearranged-lpa',
-				notifyClient,
-				recipientEmail: updateSiteVisitData.lpaEmail,
-				personalisation: emailVariables
-			});
-		} catch (error) {
-			throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+		if (notifyTemplateIds.lpa && updateSiteVisitData.lpaEmail) {
+			try {
+				await notifySend({
+					azureAdUserId,
+					templateName: notifyTemplateIds.lpa,
+					notifyClient,
+					recipientEmail: updateSiteVisitData.lpaEmail,
+					personalisation: emailVariables
+				});
+			} catch (error) {
+				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+			}
 		}
-
 		return result;
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
@@ -450,6 +456,32 @@ const fetchSiteVisitScheduleTemplateIds = (visitTypeName) => {
 		case 'unaccompanied':
 			return {
 				appellant: 'site-visit-schedule-unaccompanied-appellant'
+			};
+		default:
+			return {};
+	}
+};
+
+/**
+ * @param {string} visitTypeName
+ * @returns {VisitNotificationTemplateIds}
+ */
+const fetchRearrangeMissedSiteVisitTemplateIds = (visitTypeName) => {
+	const visitTypeKey = visitTypeName.replace(/\s+/g, '').toLowerCase();
+
+	switch (visitTypeKey) {
+		case 'accessrequired':
+			return {
+				appellant: 'missed-site-visit-rearranged-appellant'
+			};
+		case 'accompanied':
+			return {
+				appellant: 'missed-site-visit-rearranged-appellant',
+				lpa: 'missed-site-visit-rearranged-lpa'
+			};
+		case 'unaccompanied':
+			return {
+				appellant: 'missed-site-visit-rearranged-unaccompanied-appellant'
 			};
 		default:
 			return {};
@@ -582,6 +614,7 @@ const getMissedSiteVisit = async (appealId) =>
 export {
 	checkSiteVisitExists,
 	deleteSiteVisit,
+	fetchRearrangeMissedSiteVisitTemplateIds,
 	fetchRescheduleTemplateIds,
 	fetchSiteVisitScheduleTemplateIds,
 	getMissedSiteVisit,

@@ -171,8 +171,9 @@ export class InquirySectionPage extends CaseDetailsPage {
 			.and('contain.text', expectedText);
 	}
 
-	enterTimetableDueDates(timetableItems, startDate) {
-		caseDetailsPage.enterTimeTableDueDatesCaseStart(timetableItems, startDate, 7);
+	enterTimetableDueDates(timetableItems, startDate, intervalDays = 7) {
+		caseDetailsPage.enterTimeTableDueDatesCaseStart(timetableItems, startDate, intervalDays);
+		return timetableItems;
 	}
 
 	clickChangeLink(link) {
@@ -181,5 +182,55 @@ export class InquirySectionPage extends CaseDetailsPage {
 
 	updateInquiry() {
 		caseDetailsPage.clickButtonByText('Update Inquiry');
+	}
+
+	verifyInquiryTimetableRowChangeLinkVisible(timetableItems) {
+		timetableItems.forEach((item) => {
+			caseDetailsPage.verifyChangeLinkIsDisplayed(item.row);
+		});
+	}
+
+	// Setup inquiry timetable test data
+	setupTimetableDates = () => {
+		let currentDate, lpaQuestionnaireDueDate, commentsDueDate, proofOfEvidenceAndWitnessesDueDate;
+
+		return cy
+			.getBusinessActualDate(new Date(), 0)
+			.then((date) => {
+				currentDate = date;
+				return cy.getBusinessActualDate(new Date(), 10);
+			})
+			.then((date) => {
+				lpaQuestionnaireDueDate = date;
+				return cy.getBusinessActualDate(new Date(), 13);
+			})
+			.then((date) => {
+				commentsDueDate = date;
+				return cy.getBusinessActualDate(new Date(), 16);
+			})
+			.then((date) => {
+				proofOfEvidenceAndWitnessesDueDate = date;
+
+				return {
+					currentDate,
+					lpaQuestionnaireDueDate,
+					commentsDueDate,
+					ipCommentsDueDate: commentsDueDate,
+					statementDueDate: commentsDueDate,
+					proofOfEvidenceAndWitnessesDueDate
+				};
+			});
+	};
+
+	// Simulate a FO appellant/LAP adding Proof of Evidence via API
+	addProofOfEvidenceViaApi(caseObj, representationType) {
+		let serviceUserId = null;
+		if (representationType === '') {
+			cy.loadAppealDetails(caseObj).then((appealData) => {
+				serviceUserId = ((appealData?.appellant?.serviceUserId ?? 0) + 200000000).toString();
+			});
+		}
+		cy.addRepresentation(caseObj, representationType, serviceUserId);
+		cy.reload();
 	}
 }

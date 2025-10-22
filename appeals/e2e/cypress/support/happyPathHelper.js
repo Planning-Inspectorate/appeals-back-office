@@ -406,5 +406,30 @@ export const happyPathHelper = {
 
 		//case details
 		caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
+	},
+
+	changeAppealType(index) {
+		caseDetailsPage.clickChangeAppealType();
+		basePage.chooseRadioBtnByIndex(index);
+		basePage.clickButtonByText('Continue');
+		basePage.selectRadioButtonByValue('No');
+		basePage.clickButtonByText('Continue');
+		basePage.clickButtonByText('Update appeal type');
+		caseDetailsPage.validateBannerMessage('Success', 'Appeal type updated');
+	},
+
+	changeAppealTypeResubmit(index) {
+		caseDetailsPage.clickChangeAppealType();
+		basePage.chooseRadioBtnByIndex(index);
+		basePage.clickButtonByText('Continue');
+		basePage.selectRadioButtonByValue('Yes');
+		basePage.clickButtonByText('Continue');
+		basePage.clickButtonByText('Continue');
+		cy.getBusinessActualDate(new Date(), 28).then((futureDate) => {
+			dateTimeSection.enterChangeAppealTypeResubmissionDate(futureDate);
+		});
+		basePage.clickButtonByText('Continue');
+		basePage.clickButtonByText('Mark appeal as invalid');
+		caseDetailsPage.validateBannerMessage('Success', 'Appeal marked as invalid');
 	}
 };

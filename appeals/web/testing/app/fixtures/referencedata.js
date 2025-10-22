@@ -4155,7 +4155,7 @@ export const appealDataToGetRequiredActions = {
 	},
 	reviewLpaProofOfEvidenceComplete: {
 		...baseAppealDataToGetRequiredActions,
-		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+		appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
 		documentationSummary: {
 			lpaProofOfEvidence: {
 				status: DOCUMENT_STATUS_RECEIVED,
@@ -4171,7 +4171,7 @@ export const appealDataToGetRequiredActions = {
 	},
 	reviewAppellantProofOfEvidenceComplete: {
 		...baseAppealDataToGetRequiredActions,
-		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+		appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
 		documentationSummary: {
 			lpaProofOfEvidence: {
 				status: DOCUMENT_STATUS_RECEIVED,
@@ -4187,7 +4187,7 @@ export const appealDataToGetRequiredActions = {
 	},
 	reviewLpaProofOfEvidenceIncomplete: {
 		...baseAppealDataToGetRequiredActions,
-		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+		appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
 		documentationSummary: {
 			lpaProofOfEvidence: {
 				status: DOCUMENT_STATUS_RECEIVED,
@@ -4203,7 +4203,7 @@ export const appealDataToGetRequiredActions = {
 	},
 	reviewAppellantProofOfEvidenceIncomplete: {
 		...baseAppealDataToGetRequiredActions,
-		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+		appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
 		documentationSummary: {
 			lpaProofOfEvidence: {
 				status: DOCUMENT_STATUS_RECEIVED,
@@ -4212,6 +4212,22 @@ export const appealDataToGetRequiredActions = {
 			},
 			appellantProofOfEvidence: {
 				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			}
+		}
+	},
+	awaitingProofOfEvidenceAndWitnesses: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
+		documentationSummary: {
+			lpaProofOfEvidence: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+			},
+			appellantProofOfEvidence: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
 				receivedAt: pastDate,
 				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 			}

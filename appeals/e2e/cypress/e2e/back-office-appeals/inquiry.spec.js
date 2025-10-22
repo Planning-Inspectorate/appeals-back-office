@@ -2,6 +2,7 @@
 /// <reference types="cypress"/>
 
 import { users } from '../../fixtures/users';
+import { DocumentationSectionPage } from '../../page_objects/caseDetails/documentationSectionPage';
 import { InquirySectionPage } from '../../page_objects/caseDetails/inquirySectionPage';
 import { OverviewSectionPage } from '../../page_objects/caseDetails/overviewSectionPage.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
@@ -18,6 +19,7 @@ const listCasesPage = new ListCasesPage();
 const inquirySectionPage = new InquirySectionPage();
 const overviewSectionPage = new OverviewSectionPage();
 const cyaSection = new CYASection();
+const documentationSectionPage = new DocumentationSectionPage();
 
 const previousInquiryAddress = {
 	line1: '1 Grove Cottage',
@@ -117,10 +119,18 @@ const setupTestCase = () => {
 	cy.createCase({ caseType: 'W', planningObligation: true }).then((ref) => {
 		caseObj = ref;
 		appeal = caseObj;
-		cy.addLpaqSubmissionToCase(caseObj);
-		happyPathHelper.assignCaseOfficer(caseObj);
-		caseDetailsPage.checkStatusOfCase('Validation', 0);
-		happyPathHelper.reviewAppellantCase(caseObj);
+		happyPathHelper.viewCaseDetails(caseObj);
+
+		// Assign Case Officer Via API
+		cy.assignCaseOfficerViaApi(caseObj);
+
+		// Validate Appeal Via API
+		cy.getBusinessActualDate(new Date(), 0).then((date) => {
+			cy.updateAppealDetailsViaApi(caseObj, { validationOutcome: 'valid', validAt: date });
+		});
+
+		cy.reload();
+
 		caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 		happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');
 		dateTimeSection.clearInquiryDateAndTime();
@@ -137,6 +147,7 @@ afterEach(() => {
 });
 
 it('Can start case as inquiry with address and estimated days', () => {
+	cy.addLpaqSubmissionToCase(caseObj);
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		dateTimeSection.enterInquiryDate(inquiryDate);
 		dateTimeSection.enterInquiryTime('12', '00');
@@ -234,7 +245,7 @@ it('Can update inquiry date', () => {
 		inquiryDate.setHours(14);
 		cy.addInquiryViaApi(caseObj, inquiryDate);
 
-		// find case and open inqiiry section
+		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseObj);
 
@@ -266,11 +277,11 @@ it('Can update inquiry time', () => {
 		inquiryDate.setHours(14);
 		cy.addInquiryViaApi(caseObj, inquiryDate);
 
-		// find case and open inqiiry section
+		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseObj);
 
-		// generate new date with upfdated time value and update it in inquiry
+		// generate new date with updated time value and update it in inquiry
 		const newInquiryDate = new Date(inquiryDate);
 		newInquiryDate.setTime(inquiryDate.getTime() + 2 * 60 * 60 * 1000);
 
@@ -537,5 +548,208 @@ it('should add inquiry Estimates', () => {
 		expect(preparationTime).to.eq(updatedEstimates.preparationTime);
 		expect(sittingTime).to.eq(updatedEstimates.sittingTime);
 		expect(reportingTime).to.eq(updatedEstimates.reportingTime);
+	});
+});
+
+it('should update inquiry timetable dates from case details page', () => {
+	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
+		// Setup initial timetable
+		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+
+		// find case and open inquiry section
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseObj);
+
+		const timetableItemsWithNewSelector = timetableItems.map((item) => ({
+			...item,
+			row: item.row.replace('statement-due-date', 'lpa-statement-due-date')
+		}));
+
+		inquirySectionPage.verifyInquiryTimetableRowChangeLinkVisible(timetableItemsWithNewSelector);
+
+		caseDetailsPage.clickRowChangeLink('lpa-questionnaire-due-date');
+
+		// update timetable dates
+		cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
+			inquirySectionPage.enterTimetableDueDates(timetableItemsWithNewSelector, startDate, 7);
+		});
+
+		// Submit changes
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Update timetable due dates');
+
+		// Verify results
+		caseDetailsPage.validateBannerMessage('Success', 'Timetable due dates updated');
+
+		cy.loadAppealDetails(caseObj).then((appealDetails) => {
+			const timetable = appealDetails?.appealTimetable;
+			inquirySectionPage.verifyFieldsUpdated([
+				{ field: 'Valid date', value: formatDateAndTime(new Date(appealDetails.validAt)).date },
+				{ field: 'Start date', value: formatDateAndTime(new Date(appealDetails.startedAt)).date },
+				{
+					field: 'LPA questionnaire due',
+					value: formatDateAndTime(new Date(timetable.lpaQuestionnaireDueDate)).date
+				},
+				{
+					field: 'LPA statement due',
+					value: formatDateAndTime(new Date(timetable.lpaStatementDueDate)).date
+				},
+				{
+					field: 'Interested party comments due',
+					value: formatDateAndTime(new Date(timetable.ipCommentsDueDate)).date
+				},
+				{
+					field: 'Statement of common ground due',
+					value: formatDateAndTime(new Date(timetable.statementOfCommonGroundDueDate)).date
+				},
+				{
+					field: 'Planning obligation due',
+					value: formatDateAndTime(new Date(timetable.planningObligationDueDate)).date
+				},
+				{
+					field: 'Proof of evidence and witness due',
+					value: formatDateAndTime(new Date(timetable.proofOfEvidenceAndWitnessesDueDate)).date
+				}
+			]);
+		});
+	});
+});
+
+it('should validate inquiry timetable chronology', () => {
+	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
+		// Setup initial timetable
+		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+
+		// find case and open inquiry section
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseObj);
+
+		const timetableItemsWithNewSelector = timetableItems.map((item) => ({
+			...item,
+			row: item.row.replace('statement-due-date', 'lpa-statement-due-date')
+		}));
+
+		caseDetailsPage.clickRowChangeLink('lpa-questionnaire-due-date');
+
+		// update timetable dates
+		cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((timeTableDate) => {
+			inquirySectionPage.enterTimetableDueDates(timetableItemsWithNewSelector, timeTableDate, 0);
+
+			// Submit changes
+			caseDetailsPage.clickButtonByText('Continue');
+			const formatDate = formatDateAndTime(timeTableDate).date;
+
+			// verify error message
+			inquirySectionPage.verifyErrorMessages({
+				messages: [
+					`Statements due date must be after the LPA questionnaire due date on ${formatDate}`,
+					`Interested party comments due date must be after the LPA questionnaire due date on ${formatDate}`,
+					`Proof of evidence and witnesses due date must be after the Interested party comments due date on ${formatDate}`
+				],
+				fields: [
+					'lpa-statement-due-date-day',
+					'ip-comments-due-date-day',
+					'proof-of-evidence-and-witnesses-due-date-day'
+				]
+			});
+		});
+	});
+});
+
+it('should show business day validation errors for all timetable fields', () => {
+	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
+		// Setup initial timetable
+		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+
+		// find case and open inquiry section
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseObj);
+
+		const timetableItemsWithNewSelector = timetableItems.map((item) => ({
+			...item,
+			row: item.row.replace('statement-due-date', 'lpa-statement-due-date')
+		}));
+
+		caseDetailsPage.clickRowChangeLink('lpa-questionnaire-due-date');
+
+		// update timetable dates
+		const nextYear = new Date().getFullYear() + 2;
+		const nonBusinessDate = new Date(nextYear, 0, 1);
+		inquirySectionPage.enterTimetableDueDates(timetableItemsWithNewSelector, nonBusinessDate, 0);
+
+		// Submit changes
+		caseDetailsPage.clickButtonByText('Continue');
+		const formatDate = formatDateAndTime(nonBusinessDate).date;
+
+		// verify error message
+		inquirySectionPage.verifyErrorMessages({
+			messages: [
+				'The lpa questionnaire due date must be a business day',
+				'The statements due date must be a business day',
+				'The interested party comments due date must be a business day',
+				'The statement of common ground due date must be a business day',
+				'The planning obligation due date must be a business day',
+				'The proof of evidence and witnesses due date must be a business day'
+			],
+			fields: [
+				'lpa-statement-due-date-day',
+				'lpa-statement-due-date-day',
+				'ip-comments-due-date-day',
+				'statement-of-common-ground-due-date-day',
+				'planning-obligation-due-date-day',
+				'proof-of-evidence-and-witnesses-due-date-day'
+			]
+		});
+	});
+});
+
+it('should accept LPA POE for inquiry', () => {
+	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
+		// Set up inquiry case with LPA questionnaire
+		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+		cy.addLpaqSubmissionToCase(caseObj);
+
+		// Navigate to case details and verify initial state
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseObj);
+		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+		cy.reload();
+
+		// Process LPAQ review and move to statements phase
+		happyPathHelper.reviewS78Lpaq(caseObj);
+		caseDetailsPage.checkStatusOfCase('Statements', 0);
+
+		// Submit third-party representations
+		happyPathHelper.addThirdPartyComment(caseObj, true);
+		caseDetailsPage.clickBackLink();
+		happyPathHelper.addThirdPartyComment(caseObj, false);
+		caseDetailsPage.clickBackLink();
+
+		// Complete LPA statement and advance past deadline
+		happyPathHelper.addLpaStatement(caseObj);
+		cy.simulateStatementsDeadlineElapsed(caseObj);
+		cy.reload();
+
+		// Finalise statements and transition to evidence stage
+		caseDetailsPage.basePageElements.bannerLink().click();
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.checkStatusOfCase('Evidence', 0);
+
+		// Process LPA proof of evidence submission (FO) via Api
+		inquirySectionPage.addProofOfEvidenceViaApi(caseObj, 'lpaProofOfEvidence');
+
+		// TODO: verify review banner is displayed Bug: A2-4859
+
+		// Complete the evidence review workflow
+		documentationSectionPage.navigateToAddProofOfEvidenceReview('lpa-proofs-evidence');
+		caseDetailsPage.selectRadioButtonByValue('Complete');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Accept LPA proof of evidence and witnesses');
+
+		// Verify successful acceptance
+		caseDetailsPage.validateBannerMessage(
+			'Success',
+			'LPA proof of evidence and witnesses accepted'
+		);
 	});
 });
