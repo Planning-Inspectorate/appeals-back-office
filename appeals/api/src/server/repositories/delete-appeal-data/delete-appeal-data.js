@@ -1,5 +1,5 @@
 import { databaseConnector } from '#utils/database-connector.js';
-import logger from '#utils/logger.js';
+// import logger from '#utils/logger.js';
 
 /**
  * @param {Array<{id: number, reference: string}>} appeals
@@ -14,7 +14,7 @@ export async function deleteAppealsInBatches(appeals) {
 			noIterations !== 0 && eachIteration < noIterations;
 			eachIteration++
 		) {
-			logger.info(`Running batch - ${eachIteration + 1} of ${noIterations}`);
+			console.log(`Running batch - ${eachIteration + 1} of ${noIterations}`);
 
 			const batchedAppeals = appeals.splice(0, BATCH_SIZE);
 
@@ -35,7 +35,7 @@ export async function deleteAppealsInBatches(appeals) {
 			);
 		}
 	} catch (error) {
-		logger.error(error);
+		console.error(error);
 		throw error;
 	}
 }
