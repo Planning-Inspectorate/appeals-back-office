@@ -1,5 +1,4 @@
 import { databaseConnector } from '#utils/database-connector.js';
-// import logger from '#utils/logger.js';
 
 /**
  * @param {Array<{id: number, reference: string}>} appeals
@@ -573,5 +572,6 @@ const getDocuments = async (appealIDs) => {
 };
 
 export default {
-	getAppealsFromLpaCodes
+	getAppealsFromLpaCodes,
+	deleteAppealsInBatches
 };
