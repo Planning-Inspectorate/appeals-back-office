@@ -1,4 +1,5 @@
-import { getAppealsFromLpaCodes } from '#repositories/delete-appeal-data/delete-appeal-data.js';
+// import { getAppealsFromLpaCodes } from '#repositories/delete-appeal-data/delete-appeal-data.js';
+import { getAppealsFromLpaCodes } from '../../server/repositories/delete-appeal-data/delete-appeal-data.js';
 import { databaseConnector } from '../../server/utils/database-connector.js';
 import { localPlanningDepartmentList } from './LPAs/training.js';
 
