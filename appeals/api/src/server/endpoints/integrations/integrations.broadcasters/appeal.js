@@ -151,7 +151,7 @@ function getSchemaForCaseType(caseType) {
 	switch (caseType) {
 		case APPEAL_CASE_TYPE.D:
 		case APPEAL_CASE_TYPE.ZP:
-		case APPEAL_CASE_TYPE.H:
+		case APPEAL_CASE_TYPE.H: // todo: probably will be s78
 		case APPEAL_CASE_TYPE.ZA:
 			return schemas.events.appealHas;
 		default:
@@ -168,6 +168,8 @@ function getTopicForCaseType(caseType) {
 	switch (caseType) {
 		case APPEAL_CASE_TYPE.D:
 		case APPEAL_CASE_TYPE.ZP:
+		case APPEAL_CASE_TYPE.H: // todo: probably will be s78
+		case APPEAL_CASE_TYPE.ZA:
 			return producers.boCaseData;
 		default:
 			return producers.boCaseDataS78;
