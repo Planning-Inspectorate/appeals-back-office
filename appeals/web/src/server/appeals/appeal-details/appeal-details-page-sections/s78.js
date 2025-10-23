@@ -56,7 +56,7 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 				].filter(isDefined)
 			},
 			wrapperHtml: {
-				opening: '<h1 class="govuk-heading-l">Timetable</h1>',
+				opening: '<h2 class="govuk-heading-l">Timetable</h1>',
 				closing: ''
 			}
 		}

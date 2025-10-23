@@ -411,7 +411,7 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
             </details>
         </div>
     </div>
-    <h1 class="govuk-heading-l">Overview</h1>
+    <h2 class="govuk-heading-l">Overview</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
             <dd             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -459,7 +459,7 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
         </div>
     </dl>
     <div id="site-visit-section">
-        <h1 class="govuk-heading-l">Site</h1>
+        <h2 class="govuk-heading-l">Site</h2>
         <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
@@ -482,7 +482,7 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
                 </dd>
             </div>
         </dl>
-        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                 <dd                 class="govuk-summary-list__value">
@@ -503,22 +503,8 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
             </div>
         </dl>
     </div>
-    <h1 class="govuk-heading-l">Timetable</h1>
-    <dl class="govuk-summary-list appeal-case-timetable">
-        <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
-            <dd class="govuk-summary-list__value">23 May 2023</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/date"
-                data-cy="-valid-date"><span class="govuk-visually-hidden"> Valid date</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
-            <dd class="govuk-summary-list__value">Not started</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/add?backUrl=/appeals-service/appeal-details/1"
-                data-cy="start-start-case-date">Start<span class="govuk-visually-hidden"> Start date</span></a>
-            </dd>
-        </div>
-    </dl>
-    <h1 class="govuk-heading-l">Documentation</h1>
+    <h2 class="govuk-heading-l">Timetable<dl class="govuk-summary-list appeal-case-timetable"><div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt><dd class="govuk-summary-list__value"> 23 May 2023</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/date" data-cy="-valid-date"><span class="govuk-visually-hidden"> Valid date</span></a></dd></div><div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt><dd class="govuk-summary-list__value"> Not started</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/add?backUrl=/appeals-service/appeal-details/1" data-cy="start-start-case-date">Start<span class="govuk-visually-hidden"> Start date</span></a></dd></div></dl></h2>
+    <h2 class="govuk-heading-l">Documentation</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -571,7 +557,7 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Costs</h1>
+    <h2 class="govuk-heading-l">Costs</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -643,7 +629,7 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Contacts</h1>
+    <h2 class="govuk-heading-l">Contacts</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
             <dd class="govuk-summary-list__value">
@@ -679,7 +665,7 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Team</h1>
+    <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
             <dd class="govuk-summary-list__value">
@@ -709,7 +695,7 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Case management</h1>
+    <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
             <dd             class="govuk-summary-list__value">No documents</dd>

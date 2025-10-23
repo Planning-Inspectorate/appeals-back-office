@@ -23,7 +23,7 @@ export const getCaseCosts = (mappedData) => ({
 		firstCellIsHeader: true
 	},
 	wrapperHtml: {
-		opening: '<h1 class="govuk-heading-l">Costs</h1>',
+		opening: '<h2 class="govuk-heading-l">Costs</h2>',
 		closing: ''
 	}
 });
