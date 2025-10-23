@@ -720,18 +720,26 @@ export class CaseDetailsPage extends Page {
 		});
 	}
 
-	verifyTableCellTextCaseHistory(answer) {
+	verifyTableCellTextCaseHistory(answer, isIncluded = true) {
+		const expectedText = answer.toLocaleLowerCase();
+
 		this.basePageElements.tableCell(answer).then(($elem) => {
 			cy.wrap($elem)
 				.invoke('text')
-				.then((text) =>
-					expect(text.trim().toLocaleLowerCase()).to.include(
-						answer.toLocaleLowerCase(),
-						`${answer} is not included`
-					)
-				);
+				.then((t) => {
+					const text = t.trim().toLocaleLowerCase();
+
+					const assertionBase = isIncluded ? expect(text).to : expect(text).to.not;
+
+					const errorMessage = isIncluded
+						? `${answer} is not included`
+						: `${answer} should not be included`;
+
+					assertionBase.include(expectedText, errorMessage);
+				});
 		});
 	}
+
 	verifyDateChanges(timeTableRow, date) {
 		const formattedDate = formatDateAndTime(date).date;
 		this.elements
