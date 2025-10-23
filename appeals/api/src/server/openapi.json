@@ -6185,6 +6185,72 @@
 				}
 			}
 		},
+		"/appeals/{appealReference}/inquiry-elapsed": {
+			"post": {
+				"tags": ["Test Utilities"],
+				"description": "A test endpoint to simulate the deadline for inquiry in the past",
+				"parameters": [
+					{
+						"name": "appealReference",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
+		"/appeals/{appealReference}/proof-of-evidence-elapsed": {
+			"post": {
+				"tags": ["Test Utilities"],
+				"description": "A test endpoint to simulate the deadline for proof of evidence due date in the past",
+				"parameters": [
+					{
+						"name": "appealReference",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
 		"/appeals/delete-appeals": {
 			"delete": {
 				"tags": ["Test Utilities"],
