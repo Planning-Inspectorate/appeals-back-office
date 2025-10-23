@@ -29,7 +29,7 @@ async function run() {
 
 	console.log(`generating api types`);
 	const { files } = await generateApi({
-		name: path.basename(typesFile),
+		fileName: path.basename(typesFile),
 		input: specFile,
 		output: path.dirname(specFile),
 		generateClient: false

@@ -77,6 +77,28 @@ export const applyEdits = (request, sessionKey) => {
 };
 
 /**
+ * Saves any edited values to the main session key if editing, and deletes the /edit key.
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} sessionKey
+ * @param {string} appealId
+ */
+export const applyEditsForAppeal = (request, sessionKey, appealId) => {
+	const { query, session } = request;
+	const editKey = `${sessionKey}/edit`;
+	if (session[editKey]) {
+		const editValues = session[editKey][appealId];
+		delete session[editKey][appealId];
+		if (!query.editEntrypoint) {
+			return;
+		}
+		session[sessionKey][appealId] = {
+			...session[sessionKey][appealId],
+			...editValues
+		};
+	}
+};
+
+/**
  * Deletes the /edit session key without copying anything.
  * @param {import('@pins/express').Request} request
  * @param {string} sessionKey
@@ -84,6 +106,17 @@ export const applyEdits = (request, sessionKey) => {
 export const clearEdits = (request, sessionKey) => {
 	const editKey = `${sessionKey}/edit`;
 	delete request.session[editKey];
+};
+
+/**
+ * Deletes the /edit session key for this appeal without copying anything.
+ * @param {import('@pins/express').Request} request
+ * @param {string} sessionKey
+ * @param {string} appealId
+ */
+export const clearEditsForAppeal = (request, sessionKey, appealId) => {
+	const editKey = `${sessionKey}/edit`;
+	delete request.session[editKey][appealId];
 };
 
 /**

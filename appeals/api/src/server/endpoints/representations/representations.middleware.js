@@ -65,17 +65,44 @@ const canPublishFinalComments = (currentAppeal) => {
 };
 
 /**
+ * Based on the required actions "shareProofOfEvidence" and "progressToInquiry" in the front end
+ *
+ * @param {Appeal} currentAppeal
+ * @returns {boolean}
+ */
+const canPublishProofOfEvidence = (currentAppeal) => {
+	const { representations = [], appealTimetable } = currentAppeal || {};
+	const { AWAITING_REVIEW } = APPEAL_REPRESENTATION_STATUS;
+	const { LPA_PROOFS_EVIDENCE, APPELLANT_PROOFS_EVIDENCE } = APPEAL_REPRESENTATION_TYPE;
+
+	const hasProofOfEvidenceAwaitingReview = representations?.some(
+		({ status, representationType }) =>
+			[LPA_PROOFS_EVIDENCE, APPELLANT_PROOFS_EVIDENCE].includes(representationType) &&
+			status === AWAITING_REVIEW
+	);
+
+	const today = new Date();
+
+	const proofOfEvidenceDueDatePassed =
+		appealTimetable?.proofOfEvidenceAndWitnessesDueDate &&
+		dateIsPast(appealTimetable.proofOfEvidenceAndWitnessesDueDate, today);
+
+	return Boolean(!hasProofOfEvidenceAwaitingReview && proofOfEvidenceDueDatePassed);
+};
+
+/**
 @type {import("express").RequestHandler}
 @returns {Promise<object|void>}
  */
 export const validateRepresentationsToPublish = async (req, res, next) => {
 	const status = currentStatus(req.appeal);
-	const { STATEMENTS, FINAL_COMMENTS } = APPEAL_CASE_STATUS;
+	const { STATEMENTS, FINAL_COMMENTS, EVIDENCE } = APPEAL_CASE_STATUS;
 
 	if (
-		![STATEMENTS, FINAL_COMMENTS].includes(status) ||
+		![STATEMENTS, FINAL_COMMENTS, EVIDENCE].includes(status) ||
 		(status === STATEMENTS && canPublishIpCommentsAndStatements(req.appeal)) ||
-		(status === FINAL_COMMENTS && canPublishFinalComments(req.appeal))
+		(status === FINAL_COMMENTS && canPublishFinalComments(req.appeal)) ||
+		(status === EVIDENCE && canPublishProofOfEvidence(req.appeal))
 	) {
 		return next();
 	}

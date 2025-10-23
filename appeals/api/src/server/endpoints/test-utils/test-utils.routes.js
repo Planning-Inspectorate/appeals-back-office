@@ -5,6 +5,8 @@ import {
 	retrieveNotifyEmails,
 	simulateFinalCommentsElapsed,
 	simulateHearingElapsed,
+	simulateInquiryElapsed,
+	simulateProofOfEvidenceElapsed,
 	simulateSiteVisitElapsed,
 	simulateStartAppeal,
 	simulateStatementsElapsed
@@ -45,6 +47,23 @@ router.post(
 		#swagger.responses[400] = {}
 	 */
 	asyncHandler(simulateStatementsElapsed)
+);
+
+router.post(
+	'/:appealReference/proof-of-evidence-elapsed',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/proof-of-evidence-elapsed'
+		#swagger.description = 'A test endpoint to simulate the deadline for proof of evidence in the past'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(simulateProofOfEvidenceElapsed)
 );
 
 router.post(
@@ -96,6 +115,23 @@ router.post(
 		#swagger.responses[400] = {}
 	 */
 	asyncHandler(simulateHearingElapsed)
+);
+
+router.post(
+	'/:appealReference/inquiry-elapsed',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/inquiry-elapsed'
+		#swagger.description = 'A test endpoint to simulate the completion of a inquiry event'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(simulateInquiryElapsed)
 );
 
 router.delete(

@@ -49,6 +49,7 @@ const mapAppealSubmission = (data) => {
 		})
 	};
 
+	/** @type {import('#db-client').Prisma.AppealCreateInput} */
 	const appealInput = {
 		reference: randomUUID(),
 		submissionId: casedata.submissionId,
@@ -59,7 +60,6 @@ const mapAppealSubmission = (data) => {
 			connect: { lpaCode: casedata?.lpaCode }
 		},
 		applicationReference: casedata?.applicationReference,
-		address: { create: mapAddressIn(casedata) },
 		appellantCase: { create: mapAppellantCaseIn({ casedata }) },
 		neighbouringSites: neighbouringSitesInput,
 		folders: {
@@ -68,6 +68,11 @@ const mapAppealSubmission = (data) => {
 			})
 		}
 	};
+
+	const address = mapAddressIn(casedata);
+	if (address.addressLine1 && address.postcode) {
+		appealInput.address = { create: address };
+	}
 
 	const documentsInput = (renameDuplicateDocuments(documents) || []).map((document) =>
 		mapDocumentIn(document, APPEAL_CASE_STAGE.APPELLANT_CASE)

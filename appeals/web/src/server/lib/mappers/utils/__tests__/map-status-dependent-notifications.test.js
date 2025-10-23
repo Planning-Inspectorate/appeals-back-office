@@ -167,6 +167,12 @@ describe('mapStatusDependentNotifications', () => {
 			requiredAction: 'progressToProofOfEvidenceAndWitnessesComplete',
 			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F1" class="govuk-heading-s govuk-notification-banner__link">Progress to proof of evidence and witnesses</a>`,
 			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
+			bannerKey: 'progressToInquiry',
+			requiredAction: 'progressToInquiry',
+			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F1" class="govuk-heading-s govuk-notification-banner__link">Progress to inquiry</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		}
 	];
 

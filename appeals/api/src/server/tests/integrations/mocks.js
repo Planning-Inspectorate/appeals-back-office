@@ -60,6 +60,68 @@ export const validAppellantCase = {
 		}
 	]
 };
+
+export const validAppellantCaseCASAdverts = {
+	casedata: {
+		submissionId: '14960baa-3d0f-4db9-9e84-0c75be891560',
+		advertisedAppeal: true,
+		appellantCostsAppliedFor: false,
+		applicationDate: '2024-01-01T00:00:00.000Z',
+		applicationDecision: 'refused',
+		applicationDecisionDate: '2024-01-01T00:00:00.000Z',
+		applicationReference: '123',
+		caseProcedure: 'written',
+		caseSubmissionDueDate: '2024-03-25T23:59:59.999Z',
+		caseSubmittedDate: '2024-03-25T23:59:59.999Z',
+		caseType: 'ZA',
+		changedDevelopmentDescription: false,
+		enforcementNotice: false,
+		floorSpaceSquareMetres: 22,
+		knowsAllOwners: 'Some',
+		knowsOtherOwners: 'Some',
+		lpaCode: 'Q9999',
+		isGreenBelt: false,
+		nearbyCaseReferences: ['1000000'],
+		neighbouringSiteAddresses: [],
+		originalDevelopmentDescription: 'A test description',
+		ownersInformed: true,
+		ownsAllLand: true,
+		ownsSomeLand: true,
+		siteAccessDetails: ['Come and see'],
+		siteAreaSquareMetres: 22,
+		siteSafetyDetails: ["It's dangerous"],
+		isAdvertInPosition: true,
+		isSiteOnHighwayLand: true,
+		hasLandownersPermission: true,
+		siteGridReferenceEasting: '012345',
+		siteGridReferenceNorthing: '678910'
+	},
+	documents: [
+		{
+			dateCreated: '2024-03-01T13:48:35.847Z',
+			documentId: '001',
+			documentType: 'appellantCostsApplication',
+			documentURI:
+				'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+			filename: 'img1.jpg',
+			mime: 'image/jpeg',
+			originalFilename: 'oimg.jpg',
+			size: 10293
+		}
+	],
+	users: [
+		{
+			emailAddress: 'test@test.com',
+			firstName: 'Testy',
+			lastName: 'McTest',
+			salutation: 'Mr',
+			serviceUserType: 'Appellant',
+			organisation: 'A company',
+			telephoneNumber: '0123456789'
+		}
+	]
+};
+
 export const validAppellantCaseCASPlanning = {
 	...validAppellantCase,
 	casedata: {
@@ -405,6 +467,81 @@ export const appealIngestionInput = {
 		})
 	}
 };
+
+export const appealIngestionInputCasAdverts = {
+	appealType: {
+		connect: {
+			key: 'ZA'
+		}
+	},
+	appellant: {
+		create: {
+			organisationName: 'A company',
+			salutation: 'Mr',
+			firstName: 'Testy',
+			lastName: 'McTest',
+			email: 'test@test.com',
+			webAddress: undefined,
+			phoneNumber: '0123456789',
+			otherPhoneNumber: undefined,
+			faxNumber: undefined
+		}
+	},
+	agent: {
+		create: undefined
+	},
+	lpa: {
+		connect: {
+			lpaCode: 'Q9999'
+		}
+	},
+	applicationReference: '123',
+	appellantCase: {
+		create: {
+			applicationDate: '2024-01-01T00:00:00.000Z',
+			applicationDecision: 'refused',
+			applicationDecisionDate: '2024-01-01T00:00:00.000Z',
+			caseSubmittedDate: '2024-03-25T23:59:59.999Z',
+			caseSubmissionDueDate: '2024-03-25T23:59:59.999Z',
+			siteAccessDetails: 'Come and see',
+			siteSafetyDetails: "It's dangerous",
+			siteAreaSquareMetres: 22,
+			floorSpaceSquareMetres: 22,
+			ownsAllLand: true,
+			ownsSomeLand: true,
+			hasAdvertisedAppeal: true,
+			appellantCostsAppliedFor: false,
+			originalDevelopmentDescription: 'A test description',
+			changedDevelopmentDescription: false,
+			ownersInformed: true,
+			siteGridReferenceEasting: '012345',
+			siteGridReferenceNorthing: '678910',
+			advertInPosition: true,
+			highwayLand: true,
+			landownerPermission: true,
+			knowsAllOwners: {
+				connect: {
+					key: 'Some'
+				}
+			},
+			knowsOtherOwners: {
+				connect: {
+					key: 'Some'
+				}
+			},
+			isGreenBelt: false
+		}
+	},
+	neighbouringSites: {
+		create: []
+	},
+	folders: {
+		create: FOLDERS.map((/** @type {{ path: string; }} */ f) => {
+			return { path: f };
+		})
+	}
+};
+
 export const appealIngestionInputCasPlanning = {
 	appealType: {
 		connect: {

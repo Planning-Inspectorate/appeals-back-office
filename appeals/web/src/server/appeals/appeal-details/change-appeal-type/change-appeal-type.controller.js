@@ -11,6 +11,7 @@ import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { uncapitalizeFirstLetter } from '#lib/string-utilities.js';
+import { formatAppealTypeForNotify } from '@pins/appeals/utils/change-appeal-type.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
 	addHorizonReferencePage,
@@ -589,11 +590,11 @@ export const getCheckChangeAppealFinalDate = async (request, response) => {
 
 		const personalisation = {
 			appeal_reference_number: currentAppeal.appealReference,
-			existing_appeal_type: formattedExistingChangeAppealType,
+			existing_appeal_type: formatAppealTypeForNotify(formattedExistingChangeAppealType),
 			lpa_reference: currentAppeal.planningApplicationReference || '',
 			site_address: appealSiteToAddressString(currentAppeal.appealSite),
 			due_date: formattedDate,
-			appeal_type: formattedNewChangeAppealType,
+			appeal_type: formatAppealTypeForNotify(formattedNewChangeAppealType),
 			team_email_address: assignedTeamEmail
 		};
 

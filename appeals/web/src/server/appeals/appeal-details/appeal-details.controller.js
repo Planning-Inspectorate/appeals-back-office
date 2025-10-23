@@ -1,3 +1,4 @@
+import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
 import { APPEAL_REPRESENTATION_TYPE, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { appealDetailsPage } from './appeal-details.mapper.js';
@@ -61,6 +62,7 @@ export const viewAppealDetails = async (request, response) => {
 		currentAppeal.appealId,
 		currentAppeal.appellantCaseId
 	);
+	const backLinkUrl = getSavedBackUrl(request, 'appeals-detail') || '';
 
 	// Remove redundant slash at the end of the url if it exists to prevent a double slash when creating links
 	const currentUrl = request.originalUrl.endsWith('/')
@@ -77,7 +79,8 @@ export const viewAppealDetails = async (request, response) => {
 		lpaFinalComments,
 		appellantCase,
 		appellantProofOfEvidence,
-		lpaProofOfEvidence
+		lpaProofOfEvidence,
+		backLinkUrl
 	);
 
 	mappedPageContent.pageComponents = mappedPageContent.pageComponents || [];

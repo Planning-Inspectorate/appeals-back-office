@@ -50,7 +50,7 @@ describe('appeal-valid-start-case-appellant-hearing.md', () => {
 			'## Local planning authority questionnaire',
 			'Due by 01 February 2025.',
 			'',
-			'## Statements from the local planning authority',
+			'## Statement from the local planning authority',
 			'Due by 01 March 2025.',
 			'',
 			'## Interested party comments',

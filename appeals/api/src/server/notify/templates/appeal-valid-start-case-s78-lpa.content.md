@@ -22,7 +22,7 @@ The timetable is the same for the following child appeals:
 
 Due by {{questionnaire_due_date}}.
 
-## Statements from the local planning authority
+## Statement from the local planning authority
 
 Due by {{lpa_statement_deadline}}.
 
@@ -31,7 +31,7 @@ Due by {{lpa_statement_deadline}}.
 Due by {{ip_comments_deadline}}.
 
 {% if procedure_type == 'written representations' -%}
-## Final comments from the local planning authority
+## Final comments
 
 Due by {{final_comments_deadline}}.
 
@@ -49,7 +49,7 @@ Due by {{planning_obligation_deadline}}.
 
 {% endif -%}
 
-# Next steps
+# What happens next
 
 [Submit your questionnaire and other documents]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}), including your appeal notification letter and a list of those notified by {{questionnaire_due_date}}.
 

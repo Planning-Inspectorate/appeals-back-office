@@ -1,12 +1,16 @@
 // @ts-nocheck
+import usersService from '#appeals/appeal-users/users-service.js';
 import { mapActionLinksForAppeal } from '#appeals/personal-list/personal-list.mapper.js';
 import {
+	activeDirectoryUsersData,
 	appealDataToGetRequiredActions,
 	assignedAppealsPage1,
 	assignedAppealsPage2,
+	assignedAppealsPage3,
 	baseAppealDataToGetRequiredActions
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -16,7 +20,13 @@ const request = supertest(app);
 const baseUrl = '/appeals-service/personal-list';
 
 describe('personal-list', () => {
-	beforeEach(installMockApi);
+	beforeEach(() => {
+		installMockApi();
+		// @ts-ignore
+		usersService.getUsersByRole = jest.fn().mockResolvedValue(activeDirectoryUsersData);
+		// @ts-ignore
+		usersService.getUserById = jest.fn().mockResolvedValue(activeDirectoryUsersData[4]);
+	});
 	afterEach(teardown);
 
 	describe('GET /', () => {
@@ -180,7 +190,11 @@ describe('personal-list', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'href="/appeals-service/appeal-details/28535" aria-label="Appeal 6 0 2 8 5 3 5">6028535</a></strong></td><td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Lead</strong>'
+				'href=/appeals-service/appeal-details/28535?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30 ' +
+					'aria-label="Appeal 6 0 2 8 5 3 5">6028535</a>' +
+					'</strong></td>' +
+					'<td class="govuk-table__cell">' +
+					'<strong class="govuk-tag govuk-tag--grey">Lead</strong>'
 			);
 		});
 
@@ -199,7 +213,11 @@ describe('personal-list', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'href="/appeals-service/appeal-details/28524" aria-label="Appeal 6 0 2 8 5 2 4">6028524</a></strong></td><td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Child</strong>'
+				'href=/appeals-service/appeal-details/28524?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30 ' +
+					'aria-label="Appeal 6 0 2 8 5 2 4">6028524</a>' +
+					'</strong></td>' +
+					'<td class="govuk-table__cell">' +
+					'<strong class="govuk-tag govuk-tag--grey">Child</strong>'
 			);
 		});
 
@@ -218,7 +236,10 @@ describe('personal-list', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'href="/appeals-service/appeal-details/28526" aria-label="Appeal 6 0 2 8 5 2 6">6028526</a></strong></td><td class="govuk-table__cell"></td>'
+				'/appeals-service/appeal-details/28526?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30 ' +
+					'aria-label="Appeal 6 0 2 8 5 2 6">6028526</a>' +
+					'</strong></td>' +
+					'<td class="govuk-table__cell"></td>'
 			);
 		});
 
@@ -232,6 +253,57 @@ describe('personal-list', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('You are not assigned to any appeals</h1>');
+			expect(element.innerHTML).toContain('View another case officer’s appeals</a>');
+
+			expect(element.innerHTML).toContain('Search all cases</a>');
+		});
+
+		it('should render the first page of another case officer personal list with the expected content and pagination', async () => {
+			nock('http://test/')
+				.get(
+					'/appeals/personal-list?pageNumber=1&pageSize=5&caseOfficerId=abac693e-4332-4a02-bb21-af05b9fee854'
+				)
+				.reply(200, assignedAppealsPage3);
+
+			const response = await request.get(
+				`${baseUrl}${'?pageNumber=1&pageSize=5&caseOfficerId=abac693e-4332-4a02-bb21-af05b9fee854'}`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Cases assigned to McTest, George</h1>');
+			expect(element.innerHTML).toContain('View another case officer’s appeals</a>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Filters</span>');
+			expect(unprettifiedElement.innerHTML).toContain('Show cases with status</label>');
+			expect(unprettifiedElement.innerHTML).toContain('<option value="all"');
+			expect(unprettifiedElement.innerHTML).toContain('<option value="lpa_questionnaire"');
+			expect(unprettifiedElement.innerHTML).toContain('Apply</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Clear filter</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Appeal reference</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Lead or child</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Action required</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Due by</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Case status</th>');
+		});
+
+		it('should render the first page of another case officer personal list that has no appeals assigned', async () => {
+			nock('http://test/')
+				.get(
+					'/appeals/personal-list?pageNumber=1&pageSize=5&caseOfficerId=abac693e-4332-4a02-bb21-af05b9fee854'
+				)
+				.reply(200, { items: [], totalItems: 0, page: 1, totalPages: 1, pageSize: 5 });
+
+			const response = await request.get(
+				`${baseUrl}${'?pageNumber=1&pageSize=5&caseOfficerId=abac693e-4332-4a02-bb21-af05b9fee854'}`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			expect(element.innerHTML).toContain('McTest, George is not assigned to any appeals</h1>');
 			expect(element.innerHTML).toContain('View another case officer’s appeals</a>');
 
 			expect(element.innerHTML).toContain('Search all cases</a>');
@@ -419,8 +491,7 @@ describe('personal-list', () => {
 				name: 'Awaiting proof of evidence and witnesses',
 				requiredAction: 'awaitingProofOfEvidenceAndWitnesses',
 				expectedHtml: {
-					caseOfficer:
-						'Awaiting proof of evidence and witnesses<br><a class="govuk-link" href="/appeals-service/appeal-details/1/proof-of-evidence/appellant?backUrl=%2Fappeals-service%2Fpersonal-list">Review appellant proof of evidence and witnesses</a>'
+					caseOfficer: 'Awaiting proof of evidence and witnesses'
 				}
 			}
 		];

@@ -1,0 +1,524 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`grid-reference GET /change should render the grid reference change page when accessed from the appellant case page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Enter the grid reference</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <p class="govuk-body">The grid reference should match what is on the application to the local
+                        planning authority. You can <a href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        class="govuk-link"> enter an address</a> instead.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="site-grid-reference-easting">Easting</label>
+                            <div id="site-grid-reference-easting-hint" class="govuk-hint">For example, 359608</div>
+                            <input class="govuk-input govuk-input--width-10"
+                            id="site-grid-reference-easting" name="siteGridReferenceEasting" type="text"
+                            value="" aria-describedby="site-grid-reference-easting-hint">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="site-grid-reference-northing">Northing</label>
+                            <div id="site-grid-reference-northing-hint" class="govuk-hint">For example, 172607</div>
+                            <input class="govuk-input govuk-input--width-10"
+                            id="site-grid-reference-northing" name="siteGridReferenceNorthing" type="text"
+                            value="" aria-describedby="site-grid-reference-northing-hint">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`grid-reference POST /change should re-render the page with an error if the eastings field is empty 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#site-grid-reference-easting">Enter the eastings grid reference</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Enter the grid reference</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <p class="govuk-body">The grid reference should match what is on the application to the local
+                        planning authority. You can <a href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        class="govuk-link"> enter an address</a> instead.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <label class="govuk-label" for="site-grid-reference-easting">Easting</label>
+                            <div id="site-grid-reference-easting-hint" class="govuk-hint">For example, 359608</div>
+                            <p id="site-grid-reference-easting-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the eastings grid
+                                reference</p>
+                            <input class="govuk-input govuk-input--width-10 govuk-input--error"
+                            id="site-grid-reference-easting" name="siteGridReferenceEasting" type="text"
+                            value="" aria-describedby="site-grid-reference-easting-hint site-grid-reference-easting-error">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="site-grid-reference-northing">Northing</label>
+                            <div id="site-grid-reference-northing-hint" class="govuk-hint">For example, 172607</div>
+                            <input class="govuk-input govuk-input--width-10"
+                            id="site-grid-reference-northing" name="siteGridReferenceNorthing" type="text"
+                            value="123456" aria-describedby="site-grid-reference-northing-hint">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`grid-reference POST /change should re-render the page with an error if the eastings field is too big 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#site-grid-reference-easting">Eastings must be 692200 or less</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Enter the grid reference</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <p class="govuk-body">The grid reference should match what is on the application to the local
+                        planning authority. You can <a href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        class="govuk-link"> enter an address</a> instead.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <label class="govuk-label" for="site-grid-reference-easting">Easting</label>
+                            <div id="site-grid-reference-easting-hint" class="govuk-hint">For example, 359608</div>
+                            <p id="site-grid-reference-easting-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Eastings must be 692200
+                                or less</p>
+                            <input class="govuk-input govuk-input--width-10 govuk-input--error"
+                            id="site-grid-reference-easting" name="siteGridReferenceEasting" type="text"
+                            value="700000" aria-describedby="site-grid-reference-easting-hint site-grid-reference-easting-error">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="site-grid-reference-northing">Northing</label>
+                            <div id="site-grid-reference-northing-hint" class="govuk-hint">For example, 172607</div>
+                            <input class="govuk-input govuk-input--width-10"
+                            id="site-grid-reference-northing" name="siteGridReferenceNorthing" type="text"
+                            value="123456" aria-describedby="site-grid-reference-northing-hint">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`grid-reference POST /change should re-render the page with an error if the eastings field is too short 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#site-grid-reference-easting">Eastings must be at least 6 digits</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Enter the grid reference</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <p class="govuk-body">The grid reference should match what is on the application to the local
+                        planning authority. You can <a href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        class="govuk-link"> enter an address</a> instead.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <label class="govuk-label" for="site-grid-reference-easting">Easting</label>
+                            <div id="site-grid-reference-easting-hint" class="govuk-hint">For example, 359608</div>
+                            <p id="site-grid-reference-easting-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Eastings must be at least
+                                6 digits</p>
+                            <input class="govuk-input govuk-input--width-10 govuk-input--error"
+                            id="site-grid-reference-easting" name="siteGridReferenceEasting" type="text"
+                            value="123" aria-describedby="site-grid-reference-easting-hint site-grid-reference-easting-error">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="site-grid-reference-northing">Northing</label>
+                            <div id="site-grid-reference-northing-hint" class="govuk-hint">For example, 172607</div>
+                            <input class="govuk-input govuk-input--width-10"
+                            id="site-grid-reference-northing" name="siteGridReferenceNorthing" type="text"
+                            value="123456" aria-describedby="site-grid-reference-northing-hint">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`grid-reference POST /change should re-render the page with an error if the northings field contains non-numeric characters 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#site-grid-reference-northing">Northings must only include numbers 0 to 9</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Enter the grid reference</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <p class="govuk-body">The grid reference should match what is on the application to the local
+                        planning authority. You can <a href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        class="govuk-link"> enter an address</a> instead.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="site-grid-reference-easting">Easting</label>
+                            <div id="site-grid-reference-easting-hint" class="govuk-hint">For example, 359608</div>
+                            <input class="govuk-input govuk-input--width-10"
+                            id="site-grid-reference-easting" name="siteGridReferenceEasting" type="text"
+                            value="123456" aria-describedby="site-grid-reference-easting-hint">
+                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <label class="govuk-label" for="site-grid-reference-northing">Northing</label>
+                            <div id="site-grid-reference-northing-hint" class="govuk-hint">For example, 172607</div>
+                            <p id="site-grid-reference-northing-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Northings must only include
+                                numbers 0 to 9</p>
+                            <input class="govuk-input govuk-input--width-10 govuk-input--error"
+                            id="site-grid-reference-northing" name="siteGridReferenceNorthing" type="text"
+                            value="12ab56" aria-describedby="site-grid-reference-northing-hint site-grid-reference-northing-error">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`grid-reference POST /change should re-render the page with an error if the northings field is too big 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#site-grid-reference-northing">Northings must be 1299999 or less</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Enter the grid reference</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <p class="govuk-body">The grid reference should match what is on the application to the local
+                        planning authority. You can <a href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        class="govuk-link"> enter an address</a> instead.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="site-grid-reference-easting">Easting</label>
+                            <div id="site-grid-reference-easting-hint" class="govuk-hint">For example, 359608</div>
+                            <input class="govuk-input govuk-input--width-10"
+                            id="site-grid-reference-easting" name="siteGridReferenceEasting" type="text"
+                            value="123456" aria-describedby="site-grid-reference-easting-hint">
+                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <label class="govuk-label" for="site-grid-reference-northing">Northing</label>
+                            <div id="site-grid-reference-northing-hint" class="govuk-hint">For example, 172607</div>
+                            <p id="site-grid-reference-northing-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Northings must be 1299999
+                                or less</p>
+                            <input class="govuk-input govuk-input--width-10 govuk-input--error"
+                            id="site-grid-reference-northing" name="siteGridReferenceNorthing" type="text"
+                            value="1300000" aria-describedby="site-grid-reference-northing-hint site-grid-reference-northing-error">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`grid-reference POST /change should re-render the page with an error if the northings field is too short 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#site-grid-reference-northing">Northings must be at least 6 digits</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Enter the grid reference</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <p class="govuk-body">The grid reference should match what is on the application to the local
+                        planning authority. You can <a href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        class="govuk-link"> enter an address</a> instead.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="site-grid-reference-easting">Easting</label>
+                            <div id="site-grid-reference-easting-hint" class="govuk-hint">For example, 359608</div>
+                            <input class="govuk-input govuk-input--width-10"
+                            id="site-grid-reference-easting" name="siteGridReferenceEasting" type="text"
+                            value="123456" aria-describedby="site-grid-reference-easting-hint">
+                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <label class="govuk-label" for="site-grid-reference-northing">Northing</label>
+                            <div id="site-grid-reference-northing-hint" class="govuk-hint">For example, 172607</div>
+                            <p id="site-grid-reference-northing-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Northings must be at
+                                least 6 digits</p>
+                            <input class="govuk-input govuk-input--width-10 govuk-input--error"
+                            id="site-grid-reference-northing" name="siteGridReferenceNorthing" type="text"
+                            value="123" aria-describedby="site-grid-reference-northing-hint site-grid-reference-northing-error">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`grid-reference POST /change should re-render the page with multiple errors if the eastings field has multiple issues 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#site-grid-reference-easting">Eastings must only include numbers 0 to 9</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Enter the grid reference</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <p class="govuk-body">The grid reference should match what is on the application to the local
+                        planning authority. You can <a href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        class="govuk-link"> enter an address</a> instead.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <label class="govuk-label" for="site-grid-reference-easting">Easting</label>
+                            <div id="site-grid-reference-easting-hint" class="govuk-hint">For example, 359608</div>
+                            <p id="site-grid-reference-easting-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Eastings must only include
+                                numbers 0 to 9</p>
+                            <input class="govuk-input govuk-input--width-10 govuk-input--error"
+                            id="site-grid-reference-easting" name="siteGridReferenceEasting" type="text"
+                            value="a3" aria-describedby="site-grid-reference-easting-hint site-grid-reference-easting-error">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="site-grid-reference-northing">Northing</label>
+                            <div id="site-grid-reference-northing-hint" class="govuk-hint">For example, 172607</div>
+                            <input class="govuk-input govuk-input--width-10"
+                            id="site-grid-reference-northing" name="siteGridReferenceNorthing" type="text"
+                            value="123456" aria-describedby="site-grid-reference-northing-hint">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`grid-reference POST /change should re-render the page with multiple errors if the northings field has multiple issues 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#site-grid-reference-northing">Northings must only include numbers 0 to 9</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Enter the grid reference</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <p class="govuk-body">The grid reference should match what is on the application to the local
+                        planning authority. You can <a href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        class="govuk-link"> enter an address</a> instead.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="site-grid-reference-easting">Easting</label>
+                            <div id="site-grid-reference-easting-hint" class="govuk-hint">For example, 359608</div>
+                            <input class="govuk-input govuk-input--width-10"
+                            id="site-grid-reference-easting" name="siteGridReferenceEasting" type="text"
+                            value="123456" aria-describedby="site-grid-reference-easting-hint">
+                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <label class="govuk-label" for="site-grid-reference-northing">Northing</label>
+                            <div id="site-grid-reference-northing-hint" class="govuk-hint">For example, 172607</div>
+                            <p id="site-grid-reference-northing-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Northings must only include
+                                numbers 0 to 9</p>
+                            <input class="govuk-input govuk-input--width-10 govuk-input--error"
+                            id="site-grid-reference-northing" name="siteGridReferenceNorthing" type="text"
+                            value="a3" aria-describedby="site-grid-reference-northing-hint site-grid-reference-northing-error">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;

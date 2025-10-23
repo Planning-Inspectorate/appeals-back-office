@@ -70,6 +70,34 @@ describe('representations', () => {
 				`Progress to proof of evidence and witnesses</button>`
 			);
 		});
+
+		it('should contain correct content if inquiry and proof of evidence and status is set to "EVIDENCE" and no proof of evidence to share', async () => {
+			const appealWithStatments = {
+				...appealData,
+				procedureType: 'inquiry',
+				appealStatus: 'evidence',
+				documentationSummary: {},
+				appealTimetable: {
+					proofOfEvidenceAndWitnessesDueDate: '2024-12-04'
+				}
+			};
+			nock('http://test/').get('/appeals/1').reply(200, appealWithStatments);
+			const response = await request.get(`${baseUrl}/1/share`);
+			const snapshotResponse = parseHtml(response.text);
+			const textResponse = parseHtml(response.text, {
+				skipPrettyPrint: true
+			});
+
+			expect(snapshotResponse.innerHTML).toMatchSnapshot();
+			expect(textResponse.innerHTML).toContain('Progress to inquiry</h1>');
+			expect(textResponse.innerHTML).toContain(
+				`<p class="govuk-body">There are no proof of evidence and witnesses to share`
+			);
+			expect(textResponse.innerHTML.toString()).toContain(
+				`Warning</span> Do not progress to inquiry if you are awaiting any late proof of evidence and witnesses.</strong>`
+			);
+			expect(textResponse.innerHTML).toContain(`Progress to inquiry</button>`);
+		});
 	});
 
 	describe('POST /share', () => {

@@ -118,6 +118,37 @@ export const simulateFinalCommentsElapsed = async (req, res) => {
  * @param {Response} res
  * @returns {Promise<Response>}
  * */
+export const simulateProofOfEvidenceElapsed = async (req, res) => {
+	const { appealReference } = req.params;
+	const reference = Number(appealReference);
+	const appealId = reference - APPEAL_START_RANGE;
+
+	const timetable = await databaseConnector.appealTimetable.findFirst({
+		where: { appealId }
+	});
+
+	if (timetable !== null) {
+		const { id } = timetable;
+		const proofOfEvidenceAndWitnessesDueDate = sub(new Date(), { days: 3 });
+
+		await databaseConnector.appealTimetable.update({
+			where: { id },
+			data: {
+				proofOfEvidenceAndWitnessesDueDate
+			}
+		});
+
+		return res.send(true);
+	}
+
+	return res.send(false);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
 export const retrieveNotifyEmails = async (req, res) => {
 	const { appealReference } = req.params;
 	const notifications = await getAppealNotifications(appealReference);
@@ -152,6 +183,42 @@ export const simulateHearingElapsed = async (req, res) => {
 		await databaseConnector.hearing.update({
 			where: { id },
 			data: hearingData
+		});
+
+		await updateCompletedEvents(AUDIT_TRAIL_SYSTEM_UUID);
+		return res.send(true);
+	}
+
+	return res.send(false);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
+export const simulateInquiryElapsed = async (req, res) => {
+	const { appealReference } = req.params;
+	const reference = Number(appealReference);
+	const appealId = reference - APPEAL_START_RANGE;
+
+	const event = await databaseConnector.inquiry.findFirst({
+		where: { appealId }
+	});
+
+	if (event !== null) {
+		const { id, ...inquiryData } = event;
+
+		if (inquiryData.inquiryStartTime !== null) {
+			inquiryData.inquiryStartTime = sub(new Date(), { days: 3 });
+		}
+		if (inquiryData.inquiryEndTime !== null) {
+			inquiryData.inquiryEndTime = sub(new Date(), { days: 3 });
+		}
+
+		await databaseConnector.inquiry.update({
+			where: { id },
+			data: inquiryData
 		});
 
 		await updateCompletedEvents(AUDIT_TRAIL_SYSTEM_UUID);

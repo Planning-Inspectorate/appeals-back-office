@@ -3,9 +3,12 @@ import {
 	dayMonthYearHourMinuteToISOString,
 	getTodaysISOString
 } from '#lib/dates.js';
+import { applyEditsForAppeal, clearEdits, getSessionValuesForAppeal } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
+import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
 import { resolveAppealId } from '#lib/resolveAppealId.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { preserveQueryString } from '#lib/url-utilities.js';
 import { isEmpty, isEqual, pick } from 'lodash-es';
 import {
 	addressDetailsPage,
@@ -23,6 +26,8 @@ import {
 } from './set-up-inquiry.service.js';
 
 /** @typedef {import('express').NextFunction} NextFunction */
+
+const getBackLinkUrl = backLinkGenerator('setUpInquiry');
 
 /**
  * @param {string} path
@@ -99,7 +104,7 @@ export const updateInquirySession = (request, response, next) => {
 };
 
 /**
- * @param {{'inquiry-date-day': string, 'inquiry-date-month': string, 'inquiry-date-year': string, 'inquiry-time-hour': string, 'inquiry-time-minute': string}} sessionValues
+ * @param {Record<string, string>} sessionValues
  * @returns {{day: string, month: string, year: string, hour: string, minute: string}}
  */
 const sessionValuesToDateTime = (sessionValues) => {
@@ -117,9 +122,20 @@ const sessionValuesToDateTime = (sessionValues) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getInquiryDate = async (request, response) => {
-	const id = resolveAppealId(request);
-	const sessionValues = request.session['setUpInquiry']?.[id] || {};
-	return renderInquiryDate(request, response, 'setup', sessionValuesToDateTime(sessionValues));
+	const sessionValues = getSessionValuesForAppeal(
+		request,
+		'setUpInquiry',
+		request.currentAppeal.appealId
+	);
+
+	const getBackLinkUrl = backLinkGenerator('setUpInquiry');
+	const backUrl = getBackLinkUrl(
+		request,
+		null,
+		`/appeals-service/appeal-details/${request.currentAppeal.appealId}/inquiry/setup/check-details`
+	);
+
+	return renderInquiryDate(request, response, backUrl, sessionValuesToDateTime(sessionValues));
 };
 
 /**
@@ -128,21 +144,29 @@ export const getInquiryDate = async (request, response) => {
  */
 export const getChangeInquiryDate = async (request, response) => {
 	const sessionValues = request.session['changeInquiry'] || {};
-	return renderInquiryDate(request, response, 'change', sessionValuesToDateTime(sessionValues));
+
+	const getBackLinkUrl = backLinkGenerator('changeInquiry');
+	const backUrl = getBackLinkUrl(
+		request,
+		null,
+		`/appeals-service/appeal-details/${request.currentAppeal.appealId}/inquiry/change/check-details`
+	);
+
+	return renderInquiryDate(request, response, backUrl, sessionValuesToDateTime(sessionValues));
 };
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {'change' | 'setup'} action
+ * @param {string} backUrl
  * @param {{day?: string | number, month?: string | number, year?: string | number, hour?: string | number, minute?: string | number}} values
  */
-export const renderInquiryDate = async (request, response, action, values) => {
+export const renderInquiryDate = async (request, response, backUrl, values) => {
 	const { errors } = request;
 
 	const appealDetails = request.currentAppeal;
 
-	const mappedPageContent = await inquiryDatePage(appealDetails, values, action);
+	const mappedPageContent = await inquiryDatePage(appealDetails, values, backUrl);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -156,8 +180,11 @@ export const renderInquiryDate = async (request, response, action, values) => {
  */
 export const postInquiryDate = async (request, response) => {
 	if (request.errors) {
-		const id = resolveAppealId(request);
-		const sessionValues = request.session['setUpInquiry']?.[id];
+		const sessionValues = getSessionValuesForAppeal(
+			request,
+			'setUpInquiry',
+			request.currentAppeal.appealId
+		);
 		return renderInquiryDate(
 			request,
 			response,
@@ -168,7 +195,12 @@ export const postInquiryDate = async (request, response) => {
 
 	const { appealId } = request.currentAppeal;
 
-	return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/setup/estimation`);
+	return response.redirect(
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/inquiry/setup/estimation`
+		)
+	);
 };
 
 /**
@@ -195,8 +227,11 @@ export const postChangeInquiryDate = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getInquiryEstimation = async (request, response) => {
-	const id = resolveAppealId(request);
-	const sessionValues = request.session['setUpInquiry']?.[id] || {};
+	const sessionValues = getSessionValuesForAppeal(
+		request,
+		'setUpInquiry',
+		request.currentAppeal.appealId
+	);
 	return renderInquiryEstimation(request, response, 'setup', sessionValues || {});
 };
 
@@ -213,13 +248,16 @@ export const getChangeInquiryEstimation = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * @param {'change' | 'setup'} action
- * @param {{inquiryEstimationYesNo: string, inquiryEstimationDays: number}} [values]
+ * @param {Record<string, string>} [values]
  */
 export const renderInquiryEstimation = async (request, response, action, values) => {
 	const { errors } = request;
 	const appealDetails = request.currentAppeal;
 
-	const mappedPageContent = inquiryEstimationPage(appealDetails, action, errors, values);
+	const baseUrl = `/appeals-service/appeal-details/${appealDetails.appealId}/inquiry/${action}`;
+	const backUrl = getBackLinkUrl(request, `${baseUrl}/date`, `${baseUrl}/check-details`);
+
+	const mappedPageContent = inquiryEstimationPage(appealDetails, action, backUrl, errors, values);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -233,15 +271,22 @@ export const renderInquiryEstimation = async (request, response, action, values)
  */
 export const postInquiryEstimation = async (request, response) => {
 	if (request.errors) {
-		const id = resolveAppealId(request);
-		const sessionValues = request.session['setUpInquiry']?.[id] || {};
-
+		const sessionValues = getSessionValuesForAppeal(
+			request,
+			'setUpInquiry',
+			request.currentAppeal.appealId
+		);
 		return renderInquiryEstimation(request, response, 'setup', sessionValues);
 	}
 
 	const { appealId } = request.currentAppeal;
 
-	return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/setup/address`);
+	return response.redirect(
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/inquiry/setup/address`
+		)
+	);
 };
 
 /**
@@ -264,22 +309,25 @@ export const postChangeInquiryEstimation = async (request, response) => {
  */
 export const getInquiryAddress = async (request, response) => {
 	const id = resolveAppealId(request);
-	const sessionValues = request.session['setUpInquiry']?.[id] || {};
-	return renderInquiryAddress(request, response, 'setup', sessionValues || {});
+	const sessionValues = getSessionValuesForAppeal(request, 'setUpInquiry', id);
+	return renderInquiryAddress(request, response, 'setup', sessionValues);
 };
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {{addressKnown: string}} [values]
+ * @param {Record<string, string>} [values]
  * @param {'change' | 'setup'} action
  */
-export const renderInquiryAddress = async (request, response, action, values) => {
+export const renderInquiryAddress = async (request, response, action, values = {}) => {
 	const { errors } = request;
 
 	const appealDetails = request.currentAppeal;
 
-	const mappedPageContent = await addressKnownPage(appealDetails, action, values);
+	const baseUrl = `/appeals-service/appeal-details/${appealDetails.appealId}/inquiry/${action}`;
+	const backUrl = getBackLinkUrl(request, `${baseUrl}/estimation`, `${baseUrl}/check-details`);
+
+	const mappedPageContent = addressKnownPage(appealDetails, backUrl, values);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -300,12 +348,18 @@ export const postInquiryAddress = async (request, response) => {
 
 	if (request.body.addressKnown === 'yes') {
 		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/inquiry/setup/address-details`
+			preserveQueryString(
+				request,
+				`/appeals-service/appeal-details/${appealId}/inquiry/setup/address-details`
+			)
 		);
 	}
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/inquiry/setup/timetable-due-dates`
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/inquiry/setup/timetable-due-dates`
+		)
 	);
 };
 
@@ -314,21 +368,27 @@ export const postInquiryAddress = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getInquiryAddressDetails = async (request, response) => {
-	const id = resolveAppealId(request);
-	const sessionValues = request.session['setUpInquiry']?.[id] || {};
+	const sessionValues = getSessionValuesForAppeal(
+		request,
+		'setUpInquiry',
+		request.currentAppeal.appealId
+	);
 	return renderInquiryAddressDetails(request, response, sessionValues, 'setup');
 };
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {import('@pins/appeals').Address} values
+ * @param {Record<string, string>} values
  * @param {'setup' | 'change'} action
  */
 export const renderInquiryAddressDetails = async (request, response, values, action) => {
 	const { currentAppeal, errors } = request;
 
-	const mappedPageContent = await addressDetailsPage(currentAppeal, action, values, errors);
+	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/inquiry/${action}`;
+	const backUrl = getBackLinkUrl(request, `${baseUrl}/address`, `${baseUrl}/check-details`);
+
+	const mappedPageContent = addressDetailsPage(currentAppeal, backUrl, values, errors);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -350,7 +410,10 @@ export const postInquiryAddressDetails = async (request, response) => {
 	const { appealId } = request.currentAppeal;
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/inquiry/setup/timetable-due-dates`
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/inquiry/setup/timetable-due-dates`
+		)
 	);
 };
 
@@ -359,8 +422,11 @@ export const postInquiryAddressDetails = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getInquiryDueDates = async (request, response) => {
-	const id = resolveAppealId(request);
-	const sessionValues = request.session['setUpInquiry']?.[id] || {};
+	const sessionValues = getSessionValuesForAppeal(
+		request,
+		'setUpInquiry',
+		request.currentAppeal.appealId
+	);
 	return renderInquiryDueDates(request, response, 'setup', sessionValues);
 };
 
@@ -369,26 +435,33 @@ export const getInquiryDueDates = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getChangeInquiryDueDates = async (request, response) => {
-	const id = resolveAppealId(request);
-	const sessionValues = request.session['setUpInquiry']?.[id] || {};
+	const sessionValues = getSessionValuesForAppeal(
+		request,
+		'changeInquiry',
+		request.currentAppeal.appealId
+	);
 	return renderInquiryDueDates(request, response, 'change', sessionValues);
 };
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {any} [values]
+ * @param {Record<string, string>} [values]
  * @param {'change' | 'setup'} action
  */
-export const renderInquiryDueDates = async (request, response, action, values) => {
+export const renderInquiryDueDates = async (request, response, action, values = {}) => {
 	const { currentAppeal, errors } = request;
 
 	const appellantCase = await addAppellantCaseToLocals(request);
 
+	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/inquiry/${action}`;
+	const prevPageSlug = values?.addressKnown === 'yes' ? 'address-details' : 'address';
+	const backUrl = getBackLinkUrl(request, `${baseUrl}/${prevPageSlug}`, `${baseUrl}/check-details`);
+
 	const mappedPageContent = await inquiryDueDatesPage(
 		currentAppeal,
 		values,
-		action,
+		backUrl,
 		appellantCase,
 		errors
 	);
@@ -412,6 +485,8 @@ export const postInquiryDueDates = async (request, response) => {
 
 	const { appealId } = request.currentAppeal;
 
+	applyEditsForAppeal(request, 'setUpInquiry', appealId);
+
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/inquiry/setup/check-details`
 	);
@@ -428,6 +503,8 @@ export const postChangeInquiryDueDates = async (request, response) => {
 	}
 
 	const { appealId } = request.currentAppeal;
+
+	applyEditsForAppeal(request, 'changeInquiry', appealId);
 
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/inquiry/change/check-details`
@@ -460,6 +537,8 @@ export const postChangeInquiryAddress = async (request, response) => {
 		);
 	}
 
+	applyEditsForAppeal(request, 'changeInquiry', appealId);
+
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/inquiry/change/check-details`
 	);
@@ -490,6 +569,8 @@ export const postChangeInquiryAddressDetails = async (request, response) => {
 
 	const { appealId } = request.currentAppeal;
 
+	applyEditsForAppeal(request, 'changeInquiry', appealId);
+
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/inquiry/change/check-details`
 	);
@@ -512,6 +593,8 @@ export const getInquiryCheckDetails = async (request, response) => {
 	if (!session.startCaseAppealProcedure?.[appealId]?.appealProcedure) {
 		return response.status(500).render('app/500.njk');
 	}
+
+	clearEdits(request, 'setUpInquiry');
 
 	const mappedPageContent = confirmInquiryPage(
 		appealId,
@@ -543,6 +626,8 @@ export const getChangeInquiryCheckDetails = async (request, response) => {
 	if (!request.session.changeInquiry) {
 		return renderAlreadySubmittedError(request, response);
 	}
+
+	clearEdits(request, 'changeInquiry');
 
 	const mappedPageContent = confirmChangeInquiryPage(appealId, appealReference, 'change', session);
 

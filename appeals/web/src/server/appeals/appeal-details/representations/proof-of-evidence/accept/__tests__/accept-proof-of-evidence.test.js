@@ -80,7 +80,7 @@ describe('proof-of-evidence', () => {
 					`Accept ${proofOfEvidenceType.label} proof of evidence and witnesses</button>`
 				);
 				expect(unprettifiedHTML).toContain(
-					`<a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}/change/135568/?backUrl=/proof-of-evidence/${proofOfEvidenceType.type}/accept">Change<span class="govuk-visually-hidden"> proof of evidence and witnesses</span></a>`
+					`<a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}/manage-documents/135568/?backUrl=/proof-of-evidence/${proofOfEvidenceType.type}/accept">Change<span class="govuk-visually-hidden"> proof of evidence and witnesses</span></a>`
 				);
 				expect(unprettifiedHTML).toContain(
 					`<a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}?backUrl=/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}/accept">Change</a>`

@@ -52,7 +52,7 @@ describe('set up inquiry', () => {
 		const savedDate = {
 			'inquiry-date-day': '19',
 			'inquiry-date-month': '03',
-			'inquiry-date-year': '2026',
+			'inquiry-date-year': '2096',
 			'inquiry-time-hour': '10',
 			'inquiry-time-minute': '00'
 		};
@@ -76,7 +76,7 @@ describe('set up inquiry', () => {
 		it('renders the saved inquiry date scoped by appealId', async () => {
 			expect(pageHtml.querySelector('input#inquiry-date-day').getAttribute('value')).toBe('19');
 			expect(pageHtml.querySelector('input#inquiry-date-month').getAttribute('value')).toBe('03');
-			expect(pageHtml.querySelector('input#inquiry-date-year').getAttribute('value')).toBe('2026');
+			expect(pageHtml.querySelector('input#inquiry-date-year').getAttribute('value')).toBe('2096');
 			expect(pageHtml.querySelector('input#inquiry-time-hour').getAttribute('value')).toBe('10');
 			expect(pageHtml.querySelector('input#inquiry-time-minute').getAttribute('value')).toBe('00');
 		});
@@ -96,6 +96,49 @@ describe('set up inquiry', () => {
 		it('should render a Time field', () => {
 			expect(pageHtml.querySelector('input#inquiry-time-hour')).not.toBeNull();
 			expect(pageHtml.querySelector('input#inquiry-time-minute')).not.toBeNull();
+		});
+
+		it('should have a back link to the case details page', async () => {
+			nock('http://test/')
+				.persist()
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(`${baseUrl}/${appealId}/inquiry/setup/date`);
+			const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}`
+			);
+		});
+
+		it('should have a back link to the original page if specified', async () => {
+			nock('http://test/')
+				.persist()
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/inquiry/setup/date?backUrl=/my-cases`
+			);
+			const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe('/my-cases');
+		});
+
+		it('should have a back link to the CYA page if editing', async () => {
+			nock('http://test/')
+				.persist()
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const queryString = `?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F7%2Finquiry%2Fsetup%2Fdate`;
+			const response = await request.get(`${baseUrl}/7/inquiry/setup/date${queryString}`);
+			const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/check-details`
+			);
 		});
 	});
 
@@ -276,6 +319,51 @@ describe('set up inquiry', () => {
 				`id="inquiry-estimation-days" name="inquiryEstimationDays" type="text" value="8"`
 			);
 		});
+
+		it('should have a back link to the previous page', async () => {
+			nock('http://test/')
+				.persist()
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(`${baseUrl}/${appealId}/inquiry/setup/estimation`);
+			const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/date`
+			);
+		});
+
+		it('should have a back link to the CYA page if editing', async () => {
+			nock('http://test/')
+				.persist()
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const queryString = `?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fsetup%2Festimation`;
+			const response = await request.get(`${baseUrl}/2/inquiry/setup/estimation${queryString}`);
+			const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/check-details`
+			);
+		});
+
+		it('should have a back link to the previous page if editing began on another page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/inquiry/setup/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fsetup%2Fdate`
+			);
+
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fsetup%2Fdate`
+			);
+		});
 	});
 
 	describe('POST /inquiry/setup/estimation', () => {
@@ -400,6 +488,51 @@ describe('set up inquiry', () => {
 				pageHtml.querySelector('input[name="addressKnown"][value="yes"]')?.getAttribute('checked')
 			).toBeDefined();
 		});
+
+		it('should have a back link to the previous page', async () => {
+			nock('http://test/')
+				.persist()
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(`${baseUrl}/${appealId}/inquiry/setup/address`);
+			const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/estimation`
+			);
+		});
+
+		it('should have a back link to the CYA page if editing', async () => {
+			nock('http://test/')
+				.persist()
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const queryString = `?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fsetup%2Faddress`;
+			const response = await request.get(`${baseUrl}/2/inquiry/setup/address${queryString}`);
+			const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/check-details`
+			);
+		});
+
+		it('should have a back link to the previous page if editing began on another page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/inquiry/setup/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fsetup%2Festimation`
+			);
+
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fsetup%2Festimation`
+			);
+		});
 	});
 
 	describe('POST /inquiry/setup/address', () => {
@@ -490,6 +623,52 @@ describe('set up inquiry', () => {
 
 		it('should render a text input for postcode', () => {
 			expect(pageHtml.querySelector('input[name="postCode"]')).not.toBeNull();
+		});
+
+		it('should have a back link to the previous page', async () => {
+			nock('http://test/')
+				.persist()
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(`${baseUrl}/${appealId}/inquiry/setup/address-details`);
+			const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/address`
+			);
+		});
+
+		it('should have a back link to the CYA page if editing', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const queryString = `?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fsetup%2Faddress-details`;
+			const response = await request.get(
+				`${baseUrl}/2/inquiry/setup/address-details${queryString}`
+			);
+			const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/check-details`
+			);
+		});
+
+		it('should have a back link to the previous page if editing began on another page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/inquiry/setup/address-details?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fsetup%2Faddress`
+			);
+
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fsetup%2Faddress`
+			);
 		});
 	});
 
@@ -607,6 +786,138 @@ describe('set up inquiry', () => {
 			expect(pageHtml.querySelector('input#planning-obligation-due-date-day')).not.toBeNull();
 			expect(pageHtml.querySelector('input#planning-obligation-due-date-month')).not.toBeNull();
 			expect(pageHtml.querySelector('input#planning-obligation-due-date-year')).not.toBeNull();
+		});
+
+		it('should have a back link to the address page when address is known', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.times(5)
+				.reply(200, { ...appealData, appealId });
+
+			// set session data with post request
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/date`).send({
+				'inquiry-date-day': '01',
+				'inquiry-date-month': '02',
+				'inquiry-date-year': '3025',
+				'inquiry-time-hour': '12',
+				'inquiry-time-minute': '00'
+			});
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/estimation`).send({
+				inquiryEstimationYesNo: 'yes',
+				inquiryEstimationDays: 12
+			});
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/address`).send({
+				addressKnown: 'yes'
+			});
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/address-details`).send({
+				addressLine1: 'Flat 9',
+				addressLine2: '123 Gerbil Drive',
+				town: 'Blarberton',
+				county: 'Slabshire',
+				postCode: 'X25 3YZ'
+			});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates`
+			);
+
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/address-details`
+			);
+		});
+
+		it('should have a back link to the address known page if address is not known', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.times(4)
+				.reply(200, { ...appealData, appealId });
+
+			// set session data with post request
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/date`).send({
+				'inquiry-date-day': '01',
+				'inquiry-date-month': '02',
+				'inquiry-date-year': '3025',
+				'inquiry-time-hour': '12',
+				'inquiry-time-minute': '00'
+			});
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/estimation`).send({
+				inquiryEstimationYesNo: 'yes',
+				inquiryEstimationDays: 12
+			});
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/address`).send({
+				addressKnown: 'no'
+			});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates`
+			);
+
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/address`
+			);
+		});
+
+		it('should have a back link to the CYA page if editing', async () => {
+			nock('http://test/')
+				.persist()
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const queryString = `?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fsetup%2Ftimetable-due-dates`;
+			const response = await request.get(
+				`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates${queryString}`
+			);
+			const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/check-details`
+			);
+		});
+
+		it('should have a back link to the address details page if editing began on another page and address is known', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.twice()
+				.reply(200, { ...appealData, appealId });
+
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/address`).send({
+				addressKnown: 'yes'
+			});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fsetup%2Fdate`
+			);
+
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/address-details?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fsetup%2Fdate`
+			);
+		});
+
+		it('should have a back link to the address known page if editing began on another page and address is not known', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.twice()
+				.reply(200, { ...appealData, appealId });
+
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/address`).send({
+				addressKnown: 'no'
+			});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fsetup%2Fdate`
+			);
+
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fsetup%2Fdate`
+			);
 		});
 	});
 

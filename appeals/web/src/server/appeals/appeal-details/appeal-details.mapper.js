@@ -24,6 +24,7 @@ export const pageHeading = 'Case details';
  * @param {import('./representations/representations.service.js').Representation|undefined} [appellantProofOfEvidence]
  * @param {import('./representations/representations.service.js').Representation|undefined} [lpaProofOfEvidence]
  * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} [appellantCase]
+ * @param {string} [backLinkUrl]
  * @returns {Promise<PageContent>}
  */
 export async function appealDetailsPage(
@@ -36,7 +37,8 @@ export async function appealDetailsPage(
 	lpaFinalComments,
 	appellantCase,
 	appellantProofOfEvidence,
-	lpaProofOfEvidence
+	lpaProofOfEvidence,
+	backLinkUrl
 ) {
 	const mappedData = await initialiseAndMapAppealData(
 		appealDetails,
@@ -50,7 +52,6 @@ export async function appealDetailsPage(
 		appellantProofOfEvidence,
 		lpaProofOfEvidence
 	);
-
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
 	/**
@@ -113,6 +114,8 @@ export async function appealDetailsPage(
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Case details',
 		headingClasses: 'govuk-heading-xl govuk-!-margin-bottom-3',
+		backLinkText: 'Back',
+		backLinkUrl: backLinkUrl,
 		pageComponents
 	};
 }
