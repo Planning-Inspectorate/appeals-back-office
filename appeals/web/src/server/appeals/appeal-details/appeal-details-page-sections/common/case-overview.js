@@ -36,7 +36,7 @@ export const getCaseOverview = (mappedData, appealDetails) => ({
 		].filter(isDefined)
 	},
 	wrapperHtml: {
-		opening: '<h1 class="govuk-heading-l">Overview</h1>',
+		opening: '<h2 class="govuk-heading-l">Overview</h2>',
 		closing: ''
 	}
 });

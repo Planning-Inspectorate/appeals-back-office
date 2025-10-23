@@ -16,7 +16,7 @@ export const getSiteDetails = (mappedData, appealDetails) => {
 	/** @type {PageComponent} */
 	const title = {
 		type: 'html',
-		parameters: { html: '<div id="site-visit-section"><h1 class="govuk-heading-l">Site</h1>' }
+		parameters: { html: '<div id="site-visit-section"><h2 class="govuk-heading-l">Site</h2>' }
 	};
 	/** @type {PageComponent} */
 	const cancelSiteVisitLink = {
@@ -48,7 +48,7 @@ export const getSiteDetails = (mappedData, appealDetails) => {
 	const siteVisitRequestDetails = [
 		{
 			type: 'html',
-			parameters: { html: '<h1 class="govuk-heading-m">Site visit requests</h1>' }
+			parameters: { html: '<h2 class="govuk-heading-m">Site visit requests</h2>' }
 		},
 		{
 			type: 'summary-list',
