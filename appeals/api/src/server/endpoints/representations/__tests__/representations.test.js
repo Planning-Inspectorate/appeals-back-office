@@ -1133,7 +1133,7 @@ describe('/appeals/:id/reps', () => {
 			inquiry_expected_days: '',
 			inquiry_time: '',
 			inquiry_witnesses_text: '',
-			is_appellant_proof_of_evidence: false
+			inquiry_subject_line: ''
 		};
 		beforeEach(() => {
 			mockS78Appeal = structuredClone({
@@ -1457,14 +1457,7 @@ describe('/appeals/:id/reps', () => {
 					has_statement: false,
 					final_comments_deadline: '4 December 2024',
 					site_address: expectedSiteAddress,
-					user_type: '',
-					inquiry_address: '',
-					inquiry_date: '',
-					inquiry_detail_warning_text: '',
-					inquiry_expected_days: '',
-					inquiry_time: '',
-					inquiry_witnesses_text: '',
-					is_appellant_proof_of_evidence: false
+					user_type: ''
 				};
 
 				databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
@@ -2959,7 +2952,8 @@ describe('/appeals/:id/reps', () => {
 						inquiry_time: '2:00pm',
 						inquiry_witnesses_text:
 							'Your witnesses should be available for the duration of the inquiry.',
-						is_appellant_proof_of_evidence: false,
+						inquiry_subject_line:
+							'We did not receive any proof of evidence and witnesses from appellant or any other parties',
 						is_inquiry_procedure: true
 					},
 					recipientEmail: appealS78.lpa.email,
@@ -2982,7 +2976,8 @@ describe('/appeals/:id/reps', () => {
 						is_inquiry_procedure: true,
 						inquiry_witnesses_text:
 							'Your witnesses should be available for the duration of the inquiry.',
-						is_appellant_proof_of_evidence: true
+						inquiry_subject_line:
+							'We did not receive any proof of evidence and witnesses from local planning authority or any other parties'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'not-received-proof-of-evidence-and-witnesses'
@@ -3061,7 +3056,8 @@ describe('/appeals/:id/reps', () => {
 						inquiry_time: '2:00pm',
 						inquiry_witnesses_text:
 							'Your witnesses should be available for the duration of the inquiry.',
-						is_appellant_proof_of_evidence: false,
+						inquiry_subject_line:
+							'We did not receive any proof of evidence and witnesses from appellant or any other parties',
 						is_inquiry_procedure: true
 					},
 					recipientEmail: appealS78.lpa.email,
@@ -3084,7 +3080,8 @@ describe('/appeals/:id/reps', () => {
 						is_inquiry_procedure: true,
 						inquiry_witnesses_text:
 							'Your witnesses should be available for the duration of the inquiry.',
-						is_appellant_proof_of_evidence: true
+						inquiry_subject_line:
+							'We did not receive any proof of evidence and witnesses from local planning authority or any other parties'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'not-received-proof-of-evidence-and-witnesses'
