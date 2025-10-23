@@ -45,6 +45,8 @@ describe('Progress S78 to decision', () => {
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
 
+			caseDetailsPage.verifyAppealType('Planning appeal');
+
 			happyPathHelper.reviewAppellantCase(caseObj);
 			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 
@@ -79,6 +81,50 @@ describe('Progress S78 to decision', () => {
 			cy.reload();
 			caseDetailsPage.basePageElements.bannerLink().click();
 			caseDetailsPage.clickButtonByText('Share final comments');
+			caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
+
+			happyPathHelper.setupSiteVisitFromBanner(caseObj);
+			cy.simulateSiteVisit(caseObj).then((caseObj) => {
+				cy.reload();
+			});
+			caseDetailsPage.clickIssueDecision(caseObj);
+			caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Allowed'));
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.uploadSampleFile(caseDetailsPage.sampleFiles.pdf);
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.selectRadioButtonByValue('No');
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.selectRadioButtonByValue('No');
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.clickButtonByText('Issue Decision');
+			caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
+			caseDetailsPage.checkStatusOfCase('Complete', 0);
+			caseHistoryPage.verifyCaseHistory('completedState', caseObj.reference);
+			caseDetailsPage.checkDecisionOutcome('Allowed');
+			caseDetailsPage.viewDecisionLetter('View decision');
+		});
+	});
+
+	it(`Completes a CAS Planning Appeal to decision`, { tags: tag.smoke }, () => {
+		cy.createCase({ caseType: 'ZP' }).then((caseObj) => {
+			appeal = caseObj;
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
+			caseDetailsPage.checkStatusOfCase('Validation', 0);
+
+			caseDetailsPage.verifyAppealType('CAS planning');
+
+			happyPathHelper.reviewAppellantCase(caseObj);
+			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
+
+			happyPathHelper.startCase(caseObj);
+			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+
+			// Display all expected case detail sections for written cases
+			caseDetailsPage.verifyCaseDetailsSection(expectedSections);
+
+			happyPathHelper.reviewLpaq(caseObj);
+
 			caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
 
 			happyPathHelper.setupSiteVisitFromBanner(caseObj);
