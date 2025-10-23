@@ -756,7 +756,7 @@ it('should show business day validation errors for all timetable fields', () => 
 	});
 });
 
-it.only('should progress to evidence stage with no statements or IP comments', () => {
+it('should progress to evidence stage with no statements or IP comments', () => {
 	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseObj);

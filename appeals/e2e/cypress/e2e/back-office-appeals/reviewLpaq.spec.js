@@ -94,40 +94,60 @@ describe('Review LPAQ', () => {
 			listCasesPage.verifyTableCellText(testData);
 		});
 	});
-	it('Validate fields and answers in LPAQfor householder appeal', { tags: tag.smoke }, () => {
+	it('HAS - LPAQ', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			happyPathHelper.startCase(caseObj);
+			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
 			caseDetailsPage.clickReviewLpaq();
+
 			// Section 1 – Constraints
-			lpaqPage.assertCorrectAppealType(casedata.isCorrectAppealType ? 'Yes' : 'No');
-			lpaqPage.assertAffectsListedBuilding(casedata.affectedListedBuildingNumbers[0]);
-			lpaqPage.assertConservationAreaMapLabel('No documents');
-			lpaqPage.assertGreenBelt(casedata.isGreenBelt ? 'Yes' : 'No');
+			lpaqPage.assertFieldLabelAndValue(
+				'Is householder the correct type of appeal?',
+				casedata.isCorrectAppealType ? 'Yes' : 'No'
+			);
+			lpaqPage.assertFieldLabelAndValue(
+				'Does the development affect the setting of listed buildings?',
+				casedata.affectedListedBuildingNumbers[0]
+			);
+			lpaqPage.assertFieldLabelAndValue('Conservation area map and guidance', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Green belt', casedata.isGreenBelt ? 'Yes' : 'No');
 
 			// Section 2 – Notifications
-			lpaqPage.assertNotifiedWho('No documents');
-			lpaqPage.assertNotifiedHow(casedata.notificationMethod[0]);
-			lpaqPage.assertSiteNoticeLabel('No documents');
-			lpaqPage.assertEmailNotificationLabel('No documents');
-			lpaqPage.assertPressAdvertLabel('No documents');
-			lpaqPage.assertNotificationLetterLabel('No documents');
+			lpaqPage.assertFieldLabelAndValue(
+				'Who did you notify about this application?',
+				'No documents'
+			);
+			lpaqPage.assertFieldLabelAndValue(
+				'How did you notify relevant parties about this application?',
+				casedata.notificationMethod[0]
+			);
+			lpaqPage.assertFieldLabelAndValue('Site notice', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Letter or email notification', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Press advertisement', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Appeal notification letter', 'No documents');
 
-			// // Section 3 – Representations
-			lpaqPage.assertRepresentationsLabel('No documents');
+			// Section 3 – Representations
+			lpaqPage.assertFieldLabelAndValue(
+				'Representations from members of the public or other parties',
+				'No documents'
+			);
 
-			// // Section 4 – Officer Reports & Plans
-			lpaqPage.assertPlanningOfficerReportLabel('No documents');
-			lpaqPage.assertPlansDrawingsLabel('No documents');
-			lpaqPage.assertStatutoryPoliciesLabel('No documents');
-			lpaqPage.assertSupplementaryDocsLabel('No documents');
-			lpaqPage.assertEmergingPlanLabel('No documents');
+			// Section 4 – Officer Reports & Plans
+			lpaqPage.assertFieldLabelAndValue('Planning officer’s report', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Plans, drawings and list of plans', 'No documents');
+			lpaqPage.assertFieldLabelAndValue(
+				'Relevant policies from statutory development plan',
+				'No documents'
+			);
+			lpaqPage.assertFieldLabelAndValue('Supplementary planning documents', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Emerging plan relevant to appeal', 'No documents');
 
-			// // Section 5 – Site Access
-			lpaqPage.assertInspectorAccess(casedata.siteAccessDetails[0]);
+			// Section 5 – Site Access
+			lpaqPage.assertFieldLabelAndValue(
+				'Will the inspector need access to the appellant’s land or property?',
+				casedata.siteAccessDetails[0]
+			);
 			lpaqPage.assertNeighbourSiteAddress({
 				line1: address.neighbouringSiteAddressLine1,
 				line2: address.neighbouringSiteAddressLine2,
@@ -135,77 +155,104 @@ describe('Review LPAQ', () => {
 				county: address.neighbouringSiteAddressCounty,
 				postcode: address.neighbouringSiteAddressPostcode
 			});
-			lpaqPage.assertSafetyRisks(casedata.siteSafetyDetails[0]); // Example from API
+			lpaqPage.assertFieldLabelAndValue(
+				'Are there any potential safety risks?',
+				casedata.siteSafetyDetails[0]
+			);
 
 			// Section 6 – Appeal Process
-			lpaqPage.assertOngoingAppeals(casedata.nearbyCaseReferences);
+			lpaqPage.assertFieldLabelAndValue(
+				'Are there any other ongoing appeals next to, or close to the site?',
+				casedata.nearbyCaseReferences
+			);
 
 			// Final section
-			lpaqPage.assertAdditionalDocumentsLabel('None');
+			lpaqPage.assertFieldLabelAndValue('Additional documents', 'None');
 		});
 	});
 
-	it('Validate fields and answers in LPAQ for s78 appeal', { tags: tag.smoke }, () => {
+	it('S78 Full Planning - LPAQ Review', { tags: tag.smoke }, () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			cy.addLpaqSubmissionToCase(caseObj);
 			appeal = caseObj;
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			happyPathHelper.startS78Case(caseObj, 'written');
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
 			caseDetailsPage.clickReviewLpaq();
 			const address = casedata.neighbouringSiteAddresses[0];
 
 			// Section 1 – Constraints
-			lpaqPage.assertPlanningAppealType(casedata.isCorrectAppealType ? 'Yes' : 'No');
-			lpaqPage.assertAffectsListedBuilding(casedata.affectedListedBuildingNumbers[0]);
-			lpaqPage.assertScheduledMonument(''); //awaiting bug fix
-			lpaqPage.assertConservationAreaMapLabel('No documents');
-			lpaqPage.assertProtectedSpecies(''); //awaiting bug fix
-			lpaqPage.assertGreenBelt(casedata.isGreenBelt ? 'Yes' : 'No');
-			// lpaqPage.assertAONB(); //awaiting bug fix
+			lpaqPage.assertFieldLabelAndValue(
+				'Is planning appeal the correct type of appeal?',
+				casedata.isCorrectAppealType ? 'Yes' : 'No'
+			);
+			lpaqPage.assertFieldLabelAndValue(
+				'Does the development affect the setting of listed buildings?',
+				casedata.affectedListedBuildingNumbers[0]
+			);
+			lpaqPage.assertFieldLabelAndValue('Would the development affect a scheduled monument?', '');
+			lpaqPage.assertFieldLabelAndValue('Conservation area map and guidance', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Would the development affect a protected species?', '');
+			lpaqPage.assertFieldLabelAndValue('Green belt', casedata.isGreenBelt ? 'Yes' : 'No');
 			lpaqPage.assertDesignatedSites(casedata.designatedSitesNames);
-			lpaqPage.assertTreePreservationOrder('No documents');
-			// lpaqPage.assertGypsyTraveller(''); //awaiting bug fix
-			lpaqPage.assertDefinitiveMapLabel('No documents');
+			lpaqPage.assertFieldLabelAndValue('Tree Preservation Order', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Definitive map and statement extract', 'No documents');
 
 			// Section 2 – Environmental Impact Assessment
-			lpaqPage.assertDevelopmentCategory('Other');
-			// lpaqPage.assertThresholdMet('No');//awaiting bug fix
-			// lpaqPage.assertEIAStatementRequired('No');//awaiting bug fix
-			lpaqPage.assertEnvironmentalStatementLabel('No documents');
-			lpaqPage.assertScreeningOpinionDocsLabel('No documents');
-			lpaqPage.assertScreeningDirectionDocsLabel('No documents');
-			lpaqPage.assertScopingOpinionDocsLabel('No documents');
-			// lpaqPage.assertEIADevelopmentDescription('No');//awaiting bug fix
-			// lpaqPage.assertSensitiveArea(casedata.assertSensitiveArea ? 'Yes' : 'No');//awaiting bug fix
+			lpaqPage.assertFieldLabelAndValue('What is the development category?', 'Other');
+			lpaqPage.assertFieldLabelAndValue(
+				'Environmental statement and supporting information',
+				'No documents'
+			);
+			lpaqPage.assertFieldLabelAndValue('Screening opinion documents', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Screening direction documents', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Scoping opinion documents', 'No documents');
 
 			// Section 3 – Notifying relevant parties
-			lpaqPage.assertNotifiedWho('No documents');
-			lpaqPage.assertNotifiedHow(casedata.notificationMethod[0]);
-			lpaqPage.assertSiteNoticeLabel('No documents');
-			lpaqPage.assertEmailNotificationLabel('No documents');
-			lpaqPage.assertPressAdvertLabel('No documents');
-			lpaqPage.assertNotificationLetterLabel('No documents');
+			lpaqPage.assertFieldLabelAndValue(
+				'Who did you notify about this application?',
+				'No documents'
+			);
+			lpaqPage.assertFieldLabelAndValue(
+				'How did you notify relevant parties about this application?',
+				casedata.notificationMethod[0]
+			);
+			lpaqPage.assertFieldLabelAndValue('Site notice', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Letter or email notification', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Press advertisement', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Appeal notification letter', 'No documents');
 
 			// Section 4 – Representations
-			lpaqPage.assertRepresentationsLabel('No documents');
-			// lpaqPage.assertConsultationResponsesLabel('No documents');//awaiting bug fix
-			lpaqPage.assertStatutoryPoliciesLabel('No');
+			lpaqPage.assertFieldLabelAndValue(
+				'Representations from members of the public or other parties',
+				'No documents'
+			);
+			lpaqPage.assertFieldLabelAndValue('Relevant policies from statutory development plan', 'No');
+			lpaqPage.assertFieldLabelAndValue(
+				'Consultation responses and standing advice',
+				'No documents'
+			);
 
 			// Section 5 – Officer Reports and Plans
-			lpaqPage.assertPlanningOfficerReportLabel('No documents');
-			lpaqPage.assertStatutoryPoliciesLabel('No documents');
-			lpaqPage.assertSupplementaryDocsLabel('No documents');
-			lpaqPage.assertEmergingPlanLabel('No documents');
-			// lpaqPage.assertOtherRelevantPoliciesLabel('No documents');//awaiting bug fix
-			// lpaqPage.assertCommunityInfrastructureLevy('No');//awaiting bug fix
-			// lpaqPage.assertCILAdopted('Not applicable');
-			lpaqPage.assertCILAdoptedDate('Not applicable');
-			lpaqPage.assertCILExpectedDate('Not applicable');
+			lpaqPage.assertFieldLabelAndValue('Planning officer’s report', 'No documents');
+			lpaqPage.assertFieldLabelAndValue(
+				'Relevant policies from statutory development plan',
+				'No documents'
+			);
+			lpaqPage.assertFieldLabelAndValue('Supplementary planning documents', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Emerging plan relevant to appeal', 'No documents');
+			lpaqPage.assertFieldLabelAndValue(
+				'When was the community infrastructure levy formally adopted?',
+				'Not applicable'
+			);
+			lpaqPage.assertFieldLabelAndValue(
+				'When do you expect to formally adopt the community infrastructure levy?',
+				'Not applicable'
+			);
 
 			// Section 6 – Site Access
-			lpaqPage.assertInspectorAccess(casedata.siteAccessDetails[0]);
-			// lpaqPage.assertNeighbourLandAccess('No');//awaiting bug fix
+			lpaqPage.assertFieldLabelAndValue(
+				'Will the inspector need access to the appellant’s land or property?',
+				casedata.siteAccessDetails[0]
+			);
 			lpaqPage.assertNeighbourSiteAddress({
 				line1: address.neighbouringSiteAddressLine1,
 				line2: address.neighbouringSiteAddressLine2,
@@ -213,103 +260,431 @@ describe('Review LPAQ', () => {
 				county: address.neighbouringSiteAddressCounty,
 				postcode: address.neighbouringSiteAddressPostcode
 			});
-			lpaqPage.assertSafetyRisks(casedata.siteSafetyDetails[0]);
+			lpaqPage.assertFieldLabelAndValue(
+				'Are there any potential safety risks?',
+				casedata.siteSafetyDetails[0]
+			);
 
 			// Section 7 – Appeal Process
-			// lpaqPage.assertLpaProcedurePreference('Not applicable');//awaiting bug fix
-			// lpaqPage.assertLpaProcedureReason('Not applicable');//awaiting bug fix
-			// lpaqPage.assertInquiryDuration('Not applicable');//awaiting bug fix
-			lpaqPage.assertOngoingAppeals(casedata.nearbyCaseReferences);
+			lpaqPage.assertFieldLabelAndValue(
+				'Are there any other ongoing appeals next to, or close to the site?',
+				casedata.nearbyCaseReferences
+			);
 
 			// Final section
-			lpaqPage.assertAdditionalDocumentsLabel('None');
+			lpaqPage.assertFieldLabelAndValue('Additional documents', 'None');
 		});
 	});
 
-	it(
-		'Validate attributes and answers in LPAQ for s20 listed building appeal',
-		{ tags: tag.smoke },
-		() => {
-			cy.createCase({ caseType: 'Y' }).then((caseObj) => {
-				appeal = caseObj;
-				cy.addLpaqSubmissionToCase(caseObj);
-				happyPathHelper.assignCaseOfficer(caseObj);
-				happyPathHelper.reviewAppellantCase(caseObj);
-				happyPathHelper.startCase(caseObj);
-				caseDetailsPage.clickReviewLpaq();
-				const address = casedata.neighbouringSiteAddresses[0];
+	it('S20 Listed Building - LPAQ Review', { tags: tag.smoke }, () => {
+		cy.createCase({ caseType: 'Y' }).then((caseObj) => {
+			appeal = caseObj;
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
+			caseDetailsPage.clickReviewLpaq();
+			const address = casedata.neighbouringSiteAddresses[0];
 
-				// Section 1 – Constraints
-				lpaqPage.assertListedBuildingAppealType(casedata.isCorrectAppealType ? 'Yes' : 'No');
-				lpaqPage.assertAffectsListedBuilding(casedata.affectedListedBuildingNumbers[0]);
-				lpaqPage.assertScheduledMonument(''); //awaiting bug fix
-				lpaqPage.assertGrantOrLoanLabel('');
-				lpaqPage.assertConservationAreaMapLabel('No documents');
-				lpaqPage.assertProtectedSpecies(''); //awaiting bug fix
-				lpaqPage.assertGreenBelt(casedata.isGreenBelt ? 'Yes' : 'No');
-				// lpaqPage.assertAONB(); //awaiting bug fix
-				lpaqPage.assertDesignatedSites(casedata.designatedSitesNames);
-				lpaqPage.assertTreePreservationOrder('No documents');
-				// lpaqPage.assertGypsyTraveller(''); //awaiting bug fix
-				lpaqPage.assertDefinitiveMapLabel('No documents');
-				lpaqPage.assertHistoricEnglandLabel('No documents');
+			// Section 1 – Constraints
+			lpaqPage.assertFieldLabelAndValue(
+				'Is planning listed building and conservation area appeal the correct type of appeal?',
+				casedata.isCorrectAppealType ? 'Yes' : 'No'
+			);
+			lpaqPage.assertFieldLabelAndValue(
+				'Does the development affect the setting of listed buildings?',
+				casedata.affectedListedBuildingNumbers[0]
+			);
+			lpaqPage.assertFieldLabelAndValue('Would the development affect a scheduled monument?', '');
+			lpaqPage.assertFieldLabelAndValue(
+				'Was a grant or loan made to preserve the listed building at the appeal site?',
+				''
+			);
+			lpaqPage.assertFieldLabelAndValue('Conservation area map and guidance', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Would the development affect a protected species?', '');
+			lpaqPage.assertFieldLabelAndValue('Green belt', casedata.isGreenBelt ? 'Yes' : 'No');
+			lpaqPage.assertDesignatedSites(casedata.designatedSitesNames);
+			lpaqPage.assertFieldLabelAndValue('Tree Preservation Order', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Definitive map and statement extract', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Historic England consultation', 'No documents');
 
-				// Section 2 – Environmental Impact Assessment
-				lpaqPage.assertDevelopmentCategory('Other');
-				// lpaqPage.assertThresholdMet('No');//awaiting bug fix
-				// lpaqPage.assertEIAStatementRequired('No');//awaiting bug fix
-				lpaqPage.assertEnvironmentalStatementLabel('No documents');
-				lpaqPage.assertScreeningOpinionDocsLabel('No documents');
-				lpaqPage.assertScreeningDirectionDocsLabel('No documents');
-				lpaqPage.assertScopingOpinionDocsLabel('No documents');
-				// lpaqPage.assertEIADevelopmentDescription('No');//awaiting bug fix
-				// lpaqPage.assertSensitiveArea(casedata.assertSensitiveArea ? 'Yes' : 'No');//awaiting bug fix
+			// Section 2 – Environmental Impact Assessment
+			lpaqPage.assertFieldLabelAndValue('What is the development category?', 'Other');
+			lpaqPage.assertFieldLabelAndValue(
+				'Environmental statement and supporting information',
+				'No documents'
+			);
+			lpaqPage.assertFieldLabelAndValue('Screening opinion documents', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Screening direction documents', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Scoping opinion documents', 'No documents');
 
-				// Section 3 – Notifying relevant parties
-				lpaqPage.assertNotifiedWho('No documents');
-				lpaqPage.assertNotifiedHow(casedata.notificationMethod[0]);
-				lpaqPage.assertSiteNoticeLabel('No documents');
-				lpaqPage.assertEmailNotificationLabel('No documents');
-				lpaqPage.assertPressAdvertLabel('No documents');
-				lpaqPage.assertNotificationLetterLabel('No documents');
+			// Section 3 – Notifying relevant parties
+			lpaqPage.assertFieldLabelAndValue(
+				'Who did you notify about this application?',
+				'No documents'
+			);
+			lpaqPage.assertFieldLabelAndValue(
+				'How did you notify relevant parties about this application?',
+				casedata.notificationMethod[0]
+			);
+			lpaqPage.assertFieldLabelAndValue('Site notice', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Letter or email notification', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Press advertisement', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Appeal notification letter', 'No documents');
 
-				// Section 4 – Representations
-				lpaqPage.assertRepresentationsLabel('No documents');
-				// lpaqPage.assertConsultationResponsesLabel('No documents');//awaiting bug fix
-				lpaqPage.assertStatutoryPoliciesLabel('No');
+			// Section 4 – Representations
+			lpaqPage.assertFieldLabelAndValue(
+				'Representations from members of the public or other parties',
+				'No documents'
+			);
+			lpaqPage.assertFieldLabelAndValue('Relevant policies from statutory development plan', 'No');
+			lpaqPage.assertFieldLabelAndValue(
+				'Consultation responses and standing advice',
+				'No documents'
+			);
 
-				// Section 5 – Officer Reports and Plans
-				lpaqPage.assertPlanningOfficerReportLabel('No documents');
-				lpaqPage.assertStatutoryPoliciesLabel('No documents');
-				lpaqPage.assertSupplementaryDocsLabel('No documents');
-				lpaqPage.assertEmergingPlanLabel('No documents');
-				// lpaqPage.assertOtherRelevantPoliciesLabel('No documents');//awaiting bug fix
-				// lpaqPage.assertCommunityInfrastructureLevy('No');//awaiting bug fix
-				// lpaqPage.assertCILAdopted('Not applicable');
-				lpaqPage.assertCILAdoptedDate('Not applicable');
-				lpaqPage.assertCILExpectedDate('Not applicable');
+			// Section 5 – Officer Reports and Plans
+			lpaqPage.assertFieldLabelAndValue('Planning officer’s report', 'No documents');
+			lpaqPage.assertFieldLabelAndValue(
+				'Relevant policies from statutory development plan',
+				'No documents'
+			);
+			lpaqPage.assertFieldLabelAndValue('Supplementary planning documents', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Emerging plan relevant to appeal', 'No documents');
+			lpaqPage.assertFieldLabelAndValue(
+				'When was the community infrastructure levy formally adopted?',
+				'Not applicable'
+			);
+			lpaqPage.assertFieldLabelAndValue(
+				'When do you expect to formally adopt the community infrastructure levy?',
+				'Not applicable'
+			);
 
-				// Section 6 – Site Access
-				lpaqPage.assertInspectorAccess(casedata.siteAccessDetails[0]);
-				// lpaqPage.assertNeighbourLandAccess('No');//awaiting bug fix
-				lpaqPage.assertNeighbourSiteAddress({
-					line1: address.neighbouringSiteAddressLine1,
-					line2: address.neighbouringSiteAddressLine2,
-					town: address.neighbouringSiteAddressTown,
-					county: address.neighbouringSiteAddressCounty,
-					postcode: address.neighbouringSiteAddressPostcode
-				});
-				lpaqPage.assertSafetyRisks(casedata.siteSafetyDetails[0]);
-
-				// Section 7 – Appeal Process
-				// lpaqPage.assertLpaProcedurePreference('Not applicable');//awaiting bug fix
-				// lpaqPage.assertLpaProcedureReason('Not applicable');//awaiting bug fix
-				// lpaqPage.assertInquiryDuration('Not applicable');//awaiting bug fix
-				lpaqPage.assertOngoingAppeals(casedata.nearbyCaseReferences);
-
-				// Final section
-				lpaqPage.assertAdditionalDocumentsLabel('None');
+			// Section 6 – Site Access
+			lpaqPage.assertFieldLabelAndValue(
+				'Will the inspector need access to the appellant’s land or property?',
+				casedata.siteAccessDetails[0]
+			);
+			lpaqPage.assertNeighbourSiteAddress({
+				line1: address.neighbouringSiteAddressLine1,
+				line2: address.neighbouringSiteAddressLine2,
+				town: address.neighbouringSiteAddressTown,
+				county: address.neighbouringSiteAddressCounty,
+				postcode: address.neighbouringSiteAddressPostcode
 			});
-		}
-	);
+			lpaqPage.assertFieldLabelAndValue(
+				'Are there any potential safety risks?',
+				casedata.siteSafetyDetails[0]
+			);
+
+			// Section 7 – Appeal Process
+			lpaqPage.assertFieldLabelAndValue(
+				'Are there any other ongoing appeals next to, or close to the site?',
+				casedata.nearbyCaseReferences
+			);
+
+			// Final section
+			lpaqPage.assertFieldLabelAndValue('Additional documents', 'None');
+		});
+	});
+
+	it('CAS Adverts - LPAQ Review', () => {
+		cy.createCase({ ...appealsApiRequests.casAdvertsSubmission.casedata }).then((caseObj) => {
+			appeal = caseObj;
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
+			caseDetailsPage.clickReviewLpaq();
+			const address = casedata.neighbouringSiteAddresses[0];
+
+			// Section 1 – Constraints
+			lpaqPage.assertFieldLabelAndValue(
+				'Is CAS advert the correct type of appeal?',
+				casedata.isCorrectAppealType ? 'Yes' : 'No'
+			);
+			lpaqPage.assertFieldLabelAndValue(
+				'Does the development affect the setting of listed buildings?',
+				casedata.affectedListedBuildingNumbers[0]
+			);
+			lpaqPage.assertFieldLabelAndValue('Would the development affect a scheduled monument?', '');
+			lpaqPage.assertFieldLabelAndValue('Conservation area map and guidance', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Would the development affect a protected species?', '');
+			lpaqPage.assertFieldLabelAndValue('Green belt', casedata.isGreenBelt ? 'Yes' : 'No');
+			lpaqPage.assertDesignatedSites(casedata.designatedSitesNames);
+			lpaqPage.assertFieldLabelAndValue(
+				'Is the site in an area of special control of advertisements?',
+				''
+			);
+
+			// Not Present
+			lpaqPage.assertFieldNotPresent('Does the development change a listed building?', '');
+			lpaqPage.assertFieldNotPresent('Tree Preservation Order', '');
+			lpaqPage.assertFieldNotPresent('Definitive map and statement extract', '');
+			lpaqPage.assertFieldNotPresent(
+				'Does the development relate to anyone claiming to be a Gypsy or Traveller?',
+				''
+			);
+
+			// Section 2 – Notifying relevant parties
+			lpaqPage.assertFieldLabelAndValue(
+				'Who did you notify about this application?',
+				'No documents'
+			);
+			lpaqPage.assertFieldLabelAndValue(
+				'How did you notify relevant parties about this application?',
+				casedata.notificationMethod[0]
+			);
+			lpaqPage.assertFieldLabelAndValue('Site notice', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Letter or email notification', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Press advertisement', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Appeal notification letter', 'No documents');
+
+			// Section 3 – Representations
+			lpaqPage.assertFieldLabelAndValue(
+				'Representations from members of the public or other parties',
+				'No documents'
+			);
+			lpaqPage.assertFieldLabelAndValue('Relevant policies from statutory development plan', 'No');
+
+			// Not Present
+			lpaqPage.assertFieldNotPresent('Consultation responses and standing advice', 'No documents');
+
+			// Section 4 – Officer Reports and Plans
+			lpaqPage.assertFieldLabelAndValue('Planning officer’s report', 'No documents');
+			lpaqPage.assertFieldLabelAndValue(
+				'Did you refuse the application because of highway or traffic public safety?',
+				''
+			);
+			lpaqPage.assertFieldLabelAndValue(
+				'Did the appellant submit complete and accurate photographs and plans?',
+				''
+			);
+			lpaqPage.assertFieldLabelAndValue(
+				'Relevant policies from statutory development plan',
+				'No documents'
+			);
+			lpaqPage.assertFieldLabelAndValue('Supplementary planning documents', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Emerging plan relevant to appeal', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Other relevant policies', 'No documents');
+
+			lpaqPage.assertFieldNotPresent(
+				'When was the community infrastructure levy formally adopted?'
+			);
+			lpaqPage.assertFieldNotPresent(
+				'When do you expect to formally adopt the community infrastructure levy?'
+			);
+
+			// Section 5 – Site Access
+			lpaqPage.assertFieldLabelAndValue(
+				'Will the inspector need access to the appellant’s land or property?',
+				casedata.siteAccessDetails[0]
+			);
+			lpaqPage.assertNeighbourSiteAddress({
+				line1: address.neighbouringSiteAddressLine1,
+				line2: address.neighbouringSiteAddressLine2,
+				town: address.neighbouringSiteAddressTown,
+				county: address.neighbouringSiteAddressCounty,
+				postcode: address.neighbouringSiteAddressPostcode
+			});
+			lpaqPage.assertFieldLabelAndValue(
+				'Are there any potential safety risks?',
+				casedata.siteSafetyDetails[0]
+			);
+
+			// Section 7 – Appeal Process
+			lpaqPage.assertFieldLabelAndValue(
+				'Are there any other ongoing appeals next to, or close to the site?',
+				casedata.nearbyCaseReferences
+			);
+
+			// Final section
+			lpaqPage.assertFieldLabelAndValue('Additional documents', 'None');
+		});
+	});
+
+	it('CAS Planning - LPAQ review', { tags: tag.smoke }, () => {
+		cy.createCase({ caseType: 'ZP' }).then((caseObj) => {
+			appeal = caseObj;
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
+			caseDetailsPage.clickReviewLpaq();
+
+			// Section 1 – Constraints
+			lpaqPage.assertFieldLabelAndValue(
+				'Is CAS planning the correct type of appeal?',
+				casedata.isCorrectAppealType ? 'Yes' : 'No'
+			);
+			lpaqPage.assertFieldLabelAndValue(
+				'Does the development affect the setting of listed buildings?',
+				casedata.affectedListedBuildingNumbers[0]
+			);
+			lpaqPage.assertFieldLabelAndValue('Conservation area map and guidance', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Green belt', casedata.isGreenBelt ? 'Yes' : 'No');
+
+			// Section 2 – Notifications
+			lpaqPage.assertFieldLabelAndValue(
+				'Who did you notify about this application?',
+				'No documents'
+			);
+			lpaqPage.assertFieldLabelAndValue(
+				'How did you notify relevant parties about this application?',
+				casedata.notificationMethod[0]
+			);
+			lpaqPage.assertFieldLabelAndValue('Site notice', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Letter or email notification', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Press advertisement', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Appeal notification letter', 'No documents');
+
+			// Section 3 – Representations
+			lpaqPage.assertFieldLabelAndValue(
+				'Representations from members of the public or other parties',
+				'No documents'
+			);
+
+			// Section 4 – Officer Reports & Plans
+			lpaqPage.assertFieldLabelAndValue('Planning officer’s report', 'No documents');
+			lpaqPage.assertFieldNotPresent('Plans, drawings and list of plans', '');
+			lpaqPage.assertFieldLabelAndValue(
+				'Relevant policies from statutory development plan',
+				'No documents'
+			);
+			lpaqPage.assertFieldLabelAndValue('Supplementary planning documents', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Emerging plan relevant to appeal', 'No documents');
+
+			// Section 5 – Site Access
+			lpaqPage.assertFieldLabelAndValue(
+				'Will the inspector need access to the appellant’s land or property?',
+				casedata.siteAccessDetails[0]
+			);
+			lpaqPage.assertNeighbourSiteAddress({
+				line1: address.neighbouringSiteAddressLine1,
+				line2: address.neighbouringSiteAddressLine2,
+				town: address.neighbouringSiteAddressTown,
+				county: address.neighbouringSiteAddressCounty,
+				postcode: address.neighbouringSiteAddressPostcode
+			});
+			lpaqPage.assertFieldLabelAndValue(
+				'Are there any potential safety risks?',
+				casedata.siteSafetyDetails[0]
+			);
+
+			// Section 6 – Appeal Process
+			lpaqPage.assertFieldLabelAndValue(
+				'Are there any other ongoing appeals next to, or close to the site?',
+				casedata.nearbyCaseReferences
+			);
+
+			// Final section
+			lpaqPage.assertFieldLabelAndValue('Additional documents', 'None');
+		});
+	});
+
+	it('Full Adverts - LPAQ Review', () => {
+		cy.createCase({ ...appealsApiRequests.advertsSubmission.casedata }).then((caseObj) => {
+			appeal = caseObj;
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
+			caseDetailsPage.clickReviewLpaq();
+			const address = casedata.neighbouringSiteAddresses[0];
+
+			// Section 1 – Constraints
+			lpaqPage.assertFieldLabelAndValue(
+				'Is advertisement the correct type of appeal?',
+				casedata.isCorrectAppealType ? 'Yes' : 'No'
+			);
+			lpaqPage.assertFieldLabelAndValue(
+				'Does the development affect the setting of listed buildings?',
+				casedata.affectedListedBuildingNumbers[0]
+			);
+			lpaqPage.assertFieldLabelAndValue('Would the development affect a scheduled monument?', '');
+			lpaqPage.assertFieldLabelAndValue('Conservation area map and guidance', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Would the development affect a protected species?', '');
+			lpaqPage.assertFieldLabelAndValue('Green belt', casedata.isGreenBelt ? 'Yes' : 'No');
+			lpaqPage.assertDesignatedSites(casedata.designatedSitesNames);
+			lpaqPage.assertFieldLabelAndValue(
+				'Is the site in an area of special control of advertisements?',
+				''
+			);
+
+			// Not Present
+			lpaqPage.assertFieldNotPresent('Tree Preservation Order', '');
+			lpaqPage.assertFieldNotPresent('Definitive map and statement extract', '');
+			lpaqPage.assertFieldNotPresent(
+				'Does the development relate to anyone claiming to be a Gypsy or Traveller?',
+				''
+			);
+
+			// Section 2 – Notifying relevant parties
+			lpaqPage.assertFieldLabelAndValue(
+				'Who did you notify about this application?',
+				'No documents'
+			);
+			lpaqPage.assertFieldLabelAndValue(
+				'How did you notify relevant parties about this application?',
+				casedata.notificationMethod[0]
+			);
+			lpaqPage.assertFieldLabelAndValue('Site notice', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Letter or email notification', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Press advertisement', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Appeal notification letter', 'No documents');
+
+			// Section 3 – Representations
+			lpaqPage.assertFieldLabelAndValue(
+				'Representations from members of the public or other parties',
+				'No documents'
+			);
+			lpaqPage.assertFieldLabelAndValue('Relevant policies from statutory development plan', 'No');
+
+			// Not Present
+			lpaqPage.assertFieldNotPresent('Consultation responses and standing advice', 'No documents');
+
+			// Section 4 – Officer Reports and Plans
+			lpaqPage.assertFieldLabelAndValue('Planning officer’s report', 'No documents');
+			lpaqPage.assertFieldLabelAndValue(
+				'Did you refuse the application because of highway or traffic public safety?',
+				''
+			);
+			lpaqPage.assertFieldLabelAndValue(
+				'Did the appellant submit complete and accurate photographs and plans?',
+				''
+			);
+			lpaqPage.assertFieldLabelAndValue(
+				'Relevant policies from statutory development plan',
+				'No documents'
+			);
+			lpaqPage.assertFieldLabelAndValue('Supplementary planning documents', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Emerging plan relevant to appeal', 'No documents');
+			lpaqPage.assertFieldLabelAndValue('Other relevant policies', 'No documents');
+
+			lpaqPage.assertFieldNotPresent(
+				'When was the community infrastructure levy formally adopted?'
+			);
+			lpaqPage.assertFieldNotPresent(
+				'When do you expect to formally adopt the community infrastructure levy?'
+			);
+
+			// Section 5 – Site Access
+			lpaqPage.assertFieldLabelAndValue(
+				'Will the inspector need access to the appellant’s land or property?',
+				casedata.siteAccessDetails[0]
+			);
+			lpaqPage.assertNeighbourSiteAddress({
+				line1: address.neighbouringSiteAddressLine1,
+				line2: address.neighbouringSiteAddressLine2,
+				town: address.neighbouringSiteAddressTown,
+				county: address.neighbouringSiteAddressCounty,
+				postcode: address.neighbouringSiteAddressPostcode
+			});
+			lpaqPage.assertFieldLabelAndValue(
+				'Are there any potential safety risks?',
+				casedata.siteSafetyDetails[0]
+			);
+
+			// Section 7 – Appeal Process
+			lpaqPage.assertFieldLabelAndValue(
+				'Are there any other ongoing appeals next to, or close to the site?',
+				casedata.nearbyCaseReferences
+			);
+
+			// Final section
+			lpaqPage.assertFieldLabelAndValue('Additional documents', 'None');
+		});
+	});
 });
