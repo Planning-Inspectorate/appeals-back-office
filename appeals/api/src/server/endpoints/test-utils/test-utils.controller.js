@@ -1,3 +1,4 @@
+import { startAppeal } from '#endpoints/appeal-timetables/appeal-timetables.controller.js';
 import { updateCompletedEvents } from '#endpoints/appeals/appeals.service.js';
 import { getAppealNotifications } from '#repositories/appeal-notification.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
@@ -169,4 +170,30 @@ export const deleteAppeals = async (req, res) => {
 	const { appealIds } = req.body;
 	await appealRepository.deleteAppealsByIds(appealIds);
 	return res.send(true);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
+export const simulateStartAppeal = async (req, res) => {
+	const { appealReference } = req.params;
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: { reference: appealReference },
+		include: { procedureType: true, appealType: true, appealStatus: true }
+	});
+
+	if (!appeal) return res.status(400).send(false);
+
+	req.body = {
+		startDate: new Date().toISOString(),
+		procedureType: appeal.procedureType?.key || 'written'
+	};
+
+	req.appeal = appeal;
+
+	const response = await startAppeal(req, res);
+
+	return response ? response : res.status(400).send(false);
 };
