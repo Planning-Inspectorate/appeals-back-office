@@ -11,7 +11,7 @@ Your appeal procedure is a hearing.
 ## Local planning authority questionnaire
 Due by {{questionnaire_due_date}}.
 
-## Statements from the local planning authority
+## Statement from the local planning authority
 Due by {{lpa_statement_deadline}}.
 
 ## Interested party comments
