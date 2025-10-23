@@ -560,11 +560,12 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 			azureAdUserId,
 			inquiryDetailWarningText,
 			inquiryWitnessesText,
-			isAppellantProofOfEvidence: false,
 			inquiryDate,
 			inquiryTime,
 			inquiryExpectedDays,
-			inquiryAddress
+			inquiryAddress,
+			inquirySubjectLine:
+				'We did not receive any proof of evidence and witnesses from appellant or any other parties'
 		});
 
 		await notifyPublished({
@@ -577,11 +578,12 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 			azureAdUserId,
 			inquiryDetailWarningText,
 			inquiryWitnessesText,
-			isAppellantProofOfEvidence: true,
 			inquiryDate,
 			inquiryTime,
 			inquiryExpectedDays,
-			inquiryAddress
+			inquiryAddress,
+			inquirySubjectLine:
+				'We did not receive any proof of evidence and witnesses from local planning authority or any other parties'
 		});
 	} catch (error) {
 		logger.error(error);
@@ -602,7 +604,7 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
  * @property {boolean} [hasIpComments]
  * @property {boolean} [isHearingProcedure]
  * @property {boolean} [isInquiryProcedure]
- * @property {boolean} [isAppellantProofOfEvidence]
+ * @property {string} [inquirySubjectLine]
  * @property {string} [userTypeNoCommentSubmitted]
  * @property {string} azureAdUserId
  * @property {string} [inquiryDetailWarningText]
@@ -631,7 +633,7 @@ async function notifyPublished({
 	userTypeNoCommentSubmitted = '',
 	inquiryDetailWarningText = '',
 	inquiryWitnessesText = '',
-	isAppellantProofOfEvidence = false,
+	inquirySubjectLine = '',
 	inquiryDate = '',
 	inquiryTime = '',
 	inquiryExpectedDays = '',
@@ -673,7 +675,7 @@ async function notifyPublished({
 			team_email_address: await getTeamEmailFromAppealId(appeal.id),
 			inquiry_detail_warning_text: inquiryDetailWarningText,
 			inquiry_witnesses_text: inquiryWitnessesText,
-			is_appellant_proof_of_evidence: isAppellantProofOfEvidence,
+			inquiry_subject_line: inquirySubjectLine,
 			inquiry_date: inquiryDate,
 			inquiry_time: inquiryTime,
 			inquiry_expected_days: inquiryExpectedDays,
