@@ -5,6 +5,7 @@ import changeAppealProcedureTypeRouter from '#appeals/appeal-details/change-proc
 import { clearUncommittedFilesFromSession } from '#appeals/appeal-documents/appeal-documents.middleware.js';
 import config from '#environment/config.js';
 import { permissionNames } from '#environment/permissions.js';
+import { saveBackUrl } from '#lib/middleware/save-back-url.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import allocationDetailsRouter from './allocation-details/allocation-details.router.js';
@@ -56,6 +57,7 @@ const router = createRouter();
 router
 	.route('/:appealId')
 	.get(
+		saveBackUrl('appeals-detail'),
 		validateAppeal,
 		clearUncommittedFilesFromSession,
 		assertUserHasPermission(

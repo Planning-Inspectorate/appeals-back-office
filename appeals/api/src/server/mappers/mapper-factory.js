@@ -93,6 +93,10 @@ function createIntegrationMap(mappingRequest) {
 			const s20 = createMap(integrationMappers.integrationS20Mappers, mappingRequest);
 			return mergeMaps(caseData, s20);
 		}
+		case APPEAL_CASE_TYPE.ZA: {
+			const casAdvert = createMap(integrationMappers.integrationCasAdvertMappers, mappingRequest);
+			return mergeMaps(caseData, casAdvert);
+		}
 		default:
 			return caseData;
 	}
