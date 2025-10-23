@@ -415,7 +415,6 @@ export class Page {
 
 	verifyRowExists(rowName, bool) {
 		let state = bool ? 'exist' : 'not.exist';
-
 		this.basePageElements.summaryListKey().contains(rowName).should(state);
 	}
 
@@ -437,7 +436,6 @@ export class Page {
 
 	verifyActionExists(rowName, bool) {
 		const state = bool ? 'exist' : 'not.exist';
-
 		this.basePageElements
 			.summaryListKey()
 			.contains(rowName)

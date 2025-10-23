@@ -728,13 +728,10 @@ export class CaseDetailsPage extends Page {
 				.invoke('text')
 				.then((t) => {
 					const text = t.trim().toLocaleLowerCase();
-
 					const assertionBase = isIncluded ? expect(text).to : expect(text).to.not;
-
 					const errorMessage = isIncluded
 						? `${answer} is not included`
 						: `${answer} should not be included`;
-
 					assertionBase.include(expectedText, errorMessage);
 				});
 		});
