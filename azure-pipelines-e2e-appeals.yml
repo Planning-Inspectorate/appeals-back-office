@@ -2,7 +2,7 @@ parameters:
   - name: Environment
     type: string
     default: 'dev'
-    values: ['dev', 'test']
+    values: ['dev', 'test', 'staging']
 
   - name: RunParallel
     type: boolean
