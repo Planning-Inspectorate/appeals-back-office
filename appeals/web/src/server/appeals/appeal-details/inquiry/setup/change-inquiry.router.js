@@ -1,3 +1,4 @@
+import { saveBackUrl } from '#lib/middleware/save-back-url.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
 import { asyncHandler } from '@pins/express';
@@ -12,7 +13,7 @@ router.get('/', controller.redirectAndClearSession('/date', 'changeInquiry'));
 
 router
 	.route('/date')
-	.get(asyncHandler(controller.getChangeInquiryDate))
+	.get(saveBackUrl('changeInquiry'), asyncHandler(controller.getChangeInquiryDate))
 	.post(
 		validators.validateInquiryDateTime,
 		extractAndProcessDateErrors({

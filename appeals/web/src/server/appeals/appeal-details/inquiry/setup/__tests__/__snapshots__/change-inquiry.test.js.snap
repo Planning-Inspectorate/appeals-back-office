@@ -235,7 +235,7 @@ exports[`change inquiry GET /inquiry/change/check-details when all pages have be
                                     <dl class="govuk-summary-list">
                                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry date</dt>
                                             <dd class="govuk-summary-list__value">1 February 3025</dd>
-                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date"
+                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Fdate"
                                                 data-cy="change-inquiry-date">Change<span class="govuk-visually-hidden"> Inquiry date</span></a>
                                             </dd>
                                         </div>
@@ -243,7 +243,7 @@ exports[`change inquiry GET /inquiry/change/check-details when all pages have be
                                     <dl class="govuk-summary-list">
                                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry time</dt>
                                             <dd class="govuk-summary-list__value">12:00pm</dd>
-                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date"
+                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Fdate"
                                                 data-cy="change-inquiry-time">Change<span class="govuk-visually-hidden"> Inquiry time</span></a>
                                             </dd>
                                         </div>
@@ -251,7 +251,7 @@ exports[`change inquiry GET /inquiry/change/check-details when all pages have be
                                     <dl class="govuk-summary-list">
                                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the expected number of days to carry out the inquiry?</dt>
                                             <dd                                             class="govuk-summary-list__value">Yes</dd>
-                                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation"
+                                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Festimation"
                                                     data-cy="change-inquiry-expected-number-of-days">Change<span class="govuk-visually-hidden"> Do you know the expected number of days to carry out the inquiry?</span></a>
                                                 </dd>
                                         </div>
@@ -259,7 +259,7 @@ exports[`change inquiry GET /inquiry/change/check-details when all pages have be
                                     <dl class="govuk-summary-list">
                                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected number of days to carry out the inquiry</dt>
                                             <dd                                             class="govuk-summary-list__value">6 days</dd>
-                                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation"
+                                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Festimation"
                                                     data-cy="change-expected-number-of-days">Change<span class="govuk-visually-hidden"> Expected number of days to carry out the inquiry</span></a>
                                                 </dd>
                                         </div>
@@ -267,7 +267,7 @@ exports[`change inquiry GET /inquiry/change/check-details when all pages have be
                                     <dl class="govuk-summary-list">
                                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
                                             <dd                                             class="govuk-summary-list__value">Yes</dd>
-                                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address"
+                                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Faddress"
                                                     data-cy="change-inquiry-address-known">Change<span class="govuk-visually-hidden"> Do you know the address of where the inquiry will take place?</span></a>
                                                 </dd>
                                         </div>
@@ -279,7 +279,7 @@ exports[`change inquiry GET /inquiry/change/check-details when all pages have be
                                                 <br>Bristleton
                                                 <br>Tuscany
                                                 <br>T12 3YZ</dd>
-                                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address-details"
+                                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address-details?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Faddress-details"
                                                     data-cy="change-inquiry-address">Change<span class="govuk-visually-hidden"> Address of where the inquiry will take place</span></a>
                                                 </dd>
                                         </div>
@@ -319,7 +319,7 @@ exports[`change inquiry GET /inquiry/change/check-details when only address deta
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry date</dt>
                                 <dd class="govuk-summary-list__value">2 March 3024</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Fdate"
                                     data-cy="change-inquiry-date">Change<span class="govuk-visually-hidden"> Inquiry date</span></a>
                                 </dd>
                             </div>
@@ -327,7 +327,7 @@ exports[`change inquiry GET /inquiry/change/check-details when only address deta
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry time</dt>
                                 <dd class="govuk-summary-list__value">8:54am</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Fdate"
                                     data-cy="change-inquiry-time">Change<span class="govuk-visually-hidden"> Inquiry time</span></a>
                                 </dd>
                             </div>
@@ -335,7 +335,7 @@ exports[`change inquiry GET /inquiry/change/check-details when only address deta
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the expected number of days to carry out the inquiry?</dt>
                                 <dd                                 class="govuk-summary-list__value">Yes</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation"
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Festimation"
                                         data-cy="change-inquiry-expected-number-of-days">Change<span class="govuk-visually-hidden"> Do you know the expected number of days to carry out the inquiry?</span></a>
                                     </dd>
                             </div>
@@ -343,7 +343,7 @@ exports[`change inquiry GET /inquiry/change/check-details when only address deta
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected number of days to carry out the inquiry</dt>
                                 <dd                                 class="govuk-summary-list__value">6 days</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation"
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Festimation"
                                         data-cy="change-expected-number-of-days">Change<span class="govuk-visually-hidden"> Expected number of days to carry out the inquiry</span></a>
                                     </dd>
                             </div>
@@ -351,7 +351,7 @@ exports[`change inquiry GET /inquiry/change/check-details when only address deta
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
                                 <dd                                 class="govuk-summary-list__value">Yes</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address"
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Faddress"
                                         data-cy="change-inquiry-address-known">Change<span class="govuk-visually-hidden"> Do you know the address of where the inquiry will take place?</span></a>
                                     </dd>
                             </div>
@@ -363,7 +363,7 @@ exports[`change inquiry GET /inquiry/change/check-details when only address deta
                                     <br>Bristleton
                                     <br>Tuscany
                                     <br>T12 3YZ</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address-details"
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address-details?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Faddress-details"
                                         data-cy="change-inquiry-address">Change<span class="govuk-visually-hidden"> Address of where the inquiry will take place</span></a>
                                     </dd>
                             </div>
@@ -394,7 +394,7 @@ exports[`change inquiry GET /inquiry/change/check-details when only address not 
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry date</dt>
                                 <dd class="govuk-summary-list__value">2 March 3024</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Fdate"
                                     data-cy="change-inquiry-date">Change<span class="govuk-visually-hidden"> Inquiry date</span></a>
                                 </dd>
                             </div>
@@ -402,7 +402,7 @@ exports[`change inquiry GET /inquiry/change/check-details when only address not 
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry time</dt>
                                 <dd class="govuk-summary-list__value">8:54am</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Fdate"
                                     data-cy="change-inquiry-time">Change<span class="govuk-visually-hidden"> Inquiry time</span></a>
                                 </dd>
                             </div>
@@ -410,7 +410,7 @@ exports[`change inquiry GET /inquiry/change/check-details when only address not 
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the expected number of days to carry out the inquiry?</dt>
                                 <dd                                 class="govuk-summary-list__value">Yes</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation"
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Festimation"
                                         data-cy="change-inquiry-expected-number-of-days">Change<span class="govuk-visually-hidden"> Do you know the expected number of days to carry out the inquiry?</span></a>
                                     </dd>
                             </div>
@@ -418,7 +418,7 @@ exports[`change inquiry GET /inquiry/change/check-details when only address not 
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected number of days to carry out the inquiry</dt>
                                 <dd                                 class="govuk-summary-list__value">6 days</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation"
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Festimation"
                                         data-cy="change-expected-number-of-days">Change<span class="govuk-visually-hidden"> Expected number of days to carry out the inquiry</span></a>
                                     </dd>
                             </div>
@@ -426,7 +426,7 @@ exports[`change inquiry GET /inquiry/change/check-details when only address not 
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
                                 <dd                                 class="govuk-summary-list__value">No</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address"
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Faddress"
                                         data-cy="change-inquiry-address-known">Change<span class="govuk-visually-hidden"> Do you know the address of where the inquiry will take place?</span></a>
                                     </dd>
                             </div>
@@ -457,7 +457,7 @@ exports[`change inquiry GET /inquiry/change/check-details when only yes and addr
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry date</dt>
                                 <dd class="govuk-summary-list__value">2 March 3024</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Fdate"
                                     data-cy="change-inquiry-date">Change<span class="govuk-visually-hidden"> Inquiry date</span></a>
                                 </dd>
                             </div>
@@ -465,7 +465,7 @@ exports[`change inquiry GET /inquiry/change/check-details when only yes and addr
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry time</dt>
                                 <dd class="govuk-summary-list__value">8:54am</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Fdate"
                                     data-cy="change-inquiry-time">Change<span class="govuk-visually-hidden"> Inquiry time</span></a>
                                 </dd>
                             </div>
@@ -473,7 +473,7 @@ exports[`change inquiry GET /inquiry/change/check-details when only yes and addr
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the expected number of days to carry out the inquiry?</dt>
                                 <dd                                 class="govuk-summary-list__value">Yes</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation"
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Festimation"
                                         data-cy="change-inquiry-expected-number-of-days">Change<span class="govuk-visually-hidden"> Do you know the expected number of days to carry out the inquiry?</span></a>
                                     </dd>
                             </div>
@@ -481,7 +481,7 @@ exports[`change inquiry GET /inquiry/change/check-details when only yes and addr
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected number of days to carry out the inquiry</dt>
                                 <dd                                 class="govuk-summary-list__value">6 days</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation"
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Festimation"
                                         data-cy="change-expected-number-of-days">Change<span class="govuk-visually-hidden"> Expected number of days to carry out the inquiry</span></a>
                                     </dd>
                             </div>
@@ -489,7 +489,7 @@ exports[`change inquiry GET /inquiry/change/check-details when only yes and addr
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
                                 <dd                                 class="govuk-summary-list__value">Yes</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address"
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Faddress"
                                         data-cy="change-inquiry-address-known">Change<span class="govuk-visually-hidden"> Do you know the address of where the inquiry will take place?</span></a>
                                     </dd>
                             </div>
@@ -501,7 +501,7 @@ exports[`change inquiry GET /inquiry/change/check-details when only yes and addr
                                     <br>Bristleton
                                     <br>Tuscany
                                     <br>T12 3YZ</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address-details"
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address-details?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Faddress-details"
                                         data-cy="change-inquiry-address">Change<span class="govuk-visually-hidden"> Address of where the inquiry will take place</span></a>
                                     </dd>
                             </div>
@@ -552,9 +552,8 @@ exports[`change inquiry GET /inquiry/change/date should match the snapshot 1`] =
                     <span                     class="govuk-phase-banner__text">This is a new service. Help us improve it and <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzNVQjdaV0U0TDdTOE1LNktBT0w5NEQ1Vy4u"
                         class="govuk-link" target="_blank" rel="noopener noreferrer">give your feedback (opens in a new tab)</a>.</span>
                 </p>
-            </div><a href="/appeals-service/appeal-details/2/inquiry/change/check-details"
-            class="govuk-back-link">Back</a>
-            <main class="govuk-main-wrapper" id="main-content">
+            </div><a href="/appeals-service/appeal-details/2" class="govuk-back-link">Back</a>
+            <main             class="govuk-main-wrapper" id="main-content">
                 <div class="govuk-grid-row">
                     <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - start case</span>
                         <h1 class="govuk-heading-l">Inquiry date and time</h1>
@@ -624,7 +623,7 @@ exports[`change inquiry GET /inquiry/change/date should match the snapshot 1`] =
                         </div>
                     </div>
                 </div>
-            </main>
+                </main>
         </div>
         <footer class="govuk-footer" role="contentinfo">
             <div class="govuk-width-container ">

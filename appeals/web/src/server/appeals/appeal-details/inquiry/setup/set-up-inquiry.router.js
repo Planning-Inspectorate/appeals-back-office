@@ -1,3 +1,4 @@
+import { saveBackUrl } from '#lib/middleware/save-back-url.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
 import { createNotEmptyBodyValidator } from '#lib/validators/generic.validator.js';
@@ -14,7 +15,7 @@ router.get('/', controller.redirectAndClearSession('/date', 'setUpInquiry'));
 
 router
 	.route('/date')
-	.get(asyncHandler(controller.getInquiryDate))
+	.get(saveBackUrl('setUpInquiry'), asyncHandler(controller.getInquiryDate))
 	.post(
 		validators.validateInquiryDateTime,
 		extractAndProcessDateErrors({
