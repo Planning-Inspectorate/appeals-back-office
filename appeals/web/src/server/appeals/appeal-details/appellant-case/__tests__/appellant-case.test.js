@@ -1155,7 +1155,7 @@ describe('appellant-case', () => {
 					});
 
 					expect(unprettifiedElement.innerHTML).toContain(
-						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Enter reason" data-mode="text">${text301Characters}</div></dd>`
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Enter reason" data-mode="html">${text301Characters}</div></dd>`
 					);
 				});
 			});
@@ -1215,7 +1215,7 @@ describe('appellant-case', () => {
 					});
 
 					expect(unprettifiedElement.innerHTML).toContain(
-						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Enter reason" data-mode="text">${text301Characters}</div></dd>`
+						`<dd class="govuk-summary-list__value"><span>Yes</span><br><div class="pins-show-more" data-label="Enter reason" data-mode="html">${text301Characters}</div></dd>`
 					);
 				});
 			});
