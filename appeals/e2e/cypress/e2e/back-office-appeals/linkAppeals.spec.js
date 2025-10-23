@@ -5,6 +5,7 @@ import { users } from '../../fixtures/users';
 import { Page } from '../../page_objects/basePage.js';
 import { CostsSectionPage } from '../../page_objects/caseDetails/costsSectionPage.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
+import { DateTimeSection } from '../../page_objects/dateTimeSection.js';
 import { ListCasesPage } from '../../page_objects/listCasesPage.js';
 import { FileUploader, ManageDocument } from '../../page_objects/shared.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
@@ -16,6 +17,7 @@ const basePage = new Page();
 const listCasesPage = new ListCasesPage();
 const caseDetailsPage = new CaseDetailsPage();
 const costsSectionPage = new CostsSectionPage();
+const dateTimeSection = new DateTimeSection();
 const fileUploader = new FileUploader();
 const manageDocument = new ManageDocument();
 
@@ -26,6 +28,13 @@ const doc = fileUploader.sampleFiles.document;
 const img = fileUploader.sampleFiles.img;
 
 let cases = [];
+
+const timetableItems = [
+	{
+		row: 'lpa-statement-due-date',
+		editable: true
+	}
+];
 
 beforeEach(() => {
 	cy.login(users.appeals.caseAdmin);
@@ -130,7 +139,7 @@ describe('Link appeals', () => {
 });
 
 describe('Hidden elements', () => {
-	it('"Start" CTA on child appeals is hidden when at "Ready to start" stage', () => {
+	it('"Start" CTA on child appeals are hidden when at "Ready to start" stage', () => {
 		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
 			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
 				cases = [leadCaseObj, childCaseObj];
@@ -147,6 +156,94 @@ describe('Hidden elements', () => {
 				caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 				caseDetailsPage.checkStatusOfCase('Child', 1);
 				caseDetailsPage.verifyActionExists('Start date', false);
+			});
+		});
+	});
+
+	it.skip('"Change" CTA on child appeals are hidden on timetable section', () => {});
+});
+
+describe('Timetable', () => {
+	it('Timetable changes are reflected on child appeals', () => {
+		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
+			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
+				cases = [leadCaseObj, childCaseObj];
+
+				cases.forEach((appeal) => {
+					cy.addLpaqSubmissionToCase(appeal);
+				});
+
+				//child appeal
+				happyPathHelper.assignCaseOfficer(childCaseObj);
+				happyPathHelper.reviewAppellantCase(childCaseObj);
+
+				//lead appeal
+				happyPathHelper.assignCaseOfficer(leadCaseObj);
+				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
+				happyPathHelper.reviewAppellantCase(leadCaseObj);
+				happyPathHelper.startS78Case(leadCaseObj, 'written');
+
+				//update statements due date
+				caseDetailsPage.appeal;
+				caseDetailsPage.verifyActionExists('LPA statement due', true);
+				caseDetailsPage.clickRowChangeLink('lpa-statement-due-date');
+				cy.getBusinessActualDate(new Date(), 14).then((dueDate) => {
+					const formattedDate = formatDateAndTime(dueDate);
+					caseDetailsPage.changeTimetableDates(timetableItems, dueDate, 0);
+					basePage.clickButtonByText('Update timetable due dates');
+					caseDetailsPage.verifyRowValue('LPA statement due', formattedDate.date);
+
+					//child apppeal
+					happyPathHelper.viewCaseDetails(childCaseObj);
+					caseDetailsPage.verifyRowValue('LPA statement due', formattedDate.date);
+				});
+			});
+		});
+	});
+
+	it.skip('Timetable changes are reflected in case history', () => {
+		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
+			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
+				cases = [leadCaseObj, childCaseObj];
+
+				cases.forEach((appeal) => {
+					cy.addLpaqSubmissionToCase(appeal);
+				});
+
+				//child appeal
+				happyPathHelper.assignCaseOfficer(childCaseObj);
+				happyPathHelper.reviewAppellantCase(childCaseObj);
+
+				//lead appeal
+				happyPathHelper.assignCaseOfficer(leadCaseObj);
+				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
+				happyPathHelper.reviewAppellantCase(leadCaseObj);
+				happyPathHelper.startS78Case(leadCaseObj, 'written');
+
+				//update statements due date
+				caseDetailsPage.appeal;
+				caseDetailsPage.verifyActionExists('LPA statement due', true);
+				caseDetailsPage.clickRowChangeLink('lpa-statement-due-date');
+				cy.getBusinessActualDate(new Date(), 14).then((dueDate) => {
+					const formattedDate = formatDateAndTime(dueDate);
+					caseDetailsPage.changeTimetableDates(timetableItems, dueDate, 0);
+					basePage.clickButtonByText('Update timetable due dates');
+					caseDetailsPage.verifyRowValue('LPA statement due', formattedDate.date);
+
+					//case history
+					caseDetailsPage.clickViewCaseHistory();
+					caseDetailsPage.verifyTableCellTextCaseHistory(
+						`Statements due date changed to ${formattedDate.date}`
+					);
+
+					//child apppeal
+					happyPathHelper.viewCaseDetails(childCaseObj);
+					caseDetailsPage.clickViewCaseHistory();
+					caseDetailsPage.verifyTableCellTextCaseHistory(
+						`Statements due date changed to ${formattedDate.date}`,
+						false
+					);
+				});
 			});
 		});
 	});
@@ -277,7 +374,7 @@ describe('Site visit', () => {
 	});
 });
 
-describe.only('Issue Decision', () => {
+describe('Issue Decision', () => {
 	it('Issue a decision with costs for linked appeals - S78', { tags: tag.smoke }, () => {
 		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
 			cy.createCase({ caseType: 'W' }).then((childCaseObj1) => {
