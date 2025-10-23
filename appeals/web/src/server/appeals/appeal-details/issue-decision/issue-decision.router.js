@@ -5,6 +5,7 @@ import {
 } from '#appeals/appeal-details/issue-decision/issue-decision.middleware.js';
 import { permissionNames } from '#environment/permissions.js';
 import { saveBackUrl } from '#lib/middleware/save-back-url.js';
+import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 import {
 	DECISION_TYPE_APPELLANT_COSTS,
 	DECISION_TYPE_LPA_COSTS
@@ -52,6 +53,7 @@ router
 	.post(
 		validators.validateAppellantCostsDecision,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
+		saveBodyToSession('issueDecision'),
 		asyncHandler(controller.postAppellantCostsDecision)
 	);
 
@@ -83,11 +85,13 @@ router
 	.route('/lpa-costs-decision')
 	.get(
 		assertUserHasPermission(permissionNames.setCaseOutcome),
+		saveBodyToSession('issueDecision'),
 		asyncHandler(controller.renderLpaCostsDecision)
 	)
 	.post(
 		validators.validateLpaCostsDecision,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
+		saveBodyToSession('issueDecision'),
 		asyncHandler(controller.postLpaCostsDecision)
 	);
 
@@ -95,10 +99,12 @@ router
 	.route('/lpa-costs-decision-letter-upload')
 	.get(
 		assertUserHasPermission(permissionNames.setCaseOutcome),
+		saveBodyToSession('issueDecision'),
 		asyncHandler(controller.renderLpaCostsDecisionLetterUpload)
 	)
 	.post(
 		assertUserHasPermission(permissionNames.setCaseOutcome),
+		saveBodyToSession('issueDecision'),
 		asyncHandler(controller.postLpaCostsDecisionLetterUpload)
 	);
 
@@ -119,10 +125,12 @@ router
 	.route('/check-your-decision')
 	.get(
 		assertUserHasPermission(permissionNames.setCaseOutcome),
+		saveBodyToSession('issueDecision'),
 		asyncHandler(controller.renderCheckDecision)
 	)
 	.post(
 		assertUserHasPermission(permissionNames.setCaseOutcome),
+		saveBodyToSession('issueDecision'),
 		asyncHandler(controller.postCheckDecision)
 	);
 

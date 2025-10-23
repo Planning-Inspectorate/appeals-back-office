@@ -1,6 +1,7 @@
 import {
 	baseUrl,
-	buildIssueDecisionLogicData
+	buildIssueDecisionLogicData,
+	checkAndConfirmBackUrl
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import {
 	mapDocumentDownloadUrl,
@@ -527,24 +528,10 @@ export function checkAndConfirmPage(appealData, request) {
 		? specificDecisionType.replaceAll('-', ' ').replace('lpa', 'LPA')
 		: 'decision';
 
-	const baseRoute = baseUrl(currentAppeal);
-
-	let backUrl = getBackLinkUrlFromQuery(request);
-	if (!backUrl) {
-		if (specificDecisionType) {
-			backUrl = `${addBackLinkQueryToUrl(
-				request,
-				`${baseRoute}/issue-${specificDecisionType}-letter-upload`
-			)}`;
-		} else {
-			backUrl = `${baseRoute}/decision-letter-upload`;
-		}
-	}
-
 	const title = `Check details and issue ${decisionTypeText}`;
 	const pageContent = {
 		title,
-		backLinkUrl: backUrl,
+		backLinkUrl: checkAndConfirmBackUrl(currentAppeal, request, specificDecisionType),
 		preHeading: preHeadingText(appealData),
 		heading: title,
 		submitButtonText: `Issue ${decisionTypeText}`,
