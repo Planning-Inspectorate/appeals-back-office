@@ -14,6 +14,7 @@ const mockReq = {
 		error: jest.fn(),
 		warn: jest.fn()
 	},
+	get: jest.fn(),
 	body: {},
 	query: {},
 	session: {},

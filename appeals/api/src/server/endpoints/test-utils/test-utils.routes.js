@@ -8,6 +8,7 @@ import {
 	simulateInquiryElapsed,
 	simulateProofOfEvidenceElapsed,
 	simulateSiteVisitElapsed,
+	simulateStartAppeal,
 	simulateStatementsElapsed
 } from './test-utils.controller.js';
 import { deleteAppealsParamsValidator } from './test-utils.validators.js';
@@ -155,6 +156,27 @@ router.delete(
 	 */
 	deleteAppealsParamsValidator,
 	asyncHandler(deleteAppeals)
+);
+
+router.post(
+	'/:appealReference/start-appeal',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/start-appeal'
+		#swagger.description = 'A test endpoint to simulate the completion of a start appeal event'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[201] = {
+			description: 'Creates an appeal timetable and start the appeal',
+			schema: { $ref: '#/components/schemas/StartCaseResponse' }
+		}
+		#swagger.responses[400] = {}
+		#swagger.responses[500] = {}
+	 */
+	asyncHandler(simulateStartAppeal)
 );
 
 export { router as testUtilsRoutes };
