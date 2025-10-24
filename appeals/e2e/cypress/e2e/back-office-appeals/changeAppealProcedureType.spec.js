@@ -2,10 +2,12 @@
 /// <reference types="cypress"/>
 
 import { users } from '../../fixtures/users';
+import { AddressSection } from '../../page_objects/addressSection.js';
 import { OverviewSectionPage } from '../../page_objects/caseDetails/overviewSectionPage';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { CYASection } from '../../page_objects/cyaSection.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
+import { EstimatedDaysSection } from '../../page_objects/estimatedDaysSection.js';
 import { ProcedureTypePage } from '../../page_objects/procedureTypePage';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 import { formatDateAndTime, getDateAndTimeValues } from '../../support/utils/format';
@@ -14,6 +16,8 @@ const overviewSectionPage = new OverviewSectionPage();
 const caseDetailsPage = new CaseDetailsPage();
 const procedureTypePage = new ProcedureTypePage();
 const dateTimeSection = new DateTimeSection();
+const estimatedDaysSection = new EstimatedDaysSection();
+const addressSection = new AddressSection();
 const cyaSection = new CYASection();
 const currentDate = new Date();
 
@@ -27,6 +31,14 @@ describe('change appeal procedure types', () => {
 		linkedAppeals: 'No linked appeals',
 		relatedAppeals: '1000000',
 		netGainResidential: 'Not provided'
+	};
+
+	const inquiryAddress = {
+		line1: 'e2e Inquiry Test Address',
+		line2: 'Inquiry Street',
+		town: 'Inquiry Town',
+		county: 'Somewhere',
+		postcode: 'BS20 1BS'
 	};
 
 	const timetableItems = [
@@ -52,13 +64,104 @@ describe('change appeal procedure types', () => {
 		cy.deleteAppeals(appeal);
 	});
 
+	it('should change appeal procedure type - hearing to inquiry', () => {
+		happyPathHelper.startS78Case(caseObj, 'hearing');
+		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+
+		const writtenDetails = { ...overviewDetails, appealProcedure: 'Hearing' };
+		overviewSectionPage.verifyCaseOverviewDetails(writtenDetails, false);
+
+		overviewSectionPage.clickRowChangeLink('case-procedure');
+
+		procedureTypePage.verifyProcedurePageHeader(caseObj.reference, 'update appeal procedure');
+		procedureTypePage.selectProcedureType('inquiry');
+
+		// enter inquiry date
+		cy.getBusinessActualDate(currentDate, 1).then((date) => {
+			dateTimeSection.enterEventDate(date);
+			dateTimeSection.clickButtonByText('Continue');
+
+			// enter estimated days
+			estimatedDaysSection.selectEstimatedDaysOption('Yes');
+			estimatedDaysSection.enterEstimatedDays(6);
+			estimatedDaysSection.clickButtonByText('Continue');
+
+			// enter address
+			addressSection.selectAddressOption('Yes');
+			addressSection.clickButtonByText('Continue');
+			addressSection.enterAddress(inquiryAddress);
+			addressSection.clickButtonByText('Continue');
+
+			// verify previous date values are prepopulated for timetable
+			cy.loadAppealDetails(caseObj).then((appealDetails) => {
+				//procedureTypePage.verifyHeader(procedureTypeCaption());
+				const appealTimetable = appealDetails?.appealTimetable;
+				cy.log('** appealTimetable - ', JSON.stringify(appealTimetable));
+				const lpaQuestionnaireDueDate = new Date(appealTimetable.lpaQuestionnaireDueDate);
+				const lpaStatementDueDate = new Date(appealTimetable.lpaStatementDueDate);
+				const ipCommentsDueDate = new Date(appealTimetable.ipCommentsDueDate);
+
+				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+					'lpaQuestionnaireDueDate',
+					getDateAndTimeValues(lpaQuestionnaireDueDate)
+				);
+				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+					'lpaStatementDueDate',
+					getDateAndTimeValues(lpaStatementDueDate)
+				);
+				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+					'ipCommentsDueDate',
+					getDateAndTimeValues(ipCommentsDueDate)
+				);
+
+				// enter POE date
+				const proofOfEvidenceDate = new Date(lpaStatementDueDate);
+				proofOfEvidenceDate.setFullYear(lpaStatementDueDate.getFullYear() + 1);
+				dateTimeSection.enterProofOfEvidenceAndWitnessesDueDate(proofOfEvidenceDate);
+
+				// proceed to cya page and check answers
+				dateTimeSection.clickButtonByText('Continue');
+
+				cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Inquiry');
+				cyaSection.verifyCheckYourAnswers(
+					'LPA questionnaire due',
+					formatDateAndTime(lpaQuestionnaireDueDate).date
+				);
+				cyaSection.verifyCheckYourAnswers(
+					'Statements due',
+					formatDateAndTime(lpaStatementDueDate).date
+				);
+				cyaSection.verifyCheckYourAnswers(
+					'Statement of common ground due',
+					formatDateAndTime(ipCommentsDueDate).date
+				);
+				cyaSection.verifyCheckYourAnswers(
+					'Proof of evidence and witnesses due',
+					formatDateAndTime(proofOfEvidenceDate).date
+				);
+			});
+		});
+	});
+
+	it('change appeal procedure type - should not allow change procedure after lpaq', () => {
+		happyPathHelper.startS78Case(caseObj, 'hearing');
+		happyPathHelper.reviewS78Lpaq(caseObj);
+		caseDetailsPage.checkStatusOfCase('Statements', 0);
+
+		// should not be able to see change procedure link
+		overviewSectionPage.checkElementVisibility(
+			overviewSectionPage.overviewSectionSelectors.changeProcedureType,
+			false
+		);
+	});
+
 	// A2-3934 (Ticket is blocked due to post hearing mvp updates)
 	it.skip('should change appeal procedure type - written in LPAQ state', () => {
 		happyPathHelper.startS78Case(caseObj, 'written');
 		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 		const writtenDetails = { ...overviewDetails, appealProcedure: 'Written' };
-		overviewSectionPage.verifyCaseOverviewDetails(writtenDetails);
+		//overviewSectionPage.verifyCaseOverviewDetails(writtenDetails);
 
 		overviewSectionPage.clickRowChangeLink('case-procedure');
 
@@ -193,6 +296,10 @@ describe('change appeal procedure types', () => {
 		cy.createCase({ caseType: 'W' }).then((ref) => {
 			caseObj = ref;
 			appeal = caseObj;
+
+			// Assign Case Officer Via API
+			cy.assignCaseOfficerViaApi(caseObj);
+
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.checkStatusOfCase('Validation', 0);

@@ -33,8 +33,9 @@ export class DateTimeSection extends Page {
 		ipCommentsDueDate: '#ip-comments-due',
 		finalCommentsDueDate: '#final-comments-due',
 		statementOfCommonGroundDueDate: '#statement-of-common-ground-due',
-		proofOfEvidenceAndWitnessesDueDate: '#proof-of-evidence-and-witnesses-due',
+		proofOfEvidenceAndWitnessesDueDate: '#proof-of-evidence-and-witnesses-due-date-',
 		inquiryDate: '#inquiry-date-',
+		eventDate: '#event-date-',
 		inquiry: '#inquiry',
 		hearing: '#hearing',
 		planningObligationDueDate: '#planning-obligation-due'
@@ -74,6 +75,9 @@ export class DateTimeSection extends Page {
 	enterLpaqDate(date) {
 		this.#setAllDateFields(this.selectorPrefix.lpaqDate, date);
 	}
+	enterProofOfEvidenceAndWitnessesDueDate(date) {
+		this.#setAllDateFields(this.selectorPrefix.proofOfEvidenceAndWitnessesDueDate, date);
+	}
 	enterWithdrawalRequestDate(date) {
 		this.#setAllDateFields(this.selectorPrefix.withdrawalRequestDate, date);
 	}
@@ -96,6 +100,11 @@ export class DateTimeSection extends Page {
 
 	enterInquiryDate(date) {
 		this.#setAllDateFields(this.selectorPrefix.inquiryDate, date);
+	}
+
+	// used when updating procedure type
+	enterEventDate(date) {
+		this.#setAllDateFields(this.selectorPrefix.eventDate, date);
 	}
 
 	setInquiryDate(day, month, year) {

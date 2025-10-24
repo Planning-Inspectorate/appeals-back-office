@@ -10,7 +10,8 @@ export class OverviewSectionPage extends CaseDetailsPage {
 		allocationLevel: '.appeal-allocation-details .govuk-summary-list__value',
 		linkedAppeals: '.appeal-linked-appeals .govuk-summary-list__value',
 		relatedAppeals: '.appeal-other-appeals .govuk-summary-list__value',
-		netGainResidential: '.appeal-net-residence-change .govuk-summary-list__value'
+		netGainResidential: '.appeal-net-residence-change .govuk-summary-list__value',
+		changeProcedureType: '[data-cy="change-case-procedure"]'
 	};
 
 	overviewSectionElements = {
@@ -23,7 +24,7 @@ export class OverviewSectionPage extends CaseDetailsPage {
 		netGainResidential: () => cy.get(this.overviewSectionSelectors.netGainResidential)
 	};
 
-	verifyCaseOverviewDetails = (expectedValues) => {
+	verifyCaseOverviewDetails = (expectedValues, checkNetResidence = true) => {
 		// verify overview fields
 		this.overviewSectionElements
 			.appealType()
@@ -62,11 +63,15 @@ export class OverviewSectionPage extends CaseDetailsPage {
 				expect(text).to.equal(expectedValues.relatedAppeals);
 			});
 
-		this.overviewSectionElements
-			.netGainResidential()
-			.invoke('prop', 'innerText')
-			.then((text) => {
-				expect(text).to.equal(expectedValues.netGainResidential);
-			});
+		// net residence is only displayed if case is passed lpaq status
+		// for some scenarios (e.g. change procedure) this will not be the case
+		if (checkNetResidence) {
+			this.overviewSectionElements
+				.netGainResidential()
+				.invoke('prop', 'innerText')
+				.then((text) => {
+					expect(text).to.equal(expectedValues.netGainResidential);
+				});
+		}
 	};
 }
