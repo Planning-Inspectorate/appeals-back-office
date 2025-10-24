@@ -1,8 +1,9 @@
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
-import { isAfter, isBefore, isSameDay } from 'date-fns';
+import { formatInTimeZone } from 'date-fns-tz';
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.d.ts').WebAppeal} WebAppeal */
 
 /**
@@ -72,13 +73,15 @@ export const getSiteDetails = (mappedData, appealDetails) => {
 	if (siteVisit && siteVisit.visitDate) {
 		const visitDate = new Date(siteVisit.visitDate);
 		const currentDate = new Date();
+		const visitDateLocalTime = formatInTimeZone(visitDate, DEFAULT_TIMEZONE, 'yyyy-MM-dd');
+		const currentDateLocalTime = formatInTimeZone(currentDate, DEFAULT_TIMEZONE, 'yyyy-MM-dd');
 
-		if (isSameDay(visitDate, currentDate)) {
+		if (visitDateLocalTime == currentDateLocalTime) {
 			allComponents.push(cancelSiteVisitLink, recordMissedSiteVisitLink);
-		} else if (isAfter(visitDate, currentDate)) {
+		} else if (visitDateLocalTime > currentDateLocalTime) {
 			allComponents.push(cancelSiteVisitLink);
 		} else if (
-			isBefore(visitDate, currentDate) &&
+			visitDateLocalTime < currentDateLocalTime &&
 			!appealDetails.completedStateList.includes('issue_determination')
 		) {
 			allComponents.push(recordMissedSiteVisitLink);
