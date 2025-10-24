@@ -6,13 +6,16 @@ import {
 	dateISOStringToDisplayTime12hr,
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
+import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { capitalize, pick } from 'lodash-es';
 import { appealProcedureToLabelText } from './change-procedure-check-and-confirm.mapper.js';
+import { postProcedureChangeRequest } from './change-procedure-check-and-confirm.service.js';
 
 /**
  * @typedef {import('../change-procedure-type.controller.js').AppealTimetable} AppealTimetable
@@ -36,6 +39,8 @@ export const getCheckAndConfirm = async (request, response) => {
 	/** @type {ChangeProcedureTypeSession} */
 	const sessionValues = changeProcedureType;
 	const newProcedureType = sessionValues.appealProcedure;
+
+	console.log(sessionValues);
 
 	if (!objectContainsAllKeys(sessionValues, 'appealTimetable')) {
 		return response.status(500).render('app/500.njk');
@@ -289,4 +294,40 @@ export const getCheckAndConfirm = async (request, response) => {
 		response,
 		errors
 	);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postCheckAndConfirm = async (request, response) => {
+	try {
+		const {
+			session: { changeProcedureType },
+			params: { appealId }
+		} = request;
+
+		const newProcedureType = changeProcedureType.appealProcedure;
+		const sessionValues = changeProcedureType;
+
+		if (!newProcedureType) {
+			return response.status(500).render('app/500.njk');
+		}
+
+		await postProcedureChangeRequest(request.apiClient, appealId, sessionValues);
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'procedureTypeChanged',
+			appealId
+		});
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when posting the check details and change procedure'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
 };
