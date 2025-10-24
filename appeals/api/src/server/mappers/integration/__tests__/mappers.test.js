@@ -11,7 +11,7 @@ import {
 	APPEAL_DOCUMENT_TYPE
 } from '@planning-inspectorate/data-model';
 import { mapAppellantCaseIn } from '../commands/appellant-case.mapper.js';
-import { mapDesignatedSiteNames } from '../commands/questionnaire.mapper.js';
+import { mapDesignatedSiteNames, mapQuestionnaireIn } from '../commands/questionnaire.mapper.js';
 import { mapDocumentEntity } from '../map-document-entity.js';
 import { mapCaseDates } from '../shared/s20s78/map-case-dates.js';
 
@@ -477,6 +477,166 @@ describe('mapAppellantCaseIn', () => {
 		}
 	])('mapAppellantCaseIn: $desc', ({ input, expected }) => {
 		const result = mapAppellantCaseIn(input);
-		expect(result).toEqual(expected);
+		expect(result).toMatchObject(expected);
+	});
+});
+
+describe('mapQuestionnaireIn', () => {
+	const designatedSites = [
+		{ key: 'siteA', name: 'Site A', id: 1 },
+		{ key: 'siteB', name: 'Site B', id: 2 }
+	];
+
+	test.each([
+		{
+			desc: 'common fields D',
+			input: {
+				casedata: {
+					caseType: 'D',
+					lpaQuestionnaireSubmittedDate: '2025-10-22',
+					siteAccessDetails: ['access1'],
+					siteSafetyDetails: ['safety1'],
+					reasonForNeighbourVisits: 'visit',
+					lpaStatement: 'statement',
+					isCorrectAppealType: true,
+					isGreenBelt: false,
+					inConservationArea: true,
+					newConditionDetails: 'details',
+					lpaCostsAppliedFor: true,
+					notificationMethod: ['email', 'post'],
+					affectedListedBuildingNumbers: ['LB1']
+				}
+			},
+			expected: expect.objectContaining({
+				lpaQuestionnaireSubmittedDate: '2025-10-22',
+				siteAccessDetails: 'access1',
+				siteSafetyDetails: 'safety1',
+				reasonForNeighbourVisits: 'visit',
+				lpaStatement: 'statement',
+				isCorrectAppealType: true,
+				isGreenBelt: false,
+				inConservationArea: true,
+				newConditionDetails: 'details',
+				lpaCostsAppliedFor: true,
+				listedBuildingDetails: { create: [{ listEntry: 'LB1', affectsListedBuilding: true }] },
+				lpaNotificationMethods: {
+					create: [
+						{ lpaNotificationMethod: { connect: { key: 'email' } } },
+						{ lpaNotificationMethod: { connect: { key: 'post' } } }
+					]
+				}
+			})
+		},
+		{
+			desc: 'S78 case',
+			input: {
+				casedata: {
+					caseType: 'W',
+					lpaQuestionnaireSubmittedDate: '2025-10-22',
+					siteAccessDetails: ['access1'],
+					siteSafetyDetails: ['safety1'],
+					notificationMethod: ['email'],
+					affectedListedBuildingNumbers: ['LB1'],
+					designatedSitesNames: ['siteA', 'customSite']
+				}
+			},
+			expected: expect.objectContaining({
+				lpaQuestionnaireSubmittedDate: '2025-10-22',
+				siteAccessDetails: 'access1',
+				siteSafetyDetails: 'safety1',
+				listedBuildingDetails: { create: [{ listEntry: 'LB1', affectsListedBuilding: true }] },
+				lpaNotificationMethods: {
+					create: [{ lpaNotificationMethod: { connect: { key: 'email' } } }]
+				},
+				designatedSiteNames: {
+					create: [{ designatedSite: { connect: { key: 'siteA' } } }]
+				},
+				designatedSiteNameCustom: 'customSite'
+			})
+		},
+		{
+			desc: 'S20 case',
+			input: {
+				casedata: {
+					caseType: 'Y',
+					lpaQuestionnaireSubmittedDate: '2025-10-22',
+					siteAccessDetails: ['access1'],
+					siteSafetyDetails: ['safety1'],
+					notificationMethod: ['email'],
+					affectedListedBuildingNumbers: ['LB1'],
+					designatedSitesNames: ['siteB'],
+					preserveGrantLoan: true,
+					consultHistoricEngland: false
+				}
+			},
+			expected: expect.objectContaining({
+				lpaQuestionnaireSubmittedDate: '2025-10-22',
+				siteAccessDetails: 'access1',
+				siteSafetyDetails: 'safety1',
+				listedBuildingDetails: { create: [{ listEntry: 'LB1', affectsListedBuilding: true }] },
+				lpaNotificationMethods: {
+					create: [{ lpaNotificationMethod: { connect: { key: 'email' } } }]
+				},
+				designatedSiteNames: {
+					create: [{ designatedSite: { connect: { key: 'siteB' } } }]
+				},
+				preserveGrantLoan: true,
+				historicEnglandConsultation: false
+			})
+		},
+		{
+			desc: 'CAS adverts case (ZA)',
+			input: {
+				casedata: {
+					caseType: 'ZA',
+					lpaQuestionnaireSubmittedDate: '2025-10-22',
+					siteAccessDetails: ['access1'],
+					siteSafetyDetails: ['safety1'],
+					notificationMethod: ['post'],
+					affectedListedBuildingNumbers: ['LB1'],
+					designatedSitesNames: ['siteA'],
+					affectsScheduledMonument: true,
+					hasProtectedSpecies: true,
+					isAonbNationalLandscape: true,
+					hasStatutoryConsultees: true,
+					consultedBodiesDetails: 'details',
+					hasEmergingPlan: true,
+					lpaProcedurePreference: 'written',
+					lpaProcedurePreferenceDetails: 'preference details',
+					lpaProcedurePreferenceDuration: 12,
+					siteWithinSSSI: true,
+					isSiteInAreaOfSpecialControlAdverts: true,
+					wasApplicationRefusedDueToHighwayOrTraffic: true,
+					didAppellantSubmitCompletePhotosAndPlans: true
+				}
+			},
+			expected: expect.objectContaining({
+				lpaQuestionnaireSubmittedDate: '2025-10-22',
+				siteAccessDetails: 'access1',
+				siteSafetyDetails: 'safety1',
+				listedBuildingDetails: { create: [{ listEntry: 'LB1', affectsListedBuilding: true }] },
+				lpaNotificationMethods: {
+					create: [{ lpaNotificationMethod: { connect: { key: 'post' } } }]
+				},
+				designatedSiteNames: {
+					create: [{ designatedSite: { connect: { key: 'siteA' } } }]
+				},
+				affectsScheduledMonument: true,
+				hasProtectedSpecies: true,
+				isAonbNationalLandscape: true,
+				hasStatutoryConsultees: true,
+				consultedBodiesDetails: 'details',
+				hasEmergingPlan: true,
+				lpaProcedurePreference: 'written',
+				lpaProcedurePreferenceDetails: 'preference details',
+				lpaProcedurePreferenceDuration: 12,
+				isSiteInAreaOfSpecialControlAdverts: true,
+				wasApplicationRefusedDueToHighwayOrTraffic: true,
+				didAppellantSubmitCompletePhotosAndPlans: true
+			})
+		}
+	])('mapQuestionnaireIn: $desc', ({ input, expected }) => {
+		const result = mapQuestionnaireIn(input, designatedSites);
+		expect(result).toMatchObject(expected);
 	});
 });

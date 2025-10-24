@@ -613,7 +613,7 @@ const newS20Appeals = [
 	})
 ];
 
-const newCASPlanningAppeals = [
+const newCasPlanningAppeals = [
 	appealFactory({ typeShorthand: APPEAL_CASE_TYPE.ZP, assignCaseOfficer: false }),
 	appealFactory({
 		typeShorthand: APPEAL_CASE_TYPE.ZP,
@@ -690,7 +690,7 @@ const newCASPlanningAppeals = [
 	})
 ];
 
-const newCASAdvertAppeals = [
+const newCasAdvertAppeals = [
 	appealFactory({ typeShorthand: APPEAL_CASE_TYPE.ZA, assignCaseOfficer: false }),
 	appealFactory({
 		typeShorthand: APPEAL_CASE_TYPE.ZA,
@@ -999,8 +999,8 @@ const appealsData = [
 	...appealsLpaQuestionnaireDue,
 	...newS78Appeals,
 	...newS20Appeals,
-	...newCASPlanningAppeals,
-	...newCASAdvertAppeals,
+	...newCasPlanningAppeals,
+	...newCasAdvertAppeals,
 	...appealsReadyToIssueDecision
 ];
 

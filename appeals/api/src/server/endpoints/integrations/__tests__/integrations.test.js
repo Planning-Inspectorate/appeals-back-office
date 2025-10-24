@@ -9,12 +9,14 @@ import {
 	appealIngestionInputS78Written,
 	docIngestionInput,
 	validAppellantCase,
-	validAppellantCaseCASAdverts,
-	validAppellantCaseCASPlanning,
+	validAppellantCaseCasAdverts,
+	validAppellantCaseCasPlanning,
 	validAppellantCaseS20,
 	validAppellantCaseS78,
-	validLpaQuestionnaireCASPlanning,
+	validLpaQuestionnaireCasAdverts,
+	validLpaQuestionnaireCasPlanning,
 	validLpaQuestionnaireHas,
+	validLpaQuestionnaireIngestionCasAdvert,
 	validLpaQuestionnaireIngestionHas,
 	validLpaQuestionnaireIngestionS20,
 	validLpaQuestionnaireIngestionS78,
@@ -109,10 +111,10 @@ describe('/appeals/case-submission', () => {
 	describe('POST successful appeal gets ingested', () => {
 		test.each([
 			['HAS', appealIngestionInput, validAppellantCase, { id: 1 }],
-			['CAS_PLANNING', appealIngestionInputCasPlanning, validAppellantCaseCASPlanning, { id: 1 }],
+			['CAS_PLANNING', appealIngestionInputCasPlanning, validAppellantCaseCasPlanning, { id: 1 }],
 			['S78', appealIngestionInputS78, validAppellantCaseS78, { name: 'Major Casework Officer' }],
 			['S20', appealIngestionInputS20, validAppellantCaseS20, { name: 'Major Casework Officer' }],
-			['CAS_ADVERTS', appealIngestionInputCasAdverts, validAppellantCaseCASAdverts, { id: 1 }]
+			['CAS_ADVERTISEMENT', appealIngestionInputCasAdverts, validAppellantCaseCasAdverts, { id: 1 }]
 		])(
 			'POST valid %s appellant case payload and create appeal',
 			async (_, appealIngestionInput, validAppellantCase, expectedTeamQueryParam) => {
@@ -327,9 +329,14 @@ describe('/appeals/lpaq-submission', () => {
 	describe('POST valid LPA submission', () => {
 		test.each([
 			['HAS', validLpaQuestionnaireIngestionHas, validLpaQuestionnaireHas],
-			['CAS_PLANNING', validLpaQuestionnaireIngestionHas, validLpaQuestionnaireCASPlanning],
+			['CAS_PLANNING', validLpaQuestionnaireIngestionHas, validLpaQuestionnaireCasPlanning],
 			['S78', validLpaQuestionnaireIngestionS78, validLpaQuestionnaireS78],
-			['S20', validLpaQuestionnaireIngestionS20, validLpaQuestionnaireS20]
+			['S20', validLpaQuestionnaireIngestionS20, validLpaQuestionnaireS20],
+			[
+				'CAS_ADVERTISEMENT',
+				validLpaQuestionnaireIngestionCasAdvert,
+				validLpaQuestionnaireCasAdverts
+			]
 		])(
 			'POST valid %s lpaq payload and create lpaq submission',
 			async (_, ingestion, questionnaire) => {
