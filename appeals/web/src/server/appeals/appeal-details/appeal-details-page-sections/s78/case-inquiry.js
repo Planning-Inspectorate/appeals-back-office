@@ -1,5 +1,7 @@
+import { dateIsInTheFuture, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { wrapComponents } from '#lib/mappers/index.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import { startOfDay } from 'date-fns';
 
 /**
  * @param {{appeal: MappedInstructions}} mappedData
@@ -20,6 +22,17 @@ export const getCaseInquiry = (mappedData, appealDetails) => {
 		type: 'summary-list',
 		parameters: { rows: mappedData.appeal.inquiryDetails.display.summaryListItems }
 	};
+	const inquiryStartTime = appealDetails.inquiry?.inquiryStartTime;
+
+	const beginningOfInquiryDay =
+		inquiryStartTime && startOfDay(new Date(inquiryStartTime)).toISOString();
+
+	/** @type {PageComponent | undefined} */
+	const cancelInquiryComponent =
+		beginningOfInquiryDay &&
+		dateIsInTheFuture(dateISOStringToDayMonthYearHourMinute(beginningOfInquiryDay))
+			? mappedData.appeal.cancelInquiry.display.htmlItem
+			: undefined;
 
 	/** @type {PageComponent} */
 	const inquiryEstimatesHeading = {
@@ -38,6 +51,7 @@ export const getCaseInquiry = (mappedData, appealDetails) => {
 	return [
 		wrapComponents(
 			[
+				...(cancelInquiryComponent ? [cancelInquiryComponent] : []),
 				...(inquiryComponent ? [inquiryComponent] : []),
 				inquiryEstimatesHeading,
 				...(inquiryEstimatesComponent ? [inquiryEstimatesComponent] : [])

@@ -55,7 +55,9 @@ const formatAppeal = (appeal, linkedAppeals) => {
 		isHearingSetup: !!appeal.hearing,
 		hasHearingAddress: !!appeal.hearing?.addressId,
 		awaitingLinkedAppeal: null,
-		numberOfResidencesNetChange: appeal.appellantCase?.numberOfResidencesNetChange || null
+		numberOfResidencesNetChange: appeal.appellantCase?.numberOfResidencesNetChange || null,
+		isInquirySetup: !!appeal.inquiry,
+		hasInquiryAddress: !!appeal.inquiry?.addressId
 	};
 };
 
@@ -76,7 +78,15 @@ const formatPersonalListItem = async ({
 	linkType,
 	awaitingLinkedAppeal = false
 }) => {
-	const { reference, lpaQuestionnaire, appellantCase, hearing, procedureType, appealType } = appeal;
+	const {
+		reference,
+		lpaQuestionnaire,
+		appellantCase,
+		hearing,
+		procedureType,
+		appealType,
+		inquiry
+	} = appeal;
 	const appealStatus = currentStatus(appeal);
 	const appealIsCompleteOrWithdrawn =
 		appealStatus === APPEAL_CASE_STATUS.COMPLETE || appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
@@ -102,7 +112,9 @@ const formatPersonalListItem = async ({
 		hasHearingAddress: !!hearing?.addressId,
 		awaitingLinkedAppeal,
 		costsDecision: appealIsCompleteOrWithdrawn ? await formatCostsDecision(appeal) : null,
-		numberOfResidencesNetChange: appellantCase?.numberOfResidencesNetChange ?? null
+		numberOfResidencesNetChange: appellantCase?.numberOfResidencesNetChange ?? null,
+		isInquirySetup: !!inquiry,
+		hasInquiryAddress: !!inquiry?.addressId
 	};
 };
 

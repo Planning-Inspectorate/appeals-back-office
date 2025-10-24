@@ -1219,6 +1219,66 @@ describe('required actions', () => {
 					)
 				).toEqual(['arrangeSiteVisit']);
 			});
+
+			it('should return "setup inquiry" if appeal status is "EVENT"', () => {
+				expect(
+					getRequiredActionsForAppeal(
+						{
+							...appealData,
+							inquiry: null,
+							procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+							appealStatus: APPEAL_CASE_STATUS.EVENT
+						},
+						'detail'
+					)
+				).toEqual(['setupInquiry']);
+			});
+
+			it('should return "add inquiry address" if appeal status is "EVENT"', () => {
+				expect(
+					getRequiredActionsForAppeal(
+						{
+							...appealData,
+							inquiry: {
+								...appealData.inquiry,
+								addressId: null,
+								address: null
+							},
+							procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+							appealStatus: APPEAL_CASE_STATUS.EVENT
+						},
+						'detail'
+					)
+				).toEqual(['addInquiryAddress']);
+			});
+
+			it('should return "setup inquiry" if appeal status is "EVENT" and view is summary', () => {
+				expect(
+					getRequiredActionsForAppeal(
+						{
+							...appealData,
+							procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+							appealStatus: APPEAL_CASE_STATUS.EVENT
+						},
+						'summary'
+					)
+				).toEqual(['setupInquiry']);
+			});
+
+			it('should return "add inquiry address" if appeal status is "EVENT" and view is summary', () => {
+				expect(
+					getRequiredActionsForAppeal(
+						{
+							...appealData,
+							isInquirySetup: true,
+							hasInquiryAddress: null,
+							procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+							appealStatus: APPEAL_CASE_STATUS.EVENT
+						},
+						'summary'
+					)
+				).toEqual(['addInquiryAddress']);
+			});
 		});
 
 		describe('when appeal status is "WITHDRAWN"', () => {

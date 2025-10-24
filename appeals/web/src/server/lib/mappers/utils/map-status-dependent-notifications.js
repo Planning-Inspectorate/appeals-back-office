@@ -46,6 +46,8 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 		'readyForLpaQuestionnaireReview',
 		'addHearingAddress',
 		'setupHearing',
+		'setupInquiry',
+		'addInquiryAddress',
 		'addResidencesNetChange'
 	];
 
@@ -291,6 +293,24 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 					request,
 					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
 				)}" class="govuk-heading-s govuk-notification-banner__link">Progress to inquiry</a>`
+			});
+		}
+		case 'addInquiryAddress': {
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a class="govuk-link" data-cy="add-inquiry-address" href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/inquiry/change/address-details`
+				)}">Add inquiry address</a>`
+			});
+		}
+		case 'setupInquiry': {
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a class="govuk-link" data-cy="setup-inquiry" href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/inquiry/setup/date`
+				)}">Set up inquiry</a>`
 			});
 		}
 	}
