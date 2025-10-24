@@ -61,7 +61,7 @@ export const validAppellantCase = {
 	]
 };
 
-export const validAppellantCaseCASAdverts = {
+export const validAppellantCaseCasAdverts = {
 	casedata: {
 		submissionId: '14960baa-3d0f-4db9-9e84-0c75be891560',
 		advertisedAppeal: true,
@@ -122,7 +122,7 @@ export const validAppellantCaseCASAdverts = {
 	]
 };
 
-export const validAppellantCaseCASPlanning = {
+export const validAppellantCaseCasPlanning = {
 	...validAppellantCase,
 	casedata: {
 		...validAppellantCase.casedata,
@@ -230,7 +230,7 @@ export const validLpaQuestionnaireHas = {
 	documents: validLpaQuestionnaireCommon.documents
 };
 
-export const validLpaQuestionnaireCASPlanning = {
+export const validLpaQuestionnaireCasPlanning = {
 	casedata: {
 		...validLpaQuestionnaireHas.casedata,
 		caseType: 'ZP'
@@ -317,6 +317,53 @@ export const validLpaQuestionnaireS20 = {
 		preserveGrantLoan: true
 	},
 	documents: validLpaQuestionnaireS78.documents
+};
+
+export const validLpaQuestionnaireCasAdverts = {
+	casedata: {
+		...validLpaQuestionnaireCommon.casedata,
+		...validLpaQuestionnaireHas.casedata,
+		caseType: 'ZA',
+		designatedSitesNames: ['SSSI'],
+		affectsScheduledMonument: true,
+		hasProtectedSpecies: true,
+		isAonbNationalLandscape: true,
+		hasEmergingPlan: true,
+		hasStatutoryConsultees: true,
+		consultedBodiesDetails: '',
+		lpaProcedurePreference: 'written',
+		lpaProcedurePreferenceDetails: '',
+		lpaProcedurePreferenceDuration: 1,
+		siteWithinSSSI: true,
+		designatedSiteNameCustom: '',
+		isSiteInAreaOfSpecialControlAdverts: true,
+		wasApplicationRefusedDueToHighwayOrTraffic: true,
+		didAppellantSubmitCompletePhotosAndPlans: true
+	},
+	documents: [
+		{
+			dateCreated: '2024-03-01T13:48:35.847Z',
+			documentId: '001',
+			documentType: 'lpaCostsWithdrawal',
+			documentURI:
+				'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+			filename: 'img2.jpg',
+			mime: 'image/jpeg',
+			originalFilename: 'oimg.jpg',
+			size: 10293
+		},
+		{
+			dateCreated: '2024-03-01T13:48:35.847Z',
+			documentId: '001',
+			documentType: 'lpaCostsApplication',
+			documentURI:
+				'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+			filename: 'img3.jpg',
+			mime: 'image/jpeg',
+			originalFilename: 'oimg.jpg',
+			size: 10293
+		}
+	]
 };
 
 export const validRepresentationIp = {
@@ -877,6 +924,52 @@ export const validLpaQuestionnaireIngestionHas = {
 		id: 100
 	}
 };
+
+export const validLpaQuestionnaireIngestionCasAdvert = {
+	...validLpaQuestionnaireIngestionCommon,
+	...validLpaQuestionnaireIngestionHas,
+	data: {
+		...validLpaQuestionnaireIngestionCommon.data,
+		...validLpaQuestionnaireIngestionHas.data,
+		lpaQuestionnaire: {
+			...validLpaQuestionnaireIngestionCommon.data.lpaQuestionnaire,
+			...validLpaQuestionnaireIngestionHas.data.lpaQuestionnaire,
+			connectOrCreate: {
+				...validLpaQuestionnaireIngestionCommon.data.lpaQuestionnaire.connectOrCreate,
+				...validLpaQuestionnaireIngestionHas.data.lpaQuestionnaire.connectOrCreate,
+				create: {
+					...validLpaQuestionnaireIngestionCommon.data.lpaQuestionnaire.connectOrCreate.create,
+					...validLpaQuestionnaireIngestionHas.data.lpaQuestionnaire.connectOrCreate.create,
+					affectsScheduledMonument: true,
+					hasProtectedSpecies: true,
+					isAonbNationalLandscape: true,
+					hasEmergingPlan: true,
+					designatedSiteNames: {
+						create: [
+							{
+								designatedSite: {
+									connect: {
+										key: 'SSSI'
+									}
+								}
+							}
+						]
+					},
+					designatedSiteNameCustom: undefined,
+					hasStatutoryConsultees: true,
+					consultedBodiesDetails: '',
+					lpaProcedurePreference: 'written',
+					lpaProcedurePreferenceDetails: '',
+					lpaProcedurePreferenceDuration: 1,
+					isSiteInAreaOfSpecialControlAdverts: true,
+					wasApplicationRefusedDueToHighwayOrTraffic: true,
+					didAppellantSubmitCompletePhotosAndPlans: true
+				}
+			}
+		}
+	}
+};
+
 export const validLpaQuestionnaireIngestionS78 = {
 	...validLpaQuestionnaireIngestionCommon,
 	...validLpaQuestionnaireIngestionHas,
