@@ -409,6 +409,19 @@ export const appealData = {
 			postCode: 'MD21 5XY'
 		}
 	},
+	inquiry: {
+		inquiryId: 0,
+		inquiryEndTime: undefined,
+		inquiryStartTime: '2023-10-09T08:38:00.000Z',
+		addressId: 99,
+		address: {
+			addressId: 1,
+			addressLine1: '96 The Avenue',
+			addressLine2: 'Maidstone',
+			county: 'Kent',
+			postCode: 'MD21 5XY'
+		}
+	},
 	createdAt: '2023-05-21T10:27:06.626Z',
 	startedAt: '2023-05-23T10:27:06.626Z',
 	validAt: '2023-05-23T10:27:06.626Z',
@@ -4286,6 +4299,21 @@ export const appealDataToGetRequiredActions = {
 				}
 			}
 		}
+	},
+	addInquiryAddress: {
+		...baseAppealDataToGetRequiredActions,
+		inquiry: {
+			addressId: null,
+			address: null
+		},
+		appealStatus: APPEAL_CASE_STATUS.EVENT,
+		procedureType: APPEAL_CASE_PROCEDURE.INQUIRY
+	},
+	setupInquiry: {
+		...baseAppealDataToGetRequiredActions,
+		inquiry: null,
+		appealStatus: APPEAL_CASE_STATUS.EVENT,
+		procedureType: APPEAL_CASE_PROCEDURE.INQUIRY
 	}
 };
 

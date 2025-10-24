@@ -1,4 +1,4 @@
-We have received the local planning authority's questionnaire, all statements and comments from interested parties.
+We did not receive any statements or any comments from interested parties.
 
 {% include 'parts/appeal-details.md' %}
 

@@ -12,6 +12,7 @@ import { mapHearingEstimates } from './submappers/hearing-hearing-estimates.js';
 import { mapSetUpHearing } from './submappers/hearing-set-up-hearing.js';
 import { mapHorizonReference } from './submappers/horizon-reference.mapper.js';
 import { mapAddInquiryEstimates } from './submappers/inquiry-add-inquiry-estimates.js';
+import { mapCancelInquiry } from './submappers/inquiry-cancel-inquiry.js';
 import { mapInquiryDate } from './submappers/inquiry-date.mapper.js';
 import { mapInquiryDetails } from './submappers/inquiry-details.js';
 import { mapInquiryEstimates } from './submappers/inquiry-inquiry-estimates.js';
@@ -54,5 +55,6 @@ export const submaps = {
 	netResidenceGainOrLoss: mapNetResidenceGainOrLoss,
 	appellantProofOfEvidence: mapAppellantProofOfEvidence,
 	lpaProofOfEvidence: mapLPAProofOfEvidence,
-	horizonReference: mapHorizonReference
+	horizonReference: mapHorizonReference,
+	cancelInquiry: mapCancelInquiry
 };
