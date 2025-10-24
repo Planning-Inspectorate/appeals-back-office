@@ -402,6 +402,13 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 						lpaQuestionnaire: {
 							status: 'not received'
 						}
+					},
+					inquiry: {
+						inquiryId: 0,
+						inquiryEndTime: undefined,
+						inquiryStartTime: '2023-10-09T08:38:00.000Z',
+						addressId: null,
+						address: null
 					}
 				});
 			nock('http://test/')
