@@ -3,12 +3,17 @@ import { simulateStartAppeal } from '#endpoints/test-utils/test-utils.controller
 import { fullPlanningAppeal } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
-import { mockReq, mockRes } from '@pins/pdf-service-api/test/utils/mocks.js';
+import express from 'express';
+import supertest from 'supertest';
 import { request } from '../../../app-test.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 const baseDate = '2025-10-23T00:00:00.000Z';
 jest.useFakeTimers({ doNotFake: ['performance'] }).setSystemTime(new Date(baseDate));
+
+const app = express();
+app.post('/:appealReference/start-appeal', simulateStartAppeal);
+const testApiRequest = supertest(app);
 
 describe('test utils routes', () => {
 	beforeEach(() => {
@@ -286,47 +291,42 @@ describe('test utils routes', () => {
 			});
 		});
 	});
+
 	describe('POST /:appealReference/start-appeal', () => {
 		test('returns 201 for valid appeal reference', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
-			mockReq.params = { appealReference: { appealReference: '1' } };
-			const mockResponse = mockRes();
 
-			await simulateStartAppeal(mockReq, mockResponse);
+			const response = await testApiRequest.post('/1/start-appeal');
 
-			expect(mockResponse.status).toHaveBeenCalledWith(201);
-			expect(mockResponse.send).toHaveBeenCalledWith({
-				appellantStatementDueDate: new Date('2025-11-27T23:59:00.000Z'),
-				finalCommentsDueDate: new Date('2025-12-11T23:59:00.000Z'),
-				ipCommentsDueDate: new Date('2025-11-27T23:59:00.000Z'),
-				lpaQuestionnaireDueDate: new Date('2025-10-30T23:59:00.000Z'),
-				lpaStatementDueDate: new Date('2025-11-27T23:59:00.000Z'),
-				s106ObligationDueDate: new Date('2025-12-11T23:59:00.000Z')
+			expect(response.status).toEqual(201);
+			expect(response.body).toEqual({
+				appellantStatementDueDate: '2025-11-27T23:59:00.000Z',
+				finalCommentsDueDate: '2025-12-11T23:59:00.000Z',
+				ipCommentsDueDate: '2025-11-27T23:59:00.000Z',
+				lpaQuestionnaireDueDate: '2025-10-30T23:59:00.000Z',
+				lpaStatementDueDate: '2025-11-27T23:59:00.000Z',
+				s106ObligationDueDate: '2025-12-11T23:59:00.000Z'
 			});
 		});
 
 		test('returns 400 for invalid appeal reference', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(null);
-			mockReq.params = { appealReference: { appealReference: '1' } };
-			const mockResponse = mockRes();
 
-			await simulateStartAppeal(mockReq, mockResponse);
-
-			expect(mockResponse.status).toHaveBeenCalledWith(400);
-			expect(mockResponse.send).toHaveBeenCalledWith(false);
+			const response = await testApiRequest.post('/1/start-appeal');
+			expect(databaseConnector.appeal.findUnique).toHaveBeenCalled();
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
 		});
 
 		test('returns 400 for no appeal type', async () => {
 			const testAppeal = fullPlanningAppeal;
 			testAppeal.appealType = null;
 			databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
-			mockReq.params = { appealReference: { appealReference: '1' } };
-			const mockResponse = mockRes();
 
-			await simulateStartAppeal(mockReq, mockResponse);
+			const response = await testApiRequest.post('/1/start-appeal');
 
-			expect(mockResponse.status).toHaveBeenCalledWith(400);
-			expect(mockResponse.send).toHaveBeenCalledWith(false);
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
 		});
 	});
 });
