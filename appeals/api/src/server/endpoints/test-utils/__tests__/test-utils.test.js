@@ -7,6 +7,9 @@ import { mockReq, mockRes } from '@pins/pdf-service-api/test/utils/mocks.js';
 import { request } from '../../../app-test.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 
+const baseDate = '2025-10-23T00:00:00.000Z';
+jest.useFakeTimers({ doNotFake: ['performance'] }).setSystemTime(new Date(baseDate));
+
 describe('test utils routes', () => {
 	beforeEach(() => {
 		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
