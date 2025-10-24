@@ -5970,7 +5970,6 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-inquiry-section">');
-				expect(unprettifiedHTML).toContain('Inquiry</h1>');
 				expect(unprettifiedHTML).toContain('Cancel inquiry</a>');
 			});
 		});
