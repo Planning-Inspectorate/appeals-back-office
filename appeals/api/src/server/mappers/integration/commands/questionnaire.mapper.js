@@ -1,6 +1,8 @@
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
 /** @typedef {import('@pins/appeals.api').Schema.DesignatedSite} DesignatedSite */
 
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+
 /**
  *
  * @param {Pick<LPAQuestionnaireCommand, 'casedata'>} command
@@ -10,34 +12,42 @@
 export const mapQuestionnaireIn = (command, designatedSites) => {
 	const casedata = command.casedata;
 
-	const isS20 = casedata.caseType === 'Y';
-	const isS78 = casedata.caseType === 'W';
+	const isS20 = casedata.caseType === APPEAL_CASE_TYPE.Y;
+	const isS78 = casedata.caseType === APPEAL_CASE_TYPE.W;
 
 	//@ts-ignore
 	const listedBuildingsData = mapListedBuildings(casedata, isS78 || isS20);
 
 	switch (casedata.caseType) {
-		case 'D': // HAS - schema includes common and has fields
-		case 'ZP': // CAS_PLANNING - schema includes common and has fields
-			//@ts-ignore - values defined before type narrowing
+		case APPEAL_CASE_TYPE.D: // HAS - schema includes common and has fields
+		case APPEAL_CASE_TYPE.ZP: // CAS_PLANNING - schema includes common and has fields
 			return {
 				...generateCommonSchemaFields(casedata),
 				...generateHasSchemaFields(casedata, listedBuildingsData)
 			};
 
-		case 'W': // S78 - schema includes common, has and s78 fields
+		case APPEAL_CASE_TYPE.W: // S78 - schema includes common, has and s78 fields
 			return {
 				...generateCommonSchemaFields(casedata),
 				...generateHasSchemaFields(casedata, listedBuildingsData),
+				//@ts-ignore
 				...generateS78SchemaFields(casedata, designatedSites)
 			};
-		case 'Y': // S20 - schema includes common, has and s78 fields
+		case APPEAL_CASE_TYPE.Y: // S20 - schema includes common, has and s78 fields
 			return {
 				...generateCommonSchemaFields(casedata),
 				...generateHasSchemaFields(casedata, listedBuildingsData),
+				//@ts-ignore
 				...generateS78SchemaFields(casedata, designatedSites),
 				preserveGrantLoan: casedata.preserveGrantLoan,
 				historicEnglandConsultation: casedata.consultHistoricEngland
+			};
+		case APPEAL_CASE_TYPE.ZA: // CAS_ADVERTISEMENT - schema includes common, has and adverts fields
+			return {
+				...generateCommonSchemaFields(casedata),
+				...generateHasSchemaFields(casedata, listedBuildingsData),
+				//@ts-ignore
+				...generateCasAdvertSchemaFields(casedata, designatedSites)
 			};
 
 		default:
@@ -142,6 +152,30 @@ const generateS78SchemaFields = (casedata, designatedSites) => {
 		lpaProcedurePreference: casedata.lpaProcedurePreference,
 		lpaProcedurePreferenceDetails: casedata.lpaProcedurePreferenceDetails,
 		lpaProcedurePreferenceDuration: casedata.lpaProcedurePreferenceDuration
+	};
+};
+
+/**
+ *
+ * @param {import('@planning-inspectorate/data-model').Schemas.LPAQCasAdvertSubmissionProperties} casedata
+ * @param {DesignatedSite[]} designatedSites
+ * @returns
+ */
+const generateCasAdvertSchemaFields = (casedata, designatedSites) => {
+	return {
+		affectsScheduledMonument: casedata.affectsScheduledMonument,
+		isAonbNationalLandscape: casedata.isAonbNationalLandscape,
+		...mapDesignatedSiteNames(casedata, designatedSites),
+		consultedBodiesDetails: casedata.consultedBodiesDetails,
+		hasProtectedSpecies: casedata.hasProtectedSpecies,
+		hasStatutoryConsultees: casedata.hasStatutoryConsultees,
+		hasEmergingPlan: casedata.hasEmergingPlan,
+		lpaProcedurePreference: casedata.lpaProcedurePreference,
+		lpaProcedurePreferenceDetails: casedata.lpaProcedurePreferenceDetails,
+		lpaProcedurePreferenceDuration: casedata.lpaProcedurePreferenceDuration,
+		isSiteInAreaOfSpecialControlAdverts: casedata.isSiteInAreaOfSpecialControlAdverts,
+		wasApplicationRefusedDueToHighwayOrTraffic: casedata.wasApplicationRefusedDueToHighwayOrTraffic,
+		didAppellantSubmitCompletePhotosAndPlans: casedata.didAppellantSubmitCompletePhotosAndPlans
 	};
 };
 
