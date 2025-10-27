@@ -132,6 +132,9 @@ describe('inquiry routes', () => {
 					templateName: 'inquiry-set-up'
 				});
 
+				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(fullPlanningAppeal.id);
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'inquiry', 'Create');
+
 				expect(response.status).toEqual(201);
 			});
 
@@ -152,6 +155,8 @@ describe('inquiry routes', () => {
 						userId: 1
 					}
 				});
+
+				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(fullPlanningAppeal.id);
 
 				expect(response.status).toEqual(201);
 			});
