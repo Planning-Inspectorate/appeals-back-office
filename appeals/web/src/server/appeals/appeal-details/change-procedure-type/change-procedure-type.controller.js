@@ -17,7 +17,7 @@ import { isEmpty, pick } from 'lodash-es';
  * @property {string} event-time-minute
  * @property {string} dateKnown
  * @property {string} estimationYesNo
- * @property {string} estimationDays
+ * @property {string?} estimationDays
  * @property {string} addressKnown
  * @property {string} addressLine1
  * @property {string} addressLine2
@@ -60,6 +60,10 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
 				appealDetails.hearing?.hearingStartTime
 			);
 
+			if (sessionValues.appealProcedure === sessionValues.existingAppealProcedure) {
+				sessionValues.dateKnown = appealDetails.hearing?.hearingStartTime ? 'yes' : 'no';
+			}
+
 			if (typeof sessionValues.dateKnown !== 'string' && sessionValues.dateKnown !== undefined) {
 				sessionValues.dateKnown = hearingDate ? 'yes' : 'no';
 			}
@@ -81,6 +85,24 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
 			sessionValues['event-time-hour'] = sessionValues['event-time-hour'] ?? inquiryDate.hour;
 			sessionValues['event-time-minute'] = sessionValues['event-time-minute'] ?? inquiryDate.minute;
 
+			if (sessionValues.appealProcedure === sessionValues.existingAppealProcedure) {
+				sessionValues.dateKnown = sessionValues.dateKnown
+					? sessionValues.dateKnown
+					: appealDetails.inquiry?.inquiryStartTime
+					? 'yes'
+					: 'no';
+				sessionValues.estimationYesNo = sessionValues.estimationYesNo
+					? sessionValues.estimationYesNo
+					: appealDetails.inquiry?.estimatedDays
+					? 'yes'
+					: 'no';
+				sessionValues.addressKnown = sessionValues.addressKnown
+					? sessionValues.addressKnown
+					: appealDetails.inquiry?.address
+					? 'yes'
+					: 'no';
+			}
+
 			if (
 				typeof sessionValues.estimationYesNo !== 'string' &&
 				sessionValues.estimationYesNo !== undefined
@@ -89,7 +111,9 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
 			}
 
 			sessionValues.estimationDays =
-				sessionValues.estimationDays ?? appealDetails.inquiry?.estimatedDays;
+				sessionValues.estimationYesNo === 'no'
+					? undefined
+					: sessionValues.estimationDays ?? appealDetails.inquiry?.estimatedDays;
 
 			if (
 				typeof sessionValues.addressKnown !== 'string' &&
@@ -149,6 +173,9 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
 	sessionValues.appealTimetable.planningObligationDueDate =
 		sessionValues.appealTimetable.planningObligationDueDate ??
 		appealDetails.appealTimetable.planningObligationDueDate;
+	sessionValues.appealTimetable.proofOfEvidenceAndWitnessesDueDate =
+		sessionValues.appealTimetable.proofOfEvidenceAndWitnessesDueDate ??
+		appealDetails.appealTimetable.proofOfEvidenceAndWitnessesDueDate;
 
 	if (!request.session.changeProcedureType) {
 		request.session.changeProcedureType = {};
