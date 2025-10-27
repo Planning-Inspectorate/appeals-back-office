@@ -610,6 +610,12 @@ exports[`LPA Questionnaire review GET / should render the CAS advert LPA Questio
                                     </ul>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Did you refuse the application because of highway or traffic public safety?</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/lpa-questionnaire/1/public-safety/change"
+                                    data-cy="change-public-safety">Change<span class="govuk-visually-hidden"> Did you refuse the application because of highway or traffic public safety? (4. Planning officer’s report and supplementary documents)</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Relevant policies from statutory development plan</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-development-plan-policies">Add<span class="govuk-visually-hidden"> Relevant policies from statutory development plan (4. Planning officer’s report and supplementary documents)</span></a>

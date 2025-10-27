@@ -195,6 +195,8 @@ export const AUDIT_TRAIL_LPAQ_DESIGNATED_SITE_NAMES_UPDATED =
 	'In, near or likely to effect designated sites changed';
 export const AUDIT_TRAIL_LPAQ_IS_SITE_IN_AREA_OF_SPECIAL_CONTROL_ADVERTS_UPDATED =
 	'‘Is the site in an area of special control of advertisements?’ updated to {replacement0}';
+export const AUDIT_TRAIL_LPAQ_WAS_APPLICATION_REFUSED_DUE_TO_HIGHWAY_OR_TRAFFIC_UPDATED =
+	'‘Did you refuse the application because of highway or traffic public safety?’ updated to {replacement0}';
 export const AUDIT_TRAIL_TEAM_ASSIGNED = 'Case team {replacement0} assigned';
 export const AUDIT_TRAIL_RECORD_MISSED_SITE_VISIT = '{replacement0} missed the site visit';
 

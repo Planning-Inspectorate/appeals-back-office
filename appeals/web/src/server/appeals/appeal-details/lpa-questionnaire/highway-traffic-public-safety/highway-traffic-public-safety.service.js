@@ -8,7 +8,7 @@ import { convertFromYesNoToBoolean } from '#lib/boolean-formatter.js';
  * @param {string} inputData
  * @returns {Promise<{}>}
  */
-export function changeSpecialControlOfAdvertisement(
+export function changeHighwayTrafficPublicSafety(
 	apiClient,
 	appealId,
 	lpaQuestionnaireId,
@@ -18,7 +18,7 @@ export function changeSpecialControlOfAdvertisement(
 
 	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
 		json: {
-			isSiteInAreaOfSpecialControlAdverts: formattedValue
+			wasApplicationRefusedDueToHighwayOrTraffic: formattedValue
 		}
 	});
 }
