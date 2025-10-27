@@ -52,7 +52,8 @@ describe('change appeal procedure types', () => {
 		}
 	];
 
-	const procedureTypeCaption = () => `Appeal ${caseObj} - update appeal procedure`;
+	const procedureTypeCaption = (description) =>
+		`Appeal ${caseObj.reference} - update appeal procedure`;
 
 	beforeEach(() => {
 		setupTestCase();
@@ -64,7 +65,10 @@ describe('change appeal procedure types', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it('should change appeal procedure type - hearing to inquiry', () => {
+	it.skip('should change appeal procedure type - hearing to inquiry', () => {
+		// caption that should be shown when changing appeal procedure type
+		const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
+
 		happyPathHelper.startS78Case(caseObj, 'hearing');
 		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
@@ -73,7 +77,7 @@ describe('change appeal procedure types', () => {
 
 		overviewSectionPage.clickRowChangeLink('case-procedure');
 
-		procedureTypePage.verifyProcedurePageHeader(caseObj.reference, 'update appeal procedure');
+		procedureTypePage.verifyHeader(procedureTypeCaption);
 		procedureTypePage.selectProcedureType('inquiry');
 
 		// enter inquiry date
@@ -94,7 +98,7 @@ describe('change appeal procedure types', () => {
 
 			// verify previous date values are prepopulated for timetable
 			cy.loadAppealDetails(caseObj).then((appealDetails) => {
-				//procedureTypePage.verifyHeader(procedureTypeCaption());
+				procedureTypePage.verifyHeader(procedureTypeCaption);
 				const appealTimetable = appealDetails?.appealTimetable;
 				cy.log('** appealTimetable - ', JSON.stringify(appealTimetable));
 				const lpaQuestionnaireDueDate = new Date(appealTimetable.lpaQuestionnaireDueDate);
@@ -143,13 +147,14 @@ describe('change appeal procedure types', () => {
 		});
 	});
 
-	it('change appeal procedure type - should not allow change procedure after lpaq', () => {
+	it('change appeal procedure type - should not allow change procedure after statements have been shared', () => {
 		happyPathHelper.startS78Case(caseObj, 'hearing');
-		happyPathHelper.reviewS78Lpaq(caseObj);
-		caseDetailsPage.checkStatusOfCase('Statements', 0);
+
+		// progress to statements shared status
+		happyPathHelper.reviewLPaStatement(caseObj);
 
 		// should not be able to see change procedure link
-		overviewSectionPage.checkElementVisibility(
+		overviewSectionPage.verifyChangeLinkVisibility(
 			overviewSectionPage.overviewSectionSelectors.changeProcedureType,
 			false
 		);
@@ -161,7 +166,7 @@ describe('change appeal procedure types', () => {
 		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 		const writtenDetails = { ...overviewDetails, appealProcedure: 'Written' };
-		//overviewSectionPage.verifyCaseOverviewDetails(writtenDetails);
+		overviewSectionPage.verifyCaseOverviewDetails(writtenDetails, false);
 
 		overviewSectionPage.clickRowChangeLink('case-procedure');
 

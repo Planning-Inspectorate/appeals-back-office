@@ -186,7 +186,7 @@ export class InquirySectionPage extends CaseDetailsPage {
 
 	verifyInquiryTimetableRowChangeLinkVisible(timetableItems) {
 		timetableItems.forEach((item) => {
-			caseDetailsPage.verifyChangeLinkIsDisplayed(item.row);
+			caseDetailsPage.verifyChangeLinkVisibility(item.row);
 		});
 	}
 

@@ -11,7 +11,7 @@ export class OverviewSectionPage extends CaseDetailsPage {
 		linkedAppeals: '.appeal-linked-appeals .govuk-summary-list__value',
 		relatedAppeals: '.appeal-other-appeals .govuk-summary-list__value',
 		netGainResidential: '.appeal-net-residence-change .govuk-summary-list__value',
-		changeProcedureType: '[data-cy="change-case-procedure"]'
+		changeProcedureType: 'case-procedure'
 	};
 
 	overviewSectionElements = {
