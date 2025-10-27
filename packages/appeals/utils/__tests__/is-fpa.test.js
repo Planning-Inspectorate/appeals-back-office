@@ -26,9 +26,7 @@ describe('isFPA', () => {
 		expect(() => isFPA(null)).toThrow('Appeal type - null not defined in isFPA baseCaseType');
 	});
 
-	it('throws an error for unknown appealType', () => {
-		expect(() => isFPA(APPEAL_CASE_TYPE.C)).toThrow(
-			'Appeal type - C not defined in isFPA baseCaseType'
-		);
+	it('returns true for enforcement notice appealType', () => {
+		expect(isFPA(APPEAL_CASE_TYPE.C)).toBe(true);
 	});
 });

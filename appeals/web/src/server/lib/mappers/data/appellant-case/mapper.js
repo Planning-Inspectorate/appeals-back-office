@@ -3,6 +3,7 @@ import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { userHasPermission } from '../../utils/permissions.mapper.js';
 import { submaps as casAdvertSubmaps } from './cas-advert.js';
 import { submaps as casSubmaps } from './cas.js';
+import { submaps as enforcementNoticeSubmaps } from './enforcement-notice.js';
 import { submaps as hasSubmaps } from './has.js';
 import { submaps as s20Submaps } from './s20.js';
 import { submaps as s78Submaps } from './s78.js';
@@ -25,7 +26,8 @@ const submaps = {
 	[APPEAL_TYPE.S78]: s78Submaps,
 	[APPEAL_TYPE.PLANNED_LISTED_BUILDING]: s20Submaps,
 	[APPEAL_TYPE.CAS_PLANNING]: casSubmaps,
-	[APPEAL_TYPE.CAS_ADVERTISEMENT]: casAdvertSubmaps
+	[APPEAL_TYPE.CAS_ADVERTISEMENT]: casAdvertSubmaps,
+	[APPEAL_TYPE.ENFORCEMENT_NOTICE]: enforcementNoticeSubmaps
 };
 
 /**

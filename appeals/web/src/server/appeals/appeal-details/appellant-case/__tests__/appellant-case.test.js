@@ -12,6 +12,7 @@ import {
 	appealData,
 	appealDataCasAdvert,
 	appealDataCasPlanning,
+	appealDataEnforcementNotice,
 	appealDataFullPlanning,
 	appealDataListedBuilding,
 	appellantCaseDataIncompleteOutcome,
@@ -446,6 +447,63 @@ describe('appellant-case', () => {
 				expect(unprettifiedElement.innerHTML).not.toContain('Continue</button>');
 			});
 		}
+
+		it('should render the appellant case page with the expected content (Enforcement notice)', async () => {
+			nock('http://test/')
+				.get('/appeals/2')
+				.reply(200, {
+					...appealDataEnforcementNotice,
+					appealId: 2
+				});
+			nock('http://test/')
+				.get('/appeals/2/appellant-cases/0')
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+				});
+
+			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appellant case</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Design and access statement</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('New plans or drawings</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Plans, drawings and list of plans</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the status of your planning obligation?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Planning obligation</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Is the appeal site part of an agricultural holding?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are you a tenant of the agricultural holding?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Are there any other tenants?</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Separate ownership certificate and agricultural land declaration</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Other new supporting documents</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How would you prefer us to decide your appeal?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Why would you prefer this appeal procedure?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How many days would you expect the inquiry to last?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How many witnesses would you expect to give evidence at the inquiry?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are there other appeals linked to your development?</dt>'
+			);
+		});
 
 		describe('notification banners', () => {
 			it('should render a "LPA application reference" success notification banner when the planning application reference is updated', async () => {

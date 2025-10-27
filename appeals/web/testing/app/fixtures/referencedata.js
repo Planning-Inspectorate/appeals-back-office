@@ -491,6 +491,11 @@ export const appealDataCasAdvert = {
 	appealType: 'CAS advert'
 };
 
+export const appealDataEnforcementNotice = {
+	...appealData,
+	appealType: 'Enforcement notice appeal'
+};
+
 export const appellantCaseDataNotValidated = {
 	appealId: 1,
 	appealReference: 'TEST/919276',

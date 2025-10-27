@@ -70,7 +70,10 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_HEARING_POST_MVP === 'true',
 		featureFlagSearchCaseOfficer:
 			environment.FEATURE_FLAG_SEARCH_CASE_OFFICER &&
-			environment.FEATURE_FLAG_SEARCH_CASE_OFFICER === 'true'
+			environment.FEATURE_FLAG_SEARCH_CASE_OFFICER === 'true',
+		featureFlagEnforcementNotice:
+			environment.FEATURE_FLAG_ENFORCEMENT_NOTICE &&
+			environment.FEATURE_FLAG_ENFORCEMENT_NOTICE === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	enableTestEndpoints:

@@ -61,6 +61,7 @@ variable "apps_config" {
       featureFlagAutoAssignTeam         = bool
       featureFlagCancelSiteVisit        = bool
       featureFlagSearchCaseOfficer      = bool
+      featureFlagEnforcementNotice      = bool
     })
 
     logging = object({

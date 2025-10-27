@@ -993,6 +993,17 @@ const appealsReadyToIssueDecision = [
 	})
 ];
 
+export const enforcementAppeals = [
+	appealFactory({
+		typeShorthand: APPEAL_CASE_TYPE.C,
+		assignCaseOfficer: false,
+		status: {
+			status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+			createdAt: getPastDate({ days: 5 })
+		}
+	})
+];
+
 const appealsData = [
 	...appealsReadyToStart,
 	...newAppeals,
@@ -1001,7 +1012,8 @@ const appealsData = [
 	...newS20Appeals,
 	...newCasPlanningAppeals,
 	...newCasAdvertAppeals,
-	...appealsReadyToIssueDecision
+	...appealsReadyToIssueDecision,
+	...enforcementAppeals
 ];
 
 /**
