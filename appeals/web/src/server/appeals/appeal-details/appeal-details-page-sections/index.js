@@ -30,6 +30,11 @@ export function generateAppealDetailsSections(appealDetails, mappedData, session
 				throw new Error('Feature flag inactive for S78');
 			}
 			return generateS78AppealDetailsPageComponents(appealDetails, mappedData, session);
+		case APPEAL_TYPE.ENFORCEMENT_NOTICE:
+			if (!isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
+				throw new Error('Feature flag inactive for Enforcement Notice');
+			}
+			return generateS78AppealDetailsPageComponents(appealDetails, mappedData, session);
 		default:
 			throw new Error('Invalid appealType, unable to generate display page');
 	}

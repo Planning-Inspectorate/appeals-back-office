@@ -52,6 +52,7 @@ apps_config = {
     featureFlagAutoAssignTeam         = true
     featureFlagCancelSiteVisit        = true
     featureFlagSearchCaseOfficer      = true
+    featureFlagEnforcementNotice      = true
   }
 
   use_system_test_bc_for_change_lpa = true
