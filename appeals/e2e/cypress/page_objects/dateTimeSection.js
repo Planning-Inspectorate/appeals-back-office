@@ -38,6 +38,7 @@ export class DateTimeSection extends Page {
 		eventDate: '#event-date-',
 		inquiry: '#inquiry',
 		hearing: '#hearing',
+		event: '#event',
 		planningObligationDueDate: '#planning-obligation-due'
 	};
 
@@ -151,6 +152,10 @@ export class DateTimeSection extends Page {
 
 	verifyPrepopulatedInquiryValues(expectedValues) {
 		this.#verifyPrepopulatedValues(this.selectorPrefix.inquiry, expectedValues);
+	}
+
+	verifyPrepopulatedEventValues(expectedValues) {
+		this.#verifyPrepopulatedValues(this.selectorPrefix.event, expectedValues);
 	}
 
 	#verifyPrepopulatedValues(dateSelector, expectedValues, includeTime = true) {

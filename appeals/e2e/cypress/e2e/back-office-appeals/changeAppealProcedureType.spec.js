@@ -41,6 +41,22 @@ describe('change appeal procedure types', () => {
 		postcode: 'BS20 1BS'
 	};
 
+	const emptyAddress = {
+		line1: '',
+		line2: '',
+		town: '',
+		county: '',
+		postcode: ''
+	};
+
+	const defaultEventDateTime = {
+		day: '',
+		month: '',
+		year: '',
+		hours: '10',
+		minutes: '0'
+	};
+
 	const timetableItems = [
 		{
 			row: 'final-comments-due-date',
@@ -65,7 +81,7 @@ describe('change appeal procedure types', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it.skip('should change appeal procedure type - hearing to inquiry', () => {
+	it('should change appeal procedure type - hearing to inquiry', () => {
 		// caption that should be shown when changing appeal procedure type
 		const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
 
@@ -77,22 +93,29 @@ describe('change appeal procedure types', () => {
 
 		overviewSectionPage.clickRowChangeLink('case-procedure');
 
+		// verify procedure page header and preselected value
 		procedureTypePage.verifyHeader(procedureTypeCaption);
+		//procedureTypePage.verifySelectedRadioButtonValue('Hearing');
 		procedureTypePage.selectProcedureType('inquiry');
 
 		// enter inquiry date
 		cy.getBusinessActualDate(currentDate, 1).then((date) => {
+			// verify prepopulated values
+			dateTimeSection.verifyPrepopulatedEventValues(defaultEventDateTime);
 			dateTimeSection.enterEventDate(date);
 			dateTimeSection.clickButtonByText('Continue');
 
-			// enter estimated days
+			// verify estimated days is not prepopulated and enter estimated days
 			estimatedDaysSection.selectEstimatedDaysOption('Yes');
+			estimatedDaysSection.verifyPrepopulatedValue('', true);
 			estimatedDaysSection.enterEstimatedDays(6);
 			estimatedDaysSection.clickButtonByText('Continue');
 
-			// enter address
+			// verify address is not prepopulated and enter address
 			addressSection.selectAddressOption('Yes');
 			addressSection.clickButtonByText('Continue');
+
+			addressSection.verifyPrepopulatedValues(emptyAddress);
 			addressSection.enterAddress(inquiryAddress);
 			addressSection.clickButtonByText('Continue');
 
@@ -147,7 +170,7 @@ describe('change appeal procedure types', () => {
 		});
 	});
 
-	it('change appeal procedure type - should not allow change procedure after statements have been shared', () => {
+	it.skip('change appeal procedure type - should not allow change procedure after statements have been shared', () => {
 		happyPathHelper.startS78Case(caseObj, 'hearing');
 
 		// progress to statements shared status

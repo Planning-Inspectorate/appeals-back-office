@@ -443,4 +443,13 @@ export class Page {
 			.filter(this.selectors.summaryListActions)
 			.should(state);
 	}
+
+	verifySelectedRadioButtonValue(value) {
+		cy.get(`${this.selectors.radio} input:checked`)
+			.invoke('val')
+			.then((selectedValue) => {
+				cy.log('Selected value:', selectedValue);
+				expect(selectedValue).to.eq(value.toLowerCase());
+			});
+	}
 }

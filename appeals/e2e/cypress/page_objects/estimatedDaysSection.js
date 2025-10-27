@@ -39,10 +39,14 @@ export class EstimatedDaysSection extends CaseDetailsPage {
 		this.elements.radioButton().contains(option, { matchCase: false }).click();
 	}
 
-	verifyPrepopulatedValue(expectedValue) {
+	verifyPrepopulatedValue(expectedValue, updatingProcedure = false) {
+		// days selector is different depending on if setting up or updating procedure type
+		const daysInputSelector = updatingProcedure
+			? this.selectors.estimatedDaysInput
+			: this.selectors.inquiryEstimatedDaysInput;
+
 		// verify estimated days
-		this.elements
-			.inquiryEstimatedDaysInput()
+		cy.get(daysInputSelector)
 			.invoke('prop', 'value')
 			.then((text) => {
 				expect(formatAsWholeNumber(text)).to.equal(expectedValue);
