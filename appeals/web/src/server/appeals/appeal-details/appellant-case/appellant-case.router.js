@@ -30,6 +30,7 @@ import applicationDevelopmentTypeRouter from './application-development-type/app
 import applicationOutcomeRouter from './application-outcome/application-outcome.router.js';
 import applicationSubmissionDateRouter from './application-submission-date/application-submission-date.router.js';
 import developmentDescriptionRouter from './development-description/development-description.router.js';
+import gridReferenceRouter from './grid-reference/grid-reference.router.js';
 import highwayLandRouter from './highway-land/highway-land.router.js';
 import landownerPermissionRouter from './landowner-permission/landowner-permission.router.js';
 import outcomeIncompleteRouter from './outcome-incomplete/outcome-incomplete.router.js';
@@ -95,6 +96,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	siteAddressRouter
+);
+router.use(
+	'/grid-reference',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	gridReferenceRouter
 );
 router.use(
 	'/advertisement-in-position',

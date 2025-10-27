@@ -13,6 +13,8 @@ export const mapAppellantCaseIn = (command) => {
 	const casedata = command.casedata;
 	const isS78 = casedata.caseType === APPEAL_CASE_TYPE.W;
 	const isS20 = casedata.caseType === APPEAL_CASE_TYPE.Y;
+	const isAdverts =
+		casedata.caseType === APPEAL_CASE_TYPE.ZA || casedata.caseType === APPEAL_CASE_TYPE.H;
 
 	// @ts-ignore
 	const sharedFields = createSharedS20S78Fields(command);
@@ -49,6 +51,8 @@ export const mapAppellantCaseIn = (command) => {
 		siteSafetyDetails,
 		siteAreaSquareMetres: casedata.siteAreaSquareMetres,
 		floorSpaceSquareMetres: casedata.floorSpaceSquareMetres,
+		siteGridReferenceEasting: casedata.siteGridReferenceEasting,
+		siteGridReferenceNorthing: casedata.siteGridReferenceNorthing,
 		ownsAllLand: casedata.ownsAllLand,
 		ownsSomeLand: casedata.ownsSomeLand,
 		hasAdvertisedAppeal: casedata.advertisedAppeal,
@@ -68,7 +72,12 @@ export const mapAppellantCaseIn = (command) => {
 			otherTenantsAgriculturalHolding: casedata.otherTenantsAgriculturalHolding,
 			informedTenantsAgriculturalHolding: casedata.informedTenantsAgriculturalHolding
 		}),
-		numberOfResidencesNetChange: casedata.numberOfResidencesNetChange
+		numberOfResidencesNetChange: casedata.numberOfResidencesNetChange,
+		...(isAdverts && {
+			advertInPosition: casedata.isAdvertInPosition,
+			highwayLand: casedata.isSiteOnHighwayLand,
+			landownerPermission: casedata.hasLandownersPermission
+		})
 	};
 
 	// @ts-ignore

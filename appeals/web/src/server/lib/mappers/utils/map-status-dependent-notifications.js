@@ -284,5 +284,14 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 				)}" class="govuk-heading-s govuk-notification-banner__link">Progress to proof of evidence and witnesses</a>`
 			});
 		}
+		case 'progressToInquiry': {
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
+				)}" class="govuk-heading-s govuk-notification-banner__link">Progress to inquiry</a>`
+			});
+		}
 	}
 }

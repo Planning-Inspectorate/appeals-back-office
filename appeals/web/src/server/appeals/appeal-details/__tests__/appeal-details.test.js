@@ -4809,7 +4809,7 @@ describe('appeal-details', () => {
 						expect(unprettifiedHTML).not.toContain('Site</span></h2>');
 					} else {
 						// eslint-disable-next-line jest/no-conditional-expect
-						expect(unprettifiedHTML).toContain('Site</h1>');
+						expect(unprettifiedHTML).toContain('Site</h2>');
 					}
 				})
 			);
@@ -4872,7 +4872,7 @@ describe('appeal-details', () => {
 						expect(unprettifiedHTML).not.toContain('Site</span></h2>');
 					} else {
 						// eslint-disable-next-line jest/no-conditional-expect
-						expect(unprettifiedHTML).toContain('Site</h1>');
+						expect(unprettifiedHTML).toContain('Site</h2>');
 					}
 				})
 			);
@@ -4917,7 +4917,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</h1>');
+				expect(unprettifiedHTML).toContain('Hearing</h2>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -4962,7 +4962,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</h1>');
+				expect(unprettifiedHTML).toContain('Hearing</h2>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -5025,7 +5025,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</h1>');
+				expect(unprettifiedHTML).toContain('Hearing</h2>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -5128,7 +5128,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</h1>');
+				expect(unprettifiedHTML).toContain('Hearing</h2>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -5208,7 +5208,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</h1>');
+				expect(unprettifiedHTML).toContain('Hearing</h2>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -5262,7 +5262,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</h1>');
+				expect(unprettifiedHTML).toContain('Hearing</h2>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -5303,7 +5303,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</h1>');
+				expect(unprettifiedHTML).toContain('Hearing</h2>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -5617,7 +5617,7 @@ describe('appeal-details', () => {
 				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
-				expect(unprettifiedHTML).toContain('Site</h1>');
+				expect(unprettifiedHTML).toContain('Site</h2>');
 			});
 
 			for (const procedureType of [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING]) {
@@ -5681,7 +5681,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-inquiry-section">');
-				expect(unprettifiedHTML).toContain('Inquiry</h1>');
+				expect(unprettifiedHTML).toContain('Inquiry</h2>');
 
 				const inquirySectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-inquiry-section'
@@ -5736,7 +5736,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-inquiry-section">');
-				expect(unprettifiedHTML).toContain('Inquiry</h1>');
+				expect(unprettifiedHTML).toContain('Inquiry</h2>');
 
 				const inquirySectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-inquiry-section'
@@ -5782,28 +5782,40 @@ describe('appeal-details', () => {
 				).toEqual(['123 Main St', 'Apt 1', 'Anytown', 'Anycounty', 'AA1 1AA']);
 				expect(
 					unprettifiedInquirySectionHtml.querySelector('a[data-cy="change-date"]')?.attributes?.href
-				).toEqual(`${baseUrl}/${appealId}/inquiry/change/date`);
+				).toEqual(
+					`${baseUrl}/${appealId}/inquiry/change/date?backUrl=%2Fappeals-service%2Fappeal-details%2F3`
+				);
 				expect(
 					unprettifiedInquirySectionHtml.querySelector('a[data-cy="change-time"]')?.attributes?.href
-				).toEqual(`${baseUrl}/${appealId}/inquiry/change/date`);
+				).toEqual(
+					`${baseUrl}/${appealId}/inquiry/change/date?backUrl=%2Fappeals-service%2Fappeal-details%2F3`
+				);
 				expect(
 					unprettifiedInquirySectionHtml.querySelector(
 						'a[data-cy="change-whether-the-estimated-number-of-days-is-known-or-not"]'
 					)?.attributes?.href
-				).toEqual(`${baseUrl}/${appealId}/inquiry/change/estimation`);
+				).toEqual(
+					`${baseUrl}/${appealId}/inquiry/change/estimation?backUrl=%2Fappeals-service%2Fappeal-details%2F3`
+				);
 				expect(
 					unprettifiedInquirySectionHtml.querySelector('a[data-cy="change-estimated-days"]')
 						?.attributes?.href
-				).toEqual(`${baseUrl}/${appealId}/inquiry/change/estimation`);
+				).toEqual(
+					`${baseUrl}/${appealId}/inquiry/change/estimation?backUrl=%2Fappeals-service%2Fappeal-details%2F3`
+				);
 				expect(
 					unprettifiedInquirySectionHtml.querySelector(
 						'a[data-cy="change-whether-the-address-is-known-or-not"]'
 					)?.attributes?.href
-				).toEqual(`${baseUrl}/${appealId}/inquiry/change/address`);
+				).toEqual(
+					`${baseUrl}/${appealId}/inquiry/change/address?backUrl=%2Fappeals-service%2Fappeal-details%2F3`
+				);
 				expect(
 					unprettifiedInquirySectionHtml.querySelector('a[data-cy="change-address"]')?.attributes
 						?.href
-				).toEqual(`${baseUrl}/${appealId}/inquiry/change/address-details`);
+				).toEqual(
+					`${baseUrl}/${appealId}/inquiry/change/address-details?backUrl=%2Fappeals-service%2Fappeal-details%2F3`
+				);
 			});
 
 			it('should render the inquiry details summary list when inquiry is present with no address', async () => {
@@ -5828,7 +5840,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-inquiry-section">');
-				expect(unprettifiedHTML).toContain('Inquiry</h1>');
+				expect(unprettifiedHTML).toContain('Inquiry</h2>');
 
 				const inquirySectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-inquiry-section'
@@ -5894,7 +5906,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-inquiry-section">');
-				expect(unprettifiedHTML).toContain('Inquiry</h1>');
+				expect(unprettifiedHTML).toContain('Inquiry</h2>');
 
 				const inquirySectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-inquiry-section'
@@ -6012,7 +6024,7 @@ describe('appeal-details', () => {
 				skipPrettyPrint: true,
 				rootElement: '#site-visit-section'
 			}).innerHTML;
-			expect(siteSection).toContain('Site</h1>');
+			expect(siteSection).toContain('Site</h2>');
 			expect(siteSection).toContain('Record missed site visit</a>');
 		});
 		it('should render the site visit section with no links after site visit data has passed and decision has been issued', async () => {
@@ -6025,7 +6037,7 @@ describe('appeal-details', () => {
 				skipPrettyPrint: true,
 				rootElement: '#site-visit-section'
 			}).innerHTML;
-			expect(siteSection).toContain('Site</h1>');
+			expect(siteSection).toContain('Site</h2>');
 			expect(siteSection).not.toContain('Cancel site visit</a>');
 			expect(siteSection).not.toContain('Record missed site visit</a>');
 		});
@@ -6049,7 +6061,7 @@ describe('appeal-details', () => {
 				skipPrettyPrint: true,
 				rootElement: '#site-visit-section'
 			}).innerHTML;
-			expect(siteSection).toContain('Site</h1>');
+			expect(siteSection).toContain('Site</h2>');
 			expect(siteSection).toContain('Cancel site visit</a>');
 		});
 		it('should render the site visit section with correct links on site visit date', async () => {
@@ -6071,7 +6083,7 @@ describe('appeal-details', () => {
 				skipPrettyPrint: true,
 				rootElement: '#site-visit-section'
 			}).innerHTML;
-			expect(siteSection).toContain('Site</h1>');
+			expect(siteSection).toContain('Site</h2>');
 			expect(siteSection).toContain('Cancel site visit</a>');
 			expect(siteSection).toContain('Record missed site visit</a>');
 		});
@@ -6089,7 +6101,7 @@ describe('appeal-details', () => {
 				skipPrettyPrint: true,
 				rootElement: '#site-visit-section'
 			}).innerHTML;
-			expect(siteSection).toContain('Site</h1>');
+			expect(siteSection).toContain('Site</h2>');
 			expect(siteSection).not.toContain('Cancel site visit</a>');
 			expect(siteSection).not.toContain('Record missed site visit</a>');
 		});

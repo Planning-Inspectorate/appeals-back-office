@@ -27,7 +27,7 @@ export const getSiteDetails = (mappedData, appealDetails) => {
 			].filter(isDefined)
 		},
 		wrapperHtml: {
-			opening: '<h1 class="govuk-heading-l">Site</h1>',
+			opening: '<h2 class="govuk-heading-l">Site</h2>',
 			closing: ''
 		}
 	};

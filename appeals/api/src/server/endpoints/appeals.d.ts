@@ -236,7 +236,7 @@ interface SingleAppellantCaseResponse {
 	advertInPosition?: boolean | null;
 	landownerPermission?: boolean | null;
 	siteGridReferenceEasting?: string | null;
-	siteGridReferenceNothing?: string | null;
+	siteGridReferenceNorthing?: string | null;
 }
 
 interface UpdateAppellantCaseRequest {
@@ -275,7 +275,7 @@ interface UpdateAppellantCaseRequest {
 	advertInPosition?: boolean | null;
 	landownerPermission?: boolean | null;
 	siteGridReferenceEasting?: string | null;
-	siteGridReferenceNothing?: string | null;
+	siteGridReferenceNorthing?: string | null;
 }
 
 interface UpdateAppellantCaseValidationOutcome {
@@ -602,7 +602,7 @@ interface AppealListResponse {
 	advertInPosition?: boolean | null;
 	landownerPermission?: boolean | null;
 	siteGridReferenceEasting?: string | null;
-	siteGridReferenceNothing?: string | null;
+	siteGridReferenceNorthing?: string | null;
 }
 interface DocumentationSummary {
 	appellantCase?: DocumentationSummaryEntry;

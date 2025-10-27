@@ -17,7 +17,8 @@ import {
 	buildIssueDecisionLogicData,
 	checkDecisionUrl,
 	getDecisions,
-	issueDecisionBackUrl
+	issueDecisionBackUrl,
+	lpaCostsDecisionBackUrl
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { getAttachmentsFolder } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { isStatePassed } from '#lib/appeal-status.js';
@@ -448,22 +449,14 @@ export const postLpaCostsDecision = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderLpaCostsDecision = async (request, response) => {
-	const { errors, currentAppeal, session } = request;
+	const { errors, currentAppeal } = request;
 
-	const { appellantHasAppliedForCosts, appellantDecisionHasAlreadyBeenIssued } =
-		buildIssueDecisionLogicData(currentAppeal);
-
-	const backUrl =
-		appellantHasAppliedForCosts && !appellantDecisionHasAlreadyBeenIssued
-			? `${baseUrl(currentAppeal)}/appellant-costs-decision-letter-upload`
-			: session.inspectorDecision?.files?.length
-			? `${baseUrl(currentAppeal)}/decision-letter-upload`
-			: `${baseUrl(currentAppeal)}/decision`;
+	const backUrl = lpaCostsDecisionBackUrl(request);
 
 	const mappedPageContent = lpaCostsDecisionPage(
 		currentAppeal,
 		request.session.lpaCostsDecision,
-		getBackLinkUrlFromQuery(request) || backUrl,
+		backUrl,
 		errors
 	);
 
@@ -486,7 +479,7 @@ export const postLpaCostsDecisionLetterUpload = async (request, response) => {
 	await postDocumentUpload({
 		request,
 		response,
-		nextPageUrl: checkDecisionUrl(request),
+		nextPageUrl: addBackLinkQueryToUrl(request, checkDecisionUrl(request)),
 		callBack: async () => {
 			storeFileUploadInfo(session, 'lpaCostsDecision');
 		}
@@ -510,8 +503,7 @@ export const renderLpaCostsDecisionLetterUpload = async (request, response) => {
 		response,
 		appealDetails: currentAppeal,
 		backButtonUrl:
-			getBackLinkUrlFromQuery(request) ||
-			`/appeals-service/appeal-details/${request.params.appealId}/issue-decision/lpa-costs-decision`,
+			getBackLinkUrlFromQuery(request) || `${baseUrl(currentAppeal)}/lpa-costs-decision`,
 		pageHeadingTextOverride: 'LPA costs decision letter',
 		preHeadingTextOverride: preHeadingText(
 			currentAppeal,

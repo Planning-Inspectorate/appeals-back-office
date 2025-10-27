@@ -415,7 +415,32 @@ export class Page {
 
 	verifyRowExists(rowName, bool) {
 		let state = bool ? 'exist' : 'not.exist';
-
 		this.basePageElements.summaryListKey().contains(rowName).should(state);
+	}
+
+	verifyRowValue(rowName, value) {
+		this.basePageElements
+			.summaryListKey()
+			.contains(rowName)
+			.siblings()
+			.filter(this.selectors.summaryListValue)
+			.invoke('text')
+			.then((text) => {
+				const cleanText = text
+					.replace(/&nbsp;/g, ' ') // Replace &nbsp; with a space first
+					.replace(/\s+/g, ' ') // Replace multiple whitespace with a single space
+					.trim();
+				expect(cleanText).to.eq(value);
+			});
+	}
+
+	verifyActionExists(rowName, bool) {
+		const state = bool ? 'exist' : 'not.exist';
+		this.basePageElements
+			.summaryListKey()
+			.contains(rowName)
+			.siblings()
+			.filter(this.selectors.summaryListActions)
+			.should(state);
 	}
 }

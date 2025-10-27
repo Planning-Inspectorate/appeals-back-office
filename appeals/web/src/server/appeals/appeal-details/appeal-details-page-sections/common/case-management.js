@@ -16,7 +16,7 @@ export const getCaseManagement = (mappedData) => ({
 		].filter(isDefined)
 	},
 	wrapperHtml: {
-		opening: '<h1 class="govuk-heading-l">Case management</h1>',
+		opening: '<h2 class="govuk-heading-l">Case management</h2>',
 		closing: '',
 		id: 'case-management'
 	}

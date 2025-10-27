@@ -115,7 +115,7 @@ exports[`set up inquiry GET /inquiry/setup/check-details should match the snapsh
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry date</dt>
                                 <dd class="govuk-summary-list__value">1 February 3025</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/date"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Finquiry%2Fsetup%2Fdate"
                                     data-cy="change-inquiry-date">Change<span class="govuk-visually-hidden"> Inquiry date</span></a>
                                 </dd>
                             </div>
@@ -123,7 +123,7 @@ exports[`set up inquiry GET /inquiry/setup/check-details should match the snapsh
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry time</dt>
                                 <dd class="govuk-summary-list__value">12:00pm</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/date"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Finquiry%2Fsetup%2Fdate"
                                     data-cy="change-inquiry-time">Change<span class="govuk-visually-hidden"> Inquiry time</span></a>
                                 </dd>
                             </div>
@@ -131,7 +131,7 @@ exports[`set up inquiry GET /inquiry/setup/check-details should match the snapsh
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the expected number of days to carry out the inquiry?</dt>
                                 <dd                                 class="govuk-summary-list__value"></dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/estimation"
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Finquiry%2Fsetup%2Festimation"
                                         data-cy="change-inquiry-expected-number-of-days">Change<span class="govuk-visually-hidden"> Do you know the expected number of days to carry out the inquiry?</span></a>
                                     </dd>
                             </div>
@@ -139,7 +139,7 @@ exports[`set up inquiry GET /inquiry/setup/check-details should match the snapsh
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
                                 <dd                                 class="govuk-summary-list__value">Yes</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/address"
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Finquiry%2Fsetup%2Faddress"
                                         data-cy="change-inquiry-address-known">Change<span class="govuk-visually-hidden"> Do you know the address of where the inquiry will take place?</span></a>
                                     </dd>
                             </div>
@@ -151,7 +151,7 @@ exports[`set up inquiry GET /inquiry/setup/check-details should match the snapsh
                                     <br>Blarberton
                                     <br>Slabshire
                                     <br>X25 3YZ</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/address-details"
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/address-details?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Finquiry%2Fsetup%2Faddress-details"
                                         data-cy="change-inquiry-address">Change<span class="govuk-visually-hidden"> Address of where the inquiry will take place</span></a>
                                     </dd>
                             </div>
@@ -251,7 +251,7 @@ exports[`set up inquiry GET /inquiry/setup/date should match the snapshot 1`] = 
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="inquiry-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
-                                            id="inquiry-date-year" name="inquiry-date-year" type="text" value="2026"
+                                            id="inquiry-date-year" name="inquiry-date-year" type="text" value="2096"
                                             inputmode="numeric">
                                         </div>
                                     </div>

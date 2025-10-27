@@ -14,7 +14,7 @@ export const getCaseTeam = (mappedData) => ({
 		].filter(isDefined)
 	},
 	wrapperHtml: {
-		opening: '<h1 class="govuk-heading-l">Team</h1>',
+		opening: '<h2 class="govuk-heading-l">Team</h2>',
 		closing: ''
 	}
 });

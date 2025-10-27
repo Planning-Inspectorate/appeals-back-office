@@ -42,6 +42,7 @@ function canDisplayAction(appeal) {
  * @param {string|undefined} appealStatusFilter
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/appeals').CaseOfficer} caseOfficer
  * @returns {PageContent}
  */
 export function personalListPage(
@@ -49,11 +50,13 @@ export function personalListPage(
 	urlWithoutQuery,
 	appealStatusFilter,
 	session,
-	request
+	request,
+	caseOfficer
 ) {
 	const account = /** @type {AccountInfo} */ (authSession.getAccount(session));
 	const userGroups = account?.idTokenClaims?.groups ?? [];
 	const isCaseOfficer = userGroups.includes(config.referenceData.appeals.caseOfficerGroupId);
+
 	const urlToSearchCaseOfficer = addBackLinkQueryToUrl(
 		request,
 		'personal-list/search-case-officer'
@@ -171,11 +174,13 @@ export function personalListPage(
 					? mapActionLinksForAppeal(appeal, isCaseOfficer, request)
 					: '';
 
+				const urlToAppealsDetail = addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appeal?.appealId}`
+				);
 				return [
 					{
-						html: `<strong><a class="govuk-link" href="/appeals-service/appeal-details/${
-							appeal.appealId
-						}" aria-label="Appeal ${numberToAccessibleDigitLabel(
+						html: `<strong><a class="govuk-link" href=${urlToAppealsDetail} aria-label="Appeal ${numberToAccessibleDigitLabel(
 							shortReference || ''
 						)}">${shortReference}</a></strong>`
 					},
@@ -230,7 +235,7 @@ export function personalListPage(
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Personal list',
-		heading: 'Your appeals',
+		heading: caseOfficer ? `Cases assigned to ${caseOfficer.name}` : 'Your appeals',
 		pageComponents: []
 	};
 
@@ -245,7 +250,9 @@ export function personalListPage(
 	) {
 		pageContent.pageComponents?.push(filterComponent, casesComponent);
 	} else {
-		pageContent.heading = 'You are not assigned to any appeals';
+		pageContent.heading = caseOfficer
+			? `${caseOfficer.name} is not assigned to any appeals`
+			: 'You are not assigned to any appeals';
 		pageContent.pageComponents?.push(searchAllCasesButton);
 	}
 

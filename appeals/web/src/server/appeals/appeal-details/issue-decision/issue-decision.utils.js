@@ -1,4 +1,5 @@
 import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
+import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import {
 	DECISION_TYPE_APPELLANT_COSTS,
 	DECISION_TYPE_INSPECTOR,
@@ -128,4 +129,58 @@ export function issueDecisionBackUrl(currentAppeal, childAppealId, request) {
 		// @ts-ignore
 		currentAppeal.linkedAppeals[linkedAppealIndex - 1].appealId
 	}/decision`;
+}
+
+/**
+ *
+ * @param {Request} request
+ */
+export function lpaCostsDecisionBackUrl(request) {
+	const backUrl = getBackLinkUrlFromQuery(request);
+	if (backUrl) {
+		return backUrl;
+	}
+
+	const { currentAppeal, session } = request;
+	const { appellantHasAppliedForCosts, appellantDecisionHasAlreadyBeenIssued } =
+		buildIssueDecisionLogicData(currentAppeal);
+
+	return session.issueDecision.appellantCostsDecision === 'false'
+		? `${baseUrl(currentAppeal)}/appellant-costs-decision`
+		: appellantHasAppliedForCosts && !appellantDecisionHasAlreadyBeenIssued
+		? `${baseUrl(currentAppeal)}/appellant-costs-decision-letter-upload`
+		: session.inspectorDecision?.files?.length
+		? `${baseUrl(currentAppeal)}/decision-letter-upload`
+		: `${baseUrl(currentAppeal)}/decision`;
+}
+
+/**
+ *
+ * @param {WebAppeal} currentAppeal
+ * @param {Request} request
+ * @param {string | undefined} specificDecisionType
+ */
+export function checkAndConfirmBackUrl(currentAppeal, request, specificDecisionType) {
+	const backUrl = getBackLinkUrlFromQuery(request);
+	if (backUrl) {
+		return backUrl;
+	}
+
+	const baseRoute = baseUrl(currentAppeal);
+
+	if (specificDecisionType) {
+		return `${addBackLinkQueryToUrl(
+			request,
+			`${baseRoute}/issue-${specificDecisionType}-letter-upload`
+		)}`;
+	} else if (request.session.issueDecision.lpaCostsDecision === 'true') {
+		return `${addBackLinkQueryToUrl(
+			request,
+			`${baseRoute}/issue-lpa-costs-decision-letter-upload`
+		)}`;
+	} else if (request.session.issueDecision.lpaCostsDecision === 'false') {
+		return `${addBackLinkQueryToUrl(request, `${baseRoute}/lpa-costs-decision`)}`;
+	} else {
+		return `${baseRoute}/decision-letter-upload`;
+	}
 }

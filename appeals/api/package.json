@@ -36,8 +36,8 @@
 		"tscheck": "npx tsc -p jsconfig.json --maxNodeModuleJsDepth 0"
 	},
 	"dependencies": {
-		"@azure/identity": "4.2.1",
-		"@azure/service-bus": "^7.7.3",
+		"@azure/identity": "4.13.0",
+		"@azure/service-bus": "^7.9.5",
 		"@pins/event-client": "^0.0.0",
 		"@pins/express": "^0.0.0",
 		"@pins/platform": "^0.0.0",
@@ -95,7 +95,7 @@
 		"stream-json": "^1.9.1",
 		"supertest": "7.0.0",
 		"swagger-autogen": "^2.21.4",
-		"swagger-typescript-api": "^13.0.5"
+		"swagger-typescript-api": "^13.2.16"
 	},
 	"imports": {
 		"#db-client": "./src/server/utils/db-client/index.js",

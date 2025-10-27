@@ -258,25 +258,25 @@ exports[`appeal-details GET /:appealId Inquiry should render the Inquiry accordi
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
             <dd class="govuk-summary-list__value"></dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                 data-cy="change-date">Change<span class="govuk-visually-hidden"> Date</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
             <dd class="govuk-summary-list__value"></dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                 data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the estimated number of days needed to carry out the inquiry?</dt>
             <dd             class="govuk-summary-list__value">No</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimation"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimation?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                     data-cy="change-whether-the-estimated-number-of-days-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the estimated number of days is known or not</span></a>
                 </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
             <dd             class="govuk-summary-list__value">No</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/address"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/address?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                     data-cy="change-whether-the-address-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the address is known or not</span></a>
                 </dd>
         </div>
@@ -294,25 +294,25 @@ exports[`appeal-details GET /:appealId Inquiry should render the Inquiry estimat
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
             <dd class="govuk-summary-list__value"></dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                 data-cy="change-date">Change<span class="govuk-visually-hidden"> Date</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
             <dd class="govuk-summary-list__value"></dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                 data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the estimated number of days needed to carry out the inquiry?</dt>
             <dd             class="govuk-summary-list__value">No</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimation"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimation?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                     data-cy="change-whether-the-estimated-number-of-days-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the estimated number of days is known or not</span></a>
                 </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
             <dd             class="govuk-summary-list__value">No</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/address"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/address?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                     data-cy="change-whether-the-address-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the address is known or not</span></a>
                 </dd>
         </div>
@@ -346,31 +346,31 @@ exports[`appeal-details GET /:appealId Inquiry should render the inquiry details
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
             <dd class="govuk-summary-list__value">15 May 2025</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                 data-cy="change-date">Change<span class="govuk-visually-hidden"> Date</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
             <dd class="govuk-summary-list__value">1:00pm</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                 data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the estimated number of days needed to carry out the inquiry?</dt>
             <dd             class="govuk-summary-list__value">Yes</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimation"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimation?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                     data-cy="change-whether-the-estimated-number-of-days-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the estimated number of days is known or not</span></a>
                 </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Estimated number of days needed to carry out inquiry</dt>
             <dd             class="govuk-summary-list__value">6 Days</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimation"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimation?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                     data-cy="change-estimated-days">Change<span class="govuk-visually-hidden"> Estimated Days</span></a>
                 </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
             <dd             class="govuk-summary-list__value">Yes</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/address"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/address?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                     data-cy="change-whether-the-address-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the address is known or not</span></a>
                 </dd>
         </div>
@@ -380,7 +380,7 @@ exports[`appeal-details GET /:appealId Inquiry should render the inquiry details
                 <br>Anytown
                 <br>Anycounty
                 <br>AA1 1AA</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/address-details"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/address-details?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                 data-cy="change-address">Change<span class="govuk-visually-hidden"> Address</span></a>
             </dd>
         </div>
@@ -398,31 +398,31 @@ exports[`appeal-details GET /:appealId Inquiry should render the inquiry details
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
             <dd class="govuk-summary-list__value">15 May 2025</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                 data-cy="change-date">Change<span class="govuk-visually-hidden"> Date</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
             <dd class="govuk-summary-list__value">1:00pm</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                 data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the estimated number of days needed to carry out the inquiry?</dt>
             <dd             class="govuk-summary-list__value">Yes</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimation"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimation?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                     data-cy="change-whether-the-estimated-number-of-days-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the estimated number of days is known or not</span></a>
                 </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Estimated number of days needed to carry out inquiry</dt>
             <dd             class="govuk-summary-list__value">6 Days</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimation"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimation?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                     data-cy="change-estimated-days">Change<span class="govuk-visually-hidden"> Estimated Days</span></a>
                 </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
             <dd             class="govuk-summary-list__value">No</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/address"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/address?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                     data-cy="change-whether-the-address-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the address is known or not</span></a>
                 </dd>
         </div>
@@ -521,7 +521,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
             </details>
         </div>
     </div>
-    <h1 class="govuk-heading-l">Overview</h1>
+    <h2 class="govuk-heading-l">Overview</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
             <dd             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -556,7 +556,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Timetable</h1>
+    <h2 class="govuk-heading-l">Timetable</h2>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
             <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -579,7 +579,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Documentation</h1>
+    <h2 class="govuk-heading-l">Documentation</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -606,7 +606,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Contacts</h1>
+    <h2 class="govuk-heading-l">Contacts</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
             <dd class="govuk-summary-list__value">
@@ -642,7 +642,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Case management</h1>
+    <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
             <dd             class="govuk-summary-list__value">No documents</dd>
@@ -753,7 +753,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
             </details>
         </div>
     </div>
-    <h1 class="govuk-heading-l">Overview</h1>
+    <h2 class="govuk-heading-l">Overview</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
             <dd             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -805,7 +805,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
         </div>
     </dl>
     <div id="site-visit-section">
-        <h1 class="govuk-heading-l">Site</h1>
+        <h2 class="govuk-heading-l">Site</h2>
         <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
@@ -828,7 +828,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
                 </dd>
             </div>
         </dl>
-        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                 <dd                 class="govuk-summary-list__value">
@@ -849,7 +849,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
             </div>
         </dl>
     </div>
-    <h1 class="govuk-heading-l">Timetable</h1>
+    <h2 class="govuk-heading-l">Timetable</h2>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
             <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -878,7 +878,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Documentation</h1>
+    <h2 class="govuk-heading-l">Documentation</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -905,7 +905,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Costs</h1>
+    <h2 class="govuk-heading-l">Costs</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -977,7 +977,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Contacts</h1>
+    <h2 class="govuk-heading-l">Contacts</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
             <dd class="govuk-summary-list__value">
@@ -1013,7 +1013,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Team</h1>
+    <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
             <dd class="govuk-summary-list__value">
@@ -1043,7 +1043,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Case management</h1>
+    <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
             <dd             class="govuk-summary-list__value">No documents</dd>
@@ -1158,7 +1158,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
             </details>
         </div>
     </div>
-    <h1 class="govuk-heading-l">Overview</h1>
+    <h2 class="govuk-heading-l">Overview</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
             <dd             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -1193,7 +1193,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Timetable</h1>
+    <h2 class="govuk-heading-l">Timetable</h2>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
             <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -1216,7 +1216,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Documentation</h1>
+    <h2 class="govuk-heading-l">Documentation</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -1243,7 +1243,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Contacts</h1>
+    <h2 class="govuk-heading-l">Contacts</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
             <dd class="govuk-summary-list__value">
@@ -1279,7 +1279,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Case management</h1>
+    <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
             <dd             class="govuk-summary-list__value">No documents</dd>
@@ -1390,7 +1390,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
             </details>
         </div>
     </div>
-    <h1 class="govuk-heading-l">Overview</h1>
+    <h2 class="govuk-heading-l">Overview</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
             <dd             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -1436,7 +1436,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
         </div>
     </dl>
     <div id="site-visit-section">
-        <h1 class="govuk-heading-l">Site</h1>
+        <h2 class="govuk-heading-l">Site</h2>
         <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
@@ -1459,7 +1459,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
                 </dd>
             </div>
         </dl>
-        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                 <dd                 class="govuk-summary-list__value">
@@ -1480,7 +1480,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
             </div>
         </dl>
     </div>
-    <h1 class="govuk-heading-l">Timetable</h1>
+    <h2 class="govuk-heading-l">Timetable</h2>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
             <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -1509,7 +1509,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Documentation</h1>
+    <h2 class="govuk-heading-l">Documentation</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -1536,7 +1536,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Costs</h1>
+    <h2 class="govuk-heading-l">Costs</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -1608,7 +1608,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Contacts</h1>
+    <h2 class="govuk-heading-l">Contacts</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
             <dd class="govuk-summary-list__value">
@@ -1644,7 +1644,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Team</h1>
+    <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
             <dd class="govuk-summary-list__value">
@@ -1674,7 +1674,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Case management</h1>
+    <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
             <dd             class="govuk-summary-list__value">No documents</dd>
@@ -1785,7 +1785,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             </details>
         </div>
     </div>
-    <h1 class="govuk-heading-l">Overview</h1>
+    <h2 class="govuk-heading-l">Overview</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
             <dd             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -1839,7 +1839,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
         </div>
     </dl>
     <div id="site-visit-section">
-        <h1 class="govuk-heading-l">Site</h1>
+        <h2 class="govuk-heading-l">Site</h2>
         <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
@@ -1862,7 +1862,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                 </dd>
             </div>
         </dl>
-        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                 <dd                 class="govuk-summary-list__value">
@@ -1883,7 +1883,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             </div>
         </dl>
     </div>
-    <h1 class="govuk-heading-l">Timetable</h1>
+    <h2 class="govuk-heading-l">Timetable</h2>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
             <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -1915,7 +1915,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Documentation</h1>
+    <h2 class="govuk-heading-l">Documentation</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -1942,7 +1942,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Costs</h1>
+    <h2 class="govuk-heading-l">Costs</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -2014,7 +2014,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Contacts</h1>
+    <h2 class="govuk-heading-l">Contacts</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
             <dd class="govuk-summary-list__value">
@@ -2050,7 +2050,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Team</h1>
+    <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
             <dd class="govuk-summary-list__value">
@@ -2080,7 +2080,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Case management</h1>
+    <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
             <dd             class="govuk-summary-list__value">No documents</dd>
@@ -2191,7 +2191,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             </details>
         </div>
     </div>
-    <h1 class="govuk-heading-l">Overview</h1>
+    <h2 class="govuk-heading-l">Overview</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
             <dd             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -2248,7 +2248,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
         </div>
     </dl>
     <div id="site-visit-section">
-        <h1 class="govuk-heading-l">Site</h1>
+        <h2 class="govuk-heading-l">Site</h2>
         <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
@@ -2271,7 +2271,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                 </dd>
             </div>
         </dl>
-        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                 <dd                 class="govuk-summary-list__value">
@@ -2292,7 +2292,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             </div>
         </dl>
     </div>
-    <h1 class="govuk-heading-l">Timetable</h1>
+    <h2 class="govuk-heading-l">Timetable</h2>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
             <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -2324,7 +2324,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Documentation</h1>
+    <h2 class="govuk-heading-l">Documentation</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -2351,7 +2351,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Costs</h1>
+    <h2 class="govuk-heading-l">Costs</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -2423,7 +2423,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Contacts</h1>
+    <h2 class="govuk-heading-l">Contacts</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
             <dd class="govuk-summary-list__value">
@@ -2459,7 +2459,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Team</h1>
+    <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
             <dd class="govuk-summary-list__value">
@@ -2489,7 +2489,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Case management</h1>
+    <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
             <dd             class="govuk-summary-list__value">No documents</dd>
@@ -2607,7 +2607,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
             </details>
         </div>
     </div>
-    <h1 class="govuk-heading-l">Overview</h1>
+    <h2 class="govuk-heading-l">Overview</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
             <dd             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -2658,7 +2658,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
         </div>
     </dl>
     <div id="site-visit-section">
-        <h1 class="govuk-heading-l">Site</h1>
+        <h2 class="govuk-heading-l">Site</h2>
         <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
@@ -2681,7 +2681,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
                 </dd>
             </div>
         </dl>
-        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                 <dd                 class="govuk-summary-list__value">
@@ -2702,7 +2702,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
             </div>
         </dl>
     </div>
-    <h1 class="govuk-heading-l">Timetable</h1>
+    <h2 class="govuk-heading-l">Timetable</h2>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
             <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -2731,7 +2731,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Documentation</h1>
+    <h2 class="govuk-heading-l">Documentation</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -2758,7 +2758,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Costs</h1>
+    <h2 class="govuk-heading-l">Costs</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -2830,7 +2830,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Contacts</h1>
+    <h2 class="govuk-heading-l">Contacts</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
             <dd class="govuk-summary-list__value">
@@ -2866,7 +2866,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Team</h1>
+    <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
             <dd class="govuk-summary-list__value">
@@ -2896,7 +2896,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Case management</h1>
+    <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
             <dd             class="govuk-summary-list__value">No documents</dd>
@@ -3014,7 +3014,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
             </details>
         </div>
     </div>
-    <h1 class="govuk-heading-l">Overview</h1>
+    <h2 class="govuk-heading-l">Overview</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
             <dd             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -3065,7 +3065,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
         </div>
     </dl>
     <div id="site-visit-section">
-        <h1 class="govuk-heading-l">Site</h1>
+        <h2 class="govuk-heading-l">Site</h2>
         <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
@@ -3088,7 +3088,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
                 </dd>
             </div>
         </dl>
-        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                 <dd                 class="govuk-summary-list__value">
@@ -3109,7 +3109,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
             </div>
         </dl>
     </div>
-    <h1 class="govuk-heading-l">Timetable</h1>
+    <h2 class="govuk-heading-l">Timetable</h2>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
             <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -3138,7 +3138,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Documentation</h1>
+    <h2 class="govuk-heading-l">Documentation</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -3165,7 +3165,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Costs</h1>
+    <h2 class="govuk-heading-l">Costs</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -3237,7 +3237,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Contacts</h1>
+    <h2 class="govuk-heading-l">Contacts</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
             <dd class="govuk-summary-list__value">
@@ -3273,7 +3273,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Team</h1>
+    <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
             <dd class="govuk-summary-list__value">
@@ -3303,7 +3303,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Case management</h1>
+    <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
             <dd             class="govuk-summary-list__value">No documents</dd>
@@ -3421,7 +3421,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </details>
         </div>
     </div>
-    <h1 class="govuk-heading-l">Overview</h1>
+    <h2 class="govuk-heading-l">Overview</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
             <dd             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -3486,7 +3486,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
         </div>
     </dl>
     <div id="site-visit-section">
-        <h1 class="govuk-heading-l">Site</h1>
+        <h2 class="govuk-heading-l">Site</h2>
         <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
@@ -3509,7 +3509,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                 </dd>
             </div>
         </dl>
-        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                 <dd                 class="govuk-summary-list__value">
@@ -3530,7 +3530,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </div>
         </dl>
     </div>
-    <h1 class="govuk-heading-l">Timetable</h1>
+    <h2 class="govuk-heading-l">Timetable</h2>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
             <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -3559,7 +3559,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Documentation</h1>
+    <h2 class="govuk-heading-l">Documentation</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -3586,7 +3586,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Costs</h1>
+    <h2 class="govuk-heading-l">Costs</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -3658,7 +3658,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Contacts</h1>
+    <h2 class="govuk-heading-l">Contacts</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
             <dd class="govuk-summary-list__value">
@@ -3694,7 +3694,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Team</h1>
+    <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
             <dd class="govuk-summary-list__value">
@@ -3724,7 +3724,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Case management</h1>
+    <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
             <dd             class="govuk-summary-list__value">No documents</dd>
@@ -3841,7 +3841,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </details>
         </div>
     </div>
-    <h1 class="govuk-heading-l">Overview</h1>
+    <h2 class="govuk-heading-l">Overview</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
             <dd             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -3880,7 +3880,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
         </div>
     </dl>
     <div id="site-visit-section">
-        <h1 class="govuk-heading-l">Site</h1>
+        <h2 class="govuk-heading-l">Site</h2>
         <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
@@ -3903,7 +3903,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                 </dd>
             </div>
         </dl>
-        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                 <dd                 class="govuk-summary-list__value">
@@ -3924,7 +3924,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </div>
         </dl>
     </div>
-    <h1 class="govuk-heading-l">Timetable</h1>
+    <h2 class="govuk-heading-l">Timetable</h2>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
             <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -3953,7 +3953,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Documentation</h1>
+    <h2 class="govuk-heading-l">Documentation</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -3980,7 +3980,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Costs</h1>
+    <h2 class="govuk-heading-l">Costs</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -4052,7 +4052,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Contacts</h1>
+    <h2 class="govuk-heading-l">Contacts</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
             <dd class="govuk-summary-list__value">
@@ -4088,7 +4088,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Team</h1>
+    <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
             <dd class="govuk-summary-list__value">
@@ -4118,7 +4118,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Case management</h1>
+    <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
             <dd             class="govuk-summary-list__value">No documents</dd>
@@ -4236,7 +4236,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </details>
         </div>
     </div>
-    <h1 class="govuk-heading-l">Overview</h1>
+    <h2 class="govuk-heading-l">Overview</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
             <dd             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -4291,7 +4291,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
         </div>
     </dl>
     <div id="site-visit-section">
-        <h1 class="govuk-heading-l">Site</h1>
+        <h2 class="govuk-heading-l">Site</h2>
         <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
@@ -4314,7 +4314,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                 </dd>
             </div>
         </dl>
-        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                 <dd                 class="govuk-summary-list__value">
@@ -4335,7 +4335,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </div>
         </dl>
     </div>
-    <h1 class="govuk-heading-l">Timetable</h1>
+    <h2 class="govuk-heading-l">Timetable</h2>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
             <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -4364,7 +4364,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Documentation</h1>
+    <h2 class="govuk-heading-l">Documentation</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -4391,7 +4391,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Costs</h1>
+    <h2 class="govuk-heading-l">Costs</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -4463,7 +4463,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Contacts</h1>
+    <h2 class="govuk-heading-l">Contacts</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
             <dd class="govuk-summary-list__value">
@@ -4499,7 +4499,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Team</h1>
+    <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
             <dd class="govuk-summary-list__value">
@@ -4529,7 +4529,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Case management</h1>
+    <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
             <dd             class="govuk-summary-list__value">No documents</dd>
@@ -4772,7 +4772,7 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
             </details>
         </div>
     </div>
-    <h1 class="govuk-heading-l">Overview</h1>
+    <h2 class="govuk-heading-l">Overview</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
             <dd             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -4811,7 +4811,7 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
         </div>
     </dl>
     <div id="site-visit-section">
-        <h1 class="govuk-heading-l">Site</h1>
+        <h2 class="govuk-heading-l">Site</h2>
         <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
@@ -4834,7 +4834,7 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
                 </dd>
             </div>
         </dl>
-        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                 <dd                 class="govuk-summary-list__value">
@@ -4855,7 +4855,7 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
             </div>
         </dl>
     </div>
-    <h1 class="govuk-heading-l">Timetable</h1>
+    <h2 class="govuk-heading-l">Timetable</h2>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
             <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -4884,7 +4884,7 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Documentation</h1>
+    <h2 class="govuk-heading-l">Documentation</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -4911,7 +4911,7 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Costs</h1>
+    <h2 class="govuk-heading-l">Costs</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -4983,7 +4983,7 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Contacts</h1>
+    <h2 class="govuk-heading-l">Contacts</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
             <dd class="govuk-summary-list__value">
@@ -5019,7 +5019,7 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Team</h1>
+    <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
             <dd class="govuk-summary-list__value">
@@ -5049,7 +5049,7 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Case management</h1>
+    <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
             <dd             class="govuk-summary-list__value">No documents</dd>
@@ -5762,7 +5762,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </details>
         </div>
     </div>
-    <h1 class="govuk-heading-l">Overview</h1>
+    <h2 class="govuk-heading-l">Overview</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
             <dd             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -5807,7 +5807,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         </div>
     </dl>
     <div id="site-visit-section">
-        <h1 class="govuk-heading-l">Site</h1>
+        <h2 class="govuk-heading-l">Site</h2>
         <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
@@ -5830,7 +5830,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                 </dd>
             </div>
         </dl>
-        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                 <dd                 class="govuk-summary-list__value">
@@ -5851,7 +5851,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </div>
         </dl>
     </div>
-    <h1 class="govuk-heading-l">Timetable</h1>
+    <h2 class="govuk-heading-l">Timetable</h2>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
             <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -5880,7 +5880,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Documentation</h1>
+    <h2 class="govuk-heading-l">Documentation</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -5907,7 +5907,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Costs</h1>
+    <h2 class="govuk-heading-l">Costs</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -5979,7 +5979,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Contacts</h1>
+    <h2 class="govuk-heading-l">Contacts</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
             <dd class="govuk-summary-list__value">
@@ -6015,7 +6015,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Team</h1>
+    <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
             <dd class="govuk-summary-list__value">
@@ -6045,7 +6045,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Case management</h1>
+    <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
             <dd             class="govuk-summary-list__value">No documents</dd>
@@ -6163,7 +6163,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </details>
         </div>
     </div>
-    <h1 class="govuk-heading-l">Overview</h1>
+    <h2 class="govuk-heading-l">Overview</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
             <dd             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -6208,7 +6208,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         </div>
     </dl>
     <div id="site-visit-section">
-        <h1 class="govuk-heading-l">Site</h1>
+        <h2 class="govuk-heading-l">Site</h2>
         <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
@@ -6231,7 +6231,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                 </dd>
             </div>
         </dl>
-        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                 <dd                 class="govuk-summary-list__value">
@@ -6252,7 +6252,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </div>
         </dl>
     </div>
-    <h1 class="govuk-heading-l">Timetable</h1>
+    <h2 class="govuk-heading-l">Timetable</h2>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
             <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -6281,7 +6281,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Documentation</h1>
+    <h2 class="govuk-heading-l">Documentation</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -6308,7 +6308,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Costs</h1>
+    <h2 class="govuk-heading-l">Costs</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -6380,7 +6380,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Contacts</h1>
+    <h2 class="govuk-heading-l">Contacts</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
             <dd class="govuk-summary-list__value">
@@ -6416,7 +6416,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Team</h1>
+    <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
             <dd class="govuk-summary-list__value">
@@ -6446,7 +6446,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Case management</h1>
+    <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
             <dd             class="govuk-summary-list__value">No documents</dd>
@@ -6564,7 +6564,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </details>
         </div>
     </div>
-    <h1 class="govuk-heading-l">Overview</h1>
+    <h2 class="govuk-heading-l">Overview</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
             <dd             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -6603,7 +6603,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         </div>
     </dl>
     <div id="site-visit-section">
-        <h1 class="govuk-heading-l">Site</h1>
+        <h2 class="govuk-heading-l">Site</h2>
         <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
@@ -6626,7 +6626,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                 </dd>
             </div>
         </dl>
-        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                 <dd                 class="govuk-summary-list__value">
@@ -6647,7 +6647,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </div>
         </dl>
     </div>
-    <h1 class="govuk-heading-l">Timetable</h1>
+    <h2 class="govuk-heading-l">Timetable</h2>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
             <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -6676,7 +6676,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Documentation</h1>
+    <h2 class="govuk-heading-l">Documentation</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -6703,7 +6703,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Costs</h1>
+    <h2 class="govuk-heading-l">Costs</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -6775,7 +6775,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Contacts</h1>
+    <h2 class="govuk-heading-l">Contacts</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
             <dd class="govuk-summary-list__value">
@@ -6811,7 +6811,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Team</h1>
+    <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
             <dd class="govuk-summary-list__value">
@@ -6841,7 +6841,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Case management</h1>
+    <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
             <dd             class="govuk-summary-list__value">No documents</dd>
@@ -6969,7 +6969,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </details>
         </div>
     </div>
-    <h1 class="govuk-heading-l">Overview</h1>
+    <h2 class="govuk-heading-l">Overview</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
             <dd             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -7011,7 +7011,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         </div>
     </dl>
     <div id="site-visit-section">
-        <h1 class="govuk-heading-l">Site</h1>
+        <h2 class="govuk-heading-l">Site</h2>
         <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
@@ -7034,7 +7034,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 </dd>
             </div>
         </dl>
-        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                 <dd                 class="govuk-summary-list__value">
@@ -7055,7 +7055,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </div>
         </dl>
     </div>
-    <h1 class="govuk-heading-l">Timetable</h1>
+    <h2 class="govuk-heading-l">Timetable</h2>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
             <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -7084,7 +7084,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Documentation</h1>
+    <h2 class="govuk-heading-l">Documentation</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -7111,7 +7111,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Costs</h1>
+    <h2 class="govuk-heading-l">Costs</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -7183,7 +7183,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Contacts</h1>
+    <h2 class="govuk-heading-l">Contacts</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
             <dd class="govuk-summary-list__value">
@@ -7219,7 +7219,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Team</h1>
+    <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
             <dd class="govuk-summary-list__value">
@@ -7249,7 +7249,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Case management</h1>
+    <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
             <dd             class="govuk-summary-list__value">No documents</dd>
@@ -7366,7 +7366,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </details>
         </div>
     </div>
-    <h1 class="govuk-heading-l">Overview</h1>
+    <h2 class="govuk-heading-l">Overview</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
             <dd             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -7408,7 +7408,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         </div>
     </dl>
     <div id="site-visit-section">
-        <h1 class="govuk-heading-l">Site</h1>
+        <h2 class="govuk-heading-l">Site</h2>
         <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
@@ -7431,7 +7431,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 </dd>
             </div>
         </dl>
-        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                 <dd                 class="govuk-summary-list__value">
@@ -7452,7 +7452,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </div>
         </dl>
     </div>
-    <h1 class="govuk-heading-l">Timetable</h1>
+    <h2 class="govuk-heading-l">Timetable</h2>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
             <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -7481,7 +7481,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Documentation</h1>
+    <h2 class="govuk-heading-l">Documentation</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -7508,7 +7508,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Costs</h1>
+    <h2 class="govuk-heading-l">Costs</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -7580,7 +7580,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Contacts</h1>
+    <h2 class="govuk-heading-l">Contacts</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
             <dd class="govuk-summary-list__value">
@@ -7616,7 +7616,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Team</h1>
+    <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
             <dd class="govuk-summary-list__value">
@@ -7646,7 +7646,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Case management</h1>
+    <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
             <dd             class="govuk-summary-list__value">No documents</dd>
@@ -7791,7 +7791,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </details>
         </div>
     </div>
-    <h1 class="govuk-heading-l">Overview</h1>
+    <h2 class="govuk-heading-l">Overview</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
             <dd             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -7830,7 +7830,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
         </div>
     </dl>
     <div id="site-visit-section">
-        <h1 class="govuk-heading-l">Site</h1>
+        <h2 class="govuk-heading-l">Site</h2>
         <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
@@ -7853,7 +7853,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 </dd>
             </div>
         </dl>
-        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                 <dd                 class="govuk-summary-list__value">
@@ -7874,7 +7874,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </div>
         </dl>
     </div>
-    <h1 class="govuk-heading-l">Timetable</h1>
+    <h2 class="govuk-heading-l">Timetable</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
             <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -7889,7 +7889,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Documentation</h1>
+    <h2 class="govuk-heading-l">Documentation</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -7916,7 +7916,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Costs</h1>
+    <h2 class="govuk-heading-l">Costs</h2>
     <table class="govuk-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -7988,7 +7988,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </tr>
         </tbody>
     </table>
-    <h1 class="govuk-heading-l">Contacts</h1>
+    <h2 class="govuk-heading-l">Contacts</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
             <dd class="govuk-summary-list__value">
@@ -8024,7 +8024,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Team</h1>
+    <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
             <dd class="govuk-summary-list__value">
@@ -8054,7 +8054,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Case management</h1>
+    <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
             <dd             class="govuk-summary-list__value">No documents</dd>
@@ -8238,7 +8238,7 @@ exports[`appeal-details should not render a back button 1`] = `
                         </details>
                     </div>
                 </div>
-                <h1 class="govuk-heading-l">Overview</h1>
+                <h2 class="govuk-heading-l">Overview</h2>
                 <dl class="govuk-summary-list">
                     <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
                         <dd                         class="govuk-summary-list__value">48269/APP/2021/1482</dd>
@@ -8277,7 +8277,7 @@ exports[`appeal-details should not render a back button 1`] = `
                     </div>
                 </dl>
                 <div id="site-visit-section">
-                    <h1 class="govuk-heading-l">Site</h1>
+                    <h2 class="govuk-heading-l">Site</h2>
                     <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/missed">Record missed site visit</a>
                     </p>
                     <dl class="govuk-summary-list">
@@ -8300,7 +8300,7 @@ exports[`appeal-details should not render a back button 1`] = `
                             </dd>
                         </div>
                     </dl>
-                    <h1 class="govuk-heading-m">Site visit requests</h1>
+                    <h2 class="govuk-heading-m">Site visit requests</h2>
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
                             <dd                             class="govuk-summary-list__value">
@@ -8321,7 +8321,7 @@ exports[`appeal-details should not render a back button 1`] = `
                         </div>
                     </dl>
                 </div>
-                <h1 class="govuk-heading-l">Timetable</h1>
+                <h2 class="govuk-heading-l">Timetable</h2>
                 <dl class="govuk-summary-list appeal-case-timetable">
                     <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
                         <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -8350,7 +8350,7 @@ exports[`appeal-details should not render a back button 1`] = `
                         </dd>
                     </div>
                 </dl>
-                <h1 class="govuk-heading-l">Documentation</h1>
+                <h2 class="govuk-heading-l">Documentation</h2>
                 <table class="govuk-table">
                     <thead class="govuk-table__head">
                         <tr class="govuk-table__row">
@@ -8377,7 +8377,7 @@ exports[`appeal-details should not render a back button 1`] = `
                         </tr>
                     </tbody>
                 </table>
-                <h1 class="govuk-heading-l">Costs</h1>
+                <h2 class="govuk-heading-l">Costs</h2>
                 <table class="govuk-table">
                     <thead class="govuk-table__head">
                         <tr class="govuk-table__row">
@@ -8449,7 +8449,7 @@ exports[`appeal-details should not render a back button 1`] = `
                         </tr>
                     </tbody>
                 </table>
-                <h1 class="govuk-heading-l">Contacts</h1>
+                <h2 class="govuk-heading-l">Contacts</h2>
                 <dl class="govuk-summary-list">
                     <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
                         <dd class="govuk-summary-list__value">
@@ -8485,7 +8485,7 @@ exports[`appeal-details should not render a back button 1`] = `
                         </dd>
                     </div>
                 </dl>
-                <h1 class="govuk-heading-l">Team</h1>
+                <h2 class="govuk-heading-l">Team</h2>
                 <dl class="govuk-summary-list">
                     <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
                         <dd class="govuk-summary-list__value">
@@ -8515,7 +8515,7 @@ exports[`appeal-details should not render a back button 1`] = `
                         </dd>
                     </div>
                 </dl>
-                <h1 class="govuk-heading-l">Case management</h1>
+                <h2 class="govuk-heading-l">Case management</h2>
                 <dl class="govuk-summary-list">
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                         <dd                         class="govuk-summary-list__value">No documents</dd>

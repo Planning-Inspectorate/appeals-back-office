@@ -24,7 +24,10 @@ import {
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
-import formatDate from '@pins/appeals/utils/date-formatter.js';
+import formatDate, {
+	dateISOStringToDisplayDate,
+	formatTime12h
+} from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
@@ -470,6 +473,125 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
 	return result;
 }
 
+/** @type {PublishFunction} */
+export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient) {
+	if (!isCurrentStatus(appeal, APPEAL_CASE_STATUS.EVIDENCE)) {
+		throw new BackOfficeAppError('appeal in incorrect state to publish proof of evidence', 409);
+	}
+
+	const documentsUpdated = await documentRepository.setRedactionStatusOnValidation(appeal.id);
+	for (const documentUpdated of documentsUpdated) {
+		await broadcasters.broadcastDocument(
+			documentUpdated.documentGuid,
+			documentUpdated.version,
+			EventType.Update
+		);
+	}
+
+	const result = await representationRepository.updateRepresentations(
+		appeal.id,
+		{
+			representationType: {
+				in: [
+					APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
+					APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
+				]
+			},
+			status: {
+				in: [APPEAL_REPRESENTATION_STATUS.VALID, APPEAL_REPRESENTATION_STATUS.INCOMPLETE]
+			}
+		},
+		{
+			status: APPEAL_REPRESENTATION_STATUS.PUBLISHED
+		}
+	);
+
+	if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
+		await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+	}
+	await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+
+	try {
+		const hasLpaProofOfEvidence = result.some(
+			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE
+		);
+		const hasAppellantProofOfEvidence = result.some(
+			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
+		);
+
+		const inquiryDetailWarningText =
+			'The details of the inquiry are subject to change. We will contact you by email if we make any changes.';
+		const inquiryWitnessesText =
+			'Your witnesses should be available for the duration of the inquiry.';
+		const inquiryDate = dateISOStringToDisplayDate(
+			typeof appeal.inquiry?.inquiryStartTime === 'string'
+				? appeal.inquiry?.inquiryStartTime
+				: appeal.inquiry?.inquiryStartTime.toISOString()
+		);
+		const inquiryTime = formatTime12h(
+			typeof appeal.inquiry?.inquiryStartTime === 'string'
+				? new Date(appeal.inquiry?.inquiryStartTime)
+				: appeal.inquiry?.inquiryStartTime
+		);
+
+		const inquiryAddress = appeal.inquiry?.address
+			? formatAddressSingleLine(appeal.inquiry?.address)
+			: '';
+		const inquiryExpectedDays = appeal.inquiry?.estimatedDays
+			? appeal.inquiry?.estimatedDays.toString()
+			: 'Not available';
+		const whatHappensNext = appeal.inquiry
+			? `You need to attend the inquiry on ${inquiryDate}.`
+			: 'We will contact you by email when we set up the inquiry';
+
+		if (!hasLpaProofOfEvidence && hasAppellantProofOfEvidence) {
+			// TODO - Notify template to appellant but no LPA document to share
+		} else if (hasLpaProofOfEvidence && !hasAppellantProofOfEvidence) {
+			// TODO - Notify template to LPA but no appellant document to share
+		}
+
+		await notifyPublished({
+			appeal,
+			notifyClient,
+			isInquiryProcedure: true,
+			templateName: 'not-received-proof-of-evidence-and-witnesses',
+			recipientEmail: appeal.lpa?.email,
+			whatHappensNext,
+			azureAdUserId,
+			inquiryDetailWarningText,
+			inquiryWitnessesText,
+			inquiryDate,
+			inquiryTime,
+			inquiryExpectedDays,
+			inquiryAddress,
+			inquirySubjectLine:
+				'We did not receive any proof of evidence and witnesses from appellant or any other parties'
+		});
+
+		await notifyPublished({
+			appeal,
+			notifyClient,
+			isInquiryProcedure: true,
+			templateName: 'not-received-proof-of-evidence-and-witnesses',
+			recipientEmail: appeal.agent?.email || appeal.appellant?.email,
+			whatHappensNext,
+			azureAdUserId,
+			inquiryDetailWarningText,
+			inquiryWitnessesText,
+			inquiryDate,
+			inquiryTime,
+			inquiryExpectedDays,
+			inquiryAddress,
+			inquirySubjectLine:
+				'We did not receive any proof of evidence and witnesses from local planning authority or any other parties'
+		});
+	} catch (error) {
+		logger.error(error);
+	}
+
+	return result;
+}
+
 /**
  * @typedef {object} NotifyPublished
  * @property {Appeal} appeal
@@ -482,8 +604,15 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
  * @property {boolean} [hasIpComments]
  * @property {boolean} [isHearingProcedure]
  * @property {boolean} [isInquiryProcedure]
+ * @property {string} [inquirySubjectLine]
  * @property {string} [userTypeNoCommentSubmitted]
  * @property {string} azureAdUserId
+ * @property {string} [inquiryDetailWarningText]
+ * @property {string} [inquiryWitnessesText]
+ * @property {string} [inquiryDate]
+ * @property {string} [inquiryTime]
+ * @property {string} [inquiryExpectedDays]
+ * @property {string} [inquiryAddress]
  */
 
 /**
@@ -502,6 +631,13 @@ async function notifyPublished({
 	isHearingProcedure = false,
 	isInquiryProcedure = false,
 	userTypeNoCommentSubmitted = '',
+	inquiryDetailWarningText = '',
+	inquiryWitnessesText = '',
+	inquirySubjectLine = '',
+	inquiryDate = '',
+	inquiryTime = '',
+	inquiryExpectedDays = '',
+	inquiryAddress = '',
 	azureAdUserId
 }) {
 	const lpaReference = appeal.applicationReference;
@@ -536,7 +672,14 @@ async function notifyPublished({
 			is_hearing_procedure: isHearingProcedure,
 			is_inquiry_procedure: isInquiryProcedure,
 			user_type: userTypeNoCommentSubmitted,
-			team_email_address: await getTeamEmailFromAppealId(appeal.id)
+			team_email_address: await getTeamEmailFromAppealId(appeal.id),
+			inquiry_detail_warning_text: inquiryDetailWarningText,
+			inquiry_witnesses_text: inquiryWitnessesText,
+			inquiry_subject_line: inquirySubjectLine,
+			inquiry_date: inquiryDate,
+			inquiry_time: inquiryTime,
+			inquiry_expected_days: inquiryExpectedDays,
+			inquiry_address: inquiryAddress
 		}
 	});
 }
