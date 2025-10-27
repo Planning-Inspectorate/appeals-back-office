@@ -1,20 +1,18 @@
 {% include 'parts/appeal-details.md' %}
 
-# Site visit scheduled
-
-We have now arranged for our inspector (or their representative) to visit {{site_address}}.
-
-You are not required to attend the site visit.
-
 # About the visit
 
-The purpose of the site visit is for the inspector to view the site and its surroundings.
+Our inspector (or their representative) will visit {{site_address}} at {{start_time}} on {{visit_date}}.
 
-If you see the inspector, you cannot give them any documents or discuss the appeal with them. The inspector will carry out the inspection on their own.
+You cannot give the inspector any documents or discuss the appeal with them.
 
-# What happens next
+# Who will attend
 
-We will contact you when the inspector makes a decision.
+You must attend the site visit with our inspector and a representative from the local planning authority.
+
+You will accompany the inspector throughout the visit.
+
+If you need to contact us, include our appeal reference number in any communication.
 
 The Planning Inspectorate
 {{team_email_address}}
