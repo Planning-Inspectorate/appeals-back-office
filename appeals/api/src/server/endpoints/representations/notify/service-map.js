@@ -48,5 +48,15 @@ export const serviceMap = [
 		status: APPEAL_REPRESENTATION_STATUS.INCOMPLETE,
 		type: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
 		service: service.lpaStatementIncomplete
+	},
+	{
+		status: APPEAL_REPRESENTATION_STATUS.INCOMPLETE,
+		type: APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
+		service: service.lpaProofOfEvidenceIncomplete
+	},
+	{
+		status: APPEAL_REPRESENTATION_STATUS.INCOMPLETE,
+		type: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
+		service: service.appellantProofOfEvidenceIncomplete
 	}
 ];

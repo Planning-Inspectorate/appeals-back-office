@@ -313,7 +313,8 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 
 			if (!appellantProofOfEvidenceDone && appellantProofOfEvidenceReceived) {
 				actions.push('reviewAppellantProofOfEvidence');
-			} else if (!lpaProofOfEvidenceDone && lpaProofOfEvidenceReceived) {
+			}
+			if (!lpaProofOfEvidenceDone && lpaProofOfEvidenceReceived) {
 				actions.push('reviewLpaProofOfEvidence');
 			}
 			break;

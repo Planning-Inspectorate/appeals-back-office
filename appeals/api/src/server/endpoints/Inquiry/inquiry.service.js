@@ -29,10 +29,16 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 /** @typedef {import('express').NextFunction} NextFunction */
 
 /**
+ * @typedef {{appealId: number,lpaQuestionnaireDueDate: string | Date,lpaStatementDueDate: string | Date,appellantStatementDueDate: string | Date,planningObligationDueDate: string | Date | undefined,statementOfCommonGroundDueDate: string | Date,ipCommentsDueDate: string | Date,proofOfEvidenceAndWitnessesDueDate: string | Date}} TimetableData
+ */
+
+/**
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} templateName
  * @param {Appeal} appeal
  * @param {string | Date} inquiryStartTime
+ * @param {string} estimatedDays
+ * @param {TimetableData} timetableData
  * @param {Omit<import('@pins/appeals.api').Schema.Address, 'id'>} address
  * @returns {Promise<void>}
  */
@@ -41,6 +47,8 @@ const sendInquiryDetailsNotifications = async (
 	templateName,
 	appeal,
 	inquiryStartTime,
+	estimatedDays,
+	timetableData,
 	address
 ) => {
 	const personalisation = {
@@ -51,6 +59,39 @@ const sendInquiryDetailsNotifications = async (
 			typeof inquiryStartTime === 'string' ? new Date(inquiryStartTime) : inquiryStartTime
 		),
 		inquiry_address: formatAddressSingleLine({ ...address, id: 0 }),
+		inquiry_expected_days: estimatedDays,
+		questionnaire_due_date: dateISOStringToDisplayDate(
+			typeof timetableData.lpaQuestionnaireDueDate === 'string'
+				? timetableData.lpaQuestionnaireDueDate
+				: timetableData.lpaQuestionnaireDueDate.toISOString()
+		),
+		lpa_statement_deadline: dateISOStringToDisplayDate(
+			typeof timetableData.lpaStatementDueDate === 'string'
+				? timetableData.lpaStatementDueDate
+				: timetableData.lpaStatementDueDate.toISOString()
+		),
+		ip_comments_deadline: dateISOStringToDisplayDate(
+			typeof timetableData.ipCommentsDueDate === 'string'
+				? timetableData.ipCommentsDueDate
+				: timetableData.ipCommentsDueDate.toISOString()
+		),
+		statement_of_common_ground_deadline: dateISOStringToDisplayDate(
+			typeof timetableData.statementOfCommonGroundDueDate === 'string'
+				? timetableData.statementOfCommonGroundDueDate
+				: timetableData.statementOfCommonGroundDueDate.toISOString()
+		),
+		proof_of_evidence_and_witnesses_deadline: dateISOStringToDisplayDate(
+			typeof timetableData.proofOfEvidenceAndWitnessesDueDate === 'string'
+				? timetableData.proofOfEvidenceAndWitnessesDueDate
+				: timetableData.proofOfEvidenceAndWitnessesDueDate.toISOString()
+		),
+		planning_obligation_deadline: dateISOStringToDisplayDate(
+			timetableData.planningObligationDueDate
+				? typeof timetableData.planningObligationDueDate === 'string'
+					? timetableData.planningObligationDueDate
+					: timetableData.planningObligationDueDate.toISOString()
+				: ''
+		),
 		team_email_address: await getTeamEmailFromAppealId(appeal.id)
 	};
 	await sendInquiryNotifications(notifyClient, templateName, appeal, personalisation);
@@ -96,7 +137,10 @@ const sendInquiryNotifications = async (
 		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 	}
 
-	[appellantEmail, lpaEmail].forEach(async (email) => {
+	[
+		{ email: appellantEmail, isLpa: false },
+		{ email: lpaEmail, isLpa: true }
+	].forEach(async (item) => {
 		await notifySend({
 			notifyClient,
 			templateName,
@@ -104,9 +148,10 @@ const sendInquiryNotifications = async (
 				appeal_reference_number: appeal.reference,
 				site_address: appeal.address ? formatAddressSingleLine(appeal.address) : '',
 				lpa_reference: appeal.applicationReference ?? '',
+				is_lpa: item.isLpa,
 				...personalisation
 			},
-			recipientEmail: email
+			recipientEmail: item.email
 		});
 	});
 };
@@ -124,6 +169,9 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 		const inquiryStartTime = createInquiryData.inquiryStartTime;
 		const inquiryEndTime = createInquiryData.inquiryEndTime;
 		const address = createInquiryData.address;
+		const estimatedDays = createInquiryData.estimatedDays
+			? createInquiryData.estimatedDays.toString()
+			: '';
 
 		const appealType = appeal.appealType || null;
 		if (!appealType) {
@@ -193,9 +241,9 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 			}
 
 			// Return anything you want from this transaction
-			return { addr, inquiry, updatedAppeal };
+			return { addr, inquiry, updatedAppeal, timetableData };
 		});
-
+		const timetableData = result.timetableData;
 		await transitionState(
 			appeal.id,
 			azureAdUserId || AUDIT_TRAIL_SYSTEM_UUID,
@@ -211,6 +259,8 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 				'inquiry-set-up',
 				appeal,
 				inquiryStartTime,
+				estimatedDays,
+				timetableData,
 				address
 			);
 		}

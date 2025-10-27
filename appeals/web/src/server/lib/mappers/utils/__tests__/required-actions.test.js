@@ -1452,6 +1452,40 @@ describe('required actions', () => {
 				expect(result).toContain('reviewLpaProofOfEvidence');
 			});
 
+			it('should return "reviewLpaProofOfEvidence" and "reviewAppellantProofOfEvidence" if appellant and LPA POE are received but not reviewed and is in EVIDENCE state', () => {
+				const result = getRequiredActionsForAppeal(
+					{
+						...appealDataWithStatementsStatus,
+						appealTimetable: {
+							...appealDataWithStatementsStatus.appealTimetable,
+							proofOfEvidenceAndWitnessesDueDate: futureDate
+						},
+						documentationSummary: {
+							...appealDataWithStatementsStatus.documentationSummary,
+							lpaProofOfEvidence: {
+								status: 'received',
+								counts: {
+									awaiting_review: 1,
+									valid: 1,
+									published: 0
+								}
+							},
+							appellantProofOfEvidence: {
+								status: 'received',
+								counts: {
+									awaiting_review: 1,
+									valid: 0,
+									published: 0
+								}
+							}
+						}
+					},
+					'detail'
+				);
+				expect(result).toContain('reviewLpaProofOfEvidence');
+				expect(result).toContain('reviewAppellantProofOfEvidence');
+			});
+
 			it('should return "progressToInquiry" if LPA proof of evidence is not received and proof of evidence dure date has passed', () => {
 				expect(
 					getRequiredActionsForAppeal(

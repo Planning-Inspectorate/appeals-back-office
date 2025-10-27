@@ -159,3 +159,88 @@ export const lpaStatementIncomplete = async ({
 		}
 	});
 };
+
+/** @type {Service} */
+export const lpaProofOfEvidenceIncomplete = async ({
+	notifyClient,
+	appeal,
+	representation,
+	allowResubmit,
+	azureAdUserId
+}) => {
+	const recipientEmail = appeal.lpa?.email;
+	if (!recipientEmail) {
+		throw new Error(`no recipient email address found for Appeal: ${appeal.reference}`);
+	}
+	await proofOfEvidenceNotifySend(
+		notifyClient,
+		appeal,
+		representation,
+		allowResubmit,
+		azureAdUserId,
+		recipientEmail
+	);
+};
+
+/** @type {Service} */
+export const appellantProofOfEvidenceIncomplete = async ({
+	notifyClient,
+	appeal,
+	representation,
+	allowResubmit,
+	azureAdUserId
+}) => {
+	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+	if (!recipientEmail) {
+		throw new Error(`no recipient email address found for Appeal: ${appeal.reference}`);
+	}
+	await proofOfEvidenceNotifySend(
+		notifyClient,
+		appeal,
+		representation,
+		allowResubmit,
+		azureAdUserId,
+		recipientEmail
+	);
+};
+
+/**
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {Appeal} appeal
+ * @param {Representation} representation
+ * @param {boolean} allowResubmit
+ * @param {string|undefined} azureAdUserId
+ * @param {string} recipientEmail
+ */
+const proofOfEvidenceNotifySend = async (
+	notifyClient,
+	appeal,
+	representation,
+	allowResubmit,
+	azureAdUserId,
+	recipientEmail
+) => {
+	const siteAddress = formatSiteAddress(appeal);
+	const reasons = formatReasons(representation);
+	const { proofOfEvidenceAndWitnessesDueDate = null } = appeal.appealTimetable || {};
+	const extendedDeadline = await formatExtendedDeadline(
+		allowResubmit,
+		proofOfEvidenceAndWitnessesDueDate,
+		3
+	);
+
+	await notifySend({
+		azureAdUserId,
+		templateName: 'proof-of-evidence-incomplete',
+		notifyClient,
+		recipientEmail,
+		personalisation: {
+			appeal_reference_number: appeal.reference,
+			lpa_reference: appeal.applicationReference || '',
+			site_address: siteAddress,
+			deadline_date: extendedDeadline,
+			reasons,
+			team_email_address: await getTeamEmailFromAppealId(appeal.id)
+		}
+	});
+};
