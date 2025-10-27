@@ -2032,7 +2032,14 @@ export interface UpdateLPAQuestionnaireRequest {
 	preserveGrantLoan?: boolean;
 }
 
-export type UpdateLPAQuestionnaireResponse = object;
+export interface UpdateLPAQuestionnaireResponse {
+	validationOutcome?: {
+		/** @example 11 */
+		id?: number;
+		/** @example "Complete" */
+		name?: string;
+	};
+}
 
 export type AllAppellantCaseIncompleteReasonsResponse = {
 	/** @example 1 */

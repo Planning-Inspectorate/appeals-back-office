@@ -6022,6 +6022,39 @@
 				}
 			}
 		},
+		"/appeals/{appealReference}/proof-of-evidence-elapsed": {
+			"post": {
+				"tags": ["Test Utilities"],
+				"description": "A test endpoint to simulate the deadline for proof of evidence in the past",
+				"parameters": [
+					{
+						"name": "appealReference",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
 		"/appeals/{appealReference}/final-comments-elapsed": {
 			"post": {
 				"tags": ["Test Utilities"],
@@ -6124,40 +6157,7 @@
 		"/appeals/{appealReference}/inquiry-elapsed": {
 			"post": {
 				"tags": ["Test Utilities"],
-				"description": "A test endpoint to simulate the deadline for inquiry in the past",
-				"parameters": [
-					{
-						"name": "appealReference",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "OK"
-					},
-					"400": {
-						"description": "Bad Request"
-					}
-				}
-			}
-		},
-		"/appeals/{appealReference}/proof-of-evidence-elapsed": {
-			"post": {
-				"tags": ["Test Utilities"],
-				"description": "A test endpoint to simulate the deadline for proof of evidence due date in the past",
+				"description": "A test endpoint to simulate the completion of a inquiry event",
 				"parameters": [
 					{
 						"name": "appealReference",
@@ -6273,6 +6273,51 @@
 					},
 					"500": {
 						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/appeals/{appealReference}/review-lpaq": {
+			"post": {
+				"tags": ["Test Utilities"],
+				"description": "A test endpoint to simulate the completion of a review LPA questionnaire event",
+				"parameters": [
+					{
+						"name": "appealReference",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Updates a single LPA questionnaire by id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateLPAQuestionnaireResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateLPAQuestionnaireResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
 					}
 				}
 			}
@@ -11319,7 +11364,21 @@
 			},
 			"UpdateLPAQuestionnaireResponse": {
 				"type": "object",
-				"properties": {},
+				"properties": {
+					"validationOutcome": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "number",
+								"example": 11
+							},
+							"name": {
+								"type": "string",
+								"example": "Complete"
+							}
+						}
+					}
+				},
 				"xml": {
 					"name": "UpdateLPAQuestionnaireResponse"
 				}

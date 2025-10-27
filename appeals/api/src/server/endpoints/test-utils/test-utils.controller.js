@@ -1,5 +1,6 @@
 import { startAppeal } from '#endpoints/appeal-timetables/appeal-timetables.controller.js';
 import { updateCompletedEvents } from '#endpoints/appeals/appeals.service.js';
+import { updateLPAQuestionnaireById } from '#endpoints/lpa-questionnaires/lpa-questionnaires.controller.js';
 import { getAppealNotifications } from '#repositories/appeal-notification.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import { databaseConnector } from '#utils/database-connector.js';
@@ -263,4 +264,99 @@ export const simulateStartAppeal = async (req, res) => {
 	const response = await startAppeal(req, res);
 
 	return response ? response : res.status(400).send(false);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
+export const simulateReviewLPAQ = async (req, res) => {
+	const { appealReference } = req.params;
+
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: { reference: appealReference },
+		include: {
+			appealStatus: true,
+			lpa: true,
+			appellant: true,
+			lpaQuestionnaire: {
+				include: {
+					listedBuildingDetails: {
+						include: {
+							listedBuilding: true
+						}
+					},
+					designatedSiteNames: {
+						include: {
+							designatedSite: true
+						}
+					},
+					lpaNotificationMethods: {
+						include: {
+							lpaNotificationMethod: true
+						}
+					},
+					lpaQuestionnaireIncompleteReasonsSelected: {
+						include: {
+							lpaQuestionnaireIncompleteReason: true,
+							lpaQuestionnaireIncompleteReasonText: true
+						}
+					},
+					lpaQuestionnaireValidationOutcome: true
+				}
+			}
+		}
+	});
+
+	const validationOutcome = await databaseConnector.lPAQuestionnaireValidationOutcome.findUnique({
+		where: {
+			name: 'complete'
+		}
+	});
+
+	if (!appeal || !appeal.lpaQuestionnaire || !validationOutcome) return res.status(400).send(false);
+
+	req.appeal = appeal;
+	req.body = {
+		lpaStatement: appeal.lpaQuestionnaire.lpaStatement,
+		siteAccessDetails: appeal.lpaQuestionnaire.siteAccessDetails,
+		siteSafetyDetails: appeal.lpaQuestionnaire.siteSafetyDetails,
+		extraConditions: appeal.lpaQuestionnaire.newConditionDetails,
+		lpaCostsAppliedFor: appeal.lpaQuestionnaire.lpaCostsAppliedFor,
+		isConservationArea: appeal.lpaQuestionnaire.inConservationArea,
+		isCorrectAppealType: appeal.lpaQuestionnaire.isCorrectAppealType,
+		isGreenBelt: appeal.lpaQuestionnaire.isGreenBelt,
+		lpaNotificationMethods: appeal.lpaQuestionnaire.lpaNotificationMethods,
+		eiaColumnTwoThreshold: appeal.lpaQuestionnaire.eiaColumnTwoThreshold,
+		eiaRequiresEnvironmentalStatement: appeal.lpaQuestionnaire.eiaRequiresEnvironmentalStatement,
+		eiaEnvironmentalImpactSchedule: appeal.lpaQuestionnaire.eiaEnvironmentalImpactSchedule,
+		eiaDevelopmentDescription: appeal.lpaQuestionnaire.eiaDevelopmentDescription,
+		affectsScheduledMonument: appeal.lpaQuestionnaire.affectsScheduledMonument,
+		hasProtectedSpecies: appeal.lpaQuestionnaire.hasProtectedSpecies,
+		isAonbNationalLandscape: appeal.lpaQuestionnaire.isAonbNationalLandscape,
+		isGypsyOrTravellerSite: appeal.lpaQuestionnaire.isGypsyOrTravellerSite,
+		hasInfrastructureLevy: appeal.lpaQuestionnaire.hasInfrastructureLevy,
+		isInfrastructureLevyFormallyAdopted:
+			appeal.lpaQuestionnaire.isInfrastructureLevyFormallyAdopted,
+		infrastructureLevyAdoptedDate: appeal.lpaQuestionnaire.infrastructureLevyAdoptedDate,
+		infrastructureLevyExpectedDate: appeal.lpaQuestionnaire.infrastructureLevyExpectedDate,
+		lpaProcedurePreference: appeal.lpaQuestionnaire.lpaProcedurePreference,
+		lpaProcedurePreferenceDetails: appeal.lpaQuestionnaire.lpaProcedurePreferenceDetails,
+		lpaProcedurePreferenceDuration: appeal.lpaQuestionnaire.lpaProcedurePreferenceDuration,
+		eiaSensitiveAreaDetails: appeal.lpaQuestionnaire.eiaSensitiveAreaDetails,
+		consultedBodiesDetails: appeal.lpaQuestionnaire.consultedBodiesDetails,
+		reasonForNeighbourVisits: appeal.lpaQuestionnaire.reasonForNeighbourVisits,
+		designatedSiteNames: appeal.lpaQuestionnaire.designatedSiteNames,
+		preserveGrantLoan: appeal.lpaQuestionnaire.preserveGrantLoan,
+		isSiteInAreaOfSpecialControlAdverts:
+			appeal.lpaQuestionnaire.isSiteInAreaOfSpecialControlAdverts,
+		wasApplicationRefusedDueToHighwayOrTraffic:
+			appeal.lpaQuestionnaire.wasApplicationRefusedDueToHighwayOrTraffic,
+		didAppellantSubmitCompletePhotosAndPlans:
+			appeal.lpaQuestionnaire.didAppellantSubmitCompletePhotosAndPlans
+	};
+	req.validationOutcome = validationOutcome;
+	req.params = { lpaQuestionnaireId: String(appeal.lpaQuestionnaire.id) };
+	return updateLPAQuestionnaireById(req, res);
 };
