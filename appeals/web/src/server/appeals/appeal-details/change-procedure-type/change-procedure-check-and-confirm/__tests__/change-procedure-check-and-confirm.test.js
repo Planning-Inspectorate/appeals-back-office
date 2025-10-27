@@ -156,7 +156,8 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 					...appealDataWithoutStartDate,
 					appealStatus: 'lpa_questionnaire',
 					appealType: 'Planning appeal',
-					procedureType: 'hearing'
+					procedureType: 'hearing',
+					hearing: null
 				});
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
