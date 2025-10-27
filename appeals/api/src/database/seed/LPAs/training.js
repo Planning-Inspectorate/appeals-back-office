@@ -1225,5 +1225,179 @@ export const localPlanningDepartmentList = [
 		name: 'Yorkshire Dales National Park Authority',
 		email: 'planning@example.gov.uk',
 		teamId: 16 // North2
+	},
+	{
+		lpaCode: 'Y3805',
+		name: 'Adur District Council',
+		email: 'planning-Adur@example.gov.uk',
+		teamId: 12 // East2
+	},
+	{
+		lpaCode: 'P4605',
+		name: 'Birmingham City Council',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 10 //west4
+	},
+	{
+		lpaCode: 'R0335',
+		name: 'Bracknell Forest Borough Council',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 7 //West1
+	},
+	{
+		lpaCode: 'Z0116',
+		name: 'Bristol City Council',
+		email: 'development.management@example.gov.uk',
+		teamId: 10 //west4
+	},
+	{
+		lpaCode: 'B1605',
+		name: 'Cheltenham Borough Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 8 //West2
+	},
+	{
+		lpaCode: 'C3105',
+		name: 'Cherwell District Council',
+		email: 'submit.appeal@example.gov.uk',
+		teamId: 9 //West3
+	},
+	{
+		lpaCode: 'T1410',
+		name: 'Eastbourne Borough Council',
+		email: 'customerfirst@example.gov.uk',
+		teamId: 12 // East2
+	},
+	{
+		lpaCode: 'M1710',
+		name: 'East Hampshire District Council',
+		email: 'planning.appeals@example.gov.ukuk',
+		teamId: 7 //West1
+	},
+	{
+		lpaCode: 'L2250',
+		name: 'Folkestone and Hythe District Council',
+		email: 'Planning@example.gov.uk',
+		teamId: 12 // East2
+	},
+	{
+		lpaCode: 'P1425',
+		name: 'Lewes District Council',
+		email: 'planning@example.gov.uk',
+		teamId: 12 // East2
+	},
+	{
+		lpaCode: 'X5210',
+		name: 'London Borough of Camden',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 18 // North4
+	},
+	{
+		lpaCode: 'F5540',
+		name: 'London Borough of Hounslow',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 8 //West2
+	},
+	{
+		lpaCode: 'T5720',
+		name: 'London Borough of Merton',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 14 //East4
+	},
+	{
+		lpaCode: 'A5840',
+		name: 'London Borough of Southwark',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 14 //East4
+	},
+	{
+		lpaCode: 'P5870',
+		name: 'London Borough of Sutton',
+		email: 'developmentcontrol@example.gov.uk',
+		teamId: 14 //East4
+	},
+	{
+		lpaCode: 'H5960',
+		name: 'London Borough of Wandsworth',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 7 //West1
+	},
+	{
+		lpaCode: 'Y0435',
+		name: 'Milton Keynes Council',
+		email: 'dcappeals@example.gov.uk',
+		teamId: 9 //West3
+	},
+	{
+		lpaCode: 'D0121',
+		name: 'North Somerset Council',
+		email: 'DMAppeals@example.gov.uk',
+		teamId: 10 //west4
+	},
+	{
+		lpaCode: 'G3110',
+		name: 'Oxford City Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 9 //West3
+	},
+	{
+		lpaCode: 'Z1775',
+		name: 'Portsmouth City Council',
+		email: 'planningapps@example.gov.uk',
+		teamId: 7 //West1
+	},
+	{
+		lpaCode: 'E0345',
+		name: 'Reading Borough Council',
+		email: 'plgadmin@example.gov.uk',
+		teamId: 7 //West1
+	},
+	{
+		lpaCode: 'Z5630',
+		name: 'Royal Borough of Kingston Upon Thames',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 14 //East4
+	},
+	{
+		lpaCode: 'T0355',
+		name: 'Royal Borough of Windsor and Maidenhead',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 10 //west4
+	},
+	{
+		lpaCode: 'G4620',
+		name: 'Sandwell Metropolitan Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 7 //West1
+	},
+	{
+		lpaCode: 'P0119',
+		name: 'South Gloucestershire Council',
+		email: 'planningsupport@example.gov.uk',
+		teamId: 8 //West2
+	},
+	{
+		lpaCode: 'C3430',
+		name: 'South Staffordshire District Council',
+		email: 'dcapps@example.gov.uk',
+		teamId: 8 //West2
+	},
+	{
+		lpaCode: 'M3455',
+		name: 'Stoke-on-Trent City Council',
+		email: 'planning@example.gov.uk',
+		teamId: 8 //West2
+	},
+	{
+		lpaCode: 'X0360',
+		name: 'Wokingham Borough Council',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 9 //West3
+	},
+	{
+		lpaCode: 'D1835',
+		name: 'Worcester City Council',
+		email: 'planning@example.gov.uk',
+		teamId: 9 //West3
 	}
 ];
