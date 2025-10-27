@@ -52,6 +52,15 @@ describe('inquiry routes', () => {
 		databaseConnector.$transaction.mockResolvedValue({
 			inquiry: {
 				id: 2
+			},
+			timetableData: {
+				lpaQuestionnaireDueDate: '2025-01-20',
+				lpaStatementDueDate: '2025-01-21',
+				appellantStatementDueDate: '2025-01-22',
+				planningObligationDueDate: '2025-01-23',
+				statementOfCommonGroundDueDate: '2025-01-24',
+				ipCommentsDueDate: '2025-01-25',
+				proofOfEvidenceAndWitnessesDueDate: '2025-01-26'
 			}
 		});
 	});
@@ -113,7 +122,15 @@ describe('inquiry routes', () => {
 					inquiry_time: '1:00pm',
 					inquiry_address:
 						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
-					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					statement_of_common_ground_deadline: '24 January 2025',
+					lpa_statement_deadline: '21 January 2025',
+					planning_obligation_deadline: '23 January 2025',
+					proof_of_evidence_and_witnesses_deadline: '26 January 2025',
+					questionnaire_due_date: '20 January 2025',
+					ip_comments_deadline: '25 January 2025',
+					is_lpa: false,
+					inquiry_expected_days: ''
 				};
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
@@ -127,7 +144,7 @@ describe('inquiry routes', () => {
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					notifyClient: expect.anything(),
-					personalisation,
+					personalisation: { ...personalisation, is_lpa: true },
 					recipientEmail: fullPlanningAppeal.lpa.email,
 					templateName: 'inquiry-set-up'
 				});
