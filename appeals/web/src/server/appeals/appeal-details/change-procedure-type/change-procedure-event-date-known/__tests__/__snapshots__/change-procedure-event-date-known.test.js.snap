@@ -19,7 +19,7 @@ exports[`GET /change-appeal-procedure-type/hearing/change-event-date-known shoul
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="date-known" name="dateKnown" type="radio"
-                                        value="yes" checked>
+                                        value="yes">
                                         <label class="govuk-label govuk-radios__label" for="date-known">Yes</label>
                                     </div>
                                     <div class="govuk-radios__item">

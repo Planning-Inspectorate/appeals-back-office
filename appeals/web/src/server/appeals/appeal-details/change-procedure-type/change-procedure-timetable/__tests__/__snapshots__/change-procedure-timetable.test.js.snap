@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Change procedure timetable GET /change-timetable Written and Hearing should render correct "Timetable due dates" page for hearing with no planning obligation 1`] = `
+exports[`Change procedure timetable GET /change-timetable Written, Hearing and Inquiry should render correct "Timetable due dates" page for hearing with no planning obligation 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
@@ -149,7 +149,7 @@ exports[`Change procedure timetable GET /change-timetable Written and Hearing sh
 </main>"
 `;
 
-exports[`Change procedure timetable GET /change-timetable Written and Hearing should render correct "Timetable due dates" page for hearing with planning obligation 1`] = `
+exports[`Change procedure timetable GET /change-timetable Written, Hearing and Inquiry should render correct "Timetable due dates" page for hearing with planning obligation 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
@@ -331,7 +331,404 @@ exports[`Change procedure timetable GET /change-timetable Written and Hearing sh
 </main>"
 `;
 
-exports[`Change procedure timetable GET /change-timetable Written and Hearing should render correct "Timetable due dates" page for written with no planning obligation 1`] = `
+exports[`Change procedure timetable GET /change-timetable Written, Hearing and Inquiry should render correct "Timetable due dates" page for inquiry with no planning obligation 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
+            <h1             class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
+                <div id="lpa-questionnaire-due-date-hint"
+                class="govuk-hint">For example, 29 10 2024</div>
+                <div class="govuk-date-input" id="lpa-questionnaire-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-questionnaire-due-date-day" name="lpa-questionnaire-due-date-day"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-questionnaire-due-date-month" name="lpa-questionnaire-due-date-month"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="lpa-questionnaire-due-date-year" name="lpa-questionnaire-due-date-year"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
+                <div class="govuk-date-input" id="lpa-statement-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
+                <div id="ip-comments-due-date-hint"
+                class="govuk-hint">For example, 29 10 2024</div>
+                <div class="govuk-date-input" id="ip-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
+                <div id="statement-of-common-ground-due-date-hint"
+                class="govuk-hint">For example, 29 10 2024</div>
+                <div class="govuk-date-input" id="statement-of-common-ground-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-day" name="statement-of-common-ground-due-date-day"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-month" name="statement-of-common-ground-due-date-month"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-year" name="statement-of-common-ground-due-date-year"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="proof-of-evidence-and-witnesses-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Proof of evidence and witnesses due</legend>
+                <div id="proof-of-evidence-and-witnesses-due-date-hint"
+                class="govuk-hint">For example, 29 10 2024</div>
+                <div class="govuk-date-input" id="proof-of-evidence-and-witnesses-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="proof-of-evidence-and-witnesses-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="proof-of-evidence-and-witnesses-due-date-day" name="proof-of-evidence-and-witnesses-due-date-day"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="proof-of-evidence-and-witnesses-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="proof-of-evidence-and-witnesses-due-date-month" name="proof-of-evidence-and-witnesses-due-date-month"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="proof-of-evidence-and-witnesses-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="proof-of-evidence-and-witnesses-due-date-year" name="proof-of-evidence-and-witnesses-due-date-year"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
+exports[`Change procedure timetable GET /change-timetable Written, Hearing and Inquiry should render correct "Timetable due dates" page for inquiry with planning obligation 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
+            <h1             class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
+                <div id="lpa-questionnaire-due-date-hint"
+                class="govuk-hint">For example, 29 10 2024</div>
+                <div class="govuk-date-input" id="lpa-questionnaire-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-questionnaire-due-date-day" name="lpa-questionnaire-due-date-day"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-questionnaire-due-date-month" name="lpa-questionnaire-due-date-month"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="lpa-questionnaire-due-date-year" name="lpa-questionnaire-due-date-year"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
+                <div class="govuk-date-input" id="lpa-statement-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
+                <div id="ip-comments-due-date-hint"
+                class="govuk-hint">For example, 29 10 2024</div>
+                <div class="govuk-date-input" id="ip-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
+                <div id="statement-of-common-ground-due-date-hint"
+                class="govuk-hint">For example, 29 10 2024</div>
+                <div class="govuk-date-input" id="statement-of-common-ground-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-day" name="statement-of-common-ground-due-date-day"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-month" name="statement-of-common-ground-due-date-month"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-year" name="statement-of-common-ground-due-date-year"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
+                <div id="planning-obligation-due-date-hint"
+                class="govuk-hint">For example, 29 10 2024</div>
+                <div class="govuk-date-input" id="planning-obligation-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="planning-obligation-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="planning-obligation-due-date-day" name="planning-obligation-due-date-day"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="planning-obligation-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="planning-obligation-due-date-month" name="planning-obligation-due-date-month"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="planning-obligation-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="planning-obligation-due-date-year" name="planning-obligation-due-date-year"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="proof-of-evidence-and-witnesses-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Proof of evidence and witnesses due</legend>
+                <div id="proof-of-evidence-and-witnesses-due-date-hint"
+                class="govuk-hint">For example, 29 10 2024</div>
+                <div class="govuk-date-input" id="proof-of-evidence-and-witnesses-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="proof-of-evidence-and-witnesses-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="proof-of-evidence-and-witnesses-due-date-day" name="proof-of-evidence-and-witnesses-due-date-day"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="proof-of-evidence-and-witnesses-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="proof-of-evidence-and-witnesses-due-date-month" name="proof-of-evidence-and-witnesses-due-date-month"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="proof-of-evidence-and-witnesses-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="proof-of-evidence-and-witnesses-due-date-year" name="proof-of-evidence-and-witnesses-due-date-year"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
+exports[`Change procedure timetable GET /change-timetable Written, Hearing and Inquiry should render correct "Timetable due dates" page for written with no planning obligation 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
@@ -479,7 +876,7 @@ exports[`Change procedure timetable GET /change-timetable Written and Hearing sh
 </main>"
 `;
 
-exports[`Change procedure timetable GET /change-timetable Written and Hearing should render correct "Timetable due dates" page for written with planning obligation 1`] = `
+exports[`Change procedure timetable GET /change-timetable Written, Hearing and Inquiry should render correct "Timetable due dates" page for written with planning obligation 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>

@@ -20,8 +20,9 @@ export const renderEventDateKnown = async (request, response) => {
 	const { errors } = request;
 	const appealDetails = request.currentAppeal;
 	const backLinkUrl = getBackLinkUrl(request, 'change-selected-procedure-type');
-	const sessionValues = request.session.changeProcedureType;
-	const newProcedureType = request.session.changeProcedureType.appealProcedure;
+	const sessionValues =
+		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
+	const newProcedureType = sessionValues.appealProcedure;
 	const mappedPageContent = dateKnownPage(
 		appealDetails,
 		backLinkUrl,
@@ -49,8 +50,9 @@ export const postEventDateKnown = async (request, response) => {
 	if (errors) {
 		return renderEventDateKnown(request, response);
 	}
-
-	const newProcedureType = request.session.changeProcedureType.appealProcedure;
+	const sessionValues =
+		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
+	const newProcedureType = sessionValues.appealProcedure;
 	const baseUrl = `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}`;
 
 	if (dateKnown === 'yes') {

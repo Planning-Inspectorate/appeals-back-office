@@ -16,7 +16,7 @@ router
 		extractAndProcessDateErrors({
 			fieldNamePrefix: dateFieledName
 		}),
-		saveBodyToSession('changeProcedureType'),
+		saveBodyToSession('changeProcedureType', { scopeToAppeal: true }),
 		asyncHandler(controller.postChangeProcedureEventDate)
 	);
 

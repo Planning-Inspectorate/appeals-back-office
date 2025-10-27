@@ -15,7 +15,7 @@ router
 		validateAppeal,
 		addAppellantCaseToLocals,
 		runTimetableValidators,
-		saveBodyToSession('changeProcedureType'),
+		saveBodyToSession('changeProcedureType', { scopeToAppeal: true }),
 		asyncHandler(controllers.postChangeAppealTimetable)
 	);
 

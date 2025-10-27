@@ -16,16 +16,18 @@ const renderSelectProcedure = async (request, response) => {
 	const {
 		currentAppeal: { appealReference },
 		params: { appealId },
-		session: { changeProcedureType },
 		errors
 	} = request;
+
+	const sessionValues =
+		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
 
 	const mappedPageContent = selectProcedurePage(
 		appealReference,
 		request.query?.backUrl
 			? String(request.query?.backUrl)
 			: `/appeals-service/appeal-details/${appealId}`,
-		changeProcedureType.appealProcedure,
+		sessionValues.appealProcedure,
 		errors ? errors['appealProcedure']?.msg : undefined
 	);
 
@@ -44,15 +46,31 @@ export const postChangeSelectProcedure = async (request, response) => {
 	try {
 		const {
 			errors,
-			params: { appealId },
-			session: { changeProcedureType }
+			params: { appealId }
 		} = request;
 
 		if (errors) {
 			return renderSelectProcedure(request, response);
 		}
 
-		const newProcedureType = changeProcedureType.appealProcedure;
+		const sessionValues =
+			request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
+		const newProcedureType = sessionValues.appealProcedure;
+
+		// Delete all dependent session values for the existing perocedure type
+		delete sessionValues['event-date-day'];
+		delete sessionValues['event-date-month'];
+		delete sessionValues['event-date-year'];
+		delete sessionValues['event-time-hour'];
+		delete sessionValues['event-time-minute'];
+		delete sessionValues['estimationDays'];
+		delete sessionValues['addressKnown'];
+		delete sessionValues['addressLine1'];
+		delete sessionValues['addressLine2'];
+		delete sessionValues['estimationYesNo'];
+		delete sessionValues['postCode'];
+		delete sessionValues['town'];
+		delete sessionValues['county'];
 
 		switch (newProcedureType) {
 			case APPEAL_CASE_PROCEDURE.WRITTEN: {

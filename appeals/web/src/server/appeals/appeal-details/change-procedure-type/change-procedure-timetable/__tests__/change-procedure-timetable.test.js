@@ -66,86 +66,104 @@ describe('Change procedure timetable', () => {
 			'planning-obligation-due-date-day',
 			'planning-obligation-due-date-month',
 			'planning-obligation-due-date-year'
+		],
+		inquiry: [
+			'lpa-questionnaire-due-date-day',
+			'lpa-questionnaire-due-date-month',
+			'lpa-questionnaire-due-date-year',
+			'lpa-statement-due-date-day',
+			'lpa-statement-due-date-month',
+			'lpa-statement-due-date-year',
+			'ip-comments-due-date-day',
+			'ip-comments-due-date-month',
+			'ip-comments-due-date-year',
+			'statement-of-common-ground-due-date-day',
+			'statement-of-common-ground-due-date-month',
+			'statement-of-common-ground-due-date-year',
+			'proof-of-evidence-and-witnesses-due-date-day',
+			'proof-of-evidence-and-witnesses-due-date-month',
+			'proof-of-evidence-and-witnesses-due-date-year'
 		]
 	};
 
 	describe('GET /change-timetable', () => {
-		describe.each([APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING])(
-			'Written and Hearing',
-			(appealProcedure) => {
-				it(`should render correct "Timetable due dates" page for ${appealProcedure} with no planning obligation`, async () => {
-					const appealData = {
-						...baseAppealData,
-						procedureType: appealProcedure,
-						appealTimetable: {
-							appealTimetableId: 1
-						}
-					};
-					appealData.appealType = APPEAL_TYPE.S78;
-					appealData.appealStatus = 'lpa_questionnaire';
+		describe.each([
+			APPEAL_CASE_PROCEDURE.WRITTEN,
+			APPEAL_CASE_PROCEDURE.HEARING,
+			APPEAL_CASE_PROCEDURE.INQUIRY
+		])('Written, Hearing and Inquiry', (appealProcedure) => {
+			it(`should render correct "Timetable due dates" page for ${appealProcedure} with no planning obligation`, async () => {
+				const appealData = {
+					...baseAppealData,
+					procedureType: appealProcedure,
+					appealTimetable: {
+						appealTimetableId: 1
+					}
+				};
+				appealData.appealType = APPEAL_TYPE.S78;
+				appealData.appealStatus = 'lpa_questionnaire';
 
-					nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
-					nock('http://test/')
-						.get('/appeals/1/appellant-cases/0')
-						.reply(200, { planningObligation: { hasObligation: false } })
-						.persist();
+				nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, { planningObligation: { hasObligation: false } })
+					.persist();
 
-					const response = await request.get(`${baseUrl}/${appealProcedure}/change-timetable`);
-					const element = parseHtml(response.text);
+				const response = await request.get(`${baseUrl}/${appealProcedure}/change-timetable`);
+				const element = parseHtml(response.text);
 
-					expect(element.innerHTML).toMatchSnapshot();
-					expect(element.innerHTML).toContain('Timetable due dates</h1>');
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Timetable due dates</h1>');
 
-					const keyType =
-						appealProcedure === APPEAL_CASE_PROCEDURE.HEARING
-							? 'hearingWithoutPlanningObligation'
-							: appealProcedure;
-					/** @type {string[]} */
-					// @ts-ignore
-					const matchingItems = matchingTimetables[keyType];
-					matchingItems.forEach((item) => {
-						expect(element.innerHTML).toContain(`name="${item}"`);
-					});
-					expect(element.innerHTML).toContain('Continue</button>');
+				const keyType =
+					appealProcedure === APPEAL_CASE_PROCEDURE.HEARING
+						? 'hearingWithoutPlanningObligation'
+						: appealProcedure;
+				/** @type {string[]} */
+				// @ts-ignore
+				const matchingItems = matchingTimetables[keyType];
+				matchingItems.forEach((item) => {
+					expect(element.innerHTML).toContain(`name="${item}"`);
 				});
+				expect(element.innerHTML).toContain('Continue</button>');
+			});
 
-				it(`should render correct "Timetable due dates" page for ${appealProcedure} with planning obligation`, async () => {
-					const appealData = {
-						...baseAppealData,
-						procedureType: appealProcedure,
-						appealTimetable: {
-							appealTimetableId: 1
-						}
-					};
-					appealData.appealType = APPEAL_TYPE.S78;
-					appealData.appealStatus = 'lpa_questionnaire';
+			it(`should render correct "Timetable due dates" page for ${appealProcedure} with planning obligation`, async () => {
+				const appealData = {
+					...baseAppealData,
+					procedureType: appealProcedure,
+					appealTimetable: {
+						appealTimetableId: 1
+					}
+				};
+				appealData.appealType = APPEAL_TYPE.S78;
+				appealData.appealStatus = 'lpa_questionnaire';
 
-					nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
-					nock('http://test/')
-						.get('/appeals/1/appellant-cases/0')
-						.reply(200, { planningObligation: { hasObligation: true } })
-						.persist();
+				nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, { planningObligation: { hasObligation: true } })
+					.persist();
 
-					const response = await request.get(`${baseUrl}/${appealProcedure}/change-timetable`);
-					const element = parseHtml(response.text);
+				const response = await request.get(`${baseUrl}/${appealProcedure}/change-timetable`);
+				const element = parseHtml(response.text);
 
-					expect(element.innerHTML).toMatchSnapshot();
-					expect(element.innerHTML).toContain('Timetable due dates</h1>');
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Timetable due dates</h1>');
 
-					const keyType =
-						appealProcedure === APPEAL_CASE_PROCEDURE.HEARING
-							? 'hearingWithPlanningObligation'
-							: appealProcedure;
-					/** @type {string[]} */
-					// @ts-ignore
-					const matchingItems = matchingTimetables[keyType];
-					matchingItems.forEach((item) => {
-						expect(element.innerHTML).toContain(`name="${item}"`);
-					});
-					expect(element.innerHTML).toContain('Continue</button>');
+				const keyType =
+					appealProcedure === APPEAL_CASE_PROCEDURE.HEARING
+						? 'hearingWithPlanningObligation'
+						: appealProcedure;
+				/** @type {string[]} */
+				// @ts-ignore
+				const matchingItems = matchingTimetables[keyType];
+				matchingItems.forEach((item) => {
+					expect(element.innerHTML).toContain(`name="${item}"`);
 				});
-			}
-		);
+				expect(element.innerHTML).toContain('Continue</button>');
+			});
+		});
 	});
 
 	describe('POST /change-timetable', () => {
