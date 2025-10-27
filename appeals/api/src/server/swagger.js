@@ -738,7 +738,12 @@ export const spec = {
 			isGreenBelt: true,
 			preserveGrantLoan: true
 		},
-		UpdateLPAQuestionnaireResponse: {},
+		UpdateLPAQuestionnaireResponse: {
+			validationOutcome: {
+				id: 11,
+				name: 'Complete'
+			}
+		},
 		AllAppellantCaseIncompleteReasonsResponse: [
 			{
 				id: 1,

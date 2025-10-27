@@ -6277,6 +6277,51 @@
 				}
 			}
 		},
+		"/appeals/{appealReference}/review-lpaq": {
+			"post": {
+				"tags": ["Test Utilities"],
+				"description": "A test endpoint to simulate the completion of a review LPA questionnaire event",
+				"parameters": [
+					{
+						"name": "appealReference",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Updates a single LPA questionnaire by id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateLPAQuestionnaireResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateLPAQuestionnaireResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
 		"/appeals/linkable-appeal/{appealReference}/{linkableType}": {
 			"get": {
 				"tags": ["Linkable appeals"],
@@ -11319,7 +11364,21 @@
 			},
 			"UpdateLPAQuestionnaireResponse": {
 				"type": "object",
-				"properties": {},
+				"properties": {
+					"validationOutcome": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "number",
+								"example": 11
+							},
+							"name": {
+								"type": "string",
+								"example": "Complete"
+							}
+						}
+					}
+				},
 				"xml": {
 					"name": "UpdateLPAQuestionnaireResponse"
 				}
