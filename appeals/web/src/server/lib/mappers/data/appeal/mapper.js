@@ -2,6 +2,7 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import config from '#environment/config.js';
 import { permissionNames } from '#environment/permissions.js';
 import { userHasPermission } from '#lib/mappers/index.js';
+import { stripQueryString } from '#lib/url-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { submaps as hasSubmaps } from './has.js';
 import { submaps as s78Submaps } from './s78.js';
@@ -103,11 +104,10 @@ export async function initialiseAndMapAppealData(
 	const mappedData = {
 		appeal: {}
 	};
-
 	Object.entries(submappers).forEach(([key, submapper]) => {
 		mappedData.appeal[key] = submapper({
 			appealDetails,
-			currentRoute,
+			currentRoute: stripQueryString(currentRoute),
 			session,
 			request,
 			skipAssignedUsersData,
