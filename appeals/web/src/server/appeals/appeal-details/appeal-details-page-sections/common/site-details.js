@@ -1,8 +1,10 @@
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { isAfter, isBefore, isSameDay } from 'date-fns';
+import { utcToZonedTime } from 'date-fns-tz';
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.d.ts').WebAppeal} WebAppeal */
 
 /**
@@ -73,12 +75,16 @@ export const getSiteDetails = (mappedData, appealDetails) => {
 		const visitDate = new Date(siteVisit.visitDate);
 		const currentDate = new Date();
 
-		if (isSameDay(visitDate, currentDate)) {
+		// this changes the UTC time so that the local time comparisons will behave as though they are comparing in the DEFAULT_TIMEZONE
+		const visitDateTimeZoneAdjusted = utcToZonedTime(visitDate, DEFAULT_TIMEZONE);
+		const currentDateTimeZoneAdjusted = utcToZonedTime(currentDate, DEFAULT_TIMEZONE);
+
+		if (isSameDay(visitDateTimeZoneAdjusted, currentDateTimeZoneAdjusted)) {
 			allComponents.push(cancelSiteVisitLink, recordMissedSiteVisitLink);
-		} else if (isAfter(visitDate, currentDate)) {
+		} else if (isAfter(visitDateTimeZoneAdjusted, currentDateTimeZoneAdjusted)) {
 			allComponents.push(cancelSiteVisitLink);
 		} else if (
-			isBefore(visitDate, currentDate) &&
+			isBefore(visitDateTimeZoneAdjusted, currentDateTimeZoneAdjusted) &&
 			!appealDetails.completedStateList.includes('issue_determination')
 		) {
 			allComponents.push(recordMissedSiteVisitLink);
