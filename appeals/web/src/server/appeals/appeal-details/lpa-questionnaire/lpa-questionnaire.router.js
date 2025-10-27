@@ -34,6 +34,7 @@ import eiaEnvironmentalImpactScheduleRouter from './environmental-impact-assessm
 import environmentalAssessmentRouter from './environmental-impact-assessment/environmental-impact-assessment.router.js';
 import extraConditionsRouter from './extra-conditions/extra-conditions.router.js';
 import hasProtectedSpeciesRouter from './has-protected-species/has-protected-species.router.js';
+import highwayTrafficPublicSafetyRouter from './highway-traffic-public-safety/highway-traffic-public-safety.router.js';
 import isAonbNationalLandscapeRouter from './is-aonb-national-landscape/is-aonb-national-landscape.router.js';
 import isGypsyOrTravellerSiteRouter from './is-gypsy-or-traveller-site/is-gypsy-or-traveller-site.router.js';
 import { validateLpaQuestionnaireId } from './lpa-questionnaire.middleware.js';
@@ -235,6 +236,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	specialControlOfAdvertisementRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/public-safety',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	highwayTrafficPublicSafetyRouter
 );
 
 router

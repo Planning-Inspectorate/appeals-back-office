@@ -102,6 +102,7 @@ export const generateCasAdvertLpaQuestionnaireComponents = (
 			},
 			rows: [
 				mappedLPAQData.lpaq?.officersReport?.display.summaryListItem,
+				mappedLPAQData.lpaq?.highwayTrafficPublicSafety?.display.summaryListItem,
 				mappedLPAQData.lpaq?.developmentPlanPolicies?.display.summaryListItem,
 				mappedLPAQData.lpaq?.supplementaryPlanning?.display.summaryListItem,
 				mappedLPAQData.lpaq?.emergingPlan?.display.summaryListItem,

@@ -3,21 +3,22 @@ import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
-import * as mapper from './special-control-of-advertisement.mapper.js';
-import * as service from './special-control-of-advertisement.service.js';
+import * as mapper from './highway-traffic-public-safety.mapper.js';
+import * as service from './highway-traffic-public-safety.service.js';
+
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const getChangeSpecialControlOfAdvertisment = async (request, response) => {
-	return renderChangeSpecialControlOfAdvertisment(request, response);
+export const getChangeHighwayTrafficPublicSafety = async (request, response) => {
+	return renderChangeHighwayTrafficPublicSafety(request, response);
 };
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-const renderChangeSpecialControlOfAdvertisment = async (request, response) => {
+const renderChangeHighwayTrafficPublicSafety = async (request, response) => {
 	try {
 		const { currentAppeal, session, errors, originalUrl, apiClient } = request;
 		const origin = originalUrl.split('/').slice(0, -2).join('/');
@@ -28,10 +29,10 @@ const renderChangeSpecialControlOfAdvertisment = async (request, response) => {
 		);
 
 		const currentRadioValue =
-			convertFromYesNoNullToBooleanOrNull(session.isSiteInAreaOfSpecialControlAdverts) ??
-			data.isSiteInAreaOfSpecialControlAdverts;
+			convertFromYesNoNullToBooleanOrNull(session.highwayTrafficPublicSafetyRadio) ??
+			data.wasApplicationRefusedDueToHighwayOrTraffic;
 
-		const mappedPageContents = mapper.changeSpecialControlOfAdvertisment(
+		const mappedPageContents = mapper.changeHighwayTrafficPublicSafety(
 			currentAppeal,
 			currentRadioValue,
 			origin
@@ -52,12 +53,11 @@ const renderChangeSpecialControlOfAdvertisment = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const postChangeSpecialControlOfAdvertisment = async (request, response) => {
-	request.session.specialControlOfAdvertisementRadio =
-		request.body['specialControlOfAdvertisementRadio'];
+export const postChangeHighwayTrafficPublicSafety = async (request, response) => {
+	request.session.highwayTrafficPublicSafetyRadio = request.body['highwayTrafficPublicSafetyRadio'];
 
 	if (request.errors) {
-		return renderChangeSpecialControlOfAdvertisment(request, response);
+		return renderChangeHighwayTrafficPublicSafety(request, response);
 	}
 
 	try {
@@ -77,21 +77,21 @@ export const postChangeSpecialControlOfAdvertisment = async (request, response) 
 			});
 		}
 
-		await service.changeSpecialControlOfAdvertisement(
+		await service.changeHighwayTrafficPublicSafety(
 			apiClient,
 			appealId,
 			currentAppeal.lpaQuestionnaireId,
-			session.specialControlOfAdvertisementRadio
+			session.highwayTrafficPublicSafetyRadio
 		);
 
 		addNotificationBannerToSession({
 			session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			text: 'Special control of advertisements status changed'
+			text: 'Highway or traffic public safety status changed'
 		});
 
-		delete request.session.specialControlOfAdvertisementRadio;
+		delete request.session.highwayTrafficPublicSafetyRadio;
 
 		if (!origin.startsWith('/')) {
 			throw new Error('unexpected originalUrl');

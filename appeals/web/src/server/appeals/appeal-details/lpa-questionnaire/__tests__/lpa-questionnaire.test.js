@@ -1157,6 +1157,9 @@ describe('LPA Questionnaire review', () => {
 				'4. Planning officer’s report and supplementary documents</h2>'
 			);
 			expect(element.innerHTML).toContain('Planning officer’s report</dt>');
+			expect(element.innerHTML).toContain(
+				'Did you refuse the application because of highway or traffic public safety?</dt>'
+			);
 			expect(element.innerHTML).toContain('Relevant policies from statutory development plan</dt>');
 			expect(element.innerHTML).toContain('Supplementary planning documents</dt>');
 			expect(element.innerHTML).toContain('Emerging plan relevant to appeal</dt>');
