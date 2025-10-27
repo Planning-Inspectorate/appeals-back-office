@@ -9,7 +9,8 @@
  * @returns {Promise<Appeal>}
  */
 export async function setAppealAssignee(apiClient, appealId, assigneeUserId, isInspector) {
-	return await apiClient
+	assigneeUserId = assigneeUserId == '0' ? null : assigneeUserId;
+	return apiClient
 		.patch(`appeals/${appealId}`, {
 			json: isInspector ? { inspector: assigneeUserId } : { caseOfficer: assigneeUserId }
 		})

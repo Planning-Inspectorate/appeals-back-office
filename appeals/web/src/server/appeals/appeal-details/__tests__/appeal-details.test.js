@@ -453,7 +453,7 @@ describe('appeal-details', () => {
 					}).innerHTML;
 					expect(notificationBannerElementHTML).toMatchSnapshot();
 					expect(notificationBannerElementHTML).toContain('Success</h3>');
-					expect(notificationBannerElementHTML).toContain('Inspector has been removed</p>');
+					expect(notificationBannerElementHTML).toContain('Inspector removed</p>');
 				});
 
 				it('should render a success notification banner when a user was successfully assigned as case officer', async () => {

@@ -76,7 +76,7 @@ export const notificationBannerDefinitions = {
 	inspectorRemoved: {
 		type: 'success',
 		pages: ['appealDetails'],
-		text: 'Inspector has been removed'
+		text: 'Inspector removed'
 	},
 	documentAdded: {
 		type: 'success',

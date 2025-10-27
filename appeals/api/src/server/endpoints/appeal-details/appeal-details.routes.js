@@ -67,8 +67,9 @@ router.patch(
 		#swagger.description = 'Updates case team members for a single appeal'
 		#swagger.parameters['azureAdUserId'] = {
 			in: 'header',
-			required: true,
-			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+			required: false,
+			type: 'string',
+			nullable: true
 		}
 		#swagger.requestBody = {
 			in: 'body',
