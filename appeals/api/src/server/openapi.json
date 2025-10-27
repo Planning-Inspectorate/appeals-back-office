@@ -269,8 +269,8 @@
 					{
 						"name": "azureAdUserId",
 						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"required": false,
+						"nullable": true,
 						"schema": {
 							"type": "string"
 						}

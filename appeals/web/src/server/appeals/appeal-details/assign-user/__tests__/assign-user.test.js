@@ -27,7 +27,7 @@ describe('assign-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Case officer</label></h1>');
+			expect(element.innerHTML).toContain('Find a case officer</label></h1>');
 			expect(element.innerHTML).toContain('accessible-autocomplete" id="users" name="user"');
 			expect(element.innerHTML).toContain('Continue</button>');
 		});
@@ -43,7 +43,7 @@ describe('assign-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Case officer</label></h1>');
+			expect(element.innerHTML).toContain('Find a case officer</label></h1>');
 
 			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -74,7 +74,7 @@ describe('assign-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Inspector</label></h1>');
+			expect(element.innerHTML).toContain('Find an inspector</label></h1>');
 			expect(element.innerHTML).toContain('accessible-autocomplete" id="users" name="user"');
 			expect(element.innerHTML).toContain('Continue</button>');
 		});
@@ -88,7 +88,7 @@ describe('assign-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Inspector</label></h1>');
+			expect(element.innerHTML).toContain('Find an inspector</label></h1>');
 
 			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -133,9 +133,7 @@ describe('assign-user', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<br>John.Smith@planninginspectorate.gov.uk</dd>'
 			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'assign-case-officer/search-case-officer">Change'
-			);
+
 			expect(unprettifiedElement.innerHTML).toContain('Assign case officer</button>');
 		});
 	});
@@ -151,25 +149,6 @@ describe('assign-user', () => {
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
-		// 	const response = await request
-		// 		.post(`${baseUrl}/appellant-case/site-address/change/1`)
-		// 		.send({
-		// 			addressLine1: '1 Grove Cottage',
-		// 			county: 'Devon',
-		// 			postCode: 'NR35 2ND',
-		// 			town: 'Woodton'
-		// 		});
-
-		// 	expect(response.statusCode).toBe(302);
-
-		// 	const appellantCaseResponse = await request.get(`${baseUrl}/appeal-details`);
-		// 	const notificationBannerElementHTML = parseHtml(appellantCaseResponse.text, {
-		// 		rootElement: '.govuk-notification-banner'
-		// 	}).innerHTML;
-
-		// 	expect(notificationBannerElementHTML).toContain('Success</h3>');
-		// 	expect(notificationBannerElementHTML).toContain('Case officer Assigned</p>');
-		// });
 	});
 
 	describe('GET /assign-inspector/check-details', () => {
@@ -192,8 +171,29 @@ describe('assign-user', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<br>John.Smith@planninginspectorate.gov.uk</dd>'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('assign-inspector/search-inspector">Change');
 			expect(unprettifiedElement.innerHTML).toContain('Assign inspector</button>');
+		});
+
+		it('should render the unassign inspector check details page', async () => {
+			await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
+				user: '{"id": 0, "name": "Unassign", "email": "Unassign"}'
+			});
+			const response = await request.get(`${baseUrl}/assign-inspector/check-details`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Check details and unassign inspector</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'class="govuk-summary-list__key"> Inspector</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Not assigned');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<br>This will remove the current case inspector from the appeal</dd>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Remove inspector</button>');
 		});
 	});
 
@@ -207,6 +207,77 @@ describe('assign-user', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
+		});
+
+		it('should redirect to the case details page when user clicks on "Unassign inspector"', async () => {
+			nock('http://test/').patch('/appeals/1').reply(200, { caseOfficer: 'updatedCaseOfficerId' });
+			await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
+				user: '{"id": 0, "name": "Remove", "email": "Remove"}'
+			});
+			const response = await request.post(`${baseUrl}/assign-inspector/check-details`).send();
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
+		});
+
+		it('should contain the correct back link url if searching for inspector"', async () => {
+			await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
+				user: '{"id": "923ac03b-9031-4cf4-8b17-348c274321f9", "name": "Smith, John", "email": "John.Smith@planninginspectorate.gov.uk"}'
+			});
+			const response = await request.get(`${baseUrl}/assign-inspector/check-details`);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Check details and assign inspector</h1>');
+			const unprettifiedElement = parseHtml(response.text, {
+				skipPrettyPrint: true
+			});
+			const unprettifiedBodyElement = parseHtml(response.text, {
+				rootElement: 'body',
+				skipPrettyPrint: false
+			});
+			expect(unprettifiedElement.innerHTML).toContain(
+				'class="govuk-summary-list__key"> Inspector</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Smith, John');
+
+			expect(unprettifiedBodyElement.innerHTML).toContain(
+				`<a href="${baseUrl}/assign-inspector/search-inspector"`
+			);
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<br>John.Smith@planninginspectorate.gov.uk</dd>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Assign inspector</button>');
+		});
+
+		it('should contain the correct back link url if searching for case officer"', async () => {
+			await request.post(`${baseUrl}/assign-case-officer/search-case-officer`).send({
+				user: '{"id": "923ac03b-9031-4cf4-8b17-348c274321f9", "name": "Smith, John", "email": "John.Smith@planninginspectorate.gov.uk"}'
+			});
+			const response = await request.get(`${baseUrl}/assign-case-officer/check-details`);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Check details and assign case officer</h1>');
+			const unprettifiedElement = parseHtml(response.text, {
+				skipPrettyPrint: true
+			});
+			const unprettifiedBodyElement = parseHtml(response.text, {
+				rootElement: 'body',
+				skipPrettyPrint: true
+			});
+			expect(unprettifiedElement.innerHTML).toContain(
+				'class="govuk-summary-list__key"> Case officer</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Smith, John');
+
+			expect(unprettifiedBodyElement.innerHTML).toContain(
+				`<a href="${baseUrl}/assign-case-officer/search-case-officer"`
+			);
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<br>John.Smith@planninginspectorate.gov.uk</dd>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Assign case officer</button>');
 		});
 	});
 });

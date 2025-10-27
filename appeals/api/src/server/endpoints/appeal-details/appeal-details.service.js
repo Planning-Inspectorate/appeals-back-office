@@ -21,6 +21,7 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 const {
 	AUDIT_TRAIL_ASSIGNED_CASE_OFFICER,
 	AUDIT_TRAIL_ASSIGNED_INSPECTOR,
+	AUDIT_TRAIL_UNASSIGNED_INSPECTOR,
 	AUDIT_TRAIL_MODIFIED_APPEAL,
 	AUDIT_TRAIL_SYSTEM_UUID,
 	USER_TYPE_CASE_OFFICER,
@@ -71,16 +72,16 @@ const assignedUserType = ({ caseOfficer, inspector }) => {
 /**
  * @param {Appeal} caseData
  * @param {UsersToAssign} param0
- * @param {string|undefined} azureAdUserId
+ * @param {string | undefined| null} azureAdUserId
  * @returns {Promise<object | null>}
  */
 const assignUser = async (caseData, { caseOfficer, inspector }, azureAdUserId) => {
 	const assignedUserId = caseOfficer || inspector;
+
 	const typeOfAssignedUser = assignedUserType({ caseOfficer, inspector });
 
 	if (typeOfAssignedUser) {
 		let userId = null;
-
 		if (assignedUserId) {
 			({ id: userId } = await userRepository.findOrCreateUser(assignedUserId));
 		}
@@ -90,11 +91,14 @@ const assignUser = async (caseData, { caseOfficer, inspector }, azureAdUserId) =
 		await appealRepository.updateAppealById(caseData.id, { [typeOfAssignedUser]: userId });
 
 		let details = '';
-
 		if (caseOfficer) {
 			details = stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_CASE_OFFICER, [caseOfficer]);
 		} else if (inspector) {
 			details = stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [inspector]);
+		} else if (inspector == null && caseData.inspector && caseData.inspector.azureAdUserId) {
+			azureAdUserId = caseData.inspector.azureAdUserId;
+
+			details = stringTokenReplacement(AUDIT_TRAIL_UNASSIGNED_INSPECTOR, [azureAdUserId]);
 		}
 
 		await createAuditTrail({
