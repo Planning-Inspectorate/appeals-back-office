@@ -1,19 +1,21 @@
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
-describe('site-visit-schedule-unaccompanied-appellant.md', () => {
+describe('site-visit-schedule-accompanied-appellant.md', () => {
 	test('should call notify sendEmail with the correct data', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'site-visit-schedule-unaccompanied-appellant',
+			templateName: 'site-visit-schedule-accompanied-appellant',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
 			recipientEmail: 'appellant@example.com',
 			personalisation: {
-				appeal_reference_number: 'CCC33445',
-				site_address: '61, Viewpoint Hill',
-				lpa_reference: 'PLAN-98765',
+				appeal_reference_number: 'AAA11234',
+				site_address: '45, Hearing Road',
+				lpa_reference: 'PLAN-12345',
+				visit_date: '15 October 2025',
+				start_time: '11:00am',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
@@ -21,27 +23,23 @@ describe('site-visit-schedule-unaccompanied-appellant.md', () => {
 		const expectedContent = [
 			'# Appeal details',
 			'',
-			'^Appeal reference number: CCC33445',
-			'Address: 61, Viewpoint Hill',
-			'Planning application reference: PLAN-98765',
-			'',
-			'# Site visit scheduled',
-			'',
-			'We have now arranged for our inspector (or their representative) to visit 61, Viewpoint Hill.',
-			'',
-			'You are not required to attend the site visit.',
+			'^Appeal reference number: AAA11234',
+			'Address: 45, Hearing Road',
+			'Planning application reference: PLAN-12345',
 			'',
 			'# About the visit',
 			'',
-			'The purpose of the site visit is for the inspector to view the site and its surroundings. You are only required to give the inspector access to the site.',
+			'Our inspector (or their representative) will visit 45, Hearing Road at 11:00am on 15 October 2025.',
 			'',
 			'You cannot give the inspector any documents or discuss the appeal with them.',
 			'',
-			'The inspector will carry out the inspection on their own.',
+			'# Who will attend',
 			'',
-			'# What happens next',
+			'You must attend the site visit with our inspector and a representative from the local planning authority.',
 			'',
-			'We will contact you when the inspector makes a decision.',
+			'You will accompany the inspector throughout the visit.',
+			'',
+			'If you need to contact us, include our appeal reference number in any communication.',
 			'',
 			'The Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
@@ -56,7 +54,7 @@ describe('site-visit-schedule-unaccompanied-appellant.md', () => {
 			'appellant@example.com',
 			{
 				content: expectedContent,
-				subject: 'Inspector visit to appeal site: CCC33445'
+				subject: 'Inspector visit to appeal site: AAA11234'
 			}
 		);
 	});

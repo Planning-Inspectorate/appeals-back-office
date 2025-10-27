@@ -8,11 +8,9 @@ You are not required to attend the site visit.
 
 # About the visit
 
-The purpose of the site visit is for the inspector to view the site and its surroundings. You are only required to give the inspector access to the site.
+The purpose of the site visit is for the inspector to view the site and its surroundings.
 
-You cannot give the inspector any documents or discuss the appeal with them.
-
-The inspector will carry out the inspection on their own.
+If you see the inspector, you cannot give them any documents or discuss the appeal with them. The inspector will carry out the inspection on their own.
 
 # What happens next
 
