@@ -646,7 +646,7 @@ describe('issue-decision', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/issue-decision/check-your-decision'
+				'Found. Redirecting to /appeals-service/appeal-details/1/issue-decision/check-your-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Flpa-costs-decision-letter-upload'
 			);
 		});
 	});
@@ -1223,7 +1223,7 @@ describe('issue-decision', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/issue-decision/check-your-lpa-costs-decision'
+				'Found. Redirecting to /appeals-service/appeal-details/1/issue-decision/check-your-lpa-costs-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fissue-lpa-costs-decision-letter-upload'
 			);
 		});
 	});

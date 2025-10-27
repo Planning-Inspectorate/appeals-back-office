@@ -34,7 +34,7 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 			firstCellIsHeader: true
 		},
 		wrapperHtml: {
-			opening: '<h1 class="govuk-heading-l">Documentation</h1>',
+			opening: '<h2 class="govuk-heading-l">Documentation</h2>',
 			closing: '',
 			id: 'case-documentation'
 		}

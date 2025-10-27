@@ -70,7 +70,7 @@ export const getCaseHearing = (mappedData, appealDetails, session) => {
 				...(hearingEstimatesComponent ? [hearingEstimatesComponent] : [])
 			],
 			{
-				opening: '<h1 class="govuk-heading-l">Hearing</h1><div id="case-details-hearing-section">',
+				opening: '<h2 class="govuk-heading-l">Hearing</h2><div id="case-details-hearing-section">',
 				closing: '</div>'
 			}
 		)
