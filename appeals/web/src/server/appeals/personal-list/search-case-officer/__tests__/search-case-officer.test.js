@@ -27,7 +27,7 @@ describe('search-case-officer', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('Case officer</label></h1>');
 			expect(element.innerHTML).toContain('accessible-autocomplete" id="users" name="user"');
-			expect(element.innerHTML).toContain('Continue</button>');
+			expect(element.innerHTML).toContain('Update case officer</button>');
 		});
 
 		it('should re-render the search case officer page with the expected error message if a CO is not provided', async () => {

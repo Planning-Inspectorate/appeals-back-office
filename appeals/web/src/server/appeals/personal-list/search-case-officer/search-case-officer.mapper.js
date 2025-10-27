@@ -62,7 +62,7 @@ export async function searchCaseOfficerPage(session, backLinkUrl, errors) {
 			closing: '</form>'
 		},
 		parameters: {
-			text: 'Continue'
+			text: 'Update case officer'
 		}
 	};
 
