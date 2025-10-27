@@ -13,30 +13,34 @@ const appealId = appealData.appealId;
 const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
 const lpaQuestionnaireUrl = `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`;
 
-describe('special control of advertisement', () => {
+describe('appellant photos and plans', () => {
 	beforeEach(installMockApi), afterEach(teardown);
 
 	describe('GET /change', () => {
-		it('should render the special control of advertisement change page when accessed from LPAQ page', async () => {
+		it('should render the appellant photos and plans change page when accessed from LPAQ page', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
 				.reply(200, lpaQuestionnaireDataNotValidated);
-			const response = await request.get(`${lpaQuestionnaireUrl}/area-special-control/change`);
+			const response = await request.get(
+				`${lpaQuestionnaireUrl}/accurate-photographs-plans/change`
+			);
 
 			const mainInnerHtml = parseHtml(response.text).innerHTML;
 			expect(response.statusCode).toEqual(200);
 
 			expect(mainInnerHtml).toMatchSnapshot();
 			expect(mainInnerHtml).toContain(
-				'Is the site in an area of special control of advertisements?</h1>'
+				'Did the appellant submit complete and accurate photographs and plans?</h1>'
 			);
 		});
 
-		it('should render a back link to LPAQ page on the special control of advertisement change page when accessed from LPAQ page', async () => {
+		it('should render a back link to LPAQ page on the appellant photos and plans change page when accessed from LPAQ page', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
 				.reply(200, lpaQuestionnaireDataNotValidated);
-			const response = await request.get(`${lpaQuestionnaireUrl}/area-special-control/change`);
+			const response = await request.get(
+				`${lpaQuestionnaireUrl}/accurate-photographs-plans/change`
+			);
 
 			const backLinkInnerHtml = parseHtml(response.text, {
 				rootElement: '.govuk-back-link'
@@ -51,7 +55,7 @@ describe('special control of advertisement', () => {
 	describe('POST /change', () => {
 		it('should re-direct to LPA questionnaire if "yes" when accessed from LPAQ page', async () => {
 			const validData = {
-				specialControlOfAdvertisementRadio: 'yes'
+				appellantPhotosAndPlansRadio: 'yes'
 			};
 
 			const apiCall = nock('http://test/')
@@ -59,7 +63,7 @@ describe('special control of advertisement', () => {
 				.reply(200, {});
 
 			const response = await request
-				.post(`${lpaQuestionnaireUrl}/area-special-control/change`)
+				.post(`${lpaQuestionnaireUrl}/accurate-photographs-plans/change`)
 				.send(validData);
 
 			console.log(response.status);
@@ -73,7 +77,7 @@ describe('special control of advertisement', () => {
 
 		it('should re-direct to LPA questionnaire if "no" when accessed from LPAQ page', async () => {
 			const validData = {
-				specialControlOfAdvertisementRadio: 'no'
+				appellantPhotosAndPlansRadio: 'no'
 			};
 
 			const apiCall = nock('http://test/')
@@ -81,7 +85,7 @@ describe('special control of advertisement', () => {
 				.reply(200, {});
 
 			const response = await request
-				.post(`${lpaQuestionnaireUrl}/area-special-control/change`)
+				.post(`${lpaQuestionnaireUrl}/accurate-photographs-plans/change`)
 				.send(validData);
 
 			expect(apiCall.isDone()).toBe(true);

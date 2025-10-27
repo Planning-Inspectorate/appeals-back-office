@@ -1,12 +1,16 @@
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controllers from './special-control-of-advertisement.controller.js';
+import { validateSpecialControlOfAdvertisement } from './special-control-of-advertisement.validator.js';
 
 const router = createRouter({ mergeParams: true });
 
 router
 	.route('/change')
 	.get(asyncHandler(controllers.getChangeSpecialControlOfAdvertisment))
-	.post(asyncHandler(controllers.postChangeSpecialControlOfAdvertisment));
+	.post(
+		validateSpecialControlOfAdvertisement,
+		asyncHandler(controllers.postChangeSpecialControlOfAdvertisment)
+	);
 
 export default router;

@@ -22,6 +22,7 @@ import otherAppealsRouter from '../other-appeals/other-appeals.router.js';
 import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
 import affectedListedBuildingsRouter from './affected-listed-buildings/affected-listed-buildings.router.js';
 import affectsScheduledMonumentRouter from './affects-scheduled-monument/affects-scheduled-monument.router.js';
+import appellantPhotosAndPlansRouter from './appellant-photos-and-plans/appellant-photos-and-plans.router.js';
 import changedListedBuildingsRouter from './changed-listed-buildings/changed-listed-buildings.router.js';
 import hasCommunityInfrastructureLevyRouter from './community-infrastructure-levy/has-community-infrastructure-levy/has-community-infrastructure-levy.router.js';
 import infrastructureLevyAdoptedDateRouter from './community-infrastructure-levy/infrastructure-levy-adopted-date/infrastructure-levy-adopted-date.router.js';
@@ -236,6 +237,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	specialControlOfAdvertisementRouter
+);
+router.use(
+	'/:lpaQuestionnaireId/accurate-photographs-plans',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	appellantPhotosAndPlansRouter
 );
 
 router.use(
