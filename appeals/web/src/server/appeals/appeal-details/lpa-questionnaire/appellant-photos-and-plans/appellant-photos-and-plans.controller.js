@@ -3,21 +3,21 @@ import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
-import * as mapper from './special-control-of-advertisement.mapper.js';
-import * as service from './special-control-of-advertisement.service.js';
+import * as mapper from './appellant-photos-and-plans.mapper.js';
+import * as service from './appellant-photos-and-plans.service.js';
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const getChangeSpecialControlOfAdvertisment = async (request, response) => {
-	return renderChangeSpecialControlOfAdvertisment(request, response);
+export const getChangeAppellantPhotosAndPlans = async (request, response) => {
+	return renderChangeAppellantPhotosAndPlans(request, response);
 };
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-const renderChangeSpecialControlOfAdvertisment = async (request, response) => {
+const renderChangeAppellantPhotosAndPlans = async (request, response) => {
 	try {
 		const { currentAppeal, session, errors, originalUrl, apiClient } = request;
 		const origin = originalUrl.split('/').slice(0, -2).join('/');
@@ -28,10 +28,10 @@ const renderChangeSpecialControlOfAdvertisment = async (request, response) => {
 		);
 
 		const currentRadioValue =
-			convertFromYesNoNullToBooleanOrNull(session.specialControlOfAdvertisementRadio) ??
-			data.isSiteInAreaOfSpecialControlAdverts;
+			convertFromYesNoNullToBooleanOrNull(session.appellantPhotosAndPlansRadio) ??
+			data.didAppellantSubmitCompletePhotosAndPlans;
 
-		const mappedPageContents = mapper.changeSpecialControlOfAdvertisment(
+		const mappedPageContents = mapper.changeAppellantPhotosAndPlans(
 			currentAppeal,
 			currentRadioValue,
 			origin
@@ -52,12 +52,11 @@ const renderChangeSpecialControlOfAdvertisment = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const postChangeSpecialControlOfAdvertisment = async (request, response) => {
-	request.session.specialControlOfAdvertisementRadio =
-		request.body['specialControlOfAdvertisementRadio'];
+export const postChangeAppellantPhotosAndPlans = async (request, response) => {
+	request.session.appellantPhotosAndPlansRadio = request.body['appellantPhotosAndPlansRadio'];
 
 	if (request.errors) {
-		return renderChangeSpecialControlOfAdvertisment(request, response);
+		return renderChangeAppellantPhotosAndPlans(request, response);
 	}
 
 	try {
@@ -77,21 +76,21 @@ export const postChangeSpecialControlOfAdvertisment = async (request, response) 
 			});
 		}
 
-		await service.changeSpecialControlOfAdvertisement(
+		await service.changeAppellantPhotosAndPlans(
 			apiClient,
 			appealId,
 			currentAppeal.lpaQuestionnaireId,
-			session.specialControlOfAdvertisementRadio
+			session.appellantPhotosAndPlansRadio
 		);
 
 		addNotificationBannerToSession({
 			session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			text: 'Special control of advertisements status changed'
+			text: 'Photographs and plans status changed'
 		});
 
-		delete request.session.specialControlOfAdvertisementRadio;
+		delete request.session.appellantPhotosAndPlansRadio;
 
 		if (!origin.startsWith('/')) {
 			throw new Error('unexpected originalUrl');

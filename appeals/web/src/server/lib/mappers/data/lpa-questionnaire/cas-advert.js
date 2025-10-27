@@ -3,6 +3,7 @@ import { mapAdditionalDocuments } from './submappers/map-additional-documents.js
 import { mapAffectsListedBuildingDetails } from './submappers/map-affects-listed-building-details.js';
 import { mapAffectsScheduledMonument } from './submappers/map-affects-scheduled-monument.js';
 import { mapAppealNotification } from './submappers/map-appeal-notification.js';
+import { mapAppellantPhotosAndPlans } from './submappers/map-appellant-photos-and-plans.js';
 import { mapConservationAreaMap } from './submappers/map-conservation-area-map.js';
 import { mapInNearOrLikelyToAffectDesignatedSites } from './submappers/map-designated-sites.js';
 import { mapDevelopmentPlanPolicies } from './submappers/map-development-plan-policies.js';
@@ -53,6 +54,7 @@ export const submaps = {
 	consultedBodiesDetails: mapEiaConsultedBodiesDetails,
 	officersReport: mapOfficersReport,
 	highwayTrafficPublicSafety: mapHighwayTrafficPublicSafety,
+	appellantPhotosAndPlans: mapAppellantPhotosAndPlans,
 	developmentPlanPolicies: mapDevelopmentPlanPolicies,
 	supplementaryPlanning: mapSupplementaryPlanning,
 	emergingPlan: mapEmergingPlan,

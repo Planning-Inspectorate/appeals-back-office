@@ -1,6 +1,6 @@
 import { createYesNoRadioValidator } from '#lib/validators/radio.validator.js';
 
-export const validatePreserveGrantLoan = createYesNoRadioValidator(
+export const validateSpecialControlOfAdvertisement = createYesNoRadioValidator(
 	'specialControlOfAdvertisementRadio',
-	'Select yes if you know whether the site is in an area of special control for advertisements'
+	'Select yes if the site is in an area of special control for advertisements'
 );
