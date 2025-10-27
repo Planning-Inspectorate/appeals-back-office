@@ -3,7 +3,8 @@ export const APPEAL_START_RANGE = 6000000;
 
 export const EVENT_TYPE = Object.freeze({
 	SITE_VISIT: 'siteVisit',
-	HEARING: 'hearing'
+	HEARING: 'hearing',
+	INQUIRY: 'inquiry'
 });
 
 export const FEATURE_FLAG_NAMES = Object.freeze({

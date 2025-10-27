@@ -3,6 +3,20 @@ import { body } from 'express-validator';
 
 const TEXTAREA_MAX_CHARACTERS = 1000;
 
+/**
+ * Normalizes textarea input so that line endings (\r\n) are converted to \n
+ * and leading/trailing whitespace is trimmed.
+ * This ensures consistent character counts between client (GOV.UK counter)
+ * and server-side validators.
+ *
+ * @param {string} value - The textarea input
+ * @returns {string} Normalized value
+ */
+function normalizeTextareaInput(value) {
+	if (typeof value !== 'string') return value;
+	return value.replace(/\r\n/g, '\n').trim();
+}
+
 export const createTextareaValidator = (
 	fieldName = 'textarea',
 	emptyErrorMessage = 'Enter text',
@@ -11,7 +25,7 @@ export const createTextareaValidator = (
 ) =>
 	createValidator(
 		body(fieldName)
-			.trim()
+			.customSanitizer(normalizeTextareaInput)
 			.isLength({ min: 1 })
 			.withMessage(emptyErrorMessage)
 			.bail()
@@ -27,7 +41,7 @@ export const createTextareaCharacterValidator = (
 ) =>
 	createValidator(
 		body(fieldName)
-			.trim()
+			.customSanitizer(normalizeTextareaInput)
 			.isLength({ min: 1 })
 			.withMessage(emptyErrorMessage)
 			.bail()
@@ -46,7 +60,7 @@ export const createTextareaOptionalValidator = (
 ) =>
 	createValidator(
 		body(fieldName)
-			.trim()
+			.customSanitizer(normalizeTextareaInput)
 			.bail()
 			.isLength({ max: maxCharactersAllowed })
 			.withMessage(maxCharactersErrorMessage)
@@ -63,7 +77,7 @@ export const createTextareaConditionalValidator = (
 	createValidator(
 		body(fieldName)
 			.if(body(conditionalFieldName).equals(conditionalFieldValue))
-			.trim()
+			.customSanitizer(normalizeTextareaInput)
 			.isLength({ min: 1 })
 			.withMessage(emptyErrorMessage)
 			.bail()

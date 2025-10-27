@@ -5998,7 +5998,6 @@ describe('appeal-details', () => {
 	describe('Site visit section', () => {
 		const appealId = appealData.appealId.toString();
 		const futureDate = addDays(new Date(), 1).toISOString();
-		const todayDate = new Date().toISOString();
 
 		beforeEach(() => {
 			nock.cleanAll();
@@ -6064,16 +6063,23 @@ describe('appeal-details', () => {
 			expect(siteSection).toContain('Site</h2>');
 			expect(siteSection).toContain('Cancel site visit</a>');
 		});
-		it('should render the site visit section with correct links on site visit date', async () => {
+
+		it('should render the site visit section with correct links on site visit date BST', async () => {
+			jest
+				.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+				.setSystemTime(new Date('2025-06-04T12:00:00Z'));
+			const siteVisitDate = new Date('2025-06-03T23:00:00Z'); //database stores date as midnight in UTC
+			const siteVisitStartTime = new Date('2025-06-04T07:00:00Z');
+			const siteVisitEndTime = new Date('2025-06-04T09:00:00Z');
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
 				.reply(200, {
 					...appealData,
 					siteVisit: {
 						siteVisitId: 0,
-						visitDate: todayDate,
-						visitEndTime: todayDate,
-						visitStartTime: todayDate,
+						visitDate: siteVisitDate,
+						visitEndTime: siteVisitEndTime,
+						visitStartTime: siteVisitStartTime,
 						visitType: 'Accompanied'
 					}
 				});
@@ -6086,6 +6092,38 @@ describe('appeal-details', () => {
 			expect(siteSection).toContain('Site</h2>');
 			expect(siteSection).toContain('Cancel site visit</a>');
 			expect(siteSection).toContain('Record missed site visit</a>');
+			jest.useRealTimers();
+		});
+
+		it('should render the site visit section with correct links on site visit date UTC', async () => {
+			jest
+				.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+				.setSystemTime(new Date('2025-12-04T12:00:00Z'));
+			const siteVisitDate = new Date('2025-12-04T00:00:00Z'); //database stores date as midnight in UTC
+			const siteVisitStartTime = new Date('2025-12-04T08:00:00Z');
+			const siteVisitEndTime = new Date('2025-12-04T10:00:00Z');
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealData,
+					siteVisit: {
+						siteVisitId: 0,
+						visitDate: siteVisitDate,
+						visitEndTime: siteVisitEndTime,
+						visitStartTime: siteVisitStartTime,
+						visitType: 'Accompanied'
+					}
+				});
+			const response = await request.get(`${baseUrl}/${appealId}`);
+
+			const siteSection = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '#site-visit-section'
+			}).innerHTML;
+			expect(siteSection).toContain('Site</h2>');
+			expect(siteSection).toContain('Cancel site visit</a>');
+			expect(siteSection).toContain('Record missed site visit</a>');
+			jest.useRealTimers();
 		});
 
 		it('should render no links when site visit is not set up', async () => {
