@@ -202,6 +202,8 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 			APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
 		);
 
+		await broadcasters.broadcastAppeal(appeal.id);
+
 		if (address) {
 			await broadcasters.broadcastEvent(result.inquiry.id, EVENT_TYPE.INQUIRY, EventType.Create);
 			await sendInquiryDetailsNotifications(
