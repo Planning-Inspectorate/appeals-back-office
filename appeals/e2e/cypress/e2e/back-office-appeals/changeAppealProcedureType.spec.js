@@ -95,7 +95,7 @@ describe('change appeal procedure types', () => {
 
 		// verify procedure page header and preselected value
 		procedureTypePage.verifyHeader(procedureTypeCaption);
-		//procedureTypePage.verifySelectedRadioButtonValue('Hearing');
+		procedureTypePage.verifySelectedRadioButtonValue('Hearing');
 		procedureTypePage.selectProcedureType('inquiry');
 
 		// enter inquiry date
