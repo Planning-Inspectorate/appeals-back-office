@@ -11,7 +11,7 @@ router
 	.get(asyncHandler(controllers.getEventDateKnown))
 	.post(
 		validators.validateDateKnown,
-		saveBodyToSession('changeProcedureType'),
+		saveBodyToSession('changeProcedureType', { scopeToAppeal: true }),
 		asyncHandler(controllers.postEventDateKnown)
 	);
 

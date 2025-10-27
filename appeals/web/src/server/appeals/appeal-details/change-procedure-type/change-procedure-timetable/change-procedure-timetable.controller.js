@@ -14,14 +14,14 @@ export const getChangeAppealTimetable = async (request, response) => {
 const renderChangeAppealTimetable = async (request, response) => {
 	const {
 		currentAppeal,
-		session,
 		params: { appealId, procedureType },
 		errors,
 		locals: { appellantCase }
 	} = request;
-
+	const sessionValues =
+		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
 	const mappedPageContent = mapChangeTimetablePage(
-		session.changeProcedureType,
+		sessionValues,
 		currentAppeal,
 		appellantCase,
 		request.body,
@@ -55,7 +55,9 @@ export const postChangeAppealTimetable = async (request, response) => {
 			return renderChangeAppealTimetable(request, response);
 		}
 
-		const newProcedureType = request.session.changeProcedureType.appealProcedure;
+		const sessionValues =
+			request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
+		const newProcedureType = sessionValues.appealProcedure;
 
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/check-and-confirm`

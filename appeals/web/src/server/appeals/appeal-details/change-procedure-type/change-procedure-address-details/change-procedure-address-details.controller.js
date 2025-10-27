@@ -5,9 +5,10 @@ import { changeAddressDetailsPage } from './change-procedure-address-details.map
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getAddressDetails = async (request, response) => {
-	const values = request.session['changeProcedureType'] || {};
+	const sessionValues =
+		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
 
-	return renderAddressDetails(request, response, values, 'change');
+	return renderAddressDetails(request, response, sessionValues, 'change');
 };
 
 /**
@@ -18,7 +19,9 @@ export const getAddressDetails = async (request, response) => {
  */
 export const renderAddressDetails = async (request, response, values, action) => {
 	const { currentAppeal, errors } = request;
-	const newProcedureType = request.session.changeProcedureType.appealProcedure;
+	const sessionValues =
+		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
+	const newProcedureType = sessionValues.appealProcedure;
 	const mappedPageContent = changeAddressDetailsPage(
 		currentAppeal,
 		action,
@@ -38,12 +41,13 @@ export const renderAddressDetails = async (request, response, values, action) =>
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postAddressDetails = async (request, response) => {
+	const sessionValues =
+		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
 	if (request.errors) {
-		const sessionValues = request.session['changeProcedureType'] || {};
 		return renderAddressDetails(request, response, sessionValues, 'change');
 	}
 	const { appealId } = request.currentAppeal;
-	const newProcedureType = request.session.changeProcedureType.appealProcedure;
+	const newProcedureType = sessionValues.appealProcedure;
 
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-timetable`

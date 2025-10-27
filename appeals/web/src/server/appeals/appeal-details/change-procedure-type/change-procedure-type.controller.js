@@ -45,7 +45,8 @@ import { isEmpty, pick } from 'lodash-es';
  */
 export const updateChangeProcedureTypeSession = (request, response, next) => {
 	/** @type {ChangeProcedureType} */
-	let sessionValues = request.session.changeProcedureType || {};
+	let sessionValues =
+		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
 	const appealDetails = request.currentAppeal;
 
 	sessionValues.existingAppealProcedure = appealDetails.procedureType.toLowerCase();
@@ -58,11 +59,10 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
 			const hearingDate = dateISOStringToDayMonthYearHourMinute(
 				appealDetails.hearing?.hearingStartTime
 			);
-			sessionValues.dateKnown = sessionValues.dateKnown
-				? sessionValues.dateKnown
-				: hearingDate
-				? 'yes'
-				: 'no';
+
+			if (typeof sessionValues.dateKnown !== 'string' && sessionValues.dateKnown !== undefined) {
+				sessionValues.dateKnown = hearingDate ? 'yes' : 'no';
+			}
 
 			sessionValues['event-date-day'] = sessionValues['event-date-day'] ?? hearingDate?.day;
 			sessionValues['event-date-month'] = sessionValues['event-date-month'] ?? hearingDate.month;
@@ -75,27 +75,28 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
 			const inquiryDate = dateISOStringToDayMonthYearHourMinute(
 				appealDetails.inquiry?.inquiryStartTime
 			);
-			sessionValues.dateKnown = sessionValues.dateKnown ?? inquiryDate ? 'yes' : 'no';
 			sessionValues['event-date-day'] = sessionValues['event-date-day'] ?? inquiryDate?.day;
 			sessionValues['event-date-month'] = sessionValues['event-date-month'] ?? inquiryDate.month;
 			sessionValues['event-date-year'] = sessionValues['event-date-year'] ?? inquiryDate.year;
 			sessionValues['event-time-hour'] = sessionValues['event-time-hour'] ?? inquiryDate.hour;
 			sessionValues['event-time-minute'] = sessionValues['event-time-minute'] ?? inquiryDate.minute;
 
-			sessionValues.estimationYesNo = sessionValues.estimationYesNo
-				? sessionValues.estimationYesNo
-				: appealDetails.inquiry?.estimatedDays
-				? 'yes'
-				: 'no';
+			if (
+				typeof sessionValues.estimationYesNo !== 'string' &&
+				sessionValues.estimationYesNo !== undefined
+			) {
+				sessionValues.estimationYesNo = appealDetails.inquiry?.estimatedDays ? 'yes' : 'no';
+			}
 
 			sessionValues.estimationDays =
 				sessionValues.estimationDays ?? appealDetails.inquiry?.estimatedDays;
 
-			sessionValues.addressKnown = sessionValues.addressKnown
-				? sessionValues.addressKnown
-				: appealDetails.inquiry?.address
-				? 'yes'
-				: 'no';
+			if (
+				typeof sessionValues.addressKnown !== 'string' &&
+				sessionValues.addressKnown !== undefined
+			) {
+				sessionValues.addressKnown = appealDetails.inquiry?.address ? 'yes' : 'no';
+			}
 
 			const sessionAddressValues = pick(sessionValues, [
 				'addressLine1',
@@ -149,8 +150,10 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
 		sessionValues.appealTimetable.planningObligationDueDate ??
 		appealDetails.appealTimetable.planningObligationDueDate;
 
-	request.session.changeProcedureType = sessionValues;
-
+	if (!request.session.changeProcedureType) {
+		request.session.changeProcedureType = {};
+	}
+	request.session.changeProcedureType[request.currentAppeal.appealId] = sessionValues;
 	next();
 };
 

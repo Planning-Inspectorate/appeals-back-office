@@ -59,10 +59,12 @@ export const mapChangeTimetablePage = (
 		backLinkUrl:
 			procedureType === APPEAL_CASE_PROCEDURE?.WRITTEN
 				? `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-procedure-type/${newProcedureType}/change-selected-procedure-type`
-				: procedureType === APPEAL_CASE_PROCEDURE?.HEARING && session.dateKnown === 'yes'
+				: procedureType === APPEAL_CASE_PROCEDURE.HEARING && session.dateKnown === 'yes'
 				? `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-procedure-type/${newProcedureType}/date`
-				: procedureType === APPEAL_CASE_PROCEDURE?.HEARING && session.dateKnown === 'no'
+				: procedureType === APPEAL_CASE_PROCEDURE.HEARING && session.dateKnown === 'no'
 				? `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-procedure-type/${newProcedureType}/change-event-date-known`
+				: procedureType === APPEAL_CASE_PROCEDURE.INQUIRY && session.addressKnown === 'no'
+				? `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-procedure-type/${newProcedureType}/address-known`
 				: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-procedure-type/${newProcedureType}/address-details`,
 		preHeading: `Appeal ${appealShortReference(
 			appealDetails.appealReference

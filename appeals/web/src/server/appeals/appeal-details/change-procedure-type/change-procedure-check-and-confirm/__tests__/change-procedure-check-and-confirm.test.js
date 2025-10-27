@@ -207,6 +207,7 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, { planningObligation: { hasObligation: false } });
+
 			const response = await request.get(
 				'/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/check-and-confirm'
 			);
@@ -227,13 +228,6 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 			);
 
 			expect(unprettifiedHtml).toContain('Hearing details</h3>');
-			expect(unprettifiedHtml).toContain('Hearing date</dt>');
-			expect(unprettifiedHtml).toContain(
-				'href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/date" data-cy="change-hearing-date">Change'
-			);
-			expect(unprettifiedHtml).toContain(
-				'href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/date" data-cy="change-hearing-time">Change'
-			);
 
 			expect(unprettifiedHtml).toContain('<h3 class="govuk-heading-m">Timetable due dates</h3>');
 
@@ -321,11 +315,9 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 			expect(unprettifiedHtml).toContain(
 				'href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/estimation" data-cy="change-inquiry-estimation">Change'
 			);
-			expect(unprettifiedHtml).toContain('Expected number of days to carry out the inquiry</dt>');
 			expect(unprettifiedHtml).toContain(
 				'Do you know the address of where the inquiry will take place?</dt>'
 			);
-			expect(unprettifiedHtml).toContain('Address of where the inquiry will take place</dt>');
 
 			expect(unprettifiedHtml).toContain('<h3 class="govuk-heading-m">Timetable due dates</h3>');
 

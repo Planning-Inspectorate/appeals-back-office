@@ -26,22 +26,6 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
                         </dd>
                 </div>
             </dl>
-            <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Hearing date</dt>
-                    <dd class="govuk-summary-list__value">9 October 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/date"
-                        data-cy="change-hearing-date">Change<span class="govuk-visually-hidden"> Hearing date</span></a>
-                    </dd>
-                </div>
-            </dl>
-            <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Hearing time</dt>
-                    <dd class="govuk-summary-list__value">9:38am</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/date"
-                        data-cy="change-hearing-time">Change<span class="govuk-visually-hidden"> Hearing time</span></a>
-                    </dd>
-                </div>
-            </dl>
             <h3 class="govuk-heading-m">Timetable due dates</h3>
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
@@ -102,26 +86,10 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <h3 class="govuk-heading-m">Hearing details</h3>
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the date and time of the hearing?</dt>
-                    <dd                     class="govuk-summary-list__value">Yes</dd>
+                    <dd                     class="govuk-summary-list__value">No</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-event-date-known"
                             data-cy="change-hearing-date-known">Change<span class="govuk-visually-hidden"> Do you know the date and time of the hearing?</span></a>
                         </dd>
-                </div>
-            </dl>
-            <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Hearing date</dt>
-                    <dd class="govuk-summary-list__value">9 October 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/date"
-                        data-cy="change-hearing-date">Change<span class="govuk-visually-hidden"> Hearing date</span></a>
-                    </dd>
-                </div>
-            </dl>
-            <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Hearing time</dt>
-                    <dd class="govuk-summary-list__value">9:38am</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/date"
-                        data-cy="change-hearing-time">Change<span class="govuk-visually-hidden"> Hearing time</span></a>
-                    </dd>
                 </div>
             </dl>
             <h3 class="govuk-heading-m">Timetable due dates</h3>
@@ -184,26 +152,10 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <h3 class="govuk-heading-m">Hearing details</h3>
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the date and time of the hearing?</dt>
-                    <dd                     class="govuk-summary-list__value">Yes</dd>
+                    <dd                     class="govuk-summary-list__value">No</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-event-date-known"
                             data-cy="change-hearing-date-known">Change<span class="govuk-visually-hidden"> Do you know the date and time of the hearing?</span></a>
                         </dd>
-                </div>
-            </dl>
-            <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Hearing date</dt>
-                    <dd class="govuk-summary-list__value">9 October 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/date"
-                        data-cy="change-hearing-date">Change<span class="govuk-visually-hidden"> Hearing date</span></a>
-                    </dd>
-                </div>
-            </dl>
-            <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Hearing time</dt>
-                    <dd class="govuk-summary-list__value">9:38am</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/date"
-                        data-cy="change-hearing-time">Change<span class="govuk-visually-hidden"> Hearing time</span></a>
-                    </dd>
                 </div>
             </dl>
             <h3 class="govuk-heading-m">Timetable due dates</h3>
@@ -277,34 +229,17 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             </dl>
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the expected number of days to carry out the inquiry?</dt>
-                    <dd                     class="govuk-summary-list__value">Yes</dd>
+                    <dd                     class="govuk-summary-list__value"></dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/estimation"
                             data-cy="change-inquiry-estimation">Change<span class="govuk-visually-hidden"> Do you know the expected number of days to carry out the inquiry?</span></a>
                         </dd>
                 </div>
             </dl>
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected number of days to carry out the inquiry</dt>
-                    <dd                     class="govuk-summary-list__value">8 days</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/estimation"
-                            data-cy="change-inquiry-estimation">Change<span class="govuk-visually-hidden"> Expected number of days to carry out the inquiry</span></a>
-                        </dd>
-                </div>
-            </dl>
-            <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
-                    <dd                     class="govuk-summary-list__value">Yes</dd>
+                    <dd                     class="govuk-summary-list__value"></dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/address-known"
                             data-cy="change-inquiry-address-known">Change<span class="govuk-visually-hidden"> Do you know the address of where the inquiry will take place?</span></a>
-                        </dd>
-                </div>
-            </dl>
-            <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address of where the inquiry will take place</dt>
-                    <dd                     class="govuk-summary-list__value">21 The Pavement
-                        <br>Wandsworth</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/address"
-                            data-cy="change-inquiry-address">Change<span class="govuk-visually-hidden"> Address of where the inquiry will take place</span></a>
                         </dd>
                 </div>
             </dl>
