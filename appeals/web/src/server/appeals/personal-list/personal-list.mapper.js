@@ -235,7 +235,7 @@ export function personalListPage(
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Personal list',
-		heading: caseOfficer ? `Cases assigned to ${caseOfficer.name}` : 'Your appeals',
+		heading: caseOfficer ? `Appeals assigned to ${caseOfficer.name}` : 'Your appeals',
 		pageComponents: []
 	};
 
