@@ -4,6 +4,7 @@ import {
 	setSpecificDecisionType
 } from '#appeals/appeal-details/issue-decision/issue-decision.middleware.js';
 import { permissionNames } from '#environment/permissions.js';
+import { clearSessionData } from '#lib/middleware/clear-session-data.js';
 import { saveBackUrl } from '#lib/middleware/save-back-url.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 import {
@@ -167,6 +168,7 @@ router
 			permissionNames.viewCaseDetails,
 			permissionNames.viewAssignedCaseDetails
 		),
+		clearSessionData,
 		asyncHandler(controller.renderViewDecision)
 	);
 
