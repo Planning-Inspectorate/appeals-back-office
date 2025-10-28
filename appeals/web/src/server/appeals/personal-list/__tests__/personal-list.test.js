@@ -271,7 +271,7 @@ describe('personal-list', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Cases assigned to McTest, George</h1>');
+			expect(element.innerHTML).toContain('Appeals assigned to McTest, George</h1>');
 			expect(element.innerHTML).toContain('View another case officer’s appeals</a>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
