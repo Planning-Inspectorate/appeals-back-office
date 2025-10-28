@@ -136,7 +136,9 @@ const updateLPAQuestionnaireById = async (req, res) => {
 		/** @type {Record<string, ()=> string>} */
 		const auditTrailParameters = {
 			AUDIT_TRAIL_LPAQ_IS_SITE_IN_AREA_OF_SPECIAL_CONTROL_ADVERTS_UPDATED: () =>
-				body.isSiteInAreaOfSpecialControlAdverts ? 'Yes' : 'No'
+				body.isSiteInAreaOfSpecialControlAdverts ? 'Yes' : 'No',
+			AUDIT_TRAIL_LPAQ_WAS_APPLICATION_REFUSED_DUE_TO_HIGHWAY_OR_TRAFFIC_UPDATED: () =>
+				body.wasApplicationRefusedDueToHighwayOrTraffic ? 'Yes' : 'No'
 		};
 
 		// Make sure we only create unique audit trail details for properties that have changed.

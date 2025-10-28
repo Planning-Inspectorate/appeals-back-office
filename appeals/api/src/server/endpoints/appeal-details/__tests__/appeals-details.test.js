@@ -8,6 +8,7 @@ import { jest } from '@jest/globals';
 import {
 	AUDIT_TRAIL_ASSIGNED_CASE_OFFICER,
 	AUDIT_TRAIL_ASSIGNED_INSPECTOR,
+	AUDIT_TRAIL_UNASSIGNED_INSPECTOR,
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED,
 	ERROR_CANNOT_BE_EMPTY_STRING,
@@ -616,6 +617,53 @@ describe('Appeal detail routes', () => {
 				});
 			});
 
+			test('unassigns an inspector from an appeal', async () => {
+				const inspector = azureAdUserId;
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...householdAppeal,
+					inspector: { azureAdUserId: inspector }
+				});
+				databaseConnector.user.upsert.mockResolvedValue({ id: 10, azureAdUserId: inspector });
+
+				// @ts-ignore
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						inspector: null
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+					data: {
+						inspectorUserId: null,
+						caseUpdatedDate: expect.any(Date)
+					},
+					where: {
+						id: householdAppeal.id
+					},
+					include: {
+						appealStatus: true,
+						appealType: true
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: householdAppeal.id,
+						details: stringTokenReplacement(AUDIT_TRAIL_UNASSIGNED_INSPECTOR, [inspector]),
+						loggedAt: expect.any(Date),
+						userId: 10
+					}
+				});
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					inspector: null
+				});
+			});
+
 			test('assigns a case officer to linked appeals', async () => {
 				const leadAppeal = structuredClone(householdAppeal);
 				leadAppeal.childAppeals = [
@@ -631,14 +679,12 @@ describe('Appeal detail routes', () => {
 				});
 				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue(leadAppeal.caseOfficer);
-
 				const response = await request
 					.patch(`/appeals/${leadAppeal.id}`)
 					.send({
 						caseOfficer: leadAppeal.caseOfficer.azureAdUserId
 					})
 					.set('azureAdUserId', azureAdUserId);
-
 				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(3);
 				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(1, {
 					data: {

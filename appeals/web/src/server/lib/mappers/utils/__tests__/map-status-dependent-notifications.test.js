@@ -173,6 +173,18 @@ describe('mapStatusDependentNotifications', () => {
 			requiredAction: 'progressToInquiry',
 			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F1" class="govuk-heading-s govuk-notification-banner__link">Progress to inquiry</a>`,
 			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
+			bannerKey: 'setupInquiry',
+			requiredAction: 'setupInquiry',
+			expectedContainedHtml: `<a class="govuk-link" data-cy="setup-inquiry" href="/appeals-service/appeal-details/${mockAppealData.appealId}/inquiry/setup/date?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Set up inquiry</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: false
+		},
+		{
+			bannerKey: 'addInquiryAddress',
+			requiredAction: 'addInquiryAddress',
+			expectedContainedHtml: `<a class="govuk-link" data-cy="add-inquiry-address" href="/appeals-service/appeal-details/${mockAppealData.appealId}/inquiry/change/address-details?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Add inquiry address</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: false
 		}
 	];
 

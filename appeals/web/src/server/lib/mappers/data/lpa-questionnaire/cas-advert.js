@@ -10,6 +10,7 @@ import { mapEiaConsultedBodiesDetails } from './submappers/map-eia-consulted-bod
 import { mapEmergingPlan } from './submappers/map-emerging-plan.js';
 import { mapExtraConditions } from './submappers/map-extra-conditions.js';
 import { mapHasProtectedSpecies } from './submappers/map-has-protected-species.js';
+import { mapHighwayTrafficPublicSafety } from './submappers/map-highway-traffic-public-safety.js';
 import { mapIsAonbNationalLandscape } from './submappers/map-is-aonb-national-landscape.js';
 import { mapIsCorrectAppealType } from './submappers/map-is-correct-appeal-type.js';
 import { mapLettersToNeighbours } from './submappers/map-letters-to-neighbours.js';
@@ -51,6 +52,7 @@ export const submaps = {
 	representations: mapRepresentations,
 	consultedBodiesDetails: mapEiaConsultedBodiesDetails,
 	officersReport: mapOfficersReport,
+	highwayTrafficPublicSafety: mapHighwayTrafficPublicSafety,
 	developmentPlanPolicies: mapDevelopmentPlanPolicies,
 	supplementaryPlanning: mapSupplementaryPlanning,
 	emergingPlan: mapEmergingPlan,

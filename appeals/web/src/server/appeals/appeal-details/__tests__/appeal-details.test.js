@@ -453,7 +453,7 @@ describe('appeal-details', () => {
 					}).innerHTML;
 					expect(notificationBannerElementHTML).toMatchSnapshot();
 					expect(notificationBannerElementHTML).toContain('Success</h3>');
-					expect(notificationBannerElementHTML).toContain('Inspector has been removed</p>');
+					expect(notificationBannerElementHTML).toContain('Inspector removed</p>');
 				});
 
 				it('should render a success notification banner when a user was successfully assigned as case officer', async () => {
@@ -5932,6 +5932,45 @@ describe('appeal-details', () => {
 				expect(unprettifiedInquirySectionHtml).toContain(
 					`<dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/inquiry/estimates/change"`
 				);
+			});
+
+			it('should render the inquiry details summary list with cancel inquiry when inquiry date is in the future', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+						inquiry: {
+							inquiryId: '123',
+							inquiryStartTime: new Date().setDate(new Date().getDate() + 7),
+							estimatedDays: 6,
+							address: {
+								addressLine1: '123 Main St',
+								addressLine2: 'Apt 1',
+								town: 'Anytown',
+								county: 'Anycounty',
+								postcode: 'AA1 1AA'
+							}
+						}
+					});
+				nock('http://test/')
+					.get(`/appeals/${appealId}/reps?type=appellant_proofs_evidence`)
+					.reply(200, {});
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}/reps?type=lpa_proofs_evidence`)
+					.reply(200, {});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).toContain('<div id="case-details-inquiry-section">');
+				expect(unprettifiedHTML).toContain('Cancel inquiry</a>');
 			});
 		});
 

@@ -15,7 +15,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
-/** @typedef {'addHorizonReference'|'awaitingEvent'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'|'progressToProofOfEvidenceAndWitnesses'|'awaitingProofOfEvidenceAndWitnesses'|'progressToInquiry'} AppealRequiredAction */
+/** @typedef {'addHorizonReference'|'awaitingEvent'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'|'progressToProofOfEvidenceAndWitnesses'|'awaitingProofOfEvidenceAndWitnesses'|'progressToInquiry'|'setupInquiry'|'addInquiryAddress'} AppealRequiredAction */
 
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
@@ -50,34 +50,67 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			break;
 		case APPEAL_CASE_STATUS.EVENT:
 			if (
-				appealDetails.procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.HEARING.toLowerCase()
+				appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN.toLowerCase()
 			) {
 				actions.push('arrangeSiteVisit');
 				break;
 			}
-			// @ts-ignore
+
 			if (
-				// @ts-ignore
-				(view === 'detail' && !appealDetails.hearing) ||
-				// @ts-ignore
-				(view === 'summary' && !appealDetails.isHearingSetup)
+				appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING.toLowerCase()
 			) {
-				actions.push('setupHearing');
-				break;
+				if (
+					// @ts-ignore
+					(view === 'detail' && !appealDetails.hearing) ||
+					// @ts-ignore
+					(view === 'summary' && !appealDetails.isHearingSetup)
+				) {
+					actions.push('setupHearing');
+					break;
+				}
+
+				if (
+					(view === 'detail' &&
+						// @ts-ignore
+						appealDetails.hearing &&
+						// @ts-ignore
+						!appealDetails.hearing?.addressId &&
+						// @ts-ignore
+						!appealDetails.hearing?.address) ||
+					// @ts-ignore
+					(view === 'summary' && !appealDetails.hasHearingAddress)
+				) {
+					actions.push('addHearingAddress');
+					break;
+				}
 			}
 
 			if (
-				(view === 'detail' &&
-					// @ts-ignore
-					appealDetails.hearing &&
-					// @ts-ignore
-					!appealDetails.hearing?.addressId &&
-					// @ts-ignore
-					!appealDetails.hearing?.address) ||
-				// @ts-ignore
-				(view === 'summary' && !appealDetails.hasHearingAddress)
+				appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase()
 			) {
-				actions.push('addHearingAddress');
+				if (
+					// @ts-ignore
+					(view === 'detail' && !appealDetails.inquiry) ||
+					// @ts-ignore
+					(view === 'summary' && !appealDetails.isInquirySetup)
+				) {
+					actions.push('setupInquiry');
+					break;
+				}
+
+				if (
+					(view === 'detail' &&
+						// @ts-ignore
+						appealDetails.inquiry &&
+						// @ts-ignore
+						!appealDetails.inquiry?.addressId &&
+						// @ts-ignore
+						!appealDetails.inquiry?.address) ||
+					// @ts-ignore
+					(view === 'summary' && !appealDetails.hasInquiryAddress)
+				) {
+					actions.push('addInquiryAddress');
+				}
 			}
 			break;
 		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION:
@@ -313,7 +346,8 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 
 			if (!appellantProofOfEvidenceDone && appellantProofOfEvidenceReceived) {
 				actions.push('reviewAppellantProofOfEvidence');
-			} else if (!lpaProofOfEvidenceDone && lpaProofOfEvidenceReceived) {
+			}
+			if (!lpaProofOfEvidenceDone && lpaProofOfEvidenceReceived) {
 				actions.push('reviewLpaProofOfEvidence');
 			}
 			break;

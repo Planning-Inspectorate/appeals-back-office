@@ -140,7 +140,9 @@ describe('appeals list routes', () => {
 							procedureType: 'Written',
 							hasHearingAddress: true,
 							isHearingSetup: true,
-							numberOfResidencesNetChange: 5
+							numberOfResidencesNetChange: 5,
+							isInquirySetup: true,
+							hasInquiryAddress: true
 						},
 						{
 							appealId: fullPlanningAppeal.id,
@@ -197,7 +199,9 @@ describe('appeals list routes', () => {
 							procedureType: 'Written',
 							hasHearingAddress: true,
 							isHearingSetup: true,
-							numberOfResidencesNetChange: 5
+							numberOfResidencesNetChange: 5,
+							isInquirySetup: true,
+							hasInquiryAddress: true
 						}
 					],
 					lpas,
@@ -317,7 +321,9 @@ describe('appeals list routes', () => {
 							procedureType: 'Written',
 							hasHearingAddress: true,
 							isHearingSetup: true,
-							numberOfResidencesNetChange: 5
+							numberOfResidencesNetChange: 5,
+							isInquirySetup: true,
+							hasInquiryAddress: true
 						}
 					],
 					lpas,
@@ -433,7 +439,9 @@ describe('appeals list routes', () => {
 							procedureType: 'Written',
 							hasHearingAddress: true,
 							isHearingSetup: true,
-							numberOfResidencesNetChange: 5
+							numberOfResidencesNetChange: 5,
+							isInquirySetup: true,
+							hasInquiryAddress: true
 						}
 					],
 					lpas,
@@ -549,7 +557,9 @@ describe('appeals list routes', () => {
 							procedureType: 'Written',
 							hasHearingAddress: true,
 							isHearingSetup: true,
-							numberOfResidencesNetChange: 5
+							numberOfResidencesNetChange: 5,
+							isInquirySetup: true,
+							hasInquiryAddress: true
 						}
 					],
 					lpas,
@@ -665,7 +675,9 @@ describe('appeals list routes', () => {
 							procedureType: 'Written',
 							hasHearingAddress: true,
 							isHearingSetup: true,
-							numberOfResidencesNetChange: 5
+							numberOfResidencesNetChange: 5,
+							isInquirySetup: true,
+							hasInquiryAddress: true
 						}
 					],
 					lpas,
@@ -763,7 +775,9 @@ describe('appeals list routes', () => {
 							procedureType: 'Written',
 							hasHearingAddress: true,
 							isHearingSetup: true,
-							numberOfResidencesNetChange: 5
+							numberOfResidencesNetChange: 5,
+							isInquirySetup: true,
+							hasInquiryAddress: true
 						}
 					],
 					lpas,
@@ -863,7 +877,9 @@ describe('appeals list routes', () => {
 							procedureType: 'Written',
 							hasHearingAddress: true,
 							isHearingSetup: true,
-							numberOfResidencesNetChange: 5
+							numberOfResidencesNetChange: 5,
+							isInquirySetup: true,
+							hasInquiryAddress: true
 						}
 					],
 					lpas,
@@ -961,7 +977,9 @@ describe('appeals list routes', () => {
 							procedureType: 'Written',
 							hasHearingAddress: true,
 							isHearingSetup: true,
-							numberOfResidencesNetChange: 5
+							numberOfResidencesNetChange: 5,
+							isInquirySetup: true,
+							hasInquiryAddress: true
 						}
 					],
 					lpas,
@@ -1065,7 +1083,9 @@ describe('appeals list routes', () => {
 							procedureType: 'Written',
 							hasHearingAddress: true,
 							isHearingSetup: true,
-							numberOfResidencesNetChange: 5
+							numberOfResidencesNetChange: 5,
+							isInquirySetup: true,
+							hasInquiryAddress: true
 						}
 					],
 					lpas,
@@ -1170,7 +1190,9 @@ describe('appeals list routes', () => {
 							procedureType: 'Written',
 							hasHearingAddress: true,
 							isHearingSetup: true,
-							numberOfResidencesNetChange: 5
+							numberOfResidencesNetChange: 5,
+							isInquirySetup: true,
+							hasInquiryAddress: true
 						}
 					],
 					lpas,
@@ -1259,7 +1281,9 @@ describe('appeals list routes', () => {
 							procedureType: 'Written',
 							hasHearingAddress: true,
 							isHearingSetup: true,
-							numberOfResidencesNetChange: 5
+							numberOfResidencesNetChange: 5,
+							isInquirySetup: true,
+							hasInquiryAddress: true
 						}
 					],
 					lpas,
@@ -1509,7 +1533,9 @@ describe('appeals list routes', () => {
 							hasHearingAddress: false,
 							awaitingLinkedAppeal: true,
 							costsDecision: null,
-							numberOfResidencesNetChange: null
+							numberOfResidencesNetChange: null,
+							isInquirySetup: false,
+							hasInquiryAddress: false
 						},
 						{
 							appealId: 4,
@@ -1557,7 +1583,9 @@ describe('appeals list routes', () => {
 							hasHearingAddress: false,
 							awaitingLinkedAppeal: true,
 							costsDecision: null,
-							numberOfResidencesNetChange: null
+							numberOfResidencesNetChange: null,
+							isInquirySetup: false,
+							hasInquiryAddress: false
 						}
 					],
 					statuses: ['assign_case_officer', 'complete'],

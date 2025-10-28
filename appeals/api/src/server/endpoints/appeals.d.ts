@@ -603,6 +603,8 @@ interface AppealListResponse {
 	landownerPermission?: boolean | null;
 	siteGridReferenceEasting?: string | null;
 	siteGridReferenceNorthing?: string | null;
+	isInquirySetup: boolean | null;
+	hasInquiryAddress: boolean | null;
 }
 interface DocumentationSummary {
 	appellantCase?: DocumentationSummaryEntry;

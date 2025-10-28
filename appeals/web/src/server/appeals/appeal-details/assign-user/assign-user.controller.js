@@ -1,8 +1,6 @@
 import logger from '#lib/logger.js';
-import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { capitalize, kebabCase } from 'lodash-es';
-import { assignUserPage } from './assign-user.mapper.js';
+import { assignUserPage, checkAndConfirmPage } from './assign-user.mapper.js';
 import { setAppealAssignee } from './assign-user.service.js';
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -53,7 +51,6 @@ export const postAssignUser = async (request, response, isInspector = false) => 
 	if (errors) {
 		return renderAssignUser(request, response, isInspector);
 	}
-
 	request.session.user = JSON.parse(request.body.user);
 
 	return response.redirect(
@@ -77,37 +74,22 @@ export const postAssignInspector = async (request, response) => {
  */
 export const getCheckDetails = async (request, response) => {
 	const {
-		currentAppeal: { appealReference },
+		currentAppeal,
 		errors,
 		baseUrl,
 		session: { user }
 	} = request;
 
-	const isInspector = baseUrl.includes('inspector');
-	const userTypeText = isInspector ? 'inspector' : 'case officer';
-
-	return renderCheckYourAnswersComponent(
-		{
-			title: `Check details and assign ${userTypeText}`,
-			heading: `Check details and assign ${userTypeText}`,
-			preHeading: `Appeal ${appealReference}`,
-			backLinkUrl: `${baseUrl}/search-${kebabCase(userTypeText)}`,
-			submitButtonText: `Assign ${userTypeText}`,
-			responses: {
-				[capitalize(userTypeText)]: {
-					html: `${user?.name}<br>${user?.email}`,
-					actions: {
-						Change: {
-							href: `${baseUrl}/search-${kebabCase(userTypeText)}`,
-							visuallyHiddenText: 'Address'
-						}
-					}
-				}
-			}
-		},
-		response,
-		errors
+	const mappedPageContent = checkAndConfirmPage(
+		currentAppeal.appealId,
+		user,
+		currentAppeal.appealReference,
+		baseUrl
 	);
+	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
 };
 
 /**
@@ -127,10 +109,11 @@ export const postCheckDetails = async (request, response) => {
 
 	try {
 		await setAppealAssignee(request.apiClient, appealId, id, isInspector);
-
 		addNotificationBannerToSession({
 			session: request.session,
-			bannerDefinitionKey: `${isInspector ? 'inspector' : 'caseOfficer'}Assigned`,
+			bannerDefinitionKey: `${isInspector ? 'inspector' : 'caseOfficer'}${
+				id == 0 ? 'Removed' : 'Assigned'
+			}`,
 			appealId
 		});
 	} catch (error) {
