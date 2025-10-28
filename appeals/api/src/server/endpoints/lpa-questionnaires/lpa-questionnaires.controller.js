@@ -135,6 +135,8 @@ const updateLPAQuestionnaireById = async (req, res) => {
 
 		/** @type {Record<string, ()=> string>} */
 		const auditTrailParameters = {
+			AUDIT_TRAIL_LPAQ_IS_AONB_NATIONAL_LANDSCAPE_UPDATED: () =>
+				body.isSiteInAreaOfSpecialControlAdverts ? 'Yes' : 'No',
 			AUDIT_TRAIL_LPAQ_IS_SITE_IN_AREA_OF_SPECIAL_CONTROL_ADVERTS_UPDATED: () =>
 				body.isSiteInAreaOfSpecialControlAdverts ? 'Yes' : 'No'
 		};

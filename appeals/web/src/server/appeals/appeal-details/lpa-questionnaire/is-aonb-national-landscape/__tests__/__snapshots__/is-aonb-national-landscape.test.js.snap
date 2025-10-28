@@ -14,7 +14,7 @@ exports[`is-aonb-national-landscape GET /change should render the isAonbNational
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Is the site in an area of outstanding natural beauty?</h1>
+                                    <h1 class="govuk-fieldset__heading"> Is the site in a national landscape?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">

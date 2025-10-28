@@ -103,7 +103,7 @@ export function constraintsDesignationsAndOtherIssuesSection(templateData) {
 			...(!isHASAppeal
 				? [
 						{
-							key: 'Is the site in an area of outstanding natural beauty?',
+							key: 'Is the site in a national landscape?',
 							text: formatYesNo(isAonbNationalLandscape)
 						},
 						{
