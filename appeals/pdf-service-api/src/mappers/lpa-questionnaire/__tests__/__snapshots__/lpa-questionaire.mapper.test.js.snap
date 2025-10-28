@@ -1084,7 +1084,7 @@ exports[`mapLpaQuestionnaireData should map s20 LPA questionnaire data correctly
           "text": "Yes",
         },
         {
-          "key": "Is the site in an area of outstanding natural beauty?",
+          "key": "Is the site in a national landscape?",
           "text": "No",
         },
         {
@@ -1824,7 +1824,7 @@ exports[`mapLpaQuestionnaireData should map s78 LPA questionnaire data correctly
           "text": "Yes",
         },
         {
-          "key": "Is the site in an area of outstanding natural beauty?",
+          "key": "Is the site in a national landscape?",
           "text": "No",
         },
         {

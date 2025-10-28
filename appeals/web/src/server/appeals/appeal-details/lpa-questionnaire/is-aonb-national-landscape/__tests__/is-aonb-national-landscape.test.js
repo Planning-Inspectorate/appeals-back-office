@@ -29,7 +29,7 @@ describe('is-aonb-national-landscape', () => {
 			expect(response.statusCode).toEqual(200);
 
 			expect(mainInnerHtml).toMatchSnapshot();
-			expect(mainInnerHtml).toContain('Is the site in an area of outstanding natural beauty?</h1>');
+			expect(mainInnerHtml).toContain('Is the site in a national landscape?</h1>');
 		});
 
 		it('should render a back link to LPAQ page on the isAonbNationalLandscape change page when accessed from LPAQ page', async () => {

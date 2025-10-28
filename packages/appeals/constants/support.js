@@ -171,7 +171,7 @@ export const AUDIT_TRAIL_LPAQ_HAS_PROTECTED_SPECIES_UPDATED = 'Protected species
 export const AUDIT_TRAIL_LPAQ_AFFECTS_SCHEDULED_MONUMENT_UPDATED =
 	'Scheduled monument status updated';
 export const AUDIT_TRAIL_LPAQ_IS_AONB_NATIONAL_LANDSCAPE_UPDATED =
-	'Outstanding natural beauty area status updated';
+	'‘Is the site in a national landscape?’ updated to {replacement0}';
 export const AUDIT_TRAIL_LPAQ_IS_GYPSY_OR_TRAVELLER_SITE_UPDATED =
 	'Gypsy or Traveller communities status updated';
 export const AUDIT_TRAIL_LPAQ_HAS_INFRASTRUCTURE_LEVY_UPDATED =

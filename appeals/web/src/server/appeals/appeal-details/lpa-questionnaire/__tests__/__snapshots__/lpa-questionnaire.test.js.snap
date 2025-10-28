@@ -464,10 +464,10 @@ exports[`LPA Questionnaire review GET / should render the CAS advert LPA Questio
                                 data-cy="change-site-within-green-belt">Change<span class="govuk-visually-hidden"> Green belt (1. Constraints, designations and other issues)</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the site in an area of outstanding natural beauty?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the site in a national landscape?</dt>
                             <dd                             class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/lpa-questionnaire/1/is-aonb-national-landscape/change"
-                                    data-cy="change-is-aonb-national-landscape">Change<span class="govuk-visually-hidden"> Is the site in an area of outstanding natural beauty? (1. Constraints, designations and other issues)</span></a>
+                                    data-cy="change-is-aonb-national-landscape">Change<span class="govuk-visually-hidden"> Is the site in a national landscape? (1. Constraints, designations and other issues)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the development in, near or likely to affect any designated sites?</dt>
@@ -1534,10 +1534,10 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                                 data-cy="change-site-within-green-belt">Change<span class="govuk-visually-hidden"> Green belt (1. Constraints, designations and other issues)</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the site in an area of outstanding natural beauty?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the site in a national landscape?</dt>
                             <dd                             class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/is-aonb-national-landscape/change"
-                                    data-cy="change-is-aonb-national-landscape">Change<span class="govuk-visually-hidden"> Is the site in an area of outstanding natural beauty? (1. Constraints, designations and other issues)</span></a>
+                                    data-cy="change-is-aonb-national-landscape">Change<span class="govuk-visually-hidden"> Is the site in a national landscape? (1. Constraints, designations and other issues)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the development in, near or likely to affect any designated sites?</dt>

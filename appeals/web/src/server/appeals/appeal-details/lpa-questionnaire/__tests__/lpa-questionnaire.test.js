@@ -1128,9 +1128,7 @@ describe('LPA Questionnaire review', () => {
 				'Is the site in an area of special control of advertisements?</dt>'
 			);
 			expect(element.innerHTML).toContain('Green belt</dt>');
-			expect(element.innerHTML).toContain(
-				'Is the site in an area of outstanding natural beauty?</dt>'
-			);
+			expect(element.innerHTML).toContain('Is the site in a national landscape?</dt>');
 			expect(element.innerHTML).toContain(
 				'Is the development in, near or likely to affect any designated sites?</dt>'
 			);

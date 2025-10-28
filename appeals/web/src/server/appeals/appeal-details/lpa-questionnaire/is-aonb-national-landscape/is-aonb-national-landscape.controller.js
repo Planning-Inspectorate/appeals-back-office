@@ -86,7 +86,7 @@ export const postChangeIsAonbNationalLandscape = async (request, response) => {
 			session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			text: 'Outstanding natural beauty area status changed'
+			text: 'National landscape status changed'
 		});
 
 		delete request.session.isAonbNationalLandscape;

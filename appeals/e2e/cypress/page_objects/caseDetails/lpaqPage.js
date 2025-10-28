@@ -210,7 +210,7 @@ export class LpaqPage extends Page {
 	}
 
 	assertAONB(value) {
-		this.assertFieldLabelAndValue('Is the site in an area of outstanding natural beauty?', value);
+		this.assertFieldLabelAndValue('Is the site in a national landscape?', value);
 	}
 
 	assertDesignatedSites(values) {
