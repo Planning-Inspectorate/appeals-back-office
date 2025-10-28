@@ -107,9 +107,7 @@ describe('link appeals - S78', () => {
 		});
 	});
 
-	// skipping test pending investigation into pipeline issue
-	// e.g. https://dev.azure.com/planninginspectorate/appeals-back-office/_build/results?buildId=138151&view=artifacts&pathAsName=false&type=publishedArtifacts
-	it.skip('Issue a decision for linked appeals', { tags: tag.smoke }, () => {
+	it('Issue a decision for linked appeals', { tags: tag.smoke }, () => {
 		cy.createCase({ caseType: 'W' }).then((leadCase) => {
 			cy.createCase({ caseType: 'W' }).then((childCase) => {
 				cy.createCase({ caseType: 'W' }).then((childCase2) => {
@@ -258,7 +256,7 @@ describe('Unhappy path', () => {
 		});
 	});
 
-	it.skip('As a child appeal, I am unable to link to another child appeal', () => {
+	it('As a child appeal, I am unable to link to another child appeal', () => {
 		cy.createCase().then((leadCase1) => {
 			cy.createCase().then((leadCase2) => {
 				cy.createCase().then((childCase1) => {
