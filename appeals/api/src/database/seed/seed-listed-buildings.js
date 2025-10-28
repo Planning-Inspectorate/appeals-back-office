@@ -19,12 +19,11 @@ export const importListedBuildingsDataset = async (url) => {
 		console.log('ListedBuilding table not empty. Please delete all records to refresh.');
 	} else {
 		console.log('Starting download of listed buildings dataset...\n\n');
-		fetch(url).then(async (response) => {
-			if (response.body) {
-				const totalRecords = await importListedBuildings(Readable.from(response.body));
-				console.log(`\n\nComplete! ${totalRecords} records imported.`);
-			}
-		});
+		const response = await fetch(url);
+		if (response.body) {
+			const totalRecords = await importListedBuildings(Readable.from(response.body));
+			console.log(`\n\nComplete! ${totalRecords} records imported.`);
+		}
 	}
 };
 
