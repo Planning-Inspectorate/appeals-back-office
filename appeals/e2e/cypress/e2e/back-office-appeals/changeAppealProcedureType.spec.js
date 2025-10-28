@@ -170,7 +170,7 @@ describe('change appeal procedure types', () => {
 		});
 	});
 
-	it.skip('change appeal procedure type - should not allow change procedure after statements have been shared', () => {
+	it('change appeal procedure type - should not allow change procedure after statements have been shared', () => {
 		happyPathHelper.startS78Case(caseObj, 'hearing');
 
 		// progress to statements shared status
