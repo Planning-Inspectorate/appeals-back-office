@@ -31,7 +31,8 @@ const sessionValuesToDateTime = (sessionValues) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getChangeProcedureEventDate = async (request, response) => {
-	const sessionValues = request.session['changeProcedureType'] || {};
+	const sessionValues =
+		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
 
 	return renderChangeProcedureEventDate(request, response, sessionValuesToDateTime(sessionValues));
 };
@@ -45,7 +46,9 @@ export const renderChangeProcedureEventDate = async (request, response, values) 
 	const { errors } = request;
 
 	const appealDetails = request.currentAppeal;
-	const newProcedureType = request.session.changeProcedureType.appealProcedure;
+	const sessionValues =
+		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
+	const newProcedureType = sessionValues.appealProcedure;
 	const mappedPageContent = eventChangeProcedureDatePage(appealDetails, values, newProcedureType);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
@@ -64,15 +67,17 @@ export const postChangeProcedureEventDate = async (request, response) => {
 		params: { appealId }
 	} = request;
 
+	const sessionValues =
+		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
 	if (errors) {
 		return renderChangeProcedureEventDate(
 			request,
 			response,
-			sessionValuesToDateTime(request.session['changeProcedureType'] || {})
+			sessionValuesToDateTime(sessionValues)
 		);
 	}
 
-	const newProcedureType = request.session.changeProcedureType.appealProcedure;
+	const newProcedureType = sessionValues.appealProcedure;
 
 	if (newProcedureType === APPEAL_CASE_PROCEDURE.INQUIRY) {
 		return response.redirect(

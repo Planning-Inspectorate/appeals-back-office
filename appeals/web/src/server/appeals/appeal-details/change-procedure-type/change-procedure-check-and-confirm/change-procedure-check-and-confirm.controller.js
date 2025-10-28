@@ -29,12 +29,11 @@ export const getCheckAndConfirm = async (request, response) => {
 	const {
 		errors,
 		currentAppeal,
-		session: { changeProcedureType },
 		params: { appealId }
 	} = request;
 
-	/** @type {ChangeProcedureTypeSession} */
-	const sessionValues = changeProcedureType;
+	const sessionValues =
+		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
 	const newProcedureType = sessionValues.appealProcedure;
 
 	if (!objectContainsAllKeys(sessionValues, 'appealTimetable')) {
@@ -109,7 +108,11 @@ export const getCheckAndConfirm = async (request, response) => {
 						textSummaryListItem({
 							id: `${newProcedureType}-date-known`,
 							text: `Do you know the date and time of the ${newProcedureType}?`,
-							value: sessionValues.dateKnown.toLowerCase() === 'yes' ? 'Yes' : 'No',
+							value: sessionValues.dateKnown
+								? sessionValues.dateKnown.toLowerCase() === 'yes'
+									? 'Yes'
+									: 'No'
+								: 'No',
 							link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-event-date-known`,
 							editable: true,
 							cypressDataName: `change-${newProcedureType}-date-known`
@@ -121,7 +124,7 @@ export const getCheckAndConfirm = async (request, response) => {
 
 		if (
 			newProcedureType === APPEAL_CASE_PROCEDURE.INQUIRY ||
-			(newProcedureType === APPEAL_CASE_PROCEDURE.HEARING && sessionValues.dateKnown)
+			(newProcedureType === APPEAL_CASE_PROCEDURE.HEARING && sessionValues.dateKnown === 'yes')
 		) {
 			responses.push({
 				type: 'summary-list',

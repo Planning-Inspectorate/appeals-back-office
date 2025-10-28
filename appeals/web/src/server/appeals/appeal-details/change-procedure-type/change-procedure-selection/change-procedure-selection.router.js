@@ -11,7 +11,7 @@ router
 	.get(asyncHandler(controllers.getSelectProcedure))
 	.post(
 		validators.validateSelectProcedure,
-		saveBodyToSession('changeProcedureType'),
+		saveBodyToSession('changeProcedureType', { scopeToAppeal: true }),
 		asyncHandler(controllers.postChangeSelectProcedure)
 	);
 

@@ -12,7 +12,7 @@ router
 	.post(
 		validators.validateYesNoInput,
 		validators.validateEstimationInput,
-		saveBodyToSession('changeProcedureType'),
+		saveBodyToSession('changeProcedureType', { scopeToAppeal: true }),
 		asyncHandler(controller.postChangeEstimation)
 	);
 

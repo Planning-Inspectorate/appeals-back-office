@@ -9,7 +9,7 @@ export const getChangeInquiryAddressKnown = async (request, response) => {
 		request,
 		response,
 		'change',
-		request.session.changeProcedureType || {}
+		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {}
 	);
 };
 
@@ -22,7 +22,9 @@ export const getChangeInquiryAddressKnown = async (request, response) => {
 export const renderChangeInquiryAddressKnown = async (request, response, action, values) => {
 	const { errors } = request;
 	const appealDetails = request.currentAppeal;
-	const newProcedureType = request.session.changeProcedureType.appealProcedure;
+	const sessionValues =
+		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
+	const newProcedureType = sessionValues.appealProcedure;
 	const mappedPageContent = changeAddressKnownPage(appealDetails, action, newProcedureType, values);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
@@ -41,7 +43,9 @@ export const postChangeInquiryAddressKnown = async (request, response) => {
 	}
 
 	const { appealId } = request.params;
-	const newProcedureType = request.session.changeProcedureType.appealProcedure;
+	const sessionValues =
+		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
+	const newProcedureType = sessionValues.appealProcedure;
 
 	if (request.body.addressKnown === 'yes') {
 		return response.redirect(

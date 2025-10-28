@@ -11,7 +11,7 @@ router
 	.get(asyncHandler(controller.getAddressDetails))
 	.post(
 		validators.validateAddress,
-		saveBodyToSession('changeProcedureType'),
+		saveBodyToSession('changeProcedureType', { scopeToAppeal: true }),
 		asyncHandler(controller.postAddressDetails)
 	);
 

@@ -10,7 +10,7 @@ router
 	.route('/')
 	.get(
 		addAppellantCaseToLocals,
-		saveBodyToSession('changeProcedureType'),
+		saveBodyToSession('changeProcedureType', { scopeToAppeal: true }),
 		asyncHandler(controllers.getCheckAndConfirm)
 	);
 

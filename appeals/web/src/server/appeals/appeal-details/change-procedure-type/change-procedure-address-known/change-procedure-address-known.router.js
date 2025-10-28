@@ -14,7 +14,7 @@ router
 	.get(asyncHandler(getChangeInquiryAddressKnown))
 	.post(
 		validators.validateAddressKnown,
-		saveBodyToSession('changeProcedureType'),
+		saveBodyToSession('changeProcedureType', { scopeToAppeal: true }),
 		asyncHandler(postChangeInquiryAddressKnown)
 	);
 
