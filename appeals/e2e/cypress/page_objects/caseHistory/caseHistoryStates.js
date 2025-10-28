@@ -25,7 +25,6 @@ export const CASE_HISTORY_STATES = Object.freeze({
 			emailBody: ''
 		}
 	],
-
 	shareFinalComments: [
 		{
 			detail: `We have received the appellant's final comments: {caseRef} sent to LPA`,
