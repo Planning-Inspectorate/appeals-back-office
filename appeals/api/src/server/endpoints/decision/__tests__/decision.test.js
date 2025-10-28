@@ -482,10 +482,6 @@ describe('decision routes', () => {
 			const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
 			const outcome = 'allowed';
 			const childAppeal = {
-				child: {
-					id: 4,
-					reference: 'CHILD123'
-				},
 				childId: 4,
 				childRef: 'CHILD123',
 				inspectorDecision: outcome,
@@ -503,8 +499,21 @@ describe('decision routes', () => {
 				childAppeals: [childAppeal]
 			};
 
+			const child = {
+				...appeal,
+				id: childAppeal.childId,
+				reference: childAppeal.childRef
+			};
+
 			// @ts-ignore
-			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+			databaseConnector.appeal.findUnique
+				.mockResolvedValueOnce(appeal)
+				.mockResolvedValueOnce(child)
+				.mockResolvedValueOnce(appeal)
+				.mockResolvedValueOnce(appeal)
+				.mockResolvedValueOnce(child)
+				.mockResolvedValueOnce(child);
+
 			// @ts-ignore
 			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
 			// @ts-ignore
