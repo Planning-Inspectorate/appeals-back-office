@@ -703,12 +703,6 @@ export class CaseDetailsPage extends Page {
 		this.elements.decisionOutcomeText().contains(this.basePageElements.link, text);
 	}
 
-	checkElementVisibility(selector, expectedVisibility) {
-		cy.elementExists(selector).then((exists) => {
-			expect(exists).to.equal(expectedVisibility);
-		});
-	}
-
 	getCaseOfficer() {
 		return this.elements
 			.caseOfficerValue()
