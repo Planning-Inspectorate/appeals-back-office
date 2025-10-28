@@ -8,9 +8,19 @@ describe('format-bulleted-list', () => {
 		expect(result).toEqual('');
 	});
 
+	it('should format an undefined list as the fallback text', () => {
+		const result = formatBulletedList(undefined, 'Not answered');
+		expect(result).toEqual('Not answered');
+	});
+
 	it('should format an empty list as an empty string', () => {
 		const result = formatBulletedList([]);
 		expect(result).toEqual('');
+	});
+
+	it('should format an empty list as the fallback text', () => {
+		const result = formatBulletedList([], 'fallback text');
+		expect(result).toEqual('fallback text');
 	});
 
 	it('should not format a list as a bulleted list when there is one item', () => {
