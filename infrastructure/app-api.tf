@@ -77,6 +77,7 @@ module "app_api" {
     FEATURE_FLAG_CHANGE_APPEAL_TYPE  = var.apps_config.featureFlags.featureFlagChangeAppealType
     FEATURE_FLAG_HEARING_POST_MVP    = var.apps_config.featureFlags.featureFlagHearingPostMvp
     FEATURE_FLAG_SEARCH_CASE_OFFICER = var.apps_config.featureFlags.featureFlagSearchCaseOfficer
+    FEATURE_FLAG_ENFORCEMENT_NOTICE  = var.apps_config.featureFlags.featureFlagEnforcementNotice
 
 
     # service bus topics

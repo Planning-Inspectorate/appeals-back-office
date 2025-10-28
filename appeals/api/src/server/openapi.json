@@ -6277,6 +6277,51 @@
 				}
 			}
 		},
+		"/appeals/{appealReference}/review-lpaq": {
+			"post": {
+				"tags": ["Test Utilities"],
+				"description": "A test endpoint to simulate the completion of a review LPA questionnaire event",
+				"parameters": [
+					{
+						"name": "appealReference",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Updates a single LPA questionnaire by id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateLPAQuestionnaireResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateLPAQuestionnaireResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
 		"/appeals/linkable-appeal/{appealReference}/{linkableType}": {
 			"get": {
 				"tags": ["Linkable appeals"],
@@ -6880,6 +6925,53 @@
 					},
 					"500": {
 						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/appeal-procedure-change-request": {
+			"post": {
+				"tags": ["Appeal Procedure Change Request"],
+				"description": "Records a request to change the appeal procedure type",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"400": {
+						"description": "Bad Request"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Appeal procedure change request",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AppealProcedureChangeRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/AppealProcedureChangeRequest"
+							}
+						}
 					}
 				}
 			}
@@ -11319,7 +11411,21 @@
 			},
 			"UpdateLPAQuestionnaireResponse": {
 				"type": "object",
-				"properties": {},
+				"properties": {
+					"validationOutcome": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "number",
+								"example": 11
+							},
+							"name": {
+								"type": "string",
+								"example": "Complete"
+							}
+						}
+					}
+				},
 				"xml": {
 					"name": "UpdateLPAQuestionnaireResponse"
 				}
@@ -12792,6 +12898,95 @@
 					"hearingId": {
 						"type": "number",
 						"example": 1
+					}
+				}
+			},
+			"ChangeProcedureTypeRequest": {
+				"type": "object",
+				"properties": {
+					"appealProcedure": {
+						"type": "string",
+						"description": "Appeal procedure type",
+						"example": "hearing"
+					},
+					"existingAppealProcedure": {
+						"type": "string",
+						"description": "Existing appeal procedure type",
+						"example": "hearing"
+					},
+					"eventDate": {
+						"type": "string",
+						"description": "Date string of the event date and time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"estimatedDays": {
+						"type": "string",
+						"description": "Estimated number of days",
+						"example": 5
+					},
+					"lpaQuestionnaireDueDate": {
+						"type": "string",
+						"description": "Date string of the lpaQuestionnaireDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"statementDueDate": {
+						"type": "string",
+						"description": "Date string of the statementDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"ipCommentsDueDate": {
+						"type": "string",
+						"description": "Date string of the ipCommentsDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"finalCommentsDueDate": {
+						"type": "string",
+						"description": "Date string of the finalCommentsDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"statementOfCommonGroundDueDate": {
+						"type": "string",
+						"description": "Date string of the statementOfCommonGroundDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"proofOfEvidenceAndWitnessesDueDate": {
+						"type": "string",
+						"description": "Date string of the proofOfEvidenceAndWitnessesDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"planningObligationDueDate": {
+						"type": "string",
+						"description": "Date string of the planningObligationDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"address": {
+						"type": "object",
+						"properties": {
+							"addressLine1": {
+								"type": "string",
+								"example": "1 Grove Cottage"
+							},
+							"addressLine2": {
+								"type": "string",
+								"example": "Shotesham Road"
+							},
+							"country": {
+								"type": "string",
+								"example": "United Kingdom"
+							},
+							"county": {
+								"type": "string",
+								"example": "Devon"
+							},
+							"postcode": {
+								"type": "string",
+								"example": "NR35 2ND"
+							},
+							"town": {
+								"type": "string",
+								"example": "Woodton"
+							}
+						}
 					}
 				}
 			},

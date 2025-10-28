@@ -1,8 +1,12 @@
 // @ts-nocheck
-import { simulateStartAppeal } from '#endpoints/test-utils/test-utils.controller.js';
-import { fullPlanningAppeal } from '#tests/appeals/mocks.js';
-import { azureAdUserId } from '#tests/shared/mocks.js';
+import {
+	simulateReviewLPAQ,
+	simulateStartAppeal
+} from '#endpoints/test-utils/test-utils.controller.js';
+import { fullPlanningAppeal, householdAppeal } from '#tests/appeals/mocks.js';
+import { azureAdUserId, lpaQuestionnaireValidationOutcomes } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import express from 'express';
 import supertest from 'supertest';
 import { request } from '../../../app-test.js';
@@ -13,6 +17,7 @@ jest.useFakeTimers({ doNotFake: ['performance'] }).setSystemTime(new Date(baseDa
 
 const app = express();
 app.post('/:appealReference/start-appeal', simulateStartAppeal);
+app.post('/:appealReference/review-lpaq', simulateReviewLPAQ);
 const testApiRequest = supertest(app);
 
 describe('test utils routes', () => {
@@ -324,6 +329,78 @@ describe('test utils routes', () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
 
 			const response = await testApiRequest.post('/1/start-appeal');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+	});
+
+	describe('POST /:appealReference/review-lpaq', () => {
+		test('returns 200 for valid appeal reference', async () => {
+			databaseConnector.appeal.findUnique
+				.mockResolvedValueOnce({
+					...householdAppeal,
+					appealStatus: [
+						{
+							status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+							valid: true
+						}
+					]
+				})
+				.mockResolvedValueOnce({
+					...householdAppeal,
+					appealStatus: [
+						{
+							status: APPEAL_CASE_STATUS.EVENT,
+							valid: true
+						}
+					]
+				});
+			databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
+				lpaQuestionnaireValidationOutcomes[0]
+			);
+			databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+				{ id: 1, key: 'no_redaction_required' }
+			]);
+
+			const response = await testApiRequest.post('/1/review-lpaq');
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({ validationOutcome: { id: 1, name: 'Complete' } });
+		});
+
+		test('returns 400 for invalid appeal reference', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+			databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
+				lpaQuestionnaireValidationOutcomes[0]
+			);
+
+			const response = await testApiRequest.post('/1/review-lpaq');
+			expect(databaseConnector.appeal.findUnique).toHaveBeenCalled();
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+
+		test('returns 400 for no lpa questionnaire', async () => {
+			const testAppeal = fullPlanningAppeal;
+			testAppeal.lpaQuestionnaire = null;
+			databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
+			databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
+				lpaQuestionnaireValidationOutcomes[0]
+			);
+
+			const response = await testApiRequest.post('/1/review-lpaq');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+
+		test('returns 400 for no validation outcome', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+			databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/review-lpaq');
 
 			expect(response.status).toEqual(400);
 			expect(response.body).toEqual(false);

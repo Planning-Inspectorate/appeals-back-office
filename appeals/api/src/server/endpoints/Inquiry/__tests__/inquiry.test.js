@@ -130,7 +130,8 @@ describe('inquiry routes', () => {
 					questionnaire_due_date: '20 January 2025',
 					ip_comments_deadline: '25 January 2025',
 					is_lpa: false,
-					inquiry_expected_days: ''
+					inquiry_expected_days: '',
+					start_date: '1 January 2999'
 				};
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);

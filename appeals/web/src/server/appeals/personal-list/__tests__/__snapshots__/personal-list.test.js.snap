@@ -425,7 +425,7 @@ exports[`personal-list GET / should render the first page of another case office
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-l">Cases assigned to McTest, George</h1>
+            <h1 class="govuk-heading-l">Appeals assigned to McTest, George</h1>
         </div>
     </div><a class="govuk-link" href=personal-list/search-case-officer?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D5%26caseOfficerId%3Dabac693e-4332-4a02-bb21-af05b9fee854
     data-cy="change-case-officer">View another case officer’s appeals</a>

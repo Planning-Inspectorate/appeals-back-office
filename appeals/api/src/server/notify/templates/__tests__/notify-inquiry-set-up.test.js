@@ -43,7 +43,7 @@ describe('inquiry-set-up.content.md', () => {
 		const expectedContent = [
 			'You have a new planning appeal against the application 48269/APP/2021/1482.',
 			'',
-			'We will decide the appeal by written representations. You can tell us if you think a different procedure is more appropriate in the questionnaire.',
+			'We will decide the appeal by inquiry. You can tell us if you think a different procedure is more appropriate in the questionnaire.',
 			'',
 			'# Appeal details',
 			'',
@@ -153,7 +153,7 @@ describe('inquiry-set-up.content.md', () => {
 		const expectedContent = [
 			'You have a new planning appeal against the application 48269/APP/2021/1482.',
 			'',
-			'We will decide the appeal by written representations. You can tell us if you think a different procedure is more appropriate in the questionnaire.',
+			'We will decide the appeal by inquiry. You can tell us if you think a different procedure is more appropriate in the questionnaire.',
 			'',
 			'# Appeal details',
 			'',

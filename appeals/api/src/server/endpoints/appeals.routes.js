@@ -20,6 +20,7 @@ import { businessDaysRoutes } from './business-days/business-days.routes.js';
 import { caseNotesRoutes } from './case-notes/case-notes.routes.js';
 import { caseTeamRouter } from './case-team/case-team.routes.js';
 import { changeAppealTypeRoutes } from './change-appeal-type/change-appeal-type.routes.js';
+import { changeProcedureTypeRoutes } from './change-procedure-type/change-procedure-type.routes.js';
 import { decisionRoutes } from './decision/decision.routes.js';
 import { documentRedactionStatusesRoutes } from './document-redaction-statuses/document-redaction-statuses.routes.js';
 import { documentsRoutes } from './documents/documents.routes.js';
@@ -120,5 +121,6 @@ router.use(inquiryRoutes);
 router.use(inquiryEstimatesRoutes);
 
 router.use(appealStatusRoutes);
+router.use(changeProcedureTypeRoutes);
 
 export { router as appealsRoutes };
