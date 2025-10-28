@@ -40,6 +40,7 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
  * @param {string} estimatedDays
  * @param {TimetableData} timetableData
  * @param {Omit<import('@pins/appeals.api').Schema.Address, 'id'>} address
+ * @param {string | Date} startDate
  * @returns {Promise<void>}
  */
 const sendInquiryDetailsNotifications = async (
@@ -49,9 +50,13 @@ const sendInquiryDetailsNotifications = async (
 	inquiryStartTime,
 	estimatedDays,
 	timetableData,
-	address
+	address,
+	startDate
 ) => {
 	const personalisation = {
+		start_date: dateISOStringToDisplayDate(
+			typeof startDate === 'string' ? startDate : startDate.toISOString()
+		),
 		inquiry_date: dateISOStringToDisplayDate(
 			typeof inquiryStartTime === 'string' ? inquiryStartTime : inquiryStartTime.toISOString()
 		),
@@ -261,7 +266,8 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 				inquiryStartTime,
 				estimatedDays,
 				timetableData,
-				address
+				address,
+				startDateWithTimeCorrection
 			);
 		}
 	} catch (error) {

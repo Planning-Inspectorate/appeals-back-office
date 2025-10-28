@@ -1526,6 +1526,97 @@ export const spec = {
 				}
 			}
 		},
+		ChangeProcedureTypeRequest: {
+			type: 'object',
+			properties: {
+				appealProcedure: {
+					type: 'string',
+					description: 'Appeal procedure type',
+					example: 'hearing'
+				},
+				existingAppealProcedure: {
+					type: 'string',
+					description: 'Existing appeal procedure type',
+					example: 'hearing'
+				},
+				eventDate: {
+					type: 'string',
+					description: 'Date string of the event date and time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				estimatedDays: {
+					type: 'string',
+					description: 'Estimated number of days',
+					example: 5
+				},
+				lpaQuestionnaireDueDate: {
+					type: 'string',
+					description: 'Date string of the lpaQuestionnaireDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				statementDueDate: {
+					type: 'string',
+					description: 'Date string of the statementDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				ipCommentsDueDate: {
+					type: 'string',
+					description: 'Date string of the ipCommentsDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				finalCommentsDueDate: {
+					type: 'string',
+					description: 'Date string of the finalCommentsDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				statementOfCommonGroundDueDate: {
+					type: 'string',
+					description:
+						'Date string of the statementOfCommonGroundDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				proofOfEvidenceAndWitnessesDueDate: {
+					type: 'string',
+					description:
+						'Date string of the proofOfEvidenceAndWitnessesDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				planningObligationDueDate: {
+					type: 'string',
+					description: 'Date string of the planningObligationDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				address: {
+					type: 'object',
+					properties: {
+						addressLine1: {
+							type: 'string',
+							example: '1 Grove Cottage'
+						},
+						addressLine2: {
+							type: 'string',
+							example: 'Shotesham Road'
+						},
+						country: {
+							type: 'string',
+							example: 'United Kingdom'
+						},
+						county: {
+							type: 'string',
+							example: 'Devon'
+						},
+						postcode: {
+							type: 'string',
+							example: 'NR35 2ND'
+						},
+						town: {
+							type: 'string',
+							example: 'Woodton'
+						}
+					}
+				}
+			}
+		},
 		CreateInquiryRequest: {
 			type: 'object',
 			properties: {

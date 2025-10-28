@@ -12,6 +12,7 @@ router
 		addAppellantCaseToLocals,
 		saveBodyToSession('changeProcedureType', { scopeToAppeal: true }),
 		asyncHandler(controllers.getCheckAndConfirm)
-	);
+	)
+	.post(asyncHandler(controllers.postCheckAndConfirm));
 
 export default router;

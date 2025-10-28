@@ -6,19 +6,25 @@ import {
 	dateISOStringToDisplayTime12hr,
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
+import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { capitalize, pick } from 'lodash-es';
 import { appealProcedureToLabelText } from './change-procedure-check-and-confirm.mapper.js';
+import { postProcedureChangeRequest } from './change-procedure-check-and-confirm.service.js';
 
 /**
  * @typedef {import('../change-procedure-type.controller.js').AppealTimetable} AppealTimetable
  */
 /**
  * @typedef {import('../change-procedure-type.controller.js').ChangeProcedureType} ChangeProcedureTypeSession
+ */
+/**
+ * @typedef {import('../change-procedure-type.controller.js').ChangeProcedureTypeRequest} ChangeProcedureTypeRequest
  */
 
 /**
@@ -292,4 +298,80 @@ export const getCheckAndConfirm = async (request, response) => {
 		response,
 		errors
 	);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postCheckAndConfirm = async (request, response) => {
+	try {
+		const {
+			params: { appealId }
+		} = request;
+
+		const sessionValues =
+			request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
+		const newProcedureType = sessionValues.appealProcedure;
+
+		if (!newProcedureType) {
+			return response.status(500).render('app/500.njk');
+		}
+
+		const requestValues = mapSessionValuesForRequest(sessionValues);
+
+		await postProcedureChangeRequest(request.apiClient, appealId, requestValues);
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'procedureTypeChanged',
+			appealId
+		});
+
+		delete request.session['changeProcedureType']?.[request.currentAppeal.appealId];
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when posting the check details and change procedure'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ *
+ * @param {ChangeProcedureTypeSession} values
+ * @returns {ChangeProcedureTypeRequest}
+ */
+const mapSessionValuesForRequest = (values) => {
+	const eventDate = dayMonthYearHourMinuteToISOString({
+		day: values['event-date-day'],
+		month: values['event-date-month'],
+		year: values['event-date-year'],
+		hour: values['event-time-hour'],
+		minute: values['event-time-minute']
+	});
+
+	const address = {
+		...pick(values, ['addressLine1', 'addressLine2', 'town', 'county']),
+		postcode: values['postCode']
+	};
+
+	/**@type {ChangeProcedureTypeRequest} */
+	return {
+		existingAppealProcedure: values.existingAppealProcedure,
+		appealProcedure: values.appealProcedure,
+		eventDate,
+		address,
+		estimationDays: values.estimationDays,
+		lpaQuestionnaireDueDate: values.appealTimetable.lpaQuestionnaireDueDate,
+		ipCommentsDueDate: values.appealTimetable.ipCommentsDueDate,
+		lpaStatementDueDate: values.appealTimetable.lpaStatementDueDate,
+		finalCommentsDueDate: values.appealTimetable.finalCommentsDueDate,
+		statementOfCommonGroundDueDate: values.appealTimetable.statementOfCommonGroundDueDate,
+		planningObligationDueDate: values.appealTimetable.planningObligationDueDate,
+		proofOfEvidenceAndWitnessesDueDate: values.appealTimetable.proofOfEvidenceAndWitnessesDueDate
+	};
 };

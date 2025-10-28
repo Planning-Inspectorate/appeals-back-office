@@ -786,9 +786,9 @@ const buildInquiryRequest = (inquiry, hasObligation) => {
 			year: inquiry['statement-of-common-ground-due-date-year']
 		}),
 		proofOfEvidenceAndWitnessesDueDate: dayMonthYearHourMinuteToISOString({
-			day: inquiry['inquiry-date-day'],
-			month: inquiry['inquiry-date-month'],
-			year: inquiry['inquiry-date-year']
+			day: inquiry['proof-of-evidence-and-witnesses-due-date-day'],
+			month: inquiry['proof-of-evidence-and-witnesses-due-date-month'],
+			year: inquiry['proof-of-evidence-and-witnesses-due-date-year']
 		})
 	};
 
