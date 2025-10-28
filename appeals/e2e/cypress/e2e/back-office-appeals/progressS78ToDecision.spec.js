@@ -3,6 +3,7 @@
 
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
+import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
@@ -11,6 +12,7 @@ import { tag } from '../../support/tag';
 const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
+const caseHistoryPage = new CaseHistoryPage();
 
 describe('Progress S78 to decision', () => {
 	const expectedSections = [
@@ -95,6 +97,7 @@ describe('Progress S78 to decision', () => {
 			caseDetailsPage.clickButtonByText('Issue Decision');
 			caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
 			caseDetailsPage.checkStatusOfCase('Complete', 0);
+			caseHistoryPage.verifyCaseHistory('completedState', caseObj.reference);
 			caseDetailsPage.checkDecisionOutcome('Allowed');
 			caseDetailsPage.viewDecisionLetter('View decision');
 		});
