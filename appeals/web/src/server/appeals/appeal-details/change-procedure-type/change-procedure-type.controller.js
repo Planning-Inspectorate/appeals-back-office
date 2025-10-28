@@ -17,7 +17,7 @@ import { isEmpty, pick } from 'lodash-es';
  * @property {string} event-time-minute
  * @property {string} dateKnown
  * @property {string} estimationYesNo
- * @property {string?} estimationDays
+ * @property {string|undefined} estimationDays
  * @property {string} addressKnown
  * @property {string} addressLine1
  * @property {string} addressLine2
@@ -36,6 +36,22 @@ import { isEmpty, pick } from 'lodash-es';
  * @property {string|undefined} [statementOfCommonGroundDueDate]
  * @property {string|undefined} [planningObligationDueDate]
  * @property {string|undefined} [proofOfEvidenceAndWitnessesDueDate]
+ */
+
+/**
+ * @typedef {Object} ChangeProcedureTypeRequest
+ * @property {string} appealProcedure
+ * @property {string} existingAppealProcedure
+ * @property {string} [lpaQuestionnaireDueDate]
+ * @property {string} [ipCommentsDueDate]
+ * @property {string} [lpaStatementDueDate]
+ * @property {string|undefined} [finalCommentsDueDate]
+ * @property {string|undefined} [statementOfCommonGroundDueDate]
+ * @property {string|undefined} [planningObligationDueDate]
+ * @property {string|undefined} [proofOfEvidenceAndWitnessesDueDate]
+ * @property {string} eventDate
+ * @property {string|undefined} estimationDays
+ * @property {{addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}|undefined} address
  */
 
 /**
