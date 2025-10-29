@@ -1160,6 +1160,9 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain(
 				'Did you refuse the application because of highway or traffic public safety?</dt>'
 			);
+			expect(element.innerHTML).toContain(
+				'Did the appellant submit complete and accurate photographs and plans?</dt>'
+			);
 			expect(element.innerHTML).toContain('Relevant policies from statutory development plan</dt>');
 			expect(element.innerHTML).toContain('Supplementary planning documents</dt>');
 			expect(element.innerHTML).toContain('Emerging plan relevant to appeal</dt>');
