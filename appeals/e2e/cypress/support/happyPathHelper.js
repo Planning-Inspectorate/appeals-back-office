@@ -431,5 +431,13 @@ export const happyPathHelper = {
 		basePage.clickButtonByText('Continue');
 		basePage.clickButtonByText('Mark appeal as invalid');
 		caseDetailsPage.validateBannerMessage('Success', 'Appeal marked as invalid');
+	},
+
+	addNetResidences(option, number) {
+		caseDetailsPage.clickAddNetResidence();
+		basePage.selectRadioButtonByValue(option);
+		basePage.fillInput(number);
+		basePage.clickButtonByText('Save and return');
+		basePage.validateBannerMessage('Success', 'Number of residential units added');
 	}
 };

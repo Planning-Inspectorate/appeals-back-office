@@ -63,7 +63,8 @@ export class CaseDetailsPage extends Page {
 		changeInquiryDate: 'change-inquiry-date',
 		changeInquiryNumberOfDays: 'change-inquiry-expected-number-of-days',
 		addAppellantWithdrawal: 'add-costs-appellant-withdrawal',
-		addLpaWithdrawal: 'add-costs-lpa-withdrawal'
+		addLpaWithdrawal: 'add-costs-lpa-withdrawal',
+		addNetResidence: 'add-net-residence-change'
 	};
 
 	fixturesPath = 'cypress/fixtures/';
@@ -241,7 +242,8 @@ export class CaseDetailsPage extends Page {
 		caseDetailsInquiryEstimateLink: () => cy.get('#addInquiryEstimates'),
 		caseOfficerValue: () => cy.get('.appeal-case-officer .govuk-summary-list__value'),
 		addAppellantWithdrawal: () => cy.getByData(this._cyDataSelectors.addAppellantWithdrawal),
-		addLpaWithdrawal: () => cy.getByData(this._cyDataSelectors.addLpaWithdrawal)
+		addLpaWithdrawal: () => cy.getByData(this._cyDataSelectors.addLpaWithdrawal),
+		addNetResidence: () => cy.getByData(this._cyDataSelectors.addNetResidence)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -627,6 +629,10 @@ export class CaseDetailsPage extends Page {
 
 	inputCorrectionNotice(correctionNotice) {
 		this.elements.getCorrectioNotice().click().clear().type(correctionNotice);
+	}
+
+	clickAddNetResidence() {
+		this.elements.addNetResidence().click();
 	}
 
 	/***************************************************************
