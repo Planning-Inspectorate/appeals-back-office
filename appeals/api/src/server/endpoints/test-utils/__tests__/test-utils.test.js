@@ -424,6 +424,7 @@ describe('test utils routes', () => {
 				source: 'lpa',
 				representationRejectionReasonsSelected: []
 			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 			databaseConnector.representation.findFirst.mockResolvedValue(mockRepresentation);
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
@@ -452,7 +453,16 @@ describe('test utils routes', () => {
 		});
 
 		test('returns 400 for null representation', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 			databaseConnector.representation.findFirst.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/review-lpa-statement');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+
+		test('returns 400 for invalid appeal', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
 
 			const response = await testApiRequest.post('/1/review-lpa-statement');
 			expect(response.status).toEqual(400);
