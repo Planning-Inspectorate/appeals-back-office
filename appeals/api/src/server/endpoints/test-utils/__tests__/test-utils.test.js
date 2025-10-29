@@ -1,5 +1,6 @@
 // @ts-nocheck
 import {
+	simulateReviewIpComment,
 	simulateReviewLPAQ,
 	simulateStartAppeal
 } from '#endpoints/test-utils/test-utils.controller.js';
@@ -17,6 +18,7 @@ jest.useFakeTimers({ doNotFake: ['performance'] }).setSystemTime(new Date(baseDa
 
 const app = express();
 app.post('/:appealReference/start-appeal', simulateStartAppeal);
+app.post('/:appealReference/review-ip-comment', simulateReviewIpComment);
 app.post('/:appealReference/review-lpaq', simulateReviewLPAQ);
 const testApiRequest = supertest(app);
 
@@ -330,6 +332,58 @@ describe('test utils routes', () => {
 
 			const response = await testApiRequest.post('/1/start-appeal');
 
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+	});
+
+	describe('POST /:appealReference/review-ip-comment', () => {
+		test('returns 200 for valid appeal reference', async () => {
+			const mockRepresentation = {
+				id: 1,
+				lpa: false,
+				status: 'awaiting_review',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: '',
+				dateCreated: new Date('2024-12-06T12:00:00Z'),
+				notes: 'Some notes',
+				representationType: 'comment',
+				siteVisitRequested: true,
+				source: 'comment',
+				representationRejectionReasonsSelected: []
+			};
+			databaseConnector.representation.findFirst.mockResolvedValue(mockRepresentation);
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.update.mockResolvedValue({
+				...mockRepresentation,
+				status: 'valid'
+			});
+
+			const response = await testApiRequest.post('/1/review-ip-comment');
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				attachments: [],
+				author: 'undefined undefined',
+				created: '2024-12-06T12:00:00.000Z',
+				id: 1,
+				notes: 'Some notes',
+				origin: 'citizen',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: '',
+				rejectionReasons: [],
+				representationType: 'comment',
+				siteVisitRequested: true,
+				source: 'comment',
+				status: 'valid'
+			});
+		});
+
+		test('returns 400 for null representation', async () => {
+			databaseConnector.representation.findFirst.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/review-ip-comment');
 			expect(response.status).toEqual(400);
 			expect(response.body).toEqual(false);
 		});

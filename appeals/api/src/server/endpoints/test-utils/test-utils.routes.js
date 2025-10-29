@@ -7,6 +7,7 @@ import {
 	simulateHearingElapsed,
 	simulateInquiryElapsed,
 	simulateProofOfEvidenceElapsed,
+	simulateReviewIpComment,
 	simulateReviewLPAQ,
 	simulateSiteVisitElapsed,
 	simulateStartAppeal,
@@ -178,6 +179,26 @@ router.post(
 		#swagger.responses[500] = {}
 	 */
 	asyncHandler(simulateStartAppeal)
+);
+
+router.post(
+	'/:appealReference/review-ip-comment',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/review-ip-comment'
+		#swagger.description = 'A test endpoint to simulate the completion of a review ip comment event'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {
+			description: 'Get a single representation for an appeal',
+			schema: { $ref: '#/components/schemas/RepResponse' }
+		}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(simulateReviewIpComment)
 );
 
 router.post(
