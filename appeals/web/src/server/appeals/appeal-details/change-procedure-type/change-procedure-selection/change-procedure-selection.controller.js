@@ -58,6 +58,7 @@ export const postChangeSelectProcedure = async (request, response) => {
 		const newProcedureType = sessionValues.appealProcedure;
 
 		// Delete all dependent session values for the existing perocedure type
+		delete sessionValues['dateKnown'];
 		delete sessionValues['event-date-day'];
 		delete sessionValues['event-date-month'];
 		delete sessionValues['event-date-year'];
