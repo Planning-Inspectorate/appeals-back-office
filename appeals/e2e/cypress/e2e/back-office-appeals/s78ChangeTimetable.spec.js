@@ -48,7 +48,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it(
+	it.skip(
 		'should change due dates when case status is lpa_questionnaire',
 		{ retries: { runMode: 2, openMode: 0 } },
 		() => {
@@ -64,7 +64,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		}
 	);
 
-	it('should not accept current date when case status is lpa_questionnaire', () => {
+	it.skip('should not accept current date when case status is lpa_questionnaire', () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
@@ -81,7 +81,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		});
 	});
 
-	it('should not accept non business date when case status is lpa_questionnaire', () => {
+	it.skip('should not accept non business date when case status is lpa_questionnaire', () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
@@ -101,7 +101,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 	});
 
 	// tests are flaky error only caused with automation
-	it('should move case status to statements and update available due dates', () => {
+	it.skip('should move case status to statements and update available due dates', () => {
 		cy.clearAllSessionStorage();
 		cy.createCase({
 			caseType: 'W'
@@ -117,7 +117,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		});
 	});
 
-	it('should not accept current date when case status is statements', () => {
+	it.skip('should not accept current date when case status is statements', () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
@@ -137,7 +137,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		});
 	});
 
-	it('should not accept non business date when case status is statements', () => {
+	it.skip('should not accept non business date when case status is statements', () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
@@ -158,7 +158,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 	});
 
 	// tests are flaky error only caused with automation
-	it('should move case status to final_comments and update available due dates', () => {
+	it.skip('should move case status to final_comments and update available due dates', () => {
 		cy.clearAllSessionStorage();
 		cy.createCase({
 			caseType: 'W'

@@ -928,7 +928,7 @@ export class CaseDetailsPage extends Page {
 	verifyCaseDetailsSection = (expectedSections) => {
 		this.elements
 			.caseDetailsSections()
-			.find('h1.govuk-heading-l')
+			.find('h2.govuk-heading-l')
 			.should(($h1s) => {
 				const actual = [...$h1s].map((h) => h.textContent.replace(/\s+/g, ' ').trim());
 
