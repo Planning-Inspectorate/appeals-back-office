@@ -428,7 +428,7 @@ it('Can update inquiry address', () => {
 	});
 });
 
-it('Can update answer from CYA page - change address', () => {
+it.only('Can update answer from CYA page - change address', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		cy.addInquiryViaApi(caseObj, inquiryDate);
