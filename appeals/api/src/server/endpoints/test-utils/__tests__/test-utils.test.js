@@ -1,6 +1,7 @@
 // @ts-nocheck
 import {
 	simulateReviewLPAQ,
+	simulateReviewLpaStatement,
 	simulateStartAppeal
 } from '#endpoints/test-utils/test-utils.controller.js';
 import { fullPlanningAppeal, householdAppeal } from '#tests/appeals/mocks.js';
@@ -18,6 +19,7 @@ jest.useFakeTimers({ doNotFake: ['performance'] }).setSystemTime(new Date(baseDa
 const app = express();
 app.post('/:appealReference/start-appeal', simulateStartAppeal);
 app.post('/:appealReference/review-lpaq', simulateReviewLPAQ);
+app.post('/:appealReference/review-lpa-statement', simulateReviewLpaStatement);
 const testApiRequest = supertest(app);
 
 describe('test utils routes', () => {
@@ -402,6 +404,67 @@ describe('test utils routes', () => {
 
 			const response = await testApiRequest.post('/1/review-lpaq');
 
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+	});
+
+	describe('POST /:appealReference/review-lpa-statement', () => {
+		test('returns 200 for valid appeal reference', async () => {
+			const mockRepresentation = {
+				id: 1,
+				lpa: true,
+				status: 'awaiting_review',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: '',
+				dateCreated: new Date('2024-12-06T12:00:00Z'),
+				notes: 'Some notes',
+				representationType: 'lpa_statement',
+				siteVisitRequested: true,
+				source: 'lpa',
+				representationRejectionReasonsSelected: []
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+			databaseConnector.representation.findFirst.mockResolvedValue(mockRepresentation);
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.update.mockResolvedValue({
+				...mockRepresentation,
+				status: 'valid'
+			});
+
+			const response = await testApiRequest.post('/1/review-lpa-statement');
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				attachments: [],
+				created: '2024-12-06T12:00:00.000Z',
+				id: 1,
+				notes: 'Some notes',
+				origin: 'lpa',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: '',
+				rejectionReasons: [],
+				representationType: 'lpa_statement',
+				siteVisitRequested: true,
+				source: 'lpa',
+				status: 'valid'
+			});
+		});
+
+		test('returns 400 for null representation', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+			databaseConnector.representation.findFirst.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/review-lpa-statement');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+
+		test('returns 400 for invalid appeal', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/review-lpa-statement');
 			expect(response.status).toEqual(400);
 			expect(response.body).toEqual(false);
 		});
