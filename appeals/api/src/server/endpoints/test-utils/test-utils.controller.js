@@ -275,6 +275,31 @@ export const simulateStartAppeal = async (req, res) => {
  * @param {Response} res
  * @returns {Promise<Response>}
  * */
+export const simulateReviewIpComment = async (req, res) => {
+	const { appealReference } = req.params;
+	const appealId = Number(appealReference) - APPEAL_START_RANGE;
+	const representation = await databaseConnector.representation.findFirst({
+		where: {
+			appealId,
+			representationType: 'comment',
+			status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+		},
+		orderBy: { dateCreated: 'desc' }
+	});
+
+	if (!representation) return res.status(400).send(false);
+
+	req.params = { appealId: String(appealId), repId: String(representation.id) };
+	req.body = { status: APPEAL_REPRESENTATION_STATUS.VALID };
+
+	return await updateRepresentation(req, res);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
 export const simulateReviewLPAQ = async (req, res) => {
 	const { appealReference } = req.params;
 
