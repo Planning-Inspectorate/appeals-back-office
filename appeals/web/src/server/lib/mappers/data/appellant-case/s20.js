@@ -10,12 +10,14 @@ import { mapPlanningObligation } from './submappers/planning-obligation.js';
 import { mapProcedurePreferenceDetails } from './submappers/procedure-preference-details.js';
 import { mapProcedurePreferenceDuration } from './submappers/procedure-preference-duration.js';
 import { mapProcedurePreference } from './submappers/procedure-preference.js';
+import { mapSiteArea } from './submappers/site-area.js';
 import { mapStatusPlanningObligation } from './submappers/status-planning-obligation.js';
 import { mapSupportingDocuments } from './submappers/supporting-documents.js';
 
 /** @type {Record<string, import('./mapper.js').SubMapper>} */
 export const submaps = {
 	...hasSubmaps,
+	siteArea: mapSiteArea,
 	inquiryNumberOfWitnesses: mapInquiryNumberOfWitnesses,
 	procedurePreferenceDuration: mapProcedurePreferenceDuration,
 	procedurePreference: mapProcedurePreference,
