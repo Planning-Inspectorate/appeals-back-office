@@ -268,18 +268,26 @@ export class Page {
 		this.basePageElements.panelBody().should('contain.text', body);
 	}
 
-	validateBannerMessage(title, message) {
+	validateBannerMessage(title, message, expectToFind = true) {
 		cy.get('.govuk-notification-banner').then(($banners) => {
 			const matchingBanners = $banners.filter((index, banner) => {
 				const bannerText = Cypress.$(banner).text().trim();
 				return bannerText.includes(title) && bannerText.includes(message);
 			});
 
-			expect(
-				matchingBanners.length,
-				`Expected to find a banner with title "${title}" and message "${message}"`
-			).to.be.at.eq(1);
+			const errorText = expectToFind
+				? `Expected to find a banner with title "${title}" and message "${message}"`
+				: `Found a banner with title "${title}" and message "${message}, but should not have"`;
+
+			const expectedLength = expectToFind ? 1 : 0;
+
+			expect(matchingBanners.length, errorText).to.eq(expectedLength);
 		});
+	}
+
+	validateBannerExists(expectToFind) {
+		const state = expectToFind ? 'exist' : 'not.exist';
+		cy.get('.govuk-notification-banner__heading').should(state);
 	}
 
 	validatePublishBannerMessage(successMessage) {
@@ -451,5 +459,10 @@ export class Page {
 				cy.log('Selected value:', selectedValue);
 				expect(selectedValue).to.eq(value.toLowerCase());
 			});
+  }
+  
+	verifyLinkExists(linkText, bool) {
+		const state = bool ? 'exist' : 'not.exist';
+		this.basePageElements.linkByText(linkText).should(state);
 	}
 }
