@@ -1,4 +1,5 @@
 import featureFlags from '#common/feature-flags.js';
+import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { removeSummaryListActions } from '#lib/mappers/index.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
@@ -62,12 +63,28 @@ const displayProcedureChangeLink = (appealDetails) => {
 
 	const areMultipleFlagsActive = activeFlags.filter((x) => x === true).length >= 2;
 
-	const { representationStatus } = appealDetails.documentationSummary?.lpaStatement ?? {};
+	const { representationStatus: lpaStatementrepresentationStatus } =
+		appealDetails.documentationSummary?.lpaStatement ?? {};
+	const { representationStatus: ipCommentsrepresentationStatus } =
+		appealDetails.documentationSummary?.ipComments ?? {};
+	const lpaStatementDueDateElapsed = appealDetails.appealTimetable?.lpaStatementDueDate
+		? dateIsInThePast(
+				dateISOStringToDayMonthYearHourMinute(appealDetails.appealTimetable.lpaStatementDueDate)
+		  )
+		: false;
+	const ipCommentsDueDateElapsed = appealDetails.appealTimetable?.ipCommentsDueDate
+		? dateIsInThePast(
+				dateISOStringToDayMonthYearHourMinute(appealDetails.appealTimetable.ipCommentsDueDate)
+		  )
+		: false;
 
 	if (
 		appealDetails.appealType !== APPEAL_TYPE.S78 ||
 		!areMultipleFlagsActive ||
-		representationStatus === APPEAL_REPRESENTATION_STATUS.PUBLISHED
+		lpaStatementrepresentationStatus === APPEAL_REPRESENTATION_STATUS.PUBLISHED ||
+		ipCommentsrepresentationStatus === APPEAL_REPRESENTATION_STATUS.PUBLISHED ||
+		lpaStatementDueDateElapsed ||
+		ipCommentsDueDateElapsed
 	)
 		return false;
 
