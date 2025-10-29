@@ -20,7 +20,6 @@ import { mapOwnersKnown } from './submappers/owners-known.js';
 import { mapRelatedAppeals } from './submappers/related-appeals.js';
 import { mapReviewOutcome } from './submappers/review-outcome.js';
 import { mapSiteAddress } from './submappers/site-address.js';
-import { mapSiteArea } from './submappers/site-area.js';
 import { mapSiteOwnership } from './submappers/site-ownership.js';
 import { mapStatementCommonGroundDocument } from './submappers/statement-common-ground.js';
 
@@ -28,7 +27,6 @@ export const submaps = {
 	appellant: mapAppellant,
 	agent: mapAgent,
 	siteAddress: mapSiteAddress,
-	siteArea: mapSiteArea,
 	inGreenBelt: mapInGreenBelt,
 	siteOwnership: mapSiteOwnership,
 	ownersKnown: mapOwnersKnown,
