@@ -89,40 +89,6 @@ describe('Assign user to case', () => {
 		});
 	});
 
-	it.skip('Case officer should be able to remove assigned user', () => {
-		cy.createCase().then((caseObj) => {
-			appeal = caseObj;
-			cy.visit(urlPaths.appealsList);
-			listCasesPage.clickAppealByRef(caseObj);
-			caseDetailsPage.clickAssignCaseOfficer();
-			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
-			caseDetailsPage.clickLinkByText('Remove');
-			caseDetailsPage.selectRadioButtonByValue('Yes');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.selectRadioButtonByValue('No');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.validateBannerMessage('Case officer has been removed');
-			caseDetailsPage.verifyValueIsBlank(15);
-		});
-	});
-
-	it.skip('Inspector should be able to remove assigned user', () => {
-		cy.createCase().then((caseObj) => {
-			appeal = caseObj;
-			cy.visit(urlPaths.appealsList);
-			listCasesPage.clickAppealByRef(caseObj);
-			caseDetailsPage.clickAssignInspector();
-			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
-			caseDetailsPage.clickLinkByText('Remove');
-			caseDetailsPage.selectRadioButtonByValue('Yes');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.selectRadioButtonByValue('No');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.validateBannerMessage('Inspector has been removed');
-			caseDetailsPage.verifyValueIsBlank(16);
-		});
-	});
-
 	viewports.forEach((viewport) => {
 		it(`should wrap service header text properly on small screens - ${viewport.name}`, () => {
 			cy.viewport(viewport.name);
