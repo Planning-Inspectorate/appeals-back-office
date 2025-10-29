@@ -5,6 +5,7 @@ import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { happyPathHelper } from '../../support/happyPathHelper';
+import { urlPaths } from '../../support/urlPaths';
 
 const listCasesPage = new ListCasesPage();
 const caseDetailsPage = new CaseDetailsPage();
@@ -35,9 +36,9 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		cy.login(users.appeals.caseAdmin);
 		cy.intercept('POST', '**/timetable/edit/check', (req) => {
 			req.continue((res) => {
-				console.log('📤 Request body:', req.body);
-				console.log('❌ Response body:', res.body);
-				console.log('🔁 Status code:', res.statusCode);
+				cy.log('📤 Request body:', req.body);
+				cy.log('❌ Response body:', res.body);
+				cy.log('🔁 Status code:', res.statusCode);
 			});
 		}).as('timetableCheck');
 	});
@@ -48,21 +49,20 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it(
-		'should change due dates when case status is lpa_questionnaire',
-		{ retries: { runMode: 2, openMode: 0 } },
-		() => {
-			cy.createCase({
-				caseType: 'W'
-			}).then((caseObj) => {
-				appeal = caseObj;
-				happyPathHelper.assignCaseOfficer(caseObj);
-				happyPathHelper.reviewAppellantCase(caseObj);
-				happyPathHelper.startS78Case(caseObj, 'written');
-				verifyDateChanges(0);
-			});
-		}
-	);
+	it('should change due dates when case status is lpa_questionnaire', () => {
+		cy.createCase({
+			caseType: 'W'
+		}).then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startS78Case(caseObj, 'written');
+			cy.clearCookies();
+			cy.visit(urlPaths.appealsList);
+			listCasesPage.clickAppealByRef(caseObj);
+			verifyDateChanges(0);
+		});
+	});
 
 	it('should not accept current date when case status is lpa_questionnaire', () => {
 		cy.createCase({
@@ -101,18 +101,21 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 	});
 
 	// tests are flaky error only caused with automation
-	it.only('should move case status to statements and update available due dates', () => {
+	it('should move case status to statements and update available due dates', () => {
 		cy.clearAllSessionStorage();
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
 			appeal = caseObj;
+			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startS78Case(caseObj, 'written');
-			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.reviewS78Lpaq(caseObj);
 			timetableItems[0].editable = false; // lpa questionare date is not editable in statements status
+			cy.clearCookies();
+			cy.visit(urlPaths.appealsList);
+			listCasesPage.clickAppealByRef(caseObj);
 			verifyDateChanges(1);
 		});
 	});
@@ -158,7 +161,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 	});
 
 	// tests are flaky error only caused with automation
-	it.only('should move case status to final_comments and update available due dates', () => {
+	it('should move case status to final_comments and update available due dates', () => {
 		cy.clearAllSessionStorage();
 		cy.createCase({
 			caseType: 'W'
@@ -186,6 +189,9 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 			timetableItems[0].editable = false; // lpa questionare date is not editable in statements status
 			timetableItems[1].editable = false; // statement due is not editbale
 			timetableItems[2].editable = false; //
+			cy.clearCookies();
+			cy.visit(urlPaths.appealsList);
+			listCasesPage.clickAppealByRef(caseObj);
 			verifyDateChanges(7);
 		});
 	});
