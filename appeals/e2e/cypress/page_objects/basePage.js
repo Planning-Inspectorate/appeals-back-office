@@ -456,11 +456,11 @@ export class Page {
 		cy.get(`${this.selectors.radio} input:checked`)
 			.invoke('val')
 			.then((selectedValue) => {
-				cy.log('Selected value:', selectedValue);
+				cy.log('Selected radio value:', selectedValue);
 				expect(selectedValue).to.eq(value.toLowerCase());
 			});
-  }
-  
+	}
+
 	verifyLinkExists(linkText, bool) {
 		const state = bool ? 'exist' : 'not.exist';
 		this.basePageElements.linkByText(linkText).should(state);
