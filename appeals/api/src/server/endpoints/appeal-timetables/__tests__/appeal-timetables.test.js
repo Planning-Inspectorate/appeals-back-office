@@ -294,8 +294,10 @@ describe('appeal timetables routes', () => {
 			);
 
 			test('updates a full planning appeal timetable when appeal is a linked lead appeal', async () => {
+				databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+				const child = { ...fullPlanningAppeal, id: 4 };
 				const appealWithTimetable = structuredClone(fullPlanningAppealWithTimetable);
-				appealWithTimetable.childAppeals = [{ child: { ...fullPlanningAppeal, id: 2 } }];
+				appealWithTimetable.childAppeals = [{ child }];
 				const requestBody = structuredClone(householdAppealRequestBody);
 				const responseBody = structuredClone(householdAppealResponseBody);
 				// @ts-ignore
@@ -324,7 +326,18 @@ describe('appeal timetables routes', () => {
 				expect(databaseConnector.appealTimetable.update).toHaveBeenNthCalledWith(2, {
 					data: responseBody,
 					where: {
-						appealId: appealWithTimetable.id
+						appealId: child.id
+					}
+				});
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: id,
+						details: 'Timetable updated:<br>• LPA questionnaire due date changed to 10 June 2024',
+						loggedAt: expect.any(Date),
+						userId: 1
 					}
 				});
 

@@ -1,3 +1,4 @@
+import appealRepository from '#repositories/appeal.repository.js';
 import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
@@ -143,8 +144,11 @@ const updateAppealTimetableById = async (req, res) => {
 		if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) && appeal.childAppeals?.length) {
 			await Promise.all(
 				appeal.childAppeals.map(async (childAppeal) => {
-					if (childAppeal.child) {
-						return updateAppealTimetable(childAppeal.child, body, notifyClient, azureAdUserId);
+					const child =
+						childAppeal.child ||
+						(await appealRepository.getAppealById(Number(childAppeal.childId)));
+					if (child) {
+						return updateAppealTimetable(child, body, notifyClient, azureAdUserId, true);
 					}
 				})
 			);
