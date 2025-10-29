@@ -8,6 +8,7 @@ import {
 	simulateInquiryElapsed,
 	simulateProofOfEvidenceElapsed,
 	simulateReviewLPAQ,
+	simulateReviewLpaStatement,
 	simulateSiteVisitElapsed,
 	simulateStartAppeal,
 	simulateStatementsElapsed
@@ -198,6 +199,26 @@ router.post(
 		#swagger.responses[400] = {}
 	 */
 	asyncHandler(simulateReviewLPAQ)
+);
+
+router.post(
+	'/:appealReference/review-lpa-statement',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/review-lpa-statement'
+		#swagger.description = 'A test endpoint to simulate the completion of a review lpa statement event'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {
+			description: 'Get a single representation for an appeal',
+			schema: { $ref: '#/components/schemas/RepResponse' }
+		}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(simulateReviewLpaStatement)
 );
 
 export { router as testUtilsRoutes };

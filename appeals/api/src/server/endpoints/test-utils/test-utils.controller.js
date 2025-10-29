@@ -1,10 +1,14 @@
 import { startAppeal } from '#endpoints/appeal-timetables/appeal-timetables.controller.js';
 import { updateCompletedEvents } from '#endpoints/appeals/appeals.service.js';
 import { updateLPAQuestionnaireById } from '#endpoints/lpa-questionnaires/lpa-questionnaires.controller.js';
+import { updateRepresentation } from '#endpoints/representations/representations.controller.js';
 import { getAppealNotifications } from '#repositories/appeal-notification.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import { databaseConnector } from '#utils/database-connector.js';
-import { APPEAL_START_RANGE } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_START_RANGE
+} from '@pins/appeals/constants/common.js';
 import { AUDIT_TRAIL_SYSTEM_UUID } from '@pins/appeals/constants/support.js';
 import { sub } from 'date-fns';
 
@@ -359,4 +363,29 @@ export const simulateReviewLPAQ = async (req, res) => {
 	req.validationOutcome = validationOutcome;
 	req.params = { lpaQuestionnaireId: String(appeal.lpaQuestionnaire.id) };
 	return updateLPAQuestionnaireById(req, res);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
+export const simulateReviewLpaStatement = async (req, res) => {
+	const { appealReference } = req.params;
+	const appealId = Number(appealReference) - APPEAL_START_RANGE;
+	const representation = await databaseConnector.representation.findFirst({
+		where: {
+			appealId,
+			representationType: 'lpa_statement',
+			status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+		},
+		orderBy: { dateCreated: 'desc' }
+	});
+
+	if (!representation) return res.status(400).send(false);
+
+	req.params = { appealId: String(appealId), repId: String(representation.id) };
+	req.body = { status: APPEAL_REPRESENTATION_STATUS.VALID };
+
+	return await updateRepresentation(req, res);
 };
