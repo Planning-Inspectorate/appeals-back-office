@@ -744,6 +744,17 @@ function generateCaseTypeSpecificComponents(
 			} else {
 				throw new Error('Feature flag inactive for CAS adverts');
 			}
+		case APPEAL_TYPE.ADVERTISEMENT:
+			if (isFeatureActive(FEATURE_FLAG_NAMES.ADVERTISEMENT)) {
+				return generateCASAdvertComponents(
+					appealDetails,
+					appellantCaseData,
+					mappedAppellantCaseData,
+					userHasUpdateCasePermission
+				);
+			} else {
+				throw new Error('Feature flag inactive for adverts');
+			}
 		case APPEAL_TYPE.ENFORCEMENT_NOTICE:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
 				return generateEnforcementNoticeComponents(

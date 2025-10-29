@@ -29,6 +29,7 @@ import { submaps as s78Submaps } from './s78.js';
 const submaps = {
 	[APPEAL_TYPE.HOUSEHOLDER]: hasSubmaps,
 	[APPEAL_TYPE.CAS_ADVERTISEMENT]: casAdvertsSubMaps,
+	[APPEAL_TYPE.ADVERTISEMENT]: casAdvertsSubMaps,
 	[APPEAL_TYPE.CAS_PLANNING]: casPlanningSubMaps,
 	[APPEAL_TYPE.S78]: s78Submaps,
 	[APPEAL_TYPE.PLANNED_LISTED_BUILDING]: s20Submaps
