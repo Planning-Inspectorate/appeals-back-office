@@ -90,6 +90,7 @@ module "app_web" {
     FEATURE_FLAG_S20                      = var.apps_config.featureFlags.featureFlagS20
     FEATURE_FLAG_CAS                      = var.apps_config.featureFlags.featureFlagCAS
     FEATURE_FLAG_CAS_ADVERT               = var.apps_config.featureFlags.featureFlagCasAdvert
+    FEATURE_FLAG_ADVERTISEMENT            = var.apps_config.featureFlags.featureFlagAdvertisement
     FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT = var.apps_config.featureFlags.featureFlagSimplifyTeamAssignment
     FEATURE_FLAG_CHANGE_APPEAL_TYPE       = var.apps_config.featureFlags.featureFlagChangeAppealType
     FEATURE_FLAG_PDF_DOWNLOAD             = var.apps_config.featureFlags.featureFlagPdfDownload

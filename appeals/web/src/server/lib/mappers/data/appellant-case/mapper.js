@@ -27,6 +27,7 @@ const submaps = {
 	[APPEAL_TYPE.PLANNED_LISTED_BUILDING]: s20Submaps,
 	[APPEAL_TYPE.CAS_PLANNING]: casSubmaps,
 	[APPEAL_TYPE.CAS_ADVERTISEMENT]: casAdvertSubmaps,
+	[APPEAL_TYPE.ADVERTISEMENT]: casAdvertSubmaps,
 	[APPEAL_TYPE.ENFORCEMENT_NOTICE]: enforcementNoticeSubmaps
 };
 

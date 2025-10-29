@@ -313,6 +313,26 @@ export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
 				wasApplicationRefusedDueToHighwayOrTraffic: randomBool(),
 				didAppellantSubmitCompletePhotosAndPlans: randomBool()
 			};
+		case APPEAL_CASE_TYPE.H:
+			return {
+				siteSafetyDetails: 'There may be no mobile reception at the site',
+				siteAccessDetails:
+					'There is a tall hedge around the site which obstructs the view of the site',
+				inConservationArea: true,
+				isCorrectAppealType: true,
+				lpaStatement: null,
+				newConditionDetails: null,
+				lpaCostsAppliedFor: false,
+				lpaqCreatedDate: new Date(2023, 4, 9),
+				lpaQuestionnaireSubmittedDate: new Date(2023, 4, 9),
+				affectsScheduledMonument: randomBool(),
+				hasProtectedSpecies: randomBool(),
+				isAonbNationalLandscape: randomBool(),
+				isGreenBelt: randomBool(),
+				isSiteInAreaOfSpecialControlAdverts: randomBool(),
+				wasApplicationRefusedDueToHighwayOrTraffic: randomBool(),
+				didAppellantSubmitCompletePhotosAndPlans: randomBool()
+			};
 		default:
 			return;
 	}
@@ -455,6 +475,22 @@ export const appellantCaseList = {
 		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.MINOR_COMMERCIAL_DEVELOPMENT
 	},
 	[APPEAL_CASE_TYPE.ZA]: {
+		siteAreaSquareMetres: 30.9,
+		floorSpaceSquareMetres: 9.7,
+		ownsAllLand: true,
+		ownsSomeLand: false,
+		hasAdvertisedAppeal: false,
+		originalDevelopmentDescription: 'lorem ipsum',
+		changedDevelopmentDescription: false,
+		isGreenBelt: randomBool(),
+		applicationDecisionDate: sub(new Date(), { months: 1 }),
+		applicationDate: sub(new Date(), { weeks: 6 }),
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.ADVERTISEMENT,
+		highwayLand: randomBool(),
+		advertInPosition: randomBool(),
+		landownerPermission: randomBool()
+	},
+	[APPEAL_CASE_TYPE.H]: {
 		siteAreaSquareMetres: 30.9,
 		floorSpaceSquareMetres: 9.7,
 		ownsAllLand: true,
