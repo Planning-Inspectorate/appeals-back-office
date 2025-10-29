@@ -472,9 +472,16 @@ const getStartCaseNotifyPreviews = async (
  * @param {object} body
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
+ * @param {boolean} [isChildAppeal]
  * @returns {Promise<void>}
  */
-const updateAppealTimetable = async (appeal, body, notifyClient, azureAdUserId) => {
+const updateAppealTimetable = async (
+	appeal,
+	body,
+	notifyClient,
+	azureAdUserId,
+	isChildAppeal = false
+) => {
 	const processedBody = Object.fromEntries(
 		Object.entries(body).map(([item, value]) => [
 			item,
@@ -489,30 +496,34 @@ const updateAppealTimetable = async (appeal, body, notifyClient, azureAdUserId) 
 		// @ts-ignore
 		processedBody
 	);
-	let details = 'Timetable updated:';
-	if (result) {
-		Object.keys(processedBody).map(async (key) => {
-			details +=
-				'<br>' +
-				'• ' +
-				stringTokenReplacement(AUDIT_TRAIL_TIMETABLE_DUE_DATE_CHANGED, [
-					// @ts-ignore
-					dueDateToAppealTimetableTextMapper[key],
-					dateISOStringToDisplayDate(processedBody[key])
-				]);
-		});
 
+	if (result) {
 		await updatePersonalList(appeal.id);
 
-		await createAuditTrail({
-			appealId: appeal.id,
-			azureAdUserId,
-			details
-		});
+		if (!isChildAppeal) {
+			let details = 'Timetable updated:';
+			Object.keys(processedBody).map(async (key) => {
+				details +=
+					'<br>' +
+					'• ' +
+					stringTokenReplacement(AUDIT_TRAIL_TIMETABLE_DUE_DATE_CHANGED, [
+						// @ts-ignore
+						dueDateToAppealTimetableTextMapper[key],
+						dateISOStringToDisplayDate(processedBody[key])
+					]);
+			});
 
-		if (shouldSendNotify(appeal.appealType?.key, appeal.procedureType?.key)) {
-			await sendTimetableUpdateNotify(appeal, processedBody, notifyClient, azureAdUserId);
+			await createAuditTrail({
+				appealId: appeal.id,
+				azureAdUserId,
+				details
+			});
+
+			if (shouldSendNotify(appeal.appealType?.key, appeal.procedureType?.key)) {
+				await sendTimetableUpdateNotify(appeal, processedBody, notifyClient, azureAdUserId);
+			}
 		}
+
 		await broadcasters.broadcastAppeal(appeal.id);
 	}
 };
