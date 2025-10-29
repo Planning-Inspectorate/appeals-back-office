@@ -1,6 +1,6 @@
-export function formatBulletedList(list) {
+export function formatBulletedList(list, fallbackText = '') {
 	if (!list || list.length === 0) {
-		return '';
+		return fallbackText;
 	}
 	if (list.length === 1) {
 		return list[0];

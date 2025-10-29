@@ -3868,7 +3868,7 @@ describe('appeal-details', () => {
 				it('should render a "Timetable" with all rows with the Start date and IP comments due date without an action link', async () => {
 					const testDocumentationSummary = {
 						...appealDataFullPlanning.documentationSummary,
-						lpaQuestionnaire: { status: 'received' },
+						lpaQuestionnaire: { status: 'complete' },
 						ipComments: { counts: { published: 1 } }
 					};
 

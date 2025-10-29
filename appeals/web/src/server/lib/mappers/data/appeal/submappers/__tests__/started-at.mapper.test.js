@@ -86,7 +86,7 @@ describe('started-at.mapper', () => {
 
 	it('should contain a start date and no action link text', () => {
 		data.appealDetails.startedAt = '2025-01-01';
-		data.appealDetails.documentationSummary.lpaQuestionnaire.status = 'received';
+		data.appealDetails.documentationSummary.lpaQuestionnaire.status = 'complete';
 		const mappedData = mapStartedAt(data);
 		expect(mappedData).toEqual({
 			display: {

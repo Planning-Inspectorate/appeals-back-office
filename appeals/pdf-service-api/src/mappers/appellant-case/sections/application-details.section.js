@@ -1,16 +1,10 @@
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { formatDate } from '../../../lib/nunjucks-filters/format-date.js';
-import { formatDocumentData, formatSentenceCase } from '../../../lib/nunjucks-filters/index.js';
-
-function formatOtherAppeals(otherAppeals) {
-	if (!otherAppeals || otherAppeals.length < 1) return 'No';
-
-	return otherAppeals
-		.map((otherAppeal) => {
-			`<li>${appealShortReference(otherAppeal.appealReference)}</li>`;
-		})
-		.join();
-}
+import {
+	formatBulletedList,
+	formatDocumentData,
+	formatSentenceCase
+} from '../../../lib/nunjucks-filters/index.js';
 
 // implements functionality from web/src/server/lib/appeals-formatter
 function appealShortReference(reference) {
@@ -34,6 +28,9 @@ export function applicationDetailsSection(templateData) {
 
 	const isHASAppeal = appealType === APPEAL_TYPE.HOUSEHOLDER;
 
+	const otherAppealsList =
+		otherAppeals?.map((otherAppeal) => appealShortReference(otherAppeal.appealReference)) || [];
+
 	return {
 		heading: 'Application details',
 		items: [
@@ -44,7 +41,7 @@ export function applicationDetailsSection(templateData) {
 			},
 			{
 				key: 'Are there other appeals linked to your development?',
-				html: formatOtherAppeals(otherAppeals)
+				html: formatBulletedList(otherAppealsList, 'No')
 			},
 			// Development type will not appear for householder
 			// Decision letter appears here for Householder, for other appeal types appears in upload documents

@@ -9,6 +9,8 @@ export const mapStartedAt = ({ appealDetails, currentRoute, userHasUpdateCasePer
 		return { id, display: {} };
 	}
 
+	const lpaQuestionnaireStatus = appealDetails.documentationSummary.lpaQuestionnaire?.status || '';
+
 	return textSummaryListItem({
 		id,
 		text: 'Start date',
@@ -18,11 +20,10 @@ export const mapStartedAt = ({ appealDetails, currentRoute, userHasUpdateCasePer
 			: `${currentRoute}/start-case/add?backUrl=${currentRoute}`,
 		editable: !isChildAppeal(appealDetails) && Boolean(userHasUpdateCasePermission),
 		classes: 'appeal-start-date',
-		actionText:
-			appealDetails.documentationSummary.lpaQuestionnaire?.status !== 'not_received'
-				? ''
-				: appealDetails.startedAt
-				? 'Change'
-				: 'Start'
+		actionText: !['not_received', 'received'].includes(lpaQuestionnaireStatus)
+			? ''
+			: appealDetails.startedAt
+			? 'Change'
+			: 'Start'
 	});
 };
