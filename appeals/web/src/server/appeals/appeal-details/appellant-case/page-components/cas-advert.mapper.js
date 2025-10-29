@@ -34,14 +34,6 @@ export function generateCASAdvertComponents(
 	if (siteDetailsComponentIndex !== -1) {
 		const rows = pageComponents[siteDetailsComponentIndex].parameters.rows;
 
-		// remove the site area row
-		const siteAreaIndex = rows.findIndex(
-			(/** @type {{ classes: string} }} */ row) => row.classes === 'appeal-site-area'
-		);
-		if (siteAreaIndex !== -1) {
-			rows.splice(siteAreaIndex, 1);
-		}
-
 		// add the highway land row and advertisementInPosition row
 		const appealSiteAddressIndex = rows.findIndex(
 			(/** @type {{ classes: string; }} */ row) => row.classes === 'appeal-site-address'
