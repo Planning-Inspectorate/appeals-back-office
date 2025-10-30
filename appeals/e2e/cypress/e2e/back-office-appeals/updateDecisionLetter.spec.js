@@ -26,9 +26,10 @@ describe('Update Decision Letter', () => {
 	});
 
 	let sampleFiles = caseDetailsPage.sampleFiles;
-	it('Update Decision Letter', () => {
-		cy.createCase().then((caseObj) => {
-			appeal = caseObj;
+	it.only('Update Decision Letter', () => {
+		cy.createCase({
+			caseType: 'Y'
+		}).then((caseObj) => {
 			cy.addLpaqSubmissionToCase(caseObj);
 
 			// happyPathHelper.assignCaseOfficer(caseObj);
@@ -59,7 +60,7 @@ describe('Update Decision Letter', () => {
 			// caseDetailsPage.checkStatusOfCase('Complete', 0);
 			// caseDetailsPage.checkDecisionOutcome('Allowed');
 
-			cy.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'ISSUE_DECISION');
+			cy.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'ISSUE_DECISION', 'S20');
 
 			//Change decision letter
 			caseDetailsPage.clickViewDecisionLetter('View decision');
@@ -105,7 +106,7 @@ describe('Update Decision Letter', () => {
 		});
 	});
 
-	it.only('Update Decision Letter - S78', () => {
+	it('Update Decision Letter - S78', () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
