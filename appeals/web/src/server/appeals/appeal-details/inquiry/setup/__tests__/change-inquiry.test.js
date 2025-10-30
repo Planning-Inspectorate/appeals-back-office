@@ -876,8 +876,12 @@ describe('change inquiry', () => {
 			beforeEach(async () => {
 				nock('http://test/')
 					.get(`/appeals/${appealId}`)
-					.twice()
-					.reply(200, { ...appealWithInquiry, appealId });
+					.times(3)
+					.reply(200, {
+						...appealWithInquiry,
+						appealId,
+						inquiry: { ...appealWithInquiry.inquiry, address: null }
+					});
 
 				// set session data with post requests to previous pages
 				await request
@@ -916,7 +920,7 @@ describe('change inquiry', () => {
 				).toEqual('6 days');
 			});
 
-			it('should render the correct yes or no answer', () => {
+			it('should render the yes to address known', () => {
 				expect(
 					pageHtml.querySelectorAll('dd.govuk-summary-list__value')?.[4]?.innerHTML.trim()
 				).toBe('Yes');

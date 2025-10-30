@@ -398,6 +398,12 @@ function mapRequiredActionToPersonalListActionHtml(
 				`/appeals-service/appeal-details/${appealId}/share`
 			)}">Progress to awaiting hearing<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
+		case 'addInquiryAddress': {
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/inquiry/change/address-details`
+			)}">Add inquiry address<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+		}
 		case 'progressFromStatements': {
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 				request,
@@ -491,6 +497,12 @@ function mapRequiredActionToPersonalListActionHtml(
 				request,
 				`/appeals-service/appeal-details/${appealId}/residential-units/new`
 			)}">Add number of residential units<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+		}
+		case 'progressToInquiry': {
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/share`
+			)}">Progress to inquiry<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'progressToProofOfEvidenceAndWitnesses': {
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(

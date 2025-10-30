@@ -206,7 +206,9 @@ function formatAppealTimetable(appeal) {
 			lpaStatementDueDate: appeal.appealTimetable.lpaStatementDueDate?.toISOString() || null,
 			finalCommentsDueDate: appeal.appealTimetable.finalCommentsDueDate?.toISOString() || null,
 			s106ObligationDueDate: appeal.appealTimetable.s106ObligationDueDate?.toISOString() || null,
-			issueDeterminationDate: appeal.appealTimetable.issueDeterminationDate?.toISOString() || null
+			issueDeterminationDate: appeal.appealTimetable.issueDeterminationDate?.toISOString() || null,
+			proofOfEvidenceAndWitnessesDueDate:
+				appeal.appealTimetable.proofOfEvidenceAndWitnessesDueDate?.toISOString() || null
 		})
 	};
 }
