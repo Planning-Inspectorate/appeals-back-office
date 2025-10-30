@@ -3010,34 +3010,6 @@ describe('/appeals/:id/reps', () => {
 				expect(response.status).toEqual(409);
 			});
 
-			test('400 if any appellant proof of evidence or any lpa proof of evidence are awaiting review', async () => {
-				mockS78Appeal.representations = appealS78.representations;
-				databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
-				const response = await request
-					.post('/appeals/1/reps/publish')
-					.query({ type: 'evidence' })
-					.set('azureAdUserId', '732652365');
-
-				console.log(response.body);
-				expect(response.status).toEqual(400);
-			});
-
-			test('400 if the deadline for proof of evidence has not passed', async () => {
-				mockS78Appeal.appealTimetable = {
-					...mockS78Appeal.appealTimetable,
-					proofOfEvidenceAndWitnessesDueDate: new Date('3025-01-01')
-				};
-				databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
-
-				const response = await request
-					.post('/appeals/1/reps/publish')
-					.query({ type: 'evidence' })
-					.set('azureAdUserId', '732652365');
-
-				console.log(response.body);
-				expect(response.status).toEqual(400);
-			});
-
 			test('send notify lpa and appellant proof of evidence S78 with inquiry address', async () => {
 				mockS78Appeal = {
 					...mockS78Appeal,

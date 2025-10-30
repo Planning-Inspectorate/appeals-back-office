@@ -352,7 +352,8 @@ export const ERROR_REP_OUTCOME_MUST_BE_ONE_OF = `The representation status must 
 export const ERROR_REP_ONLY_STATEMENT_INCOMPLETE = 'Only LPA statements can be set to incomplete';
 export const ERROR_REP_PUBLISH_USING_ENDPOINT =
 	'LPA statements and final comments can only be published using the dedicated endpoint';
-export const ERROR_REP_PUBLISH_BLOCKED = 'Publishing of LPA statements and ip comments is blocked';
+export const ERROR_REP_PUBLISH_BLOCKED =
+	'Publishing of LPA statements, ip comments and proof of evidence is blocked';
 export const ERROR_LINKING_APPEALS =
 	'The appeals cannot be linked as the lead or child are already linked to other appeals.';
 export const ERROR_INVALID_EMAIL = 'must be a valid email';
