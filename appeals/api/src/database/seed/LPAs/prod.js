@@ -975,7 +975,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'M9496',
 		name: 'Peak District National Park Authority',
-		email: 'legal@peakdistrict.gov.uk',
+		email: 'planningappeals@peakdistrict.gov.uk',
 		teamId: 17 // North3
 	},
 	{
@@ -1197,7 +1197,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'F3545',
 		name: 'West Suffolk',
-		email: 'planning.helpdesk@westsuffolk.gov.uk',
+		email: 'planning.technical@westsuffolk.gov.uk',
 		teamId: 14 // East4
 	},
 	{
