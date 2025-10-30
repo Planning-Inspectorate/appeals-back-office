@@ -286,7 +286,7 @@ export const casPlanningAppeal = {
 	...householdAppeal,
 	id: 7,
 	appealType: {
-		id: 13,
+		id: 14,
 		type: 'CAS planning',
 		key: 'ZP'
 	},
@@ -295,6 +295,49 @@ export const casPlanningAppeal = {
 		hasDesignAndAccessStatement: true,
 		hasNewPlansOrDrawings: true
 	}
+};
+
+export const casAdvertAppeal = {
+	...householdAppeal,
+	id: 7,
+	appealType: {
+		id: 13,
+		type: 'CAS advert',
+		key: 'ZA'
+	},
+	appellantCase: {
+		...householdAppeal.appellantCase,
+		hasDesignAndAccessStatement: true,
+		hasNewPlansOrDrawings: true
+	}
+};
+
+export const casAdvertAppealAppellantCaseIncomplete = {
+	...casAdvertAppeal,
+	appellantCase: {
+		...casAdvertAppeal.appellantCase,
+		...incompleteAppellantCaseOutcome
+	},
+	id: 8,
+	caseExtensionDate: new Date(2099, 6, 14)
+};
+
+export const casAdvertAppealAppellantCaseInvalid = {
+	...casAdvertAppeal,
+	appellantCase: {
+		...casAdvertAppeal.appellantCase,
+		...invalidAppellantCaseOutcome
+	},
+	id: 8
+};
+
+export const casAdvertAppealAppellantCaseValid = {
+	...casAdvertAppeal,
+	appellantCase: {
+		...casAdvertAppeal.appellantCase,
+		...validAppellantCaseOutcome
+	},
+	id: 8
 };
 
 export const fullPlanningAppeal = {
@@ -508,6 +551,21 @@ export const casPlanningAppealAppellantCaseInvalid = {
 };
 
 export const casPlanningAppealLPAQuestionnaireIncomplete = {
+	...casPlanningAppeal,
+	appealStatus: [
+		{
+			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+			valid: true
+		}
+	],
+	lpaQuestionnaire: {
+		...casPlanningAppeal.lpaQuestionnaire,
+		...incompleteLPAQuestionnaireOutcome
+	},
+	id: 4
+};
+
+export const casAdvertAppealLPAQuestionnaireIncomplete = {
 	...casPlanningAppeal,
 	appealStatus: [
 		{

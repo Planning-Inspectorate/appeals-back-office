@@ -22,6 +22,7 @@ import { formatAddressSingleLine } from '../../addresses/addresses.formatter.js'
 
 import {
 	appealS78,
+	casAdvertAppeal as casAdvertAppealData,
 	casPlanningAppeal as casPlanningAppealData,
 	fullPlanningAppeal as fullPlanningAppealData,
 	householdAppeal as householdAppealData,
@@ -390,6 +391,7 @@ describe('site visit routes', () => {
 			describe.each([
 				['householdAppeal', householdAppealData],
 				['casPlanningAppeal', casPlanningAppealData],
+				['casAdvertAppeal', casAdvertAppealData],
 				['fullPlanningAppeal', fullPlanningAppealData],
 				['listedBuildingAppeal', listedBuildingAppealData]
 			])('create site visit for appeal type %s', (_, appeal) => {
@@ -1578,6 +1580,7 @@ describe('site visit routes', () => {
 			describe.each([
 				['householdAppeal', householdAppealData],
 				['casPlanningAppeal', casPlanningAppealData],
+				['casAdvertAppeal', casAdvertAppealData],
 				['fullPlanningAppeal', fullPlanningAppealData],
 				['listedBuildingAppeal', listedBuildingAppealData]
 			])('site visit updates for appeal type: %s', (_, appeal) => {

@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { request } from '#tests/../app-test.js';
 import {
+	casAdvertAppeal,
 	casPlanningAppeal,
 	fullPlanningAppeal,
 	householdAppeal,
@@ -222,6 +223,7 @@ describe('appeal change type resubmit routes', () => {
 		test.each([
 			['household', householdAppeal, 13],
 			['casPlanning', casPlanningAppeal, 1],
+			['casAdvert', casAdvertAppeal, 1],
 			['fullPlanning', fullPlanningAppeal, 1],
 			['listedBuilding', listedBuildingAppeal, 1]
 		])('returns 200 when appeal status is correct: %s', async (_, appeal, newType) => {

@@ -1,5 +1,7 @@
 // @ts-nocheck
 import {
+	casAdvertAppeal,
+	casAdvertAppealLPAQuestionnaireIncomplete,
 	casPlanningAppeal,
 	casPlanningAppealLPAQuestionnaireIncomplete,
 	fullPlanningAppeal,
@@ -268,6 +270,21 @@ describe('lpa questionnaires routes', () => {
 							lpa_reference: casPlanningAppeal.applicationReference,
 							appeal_reference_number: casPlanningAppeal.reference,
 							site_address: `${casPlanningAppeal.address.addressLine1}, ${casPlanningAppeal.address.addressLine2}, ${casPlanningAppeal.address.addressTown}, ${casPlanningAppeal.address.addressCounty}, ${casPlanningAppeal.address.postcode}, ${casPlanningAppeal.address.addressCountry}`,
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+						}
+					}
+				],
+				[
+					'casAdvertAppeal',
+					{
+						appeal: casAdvertAppeal,
+						templateName: 'lpaq-complete-appellant',
+						personalisation: {
+							lpa_reference: casAdvertAppeal.applicationReference,
+							appeal_reference_number: casAdvertAppeal.reference,
+							site_address: `${fullPlanningAppeal.address.addressLine1}, ${fullPlanningAppeal.address.addressLine2}, ${fullPlanningAppeal.address.addressTown}, ${fullPlanningAppeal.address.addressCounty}, ${fullPlanningAppeal.address.postcode}, ${fullPlanningAppeal.address.addressCountry}`,
+							what_happens_next:
+								'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.',
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						}
 					}
@@ -982,6 +999,7 @@ describe('lpa questionnaires routes', () => {
 			test.each([
 				['household', householdAppealLPAQuestionnaireIncomplete],
 				['cas planning', casPlanningAppealLPAQuestionnaireIncomplete],
+				['cas advert', casAdvertAppealLPAQuestionnaireIncomplete],
 				['full planning', fullPlanningAppealLPAQuestionnaireIncomplete],
 				['listed building', listedBuildingAppealLPAQuestionnaireIncomplete]
 			])(
