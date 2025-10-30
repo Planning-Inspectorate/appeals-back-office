@@ -33,17 +33,17 @@ export const changeProcedureToWritten = async (data, appealId) => {
 			});
 
 			if (data.existingAppealProcedure === 'hearing') {
-				await tx.hearing.delete({
+				await tx.hearing.deleteMany({
 					where: { appealId }
 				});
-				await tx.hearingEstimate.delete({
+				await tx.hearingEstimate.deleteMany({
 					where: { appealId }
 				});
 			} else if (data.existingAppealProcedure === 'inquiry') {
-				await tx.inquiry.delete({
+				await tx.inquiry.deleteMany({
 					where: { appealId }
 				});
-				await tx.inquiryEstimate.delete({
+				await tx.inquiryEstimate.deleteMany({
 					where: { appealId }
 				});
 			}

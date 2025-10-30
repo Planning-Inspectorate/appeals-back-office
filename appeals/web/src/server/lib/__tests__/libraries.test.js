@@ -38,6 +38,7 @@ import {
 	dateISOStringToDisplayTime24hr,
 	dateIsTodayOrInThePast,
 	dateIsValid,
+	dateStringToISOString,
 	dayMonthYearHourMinuteToDisplayDate,
 	dayMonthYearHourMinuteToISOString,
 	getDayFromISODate
@@ -213,7 +214,12 @@ describe('Libraries', () => {
 				expect(dateIsTodayOrInThePast({ year: 3000, month: 1, day: 1 })).toBe(false);
 			});
 		});
-
+		describe('dateStringToISOString', () => {
+			it('should return the correct date as IOS string when provided a DayMonthYear with single-digit day and month values', () => {
+				const convertedDate = dateStringToISOString('2023-12-01');
+				expect(convertedDate).toBe('2023-12-01T00:00:00.000Z');
+			});
+		});
 		describe('dayMonthYearHourMinuteToISOString', () => {
 			it('should return the correct date as a string in the format YYYY-MM-DD when provided a DayMonthYearHourMinute with single-digit day and month values', () => {
 				const convertedDate = dayMonthYearHourMinuteToISOString({

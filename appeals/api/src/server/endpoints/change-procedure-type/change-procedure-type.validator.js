@@ -40,7 +40,6 @@ export const postChangeProcedureTypeValidator = composeMiddleware(
 		.isISO8601()
 		.withMessage('eventDate must be a valid date'),
 
-	// hearing/written → optional, but if present must be a valid date
 	body('eventDate')
 		.if((_, { req }) => ['hearing', 'written'].includes(req.body.appealProcedure))
 		.optional({ checkFalsy: true })
@@ -58,45 +57,21 @@ export const postChangeProcedureTypeValidator = composeMiddleware(
 
 	body('planningObligationDueDate')
 		.optional({ checkFalsy: true })
-		.custom(() =>
-			validateDateParameter({
-				parameterName: 'planningObligationDueDate',
-				isRequired: false
-			})
-		)
+		.isISO8601()
 		.withMessage('planningObligationDueDate must be a valid date'),
 
 	body('finalCommentsDueDate')
-		.optional({ checkFalsy: true })
-		.custom((value, { req }) => {
-			if (req.body.appealProcedure === 'written') {
-				validateDateParameter({ parameterName: 'finalCommentsDueDate', isRequired: true });
-			}
-			return true;
-		}),
+		.if((_, { req }) => req.body.appealProcedure === 'written')
+		.isISO8601()
+		.withMessage('finalCommentsDueDate must be a valid date'),
 	body('statementOfCommonGroundDueDate')
-		.optional({ checkFalsy: true })
-		.custom((value, { req }) => {
-			if (['inquiry', 'hearing'].includes(req.body.appealProcedure)) {
-				validateDateParameter({
-					parameterName: 'statementOfCommonGroundDueDate',
-					isRequired: true
-				});
-			}
-			return true;
-		}),
+		.if((_, { req }) => ['inquiry', 'hearing'].includes(req.body.appealProcedure))
+		.isISO8601()
+		.withMessage('statementOfCommonGroundDueDate must be a valid date'),
 	body('proofOfEvidenceAndWitnessesDueDate')
-		.optional({ checkFalsy: true })
-		.custom((value, { req }) => {
-			if (req.body.appealProcedure === 'inquiry') {
-				validateDateParameter({
-					parameterName: 'proofOfEvidenceAndWitnessesDueDate',
-					isRequired: true
-				});
-			}
-			return true;
-		}),
-
+		.if((_, { req }) => req.body.appealProcedure === 'inquiry')
+		.isISO8601()
+		.withMessage('proofOfEvidenceAndWitnessesDueDate must be a valid date'),
 	body('address')
 		.optional()
 		.custom((value) => {

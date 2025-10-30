@@ -4,6 +4,7 @@ import { addressToString } from '#lib/address-formatter.js';
 import {
 	dateISOStringToDisplayDate,
 	dateISOStringToDisplayTime12hr,
+	dateStringToISOString,
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
 import logger from '#lib/logger.js';
@@ -359,19 +360,27 @@ const mapSessionValuesForRequest = (values) => {
 		postcode: values['postCode']
 	};
 
+	const includeAddress = address && Object.keys(address).length > 0 ? address : {};
+
 	/**@type {ChangeProcedureTypeRequest} */
 	return {
 		existingAppealProcedure: values.existingAppealProcedure,
 		appealProcedure: values.appealProcedure,
 		eventDate,
-		address,
+		...includeAddress,
 		estimationDays: values.estimationDays,
-		lpaQuestionnaireDueDate: values.appealTimetable.lpaQuestionnaireDueDate,
-		ipCommentsDueDate: values.appealTimetable.ipCommentsDueDate,
-		lpaStatementDueDate: values.appealTimetable.lpaStatementDueDate,
-		finalCommentsDueDate: values.appealTimetable.finalCommentsDueDate,
-		statementOfCommonGroundDueDate: values.appealTimetable.statementOfCommonGroundDueDate,
-		planningObligationDueDate: values.appealTimetable.planningObligationDueDate,
-		proofOfEvidenceAndWitnessesDueDate: values.appealTimetable.proofOfEvidenceAndWitnessesDueDate
+		lpaQuestionnaireDueDate: dateStringToISOString(values.appealTimetable.lpaQuestionnaireDueDate),
+		ipCommentsDueDate: dateStringToISOString(values.appealTimetable.ipCommentsDueDate),
+		lpaStatementDueDate: dateStringToISOString(values.appealTimetable.lpaStatementDueDate),
+		finalCommentsDueDate: dateStringToISOString(values.appealTimetable.finalCommentsDueDate),
+		statementOfCommonGroundDueDate: dateStringToISOString(
+			values.appealTimetable.statementOfCommonGroundDueDate
+		),
+		planningObligationDueDate: dateStringToISOString(
+			values.appealTimetable.planningObligationDueDate
+		),
+		proofOfEvidenceAndWitnessesDueDate: dateStringToISOString(
+			values.appealTimetable.proofOfEvidenceAndWitnessesDueDate
+		)
 	};
 };
