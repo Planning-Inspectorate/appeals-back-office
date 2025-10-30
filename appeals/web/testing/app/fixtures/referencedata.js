@@ -503,6 +503,10 @@ export const appealDataCasAdvert = {
 	...appealData,
 	appealType: 'CAS advert'
 };
+export const appealDataAdvert = {
+	...appealData,
+	appealType: 'Advertisement appeal'
+};
 
 export const appealDataEnforcementNotice = {
 	...appealData,
