@@ -944,7 +944,8 @@ export class CaseDetailsPage extends Page {
 		this.elements.pageHeading().should('have.text', expectedText);
 	};
 
-	verifyChangeLinkIsDisplayed = (row) => {
-		this.elements.rowChangeLink(row).should('be.visible');
+	verifyChangeLinkVisibility = (row, shouldBeVisibile = true) => {
+		const visibilityAssertion = shouldBeVisibile ? 'be.visible' : 'not.exist';
+		this.elements.rowChangeLink(row).should(visibilityAssertion);
 	};
 }

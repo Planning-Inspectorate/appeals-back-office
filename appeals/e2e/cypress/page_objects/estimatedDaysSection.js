@@ -7,6 +7,7 @@ export class EstimatedDaysSection extends CaseDetailsPage {
 
 	selectors = {
 		inquiryEstimatedDaysInput: '#inquiry-estimation-days',
+		estimatedDaysInput: '#estimation-days',
 		radio: '.govuk-radios__item'
 	};
 
@@ -14,6 +15,7 @@ export class EstimatedDaysSection extends CaseDetailsPage {
 
 	elements = {
 		inquiryEstimatedDaysInput: () => cy.get(this.selectors.inquiryEstimatedDaysInput),
+		estimatedDaysInput: () => cy.get(this.selectors.estimatedDaysInput),
 		radioButton: () => cy.get(this.selectors.radio)
 	};
 
@@ -28,14 +30,23 @@ export class EstimatedDaysSection extends CaseDetailsPage {
 		this.elements.inquiryEstimatedDaysInput().clear().type(estimatedInquiryDays.toString());
 	}
 
+	// used when updating procedure type
+	enterEstimatedDays(estimatedDays) {
+		this.elements.estimatedDaysInput().clear().type(estimatedDays.toString());
+	}
+
 	selectEstimatedDaysOption(option) {
 		this.elements.radioButton().contains(option, { matchCase: false }).click();
 	}
 
-	verifyPrepopulatedValue(expectedValue) {
+	verifyPrepopulatedValue(expectedValue, updatingProcedure = false) {
+		// days selector is different depending on if setting up or updating procedure type
+		const daysInputSelector = updatingProcedure
+			? this.selectors.estimatedDaysInput
+			: this.selectors.inquiryEstimatedDaysInput;
+
 		// verify estimated days
-		this.elements
-			.inquiryEstimatedDaysInput()
+		cy.get(daysInputSelector)
 			.invoke('prop', 'value')
 			.then((text) => {
 				expect(formatAsWholeNumber(text)).to.equal(expectedValue);

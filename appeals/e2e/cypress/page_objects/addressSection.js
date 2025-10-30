@@ -8,51 +8,57 @@ export class AddressSection extends CaseDetailsPage {
 
 	// E L E M E N T S
 
-	elements = {
+	addressElements = {
+		...this.elements,
 		line1: () => cy.get('#address-line-1'),
 		line2: () => cy.get('#address-line-2'),
 		town: () => cy.get('#town'),
 		county: () => cy.get('#county'),
-		postcode: () => cy.get('#post-code')
+		postcode: () => cy.get('#post-code'),
+		radioButton: () => cy.get('.govuk-radios__item')
 	};
 
 	// A C T I O N S
 
 	enterAddress(address) {
-		this.elements.line1().clear().type(address.line1);
-		this.elements.line2().clear().type(address.line2);
-		this.elements.town().clear().type(address.town);
-		this.elements.county().clear().type(address.county);
-		this.elements.postcode().clear().type(address.postcode);
+		this.addressElements.line1().clear().type(address.line1);
+		this.addressElements.line2().clear().type(address.line2);
+		this.addressElements.town().clear().type(address.town);
+		this.addressElements.county().clear().type(address.county);
+		this.addressElements.postcode().clear().type(address.postcode);
+	}
+
+	selectAddressOption(option) {
+		this.addressElements.radioButton().contains(option, { matchCase: false }).click();
 	}
 
 	verifyPrepopulatedValues(expectedValues) {
 		// verify adddress fields
-		this.elements
+		this.addressElements
 			.line1()
 			.invoke('prop', 'value')
 			.then((text) => {
 				expect(text).to.equal(expectedValues.line1);
 			});
-		this.elements
+		this.addressElements
 			.line2()
 			.invoke('prop', 'value')
 			.then((text) => {
 				expect(text).to.equal(expectedValues.line2);
 			});
-		this.elements
+		this.addressElements
 			.town()
 			.invoke('prop', 'value')
 			.then((text) => {
 				expect(text).to.equal(expectedValues.town);
 			});
-		this.elements
+		this.addressElements
 			.county()
 			.invoke('prop', 'value')
 			.then((text) => {
 				expect(text).to.equal(expectedValues.county);
 			});
-		this.elements
+		this.addressElements
 			.postcode()
 			.invoke('prop', 'value')
 			.then((text) => {
