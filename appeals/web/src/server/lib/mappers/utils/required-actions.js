@@ -335,20 +335,20 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				appealDetails.documentationSummary?.appellantProofOfEvidence?.status ===
 				APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED;
 
-			if (
-				(!lpaProofOfEvidenceReceived || !appellantProofOfEvidenceReceived) &&
-				proofOfEvidenceDueDatePassed
-			) {
-				actions.push('progressToInquiry');
-			} else if (!lpaProofOfEvidenceReceived || !appellantProofOfEvidenceReceived) {
-				actions.push('awaitingProofOfEvidenceAndWitnesses');
-			}
-
 			if (!appellantProofOfEvidenceDone && appellantProofOfEvidenceReceived) {
 				actions.push('reviewAppellantProofOfEvidence');
 			}
 			if (!lpaProofOfEvidenceDone && lpaProofOfEvidenceReceived) {
 				actions.push('reviewLpaProofOfEvidence');
+			}
+
+			if (
+				proofOfEvidenceDueDatePassed ||
+				(appellantProofOfEvidenceDone && lpaProofOfEvidenceDone)
+			) {
+				actions.push('progressToInquiry');
+			} else if (!lpaProofOfEvidenceReceived || !appellantProofOfEvidenceReceived) {
+				actions.push('awaitingProofOfEvidenceAndWitnesses');
 			}
 			break;
 		}
