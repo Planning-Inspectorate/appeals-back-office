@@ -1,8 +1,6 @@
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { isDefined } from '#lib/ts-utilities.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
-import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { isAfter, isBefore, isSameDay } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.d.ts').WebAppeal} WebAppeal */
@@ -98,12 +96,6 @@ export const getSiteDetails = (mappedData, appealDetails) => {
 		allComponents.push(siteVisitDetailsList);
 	}
 	allComponents.push(...siteVisitRequestDetails);
-
-	if (appealDetails.appealType === APPEAL_TYPE.S78) {
-		return appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN
-			? allComponents
-			: [];
-	}
 
 	return allComponents;
 };

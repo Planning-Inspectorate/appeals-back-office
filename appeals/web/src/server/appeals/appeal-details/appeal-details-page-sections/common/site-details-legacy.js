@@ -1,6 +1,4 @@
 import { isDefined } from '#lib/ts-utilities.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.d.ts').WebAppeal} WebAppeal */
 
@@ -31,12 +29,6 @@ export const getSiteDetails = (mappedData, appealDetails) => {
 			closing: ''
 		}
 	};
-
-	if (appealDetails.appealType === APPEAL_TYPE.S78) {
-		return appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN
-			? [component]
-			: [];
-	}
 
 	return [component];
 };
