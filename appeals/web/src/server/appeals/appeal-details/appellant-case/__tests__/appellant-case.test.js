@@ -10,6 +10,7 @@ import {
 	activeDirectoryUsersData,
 	additionalDocumentsFolderInfo,
 	appealData,
+	appealDataAdvert,
 	appealDataCasAdvert,
 	appealDataCasPlanning,
 	appealDataEnforcementNotice,
@@ -370,6 +371,82 @@ describe('appellant-case', () => {
 			);
 
 			expect(unprettifiedElement.innerHTML).toContain('4. Upload documents</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Application form');
+			expect(unprettifiedElement.innerHTML).toContain('Appeal statement');
+			expect(unprettifiedElement.innerHTML).toContain('Application for an award of appeal costs');
+			expect(unprettifiedElement.innerHTML).toContain('Plans, drawings and list of plans');
+
+			expect(unprettifiedElement.innerHTML).not.toContain('Additional documents</h2>');
+		});
+
+		it('should render the appellant case page with the expected content (advert)', async () => {
+			nock('http://test/')
+				.get('/appeals/2')
+				.reply(200, {
+					...appealDataAdvert,
+					appealId: 2
+				});
+			nock('http://test/')
+				.get('/appeals/2/appellant-cases/0')
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.ADVERTISEMENT
+				});
+
+			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appellant case</h1>');
+
+			expect(unprettifiedElement.innerHTML).toContain('1. Appellant details</h2>');
+
+			expect(unprettifiedElement.innerHTML).toContain('2. Site details</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('What is the address of the appeal site?');
+			expect(unprettifiedElement.innerHTML).toContain('Is the appeal site in a green belt?');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Does the appellant own all of the land involved in the appeal?'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Does the appellant know who owns the land involved in the appeal?'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Will an inspector need to access your land or property?'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are there any health and safety issues on the appeal site?'
+			);
+
+			expect(unprettifiedElement.innerHTML).toContain('3. Application details</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('What date did you submit your application?');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change the description of the advertisement'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are there other appeals linked to your development?'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Decision letter from the local planning authority'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('4. Appeal details</h2>');
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How would you prefer us to decide your appeal?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Why would you prefer this appeal procedure?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How many days would you expect the inquiry to last?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How many witnesses would you expect to give evidence at the inquiry?</dt>'
+			);
+
+			expect(unprettifiedElement.innerHTML).toContain('5. Upload documents</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Application form');
 			expect(unprettifiedElement.innerHTML).toContain('Appeal statement');
 			expect(unprettifiedElement.innerHTML).toContain('Application for an award of appeal costs');

@@ -1,3 +1,4 @@
+import { apiAdvertMappers } from './advert/index.js';
 import { apiCasAdvertMappers } from './cas-advert/index.js';
 import { apiS20Mappers } from './s20/index.js';
 import { apiS78Mappers } from './s78/index.js';
@@ -7,5 +8,6 @@ export const apiMappers = {
 	apiSharedMappers,
 	apiS78Mappers,
 	apiS20Mappers,
-	apiCasAdvertMappers
+	apiCasAdvertMappers,
+	apiAdvertMappers
 };
