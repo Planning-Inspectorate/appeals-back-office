@@ -1,10 +1,12 @@
 import { getCaseDocumentation } from '#appeals/appeal-details/appeal-details-page-sections/common/case-documentation.js';
 import config from '#environment/config.js';
 import { permissionNames } from '#environment/permissions.js';
+import { isStatePassed } from '#lib/appeal-status.js';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { isDefined } from '#lib/ts-utilities.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { getCaseContacts } from './common/case-contacts.js';
 import { getCaseCosts } from './common/case-costs.js';
 import { getCaseManagement } from './common/case-management.js';
@@ -26,7 +28,13 @@ import { removeAppealDetailsSectionComponentsActions } from './utils/index.js';
 export function generateAppealDetailsPageComponents(appealDetails, mappedData, session) {
 	const caseOverview = getCaseOverview(mappedData, appealDetails);
 
-	const siteDetails = isChildAppeal(appealDetails)
+	const siteDetailsShouldBeHidden =
+		isChildAppeal(appealDetails) ||
+		!isStatePassed(appealDetails, APPEAL_CASE_STATUS.READY_TO_START) ||
+		(appealDetails.appealType === APPEAL_TYPE.S78 &&
+			appealDetails.procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.WRITTEN);
+
+	const siteDetails = siteDetailsShouldBeHidden
 		? []
 		: config.featureFlags.featureFlagCancelSiteVisit
 		? getSiteDetails(mappedData, appealDetails)
