@@ -5,6 +5,7 @@
  */
 export function formatAsWholeNumber(value) {
 	// remove any leading 0 (e.g. from '00' or '05')
+	if (!value) return ''; // if value is empty return as empty string
 	return +value + '';
 }
 

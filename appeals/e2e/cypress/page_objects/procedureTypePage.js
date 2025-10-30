@@ -59,7 +59,7 @@ export class ProcedureTypePage extends CaseDetailsPage {
 		return Object.values(this.procedureTypeMappings).map((mapping) => mapping.displayName);
 	}
 
-	verifyHeader(sectionHeader) {
-		this.elements.getAppealRefCaseDetails().should('contain.text', sectionHeader);
+	verifyHeader(procedureTypeCaption) {
+		this.elements.getAppealRefCaseDetails().should('contain.text', procedureTypeCaption);
 	}
 }
