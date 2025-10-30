@@ -504,7 +504,14 @@ export const appellantCaseList = {
 		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.ADVERTISEMENT,
 		highwayLand: randomBool(),
 		advertInPosition: randomBool(),
-		landownerPermission: randomBool()
+		landownerPermission: randomBool(),
+		appellantProcedurePreference: randomEnumValue(APPEAL_APPELLANT_PROCEDURE_PREFERENCE),
+		appellantProcedurePreferenceDetails: randomArrayValue([
+			'Need for a detailed examination',
+			null
+		]),
+		appellantProcedurePreferenceDuration: randomArrayValue(procedureDurationPossibleValues),
+		appellantProcedurePreferenceWitnessCount: 1
 	}
 };
 
