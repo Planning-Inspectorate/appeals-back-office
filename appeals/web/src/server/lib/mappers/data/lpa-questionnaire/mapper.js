@@ -1,8 +1,9 @@
 import { permissionNames } from '#environment/permissions.js';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { submaps as casAdvertsSubMaps } from './cas-advert.js';
-import { submaps as casPlanningSubMaps } from './cas-planning.js';
+import { submaps as advertSubmaps } from './advert.js';
+import { submaps as casAdvertSubmaps } from './cas-advert.js';
+import { submaps as casPlanningSubmaps } from './cas-planning.js';
 import { submaps as hasSubmaps } from './has.js';
 import { submaps as s20Submaps } from './s20.js';
 import { submaps as s78Submaps } from './s78.js';
@@ -28,9 +29,9 @@ import { submaps as s78Submaps } from './s78.js';
 /** @type {Record<string, Record<string, SubMapper>>} */
 const submaps = {
 	[APPEAL_TYPE.HOUSEHOLDER]: hasSubmaps,
-	[APPEAL_TYPE.CAS_ADVERTISEMENT]: casAdvertsSubMaps,
-	[APPEAL_TYPE.ADVERTISEMENT]: casAdvertsSubMaps,
-	[APPEAL_TYPE.CAS_PLANNING]: casPlanningSubMaps,
+	[APPEAL_TYPE.CAS_ADVERTISEMENT]: casAdvertSubmaps,
+	[APPEAL_TYPE.ADVERTISEMENT]: advertSubmaps,
+	[APPEAL_TYPE.CAS_PLANNING]: casPlanningSubmaps,
 	[APPEAL_TYPE.S78]: s78Submaps,
 	[APPEAL_TYPE.PLANNED_LISTED_BUILDING]: s20Submaps
 };
