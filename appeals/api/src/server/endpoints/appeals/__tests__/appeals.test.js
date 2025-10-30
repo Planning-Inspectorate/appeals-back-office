@@ -1460,21 +1460,34 @@ describe('appeals list routes', () => {
 	});
 
 	describe('/appeals/personal-list', () => {
+		const appealTimetable = {
+			appellantStatementDueDate: new Date('2025-11-01T00:00:00.000Z'),
+			caseResubmissionDueDate: new Date('2025-11-02T00:00:00.000Z'),
+			finalCommentsDueDate: new Date('2025-11-03T00:00:00.000Z'),
+			ipCommentsDueDate: new Date('2025-11-04T00:00:00.000Z'),
+			issueDeterminationDate: new Date('2025-11-05T00:00:00.000Z'),
+			lpaQuestionnaireDueDate: new Date('2025-11-06T00:00:00.000Z'),
+			lpaStatementDueDate: new Date('2025-11-07T00:00:00.000Z'),
+			proofOfEvidenceAndWitnessesDueDate: new Date('2025-11-08T00:00:00.000Z'),
+			s106ObligationDueDate: new Date('2025-11-09T00:00:00.000Z')
+		};
+		const appeal = { id: 1, appealTimetable, appealType: { key: 'W' } };
+
 		beforeEach(() => {
 			databaseConnector.personalList.findMany
 				.mockResolvedValueOnce([
-					{ appealId: 3, leadAppealId: 1, linkType: 'child', appeal: { id: 3 } },
-					{ appealId: 4, leadAppealId: 1, linkType: 'child', appeal: { id: 4 } }
+					{ appealId: 3, leadAppealId: 1, linkType: 'child', appeal: { ...appeal, id: 3 } },
+					{ appealId: 4, leadAppealId: 1, linkType: 'child', appeal: { ...appeal, id: 4 } }
 				])
 				.mockResolvedValueOnce([
 					{ appeal: { appealStatus: [{ status: 'assign_case_officer', valid: true }] } },
 					{ appeal: { appealStatus: [{ status: 'complete', valid: true }] } }
 				])
 				.mockResolvedValueOnce([
-					{ appealId: 1, leadAppealId: 1, linkType: 'parent', appeal: { id: 1 } },
-					{ appealId: 2, leadAppealId: 1, linkType: 'child', appeal: { id: 2 } },
-					{ appealId: 3, leadAppealId: 1, linkType: 'child', appeal: { id: 3 } },
-					{ appealId: 4, leadAppealId: 1, linkType: 'child', appeal: { id: 4 } }
+					{ appealId: 1, leadAppealId: 1, linkType: 'parent', appeal: { ...appeal, id: 1 } },
+					{ appealId: 2, leadAppealId: 1, linkType: 'child', appeal: { ...appeal, id: 2 } },
+					{ appealId: 3, leadAppealId: 1, linkType: 'child', appeal: { ...appeal, id: 3 } },
+					{ appealId: 4, leadAppealId: 1, linkType: 'child', appeal: { ...appeal, id: 4 } }
 				]);
 			databaseConnector.personalList.count.mockResolvedValue(4);
 		});
@@ -1502,6 +1515,7 @@ describe('appeals list routes', () => {
 									status: 'not_received'
 								},
 								lpaQuestionnaire: {
+									dueDate: '2025-11-06T00:00:00.000Z',
 									status: 'not_received'
 								},
 								ipComments: {
@@ -1535,7 +1549,18 @@ describe('appeals list routes', () => {
 							costsDecision: null,
 							numberOfResidencesNetChange: null,
 							isInquirySetup: false,
-							hasInquiryAddress: false
+							hasInquiryAddress: false,
+							appealTimetable: {
+								appellantStatementDueDate: '2025-11-01T00:00:00.000Z',
+								caseResubmissionDueDate: '2025-11-02T00:00:00.000Z',
+								finalCommentsDueDate: '2025-11-03T00:00:00.000Z',
+								ipCommentsDueDate: '2025-11-04T00:00:00.000Z',
+								issueDeterminationDate: '2025-11-05T00:00:00.000Z',
+								lpaQuestionnaireDueDate: '2025-11-06T00:00:00.000Z',
+								lpaStatementDueDate: '2025-11-07T00:00:00.000Z',
+								proofOfEvidenceAndWitnessesDueDate: '2025-11-08T00:00:00.000Z',
+								s106ObligationDueDate: '2025-11-09T00:00:00.000Z'
+							}
 						},
 						{
 							appealId: 4,
@@ -1552,6 +1577,7 @@ describe('appeals list routes', () => {
 									status: 'not_received'
 								},
 								lpaQuestionnaire: {
+									dueDate: '2025-11-06T00:00:00.000Z',
 									status: 'not_received'
 								},
 								ipComments: {
@@ -1585,7 +1611,18 @@ describe('appeals list routes', () => {
 							costsDecision: null,
 							numberOfResidencesNetChange: null,
 							isInquirySetup: false,
-							hasInquiryAddress: false
+							hasInquiryAddress: false,
+							appealTimetable: {
+								appellantStatementDueDate: '2025-11-01T00:00:00.000Z',
+								caseResubmissionDueDate: '2025-11-02T00:00:00.000Z',
+								finalCommentsDueDate: '2025-11-03T00:00:00.000Z',
+								ipCommentsDueDate: '2025-11-04T00:00:00.000Z',
+								issueDeterminationDate: '2025-11-05T00:00:00.000Z',
+								lpaQuestionnaireDueDate: '2025-11-06T00:00:00.000Z',
+								lpaStatementDueDate: '2025-11-07T00:00:00.000Z',
+								proofOfEvidenceAndWitnessesDueDate: '2025-11-08T00:00:00.000Z',
+								s106ObligationDueDate: '2025-11-09T00:00:00.000Z'
+							}
 						}
 					],
 					statuses: ['assign_case_officer', 'complete'],

@@ -569,6 +569,10 @@ export const postChangeInquiryAddressDetails = async (request, response) => {
 
 	const { appealId } = request.currentAppeal;
 
+	// Answer yes to address known if we have submitted an address (we probably
+	// came straight to this page)
+	request.session['changeInquiry']['addressKnown'] = 'yes';
+
 	applyEditsForAppeal(request, 'changeInquiry', appealId);
 
 	return response.redirect(
