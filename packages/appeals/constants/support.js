@@ -228,8 +228,7 @@ export const AUDIT_TRAIL_INQUIRY_ESTIMATES_ADDED = 'Inquiry estimates added';
 export const AUDIT_TRAIL_INQUIRY_ESTIMATES_UPDATED = 'Inquiry estimates updated';
 export const AUDIT_TRAIL_INQUIRY_ESTIMATES_REMOVED = 'Inquiry estimates removed';
 
-export const AUDIT_TRAIL_CHANGE_PROCEDURE_TYPE =
-	'Appeal procedure type changed from {replacement0} to {replacement1}';
+export const AUDIT_TRAIL_CHANGE_PROCEDURE_TYPE = 'Appeal procedure updated to {replacement0}';
 
 export const AUDIT_TRAIL_DECISION_ISSUED = 'Decision issued: {replacement0}';
 export const AUDIT_TRAIL_DECISION_LETTER_UPLOADED = 'Decision letter {replacement0} uploaded';

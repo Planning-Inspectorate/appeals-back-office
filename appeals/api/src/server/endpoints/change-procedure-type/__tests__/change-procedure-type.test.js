@@ -88,6 +88,41 @@ describe('Change appeal procedure type route', () => {
 
 				// verify transaction itself was called
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
+
+				const personalisation = {
+					appeal_reference_number: '1345264',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					lpa_reference: '48269/APP/2021/1482',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					appeal_procedure: 'written',
+					change_message:
+						'We have changed your appeal procedure to written representations and cancelled your hearing.',
+					lpa_statement_exists: true
+				};
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						...personalisation,
+						is_lpa: false,
+						subject: 'We have changed your appeal procedure: 1345264'
+					},
+					recipientEmail: fullPlanningAppeal.appellant.email,
+					templateName: 'change-procedure-type'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						...personalisation,
+						is_lpa: true,
+						subject: 'We have changed the appeal procedure: 1345264'
+					},
+					recipientEmail: fullPlanningAppeal.lpa.email,
+					templateName: 'change-procedure-type'
+				});
 			});
 
 			test('returns 201 and calls delete hearing if changing from inquiry to written', async () => {
@@ -120,6 +155,41 @@ describe('Change appeal procedure type route', () => {
 
 				// verify transaction itself was called
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
+
+				const personalisation = {
+					appeal_reference_number: '1345264',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					lpa_reference: '48269/APP/2021/1482',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					appeal_procedure: 'written',
+					change_message:
+						'We have changed your appeal procedure to written representations and cancelled your inquiry.',
+					lpa_statement_exists: true
+				};
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						...personalisation,
+						is_lpa: false,
+						subject: 'We have changed your appeal procedure: 1345264'
+					},
+					recipientEmail: fullPlanningAppeal.appellant.email,
+					templateName: 'change-procedure-type'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						...personalisation,
+						is_lpa: true,
+						subject: 'We have changed the appeal procedure: 1345264'
+					},
+					recipientEmail: fullPlanningAppeal.lpa.email,
+					templateName: 'change-procedure-type'
+				});
 			});
 
 			test('returns 201 and calls delete hearing if changing from written to written', async () => {
@@ -148,6 +218,8 @@ describe('Change appeal procedure type route', () => {
 
 				// verify transaction itself was called
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
+
+				expect(mockNotifySend).not.toHaveBeenCalled();
 			});
 		});
 	});
