@@ -306,11 +306,11 @@ export function proofOfEvidenceSharePage(appeal, request, backUrl) {
 		const appellantProofOfEvidenceLink = `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 			request,
 			`/appeals-service/appeal-details/${appeal.appealId}/proof-of-evidence/appellant`
-		)}">appellant final comments</a>`;
+		)}">appellant proof of evidence</a>`;
 		const lpaProofOfEvidenceLink = `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 			request,
 			`/appeals-service/appeal-details/${appeal.appealId}/proof-of-evidence/lpa`
-		)}">LPA final comments</a>`;
+		)}">LPA proof of evidence</a>`;
 
 		if (hasValidAppellantProofOfEvidence && hasValidLpaProofOfEvidence) {
 			return `We’ll share ${appellantProofOfEvidenceLink} and ${lpaProofOfEvidenceLink} with the relevant parties.`;
