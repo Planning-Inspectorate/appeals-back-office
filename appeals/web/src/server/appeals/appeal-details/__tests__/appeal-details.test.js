@@ -1345,7 +1345,8 @@ describe('appeal-details', () => {
 							...appealData,
 							appealId,
 							siteVisit: undefined,
-							appealStatus: 'event'
+							appealStatus: 'event',
+							completedStateList: ['ready_to_start']
 						});
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 					const response = await request.get(`${baseUrl}/${appealId}`);
@@ -1369,7 +1370,11 @@ describe('appeal-details', () => {
 
 					nock('http://test/')
 						.get(`/appeals/${appealId}`)
-						.reply(200, { ...appealData, appealStatus: 'issue_determination' });
+						.reply(200, {
+							...appealData,
+							appealStatus: 'issue_determination',
+							completedStateList: ['ready_to_start']
+						});
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 					const response = await request.get(`${baseUrl}/${appealId}`);
 					const element = parseHtml(response.text);
@@ -1414,7 +1419,7 @@ describe('appeal-details', () => {
 									...appealData,
 									appealId,
 									appealType: appealType,
-									completedStateList: ['lpa_questionnaire']
+									completedStateList: ['ready_to_start', 'lpa_questionnaire']
 								});
 							nock('http://test/')
 								.get(/appeals\/\d+\/appellant-cases\/\d+/)
@@ -2049,7 +2054,8 @@ describe('appeal-details', () => {
 						.reply(200, {
 							...appealData,
 							appealId,
-							appealStatus: testCase.appealStatus
+							appealStatus: testCase.appealStatus,
+							completedStateList: testCase.completedStateList ?? []
 						});
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 
@@ -2106,6 +2112,7 @@ describe('appeal-details', () => {
 					.reply(200, {
 						...appealData,
 						appealStatus: 'lpa_questionnaire',
+						completedStateList: ['ready_to_start'],
 						linkedAppeals: linkedAppealsAreAllInternalAndNotALead
 					});
 				nock('http://test/')
@@ -2144,6 +2151,7 @@ describe('appeal-details', () => {
 						...appealData,
 						isParentAppeal: true,
 						appealStatus: 'lpa_questionnaire',
+						completedStateList: ['ready_to_start'],
 						linkedAppeals: linkedAppealsAreAllInternalAndNotALead
 					});
 				nock('http://test/')
@@ -2180,6 +2188,7 @@ describe('appeal-details', () => {
 					.get(`/appeals/${appealData.appealId}`)
 					.reply(200, {
 						...appealData,
+						completedStateList: ['ready_to_start'],
 						isParentAppeal: false,
 						linkedAppeals: linkedAppealsWithExternalLead
 					});
@@ -2221,6 +2230,7 @@ describe('appeal-details', () => {
 					.get(`/appeals/${appealData.appealId}`)
 					.reply(200, {
 						...appealData,
+						completedStateList: ['ready_to_start'],
 						linkedAppeals
 					});
 				nock('http://test/')
@@ -2276,6 +2286,7 @@ describe('appeal-details', () => {
 					.get(`/appeals/${appealId}`)
 					.reply(200, {
 						...appealData,
+						completedStateList: ['ready_to_start'],
 						appealId,
 						linkedAppeals: [
 							{
@@ -2313,6 +2324,7 @@ describe('appeal-details', () => {
 					.get(`/appeals/${appealId}`)
 					.reply(200, {
 						...appealData,
+						completedStateList: ['ready_to_start'],
 						appealId,
 						linkedAppeals: [
 							{
@@ -2357,6 +2369,7 @@ describe('appeal-details', () => {
 					.get(`/appeals/${appealData.appealId}`)
 					.reply(200, {
 						...appealData,
+						completedStateList: ['ready_to_start'],
 						linkedAppeals
 					});
 				nock('http://test/')
@@ -2392,6 +2405,7 @@ describe('appeal-details', () => {
 					.get(`/appeals/${appealData.appealId}`)
 					.reply(200, {
 						...appealData,
+						completedStateList: ['ready_to_start'],
 						isParentAppeal: true,
 						isChildAppeal: false,
 						linkedAppeals: linkedAppeals.filter(
@@ -2424,6 +2438,7 @@ describe('appeal-details', () => {
 					.get(`/appeals/${appealData.appealId}`)
 					.reply(200, {
 						...appealData,
+						completedStateList: ['ready_to_start'],
 						isParentAppeal: false,
 						isChildAppeal: true,
 						linkedAppeals: linkedAppeals.filter(
@@ -2757,6 +2772,7 @@ describe('appeal-details', () => {
 		describe('"Progress case" important banners', () => {
 			const appealId = 1;
 			const appealStatus = 'final_comments';
+			const completedStateList = ['ready_to_start'];
 			const testCases = [
 				{
 					conditionName: 'both Appellant and LPA Final Comments are valid',
@@ -2764,6 +2780,7 @@ describe('appeal-details', () => {
 						...appealData,
 						appealId,
 						appealStatus,
+						completedStateList,
 						appealTimetable: {
 							finalCommentsDueDate: '2024-09-24T22:59:00.000Z'
 						},
@@ -2784,6 +2801,7 @@ describe('appeal-details', () => {
 						...appealData,
 						appealId,
 						appealStatus,
+						completedStateList,
 						appealTimetable: {
 							finalCommentsDueDate: '2024-09-24T22:59:00.000Z'
 						},
@@ -2804,6 +2822,7 @@ describe('appeal-details', () => {
 						...appealData,
 						appealId,
 						appealStatus,
+						completedStateList,
 						appealTimetable: {
 							finalCommentsDueDate: '2024-09-24T22:59:00.000Z'
 						},
@@ -2824,6 +2843,7 @@ describe('appeal-details', () => {
 						...appealData,
 						appealId,
 						appealStatus,
+						completedStateList,
 						appealTimetable: {
 							finalCommentsDueDate: '2024-09-24T22:59:00.000Z'
 						},
@@ -4826,6 +4846,7 @@ describe('appeal-details', () => {
 						.reply(200, {
 							...appealData,
 							...config,
+							completedStateList: ['ready_to_start'],
 							appealId
 						});
 
@@ -4883,12 +4904,14 @@ describe('appeal-details', () => {
 			].map((config) =>
 				it(`should ${
 					config.isChildAppeal ? 'not ' : ''
-				}render the site accordion for S78 cases when ${config.title}`, async () => {
+				}render the site accordion for S78 Written cases when ${config.title}`, async () => {
 					nock('http://test/')
 						.get(`/appeals/${appealId}`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							...config,
+							completedStateList: ['ready_to_start'],
+							procedureType: 'written',
 							appealId
 						});
 
@@ -5638,6 +5661,7 @@ describe('appeal-details', () => {
 					.get(`/appeals/${appealId}`)
 					.reply(200, {
 						...appealData,
+						completedStateList: ['ready_to_start'],
 						appealId,
 						procedureType: 'Inquiry'
 					});
@@ -6087,7 +6111,7 @@ describe('appeal-details', () => {
 		it('should render the site visit section with correct link after site visit data has passed and decision has not been issued', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
-				.reply(200, { ...appealData });
+				.reply(200, { ...appealData, completedStateList: [APPEAL_CASE_STATUS.READY_TO_START] });
 			const response = await request.get(`${baseUrl}/${appealId}`);
 
 			const siteSection = parseHtml(response.text, {
@@ -6100,7 +6124,10 @@ describe('appeal-details', () => {
 		it('should render the site visit section with no links after site visit data has passed and decision has been issued', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
-				.reply(200, { ...appealData, completedStateList: ['issue_determination'] });
+				.reply(200, {
+					...appealData,
+					completedStateList: ['ready_to_start', 'issue_determination']
+				});
 			const response = await request.get(`${baseUrl}/${appealId}`);
 
 			const siteSection = parseHtml(response.text, {
@@ -6117,6 +6144,7 @@ describe('appeal-details', () => {
 				.get(`/appeals/${appealId}`)
 				.reply(200, {
 					...appealData,
+					completedStateList: ['ready_to_start'],
 					siteVisit: {
 						siteVisitId: 0,
 						visitDate: futureDate,
@@ -6146,6 +6174,7 @@ describe('appeal-details', () => {
 				.get(`/appeals/${appealId}`)
 				.reply(200, {
 					...appealData,
+					completedStateList: ['ready_to_start'],
 					siteVisit: {
 						siteVisitId: 0,
 						visitDate: siteVisitDate,
@@ -6177,6 +6206,7 @@ describe('appeal-details', () => {
 				.get(`/appeals/${appealId}`)
 				.reply(200, {
 					...appealData,
+					completedStateList: ['ready_to_start'],
 					siteVisit: {
 						siteVisitId: 0,
 						visitDate: siteVisitDate,
@@ -6202,6 +6232,7 @@ describe('appeal-details', () => {
 				.get(`/appeals/${appealId}`)
 				.reply(200, {
 					...appealData,
+					completedStateList: ['ready_to_start'],
 					siteVisit: {}
 				});
 			const response = await request.get(`${baseUrl}/${appealId}`);

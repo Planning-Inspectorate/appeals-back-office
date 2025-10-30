@@ -1,5 +1,6 @@
 import config from '#environment/config.js';
 import { permissionNames } from '#environment/permissions.js';
+import { isStatePassed } from '#lib/appeal-status.js';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { isDefined } from '#lib/ts-utilities.js';
@@ -21,7 +22,12 @@ import { removeAppealDetailsSectionComponentsActions } from './utils/index.js';
  */
 export function generateAppealDetailsPageComponents(appealDetails, mappedData, session) {
 	const caseOverview = getCaseOverview(mappedData, appealDetails);
-	const siteDetails = isChildAppeal(appealDetails)
+
+	const siteDetailsShouldBeHidden =
+		isChildAppeal(appealDetails) ||
+		!isStatePassed(appealDetails, APPEAL_CASE_STATUS.READY_TO_START);
+
+	const siteDetails = siteDetailsShouldBeHidden
 		? []
 		: config.featureFlags.featureFlagCancelSiteVisit
 		? getSiteDetails(mappedData, appealDetails)
