@@ -419,4 +419,39 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 			expect(unprettifiedHtml).not.toContain('Address of where the inquiry will take place</dt>');
 		});
 	});
+	describe('POST /change-appeal-procedure-type/inquiry/check-and-confirm', () => {
+		it('should redirect to appeal details screen on success', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealStatus: 'lpa_questionnaire',
+					appealType: 'Planning appeal',
+					procedureType: 'hearing',
+					documentationSummary: {
+						lpaQuestionnaire: {
+							status: 'not received'
+						}
+					}
+				});
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, {
+					planningObligation: { hasObligation: true },
+					procedureType: 'hearing',
+					dateKnown: 'yes'
+				});
+			nock('http://test/').post('/appeals/1/procedure-type-change-request').reply(200);
+
+			const response = await request
+				.post(
+					'/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/check-and-confirm'
+				)
+				.send();
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toContain('/appeals-service/appeal-details/1');
+			expect(response.text).toContain('Found. Redirecting to /appeals-service/appeal-details/1');
+		});
+	});
 });

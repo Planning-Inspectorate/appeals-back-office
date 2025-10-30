@@ -49,9 +49,9 @@ import { isEmpty, pick } from 'lodash-es';
  * @property {string|undefined} [statementOfCommonGroundDueDate]
  * @property {string|undefined} [planningObligationDueDate]
  * @property {string|undefined} [proofOfEvidenceAndWitnessesDueDate]
- * @property {string} eventDate
- * @property {string|undefined} estimationDays
- * @property {{addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}|undefined} address
+ * @property {string} [eventDate]
+ * @property {string|undefined} [estimationDays]
+ * @property {{addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}} [address]
  */
 
 /**

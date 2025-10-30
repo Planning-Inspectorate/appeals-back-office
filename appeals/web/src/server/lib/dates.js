@@ -177,6 +177,25 @@ export function dateISOStringToDayMonthYearHourMinute(dateISOString) {
 }
 
 /**
+ * @param {string | null | undefined} dateString
+ * @returns {string}
+ */
+export function dateStringToISOString(dateString) {
+	if (typeof dateString === 'undefined' || dateString === null) {
+		return '';
+	}
+
+	const dates = dateISOStringToDayMonthYearHourMinute(dateString);
+	return dayMonthYearHourMinuteToISOString({
+		year: dates.year,
+		month: dates.month,
+		day: dates.day,
+		minute: dates.minute,
+		hour: dates.hour
+	});
+}
+
+/**
  * Parse the date and time parameters in Europe/London
  * @param {DayMonthYearHourMinute} dayMonthYearHourMinute
  * @returns {string}

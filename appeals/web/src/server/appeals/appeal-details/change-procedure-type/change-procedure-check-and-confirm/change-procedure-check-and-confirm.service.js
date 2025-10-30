@@ -9,9 +9,7 @@
  * @returns {Promise<*>}
  */
 export const postProcedureChangeRequest = async (apiClient, appealId, data) => {
-	return await apiClient
-		.post(`appeals/${appealId}/procedure-type-change-request`, {
-			json: data
-		})
-		.json();
+	return await apiClient.post(`appeals/${appealId}/procedure-type-change-request`, {
+		json: data
+	});
 };
