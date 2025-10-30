@@ -87,7 +87,7 @@ const canPublishProofOfEvidence = (currentAppeal) => {
 		appealTimetable?.proofOfEvidenceAndWitnessesDueDate &&
 		dateIsPast(appealTimetable.proofOfEvidenceAndWitnessesDueDate, today);
 
-	return Boolean(!hasProofOfEvidenceAwaitingReview && proofOfEvidenceDueDatePassed);
+	return Boolean(!hasProofOfEvidenceAwaitingReview || proofOfEvidenceDueDatePassed);
 };
 
 /**
