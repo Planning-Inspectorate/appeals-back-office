@@ -40,11 +40,17 @@ export const formatDocumentActionLink = (appealId, listOfDocuments, documentUplo
  * @returns {string}
  */
 export const formatListOfNotificationMethodsToHtml = (notificationMethods) => {
+	let notificationMethodsList = ``;
 	if (!notificationMethods || !notificationMethods.length) {
-		return '';
+		return notificationMethodsList;
+	} else if (notificationMethods.length === 1) {
+		return `<span class="pins-summary-list-value">${notificationMethods
+			// @ts-ignore
+			.map((method) => `${method.name}`)
+			.join('')}</span>`;
 	}
 	// TODO: check LPANotificationMethodDetails in SingleAppellantCaseResponse
-	return `<ul class="pins-summary-list-sublist">${notificationMethods
+	return `<ul class="pins-summary-list__value">${notificationMethods
 		// @ts-ignore
 		.map((method) => `<li>${method.name}</li>`)
 		.join('')}</ul>`;
@@ -98,10 +104,21 @@ export const formatListOfRelatedAppeals = (listOfAppeals) => {
 				: `/appeals-service/appeal-details/${listOfAppeals[i].appealId}`;
 			const linkAriaLabel = `Appeal ${numberToAccessibleDigitLabel(shortAppealReference || '')}`;
 
-			formattedLinks +=
-				linkUrl.length > 0
-					? `<li><a href="${linkUrl}" class="govuk-link" data-cy="related-appeal-${shortAppealReference}" aria-label="${linkAriaLabel}">${shortAppealReference}</a></li>`
-					: `<li><span class="govuk-body">${shortAppealReference}</span></li>`;
+			if (listOfAppeals.length === 1) {
+				formattedLinks +=
+					linkUrl.length > 0
+						? `<a href="${linkUrl}" class="govuk-link" data-cy="related-appeal-${shortAppealReference}" aria-label="${linkAriaLabel}">${shortAppealReference}</a>`
+						: `<span class="govuk-body">${shortAppealReference}</span>`;
+			} else {
+				formattedLinks +=
+					linkUrl.length > 0
+						? `<li><a href="${linkUrl}" class="govuk-link" data-cy="related-appeal-${shortAppealReference}" aria-label="${linkAriaLabel}">${shortAppealReference}</a></li>`
+						: `<li><span class="govuk-body">${shortAppealReference}</span></li>`;
+			}
+		}
+
+		if (listOfAppeals.length === 1) {
+			return formattedLinks;
 		}
 
 		return `<ul class="govuk-list govuk-list--bullet">${formattedLinks}</ul>`;
@@ -345,13 +362,18 @@ export function formatFreeTextForDisplay(freeText) {
  * @returns
  */
 export function formatListOfAddresses(arrayOfAddresses) {
+	let formattedList = ``;
 	if (arrayOfAddresses.length > 0) {
-		let formattedList = ``;
-		for (let i = 0; i < arrayOfAddresses.length; i++) {
-			const address = arrayOfAddresses[i].address;
-			formattedList += `<li>${appealSiteToMultilineAddressStringHtml(address)}</li>`;
+		if (arrayOfAddresses.length === 1) {
+			formattedList += appealSiteToMultilineAddressStringHtml(arrayOfAddresses[0].address);
+			return formattedList;
+		} else {
+			for (let i = 0; i < arrayOfAddresses.length; i++) {
+				const address = arrayOfAddresses[i].address;
+				formattedList += `<li>${appealSiteToMultilineAddressStringHtml(address)}</li>`;
+			}
+			return `<ul class="govuk-list govuk-list--bullet">${formattedList}</ul>`;
 		}
-		return `<ul class="govuk-list govuk-list--bullet">${formattedList}</ul>`;
 	}
 	return '<span>None</span>';
 }

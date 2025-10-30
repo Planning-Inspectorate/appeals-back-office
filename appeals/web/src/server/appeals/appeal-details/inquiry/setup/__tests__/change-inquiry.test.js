@@ -170,6 +170,7 @@ describe('change inquiry', () => {
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealWithInquiry, appealId });
 		});
+		afterEach(teardown);
 
 		it('should redirect to /inquiry/change/estimation with valid inputs', async () => {
 			const response = await request.post(`${baseUrl}/${appealId}/inquiry/change/date`).send({
@@ -418,6 +419,7 @@ describe('change inquiry', () => {
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealWithInquiry, appealId });
 		});
+		afterEach(teardown);
 
 		it('should redirect to /inquiry/change/confirmation when answering no', async () => {
 			const response = await request
@@ -469,6 +471,7 @@ describe('change inquiry', () => {
 			const response = await request.get(`${baseUrl}/${appealId}/inquiry/change/address-details`);
 			pageHtml = parseHtml(response.text, { rootElement: 'body' });
 		});
+		afterEach(teardown);
 
 		it('should match the snapshot', () => {
 			expect(pageHtml.innerHTML).toMatchSnapshot();
@@ -607,6 +610,7 @@ describe('change inquiry', () => {
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealWithInquiry, appealId });
 		});
+		afterEach(teardown);
 
 		it('should redirect to /inquiry/change/check-details with valid inputs', async () => {
 			const response = await request
@@ -666,6 +670,7 @@ describe('change inquiry', () => {
 				const response = await request.get(`${baseUrl}/${appealId}/inquiry/change/check-details`);
 				pageHtml = parseHtml(response.text, { rootElement: 'body' });
 			});
+			afterEach(teardown);
 
 			it('should match the snapshot', () => {
 				expect(pageHtml.innerHTML).toMatchSnapshot();
@@ -765,6 +770,7 @@ describe('change inquiry', () => {
 				const response = await request.get(`${baseUrl}/${appealId}/inquiry/change/check-details`);
 				pageHtml = parseHtml(response.text);
 			});
+			afterEach(teardown);
 
 			it('should match the snapshot', () => {
 				expect(pageHtml.innerHTML).toMatchSnapshot();
@@ -825,6 +831,7 @@ describe('change inquiry', () => {
 				const response = await request.get(`${baseUrl}/${appealId}/inquiry/change/check-details`);
 				pageHtml = parseHtml(response.text);
 			});
+			afterEach(teardown);
 
 			it('should match the snapshot', () => {
 				expect(pageHtml.innerHTML).toMatchSnapshot();
@@ -891,6 +898,7 @@ describe('change inquiry', () => {
 				const response = await request.get(`${baseUrl}/${appealId}/inquiry/change/check-details`);
 				pageHtml = parseHtml(response.text);
 			});
+			afterEach(teardown);
 
 			it('should match the snapshot', () => {
 				expect(pageHtml.innerHTML).toMatchSnapshot();
@@ -958,6 +966,7 @@ describe('change inquiry', () => {
 				.times(4)
 				.reply(200, { ...appealWithInquiry, appealId });
 		});
+		afterEach(teardown);
 
 		it('should redirect to appeal details page after submission with address', async () => {
 			nock('http://test/')
