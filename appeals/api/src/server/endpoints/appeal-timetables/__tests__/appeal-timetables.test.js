@@ -1,5 +1,6 @@
 // @ts-nocheck
 import {
+	casAdvertAppeal,
 	casPlanningAppeal,
 	fullPlanningAppeal,
 	householdAppeal,
@@ -53,6 +54,18 @@ const houseAppealWithTimetable = {
 
 const casPlanningAppealWithTimetable = {
 	...casPlanningAppeal,
+	caseStartedDate: new Date(2022, 4, 18),
+	caseValidationDate: new Date(2022, 4, 20),
+	caseValidDate: new Date(2022, 4, 20),
+	appealTimetable: {
+		appealId: 1,
+		id: 101,
+		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z')
+	}
+};
+
+const casAdvertAppealWithTimetable = {
+	...casAdvertAppeal,
 	caseStartedDate: new Date(2022, 4, 18),
 	caseValidationDate: new Date(2022, 4, 20),
 	caseValidDate: new Date(2022, 4, 20),
@@ -217,10 +230,10 @@ describe('appeal timetables routes', () => {
 					fullPlanningAppealResponseBody
 				],
 				[
-					'listed building',
-					listedBuildingAppealWithTimetable,
-					fullPlanningAppealRequestBody,
-					fullPlanningAppealResponseBody
+					'cas advert',
+					casAdvertAppealWithTimetable,
+					householdAppealRequestBody,
+					householdAppealResponseBody
 				]
 			])(
 				'updates a %s appeal timetable and sends notify',
@@ -628,6 +641,12 @@ describe('appeal timetables routes', () => {
 					{}
 				],
 				[
+					'casAdvertAppeal',
+					casAdvertAppealWithTimetable,
+					{ lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z' },
+					{}
+				],
+				[
 					'fullPlanningAppeal',
 					fullPlanningAppealWithTimetable,
 					{
@@ -856,6 +875,12 @@ describe('appeal timetables routes', () => {
 					{}
 				],
 				[
+					'casAdvertAppeal',
+					casAdvertAppealWithTimetable,
+					{ lpaQuestionnaireDueDate: '2024-06-10T22:59:00.000Z' },
+					{}
+				],
+				[
 					'fullPlanningAppeal',
 					fullPlanningAppealWithTimetable,
 					{
@@ -979,7 +1004,8 @@ describe('appeal timetables routes', () => {
 
 			test.each([
 				['householdAppeal', householdAppeal],
-				['casPlanningAppeal', casPlanningAppeal]
+				['casPlanningAppeal', casPlanningAppeal],
+				['casAdvertAppeal', casAdvertAppeal]
 			])('start a %s timetable', async (_, appeal) => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);

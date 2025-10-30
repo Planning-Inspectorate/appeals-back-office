@@ -1,5 +1,6 @@
 // @ts-nocheck
 import {
+	casAdvertAppeal,
 	casPlanningAppeal,
 	fullPlanningAppeal,
 	householdAppeal,
@@ -157,6 +158,7 @@ describe('appeal decision routes', () => {
 		test.each([
 			['householdAppeal', householdAppeal],
 			['casPlanningAppeal', casPlanningAppeal],
+			['casAdvertAppeal', casAdvertAppeal],
 			['fullPlanningAppeal', fullPlanningAppeal],
 			['listedBuildingAppeal', listedBuildingAppeal]
 		])('returns 200 when all good, appeal type: %s', async (_, appeal) => {

@@ -1,5 +1,9 @@
 // @ts-nocheck
 import {
+	casAdvertAppeal,
+	casAdvertAppealAppellantCaseIncomplete,
+	casAdvertAppealAppellantCaseInvalid,
+	casAdvertAppealAppellantCaseValid,
 	casPlanningAppeal,
 	casPlanningAppealAppellantCaseIncomplete,
 	casPlanningAppealAppellantCaseInvalid,
@@ -70,6 +74,13 @@ describe('appellant cases routes', () => {
 					casPlanningAppealAppellantCaseValid,
 					casPlanningAppealAppellantCaseIncomplete,
 					casPlanningAppealAppellantCaseInvalid
+				],
+				[
+					'casAdvertAppeal',
+					casAdvertAppeal,
+					casAdvertAppealAppellantCaseValid,
+					casAdvertAppealAppellantCaseIncomplete,
+					casAdvertAppealAppellantCaseInvalid
 				],
 				[
 					'fullPlanningAppeal',
@@ -586,6 +597,7 @@ describe('appellant cases routes', () => {
 			test.each([
 				['householdAppeal', householdAppealAppellantCaseIncomplete],
 				['casPlanningAppeal', casPlanningAppealAppellantCaseIncomplete],
+				['casAdvertAppeal', casAdvertAppealAppellantCaseIncomplete],
 				['fullPlanningAppeal', fullPlanningAppealAppellantCaseIncomplete],
 				['listedBuildingAppeal', listedBuildingAppealAppellantCaseIncomplete]
 			])(
@@ -856,6 +868,7 @@ describe('appellant cases routes', () => {
 			test.each([
 				['householdAppeal', householdAppealAppellantCaseInvalid],
 				['casPlanningAppeal', casPlanningAppealAppellantCaseInvalid],
+				['casAdvertAppeal', casAdvertAppealAppellantCaseInvalid],
 				['fullPlanningAppeal', fullPlanningAppealAppellantCaseInvalid],
 				['listedBuildingAppeal', listedBuildingAppealAppellantCaseInvalid]
 			])(
@@ -934,6 +947,7 @@ describe('appellant cases routes', () => {
 
 			test.each([
 				['householdAppeal', householdAppeal],
+				['casAdvertAppeal', casAdvertAppeal],
 				['casPlanningAppeal', casPlanningAppeal],
 				['fullPlanningAppeal', fullPlanningAppeal],
 				['listedBuildingAppeal', listedBuildingAppeal]
