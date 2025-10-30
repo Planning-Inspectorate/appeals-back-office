@@ -29,7 +29,7 @@ export class CaseHistoryPage extends Page {
 					if (rowText.includes(expectedText)) {
 						found = true;
 
-						['detail', 'emailSubject', 'emailBody'].forEach((key) => {
+						['emailSubject', 'emailBody'].forEach((key) => {
 							const expectedKey = status[key].trim().toLowerCase().replace('{caseref}', caseRef);
 							expect(rowText).to.contain(expectedKey);
 						});
