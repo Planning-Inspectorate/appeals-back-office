@@ -141,31 +141,32 @@ describe('change appeal procedure types', () => {
 					getDateAndTimeValues(ipCommentsDueDate)
 				);
 
-				// enter POE date
-				const proofOfEvidenceDate = new Date(lpaStatementDueDate);
-				proofOfEvidenceDate.setFullYear(lpaStatementDueDate.getFullYear() + 1);
-				dateTimeSection.enterProofOfEvidenceAndWitnessesDueDate(proofOfEvidenceDate);
+				// enter POE date, ensure is business day
+				cy.getBusinessActualDate(ipCommentsDueDate, 10).then((date) => {
+					const proofOfEvidenceDate = date;
+					dateTimeSection.enterProofOfEvidenceAndWitnessesDueDate(proofOfEvidenceDate);
 
-				// proceed to cya page and check answers
-				dateTimeSection.clickButtonByText('Continue');
+					// proceed to cya page and check answers
+					dateTimeSection.clickButtonByText('Continue');
 
-				cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Inquiry');
-				cyaSection.verifyCheckYourAnswers(
-					'LPA questionnaire due',
-					formatDateAndTime(lpaQuestionnaireDueDate).date
-				);
-				cyaSection.verifyCheckYourAnswers(
-					'Statements due',
-					formatDateAndTime(lpaStatementDueDate).date
-				);
-				cyaSection.verifyCheckYourAnswers(
-					'Statement of common ground due',
-					formatDateAndTime(ipCommentsDueDate).date
-				);
-				cyaSection.verifyCheckYourAnswers(
-					'Proof of evidence and witnesses due',
-					formatDateAndTime(proofOfEvidenceDate).date
-				);
+					cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Inquiry');
+					cyaSection.verifyCheckYourAnswers(
+						'LPA questionnaire due',
+						formatDateAndTime(lpaQuestionnaireDueDate).date
+					);
+					cyaSection.verifyCheckYourAnswers(
+						'Statements due',
+						formatDateAndTime(lpaStatementDueDate).date
+					);
+					cyaSection.verifyCheckYourAnswers(
+						'Statement of common ground due',
+						formatDateAndTime(ipCommentsDueDate).date
+					);
+					cyaSection.verifyCheckYourAnswers(
+						'Proof of evidence and witnesses due',
+						formatDateAndTime(proofOfEvidenceDate).date
+					);
+				});
 			});
 		});
 	});
