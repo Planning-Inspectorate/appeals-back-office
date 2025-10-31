@@ -3745,7 +3745,8 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span><span></span><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span>
+                            <br><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Upload evidence of your agreement to change the description of development</h2>
@@ -3798,7 +3799,8 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span><span></span><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span>
+                            <br><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
@@ -3855,7 +3857,8 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span><span></span><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span>
+                            <br><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
@@ -3912,7 +3915,8 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span><span></span><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span>
+                            <br><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
@@ -3988,7 +3992,8 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span><span></span><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span>
+                            <br><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
@@ -4040,7 +4045,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF.</span><span> The file must be smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Upload evidence of your agreement to change the description of development</h2>
@@ -4092,7 +4097,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF.</span><span> The file must be smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Update additional document</h2>
@@ -4148,7 +4153,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF.</span><span> The file must be smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Update additional document</h2>
@@ -4204,7 +4209,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF.</span><span> The file must be smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Update additional document</h2>
@@ -4279,7 +4284,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF.</span><span> The file must be smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Update additional document</h2>
