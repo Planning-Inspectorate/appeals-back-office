@@ -110,7 +110,6 @@ export function generateHASComponents(
 			},
 			rows: [
 				mappedAppellantCaseData.siteAddress.display.summaryListItem,
-				mappedAppellantCaseData.siteArea.display.summaryListItem,
 				mappedAppellantCaseData.inGreenBelt.display.summaryListItem,
 				mappedAppellantCaseData.siteOwnership.display.summaryListItem,
 				mappedAppellantCaseData.ownersKnown.display.summaryListItem,
