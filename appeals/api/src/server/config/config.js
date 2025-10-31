@@ -78,6 +78,9 @@ const { value, error } = schema.validate({
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	enableTestEndpoints:
 		environment.ENABLE_TEST_ENDPOINTS && environment.ENABLE_TEST_ENDPOINTS === 'true',
+	forcePersonalListFullRefresh:
+		environment.FORCE_PERSONAL_LIST_FULL_REFRESH &&
+		environment.FORCE_PERSONAL_LIST_FULL_REFRESH === 'true',
 	govNotify: {
 		api: {
 			key: environment.GOV_NOTIFY_API_KEY
