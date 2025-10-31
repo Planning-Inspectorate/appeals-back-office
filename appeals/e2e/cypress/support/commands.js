@@ -444,3 +444,19 @@ Cypress.Commands.add('selectReasonOption', (optionLabel = null) => {
 		return cy.wrap(selectedLabelText);
 	});
 });
+
+Cypress.Commands.add('startAppeal', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.startAppeal(caseObj.reference);
+		cy.log('Started case for ref ' + caseObj.reference);
+		return;
+	});
+});
+
+Cypress.Commands.add('reviewLpaqSubmission', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.reviewLpaq(caseObj.reference);
+		cy.log('Reviewed lpaq submission for case ref ' + caseObj.reference);
+		return;
+	});
+});
