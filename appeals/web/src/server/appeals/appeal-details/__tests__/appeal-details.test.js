@@ -2313,7 +2313,7 @@ describe('appeal-details', () => {
 					'Linked appeals</dt><dd class="govuk-summary-list__value"><a href="/appeals-service/appeal-details/1" class="govuk-link" data-cy="linked-appeal-725284" aria-label="Appeal 7 2 5 2 8 4">725284</a>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'Related appeals</dt><dd class="govuk-summary-list__value"><ul class="govuk-list govuk-list--bullet"><li><a href="/appeals-service/appeal-details/3" class="govuk-link" data-cy="related-appeal-765413" aria-label="Appeal 7 6 5 4 1 3">765413</a>'
+					'Related appeals</dt><dd class="govuk-summary-list__value"><a href="/appeals-service/appeal-details/3" class="govuk-link" data-cy="related-appeal-765413" aria-label="Appeal 7 6 5 4 1 3">765413</a>'
 				);
 			});
 
