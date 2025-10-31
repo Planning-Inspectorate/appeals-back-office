@@ -2011,7 +2011,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you have the landowner&#39;s permission?</dt>
-                            <dd                             class="govuk-summary-list__value"></dd>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/landowner-permission/change">Change<span class="govuk-visually-hidden"> Do you have the landowner&#39;s permission? (2. Site details)</span></a>
                                 </dd>
                         </div>
