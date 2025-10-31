@@ -3,6 +3,7 @@
 
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { happyPathHelper } from '../../support/happyPathHelper';
 import { tag } from '../../support/tag';
@@ -11,6 +12,7 @@ let appeal;
 
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
+const caseHistoryPage = new CaseHistoryPage();
 
 const setupTestCase = () => {
 	cy.login(users.appeals.caseAdmin);
@@ -27,9 +29,9 @@ describe('Schedule site visit', () => {
 		setupTestCase();
 	});
 
-	afterEach(() => {
-		cy.deleteAppeals(appeal);
-	});
+	//afterEach(() => {
+	//	cy.deleteAppeals(appeal);
+	//});
 
 	const visitTypeTestCases = ['Accompanied', 'Access required', 'Unaccompanied'];
 
@@ -73,6 +75,24 @@ describe('Schedule site visit', () => {
 			caseDetailsPage.clickLinkByText('Cancel site visit');
 			caseDetailsPage.clickButtonByText('Cancel site visit');
 			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit cancelled');
+		});
+
+		it('Missed Site Visit', () => {
+			caseDetailsPage.clickSetUpSiteVisitType();
+			caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(visitType));
+			cy.getBusinessActualDate(new Date(), -28).then((visitDate) => {
+				dateTimeSection.enterVisitDate(visitDate);
+			});
+			dateTimeSection.enterVisitStartTime('13', '00'); //
+			dateTimeSection.enterVisitEndTime('14', '00'); //
+			caseDetailsPage.clickButtonByText('Confirm');
+			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit set up');
+			caseDetailsPage.clickLinkByText('Record missed site visit');
+			caseDetailsPage.selectRadioButtonByValue('Appellant');
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.clickButtonByText('Record missed site visit');
+			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Missed site visit recorded');
+			caseHistoryPage.verifyCaseHistory('missedSiteVisit', appeal.reference);
 		});
 	});
 
