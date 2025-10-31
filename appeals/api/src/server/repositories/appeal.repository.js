@@ -547,13 +547,19 @@ const getAppealsWithCompletedEvents = () =>
 	});
 
 /**
+ * @param {boolean} [whereNoPersonalListEntries]
  * @returns {PrismaPromise<{ id: number; }[]>}
  */
-const getAppealIdsWithNoPersonalListEntries = () =>
-	databaseConnector.appeal.findMany({
-		select: { id: true },
-		where: { PersonalList: { is: null } }
-	});
+const getAppealIdList = (whereNoPersonalListEntries = false) => {
+	const query = {
+		select: { id: true }
+	};
+	if (whereNoPersonalListEntries) {
+		// @ts-ignore
+		query.where = { PersonalList: { is: null } };
+	}
+	return databaseConnector.appeal.findMany(query);
+};
 
 /**
  * @param {number} id
@@ -592,6 +598,7 @@ export default {
 	getAppealById,
 	getAppealTypeById,
 	getAppealByAppealReference,
+	getAppealIdList,
 	updateAppealById,
 	setAppealDecision,
 	setAppealWithdrawal,
@@ -602,7 +609,6 @@ export default {
 	unlinkAppeal,
 	getAppealsByIds,
 	getAppealsWithCompletedEvents,
-	getAppealsWithNoPersonalListEntries: getAppealIdsWithNoPersonalListEntries,
 	setAssignedTeamId,
 	deleteAppealsByIds
 };
