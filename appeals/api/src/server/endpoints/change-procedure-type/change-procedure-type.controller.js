@@ -10,7 +10,10 @@ import {
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_INVALID_PROCEDURE_TYPE
 } from '@pins/appeals/constants/support.js';
-import { changeProcedureToWritten } from './change-procedure-type.service.js';
+import {
+	changeProcedureToWritten,
+	sendChangeProcedureTypeNotifications
+} from './change-procedure-type.service.js';
 
 /**
  * @param {Request} req
@@ -42,14 +45,23 @@ export const requestChangeOfProcedureType = async (req, res) => {
 
 		await broadcasters.broadcastAppeal(appeal.id);
 
-		await createAuditTrail({
-			appealId: appeal.id,
-			azureAdUserId,
-			details: stringTokenReplacement(AUDIT_TRAIL_CHANGE_PROCEDURE_TYPE, [
-				data.existingAppealProcedure ?? '',
-				data.appealProcedure
-			])
-		});
+		if (data.appealProcedure !== data.existingAppealProcedure) {
+			await sendChangeProcedureTypeNotifications(
+				req.notifyClient,
+				'change-procedure-type',
+				appeal,
+				data.appealProcedure,
+				data.existingAppealProcedure
+			);
+
+			await createAuditTrail({
+				appealId: appeal.id,
+				azureAdUserId,
+				details: stringTokenReplacement(AUDIT_TRAIL_CHANGE_PROCEDURE_TYPE, [
+					data.appealProcedure === 'written' ? 'written representations' : data.appealProcedure
+				])
+			});
+		}
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });

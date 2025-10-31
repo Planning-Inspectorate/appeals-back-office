@@ -34,17 +34,6 @@ export function renderShareRepresentations(request, response) {
 				return finalCommentsSharePage(currentAppeal, request, getBackLinkUrlFromQuery(request));
 			}
 			case APPEAL_CASE_STATUS.EVIDENCE: {
-				const proofOfEvidenceDueDate =
-					currentAppeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate;
-
-				if (
-					!proofOfEvidenceDueDate ||
-					!dateIsInThePast(dateISOStringToDayMonthYearHourMinute(proofOfEvidenceDueDate))
-				) {
-					throw new Error(
-						'Proof of evidence and witnesses cannot be shared before the due date has passed'
-					);
-				}
 				return proofOfEvidenceSharePage(currentAppeal, request, getBackLinkUrlFromQuery(request));
 			}
 			default:
