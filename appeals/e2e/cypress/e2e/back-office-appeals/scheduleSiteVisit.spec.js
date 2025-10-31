@@ -29,9 +29,9 @@ describe('Schedule site visit', () => {
 		setupTestCase();
 	});
 
-	//afterEach(() => {
-	//	cy.deleteAppeals(appeal);
-	//});
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
 
 	const visitTypeTestCases = ['Accompanied', 'Access required', 'Unaccompanied'];
 
