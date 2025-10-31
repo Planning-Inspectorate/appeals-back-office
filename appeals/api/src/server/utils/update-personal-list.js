@@ -100,19 +100,21 @@ function sleep(ms) {
 
 /**
  * Refreshes the PersonalList for all appeals that have no PersonalList entries
+ * @param {boolean} [forceFullRefresh]
  * @returns {Promise<void>}
  */
-export async function refreshPersonalList() {
+export async function refreshPersonalList(forceFullRefresh = false) {
 	try {
-		const appealsWithoutPersonalListEntry =
-			await appealRepository.getAppealsWithNoPersonalListEntries();
+		const appealsWithoutPersonalListEntry = await appealRepository.getAppealIdList(
+			!forceFullRefresh
+		);
 		if (appealsWithoutPersonalListEntry.length > 0) {
 			logger.info(
 				`PersonalList will be refreshed for ${appealsWithoutPersonalListEntry.length} appeals`
 			);
 			for (const appeal of appealsWithoutPersonalListEntry) {
 				await updatePersonalList(appeal.id);
-				await sleep(10); // sleep for 10 milliseconds
+				await sleep(5); // sleep for 5 milliseconds
 			}
 			logger.info(`PersonalList refresh complete`);
 		}
