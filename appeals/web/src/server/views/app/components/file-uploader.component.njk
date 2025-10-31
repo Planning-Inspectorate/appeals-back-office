@@ -4,10 +4,7 @@
 {%- from "govuk/components/checkboxes/macro.njk" import govukCheckboxes -%}
 
 {%- macro extensionsHtml(params) -%}
-	<span>{{ "Each file must be a " if params.multiple else "The file must be a " }}{{ params.allowedTypes | formattedFileTypes }}{{ " and smaller than 25MB"  if params.multiple else "" }}.</span>
-	<span>
-		{{ "" if params.multiple else "The file must be smaller than 25MB." }}
-	</span>
+	<span>{{ "Each file must be a " if params.multiple else "The file must be a " }}{{ params.allowedTypes | formattedFileTypes }}{{ " and smaller than 25MB"}}.</span>
 {% endmacro %}
 
 {%- macro fileUploader(params) -%}
@@ -32,7 +29,7 @@
 			<div class="pins-file-upload__container">
 				<div class="govuk-body pins-file-upload__instructions">
 					{{ extensionsHtml(params) }}
-					{%- if params.multiple -%}<span>{{ 'The total size of your uploaded files must be smaller than 1GB.' }}</span>{%- endif -%}
+					{%- if params.multiple -%}<br><span>{{ 'The total size of your uploaded files must be smaller than 1GB.' }}</span>{%- endif -%}
 				</div>
 				<div class="middle-errors-hook">
 					<h2 class="pins-file-upload__container-title">{{ params.uploadContainerHeadingText }}</h2>
