@@ -4311,6 +4311,8 @@ export const appealDataToGetRequiredActions = {
 			addressId: null,
 			address: null
 		},
+		isInquirySetup: true,
+		hasInquiryAddress: false,
 		appealStatus: APPEAL_CASE_STATUS.EVENT,
 		procedureType: APPEAL_CASE_PROCEDURE.INQUIRY
 	},

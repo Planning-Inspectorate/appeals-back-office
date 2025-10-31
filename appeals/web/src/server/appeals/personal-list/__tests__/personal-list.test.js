@@ -493,6 +493,20 @@ describe('personal-list', () => {
 				expectedHtml: {
 					caseOfficer: 'Awaiting proof of evidence and witnesses'
 				}
+			},
+			{
+				name: 'Progress to inquiry',
+				requiredAction: 'progressToInquiry',
+				expectedHtml: {
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=%2Fappeals-service%2Fpersonal-list">Progress to inquiry<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+				}
+			},
+			{
+				name: 'Add inquiry address',
+				requiredAction: 'addInquiryAddress',
+				expectedHtml: {
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/inquiry/change/address-details?backUrl=%2Fappeals-service%2Fpersonal-list">Add inquiry address<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+				}
 			}
 		];
 
