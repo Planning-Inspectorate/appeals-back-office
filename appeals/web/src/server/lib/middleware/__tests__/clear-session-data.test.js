@@ -9,20 +9,58 @@ describe('clear-session-data', () => {
 		next = jest.fn();
 	});
 	describe('clearSessionData', () => {
-		it('Should not clear session of params that are part of the required session params', () => {
+		it('Should not clear session of account param', () => {
 			const req = {
 				session: {
 					account: 'user account info',
-					permissions: 'permissions',
-					cookie: 'cookies info'
+					shouldBeCleared: 'someValue'
 				}
 			};
 			const res = {};
 
 			clearSessionData(req, res, next);
-			expect(req.session.account).toBe('user account info');
-			expect(req.session.permissions).toBe('permissions');
-			expect(req.session.cookie).toBe('cookies info');
+			expect(req.session).toEqual({ account: 'user account info' });
+		});
+
+		it('Should not clear session of cookie param', () => {
+			const req = {
+				session: {
+					cookie: 'some cookie info',
+					shouldBeCleared: 'someValue'
+				}
+			};
+			const res = {};
+
+			clearSessionData(req, res, next);
+			expect(req.session).toEqual({ cookie: 'some cookie info' });
+		});
+
+		it('Should not clear session of permissions param', () => {
+			const req = {
+				session: {
+					permissions: 'some permissions info',
+					shouldBeCleared: 'someValue'
+				}
+			};
+			const res = {};
+
+			clearSessionData(req, res, next);
+			expect(req.session).toEqual({ permissions: 'some permissions info' });
+		});
+
+		it('Should not clear session of notificationBanners', () => {
+			const req = {
+				session: {
+					notificationBanners: [{ banner: 'some notification banner info' }],
+					shouldBeCleared: 'someValue'
+				}
+			};
+			const res = {};
+
+			clearSessionData(req, res, next);
+			expect(req.session).toEqual({
+				notificationBanners: [{ banner: 'some notification banner info' }]
+			});
 		});
 
 		it('Should clear session of params that are not part of the required session params', () => {

@@ -8,7 +8,12 @@ export const clearSessionData = (req, res, next) => {
 	}
 
 	// clears all session data except for account, permissions, and cookies
-	const requiredSessionParams = new Set(['account', 'permissions', 'cookie']);
+	const requiredSessionParams = new Set([
+		'account',
+		'permissions',
+		'cookie',
+		'notificationBanners'
+	]);
 
 	Object.keys(req.session).forEach((key) => {
 		if (!requiredSessionParams.has(key)) delete req.session[key];
