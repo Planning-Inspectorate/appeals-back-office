@@ -134,13 +134,16 @@ export function nationalListPage(
 			value: 'all',
 			selected: appealTypeFilter === 'all'
 		},
-		...appealTypes
-			.filter(({ key }) => enabledAppealTypes.includes(key))
-			.map(({ type, id }) => ({
-				text: type,
-				value: id.toString(),
-				selected: appealTypeFilter === id.toString()
-			}))
+		...enabledAppealTypes
+			.filter((appealType) => appealTypes.some((item) => item.key === appealType))
+			.map((appealType) => {
+				const { type, id } = appealTypes.find((item) => item.key === appealType) || {};
+				return {
+					text: type,
+					value: `${id}`,
+					selected: appealTypeFilter === `${id}`
+				};
+			})
 	];
 
 	const caseTeamFilterItemsArray = [
