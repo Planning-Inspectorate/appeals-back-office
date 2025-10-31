@@ -462,5 +462,39 @@ export const appealsApiClient = {
 		} catch {
 			return false;
 		}
+	},
+
+	async startAppeal(appealReference) {
+		try {
+			const url = `${baseUrl}appeals/${appealReference}/start-appeal`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+			expect(response.status).eq(201);
+		} catch {
+			return false;
+		}
+	},
+
+	async reviewLpaq(appealReference) {
+		try {
+			const url = `${baseUrl}appeals/${appealReference}/review-lpaq`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+			expect(response.status).eq(200);
+			const body = await response.json();
+			expect(body.validationOutcome.name).eq('Complete');
+		} catch {
+			return false;
+		}
 	}
 };
