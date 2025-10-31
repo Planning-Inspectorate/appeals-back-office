@@ -25,6 +25,20 @@ export const CASE_HISTORY_STATES = Object.freeze({
 			emailBody: ''
 		}
 	],
+	missedSiteVisit: [
+		{
+			detail: 'Missed site visit: {caseRef} sent to appellant',
+			emailLink: 'yes',
+			emailSubject: 'Subject: Missed site visit: {caseRef}',
+			emailBody: 'Nobody was at the site to give the inspector access.'
+		},
+		{
+			detail: 'Appellant missed the site visit',
+			emailLink: 'no',
+			emailSubject: '',
+			emailBody: ''
+		}
+	],
 	shareFinalComments: [
 		{
 			detail: `We have received the appellant's final comments: {caseRef} sent to LPA`,
