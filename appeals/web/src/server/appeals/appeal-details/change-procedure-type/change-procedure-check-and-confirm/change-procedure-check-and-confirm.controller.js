@@ -356,11 +356,12 @@ const mapSessionValuesForRequest = (values) => {
 	});
 
 	const address = {
-		...pick(values, ['addressLine1', 'addressLine2', 'town', 'county']),
-		postcode: values['postCode']
+		address: {
+			...pick(values, ['addressLine1', 'addressLine2', 'town', 'county']),
+			postcode: values['postCode']
+		}
 	};
-
-	const includeAddress = address && Object.keys(address).length > 0 ? address : {};
+	const includeAddress = address && Object.keys(address.address).length > 0 ? address : {};
 
 	/**@type {ChangeProcedureTypeRequest} */
 	return {
