@@ -139,7 +139,7 @@ describe('Link appeals', () => {
 });
 
 describe('Hidden elements', () => {
-	it('"Start" CTA on child appeals are hidden when at "Ready to start" stage', () => {
+	it('Start CTA on child appeals are hidden when at "Ready to start" stage', () => {
 		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
 			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
 				cases = [leadCaseObj, childCaseObj];
@@ -160,7 +160,172 @@ describe('Hidden elements', () => {
 		});
 	});
 
-	it.skip('"Change" CTA on child appeals are hidden on timetable section', () => {});
+	it.skip('Change CTA on child appeals are hidden on timetable section', () => {});
+
+	it('Cancel CTA is hidden on linked appeals', () => {
+		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
+			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
+				cases = [leadCaseObj, childCaseObj];
+
+				//child appeal
+				happyPathHelper.assignCaseOfficer(childCaseObj);
+				happyPathHelper.reviewAppellantCase(childCaseObj);
+				caseDetailsPage.verifyLinkExists('Cancel appeal', true);
+
+				//lead appeal
+				happyPathHelper.assignCaseOfficer(leadCaseObj);
+				caseDetailsPage.verifyLinkExists('Cancel appeal', true);
+				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
+				happyPathHelper.reviewAppellantCase(leadCaseObj);
+				happyPathHelper.startS78Case(leadCaseObj, 'written');
+				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+				caseDetailsPage.verifyLinkExists('Cancel appeal', false);
+
+				//child appeal
+				happyPathHelper.viewCaseDetails(childCaseObj);
+				caseDetailsPage.verifyLinkExists('Cancel appeal', false);
+			});
+		});
+	});
+
+	it('Change CTA is hidden on appeal procedure row on linked appeals', () => {
+		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
+			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
+				cases = [leadCaseObj, childCaseObj];
+
+				//child appeal
+				happyPathHelper.assignCaseOfficer(childCaseObj);
+				happyPathHelper.reviewAppellantCase(childCaseObj);
+
+				//lead appeal
+				happyPathHelper.assignCaseOfficer(leadCaseObj);
+				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
+				happyPathHelper.reviewAppellantCase(leadCaseObj);
+				happyPathHelper.startS78Case(leadCaseObj, 'written');
+				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+				caseDetailsPage.verifyActionExists('Appeal procedure', false);
+
+				//child appeal
+				happyPathHelper.viewCaseDetails(childCaseObj);
+				caseDetailsPage.verifyActionExists('Appeal procedure', false);
+			});
+		});
+	});
+});
+
+describe.only('Net residences', () => {
+	it('Net residence banner is only displayed on the lead appeal', () => {
+		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
+			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
+				cases = [leadCaseObj, childCaseObj];
+
+				cases.forEach((appeal) => {
+					cy.addLpaqSubmissionToCase(appeal);
+				});
+
+				//child appeal
+				happyPathHelper.assignCaseOfficer(childCaseObj);
+				happyPathHelper.reviewAppellantCase(childCaseObj);
+
+				//lead appeal
+				happyPathHelper.assignCaseOfficer(leadCaseObj);
+				happyPathHelper.reviewAppellantCase(leadCaseObj);
+				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
+				happyPathHelper.startS78Case(leadCaseObj, 'written');
+				happyPathHelper.reviewS78Lpaq(leadCaseObj);
+
+				//child appeal
+				happyPathHelper.reviewS78Lpaq(childCaseObj);
+				caseDetailsPage.validateBannerMessage(
+					'Important',
+					'Add number of residential units',
+					false
+				);
+
+				//lead appeal
+				happyPathHelper.viewCaseDetails(leadCaseObj);
+				caseDetailsPage.validateBannerMessage('Important', 'Add number of residential units');
+			});
+		});
+	});
+
+	it('Net residence rows are not visible on the child appeal', () => {
+		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
+			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
+				cases = [leadCaseObj, childCaseObj];
+
+				cases.forEach((appeal) => {
+					cy.addLpaqSubmissionToCase(appeal);
+				});
+
+				//child appeal
+				happyPathHelper.assignCaseOfficer(childCaseObj);
+				happyPathHelper.reviewAppellantCase(childCaseObj);
+
+				//lead appeal
+				happyPathHelper.assignCaseOfficer(leadCaseObj);
+				happyPathHelper.reviewAppellantCase(leadCaseObj);
+				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
+				happyPathHelper.startS78Case(leadCaseObj, 'written');
+				happyPathHelper.reviewS78Lpaq(leadCaseObj);
+
+				//child appeal
+				happyPathHelper.viewCaseDetails(childCaseObj);
+				happyPathHelper.reviewS78Lpaq(childCaseObj);
+
+				//lead appeal
+				happyPathHelper.viewCaseDetails(leadCaseObj);
+				happyPathHelper.addNetResidences('Net gain', '4');
+				caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added'),
+					caseDetailsPage.verifyRowValue('Net gain', '4');
+
+				//child appeal
+				happyPathHelper.viewCaseDetails(childCaseObj);
+				caseDetailsPage.validateBannerExists(false);
+				caseDetailsPage.verifyRowExists('Net gain', false);
+			});
+		});
+	});
+
+	//A2-4950
+	it('Net residence case history entries only appear on the lead appeal', () => {
+		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
+			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
+				cases = [leadCaseObj, childCaseObj];
+
+				cases.forEach((appeal) => {
+					cy.addLpaqSubmissionToCase(appeal);
+				});
+
+				//child appeal
+				happyPathHelper.assignCaseOfficer(childCaseObj);
+				happyPathHelper.reviewAppellantCase(childCaseObj);
+
+				//lead appeal
+				happyPathHelper.assignCaseOfficer(leadCaseObj);
+				happyPathHelper.reviewAppellantCase(leadCaseObj);
+				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
+				happyPathHelper.startS78Case(leadCaseObj, 'written');
+				happyPathHelper.reviewS78Lpaq(leadCaseObj);
+
+				//child appeal
+				happyPathHelper.viewCaseDetails(childCaseObj);
+				happyPathHelper.reviewS78Lpaq(childCaseObj);
+
+				//lead appeal
+				happyPathHelper.viewCaseDetails(leadCaseObj);
+				happyPathHelper.addNetResidences('Net gain', '4');
+				caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added'),
+					caseDetailsPage.clickViewCaseHistory();
+				caseDetailsPage.verifyTableCellTextCaseHistory('Case updated');
+
+				//child appeal
+				happyPathHelper.viewCaseDetails(childCaseObj);
+				caseDetailsPage.clickViewCaseHistory();
+				caseDetailsPage.verifyTableCellTextCaseHistory('Case updated', false);
+			});
+		});
+	});
 });
 
 describe('Timetable', () => {
@@ -201,6 +366,7 @@ describe('Timetable', () => {
 		});
 	});
 
+	//A2-4902
 	it.skip('Timetable changes are reflected in case history', () => {
 		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
 			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
@@ -367,7 +533,6 @@ describe('Site visit', () => {
 						recipient: 'agent@test.com'
 					}
 				];
-
 				cy.checkNotifySent(leadCaseObj, expectedNotifies);
 			});
 		});
