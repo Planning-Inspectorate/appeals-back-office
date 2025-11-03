@@ -5,11 +5,12 @@ import {
 import {
 	appellantCostsDecisionPage,
 	checkAndConfirmPage,
+	decisionLetterPage,
 	issueDecisionPage,
 	lpaCostsDecisionPage,
 	viewDecisionPage
 } from './issue-decision.mapper.js';
-import { postInspectorDecision, postInspectorInvalidReason } from './issue-decision.service.js';
+import { postInspectorDecision } from './issue-decision.service.js';
 
 import { createNewDocument } from '#app/components/file-uploader.component.js';
 import {
@@ -21,6 +22,7 @@ import {
 	lpaCostsDecisionBackUrl
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { getAttachmentsFolder } from '#appeals/appeal-documents/appeal.documents.service.js';
+import { isFeatureActive } from '#common/feature-flags.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { getOriginalAndLatestLetterDatesObject, getTodaysISOString } from '#lib/dates.js';
 import { preHeadingText } from '#lib/mappers/utils/appeal-preheading.js';
@@ -29,6 +31,7 @@ import { isParentAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	CASE_OUTCOME_INVALID,
 	DECISION_TYPE_APPELLANT_COSTS,
@@ -114,24 +117,28 @@ export const postIssueDecision = async (request, response) => {
 		session.inspectorDecision = {
 			...request.session.inspectorDecision,
 			outcome: body.decision,
-			invalidReason: body.invalidReason
+			invalidReason: body.decision === CASE_OUTCOME_INVALID ? body.invalidReason : ''
 		};
 	}
 
 	if (session.inspectorDecision.outcome === CASE_OUTCOME_INVALID) {
-		const {
-			appellantHasAppliedForCosts,
-			lpaHasAppliedForCosts,
-			appellantDecisionHasAlreadyBeenIssued,
-			lpaDecisionHasAlreadyBeenIssued
-		} = buildIssueDecisionLogicData(currentAppeal);
-
-		if (appellantHasAppliedForCosts && !appellantDecisionHasAlreadyBeenIssued) {
-			nextPageUrl = `${baseUrl(currentAppeal)}/appellant-costs-decision`;
-		} else if (lpaHasAppliedForCosts && !lpaDecisionHasAlreadyBeenIssued) {
-			nextPageUrl = `${baseUrl(currentAppeal)}/lpa-costs-decision`;
+		if (isFeatureActive(FEATURE_FLAG_NAMES.INVALID_DECISION_LETTER)) {
+			nextPageUrl = `${baseUrl(currentAppeal)}/decision-letter`;
 		} else {
-			nextPageUrl = checkDecisionUrl(request);
+			const {
+				appellantHasAppliedForCosts,
+				lpaHasAppliedForCosts,
+				appellantDecisionHasAlreadyBeenIssued,
+				lpaDecisionHasAlreadyBeenIssued
+			} = buildIssueDecisionLogicData(currentAppeal);
+
+			if (appellantHasAppliedForCosts && !appellantDecisionHasAlreadyBeenIssued) {
+				nextPageUrl = `${baseUrl(currentAppeal)}/appellant-costs-decision`;
+			} else if (lpaHasAppliedForCosts && !lpaDecisionHasAlreadyBeenIssued) {
+				nextPageUrl = `${baseUrl(currentAppeal)}/lpa-costs-decision`;
+			} else {
+				nextPageUrl = checkDecisionUrl(request);
+			}
 		}
 	}
 
@@ -184,6 +191,67 @@ export const renderIssueDecision = async (request, response) => {
 };
 
 /**
+ * @param {Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postDecisionLetter = async (request, response) => {
+	const { currentAppeal, params, body, session, errors } = request;
+
+	if (errors) {
+		return renderDecisionLetter(request, response);
+	}
+
+	/** @type {import('./issue-decision.types.js').DecisionLetterRequest} */
+	session.decisionLetter = {
+		appealId: params.appealId,
+		...request.session.decisionLetter,
+		outcome: body.decisionLetter
+	};
+
+	const { appellantHasAppliedForCosts, appellantDecisionHasAlreadyBeenIssued } =
+		buildIssueDecisionLogicData(currentAppeal);
+
+	let nextPageUrl;
+
+	if (body.decisionLetter === 'true') {
+		nextPageUrl = `${baseUrl(currentAppeal)}/decision-letter-upload`;
+	} else {
+		if (session.inspectorDecision.files) {
+			session.inspectorDecision.files = [];
+		}
+		if (appellantHasAppliedForCosts && !appellantDecisionHasAlreadyBeenIssued) {
+			nextPageUrl = `${baseUrl(currentAppeal)}/appellant-costs-decision`;
+		} else {
+			nextPageUrl = addBackLinkQueryToUrl(request, checkDecisionUrl(request));
+		}
+	}
+	return response.redirect(nextPageUrl);
+};
+
+/**
+ *
+ * @param {Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const renderDecisionLetter = async (request, response) => {
+	const { errors, currentAppeal } = request;
+
+	const backUrl = `${baseUrl(currentAppeal)}/decision`;
+
+	const mappedPageContent = decisionLetterPage(
+		currentAppeal,
+		request.session.decisionLetter,
+		getBackLinkUrlFromQuery(request) || backUrl,
+		errors
+	);
+
+	return response.status(200).render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/**
  *
  * @param {Session} session
  * @param {string} decisionType
@@ -191,8 +259,8 @@ export const renderIssueDecision = async (request, response) => {
 function storeFileUploadInfo(session, decisionType) {
 	// Note that postDocumentUpload and renderDocumentUpload functions use the fileUploadInfo at the route of the session object.
 	// This makes sure the values are stored in the session for the decision type so the session.fileUploadInfo can be reused.
-	const { outcome } = session[decisionType] || {};
-	session[decisionType] = structuredClone({ outcome, ...session.fileUploadInfo });
+	const { outcome, invalidReason } = session[decisionType] || {};
+	session[decisionType] = structuredClone({ outcome, invalidReason, ...session.fileUploadInfo });
 	delete session.fileUploadInfo;
 }
 
@@ -276,7 +344,9 @@ export const renderDecisionLetterUpload = async (request, response) => {
 		};
 	}
 
-	const backUrl = isParentAppeal(currentAppeal)
+	const backUrl = request.session.inspectorDecision?.invalidReason
+		? `${baseUrl(currentAppeal)}/decision-letter`
+		: isParentAppeal(currentAppeal)
 		? `${baseUrl(currentAppeal)}/${
 				currentAppeal.linkedAppeals[currentAppeal.linkedAppeals.length - 1].appealId
 		  }/decision`
@@ -558,16 +628,27 @@ export const postCheckDecision = async (request, response) => {
 		await Promise.all(
 			decisions
 				.filter((decision) => !decision.isChildAppeal)
-				.map((decision) => postDecisionDocument({ apiClient, decision }))
+				.map(
+					async (decision) =>
+						decision.files && (await postDecisionDocument({ apiClient, decision }))
+				)
 		);
 		const decisionsToPost = decisions.map((decision) => {
-			const { appealId, decisionType, outcome, files, isChildAppeal = false } = decision;
+			const {
+				appealId,
+				decisionType,
+				outcome,
+				files,
+				invalidReason,
+				isChildAppeal = false
+			} = decision;
 			return {
 				appealId,
 				decisionType,
-				documentGuid: files[0].GUID,
+				documentGuid: files && files[0].GUID,
 				documentDate: getTodaysISOString(),
 				outcome: decisionType === DECISION_TYPE_INSPECTOR ? outcome : null,
+				invalidReason,
 				isChildAppeal
 			};
 		});
@@ -575,10 +656,6 @@ export const postCheckDecision = async (request, response) => {
 		if (decisionsToPost.length) {
 			await postInspectorDecision(apiClient, appealId, decisionsToPost);
 		}
-	}
-
-	if (invalidReason) {
-		await postInspectorInvalidReason(request.apiClient, appealId, invalidReason);
 	}
 
 	addNotificationBannerToSession({

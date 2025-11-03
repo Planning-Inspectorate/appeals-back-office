@@ -5,6 +5,7 @@ import {
 	DECISION_TYPE_INSPECTOR,
 	DECISION_TYPE_LPA_COSTS
 } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_DECISION_OUTCOME } from '@planning-inspectorate/data-model';
 
 /**
  * @typedef {import('@pins/express/types/express.js').Request & {specificDecisionType?: string}} Request
@@ -49,7 +50,10 @@ export function getDecisions(session) {
 		{ ...inspectorDecision, decisionType: DECISION_TYPE_INSPECTOR },
 		{ ...appellantCostsDecision, decisionType: DECISION_TYPE_APPELLANT_COSTS },
 		{ ...lpaCostsDecision, decisionType: DECISION_TYPE_LPA_COSTS }
-	].filter((decision) => decision?.files?.length);
+	].filter(
+		(decision) =>
+			decision.outcome === APPEAL_CASE_DECISION_OUTCOME.INVALID || decision?.files?.length
+	);
 
 	if (childDecisions?.decisions?.length) {
 		decisions.push(
@@ -59,6 +63,7 @@ export function getDecisions(session) {
 				appealId: decision.appealId.toString(),
 				decisionType: DECISION_TYPE_INSPECTOR,
 				files: inspectorDecision.files,
+				invalidReason: inspectorDecision.invalidReason,
 				isChildAppeal: true
 			}))
 		);
