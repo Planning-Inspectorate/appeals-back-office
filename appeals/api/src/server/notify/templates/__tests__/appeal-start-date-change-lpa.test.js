@@ -42,6 +42,10 @@ describe('appeal-start-date-change-appellant.md', () => {
 			'',
 			'We will decide the appeal by a hearing. You can tell us if you think a different procedure is more appropriate in the questionnaire.',
 			'',
+			'# Next steps',
+			'',
+			'[Submit your questionnaire](/mock-front-office-url/manage-appeals/134526) by 01 January 2025.',
+			'',
 			'The Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
