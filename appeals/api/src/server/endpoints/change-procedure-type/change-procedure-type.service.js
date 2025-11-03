@@ -1,14 +1,20 @@
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 
-import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import {
+	formatAddressForDb,
+	formatAddressSingleLine
+} from '#endpoints/addresses/addresses.formatter.js';
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { notifySend } from '#notify/notify-send.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
 import {
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_NO_RECIPIENT_EMAIL
 } from '@pins/appeals/constants/support.js';
+import { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
+import { formatInTimeZone } from 'date-fns-tz';
 
 /**
  * @param {import('src/server/openapi-types.js').ChangeProcedureTypeRequest} data
@@ -60,6 +66,8 @@ export const changeProcedureToWritten = async (data, appealId) => {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
 };
+
+/** @typedef {import('@pins/appeals.api').Schema.Address} Address */
 
 /**
  * @param {import('src/server/openapi-types.js').ChangeProcedureTypeRequest} data
@@ -236,6 +244,8 @@ export const changeProcedureToInquiry = async (data, appealId) => {
  * @param {Appeal} appeal
  * @param {string} appealProcedure
  * @param {string | undefined} existingAppealProcedure
+ * @param {string | undefined} proofOfEvidenceAndWitnessesDueDate
+ * @param {import('#endpoints/appeals.js').SingleAddressResponse | undefined} address
  * @returns {Promise<void>}
  */
 export const sendChangeProcedureTypeNotifications = async (
@@ -243,23 +253,65 @@ export const sendChangeProcedureTypeNotifications = async (
 	templateName,
 	appeal,
 	appealProcedure,
-	existingAppealProcedure
+	existingAppealProcedure,
+	proofOfEvidenceAndWitnessesDueDate,
+	address
 ) => {
 	const lpaStatement = await databaseConnector.representation.findFirst({
 		where: { appealId: appeal.id, representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT }
 	});
+
+	const inquiry = await databaseConnector.inquiry.findUnique({
+		where: { appealId: appeal.id },
+		include: {
+			address: true
+		}
+	});
+
+	const conferenceDate = inquiry?.inquiryStartTime ? new Date(inquiry.inquiryStartTime) : null;
+	const weekBeforeConferenceDate = conferenceDate
+		? new Date(conferenceDate.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString()
+		: '';
+
 	const personalisation = {
 		change_message: `We have changed your appeal procedure to ${
 			appealProcedure === 'written' ? 'written representations' : appealProcedure
 		} ${
-			existingAppealProcedure === 'hearing'
+			existingAppealProcedure === 'hearing' && appeal.hearing
 				? `and cancelled your hearing`
-				: existingAppealProcedure === 'inquiry'
+				: existingAppealProcedure === 'inquiry' && appeal.inquiry
 				? `and cancelled your inquiry`
+				: existingAppealProcedure === 'written' && appeal.siteVisit
+				? 'and cancelled your site visit'
 				: ''
 		}.`,
 		appeal_procedure: appealProcedure,
-		team_email_address: await getTeamEmailFromAppealId(appeal.id)
+		team_email_address: await getTeamEmailFromAppealId(appeal.id),
+		inquiry_date: dateISOStringToDisplayDate(
+			inquiry?.inquiryStartTime
+				? typeof inquiry?.inquiryStartTime === 'string'
+					? inquiry?.inquiryStartTime
+					: inquiry?.inquiryStartTime.toISOString()
+				: ''
+		),
+		inquiry_time: dateISOStringToDisplayTime12hr(
+			inquiry?.inquiryStartTime
+				? typeof inquiry?.inquiryStartTime === 'string'
+					? inquiry?.inquiryStartTime
+					: inquiry?.inquiryStartTime.toISOString()
+				: ''
+		),
+		inquiry_expected_days: inquiry?.estimatedDays ? inquiry?.estimatedDays.toString() : '',
+		inquiry_address: address
+			? formatAddressSingleLine({ ...formatAddressForDb(address), id: 0 })
+			: '',
+		week_before_conference_date: inquiry?.inquiryStartTime
+			? dateISOStringToDisplayDate(weekBeforeConferenceDate)
+			: '',
+		proof_of_evidence_due_date: proofOfEvidenceAndWitnessesDueDate
+			? dateISOStringToDisplayDate(proofOfEvidenceAndWitnessesDueDate)
+			: '',
+		existing_appeal_procedure: existingAppealProcedure ?? ''
 	};
 	await sendNotifications(notifyClient, templateName, appeal, lpaStatement, personalisation);
 };
@@ -309,3 +361,23 @@ const sendNotifications = async (
 		});
 	});
 };
+
+/**
+ * @param {string | null | undefined} dateISOString
+ * @returns {string}
+ */
+function dateISOStringToDisplayTime12hr(dateISOString) {
+	if (typeof dateISOString === 'undefined' || dateISOString === null) {
+		return '';
+	}
+
+	let displayTimeString;
+
+	try {
+		displayTimeString = formatInTimeZone(dateISOString, DEFAULT_TIMEZONE, `h:mmaaa`);
+	} catch (e) {
+		displayTimeString = '';
+	}
+
+	return displayTimeString;
+}
