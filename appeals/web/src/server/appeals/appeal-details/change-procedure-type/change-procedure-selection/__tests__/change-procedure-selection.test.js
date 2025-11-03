@@ -236,8 +236,6 @@ describe('Change procedure type', () => {
 			expect(unprettifiedErrorSummaryHtml).toContain('Select the appeal procedure</a>');
 		});
 
-		//TODO: 'sort this test out'
-
 		// it('should redirect to the timetable due page if a existing procedure is Written and change to Hearing', async () => {
 		// 	nock('http://test/')
 		// 		.get('/appeals/1')
