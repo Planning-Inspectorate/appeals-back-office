@@ -11,6 +11,8 @@ import {
 	ERROR_INVALID_PROCEDURE_TYPE
 } from '@pins/appeals/constants/support.js';
 import {
+	changeProcedureToHearing,
+	changeProcedureToInquiry,
 	changeProcedureToWritten,
 	sendChangeProcedureTypeNotifications
 } from './change-procedure-type.service.js';
@@ -33,10 +35,10 @@ export const requestChangeOfProcedureType = async (req, res) => {
 				await changeProcedureToWritten(data, appealId);
 				break;
 			case 'hearing':
-				// logic for hearing
+				await changeProcedureToHearing(data, appealId);
 				break;
 			case 'inquiry':
-				// logic for inquiry
+				await changeProcedureToInquiry(data, appealId);
 				break;
 			default:
 				logger.error(`Appeal procedure ${data.appealProcedure} is not valid`);
