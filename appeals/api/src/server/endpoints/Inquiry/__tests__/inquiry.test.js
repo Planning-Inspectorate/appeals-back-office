@@ -95,8 +95,10 @@ describe('inquiry routes', () => {
 
 		describe('POST', () => {
 			test('creates a single inquiry with address', async () => {
-				// @ts-ignore
+				fullPlanningAppeal.appealType.type = 'Planning appeal';
+
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				// @ts-ignore
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
 					.send(requestData)
@@ -116,6 +118,7 @@ describe('inquiry routes', () => {
 				);
 				const personalisation = {
 					appeal_reference_number: '1345264',
+					appeal_type: 'Planning',
 					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 					lpa_reference: '48269/APP/2021/1482',
 					inquiry_date: '1 January 2999',

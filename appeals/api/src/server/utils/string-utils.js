@@ -41,4 +41,12 @@ function capitalizeFirstLetter(str) {
 	return str.toUpperCase();
 }
 
-export { camelToScreamingSnake, capitalizeFirstLetter };
+/**
+ * @param {string} appealType
+ * @returns {string}
+ */
+const trimAppealType = (appealType) => {
+	return appealType.endsWith(' appeal') ? appealType.replace(' appeal', '') : appealType;
+};
+
+export { camelToScreamingSnake, capitalizeFirstLetter, trimAppealType };

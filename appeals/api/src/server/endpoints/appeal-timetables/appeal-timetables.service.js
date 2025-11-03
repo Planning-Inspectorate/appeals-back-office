@@ -10,6 +10,7 @@ import transitionState from '#state/transition-state.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { trimAppealType } from '#utils/string-utils.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
 import {
 	FEATURE_FLAG_NAMES,
@@ -113,7 +114,7 @@ const getStartCaseNotifyParams = async (
 	const hearingSuffix = hearingStartTime ? '-hearing' : '';
 
 	const { type = '', key: appealTypeKey = 'D' } = appeal.appealType || {};
-	const appealType = type?.endsWith(' appeal') ? type.replace(' appeal', '') : type;
+	const appealType = trimAppealType(type);
 
 	const appellantTemplate = appeal.caseStartedDate
 		? 'appeal-start-date-change-appellant'

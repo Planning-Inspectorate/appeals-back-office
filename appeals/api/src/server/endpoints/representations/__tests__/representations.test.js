@@ -703,7 +703,7 @@ describe('/appeals/:id/reps', () => {
 
 			const expectedEmailPayload = {
 				lpa_reference: appeal.applicationReference,
-				deadline_date: '',
+				deadline_date: '16 December 2024',
 				appeal_reference_number: appeal.reference,
 				reasons: ['Supporting documents missing', 'Other: Provided documents were incomplete'],
 				site_address: expectedSiteAddress,
@@ -791,7 +791,7 @@ describe('/appeals/:id/reps', () => {
 
 			const expectedEmailPayload = {
 				lpa_reference: appeal.applicationReference,
-				deadline_date: '',
+				deadline_date: '16 December 2024',
 				appeal_reference_number: appeal.reference,
 				reasons: ['Supporting documents missing', 'Other: Provided documents were incomplete'],
 				site_address: expectedSiteAddress,

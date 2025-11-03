@@ -5,6 +5,7 @@ import { notifySend } from '#notify/notify-send.js';
 import inquiryRepository from '#repositories/inquiry.repository.js';
 import transitionState from '#state/transition-state.js';
 import { databaseConnector } from '#utils/database-connector.js';
+import { trimAppealType } from '#utils/string-utils.js';
 import { EVENT_TYPE, PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_SYSTEM_UUID,
@@ -54,6 +55,7 @@ const sendInquiryDetailsNotifications = async (
 	startDate
 ) => {
 	const personalisation = {
+		appeal_type: trimAppealType(appeal.appealType?.type ?? ''),
 		start_date: dateISOStringToDisplayDate(
 			typeof startDate === 'string' ? startDate : startDate.toISOString()
 		),
