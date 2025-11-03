@@ -60,6 +60,128 @@ describe('GET /change-appeal-procedure-type/hearing/change-event-date-known', ()
 
 		expect(unprettifiedHtml).toContain('Continue</button>');
 	});
+
+	it('should render and not delete existing session data if procedure type is not changed', async () => {
+		nock('http://test/')
+			.get('/appeals/1')
+			.reply(200, {
+				...appealDataWithoutStartDate,
+				appealStatus: 'lpa_questionnaire',
+				appealType: 'Planning appeal',
+				procedureType: 'written',
+				documentationSummary: {
+					lpaQuestionnaire: {
+						status: 'not received'
+					}
+				}
+			})
+			.persist();
+
+		nock('http://test/')
+			.get('/appeals/1/appellant-cases/0')
+			.reply(200, { planningObligation: { hasObligation: false }, procedureType: 'written' })
+			.persist();
+
+		await request
+			.post(
+				`/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type`
+			)
+			.send({
+				appealProcedure: 'hearing'
+			});
+
+		await request
+			.post(
+				`/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-event-date-known`
+			)
+			.send({
+				dateKnown: 'yes'
+			});
+
+		await request
+			.post(
+				`/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type`
+			)
+			.send({
+				appealProcedure: 'hearing'
+			});
+
+		const response = await request.get(
+			`/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-event-date-known`
+		);
+
+		expect(response.statusCode).toBe(200);
+
+		const html = parseHtml(response.text).innerHTML;
+
+		expect(html).toMatchSnapshot();
+
+		const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+		expect(unprettifiedHtml).toContain(
+			'type="radio" value="yes" checked><label class="govuk-label govuk-radios__label" for="date-known"> Yes</label>'
+		);
+	});
+
+	it('should render and delete existing session data if procedure type is changed', async () => {
+		nock('http://test/')
+			.get('/appeals/1')
+			.reply(200, {
+				...appealDataWithoutStartDate,
+				appealStatus: 'lpa_questionnaire',
+				appealType: 'Planning appeal',
+				procedureType: 'written',
+				documentationSummary: {
+					lpaQuestionnaire: {
+						status: 'not received'
+					}
+				}
+			})
+			.persist();
+
+		nock('http://test/')
+			.get('/appeals/1/appellant-cases/0')
+			.reply(200, { planningObligation: { hasObligation: false }, procedureType: 'written' })
+			.persist();
+
+		await request
+			.post(
+				`/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type`
+			)
+			.send({
+				appealProcedure: 'inquiry'
+			});
+
+		await request
+			.post(
+				`/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-event-date-known`
+			)
+			.send({
+				dateKnown: 'yes'
+			});
+
+		await request
+			.post(
+				`/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type`
+			)
+			.send({
+				appealProcedure: 'hearing'
+			});
+
+		const response = await request.get(
+			`/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-event-date-known`
+		);
+
+		expect(response.statusCode).toBe(200);
+
+		const html = parseHtml(response.text).innerHTML;
+
+		expect(html).toMatchSnapshot();
+
+		const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+		expect(unprettifiedHtml).toContain(
+			'type="radio" value="yes"><label class="govuk-label govuk-radios__label" for="date-known"> Yes</label>'
+		);
+	});
 });
 
 describe('POST /change-appeal-procedure-type/hearing/change-event-date-known', () => {

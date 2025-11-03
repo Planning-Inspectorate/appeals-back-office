@@ -57,21 +57,25 @@ export const postChangeSelectProcedure = async (request, response) => {
 			request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
 		const newProcedureType = sessionValues.appealProcedure;
 
-		// Delete all dependent session values for the existing perocedure type
-		delete sessionValues['dateKnown'];
-		delete sessionValues['event-date-day'];
-		delete sessionValues['event-date-month'];
-		delete sessionValues['event-date-year'];
-		delete sessionValues['event-time-hour'];
-		delete sessionValues['event-time-minute'];
-		delete sessionValues['estimationDays'];
-		delete sessionValues['addressKnown'];
-		delete sessionValues['addressLine1'];
-		delete sessionValues['addressLine2'];
-		delete sessionValues['estimationYesNo'];
-		delete sessionValues['postCode'];
-		delete sessionValues['town'];
-		delete sessionValues['county'];
+		if (newProcedureType !== sessionValues.selectedProcedureType) {
+			// Delete all dependent session values for the existing perocedure type
+			delete sessionValues['dateKnown'];
+			delete sessionValues['event-date-day'];
+			delete sessionValues['event-date-month'];
+			delete sessionValues['event-date-year'];
+			delete sessionValues['event-time-hour'];
+			delete sessionValues['event-time-minute'];
+			delete sessionValues['estimationDays'];
+			delete sessionValues['addressKnown'];
+			delete sessionValues['addressLine1'];
+			delete sessionValues['addressLine2'];
+			delete sessionValues['estimationYesNo'];
+			delete sessionValues['postCode'];
+			delete sessionValues['town'];
+			delete sessionValues['county'];
+		}
+
+		sessionValues.selectedProcedureType = newProcedureType;
 
 		switch (newProcedureType) {
 			case APPEAL_CASE_PROCEDURE.WRITTEN: {
