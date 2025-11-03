@@ -56,7 +56,6 @@ export function personalListPage(
 	const account = /** @type {AccountInfo} */ (authSession.getAccount(session));
 	const userGroups = account?.idTokenClaims?.groups ?? [];
 	const isCaseOfficer = userGroups.includes(config.referenceData.appeals.caseOfficerGroupId);
-
 	const urlToSearchCaseOfficer = addBackLinkQueryToUrl(
 		request,
 		'personal-list/search-case-officer'
@@ -235,7 +234,10 @@ export function personalListPage(
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Personal list',
-		heading: caseOfficer ? `Appeals assigned to ${caseOfficer.name}` : 'Your appeals',
+		heading:
+			caseOfficer && caseOfficer?.id != account.localAccountId
+				? `Appeals assigned to ${caseOfficer.name}`
+				: 'Your appeals',
 		pageComponents: []
 	};
 
@@ -250,9 +252,10 @@ export function personalListPage(
 	) {
 		pageContent.pageComponents?.push(filterComponent, casesComponent);
 	} else {
-		pageContent.heading = caseOfficer
-			? `${caseOfficer.name} is not assigned to any appeals`
-			: 'You are not assigned to any appeals';
+		pageContent.heading =
+			caseOfficer && caseOfficer?.id != account.localAccountId
+				? `${caseOfficer.name} is not assigned to any appeals`
+				: 'You are not assigned to any appeals';
 		pageContent.pageComponents?.push(searchAllCasesButton);
 	}
 
