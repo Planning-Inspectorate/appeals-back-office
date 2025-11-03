@@ -86,7 +86,7 @@ const appealDataCasAdvert = {
 };
 const appealDataAdvert = {
 	...lpaqAppealData,
-	appealType: 'Advertisement appeal'
+	appealType: 'Advertisement'
 };
 
 const FieldTestCases = [
@@ -1219,9 +1219,7 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain('LPA questionnaire</h1>');
 
 			expect(element.innerHTML).toContain('1. Constraints, designations and other issues</h2>');
-			expect(element.innerHTML).toContain(
-				'Is advertisement appeal the correct type of appeal?</dt>'
-			);
+			expect(element.innerHTML).toContain('Is advertisement the correct type of appeal?</dt>');
 			expect(element.innerHTML).toContain('Does the development change a listed building?</dt>');
 			expect(element.innerHTML).toContain(
 				'Does the development affect the setting of listed buildings?</dt>'

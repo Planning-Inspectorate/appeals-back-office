@@ -32,7 +32,7 @@ export const APPEAL_TYPE = Object.freeze({
 	ENFORCEMENT_NOTICE: 'Enforcement notice appeal',
 	ENFORCEMENT_LISTED_BUILDING: 'Enforcement listed building and conservation area appeal',
 	DISCONTINUANCE_NOTICE: 'Discontinuance notice appeal',
-	ADVERTISEMENT: 'Advertisement appeal',
+	ADVERTISEMENT: 'Advertisement',
 	COMMUNITY_INFRASTRUCTURE_LEVY: 'Community infrastructure levy',
 	PLANNING_OBLIGATION: 'Planning obligation appeal',
 	AFFORDABLE_HOUSING_OBLIGATION: 'Affordable housing obligation appeal',
