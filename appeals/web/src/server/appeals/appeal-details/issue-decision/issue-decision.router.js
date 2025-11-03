@@ -35,6 +35,19 @@ router
 	);
 
 router
+	.route('/decision-letter')
+	.get(
+		assertUserHasPermission(permissionNames.setCaseOutcome),
+		asyncHandler(controller.renderDecisionLetter)
+	)
+	.post(
+		validators.validateDecisionLetter,
+		assertUserHasPermission(permissionNames.setCaseOutcome),
+		saveBodyToSession('issueDecision'),
+		asyncHandler(controller.postDecisionLetter)
+	);
+
+router
 	.route('/decision-letter-upload')
 	.get(
 		assertUserHasPermission(permissionNames.setCaseOutcome),

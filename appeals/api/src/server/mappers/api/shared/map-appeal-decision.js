@@ -1,10 +1,6 @@
 import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
 import { isValidOutcome, isValidVirusCheckStatus } from '#utils/mapping/map-enums.js';
-import {
-	APPEAL_CASE_DECISION_OUTCOME,
-	APPEAL_CASE_STAGE,
-	APPEAL_DOCUMENT_TYPE
-} from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Api.AppealDecision} AppealDecision */
@@ -29,10 +25,7 @@ export const mapAppealDecision = (data) => {
 				(d) => d.guid === appeal.inspectorDecision?.decisionLetterGuid
 			);
 			if (outcome) {
-				if (
-					outcome !== APPEAL_CASE_DECISION_OUTCOME.INVALID &&
-					decisionLetter?.latestDocumentVersion
-				) {
+				if (decisionLetter?.latestDocumentVersion) {
 					const avCheckStatus = getAvScanStatus(decisionLetter.latestDocumentVersion);
 					if (isValidVirusCheckStatus(avCheckStatus)) {
 						return {

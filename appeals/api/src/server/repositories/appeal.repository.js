@@ -262,7 +262,10 @@ const updateAppealById = (
  * @param {SetAppealDecisionRequest} data
  * @returns {PrismaPromise<[InspectorDecision, DocumentVersion]>}
  */
-const setAppealDecision = (id, { documentDate, documentGuid, version = 1, outcome }) => {
+const setAppealDecision = (
+	id,
+	{ documentDate, documentGuid, version = 1, outcome, invalidDecisionReason = null }
+) => {
 	const decisionDate = new Date(documentDate).toISOString();
 	// @ts-ignore
 	return databaseConnector.$transaction(async (tx) => {
@@ -275,7 +278,8 @@ const setAppealDecision = (id, { documentDate, documentGuid, version = 1, outcom
 				},
 				outcome,
 				decisionLetterGuid: documentGuid,
-				caseDecisionOutcomeDate: new Date(documentDate)
+				caseDecisionOutcomeDate: new Date(documentDate),
+				invalidDecisionReason: invalidDecisionReason ? invalidDecisionReason : null
 			}
 		});
 

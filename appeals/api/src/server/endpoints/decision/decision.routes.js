@@ -4,9 +4,10 @@ import { Router as createRouter } from 'express';
 import { postInspectorDecision } from './decision.controller.js';
 import {
 	getDateValidator,
-	getDecisionTypeValidator,
 	getDecisionsValidator,
+	getDecisionTypeValidator,
 	getDocumentValidator,
+	getInvalidDecisionReasonValidator,
 	getOutcomeValidator
 } from './decision.validator.js';
 
@@ -42,6 +43,7 @@ router.post(
 	getOutcomeValidator,
 	getDateValidator,
 	getDocumentValidator,
+	getInvalidDecisionReasonValidator,
 	asyncHandler(postInspectorDecision)
 );
 

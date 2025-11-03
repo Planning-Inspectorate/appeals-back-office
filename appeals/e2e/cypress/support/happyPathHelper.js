@@ -260,15 +260,6 @@ export const happyPathHelper = {
 		caseDetailsPage.clickIssueDecision();
 		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(decision));
 
-		if (decision === 'Invalid') {
-			caseDetailsPage.fillTextArea('The appeal is invalid because of X reason', 0);
-			caseDetailsPage.clickButtonByText('Continue');
-		} else {
-			caseDetailsPage.clickButtonByText('Continue');
-			fileUploader.uploadFiles(sampleFiles.pdf);
-			caseDetailsPage.clickButtonByText('Continue');
-		}
-
 		const issueCosts = (bool) => {
 			if (bool) {
 				basePage.selectRadioButtonByValue('Yes');
@@ -280,6 +271,17 @@ export const happyPathHelper = {
 				basePage.clickButtonByText('Continue');
 			}
 		};
+
+		if (decision === 'Invalid') {
+			caseDetailsPage.fillTextArea('The appeal is invalid because of X reason', 0);
+			caseDetailsPage.clickButtonByText('Continue');
+			// this is actually choosing not to upload the decision letter for an invalid appeal
+			issueCosts(false);
+		} else {
+			caseDetailsPage.clickButtonByText('Continue');
+			fileUploader.uploadFiles(sampleFiles.pdf);
+			caseDetailsPage.clickButtonByText('Continue');
+		}
 
 		//this is not for which costs are issued but which costs are eligible to be issued
 		switch (route) {

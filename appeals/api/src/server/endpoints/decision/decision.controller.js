@@ -12,7 +12,7 @@ import { publishChildDecision, publishCostsDecision, publishDecision } from './d
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
-/** @typedef {{decisionType: string, outcome: string, documentGuid: string, documentDate: Date, appealId: number, isChildAppeal: boolean}} Decision */
+/** @typedef {{decisionType: string, outcome: string, invalidReason?: string, documentGuid: string, documentDate: Date, appealId: number, isChildAppeal: boolean}} Decision */
 
 /**
  * @param {Request} req
@@ -47,6 +47,7 @@ export const postInspectorDecision = async (req, res) => {
 					documentDate,
 					documentGuid,
 					outcome,
+					invalidReason: invalidDecisionReason,
 					appealId: decisionAppealId,
 					isChildAppeal
 				} = decision;
@@ -72,7 +73,8 @@ export const postInspectorDecision = async (req, res) => {
 							documentGuid,
 							notifyClient,
 							siteAddress,
-							azureAdUserId
+							azureAdUserId,
+							invalidDecisionReason || null
 						);
 					}
 					case DECISION_TYPE_APPELLANT_COSTS:
