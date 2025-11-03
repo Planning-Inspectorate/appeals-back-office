@@ -18,6 +18,8 @@ describe('assign-user', () => {
 		usersService.getUsersByRole = jest.fn().mockResolvedValue(activeDirectoryUsersData);
 		// @ts-ignore
 		usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
+		// @ts-ignore
+		usersService.getUserById = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
 	});
 	afterEach(teardown);
 

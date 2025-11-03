@@ -38,20 +38,50 @@ const getAppeal = async (req, res) => {
 const updateAppealById = async (req, res) => {
 	const {
 		appeal,
-		body: { caseOfficer, inspector, startedAt, validAt, planningApplicationReference, agent },
+		body: {
+			caseOfficerId,
+			inspectorId,
+			caseOfficerName,
+			inspectorName,
+			prevUserName,
+			startedAt,
+			validAt,
+			planningApplicationReference,
+			agent
+		},
 		params
 	} = req;
+
 	const appealId = Number(params.appealId);
 	const azureAdUserId = req.get('azureAdUserId');
 
+	const notifyClient = req.notifyClient;
 	try {
-		if (appealDetailService.assignedUserType({ caseOfficer, inspector })) {
-			await appealDetailService.assignUser(appeal, { caseOfficer, inspector }, azureAdUserId);
+		if (
+			appealDetailService.assignedUserType({ caseOfficer: caseOfficerId, inspector: inspectorId })
+		) {
+			await appealDetailService.assignUser(
+				appeal,
+				{ caseOfficer: caseOfficerId, inspector: inspectorId },
+				{
+					caseOfficerName: caseOfficerName,
+					inspectorName: inspectorName,
+					prevUserName: prevUserName
+				},
+				azureAdUserId,
+				notifyClient
+			);
 			if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) && appeal.childAppeals?.length) {
 				await appealDetailService.assignUserForLinkedAppeals(
 					appeal,
-					{ caseOfficer, inspector },
-					azureAdUserId
+					{ caseOfficer: caseOfficerId, inspector: inspectorId },
+					{
+						caseOfficerName: caseOfficerName,
+						inspectorName: inspectorName,
+						prevUserName: prevUserName
+					},
+					azureAdUserId,
+					notifyClient
 				);
 			}
 		} else {
@@ -78,8 +108,8 @@ const updateAppealById = async (req, res) => {
 	}
 
 	const response = {
-		...(caseOfficer !== undefined && { caseOfficer }),
-		...(inspector !== undefined && { inspector }),
+		...(caseOfficerId !== undefined && { caseOfficerId }),
+		...(inspectorId !== undefined && { inspectorId }),
 		...(startedAt !== undefined && { startedAt }),
 		...(validAt !== undefined && { validAt }),
 		...(planningApplicationReference !== undefined && { planningApplicationReference })
