@@ -53,7 +53,10 @@ export const requestChangeOfProcedureType = async (req, res) => {
 				'change-procedure-type',
 				appeal,
 				data.appealProcedure,
-				data.existingAppealProcedure
+				data.existingAppealProcedure,
+				data.proofOfEvidenceAndWitnessesDueDate,
+				// @ts-ignore
+				data.address
 			);
 
 			await createAuditTrail({
