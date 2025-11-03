@@ -224,7 +224,7 @@ const proofOfEvidenceNotifySend = async (
 	const reasons = formatReasons(representation);
 	const { proofOfEvidenceAndWitnessesDueDate = null } = appeal.appealTimetable || {};
 	const extendedDeadline = await formatExtendedDeadline(
-		allowResubmit,
+		true,
 		proofOfEvidenceAndWitnessesDueDate,
 		3
 	);
