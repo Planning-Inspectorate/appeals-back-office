@@ -84,8 +84,24 @@ export const linkAppeal = async (req, res) => {
 		await setAssignedTeamId(childAppeal.id, parentAppeal.assignedTeamId || null, azureAdUserId);
 		const caseOfficer = parentAppeal.caseOfficer?.azureAdUserId || null;
 		const inspector = parentAppeal.inspector?.azureAdUserId || null;
-		await appealDetailService.assignUser(childAppeal, { caseOfficer }, azureAdUserId);
-		await appealDetailService.assignUser(childAppeal, { inspector }, azureAdUserId);
+		const caseOfficerName = '';
+		const inspectorName = '';
+		const prevUserName = '';
+		await appealDetailService.assignUser(
+			childAppeal,
+			{ caseOfficer },
+			{ caseOfficerName, inspectorName, prevUserName },
+			azureAdUserId,
+			notifyClient
+		);
+
+		await appealDetailService.assignUser(
+			childAppeal,
+			{ inspector },
+			{ caseOfficerName, inspectorName, prevUserName },
+			azureAdUserId,
+			notifyClient
+		);
 	}
 
 	const siteAddress = currentAppeal.address

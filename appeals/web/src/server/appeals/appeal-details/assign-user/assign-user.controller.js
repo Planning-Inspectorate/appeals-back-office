@@ -1,3 +1,4 @@
+import usersService from '#appeals/appeal-users/users-service.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { assignUserPage, checkAndConfirmPage } from './assign-user.mapper.js';
@@ -52,6 +53,10 @@ export const postAssignUser = async (request, response, isInspector = false) => 
 		return renderAssignUser(request, response, isInspector);
 	}
 	request.session.user = JSON.parse(request.body.user);
+	request.session.prevUser =
+		userTypeText === 'inspector'
+			? await usersService.getUserById(currentAppeal.inspector, request.session)
+			: await usersService.getUserById(currentAppeal.caseOfficer, request.session);
 
 	return response.redirect(
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/assign-${userTypeText}/check-details`
@@ -98,9 +103,7 @@ export const getCheckDetails = async (request, response) => {
  */
 export const postCheckDetails = async (request, response) => {
 	const {
-		session: {
-			user: { id }
-		},
+		session: { user, prevUser },
 		currentAppeal: { appealId },
 		baseUrl
 	} = request;
@@ -108,11 +111,11 @@ export const postCheckDetails = async (request, response) => {
 	const isInspector = baseUrl.includes('inspector');
 
 	try {
-		await setAppealAssignee(request.apiClient, appealId, id, isInspector);
+		await setAppealAssignee(request.apiClient, appealId, user, isInspector, prevUser);
 		addNotificationBannerToSession({
 			session: request.session,
 			bannerDefinitionKey: `${isInspector ? 'inspector' : 'caseOfficer'}${
-				id == 0 ? 'Removed' : 'Assigned'
+				user.id == '0' ? 'Removed' : 'Assigned'
 			}`,
 			appealId
 		});

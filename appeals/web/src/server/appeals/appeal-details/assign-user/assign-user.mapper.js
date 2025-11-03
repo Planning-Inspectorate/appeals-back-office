@@ -21,7 +21,6 @@ import usersService from '../../appeal-users/users-service.js';
 export async function assignUserPage(appealDetails, isInspector, session, errors = undefined) {
 	const userTypeText = isInspector ? 'inspector' : 'case officer';
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
-
 	const users = await usersService.getUsersByRole(
 		isInspector
 			? config.referenceData.appeals.inspectorGroupId
@@ -40,14 +39,16 @@ export async function assignUserPage(appealDetails, isInspector, session, errors
 	];
 
 	const unassignUser = {
-		value: JSON.stringify({ id: 0, name: 'Unassign', email: 'Unassign' }),
+		value: JSON.stringify({ id: '0', name: 'Unassign', email: 'Unassign' }),
 		text: 'Unassign'
 	};
 	const removeUser = {
-		value: JSON.stringify({ id: 0, name: 'Remove', email: 'Remove' }),
+		value: JSON.stringify({ id: '0', name: 'Remove', email: 'Remove' }),
 		text: 'Remove'
 	};
+
 	isInspector && appealDetails?.inspector ? userArray.push(unassignUser, removeUser) : null;
+
 	/** @type {PageComponent} */
 	const selectSearchPageComponent = {
 		type: 'select',
@@ -111,7 +112,6 @@ export function checkAndConfirmPage(appealId, user, appealReference, baseUrl) {
 	const isInspector = baseUrl.includes('inspector');
 	const userTypeText = isInspector ? 'inspector' : 'case officer';
 	const mappedUser = mapUserText(user, userTypeText);
-
 	/** @type {PageComponent} */
 	const summaryListComponent = {
 		type: 'summary-list',

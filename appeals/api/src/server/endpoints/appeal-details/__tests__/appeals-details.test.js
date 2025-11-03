@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { notifySend } from '#notify/notify-send.js';
 import { request } from '#tests/../app-test.js';
 import { mocks } from '#tests/appeals/index.js';
 import { savedFolder } from '#tests/documents/mocks.js';
@@ -21,6 +22,7 @@ import {
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
+jest.mock('#notify/notify-send.js');
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 const householdAppeal = mocks.householdAppeal;
@@ -488,7 +490,7 @@ describe('Appeal detail routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}`)
 					.send({
-						caseOfficer: householdAppeal.caseOfficer.azureAdUserId
+						caseOfficerId: householdAppeal.caseOfficer.azureAdUserId
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -523,7 +525,7 @@ describe('Appeal detail routes', () => {
 
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
-					caseOfficer: householdAppeal.caseOfficer.azureAdUserId
+					caseOfficerId: householdAppeal.caseOfficer.azureAdUserId
 				});
 			});
 
@@ -536,7 +538,7 @@ describe('Appeal detail routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}`)
 					.send({
-						caseOfficer: householdAppeal.caseOfficer.azureAdUserId
+						caseOfficerId: householdAppeal.caseOfficer.azureAdUserId
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -568,21 +570,22 @@ describe('Appeal detail routes', () => {
 				});
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
-					caseOfficer: householdAppeal.caseOfficer.azureAdUserId
+					caseOfficerId: householdAppeal.caseOfficer.azureAdUserId
 				});
 			});
 
 			test('assigns an inspector to an appeal', async () => {
-				const inspector = '37b537ee-8a4e-42c3-8b97-089ddb8949e7';
+				const inspectorId = '37b537ee-8a4e-42c3-8b97-089ddb8949e7';
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({ id: 10, azureAdUserId: inspector });
+				databaseConnector.user.upsert.mockResolvedValue({ id: 10, azureAdUserId: inspectorId });
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}`)
 					.send({
-						inspector
+						inspectorId: inspectorId,
+						inspectorName: 'Tom Harry'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -602,18 +605,20 @@ describe('Appeal detail routes', () => {
 					}
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+				expect(notifySend).toHaveBeenCalledTimes(1);
+
 				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
-						details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [inspector]),
+						details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [inspectorId]),
 						loggedAt: expect.any(Date),
 						userId: 10
 					}
 				});
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
-					inspector
+					inspectorId
 				});
 			});
 
@@ -630,7 +635,9 @@ describe('Appeal detail routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}`)
 					.send({
-						inspector: null
+						inspectorId: null,
+						inspectorName: null,
+						prevUserName: 'Tom Harry'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -649,6 +656,8 @@ describe('Appeal detail routes', () => {
 					}
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+				expect(notifySend).toHaveBeenCalledTimes(1);
+
 				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
@@ -660,7 +669,7 @@ describe('Appeal detail routes', () => {
 				});
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
-					inspector: null
+					inspectorId: null
 				});
 			});
 
@@ -682,7 +691,7 @@ describe('Appeal detail routes', () => {
 				const response = await request
 					.patch(`/appeals/${leadAppeal.id}`)
 					.send({
-						caseOfficer: leadAppeal.caseOfficer.azureAdUserId
+						caseOfficerId: leadAppeal.caseOfficer.azureAdUserId
 					})
 					.set('azureAdUserId', azureAdUserId);
 				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(3);
@@ -762,7 +771,7 @@ describe('Appeal detail routes', () => {
 
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
-					caseOfficer: leadAppeal.caseOfficer.azureAdUserId
+					caseOfficerId: leadAppeal.caseOfficer.azureAdUserId
 				});
 			});
 
@@ -781,7 +790,7 @@ describe('Appeal detail routes', () => {
 				const response = await request
 					.patch(`/appeals/${leadAppeal.id}`)
 					.send({
-						caseOfficer: leadAppeal.caseOfficer.azureAdUserId
+						caseOfficerId: leadAppeal.caseOfficer.azureAdUserId
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -861,7 +870,7 @@ describe('Appeal detail routes', () => {
 				});
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
-					caseOfficer: leadAppeal.caseOfficer.azureAdUserId
+					caseOfficerId: leadAppeal.caseOfficer.azureAdUserId
 				});
 			});
 
@@ -881,7 +890,7 @@ describe('Appeal detail routes', () => {
 				const response = await request
 					.patch(`/appeals/${leadAppeal.id}`)
 					.send({
-						inspector
+						inspectorId: inspector
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -954,7 +963,7 @@ describe('Appeal detail routes', () => {
 
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
-					inspector
+					inspectorId: inspector
 				});
 			});
 
@@ -1074,14 +1083,14 @@ describe('Appeal detail routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}`)
 					.send({
-						caseOfficer: '1'
+						caseOfficerId: '1'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						caseOfficer: ERROR_MUST_BE_UUID
+						caseOfficerId: ERROR_MUST_BE_UUID
 					}
 				});
 			});
@@ -1090,14 +1099,14 @@ describe('Appeal detail routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}`)
 					.send({
-						inspector: '1'
+						inspectorId: '1'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						inspector: ERROR_MUST_BE_UUID
+						inspectorId: ERROR_MUST_BE_UUID
 					}
 				});
 			});
