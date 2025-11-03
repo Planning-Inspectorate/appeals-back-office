@@ -53,6 +53,12 @@ export const postChangeInquiryAddressKnown = async (request, response) => {
 		);
 	}
 
+	delete sessionValues['addressLine1'];
+	delete sessionValues['addressLine2'];
+	delete sessionValues['town'];
+	delete sessionValues['county'];
+	delete sessionValues['postCode'];
+
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-timetable`
 	);

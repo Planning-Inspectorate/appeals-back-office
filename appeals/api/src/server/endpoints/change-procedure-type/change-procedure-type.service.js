@@ -62,6 +62,175 @@ export const changeProcedureToWritten = async (data, appealId) => {
 };
 
 /**
+ * @param {import('src/server/openapi-types.js').ChangeProcedureTypeRequest} data
+ * @param {number} appealId
+ * @returns {Promise<void>}
+ */
+export const changeProcedureToHearing = async (data, appealId) => {
+	try {
+		await databaseConnector.$transaction(async (tx) => {
+			const procedureType = await tx.procedureType.findFirst({
+				where: { key: data.appealProcedure }
+			});
+
+			await tx.appeal.update({
+				where: { id: appealId },
+				data: {
+					procedureTypeId: procedureType?.id
+				}
+			});
+
+			const hearing = await tx.hearing.findFirst({ where: { appealId } });
+
+			if (hearing) {
+				await tx.hearing.update({
+					where: { appealId },
+					data: {
+						hearingStartTime: data.eventDate
+					}
+				});
+			} else {
+				if (data.eventDate) {
+					await tx.hearing.create({
+						data: {
+							appealId,
+							hearingStartTime: data.eventDate
+						}
+					});
+				}
+			}
+
+			const updatedAppeal = await tx.appealTimetable.update({
+				where: { appealId },
+				data: {
+					lpaQuestionnaireDueDate: data.lpaQuestionnaireDueDate,
+					lpaStatementDueDate: data.statementDueDate,
+					ipCommentsDueDate: data.ipCommentsDueDate,
+					statementOfCommonGroundDueDate: data.statementOfCommonGroundDueDate,
+					planningObligationDueDate: data.planningObligationDueDate
+				}
+			});
+			if (data.existingAppealProcedure === 'written') {
+				await tx.siteVisit.deleteMany({
+					where: { appealId }
+				});
+			} else if (data.existingAppealProcedure === 'inquiry') {
+				await tx.inquiry.deleteMany({
+					where: { appealId }
+				});
+				await tx.inquiryEstimate.deleteMany({
+					where: { appealId }
+				});
+			}
+			return { updatedAppeal };
+		});
+	} catch (error) {
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+	}
+};
+
+/**
+ * @param {import('src/server/openapi-types.js').ChangeProcedureTypeRequest} data
+ * @param {number} appealId
+ * @returns {Promise<void>}
+ */
+export const changeProcedureToInquiry = async (data, appealId) => {
+	try {
+		await databaseConnector.$transaction(async (tx) => {
+			const procedureType = await tx.procedureType.findFirst({
+				where: { key: data.appealProcedure }
+			});
+
+			await tx.appeal.update({
+				where: { id: appealId },
+				data: {
+					procedureTypeId: procedureType?.id
+				}
+			});
+
+			const inquiry = await tx.inquiry.findFirst({ where: { appealId } });
+
+			let address;
+			if (data.address && !inquiry?.addressId) {
+				address = await tx.address.create({
+					data: {
+						addressLine1: data.address.addressLine1,
+						addressLine2: data.address.addressLine2 || null,
+						addressTown: data.address.town,
+						addressCounty: data.address.county || null,
+						postcode: data.address.postcode,
+						addressCountry: data.address.country || null
+					}
+				});
+			} else if (data.address && inquiry?.addressId) {
+				address = await tx.address.update({
+					where: { id: inquiry.addressId },
+					data: {
+						addressLine1: data.address.addressLine1,
+						addressLine2: data.address.addressLine2 || null,
+						addressTown: data.address.town,
+						addressCounty: data.address.county || null,
+						postcode: data.address.postcode,
+						addressCountry: data.address.country || null
+					}
+				});
+			}
+
+			if (inquiry) {
+				await tx.inquiry.update({
+					where: { appealId },
+					data: {
+						inquiryStartTime: data.eventDate,
+						estimatedDays: data.estimatedDays ? Number(data.estimatedDays) : null,
+						addressId: data.address ? address?.id : null
+					}
+				});
+			} else {
+				if (data.eventDate) {
+					await tx.inquiry.create({
+						data: {
+							inquiryStartTime: data.eventDate,
+							inquiryEndTime: null,
+							appealId,
+							addressId: data?.address ? address?.id : null,
+							estimatedDays: data.estimatedDays ? Number(data.estimatedDays) : null
+						}
+					});
+				}
+			}
+
+			const updatedAppeal = await tx.appealTimetable.update({
+				where: { appealId },
+				data: {
+					lpaQuestionnaireDueDate: data.lpaQuestionnaireDueDate,
+					lpaStatementDueDate: data.statementDueDate,
+					ipCommentsDueDate: data.ipCommentsDueDate,
+					statementOfCommonGroundDueDate: data.statementOfCommonGroundDueDate,
+					planningObligationDueDate: data.planningObligationDueDate,
+					proofOfEvidenceAndWitnessesDueDate: data.proofOfEvidenceAndWitnessesDueDate
+				}
+			});
+
+			if (data.existingAppealProcedure === 'hearing') {
+				await tx.hearing.deleteMany({
+					where: { appealId }
+				});
+				await tx.hearingEstimate.deleteMany({
+					where: { appealId }
+				});
+			} else if (data.existingAppealProcedure === 'written') {
+				await tx.siteVisit.deleteMany({
+					where: { appealId }
+				});
+			}
+			return { updatedAppeal };
+		});
+	} catch (error) {
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+	}
+};
+
+/**
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} templateName
  * @param {Appeal} appeal
