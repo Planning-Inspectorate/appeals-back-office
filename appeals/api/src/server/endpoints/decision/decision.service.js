@@ -16,14 +16,16 @@ import {
 	AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED,
 	CASE_RELATIONSHIP_LINKED,
 	DECISION_TYPE_APPELLANT_COSTS,
-	DECISION_TYPE_LPA_COSTS
+	DECISION_TYPE_LPA_COSTS,
+	ERROR_NO_RECIPIENT_EMAIL
 } from '@pins/appeals/constants/support.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { loadEnvironment } from '@pins/platform';
 import {
 	APPEAL_CASE_DECISION_OUTCOME,
 	APPEAL_CASE_STAGE,
-	APPEAL_CASE_STATUS
+	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE
 } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
@@ -35,12 +37,26 @@ const environment = loadEnvironment(process.env.NODE_ENV);
 /**
  *
  * @param {Appeal} appeal
+ * @param {string} appealDocumentType
+ * @returns {boolean}
+ */
+const hasCostsDocument = (appeal, appealDocumentType) => {
+	const folder = appeal.folders?.find(
+		(folder) => folder.path === `${APPEAL_CASE_STAGE.COSTS}/${appealDocumentType}`
+	);
+	return !!folder?.documents?.length;
+};
+
+/**
+ *
+ * @param {Appeal} appeal
  * @param {string} outcome
  * @param {Date} documentDate
  * @param {string} documentGuid
  * @param {import('#endpoints/appeals.js').NotifyClient } notifyClient
  * @param {string} siteAddress
  * @param {string} azureAdUserId
+ * @param {string|null} [invalidDecisionReason]
  * @returns
  */
 export const publishDecision = async (
@@ -50,47 +66,80 @@ export const publishDecision = async (
 	documentGuid,
 	notifyClient,
 	siteAddress,
-	azureAdUserId
+	azureAdUserId,
+	invalidDecisionReason = null
 ) => {
 	const result = await appealRepository.setAppealDecision(appeal.id, {
 		documentDate,
 		documentGuid,
 		version: 1,
-		outcome: outcome === 'split decision' ? APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION : outcome
+		outcome: outcome === 'split decision' ? APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION : outcome,
+		invalidDecisionReason
 	});
 
 	if (result) {
+		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+
+		if (!recipientEmail || !appeal.lpa?.email) {
+			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+		}
+
+		const hasAppellantCostsDecision = hasCostsDocument(
+			appeal,
+			APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER
+		);
+
+		const hasLpaCostsDecision = hasCostsDocument(
+			appeal,
+			APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER
+		);
+
+		const lpaEmail = appeal.lpa?.email || '';
+
+		const nextState = invalidDecisionReason
+			? APPEAL_CASE_STATUS.INVALID
+			: APPEAL_CASE_STATUS.COMPLETE;
+
 		const personalisation = {
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
-			front_office_url: environment.FRONT_OFFICE_URL || '',
-			decision_date: formatDate(new Date(documentDate || ''), false),
-			child_appeals:
-				appeal.childAppeals
-					?.filter((childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED)
-					.map((childAppeal) => childAppeal.childRef) || []
+			...(invalidDecisionReason && { reasons: [invalidDecisionReason] }),
+			...(!invalidDecisionReason && {
+				front_office_url: environment.FRONT_OFFICE_URL || '',
+				decision_date: formatDate(new Date(documentDate || ''), false),
+				child_appeals:
+					appeal.childAppeals
+						?.filter((childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED)
+						.map((childAppeal) => childAppeal.childRef) || []
+			})
 		};
-		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-		const lpaEmail = appeal.lpa?.email || '';
 
 		if (recipientEmail) {
 			await notifySend({
 				azureAdUserId,
-				templateName: 'decision-is-allowed-split-dismissed-appellant',
+				templateName: invalidDecisionReason
+					? 'decision-is-invalid-appellant'
+					: 'decision-is-allowed-split-dismissed-appellant',
 				notifyClient,
 				recipientEmail,
-				personalisation
+				personalisation: invalidDecisionReason
+					? { ...personalisation, has_costs_decision: hasAppellantCostsDecision }
+					: personalisation
 			});
 		}
 
 		if (lpaEmail) {
 			await notifySend({
 				azureAdUserId,
-				templateName: 'decision-is-allowed-split-dismissed-lpa',
+				templateName: invalidDecisionReason
+					? 'decision-is-invalid-lpa'
+					: 'decision-is-allowed-split-dismissed-lpa',
 				notifyClient,
 				recipientEmail: lpaEmail,
-				personalisation
+				personalisation: invalidDecisionReason
+					? { ...personalisation, has_costs_decision: hasLpaCostsDecision }
+					: personalisation
 			});
 		}
 
@@ -102,7 +151,7 @@ export const publishDecision = async (
 			])
 		});
 
-		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.COMPLETE);
+		await transitionState(appeal.id, azureAdUserId, nextState);
 		await broadcasters.broadcastAppeal(appeal.id);
 
 		return result;

@@ -7,6 +7,13 @@ export const validateDecision = createValidator(
 	body('decision').trim().notEmpty().withMessage('Select the decision')
 );
 
+export const validateDecisionLetter = createValidator(
+	body('decisionLetter')
+		.trim()
+		.notEmpty()
+		.withMessage('Select yes if you want to issue a decision letter')
+);
+
 export const validateAppellantCostsDecision = createValidator(
 	body('appellantCostsDecision')
 		.trim()

@@ -803,6 +803,7 @@ interface SetAppealDecisionRequest {
 	documentGuid?: string;
 	version: number;
 	outcome: string;
+	invalidDecisionReason?: string | null;
 }
 
 interface SetInvalidAppealDecisionRequest {

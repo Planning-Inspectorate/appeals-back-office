@@ -81,33 +81,6 @@ describe('decision routes', () => {
 				}
 			});
 		});
-		test('returns 400 when outcome is invalid', async () => {
-			// @ts-ignore
-			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-			// @ts-ignore
-			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
-
-			const response = await request
-				.post(`/appeals/${householdAppeal.id}/decision`)
-				.send({
-					decisions: [
-						{
-							decisionType: DECISION_TYPE_INSPECTOR,
-							outcome: 'invalid',
-							documentDate: '2023-11-10',
-							documentGuid: documentCreated.guid
-						}
-					]
-				})
-				.set('azureAdUserId', azureAdUserId);
-
-			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({
-				errors: {
-					'decisions[0].outcome': ERROR_CASE_OUTCOME_MUST_BE_ONE_OF
-				}
-			});
-		});
 		test('returns 400 when date is incorrect', async () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);

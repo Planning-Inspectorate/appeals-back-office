@@ -236,14 +236,14 @@ describe('issue-decision', () => {
 			);
 		});
 
-		it(`should send the decision details for invalid, and redirect to the invalid reason page, if the decision is 'Invalid'`, async () => {
+		it(`should send the decision details for invalid, and redirect to the decision letter page, if the decision is 'Invalid'`, async () => {
 			const response = await request
 				.post(`${baseUrl}/1/issue-decision/decision`)
 				.send({ decision: CASE_OUTCOME_INVALID, invalidReason: 'my invalid reason' })
 				.expect(302);
 
 			expect(response.headers.location).toBe(
-				'/appeals-service/appeal-details/1/issue-decision/check-your-decision'
+				'/appeals-service/appeal-details/1/issue-decision/decision-letter'
 			);
 		});
 	});
