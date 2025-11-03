@@ -44,7 +44,8 @@ describe('site-visit-change-accompanied-to-access-required-appellant.md', () => 
 			'',
 			'The inspector will carry out the inspection on their own.',
 			'',
-			'The Planning Inspectorate'
+			'The Planning Inspectorate',
+			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 
 		await notifySend(notifySendData);
