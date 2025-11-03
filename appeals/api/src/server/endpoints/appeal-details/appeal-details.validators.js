@@ -23,14 +23,14 @@ export const patchAppealValidator = composeMiddleware(
 	validateDateParameter({ parameterName: 'validAt', mustBeNotBeFutureDate: true }),
 	validateStringParameter('planningApplicationReference'),
 	validateUuidParameter({
-		parameterName: 'caseOfficer',
+		parameterName: 'caseOfficerId',
 		parameterType: body,
 		isRequired: false,
 		allowNull: true
 	}),
 	validateBooleanParameter('isGreenBelt'),
 	validateUuidParameter({
-		parameterName: 'inspector',
+		parameterName: 'inspectorId',
 		parameterType: body,
 		isRequired: false,
 		allowNull: true

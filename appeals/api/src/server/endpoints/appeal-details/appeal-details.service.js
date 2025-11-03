@@ -1,7 +1,10 @@
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { contextEnum } from '#mappers/context-enum.js';
 import { mapCase } from '#mappers/mapper-factory.js';
+import { notifySend } from '#notify/notify-send.js';
 import { getAllAppealTypes } from '#repositories/appeal-type.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import serviceUserRepository from '#repositories/service-user.repository.js';
@@ -32,6 +35,7 @@ const {
 /** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
 /** @typedef {import('@pins/appeals.api').Appeals.AssignedUser} AssignedUser */
 /** @typedef {import('@pins/appeals.api').Api.Team} UsersToAssign */
+/** @typedef {import('@pins/appeals.api').Api.TeamV2} UserNamesToAssign */
 /** @typedef {import('@pins/appeals.api').Api.Appeal} AppealDto */
 /** @typedef {import('#mappers/mapper-factory.js').MapResult} MapResult */
 
@@ -72,32 +76,62 @@ const assignedUserType = ({ caseOfficer, inspector }) => {
 /**
  * @param {Appeal} caseData
  * @param {UsersToAssign} param0
+ * @param {UserNamesToAssign} param1
  * @param {string | undefined| null} azureAdUserId
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @returns {Promise<object | null>}
  */
-const assignUser = async (caseData, { caseOfficer, inspector }, azureAdUserId) => {
+const assignUser = async (
+	caseData,
+	{ caseOfficer, inspector },
+	// eslint-disable-next-line no-unused-vars
+	{ caseOfficerName, inspectorName, prevUserName },
+	azureAdUserId,
+	notifyClient
+) => {
 	const assignedUserId = caseOfficer || inspector;
 
 	const typeOfAssignedUser = assignedUserType({ caseOfficer, inspector });
-
 	if (typeOfAssignedUser) {
 		let userId = null;
 		if (assignedUserId) {
 			({ id: userId } = await userRepository.findOrCreateUser(assignedUserId));
 		}
-
 		const shouldTransitionState =
 			caseData.caseOfficerUserId === null && typeOfAssignedUser === 'caseOfficer';
 		await appealRepository.updateAppealById(caseData.id, { [typeOfAssignedUser]: userId });
 
 		let details = '';
+		const siteAddress = caseData.address
+			? formatAddressSingleLine(caseData.address)
+			: 'Address not available';
+
+		const personalisation = {
+			appeal_reference_number: caseData.reference || '',
+			site_address: siteAddress,
+			lpa_reference: caseData.applicationReference || '',
+			team_email_address: await getTeamEmailFromAppealId(caseData.id),
+			inspector_name: ''
+		};
+
+		let notifyAppellant = false;
+		let templateName = '';
 		if (caseOfficer) {
 			details = stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_CASE_OFFICER, [caseOfficer]);
 		} else if (inspector) {
 			details = stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [inspector]);
-		} else if (inspector == null && caseData.inspector && caseData.inspector.azureAdUserId) {
+			if (inspectorName) {
+				personalisation.inspector_name = inspectorName || '';
+				templateName = 'appeal-assign-inspector';
+				notifyAppellant = true;
+			}
+		} else if (inspector == null && prevUserName && caseData.inspector?.azureAdUserId) {
 			azureAdUserId = caseData.inspector.azureAdUserId;
-
+			if (prevUserName) {
+				personalisation.inspector_name = prevUserName || '';
+				templateName = 'appeal-unassign-inspector';
+				notifyAppellant = true;
+			}
 			details = stringTokenReplacement(AUDIT_TRAIL_UNASSIGNED_INSPECTOR, [azureAdUserId]);
 		}
 
@@ -106,6 +140,17 @@ const assignUser = async (caseData, { caseOfficer, inspector }, azureAdUserId) =
 			details,
 			azureAdUserId: azureAdUserId || AUDIT_TRAIL_SYSTEM_UUID
 		});
+		const recipientEmail = caseData.agent?.email || caseData.appellant?.email;
+
+		if (recipientEmail && notifyAppellant) {
+			await notifySend({
+				azureAdUserId: azureAdUserId || '',
+				templateName: templateName,
+				notifyClient,
+				recipientEmail,
+				personalisation: personalisation
+			});
+		}
 
 		if (shouldTransitionState && caseData.appealType) {
 			await transitionState(
@@ -122,19 +167,35 @@ const assignUser = async (caseData, { caseOfficer, inspector }, azureAdUserId) =
 /**
  * @param {Appeal} caseData
  * @param {UsersToAssign} usersToAssign
+ * @param {UserNamesToAssign} userNamesToAssign
  * @param {string|undefined} azureAdUserId
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @returns {Promise<object | null>}
  */
-const assignUserForLinkedAppeals = async (caseData, usersToAssign, azureAdUserId) => {
+const assignUserForLinkedAppeals = async (
+	caseData,
+	usersToAssign,
+	userNamesToAssign,
+	azureAdUserId,
+	notifyClient
+) => {
 	const { childAppeals = [] } = caseData || {};
 	return Promise.all(
 		childAppeals
 			.filter((linkedAppeal) => linkedAppeal?.type === CASE_RELATIONSHIP_LINKED)
 			.map(async (linkedAppeal) => {
 				// @ts-ignore
-				await appealDetailService.assignUser(linkedAppeal?.child, usersToAssign, azureAdUserId);
-				// @ts-ignore
-				await broadcasters.broadcastAppeal(linkedAppeal?.childId);
+				if (linkedAppeal?.child) {
+					await appealDetailService.assignUser(
+						linkedAppeal.child,
+						usersToAssign,
+						userNamesToAssign,
+						azureAdUserId,
+						notifyClient
+					);
+					// @ts-ignore
+					await broadcasters.broadcastAppeal(linkedAppeal.childId);
+				}
 			})
 	);
 };

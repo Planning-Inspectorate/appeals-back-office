@@ -3095,6 +3095,16 @@ export interface Team {
 	inspector?: string | null;
 }
 
+export interface TeamV2 {
+	/** @format uuid */
+	caseOfficerId?: string | null;
+	/** @format uuid */
+	inspectorId?: string | null;
+	caseOfficerName?: string | null;
+	inspectorName?: string | null;
+	prevUserName?: string | null;
+}
+
 export interface AppealSummary {
 	appealId: number;
 	appealReference: string;
