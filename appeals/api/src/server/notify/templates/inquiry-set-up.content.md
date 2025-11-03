@@ -7,8 +7,9 @@ We have set up your timetable.
 {% endif %}
 
 {% include 'parts/appeal-details.md' %}
+{% if is_lpa -%}
 Start date: {{start_date}}
-
+{% endif %}
 # Timetable
 
 ## Local planning authority questionnaire
@@ -54,22 +55,24 @@ Expected days: {{inquiry_expected_days}}
 Venue address: {{inquiry_address}}
 {% endif %}
 The details of the inquiry are subject to change. We will contact you:
-• if we make any changes to the inquiry
-• when we set up the case management conference
+
+- if we make any changes to the inquiry
+- when we set up the case management conference
 
 # What happens next
 
-{% if inquiry_address and is_lpa -%}
+{% if not inquiry_address and is_lpa -%}
 
 1. [Submit your questionnaire and other documents]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}), including your appeal notification letter and a list of those notified by {{questionnaire_due_date}}.
 
 2. Email {{team_email_address}} to confirm the venue address for the inquiry.
-{% elseif not inquiry_address and is_lpa -%}
+{% elseif inquiry_address and is_lpa -%}
 [Submit your questionnaire and other documents]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}), including your appeal notification letter and a list of those notified by {{questionnaire_due_date}}.
 {% elseif not is_lpa -%}
 We will let you know when you can:
-• view information from other parties in the appeals service
-• submit your proof of evidence and witnesses
+
+- view information from other parties in the appeals service
+- submit your proof of evidence and witnesses
 {% endif %}
 The Planning Inspectorate
 {{team_email_address}}
