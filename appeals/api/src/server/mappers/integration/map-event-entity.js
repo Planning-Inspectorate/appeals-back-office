@@ -1,6 +1,7 @@
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.SiteVisit & {appeal: Appeal}} SiteVisitWithAppeal */
 /** @typedef {import('@pins/appeals.api').Schema.Hearing & {appeal: Appeal}} HearingWithAppeal */
+/** @typedef {import('@pins/appeals.api').Schema.Inquiry & {appeal: Appeal}} InquiryWithAppeal */
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealEvent} AppealEvent */
 /** @typedef {import('@pins/appeals.api').Schema.Address} Address */
 import { EventType } from '@pins/event-client';
@@ -50,6 +51,28 @@ export const mapHearingEntity = (hearing, updateType) => {
 		eventEndDateTime: hearing.hearingEndTime?.toISOString() || null,
 		notificationOfSiteVisit: null,
 		...mapEventAddress(hearing.address)
+	};
+};
+
+/**
+ *
+ * @param {InquiryWithAppeal} inquiry
+ * @param { EventType } updateType
+ * @returns {AppealEvent}
+ */
+export const mapInquiryEntity = (inquiry, updateType) => {
+	return {
+		eventId: `${inquiry.appeal?.reference}-1`,
+		caseReference: inquiry.appeal?.reference ?? '',
+		eventType: EVENT_TYPE.INQUIRY,
+		eventName: `Inquiry #${inquiry.id}`,
+		eventStatus: updateType === EventType.Delete ? 'withdrawn' : 'offered',
+		isUrgent: false,
+		eventPublished: true,
+		eventStartDateTime: (inquiry.inquiryStartTime ?? inquiry.inquiryStartTime)?.toISOString() ?? '',
+		eventEndDateTime: inquiry.inquiryEndTime?.toISOString() || null,
+		notificationOfSiteVisit: null,
+		...mapEventAddress(inquiry.address)
 	};
 };
 

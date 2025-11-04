@@ -1696,4 +1696,112 @@ describe('inquiry routes', () => {
 			});
 		});
 	});
+
+	describe('DELETE', () => {
+		test('deletes a single inquiry', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue({ ...fullPlanningAppeal, inquiry });
+
+			const response = await request
+				.delete(`/appeals/${fullPlanningAppeal.id}/inquiry/${inquiry.id}`)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.inquiry.delete).toHaveBeenCalledWith({
+				where: {
+					id: inquiry.id
+				}
+			});
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: fullPlanningAppeal.id,
+					details: 'Inquiry cancelled',
+					loggedAt: expect.any(Date),
+					userId: 1
+				}
+			});
+			const personalisation = {
+				appeal_reference_number: '1345264',
+				site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+				lpa_reference: '48269/APP/2021/1482',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+			};
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				notifyClient: expect.anything(),
+				personalisation: {
+					...personalisation,
+					is_lpa: false
+				},
+				recipientEmail: fullPlanningAppeal.appellant.email,
+				templateName: 'inquiry-cancelled'
+			});
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				notifyClient: expect.anything(),
+				personalisation: {
+					...personalisation,
+					is_lpa: true
+				},
+				recipientEmail: fullPlanningAppeal.lpa.email,
+				templateName: 'inquiry-cancelled'
+			});
+
+			expect(response.status).toEqual(200);
+		});
+
+		test('returns an error if appealId is not a number', async () => {
+			const { inquiry } = fullPlanningAppeal;
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+			const response = await request
+				.delete(`/appeals/BUSSIN/inquiry/${inquiry.id}`)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: { appealId: 'must be a number' }
+			});
+		});
+
+		test('returns an error if inquiryId is not a number', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+			const response = await request
+				.delete(`/appeals/${fullPlanningAppeal.id}/inquiry/BUSSIN`)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: { inquiryId: 'must be a number' }
+			});
+		});
+
+		test('returns an error if the inquiry has already occurred', async () => {
+			const appeal = {
+				...fullPlanningAppeal,
+				inquiry: {
+					...fullPlanningAppeal.inquiry,
+					inquiryStartTime: new Date('2020-01-01')
+				}
+			};
+			const { inquiry } = appeal;
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+
+			const response = await request
+				.delete(`/appeals/${appeal.id}/inquiry/${inquiry.id}`)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: { inquiryStartTime: 'must be in the future' }
+			});
+		});
+	});
 });
