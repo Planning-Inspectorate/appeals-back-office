@@ -218,6 +218,11 @@ export const postChangeInquiryDate = async (request, response) => {
 	}
 
 	const { appealId } = request.currentAppeal;
+	request.session.changeInquiry = {
+		...(request.session.changeInquiry || {}),
+		...request.body
+	};
+	applyEditsForAppeal(request, 'changeInquiry', appealId);
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/change/estimation`);
 };
@@ -295,10 +300,21 @@ export const postInquiryEstimation = async (request, response) => {
  */
 export const postChangeInquiryEstimation = async (request, response) => {
 	if (request.errors) {
-		return renderInquiryEstimation(request, response, 'change');
+		const sessionValues = getSessionValuesForAppeal(
+			request,
+			'changeInquiry',
+			request.currentAppeal.appealId
+		);
+		return renderInquiryEstimation(request, response, 'change', sessionValues);
 	}
 
 	const { appealId } = request.currentAppeal;
+
+	request.session.changeInquiry = {
+		...(request.session.changeInquiry || {}),
+		...request.body
+	};
+	applyEditsForAppeal(request, 'changeInquiry', appealId);
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/change/address`);
 };

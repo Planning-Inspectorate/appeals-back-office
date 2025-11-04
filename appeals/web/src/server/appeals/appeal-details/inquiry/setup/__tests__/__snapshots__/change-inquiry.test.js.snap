@@ -258,7 +258,7 @@ exports[`change inquiry GET /inquiry/change/check-details when all pages have be
                                     </dl>
                                     <dl class="govuk-summary-list">
                                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected number of days to carry out the inquiry</dt>
-                                            <dd                                             class="govuk-summary-list__value">6 days</dd>
+                                            <dd                                             class="govuk-summary-list__value">10 days</dd>
                                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fchange%2Festimation"
                                                     data-cy="change-expected-number-of-days">Change<span class="govuk-visually-hidden"> Expected number of days to carry out the inquiry</span></a>
                                                 </dd>

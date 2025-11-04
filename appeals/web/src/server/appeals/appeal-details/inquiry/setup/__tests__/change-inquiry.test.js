@@ -655,11 +655,15 @@ describe('change inquiry', () => {
 			beforeEach(async () => {
 				nock('http://test/')
 					.get(`/appeals/${appealId}`)
-					.times(4)
+					.times(5)
 					.reply(200, { ...appealWithInquiry, appealId });
 
 				// set session data with post requests to previous pages
 				await request.post(`${baseUrl}/${appealId}/inquiry/change/date`).send(dateValues);
+				await request.post(`${baseUrl}/${appealId}/inquiry/change/estimation`).send({
+					inquiryEstimationYesNo: 'yes',
+					inquiryEstimationDays: '10'
+				});
 				await request
 					.post(`${baseUrl}/${appealId}/inquiry/change/address`)
 					.send({ addressKnown: 'yes' });
@@ -703,7 +707,7 @@ describe('change inquiry', () => {
 			it('should render the correct number of estimated days', () => {
 				expect(
 					pageHtml.querySelectorAll('dd.govuk-summary-list__value')?.[3]?.innerHTML.trim()
-				).toBe('6 days');
+				).toBe('10 days');
 			});
 
 			it('should render the submitted yes or no answer', () => {
