@@ -1009,6 +1009,11 @@ type InquiryResponse = {
 	estimatedDays: number | null;
 };
 
+type CancelInquiry = {
+	appealId?: number;
+	inquiryId: number;
+};
+
 type ListedBuildingDetailsResponse = {
 	id: number;
 	listEntry: string;
@@ -1048,6 +1053,7 @@ export {
 	BankHolidayFeedDivisions,
 	BankHolidayFeedEvents,
 	CancelHearing,
+	CancelInquiry,
 	CreateAuditTrail,
 	CreateAuditTrailRequest,
 	CreateHearing,

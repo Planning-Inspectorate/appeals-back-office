@@ -6,13 +6,15 @@ import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	AUDIT_TRAIL_INQUIRY_ADDRESS_ADDED,
+	AUDIT_TRAIL_INQUIRY_CANCELLED,
 	AUDIT_TRAIL_INQUIRY_SET_UP,
 	ERROR_FAILED_TO_SAVE_DATA,
+	VALIDATION_OUTCOME_CANCEL,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
 import { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { createInquiry, updateInquiry } from './inquiry.service.js';
+import { createInquiry, deleteInquiry, updateInquiry } from './inquiry.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -139,4 +141,30 @@ export const patchInquiry = async (req, res) => {
 	}
 
 	return res.status(201).send({ appealId, inquiryStartTime });
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const cancelInquiry = async (req, res) => {
+	const {
+		params: { appealId, inquiryId }
+	} = req;
+	const azureAdUserId = String(req.get('azureAdUserId'));
+	try {
+		await deleteInquiry({ inquiryId: Number(inquiryId) }, req.notifyClient, req.appeal);
+		await transitionState(Number(appealId), azureAdUserId, VALIDATION_OUTCOME_CANCEL);
+		await createAuditTrail({
+			appealId: Number(appealId),
+			azureAdUserId,
+			details: AUDIT_TRAIL_INQUIRY_CANCELLED
+		});
+	} catch (error) {
+		logger.error(error);
+		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
+	}
+
+	return res.status(200).send({ appealId, inquiryId });
 };
