@@ -16,6 +16,7 @@ import { mapCancelInquiry } from './submappers/inquiry-cancel-inquiry.js';
 import { mapInquiryDate } from './submappers/inquiry-date.mapper.js';
 import { mapInquiryDetails } from './submappers/inquiry-details.js';
 import { mapInquiryEstimates } from './submappers/inquiry-inquiry-estimates.js';
+import { mapSetUpInquiry } from './submappers/inquiry-set-up-inquiry.js';
 import { mapIpCommentsDueDate } from './submappers/ip-comments-due-date.mapper.js';
 import { mapIpComments } from './submappers/ip-comments.mapper.js';
 import { mapLPAFinalComments } from './submappers/lpa-final-comments.mapper.js';
@@ -56,5 +57,6 @@ export const submaps = {
 	appellantProofOfEvidence: mapAppellantProofOfEvidence,
 	lpaProofOfEvidence: mapLPAProofOfEvidence,
 	horizonReference: mapHorizonReference,
-	cancelInquiry: mapCancelInquiry
+	cancelInquiry: mapCancelInquiry,
+	setUpInquiry: mapSetUpInquiry
 };

@@ -6028,6 +6028,33 @@ describe('appeal-details', () => {
 				expect(unprettifiedHTML).toContain('<div id="case-details-inquiry-section">');
 				expect(unprettifiedHTML).toContain('Cancel inquiry</a>');
 			});
+			it('should render the inquiry details summary list with setup inquiry when there is no inquiry', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+						inquiry: null
+					});
+				nock('http://test/')
+					.get(`/appeals/${appealId}/reps?type=appellant_proofs_evidence`)
+					.reply(200, {});
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}/reps?type=lpa_proofs_evidence`)
+					.reply(200, {});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).toContain('<div id="case-details-inquiry-section">');
+				expect(unprettifiedHTML).toContain('govuk-button"> Set up inquiry</a');
+			});
 		});
 
 		describe('Cancel appeal', () => {

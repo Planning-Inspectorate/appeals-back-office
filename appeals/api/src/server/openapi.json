@@ -5705,134 +5705,6 @@
 			}
 		},
 		"/appeals/{appealId}/hearing/{hearingId}": {
-			"get": {
-				"tags": ["Hearing Details"],
-				"description": "Gets a single hearing by appeal ID",
-				"parameters": [
-					{
-						"name": "appealId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "hearingId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Gets a single hearing by ID",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HearingResponse"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/HearingResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					},
-					"404": {
-						"description": "Not Found"
-					}
-				}
-			},
-			"patch": {
-				"tags": ["Hearing Details"],
-				"description": "Updates hearing values for a single appeal by id",
-				"parameters": [
-					{
-						"name": "appealId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "hearingId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Updates a single hearing by id",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/UpdateHearing"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/UpdateHearing"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					},
-					"404": {
-						"description": "Not Found"
-					},
-					"500": {
-						"description": "Internal Server Error"
-					}
-				},
-				"requestBody": {
-					"in": "body",
-					"description": "Hearing details to update",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/UpdateHearingRequest"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/UpdateHearingRequest"
-							}
-						}
-					}
-				}
-			},
 			"delete": {
 				"tags": ["Hearing Details"],
 				"description": "Cancels a single hearing by id",
@@ -13214,6 +13086,19 @@
 					"estimatedDays": {
 						"type": "number",
 						"description": "Number of estimated days for the inquiry",
+						"example": 1
+					}
+				}
+			},
+			"CancelInquiry": {
+				"type": "object",
+				"properties": {
+					"appealId": {
+						"type": "number",
+						"example": 1
+					},
+					"inquiryId": {
+						"type": "number",
 						"example": 1
 					}
 				}

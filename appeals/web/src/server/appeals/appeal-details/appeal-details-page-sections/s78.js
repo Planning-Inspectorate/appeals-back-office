@@ -82,7 +82,7 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 
 	const caseHearing = getCaseHearing(mappedData, appealDetails, session);
 
-	const caseInquiry = getCaseInquiry(mappedData, appealDetails);
+	const caseInquiry = getCaseInquiry(mappedData, appealDetails, session);
 
 	const pageComponents = [
 		caseOverview,

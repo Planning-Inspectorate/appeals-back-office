@@ -2843,7 +2843,7 @@ export interface CreateInquiryRequest {
 	 * Date string of the inquiry start time: YYYY-MM-DDTHH:MM:SS+HH:MM
 	 * @example "2026-11-10T00:00:00.000Z"
 	 */
-	inquiryStartTime?: string | Date;
+	inquiryStartTime?: string;
 	/**
 	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
 	 * @example "2026-11-10T00:00:00.000Z"
@@ -2940,6 +2940,13 @@ export interface UpdateInquiryRequest {
 	 * @example 1
 	 */
 	estimatedDays?: number;
+}
+
+export interface CancelInquiry {
+	/** @example 1 */
+	appealId?: number;
+	/** @example 1 */
+	inquiryId?: number;
 }
 
 export interface InquiryResponse {

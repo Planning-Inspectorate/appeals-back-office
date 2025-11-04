@@ -1755,6 +1755,19 @@ export const spec = {
 				}
 			}
 		},
+		CancelInquiry: {
+			type: 'object',
+			properties: {
+				appealId: {
+					type: 'number',
+					example: 1
+				},
+				inquiryId: {
+					type: 'number',
+					example: 1
+				}
+			}
+		},
 		InquiryResponse: {
 			type: 'object',
 			properties: {

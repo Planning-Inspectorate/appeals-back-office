@@ -25,6 +25,7 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 /** @typedef {import('@pins/appeals.api').Schema.Inquiry} Inquiry */
 /** @typedef {import('@pins/appeals.api').Appeals.CreateInquiry} CreateInquiry */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateInquiry} UpdateInquiry */
+/** @typedef {import('@pins/appeals.api').Appeals.CancelInquiry} CancelInquiry */
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
 /** @typedef {import('express').NextFunction} NextFunction */
@@ -313,4 +314,31 @@ const updateInquiry = async (updateInquiryData, appeal) => {
 	}
 };
 
-export { checkInquiryExists, createInquiry, updateInquiry };
+/**
+ * @param {CancelInquiry} deleteInquiryData
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {Appeal} appeal
+ */
+const deleteInquiry = async (deleteInquiryData, notifyClient, appeal) => {
+	try {
+		const { inquiryId } = deleteInquiryData;
+
+		const existingInquiry = await inquiryRepository.getInquiryById(inquiryId);
+
+		await inquiryRepository.deleteInquiryById(inquiryId);
+
+		await broadcasters.broadcastEvent(
+			inquiryId,
+			EVENT_TYPE.INQUIRY,
+			EventType.Delete,
+			existingInquiry
+		);
+		await sendInquiryNotifications(notifyClient, 'inquiry-cancelled', appeal, {
+			team_email_address: await getTeamEmailFromAppealId(appeal.id)
+		});
+	} catch (error) {
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+	}
+};
+
+export { checkInquiryExists, createInquiry, deleteInquiry, updateInquiry };
