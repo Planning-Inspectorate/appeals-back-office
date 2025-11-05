@@ -22,6 +22,7 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
  * @param {number} appealTypeId
  * @param {number} assignedTeamId
  * @param {number} procedureTypeId
+ * @param {string} appellantProcedurePreferencePreFilter
  * @param {number} [pageNumber]
  * @param {number} [pageSize]
  */
@@ -36,6 +37,7 @@ const getAllAppeals = async (
 	appealTypeId,
 	assignedTeamId,
 	procedureTypeId,
+	appellantProcedurePreferencePreFilter,
 	pageNumber,
 	pageSize
 ) => {
@@ -58,7 +60,8 @@ const getAllAppeals = async (
 		isGreenBelt,
 		appealTypeId,
 		assignedTeamId,
-		procedureTypeId
+		procedureTypeId,
+		appellantProcedurePreferencePreFilter
 	);
 
 	const appeals = await databaseConnector.appeal.findMany({
@@ -109,6 +112,7 @@ const getAllAppeals = async (
  * @param {number} appealTypeId
  * @param {number} assignedTeamId
  * @param {number} procedureTypeId
+ * @param {string} appellantProcedurePreferencePreFilter
  */
 const getAllAppealsCount = async (
 	searchTerm,
@@ -120,7 +124,8 @@ const getAllAppealsCount = async (
 	isGreenBelt,
 	appealTypeId,
 	assignedTeamId,
-	procedureTypeId
+	procedureTypeId,
+	appellantProcedurePreferencePreFilter
 ) => {
 	const where = buildAllAppealsWhereClause(
 		searchTerm,
@@ -132,7 +137,8 @@ const getAllAppealsCount = async (
 		isGreenBelt,
 		appealTypeId,
 		assignedTeamId,
-		procedureTypeId
+		procedureTypeId,
+		appellantProcedurePreferencePreFilter
 	);
 
 	const count = await databaseConnector.appeal.count({ where });
@@ -151,6 +157,7 @@ const getAllAppealsCount = async (
  * @param {number} appealTypeId
  * @param {number} assignedTeamId
  * @param {number} procedureTypeId
+ * @param {string} appellantProcedurePreferencePreFilter
  */
 const getAppealsWithoutIncludes = async (
 	searchTerm,
@@ -162,7 +169,8 @@ const getAppealsWithoutIncludes = async (
 	isGreenBelt,
 	appealTypeId,
 	assignedTeamId,
-	procedureTypeId
+	procedureTypeId,
+	appellantProcedurePreferencePreFilter
 ) => {
 	const where = buildAllAppealsWhereClause(
 		searchTerm,
@@ -174,7 +182,8 @@ const getAppealsWithoutIncludes = async (
 		isGreenBelt,
 		appealTypeId,
 		assignedTeamId,
-		procedureTypeId
+		procedureTypeId,
+		appellantProcedurePreferencePreFilter
 	);
 
 	return databaseConnector.appeal.findMany({ where });
@@ -191,6 +200,7 @@ const getAppealsWithoutIncludes = async (
  * @param {number} appealTypeId
  * @param {number} assignedTeamId
  * @param {number} procedureTypeId
+ * @param {string} appellantProcedurePreferencePreFilter
  */
 const buildAllAppealsWhereClause = (
 	searchTerm,
@@ -202,7 +212,8 @@ const buildAllAppealsWhereClause = (
 	isGreenBelt,
 	appealTypeId,
 	assignedTeamId,
-	procedureTypeId
+	procedureTypeId,
+	appellantProcedurePreferencePreFilter
 ) => {
 	return {
 		appealStatus: {
@@ -273,6 +284,23 @@ const buildAllAppealsWhereClause = (
 			}),
 		...(!!procedureTypeId && {
 			procedureTypeId
+		}),
+		...(!!appellantProcedurePreferencePreFilter && {
+			appealStatus: {
+				some: {
+					valid: true,
+					status: {
+						in: [
+							APPEAL_CASE_STATUS.READY_TO_START,
+							APPEAL_CASE_STATUS.VALIDATION,
+							APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER
+						]
+					}
+				}
+			},
+			appellantCase: {
+				appellantProcedurePreference: appellantProcedurePreferencePreFilter
+			}
 		})
 	};
 };

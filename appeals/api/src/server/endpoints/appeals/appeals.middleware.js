@@ -54,3 +54,22 @@ export const validateAppealStatus = async (req, res, next) => {
 	}
 	next();
 };
+
+/**
+ * @type {import("express").RequestHandler}
+ * @returns {Promise<object|void>}
+ */
+export const validateProcedurePreference = async (req, res, next) => {
+	const appellantProcedurePreference = req.query.appellantProcedurePreference;
+	const validProcedurePreferences = ['hearing', 'inquiry'];
+
+	const isValidAppellantProcedurePreference =
+		typeof appellantProcedurePreference === 'string'
+			? validProcedurePreferences.includes(appellantProcedurePreference)
+			: !appellantProcedurePreference;
+
+	if (!isValidAppellantProcedurePreference) {
+		return res.status(400).send({ errors: { status: ERROR_MUST_BE_VALID_APPEAL_STATE } });
+	}
+	next();
+};

@@ -5,7 +5,11 @@ import {
 	getPersonalList,
 	updateCompletedEventsController
 } from './appeals.controller.js';
-import { validateAppealStatus, validateHasInspector } from './appeals.middleware.js';
+import {
+	validateAppealStatus,
+	validateHasInspector,
+	validateProcedurePreference
+} from './appeals.middleware.js';
 import { getAppealsValidator } from './appeals.validators.js';
 
 const router = createRouter();
@@ -80,6 +84,7 @@ router.get(
 	getAppealsValidator,
 	validateAppealStatus,
 	validateHasInspector,
+	validateProcedurePreference,
 	asyncHandler(getAppeals)
 );
 
