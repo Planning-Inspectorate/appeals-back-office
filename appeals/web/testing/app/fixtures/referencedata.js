@@ -1524,31 +1524,46 @@ export const appellantCaseIncompleteReasons = [
 	},
 	{
 		id: 2027,
+		name: "LPA's decision notice is missing",
+		hasText: false
+	},
+	{
+		id: 2028,
 		name: "LPA's decision notice is incorrect or incomplete",
 		hasText: true
 	},
 	{
-		id: 2028,
-		name: 'Documents and plans referred in the application form, decision notice and appeal covering letter are missing',
+		id: 2029,
+		name: 'Documents and/or plans referred in the application form, decision notice and appeal covering letter are missing',
 		hasText: true
 	},
 	{
-		id: 2029,
-		name: 'Site ownership certificate, agricultural holding certificate and declaration have not been completed on the appeal form',
-		hasText: false
-	},
-	{
 		id: 2030,
-		name: 'The original application form is incomplete or missing',
+		name: 'Agricultural holding certificate and declaration have not been completed on the appeal form',
 		hasText: false
 	},
 	{
 		id: 2031,
-		name: 'Statement of case and ground of appeal are missing',
+		name: 'The original application form is missing',
 		hasText: false
 	},
 	{
 		id: 2032,
+		name: 'The original application form is incomplete',
+		hasText: true
+	},
+	{
+		id: 2033,
+		name: 'Statement of case and ground of appeal are missing',
+		hasText: false
+	},
+	{
+		id: 2034,
+		name: 'Draft statement of common ground is missing',
+		hasText: false
+	},
+	{
+		id: 2035,
 		name: 'Other',
 		hasText: true
 	}

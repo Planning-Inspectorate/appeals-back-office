@@ -303,6 +303,11 @@ export const appellantCaseIncompleteReasons = [
 		hasText: false
 	},
 	{
+		id: 11,
+		name: 'Draft statement of common ground is missing',
+		hasText: false
+	},
+	{
 		id: 10,
 		name: 'Other',
 		hasText: true
