@@ -1,7 +1,10 @@
 import { startAppeal } from '#endpoints/appeal-timetables/appeal-timetables.controller.js';
 import { updateCompletedEvents } from '#endpoints/appeals/appeals.service.js';
 import { updateLPAQuestionnaireById } from '#endpoints/lpa-questionnaires/lpa-questionnaires.controller.js';
-import { updateRepresentation } from '#endpoints/representations/representations.controller.js';
+import {
+	publish,
+	updateRepresentation
+} from '#endpoints/representations/representations.controller.js';
 import { getAppealNotifications } from '#repositories/appeal-notification.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import { databaseConnector } from '#utils/database-connector.js';
@@ -425,4 +428,23 @@ export const simulateReviewLpaStatement = async (req, res) => {
 	req.body = { status: APPEAL_REPRESENTATION_STATUS.VALID };
 
 	return await updateRepresentation(req, res);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
+export const simulateShareIpCommentsAndLpaStatement = async (req, res) => {
+	const { appealReference } = req.params;
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: { reference: appealReference },
+		include: { appealStatus: true }
+	});
+
+	if (!appeal) return res.status(400).send(false);
+
+	req.appeal = appeal;
+
+	return await publish(req, res);
 };
