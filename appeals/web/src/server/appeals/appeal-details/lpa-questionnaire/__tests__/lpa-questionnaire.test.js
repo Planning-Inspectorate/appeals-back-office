@@ -986,7 +986,7 @@ describe('LPA Questionnaire review', () => {
 
 			expect(element.innerHTML).toContain('5. Site access</h2>');
 			expect(element.innerHTML).toContain(
-				'Might the inspector need access to the appellant’s land or property?</dt>'
+				'Will the inspector need access to the appellant’s land or property?</dt>'
 			);
 			expect(element.innerHTML).toContain('Address of the neighbour’s land or property</dt>');
 			expect(element.innerHTML).toContain('Are there any potential safety risks?</dt>');
@@ -1084,7 +1084,7 @@ describe('LPA Questionnaire review', () => {
 
 			expect(element.innerHTML).toContain('5. Site access</h2>');
 			expect(element.innerHTML).toContain(
-				'Might the inspector need access to the appellant’s land or property?</dt>'
+				'Will the inspector need access to the appellant’s land or property?</dt>'
 			);
 			expect(element.innerHTML).toContain('Address of the neighbour’s land or property</dt>');
 			expect(element.innerHTML).toContain('Are there any potential safety risks?</dt>');
@@ -1172,10 +1172,10 @@ describe('LPA Questionnaire review', () => {
 
 			expect(element.innerHTML).toContain('5. Site access</h2>');
 			expect(element.innerHTML).toContain(
-				'Might the inspector need access to the appellant’s land or property?</dt>'
+				'Will the inspector need access to the appellant’s land or property?</dt>'
 			);
 			expect(element.innerHTML).toContain(
-				'Might the inspector need to enter a neighbour’s land or property?</dt>'
+				'Will the inspector need to enter a neighbour’s land or property?</dt>'
 			);
 			expect(element.innerHTML).toContain('Address of the neighbour’s land or property</dt>');
 			expect(element.innerHTML).toContain('Are there any potential safety risks?</dt>');
@@ -1272,10 +1272,10 @@ describe('LPA Questionnaire review', () => {
 
 			expect(element.innerHTML).toContain('5. Site access</h2>');
 			expect(element.innerHTML).toContain(
-				'Might the inspector need access to the appellant’s land or property?</dt>'
+				'Will the inspector need access to the appellant’s land or property?</dt>'
 			);
 			expect(element.innerHTML).toContain(
-				'Might the inspector need to enter a neighbour’s land or property?</dt>'
+				'Will the inspector need to enter a neighbour’s land or property?</dt>'
 			);
 			expect(element.innerHTML).toContain('Address of the neighbour’s land or property</dt>');
 			expect(element.innerHTML).toContain('Are there any potential safety risks?</dt>');

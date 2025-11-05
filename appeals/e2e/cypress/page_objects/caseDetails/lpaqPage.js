@@ -133,7 +133,7 @@ export class LpaqPage extends Page {
 
 	assertInspectorAccess(value) {
 		this.assertFieldLabelAndValue(
-			'Might the inspector need access to the appellant’s land or property?',
+			'Will the inspector need access to the appellant’s land or property?',
 			value
 		);
 	}

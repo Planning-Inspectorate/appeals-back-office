@@ -69,7 +69,7 @@ export const postChangeNeighbouringSiteAccess = async (request, response) => {
 			session: request.session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			text: 'Might the inspector need to enter a neighbour’s land or property updated'
+			text: 'Will the inspector need to enter a neighbour’s land or property updated'
 		});
 
 		delete request.session.neighbouringSiteAccess;
