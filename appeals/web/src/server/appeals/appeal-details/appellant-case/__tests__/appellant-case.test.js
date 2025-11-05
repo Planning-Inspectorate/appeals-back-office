@@ -1899,7 +1899,7 @@ describe('appellant-case', () => {
 			nock.cleanAll();
 		});
 
-		it('should render the incomplete reason page', async () => {
+		it('should render the incomplete reason page and content', async () => {
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}`
 			);
@@ -1908,6 +1908,32 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('Why is the appeal incomplete?</h1>');
 			expect(element.innerHTML).toContain('data-module="govuk-checkboxes">');
+
+			// Checkbox content check
+			if (!element.textContent) {
+				throw new Error('Test setup failed: The main element was not found in the HTML');
+			}
+			const textContent = element.textContent.replace(/\s+/g, ' ').trim();
+			expect(textContent).toContain(
+				'Appellant name is not the same on the application form and appeal form'
+			);
+			expect(textContent).toContain(
+				'Attachments and/or appendices have not been included to the full statement of case'
+			);
+			expect(textContent).toContain("LPA's decision notice is missing");
+			expect(textContent).toContain("LPA's decision notice is incorrect or incomplete");
+			expect(textContent).toContain(
+				'Documents and/or plans referred in the application form, decision notice and appeal covering letter are missing'
+			);
+			expect(textContent).toContain(
+				'Agricultural holding certificate and declaration have not been completed on the appeal form'
+			);
+			expect(textContent).toContain('The original application form is missing');
+			expect(textContent).toContain('The original application form is incomplete');
+			expect(textContent).toContain('Statement of case and ground of appeal are missing');
+			expect(textContent).toContain('Draft statement of common ground is missing');
+			expect(textContent).toContain('Other');
+
 			expect(element.innerHTML).toContain('Continue</button>');
 		});
 	});
