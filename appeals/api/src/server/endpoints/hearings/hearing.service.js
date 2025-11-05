@@ -3,6 +3,7 @@ import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import hearingRepository from '#repositories/hearing.repository.js';
+import logger from '#utils/logger.js';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	ERROR_FAILED_TO_SAVE_DATA,
@@ -149,6 +150,7 @@ const createHearing = async (createHearingData, appeal, notifyClient, azureAdUse
 			);
 		}
 	} catch (error) {
+		logger.error(error, 'Failed to create hearing');
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
 };
@@ -201,6 +203,7 @@ const updateHearing = async (
 
 		return result;
 	} catch (error) {
+		logger.error(error, 'Failed to update hearing');
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
 };
@@ -227,6 +230,7 @@ const deleteHearing = async (deleteHearingData, notifyClient, appeal, azureAdUse
 		);
 		await sendHearingNotifications(notifyClient, 'hearing-cancelled', appeal, azureAdUserId);
 	} catch (error) {
+		logger.error(error, 'Failed to delete hearing');
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
 };
