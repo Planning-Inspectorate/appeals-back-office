@@ -3,6 +3,7 @@ import {
 	simulateReviewIpComment,
 	simulateReviewLPAQ,
 	simulateReviewLpaStatement,
+	simulateShareIpCommentsAndLpaStatement,
 	simulateStartAppeal
 } from '#endpoints/test-utils/test-utils.controller.js';
 import { fullPlanningAppeal, householdAppeal } from '#tests/appeals/mocks.js';
@@ -22,6 +23,7 @@ app.post('/:appealReference/start-appeal', simulateStartAppeal);
 app.post('/:appealReference/review-ip-comment', simulateReviewIpComment);
 app.post('/:appealReference/review-lpaq', simulateReviewLPAQ);
 app.post('/:appealReference/review-lpa-statement', simulateReviewLpaStatement);
+app.post('/:appealReference/share-comments-and-statement', simulateShareIpCommentsAndLpaStatement);
 const testApiRequest = supertest(app);
 
 describe('test utils routes', () => {
@@ -532,5 +534,35 @@ describe('test utils routes', () => {
 			expect(response.status).toEqual(400);
 			expect(response.body).toEqual(false);
 		});
+	});
+
+	describe('POST /:appealReference/share-comments-and-statement', () => {
+		test('returns 200 for valid appeal reference', async () => {
+			const testAppeal = householdAppeal;
+			testAppeal.appealStatus[0].status = 'statements';
+			databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{ representationType: 'lpa_statement' },
+				{ representationType: 'comment' }
+			]);
+
+			const response = await testApiRequest
+				.post('/1/share-comments-and-statement')
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual([
+				{ representationType: 'lpa_statement' },
+				{ representationType: 'comment' }
+			]);
+		});
+	});
+
+	test('returns 400 for invalid appeal', async () => {
+		databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+		const response = await testApiRequest.post('/1/share-comments-and-statement');
+		expect(response.status).toEqual(400);
+		expect(response.body).toEqual(false);
 	});
 });

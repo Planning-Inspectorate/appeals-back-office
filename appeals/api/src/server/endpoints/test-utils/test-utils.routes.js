@@ -10,6 +10,7 @@ import {
 	simulateReviewIpComment,
 	simulateReviewLPAQ,
 	simulateReviewLpaStatement,
+	simulateShareIpCommentsAndLpaStatement,
 	simulateSiteVisitElapsed,
 	simulateStartAppeal,
 	simulateStatementsElapsed
@@ -240,6 +241,25 @@ router.post(
 		#swagger.responses[400] = {}
 	 */
 	asyncHandler(simulateReviewLpaStatement)
+);
+
+router.post(
+	'/:appealReference/share-comments-and-statement',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/share-comments-and-statement'
+		#swagger.description = 'A test endpoint to simulate the completion of a share ip comments and lpa statement event'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {
+			schema: { $ref: '#/components/schemas/RepResponse' }
+		}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(simulateShareIpCommentsAndLpaStatement)
 );
 
 export { router as testUtilsRoutes };
