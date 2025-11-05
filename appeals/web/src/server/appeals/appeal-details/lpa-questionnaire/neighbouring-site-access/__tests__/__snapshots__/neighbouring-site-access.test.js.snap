@@ -4,7 +4,7 @@ exports[`neighbouring-site-access change page GET /neighbouring-site-access/chan
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Might the inspector need to enter a neighbour’s land or property?</h1>
+            <h1 class="govuk-heading-l">Will the inspector need to enter a neighbour’s land or property?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -48,7 +48,7 @@ exports[`neighbouring-site-access change page GET /neighbouring-site-access/chan
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Might the inspector need to enter a neighbour’s land or property?</h1>
+            <h1 class="govuk-heading-l">Will the inspector need to enter a neighbour’s land or property?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">

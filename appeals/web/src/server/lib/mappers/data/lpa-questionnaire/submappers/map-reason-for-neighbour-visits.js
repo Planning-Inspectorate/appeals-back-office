@@ -8,7 +8,7 @@ export const mapReasonForNeighbourVisits = ({
 }) =>
 	booleanWithDetailsSummaryListItem({
 		id: 'neighbouring-site-access',
-		text: 'Might the inspector need to enter a neighbour’s land or property?',
+		text: 'Will the inspector need to enter a neighbour’s land or property?',
 		value: !!(
 			lpaQuestionnaireData.reasonForNeighbourVisits &&
 			lpaQuestionnaireData.reasonForNeighbourVisits?.length > 0
@@ -20,5 +20,5 @@ export const mapReasonForNeighbourVisits = ({
 		addCyAttribute: true,
 		classes: 'lpa-neighbouring-site-access',
 		withShowMore: true,
-		showMoreLabelText: 'Might the inspector need to enter a neighbour’s land or property?'
+		showMoreLabelText: 'Will the inspector need to enter a neighbour’s land or property?'
 	});

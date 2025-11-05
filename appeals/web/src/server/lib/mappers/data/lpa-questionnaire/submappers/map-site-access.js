@@ -4,7 +4,7 @@ import { booleanWithDetailsSummaryListItem } from '#lib/mappers/index.js';
 export const mapSiteAccess = ({ lpaQuestionnaireData, currentRoute, userHasUpdateCase }) =>
 	booleanWithDetailsSummaryListItem({
 		id: 'does-site-require-inspector-access',
-		text: 'Might the inspector need access to the appellant’s land or property?',
+		text: 'Will the inspector need access to the appellant’s land or property?',
 		value: lpaQuestionnaireData.siteAccessRequired?.isRequired,
 		valueDetails: lpaQuestionnaireData.siteAccessRequired?.details,
 		defaultText: 'No answer provided',

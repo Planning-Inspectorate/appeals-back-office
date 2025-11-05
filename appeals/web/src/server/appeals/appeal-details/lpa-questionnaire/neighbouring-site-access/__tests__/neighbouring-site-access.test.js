@@ -24,7 +24,7 @@ describe('neighbouring-site-access', () => {
 			];
 
 			for (const testCase of testCases) {
-				it(`should render a row for "Might the inspector need to enter a neighbour’s land or property?" with a value of "${testCase.expectedContent.join(
+				it(`should render a row for "Will the inspector need to enter a neighbour’s land or property?" with a value of "${testCase.expectedContent.join(
 					', '
 				)}" if reasonForNeighbourVisits is "${testCase.value}"`, async () => {
 					nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
@@ -42,7 +42,7 @@ describe('neighbouring-site-access', () => {
 						skipPrettyPrint: true
 					});
 					expect(rowKeyElement.innerHTML).toContain(
-						'Might the inspector need to enter a neighbour’s land or property?'
+						'Will the inspector need to enter a neighbour’s land or property?'
 					);
 
 					const rowValueElement = parseHtml(response.text, {
@@ -56,7 +56,7 @@ describe('neighbouring-site-access', () => {
 				});
 			}
 
-			it('should render a row for "Might the inspector need to enter a neighbour’s land or property?" with the value wrapped in a "show more" component, if reasonForNeighbourVisits is more than 300 characters in length', async () => {
+			it('should render a row for "Will the inspector need to enter a neighbour’s land or property?" with the value wrapped in a "show more" component, if reasonForNeighbourVisits is more than 300 characters in length', async () => {
 				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get('/appeals/1/lpa-questionnaires/2')
@@ -100,7 +100,7 @@ describe('neighbouring-site-access', () => {
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain(
-					'Might the inspector need to enter a neighbour’s land or property?</h1>'
+					'Will the inspector need to enter a neighbour’s land or property?</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="neighbouringSiteAccessRadio" type="radio" value="yes"'
@@ -133,7 +133,7 @@ describe('neighbouring-site-access', () => {
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain(
-					'Might the inspector need to enter a neighbour’s land or property?</h1>'
+					'Will the inspector need to enter a neighbour’s land or property?</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="neighbouringSiteAccessRadio" type="radio" value="yes" checked'
@@ -172,7 +172,7 @@ describe('neighbouring-site-access', () => {
 				const elementInnerHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
 				expect(elementInnerHtml).toContain(
-					'Might the inspector need to enter a neighbour’s land or property?</h1>'
+					'Will the inspector need to enter a neighbour’s land or property?</h1>'
 				);
 				expect(elementInnerHtml).toContain(
 					'name="neighbouringSiteAccessRadio" type="radio" value="yes" checked'
@@ -215,7 +215,7 @@ describe('neighbouring-site-access', () => {
 				const elementInnerHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
 				expect(elementInnerHtml).toContain(
-					'Might the inspector need to enter a neighbour’s land or property?</h1>'
+					'Will the inspector need to enter a neighbour’s land or property?</h1>'
 				);
 				expect(elementInnerHtml).toContain(
 					'name="neighbouringSiteAccessRadio" type="radio" value="yes" checked'
