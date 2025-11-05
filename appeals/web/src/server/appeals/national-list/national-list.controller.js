@@ -5,7 +5,7 @@ import logger from '#lib/logger.js';
 import { mapPagination } from '#lib/mappers/index.js';
 import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
 import { stripQueryString } from '#lib/url-utilities.js';
-import { nationalListPage } from './national-list.mapper.js';
+import { getAppellantProcedurePreference, nationalListPage } from './national-list.mapper.js';
 import { getAppealProcedureTypes, getAppeals, getAppealTypes } from './national-list.service.js';
 
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
@@ -30,7 +30,7 @@ export const getCaseOfficers = async (
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const viewNationalList = async (request, response) => {
-	const { originalUrl, query, session } = request;
+	const { originalUrl, query, session, params } = request;
 	delete session.changeAppealType;
 
 	const appealStatusFilter = query.appealStatusFilter && String(query.appealStatusFilter);
@@ -45,6 +45,11 @@ export const viewNationalList = async (request, response) => {
 	const appealProcedureFilter = query.appealProcedureFilter && String(query.appealProcedureFilter);
 	let searchTerm = query?.searchTerm ? String(query.searchTerm).trim() : '';
 	let searchTermError = '';
+	const procedurePreferenceRequest =
+		params.procedurePreferenceRequest && String(params.procedurePreferenceRequest);
+	const appellantProcedurePreferenceFilter = getAppellantProcedurePreference(
+		procedurePreferenceRequest
+	);
 
 	if (searchTerm && searchTerm.length && (searchTerm.length === 1 || searchTerm.length > 50)) {
 		searchTerm = '';
@@ -69,6 +74,7 @@ export const viewNationalList = async (request, response) => {
 		appealTypeFilter,
 		caseTeamFilter,
 		appealProcedureFilter,
+		appellantProcedurePreferenceFilter,
 		paginationParameters.pageNumber,
 		paginationParameters.pageSize
 	).catch((error) => logger.error(error));

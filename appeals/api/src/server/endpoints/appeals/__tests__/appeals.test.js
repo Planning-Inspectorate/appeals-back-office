@@ -1316,6 +1316,54 @@ describe('appeals list routes', () => {
 				expect(response.status).toEqual(200);
 			});
 
+			test('gets hearing request appeals when given an appellantProcedurePreference param as hearing', async () => {
+				const hearingRequestAppeal = structuredClone(householdAppeal);
+				hearingRequestAppeal.appellantCase.appellantProcedurePreference = 'hearing';
+
+				databaseConnector.appeal.findMany
+					.mockResolvedValueOnce([hearingRequestAppeal])
+					.mockResolvedValueOnce(allAppeals);
+
+				const response = await request
+					.get('/appeals?appellantProcedurePreference=hearing')
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
+					expect.objectContaining({
+						where: expect.objectContaining({
+							appellantCase: {
+								appellantProcedurePreference: 'hearing'
+							}
+						})
+					})
+				);
+				expect(response.status).toEqual(200);
+			});
+
+			test('gets inquiry request appeals when given an appellantProcedurePreference param as inquiry', async () => {
+				const inquiryRequestAppeal = structuredClone(householdAppeal);
+				inquiryRequestAppeal.appellantCase.appellantProcedurePreference = 'inquiry';
+
+				databaseConnector.appeal.findMany
+					.mockResolvedValueOnce([inquiryRequestAppeal])
+					.mockResolvedValueOnce(allAppeals);
+
+				const response = await request
+					.get('/appeals?appellantProcedurePreference=inquiry')
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
+					expect.objectContaining({
+						where: expect.objectContaining({
+							appellantCase: {
+								appellantProcedurePreference: 'inquiry'
+							}
+						})
+					})
+				);
+				expect(response.status).toEqual(200);
+			});
+
 			test('returns an error if pageNumber is given and pageSize is not given', async () => {
 				const response = await request
 					.get('/appeals?pageNumber=1')

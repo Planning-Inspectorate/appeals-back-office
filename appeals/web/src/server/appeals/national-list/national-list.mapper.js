@@ -564,3 +564,16 @@ export function nationalListPage(
 
 	return pageContent;
 }
+
+/**
+ * @param {string|undefined} procedurePreferenceRequest
+ * @returns {string|undefined}
+ */
+export const getAppellantProcedurePreference = (procedurePreferenceRequest) => {
+	switch (procedurePreferenceRequest) {
+		case 'hearingRequests':
+			return 'hearing';
+		case 'inquiryRequests':
+			return 'inquiry';
+	}
+};
