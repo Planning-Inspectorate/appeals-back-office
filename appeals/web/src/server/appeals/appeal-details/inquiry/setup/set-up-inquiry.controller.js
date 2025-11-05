@@ -222,7 +222,6 @@ export const postChangeInquiryDate = async (request, response) => {
 		...(request.session.changeInquiry || {}),
 		...request.body
 	};
-	applyEditsForAppeal(request, 'changeInquiry', appealId);
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/change/estimation`);
 };
@@ -314,7 +313,6 @@ export const postChangeInquiryEstimation = async (request, response) => {
 		...(request.session.changeInquiry || {}),
 		...request.body
 	};
-	applyEditsForAppeal(request, 'changeInquiry', appealId);
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/change/address`);
 };
