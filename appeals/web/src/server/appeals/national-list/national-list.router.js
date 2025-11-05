@@ -6,6 +6,8 @@ const router = createRouter();
 
 router.route('/').get(asyncHandler(controller.viewNationalList));
 
+router.route('/:procedurePreferenceRequest').get(asyncHandler(controller.viewNationalList));
+
 //This is a test route to check user permissions on AD
 router.route('/ad').get(asyncHandler(controller.getCaseOfficers));
 
