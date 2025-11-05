@@ -53,6 +53,15 @@ export const mapIncompleteReasonPage = (
 ) => {
 	const shortAppealReference = appealShortReference(appealReference);
 
+	mappedIncompleteReasonOptions.sort((a, b) => {
+		// identify id 10 'other' and send to back of item list
+		if (a.value === '10') return 1;
+
+		if (b.value === '10') return -1;
+
+		return +a.value - +b.value;
+	});
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Why is the appeal incomplete?`,
