@@ -1089,7 +1089,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'L2630',
 		name: 'South Norfolk District Council',
-		email: 'Planning.snc@southnorfolkandbroadland.gov.uk',
+		email: 'planning@southnorfolkandbroadland.gov.uk',
 		teamId: 14 // East4
 	},
 	{
