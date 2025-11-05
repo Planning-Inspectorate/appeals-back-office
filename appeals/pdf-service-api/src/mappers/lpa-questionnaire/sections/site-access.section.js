@@ -37,14 +37,14 @@ export function siteAccessSection(templateData) {
 		heading: 'Site access',
 		items: [
 			{
-				key: 'Might the inspector need access to the appellant’s land or property?',
+				key: 'Will the inspector need access to the appellant’s land or property?',
 				html: formatSiteAccessDetails(siteAccessRequired)
 			},
 			// does not appear for householder
 			...(!isHASAppeal
 				? [
 						{
-							key: 'Might the inspector need to enter a neighbour’s land or property?',
+							key: 'Will the inspector need to enter a neighbour’s land or property?',
 							html: formatYesNoDetails(reasonForNeighbourVisits)
 						},
 						{

@@ -521,7 +521,7 @@ exports[`mapLpaQuestionnaireData should map householder LPA questionnaire data c
       "items": [
         {
           "html": "Yes<br>There is a tall hedge around the site which obstructs the view of the site",
-          "key": "Might the inspector need access to the appellant’s land or property?",
+          "key": "Will the inspector need access to the appellant’s land or property?",
         },
         {
           "html": "Yes<br>There may be no mobile reception at the site",
@@ -1246,11 +1246,11 @@ exports[`mapLpaQuestionnaireData should map s20 LPA questionnaire data correctly
       "items": [
         {
           "html": "Yes<br>There is a tall hedge around the site which obstructs the view of the site",
-          "key": "Might the inspector need access to the appellant’s land or property?",
+          "key": "Will the inspector need access to the appellant’s land or property?",
         },
         {
           "html": "No",
-          "key": "Might the inspector need to enter a neighbour’s land or property?",
+          "key": "Will the inspector need to enter a neighbour’s land or property?",
         },
         {
           "html": "None",
@@ -1982,11 +1982,11 @@ exports[`mapLpaQuestionnaireData should map s78 LPA questionnaire data correctly
       "items": [
         {
           "html": "Yes<br>There is a tall hedge around the site which obstructs the view of the site",
-          "key": "Might the inspector need access to the appellant’s land or property?",
+          "key": "Will the inspector need access to the appellant’s land or property?",
         },
         {
           "html": "No",
-          "key": "Might the inspector need to enter a neighbour’s land or property?",
+          "key": "Will the inspector need to enter a neighbour’s land or property?",
         },
         {
           "html": "None",

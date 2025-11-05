@@ -26,7 +26,7 @@ export const changeInspectorAccessPage = (appealData, storedSessionData, origin,
 	/** @type {PageContent} */
 	const pageContent = {
 		title: isSourceLpa
-			? 'Might the inspector need access to the appellant’s land or property?'
+			? 'Will the inspector need access to the appellant’s land or property?'
 			: 'Will an inspector need to access your land or property?',
 		backLinkUrl: origin,
 		preHeading: `Appeal ${shortAppealReference}`,
@@ -35,7 +35,7 @@ export const changeInspectorAccessPage = (appealData, storedSessionData, origin,
 				name: 'inspectorAccessRadio',
 				value: currentRadioValue,
 				legendText: isSourceLpa
-					? 'Might the inspector need access to the appellant’s land or property?'
+					? 'Will the inspector need access to the appellant’s land or property?'
 					: 'Will an inspector need to access your land or property?',
 				legendIsPageHeading: true,
 				yesConditional: {
