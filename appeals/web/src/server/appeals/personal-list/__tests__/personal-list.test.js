@@ -289,6 +289,50 @@ describe('personal-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Case status</th>');
 		});
 
+		it('should render the first page of another case officer personal list with applied filter, the expected content and pagination', async () => {
+			nock('http://test/')
+				.get(
+					'/appeals/personal-list?pageNumber=2&pageSize=1&caseOfficerId=abac693e-4332-4a02-bb21-af05b9fee854&status=lpa_questionnaire'
+				)
+				.reply(200, assignedAppealsPage2);
+
+			const response = await request.get(
+				`${baseUrl}${'?pageNumber=2&pageSize=1&caseOfficerId=abac693e-4332-4a02-bb21-af05b9fee854&appealStatusFilter=lpa_questionnaire'}`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Appeals assigned to McTest, George</h1>');
+			expect(element.innerHTML).toContain('View another case officer’s appeals</a>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Filters</span>');
+			expect(unprettifiedElement.innerHTML).toContain('Show cases with status</label>');
+			expect(unprettifiedElement.innerHTML).toContain('<option value="all"');
+			expect(unprettifiedElement.innerHTML).toContain('<option value="awaiting_transfer"');
+			expect(unprettifiedElement.innerHTML).toContain('<option value="event"');
+			expect(unprettifiedElement.innerHTML).toContain('<option value="lpa_questionnaire" selected');
+			expect(unprettifiedElement.innerHTML).toContain('<option value="final_comments"');
+			expect(unprettifiedElement.innerHTML).toContain('Apply</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Clear filter</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Appeal reference</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Lead or child</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Action required</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Due by</th>');
+			expect(unprettifiedElement.innerHTML).toContain('Case status</th>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<nav class="govuk-pagination" aria-label="Pagination">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<span class="govuk-pagination__link-title"> Previous'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('aria-label="Page 1"> 1</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'aria-label="Page 2" aria-current="page"> 2</a>'
+			);
+		});
+
 		it('should render the first page of another case officer personal list that has no appeals assigned', async () => {
 			nock('http://test/')
 				.get(
