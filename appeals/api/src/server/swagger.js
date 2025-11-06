@@ -1670,6 +1670,11 @@ export const spec = {
 					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
 					example: '2026-11-10T00:00:00.000Z'
 				},
+				isStartCase: {
+					type: 'boolean',
+					description: 'Whether case is being started or inquiry is being set up',
+					example: true
+				},
 				address: {
 					type: 'object',
 					properties: {

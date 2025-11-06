@@ -142,6 +142,101 @@ describe('set up inquiry', () => {
 		});
 	});
 
+	describe('GET /inquiry/setup/date setup inquiry', () => {
+		const appealId = 7;
+		const savedDate = {
+			'inquiry-date-day': '19',
+			'inquiry-date-month': '03',
+			'inquiry-date-year': '2096',
+			'inquiry-time-hour': '10',
+			'inquiry-time-minute': '00'
+		};
+
+		let pageHtml;
+		beforeAll(async () => {
+			// Mock API call for the appeal
+			nock('http://test/')
+				.persist()
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId, procedureType: 'inquiry' });
+
+			// Save inquiry data for this appealId
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/date`).send(savedDate);
+
+			//fetch page
+			const response = await request.get(`${baseUrl}/${appealId}/inquiry/setup/date`);
+			pageHtml = parseHtml(response.text);
+		});
+
+		it('renders the saved inquiry date scoped by appealId', async () => {
+			expect(pageHtml.querySelector('input#inquiry-date-day').getAttribute('value')).toBe('19');
+			expect(pageHtml.querySelector('input#inquiry-date-month').getAttribute('value')).toBe('03');
+			expect(pageHtml.querySelector('input#inquiry-date-year').getAttribute('value')).toBe('2096');
+			expect(pageHtml.querySelector('input#inquiry-time-hour').getAttribute('value')).toBe('10');
+			expect(pageHtml.querySelector('input#inquiry-time-minute').getAttribute('value')).toBe('00');
+		});
+		it('should match the snapshot', () => {
+			expect(pageHtml.innerHTML).toMatchSnapshot();
+		});
+		it('should render the correct heading', () => {
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Inquiry date and time');
+		});
+
+		it('should render a Date field', () => {
+			expect(pageHtml.querySelector('input#inquiry-date-day')).not.toBeNull();
+			expect(pageHtml.querySelector('input#inquiry-date-month')).not.toBeNull();
+			expect(pageHtml.querySelector('input#inquiry-date-year')).not.toBeNull();
+		});
+
+		it('should render a Time field', () => {
+			expect(pageHtml.querySelector('input#inquiry-time-hour')).not.toBeNull();
+			expect(pageHtml.querySelector('input#inquiry-time-minute')).not.toBeNull();
+		});
+
+		it('should have a back link to the case details page', async () => {
+			nock('http://test/')
+				.persist()
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(`${baseUrl}/${appealId}/inquiry/setup/date`);
+			const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}`
+			);
+		});
+
+		it('should have a back link to the original page if specified', async () => {
+			nock('http://test/')
+				.persist()
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/inquiry/setup/date?backUrl=/my-cases`
+			);
+			const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe('/my-cases');
+		});
+
+		it('should have a back link to the CYA page if editing', async () => {
+			nock('http://test/')
+				.persist()
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const queryString = `?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F7%2Finquiry%2Fsetup%2Fdate`;
+			const response = await request.get(`${baseUrl}/7/inquiry/setup/date${queryString}`);
+			const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/check-details`
+			);
+		});
+	});
+
 	describe('POST /inquiry/setup/date', () => {
 		const appealId = 2;
 
@@ -292,6 +387,9 @@ describe('set up inquiry', () => {
 			const response = await request.get(`${baseUrl}/${appealId}/Inquiry/setup/estimation`);
 			pageHtml = parseHtml(response.text, { skipPrettyPrint: true });
 		});
+		afterEach(() => {
+			nock.cleanAll();
+		});
 
 		it('should match the snapshot', () => {
 			expect(pageHtml.innerHTML).toMatchSnapshot();
@@ -373,6 +471,9 @@ describe('set up inquiry', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
+		});
+		afterEach(() => {
+			nock.cleanAll();
 		});
 
 		it('should redirect to /Inquiry/setup/address when answering no', async () => {
@@ -464,6 +565,102 @@ describe('set up inquiry', () => {
 			const response = await request.get(`${baseUrl}/${appealId}/Inquiry/setup/address`);
 			pageHtml = parseHtml(response.text);
 		});
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should match the snapshot', () => {
+			expect(pageHtml.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render the correct heading', () => {
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe(
+				'Do you know the address of where the inquiry will take place?'
+			);
+		});
+
+		it('should render a radio button for address known', () => {
+			expect(pageHtml.querySelector('input[name="addressKnown"]')).not.toBeNull();
+		});
+
+		it('should render a radio button for address unknown', () => {
+			expect(pageHtml.querySelector('input[name="addressKnown"]')).not.toBeNull();
+		});
+
+		it('should check the submitted value', () => {
+			expect(
+				pageHtml.querySelector('input[name="addressKnown"][value="yes"]')?.getAttribute('checked')
+			).toBeDefined();
+		});
+
+		it('should have a back link to the previous page', async () => {
+			nock('http://test/')
+				.persist()
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(`${baseUrl}/${appealId}/inquiry/setup/address`);
+			const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/estimation`
+			);
+		});
+
+		it('should have a back link to the CYA page if editing', async () => {
+			nock('http://test/')
+				.persist()
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const queryString = `?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fsetup%2Faddress`;
+			const response = await request.get(`${baseUrl}/2/inquiry/setup/address${queryString}`);
+			const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/check-details`
+			);
+		});
+
+		it('should have a back link to the previous page if editing began on another page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/inquiry/setup/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fsetup%2Festimation`
+			);
+
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finquiry%2Fsetup%2Festimation`
+			);
+		});
+	});
+
+	describe('GET /inquiry/setup/address setup inquiry', () => {
+		const appealId = 2;
+
+		let pageHtml;
+
+		beforeAll(async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.twice()
+				.reply(200, { ...appealData, appealId, procedureType: 'inquiry' });
+
+			// set session data with post request
+			await request.post(`${baseUrl}/${appealId}/Inquiry/setup/address`).send({
+				addressKnown: 'yes'
+			});
+
+			const response = await request.get(`${baseUrl}/${appealId}/Inquiry/setup/address`);
+			pageHtml = parseHtml(response.text);
+		});
+		afterAll(() => {
+			nock.cleanAll();
+		});
 
 		it('should match the snapshot', () => {
 			expect(pageHtml.innerHTML).toMatchSnapshot();
@@ -544,6 +741,10 @@ describe('set up inquiry', () => {
 				.reply(200, { ...appealData, appealId });
 		});
 
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
 		it('should redirect to /inquiry/setup/timetable-due-dates when answering no', async () => {
 			const response = await request.post(`${baseUrl}/${appealId}/Inquiry/setup/address`).send({
 				addressKnown: 'no'
@@ -595,6 +796,9 @@ describe('set up inquiry', () => {
 
 			const response = await request.get(`${baseUrl}/${appealId}/Inquiry/setup/address-details`);
 			pageHtml = parseHtml(response.text);
+		});
+		afterEach(() => {
+			nock.cleanAll();
 		});
 
 		it('should match the snapshot', () => {
@@ -681,6 +885,10 @@ describe('set up inquiry', () => {
 				.reply(200, { ...appealData, appealId });
 		});
 
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
 		it('should redirect to /Inquiry/setup/timetable-due-dates with valid inputs', async () => {
 			const response = await request
 				.post(`${baseUrl}/${appealId}/Inquiry/setup/address-details`)
@@ -696,6 +904,40 @@ describe('set up inquiry', () => {
 			expect(response.headers.location).toBe(
 				`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates`
 			);
+		});
+
+		behavesLikeAddressForm({
+			request,
+			url: `${baseUrl}/${appealId}/Inquiry/setup/address-details`
+		});
+	});
+
+	describe('POST /inquiry/setup/address-details on setup inquiry', () => {
+		const appealId = 2;
+
+		beforeAll(() => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId, procedureType: 'inquiry' });
+		});
+
+		afterAll(() => {
+			nock.cleanAll();
+		});
+
+		it('should redirect to /Inquiry/setup/timetable-due-dates with valid inputs', async () => {
+			const response = await request
+				.post(`${baseUrl}/${appealId}/Inquiry/setup/address-details`)
+				.send({
+					addressLine1: 'Flat 9',
+					addressLine2: '123 Gerbil Drive',
+					town: 'Blarberton',
+					county: 'Slabshire',
+					postCode: 'X25 3YZ'
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe(`${baseUrl}/${appealId}/inquiry/setup/check-details`);
 		});
 
 		behavesLikeAddressForm({
@@ -1166,6 +1408,105 @@ describe('set up inquiry', () => {
 
 		it('should render the correct button text', () => {
 			expect(pageHtml.querySelector('button')?.innerHTML.trim()).toBe('Start case');
+		});
+	});
+
+	describe('GET /inquiry/setup/check-details on setup inquiry', () => {
+		const appealId = 1;
+		const dateValues = {
+			'inquiry-date-day': '01',
+			'inquiry-date-month': '02',
+			'inquiry-date-year': '3025',
+			'inquiry-time-hour': '12',
+			'inquiry-time-minute': '00'
+		};
+		const addressValues = {
+			addressLine1: 'Flat 9',
+			addressLine2: '123 Gerbil Drive',
+			town: 'Blarberton',
+			county: 'Slabshire',
+			postCode: 'X25 3YZ'
+		};
+		const estimationValue = {
+			inquiryEstimationDays: '10'
+		};
+		const validData = {
+			planningObligation: {
+				hasObligation: true
+			}
+		};
+
+		let pageHtml;
+
+		beforeAll(async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.times(5)
+				.reply(200, { ...appealData, appealId, procedureType: 'inquiry' });
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+				.reply(200, {
+					...validData
+				});
+
+			// set session data with post requests to previous pages
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/date`).send(dateValues);
+			await request
+				.post(`${baseUrl}/${appealId}/inquiry/setup/address`)
+				.send({ addressKnown: 'yes' });
+			await request
+				.post(`${baseUrl}/${appealId}/inquiry/setup/address-details`)
+				.send(addressValues);
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/estimation`).send(estimationValue);
+
+			const response = await request.get(`${baseUrl}/${appealId}/inquiry/setup/check-details`);
+			pageHtml = parseHtml(response.text);
+		});
+
+		afterAll(() => {
+			nock.cleanAll();
+		});
+
+		it('should match the snapshot', () => {
+			expect(pageHtml.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render the correct heading', () => {
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe(
+				'Check details and set up inquiry'
+			);
+		});
+
+		it('should render the correct date', () => {
+			expect(pageHtml.querySelectorAll('dd.govuk-summary-list__value')?.[0]?.innerHTML.trim()).toBe(
+				'1 February 3025'
+			);
+		});
+
+		it('should render the correct time', () => {
+			expect(pageHtml.querySelectorAll('dd.govuk-summary-list__value')?.[1]?.innerHTML.trim()).toBe(
+				'12:00pm'
+			);
+		});
+
+		it('should render the correct yes or no answer', () => {
+			expect(
+				pageHtml.querySelectorAll('dd.govuk-summary-list__value')?.[0]?.innerHTML.trim()
+			).not.toBe('Inquiry');
+		});
+
+		it('should render the correct address', () => {
+			expect(
+				pageHtml
+					.querySelectorAll('dd.govuk-summary-list__value')?.[4]
+					?.innerHTML.split('<br>')
+					.map((line) => line.trim())
+			).toEqual(['Flat 9', '123 Gerbil Drive', 'Blarberton', 'Slabshire', 'X25 3YZ']);
+		});
+
+		it('should render the correct button text', () => {
+			expect(pageHtml.querySelector('button')?.innerHTML.trim()).toBe('Set up inquiry');
 		});
 	});
 

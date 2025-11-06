@@ -19,7 +19,7 @@ export const getCaseInquiry = (mappedData, appealDetails, session) => {
 		return;
 	}
 
-	const canEditHearing = userHasPermission(permissionNames.updateCase, session);
+	const canEditInquiry = userHasPermission(permissionNames.updateCase, session);
 
 	/** @type {PageComponent | undefined} */
 	const inquiryComponent = appealDetails.inquiry
@@ -27,7 +27,7 @@ export const getCaseInquiry = (mappedData, appealDetails, session) => {
 				type: 'summary-list',
 				parameters: { rows: mappedData.appeal.inquiryDetails.display.summaryListItems }
 		  }
-		: canEditHearing
+		: canEditInquiry
 		? mappedData.appeal.setUpInquiry.display.buttonItem
 		: simpleHtmlComponent('p', { class: 'govuk-body govuk-!-margin-bottom-7' }, 'Not set up');
 
@@ -55,7 +55,7 @@ export const getCaseInquiry = (mappedData, appealDetails, session) => {
 				type: 'summary-list',
 				parameters: { rows: mappedData.appeal.inquiryEstimates.display.summaryListItems }
 		  }
-		: canEditHearing
+		: canEditInquiry
 		? mappedData.appeal.addInquiryEstimates.display.htmlItem
 		: simpleHtmlComponent(
 				'p',

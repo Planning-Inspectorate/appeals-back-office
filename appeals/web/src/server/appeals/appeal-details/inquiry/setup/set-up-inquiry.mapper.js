@@ -58,7 +58,11 @@ export function inquiryDatePage(appealData, values, backLinkUrl) {
 	return {
 		title: `Date and time - set up inquiry - ${shortAppealReference}`,
 		backLinkUrl,
-		preHeading: `Appeal ${shortAppealReference} - start case`,
+		preHeading: `Appeal ${shortAppealReference} - ${
+			appealData.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY
+				? 'set up inquiry'
+				: 'start case'
+		}`,
 		heading: 'Inquiry date and time',
 		pageComponents: [dateComponent, timeComponent]
 	};
@@ -153,9 +157,17 @@ export function addressKnownPage(appealData, backLinkUrl, values) {
 
 	/** @type {PageContent} */
 	return {
-		title: `Address - start case - ${shortAppealReference}`,
+		title: `Address - ${
+			appealData.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY
+				? 'set up inquiry'
+				: 'start case'
+		} - ${shortAppealReference}`,
 		backLinkUrl,
-		preHeading: `Appeal ${shortAppealReference} - start case`,
+		preHeading: `Appeal ${shortAppealReference} - ${
+			appealData.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY
+				? 'set up inquiry'
+				: 'start case'
+		}`,
 		pageComponents: [addressKnownComponent]
 	};
 }
@@ -172,7 +184,11 @@ export function addressDetailsPage(appealData, backLinkUrl, values = {}, errors)
 
 	/** @type {PageContent} */
 	return {
-		title: `Address - start case - ${shortAppealReference}`,
+		title: `Address - ${
+			appealData.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY
+				? 'set up inquiry'
+				: 'start case'
+		} - ${shortAppealReference}`,
 		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Inquiry address',
@@ -297,52 +313,78 @@ export const getDueDateFieldNameAndID = (dateField) => {
  * @param {boolean} hasObligation
  * @param {'setup'|'change'} action
  * @param {import('@pins/express').Session} session
+ * @param {string} procedureType
  * @returns {PageContent}
  */
-export function confirmInquiryPage(appealId, appealReference, hasObligation, action, session) {
-	const procedureType = APPEAL_CASE_PROCEDURE.INQUIRY;
+export function confirmInquiryPage(
+	appealId,
+	appealReference,
+	hasObligation,
+	action,
+	session,
+	procedureType
+) {
 	/**@type {PageComponent[]} */
-	const pageComponents = [
-		{
+	const pageComponents = [];
+
+	if (procedureType !== APPEAL_CASE_PROCEDURE.INQUIRY) {
+		pageComponents.push({
 			type: 'summary-list',
 			parameters: {
 				rows: [
 					textSummaryListItem({
 						id: 'appeal-procedure',
 						text: 'Appeal procedure',
-						value: capitalizeFirstLetter(procedureType),
+						value: capitalizeFirstLetter(APPEAL_CASE_PROCEDURE.INQUIRY),
 						link: `/appeals-service/appeal-details/${appealId}/start-case/select-procedure`,
 						editable: true
 					})?.display.summaryListItem
 				]
 			}
-		}
-	];
+		});
+	}
 
 	pageComponents.push(...mapInquiryDetails(appealId, action, session['setUpInquiry']?.[appealId]));
 
-	pageComponents.push(
-		...mapInquiryTimetableDue(appealId, action, hasObligation, session['setUpInquiry']?.[appealId])
-	);
+	if (procedureType !== APPEAL_CASE_PROCEDURE.INQUIRY) {
+		pageComponents.push(
+			...mapInquiryTimetableDue(
+				appealId,
+				action,
+				hasObligation,
+				session['setUpInquiry']?.[appealId]
+			)
+		);
 
-	// Add page footer
-	pageComponents.push(
-		simpleHtmlComponent(
-			'p',
-			{
-				class: 'govuk-body'
-			},
-			`We'll start the timetable now and send emails to the relevant parties.`
-		)
-	);
+		// Add page footer
+		pageComponents.push(
+			simpleHtmlComponent(
+				'p',
+				{
+					class: 'govuk-body'
+				},
+				`We'll start the timetable now and send emails to the relevant parties.`
+			)
+		);
+	}
+
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Check details and start case',
-		backLinkUrl: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
+		title: `Check details and ${
+			procedureType === APPEAL_CASE_PROCEDURE.INQUIRY ? 'set up inquiry' : 'start case'
+		}`,
+		backLinkUrl:
+			procedureType === APPEAL_CASE_PROCEDURE.INQUIRY
+				? `/appeals-service/appeal-details/${appealId}/inquiry/${action}/address-details`
+				: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
-		heading: 'Check details and start case',
+		heading: `Check details and ${
+			procedureType === APPEAL_CASE_PROCEDURE.INQUIRY ? 'set up inquiry' : 'start case'
+		}`,
 		pageComponents,
-		submitButtonText: 'Start case'
+		submitButtonText: `${
+			procedureType === APPEAL_CASE_PROCEDURE.INQUIRY ? 'Set up inquiry' : 'Start case'
+		}`
 	};
 
 	return pageContent;

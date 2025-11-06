@@ -11,7 +11,10 @@ export const mapSetUpInquiry = ({ currentRoute, request, userHasUpdateCasePermis
 		id,
 		text: 'Set up inquiry',
 		buttonOptions: {
-			href: addBackLinkQueryToUrl(request, `${currentRoute}/inquiry/setup`)
+			href: addBackLinkQueryToUrl(
+				request,
+				`${currentRoute}/inquiry/setup/date?backUrl=${currentRoute}`
+			)
 		}
 	});
 };

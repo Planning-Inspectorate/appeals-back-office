@@ -298,7 +298,7 @@ exports[`appeal-details GET /:appealId Inquiry should render the Inquiry accordi
 `;
 
 exports[`appeal-details GET /:appealId Inquiry should render the Inquiry estimates summary list when estimates are present 1`] = `
-"<div id="case-details-inquiry-section"><a href="/appeals-service/appeal-details/3/inquiry/setup?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
+"<div id="case-details-inquiry-section"><a href="/appeals-service/appeal-details/3/inquiry/setup/date?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
     role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Set up inquiry</a>
     <h3     class="govuk-heading-m">Inquiry estimates</h3>
         <dl class="govuk-summary-list">
