@@ -53,6 +53,7 @@ apps_config = {
     featureFlagCancelSiteVisit        = false
     featureFlagSearchCaseOfficer      = false
     featureFlagEnforcementNotice      = false
+    featureFlagInvalidDecisionLetter  = false
   }
 
   use_system_test_bc_for_change_lpa = false
