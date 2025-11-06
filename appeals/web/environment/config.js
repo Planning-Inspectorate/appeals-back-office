@@ -87,7 +87,8 @@ export function loadConfig() {
 		FEATURE_FLAG_AUTO_ASSIGN_TEAM,
 		FEATURE_FLAG_CANCEL_SITE_VISIT,
 		FEATURE_FLAG_SEARCH_CASE_OFFICER,
-		FEATURE_FLAG_ENFORCEMENT_NOTICE
+		FEATURE_FLAG_ENFORCEMENT_NOTICE,
+		FEATURE_FLAG_INVALID_DECISION_LETTER
 	} = environment;
 
 	const config = {
@@ -162,7 +163,8 @@ export function loadConfig() {
 			featureFlagAutoAssignTeam: FEATURE_FLAG_AUTO_ASSIGN_TEAM === 'true',
 			featureFlagCancelSiteVisit: FEATURE_FLAG_CANCEL_SITE_VISIT === 'true',
 			featureFlagSearchCaseOfficer: FEATURE_FLAG_SEARCH_CASE_OFFICER === 'true',
-			featureFlagEnforcementNotice: FEATURE_FLAG_ENFORCEMENT_NOTICE === 'true'
+			featureFlagEnforcementNotice: FEATURE_FLAG_ENFORCEMENT_NOTICE === 'true',
+			featureFlagInvalidDecisionLetter: FEATURE_FLAG_INVALID_DECISION_LETTER === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		pdfServiceHost: PDF_SERVICE_HOST

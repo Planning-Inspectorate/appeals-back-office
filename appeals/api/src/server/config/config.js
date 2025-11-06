@@ -73,7 +73,10 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_SEARCH_CASE_OFFICER === 'true',
 		featureFlagEnforcementNotice:
 			environment.FEATURE_FLAG_ENFORCEMENT_NOTICE &&
-			environment.FEATURE_FLAG_ENFORCEMENT_NOTICE === 'true'
+			environment.FEATURE_FLAG_ENFORCEMENT_NOTICE === 'true',
+		featureFlagInvalidDecisionLetter:
+			environment.FEATURE_FLAG_INVALID_DECISION_LETTER &&
+			environment.FEATURE_FLAG_INVALID_DECISION_LETTER === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	enableTestEndpoints:
