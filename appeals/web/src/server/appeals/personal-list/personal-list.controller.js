@@ -17,14 +17,14 @@ export const viewPersonalList = async (request, response) => {
 	const { originalUrl, query, session } = request;
 
 	const appealStatusFilter = query.appealStatusFilter && String(query.appealStatusFilter);
-	const caseOfficerId = query?.caseOfficerId && String(query?.caseOfficerId);
 	const urlWithoutQuery = stripQueryString(originalUrl);
 	const paginationParameters = getPaginationParametersFromQuery(query);
+	const isSearchedCO =
+		(query?.caseOfficerId && config.featureFlags.featureFlagSearchCaseOfficer) || false;
 
-	const caseOfficer =
-		caseOfficerId && config.featureFlags.featureFlagSearchCaseOfficer
-			? (await usersService.getUserById(caseOfficerId, session)) || null
-			: null;
+	const caseOfficer = isSearchedCO
+		? (await usersService.getUserById(String(query.caseOfficerId), session)) || null
+		: null;
 
 	const assignedAppeals = await getAppealsAssignedToCurrentUser(
 		request.apiClient,
@@ -44,7 +44,8 @@ export const viewPersonalList = async (request, response) => {
 		appealStatusFilter,
 		request.session,
 		request,
-		caseOfficer
+		caseOfficer,
+		isSearchedCO
 	);
 
 	const pagination = mapPagination(

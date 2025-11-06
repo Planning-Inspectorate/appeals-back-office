@@ -43,6 +43,7 @@ function canDisplayAction(appeal) {
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/appeals').CaseOfficer} caseOfficer
+ * @param {boolean} isSearchedCO
  * @returns {PageContent}
  */
 export function personalListPage(
@@ -51,7 +52,8 @@ export function personalListPage(
 	appealStatusFilter,
 	session,
 	request,
-	caseOfficer
+	caseOfficer,
+	isSearchedCO
 ) {
 	const account = /** @type {AccountInfo} */ (authSession.getAccount(session));
 	const userGroups = account?.idTokenClaims?.groups ?? [];
@@ -60,7 +62,6 @@ export function personalListPage(
 		request,
 		'personal-list/search-case-officer'
 	);
-
 	const filterItemsArray = ['all', ...(appealsAssignedToCurrentUser?.statuses || [])]
 		.map((appealStatus) => ({
 			text: mapStatusFilterLabel(appealStatus),
@@ -83,6 +84,14 @@ export function personalListPage(
 			text: 'Search all cases'
 		}
 	};
+	const existingQueryParams = Object.entries(request.query)
+		.filter(([key]) => key !== 'appealStatusFilter')
+		.map(([key, value]) => `<input type="hidden" name="${key}" value="${value}">`)
+		.join('');
+
+	const clearFilterURL = isSearchedCO
+		? urlWithoutQuery + '?caseOfficerId=' + caseOfficer.id
+		: urlWithoutQuery;
 
 	/** @type {PageComponent} */
 	const filterComponent = {
@@ -98,7 +107,7 @@ export function personalListPage(
 				{
 					type: 'html',
 					parameters: {
-						html: `<form method="GET">`
+						html: `<form method="GET">${existingQueryParams}`
 					}
 				},
 				{
@@ -131,7 +140,7 @@ export function personalListPage(
 				{
 					type: 'html',
 					parameters: {
-						html: `<a class="govuk-link" href="${urlWithoutQuery}">Clear filter</a></div></form>`
+						html: `<a class="govuk-link" href="${clearFilterURL}">Clear filter</a></div></form>`
 					}
 				}
 			]
@@ -253,7 +262,7 @@ export function personalListPage(
 		pageContent.pageComponents?.push(filterComponent, casesComponent);
 	} else {
 		pageContent.heading =
-			caseOfficer && caseOfficer?.id != account.localAccountId
+			isSearchedCO && caseOfficer?.id != account.localAccountId
 				? `${caseOfficer.name} is not assigned to any appeals`
 				: 'You are not assigned to any appeals';
 		pageContent.pageComponents?.push(searchAllCasesButton);
