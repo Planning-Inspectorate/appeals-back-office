@@ -964,6 +964,7 @@ type CreateInquiry = {
 	statementOfCommonGroundDueDate: Date | string;
 	proofOfEvidenceAndWitnessesDueDate: Date | string;
 	planningObligationDueDate: Date | string | undefined;
+	isStartCase: boolean;
 };
 
 type UpdateInquiry = {

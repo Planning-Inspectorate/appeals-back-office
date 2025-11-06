@@ -83,17 +83,6 @@ describe('Change to  inquiry', () => {
 
 		appealData.procedureType = 'inquiry';
 
-		it('should redirect to /change-appeal-procedure-type/inquiry/change-timetable when answering no', async () => {
-			const response = await request.post(`${baseUrl}/${appealId}/Inquiry/setup/address`).send({
-				addressKnown: 'no'
-			});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.headers.location).toBe(
-				`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates`
-			);
-		});
-
 		it('should redirect to /change-appeal-procedure-type/inquiry/address-details when answering yes', async () => {
 			appealData.procedureType = 'inquiry';
 

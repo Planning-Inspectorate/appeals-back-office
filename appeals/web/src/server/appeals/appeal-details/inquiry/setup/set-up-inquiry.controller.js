@@ -9,6 +9,7 @@ import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
 import { resolveAppealId } from '#lib/resolveAppealId.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { isEmpty, isEqual, pick } from 'lodash-es';
 import {
 	addressDetailsPage,
@@ -344,7 +345,7 @@ export const postInquiryAddress = async (request, response) => {
 		return renderInquiryAddress(request, response, 'setup');
 	}
 
-	const { appealId } = request.currentAppeal;
+	const { appealId, procedureType } = request.currentAppeal;
 
 	if (request.body.addressKnown === 'yes') {
 		return response.redirect(
@@ -355,6 +356,14 @@ export const postInquiryAddress = async (request, response) => {
 		);
 	}
 
+	if (procedureType.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
+		return response.redirect(
+			preserveQueryString(
+				request,
+				`/appeals-service/appeal-details/${appealId}/inquiry/setup/check-details`
+			)
+		);
+	}
 	return response.redirect(
 		preserveQueryString(
 			request,
@@ -412,7 +421,9 @@ export const postInquiryAddressDetails = async (request, response) => {
 	return response.redirect(
 		preserveQueryString(
 			request,
-			`/appeals-service/appeal-details/${appealId}/inquiry/setup/timetable-due-dates`
+			request.currentAppeal.procedureType.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY
+				? `/appeals-service/appeal-details/${appealId}/inquiry/setup/check-details`
+				: `/appeals-service/appeal-details/${appealId}/inquiry/setup/timetable-due-dates`
 		)
 	);
 };
@@ -587,14 +598,17 @@ export const postChangeInquiryAddressDetails = async (request, response) => {
  */
 export const getInquiryCheckDetails = async (request, response) => {
 	const {
-		currentAppeal: { appealId, appealReference },
+		currentAppeal: { appealId, appealReference, procedureType },
 		session,
 		errors
 	} = request;
 
 	const appellantCase = await addAppellantCaseToLocals(request);
 
-	if (!session.startCaseAppealProcedure?.[appealId]?.appealProcedure) {
+	if (
+		!session.startCaseAppealProcedure?.[appealId]?.appealProcedure &&
+		procedureType.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY
+	) {
 		return response.status(500).render('app/500.njk');
 	}
 
@@ -605,7 +619,8 @@ export const getInquiryCheckDetails = async (request, response) => {
 		appealReference,
 		appellantCase?.planningObligation?.hasObligation,
 		'setup',
-		session
+		session,
+		procedureType.toLowerCase()
 	);
 
 	return response.render('patterns/change-page.pattern.njk', {
@@ -649,7 +664,7 @@ export const getChangeInquiryCheckDetails = async (request, response) => {
 export const postInquiryCheckDetails = async (request, response) => {
 	try {
 		const {
-			currentAppeal: { appealId }
+			currentAppeal: { appealId, procedureType }
 		} = request;
 
 		const { session } = request;
@@ -660,29 +675,48 @@ export const postInquiryCheckDetails = async (request, response) => {
 			return renderAlreadySubmittedError(request, response);
 		}
 
-		if (!session.startCaseAppealProcedure?.[appealId]?.appealProcedure) {
+		const isStartCase = procedureType.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY;
+
+		if (!session.startCaseAppealProcedure?.[appealId]?.appealProcedure && isStartCase) {
 			return response.status(500).render('app/500.njk');
 		}
 
 		const appellantCase = await addAppellantCaseToLocals(request);
-
-		//Create Inquiry
-		await createInquiry(request, {
+		const inquiryRequest = {
 			...buildInquiryRequest(inquiry, appellantCase?.planningObligation?.hasObligation),
-			startDate: getTodaysISOString()
-		});
+			startDate: getTodaysISOString(),
+			isStartCase
+		};
+		//Create Inquiry
+		await createInquiry(request, inquiryRequest);
 
-		addNotificationBannerToSession({
-			session: request.session,
-			bannerDefinitionKey: 'caseStarted',
-			appealId
-		});
+		if (isStartCase) {
+			addNotificationBannerToSession({
+				session: request.session,
+				bannerDefinitionKey: 'caseStarted',
+				appealId
+			});
 
-		addNotificationBannerToSession({
-			session: request.session,
-			bannerDefinitionKey: 'timetableStarted',
-			appealId
-		});
+			addNotificationBannerToSession({
+				session: request.session,
+				bannerDefinitionKey: 'timetableStarted',
+				appealId
+			});
+		} else {
+			if (inquiryRequest.address) {
+				addNotificationBannerToSession({
+					session: request.session,
+					bannerDefinitionKey: 'inquirySetUp',
+					appealId
+				});
+			} else {
+				addNotificationBannerToSession({
+					session: request.session,
+					bannerDefinitionKey: 'inquiryReadyToSetup',
+					appealId
+				});
+			}
+		}
 
 		delete request.session['setUpInquiry']?.[appealId];
 
