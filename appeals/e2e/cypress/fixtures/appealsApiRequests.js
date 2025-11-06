@@ -229,13 +229,22 @@ const appealsApiRequests = {
 		caseReference: '6000000',
 		representation: 'Hello, not about cheese but still a rep of some kind (Appellant Proof Of Evidence)',
 		representationType: 'proofs_evidence',
-		representationSubmittedDate: '2025-10-21T13:48:35.847Z',
+		representationSubmittedDate: new Date(new Date().setDate(new Date().getDate() - 1)),
+		newUser: {
+			emailAddress: 'interestedparty@test.com',
+			firstName: 'Testy',
+			lastName: 'McTest',
+			salutation: 'Mr',
+			serviceUserType: 'InterestedParty',
+			organisation: 'A company',
+			telephoneNumber: '0123456789'
+		}
 	},
 	lpaProofOfEvidence: {
 		caseReference: '6000000',
 		representation: 'Hello, not about cheese but still a rep of some kind (LPA Appellant Proof Of Evidence)',
 		representationType: 'proofs_evidence',
-		representationSubmittedDate: '2025-10-21T13:48:35.847Z',
+		representationSubmittedDate: new Date(new Date().setDate(new Date().getDate() - 1)),
 		lpaCode: 'Q9999'
 	},
 };
@@ -447,6 +456,36 @@ const documentsApiRequest = {
 					documentType: 'appellantFinalComment',
 					documentURI:
 						'https://pinsstdocstestukw001.blob.core.windows.net/uploads/087468cc-ae2a-4960-9683-0c2c276607d4/a96085b5-b1ed-4801-a2f9-3b1af3836a61/087468cc-ae2a-4960-9683-0c2c276607d4-appellant-submission.pdf',
+					filename: 'img1.jpg',
+					mime: 'image/jpeg',
+					originalFilename: 'oimg.jpg',
+					size: 10293
+				}
+			]
+		},
+		appellantProofOfEvidence: {
+			documents: [
+				{
+					dateCreated: '2024-03-01T13:48:35.847Z',
+					documentId: '001',
+					documentType: 'appellantProofOfEvidence',
+					documentURI:
+						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+					filename: 'img1.jpg',
+					mime: 'image/jpeg',
+					originalFilename: 'oimg.jpg',
+					size: 10293
+				}
+			]
+		},
+		lpaProofOfEvidence: {
+			documents: [
+				{
+					dateCreated: '2024-03-01T13:48:35.847Z',
+					documentId: '001',
+					documentType: 'lpaProofOfEvidence',
+					documentURI:
+						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
 					filename: 'img1.jpg',
 					mime: 'image/jpeg',
 					originalFilename: 'oimg.jpg',
