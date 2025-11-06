@@ -448,3 +448,65 @@ export const simulateShareIpCommentsAndLpaStatement = async (req, res) => {
 
 	return await publish(req, res);
 };
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
+export const simulateReviewLpaFinalComments = async (req, res) => {
+	const { appealReference } = req.params;
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: { reference: appealReference }
+	});
+
+	if (!appeal) return res.status(400).send(false);
+
+	const appealId = appeal.id;
+	const representation = await databaseConnector.representation.findFirst({
+		where: {
+			appealId,
+			representationType: 'lpa_final_comment',
+			status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+		},
+		orderBy: { dateCreated: 'desc' }
+	});
+
+	if (!representation) return res.status(400).send(false);
+
+	req.params = { appealId: String(appealId), repId: String(representation.id) };
+	req.body = { status: APPEAL_REPRESENTATION_STATUS.VALID };
+
+	return await updateRepresentation(req, res);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
+export const simulateReviewAppellantFinalComments = async (req, res) => {
+	const { appealReference } = req.params;
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: { reference: appealReference }
+	});
+
+	if (!appeal) return res.status(400).send(false);
+
+	const appealId = appeal.id;
+	const representation = await databaseConnector.representation.findFirst({
+		where: {
+			appealId,
+			representationType: 'appellant_final_comment',
+			status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+		},
+		orderBy: { dateCreated: 'desc' }
+	});
+
+	if (!representation) return res.status(400).send(false);
+
+	req.params = { appealId: String(appealId), repId: String(representation.id) };
+	req.body = { status: APPEAL_REPRESENTATION_STATUS.VALID };
+
+	return await updateRepresentation(req, res);
+};

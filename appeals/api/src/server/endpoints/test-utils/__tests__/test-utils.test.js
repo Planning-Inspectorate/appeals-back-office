@@ -1,6 +1,8 @@
 // @ts-nocheck
 import {
+	simulateReviewAppellantFinalComments,
 	simulateReviewIpComment,
+	simulateReviewLpaFinalComments,
 	simulateReviewLPAQ,
 	simulateReviewLpaStatement,
 	simulateShareIpCommentsAndLpaStatement,
@@ -23,6 +25,8 @@ app.post('/:appealReference/start-appeal', simulateStartAppeal);
 app.post('/:appealReference/review-ip-comment', simulateReviewIpComment);
 app.post('/:appealReference/review-lpaq', simulateReviewLPAQ);
 app.post('/:appealReference/review-lpa-statement', simulateReviewLpaStatement);
+app.post('/:appealReference/review-lpa-final-comments', simulateReviewLpaFinalComments);
+app.post('/:appealReference/review-appellant-final-comments', simulateReviewAppellantFinalComments);
 app.post('/:appealReference/share-comments-and-statement', simulateShareIpCommentsAndLpaStatement);
 const testApiRequest = supertest(app);
 
@@ -531,6 +535,127 @@ describe('test utils routes', () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(null);
 
 			const response = await testApiRequest.post('/1/review-lpa-statement');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+	});
+
+	describe('POST /:appealReference/review-lpa-final-comments', () => {
+		test('returns 200 for valid appeal reference', async () => {
+			const mockRepresentation = {
+				id: 1,
+				lpa: true,
+				status: 'awaiting_review',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: '',
+				dateCreated: new Date('2024-12-06T12:00:00Z'),
+				notes: 'Some notes',
+				representationType: 'lpa_final_comment',
+				siteVisitRequested: true,
+				source: 'lpa',
+				representationRejectionReasonsSelected: []
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			databaseConnector.representation.findFirst.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.update.mockResolvedValue({
+				...mockRepresentation,
+				status: 'valid'
+			});
+
+			const response = await testApiRequest.post('/1/review-lpa-final-comments');
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				attachments: [],
+				created: '2024-12-06T12:00:00.000Z',
+				id: 1,
+				notes: 'Some notes',
+				origin: 'lpa',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: '',
+				rejectionReasons: [],
+				representationType: 'lpa_final_comment',
+				siteVisitRequested: true,
+				source: 'lpa',
+				status: 'valid'
+			});
+		});
+
+		test('returns 400 for null representation', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+			databaseConnector.representation.findFirst.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/review-lpa-final-comments');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+
+		test('returns 400 for invalid appeal', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/review-lpa-final-comments');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+	});
+
+	describe('POST /:appealReference/review-appellant-final-comments', () => {
+		test('returns 200 for valid appeal reference', async () => {
+			const mockRepresentation = {
+				id: 1,
+				lpa: false,
+				status: 'awaiting_review',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: '',
+				dateCreated: new Date('2024-12-06T12:00:00Z'),
+				notes: 'Some notes',
+				representationType: 'appellant_final_comment',
+				siteVisitRequested: true,
+				source: 'citizen',
+				representationRejectionReasonsSelected: []
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			databaseConnector.representation.findFirst.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.update.mockResolvedValue({
+				...mockRepresentation,
+				status: 'valid'
+			});
+
+			const response = await testApiRequest.post('/1/review-appellant-final-comments');
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				attachments: [],
+				author: 'undefined undefined',
+				created: '2024-12-06T12:00:00.000Z',
+				id: 1,
+				notes: 'Some notes',
+				origin: 'citizen',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: '',
+				rejectionReasons: [],
+				representationType: 'appellant_final_comment',
+				siteVisitRequested: true,
+				source: 'citizen',
+				status: 'valid'
+			});
+		});
+
+		test('returns 400 for null representation', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+			databaseConnector.representation.findFirst.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/review-appellant-final-comments');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+
+		test('returns 400 for invalid appeal', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/review-appellant-final-comments');
 			expect(response.status).toEqual(400);
 			expect(response.body).toEqual(false);
 		});
