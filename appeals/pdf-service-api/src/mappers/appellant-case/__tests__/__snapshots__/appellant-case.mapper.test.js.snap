@@ -172,7 +172,7 @@ exports[`mapAppellantCaseData should map appellant case data for a s20 appeal 1`
         },
         {
           "key": "What type of application is your appeal about?",
-          "text": "Full appeal",
+          "text": "Full planning",
         },
         {
           "key": "Was your application granted or refused?",
@@ -373,7 +373,7 @@ exports[`mapAppellantCaseData should map appellant case data for a s78 appeal 1`
         },
         {
           "key": "What type of application is your appeal about?",
-          "text": "Full appeal",
+          "text": "Full planning",
         },
         {
           "key": "Was your application granted or refused?",
