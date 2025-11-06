@@ -7,7 +7,9 @@ import {
 	simulateHearingElapsed,
 	simulateInquiryElapsed,
 	simulateProofOfEvidenceElapsed,
+	simulateReviewAppellantFinalComments,
 	simulateReviewIpComment,
+	simulateReviewLpaFinalComments,
 	simulateReviewLPAQ,
 	simulateReviewLpaStatement,
 	simulateShareIpCommentsAndLpaStatement,
@@ -241,6 +243,46 @@ router.post(
 		#swagger.responses[400] = {}
 	 */
 	asyncHandler(simulateReviewLpaStatement)
+);
+
+router.post(
+	'/:appealReference/review-appellant-final-comments',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/review-appellant-final-comments'
+		#swagger.description = 'A test endpoint to simulate the completion of a review appellant final comments event'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {
+			description: 'Get a single representation for an appeal',
+			schema: { $ref: '#/components/schemas/RepResponse' }
+		}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(simulateReviewAppellantFinalComments)
+);
+
+router.post(
+	'/:appealReference/review-lpa-final-comments',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/review-lpa-final-comments'
+		#swagger.description = 'A test endpoint to simulate the completion of a review lpa final comments event'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {
+			description: 'Get a single representation for an appeal',
+			schema: { $ref: '#/components/schemas/RepResponse' }
+		}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(simulateReviewLpaFinalComments)
 );
 
 router.post(
