@@ -27,14 +27,32 @@ export const getInquiryValidator = composeMiddleware(
 
 export const postInquiryValidator = composeMiddleware(
 	validateIdParameter('appealId'),
-	validateDateParameter({ parameterName: 'startDate', isRequired: true }),
 	validateDateParameter({ parameterName: 'inquiryStartTime', isRequired: true }),
 	validateDateParameter({ parameterName: 'inquiryEndTime' }),
-	validateDateParameter({ parameterName: 'lpaQuestionnaireDueDate', isRequired: true }),
-	validateDateParameter({ parameterName: 'statementDueDate', isRequired: true }),
-	validateDateParameter({ parameterName: 'ipCommentsDueDate', isRequired: true }),
-	validateDateParameter({ parameterName: 'statementOfCommonGroundDueDate', isRequired: true }),
-	validateDateParameter({ parameterName: 'proofOfEvidenceAndWitnessesDueDate', isRequired: true }),
+	body('startDate')
+		.if((_, { req }) => req.body.isStartCase)
+		.isISO8601()
+		.withMessage('startDate must be a valid date'),
+	body('lpaQuestionnaireDueDate')
+		.if((_, { req }) => req.body.isStartCase)
+		.isISO8601()
+		.withMessage('lpaQuestionnaireDueDate must be a valid date'),
+	body('statementDueDate')
+		.if((_, { req }) => req.body.isStartCase)
+		.isISO8601()
+		.withMessage('statementDueDate must be a valid date'),
+	body('ipCommentsDueDate')
+		.if((_, { req }) => req.body.isStartCase)
+		.isISO8601()
+		.withMessage('ipCommentsDueDate must be a valid date'),
+	body('statementOfCommonGroundDueDate')
+		.if((_, { req }) => req.body.isStartCase)
+		.isISO8601()
+		.withMessage('statementOfCommonGroundDueDate must be a valid date'),
+	body('proofOfEvidenceAndWitnessesDueDate')
+		.if((_, { req }) => req.body.isStartCase)
+		.isISO8601()
+		.withMessage('proofOfEvidenceAndWitnessesDueDate must be a valid date'),
 	body('planningObligationDueDate')
 		.optional({ checkFalsy: true })
 		.custom(() =>

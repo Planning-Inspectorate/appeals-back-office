@@ -37,7 +37,8 @@ export const postInquiry = async (req, res) => {
 			ipCommentsDueDate,
 			statementOfCommonGroundDueDate,
 			proofOfEvidenceAndWitnessesDueDate,
-			planningObligationDueDate
+			planningObligationDueDate,
+			isStartCase
 		},
 		params,
 		appeal
@@ -59,6 +60,7 @@ export const postInquiry = async (req, res) => {
 				statementOfCommonGroundDueDate,
 				proofOfEvidenceAndWitnessesDueDate,
 				planningObligationDueDate,
+				isStartCase,
 				...(address && {
 					address: {
 						addressLine1: address.addressLine1,

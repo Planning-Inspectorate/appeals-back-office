@@ -40,7 +40,7 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
  * @param {Appeal} appeal
  * @param {string | Date} inquiryStartTime
  * @param {string} estimatedDays
- * @param {TimetableData} timetableData
+ * @param {TimetableData | undefined} timetableData
  * @param {Omit<import('@pins/appeals.api').Schema.Address, 'id'>} address
  * @param {string | Date} startDate
  * @returns {Promise<void>}
@@ -58,7 +58,7 @@ const sendInquiryDetailsNotifications = async (
 	const personalisation = {
 		appeal_type: trimAppealType(appeal.appealType?.type ?? ''),
 		start_date: dateISOStringToDisplayDate(
-			typeof startDate === 'string' ? startDate : startDate.toISOString()
+			startDate ? (typeof startDate === 'string' ? startDate : startDate.toISOString()) : ''
 		),
 		inquiry_date: dateISOStringToDisplayDate(
 			typeof inquiryStartTime === 'string' ? inquiryStartTime : inquiryStartTime.toISOString()
@@ -69,35 +69,45 @@ const sendInquiryDetailsNotifications = async (
 		inquiry_address: formatAddressSingleLine({ ...address, id: 0 }),
 		inquiry_expected_days: estimatedDays,
 		questionnaire_due_date: dateISOStringToDisplayDate(
-			typeof timetableData.lpaQuestionnaireDueDate === 'string'
-				? timetableData.lpaQuestionnaireDueDate
-				: timetableData.lpaQuestionnaireDueDate.toISOString()
+			timetableData?.lpaQuestionnaireDueDate
+				? typeof timetableData?.lpaQuestionnaireDueDate === 'string'
+					? timetableData?.lpaQuestionnaireDueDate
+					: timetableData?.lpaQuestionnaireDueDate.toISOString()
+				: ''
 		),
 		lpa_statement_deadline: dateISOStringToDisplayDate(
-			typeof timetableData.lpaStatementDueDate === 'string'
-				? timetableData.lpaStatementDueDate
-				: timetableData.lpaStatementDueDate.toISOString()
+			timetableData?.lpaStatementDueDate
+				? typeof timetableData?.lpaStatementDueDate === 'string'
+					? timetableData?.lpaStatementDueDate
+					: timetableData?.lpaStatementDueDate.toISOString()
+				: ''
 		),
 		ip_comments_deadline: dateISOStringToDisplayDate(
-			typeof timetableData.ipCommentsDueDate === 'string'
-				? timetableData.ipCommentsDueDate
-				: timetableData.ipCommentsDueDate.toISOString()
+			timetableData?.ipCommentsDueDate
+				? typeof timetableData?.ipCommentsDueDate === 'string'
+					? timetableData?.ipCommentsDueDate
+					: timetableData?.ipCommentsDueDate.toISOString()
+				: ''
 		),
 		statement_of_common_ground_deadline: dateISOStringToDisplayDate(
-			typeof timetableData.statementOfCommonGroundDueDate === 'string'
-				? timetableData.statementOfCommonGroundDueDate
-				: timetableData.statementOfCommonGroundDueDate.toISOString()
+			timetableData?.statementOfCommonGroundDueDate
+				? typeof timetableData?.statementOfCommonGroundDueDate === 'string'
+					? timetableData?.statementOfCommonGroundDueDate
+					: timetableData?.statementOfCommonGroundDueDate.toISOString()
+				: ''
 		),
 		proof_of_evidence_and_witnesses_deadline: dateISOStringToDisplayDate(
-			typeof timetableData.proofOfEvidenceAndWitnessesDueDate === 'string'
-				? timetableData.proofOfEvidenceAndWitnessesDueDate
-				: timetableData.proofOfEvidenceAndWitnessesDueDate.toISOString()
+			timetableData?.proofOfEvidenceAndWitnessesDueDate
+				? typeof timetableData?.proofOfEvidenceAndWitnessesDueDate === 'string'
+					? timetableData?.proofOfEvidenceAndWitnessesDueDate
+					: timetableData?.proofOfEvidenceAndWitnessesDueDate.toISOString()
+				: ''
 		),
 		planning_obligation_deadline: dateISOStringToDisplayDate(
-			timetableData.planningObligationDueDate
+			timetableData?.planningObligationDueDate
 				? typeof timetableData.planningObligationDueDate === 'string'
-					? timetableData.planningObligationDueDate
-					: timetableData.planningObligationDueDate.toISOString()
+					? timetableData?.planningObligationDueDate
+					: timetableData?.planningObligationDueDate.toISOString()
 				: ''
 		),
 		team_email_address: await getTeamEmailFromAppealId(appeal.id)
@@ -180,6 +190,7 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 		const estimatedDays = createInquiryData.estimatedDays
 			? createInquiryData.estimatedDays.toString()
 			: '';
+		const isStartCase = createInquiryData.isStartCase;
 
 		const appealType = appeal.appealType || null;
 		if (!appealType) {
@@ -213,51 +224,59 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 				}
 			});
 
-			const updatedAppeal = await tx.appeal.update({
-				where: { id: appeal.id },
-				data: {
-					caseStartedDate: startDateWithTimeCorrection.toISOString(),
-					...(procedureTypeId && { procedureTypeId })
+			let updatedAppeal;
+
+			/** @type {TimetableData | undefined} */
+			let timetableData;
+			if (isStartCase) {
+				updatedAppeal = await tx.appeal.update({
+					where: { id: appeal.id },
+					data: {
+						caseStartedDate: startDateWithTimeCorrection.toISOString(),
+						...(procedureTypeId && { procedureTypeId })
+					}
+				});
+
+				const existingTimetable = await tx.appealTimetable.findFirst({
+					where: { appealId }
+				});
+				timetableData = {
+					appealId,
+					lpaQuestionnaireDueDate: createInquiryData.lpaQuestionnaireDueDate,
+					lpaStatementDueDate: createInquiryData.statementDueDate,
+					appellantStatementDueDate: createInquiryData.statementDueDate,
+					planningObligationDueDate: createInquiryData.planningObligationDueDate,
+					statementOfCommonGroundDueDate: createInquiryData.statementOfCommonGroundDueDate,
+					ipCommentsDueDate: createInquiryData.ipCommentsDueDate,
+					proofOfEvidenceAndWitnessesDueDate: createInquiryData.proofOfEvidenceAndWitnessesDueDate
+				};
+
+				if (existingTimetable) {
+					// Add Appeal Timetable
+					await tx.appealTimetable.update({
+						where: { appealId },
+						data: timetableData
+					});
+				} else {
+					// Add Appeal Timetable
+					await tx.appealTimetable.create({
+						data: timetableData
+					});
 				}
-			});
-
-			const existingTimetable = await tx.appealTimetable.findFirst({
-				where: { appealId }
-			});
-			const timetableData = {
-				appealId,
-				lpaQuestionnaireDueDate: createInquiryData.lpaQuestionnaireDueDate,
-				lpaStatementDueDate: createInquiryData.statementDueDate,
-				appellantStatementDueDate: createInquiryData.statementDueDate,
-				planningObligationDueDate: createInquiryData.planningObligationDueDate,
-				statementOfCommonGroundDueDate: createInquiryData.statementOfCommonGroundDueDate,
-				ipCommentsDueDate: createInquiryData.ipCommentsDueDate,
-				proofOfEvidenceAndWitnessesDueDate: createInquiryData.proofOfEvidenceAndWitnessesDueDate
-			};
-
-			if (existingTimetable) {
-				// Add Appeal Timetable
-				await tx.appealTimetable.update({
-					where: { appealId },
-					data: timetableData
-				});
-			} else {
-				// Add Appeal Timetable
-				await tx.appealTimetable.create({
-					data: timetableData
-				});
 			}
 
 			// Return anything you want from this transaction
 			return { addr, inquiry, updatedAppeal, timetableData };
 		});
 		const timetableData = result.timetableData;
-		await transitionState(
-			appeal.id,
-			azureAdUserId || AUDIT_TRAIL_SYSTEM_UUID,
-			APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
-		);
 
+		if (isStartCase) {
+			await transitionState(
+				appeal.id,
+				azureAdUserId || AUDIT_TRAIL_SYSTEM_UUID,
+				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+			);
+		}
 		await broadcasters.broadcastAppeal(appeal.id);
 
 		if (address) {

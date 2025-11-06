@@ -69,7 +69,7 @@ describe('inquiry routes', () => {
 		jest.useRealTimers();
 	});
 
-	describe('/:appealId/inquiry', () => {
+	describe('/:appealId/inquiry on start case', () => {
 		let requestData = null;
 		const inquiryAddress = {
 			addressLine1: 'Court 2',
@@ -89,7 +89,736 @@ describe('inquiry routes', () => {
 				proofOfEvidenceAndWitnessesDueDate: new Date('2999-01-01T17:00:00.000Z'),
 				startDate: new Date('2999-01-01T18:00:00.000Z'),
 				statementDueDate: new Date('2999-01-01T19:00:00.000Z'),
-				statementOfCommonGroundDueDate: new Date('2999-01-01T20:00:00.000Z')
+				statementOfCommonGroundDueDate: new Date('2999-01-01T20:00:00.000Z'),
+				isStartCase: true
+			};
+		});
+
+		describe('POST', () => {
+			test('creates a single inquiry with address', async () => {
+				fullPlanningAppeal.appealType.type = 'Planning appeal';
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				// @ts-ignore
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send(requestData)
+					.set('azureAdUserId', azureAdUserId);
+
+				['Inquiry set up on 1 January 2999', 'The inquiry address has been added'].forEach(
+					(details) => {
+						expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+							data: {
+								appealId: fullPlanningAppeal.id,
+								details,
+								loggedAt: expect.any(Date),
+								userId: 1
+							}
+						});
+					}
+				);
+				const personalisation = {
+					appeal_reference_number: '1345264',
+					appeal_type: 'Planning',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					lpa_reference: '48269/APP/2021/1482',
+					inquiry_date: '1 January 2999',
+					inquiry_time: '1:00pm',
+					inquiry_address:
+						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					statement_of_common_ground_deadline: '24 January 2025',
+					lpa_statement_deadline: '21 January 2025',
+					planning_obligation_deadline: '23 January 2025',
+					proof_of_evidence_and_witnesses_deadline: '26 January 2025',
+					questionnaire_due_date: '20 January 2025',
+					ip_comments_deadline: '25 January 2025',
+					is_lpa: false,
+					inquiry_expected_days: '',
+					start_date: '1 January 2999'
+				};
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: fullPlanningAppeal.appellant.email,
+					templateName: 'inquiry-set-up'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					notifyClient: expect.anything(),
+					personalisation: { ...personalisation, is_lpa: true },
+					recipientEmail: fullPlanningAppeal.lpa.email,
+					templateName: 'inquiry-set-up'
+				});
+
+				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(fullPlanningAppeal.id);
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'inquiry', 'Create');
+
+				expect(response.status).toEqual(201);
+			});
+
+			test('creates a single inquiry with no address or inquiryEndTime', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({ ...requestData, inquiryStartTime: inquiry.inquiryStartTime })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: fullPlanningAppeal.id,
+						details: 'Inquiry set up on 1 January 2999',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+
+				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(fullPlanningAppeal.id);
+
+				expect(response.status).toEqual(201);
+			});
+
+			test('returns an error if appealId is not provided', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/inquiry`)
+					.send({
+						...requestData,
+						inquiryStartTime: inquiry.inquiryStartTime,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(405);
+				expect(response.body).toEqual({
+					errors: 'Method is not allowed'
+				});
+			});
+			test('returns an error if appealId is not a number', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/appealId/inquiry`)
+					.send({
+						...requestData,
+						inquiryStartTime: inquiry.inquiryStartTime,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: { appealId: 'must be a number' }
+				});
+			});
+
+			test('returns an error if inquiryStartTime is not provided', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({
+						...requestData,
+						inquiryStartTime: undefined,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						inquiryStartTime: 'must be a valid utc date time format'
+					}
+				});
+			});
+
+			test('returns an error if inquiryStartTime is not a valid date', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({
+						...requestData,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address,
+						inquiryStartTime: 'inquiryStartTime'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						inquiryStartTime: 'must be a valid utc date time format'
+					}
+				});
+			});
+
+			test('does not return an error if inquiryEndTime is not provided', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({ ...requestData, inquiryStartTime: inquiry.inquiryStartTime, address })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+			});
+
+			test('returns an error if inquiryEndTime is not a valid date', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({
+						...requestData,
+						inquiryStartTime: inquiry.inquiryStartTime,
+						address,
+						inquiryEndTime: 'inquiryEndTime'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						inquiryEndTime: 'must be a valid utc date time format'
+					}
+				});
+			});
+
+			test('returns an error if addressLine1 is not provided', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({
+						...requestData,
+						inquiryStartTime: inquiry.inquiryStartTime,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address: {
+							addressLine2: inquiry.address.addressLine2,
+							country: inquiry.address.addressCountry,
+							county: inquiry.address.addressCounty,
+							postcode: inquiry.address.postcode,
+							town: inquiry.address.addressTown
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						'address.addressLine1': 'must be a string'
+					}
+				});
+			});
+			test('returns an error if addressLine1 is not a string', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({
+						...requestData,
+						inquiryStartTime: inquiry.inquiryStartTime,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address: {
+							addressLine1: 123,
+							addressLine2: inquiry.address.addressLine2,
+							country: inquiry.address.addressCountry,
+							county: inquiry.address.addressCounty,
+							postcode: inquiry.address.postcode,
+							town: inquiry.address.addressTown
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						'address.addressLine1': 'must be a string'
+					}
+				});
+			});
+			test('returns an error if addressLine1 is greater than 250 characters', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({
+						...requestData,
+						inquiryStartTime: inquiry.inquiryStartTime,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address: {
+							addressLine1: 'a'.repeat(251),
+							addressLine2: inquiry.address.addressLine2,
+							country: inquiry.address.addressCountry,
+							county: inquiry.address.addressCounty,
+							postcode: inquiry.address.postcode,
+							town: inquiry.address.addressTown
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						'address.addressLine1': 'must be 250 characters or less'
+					}
+				});
+			});
+
+			test('returns an error if addressLine2 is not a string', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({
+						...requestData,
+						inquiryStartTime: inquiry.inquiryStartTime,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address: {
+							addressLine1: inquiry.address.addressLine1,
+							addressLine2: 123,
+							country: inquiry.address.addressCountry,
+							county: inquiry.address.addressCounty,
+							postcode: inquiry.address.postcode,
+							town: inquiry.address.addressTown
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						'address.addressLine2': 'must be a string'
+					}
+				});
+			});
+			test('returns an error if addressLine2 is greater than 250 characters', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({
+						...requestData,
+						inquiryStartTime: inquiry.inquiryStartTime,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address: {
+							addressLine1: inquiry.address.addressLine1,
+							addressLine2: 'a'.repeat(251),
+							country: inquiry.address.addressCountry,
+							county: inquiry.address.addressCounty,
+							postcode: inquiry.address.postcode,
+							town: inquiry.address.addressTown
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						'address.addressLine2': 'must be 250 characters or less'
+					}
+				});
+			});
+
+			test('returns an error if town is not provided', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({
+						...requestData,
+						inquiryStartTime: inquiry.inquiryStartTime,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address: {
+							addressLine1: inquiry.address.addressLine1,
+							addressLine2: inquiry.address.addressLine2,
+							country: inquiry.address.addressCountry,
+							county: inquiry.address.addressCounty,
+							postcode: inquiry.address.postcode
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						'address.town': 'must be a string'
+					}
+				});
+			});
+			test('returns an error if town is not a string', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({
+						...requestData,
+						inquiryStartTime: inquiry.inquiryStartTime,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address: {
+							addressLine1: inquiry.address.addressLine1,
+							addressLine2: inquiry.address.addressLine2,
+							country: inquiry.address.addressCountry,
+							county: inquiry.address.addressCounty,
+							postcode: inquiry.address.postcode,
+							town: 123
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						'address.town': 'must be a string'
+					}
+				});
+			});
+			test('returns an error if town is greater than 250 characters', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({
+						...requestData,
+						inquiryStartTime: inquiry.inquiryStartTime,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address: {
+							addressLine1: inquiry.address.addressLine1,
+							addressLine2: inquiry.address.addressLine2,
+							country: inquiry.address.addressCountry,
+							county: inquiry.address.addressCounty,
+							postcode: inquiry.address.postcode,
+							town: 'a'.repeat(251)
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						'address.town': 'must be 250 characters or less'
+					}
+				});
+			});
+
+			test('returns an error if country is not a string', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({
+						...requestData,
+						inquiryStartTime: inquiry.inquiryStartTime,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address: {
+							addressLine1: inquiry.address.addressLine1,
+							addressLine2: inquiry.address.addressLine2,
+							country: 123,
+							county: inquiry.address.addressCounty,
+							postcode: inquiry.address.postcode,
+							town: inquiry.address.addressTown
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						'address.country': 'must be a string'
+					}
+				});
+			});
+			test('returns an error if country is greater than 250 characters', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({
+						...requestData,
+						inquiryStartTime: inquiry.inquiryStartTime,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address: {
+							addressLine1: inquiry.address.addressLine1,
+							addressLine2: inquiry.address.addressLine2,
+							country: 'a'.repeat(251),
+							county: inquiry.address.addressCounty,
+							postcode: inquiry.address.postcode,
+							town: inquiry.address.addressTown
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						'address.country': 'must be 250 characters or less'
+					}
+				});
+			});
+
+			test('returns an error if county is not a string', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({
+						...requestData,
+						inquiryStartTime: inquiry.inquiryStartTime,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address: {
+							addressLine1: inquiry.address.addressLine1,
+							addressLine2: inquiry.address.addressLine2,
+							country: inquiry.address.addressCountry,
+							county: 123,
+							postcode: inquiry.address.postcode,
+							town: inquiry.address.addressTown
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						'address.county': 'must be a string'
+					}
+				});
+			});
+			test('returns an error if county is greater than 250 characters', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({
+						...requestData,
+						inquiryStartTime: inquiry.inquiryStartTime,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address: {
+							addressLine1: inquiry.address.addressLine1,
+							addressLine2: inquiry.address.addressLine2,
+							country: inquiry.address.addressCountry,
+							county: 'a'.repeat(251),
+							postcode: inquiry.address.postcode,
+							town: inquiry.address.addressTown
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						'address.county': 'must be 250 characters or less'
+					}
+				});
+			});
+
+			test('returns an error if postcode is not provided', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({
+						...requestData,
+						inquiryStartTime: inquiry.inquiryStartTime,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address: {
+							addressLine1: inquiry.address.addressLine1,
+							addressLine2: inquiry.address.addressLine2,
+							country: inquiry.address.addressCountry,
+							county: inquiry.address.addressCounty,
+							town: inquiry.address.addressTown
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						'address.postcode': 'must be a string'
+					}
+				});
+			});
+			test('returns an error if postcode is not a string', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({
+						...requestData,
+						inquiryStartTime: inquiry.inquiryStartTime,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address: {
+							addressLine1: inquiry.address.addressLine1,
+							addressLine2: inquiry.address.addressLine2,
+							country: inquiry.address.addressCountry,
+							county: inquiry.address.addressCounty,
+							postcode: 123,
+							town: inquiry.address.addressTown
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						'address.postcode': 'must be a string'
+					}
+				});
+			});
+			test('returns an error if postcode is greater than 8 characters', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({
+						...requestData,
+						inquiryStartTime: inquiry.inquiryStartTime,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address: {
+							addressLine1: inquiry.address.addressLine1,
+							addressLine2: inquiry.address.addressLine2,
+							country: inquiry.address.addressCountry,
+							county: inquiry.address.addressCounty,
+							postcode: 'a'.repeat(9),
+							town: inquiry.address.addressTown
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						'address.postcode': 'must be 8 characters or less'
+					}
+				});
+			});
+			test('returns an error if postcode is not a valid UK postcode', async () => {
+				const { inquiry } = fullPlanningAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send({
+						...requestData,
+						inquiryStartTime: inquiry.inquiryStartTime,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address: {
+							addressLine1: inquiry.address.addressLine1,
+							addressLine2: inquiry.address.addressLine2,
+							country: inquiry.address.addressCountry,
+							county: inquiry.address.addressCounty,
+							postcode: 'ZZ999XZZ',
+							town: inquiry.address.addressTown
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						'address.postcode': 'needs to be a valid and include spaces'
+					}
+				});
+			});
+		});
+	});
+
+	describe('/:appealId/inquiry on setup inquiry', () => {
+		let requestData = null;
+		const inquiryAddress = {
+			addressLine1: 'Court 2',
+			addressLine2: '24 Court Street',
+			country: 'United Kingdom',
+			county: 'Test County',
+			postcode: 'AB12 3CD',
+			town: 'Test Town'
+		};
+		beforeEach(() => {
+			requestData = {
+				inquiryStartTime: '2999-01-01T13:00:00.000Z',
+				address: inquiryAddress,
+				ipCommentsDueDate: new Date('2999-01-01T14:00:00.000Z'),
+				lpaQuestionnaireDueDate: new Date('2999-01-01T15:00:00.000Z'),
+				planningObligationDueDate: new Date('2999-01-01T16:00:00.000Z'),
+				proofOfEvidenceAndWitnessesDueDate: new Date('2999-01-01T17:00:00.000Z'),
+				startDate: new Date('2999-01-01T18:00:00.000Z'),
+				statementDueDate: new Date('2999-01-01T19:00:00.000Z'),
+				statementOfCommonGroundDueDate: new Date('2999-01-01T20:00:00.000Z'),
+				isStartCase: false
 			};
 		});
 
