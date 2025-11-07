@@ -94,10 +94,7 @@ describe('issue-decision', () => {
 					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="split decision">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="invalid" data-aria-controls="conditional-decision-4">'
-				);
-				expect(unprettifiedElement.innerHTML).toContain(
-					'<textarea class="govuk-textarea" id="invalid-reason" name="invalidReason" rows="5" aria-describedby="invalid-reason-hint"></textarea>'
+					'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="invalid">'
 				);
 			});
 		});
@@ -189,20 +186,6 @@ describe('issue-decision', () => {
 			);
 		});
 
-		it('should require a reason if the decision is "Invalid"', async () => {
-			const response = await request
-				.post(`${baseUrl}/1/issue-decision/decision`)
-				.send({ decision: CASE_OUTCOME_INVALID, invalidReason: '' })
-				.expect(200);
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Enter a reason</a>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<p id="invalid-reason-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a reason</p>'
-			);
-		});
-
 		it(`should redirect to the decision letter upload page, if the decision is 'Allowed'`, async () => {
 			const response = await request
 				.post(`${baseUrl}/1/issue-decision/decision`)
@@ -236,14 +219,87 @@ describe('issue-decision', () => {
 			);
 		});
 
-		it(`should send the decision details for invalid, and redirect to the decision letter page, if the decision is 'Invalid'`, async () => {
+		it(`should redirect to the decision letter page, if the decision is 'Invalid'`, async () => {
 			const response = await request
 				.post(`${baseUrl}/1/issue-decision/decision`)
-				.send({ decision: CASE_OUTCOME_INVALID, invalidReason: 'my invalid reason' })
+				.send({ decision: CASE_OUTCOME_INVALID })
 				.expect(302);
 
 			expect(response.headers.location).toBe(
 				'/appeals-service/appeal-details/1/issue-decision/decision-letter'
+			);
+		});
+	});
+
+	describe('GET /decision-letter', () => {
+		it('should render the decision letter page', async () => {
+			const mockAppealId = '1';
+			const response = await request.get(
+				`${baseUrl}/${mockAppealId}/issue-decision/decision-letter`
+			);
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062 - issue decision</span>');
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Do you want to issue a decision letter?</h1>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<input class="govuk-radios__input" id="decision-letter" name="decisionLetter" type="radio" value="true">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<input class="govuk-radios__input" id="decision-letter-2" name="decisionLetter" type="radio" value="false">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+		});
+	});
+
+	describe('POST /decision-letter', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
+			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+		});
+		afterEach(teardown);
+
+		it(`should require a chosen option`, async () => {
+			const response = await request
+				.post(`${baseUrl}/1/issue-decision/decision-letter`)
+				.expect(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Select yes if you want to issue a decision letter</a>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<p id="decision-letter-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select yes if you want to issue a decision letter</p>'
+			);
+		});
+
+		it(`should redirect to the decision letter upload page, if the decision is 'Yes'`, async () => {
+			const response = await request
+				.post(`${baseUrl}/1/issue-decision/decision-letter`)
+				.send({ decisionLetter: 'true' })
+				.expect(302);
+
+			expect(response.headers.location).toBe(
+				'/appeals-service/appeal-details/1/issue-decision/decision-letter-upload'
+			);
+		});
+
+		it(`should redirect to the invalid decision page, if the decision is 'No'`, async () => {
+			const response = await request
+				.post(`${baseUrl}/1/issue-decision/decision-letter`)
+				.send({ decisionLetter: 'false' })
+				.expect(302);
+
+			expect(response.headers.location).toBe(
+				'/appeals-service/appeal-details/1/issue-decision/invalid-reason'
 			);
 		});
 	});
@@ -331,6 +387,77 @@ describe('issue-decision', () => {
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
 				'Found. Redirecting to /appeals-service/appeal-details/1/issue-decision/appellant-costs-decision'
+			);
+		});
+	});
+
+	describe('GET /invalid-reason', () => {
+		it('should render the invalid reason page', async () => {
+			const mockAppealId = '1';
+			const response = await request.get(
+				`${baseUrl}/${mockAppealId}/issue-decision/invalid-reason`
+			);
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062 - issue decision</span>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Why is the appeal invalid?</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<textarea class="govuk-textarea" id="invalid-reason" name="invalidReason" rows="5" aria-describedby="invalid-reason-hint"></textarea>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+		});
+	});
+
+	describe('POST /invalid-reason', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
+			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+		});
+		afterEach(teardown);
+
+		it(`invalid reason cannot be empty`, async () => {
+			const response = await request
+				.post(`${baseUrl}/1/issue-decision/invalid-reason`)
+				.send({ invalidReason: '' })
+				.expect(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Enter reason</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<p id="invalid-reason-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter reason</p>'
+			);
+		});
+
+		it(`invalid reason must be less than or equal to 1000 characters`, async () => {
+			const invalidReason = 'a'.repeat(1001);
+			const response = await request
+				.post(`${baseUrl}/1/issue-decision/invalid-reason`)
+				.send({ invalidReason })
+				.expect(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Reason must be 1000 characters or less</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<p id="invalid-reason-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Reason must be 1000 characters or less</p>'
+			);
+		});
+
+		it(`should redirect to the decision letter upload page, if the invalid decision is entered and is less than 1000 characters`, async () => {
+			const response = await request
+				.post(`${baseUrl}/1/issue-decision/invalid-reason`)
+				.send({ invalidReason: 'my reason' })
+				.expect(302);
+
+			expect(response.headers.location).toContain(
+				'/appeals-service/appeal-details/1/issue-decision/check-your-decision'
 			);
 		});
 	});
