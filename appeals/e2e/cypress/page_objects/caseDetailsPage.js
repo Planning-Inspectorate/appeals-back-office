@@ -864,7 +864,7 @@ export class CaseDetailsPage extends Page {
 	}
 
 	enterTimeTableDueDatesCaseStart(timetableItems, date, intervalDays) {
-		dateTimeSection.enterDueDates(timetableItems, date, intervalDays);
+		dateTimeSection.enterInquiryDueDates(timetableItems, date, intervalDays);
 	}
 
 	clickUpdateTimetableDueDates(date) {

@@ -25,7 +25,7 @@ schedules:
 
 jobs:
   - job: Run_Cypress_Tests_For_Appeals
-    timeoutInMinutes: 90
+    timeoutInMinutes: 120
     pool: pins-odt-agent-pool-tests
 
     strategy:
@@ -39,7 +39,7 @@ jobs:
           group3:
             SPEC: cypress/e2e/back-office-appeals/addCorrespondence.spec.js,cypress/e2e/back-office-appeals/appellantCase.spec.js,cypress/e2e/back-office-appeals/assignUserToCase.spec.js,cypress/e2e/back-office-appeals/caseHistory.spec.js,cypress/e2e/back-office-appeals/caseNotes.spec.js,cypress/e2e/back-office-appeals/changeAppealType.spec.js,cypress/e2e/back-office-appeals/changeContact.spec.js,cypress/e2e/back-office-appeals/changeSiteVisit.spec.js,cypress/e2e/back-office-appeals/changeStartDate.spec.js,cypress/e2e/back-office-appeals/globalDateValidation.spec.js,cypress/e2e/back-office-appeals/issueDecisionInvalid.spec.js,cypress/e2e/back-office-appeals/linkAppeals.spec.js,cypress/e2e/back-office-appeals/lpaStatement.spec.js,cypress/e2e/back-office-appeals/manageDocsSupporting.spec.js
 
-      # 🟡 SINGLE AGENT RUN (default)
+      #  SINGLE AGENT RUN (default)
       ${{ if eq(parameters.RunParallel, false) }}:
         matrix:
           single:

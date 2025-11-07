@@ -73,6 +73,17 @@ export class DateTimeSection extends Page {
 		});
 	}
 
+	enterInquiryDueDates(timetableItems, startDate, intervalDays) {
+		timetableItems.forEach((item, index) => {
+			if (!item.editable) return;
+
+			cy.getBusinessActualDate(startDate, index * intervalDays).then((due) => {
+				const dueDate = new Date(due); // ensure Date object if API returns string
+				this.#setAllDateFields(`#${item.row}-`, dueDate);
+			});
+		});
+	}
+
 	enterLpaqDate(date) {
 		this.#setAllDateFields(this.selectorPrefix.lpaqDate, date);
 	}

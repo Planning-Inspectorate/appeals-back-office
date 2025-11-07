@@ -358,6 +358,7 @@ export const appealsApiClient = {
 			requestBody.statementOfCommonGroundDueDate = date.toISOString();
 			requestBody.proofOfEvidenceAndWitnessesDueDate = date.toISOString();
 			requestBody.planningObligationDueDate = date.toISOString();
+			requestBody.isStartCase = true;
 
 			// apply any overrides to payload
 			const requestBodyWithOverrides = {
