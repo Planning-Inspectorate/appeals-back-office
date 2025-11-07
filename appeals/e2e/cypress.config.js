@@ -11,6 +11,7 @@ const {
 	validateDownloadedFile
 } = require('./cypress/support/cypressUtils');
 const { getSpecPattern } = require('./cypress/support/utils/getSpecPattern');
+const { allureCypress } = require('allure-cypress/reporter');
 
 require('dotenv').config();
 
@@ -30,6 +31,10 @@ module.exports = defineConfig({
 			on('task', { GetConfigByFile: getConfigByFile });
 			on('task', { GetCookiesFileContents: getCookiesFileContents });
 			on('task', { ValidateDownloadedFile: validateDownloadedFile });
+
+			allureCypress(on, config, {
+				resultsDir: 'allure-results'
+			});
 			return config;
 		},
 		baseUrl: process.env.BASE_URL,

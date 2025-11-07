@@ -1,3 +1,4 @@
 export const tag = {
-	smoke: 'smoke'
+	smoke: 'smoke',
+	test_allure: 'test_allure'
 };
