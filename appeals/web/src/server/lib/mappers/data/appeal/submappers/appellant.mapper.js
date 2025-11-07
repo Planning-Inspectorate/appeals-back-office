@@ -1,5 +1,5 @@
 import { textSummaryListItem } from '#lib/mappers/index.js';
-import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
+import { formatAppellantAsHtmlList } from '#lib/service-user-formatter.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapAppellant = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) =>
@@ -8,7 +8,7 @@ export const mapAppellant = ({ appealDetails, currentRoute, userHasUpdateCasePer
 		text: 'Appellant',
 		value: {
 			html: appealDetails.appellant
-				? formatServiceUserAsHtmlList(appealDetails.appellant)
+				? formatAppellantAsHtmlList(appealDetails.appellant, appealDetails.agent)
 				: 'No data'
 		},
 		link: `${currentRoute}/service-user/change/appellant`,

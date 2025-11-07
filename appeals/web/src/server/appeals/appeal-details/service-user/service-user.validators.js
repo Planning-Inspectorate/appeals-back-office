@@ -1,5 +1,5 @@
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
-import { createEmailInputValidator } from '#lib/validators/email-input.validator.js';
+import { createEmailInputConditionallyMandatoryValidator } from '#lib/validators/email-input.validator.js';
 import {
 	createTextInputOptionalValidator,
 	createTextInputValidator
@@ -26,18 +26,30 @@ export const validateChangeServiceUser = createValidator(
 		textInputCharacterLimits.defaultInputLength,
 		`Organisation name must be ${textInputCharacterLimits.defaultInputLength} characters or less`
 	),
-	createEmailInputValidator('emailAddress', `Enter the {replacement0}'s email address`),
+	createEmailInputConditionallyMandatoryValidator(
+		'emailAddress',
+		`Enter the {replacement0}'s email address`
+	),
 	body('phoneNumber')
+		.if((value) => typeof value !== 'undefined')
 		.trim()
 		.isLength({ min: 1 })
 		.withMessage((value, { req }) => {
-			if (req.params && req.params.userType) {
-				return stringTokenReplacement(`Enter the {replacement0}'s phone number`, [
-					req.params.userType
-				]);
-			} else {
-				return `Enter the phone number`;
+			const isMandatory =
+				(req.currentAppeal && typeof req.currentAppeal.agent === 'undefined') ||
+				req.params?.userType === 'agent';
+
+			if (isMandatory && !value) {
+				if (req.params && req.params.userType) {
+					return stringTokenReplacement(`Enter the {replacement0}'s phone number`, [
+						req.params.userType
+					]);
+				} else {
+					return `Enter the phone number`;
+				}
 			}
+
+			return true;
 		})
 		.bail()
 		.customSanitizer((value) => {

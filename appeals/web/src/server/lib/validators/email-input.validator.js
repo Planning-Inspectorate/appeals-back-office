@@ -45,3 +45,43 @@ export const createEmailInputOptionalValidator = (
 			.isLength({ max: maxLength })
 			.withMessage(maxLengthErrorMessage)
 	);
+
+/**
+ *
+ * @param {string} [fieldName='email'] - The name of the field.
+ * @param {string} [emptyErrorMessage='Enter an email address'] - Error message if mandatory and empty.
+ * @param {number} [maxLength=EMAIL_MAX_LENGTH] - Max length.
+ * @param {string} [maxLengthErrorMessage] - Error message for max length.
+ */
+export const createEmailInputConditionallyMandatoryValidator = (
+	fieldName = 'email',
+	emptyErrorMessage = 'Enter an email address',
+	maxLength = EMAIL_MAX_LENGTH,
+	maxLengthErrorMessage = `Email must be ${maxLength} characters or less`
+) =>
+	createValidator(
+		body(fieldName)
+			.if((value) => typeof value !== 'undefined')
+			.trim()
+			.custom((value, { req }) => {
+				const isMandatory =
+					(req.currentAppeal && typeof req.currentAppeal.agent === 'undefined') ||
+					req.params?.userType === 'agent';
+
+				if (isMandatory && !value) {
+					if (req.params && req.params.userType) {
+						throw new Error(stringTokenReplacement(emptyErrorMessage, [req.params.userType]));
+					}
+				}
+
+				return true;
+			})
+			.bail()
+			.if(body(fieldName).notEmpty())
+			.isEmail()
+			.bail()
+			.withMessage(INVALID_EMAIL_MESSAGE)
+			.isLength({ max: maxLength })
+			.bail()
+			.withMessage(maxLengthErrorMessage)
+	);

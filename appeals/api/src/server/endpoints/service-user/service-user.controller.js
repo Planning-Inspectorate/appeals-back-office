@@ -16,6 +16,7 @@ import { formatServiceUser, upsertServiceUserAddress } from './service-user.serv
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
+/** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
 
 /**
  * @param {Request} req
@@ -24,8 +25,8 @@ import { formatServiceUser, upsertServiceUserAddress } from './service-user.serv
  */
 export const updateServiceUserById = async (req, res) => {
 	const { serviceUser } = req.body;
+	const { agent, reference: appealReference } = req.appeal;
 	const { appealId } = req.params;
-
 	const {
 		serviceUserId,
 		userType,
@@ -38,15 +39,23 @@ export const updateServiceUserById = async (req, res) => {
 		addressId
 	} = serviceUser;
 
-	const dbSavedResult = await serviceUserRepository.updateServiceUserById(parseInt(serviceUserId), {
+	const isUpdatingAppellant = userType === 'appellant';
+	const isAgentPresent = !!agent;
+	const addExtraData = !(isUpdatingAppellant && isAgentPresent);
+
+	const dataToUpdate = {
 		organisationName,
 		firstName,
 		middleName,
 		lastName,
-		email,
-		phoneNumber,
-		addressId
-	});
+		addressId,
+		...(addExtraData && { email, phoneNumber })
+	};
+
+	const dbSavedResult = await serviceUserRepository.updateServiceUserById(
+		parseInt(serviceUserId),
+		dataToUpdate
+	);
 
 	if (!dbSavedResult) {
 		return res.status(404).send({ errors: { serviceUserId: ERROR_NOT_FOUND } });
@@ -65,7 +74,7 @@ export const updateServiceUserById = async (req, res) => {
 		dbSavedResult.id,
 		EventType.Update,
 		userType,
-		req.appeal.reference
+		appealReference
 	);
 
 	return res.send({
