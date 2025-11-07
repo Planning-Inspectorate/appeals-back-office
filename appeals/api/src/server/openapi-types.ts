@@ -2889,6 +2889,11 @@ export interface CreateInquiryRequest {
 	 * @example "2026-11-10T00:00:00.000Z"
 	 */
 	planningObligationDueDate?: string;
+	/**
+	 * Whether case is being started or inquiry is being set up
+	 * @example true
+	 */
+	isStartCase?: boolean;
 	address?: {
 		/** @example "1 Grove Cottage" */
 		addressLine1?: string;

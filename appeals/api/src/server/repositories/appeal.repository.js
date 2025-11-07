@@ -79,7 +79,8 @@ const appealDetailsInclude = {
 			},
 			appellantCaseValidationOutcome: true,
 			knowsOtherOwners: true,
-			knowsAllOwners: true
+			knowsAllOwners: true,
+			appellantCaseAdvertDetails: true
 		}
 	},
 	appellant: true,

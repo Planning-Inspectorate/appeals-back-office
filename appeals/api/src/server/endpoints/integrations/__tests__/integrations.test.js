@@ -1,6 +1,7 @@
 import { request } from '#tests/../app-test.js';
 import {
 	appealIngestionInput,
+	appealIngestionInputAdverts,
 	appealIngestionInputCasAdverts,
 	appealIngestionInputCasPlanning,
 	appealIngestionInputS20,
@@ -9,13 +10,16 @@ import {
 	appealIngestionInputS78Written,
 	docIngestionInput,
 	validAppellantCase,
+	validAppellantCaseAdverts,
 	validAppellantCaseCasAdverts,
 	validAppellantCaseCasPlanning,
 	validAppellantCaseS20,
 	validAppellantCaseS78,
+	validLpaQuestionnaireAdverts,
 	validLpaQuestionnaireCasAdverts,
 	validLpaQuestionnaireCasPlanning,
 	validLpaQuestionnaireHas,
+	validLpaQuestionnaireIngestionAdvert,
 	validLpaQuestionnaireIngestionCasAdvert,
 	validLpaQuestionnaireIngestionHas,
 	validLpaQuestionnaireIngestionS20,
@@ -114,7 +118,13 @@ describe('/appeals/case-submission', () => {
 			['CAS_PLANNING', appealIngestionInputCasPlanning, validAppellantCaseCasPlanning, { id: 1 }],
 			['S78', appealIngestionInputS78, validAppellantCaseS78, { name: 'Major Casework Officer' }],
 			['S20', appealIngestionInputS20, validAppellantCaseS20, { name: 'Major Casework Officer' }],
-			['CAS_ADVERTISEMENT', appealIngestionInputCasAdverts, validAppellantCaseCasAdverts, { id: 1 }]
+			[
+				'CAS_ADVERTISEMENT',
+				appealIngestionInputCasAdverts,
+				validAppellantCaseCasAdverts,
+				{ id: 1 }
+			],
+			['ADVERTISEMENT', appealIngestionInputAdverts, validAppellantCaseAdverts, { id: 1 }]
 		])(
 			'POST valid %s appellant case payload and create appeal',
 			async (_, appealIngestionInput, validAppellantCase, expectedTeamQueryParam) => {
@@ -336,7 +346,8 @@ describe('/appeals/lpaq-submission', () => {
 				'CAS_ADVERTISEMENT',
 				validLpaQuestionnaireIngestionCasAdvert,
 				validLpaQuestionnaireCasAdverts
-			]
+			],
+			['ADVERTISEMENT', validLpaQuestionnaireIngestionAdvert, validLpaQuestionnaireAdverts]
 		])(
 			'POST valid %s lpaq payload and create lpaq submission',
 			async (_, ingestion, questionnaire) => {

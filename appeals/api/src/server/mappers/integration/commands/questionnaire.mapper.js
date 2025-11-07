@@ -14,9 +14,10 @@ export const mapQuestionnaireIn = (command, designatedSites) => {
 
 	const isS20 = casedata.caseType === APPEAL_CASE_TYPE.Y;
 	const isS78 = casedata.caseType === APPEAL_CASE_TYPE.W;
+	const isAdverts = casedata.caseType === APPEAL_CASE_TYPE.H;
 
 	//@ts-ignore
-	const listedBuildingsData = mapListedBuildings(casedata, isS78 || isS20);
+	const listedBuildingsData = mapListedBuildings(casedata, isS78 || isS20 || isAdverts);
 
 	switch (casedata.caseType) {
 		case APPEAL_CASE_TYPE.D: // HAS - schema includes common and has fields
@@ -42,6 +43,7 @@ export const mapQuestionnaireIn = (command, designatedSites) => {
 				preserveGrantLoan: casedata.preserveGrantLoan,
 				historicEnglandConsultation: casedata.consultHistoricEngland
 			};
+		case APPEAL_CASE_TYPE.H: // ADVERTISEMENT - schema includes cas adverts + changed listed buildings
 		case APPEAL_CASE_TYPE.ZA: // CAS_ADVERTISEMENT - schema includes common, has and adverts fields
 			return {
 				...generateCommonSchemaFields(casedata),
@@ -119,7 +121,7 @@ const generateHasSchemaFields = (casedata, listedBuildingsData) => {
 
 /**
  *
- * @param {import('@planning-inspectorate/data-model').Schemas.LPAQS78SubmissionProperties} casedata
+ * @param {import('@planning-inspectorate/data-model').Schemas.LPAQuestionnaireCommand} casedata
  * @param {DesignatedSite[]} designatedSites
  * @returns
  */
@@ -157,7 +159,7 @@ const generateS78SchemaFields = (casedata, designatedSites) => {
 
 /**
  *
- * @param {import('@planning-inspectorate/data-model').Schemas.LPAQCasAdvertSubmissionProperties} casedata
+ * @param {import('@planning-inspectorate/data-model').Schemas.LPAQuestionnaireCommand} casedata
  * @param {DesignatedSite[]} designatedSites
  * @returns
  */
@@ -165,6 +167,7 @@ const generateCasAdvertSchemaFields = (casedata, designatedSites) => {
 	return {
 		affectsScheduledMonument: casedata.affectsScheduledMonument,
 		isAonbNationalLandscape: casedata.isAonbNationalLandscape,
+		// @ts-ignore - values defined before type narrowing
 		...mapDesignatedSiteNames(casedata, designatedSites),
 		consultedBodiesDetails: casedata.consultedBodiesDetails,
 		hasProtectedSpecies: casedata.hasProtectedSpecies,
