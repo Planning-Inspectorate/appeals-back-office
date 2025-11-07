@@ -1747,7 +1747,7 @@ describe('/appeals/:id/reps', () => {
 						is_hearing_procedure: false,
 						is_inquiry_procedure: false,
 						what_happens_next:
-							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
+							'The inspector will visit the site and we will contact you when we have made the decision.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.lpa.email,
@@ -1825,7 +1825,7 @@ describe('/appeals/:id/reps', () => {
 						is_hearing_procedure: false,
 						is_inquiry_procedure: false,
 						what_happens_next:
-							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
+							'The inspector will visit the site and we will contact you when we have made the decision.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: appealS78.lpa.email,

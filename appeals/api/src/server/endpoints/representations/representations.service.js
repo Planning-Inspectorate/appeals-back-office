@@ -371,7 +371,9 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 			whatHappensNextLpa = `You need to [submit your proof of evidence and witnesses](${config.frontOffice.url}/manage-appeals/${appeal.reference}) by ${proofOfEvidenceDueDate}.`;
 		} else {
 			whatHappensNextAppellant = `You need to [submit your final comments](${config.frontOffice.url}/appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
-			whatHappensNextLpa = `You need to [submit your final comments](${config.frontOffice.url}/manage-appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
+			whatHappensNextLpa = hasIpComments
+				? `You need to [submit your final comments](${config.frontOffice.url}/manage-appeals/${appeal.reference}) by ${finalCommentsDueDate}.`
+				: `The inspector will visit the site and we will contact you when we have made the decision.`;
 		}
 
 		let lpaTemplate = 'received-statement-and-ip-comments-lpa';
