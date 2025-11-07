@@ -6,6 +6,7 @@ import {
 	appellantCostsDecisionPage,
 	checkAndConfirmPage,
 	decisionLetterPage,
+	invalidReasonPage,
 	issueDecisionPage,
 	lpaCostsDecisionPage,
 	viewDecisionPage
@@ -14,9 +15,11 @@ import { postInspectorDecision } from './issue-decision.service.js';
 
 import { createNewDocument } from '#app/components/file-uploader.component.js';
 import {
+	appellantCostsDecisionBackUrl,
 	baseUrl,
 	buildIssueDecisionLogicData,
 	checkDecisionUrl,
+	decisionLetterUploadBackUrl,
 	getDecisions,
 	issueDecisionBackUrl,
 	lpaCostsDecisionBackUrl
@@ -38,6 +41,7 @@ import {
 	DECISION_TYPE_INSPECTOR
 } from '@pins/appeals/constants/support.js';
 import {
+	APPEAL_CASE_DECISION_OUTCOME,
 	APPEAL_CASE_STAGE,
 	APPEAL_CASE_STATUS,
 	APPEAL_DOCUMENT_TYPE
@@ -208,22 +212,12 @@ export const postDecisionLetter = async (request, response) => {
 		outcome: body.decisionLetter
 	};
 
-	const { appellantHasAppliedForCosts, appellantDecisionHasAlreadyBeenIssued } =
-		buildIssueDecisionLogicData(currentAppeal);
-
 	let nextPageUrl;
 
 	if (body.decisionLetter === 'true') {
 		nextPageUrl = `${baseUrl(currentAppeal)}/decision-letter-upload`;
 	} else {
-		if (session.inspectorDecision.files) {
-			session.inspectorDecision.files = [];
-		}
-		if (appellantHasAppliedForCosts && !appellantDecisionHasAlreadyBeenIssued) {
-			nextPageUrl = `${baseUrl(currentAppeal)}/appellant-costs-decision`;
-		} else {
-			nextPageUrl = addBackLinkQueryToUrl(request, checkDecisionUrl(request));
-		}
+		nextPageUrl = `${baseUrl(currentAppeal)}/invalid-reason`;
 	}
 	return response.redirect(nextPageUrl);
 };
@@ -241,6 +235,63 @@ export const renderDecisionLetter = async (request, response) => {
 	const mappedPageContent = decisionLetterPage(
 		currentAppeal,
 		request.session.decisionLetter,
+		getBackLinkUrlFromQuery(request) || backUrl,
+		errors
+	);
+
+	return response.status(200).render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+/**
+ * @param {Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+
+export const postInvalidReason = async (request, response) => {
+	const { currentAppeal, params, body, session, errors } = request;
+
+	if (errors) {
+		return renderInvalidReason(request, response);
+	}
+
+	session.inspectorDecision = {
+		appealId: params.appealId,
+		...request.session.inspectorDecision,
+		invalidReason: body.invalidReason
+	};
+
+	const { appellantHasAppliedForCosts, appellantDecisionHasAlreadyBeenIssued } =
+		buildIssueDecisionLogicData(currentAppeal);
+
+	let nextPageUrl;
+
+	if (session.inspectorDecision.files) {
+		session.inspectorDecision.files = [];
+	}
+	if (appellantHasAppliedForCosts && !appellantDecisionHasAlreadyBeenIssued) {
+		nextPageUrl = `${baseUrl(currentAppeal)}/appellant-costs-decision`;
+	} else {
+		nextPageUrl = addBackLinkQueryToUrl(request, checkDecisionUrl(request));
+	}
+
+	return response.redirect(nextPageUrl);
+};
+
+/**
+ *
+ * @param {Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const renderInvalidReason = async (request, response) => {
+	const { errors, currentAppeal } = request;
+
+	const backUrl = decisionLetterUploadBackUrl(request);
+
+	const mappedPageContent = invalidReasonPage(
+		currentAppeal,
+		request.session.inspectorDecision.invalidReason,
 		getBackLinkUrlFromQuery(request) || backUrl,
 		errors
 	);
@@ -287,6 +338,16 @@ export const postDecisionLetterUpload = async (request, response) => {
 		folderId: currentAppeal.decision?.folderId,
 		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
 	};
+
+	if (session.inspectorDecision?.invalidReason) {
+		delete session.inspectorDecision.invalidReason;
+	}
+	if (
+		session.decisionLetter?.outcome &&
+		session.inspectorDecision?.outcome !== APPEAL_CASE_DECISION_OUTCOME.INVALID
+	) {
+		delete session.decisionLetter.outcome;
+	}
 
 	const {
 		appellantHasAppliedForCosts,
@@ -344,13 +405,7 @@ export const renderDecisionLetterUpload = async (request, response) => {
 		};
 	}
 
-	const backUrl = request.session.inspectorDecision?.invalidReason
-		? `${baseUrl(currentAppeal)}/decision-letter`
-		: isParentAppeal(currentAppeal)
-		? `${baseUrl(currentAppeal)}/${
-				currentAppeal.linkedAppeals[currentAppeal.linkedAppeals.length - 1].appealId
-		  }/decision`
-		: `${baseUrl(currentAppeal)}/decision`;
+	const backUrl = decisionLetterUploadBackUrl(request);
 
 	await renderDocumentUpload({
 		request,
@@ -405,11 +460,9 @@ export const postAppellantCostsDecision = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderAppellantCostsDecision = async (request, response) => {
-	const { errors, currentAppeal, session } = request;
+	const { errors, currentAppeal } = request;
 
-	const backUrl = session.inspectorDecision?.files?.length
-		? `${baseUrl(currentAppeal)}/decision-letter-upload`
-		: `${baseUrl(currentAppeal)}/decision`;
+	const backUrl = appellantCostsDecisionBackUrl(request);
 
 	const mappedPageContent = appellantCostsDecisionPage(
 		currentAppeal,
