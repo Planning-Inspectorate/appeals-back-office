@@ -595,7 +595,6 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
             <dd class="govuk-summary-list__value">
                 <ul class="govuk-list">
                     <li>Roger Simmons</li>
-                    <li>test3@example.com</li>
                 </ul>
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/appellant"
@@ -962,7 +961,6 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
             <dd class="govuk-summary-list__value">
                 <ul class="govuk-list">
                     <li>Roger Simmons</li>
-                    <li>test3@example.com</li>
                 </ul>
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/appellant"
@@ -1228,7 +1226,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
             <dd class="govuk-summary-list__value">
                 <ul class="govuk-list">
                     <li>Roger Simmons</li>
-                    <li>test3@example.com</li>
                 </ul>
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/appellant"
@@ -1589,7 +1586,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
             <dd class="govuk-summary-list__value">
                 <ul class="govuk-list">
                     <li>Roger Simmons</li>
-                    <li>test3@example.com</li>
                 </ul>
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/appellant"
@@ -1991,7 +1987,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             <dd class="govuk-summary-list__value">
                 <ul class="govuk-list">
                     <li>Roger Simmons</li>
-                    <li>test3@example.com</li>
                 </ul>
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/appellant"
@@ -2396,7 +2391,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             <dd class="govuk-summary-list__value">
                 <ul class="govuk-list">
                     <li>Roger Simmons</li>
-                    <li>test3@example.com</li>
                 </ul>
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/appellant"
@@ -2799,7 +2793,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
             <dd class="govuk-summary-list__value">
                 <ul class="govuk-list">
                     <li>Roger Simmons</li>
-                    <li>test3@example.com</li>
                 </ul>
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/appellant"
@@ -3202,7 +3195,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
             <dd class="govuk-summary-list__value">
                 <ul class="govuk-list">
                     <li>Roger Simmons</li>
-                    <li>test3@example.com</li>
                 </ul>
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/appellant"
@@ -3619,7 +3611,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             <dd class="govuk-summary-list__value">
                 <ul class="govuk-list">
                     <li>Roger Simmons</li>
-                    <li>test3@example.com</li>
                 </ul>
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/service-user/change/appellant"
@@ -3968,7 +3959,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             <dd class="govuk-summary-list__value">
                 <ul class="govuk-list">
                     <li>Roger Simmons</li>
-                    <li>test3@example.com</li>
                 </ul>
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/appellant"
@@ -4371,7 +4361,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             <dd class="govuk-summary-list__value">
                 <ul class="govuk-list">
                     <li>Roger Simmons</li>
-                    <li>test3@example.com</li>
                 </ul>
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/appellant"
@@ -4887,7 +4876,6 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
             <dd class="govuk-summary-list__value">
                 <ul class="govuk-list">
                     <li>Roger Simmons</li>
-                    <li>test3@example.com</li>
                 </ul>
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/appellant"
@@ -5838,7 +5826,6 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             <dd class="govuk-summary-list__value">
                 <ul class="govuk-list">
                     <li>Roger Simmons</li>
-                    <li>test3@example.com</li>
                 </ul>
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/appellant"
@@ -6194,7 +6181,6 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             <dd class="govuk-summary-list__value">
                 <ul class="govuk-list">
                     <li>Roger Simmons</li>
-                    <li>test3@example.com</li>
                 </ul>
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/appellant"
@@ -6544,7 +6530,6 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             <dd class="govuk-summary-list__value">
                 <ul class="govuk-list">
                     <li>Roger Simmons</li>
-                    <li>test3@example.com</li>
                 </ul>
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/appellant"
@@ -6907,7 +6892,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             <dd class="govuk-summary-list__value">
                 <ul class="govuk-list">
                     <li>Roger Simmons</li>
-                    <li>test3@example.com</li>
                 </ul>
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/appellant"
@@ -7259,7 +7243,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             <dd class="govuk-summary-list__value">
                 <ul class="govuk-list">
                     <li>Roger Simmons</li>
-                    <li>test3@example.com</li>
                 </ul>
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/appellant"
@@ -7622,7 +7605,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             <dd class="govuk-summary-list__value">
                 <ul class="govuk-list">
                     <li>Roger Simmons</li>
-                    <li>test3@example.com</li>
                 </ul>
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/appellant"
@@ -8038,7 +8020,6 @@ exports[`appeal-details should not render a back button 1`] = `
                         <dd class="govuk-summary-list__value">
                             <ul class="govuk-list">
                                 <li>Roger Simmons</li>
-                                <li>test3@example.com</li>
                             </ul>
                         </dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/appellant"

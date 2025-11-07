@@ -631,6 +631,40 @@ const deleteAppealsByIds = async (appealIds) => {
 	await deleteAppealsInBatches(appeals);
 };
 
+/**
+ * @param {number} appealId
+ * @returns {Promise<boolean>}
+ */
+const checkIfAppealHasAgent = async (appealId) => {
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: {
+			id: appealId
+		},
+		select: {
+			agentId: true
+		}
+	});
+
+	return appeal?.agentId !== null && typeof appeal?.agentId !== 'undefined';
+};
+
+/**
+ * @param {number} appealId
+ * @returns {Promise<string>}
+ */
+const getAppealReference = async (appealId) => {
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: {
+			id: appealId
+		},
+		select: {
+			reference: true
+		}
+	});
+
+	return appeal?.reference ?? '';
+};
+
 export default {
 	getLinkedAppeals,
 	getLinkedAppealsById,
@@ -649,5 +683,7 @@ export default {
 	getAppealsByIds,
 	getAppealsWithCompletedEvents,
 	setAssignedTeamId,
-	deleteAppealsByIds
+	deleteAppealsByIds,
+	checkIfAppealHasAgent,
+	getAppealReference
 };

@@ -81,6 +81,53 @@ exports[`service-user GET /change/:userType should render the 500 error page whe
 </main>"
 `;
 
+exports[`service-user GET /change/:userType should render the appellant details page with email and phone number if the appeal has no agent and action is 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Appellant&#39;s details</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="first-name">First name</label>
+                            <input class="govuk-input" id="first-name" name="firstName"
+                            type="text" value="Roger">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="last-name">Last name</label>
+                            <input class="govuk-input" id="last-name" name="lastName"
+                            type="text" value="Simmons">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="organisation-name">Company or organisation name</label>
+                            <input class="govuk-input" id="organisation-name"
+                            name="organisationName" type="text" value="">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="email-address">Email address</label>
+                            <input class="govuk-input" id="email-address" name="emailAddress"
+                            type="text" value="test3@example.com">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="phone-number">Phone number</label>
+                            <input class="govuk-input" id="phone-number" name="phoneNumber"
+                            type="text" value="">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`service-user GET /change/:userType should render the change service user page for an agent 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -134,11 +181,11 @@ exports[`service-user GET /change/:userType should render the change service use
 </main>"
 `;
 
-exports[`service-user GET /change/:userType should render the change service user page for an appellant 1`] = `
+exports[`service-user GET /change/:userType should render the change service user page for an appellant when agent is present 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Appellant&#39;s contact details</h1>
+            <h1 class="govuk-heading-l">Appellant&#39;s details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -160,16 +207,6 @@ exports[`service-user GET /change/:userType should render the change service use
                             <label class="govuk-label" for="organisation-name">Company or organisation name</label>
                             <input class="govuk-input" id="organisation-name"
                             name="organisationName" type="text" value="">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="email-address">Email address</label>
-                            <input class="govuk-input" id="email-address" name="emailAddress"
-                            type="text" value="test3@example.com">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="phone-number">Phone number</label>
-                            <input class="govuk-input" id="phone-number" name="phoneNumber"
-                            type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -329,70 +366,6 @@ exports[`service-user POST /add/:userType agent should display errors if invalid
 </main>"
 `;
 
-exports[`service-user POST /add/:userType agent should re-direct to appeals details if firstName, lastName, and email are valid 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#phone-number">Enter the agent&#39;s phone number</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Agent&#39;s contact details</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="first-name">First name</label>
-                            <input class="govuk-input" id="first-name" name="firstName"
-                            type="text" value="Jessica">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="last-name">Last name</label>
-                            <input class="govuk-input" id="last-name" name="lastName"
-                            type="text" value="Jones">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="organisation-name">Company or organisation name</label>
-                            <input class="govuk-input" id="organisation-name"
-                            name="organisationName" type="text" value="">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="email-address">Email address</label>
-                            <input class="govuk-input" id="email-address" name="emailAddress"
-                            type="text" value="jessica.jones@email.com">
-                        </div>
-                        <div class="govuk-form-group govuk-form-group--error">
-                            <label class="govuk-label" for="phone-number">Phone number</label>
-                            <p id="phone-number-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the agent&#39;s
-                                phone number</p>
-                            <input class="govuk-input govuk-input--error" id="phone-number"
-                            name="phoneNumber" type="text" value="" aria-describedby="phone-number-error">
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
 exports[`service-user POST /add/:userType agent should re-render changeServiceUser with the expected error message if email is not an email 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -403,8 +376,6 @@ exports[`service-user POST /add/:userType agent should re-render changeServiceUs
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#email-address">Enter an email address in the correct format, like name@example.com</a>
-                            </li>
-                            <li><a href="#phone-number">Enter the agent&#39;s phone number</a>
                             </li>
                         </ul>
                     </div>
@@ -445,12 +416,10 @@ exports[`service-user POST /add/:userType agent should re-render changeServiceUs
                             id="email-address" name="emailAddress" type="text" value="jessica.jones"
                             aria-describedby="email-address-error">
                         </div>
-                        <div class="govuk-form-group govuk-form-group--error">
+                        <div class="govuk-form-group">
                             <label class="govuk-label" for="phone-number">Phone number</label>
-                            <p id="phone-number-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the agent&#39;s
-                                phone number</p>
-                            <input class="govuk-input govuk-input--error" id="phone-number"
-                            name="phoneNumber" type="text" value="" aria-describedby="phone-number-error">
+                            <input class="govuk-input" id="phone-number" name="phoneNumber"
+                            type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -601,8 +570,6 @@ exports[`service-user POST /add/:userType agent should re-render changeServiceUs
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#last-name">Enter the agent&#39;s last name</a>
                             </li>
-                            <li><a href="#phone-number">Enter the agent&#39;s phone number</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -641,12 +608,10 @@ exports[`service-user POST /add/:userType agent should re-render changeServiceUs
                             <input class="govuk-input" id="email-address" name="emailAddress"
                             type="text" value="jessica.null@email.com">
                         </div>
-                        <div class="govuk-form-group govuk-form-group--error">
+                        <div class="govuk-form-group">
                             <label class="govuk-label" for="phone-number">Phone number</label>
-                            <p id="phone-number-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the agent&#39;s
-                                phone number</p>
-                            <input class="govuk-input govuk-input--error" id="phone-number"
-                            name="phoneNumber" type="text" value="" aria-describedby="phone-number-error">
+                            <input class="govuk-input" id="phone-number" name="phoneNumber"
+                            type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -669,8 +634,6 @@ exports[`service-user POST /add/:userType agent should re-render changeServiceUs
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#last-name">Enter the agent&#39;s last name</a>
                             </li>
-                            <li><a href="#phone-number">Enter the agent&#39;s phone number</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -709,12 +672,10 @@ exports[`service-user POST /add/:userType agent should re-render changeServiceUs
                             <input class="govuk-input" id="email-address" name="emailAddress"
                             type="text" value="jessica.null@email.com">
                         </div>
-                        <div class="govuk-form-group govuk-form-group--error">
+                        <div class="govuk-form-group">
                             <label class="govuk-label" for="phone-number">Phone number</label>
-                            <p id="phone-number-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the agent&#39;s
-                                phone number</p>
-                            <input class="govuk-input govuk-input--error" id="phone-number"
-                            name="phoneNumber" type="text" value="" aria-describedby="phone-number-error">
+                            <input class="govuk-input" id="phone-number" name="phoneNumber"
+                            type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -801,8 +762,6 @@ exports[`service-user POST /add/:userType agent should re-render changeServiceUs
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#first-name">Enter the agent&#39;s first name</a>
                             </li>
-                            <li><a href="#phone-number">Enter the agent&#39;s phone number</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -841,12 +800,10 @@ exports[`service-user POST /add/:userType agent should re-render changeServiceUs
                             <input class="govuk-input" id="email-address" name="emailAddress"
                             type="text" value="null.jones@email.com">
                         </div>
-                        <div class="govuk-form-group govuk-form-group--error">
+                        <div class="govuk-form-group">
                             <label class="govuk-label" for="phone-number">Phone number</label>
-                            <p id="phone-number-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the agent&#39;s
-                                phone number</p>
-                            <input class="govuk-input govuk-input--error" id="phone-number"
-                            name="phoneNumber" type="text" value="" aria-describedby="phone-number-error">
+                            <input class="govuk-input" id="phone-number" name="phoneNumber"
+                            type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -868,8 +825,6 @@ exports[`service-user POST /add/:userType agent should re-render changeServiceUs
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#last-name">Enter the agent&#39;s last name</a>
-                            </li>
-                            <li><a href="#phone-number">Enter the agent&#39;s phone number</a>
                             </li>
                         </ul>
                     </div>
@@ -909,12 +864,10 @@ exports[`service-user POST /add/:userType agent should re-render changeServiceUs
                             <input class="govuk-input" id="email-address" name="emailAddress"
                             type="text" value="jessica.null@email.com">
                         </div>
-                        <div class="govuk-form-group govuk-form-group--error">
+                        <div class="govuk-form-group">
                             <label class="govuk-label" for="phone-number">Phone number</label>
-                            <p id="phone-number-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the agent&#39;s
-                                phone number</p>
-                            <input class="govuk-input govuk-input--error" id="phone-number"
-                            name="phoneNumber" type="text" value="" aria-describedby="phone-number-error">
+                            <input class="govuk-input" id="phone-number" name="phoneNumber"
+                            type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -1007,76 +960,6 @@ exports[`service-user POST /change/:userType agent should display errors if inva
 </main>"
 `;
 
-exports[`service-user POST /change/:userType agent should re-direct to appeals details if firstName, lastName, and email are valid 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#phone-number">Enter the agent&#39;s phone number</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Agent&#39;s contact details</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="first-name">First name</label>
-                            <input class="govuk-input" id="first-name" name="firstName"
-                            type="text" value="Jessica">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="last-name">Last name</label>
-                            <input class="govuk-input" id="last-name" name="lastName"
-                            type="text" value="Jones">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="organisation-name">Company or organisation name</label>
-                            <input class="govuk-input" id="organisation-name"
-                            name="organisationName" type="text" value="">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="email-address">Email address</label>
-                            <input class="govuk-input" id="email-address" name="emailAddress"
-                            type="text" value="jessica.jones@email.com">
-                        </div>
-                        <div class="govuk-form-group govuk-form-group--error">
-                            <label class="govuk-label" for="phone-number">Phone number</label>
-                            <p id="phone-number-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the agent&#39;s
-                                phone number</p>
-                            <input class="govuk-input govuk-input--error" id="phone-number"
-                            name="phoneNumber" type="text" value="" aria-describedby="phone-number-error">
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/remove/agent">Remove agent</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
 exports[`service-user POST /change/:userType agent should re-render changeServiceUser with the expected error message if email is not an email 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -1087,8 +970,6 @@ exports[`service-user POST /change/:userType agent should re-render changeServic
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#email-address">Enter an email address in the correct format, like name@example.com</a>
-                            </li>
-                            <li><a href="#phone-number">Enter the agent&#39;s phone number</a>
                             </li>
                         </ul>
                     </div>
@@ -1129,12 +1010,10 @@ exports[`service-user POST /change/:userType agent should re-render changeServic
                             id="email-address" name="emailAddress" type="text" value="jessica.jones"
                             aria-describedby="email-address-error">
                         </div>
-                        <div class="govuk-form-group govuk-form-group--error">
+                        <div class="govuk-form-group">
                             <label class="govuk-label" for="phone-number">Phone number</label>
-                            <p id="phone-number-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the agent&#39;s
-                                phone number</p>
-                            <input class="govuk-input govuk-input--error" id="phone-number"
-                            name="phoneNumber" type="text" value="" aria-describedby="phone-number-error">
+                            <input class="govuk-input" id="phone-number" name="phoneNumber"
+                            type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -1303,8 +1182,6 @@ exports[`service-user POST /change/:userType agent should re-render changeServic
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#last-name">Enter the agent&#39;s last name</a>
                             </li>
-                            <li><a href="#phone-number">Enter the agent&#39;s phone number</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -1343,12 +1220,10 @@ exports[`service-user POST /change/:userType agent should re-render changeServic
                             <input class="govuk-input" id="email-address" name="emailAddress"
                             type="text" value="jessica.null@email.com">
                         </div>
-                        <div class="govuk-form-group govuk-form-group--error">
+                        <div class="govuk-form-group">
                             <label class="govuk-label" for="phone-number">Phone number</label>
-                            <p id="phone-number-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the agent&#39;s
-                                phone number</p>
-                            <input class="govuk-input govuk-input--error" id="phone-number"
-                            name="phoneNumber" type="text" value="" aria-describedby="phone-number-error">
+                            <input class="govuk-input" id="phone-number" name="phoneNumber"
+                            type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -1377,8 +1252,6 @@ exports[`service-user POST /change/:userType agent should re-render changeServic
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#last-name">Enter the agent&#39;s last name</a>
                             </li>
-                            <li><a href="#phone-number">Enter the agent&#39;s phone number</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -1417,12 +1290,10 @@ exports[`service-user POST /change/:userType agent should re-render changeServic
                             <input class="govuk-input" id="email-address" name="emailAddress"
                             type="text" value="jessica.null@email.com">
                         </div>
-                        <div class="govuk-form-group govuk-form-group--error">
+                        <div class="govuk-form-group">
                             <label class="govuk-label" for="phone-number">Phone number</label>
-                            <p id="phone-number-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the agent&#39;s
-                                phone number</p>
-                            <input class="govuk-input govuk-input--error" id="phone-number"
-                            name="phoneNumber" type="text" value="" aria-describedby="phone-number-error">
+                            <input class="govuk-input" id="phone-number" name="phoneNumber"
+                            type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -1521,8 +1392,6 @@ exports[`service-user POST /change/:userType agent should re-render changeServic
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#first-name">Enter the agent&#39;s first name</a>
                             </li>
-                            <li><a href="#phone-number">Enter the agent&#39;s phone number</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -1561,12 +1430,10 @@ exports[`service-user POST /change/:userType agent should re-render changeServic
                             <input class="govuk-input" id="email-address" name="emailAddress"
                             type="text" value="null.jones@email.com">
                         </div>
-                        <div class="govuk-form-group govuk-form-group--error">
+                        <div class="govuk-form-group">
                             <label class="govuk-label" for="phone-number">Phone number</label>
-                            <p id="phone-number-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the agent&#39;s
-                                phone number</p>
-                            <input class="govuk-input govuk-input--error" id="phone-number"
-                            name="phoneNumber" type="text" value="" aria-describedby="phone-number-error">
+                            <input class="govuk-input" id="phone-number" name="phoneNumber"
+                            type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -1594,8 +1461,6 @@ exports[`service-user POST /change/:userType agent should re-render changeServic
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#last-name">Enter the agent&#39;s last name</a>
-                            </li>
-                            <li><a href="#phone-number">Enter the agent&#39;s phone number</a>
                             </li>
                         </ul>
                     </div>
@@ -1635,12 +1500,10 @@ exports[`service-user POST /change/:userType agent should re-render changeServic
                             <input class="govuk-input" id="email-address" name="emailAddress"
                             type="text" value="jessica.null@email.com">
                         </div>
-                        <div class="govuk-form-group govuk-form-group--error">
+                        <div class="govuk-form-group">
                             <label class="govuk-label" for="phone-number">Phone number</label>
-                            <p id="phone-number-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the agent&#39;s
-                                phone number</p>
-                            <input class="govuk-input govuk-input--error" id="phone-number"
-                            name="phoneNumber" type="text" value="" aria-describedby="phone-number-error">
+                            <input class="govuk-input" id="phone-number" name="phoneNumber"
+                            type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -1658,71 +1521,7 @@ exports[`service-user POST /change/:userType agent should re-render changeServic
 </main>"
 `;
 
-exports[`service-user POST /change/:userType appellant should re-direct to appeals details if firstName, lastName, and email are valid 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#phone-number">Enter the appellant&#39;s phone number</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Appellant&#39;s contact details</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="first-name">First name</label>
-                            <input class="govuk-input" id="first-name" name="firstName"
-                            type="text" value="Jessica">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="last-name">Last name</label>
-                            <input class="govuk-input" id="last-name" name="lastName"
-                            type="text" value="Jones">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="organisation-name">Company or organisation name</label>
-                            <input class="govuk-input" id="organisation-name"
-                            name="organisationName" type="text" value="">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="email-address">Email address</label>
-                            <input class="govuk-input" id="email-address" name="emailAddress"
-                            type="text" value="jessica.jones@email.com">
-                        </div>
-                        <div class="govuk-form-group govuk-form-group--error">
-                            <label class="govuk-label" for="phone-number">Phone number</label>
-                            <p id="phone-number-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the appellant&#39;s
-                                phone number</p>
-                            <input class="govuk-input govuk-input--error" id="phone-number"
-                            name="phoneNumber" type="text" value="" aria-describedby="phone-number-error">
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`service-user POST /change/:userType appellant should re-render changeServiceUser with the expected error message if email is not an email 1`] = `
+exports[`service-user POST /change/:userType appellant should show error(s) when email is not an email 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -1733,8 +1532,6 @@ exports[`service-user POST /change/:userType appellant should re-render changeSe
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#email-address">Enter an email address in the correct format, like name@example.com</a>
                             </li>
-                            <li><a href="#phone-number">Enter the appellant&#39;s phone number</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -1743,7 +1540,7 @@ exports[`service-user POST /change/:userType appellant should re-render changeSe
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Appellant&#39;s contact details</h1>
+            <h1 class="govuk-heading-l">Appellant&#39;s details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1766,21 +1563,6 @@ exports[`service-user POST /change/:userType appellant should re-render changeSe
                             <input class="govuk-input" id="organisation-name"
                             name="organisationName" type="text" value="">
                         </div>
-                        <div class="govuk-form-group govuk-form-group--error">
-                            <label class="govuk-label" for="email-address">Email address</label>
-                            <p id="email-address-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter an email address
-                                in the correct format, like name@example.com</p>
-                            <input class="govuk-input govuk-input--error"
-                            id="email-address" name="emailAddress" type="text" value="jessica.jones"
-                            aria-describedby="email-address-error">
-                        </div>
-                        <div class="govuk-form-group govuk-form-group--error">
-                            <label class="govuk-label" for="phone-number">Phone number</label>
-                            <p id="phone-number-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the appellant&#39;s
-                                phone number</p>
-                            <input class="govuk-input govuk-input--error" id="phone-number"
-                            name="phoneNumber" type="text" value="" aria-describedby="phone-number-error">
-                        </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
                     </form>
@@ -1791,7 +1573,7 @@ exports[`service-user POST /change/:userType appellant should re-render changeSe
 </main>"
 `;
 
-exports[`service-user POST /change/:userType appellant should re-render changeServiceUser with the expected error message if firstName is empty 1`] = `
+exports[`service-user POST /change/:userType appellant should show error(s) when firstName is empty 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -1810,7 +1592,7 @@ exports[`service-user POST /change/:userType appellant should re-render changeSe
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Appellant&#39;s contact details</h1>
+            <h1 class="govuk-heading-l">Appellant&#39;s details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1835,16 +1617,6 @@ exports[`service-user POST /change/:userType appellant should re-render changeSe
                             <input class="govuk-input" id="organisation-name"
                             name="organisationName" type="text" value="">
                         </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="email-address">Email address</label>
-                            <input class="govuk-input" id="email-address" name="emailAddress"
-                            type="text" value="null.jones@email.com">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="phone-number">Phone number</label>
-                            <input class="govuk-input" id="phone-number" name="phoneNumber"
-                            type="text" value="07906954865">
-                        </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
                     </form>
@@ -1855,7 +1627,7 @@ exports[`service-user POST /change/:userType appellant should re-render changeSe
 </main>"
 `;
 
-exports[`service-user POST /change/:userType appellant should re-render changeServiceUser with the expected error message if firstName is null 1`] = `
+exports[`service-user POST /change/:userType appellant should show error(s) when firstName is null 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -1874,7 +1646,7 @@ exports[`service-user POST /change/:userType appellant should re-render changeSe
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Appellant&#39;s contact details</h1>
+            <h1 class="govuk-heading-l">Appellant&#39;s details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1899,15 +1671,59 @@ exports[`service-user POST /change/:userType appellant should re-render changeSe
                             <input class="govuk-input" id="organisation-name"
                             name="organisationName" type="text" value="">
                         </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="email-address">Email address</label>
-                            <input class="govuk-input" id="email-address" name="emailAddress"
-                            type="text" value="null.jones@email.com">
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`service-user POST /change/:userType appellant should show error(s) when firstName is undefined 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#first-name">Enter the appellant&#39;s first name</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Appellant&#39;s details</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <label class="govuk-label" for="first-name">First name</label>
+                            <p id="first-name-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the appellant&#39;s
+                                first name</p>
+                            <input class="govuk-input govuk-input--error" id="first-name"
+                            name="firstName" type="text" value="" aria-describedby="first-name-error">
                         </div>
                         <div class="govuk-form-group">
-                            <label class="govuk-label" for="phone-number">Phone number</label>
-                            <input class="govuk-input" id="phone-number" name="phoneNumber"
-                            type="text" value="07782446782">
+                            <label class="govuk-label" for="last-name">Last name</label>
+                            <input class="govuk-input" id="last-name" name="lastName"
+                            type="text" value="Jones">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="organisation-name">Company or organisation name</label>
+                            <input class="govuk-input" id="organisation-name"
+                            name="organisationName" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -1919,7 +1735,7 @@ exports[`service-user POST /change/:userType appellant should re-render changeSe
 </main>"
 `;
 
-exports[`service-user POST /change/:userType appellant should re-render changeServiceUser with the expected error message if lastName is empty 1`] = `
+exports[`service-user POST /change/:userType appellant should show error(s) when lastName is empty 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -1930,8 +1746,6 @@ exports[`service-user POST /change/:userType appellant should re-render changeSe
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#last-name">Enter the appellant&#39;s last name</a>
                             </li>
-                            <li><a href="#phone-number">Enter the appellant&#39;s phone number</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -1940,7 +1754,7 @@ exports[`service-user POST /change/:userType appellant should re-render changeSe
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Appellant&#39;s contact details</h1>
+            <h1 class="govuk-heading-l">Appellant&#39;s details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1965,18 +1779,6 @@ exports[`service-user POST /change/:userType appellant should re-render changeSe
                             <input class="govuk-input" id="organisation-name"
                             name="organisationName" type="text" value="">
                         </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="email-address">Email address</label>
-                            <input class="govuk-input" id="email-address" name="emailAddress"
-                            type="text" value="jessica.null@email.com">
-                        </div>
-                        <div class="govuk-form-group govuk-form-group--error">
-                            <label class="govuk-label" for="phone-number">Phone number</label>
-                            <p id="phone-number-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the appellant&#39;s
-                                phone number</p>
-                            <input class="govuk-input govuk-input--error" id="phone-number"
-                            name="phoneNumber" type="text" value="" aria-describedby="phone-number-error">
-                        </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
                     </form>
@@ -1987,7 +1789,7 @@ exports[`service-user POST /change/:userType appellant should re-render changeSe
 </main>"
 `;
 
-exports[`service-user POST /change/:userType appellant should re-render changeServiceUser with the expected error message if lastName is undefined 1`] = `
+exports[`service-user POST /change/:userType appellant should show error(s) when lastName is null 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -1998,8 +1800,6 @@ exports[`service-user POST /change/:userType appellant should re-render changeSe
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#last-name">Enter the appellant&#39;s last name</a>
                             </li>
-                            <li><a href="#phone-number">Enter the appellant&#39;s phone number</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -2008,7 +1808,7 @@ exports[`service-user POST /change/:userType appellant should re-render changeSe
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Appellant&#39;s contact details</h1>
+            <h1 class="govuk-heading-l">Appellant&#39;s details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2033,17 +1833,59 @@ exports[`service-user POST /change/:userType appellant should re-render changeSe
                             <input class="govuk-input" id="organisation-name"
                             name="organisationName" type="text" value="">
                         </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`service-user POST /change/:userType appellant should show error(s) when lastName is undefined 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#last-name">Enter the appellant&#39;s last name</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Appellant&#39;s details</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <label class="govuk-label" for="email-address">Email address</label>
-                            <input class="govuk-input" id="email-address" name="emailAddress"
-                            type="text" value="jessica.null@email.com">
+                            <label class="govuk-label" for="first-name">First name</label>
+                            <input class="govuk-input" id="first-name" name="firstName"
+                            type="text" value="Jessica">
                         </div>
                         <div class="govuk-form-group govuk-form-group--error">
-                            <label class="govuk-label" for="phone-number">Phone number</label>
-                            <p id="phone-number-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the appellant&#39;s
-                                phone number</p>
-                            <input class="govuk-input govuk-input--error" id="phone-number"
-                            name="phoneNumber" type="text" value="" aria-describedby="phone-number-error">
+                            <label class="govuk-label" for="last-name">Last name</label>
+                            <p id="last-name-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the appellant&#39;s
+                                last name</p>
+                            <input class="govuk-input govuk-input--error" id="last-name"
+                            name="lastName" type="text" value="" aria-describedby="last-name-error">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="organisation-name">Company or organisation name</label>
+                            <input class="govuk-input" id="organisation-name"
+                            name="organisationName" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -2055,7 +1897,7 @@ exports[`service-user POST /change/:userType appellant should re-render changeSe
 </main>"
 `;
 
-exports[`service-user POST /change/:userType appellant should re-render changeServiceUser with the expected error message if phone number is provided but invalid 1`] = `
+exports[`service-user POST /change/:userType appellant should show error(s) when phone number is provided but invalid 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -2074,7 +1916,191 @@ exports[`service-user POST /change/:userType appellant should re-render changeSe
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Appellant&#39;s contact details</h1>
+            <h1 class="govuk-heading-l">Appellant&#39;s details</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="first-name">First name</label>
+                            <input class="govuk-input" id="first-name" name="firstName"
+                            type="text" value="Jessica">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="last-name">Last name</label>
+                            <input class="govuk-input" id="last-name" name="lastName"
+                            type="text" value="Jones">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="organisation-name">Company or organisation name</label>
+                            <input class="govuk-input" id="organisation-name"
+                            name="organisationName" type="text" value="">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`service-user POST /change/appellant (appeal with no agent) should show error(s) when missing email address 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#email-address">Enter the appellant&#39;s email address</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Appellant&#39;s details</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="first-name">First name</label>
+                            <input class="govuk-input" id="first-name" name="firstName"
+                            type="text" value="Jessica">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="last-name">Last name</label>
+                            <input class="govuk-input" id="last-name" name="lastName"
+                            type="text" value="Jones">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="organisation-name">Company or organisation name</label>
+                            <input class="govuk-input" id="organisation-name"
+                            name="organisationName" type="text" value="">
+                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <label class="govuk-label" for="email-address">Email address</label>
+                            <p id="email-address-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the appellant&#39;s
+                                email address</p>
+                            <input class="govuk-input govuk-input--error" id="email-address"
+                            name="emailAddress" type="text" value="" aria-describedby="email-address-error">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="phone-number">Phone number</label>
+                            <input class="govuk-input" id="phone-number" name="phoneNumber"
+                            type="text" value="07906954865">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`service-user POST /change/appellant (appeal with no agent) should show error(s) when missing email address and phone number 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#email-address">Enter the appellant&#39;s email address</a>
+                            </li>
+                            <li><a href="#phone-number">Enter the appellant&#39;s phone number</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Appellant&#39;s details</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="first-name">First name</label>
+                            <input class="govuk-input" id="first-name" name="firstName"
+                            type="text" value="Jessica">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="last-name">Last name</label>
+                            <input class="govuk-input" id="last-name" name="lastName"
+                            type="text" value="Jones">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="organisation-name">Company or organisation name</label>
+                            <input class="govuk-input" id="organisation-name"
+                            name="organisationName" type="text" value="">
+                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <label class="govuk-label" for="email-address">Email address</label>
+                            <p id="email-address-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the appellant&#39;s
+                                email address</p>
+                            <input class="govuk-input govuk-input--error" id="email-address"
+                            name="emailAddress" type="text" value="" aria-describedby="email-address-error">
+                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <label class="govuk-label" for="phone-number">Phone number</label>
+                            <p id="phone-number-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the appellant&#39;s
+                                phone number</p>
+                            <input class="govuk-input govuk-input--error" id="phone-number"
+                            name="phoneNumber" type="text" value="" aria-describedby="phone-number-error">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`service-user POST /change/appellant (appeal with no agent) should show error(s) when missing phone number 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#phone-number">Enter the appellant&#39;s phone number</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Appellant&#39;s details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2101,142 +2127,6 @@ exports[`service-user POST /change/:userType appellant should re-render changeSe
                             <label class="govuk-label" for="email-address">Email address</label>
                             <input class="govuk-input" id="email-address" name="emailAddress"
                             type="text" value="jessica.jones@email.com">
-                        </div>
-                        <div class="govuk-form-group govuk-form-group--error">
-                            <label class="govuk-label" for="phone-number">Phone number</label>
-                            <p id="phone-number-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a valid UK phone
-                                number, like 01632 960 001, 07700 900 982 or +44 808 157 0192</p>
-                            <input                             class="govuk-input govuk-input--error" id="phone-number" name="phoneNumber"
-                            type="text" value="00000" aria-describedby="phone-number-error">
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`service-user POST /change/:userType appellant should re-render changeServiceUser with with the expected error message if firstName is undefined 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#first-name">Enter the appellant&#39;s first name</a>
-                            </li>
-                            <li><a href="#phone-number">Enter the appellant&#39;s phone number</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Appellant&#39;s contact details</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group govuk-form-group--error">
-                            <label class="govuk-label" for="first-name">First name</label>
-                            <p id="first-name-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the appellant&#39;s
-                                first name</p>
-                            <input class="govuk-input govuk-input--error" id="first-name"
-                            name="firstName" type="text" value="" aria-describedby="first-name-error">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="last-name">Last name</label>
-                            <input class="govuk-input" id="last-name" name="lastName"
-                            type="text" value="Jones">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="organisation-name">Company or organisation name</label>
-                            <input class="govuk-input" id="organisation-name"
-                            name="organisationName" type="text" value="">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="email-address">Email address</label>
-                            <input class="govuk-input" id="email-address" name="emailAddress"
-                            type="text" value="null.jones@email.com">
-                        </div>
-                        <div class="govuk-form-group govuk-form-group--error">
-                            <label class="govuk-label" for="phone-number">Phone number</label>
-                            <p id="phone-number-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the appellant&#39;s
-                                phone number</p>
-                            <input class="govuk-input govuk-input--error" id="phone-number"
-                            name="phoneNumber" type="text" value="" aria-describedby="phone-number-error">
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`service-user POST /change/:userType appellant should re-render changeServiceUser with with the expected error message if lastName is null 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#last-name">Enter the appellant&#39;s last name</a>
-                            </li>
-                            <li><a href="#phone-number">Enter the appellant&#39;s phone number</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Appellant&#39;s contact details</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="first-name">First name</label>
-                            <input class="govuk-input" id="first-name" name="firstName"
-                            type="text" value="Jessica">
-                        </div>
-                        <div class="govuk-form-group govuk-form-group--error">
-                            <label class="govuk-label" for="last-name">Last name</label>
-                            <p id="last-name-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the appellant&#39;s
-                                last name</p>
-                            <input class="govuk-input govuk-input--error" id="last-name"
-                            name="lastName" type="text" value="" aria-describedby="last-name-error">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="organisation-name">Company or organisation name</label>
-                            <input class="govuk-input" id="organisation-name"
-                            name="organisationName" type="text" value="">
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="email-address">Email address</label>
-                            <input class="govuk-input" id="email-address" name="emailAddress"
-                            type="text" value="jessica.null@email.com">
                         </div>
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="phone-number">Phone number</label>

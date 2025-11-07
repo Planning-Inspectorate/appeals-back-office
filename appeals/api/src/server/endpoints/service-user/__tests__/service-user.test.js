@@ -25,6 +25,12 @@ const serviceUserWithInvalidUserType = {
 	...validServiceUser,
 	userType: null
 };
+const appellantServiceUser = {
+	...validServiceUser,
+	userType: 'appellant',
+	email: 'email@example.com',
+	phoneNumber: '01234567890'
+};
 
 describe('appeal service user routes', () => {
 	afterEach(() => {
@@ -111,6 +117,84 @@ describe('appeal service user routes', () => {
 				data: {
 					firstName: 'Jessica',
 					lastName: 'Jones'
+				},
+				where: {
+					id: 1
+				}
+			});
+			expect(response.status).toEqual(200);
+		});
+		test('returns 200 when updating an appellant service user and agent assigned to appeal missed phone number and email data', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValueOnce(householdAppeal);
+			// @ts-ignore
+			databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+			// @ts-ignore
+			databaseConnector.serviceUser.findUnique.mockResolvedValue(appellantServiceUser);
+			// @ts-ignore
+			databaseConnector.serviceUser.update.mockResolvedValue({
+				...appellantServiceUser,
+				firstName: 'Jessica',
+				lastName: 'Jones',
+				userType: 'appellant'
+			});
+
+			const response = await request
+				.patch(`/appeals/${householdAppeal.id}/service-user`)
+				.send({ serviceUser: appellantServiceUser })
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.serviceUser.update).toHaveBeenCalledWith({
+				data: {
+					firstName: 'Jessica',
+					lastName: 'Jones'
+				},
+				where: {
+					id: 1
+				}
+			});
+			expect(databaseConnector.serviceUser.update).not.toHaveBeenCalledWith({
+				data: {
+					email: 'email@example.com',
+					phoneNumber: '01234567890'
+				},
+				where: {
+					id: 1
+				}
+			});
+			expect(response.status).toEqual(200);
+		});
+		test('returns 200 when updating an appellant service user with no agent present - including phone number and email', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValueOnce({
+				...householdAppeal,
+				agent: null
+			});
+			// @ts-ignore
+			databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+			// @ts-ignore
+			databaseConnector.serviceUser.findUnique.mockResolvedValue(appellantServiceUser);
+			// @ts-ignore
+			databaseConnector.serviceUser.update.mockResolvedValue({
+				...serviceUser,
+				firstName: 'Jessica',
+				lastName: 'Jones',
+				userType: 'appellant',
+				email: 'email@example.com',
+				phoneNumber: '01234567890'
+			});
+
+			const response = await request
+				.patch(`/appeals/${householdAppeal.id}/service-user`)
+				.send({ serviceUser: appellantServiceUser })
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.serviceUser.update).toHaveBeenCalledWith({
+				data: {
+					firstName: 'Jessica',
+					lastName: 'Jones',
+					email: 'email@example.com',
+					phoneNumber: '01234567890'
 				},
 				where: {
 					id: 1
