@@ -87,7 +87,7 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 			recipientEmail,
 			{
 				content: expectedContent,
-				subject: 'Submit your final comments: ABC45678'
+				subject: 'No interested party comments: ABC45678'
 			}
 		);
 	});
@@ -146,7 +146,7 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 				...basePersonalisation,
 				has_ip_comments: false,
 				what_happens_next:
-					'You need to [submit your final comments](/mock-front-office-url/manage-appeals/ABC45678) by 01 January 2021.',
+					'The inspector will visit the site and we will contact you when we have made the decision.',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
@@ -161,7 +161,7 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 			'',
 			'# What happens next',
 			'',
-			'You need to [submit your final comments](/mock-front-office-url/manage-appeals/ABC45678) by 01 January 2021.',
+			'The inspector will visit the site and we will contact you when we have made the decision.',
 			'',
 			'The Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
@@ -174,7 +174,7 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 			recipientEmail,
 			{
 				content: expectedContent,
-				subject: 'Submit your final comments: ABC45678'
+				subject: 'No interested party comments: ABC45678'
 			}
 		);
 	});
