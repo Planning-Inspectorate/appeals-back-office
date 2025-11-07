@@ -295,4 +295,8 @@ export class AppellantCasePage extends Page {
 	assertOtherTenantsNotPresent() {
 		this.assertFieldNotPresent('Are there any other tenants?');
 	}
+
+	assertSiteAreaNotPresent() {
+		this.assertFieldNotPresent('What is the area of the appeal site?');
+	}
 }

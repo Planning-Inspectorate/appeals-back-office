@@ -93,7 +93,7 @@ describe('Managing Appellant Case Details', () => {
 			appellantCasePage.assertSiteAddress(
 				`${casedata.siteAddressLine1}, ${casedata.siteAddressLine2}, ${casedata.siteAddressTown}, ${casedata.siteAddressCounty}, ${casedata.siteAddressPostcode}`
 			);
-			appellantCasePage.assertSiteArea(`${casedata.siteAreaSquareMetres}`);
+			appellantCasePage.assertSiteAreaNotPresent();
 			appellantCasePage.assertGreenBelt(casedata.isGreenBelt ? 'Yes' : 'No');
 			appellantCasePage.assertOwnsAllLand(casedata.ownsAllLand ? 'Fully owned' : 'Partially owned');
 			appellantCasePage.assertKnowsOwnership(casedata.knowsAllOwners);
