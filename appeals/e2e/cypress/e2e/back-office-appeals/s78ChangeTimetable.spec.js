@@ -131,6 +131,9 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 			happyPathHelper.startS78Case(caseObj, 'written');
 			happyPathHelper.reviewS78Lpaq(caseObj);
 			timetableItems[0].editable = false; // lpa questionare date is not editable in statements status
+			cy.clearCookies();
+			cy.visit(urlPaths.appealsList);
+			listCasesPage.clickAppealByRef(caseObj);
 			caseDetailsPage.checkTimetableDueDatesAndChangeLinks(timetableItems);
 			caseDetailsPage.clickRowChangeLink(timetableItems[1].row);
 			caseDetailsPage.changeTimetableDates(timetableItems, new Date(), 7);

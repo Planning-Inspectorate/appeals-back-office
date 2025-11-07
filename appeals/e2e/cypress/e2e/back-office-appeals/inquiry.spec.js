@@ -142,9 +142,9 @@ beforeEach(() => {
 
 let appeal;
 
-afterEach(() => {
-	cy.deleteAppeals(appeal);
-});
+// afterEach(() => {
+// 	cy.deleteAppeals(appeal);
+// });
 
 it('Can start case as inquiry with address and estimated days', () => {
 	cy.addLpaqSubmissionToCase(caseObj);
@@ -676,7 +676,7 @@ it('should show business day validation errors for all timetable fields', () => 
 		// update timetable dates
 		const nextYear = new Date().getFullYear() + 2;
 		const nonBusinessDate = new Date(nextYear, 0, 1);
-		inquirySectionPage.enterTimetableDueDates(timetableItemsWithNewSelector, nonBusinessDate, 0);
+		inquirySectionPage.changeTimetableDates(timetableItemsWithNewSelector, nonBusinessDate, 0);
 
 		// Submit changes
 		caseDetailsPage.clickButtonByText('Continue');
