@@ -78,7 +78,7 @@ Or by spawning multiple Node.js processes in the same terminal, from the root fo
 The individual applications should now be available on the default configuration, on the endpoints:
 
 - http://localhost:8080 (web)
-- http://localhost:3000 (api)
+- http://localhost:3999 (api)
 
 > [!IMPORTANT]
 > The basic described above setup allows to run the application and make contributions on the standard functionality, but will disable some important features. An [advanced setup](advanced-setup.md) is required for these additional scenarios.
