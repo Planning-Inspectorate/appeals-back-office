@@ -12,6 +12,7 @@ import {
 	simulateReviewLpaFinalComments,
 	simulateReviewLPAQ,
 	simulateReviewLpaStatement,
+	simulateSetUpSiteVisit,
 	simulateShareIpCommentsAndLpaStatement,
 	simulateSiteVisitElapsed,
 	simulateStartAppeal,
@@ -302,6 +303,26 @@ router.post(
 		#swagger.responses[400] = {}
 	 */
 	asyncHandler(simulateShareIpCommentsAndLpaStatement)
+);
+
+router.post(
+	'/:appealReference/set-up-site-visit',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/set-up-site-visit'
+		#swagger.description = 'A test endpoint to simulate the completion of a set up site visit event'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[201] = {
+			description: 'Creates a single site visit',
+			schema: { $ref: '#/components/schemas/SiteVisitSingleResponse' }
+		}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(simulateSetUpSiteVisit)
 );
 
 export { router as testUtilsRoutes };
