@@ -1,4 +1,4 @@
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import { getAddressById, updateAddressById } from './addresses.controller.js';
@@ -26,7 +26,7 @@ router.get(
 		#swagger.responses[404] = {}
 	 */
 	getAddressValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest(['address']),
 	checkAddressExists,
 	asyncHandler(getAddressById)
 );
@@ -56,7 +56,7 @@ router.patch(
 		#swagger.responses[404] = {}
 	 */
 	patchAddressValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest(['address']),
 	checkAddressExists,
 	asyncHandler(updateAddressById)
 );
