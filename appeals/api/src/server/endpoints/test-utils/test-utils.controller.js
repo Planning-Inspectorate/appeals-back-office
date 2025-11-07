@@ -5,6 +5,7 @@ import {
 	publish,
 	updateRepresentation
 } from '#endpoints/representations/representations.controller.js';
+import { postSiteVisit } from '#endpoints/site-visits/site-visits.controller.js';
 import { getAppealNotifications } from '#repositories/appeal-notification.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import { databaseConnector } from '#utils/database-connector.js';
@@ -13,6 +14,7 @@ import {
 	APPEAL_START_RANGE
 } from '@pins/appeals/constants/common.js';
 import { AUDIT_TRAIL_SYSTEM_UUID } from '@pins/appeals/constants/support.js';
+import { APPEAL_EVENT_TYPE } from '@planning-inspectorate/data-model';
 import { sub } from 'date-fns';
 
 /** @typedef {import('express').Request} Request */
@@ -509,4 +511,41 @@ export const simulateReviewAppellantFinalComments = async (req, res) => {
 	req.body = { status: APPEAL_REPRESENTATION_STATUS.VALID };
 
 	return await updateRepresentation(req, res);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
+export const simulateSetUpSiteVisit = async (req, res) => {
+	const { appealReference } = req.params;
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: { reference: appealReference },
+		include: { appealStatus: true }
+	});
+
+	if (!appeal) return res.status(400).send(false);
+
+	const visitType = await databaseConnector.siteVisitType.findUnique({
+		where: { key: APPEAL_EVENT_TYPE.SITE_VISIT_UNACCOMPANIED }
+	});
+
+	req.appeal = appeal;
+	const visitDate = new Date();
+	const visitStartTime = new Date();
+	const visitEndTime = new Date();
+	visitDate.setHours(0, 0, 0, 0);
+	visitStartTime.setHours(9, 0, 0, 0);
+	visitEndTime.setHours(10, 0, 0, 0);
+
+	req.body = {
+		visitDate,
+		visitStartTime,
+		visitEndTime
+	};
+	req.visitType = visitType;
+	req.params = { appealId: String(appeal.id) };
+
+	return await postSiteVisit(req, res);
 };
