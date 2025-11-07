@@ -5,6 +5,7 @@ import {
 	simulateReviewLpaFinalComments,
 	simulateReviewLPAQ,
 	simulateReviewLpaStatement,
+	simulateSetUpSiteVisit,
 	simulateShareIpCommentsAndLpaStatement,
 	simulateStartAppeal
 } from '#endpoints/test-utils/test-utils.controller.js';
@@ -28,6 +29,7 @@ app.post('/:appealReference/review-lpa-statement', simulateReviewLpaStatement);
 app.post('/:appealReference/review-lpa-final-comments', simulateReviewLpaFinalComments);
 app.post('/:appealReference/review-appellant-final-comments', simulateReviewAppellantFinalComments);
 app.post('/:appealReference/share-comments-and-statement', simulateShareIpCommentsAndLpaStatement);
+app.post('/:appealReference/set-up-site-visit', simulateSetUpSiteVisit);
 const testApiRequest = supertest(app);
 
 describe('test utils routes', () => {
@@ -681,13 +683,44 @@ describe('test utils routes', () => {
 				{ representationType: 'comment' }
 			]);
 		});
+
+		test('returns 400 for invalid appeal', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/share-comments-and-statement');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
 	});
 
-	test('returns 400 for invalid appeal', async () => {
-		databaseConnector.appeal.findUnique.mockResolvedValue(null);
+	describe('POST /:appealReference/set-up-site-visit', () => {
+		test('returns 200 for valid appeal reference', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			databaseConnector.siteVisitType.findUnique.mockResolvedValue({
+				id: 3,
+				key: 'site_visit_unaccompanied',
+				name: 'Unaccompanied'
+			});
 
-		const response = await testApiRequest.post('/1/share-comments-and-statement');
-		expect(response.status).toEqual(400);
-		expect(response.body).toEqual(false);
+			const response = await testApiRequest
+				.post('/1/set-up-site-visit')
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				visitDate: '2025-10-23T00:00:00.000Z',
+				visitEndTime: '2025-10-23T10:00:00.000Z',
+				visitStartTime: '2025-10-23T09:00:00.000Z',
+				visitType: 'Unaccompanied'
+			});
+		});
+
+		test('returns 400 for invalid appeal', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/set-up-site-visit');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
 	});
 });
