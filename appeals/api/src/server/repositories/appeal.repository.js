@@ -79,7 +79,8 @@ export const appealDetailsInclude = /** @type {const} */ {
 			},
 			appellantCaseValidationOutcome: true,
 			knowsOtherOwners: true,
-			knowsAllOwners: true
+			knowsAllOwners: true,
+			appellantCaseAdvertDetails: true
 		}
 	},
 	appellant: true,

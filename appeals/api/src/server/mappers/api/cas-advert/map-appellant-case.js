@@ -1,4 +1,3 @@
-/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Api.AppellantCase} AppellantCase */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
 
@@ -12,9 +11,11 @@ export const mapCasAdvertAppellantCase = (data) => {
 		appeal: { appellantCase }
 	} = data;
 
+	const advertDetails = appellantCase?.appellantCaseAdvertDetails;
+
 	return {
-		highwayLand: appellantCase?.highwayLand,
-		advertInPosition: appellantCase?.advertInPosition,
+		highwayLand: advertDetails?.[0]?.highwayLand,
+		advertInPosition: advertDetails?.[0]?.advertInPosition,
 		landownerPermission: appellantCase?.landownerPermission,
 		siteGridReferenceEasting: appellantCase?.siteGridReferenceEasting,
 		siteGridReferenceNorthing: appellantCase?.siteGridReferenceNorthing

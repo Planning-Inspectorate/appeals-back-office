@@ -38,7 +38,9 @@ export const validateFromSchema = async (schema, payload, isCommand = false) => 
 		setCache(cacheKey, commandsAndEvents);
 	}
 
-	const schemas = isCommand ? commandsAndEvents.commands : commandsAndEvents.schemas;
+	const schemas = isCommand
+		? { ...commandsAndEvents.commands, ...commandsAndEvents.appealsComponents }
+		: commandsAndEvents.schemas;
 	const ajv = new Ajv({ schemas });
 	addFormats(ajv);
 

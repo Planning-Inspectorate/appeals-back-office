@@ -20,6 +20,11 @@ export const mapAppellantCase = (data) => {
 			isAdvertInPosition: advert.advertInPosition ?? null,
 			isSiteOnHighwayLand: advert.highwayLand ?? null
 		})),
-		hasLandownersPermission: casedata?.landownerPermission ?? null
+		hasLandownersPermission: casedata?.landownerPermission ?? null,
+		// required fields, but not used in adverts
+		informedTenantsAgriculturalHolding: null,
+		agriculturalHolding: null,
+		tenantAgriculturalHolding: null,
+		otherTenantsAgriculturalHolding: null
 	};
 };

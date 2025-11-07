@@ -438,14 +438,26 @@ describe('mapAppellantCaseIn', () => {
 			input: {
 				casedata: {
 					caseType: 'ZA',
-					isAdvertInPosition: true,
-					isSiteOnHighwayLand: false,
+					advertDetails: [
+						{
+							isAdvertInPosition: true,
+							isSiteOnHighwayLand: false
+						}
+					],
 					hasLandownersPermission: true
 				}
 			},
 			expected: expect.objectContaining({
-				advertInPosition: true,
-				highwayLand: false,
+				appellantCaseAdvertDetails: {
+					createMany: {
+						data: [
+							{
+								advertInPosition: true,
+								highwayLand: false
+							}
+						]
+					}
+				},
 				landownerPermission: true
 			})
 		},
@@ -454,14 +466,26 @@ describe('mapAppellantCaseIn', () => {
 			input: {
 				casedata: {
 					caseType: 'H',
-					isAdvertInPosition: true,
-					isSiteOnHighwayLand: false,
+					advertDetails: [
+						{
+							isAdvertInPosition: true,
+							isSiteOnHighwayLand: false
+						}
+					],
 					hasLandownersPermission: true
 				}
 			},
 			expected: expect.objectContaining({
-				advertInPosition: true,
-				highwayLand: false,
+				appellantCaseAdvertDetails: {
+					createMany: {
+						data: [
+							{
+								advertInPosition: true,
+								highwayLand: false
+							}
+						]
+					}
+				},
 				landownerPermission: true
 			})
 		},
@@ -615,6 +639,63 @@ describe('mapQuestionnaireIn', () => {
 				siteAccessDetails: 'access1',
 				siteSafetyDetails: 'safety1',
 				listedBuildingDetails: { create: [{ listEntry: 'LB1', affectsListedBuilding: true }] },
+				lpaNotificationMethods: {
+					create: [{ lpaNotificationMethod: { connect: { key: 'post' } } }]
+				},
+				designatedSiteNames: {
+					create: [{ designatedSite: { connect: { key: 'siteA' } } }]
+				},
+				affectsScheduledMonument: true,
+				hasProtectedSpecies: true,
+				isAonbNationalLandscape: true,
+				hasStatutoryConsultees: true,
+				consultedBodiesDetails: 'details',
+				hasEmergingPlan: true,
+				lpaProcedurePreference: 'written',
+				lpaProcedurePreferenceDetails: 'preference details',
+				lpaProcedurePreferenceDuration: 12,
+				isSiteInAreaOfSpecialControlAdverts: true,
+				wasApplicationRefusedDueToHighwayOrTraffic: true,
+				didAppellantSubmitCompletePhotosAndPlans: true
+			})
+		},
+		{
+			desc: 'CAS adverts case (H)',
+			input: {
+				casedata: {
+					caseType: 'H',
+					lpaQuestionnaireSubmittedDate: '2025-10-22',
+					siteAccessDetails: ['access1'],
+					siteSafetyDetails: ['safety1'],
+					notificationMethod: ['post'],
+					affectedListedBuildingNumbers: ['LB1'],
+					changedListedBuildingNumbers: ['LB2'],
+					designatedSitesNames: ['siteA'],
+					affectsScheduledMonument: true,
+					hasProtectedSpecies: true,
+					isAonbNationalLandscape: true,
+					hasStatutoryConsultees: true,
+					consultedBodiesDetails: 'details',
+					hasEmergingPlan: true,
+					lpaProcedurePreference: 'written',
+					lpaProcedurePreferenceDetails: 'preference details',
+					lpaProcedurePreferenceDuration: 12,
+					siteWithinSSSI: true,
+					isSiteInAreaOfSpecialControlAdverts: true,
+					wasApplicationRefusedDueToHighwayOrTraffic: true,
+					didAppellantSubmitCompletePhotosAndPlans: true
+				}
+			},
+			expected: expect.objectContaining({
+				lpaQuestionnaireSubmittedDate: '2025-10-22',
+				siteAccessDetails: 'access1',
+				siteSafetyDetails: 'safety1',
+				listedBuildingDetails: {
+					create: [
+						{ listEntry: 'LB1', affectsListedBuilding: true },
+						{ listEntry: 'LB2', affectsListedBuilding: false }
+					]
+				},
 				lpaNotificationMethods: {
 					create: [{ lpaNotificationMethod: { connect: { key: 'post' } } }]
 				},

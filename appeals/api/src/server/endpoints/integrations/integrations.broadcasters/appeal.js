@@ -68,7 +68,8 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
 						}
 					},
 					knowsAllOwners: true,
-					knowsOtherOwners: true
+					knowsOtherOwners: true,
+					appellantCaseAdvertDetails: true
 				}
 			},
 			lpaQuestionnaire: {
