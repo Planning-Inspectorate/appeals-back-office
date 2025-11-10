@@ -41,7 +41,7 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
  * @param {string | Date} inquiryStartTime
  * @param {string} estimatedDays
  * @param {TimetableData | undefined} timetableData
- * @param {Omit<import('@pins/appeals.api').Schema.Address, 'id'>} address
+ * @param {Omit<import('@pins/appeals.api').Schema.Address, 'id'> | null | undefined} address
  * @param {string | Date} startDate
  * @returns {Promise<void>}
  */
@@ -66,7 +66,7 @@ const sendInquiryDetailsNotifications = async (
 		inquiry_time: formatTime12h(
 			typeof inquiryStartTime === 'string' ? new Date(inquiryStartTime) : inquiryStartTime
 		),
-		inquiry_address: formatAddressSingleLine({ ...address, id: 0 }),
+		inquiry_address: address ? formatAddressSingleLine({ ...address, id: 0 }) : '',
 		inquiry_expected_days: estimatedDays,
 		questionnaire_due_date: dateISOStringToDisplayDate(
 			timetableData?.lpaQuestionnaireDueDate
@@ -299,10 +299,12 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 
 /**
  * @param {UpdateInquiry | Omit<UpdateInquiry, 'address'>} updateInquiryData
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {Appeal} appeal
+ * @param {number | null | undefined} existingAddressId
  * @returns {Promise<void>}
  */
-const updateInquiry = async (updateInquiryData, appeal) => {
+const updateInquiry = async (updateInquiryData, notifyClient, appeal, existingAddressId) => {
 	try {
 		const appealId = updateInquiryData.appealId;
 		const inquiryId = updateInquiryData.inquiryId;
@@ -327,7 +329,22 @@ const updateInquiry = async (updateInquiryData, appeal) => {
 			estimatedDays
 		};
 
-		await inquiryRepository.updateInquiryById(inquiryId, updateData);
+		const result = await inquiryRepository.updateInquiryById(inquiryId, updateData);
+
+		// @ts-ignore
+		if (result.address || existingAddressId) {
+			await broadcasters.broadcastEvent(updateData.inquiryId, EVENT_TYPE.INQUIRY, EventType.Update);
+			await sendInquiryDetailsNotifications(
+				notifyClient,
+				'inquiry-updated',
+				appeal,
+				inquiryStartTime,
+				result?.estimatedDays ? result?.estimatedDays.toString() : '',
+				undefined,
+				address,
+				''
+			);
+		}
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
