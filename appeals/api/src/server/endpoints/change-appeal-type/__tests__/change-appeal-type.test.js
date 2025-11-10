@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { request } from '#tests/../app-test.js';
 import {
+	advertisementAppeal,
 	casAdvertAppeal,
 	casPlanningAppeal,
 	fullPlanningAppeal,
@@ -222,6 +223,7 @@ describe('appeal change type resubmit routes', () => {
 		});
 		test.each([
 			['household', householdAppeal, 13],
+			['advertisement', advertisementAppeal, 5],
 			['casPlanning', casPlanningAppeal, 1],
 			['casAdvert', casAdvertAppeal, 1],
 			['fullPlanning', fullPlanningAppeal, 1],

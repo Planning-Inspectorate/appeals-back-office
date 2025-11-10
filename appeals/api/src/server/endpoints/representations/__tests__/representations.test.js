@@ -1,6 +1,8 @@
 // @ts-nocheck
 import { request } from '#tests/../app-test.js';
 import {
+	advertisementAppeal,
+	appealAdvert,
 	appealS20,
 	appealS78,
 	fullPlanningAppeal,
@@ -176,6 +178,7 @@ describe('/appeals/:id/reps', () => {
 		});
 
 		test.each([
+			['Advert', advertisementAppeal],
 			['HAS', householdAppeal],
 			['S78', fullPlanningAppeal],
 			['S20', listedBuildingAppeal]
@@ -268,6 +271,7 @@ describe('/appeals/:id/reps', () => {
 		);
 		test.each([
 			['HAS', householdAppeal],
+			['Advert', advertisementAppeal],
 			['S78', fullPlanningAppeal],
 			['S20', listedBuildingAppeal]
 		])(
@@ -560,7 +564,8 @@ describe('/appeals/:id/reps', () => {
 
 		test.each([
 			['full planning', appealS78],
-			['listed building', appealS20]
+			['listed building', appealS20],
+			['advertisement', appealAdvert]
 		])(
 			'200 when lpa statement incomplete is successfully updated with rejection, appeal type %s',
 			async (_, appeal) => {
@@ -1300,6 +1305,7 @@ describe('/appeals/:id/reps', () => {
 	});
 
 	describe('/appeals/:id/reps/publish', () => {
+		let mockAdvertAppeal;
 		let mockS78Appeal;
 		let mockS20Appeal;
 		const emailPayload = {
@@ -1312,6 +1318,12 @@ describe('/appeals/:id/reps', () => {
 			inquiry_subject_line: ''
 		};
 		beforeEach(() => {
+			mockAdvertAppeal = structuredClone({
+				...appealAdvert,
+				representations: appealAdvert.representations.filter(
+					(rep) => rep.status !== 'awaiting_review'
+				)
+			});
 			mockS78Appeal = structuredClone({
 				...appealS78,
 				representations: appealS78.representations.filter((rep) => rep.status !== 'awaiting_review')
@@ -1328,6 +1340,7 @@ describe('/appeals/:id/reps', () => {
 
 		describe('publish LPA statements', () => {
 			beforeEach(() => {
+				mockAdvertAppeal.appealStatus[0].status = 'statements';
 				mockS78Appeal.appealStatus[0].status = 'statements';
 				mockS20Appeal.appealStatus[0].status = 'statements';
 			});
@@ -1415,6 +1428,87 @@ describe('/appeals/:id/reps', () => {
 				};
 
 				databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([
+					{ representationType: 'lpa_statement' },
+					{ representationType: 'comment' }
+				]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'statements' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						has_ip_comments: true,
+						has_statement: true,
+						is_hearing_procedure: false,
+						is_inquiry_procedure: false,
+						what_happens_next:
+							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					},
+					recipientEmail: appealS78.lpa.email,
+					templateName: 'received-statement-and-ip-comments-lpa'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						has_ip_comments: true,
+						has_statement: true,
+						is_hearing_procedure: false,
+						is_inquiry_procedure: false,
+						what_happens_next:
+							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					},
+					recipientEmail: appealS78.appellant.email,
+					templateName: 'received-statement-and-ip-comments-appellant'
+				});
+			});
+
+			test('send notify comments and statements (written) advertisement', async () => {
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => mockAdvertAppeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedEmailPayload = {
+					...emailPayload,
+					lpa_reference: mockAdvertAppeal.applicationReference,
+					appeal_reference_number: mockAdvertAppeal.reference,
+					has_ip_comments: false,
+					has_statement: false,
+					final_comments_deadline: '4 December 2024',
+					site_address: expectedSiteAddress,
+					user_type: ''
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(mockAdvertAppeal);
 				databaseConnector.appealStatus.create.mockResolvedValue({});
 				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
 				databaseConnector.representation.findMany.mockResolvedValue([
@@ -2380,6 +2474,7 @@ describe('/appeals/:id/reps', () => {
 
 		describe('publish final comments', () => {
 			beforeEach(() => {
+				mockAdvertAppeal.appealStatus[0].status = 'final_comments';
 				mockS78Appeal.appealStatus[0].status = 'final_comments';
 				mockS20Appeal.appealStatus[0].status = 'final_comments';
 			});

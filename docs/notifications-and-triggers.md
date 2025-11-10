@@ -60,13 +60,13 @@ The following notifications are sent from the back-office using these [Notify Te
 
 ### Appeal valid start case householder appellant
 
-- **Appeal type:** householder, CAS planning
+- **Appeal type:** householder, CAS planning, CAS advert, Full advert
 - **Notify Template:** [appeal-valid-start-case-appellant](../appeals/api/src/server/notify/templates/appeal-valid-start-case-appellant.content.md)
 - **Trigger:** Start a householder case, select an appeal procedure, and confirm.
 
 ### Appeal valid start case householder lpa
 
-- **Appeal type:** householder, CAS planning
+- **Appeal type:** householder, CAS planning, CAS advert, Full advert
 - **Notify Template:** [appeal-valid-start-case-lpa](../appeals/api/src/server/notify/templates/appeal-valid-start-case-lpa.content.md)
 - **Trigger:** Start a householder case, select an appeal procedure, and confirm.
 
@@ -92,7 +92,7 @@ The following notifications are sent from the back-office using these [Notify Te
 
 ### Lpaq complete householder appellant
 
-- **Appeal type:** householder, CAS planning
+- **Appeal type:** householder, CAS planning, CAS advert, Full advert
 - **Notify Template:** [lpaq-complete-has-appellant](../appeals/api/src/server/notify/templates/lpaq-complete-has-appellant.content.md)
 - **Trigger:** Review a Lpaq and mark it as complete by selecting "Complete" and continue
 
