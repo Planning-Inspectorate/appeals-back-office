@@ -24,6 +24,7 @@ import { isEmpty, pick } from 'lodash-es';
  * @property {string} town
  * @property {string} county
  * @property {string} postCode
+ * @property {boolean} isEventDate
  */
 
 /**
@@ -76,19 +77,33 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
 				appealDetails.hearing?.hearingStartTime
 			);
 
-			if (sessionValues.appealProcedure === sessionValues.existingAppealProcedure) {
-				sessionValues.dateKnown = appealDetails.hearing?.hearingStartTime ? 'yes' : 'no';
-			}
-
 			if (typeof sessionValues.dateKnown !== 'string' && sessionValues.dateKnown !== undefined) {
 				sessionValues.dateKnown = hearingDate ? 'yes' : 'no';
 			}
 
-			sessionValues['event-date-day'] = sessionValues['event-date-day'] ?? hearingDate?.day;
-			sessionValues['event-date-month'] = sessionValues['event-date-month'] ?? hearingDate.month;
-			sessionValues['event-date-year'] = sessionValues['event-date-year'] ?? hearingDate.year;
-			sessionValues['event-time-hour'] = sessionValues['event-time-hour'] ?? hearingDate.hour;
-			sessionValues['event-time-minute'] = sessionValues['event-time-minute'] ?? hearingDate.minute;
+			if (sessionValues['isEventDate'] || sessionValues['isEventDate'] === undefined) {
+				sessionValues['event-date-day'] = sessionValues['event-date-day'] ?? hearingDate?.day;
+				sessionValues['event-date-month'] = sessionValues['event-date-month'] ?? hearingDate.month;
+				sessionValues['event-date-year'] = sessionValues['event-date-year'] ?? hearingDate.year;
+				sessionValues['event-time-hour'] = sessionValues['event-time-hour'] ?? hearingDate.hour;
+				sessionValues['event-time-minute'] =
+					sessionValues['event-time-minute'] ?? hearingDate.minute;
+			}
+
+			if (sessionValues.appealProcedure === sessionValues.existingAppealProcedure) {
+				if (
+					sessionValues['event-date-day'] ||
+					sessionValues['event-date-month'] ||
+					sessionValues['event-date-year'] ||
+					sessionValues['event-time-hour'] ||
+					sessionValues['event-time-minute']
+				) {
+					sessionValues.dateKnown = 'yes';
+				} else {
+					sessionValues.dateKnown = 'no';
+				}
+			}
+
 			break;
 		}
 		case APPEAL_CASE_PROCEDURE.INQUIRY: {
