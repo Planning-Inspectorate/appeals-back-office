@@ -228,5 +228,7 @@ export const postConfirm = async (request, response) => {
 		appealId
 	});
 
+	delete request.session.reviewProofOfEvidence;
+
 	return response.status(200).redirect(`/appeals-service/appeal-details/${appealId}`);
 };
