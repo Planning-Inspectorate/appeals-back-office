@@ -12,6 +12,7 @@ import {
 	simulateReviewLpaFinalComments,
 	simulateReviewLPAQ,
 	simulateReviewLpaStatement,
+	simulateSetUpHearing,
 	simulateSetUpSiteVisit,
 	simulateShareIpCommentsAndLpaStatement,
 	simulateSiteVisitElapsed,
@@ -323,6 +324,26 @@ router.post(
 		#swagger.responses[400] = {}
 	 */
 	asyncHandler(simulateSetUpSiteVisit)
+);
+
+router.post(
+	'/:appealReference/set-up-hearing',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/set-up-hearing'
+		#swagger.description = 'A test endpoint to simulate the completion of a set up hearing event'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[201] = {
+				description: 'Sets a single hearing by ID',
+				schema: { $ref: '#/components/schemas/CreateHearing' }
+		}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(simulateSetUpHearing)
 );
 
 export { router as testUtilsRoutes };

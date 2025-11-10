@@ -2671,6 +2671,15 @@ export interface CreateHearingRequest {
 	};
 }
 
+export interface CreateHearing {
+	/** @example 428 */
+	appealId?: number;
+	/** @example "2026-11-10T09:00:00.000Z" */
+	hearingStartTime?: string;
+	/** @example "2026-11-10T10:00:00.000Z" */
+	hearingEndTime?: string;
+}
+
 export interface UpdateHearingRequest {
 	/**
 	 * Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM
