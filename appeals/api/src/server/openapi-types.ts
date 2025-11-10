@@ -1404,16 +1404,22 @@ export interface SingleAppellantCaseResponse {
 
 export interface UpdateCaseTeamRequest {
 	/** @example "13de469c-8de6-4908-97cd-330ea73df618" */
-	caseOfficer?: string;
+	caseOfficerId?: string;
+	/** @example "John Smith" */
+	caseOfficerName?: string;
 	/** @example "f7ea429b-65d8-4c44-8fc2-7f1a34069855" */
-	inspector?: string;
+	inspectorId?: string;
+	/** @example "John Smith" */
+	inspectorName?: string;
+	/** @example "John Smith Jr" */
+	prevUserName?: string;
 }
 
 export interface UpdateCaseTeamResponse {
 	/** @example "13de469c-8de6-4908-97cd-330ea73df618" */
-	caseOfficer?: string;
+	caseOfficerId?: string;
 	/** @example "f7ea429b-65d8-4c44-8fc2-7f1a34069855" */
-	inspector?: string;
+	inspectorId?: string;
 }
 
 export interface StartCaseRequest {
@@ -2889,6 +2895,11 @@ export interface CreateInquiryRequest {
 	 * @example "2026-11-10T00:00:00.000Z"
 	 */
 	planningObligationDueDate?: string;
+	/**
+	 * Whether case is being started or inquiry is being set up
+	 * @example true
+	 */
+	isStartCase?: boolean;
 	address?: {
 		/** @example "1 Grove Cottage" */
 		addressLine1?: string;
@@ -3100,16 +3111,6 @@ export interface Team {
 	caseOfficer?: string | null;
 	/** @format uuid */
 	inspector?: string | null;
-}
-
-export interface TeamV2 {
-	/** @format uuid */
-	caseOfficerId?: string | null;
-	/** @format uuid */
-	inspectorId?: string | null;
-	caseOfficerName?: string | null;
-	inspectorName?: string | null;
-	prevUserName?: string | null;
 }
 
 export interface AppealSummary {
