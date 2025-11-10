@@ -78,19 +78,8 @@ export const postAssignInspector = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getCheckDetails = async (request, response) => {
-	const {
-		currentAppeal,
-		errors,
-		baseUrl,
-		session: { user }
-	} = request;
-
-	const mappedPageContent = checkAndConfirmPage(
-		currentAppeal.appealId,
-		user,
-		currentAppeal.appealReference,
-		baseUrl
-	);
+	const { errors } = request;
+	const mappedPageContent = await checkAndConfirmPage(request);
 	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
