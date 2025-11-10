@@ -1612,7 +1612,76 @@ describe('inquiry routes', () => {
 					}
 				});
 
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				const personalisation = {
+					appeal_reference_number: '1345264',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					lpa_reference: '48269/APP/2021/1482',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					appeal_type: 'Full Planning',
+					inquiry_address:
+						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
+					inquiry_date: '1 January 2999',
+					inquiry_expected_days: '',
+					inquiry_time: '12:00pm',
+					ip_comments_deadline: '',
+					start_date: '',
+					statement_of_common_ground_deadline: '',
+					lpa_statement_deadline: '',
+					planning_obligation_deadline: '',
+					proof_of_evidence_and_witnesses_deadline: '',
+					questionnaire_due_date: ''
+				};
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						...personalisation,
+						is_lpa: false
+					},
+					recipientEmail: fullPlanningAppeal.appellant.email,
+					templateName: 'inquiry-updated'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						...personalisation,
+						is_lpa: true
+					},
+					recipientEmail: fullPlanningAppeal.lpa.email,
+					templateName: 'inquiry-updated'
+				});
+
 				expect(response.status).toEqual(201);
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(4);
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+					data: {
+						appealId: fullPlanningAppeal.id,
+						details: 'Case progressed to awaiting_event',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+					data: {
+						appealId: fullPlanningAppeal.id,
+						details: 'Inquiry date updated to 1 Jan 2999',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
+					data: {
+						appealId: fullPlanningAppeal.id,
+						details: 'Inquiry time updated to 12:00pm',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
 			});
 
 			test('updates a single inquiry with addressId', async () => {
@@ -1672,6 +1741,46 @@ describe('inquiry routes', () => {
 				});
 
 				expect(response.status).toEqual(201);
+
+				const personalisation = {
+					appeal_reference_number: '1345264',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					lpa_reference: '48269/APP/2021/1482',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					appeal_type: 'Full Planning',
+					inquiry_address:
+						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
+					inquiry_date: '1 January 2999',
+					inquiry_expected_days: '',
+					inquiry_time: '12:00pm',
+					ip_comments_deadline: '',
+					start_date: '',
+					statement_of_common_ground_deadline: '',
+					lpa_statement_deadline: '',
+					planning_obligation_deadline: '',
+					proof_of_evidence_and_witnesses_deadline: '',
+					questionnaire_due_date: ''
+				};
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						...personalisation,
+						is_lpa: false
+					},
+					recipientEmail: fullPlanningAppeal.appellant.email,
+					templateName: 'inquiry-updated'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						...personalisation,
+						is_lpa: true
+					},
+					recipientEmail: fullPlanningAppeal.lpa.email,
+					templateName: 'inquiry-updated'
+				});
+
 				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
 			});
 
@@ -1738,6 +1847,7 @@ describe('inquiry routes', () => {
 				});
 
 				expect(response.status).toEqual(201);
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 			});
 
 			test('removes the address if address is null', async () => {
@@ -1773,10 +1883,45 @@ describe('inquiry routes', () => {
 						address: true
 					}
 				});
-
-				expect(mockNotifySend).not.toHaveBeenCalled();
-
 				expect(response.status).toEqual(201);
+
+				const personalisation = {
+					appeal_reference_number: '1345264',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					lpa_reference: '48269/APP/2021/1482',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					appeal_type: 'Full Planning',
+					inquiry_address: '',
+					inquiry_date: '31 March 2022',
+					inquiry_expected_days: '6',
+					inquiry_time: '2:00am',
+					ip_comments_deadline: '',
+					start_date: '',
+					statement_of_common_ground_deadline: '',
+					lpa_statement_deadline: '',
+					planning_obligation_deadline: '',
+					proof_of_evidence_and_witnesses_deadline: '',
+					questionnaire_due_date: ''
+				};
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						...personalisation,
+						is_lpa: false
+					},
+					recipientEmail: fullPlanningAppeal.appellant.email,
+					templateName: 'inquiry-updated'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						...personalisation,
+						is_lpa: true
+					},
+					recipientEmail: fullPlanningAppeal.lpa.email,
+					templateName: 'inquiry-updated'
+				});
 			});
 
 			test('updates a single inquiry with no estimation day', async () => {
