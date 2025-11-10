@@ -2300,71 +2300,6 @@
 				}
 			}
 		},
-		"/appeals/{appealId}/inspector-decision-invalid": {
-			"post": {
-				"tags": ["Inspector Decision"],
-				"description": "Closes an appeal by setting the inspector decision as Invalid",
-				"parameters": [
-					{
-						"name": "appealId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"201": {
-						"description": "Gets the Invalid decision info or null",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/InvalidDecisionInfo"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/InvalidDecisionInfo"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					},
-					"404": {
-						"description": "Not Found"
-					}
-				},
-				"requestBody": {
-					"in": "body",
-					"description": "Invalid decision info",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/InvalidDecisionInfo"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/InvalidDecisionInfo"
-							}
-						}
-					}
-				}
-			}
-		},
 		"/appeals/{appealId}/appellant-cases/{appellantCaseId}": {
 			"get": {
 				"tags": ["Appellant Cases"],
@@ -6589,6 +6524,51 @@
 							"application/xml": {
 								"schema": {
 									"$ref": "#/components/schemas/SiteVisitSingleResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
+		"/appeals/{appealReference}/set-up-hearing": {
+			"post": {
+				"tags": ["Test Utilities"],
+				"description": "A test endpoint to simulate the completion of a set up hearing event",
+				"parameters": [
+					{
+						"name": "appealReference",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Sets a single hearing by ID",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreateHearing"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/CreateHearing"
 								}
 							}
 						}
@@ -13055,6 +13035,23 @@
 								"example": "Woodton"
 							}
 						}
+					}
+				}
+			},
+			"CreateHearing": {
+				"type": "object",
+				"properties": {
+					"appealId": {
+						"type": "number",
+						"example": 428
+					},
+					"hearingStartTime": {
+						"type": "string",
+						"example": "2026-11-10T09:00:00.000Z"
+					},
+					"hearingEndTime": {
+						"type": "string",
+						"example": "2026-11-10T10:00:00.000Z"
 					}
 				}
 			},

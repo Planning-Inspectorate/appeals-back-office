@@ -2665,6 +2665,15 @@ export interface CreateHearingRequest {
 	};
 }
 
+export interface CreateHearing {
+	/** @example 428 */
+	appealId?: number;
+	/** @example "2026-11-10T09:00:00.000Z" */
+	hearingStartTime?: string;
+	/** @example "2026-11-10T10:00:00.000Z" */
+	hearingEndTime?: string;
+}
+
 export interface UpdateHearingRequest {
 	/**
 	 * Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM
@@ -2889,6 +2898,11 @@ export interface CreateInquiryRequest {
 	 * @example "2026-11-10T00:00:00.000Z"
 	 */
 	planningObligationDueDate?: string;
+	/**
+	 * Whether case is being started or inquiry is being set up
+	 * @example true
+	 */
+	isStartCase?: boolean;
 	address?: {
 		/** @example "1 Grove Cottage" */
 		addressLine1?: string;
