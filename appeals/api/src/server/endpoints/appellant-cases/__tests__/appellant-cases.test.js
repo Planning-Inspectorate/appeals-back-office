@@ -1,5 +1,8 @@
 // @ts-nocheck
 import {
+	advertisementAppeal,
+	advertisementAppealAppellantCaseIncomplete,
+	advertisementAppealAppellantCaseInvalid,
 	casAdvertAppeal,
 	casAdvertAppealAppellantCaseIncomplete,
 	casAdvertAppealAppellantCaseInvalid,
@@ -595,6 +598,7 @@ describe('appellant cases routes', () => {
 			});
 
 			test.each([
+				['advertisementAppeal', advertisementAppealAppellantCaseIncomplete],
 				['householdAppeal', householdAppealAppellantCaseIncomplete],
 				['casPlanningAppeal', casPlanningAppealAppellantCaseIncomplete],
 				['casAdvertAppeal', casAdvertAppealAppellantCaseIncomplete],
@@ -867,6 +871,7 @@ describe('appellant cases routes', () => {
 
 			test.each([
 				['householdAppeal', householdAppealAppellantCaseInvalid],
+				['advertisementAppeal', advertisementAppealAppellantCaseInvalid],
 				['casPlanningAppeal', casPlanningAppealAppellantCaseInvalid],
 				['casAdvertAppeal', casAdvertAppealAppellantCaseInvalid],
 				['fullPlanningAppeal', fullPlanningAppealAppellantCaseInvalid],
@@ -947,6 +952,7 @@ describe('appellant cases routes', () => {
 
 			test.each([
 				['householdAppeal', householdAppeal],
+				['advertisementAppeal', advertisementAppeal],
 				['casAdvertAppeal', casAdvertAppeal],
 				['casPlanningAppeal', casPlanningAppeal],
 				['fullPlanningAppeal', fullPlanningAppeal],
