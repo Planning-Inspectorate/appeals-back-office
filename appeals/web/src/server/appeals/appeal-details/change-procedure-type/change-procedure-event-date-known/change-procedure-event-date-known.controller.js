@@ -57,7 +57,16 @@ export const postEventDateKnown = async (request, response) => {
 
 	if (dateKnown === 'yes') {
 		// Answer was yes so we progress to the next page
+		sessionValues['noEventDate'] = true;
 		return response.redirect(preserveQueryString(request, `${baseUrl}/date`));
 	}
+
+	delete sessionValues['event-date-day'];
+	delete sessionValues['event-date-month'];
+	delete sessionValues['event-date-year'];
+	delete sessionValues['event-time-hour'];
+	delete sessionValues['event-time-minute'];
+	sessionValues['isEventDate'] = false;
+
 	return response.redirect(`${baseUrl}/change-timetable`);
 };
