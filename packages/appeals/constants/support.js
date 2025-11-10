@@ -221,6 +221,7 @@ export const AUDIT_TRAIL_HEARING_ESTIMATES_REMOVED = 'Hearing estimates removed'
 
 export const AUDIT_TRAIL_INQUIRY_SET_UP = 'Inquiry set up on {replacement0}';
 export const AUDIT_TRAIL_INQUIRY_DATE_UPDATED = 'Inquiry date updated to {replacement0}';
+export const AUDIT_TRAIL_INQUIRY_TIME_UPDATED = 'Inquiry time updated to {replacement0}';
 export const AUDIT_TRAIL_INQUIRY_ADDRESS_ADDED = 'The inquiry address has been added';
 export const AUDIT_TRAIL_INQUIRY_ADDRESS_UPDATED = 'Inquiry address updated to {replacement0}';
 export const AUDIT_TRAIL_INQUIRY_CANCELLED = 'Inquiry cancelled';

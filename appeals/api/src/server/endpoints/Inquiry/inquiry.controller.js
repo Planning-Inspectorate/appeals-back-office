@@ -1,23 +1,36 @@
-import { formatAddressForDb } from '#endpoints/addresses/addresses.formatter.js';
+import {
+	formatAddressForDb,
+	formatAddressSingleLine
+} from '#endpoints/addresses/addresses.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import inquiryRepository from '#repositories/inquiry.repository.js';
 import transitionState from '#state/transition-state.js';
 import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	AUDIT_TRAIL_INQUIRY_ADDRESS_ADDED,
+	AUDIT_TRAIL_INQUIRY_ADDRESS_UPDATED,
 	AUDIT_TRAIL_INQUIRY_CANCELLED,
+	AUDIT_TRAIL_INQUIRY_DATE_UPDATED,
 	AUDIT_TRAIL_INQUIRY_SET_UP,
+	AUDIT_TRAIL_INQUIRY_TIME_UPDATED,
 	ERROR_FAILED_TO_SAVE_DATA,
 	VALIDATION_OUTCOME_CANCEL,
-	VALIDATION_OUTCOME_COMPLETE
+	VALIDATION_OUTCOME_COMPLETE,
+	VALIDATION_OUTCOME_INCOMPLETE
 } from '@pins/appeals/constants/support.js';
-import { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
+import formatDate, {
+	dateISOStringToDisplayDate,
+	formatTime12h
+} from '@pins/appeals/utils/date-formatter.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { isSameDay, isSameHour, isSameMinute } from 'date-fns';
 import { createInquiry, deleteInquiry, updateInquiry } from './inquiry.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
+/** @typedef {import('@pins/appeals.api').Schema.Inquiry} Inquiry */
 
 /**
  * @param {Request} req
@@ -119,6 +132,9 @@ export const patchInquiry = async (req, res) => {
 	const inquiryId = Number(params.inquiryId);
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	try {
+		/** @type {Inquiry | undefined} */
+		const currentInquiry = await inquiryRepository.getInquiryById(inquiryId);
+		const existingAddressId = currentInquiry?.addressId;
 		await updateInquiry(
 			{
 				appealId,
@@ -131,11 +147,57 @@ export const patchInquiry = async (req, res) => {
 					address: address === null ? null : formatAddressForDb(address)
 				})
 			},
-			appeal
+			req.notifyClient,
+			appeal,
+			existingAddressId
 		);
 
-		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT) && address) {
-			await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+		const existingInquiry = req.appeal.inquiry;
+
+		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT)) {
+			if (address && !currentInquiry?.addressId) {
+				await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+			} else if (!address && currentInquiry?.addressId) {
+				await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_INCOMPLETE);
+			}
+		}
+
+		if (existingInquiry) {
+			if (!isSameDay(existingInquiry.inquiryStartTime, inquiryStartTime)) {
+				await createAuditTrail({
+					appealId: appeal.id,
+					azureAdUserId,
+					details: stringTokenReplacement(AUDIT_TRAIL_INQUIRY_DATE_UPDATED, [
+						formatDate(new Date(inquiryStartTime))
+					])
+				});
+			}
+
+			if (
+				!isSameHour(existingInquiry.inquiryStartTime, inquiryStartTime) ||
+				!isSameMinute(existingInquiry.inquiryStartTime, inquiryStartTime)
+			) {
+				await createAuditTrail({
+					appealId: appeal.id,
+					azureAdUserId,
+					details: stringTokenReplacement(AUDIT_TRAIL_INQUIRY_TIME_UPDATED, [
+						formatTime12h(new Date(inquiryStartTime))
+					])
+				});
+			}
+		}
+
+		if (address) {
+			const details = existingInquiry?.address
+				? stringTokenReplacement(AUDIT_TRAIL_INQUIRY_ADDRESS_UPDATED, [
+						formatAddressSingleLine(formatAddressForDb(address))
+				  ])
+				: AUDIT_TRAIL_INQUIRY_ADDRESS_ADDED;
+			await createAuditTrail({
+				appealId: appeal.id,
+				azureAdUserId,
+				details
+			});
 		}
 	} catch (error) {
 		logger.error(error);
