@@ -1,5 +1,6 @@
 import { startAppeal } from '#endpoints/appeal-timetables/appeal-timetables.controller.js';
 import { updateCompletedEvents } from '#endpoints/appeals/appeals.service.js';
+import { postInspectorDecision } from '#endpoints/decision/decision.controller.js';
 import { postHearing } from '#endpoints/hearings/hearing.controller.js';
 import { updateLPAQuestionnaireById } from '#endpoints/lpa-questionnaires/lpa-questionnaires.controller.js';
 import {
@@ -512,6 +513,35 @@ export const simulateReviewAppellantFinalComments = async (req, res) => {
 	req.body = { status: APPEAL_REPRESENTATION_STATUS.VALID };
 
 	return await updateRepresentation(req, res);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
+export const simulateIssueDecision = async (req, res) => {
+	const { appealReference } = req.params;
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: { reference: appealReference },
+		include: { appealStatus: true, lpa: true, appellant: true }
+	});
+
+	if (!appeal) return res.status(400).send(false);
+
+	req.appeal = appeal;
+	req.body = {
+		decisions: [
+			{
+				decisionType: 'inspector-decision',
+				outcome: 'allowed',
+				documentGuild: '',
+				documentDate: new Date().toString()
+			}
+		]
+	};
+
+	return await postInspectorDecision(req, res);
 };
 
 /**
