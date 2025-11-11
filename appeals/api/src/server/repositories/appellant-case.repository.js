@@ -14,9 +14,10 @@ import commonRepository from './common.repository.js';
 /**
  * @param {number} id
  * @param {AppellantCaseUpdateRequest} data
- * @returns {Promise<any[]|PrismaPromise<object>>}
+ * @param {any[]} transaction
+ * @returns {Promise<PrismaPromise<object>[]>}
  */
-const updateAppellantCaseById = async (id, data) => {
+const updateAppellantCaseById = async (id, data, transaction = []) => {
 	const knowsOtherOwners =
 		data.knowsOtherOwners !== undefined
 			? data.knowsOtherOwners === null
@@ -30,17 +31,17 @@ const updateAppellantCaseById = async (id, data) => {
 
 	if (knowsOtherOwners === null) {
 		logger.info({ id }, 'removing knowsOtherOwners from appellant case');
-		return databaseConnector.appellantCase.update({
-			where: { id },
-			data: {
-				knowsOtherOwnersId: null
-			}
-		});
+		return [
+			databaseConnector.appellantCase.update({
+				where: { id },
+				data: {
+					knowsOtherOwnersId: null
+				}
+			})
+		];
 	}
 
 	const { advertInPosition, highwayLand, ...mainUpdates } = data;
-
-	const transaction = [];
 
 	logger.info({ id }, 'appellant case update');
 	logger.debug({ id, mainUpdates, knowsOtherOwners }, 'appellant case update details');
@@ -90,14 +91,14 @@ const updateAppellantCaseById = async (id, data) => {
 		}
 	}
 
-	return databaseConnector.$transaction(transaction);
+	return transaction;
 };
 
 /**
  * @param {UpdateAppellantCaseValidationOutcome} param0
  * @returns {Promise<object[]>}
  */
-const updateAppellantCaseValidationOutcome = ({
+const updateAppellantCaseValidationOutcome = async ({
 	appellantCaseId,
 	validationOutcomeId,
 	incompleteReasons,
@@ -106,11 +107,9 @@ const updateAppellantCaseValidationOutcome = ({
 	validAt,
 	appealDueDate
 }) => {
-	const transaction = [
-		updateAppellantCaseById(appellantCaseId, {
-			appellantCaseValidationOutcomeId: validationOutcomeId
-		})
-	];
+	const transaction = await updateAppellantCaseById(appellantCaseId, {
+		appellantCaseValidationOutcomeId: validationOutcomeId
+	});
 
 	if (incompleteReasons) {
 		transaction.push(
