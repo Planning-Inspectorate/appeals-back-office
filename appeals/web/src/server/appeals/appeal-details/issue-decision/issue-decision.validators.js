@@ -1,5 +1,5 @@
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
-import { createTextareaCharacterValidator } from '#lib/validators/textarea-validator.js';
+import { createTextareaConditionalValidator } from '#lib/validators/textarea-validator.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 
@@ -28,9 +28,11 @@ export const validateLpaCostsDecision = createValidator(
 		.withMessage("Select yes if you want to issue the LPA's cost decision")
 );
 
-export const validateInvalidReason = createTextareaCharacterValidator(
+export const validateInvalidReason = createTextareaConditionalValidator(
 	'invalidReason',
-	'Enter reason',
+	'decision',
+	'invalid',
+	'Enter a reason',
 	textInputCharacterLimits.defaultTextareaLength,
 	`Reason must be ${textInputCharacterLimits.defaultTextareaLength} characters or less`
 );

@@ -15,7 +15,6 @@ export const mapAppellantCaseIn = (command) => {
 	const isS20 = casedata.caseType === APPEAL_CASE_TYPE.Y;
 	const isAdverts =
 		casedata.caseType === APPEAL_CASE_TYPE.ZA || casedata.caseType === APPEAL_CASE_TYPE.H;
-	const isFullAdverts = casedata.caseType === APPEAL_CASE_TYPE.H;
 
 	// @ts-ignore
 	const sharedFields = createSharedS20S78Fields(command);
@@ -40,18 +39,6 @@ export const mapAppellantCaseIn = (command) => {
 	const siteSafetyDetails =
 		casedata.siteSafetyDetails != null && casedata.siteSafetyDetails.length > 0
 			? casedata.siteSafetyDetails[0]
-			: null;
-
-	const advertDetails =
-		(casedata.caseType === 'ZA' || casedata.caseType === 'H') &&
-		casedata.advertDetails &&
-		casedata.advertDetails.length > 0
-			? casedata.advertDetails
-					.map((detail) => ({
-						advertInPosition: detail.isAdvertInPosition,
-						highwayLand: detail.isSiteOnHighwayLand
-					}))
-					.filter(Boolean)
 			: null;
 
 	const data = {
@@ -87,18 +74,9 @@ export const mapAppellantCaseIn = (command) => {
 		}),
 		numberOfResidencesNetChange: casedata.numberOfResidencesNetChange,
 		...(isAdverts && {
-			appellantCaseAdvertDetails: {
-				createMany: {
-					data: advertDetails || []
-				}
-			},
+			advertInPosition: casedata.isAdvertInPosition,
+			highwayLand: casedata.isSiteOnHighwayLand,
 			landownerPermission: casedata.hasLandownersPermission
-		}),
-		...(isFullAdverts && {
-			appellantProcedurePreference: casedata.appellantProcedurePreference,
-			appellantProcedurePreferenceDetails: casedata.appellantProcedurePreferenceDetails,
-			appellantProcedurePreferenceDuration: casedata.appellantProcedurePreferenceDuration,
-			appellantProcedurePreferenceWitnessCount: casedata.appellantProcedurePreferenceWitnessCount
 		})
 	};
 

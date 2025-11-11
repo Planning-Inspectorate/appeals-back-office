@@ -55,8 +55,6 @@ export const postConfirmAcceptProofOfEvidence = async (request, response) => {
 			appealId
 		});
 
-		delete request.session.reviewProofOfEvidence;
-
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(error);

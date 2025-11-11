@@ -1,4 +1,3 @@
-import { isParentAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
 import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import {
@@ -141,47 +140,6 @@ export function issueDecisionBackUrl(currentAppeal, childAppealId, request) {
  *
  * @param {Request} request
  */
-export function decisionLetterUploadBackUrl(request) {
-	const backUrl = getBackLinkUrlFromQuery(request);
-	if (backUrl) {
-		return backUrl;
-	}
-
-	const { currentAppeal, session } = request;
-
-	return session.inspectorDecision?.outcome === APPEAL_CASE_DECISION_OUTCOME.INVALID
-		? `${baseUrl(currentAppeal)}/decision-letter`
-		: isParentAppeal(currentAppeal)
-		? `${baseUrl(currentAppeal)}/${
-				currentAppeal.linkedAppeals[currentAppeal.linkedAppeals.length - 1].appealId
-		  }/decision`
-		: `${baseUrl(currentAppeal)}/decision`;
-}
-
-/**
- *
- * @param {Request} request
- */
-export function appellantCostsDecisionBackUrl(request) {
-	const backUrl = getBackLinkUrlFromQuery(request);
-	if (backUrl) {
-		return backUrl;
-	}
-
-	const { currentAppeal, session } = request;
-
-	return session.inspectorDecision?.files?.length
-		? `${baseUrl(currentAppeal)}/decision-letter-upload`
-		: session.inspectorDecision.outcome === APPEAL_CASE_DECISION_OUTCOME.INVALID &&
-		  session.inspectorDecision?.invalidReason?.length
-		? `${baseUrl(currentAppeal)}/invalid-reason`
-		: decisionLetterUploadBackUrl(request);
-}
-
-/**
- *
- * @param {Request} request
- */
 export function lpaCostsDecisionBackUrl(request) {
 	const backUrl = getBackLinkUrlFromQuery(request);
 	if (backUrl) {
@@ -196,7 +154,9 @@ export function lpaCostsDecisionBackUrl(request) {
 		? `${baseUrl(currentAppeal)}/appellant-costs-decision`
 		: appellantHasAppliedForCosts && !appellantDecisionHasAlreadyBeenIssued
 		? `${baseUrl(currentAppeal)}/appellant-costs-decision-letter-upload`
-		: appellantCostsDecisionBackUrl(request);
+		: session.inspectorDecision?.files?.length
+		? `${baseUrl(currentAppeal)}/decision-letter-upload`
+		: `${baseUrl(currentAppeal)}/decision`;
 }
 
 /**

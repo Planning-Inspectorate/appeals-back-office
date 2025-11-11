@@ -16,7 +16,7 @@
  * @returns {Promise<Appeal>}
  */
 export async function setAppealAssignee(apiClient, appealId, assigneeUser, isInspector, prevUser) {
-	const assigneeUserId = assigneeUser.id === '0' ? null : assigneeUser.id;
+	const assigneeUserId = assigneeUser.id == '0' ? null : assigneeUser.id;
 	return apiClient
 		.patch(`appeals/${appealId}`, {
 			json: isInspector

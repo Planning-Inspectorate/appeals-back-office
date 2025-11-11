@@ -1,7 +1,3 @@
-import {
-	assignEmailTemplate,
-	unassignEmailTemplate
-} from '#appeals/appeal-details/assign-user/assign-user.data.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { activeDirectoryUsersData } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
@@ -25,11 +21,7 @@ describe('assign-user', () => {
 		// @ts-ignore
 		usersService.getUserById = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
 	});
-
-	afterEach(() => {
-		teardown();
-		nock.cleanAll();
-	});
+	afterEach(teardown);
 
 	describe('GET /assign-case-officer/search-case-officer', () => {
 		it('should render the search for case officer page with expected content', async () => {
@@ -162,16 +154,7 @@ describe('assign-user', () => {
 	});
 
 	describe('GET /assign-inspector/check-details', () => {
-		it('should render the assign inspector check details page', async () => {
-			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
-				id: 1,
-				email: 'caseofficers@planninginspectorate.gov.uk',
-				name: 'standard email'
-			});
-			nock('http://test/')
-				.post(`/appeals/notify-preview/appeal-assign-inspector.content.md`)
-				.reply(200, assignEmailTemplate);
-
+		it('should render the inspector check details page', async () => {
 			await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
 				user: '{"id": "923ac03b-9031-4cf4-8b17-348c274321f9", "name": "Smith, John", "email": "John.Smith@planninginspectorate.gov.uk"}'
 			});
@@ -194,16 +177,8 @@ describe('assign-user', () => {
 		});
 
 		it('should render the unassign inspector check details page', async () => {
-			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
-				id: 1,
-				email: 'caseofficers@planninginspectorate.gov.uk',
-				name: 'standard email'
-			});
-			nock('http://test/')
-				.post(`/appeals/notify-preview/appeal-unassign-inspector.content.md`)
-				.reply(200, unassignEmailTemplate);
 			await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
-				user: '{"id": "0", "name": "Unassign", "email": "Unassign"}'
+				user: '{"id": 0, "name": "Unassign", "email": "Unassign"}'
 			});
 			const response = await request.get(`${baseUrl}/assign-inspector/check-details`);
 			const element = parseHtml(response.text);
@@ -239,7 +214,7 @@ describe('assign-user', () => {
 		it('should redirect to the case details page when user clicks on "Unassign inspector"', async () => {
 			nock('http://test/').patch('/appeals/1').reply(200, { caseOfficer: 'updatedCaseOfficerId' });
 			await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
-				user: '{"id": "0", "name": "Remove", "email": "Remove"}'
+				user: '{"id": 0, "name": "Remove", "email": "Remove"}'
 			});
 			const response = await request.post(`${baseUrl}/assign-inspector/check-details`).send();
 
@@ -248,15 +223,6 @@ describe('assign-user', () => {
 		});
 
 		it('should contain the correct back link url if searching for inspector"', async () => {
-			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
-				id: 1,
-				email: 'caseofficers@planninginspectorate.gov.uk',
-				name: 'standard email'
-			});
-			nock('http://test/')
-				.post(`/appeals/notify-preview/appeal-assign-inspector.content.md`)
-				.reply(200, assignEmailTemplate);
-
 			await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
 				user: '{"id": "923ac03b-9031-4cf4-8b17-348c274321f9", "name": "Smith, John", "email": "John.Smith@planninginspectorate.gov.uk"}'
 			});

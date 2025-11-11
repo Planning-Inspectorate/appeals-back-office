@@ -486,16 +486,8 @@ export const appellantCaseList = {
 		applicationDecisionDate: sub(new Date(), { months: 1 }),
 		applicationDate: sub(new Date(), { weeks: 6 }),
 		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.ADVERTISEMENT,
-		appellantCaseAdvertDetails: {
-			createMany: {
-				data: [
-					{
-						highwayLand: randomBool(),
-						advertInPosition: randomBool()
-					}
-				]
-			}
-		},
+		highwayLand: randomBool(),
+		advertInPosition: randomBool(),
 		landownerPermission: randomBool()
 	},
 	[APPEAL_CASE_TYPE.H]: {
@@ -510,16 +502,8 @@ export const appellantCaseList = {
 		applicationDecisionDate: sub(new Date(), { months: 1 }),
 		applicationDate: sub(new Date(), { weeks: 6 }),
 		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.ADVERTISEMENT,
-		appellantCaseAdvertDetails: {
-			createMany: {
-				data: [
-					{
-						highwayLand: randomBool(),
-						advertInPosition: randomBool()
-					}
-				]
-			}
-		},
+		highwayLand: randomBool(),
+		advertInPosition: randomBool(),
 		landownerPermission: randomBool(),
 		appellantProcedurePreference: randomEnumValue(APPEAL_APPELLANT_PROCEDURE_PREFERENCE),
 		appellantProcedurePreferenceDetails: randomArrayValue([

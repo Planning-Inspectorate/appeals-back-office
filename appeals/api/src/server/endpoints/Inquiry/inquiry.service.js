@@ -331,6 +331,7 @@ const updateInquiry = async (updateInquiryData, notifyClient, appeal, existingAd
 
 		const result = await inquiryRepository.updateInquiryById(inquiryId, updateData);
 
+		// @ts-ignore
 		if (result.address || existingAddressId) {
 			await broadcasters.broadcastEvent(updateData.inquiryId, EVENT_TYPE.INQUIRY, EventType.Update);
 			await sendInquiryDetailsNotifications(

@@ -385,38 +385,6 @@ export const appealsApiClient = {
 		}
 	},
 
-	async reviewStatement(reference) {
-		try {
-			const url = `${baseUrl}appeals/${reference}/review-lpa-statement`;
-			const response = await fetch(url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
-				}
-			});
-			expect(response.status).eq(200);
-		} catch {
-			return false;
-		}
-	},
-
-	async reviewIpComments(reference) {
-		try {
-			const url = `${baseUrl}appeals/${reference}/review-ip-comment`;
-			const response = await fetch(url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
-				}
-			});
-			expect(response.status).eq(200);
-		} catch {
-			return false;
-		}
-	},
-
 	async addEstimate(procedureType, appealId, estimate = null) {
 		try {
 			let requestBody;
@@ -468,7 +436,7 @@ export const appealsApiClient = {
 					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 				},
 				body: JSON.stringify({
-					caseOfficerId: '544f5029-e660-4bc3-81b1-adc19d47e970'
+					caseOfficerId: '13de469c-8de6-4908-97cd-330ea73df618'
 				})
 			});
 			expect(response.status).eq(200);

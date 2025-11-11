@@ -18,8 +18,6 @@ export async function deleteAllRecords(databaseConnector) {
 	const deleteCaseNotes = databaseConnector.caseNote.deleteMany();
 	const deleteUsers = databaseConnector.user.deleteMany();
 	const deleteAddresses = databaseConnector.address.deleteMany();
-	const deleteAppellantCaseAdvertDetails =
-		databaseConnector.appellantCaseAdvertDetails.deleteMany();
 	const deleteAppellantCase = databaseConnector.appellantCase.deleteMany();
 	const deleteAppealStatus = databaseConnector.appealStatus.deleteMany();
 	const deleteAppealTimetable = databaseConnector.appealTimetable.deleteMany();
@@ -110,7 +108,6 @@ export async function deleteAllRecords(databaseConnector) {
 		deleteAppealAllocationLevels,
 		deleteAppealSpecialisms,
 		deleteAppealRelationships,
-		deleteAppellantCaseAdvertDetails,
 		deleteAppellantCaseIncompleteReasonText,
 		deleteAppellantCaseIncompleteReasonOnAppellantCase,
 		deleteAppellantCaseInvalidReasonText,

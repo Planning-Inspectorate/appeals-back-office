@@ -252,48 +252,17 @@ exports[`issue-decision GET /decision Single appeal should render the 'what is t
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="decision-4" name="decision" type="radio"
-                                        value="invalid">
+                                        value="invalid" data-aria-controls="conditional-decision-4">
                                         <label class="govuk-label govuk-radios__label" for="decision-4">Invalid</label>
                                     </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`issue-decision GET /decision-letter should render the decision letter page 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - issue decision</span>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Do you want to issue a decision letter?</h1>
-                                </legend>
-                                <div class="govuk-radios" data-module="govuk-radios">
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="decision-letter" name="decisionLetter"
-                                        type="radio" value="true">
-                                        <label class="govuk-label govuk-radios__label" for="decision-letter">Yes</label>
-                                    </div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="decision-letter-2" name="decisionLetter"
-                                        type="radio" value="false">
-                                        <label class="govuk-label govuk-radios__label" for="decision-letter-2">No</label>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-decision-4">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-label--s" for="invalid-reason">Reason</label>
+                                            <div id="invalid-reason-hint" class="govuk-hint">We will share the reason with the relevant parties</div>
+                                            <textarea class="govuk-textarea"
+                                            id="invalid-reason" name="invalidReason" rows="5" aria-describedby="invalid-reason-hint"></textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </fieldset>
@@ -354,33 +323,6 @@ exports[`issue-decision GET /decision-letter-upload should render the decision l
                         <div class="progress-hook"></div>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`issue-decision GET /invalid-reason should render the invalid reason page 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - issue decision</span>
-            <h1             class="govuk-heading-l">Why is the appeal invalid?</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <div id="invalid-reason-hint" class="govuk-hint">We will share the reason with the relevant parties</div>
-                            <textarea class="govuk-textarea"
-                            id="invalid-reason" name="invalidReason" rows="5" aria-describedby="invalid-reason-hint"></textarea>
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
             </div>
         </div>
     </div>

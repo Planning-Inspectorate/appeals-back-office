@@ -273,11 +273,10 @@ export const happyPathHelper = {
 		};
 
 		if (decision === 'Invalid') {
+			caseDetailsPage.fillTextArea('The appeal is invalid because of X reason', 0);
 			caseDetailsPage.clickButtonByText('Continue');
 			// this is actually choosing not to upload the decision letter for an invalid appeal
 			issueCosts(false);
-			caseDetailsPage.fillTextArea('The appeal is invalid because of X reason', 0);
-			caseDetailsPage.clickButtonByText('Continue');
 		} else {
 			caseDetailsPage.clickButtonByText('Continue');
 			fileUploader.uploadFiles(sampleFiles.pdf);

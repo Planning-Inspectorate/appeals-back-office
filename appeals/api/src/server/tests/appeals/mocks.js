@@ -2,7 +2,6 @@ import {
 	APPEAL_TYPE_SHORTHAND_FPA,
 	APPEAL_TYPE_SHORTHAND_HAS
 } from '@pins/appeals/constants/support.js';
-import advert from './advert.js';
 import has from './has.js';
 import s20 from './s20.js';
 import s78 from './s78.js';
@@ -101,10 +100,6 @@ export const appealS78 = {
 
 export const appealS20 = {
 	...s20
-};
-
-export const appealAdvert = {
-	...advert
 };
 
 export const householdAppeal = {
@@ -285,40 +280,6 @@ export const householdAppeal = {
 		lpaqCreatedDate: new Date(2024, 5, 24),
 		lpaQuestionnaireSubmittedDate: new Date(2024, 5, 24)
 	}
-};
-
-export const advertisementAppeal = {
-	...householdAppeal,
-	id: 7,
-	appealType: {
-		id: 14,
-		type: 'Advertisement',
-		key: 'H'
-	},
-	appellantCase: {
-		...householdAppeal.appellantCase,
-		hasDesignAndAccessStatement: true,
-		hasNewPlansOrDrawings: true
-	}
-};
-
-export const advertisementAppealAppellantCaseIncomplete = {
-	...advertisementAppeal,
-	appellantCase: {
-		...advertisementAppeal.appellantCase,
-		...incompleteAppellantCaseOutcome
-	},
-	id: 8,
-	caseExtensionDate: new Date(2099, 6, 14)
-};
-
-export const advertisementAppealAppellantCaseInvalid = {
-	...advertisementAppeal,
-	appellantCase: {
-		...advertisementAppeal.appellantCase,
-		...invalidAppellantCaseOutcome
-	},
-	id: 4
 };
 
 export const casPlanningAppeal = {

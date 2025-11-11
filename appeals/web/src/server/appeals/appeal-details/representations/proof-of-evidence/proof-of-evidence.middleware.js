@@ -68,12 +68,8 @@ export const addPageContentToLocals = async (req, _res, next) => {
 			pageHeadingTextOverride: 'Received date'
 		},
 		checkYourAnswer: {
-			pageHeadingTextOverride: `Check details and add ${
-				proofOfEvidenceType === 'lpa' ? 'LPA' : 'appellant'
-			} proof of evidence and witnesses`,
-			submitButtonTextOverride: `Add ${
-				proofOfEvidenceType === 'lpa' ? 'LPA' : 'appellant'
-			} proof of evidence and witnesses`,
+			pageHeadingTextOverride: `Check details and add ${proofOfEvidenceType} proof of evidence and witnesses`,
+			submitButtonTextOverride: `Add ${proofOfEvidenceType} proof of evidence and witnesses`,
 			supportingDocumentTextOverride: 'Proof of evidence and witnesses',
 			dateSubmittedTextOverride: 'Date received'
 		},

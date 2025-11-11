@@ -61,76 +61,6 @@ export const validAppellantCase = {
 	]
 };
 
-export const validAppellantCaseAdverts = {
-	casedata: {
-		submissionId: '14960baa-3d0f-4db9-9e84-0c75be891560',
-		advertisedAppeal: true,
-		appellantCostsAppliedFor: false,
-		appellantProcedurePreference: 'inquiry',
-		appellantProcedurePreferenceDetails: 'Reason for preference',
-		appellantProcedurePreferenceDuration: 3,
-		appellantProcedurePreferenceWitnessCount: 2,
-		applicationDate: '2024-01-01T00:00:00.000Z',
-		applicationDecision: 'refused',
-		applicationDecisionDate: '2024-01-01T00:00:00.000Z',
-		applicationReference: '123',
-		caseProcedure: 'written',
-		caseSubmissionDueDate: '2024-03-25T23:59:59.999Z',
-		caseSubmittedDate: '2024-03-25T23:59:59.999Z',
-		caseType: 'H',
-		changedDevelopmentDescription: false,
-		enforcementNotice: false,
-		floorSpaceSquareMetres: 22,
-		knowsAllOwners: 'Some',
-		knowsOtherOwners: 'Some',
-		lpaCode: 'Q9999',
-		isGreenBelt: false,
-		nearbyCaseReferences: ['1000000'],
-		neighbouringSiteAddresses: [],
-		originalDevelopmentDescription: 'A test description',
-		ownersInformed: true,
-		ownsAllLand: true,
-		ownsSomeLand: true,
-		siteAccessDetails: ['Come and see'],
-		siteAreaSquareMetres: 22,
-		siteSafetyDetails: ["It's dangerous"],
-		advertDetails: [
-			{
-				advertType: null,
-				isAdvertInPosition: true,
-				isSiteOnHighwayLand: true
-			}
-		],
-		hasLandownersPermission: true,
-		siteGridReferenceEasting: '012345',
-		siteGridReferenceNorthing: '678910'
-	},
-	documents: [
-		{
-			dateCreated: '2024-03-01T13:48:35.847Z',
-			documentId: '001',
-			documentType: 'appellantCostsApplication',
-			documentURI:
-				'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
-			filename: 'img1.jpg',
-			mime: 'image/jpeg',
-			originalFilename: 'oimg.jpg',
-			size: 10293
-		}
-	],
-	users: [
-		{
-			emailAddress: 'test@test.com',
-			firstName: 'Testy',
-			lastName: 'McTest',
-			salutation: 'Mr',
-			serviceUserType: 'Appellant',
-			organisation: 'A company',
-			telephoneNumber: '0123456789'
-		}
-	]
-};
-
 export const validAppellantCaseCasAdverts = {
 	casedata: {
 		submissionId: '14960baa-3d0f-4db9-9e84-0c75be891560',
@@ -160,13 +90,8 @@ export const validAppellantCaseCasAdverts = {
 		siteAccessDetails: ['Come and see'],
 		siteAreaSquareMetres: 22,
 		siteSafetyDetails: ["It's dangerous"],
-		advertDetails: [
-			{
-				advertType: null,
-				isAdvertInPosition: true,
-				isSiteOnHighwayLand: true
-			}
-		],
+		isAdvertInPosition: true,
+		isSiteOnHighwayLand: true,
 		hasLandownersPermission: true,
 		siteGridReferenceEasting: '012345',
 		siteGridReferenceNorthing: '678910'
@@ -394,54 +319,6 @@ export const validLpaQuestionnaireS20 = {
 	documents: validLpaQuestionnaireS78.documents
 };
 
-export const validLpaQuestionnaireAdverts = {
-	casedata: {
-		...validLpaQuestionnaireCommon.casedata,
-		...validLpaQuestionnaireHas.casedata,
-		caseType: 'H',
-		changedListedBuildingNumbers: ['10023', '17824'],
-		designatedSitesNames: ['SSSI'],
-		affectsScheduledMonument: true,
-		hasProtectedSpecies: true,
-		isAonbNationalLandscape: true,
-		hasEmergingPlan: true,
-		hasStatutoryConsultees: true,
-		consultedBodiesDetails: '',
-		lpaProcedurePreference: 'written',
-		lpaProcedurePreferenceDetails: '',
-		lpaProcedurePreferenceDuration: 1,
-		siteWithinSSSI: true,
-		designatedSiteNameCustom: '',
-		isSiteInAreaOfSpecialControlAdverts: true,
-		wasApplicationRefusedDueToHighwayOrTraffic: true,
-		didAppellantSubmitCompletePhotosAndPlans: true
-	},
-	documents: [
-		{
-			dateCreated: '2024-03-01T13:48:35.847Z',
-			documentId: '001',
-			documentType: 'lpaCostsWithdrawal',
-			documentURI:
-				'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
-			filename: 'img2.jpg',
-			mime: 'image/jpeg',
-			originalFilename: 'oimg.jpg',
-			size: 10293
-		},
-		{
-			dateCreated: '2024-03-01T13:48:35.847Z',
-			documentId: '001',
-			documentType: 'lpaCostsApplication',
-			documentURI:
-				'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
-			filename: 'img3.jpg',
-			mime: 'image/jpeg',
-			originalFilename: 'oimg.jpg',
-			size: 10293
-		}
-	]
-};
-
 export const validLpaQuestionnaireCasAdverts = {
 	casedata: {
 		...validLpaQuestionnaireCommon.casedata,
@@ -638,92 +515,6 @@ export const appealIngestionInput = {
 	}
 };
 
-export const appealIngestionInputAdverts = {
-	appealType: {
-		connect: {
-			key: 'H'
-		}
-	},
-	appellant: {
-		create: {
-			organisationName: 'A company',
-			salutation: 'Mr',
-			firstName: 'Testy',
-			lastName: 'McTest',
-			email: 'test@test.com',
-			webAddress: undefined,
-			phoneNumber: '0123456789',
-			otherPhoneNumber: undefined,
-			faxNumber: undefined
-		}
-	},
-	agent: {
-		create: undefined
-	},
-	lpa: {
-		connect: {
-			lpaCode: 'Q9999'
-		}
-	},
-	applicationReference: '123',
-	appellantCase: {
-		create: {
-			appellantProcedurePreference: 'inquiry',
-			appellantProcedurePreferenceDetails: 'Reason for preference',
-			appellantProcedurePreferenceDuration: 3,
-			appellantProcedurePreferenceWitnessCount: 2,
-			applicationDate: '2024-01-01T00:00:00.000Z',
-			applicationDecision: 'refused',
-			applicationDecisionDate: '2024-01-01T00:00:00.000Z',
-			caseSubmittedDate: '2024-03-25T23:59:59.999Z',
-			caseSubmissionDueDate: '2024-03-25T23:59:59.999Z',
-			siteAccessDetails: 'Come and see',
-			siteSafetyDetails: "It's dangerous",
-			siteAreaSquareMetres: 22,
-			floorSpaceSquareMetres: 22,
-			ownsAllLand: true,
-			ownsSomeLand: true,
-			hasAdvertisedAppeal: true,
-			appellantCostsAppliedFor: false,
-			originalDevelopmentDescription: 'A test description',
-			changedDevelopmentDescription: false,
-			ownersInformed: true,
-			siteGridReferenceEasting: '012345',
-			siteGridReferenceNorthing: '678910',
-			appellantCaseAdvertDetails: {
-				createMany: {
-					data: [
-						{
-							advertInPosition: true,
-							highwayLand: true
-						}
-					]
-				}
-			},
-			landownerPermission: true,
-			knowsAllOwners: {
-				connect: {
-					key: 'Some'
-				}
-			},
-			knowsOtherOwners: {
-				connect: {
-					key: 'Some'
-				}
-			},
-			isGreenBelt: false
-		}
-	},
-	neighbouringSites: {
-		create: []
-	},
-	folders: {
-		create: FOLDERS.map((/** @type {{ path: string; }} */ f) => {
-			return { path: f };
-		})
-	}
-};
-
 export const appealIngestionInputCasAdverts = {
 	appealType: {
 		connect: {
@@ -772,16 +563,8 @@ export const appealIngestionInputCasAdverts = {
 			ownersInformed: true,
 			siteGridReferenceEasting: '012345',
 			siteGridReferenceNorthing: '678910',
-			appellantCaseAdvertDetails: {
-				createMany: {
-					data: [
-						{
-							advertInPosition: true,
-							highwayLand: true
-						}
-					]
-				}
-			},
+			advertInPosition: true,
+			highwayLand: true,
 			landownerPermission: true,
 			knowsAllOwners: {
 				connect: {
@@ -1139,71 +922,6 @@ export const validLpaQuestionnaireIngestionHas = {
 	},
 	where: {
 		id: 100
-	}
-};
-
-export const validLpaQuestionnaireIngestionAdvert = {
-	...validLpaQuestionnaireIngestionCommon,
-	...validLpaQuestionnaireIngestionHas,
-	data: {
-		...validLpaQuestionnaireIngestionCommon.data,
-		...validLpaQuestionnaireIngestionHas.data,
-		lpaQuestionnaire: {
-			...validLpaQuestionnaireIngestionCommon.data.lpaQuestionnaire,
-			...validLpaQuestionnaireIngestionHas.data.lpaQuestionnaire,
-			connectOrCreate: {
-				...validLpaQuestionnaireIngestionCommon.data.lpaQuestionnaire.connectOrCreate,
-				...validLpaQuestionnaireIngestionHas.data.lpaQuestionnaire.connectOrCreate,
-				create: {
-					...validLpaQuestionnaireIngestionCommon.data.lpaQuestionnaire.connectOrCreate.create,
-					...validLpaQuestionnaireIngestionHas.data.lpaQuestionnaire.connectOrCreate.create,
-					affectsScheduledMonument: true,
-					hasProtectedSpecies: true,
-					isAonbNationalLandscape: true,
-					hasEmergingPlan: true,
-					designatedSiteNames: {
-						create: [
-							{
-								designatedSite: {
-									connect: {
-										key: 'SSSI'
-									}
-								}
-							}
-						]
-					},
-					listedBuildingDetails: {
-						create: [
-							{
-								affectsListedBuilding: true,
-								listEntry: '10001'
-							},
-							{
-								affectsListedBuilding: true,
-								listEntry: '10002'
-							},
-							{
-								affectsListedBuilding: false,
-								listEntry: '10023'
-							},
-							{
-								affectsListedBuilding: false,
-								listEntry: '17824'
-							}
-						]
-					},
-					designatedSiteNameCustom: undefined,
-					hasStatutoryConsultees: true,
-					consultedBodiesDetails: '',
-					lpaProcedurePreference: 'written',
-					lpaProcedurePreferenceDetails: '',
-					lpaProcedurePreferenceDuration: 1,
-					isSiteInAreaOfSpecialControlAdverts: true,
-					wasApplicationRefusedDueToHighwayOrTraffic: true,
-					didAppellantSubmitCompletePhotosAndPlans: true
-				}
-			}
-		}
 	}
 };
 

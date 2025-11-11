@@ -15,11 +15,8 @@ export const mapAppellantCase = (data) => {
 
 	return {
 		...mapAppellantCaseSharedFields(data),
-		advertDetails: casedata?.appellantCaseAdvertDetails?.map((advert) => ({
-			advertType: null,
-			isAdvertInPosition: advert.advertInPosition ?? null,
-			isSiteOnHighwayLand: advert.highwayLand ?? null
-		})),
+		isAdvertInPosition: casedata?.advertInPosition ?? null,
+		isSiteOnHighwayLand: casedata?.highwayLand ?? null,
 		hasLandownersPermission: casedata?.landownerPermission ?? null
 	};
 };

@@ -356,22 +356,6 @@ Cypress.Commands.add('addInquiryViaApi', (caseObj, date, propertyOverrides = {})
 	});
 });
 
-Cypress.Commands.add('reviewStatementViaApi', (caseObj) => {
-	return cy.wrap(null).then(async () => {
-		await appealsApiClient.reviewStatement(caseObj.reference);
-		cy.log('Reviewed lpa statement for case ref ' + caseObj.reference);
-		return;
-	});
-});
-
-Cypress.Commands.add('reviewIpCommentsViaApi', (caseObj) => {
-	return cy.wrap(null).then(async () => {
-		await appealsApiClient.reviewIpComments(caseObj.reference);
-		cy.log('Reviewed IP comments for case ref ' + caseObj.reference);
-		return;
-	});
-});
-
 Cypress.Commands.add('addEstimateViaApi', (procedureType, caseObj, estimate = null) => {
 	return cy.wrap(null).then(async () => {
 		const details = await appealsApiClient.loadCaseDetails(caseObj.reference);

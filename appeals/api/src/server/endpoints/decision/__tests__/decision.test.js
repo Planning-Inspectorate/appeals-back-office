@@ -297,13 +297,8 @@ describe('decision routes', () => {
 			expect(response.status).toEqual(201);
 		});
 
-		test.each([
-			['householdAppeal', householdAppeal],
-			['casPlanningAppeal', casPlanningAppeal],
-			['casAdvertAppeal', casAdvertAppeal],
-			['fullPlanningAppeal', fullPlanningAppeal],
-			['listedBuildingAppeal', listedBuildingAppeal]
-		])('returns 200 when only issuing appellant costs decisions (%s)', async (_, appeal) => {
+		test('returns 200 when only issuing appellant costs decisions', async () => {
+			const appeal = structuredClone(householdAppeal);
 			const correctAppealState = {
 				...appeal,
 				appealStatus: [

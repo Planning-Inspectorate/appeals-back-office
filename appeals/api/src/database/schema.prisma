@@ -316,9 +316,9 @@ model AppellantCase {
   typeOfPlanningApplication                String?
 
   //Cas adverts fields
+  highwayLand         Boolean?
+  advertInPosition    Boolean?
   landownerPermission Boolean?
-
-  appellantCaseAdvertDetails AppellantCaseAdvertDetails[]
 }
 
 /// AppellantCaseValidationOutcome model
@@ -926,29 +926,4 @@ model PersonalList {
   appeal       Appeal    @relation("appeal", fields: [appealId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([dueDate, leadAppealId, linkType(sort: Desc), appealId])
-}
-
-/// AppellantCaseAdvertDetails model
-model AppellantCaseAdvertDetails {
-  id Int @id @default(autoincrement())
-
-  appellantCaseId Int
-  appellantCase   AppellantCase @relation(fields: [appellantCaseId], references: [id])
-
-  advertTypeId Int?
-  advertType   AdvertType? @relation(fields: [advertTypeId], references: [id])
-
-  advertInPosition Boolean /// Is the advertisement in position
-  highwayLand      Boolean /// Is the site on highway land
-
-  @@index([advertTypeId])
-  @@index([appellantCaseId])
-}
-
-/// AdvertType model
-model AdvertType {
-  id   Int    @id
-  name String @unique
-
-  appealAdvertDetails AppellantCaseAdvertDetails[]
 }

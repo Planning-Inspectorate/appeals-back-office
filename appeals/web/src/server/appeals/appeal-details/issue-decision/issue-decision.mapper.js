@@ -10,6 +10,7 @@ import {
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-handlers.js';
 import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 import { preHeadingText } from '#lib/mappers/utils/appeal-preheading.js';
@@ -135,7 +136,30 @@ export function issueDecisionPage(
 		items.push({
 			value: CASE_OUTCOME_INVALID,
 			text: toSentenceCase(CASE_OUTCOME_INVALID),
-			checked: inspectorDecision?.outcome === CASE_OUTCOME_INVALID
+			checked: inspectorDecision?.outcome === CASE_OUTCOME_INVALID,
+			// @ts-ignore
+			conditional: {
+				html: renderPageComponentsToHtml([
+					{
+						type: 'textarea',
+						parameters: {
+							name: 'invalidReason',
+							id: 'invalid-reason',
+							value: inspectorDecision?.invalidReason ?? '',
+							label: {
+								text: 'Reason',
+								classes: 'govuk-label--s'
+							},
+							hint: { text: 'We will share the reason with the relevant parties' },
+							errorMessage: errors?.invalidReason
+								? {
+										text: errors?.invalidReason.msg
+								  }
+								: null
+						}
+					}
+				])
+			}
 		});
 	}
 
@@ -187,7 +211,7 @@ export function decisionLetterPage(appealDetails, decisionLetter, backLinkUrl, e
 		type: 'radios',
 		parameters: {
 			name: 'decisionLetter',
-			idPrefix: 'decision-letter',
+			idPrefix: 'appellant-costs-decision',
 			fieldset: {
 				legend: {
 					text: 'Do you want to issue a decision letter?',
@@ -365,11 +389,27 @@ function checkAndConfirmPageRows(appealData, request) {
 
 	if (inspectorDecision) {
 		if (inspectorDecision.outcome) {
+			let invalidReasonHtml = inspectorDecision.invalidReason ? `Reason: ` : '';
+			if (invalidReasonHtml) {
+				invalidReasonHtml = renderPageComponentsToHtml([
+					{
+						type: 'show-more',
+						parameters: {
+							text: `${invalidReasonHtml}${inspectorDecision.invalidReason}`,
+							maximumBeforeHiding: invalidReasonHtml.length + LENGTH_300, // 300 being the maximum length of the invalid reason before hiding
+							toggleTextCollapsed: 'Show more',
+							toggleTextExpanded: 'Show less'
+						}
+					}
+				]);
+			}
 			rows.push({
 				key: childDecisionsExist
 					? `Decision for lead appeal ${appealShortReference(appealData.appealReference)}`
 					: 'Decision',
-				html: toSentenceCase(inspectorDecision.outcome),
+				html: `${toSentenceCase(inspectorDecision.outcome)}${
+					invalidReasonHtml ? `<br><br>${invalidReasonHtml}` : ''
+				}`,
 				actions: [
 					{
 						text: 'Change',
@@ -412,31 +452,6 @@ function checkAndConfirmPageRows(appealData, request) {
 						text: 'Change',
 						href: addBackLinkQueryToUrl(request, `${baseRoute}/decision-letter`),
 						visuallyHiddenText: 'decision letter'
-					}
-				]
-			});
-		}
-
-		if (inspectorDecision.invalidReason) {
-			const invalidReasonHtml = renderPageComponentsToHtml([
-				{
-					type: 'show-more',
-					parameters: {
-						text: inspectorDecision.invalidReason,
-						maximumBeforeHiding: LENGTH_300, // 300 being the maximum length of the invalid reason before hiding
-						toggleTextCollapsed: 'Show more',
-						toggleTextExpanded: 'Show less'
-					}
-				}
-			]);
-			rows.push({
-				key: 'Why is the appeal invalid?',
-				html: invalidReasonHtml,
-				actions: [
-					{
-						text: 'Change',
-						href: addBackLinkQueryToUrl(request, `${baseRoute}/invalid-reason`),
-						visuallyHiddenText: 'invalid reason'
 					}
 				]
 			});
@@ -775,41 +790,126 @@ export function viewDecisionPage(appealData, request, latestDecsionDocumentText)
 
 /**
  *
- * @param {Appeal} appealDetails
+ * @param {Appeal} appealData
  * @param {String} invalidReason
- * @param {string|undefined} backLinkUrl
- * @param {any} errors
  * @returns {PageContent}
  */
-export function invalidReasonPage(appealDetails, invalidReason, backLinkUrl, errors) {
+export function invalidReasonPage(appealData, invalidReason) {
 	const title = 'Why is the appeal invalid?';
 
 	/** @type {PageComponent} */
 	const invalidReasonComponent = {
-		type: 'textarea',
+		type: 'character-count',
 		parameters: {
-			name: 'invalidReason',
-			id: 'invalid-reason',
-			value: invalidReason ?? '',
-			hint: { text: 'We will share the reason with the relevant parties' },
-			errorMessage: errors?.invalidReason
-				? {
-						text: errors?.invalidReason.msg
-				  }
-				: null
+			id: 'decision-invalid-reason',
+			name: 'decisionInvalidReason',
+			rows: '15',
+			maxlength: 1000,
+			value: invalidReason || '',
+			hint: {
+				text: 'This information will be shared with all parties.'
+			}
 		}
 	};
-
-	const shortAppealReference = appealShortReference(appealDetails.appealReference);
-
-	/** @type {PageContent} */
-	const pageContent = {
-		title: `Do you want to issue a decision letter? - ${shortAppealReference}`,
-		backLinkUrl,
-		preHeading: preHeadingText(appealDetails, 'issue decision'),
+	return {
+		title,
+		backLinkUrl: `${baseUrl(appealData)}/decision`,
+		backLinkText: 'Back',
+		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
 		pageComponents: [invalidReasonComponent]
 	};
+}
+
+/**
+ * @param {Request} request
+ * @param {Appeal} appealData
+ * @returns {PageContent}
+ */
+export function checkAndConfirmInvalidPage(request, appealData) {
+	const decisionOutcome = 'Invalid';
+
+	/** @type {PageComponent} */
+	const summaryListComponent = {
+		type: 'summary-list',
+		parameters: {
+			rows: [
+				{
+					key: {
+						text: 'Decision'
+					},
+					value: {
+						text: decisionOutcome
+					},
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: `${baseUrl(appealData)}/decision`,
+								visuallyHiddenText: 'decision'
+							}
+						]
+					}
+				},
+				{
+					key: {
+						text: 'Reasons'
+					},
+					value: {
+						html: displayPageFormatter.formatFreeTextForDisplay(request.session.invalidReason)
+					},
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: `${baseUrl(appealData)}/invalid-reason`,
+								visuallyHiddenText: 'invalid reasons'
+							}
+						]
+					}
+				}
+			]
+		}
+	};
+
+	/** @type {PageComponent} */
+	const warningTextComponent = {
+		type: 'warning-text',
+		parameters: {
+			text: 'You are about to send the decision to relevant parties and close the appeal. Make sure you have reviewed the decision information.'
+		}
+	};
+
+	/** @type {PageComponent} */
+	const insetConfirmComponent = {
+		type: 'checkboxes',
+		parameters: {
+			name: 'ready-to-send',
+			idPrefix: 'ready-to-send',
+			items: [
+				{
+					text: 'This decision is ready to be sent to the relevant parties',
+					value: 'yes',
+					checked: false
+				}
+			]
+		}
+	};
+
+	const title = 'Check your answers';
+	const pageContent = {
+		title,
+		backLinkUrl: `${baseUrl(appealData)}/invalid-reason`,
+		backLinkText: 'Back',
+		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
+		heading: title,
+		submitButtonText: 'Issue decision',
+		pageComponents: [summaryListComponent, warningTextComponent, insetConfirmComponent]
+	};
+
+	if (pageContent.pageComponents) {
+		preRenderPageComponents(pageContent.pageComponents);
+	}
 
 	return pageContent;
 }

@@ -2300,6 +2300,71 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/inspector-decision-invalid": {
+			"post": {
+				"tags": ["Inspector Decision"],
+				"description": "Closes an appeal by setting the inspector decision as Invalid",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Gets the Invalid decision info or null",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/InvalidDecisionInfo"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/InvalidDecisionInfo"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Invalid decision info",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/InvalidDecisionInfo"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/InvalidDecisionInfo"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/appellant-cases/{appellantCaseId}": {
 			"get": {
 				"tags": ["Appellant Cases"],
@@ -10241,25 +10306,13 @@
 			"UpdateCaseTeamRequest": {
 				"type": "object",
 				"properties": {
-					"caseOfficerId": {
+					"caseOfficer": {
 						"type": "string",
 						"example": "13de469c-8de6-4908-97cd-330ea73df618"
 					},
-					"caseOfficerName": {
-						"type": "string",
-						"example": "John Smith"
-					},
-					"inspectorId": {
+					"inspector": {
 						"type": "string",
 						"example": "f7ea429b-65d8-4c44-8fc2-7f1a34069855"
-					},
-					"inspectorName": {
-						"type": "string",
-						"example": "John Smith"
-					},
-					"prevUserName": {
-						"type": "string",
-						"example": "John Smith Jr"
 					}
 				},
 				"xml": {
@@ -10269,11 +10322,11 @@
 			"UpdateCaseTeamResponse": {
 				"type": "object",
 				"properties": {
-					"caseOfficerId": {
+					"caseOfficer": {
 						"type": "string",
 						"example": "13de469c-8de6-4908-97cd-330ea73df618"
 					},
-					"inspectorId": {
+					"inspector": {
 						"type": "string",
 						"example": "f7ea429b-65d8-4c44-8fc2-7f1a34069855"
 					}

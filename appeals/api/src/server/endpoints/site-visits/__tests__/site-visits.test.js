@@ -21,7 +21,6 @@ import { request } from '../../../app-test.js';
 import { formatAddressSingleLine } from '../../addresses/addresses.formatter.js';
 
 import {
-	advertisementAppeal as advertisementAppealData,
 	appealS78,
 	casAdvertAppeal as casAdvertAppealData,
 	casPlanningAppeal as casPlanningAppealData,
@@ -391,7 +390,6 @@ describe('site visit routes', () => {
 
 			describe.each([
 				['householdAppeal', householdAppealData],
-				['advertisementAppeal', advertisementAppealData],
 				['casPlanningAppeal', casPlanningAppealData],
 				['casAdvertAppeal', casAdvertAppealData],
 				['fullPlanningAppeal', fullPlanningAppealData],
@@ -1581,7 +1579,6 @@ describe('site visit routes', () => {
 
 			describe.each([
 				['householdAppeal', householdAppealData],
-				['advertisementAppeal', advertisementAppealData],
 				['casPlanningAppeal', casPlanningAppealData],
 				['casAdvertAppeal', casAdvertAppealData],
 				['fullPlanningAppeal', fullPlanningAppealData],

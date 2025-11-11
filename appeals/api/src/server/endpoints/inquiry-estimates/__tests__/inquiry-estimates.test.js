@@ -245,12 +245,6 @@ describe('appeal inquiry estimates routes', () => {
 					reportingTime: validInquiryEstimate.reportingTime
 				}
 			});
-			expect(mockBroadcasters.broadcastEventEstimates).toHaveBeenCalledWith(
-				1,
-				'inquiry',
-				'Create',
-				null
-			);
 		});
 
 		test('returns 200 when updating a inquiry estimate with valid values', async () => {
@@ -275,12 +269,6 @@ describe('appeal inquiry estimates routes', () => {
 					reportingTime: validInquiryEstimate.reportingTime
 				}
 			});
-			expect(mockBroadcasters.broadcastEventEstimates).toHaveBeenCalledWith(
-				1,
-				'inquiry',
-				'Update',
-				null
-			);
 		});
 
 		test('returns 200 when deleting a inquiry estimate', async () => {
@@ -299,12 +287,6 @@ describe('appeal inquiry estimates routes', () => {
 			expect(databaseConnector.inquiryEstimate.delete).toHaveBeenCalledWith({
 				where: { appealId: householdAppeal.id }
 			});
-			expect(mockBroadcasters.broadcastEventEstimates).toHaveBeenCalledWith(
-				1,
-				'inquiry',
-				'Delete',
-				appealWithInquiryEstimate.inquiryEstimate
-			);
 		});
 	});
 });

@@ -35,9 +35,9 @@ const {
 /** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
 /** @typedef {import('@pins/appeals.api').Appeals.AssignedUser} AssignedUser */
 /** @typedef {import('@pins/appeals.api').Api.Team} UsersToAssign */
+/** @typedef {import('@pins/appeals.api').Api.TeamV2} UserNamesToAssign */
 /** @typedef {import('@pins/appeals.api').Api.Appeal} AppealDto */
 /** @typedef {import('#mappers/mapper-factory.js').MapResult} MapResult */
-/** @typedef {{ caseOfficerName: string | undefined, inspectorName: string | undefined, prevUserName: string | undefined }} UserNamesToAssign */
 
 /**
  *

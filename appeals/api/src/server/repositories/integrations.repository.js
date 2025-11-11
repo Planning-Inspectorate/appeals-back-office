@@ -26,55 +26,45 @@ export const createAppeal = async (
 	relatedReferences,
 	appellantProcedurePreference
 ) => {
-	const transaction = await databaseConnector.$transaction(
-		async (tx) => {
-			let appeal = await tx.appeal.create({ data });
-			const reference = createAppealReference(appeal.id).toString();
+	const transaction = await databaseConnector.$transaction(async (tx) => {
+		let appeal = await tx.appeal.create({ data });
+		const reference = createAppealReference(appeal.id).toString();
 
-			const inquiryProcedureTypeId = PROCEDURE_TYPE_ID_MAP['inquiry'];
-			const appellantSelectedProcedureType =
-				PROCEDURE_TYPE_ID_MAP[appellantProcedurePreference || 'written'];
+		const inquiryProcedureTypeId = PROCEDURE_TYPE_ID_MAP['inquiry'];
+		const appellantSelectedProcedureType =
+			PROCEDURE_TYPE_ID_MAP[appellantProcedurePreference || 'written'];
 
-			const teamId =
-				appellantSelectedProcedureType == inquiryProcedureTypeId
-					? await getTeamIdFromName(TEAM_NAME_MAP.MAJOR_CASEWORK)
-					: await getTeamIdFromLpaCode(data.lpa.connect?.lpaCode || '');
+		const teamId =
+			appellantSelectedProcedureType == inquiryProcedureTypeId
+				? await getTeamIdFromName(TEAM_NAME_MAP.MAJOR_CASEWORK)
+				: await getTeamIdFromLpaCode(data.lpa.connect?.lpaCode || '');
 
-			appeal = await tx.appeal.update({
-				where: { id: appeal.id },
-				data: {
-					reference,
-					appealStatus: {
-						create: {
-							status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
-							createdAt: new Date().toISOString()
-						}
-					},
-					assignedTeamId: teamId
-				}
-			});
+		appeal = await tx.appeal.update({
+			where: { id: appeal.id },
+			data: {
+				reference,
+				appealStatus: {
+					create: {
+						status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+						createdAt: new Date().toISOString()
+					}
+				},
+				assignedTeamId: teamId
+			}
+		});
 
-			const documentVersions = await setDocumentVersions(
-				tx,
-				appeal.id,
-				appeal.reference,
-				documents
-			);
-			await setAppealRelationships(tx, appeal.id, appeal.reference, relatedReferences);
+		const documentVersions = await setDocumentVersions(tx, appeal.id, appeal.reference, documents);
+		await setAppealRelationships(tx, appeal.id, appeal.reference, relatedReferences);
 
-			const appealDetails = await tx.appeal.findUnique({
-				where: { id: appeal.id }
-			});
+		const appealDetails = await tx.appeal.findUnique({
+			where: { id: appeal.id }
+		});
 
-			return {
-				appeal: appealDetails,
-				documentVersions
-			};
-		},
-		{
-			timeout: 10000 // default: 5000
-		}
-	);
+		return {
+			appeal: appealDetails,
+			documentVersions
+		};
+	});
 
 	// @ts-ignore
 	return transaction;
@@ -94,52 +84,42 @@ export const createOrUpdateLpaQuestionnaire = async (
 	documents,
 	relatedReferences
 ) => {
-	const transaction = await databaseConnector.$transaction(
-		async (tx) => {
-			let appeal = await tx.appeal.findUnique({
-				where: { reference: caseReference }
-			});
+	const transaction = await databaseConnector.$transaction(async (tx) => {
+		let appeal = await tx.appeal.findUnique({
+			where: { reference: caseReference }
+		});
 
-			if (!appeal) {
-				return null;
-			}
-
-			// @ts-ignore
-			const { neighbouringSites, ...metadata } = data;
-			appeal = await tx.appeal.update({
-				where: { id: appeal.id },
-				data: {
-					lpaQuestionnaire: {
-						connectOrCreate: {
-							where: { appealId: appeal.id },
-							create: metadata
-						}
-					},
-					neighbouringSites
-				}
-			});
-
-			const documentVersions = await setDocumentVersions(
-				tx,
-				appeal.id,
-				appeal.reference,
-				documents
-			);
-			await setAppealRelationships(tx, appeal.id, appeal.reference, relatedReferences);
-
-			appeal = await tx.appeal.findUnique({
-				where: { id: appeal.id }
-			});
-
-			return {
-				appeal,
-				documentVersions
-			};
-		},
-		{
-			timeout: 10000 // default: 5000
+		if (!appeal) {
+			return null;
 		}
-	);
+
+		// @ts-ignore
+		const { neighbouringSites, ...metadata } = data;
+		appeal = await tx.appeal.update({
+			where: { id: appeal.id },
+			data: {
+				lpaQuestionnaire: {
+					connectOrCreate: {
+						where: { appealId: appeal.id },
+						create: metadata
+					}
+				},
+				neighbouringSites
+			}
+		});
+
+		const documentVersions = await setDocumentVersions(tx, appeal.id, appeal.reference, documents);
+		await setAppealRelationships(tx, appeal.id, appeal.reference, relatedReferences);
+
+		appeal = await tx.appeal.findUnique({
+			where: { id: appeal.id }
+		});
+
+		return {
+			appeal,
+			documentVersions
+		};
+	});
 
 	return transaction;
 };
@@ -152,34 +132,29 @@ export const createOrUpdateLpaQuestionnaire = async (
  * @returns {Promise<{rep: Representation, documentVersions: DocumentVersion[]}>}
  */
 export const createRepresentation = async (appeal, data, attachments) => {
-	const transaction = await databaseConnector.$transaction(
-		async (tx) => {
-			const rep = await tx.representation.create({
-				data: {
-					...data,
-					appeal: {
-						connect: { id: appeal.id }
-					}
+	const transaction = await databaseConnector.$transaction(async (tx) => {
+		const rep = await tx.representation.create({
+			data: {
+				...data,
+				appeal: {
+					connect: { id: appeal.id }
 				}
-			});
+			}
+		});
 
-			const documentVersions = await setDocumentVersions(
-				tx,
-				appeal.id,
-				appeal.reference,
-				attachments
-			);
-			await attachToRepresentation(tx, rep.id, documentVersions);
+		const documentVersions = await setDocumentVersions(
+			tx,
+			appeal.id,
+			appeal.reference,
+			attachments
+		);
+		await attachToRepresentation(tx, rep.id, documentVersions);
 
-			return {
-				rep,
-				documentVersions
-			};
-		},
-		{
-			timeout: 10000 // default: 5000
-		}
-	);
+		return {
+			rep,
+			documentVersions
+		};
+	});
 
 	return transaction;
 };

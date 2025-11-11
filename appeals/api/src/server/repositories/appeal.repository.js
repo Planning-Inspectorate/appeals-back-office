@@ -37,7 +37,7 @@ const linkedAppealsInclude = isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)
 			appealType: true
 	  };
 
-export const appealDetailsInclude = /** @type {const} */ {
+const appealDetailsInclude = {
 	address: true,
 	procedureType: true,
 	parentAppeals: {
@@ -79,8 +79,7 @@ export const appealDetailsInclude = /** @type {const} */ {
 			},
 			appellantCaseValidationOutcome: true,
 			knowsOtherOwners: true,
-			knowsAllOwners: true,
-			appellantCaseAdvertDetails: true
+			knowsAllOwners: true
 		}
 	},
 	appellant: true,
@@ -157,50 +156,16 @@ export const appealDetailsInclude = /** @type {const} */ {
 };
 
 /**
- * Build obj to include for an appeal
- *
- * @template {keyof typeof appealDetailsInclude} K
- *
- * @param {K[]} selectedKeys
- * @param {boolean} [includeDetails]
- * @returns {Pick<typeof appealDetailsInclude, K> | typeof appealDetailsInclude | null}
- */
-export const buildAppealInclude = (selectedKeys = [], includeDetails = true) => {
-	if (!includeDetails) {
-		// Only return appeal details
-		return null;
-	}
-
-	if (!selectedKeys.length) {
-		// Return everything if no keys are selected
-		return appealDetailsInclude;
-	}
-
-	/** @type {Partial<typeof appealDetailsInclude>} */
-	const include = {};
-	for (const key of selectedKeys) {
-		include[key] = appealDetailsInclude[key];
-	}
-
-	return /** @type {Pick<typeof appealDetailsInclude, K>} */ (include);
-};
-
-/**
- * @template {keyof typeof appealDetailsInclude} K
- *
  * @param {number} id
  * @param {boolean} [includeDetails]
- * @param {K[]} selectedKeys
  * @returns {Promise<Appeal|undefined>}
  */
-const getAppealById = async (id, includeDetails = true, selectedKeys = []) => {
-	const include = buildAppealInclude(selectedKeys, includeDetails);
-
+const getAppealById = async (id, includeDetails = true) => {
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: {
 			id
 		},
-		include
+		include: includeDetails ? appealDetailsInclude : null
 	});
 	if (appeal) {
 		// @ts-ignore

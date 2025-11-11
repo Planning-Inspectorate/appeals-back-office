@@ -58,14 +58,14 @@ export const getEnabledAppealCaseTypes = () => {
 	if (isAppealCaseTypeEnabled(APPEAL_CASE_TYPE.Y)) {
 		enabledAppeals.push(APPEAL_CASE_TYPE.Y);
 	}
-	if (isAppealCaseTypeEnabled(APPEAL_CASE_TYPE.H)) {
-		enabledAppeals.push(APPEAL_CASE_TYPE.H);
-	}
 	if (isAppealCaseTypeEnabled(APPEAL_CASE_TYPE.ZA)) {
 		enabledAppeals.push(APPEAL_CASE_TYPE.ZA);
 	}
 	if (isAppealCaseTypeEnabled(APPEAL_CASE_TYPE.ZP)) {
 		enabledAppeals.push(APPEAL_CASE_TYPE.ZP);
+	}
+	if (isAppealCaseTypeEnabled(APPEAL_CASE_TYPE.H)) {
+		enabledAppeals.push(APPEAL_CASE_TYPE.H);
 	}
 	if (isAppealCaseTypeEnabled(APPEAL_CASE_TYPE.C)) {
 		enabledAppeals.push(APPEAL_CASE_TYPE.C);

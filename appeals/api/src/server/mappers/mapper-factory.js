@@ -101,10 +101,6 @@ function createIntegrationMap(mappingRequest) {
 			const casAdvert = createMap(integrationMappers.integrationCasAdvertMappers, mappingRequest);
 			return mergeMaps(caseData, casAdvert);
 		}
-		case APPEAL_CASE_TYPE.H: {
-			const advert = createMap(integrationMappers.integrationAdvertMappers, mappingRequest);
-			return mergeMaps(caseData, advert);
-		}
 		default:
 			return caseData;
 	}

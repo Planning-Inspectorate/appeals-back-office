@@ -1,20 +1,11 @@
 // @ts-nocheck
 import {
-	advertisementAppeal,
 	casAdvertAppeal,
 	casPlanningAppeal,
 	fullPlanningAppeal,
 	householdAppeal,
 	listedBuildingAppeal
 } from '#tests/appeals/mocks.js';
-import {
-	advertisementAppealWithTimetable,
-	casAdvertAppealWithTimetable,
-	casPlanningAppealWithTimetable,
-	fullPlanningAppealWithTimetable,
-	houseAppealWithTimetable,
-	listedBuildingAppealWithTimetable
-} from '#tests/appeals/timetableMocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
@@ -48,6 +39,68 @@ const futureDate = add(new Date(baseDate), { days: 5 });
 const withoutWeekends = await recalculateDateIfNotBusinessDay(futureDate.toISOString());
 const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
 const responseDateSet = setTimeInTimeZone(utcDate, DEADLINE_HOUR, DEADLINE_MINUTE).toISOString();
+
+const houseAppealWithTimetable = {
+	...householdAppeal,
+	caseStartedDate: new Date(2022, 4, 18),
+	caseValidationDate: new Date(2022, 4, 20),
+	caseValidDate: new Date(2022, 4, 20),
+	appealTimetable: {
+		appealId: 1,
+		id: 101,
+		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z')
+	}
+};
+
+const casPlanningAppealWithTimetable = {
+	...casPlanningAppeal,
+	caseStartedDate: new Date(2022, 4, 18),
+	caseValidationDate: new Date(2022, 4, 20),
+	caseValidDate: new Date(2022, 4, 20),
+	appealTimetable: {
+		appealId: 1,
+		id: 101,
+		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z')
+	}
+};
+
+const casAdvertAppealWithTimetable = {
+	...casAdvertAppeal,
+	caseStartedDate: new Date(2022, 4, 18),
+	caseValidationDate: new Date(2022, 4, 20),
+	caseValidDate: new Date(2022, 4, 20),
+	appealTimetable: {
+		appealId: 1,
+		id: 101,
+		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z')
+	}
+};
+
+const fullPlanningAppealWithTimetable = {
+	...fullPlanningAppeal,
+	caseStartedDate: new Date(2022, 4, 22),
+	caseValidationDate: new Date(2022, 4, 20),
+	caseValidDate: new Date(2022, 4, 20),
+	appealTimetable: {
+		appealId: 1,
+		id: 101,
+		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z'),
+		lpaStatementDueDate: null
+	}
+};
+
+const listedBuildingAppealWithTimetable = {
+	...listedBuildingAppeal,
+	caseStartedDate: new Date(2022, 4, 22),
+	caseValidationDate: new Date(2022, 4, 20),
+	caseValidDate: new Date(2022, 4, 20),
+	appealTimetable: {
+		appealId: 1,
+		id: 101,
+		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z'),
+		lpaStatementDueDate: null
+	}
+};
 
 describe('appeal timetables routes', () => {
 	beforeEach(() => {
@@ -179,12 +232,6 @@ describe('appeal timetables routes', () => {
 				[
 					'cas advert',
 					casAdvertAppealWithTimetable,
-					householdAppealRequestBody,
-					householdAppealResponseBody
-				],
-				[
-					'advert',
-					advertisementAppealWithTimetable,
 					householdAppealRequestBody,
 					householdAppealResponseBody
 				]
@@ -600,12 +647,6 @@ describe('appeal timetables routes', () => {
 					{}
 				],
 				[
-					'advertisementAppeal',
-					advertisementAppealWithTimetable,
-					{ lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z' },
-					{}
-				],
-				[
 					'fullPlanningAppeal',
 					fullPlanningAppealWithTimetable,
 					{
@@ -840,12 +881,6 @@ describe('appeal timetables routes', () => {
 					{}
 				],
 				[
-					'advertisementAppeal',
-					advertisementAppealWithTimetable,
-					{ lpaQuestionnaireDueDate: '2024-06-10T22:59:00.000Z' },
-					{}
-				],
-				[
 					'fullPlanningAppeal',
 					fullPlanningAppealWithTimetable,
 					{
@@ -970,8 +1005,7 @@ describe('appeal timetables routes', () => {
 			test.each([
 				['householdAppeal', householdAppeal],
 				['casPlanningAppeal', casPlanningAppeal],
-				['casAdvertAppeal', casAdvertAppeal],
-				['advertisementAppeal', advertisementAppeal]
+				['casAdvertAppeal', casAdvertAppeal]
 			])('start a %s timetable', async (_, appeal) => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);

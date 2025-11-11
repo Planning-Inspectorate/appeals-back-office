@@ -74,7 +74,6 @@ export interface AppellantCase extends schema.AppellantCase {
 	appellantCaseInvalidReasonsSelected: AppellantCaseInvalidReasons[];
 	knowsAllOwners?: KnowledgeOfOtherLandowners | null;
 	knowsOtherOwners?: KnowledgeOfOtherLandowners | null;
-	appellantCaseAdvertDetails?: AppellantCaseAdvertDetails[];
 }
 export interface AppellantCaseValidationOutcome extends schema.AppellantCaseValidationOutcome {}
 export interface AppellantCaseIncompleteReason extends schema.AppellantCaseIncompleteReason {}

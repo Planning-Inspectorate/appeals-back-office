@@ -1,6 +1,5 @@
 // @ts-nocheck
 import {
-	advertisementAppeal,
 	casAdvertAppeal,
 	casPlanningAppeal,
 	fullPlanningAppeal,
@@ -73,7 +72,6 @@ describe('appeal withdrawal routes', () => {
 			['household', householdAppeal],
 			['casPlanning', casPlanningAppeal],
 			['casAdvert', casAdvertAppeal],
-			['advertisement', advertisementAppeal],
 			['fullPlanning', fullPlanningAppeal],
 			['listedBuilding', listedBuildingAppeal]
 		])('returns 200 when appeal: %s is withdrawn', async (_, appeal) => {

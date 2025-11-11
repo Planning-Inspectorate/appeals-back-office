@@ -3,9 +3,9 @@ import { addAssignedTeamIdToAppeal } from './add-assigned-team-id.js';
 import { seedStaticData } from './data-static.js';
 import { seedTestData } from './data-test.js';
 import { localPlanningDepartmentList } from './LPAs/dev.js';
+import { deleteAllRecords } from './seed-clear.js';
 import { seedLPAs } from './seed-lpas.js';
 import { seedTeams } from './seed-teams.js';
-import { deleteExistingData } from './seed-truncate.js';
 import { teamsToCreate } from './teams/dev.js';
 
 /**
@@ -16,18 +16,12 @@ import { teamsToCreate } from './teams/dev.js';
  */
 const seedDevelopment = async () => {
 	try {
-		await deleteExistingData(databaseConnector);
-		console.info('Cleared existing records from development database\n');
+		await deleteAllRecords(databaseConnector);
 		await seedTeams(databaseConnector, teamsToCreate);
-		console.info('Seeded teams into development database\n');
 		await seedLPAs(databaseConnector, localPlanningDepartmentList);
-		console.info('Seeded LPAs into development database\n');
 		await seedStaticData(databaseConnector);
-		console.info('Seeded static data into development database\n');
 		await seedTestData(databaseConnector);
-		console.info('Seeded test data into development database\n');
 		await addAssignedTeamIdToAppeal(databaseConnector);
-		console.info('Updated appeals with assigned team IDs\n');
 	} catch (error) {
 		console.error(error);
 		throw error;

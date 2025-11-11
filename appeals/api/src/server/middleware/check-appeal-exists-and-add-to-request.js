@@ -71,33 +71,3 @@ export const checkAppealExistsById = async (req, res, next) => {
 
 	next();
 };
-
-/**
- * @typedef {import('#repositories/appeal.repository.js').appealDetailsInclude} AppealDetailsInclude
- *
- * @param {Array<keyof typeof import('#repositories/appeal.repository.js').appealDetailsInclude>} [selectedKeys=[]]
- * @returns {(req: Request, res: Response, next: NextFunction) => Promise<Response | void>}
- */
-export const checkAppealExistsByIdAndAddPartialToRequest =
-	(selectedKeys = []) =>
-	async (req, res, next) => {
-		const {
-			params: { appealId }
-		} = req;
-
-		if (selectedKeys.length) {
-			selectedKeys = [
-				.../** @type {Set<keyof typeof import('#repositories/appeal.repository.js').appealDetailsInclude>} */
-				(new Set([...selectedKeys, 'appealType']))
-			];
-		}
-
-		const appeal = await appealRepository.getAppealById(Number(appealId), true, selectedKeys);
-
-		if (!appeal || !isAppealTypeEnabled(appeal.appealType?.key || '')) {
-			return res.status(404).send({ errors: { appealId: ERROR_NOT_FOUND } });
-		}
-
-		req.appeal = appeal;
-		next();
-	};

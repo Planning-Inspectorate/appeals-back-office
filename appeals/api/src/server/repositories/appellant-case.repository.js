@@ -1,5 +1,4 @@
 import { databaseConnector } from '#utils/database-connector.js';
-import logger from '#utils/logger.js';
 import appealRepository from './appeal.repository.js';
 import commonRepository from './common.repository.js';
 
@@ -14,9 +13,9 @@ import commonRepository from './common.repository.js';
 /**
  * @param {number} id
  * @param {AppellantCaseUpdateRequest} data
- * @returns {Promise<any[]|PrismaPromise<object>>}
+ * @returns {PrismaPromise<object>}
  */
-const updateAppellantCaseById = async (id, data) => {
+const updateAppellantCaseById = (id, data) => {
 	const knowsOtherOwners =
 		data.knowsOtherOwners !== undefined
 			? data.knowsOtherOwners === null
@@ -29,7 +28,6 @@ const updateAppellantCaseById = async (id, data) => {
 			: undefined;
 
 	if (knowsOtherOwners === null) {
-		logger.info({ id }, 'removing knowsOtherOwners from appellant case');
 		return databaseConnector.appellantCase.update({
 			where: { id },
 			data: {
@@ -38,59 +36,14 @@ const updateAppellantCaseById = async (id, data) => {
 		});
 	}
 
-	const { advertInPosition, highwayLand, ...mainUpdates } = data;
-
-	const transaction = [];
-
-	logger.info({ id }, 'appellant case update');
-	logger.debug({ id, mainUpdates, knowsOtherOwners }, 'appellant case update details');
-
-	transaction.push(
-		databaseConnector.appellantCase.update({
-			where: { id },
-			// @ts-ignore
-			data: {
-				...mainUpdates,
-				knowsOtherOwners
-			}
-		})
-	);
-
-	const hasAdvertDetails =
-		(advertInPosition !== undefined && advertInPosition !== null) ||
-		(highwayLand !== undefined && highwayLand !== null);
-
-	if (hasAdvertDetails) {
-		logger.info({ id }, 'hasAdvertDetails update');
-		logger.debug({ id, hasAdvertDetails }, `hasAdvertDetails update details`);
-		const existing = await databaseConnector.appellantCaseAdvertDetails.findFirst({
-			where: { appellantCaseId: id }
-		});
-
-		if (existing) {
-			transaction.push(
-				databaseConnector.appellantCaseAdvertDetails.update({
-					where: { id: existing.id },
-					data: {
-						advertInPosition: advertInPosition ?? undefined,
-						highwayLand: highwayLand ?? undefined
-					}
-				})
-			);
-		} else {
-			transaction.push(
-				databaseConnector.appellantCaseAdvertDetails.create({
-					data: {
-						appellantCaseId: id,
-						advertInPosition: advertInPosition ?? false,
-						highwayLand: highwayLand ?? false
-					}
-				})
-			);
+	return databaseConnector.appellantCase.update({
+		where: { id },
+		// @ts-ignore
+		data: {
+			...data,
+			knowsOtherOwners
 		}
-	}
-
-	return databaseConnector.$transaction(transaction);
+	});
 };
 
 /**
@@ -155,7 +108,6 @@ const updateAppellantCaseValidationOutcome = ({
 		);
 	}
 
-	// @ts-ignore
 	const tx = databaseConnector.$transaction(transaction);
 	return tx;
 };

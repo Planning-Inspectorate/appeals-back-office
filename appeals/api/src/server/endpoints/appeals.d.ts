@@ -823,14 +823,6 @@ interface UsersToAssign {
 	inspector?: string | null;
 }
 
-interface UserNamesToAssign {
-	caseOfficerId?: string | null;
-	caseOfficerName?: string | null;
-	inspectorId?: string | null;
-	inspectorName?: string | null;
-	prevUserName?: string | null;
-}
-
 interface ReasonOption {
 	id: number;
 	name: string;
@@ -1117,7 +1109,6 @@ export {
 	UpdateLPAQuestionnaireRequest,
 	UpdateLPAQuestionnaireValidationOutcomeParams,
 	UpdateTimetableRequest,
-	UserNamesToAssign,
 	UsersToAssign,
 	ValidationOutcomeResponse
 };
