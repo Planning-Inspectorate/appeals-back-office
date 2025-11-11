@@ -807,7 +807,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'Q9495',
 		name: 'Lake District National Park',
-		email: 'appeals@lake-district.gov.uk',
+		email: 'appeals@lakedistrict.gov.uk',
 		teamId: 15 // North1
 	},
 	{
@@ -939,7 +939,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'W9500',
 		name: 'North York Moors National Park Authority',
-		email: 'dc@northyorkmoors-npa.gov.uk',
+		email: 'planning@northyorkmoors.org.uk',
 		teamId: 16 // North2
 	},
 	{
@@ -1065,7 +1065,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'W0530',
 		name: 'South Cambridgeshire District Council',
-		email: 'DSAppeals@scambs.gov.uk',
+		email: 'appeals@scambs.gov.uk',
 		teamId: 18 // North4
 	},
 	{
@@ -1131,7 +1131,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'V2255',
 		name: 'Swale Borough Council',
-		email: 'appeals@swale.gov.uk',
+		email: 'planningappeals@midkent.gov.uk',
 		teamId: 12 // East2
 	},
 	{
@@ -1251,7 +1251,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'B1605',
 		name: 'Cheltenham Borough Council',
-		email: 'planningappeals@cheltenham.gov.uk',
+		email: 'planning.appeals@cheltenham.gov.uk',
 		teamId: 8 //West2
 	},
 	{
