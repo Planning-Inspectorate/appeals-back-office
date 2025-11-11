@@ -597,6 +597,10 @@ export const postChangeInquiryAddressDetails = async (request, response) => {
 	// Answer yes to address known if we have submitted an address (we probably
 	// came straight to this page)
 	request.session['changeInquiry']['addressKnown'] = 'yes';
+	request.session.changeInquiry = {
+		...(request.session.changeInquiry || {}),
+		...request.body
+	};
 
 	applyEditsForAppeal(request, 'changeInquiry', appealId);
 
