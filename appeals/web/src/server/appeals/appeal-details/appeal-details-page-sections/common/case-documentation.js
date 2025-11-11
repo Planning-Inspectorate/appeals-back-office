@@ -1,5 +1,6 @@
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { isDefined } from '#lib/ts-utilities.js';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /**
  * @param {{appeal: MappedInstructions}} mappedData
@@ -23,8 +24,13 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 					? [
 							mappedData.appeal.lpaStatement.display.tableItem,
 							mappedData.appeal.ipComments.display.tableItem,
-							mappedData.appeal.appellantFinalComments.display.tableItem,
-							mappedData.appeal.lpaFinalComments.display.tableItem,
+							...(appealDetails.procedureType?.toLowerCase() !==
+							APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase()
+								? [
+										mappedData.appeal.appellantFinalComments.display.tableItem,
+										mappedData.appeal.lpaFinalComments.display.tableItem
+								  ]
+								: []),
 							mappedData.appeal.appellantProofOfEvidence.display.tableItem,
 							mappedData.appeal.lpaProofOfEvidence.display.tableItem
 					  ]
