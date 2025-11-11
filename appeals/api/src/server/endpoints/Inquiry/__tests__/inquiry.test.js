@@ -166,7 +166,7 @@ describe('inquiry routes', () => {
 
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
-					.send({ ...requestData, inquiryStartTime: inquiry.inquiryStartTime })
+					.send({ ...requestData, inquiryStartTime: inquiry.inquiryStartTime, address: undefined })
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
@@ -179,6 +179,7 @@ describe('inquiry routes', () => {
 				});
 
 				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(fullPlanningAppeal.id);
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 				expect(response.status).toEqual(201);
 			});
@@ -889,12 +890,11 @@ describe('inquiry routes', () => {
 			});
 
 			test('creates a single inquiry with no address or inquiryEndTime', async () => {
-				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
-					.send({ ...requestData, inquiryStartTime: inquiry.inquiryStartTime })
+					.send({ ...requestData, inquiryStartTime: inquiry.inquiryStartTime, address: undefined })
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
@@ -907,6 +907,7 @@ describe('inquiry routes', () => {
 				});
 
 				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(fullPlanningAppeal.id);
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 				expect(response.status).toEqual(201);
 			});
@@ -1682,6 +1683,12 @@ describe('inquiry routes', () => {
 						userId: 1
 					}
 				});
+
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+					inquiry.id,
+					'inquiry',
+					'Update'
+				);
 			});
 
 			test('updates a single inquiry with addressId', async () => {
@@ -1782,11 +1789,18 @@ describe('inquiry routes', () => {
 				});
 
 				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
+
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+					inquiry.id,
+					'inquiry',
+					'Update'
+				);
 			});
 
 			test('updates a single inquiry with null address', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
-				databaseConnector.inquiry.update.mockResolvedValue(inquiry);
+				databaseConnector.inquiry.findUnique.mockResolvedValue({ ...inquiry, address: undefined });
+				databaseConnector.inquiry.update.mockResolvedValue({ ...inquiry, address: undefined });
 
 				const response = await request
 					.patch(`/appeals/${fullPlanningAppeal.id}/inquiry/${inquiry.id}`)
@@ -1816,11 +1830,14 @@ describe('inquiry routes', () => {
 				});
 
 				expect(response.status).toEqual(201);
+
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 			});
 
 			test('updates a single inquiry with no address', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
-				databaseConnector.inquiry.update.mockResolvedValue(inquiry);
+				databaseConnector.inquiry.findUnique.mockResolvedValue({ ...inquiry, address: undefined });
+				databaseConnector.inquiry.update.mockResolvedValue({ ...inquiry, address: undefined });
 
 				const response = await request
 					.patch(`/appeals/${fullPlanningAppeal.id}/inquiry/${inquiry.id}`)
@@ -1847,14 +1864,20 @@ describe('inquiry routes', () => {
 				});
 
 				expect(response.status).toEqual(201);
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				expect(mockNotifySend).not.toHaveBeenCalled();
+
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 			});
 
 			test('removes the address if address is null', async () => {
 				const { inquiry } = fullPlanningAppeal;
 
-				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				databaseConnector.inquiry.findUnique.mockResolvedValue({
+					...inquiry,
+					address: undefined,
+					addressId: undefined
+				});
 				databaseConnector.inquiry.update.mockResolvedValue({ ...inquiry, address: null });
 
 				const response = await request
@@ -1885,43 +1908,9 @@ describe('inquiry routes', () => {
 				});
 				expect(response.status).toEqual(201);
 
-				const personalisation = {
-					appeal_reference_number: '1345264',
-					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-					lpa_reference: '48269/APP/2021/1482',
-					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-					appeal_type: 'Full Planning',
-					inquiry_address: '',
-					inquiry_date: '31 March 2022',
-					inquiry_expected_days: '6',
-					inquiry_time: '2:00am',
-					ip_comments_deadline: '',
-					start_date: '',
-					statement_of_common_ground_deadline: '',
-					lpa_statement_deadline: '',
-					planning_obligation_deadline: '',
-					proof_of_evidence_and_witnesses_deadline: '',
-					questionnaire_due_date: ''
-				};
-				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-					notifyClient: expect.anything(),
-					personalisation: {
-						...personalisation,
-						is_lpa: false
-					},
-					recipientEmail: fullPlanningAppeal.appellant.email,
-					templateName: 'inquiry-updated'
-				});
+				expect(mockNotifySend).not.toHaveBeenCalled();
 
-				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-					notifyClient: expect.anything(),
-					personalisation: {
-						...personalisation,
-						is_lpa: true
-					},
-					recipientEmail: fullPlanningAppeal.lpa.email,
-					templateName: 'inquiry-updated'
-				});
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 			});
 
 			test('updates a single inquiry with no estimation day', async () => {
@@ -2573,7 +2562,6 @@ describe('inquiry routes', () => {
 
 	describe('DELETE', () => {
 		test('deletes a single inquiry', async () => {
-			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue({ ...fullPlanningAppeal, inquiry });
 
 			const response = await request
@@ -2621,6 +2609,12 @@ describe('inquiry routes', () => {
 				recipientEmail: fullPlanningAppeal.lpa.email,
 				templateName: 'inquiry-cancelled'
 			});
+			expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+				inquiry.id,
+				'inquiry',
+				'Delete',
+				inquiry
+			);
 
 			expect(response.status).toEqual(200);
 		});

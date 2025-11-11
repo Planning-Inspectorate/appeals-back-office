@@ -29,7 +29,6 @@ router
 	)
 	.post(
 		validators.validateDecision,
-		validators.validateInvalidReason,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.postIssueDecision)
 	);
@@ -45,6 +44,19 @@ router
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		saveBodyToSession('issueDecision'),
 		asyncHandler(controller.postDecisionLetter)
+	);
+
+router
+	.route('/invalid-reason')
+	.get(
+		assertUserHasPermission(permissionNames.setCaseOutcome),
+		asyncHandler(controller.renderInvalidReason)
+	)
+	.post(
+		validators.validateInvalidReason,
+		assertUserHasPermission(permissionNames.setCaseOutcome),
+		saveBodyToSession('issueDecision'),
+		asyncHandler(controller.postInvalidReason)
 	);
 
 router
@@ -193,7 +205,6 @@ router
 	)
 	.post(
 		validators.validateDecision,
-		validators.validateInvalidReason,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.postIssueDecision)
 	);

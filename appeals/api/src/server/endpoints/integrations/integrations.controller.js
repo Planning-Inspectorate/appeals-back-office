@@ -15,7 +15,11 @@ import {
 	AUDIT_TRIAL_APPELLANT_UUID
 } from '@pins/appeals/constants/support.js';
 import { EventType } from '@pins/event-client';
-import { APPEAL_REPRESENTATION_TYPE, SERVICE_USER_TYPE } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_APPELLANT_PROCEDURE_PREFERENCE,
+	APPEAL_REPRESENTATION_TYPE,
+	SERVICE_USER_TYPE
+} from '@planning-inspectorate/data-model';
 import { broadcasters } from './integrations.broadcasters.js';
 import { integrationService } from './integrations.service.js';
 
@@ -37,10 +41,16 @@ import { integrationService } from './integrations.service.js';
 export const importAppeal = async (req, res) => {
 	const { appeal, documents, relatedReferences } = commandMappers.mapAppealSubmission(req.body);
 
-	let appellantProcedurePreference = 'written';
+	let appellantProcedurePreference = APPEAL_APPELLANT_PROCEDURE_PREFERENCE.WRITTEN;
 
-	if (req.body.casedata.caseType === 'W' || req.body.casedata.caseType === 'Y') {
-		appellantProcedurePreference = req.body.casedata.appellantProcedurePreference || 'written';
+	if (
+		req.body.casedata.caseType === 'W' ||
+		req.body.casedata.caseType === 'Y' ||
+		req.body.casedata.caseType === 'H'
+	) {
+		appellantProcedurePreference =
+			req.body.casedata.appellantProcedurePreference ||
+			APPEAL_APPELLANT_PROCEDURE_PREFERENCE.WRITTEN;
 	}
 	const casedata = await integrationService.importAppellantCase(
 		appeal,

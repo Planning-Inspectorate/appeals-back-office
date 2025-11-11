@@ -1,5 +1,8 @@
 // @ts-nocheck
 import {
+	advertisementAppeal,
+	advertisementAppealAppellantCaseIncomplete,
+	advertisementAppealAppellantCaseInvalid,
 	casAdvertAppeal,
 	casAdvertAppealAppellantCaseIncomplete,
 	casAdvertAppealAppellantCaseInvalid,
@@ -45,7 +48,6 @@ const { databaseConnector } = await import('../../../utils/database-connector.js
 
 describe('appellant cases routes', () => {
 	beforeEach(() => {
-		// @ts-ignore
 		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 		databaseConnector.team.findUnique.mockResolvedValue({
 			id: 1,
@@ -595,6 +597,7 @@ describe('appellant cases routes', () => {
 			});
 
 			test.each([
+				['advertisementAppeal', advertisementAppealAppellantCaseIncomplete],
 				['householdAppeal', householdAppealAppellantCaseIncomplete],
 				['casPlanningAppeal', casPlanningAppealAppellantCaseIncomplete],
 				['casAdvertAppeal', casAdvertAppealAppellantCaseIncomplete],
@@ -867,6 +870,7 @@ describe('appellant cases routes', () => {
 
 			test.each([
 				['householdAppeal', householdAppealAppellantCaseInvalid],
+				['advertisementAppeal', advertisementAppealAppellantCaseInvalid],
 				['casPlanningAppeal', casPlanningAppealAppellantCaseInvalid],
 				['casAdvertAppeal', casAdvertAppealAppellantCaseInvalid],
 				['fullPlanningAppeal', fullPlanningAppealAppellantCaseInvalid],
@@ -947,6 +951,7 @@ describe('appellant cases routes', () => {
 
 			test.each([
 				['householdAppeal', householdAppeal],
+				['advertisementAppeal', advertisementAppeal],
 				['casAdvertAppeal', casAdvertAppeal],
 				['casPlanningAppeal', casPlanningAppeal],
 				['fullPlanningAppeal', fullPlanningAppeal],
@@ -1192,6 +1197,66 @@ describe('appellant cases routes', () => {
 					'appellantProcedurePreferenceDetails',
 					'must be 1000 characters or less'
 				);
+			});
+
+			test('creates new appellant advert details', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+				databaseConnector.appellantCaseAdvertDetails.findFirst.mockResolvedValue(null);
+
+				const { id, appellantCase } = householdAppeal;
+				const patchBody = {
+					advertInPosition: true,
+					highwayLand: false
+				};
+
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(databaseConnector.appellantCaseAdvertDetails.create).toHaveBeenCalledWith({
+					data: expect.objectContaining({
+						appellantCaseId: appellantCase.id,
+						advertInPosition: patchBody.advertInPosition,
+						highwayLand: patchBody.highwayLand
+					})
+				});
+			});
+
+			test('updates existing appellant advert details', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+				databaseConnector.appellantCaseAdvertDetails.findFirst.mockResolvedValue({
+					id: 1
+				});
+
+				const { id, appellantCase } = householdAppeal;
+				const patchBody = {
+					advertInPosition: true,
+					highwayLand: false
+				};
+
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(databaseConnector.appellantCaseAdvertDetails.update).toHaveBeenCalledWith({
+					where: { id: 1 },
+					data: expect.objectContaining({
+						advertInPosition: patchBody.advertInPosition,
+						highwayLand: patchBody.highwayLand
+					})
+				});
 			});
 		});
 	});

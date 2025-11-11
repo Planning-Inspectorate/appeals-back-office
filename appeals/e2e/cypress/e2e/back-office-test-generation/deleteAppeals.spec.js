@@ -11,7 +11,7 @@ const inquirySectionPage = new InquirySectionPage();
 let caseObj;
 let appeal;
 
-let testAppealsIdsToDelete = [];
+let testAppealsIdsToDelete = [8543];
 
 before(() => {});
 

@@ -1,5 +1,6 @@
 // @ts-nocheck
 import {
+	advertisementAppeal,
 	casAdvertAppeal,
 	casPlanningAppeal,
 	fullPlanningAppeal,
@@ -157,6 +158,7 @@ describe('appeal decision routes', () => {
 
 		test.each([
 			['householdAppeal', householdAppeal],
+			['advertisementAppeal', advertisementAppeal],
 			['casPlanningAppeal', casPlanningAppeal],
 			['casAdvertAppeal', casAdvertAppeal],
 			['fullPlanningAppeal', fullPlanningAppeal],

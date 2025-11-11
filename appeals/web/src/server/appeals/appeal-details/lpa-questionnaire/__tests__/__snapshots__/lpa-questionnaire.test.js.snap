@@ -1955,10 +1955,10 @@ exports[`LPA Questionnaire review GET / should render the advert LPA Questionnai
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="constraints-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is advertisement appeal the correct type of appeal?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is advertisement the correct type of appeal?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/is-correct-appeal-type/change"
-                                    data-cy="change-is-correct-appeal-type">Change<span class="govuk-visually-hidden"> Is advertisement appeal the correct type of appeal? (1. Constraints, designations and other issues)</span></a>
+                                    data-cy="change-is-correct-appeal-type">Change<span class="govuk-visually-hidden"> Is advertisement the correct type of appeal? (1. Constraints, designations and other issues)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Does the development change a listed building?</dt>

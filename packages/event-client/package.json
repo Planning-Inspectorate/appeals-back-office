@@ -14,8 +14,8 @@
         "tscheck": "npx tsc -p jsconfig.json --maxNodeModuleJsDepth 0"
     },
     "dependencies": {
-		"@azure/identity": "4.13.0",
-		"@azure/service-bus": "^7.9.5",
-		"@planning-inspectorate/data-model": "^1.19.0"
-	}
+        "@azure/identity": "4.13.0",
+        "@azure/service-bus": "^7.9.5",
+        "@planning-inspectorate/data-model": "^1.22.0"
+    }
 }

@@ -147,7 +147,7 @@ exports[`proof-of-evidence GET /add-document/check-your-answers for lpa should r
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Check details and add lpa proof of evidence and witnesses</h1>
+            <h1 class="govuk-heading-l">Check details and add LPA proof of evidence and witnesses</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -173,7 +173,7 @@ exports[`proof-of-evidence GET /add-document/check-your-answers for lpa should r
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">
-                        <button type="submit" class="govuk-button" data-module="govuk-button">Add lpa proof of evidence and witnesses</button>
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Add LPA proof of evidence and witnesses</button>
                     </form>
                 </div>
             </div>
