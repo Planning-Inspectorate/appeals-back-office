@@ -7,8 +7,10 @@ import { getRepresentations } from '#endpoints/representations/representations.s
 import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
 	AUDIT_TRAIL_CORRECTION_NOTICE_ADDED,
@@ -45,6 +47,22 @@ const hasCostsDocument = (appeal, appealDocumentType) => {
 		(folder) => folder.path === `${APPEAL_CASE_STAGE.COSTS}/${appealDocumentType}`
 	);
 	return !!folder?.documents?.length;
+};
+
+/**
+ *
+ * @param {string} outcome
+ * @param {string|null} [invalidDecisionReason]
+ * @returns {string}
+ */
+const formatIssueDecisionAuditTrail = (outcome, invalidDecisionReason) => {
+	return stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
+		`${outcome[0].toUpperCase() + outcome.slice(1)}${
+			invalidDecisionReason && isFeatureActive(FEATURE_FLAG_NAMES.INVALID_DECISION_LETTER)
+				? '\n\n Reason: ' + invalidDecisionReason
+				: ''
+		}`
+	]);
 };
 
 /**
@@ -96,9 +114,10 @@ export const publishDecision = async (
 
 		const lpaEmail = appeal.lpa?.email || '';
 
-		const nextState = invalidDecisionReason
-			? APPEAL_CASE_STATUS.INVALID
-			: APPEAL_CASE_STATUS.COMPLETE;
+		const nextState =
+			outcome === APPEAL_CASE_DECISION_OUTCOME.INVALID
+				? APPEAL_CASE_STATUS.INVALID
+				: APPEAL_CASE_STATUS.COMPLETE;
 
 		const personalisation = {
 			appeal_reference_number: appeal.reference,
@@ -146,9 +165,7 @@ export const publishDecision = async (
 		await createAuditTrail({
 			appealId: appeal.id,
 			azureAdUserId: azureAdUserId,
-			details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
-				outcome[0].toUpperCase() + outcome.slice(1)
-			])
+			details: formatIssueDecisionAuditTrail(outcome, invalidDecisionReason)
 		});
 
 		await transitionState(appeal.id, azureAdUserId, nextState);
@@ -190,9 +207,7 @@ export const publishChildDecision = async (
 		await createAuditTrail({
 			appealId,
 			azureAdUserId: azureAdUserId,
-			details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
-				outcome[0].toUpperCase() + outcome.slice(1)
-			])
+			details: formatIssueDecisionAuditTrail(outcome)
 		});
 
 		await transitionState(appealId, azureAdUserId, APPEAL_CASE_STATUS.COMPLETE);
