@@ -83,8 +83,8 @@ export const postChangeProcedureTypeValidator = composeMiddleware(
 			return true;
 		}),
 
-	body('address').optional(),
 	body('estimatedDays').optional().isNumeric().withMessage(ERROR_MUST_BE_NUMBER),
+
 	validateRequiredStringParameter('address.addressLine1', LENGTH_250, 'address'),
 	validateStringParameterAllowingEmpty('address.addressLine2', LENGTH_250),
 	validateRequiredStringParameter('address.town', LENGTH_250, 'address'),

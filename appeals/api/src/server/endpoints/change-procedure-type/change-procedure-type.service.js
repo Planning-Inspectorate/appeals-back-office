@@ -7,6 +7,7 @@ import {
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { notifySend } from '#notify/notify-send.js';
 import { databaseConnector } from '#utils/database-connector.js';
+import logger from '#utils/logger.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
 import {
@@ -234,6 +235,7 @@ export const changeProcedureToInquiry = async (data, appealId) => {
 			return { updatedAppeal };
 		});
 	} catch (error) {
+		logger.error(error);
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
 };
