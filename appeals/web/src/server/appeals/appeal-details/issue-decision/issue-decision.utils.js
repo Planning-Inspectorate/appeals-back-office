@@ -1,6 +1,8 @@
+import { isFeatureActive } from '#common/feature-flags.js';
 import { isParentAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
 import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	DECISION_TYPE_APPELLANT_COSTS,
 	DECISION_TYPE_INSPECTOR,
@@ -149,7 +151,8 @@ export function decisionLetterUploadBackUrl(request) {
 
 	const { currentAppeal, session } = request;
 
-	return session.inspectorDecision?.outcome === APPEAL_CASE_DECISION_OUTCOME.INVALID
+	return session.inspectorDecision?.outcome === APPEAL_CASE_DECISION_OUTCOME.INVALID &&
+		isFeatureActive(FEATURE_FLAG_NAMES.INVALID_DECISION_LETTER)
 		? `${baseUrl(currentAppeal)}/decision-letter`
 		: isParentAppeal(currentAppeal)
 		? `${baseUrl(currentAppeal)}/${
@@ -173,7 +176,8 @@ export function appellantCostsDecisionBackUrl(request) {
 	return session.inspectorDecision?.files?.length
 		? `${baseUrl(currentAppeal)}/decision-letter-upload`
 		: session.inspectorDecision.outcome === APPEAL_CASE_DECISION_OUTCOME.INVALID &&
-		  session.inspectorDecision?.invalidReason?.length
+		  session.inspectorDecision?.invalidReason?.length &&
+		  isFeatureActive(FEATURE_FLAG_NAMES.INVALID_DECISION_LETTER)
 		? `${baseUrl(currentAppeal)}/invalid-reason`
 		: decisionLetterUploadBackUrl(request);
 }
@@ -226,6 +230,6 @@ export function checkAndConfirmBackUrl(currentAppeal, request, specificDecisionT
 	} else if (request.session.issueDecision.lpaCostsDecision === 'false') {
 		return `${addBackLinkQueryToUrl(request, `${baseRoute}/lpa-costs-decision`)}`;
 	} else {
-		return `${baseRoute}/decision-letter-upload`;
+		return appellantCostsDecisionBackUrl(request);
 	}
 }
