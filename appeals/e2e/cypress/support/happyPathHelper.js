@@ -2,6 +2,7 @@
 
 import { users } from '../fixtures/users';
 import { Page } from '../page_objects/basePage.js';
+import { HearingSectionPage } from '../page_objects/caseDetails/hearingSectionPage';
 import { CaseDetailsPage } from '../page_objects/caseDetailsPage.js';
 import { DateTimeSection } from '../page_objects/dateTimeSection';
 import { ListCasesPage } from '../page_objects/listCasesPage';
@@ -13,6 +14,8 @@ const caseDetailsPage = new CaseDetailsPage();
 const dateTimeSection = new DateTimeSection();
 const listCasesPage = new ListCasesPage();
 const fileUploader = new FileUploader();
+const hearingSectionPage = new HearingSectionPage();
+const currentDate = new Date();
 
 let sampleFiles = fileUploader.sampleFiles;
 let pdf = sampleFiles.pdf;
@@ -66,6 +69,9 @@ export const happyPathHelper = {
 	startS78Case(caseObj, procedureType) {
 		if (procedureType === 'hearing') {
 			return happyPathHelper.startS78HearingCase(caseObj, procedureType);
+		}
+		if (procedureType === 'inquiry') {
+			return happyPathHelper.startS78InquiryCase(caseObj, procedureType);
 		}
 		happyPathHelper.viewCaseDetails(caseObj);
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
@@ -254,6 +260,49 @@ export const happyPathHelper = {
 		dateTimeSection.enterVisitEndTime('12', '00');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.validateBannerMessage('Success', 'Site visit set up');
+	},
+
+	setupSiteHearingFromBanner(caseObj) {
+		caseDetailsPage.clickHearingBannerLink();
+
+		cy.getBusinessActualDate(currentDate, 2).then((hearingDate) => {
+			hearingDate.setHours(currentDate.getHours(), currentDate.getMinutes());
+			hearingSectionPage.setUpHearing(
+				hearingDate,
+				hearingDate.getHours(),
+				hearingDate.getMinutes()
+			);
+		});
+		hearingSectionPage.selectRadioButtonByValue('No');
+		hearingSectionPage.clickButtonByText('Continue');
+		hearingSectionPage.clickButtonByText('Set up hearing');
+		caseDetailsPage.validateBannerMessage('Success', 'Hearing set up');
+		//add address
+		const originalAddress = {
+			line1: 'e2e Hearing Test Address',
+			line2: 'Hearing Street',
+			town: 'Hearing Town',
+			county: 'Somewhere',
+			postcode: 'BS20 1BS'
+		};
+		const headers = {
+			hearingEstimate: {
+				checkDetails: 'Check details and add hearing estimates',
+				estimateForm: 'Hearing estimates'
+			},
+			hearing: {
+				checkDetails: 'Check details and set up hearing',
+				addressQuestion: 'Do you know the address of where the hearing will take place?',
+				addressForm: 'Address',
+				dateTime: 'Date and time',
+				confirmHearingCancellation: 'Confirm that you want to cancel the hearing'
+			}
+		};
+		caseDetailsPage.clickHearingBannerAddressLink();
+		hearingSectionPage.addHearingLocationAddress(originalAddress);
+		hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
+		caseDetailsPage.clickButtonByText('Update hearing');
+		caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
 	},
 
 	issueDecision(decision, route, appellantCostsBool = true, lpaCostsBool = true) {
@@ -461,15 +510,15 @@ const STATUSES = {
 
 // 2️⃣  Flows pick only the statuses they need (and order)
 const FLOWS = {
-	BASE: [
+	HAS: [
 		STATUSES.ASSIGN_CASE_OFFICER,
 		STATUSES.VALIDATION,
 		STATUSES.READY_TO_START,
 		STATUSES.LPA_QUESTIONNAIRE,
-		STATUSES.STATEMENTS, //this needs to be removed
 		STATUSES.EVENT_READY_TO_SETUP,
 		STATUSES.AWAITING_EVENT,
-		STATUSES.ISSUE_DECISION
+		STATUSES.ISSUE_DECISION,
+		STATUSES.COMPLETE
 	],
 	S78: [
 		STATUSES.ASSIGN_CASE_OFFICER,
@@ -478,8 +527,10 @@ const FLOWS = {
 		STATUSES.LPA_QUESTIONNAIRE,
 		STATUSES.STATEMENTS,
 		STATUSES.FINAL_COMMENTS,
+		STATUSES.EVENT_READY_TO_SETUP,
 		STATUSES.AWAITING_EVENT,
-		STATUSES.ISSUE_DECISION
+		STATUSES.ISSUE_DECISION,
+		STATUSES.COMPLETE
 	],
 	S20: [
 		STATUSES.ASSIGN_CASE_OFFICER,
@@ -488,65 +539,97 @@ const FLOWS = {
 		STATUSES.LPA_QUESTIONNAIRE,
 		STATUSES.STATEMENTS,
 		STATUSES.FINAL_COMMENTS,
+		STATUSES.EVENT_READY_TO_SETUP,
 		STATUSES.AWAITING_EVENT,
-		STATUSES.ISSUE_DECISION
+		STATUSES.ISSUE_DECISION,
+		STATUSES.COMPLETE
 	]
 };
 //potentially add check
 const baseActions = {
-	[STATUSES.VALIDATION]: (caseObj) => {
+	[STATUSES.ASSIGN_CASE_OFFICER]: (caseObj) => {
 		happyPathHelper.assignCaseOfficer(caseObj);
 	},
-	[STATUSES.READY_TO_START]: (caseObj) => {
+	[STATUSES.VALIDATION]: (caseObj) => {
 		happyPathHelper.reviewAppellantCase(caseObj);
 	},
-	[STATUSES.LPA_QUESTIONNAIRE]: (caseObj, appealType) => {
-		if (appealType === 'PLANNING') {
-			// 👇 Planning-specific start behaviour
-			happyPathHelper.startS78Case(caseObj, 'written');
+	[STATUSES.READY_TO_START]: (caseObj, appealType, procedureType) => {
+		if (appealType === 'S78') {
+			happyPathHelper.startS78Case(caseObj, procedureType);
+		} else if (procedureType === 'S78') {
+			happyPathHelper.startS78Case(caseObj, procedureType);
 		} else {
-			// 👇 Default path for all other appeal types
 			happyPathHelper.startCase(caseObj);
 		}
 	},
-	[STATUSES.STATEMENTS]: (caseObj, appealType) => {
-		if (appealType === 'PLANNING') {
-			// 👇 Planning-specific start behaviour
+	[STATUSES.LPA_QUESTIONNAIRE]: (caseObj, appealType) => {
+		if (appealType === 'S78' || appealType === 'S20') {
 			happyPathHelper.reviewS78Lpaq(caseObj);
 		} else {
-			// 👇 Default path for all other appeal types
 			happyPathHelper.reviewLpaq(caseObj);
 		}
 	},
-	[STATUSES.FINAL_COMMENTS]: (caseObj) => {
+	[STATUSES.STATEMENTS]: (caseObj) => {
 		happyPathHelper.addLpaStatement(caseObj);
-		cy.simulateStatementsDeadlineElapsed(caseObj.reference).then(() => {
-			cy.reload();
-		});
+		cy.simulateStatementsDeadlineElapsed(caseObj);
+		cy.reload();
+		caseDetailsPage.basePageElements.bannerLink().click();
+		caseDetailsPage.clickButtonByText('Confirm');
 	},
-	[STATUSES.EVENT_READY_TO_SETUP]: (caseObj) => {
-		happyPathHelper.setupSiteVisitFromBanner(caseObj);
-	},
-	[STATUSES.AWAITING_EVENT]: (caseObj) => {
-		cy.simulateSiteVisit(caseObj).then(() => {
+	[STATUSES.FINAL_COMMENTS]: (caseObj, _appealType, procedureType) => {
+		if (procedureType === 'hearing') {
+			cy.log('skip');
+		} else {
+			happyPathHelper.addLpaFinalComment(caseObj);
+			cy.simulateFinalCommentsDeadlineElapsed(caseObj);
 			cy.reload();
-		});
+			caseDetailsPage.basePageElements.bannerLink().click();
+			caseDetailsPage.clickButtonByText('Share final comments');
+		}
+	},
+	[STATUSES.EVENT_READY_TO_SETUP]: (caseObj, _appealType, procedureType) => {
+		if (procedureType === 'hearing') {
+			happyPathHelper.setupSiteHearingFromBanner(caseObj);
+		} else {
+			happyPathHelper.setupSiteVisitFromBanner(caseObj);
+		}
+	},
+	[STATUSES.AWAITING_EVENT]: (caseObj, _appealType, procedureType) => {
+		if (procedureType === 'hearing') {
+			cy.simulateHearingElapsed(caseObj);
+			cy.reload();
+		} else {
+			cy.simulateSiteVisit(caseObj).then(() => {
+				cy.reload();
+			});
+		}
 	},
 	[STATUSES.ISSUE_DECISION]: (caseObj) => {
-		happyPathHelper.issueDecision(caseObj, 'Allowed');
+		happyPathHelper.issueDecision('Allowed', 'both costs');
 	}
 };
 
-// 4️⃣  Generic runner — flow decides what steps run
-function updateCase(caseObj, currentStatus, targetStatus, appealType = 'BASE') {
+// 4️⃣ Generic runner — actions run for the CURRENT status to move to the NEXT
+function updateCase(
+	caseObj,
+	currentStatus,
+	targetStatus,
+	appealType = 'HAS',
+	procedureType = 'hearing'
+) {
 	const flow = FLOWS[appealType] || FLOWS.BASE;
+
 	const fromIndex = flow.indexOf(currentStatus);
 	const toIndex = flow.indexOf(targetStatus);
 
-	for (let i = fromIndex + 1; i <= toIndex; i++) {
-		const next = flow[i];
-		const fn = baseActions[next];
-		if (fn) fn(caseObj, appealType);
+	for (let i = fromIndex; i < toIndex; i++) {
+		const current = flow[i];
+		const fn = baseActions[current];
+		if (fn) {
+			fn(caseObj, appealType, procedureType);
+		} else {
+			cy.log(`⚠️ No action defined for ${current}`);
+		}
 	}
 }
 
