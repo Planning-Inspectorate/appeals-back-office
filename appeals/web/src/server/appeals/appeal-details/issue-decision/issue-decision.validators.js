@@ -1,5 +1,10 @@
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
-import { createTextareaCharacterValidator } from '#lib/validators/textarea-validator.js';
+import { isFeatureActive } from '#common/feature-flags.js';
+import {
+	createTextareaCharacterValidator,
+	createTextareaConditionalValidator
+} from '#lib/validators/textarea-validator.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 
@@ -28,9 +33,18 @@ export const validateLpaCostsDecision = createValidator(
 		.withMessage("Select yes if you want to issue the LPA's cost decision")
 );
 
-export const validateInvalidReason = createTextareaCharacterValidator(
-	'invalidReason',
-	'Enter reason',
-	textInputCharacterLimits.defaultTextareaLength,
-	`Reason must be ${textInputCharacterLimits.defaultTextareaLength} characters or less`
-);
+export const validateInvalidReason = isFeatureActive(FEATURE_FLAG_NAMES.INVALID_DECISION_LETTER)
+	? createTextareaCharacterValidator(
+			'invalidReason',
+			'Enter reason',
+			textInputCharacterLimits.defaultTextareaLength,
+			`Reason must be ${textInputCharacterLimits.defaultTextareaLength} characters or less`
+	  )
+	: createTextareaConditionalValidator(
+			'invalidReason',
+			'decision',
+			'invalid',
+			'Enter a reason',
+			textInputCharacterLimits.defaultTextareaLength,
+			`Reason must be ${textInputCharacterLimits.defaultTextareaLength} characters or less`
+	  );
