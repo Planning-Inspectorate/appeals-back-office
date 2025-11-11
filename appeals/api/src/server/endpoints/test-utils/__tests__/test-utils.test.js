@@ -1,5 +1,6 @@
 // @ts-nocheck
 import {
+	simulateIssueDecision,
 	simulateReviewAppellantFinalComments,
 	simulateReviewIpComment,
 	simulateReviewLpaFinalComments,
@@ -30,6 +31,7 @@ app.post('/:appealReference/review-lpa-statement', simulateReviewLpaStatement);
 app.post('/:appealReference/review-lpa-final-comments', simulateReviewLpaFinalComments);
 app.post('/:appealReference/review-appellant-final-comments', simulateReviewAppellantFinalComments);
 app.post('/:appealReference/share-comments-and-statement', simulateShareIpCommentsAndLpaStatement);
+app.post('/:appealReference/issue-decision', simulateIssueDecision);
 app.post('/:appealReference/set-up-site-visit', simulateSetUpSiteVisit);
 app.post('/:appealReference/set-up-hearing', simulateSetUpHearing);
 const testApiRequest = supertest(app);
@@ -690,6 +692,29 @@ describe('test utils routes', () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(null);
 
 			const response = await testApiRequest.post('/1/share-comments-and-statement');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+	});
+
+	describe('POST /:appealReference/issue-decision', () => {
+		test('returns 201 for valid appeal reference', async () => {
+			const testAppeal = householdAppeal;
+			testAppeal.appealStatus[0].status = 'issue_determination';
+			databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
+
+			const response = await testApiRequest
+				.post('/1/issue-decision')
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(response.body).toEqual({});
+		});
+
+		test('returns 400 for invalid appeal', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/issue-decision');
 			expect(response.status).toEqual(400);
 			expect(response.body).toEqual(false);
 		});

@@ -6,6 +6,7 @@ import {
 	simulateFinalCommentsElapsed,
 	simulateHearingElapsed,
 	simulateInquiryElapsed,
+	simulateIssueDecision,
 	simulateProofOfEvidenceElapsed,
 	simulateReviewAppellantFinalComments,
 	simulateReviewIpComment,
@@ -304,6 +305,23 @@ router.post(
 		#swagger.responses[400] = {}
 	 */
 	asyncHandler(simulateShareIpCommentsAndLpaStatement)
+);
+
+router.post(
+	'/:appealReference/issue-decision',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/issue-decision'
+		#swagger.description = 'A test endpoint to simulate the completion of an issue decision event'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[201] = {}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(simulateIssueDecision)
 );
 
 router.post(
