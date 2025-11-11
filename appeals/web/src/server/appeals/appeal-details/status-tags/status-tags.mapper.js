@@ -24,7 +24,7 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 			type: 'status-tag',
 			parameters: {
 				...mappedData.appeal.appealStatus.display.statusTag,
-				classes: 'pins-status-tag--full-width'
+				classes: 'pins-status-tag--full-width govuk-!-margin-bottom-6'
 			}
 		});
 	}

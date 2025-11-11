@@ -338,7 +338,7 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Received appeal</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width govuk-!-margin-bottom-6">Received appeal</strong>
         </div>
     </div>
     <div class="govuk-grid-row">
