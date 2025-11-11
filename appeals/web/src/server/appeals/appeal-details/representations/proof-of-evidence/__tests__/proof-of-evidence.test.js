@@ -245,7 +245,9 @@ describe('proof-of-evidence', () => {
 				expect(unprettifiedElement.innerHTML).toContain(`Proof of evidence and witnesses</dt>`);
 				expect(unprettifiedElement.innerHTML).toContain(`Date received</dt>`);
 				expect(unprettifiedElement.innerHTML).toContain(
-					`Add ${proofOfEvidenceType.type} proof of evidence and witnesses</button>`
+					`Add ${
+						proofOfEvidenceType.type === 'lpa' ? 'LPA' : 'appellant'
+					} proof of evidence and witnesses</button>`
 				);
 			});
 		});
