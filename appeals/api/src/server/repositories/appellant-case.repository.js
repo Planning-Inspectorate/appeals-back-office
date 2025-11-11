@@ -14,7 +14,7 @@ import commonRepository from './common.repository.js';
 /**
  * @param {number} id
  * @param {AppellantCaseUpdateRequest} data
- * @returns {Promise<any[]|PrismaPromise<object>>}
+ * @returns {Promise<PrismaPromise<object>>}
  */
 const updateAppellantCaseById = async (id, data) => {
 	const knowsOtherOwners =
@@ -42,17 +42,11 @@ const updateAppellantCaseById = async (id, data) => {
 
 	const transaction = [];
 
-	logger.info({ id }, 'appellant case update');
-	logger.debug({ id, mainUpdates, knowsOtherOwners }, 'appellant case update details');
-
 	transaction.push(
-		databaseConnector.appellantCase.update({
-			where: { id },
+		updateAppellantCaseTable(id, {
+			...mainUpdates,
 			// @ts-ignore
-			data: {
-				...mainUpdates,
-				knowsOtherOwners
-			}
+			knowsOtherOwners
 		})
 	);
 
@@ -94,6 +88,24 @@ const updateAppellantCaseById = async (id, data) => {
 };
 
 /**
+ * @param {number} id
+ * @param {AppellantCaseUpdateRequest} data
+ * @returns {PrismaPromise<object>}
+ */
+const updateAppellantCaseTable = (id, data) => {
+	logger.info({ id }, 'appellant case update');
+	logger.debug({ id, data }, 'appellant case update details');
+
+	return databaseConnector.appellantCase.update({
+		where: { id },
+		// @ts-ignore
+		data: {
+			...data
+		}
+	});
+};
+
+/**
  * @param {UpdateAppellantCaseValidationOutcome} param0
  * @returns {Promise<object[]>}
  */
@@ -107,7 +119,7 @@ const updateAppellantCaseValidationOutcome = ({
 	appealDueDate
 }) => {
 	const transaction = [
-		updateAppellantCaseById(appellantCaseId, {
+		updateAppellantCaseTable(appellantCaseId, {
 			appellantCaseValidationOutcomeId: validationOutcomeId
 		})
 	];
