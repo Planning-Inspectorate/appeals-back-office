@@ -25,8 +25,8 @@ describe('isExpeditedAppealType', () => {
 		expect(isExpeditedAppealType(APPEAL_CASE_TYPE.Y)).toBe(false);
 	});
 
-	it('returns true for advert appealType', () => {
-		expect(isExpeditedAppealType(APPEAL_CASE_TYPE.H)).toBe(true);
+	it('returns false for advert appealType', () => {
+		expect(isExpeditedAppealType(APPEAL_CASE_TYPE.H)).toBe(false);
 	});
 
 	it('returns false for enforcement notice appealType', () => {
