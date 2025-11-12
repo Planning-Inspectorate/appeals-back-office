@@ -26,7 +26,6 @@ export function beforeYouStartSection(templateData) {
 	const {
 		localPlanningDepartment,
 		planningApplicationReference,
-		applicationDate,
 		applicationDecision,
 		applicationDecisionDate,
 		typeOfPlanningApplication
@@ -56,8 +55,7 @@ export function beforeYouStartSection(templateData) {
 			// 	key: 'Are you claiming costs as part of your appeal?',
 			// 	text: formatYesNo(appellantCostsAppliedFor)
 			// },
-			{ key: 'What is the application reference number?', text: planningApplicationReference },
-			{ key: 'What date did you submit your application?', text: formatDate(applicationDate) }
+			{ key: 'What is the application reference number?', text: planningApplicationReference }
 		]
 	};
 }
