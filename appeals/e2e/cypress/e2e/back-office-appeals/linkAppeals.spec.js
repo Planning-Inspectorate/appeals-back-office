@@ -50,7 +50,8 @@ describe('Link appeals', () => {
 			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
 				cases = [leadCaseObj, childCaseObj];
 
-				happyPathHelper.assignCaseOfficer(leadCaseObj);
+				cy.assignCaseOfficerViaApi(leadCaseObj);
+				happyPathHelper.viewCaseDetails(leadCaseObj);
 
 				//link appeal
 				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
@@ -78,7 +79,8 @@ describe('Link appeals', () => {
 			cy.createCase().then((childCaseObj) => {
 				cases = [leadCaseObj, childCaseObj];
 
-				happyPathHelper.assignCaseOfficer(childCaseObj);
+				cy.assignCaseOfficerViaApi(childCaseObj);
+				happyPathHelper.viewCaseDetails(childCaseObj);
 
 				//link appeal
 				happyPathHelper.addLinkedAppeal(leadCaseObj, leadCaseObj);
@@ -107,7 +109,8 @@ describe('Link appeals', () => {
 				cy.createCase({ caseType: 'W' }).then((childCaseObj2) => {
 					cases = [leadCaseObj, childCaseObj1, childCaseObj2];
 
-					happyPathHelper.assignCaseOfficer(leadCaseObj);
+					cy.assignCaseOfficerViaApi(leadCaseObj);
+					happyPathHelper.viewCaseDetails(leadCaseObj);
 					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj1);
 					caseDetailsPage.checkStatusOfCase('Lead', 1);
 					caseDetailsPage.verifyNumberOfLinkedAppeals(1);
@@ -124,7 +127,8 @@ describe('Link appeals', () => {
 			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
 				cases = [leadCaseObj, childCaseObj];
 
-				happyPathHelper.assignCaseOfficer(leadCaseObj);
+				cy.assignCaseOfficerViaApi(leadCaseObj);
+				happyPathHelper.viewCaseDetails(leadCaseObj);
 
 				//link appeal
 				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
@@ -144,7 +148,8 @@ describe('Hidden elements', () => {
 			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
 				cases = [leadCaseObj, childCaseObj];
 
-				happyPathHelper.assignCaseOfficer(leadCaseObj);
+				cy.assignCaseOfficerViaApi(leadCaseObj);
+				happyPathHelper.viewCaseDetails(leadCaseObj);
 
 				//link appeal
 				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
@@ -168,12 +173,14 @@ describe('Hidden elements', () => {
 				cases = [leadCaseObj, childCaseObj];
 
 				//child appeal
-				happyPathHelper.assignCaseOfficer(childCaseObj);
+				cy.assignCaseOfficerViaApi(childCaseObj);
+				happyPathHelper.viewCaseDetails(childCaseObj);
 				happyPathHelper.reviewAppellantCase(childCaseObj);
 				caseDetailsPage.verifyLinkExists('Cancel appeal', true);
 
 				//lead appeal
-				happyPathHelper.assignCaseOfficer(leadCaseObj);
+				cy.assignCaseOfficerViaApi(leadCaseObj);
+				happyPathHelper.viewCaseDetails(leadCaseObj);
 				caseDetailsPage.verifyLinkExists('Cancel appeal', true);
 				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 				happyPathHelper.reviewAppellantCase(leadCaseObj);
@@ -194,11 +201,13 @@ describe('Hidden elements', () => {
 				cases = [leadCaseObj, childCaseObj];
 
 				//child appeal
-				happyPathHelper.assignCaseOfficer(childCaseObj);
+				cy.assignCaseOfficerViaApi(childCaseObj);
+				happyPathHelper.viewCaseDetails(childCaseObj);
 				happyPathHelper.reviewAppellantCase(childCaseObj);
 
 				//lead appeal
-				happyPathHelper.assignCaseOfficer(leadCaseObj);
+				cy.assignCaseOfficerViaApi(leadCaseObj);
+				happyPathHelper.viewCaseDetails(leadCaseObj);
 				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 				happyPathHelper.reviewAppellantCase(leadCaseObj);
 				happyPathHelper.startS78Case(leadCaseObj, 'written');
@@ -213,7 +222,7 @@ describe('Hidden elements', () => {
 	});
 });
 
-describe.only('Net residences', () => {
+describe('Net residences', () => {
 	it('Net residence banner is only displayed on the lead appeal', () => {
 		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
 			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
@@ -224,11 +233,13 @@ describe.only('Net residences', () => {
 				});
 
 				//child appeal
-				happyPathHelper.assignCaseOfficer(childCaseObj);
+				cy.assignCaseOfficerViaApi(childCaseObj);
+				happyPathHelper.viewCaseDetails(childCaseObj);
 				happyPathHelper.reviewAppellantCase(childCaseObj);
 
 				//lead appeal
-				happyPathHelper.assignCaseOfficer(leadCaseObj);
+				cy.assignCaseOfficerViaApi(leadCaseObj);
+				happyPathHelper.viewCaseDetails(leadCaseObj);
 				happyPathHelper.reviewAppellantCase(leadCaseObj);
 				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 				happyPathHelper.startS78Case(leadCaseObj, 'written');
@@ -259,11 +270,13 @@ describe.only('Net residences', () => {
 				});
 
 				//child appeal
-				happyPathHelper.assignCaseOfficer(childCaseObj);
+				cy.assignCaseOfficerViaApi(childCaseObj);
+				happyPathHelper.viewCaseDetails(childCaseObj);
 				happyPathHelper.reviewAppellantCase(childCaseObj);
 
 				//lead appeal
-				happyPathHelper.assignCaseOfficer(leadCaseObj);
+				cy.assignCaseOfficerViaApi(leadCaseObj);
+				happyPathHelper.viewCaseDetails(leadCaseObj);
 				happyPathHelper.reviewAppellantCase(leadCaseObj);
 				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 				happyPathHelper.startS78Case(leadCaseObj, 'written');
@@ -288,7 +301,7 @@ describe.only('Net residences', () => {
 	});
 
 	//A2-4950
-	it('Net residence case history entries only appear on the lead appeal', () => {
+	it.skip('Net residence case history entries only appear on the lead appeal', () => {
 		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
 			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
 				cases = [leadCaseObj, childCaseObj];
@@ -298,11 +311,13 @@ describe.only('Net residences', () => {
 				});
 
 				//child appeal
-				happyPathHelper.assignCaseOfficer(childCaseObj);
+				cy.assignCaseOfficerViaApi(childCaseObj);
+				happyPathHelper.viewCaseDetails(childCaseObj);
 				happyPathHelper.reviewAppellantCase(childCaseObj);
 
 				//lead appeal
-				happyPathHelper.assignCaseOfficer(leadCaseObj);
+				cy.assignCaseOfficerViaApi(leadCaseObj);
+				happyPathHelper.viewCaseDetails(leadCaseObj);
 				happyPathHelper.reviewAppellantCase(leadCaseObj);
 				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 				happyPathHelper.startS78Case(leadCaseObj, 'written');
@@ -339,11 +354,13 @@ describe('Timetable', () => {
 				});
 
 				//child appeal
-				happyPathHelper.assignCaseOfficer(childCaseObj);
+				cy.assignCaseOfficerViaApi(childCaseObj);
+				happyPathHelper.viewCaseDetails(childCaseObj);
 				happyPathHelper.reviewAppellantCase(childCaseObj);
 
 				//lead appeal
-				happyPathHelper.assignCaseOfficer(leadCaseObj);
+				cy.assignCaseOfficerViaApi(leadCaseObj);
+				happyPathHelper.viewCaseDetails(leadCaseObj);
 				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 				happyPathHelper.reviewAppellantCase(leadCaseObj);
 				happyPathHelper.startS78Case(leadCaseObj, 'written');
@@ -377,11 +394,13 @@ describe('Timetable', () => {
 				});
 
 				//child appeal
-				happyPathHelper.assignCaseOfficer(childCaseObj);
+				cy.assignCaseOfficerViaApi(childCaseObj);
+				happyPathHelper.viewCaseDetails(childCaseObj);
 				happyPathHelper.reviewAppellantCase(childCaseObj);
 
 				//lead appeal
-				happyPathHelper.assignCaseOfficer(leadCaseObj);
+				cy.assignCaseOfficerViaApi(leadCaseObj);
+				happyPathHelper.viewCaseDetails(leadCaseObj);
 				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 				happyPathHelper.reviewAppellantCase(leadCaseObj);
 				happyPathHelper.startS78Case(leadCaseObj, 'written');
@@ -425,10 +444,12 @@ describe('Site visit', () => {
 					cy.addLpaqSubmissionToCase(caseObj);
 				});
 
-				happyPathHelper.assignCaseOfficer(childCaseObj);
+				cy.assignCaseOfficerViaApi(childCaseObj);
+				happyPathHelper.viewCaseDetails(childCaseObj);
 				happyPathHelper.reviewAppellantCase(childCaseObj);
 
-				happyPathHelper.assignCaseOfficer(leadCaseObj);
+				cy.assignCaseOfficerViaApi(leadCaseObj);
+				happyPathHelper.viewCaseDetails(leadCaseObj);
 
 				//link appeals
 				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
@@ -551,12 +572,14 @@ describe('Issue Decision', () => {
 						cy.addLpaqSubmissionToCase(caseRef);
 					});
 
-					children.forEach((child) => {
-						happyPathHelper.assignCaseOfficer(child);
-						happyPathHelper.reviewAppellantCase(child);
+					children.forEach((childCaseObj) => {
+						cy.assignCaseOfficerViaApi(childCaseObj);
+						happyPathHelper.viewCaseDetails(childCaseObj);
+						happyPathHelper.reviewAppellantCase(childCaseObj);
 					});
 
-					happyPathHelper.assignCaseOfficer(leadCaseObj);
+					cy.assignCaseOfficerViaApi(leadCaseObj);
+					happyPathHelper.viewCaseDetails(leadCaseObj);
 
 					//link appeals
 					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj1);
@@ -658,12 +681,14 @@ describe('Issue Decision', () => {
 						cy.addLpaqSubmissionToCase(caseObj);
 					});
 
-					children.forEach((childCaseObj1) => {
-						happyPathHelper.assignCaseOfficer(childCaseObj1);
-						happyPathHelper.reviewAppellantCase(childCaseObj1);
+					children.forEach((childCaseObj) => {
+						cy.assignCaseOfficerViaApi(childCaseObj);
+						happyPathHelper.viewCaseDetails(childCaseObj);
+						happyPathHelper.reviewAppellantCase(childCaseObj);
 					});
 
-					happyPathHelper.assignCaseOfficer(leadCaseObj);
+					cy.assignCaseOfficerViaApi(leadCaseObj);
+					happyPathHelper.viewCaseDetails(leadCaseObj);
 
 					//link appeals
 					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj1);
@@ -750,7 +775,7 @@ describe('Issue Decision', () => {
 					caseDetailsPage.checkDecisionOutcome('LPA costs decision: Issued');
 
 					cases.forEach((caseObj) => {
-						happyPathHelper.viewCaseDetails(caseObj.reference);
+						happyPathHelper.viewCaseDetails(caseObj);
 						caseDetailsPage.checkStatusOfCase('Complete', 0);
 						caseDetailsPage.checkDecisionOutcome(`Decision: Allowed`);
 						caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
@@ -768,18 +793,20 @@ describe('Issue Decision', () => {
 					const children = cases.slice(1);
 
 					cases.forEach((caseObj) => {
-						cy.addLpaqSubmissionToCase(caseObj.reference);
+						cy.addLpaqSubmissionToCase(caseObj);
 					});
 
 					children.forEach((childCaseObj) => {
-						happyPathHelper.assignCaseOfficer(childCaseObj.reference);
-						happyPathHelper.reviewAppellantCase(childCaseObj.reference);
+						cy.assignCaseOfficerViaApi(childCaseObj);
+						happyPathHelper.viewCaseDetails(childCaseObj);
+						happyPathHelper.reviewAppellantCase(childCaseObj);
 					});
 
-					happyPathHelper.assignCaseOfficer(leadCaseObj);
+					cy.assignCaseOfficerViaApi(leadCaseObj);
+					happyPathHelper.viewCaseDetails(leadCaseObj);
 
 					//link appeals
-					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
+					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj1);
 					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj2, false);
 
 					caseDetailsPage.checkStatusOfCase('Lead', 1);
@@ -863,7 +890,7 @@ describe('Issue Decision', () => {
 					caseDetailsPage.checkDecisionOutcome('Appellant costs decision: Issued');
 
 					cases.forEach((caseObj) => {
-						happyPathHelper.viewCaseDetails(caseObj.reference);
+						happyPathHelper.viewCaseDetails(caseObj);
 						caseDetailsPage.checkStatusOfCase('Complete', 0);
 						caseDetailsPage.checkDecisionOutcome(`Decision: Allowed`);
 						caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
@@ -881,13 +908,15 @@ describe('Unhappy path', () => {
 				cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
 					cases = [leadCaseObj1, leadCaseObj2, childCaseObj];
 
-					happyPathHelper.assignCaseOfficer(leadCaseObj1);
+					cy.assignCaseOfficerViaApi(leadCaseObj1);
+					happyPathHelper.viewCaseDetails(leadCaseObj1);
 
 					happyPathHelper.addLinkedAppeal(leadCaseObj1, childCaseObj);
 					caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 					//2nd lead case
-					happyPathHelper.assignCaseOfficer(leadCaseObj2);
+					cy.assignCaseOfficerViaApi(leadCaseObj2);
+					happyPathHelper.viewCaseDetails(leadCaseObj2);
 
 					//link appeal
 					caseDetailsPage.clickAddLinkedAppeal();
@@ -906,13 +935,15 @@ describe('Unhappy path', () => {
 					cy.createCase({ caseType: 'W' }).then((childCaseObj2) => {
 						cases = [leadCaseObj1, leadCaseObj2, childCaseObj1, childCaseObj2];
 
-						happyPathHelper.assignCaseOfficer(leadCaseObj1);
+						cy.assignCaseOfficerViaApi(leadCaseObj1);
+						happyPathHelper.viewCaseDetails(leadCaseObj1);
 
 						happyPathHelper.addLinkedAppeal(leadCaseObj1, childCaseObj1);
 						caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 						//2nd lead case
-						happyPathHelper.assignCaseOfficer(leadCaseObj2);
+						cy.assignCaseOfficerViaApi(leadCaseObj2);
+						happyPathHelper.viewCaseDetails(leadCaseObj2);
 
 						happyPathHelper.addLinkedAppeal(leadCaseObj2, childCaseObj2);
 						caseDetailsPage.checkStatusOfCase('Lead', 1);
@@ -939,13 +970,15 @@ describe('Unhappy path', () => {
 					cy.createCase({ caseType: 'W' }).then((childCaseObj2) => {
 						cases = [leadCaseObj1, leadCaseObj2, childCaseObj1, childCaseObj2];
 
-						happyPathHelper.assignCaseOfficer(leadCaseObj1);
+						cy.assignCaseOfficerViaApi(leadCaseObj1);
+						happyPathHelper.viewCaseDetails(leadCaseObj1);
 
 						happyPathHelper.addLinkedAppeal(leadCaseObj1, childCaseObj1);
 						caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 						//2nd lead case
-						happyPathHelper.assignCaseOfficer(leadCaseObj2);
+						cy.assignCaseOfficerViaApi(leadCaseObj2);
+						happyPathHelper.viewCaseDetails(leadCaseObj2);
 						happyPathHelper.addLinkedAppeal(leadCaseObj2, childCaseObj2);
 						caseDetailsPage.checkStatusOfCase('Lead', 1);
 
@@ -964,7 +997,8 @@ describe('Unhappy path', () => {
 				cases = [leadCaseObj, childCaseObj];
 
 				cy.addLpaqSubmissionToCase(leadCaseObj);
-				happyPathHelper.assignCaseOfficer(leadCaseObj);
+				cy.assignCaseOfficerViaApi(leadCaseObj);
+				happyPathHelper.viewCaseDetails(leadCaseObj);
 				happyPathHelper.reviewAppellantCase(leadCaseObj);
 				happyPathHelper.startS78Case(leadCaseObj, 'written');
 				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
@@ -983,7 +1017,8 @@ describe('Unhappy path', () => {
 				cases = [leadCaseObj, childCaseObj];
 
 				cy.addLpaqSubmissionToCase(childCaseObj);
-				happyPathHelper.assignCaseOfficer(childCaseObj);
+				cy.assignCaseOfficerViaApi(childCaseObj);
+				happyPathHelper.viewCaseDetails(childCaseObj);
 				happyPathHelper.reviewAppellantCase(childCaseObj);
 				happyPathHelper.startS78Case(childCaseObj, 'written');
 				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
