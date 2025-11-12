@@ -648,4 +648,465 @@ describe('change-procedure-type.md', () => {
 			);
 		});
 	});
+	describe('change to hearing', () => {
+		test('should call notify sendEmail with the correct data if changing from written to hearing procedure and is LPA', async () => {
+			const notifySendData = {
+				doNotMockNotifySend: true,
+				templateName: 'change-procedure-type',
+				notifyClient: {
+					sendEmail: jest.fn()
+				},
+				recipientEmail: 'test@136s7.com',
+				personalisation: {
+					appeal_reference_number: 'ABC45678',
+					site_address: '10, Test Street',
+					lpa_reference: '12345XYZ',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					appeal_procedure: 'hearing',
+					change_message:
+						'We have changed your appeal procedure to hearing and cancelled your site visit.',
+					lpa_statement_exists: true,
+					is_lpa: true,
+					subject: 'We have changed your appeal procedure: ABC45678',
+					hearing_date: '31 March 2024',
+					hearing_time: '1pm',
+					inquiry_date: '',
+					inquiry_time: '',
+					inquiry_expected_days: '',
+					inquiry_address: '',
+					week_before_conference_date: '23 March 2024',
+					proof_of_evidence_due_date: '20 March 2024',
+					existing_appeal_procedure: 'written'
+				}
+			};
+
+			const expectedContent = [
+				'We have changed your appeal procedure to hearing and cancelled your site visit.',
+				'',
+				'# Appeal details',
+				'',
+				'^Appeal reference number: ABC45678',
+				'Address: 10, Test Street',
+				'Planning application reference: 12345XYZ',
+				'',
+				'# Hearing details',
+				'',
+				'^Date: 31 March 2024',
+				'Time: 1pm',
+				'',
+				'We will contact you if we make any changes to the hearing.',
+				'',
+				'# What happens next',
+				'',
+				'You need to [submit a new statement](/mock-front-office-url/manage-appeals/ABC45678).',
+				'',
+				'The Planning Inspectorate',
+				'caseofficers@planninginspectorate.gov.uk'
+			].join('\n');
+
+			await notifySend(notifySendData);
+
+			expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+				{
+					id: 'mock-appeal-generic-id'
+				},
+				'test@136s7.com',
+				{
+					content: expectedContent,
+					subject: 'We have changed your appeal procedure: ABC45678'
+				}
+			);
+		});
+
+		test('should call notify sendEmail with the correct data if changing from written to hearing procedure and is appellant', async () => {
+			const notifySendData = {
+				doNotMockNotifySend: true,
+				templateName: 'change-procedure-type',
+				notifyClient: {
+					sendEmail: jest.fn()
+				},
+				recipientEmail: 'test@136s7.com',
+				personalisation: {
+					appeal_reference_number: 'ABC45678',
+					site_address: '10, Test Street',
+					lpa_reference: '12345XYZ',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					appeal_procedure: 'hearing',
+					change_message:
+						'We have changed your appeal procedure to hearing and cancelled your site visit.',
+					lpa_statement_exists: true,
+					is_lpa: false,
+					subject: 'We have changed your appeal procedure: ABC45678',
+					hearing_date: '31 March 2024',
+					hearing_time: '1pm',
+					inquiry_date: '',
+					inquiry_time: '',
+					inquiry_expected_days: '',
+					inquiry_address: '',
+					week_before_conference_date: '23 March 2024',
+					proof_of_evidence_due_date: '20 March 2024',
+					existing_appeal_procedure: 'written'
+				}
+			};
+
+			const expectedContent = [
+				'We have changed your appeal procedure to hearing and cancelled your site visit.',
+				'',
+				'# Appeal details',
+				'',
+				'^Appeal reference number: ABC45678',
+				'Address: 10, Test Street',
+				'Planning application reference: 12345XYZ',
+				'',
+				'# Hearing details',
+				'',
+				'^Date: 31 March 2024',
+				'Time: 1pm',
+				'',
+				'We will contact you if we make any changes to the hearing.',
+				'',
+				'The Planning Inspectorate',
+				'caseofficers@planninginspectorate.gov.uk'
+			].join('\n');
+
+			await notifySend(notifySendData);
+
+			expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+				{
+					id: 'mock-appeal-generic-id'
+				},
+				'test@136s7.com',
+				{
+					content: expectedContent,
+					subject: 'We have changed your appeal procedure: ABC45678'
+				}
+			);
+		});
+
+		test('should call notify sendEmail with the correct data if changing from inquiry to hearing procedure and is LPA', async () => {
+			const notifySendData = {
+				doNotMockNotifySend: true,
+				templateName: 'change-procedure-type',
+				notifyClient: {
+					sendEmail: jest.fn()
+				},
+				recipientEmail: 'test@136s7.com',
+				personalisation: {
+					appeal_reference_number: 'ABC45678',
+					site_address: '10, Test Street',
+					lpa_reference: '12345XYZ',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					appeal_procedure: 'hearing',
+					change_message:
+						'We have changed your appeal procedure to hearing and cancelled your inquiry.',
+					lpa_statement_exists: true,
+					is_lpa: true,
+					subject: 'We have changed your appeal procedure: ABC45678',
+					hearing_date: '31 March 2024',
+					hearing_time: '1pm',
+					inquiry_date: '',
+					inquiry_time: '',
+					inquiry_expected_days: '',
+					inquiry_address: '',
+					week_before_conference_date: '23 March 2024',
+					proof_of_evidence_due_date: '20 March 2024',
+					existing_appeal_procedure: 'inquiry'
+				}
+			};
+
+			const expectedContent = [
+				'We have changed your appeal procedure to hearing and cancelled your inquiry.',
+				'',
+				'# Appeal details',
+				'',
+				'^Appeal reference number: ABC45678',
+				'Address: 10, Test Street',
+				'Planning application reference: 12345XYZ',
+				'',
+				'# Hearing details',
+				'',
+				'^Date: 31 March 2024',
+				'Time: 1pm',
+				'',
+				'We will contact you if we make any changes to the hearing.',
+				'',
+				'# What happens next',
+				'',
+				'You need to [submit a new statement](/mock-front-office-url/manage-appeals/ABC45678).',
+				'',
+				'The Planning Inspectorate',
+				'caseofficers@planninginspectorate.gov.uk'
+			].join('\n');
+
+			await notifySend(notifySendData);
+
+			expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+				{
+					id: 'mock-appeal-generic-id'
+				},
+				'test@136s7.com',
+				{
+					content: expectedContent,
+					subject: 'We have changed your appeal procedure: ABC45678'
+				}
+			);
+		});
+
+		test('should call notify sendEmail with the correct data if changing from inquiry to hearing procedure and is appellant', async () => {
+			const notifySendData = {
+				doNotMockNotifySend: true,
+				templateName: 'change-procedure-type',
+				notifyClient: {
+					sendEmail: jest.fn()
+				},
+				recipientEmail: 'test@136s7.com',
+				personalisation: {
+					appeal_reference_number: 'ABC45678',
+					site_address: '10, Test Street',
+					lpa_reference: '12345XYZ',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					appeal_procedure: 'hearing',
+					change_message:
+						'We have changed your appeal procedure to hearing and cancelled your inquiry.',
+					lpa_statement_exists: true,
+					is_lpa: false,
+					subject: 'We have changed your appeal procedure: ABC45678',
+					hearing_date: '31 March 2024',
+					hearing_time: '1pm',
+					inquiry_date: '',
+					inquiry_time: '',
+					inquiry_expected_days: '',
+					inquiry_address: '',
+					week_before_conference_date: '23 March 2024',
+					proof_of_evidence_due_date: '20 March 2024',
+					existing_appeal_procedure: 'inquiry'
+				}
+			};
+
+			const expectedContent = [
+				'We have changed your appeal procedure to hearing and cancelled your inquiry.',
+				'',
+				'# Appeal details',
+				'',
+				'^Appeal reference number: ABC45678',
+				'Address: 10, Test Street',
+				'Planning application reference: 12345XYZ',
+				'',
+				'# Hearing details',
+				'',
+				'^Date: 31 March 2024',
+				'Time: 1pm',
+				'',
+				'We will contact you if we make any changes to the hearing.',
+				'',
+				'The Planning Inspectorate',
+				'caseofficers@planninginspectorate.gov.uk'
+			].join('\n');
+
+			await notifySend(notifySendData);
+
+			expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+				{
+					id: 'mock-appeal-generic-id'
+				},
+				'test@136s7.com',
+				{
+					content: expectedContent,
+					subject: 'We have changed your appeal procedure: ABC45678'
+				}
+			);
+		});
+
+		test('should call notify sendEmail with the correct data if changing from written to inquiry and LPA with LPA statement not existing', async () => {
+			const notifySendData = {
+				doNotMockNotifySend: true,
+				templateName: 'change-procedure-type',
+				notifyClient: {
+					sendEmail: jest.fn()
+				},
+				recipientEmail: 'test@136s7.com',
+				personalisation: {
+					appeal_reference_number: 'ABC45678',
+					site_address: '10, Test Street',
+					lpa_reference: '12345XYZ',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					appeal_procedure: 'hearing',
+					change_message:
+						'We have changed your appeal procedure to hearing and cancelled your site visit.',
+					lpa_statement_exists: false,
+					is_lpa: true,
+					subject: 'We have changed your appeal procedure: ABC45678',
+					hearing_date: '31 March 2024',
+					hearing_time: '1pm',
+					inquiry_date: '',
+					inquiry_time: '',
+					inquiry_expected_days: '',
+					inquiry_address: '',
+					week_before_conference_date: '23 March 2024',
+					proof_of_evidence_due_date: '20 March 2024',
+					existing_appeal_procedure: 'written'
+				}
+			};
+
+			const expectedContent = [
+				'We have changed your appeal procedure to hearing and cancelled your site visit.',
+				'',
+				'# Appeal details',
+				'',
+				'^Appeal reference number: ABC45678',
+				'Address: 10, Test Street',
+				'Planning application reference: 12345XYZ',
+				'',
+				'# Hearing details',
+				'',
+				'^Date: 31 March 2024',
+				'Time: 1pm',
+				'',
+				'We will contact you if we make any changes to the hearing.',
+				'',
+				'The Planning Inspectorate',
+				'caseofficers@planninginspectorate.gov.uk'
+			].join('\n');
+
+			await notifySend(notifySendData);
+
+			expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+				{
+					id: 'mock-appeal-generic-id'
+				},
+				'test@136s7.com',
+				{
+					content: expectedContent,
+					subject: 'We have changed your appeal procedure: ABC45678'
+				}
+			);
+		});
+
+		test('should call notify sendEmail with the correct data if changing from inquiry to hearing and LPA with LPA statement not existing', async () => {
+			const notifySendData = {
+				doNotMockNotifySend: true,
+				templateName: 'change-procedure-type',
+				notifyClient: {
+					sendEmail: jest.fn()
+				},
+				recipientEmail: 'test@136s7.com',
+				personalisation: {
+					appeal_reference_number: 'ABC45678',
+					site_address: '10, Test Street',
+					lpa_reference: '12345XYZ',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					appeal_procedure: 'hearing',
+					change_message:
+						'We have changed your appeal procedure to hearing and cancelled your site visit.',
+					lpa_statement_exists: false,
+					is_lpa: false,
+					subject: 'We have changed your appeal procedure: ABC45678',
+					hearing_date: '31 March 2024',
+					hearing_time: '1pm',
+					inquiry_date: '',
+					inquiry_time: '',
+					inquiry_expected_days: '',
+					inquiry_address: '',
+					week_before_conference_date: '23 March 2024',
+					proof_of_evidence_due_date: '20 March 2024',
+					existing_appeal_procedure: 'written'
+				}
+			};
+
+			const expectedContent = [
+				'We have changed your appeal procedure to hearing and cancelled your site visit.',
+				'',
+				'# Appeal details',
+				'',
+				'^Appeal reference number: ABC45678',
+				'Address: 10, Test Street',
+				'Planning application reference: 12345XYZ',
+				'',
+				'# Hearing details',
+				'',
+				'^Date: 31 March 2024',
+				'Time: 1pm',
+				'',
+				'We will contact you if we make any changes to the hearing.',
+				'',
+				'The Planning Inspectorate',
+				'caseofficers@planninginspectorate.gov.uk'
+			].join('\n');
+
+			await notifySend(notifySendData);
+
+			expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+				{
+					id: 'mock-appeal-generic-id'
+				},
+				'test@136s7.com',
+				{
+					content: expectedContent,
+					subject: 'We have changed your appeal procedure: ABC45678'
+				}
+			);
+		});
+
+		test('should call notify sendEmail with the correct data if changing from inquiry to hearing procedure and no hearing details', async () => {
+			const notifySendData = {
+				doNotMockNotifySend: true,
+				templateName: 'change-procedure-type',
+				notifyClient: {
+					sendEmail: jest.fn()
+				},
+				recipientEmail: 'test@136s7.com',
+				personalisation: {
+					appeal_reference_number: 'ABC45678',
+					site_address: '10, Test Street',
+					lpa_reference: '12345XYZ',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					appeal_procedure: 'hearing',
+					change_message:
+						'We have changed your appeal procedure to hearing and cancelled your inquiry.',
+					lpa_statement_exists: true,
+					is_lpa: true,
+					subject: 'We have changed your appeal procedure: ABC45678',
+					hearing_date: '',
+					hearing_time: '',
+					inquiry_date: '',
+					inquiry_time: '',
+					inquiry_expected_days: '',
+					inquiry_address: '',
+					week_before_conference_date: '23 March 2024',
+					proof_of_evidence_due_date: '20 March 2024',
+					existing_appeal_procedure: 'inquiry'
+				}
+			};
+
+			const expectedContent = [
+				'We have changed your appeal procedure to hearing and cancelled your inquiry.',
+				'',
+				'# Appeal details',
+				'',
+				'^Appeal reference number: ABC45678',
+				'Address: 10, Test Street',
+				'Planning application reference: 12345XYZ',
+				'',
+				'# What happens next',
+				'',
+				'You need to [submit a new statement](/mock-front-office-url/manage-appeals/ABC45678).',
+				'',
+				'The Planning Inspectorate',
+				'caseofficers@planninginspectorate.gov.uk'
+			].join('\n');
+
+			await notifySend(notifySendData);
+
+			expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+				{
+					id: 'mock-appeal-generic-id'
+				},
+				'test@136s7.com',
+				{
+					content: expectedContent,
+					subject: 'We have changed your appeal procedure: ABC45678'
+				}
+			);
+		});
+	});
 });

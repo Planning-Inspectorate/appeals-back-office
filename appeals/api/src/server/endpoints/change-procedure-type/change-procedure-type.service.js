@@ -248,6 +248,7 @@ export const changeProcedureToInquiry = async (data, appealId) => {
  * @param {string | undefined} existingAppealProcedure
  * @param {string | undefined} proofOfEvidenceAndWitnessesDueDate
  * @param {import('#endpoints/appeals.js').SingleAddressResponse | undefined} address
+ * @param {string | undefined} eventDate
  * @returns {Promise<void>}
  */
 export const sendChangeProcedureTypeNotifications = async (
@@ -257,7 +258,8 @@ export const sendChangeProcedureTypeNotifications = async (
 	appealProcedure,
 	existingAppealProcedure,
 	proofOfEvidenceAndWitnessesDueDate,
-	address
+	address,
+	eventDate
 ) => {
 	const lpaStatement = await databaseConnector.representation.findFirst({
 		where: { appealId: appeal.id, representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT }
@@ -313,7 +315,11 @@ export const sendChangeProcedureTypeNotifications = async (
 		proof_of_evidence_due_date: proofOfEvidenceAndWitnessesDueDate
 			? dateISOStringToDisplayDate(proofOfEvidenceAndWitnessesDueDate)
 			: '',
-		existing_appeal_procedure: existingAppealProcedure ?? ''
+		existing_appeal_procedure: existingAppealProcedure ?? '',
+		hearing_date: dateISOStringToDisplayDate(
+			eventDate ? dateISOStringToDisplayDate(eventDate) : ''
+		),
+		hearing_time: dateISOStringToDisplayTime12hr(eventDate ?? '')
 	};
 	await sendNotifications(notifyClient, templateName, appeal, lpaStatement, personalisation);
 };
