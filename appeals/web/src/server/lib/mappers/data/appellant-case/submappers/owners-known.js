@@ -20,11 +20,15 @@ const mapOwnersKnownLabelText = (knowsOtherLandowners) => {
 };
 
 /** @type {import("../mapper.js").SubMapper} */
-export const mapOwnersKnown = ({ appellantCaseData, currentRoute, userHasUpdateCase }) =>
-	textSummaryListItem({
+export const mapOwnersKnown = ({ appellantCaseData, currentRoute, userHasUpdateCase }) => {
+	const knowsOwners = appellantCaseData.siteOwnership.ownsSomeLand
+		? appellantCaseData.siteOwnership.knowsOtherLandowners
+		: appellantCaseData.siteOwnership.areAllOwnersKnown;
+	return textSummaryListItem({
 		id: 'owners-known',
 		text: 'Does the appellant know who owns the land involved in the appeal?',
-		value: mapOwnersKnownLabelText(appellantCaseData.siteOwnership.knowsOtherLandowners),
+		value: mapOwnersKnownLabelText(knowsOwners),
 		link: `${currentRoute}/owners-known/change`,
 		editable: userHasUpdateCase
 	});
+};
