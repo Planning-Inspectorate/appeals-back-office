@@ -179,6 +179,7 @@ describe('inquiry routes', () => {
 				});
 
 				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(fullPlanningAppeal.id);
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(1);
 
 				expect(response.status).toEqual(201);
 			});
@@ -907,6 +908,7 @@ describe('inquiry routes', () => {
 				});
 
 				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(fullPlanningAppeal.id);
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(1);
 
 				expect(response.status).toEqual(201);
 			});
