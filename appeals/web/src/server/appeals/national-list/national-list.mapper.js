@@ -121,9 +121,7 @@ export function nationalListPage(
 	if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
 		enabledAppealProcedures.push(APPEAL_CASE_PROCEDURE.WRITTEN);
 	}
-	if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_HEARING)) {
-		enabledAppealProcedures.push(APPEAL_CASE_PROCEDURE.HEARING);
-	}
+	enabledAppealProcedures.push(APPEAL_CASE_PROCEDURE.HEARING);
 	if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_INQUIRY)) {
 		enabledAppealProcedures.push(APPEAL_CASE_PROCEDURE.INQUIRY);
 	}
