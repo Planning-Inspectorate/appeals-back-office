@@ -5,7 +5,12 @@
 
 ^Date: {{inquiry_date}}
 Time: {{inquiry_time}}
+{% if inquiry_expected_days -%}
+Expected days: {{inquiry_expected_days}}
+{% endif -%}
+{% if inquiry_address -%}
 Venue address: {{inquiry_address}}
+{% endif %}
 
 # What happens next
 
