@@ -39,12 +39,21 @@ export const errorMessage = (type, replaceValue, additionalValues = {}) => {
 		DIFFERENT_FILE_EXTENSION: `The selected file must be a {fileExtension}`,
 		SINGLE_FILE_ONLY: `You can only upload 1 file`
 	};
+	// Change text output in case of on Decision Letter page
+	const mainHeading = document.querySelector('h1');
+	const isDecisionLetterPage =
+		(mainHeading && mainHeading.textContent?.includes('Decision Letter')) ||
+		window.location.pathname.includes('decision-letter-upload');
+
+	const fileSubject = isDecisionLetterPage ? 'The decision letter' : 'The selected file';
 
 	let message = index[type];
 
 	if (!message) {
 		return index.GENERIC;
 	}
+
+	message = message.replace('The selected file', fileSubject);
 
 	if (additionalValues) {
 		for (const [key, value] of Object.entries(additionalValues)) {
