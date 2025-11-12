@@ -1,4 +1,7 @@
-import { APPEAL_TYPE_OF_PLANNING_APPLICATION } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_APPLICATION_DECISION,
+	APPEAL_TYPE_OF_PLANNING_APPLICATION
+} from '@planning-inspectorate/data-model';
 import { formatDate } from '../../../lib/nunjucks-filters/format-date.js';
 import { formatSentenceCase } from '../../../lib/nunjucks-filters/index.js';
 
@@ -19,6 +22,19 @@ function formatApplicationType(typeOfPlanningApplication) {
 			return 'Displaying an advertisement';
 		default:
 			return formatSentenceCase(typeOfPlanningApplication, 'Not provided');
+	}
+}
+
+function formatApplicationDecision(applicationDecision) {
+	switch (applicationDecision) {
+		case APPEAL_APPLICATION_DECISION.NOT_RECEIVED:
+			return 'I have not received a decision';
+		case APPEAL_APPLICATION_DECISION.GRANTED:
+			return 'Granted with conditions';
+		case APPEAL_APPLICATION_DECISION.REFUSED:
+			return 'Refused';
+		default:
+			return '';
 	}
 }
 
@@ -44,11 +60,14 @@ export function beforeYouStartSection(templateData) {
 			},
 			{
 				key: 'Was your application granted or refused?',
-				text: formatSentenceCase(applicationDecision)
+				text: formatApplicationDecision(applicationDecision)
 			},
 			{
-				key: 'What’s the date on the decision letter from the local planning authority?',
-				text: formatDate(applicationDecisionDate)
+				key:
+					applicationDecision === APPEAL_APPLICATION_DECISION.NOT_RECEIVED
+						? 'What date was your decision due from the local planning authority?'
+						: 'What’s the date on the decision letter from the local planning authority?',
+				text: applicationDecisionDate ? formatDate(applicationDecisionDate) : 'No data'
 			},
 			// Being removed from BYS in BO
 			// {
