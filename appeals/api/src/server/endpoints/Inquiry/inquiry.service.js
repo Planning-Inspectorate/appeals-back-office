@@ -5,6 +5,7 @@ import { notifySend } from '#notify/notify-send.js';
 import inquiryRepository from '#repositories/inquiry.repository.js';
 import transitionState from '#state/transition-state.js';
 import { databaseConnector } from '#utils/database-connector.js';
+import logger from '#utils/logger.js';
 import { trimAppealType } from '#utils/string-utils.js';
 import { EVENT_TYPE, PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/common.js';
 import {
@@ -293,6 +294,7 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 			);
 		}
 	} catch (error) {
+		logger.error(error, 'Failed to create inquiry');
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
 };
@@ -346,6 +348,7 @@ const updateInquiry = async (updateInquiryData, notifyClient, appeal, existingAd
 			);
 		}
 	} catch (error) {
+		logger.error(error, 'Failed to update inquiry');
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
 };
@@ -373,6 +376,7 @@ const deleteInquiry = async (deleteInquiryData, notifyClient, appeal) => {
 			team_email_address: await getTeamEmailFromAppealId(appeal.id)
 		});
 	} catch (error) {
+		logger.error(error, 'Failed to delete inquiry');
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
 };
