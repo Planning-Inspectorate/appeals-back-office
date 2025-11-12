@@ -406,15 +406,7 @@ Cypress.Commands.add('setupSiteVisitViaAPI', (caseObj) => {
 
 Cypress.Commands.add('issueDecisionViaApi', (caseObj) => {
 	return cy.wrap(null).then(async () => {
-		await appealsApiClient.setupSiteVisit(caseObj.reference);
-		cy.log('Issue allowed decision for case ref ' + caseObj.reference);
-		return;
-	});
-});
-
-Cypress.Commands.add('issueDecisionViaApi', (caseObj) => {
-	return cy.wrap(null).then(async () => {
-		await appealsApiClient.setupSiteVisit(caseObj.reference);
+		await appealsApiClient.issueDecision(caseObj.reference);
 		cy.log('Issue allowed decision for case ref ' + caseObj.reference);
 		return;
 	});

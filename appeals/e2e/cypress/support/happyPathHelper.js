@@ -588,7 +588,7 @@ function updateCase(
 	currentStatus,
 	targetStatus,
 	appealType = 'HAS',
-	procedureType = 'hearing'
+	procedureType = 'written'
 ) {
 	const flow = FLOWS[appealType] || FLOWS.BASE;
 
@@ -598,7 +598,11 @@ function updateCase(
 	for (let i = fromIndex; i < toIndex; i++) {
 		const current = flow[i];
 		const fn = baseActions[current];
-		fn(caseObj, appealType, procedureType);
+		if (fn) {
+			fn(caseObj, appealType, procedureType);
+		} else {
+			cy.log(`⚠️ No action defined for ${current}`);
+		}
 	}
 	happyPathHelper.viewCaseDetails(caseObj);
 }

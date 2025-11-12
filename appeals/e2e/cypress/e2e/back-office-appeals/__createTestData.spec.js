@@ -20,14 +20,15 @@ describe('Create Test Data', () => {
 			cy.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'S78', 'written');
 		});
 	});
-	it('S20 Listed Building', () => {
+	it.only('S20 Listed Building', () => {
 		cy.createCase({ caseType: 'Y' }).then((caseObj) => {
 			cy.login(users.appeals.caseAdmin);
 			cy.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'S20');
+			happyPathHelper.viewCaseDetails(caseObj);
 		});
 	});
 
-	it.only('Update Case', () => {
+	it('Update Case', () => {
 		const caseObj = { reference: '6000546' };
 		cy.login(users.appeals.caseAdmin);
 		cy.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'EVENT_READY_TO_SETUP');

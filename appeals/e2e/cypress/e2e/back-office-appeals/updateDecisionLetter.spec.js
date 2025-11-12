@@ -4,6 +4,7 @@
 import { appealsApiRequests } from '../../fixtures/appealsApiRequests';
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
+import { happyPathHelper } from '../../support/happyPathHelper.js';
 import { formatDateAndTime } from '../../support/utils/format';
 
 const caseDetailsPage = new CaseDetailsPage();
@@ -25,13 +26,13 @@ describe('Update Decision Letter', () => {
 	});
 
 	let sampleFiles = caseDetailsPage.sampleFiles;
-	it.only('Update Decision Letter', () => {
-		cy.createCase({
-			caseType: 'W'
-		}).then((caseObj) => {
-			cy.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'S78', 'written');
-
+	it('Update Decision Letter', () => {
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			appeal = caseObj;
+			//Move Case to Decision Issued Status
+			cy.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'ISSUE_DECISION', 'S78', 'written');
 			//Change decision letter
+			happyPathHelper.issueDecision('Allowed', 'both costs', false, false);
 			caseDetailsPage.clickViewDecisionLetter('View decision');
 			caseDetailsPage.clickChangeLinkByLabel('Decision letter');
 			caseDetailsPage.uploadSampleFile(sampleFiles.pdf2);
