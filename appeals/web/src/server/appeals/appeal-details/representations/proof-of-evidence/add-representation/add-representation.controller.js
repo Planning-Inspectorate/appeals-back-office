@@ -85,11 +85,17 @@ export const renderCheckYourAnswers = (request, response) => {
 
 	return renderCheckYourAnswersComponent(
 		{
-			title: `Check details and add ${proofOfEvidenceType} proof of evidence and witnesses`,
-			heading: `Check details and add ${proofOfEvidenceType} proof of evidence and witnesses`,
+			title: `Check details and add ${
+				proofOfEvidenceType === 'lpa' ? 'LPA' : 'appellant'
+			}} proof of evidence and witnesses`,
+			heading: `Check details and add ${
+				proofOfEvidenceType === 'lpa' ? 'LPA' : 'appellant'
+			}} proof of evidence and witnesses`,
 			preHeading: `Appeal ${appealShortReference(appealReference)}`,
 			backLinkUrl: `${baseUrl}/add-document`,
-			submitButtonText: `Add ${proofOfEvidenceType} proof of evidence and witnesses`,
+			submitButtonText: `Add ${
+				proofOfEvidenceType === 'lpa' ? 'LPA' : 'appellant'
+			}} proof of evidence and witnesses`,
 			responses: {
 				'Proof of evidence and witnesses': {
 					html: `<a class="govuk-link" download href="${blobStoreUrl ?? ''}">${name ?? ''}</a>`,
