@@ -278,20 +278,17 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 			);
 		}
 		await broadcasters.broadcastAppeal(appeal.id);
-
-		if (address) {
-			await broadcasters.broadcastEvent(result.inquiry.id, EVENT_TYPE.INQUIRY, EventType.Create);
-			await sendInquiryDetailsNotifications(
-				notifyClient,
-				'inquiry-set-up',
-				appeal,
-				inquiryStartTime,
-				estimatedDays,
-				timetableData,
-				address,
-				startDateWithTimeCorrection
-			);
-		}
+		await broadcasters.broadcastEvent(result.inquiry.id, EVENT_TYPE.INQUIRY, EventType.Create);
+		await sendInquiryDetailsNotifications(
+			notifyClient,
+			'inquiry-set-up',
+			appeal,
+			inquiryStartTime,
+			estimatedDays,
+			timetableData,
+			address,
+			startDateWithTimeCorrection
+		);
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
