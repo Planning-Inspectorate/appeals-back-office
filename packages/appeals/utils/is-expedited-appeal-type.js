@@ -23,13 +23,15 @@ const baseCaseType = {
  * @param {string | null} appealType
  * @returns {boolean}
  */
-const isFPA = (appealType) => {
+const isExpeditedAppealType = (appealType) => {
 	if (appealType === '') return false;
 
 	if (!appealType || !baseCaseType[appealType]) {
-		throw new Error(`Appeal type - ${appealType} not defined in isFPA baseCaseType`);
+		throw new Error(
+			`Appeal type - ${appealType} not defined in isExpeditedAppealType baseCaseType`
+		);
 	}
-	return Boolean(baseCaseType[appealType] === APPEAL_TYPE_SHORTHAND_FPA);
+	return Boolean(baseCaseType[appealType] === APPEAL_TYPE_SHORTHAND_HAS);
 };
 
-export default isFPA;
+export default isExpeditedAppealType;
