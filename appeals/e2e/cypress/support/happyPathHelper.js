@@ -22,8 +22,7 @@ let pdf = sampleFiles.pdf;
 
 export const happyPathHelper = {
 	viewCaseDetails(caseObj) {
-		cy.visit(urlPaths.appealsList);
-		listCasesPage.clickAppealByRef(caseObj);
+		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 	},
 	assignCaseOfficer(caseObj) {
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
@@ -548,64 +547,38 @@ const FLOWS = {
 //potentially add check
 const baseActions = {
 	[STATUSES.ASSIGN_CASE_OFFICER]: (caseObj) => {
-		happyPathHelper.assignCaseOfficer(caseObj);
+		cy.assignCaseOfficerViaApi(caseObj);
 	},
 	[STATUSES.VALIDATION]: (caseObj) => {
-		happyPathHelper.reviewAppellantCase(caseObj);
+		cy.updateAppealDetailsViaApi(caseObj, { validationOutcome: 'valid' });
 	},
 	[STATUSES.READY_TO_START]: (caseObj, appealType, procedureType) => {
-		if (appealType === 'S78') {
-			happyPathHelper.startS78Case(caseObj, procedureType);
-		} else if (procedureType === 'S78') {
-			happyPathHelper.startS78Case(caseObj, procedureType);
-		} else {
-			happyPathHelper.startCase(caseObj);
-		}
+		cy.startAppeal(caseObj);
 	},
 	[STATUSES.LPA_QUESTIONNAIRE]: (caseObj, appealType) => {
-		if (appealType === 'S78' || appealType === 'S20') {
-			happyPathHelper.reviewS78Lpaq(caseObj);
-		} else {
-			happyPathHelper.reviewLpaq(caseObj);
-		}
+		cy.addLpaqSubmissionToCase(caseObj);
+		cy.reviewLpaqSubmission(caseObj);
 	},
 	[STATUSES.STATEMENTS]: (caseObj) => {
-		happyPathHelper.addLpaStatement(caseObj);
+		cy.addRepresentation(caseObj, 'lpaStatement', null);
+		cy.reviewStatementViaApi(caseObj);
 		cy.simulateStatementsDeadlineElapsed(caseObj);
-		cy.reload();
-		caseDetailsPage.basePageElements.bannerLink().click();
-		caseDetailsPage.clickButtonByText('Confirm');
+		cy.shareCommentsAndStatementsViaApi(caseObj);
 	},
 	[STATUSES.FINAL_COMMENTS]: (caseObj, _appealType, procedureType) => {
-		if (procedureType === 'hearing') {
-			cy.log('skip');
-		} else {
-			happyPathHelper.addLpaFinalComment(caseObj);
-			cy.simulateFinalCommentsDeadlineElapsed(caseObj);
-			cy.reload();
-			caseDetailsPage.basePageElements.bannerLink().click();
-			caseDetailsPage.clickButtonByText('Share final comments');
-		}
+		cy.addRepresentation(caseObj, 'lpaFinalComment', null);
+		cy.reviewLpaFinalCommentsViaApi(caseObj);
+		cy.simulateFinalCommentsDeadlineElapsed(caseObj);
+		cy.shareCommentsAndStatementsViaApi(caseObj);
 	},
 	[STATUSES.EVENT_READY_TO_SETUP]: (caseObj, _appealType, procedureType) => {
-		if (procedureType === 'hearing') {
-			happyPathHelper.setupSiteHearingFromBanner(caseObj);
-		} else {
-			happyPathHelper.setupSiteVisitFromBanner(caseObj);
-		}
+		cy.setupSiteVisitViaAPI(caseObj);
 	},
 	[STATUSES.AWAITING_EVENT]: (caseObj, _appealType, procedureType) => {
-		if (procedureType === 'hearing') {
-			cy.simulateHearingElapsed(caseObj);
-			cy.reload();
-		} else {
-			cy.simulateSiteVisit(caseObj).then(() => {
-				cy.reload();
-			});
-		}
+		cy.simulateSiteVisit(caseObj).then(() => {});
 	},
 	[STATUSES.ISSUE_DECISION]: (caseObj) => {
-		happyPathHelper.issueDecision('Allowed', 'both costs');
+		cy.issueDecisionViaApi(caseObj);
 	}
 };
 
