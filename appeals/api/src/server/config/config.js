@@ -46,8 +46,6 @@ const { value, error } = schema.validate({
 	featureFlags: {
 		featureFlagS78Written:
 			environment.FEATURE_FLAG_S78_WRITTEN && environment.FEATURE_FLAG_S78_WRITTEN === 'true',
-		featureFlagS78Hearing:
-			environment.FEATURE_FLAG_S78_HEARING && environment.FEATURE_FLAG_S78_HEARING === 'true',
 		featureFlagS78Inquiry:
 			environment.FEATURE_FLAG_S78_INQUIRY && environment.FEATURE_FLAG_S78_INQUIRY === 'true',
 		featureFlagLinkedAppeals:
