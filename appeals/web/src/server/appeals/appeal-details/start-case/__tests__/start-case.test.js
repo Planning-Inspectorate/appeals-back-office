@@ -45,37 +45,7 @@ describe('start-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
 
-		it('should render the start case page with the expected content if the appeal type is S78 and the S78 hearing feature flag is disabled', async () => {
-			featureFlags.isFeatureActive = () => false;
-
-			nock('http://test/')
-				.get('/appeals/1?include=all')
-				.reply(200, {
-					...appealDataWithoutStartDate,
-					appealType: 'Planning appeal'
-				});
-
-			const response = await request.get(`${baseUrl}/1/start-case/add`);
-
-			expect(response.statusCode).toBe(200);
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toContain('Start case</h1>');
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain(
-				`Warning</span> Confirming will activate the timetable on ${dateISOStringToDisplayDate(
-					new Date().toISOString()
-				)}. Start letters will be sent to the relevant parties.`
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
-		});
-
-		it('should redirect to the select procedure page if the appeal type is S78 and the S78 hearing feature flag is enabled', async () => {
-			featureFlags.isFeatureActive = () => true;
-
+		it('should redirect to the select procedure page if the appeal type is S78', async () => {
 			nock('http://test/')
 				.get('/appeals/1?include=all')
 				.reply(200, {
@@ -91,9 +61,7 @@ describe('start-case', () => {
 			);
 		});
 
-		it('should redirect to the select procedure page if the appeal type is S78 and the S78 hearing feature flag is enabled, passing the backLink query parameter if provided', async () => {
-			featureFlags.isFeatureActive = () => true;
-
+		it('should redirect to the select procedure page if the appeal type is S78, passing the backLink query parameter if provided', async () => {
 			nock('http://test/')
 				.get('/appeals/1?include=all')
 				.reply(200, {
@@ -109,9 +77,7 @@ describe('start-case', () => {
 			);
 		});
 
-		it('should redirect to the select procedure page if the appeal type is S78 and the S78 hearing feature flag is enabled, and the select procedure type page was previously submitted with an option selected', async () => {
-			featureFlags.isFeatureActive = () => true;
-
+		it('should redirect to the select procedure page if the appeal type is S78 and the select procedure type page was previously submitted with an option selected', async () => {
 			nock('http://test/')
 				.get('/appeals/1?include=all')
 				.reply(200, {

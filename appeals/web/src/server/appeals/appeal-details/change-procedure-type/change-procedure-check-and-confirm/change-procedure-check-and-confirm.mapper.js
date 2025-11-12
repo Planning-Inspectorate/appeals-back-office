@@ -29,8 +29,7 @@ export const selectProcedurePage = (
 			featureFlag: FEATURE_FLAG_NAMES.SECTION_78
 		},
 		{
-			case: APPEAL_CASE_PROCEDURE.HEARING,
-			featureFlag: FEATURE_FLAG_NAMES.SECTION_78_HEARING
+			case: APPEAL_CASE_PROCEDURE.HEARING
 		},
 		{
 			case: APPEAL_CASE_PROCEDURE.INQUIRY,
@@ -42,7 +41,7 @@ export const selectProcedurePage = (
 	const radioItems = [];
 
 	dataMappers.map((item) => {
-		if (featureFlags.isFeatureActive(item.featureFlag)) {
+		if (!item.featureFlag || featureFlags.isFeatureActive(item.featureFlag)) {
 			radioItems.push({
 				value: item.case,
 				text: appealProcedureToLabelText(item.case),
