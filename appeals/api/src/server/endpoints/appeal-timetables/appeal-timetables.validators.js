@@ -3,7 +3,7 @@ import validateIdParameter from '#common/validators/id-parameter.js';
 import { validationErrorHandler } from '#middleware/error-handler.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { ERROR_MUST_NOT_HAVE_TIMETABLE_DATE } from '@pins/appeals/constants/support.js';
-import isFPA from '@pins/appeals/utils/is-fpa.js';
+import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
 import { composeMiddleware } from '@pins/express';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
@@ -16,7 +16,7 @@ import { composeMiddleware } from '@pins/express';
 const validateFPATimetableDate = (value, { req }) => {
 	const appealTypeKey = req.appeal?.appealType?.key || '';
 
-	if (!isFPA(appealTypeKey)) {
+	if (isExpeditedAppealType(appealTypeKey)) {
 		throw new Error(stringTokenReplacement(ERROR_MUST_NOT_HAVE_TIMETABLE_DATE, [appealTypeKey]));
 	}
 	return true;

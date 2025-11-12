@@ -18,7 +18,7 @@ import { addBusinessDays, isAfter, isBefore, isSameDay, isWeekend, parseISO } fr
 import { formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
 import fetch from 'node-fetch';
 import { getCache, setCache } from './cache-data.js';
-import isFPA from './is-fpa.js';
+import isExpeditedAppealType from './is-expedited-appeal-type.js';
 
 /** @typedef {import('../types/appeal.js').BankHolidayFeedEvents } BankHolidayFeedEvents */
 /** @typedef {import('../types/appeal.js').BankHolidayFeedDivisions } BankHolidayFeedDivisions */
@@ -201,7 +201,7 @@ const calculateTimetable = async (appealType, startedAt, procedureType = 'writte
 			inquiry: APPEAL_TYPE_SHORTHAND_INQUIRY
 		};
 
-		const appealTypeKey = isFPA(appealType)
+		const appealTypeKey = !isExpeditedAppealType(appealType)
 			? procedureTypeMap[procedureType] ?? APPEAL_TYPE_SHORTHAND_FPA
 			: APPEAL_TYPE_SHORTHAND_HAS;
 

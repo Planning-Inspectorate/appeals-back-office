@@ -7,7 +7,7 @@ import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
-import isFPA from '@pins/appeals/utils/is-fpa.js';
+import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
 import { countBy, maxBy } from 'lodash-es';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
@@ -72,7 +72,7 @@ export const mapDocumentationSummary = (data) => {
 				appeal.lpaQuestionnaire?.lpaqCreatedDate &&
 				appeal.lpaQuestionnaire?.lpaqCreatedDate.toISOString()
 		},
-		...(isFPA(appeal.appealType?.key || '') && {
+		...(!isExpeditedAppealType(appeal.appealType?.key || '') && {
 			ipComments: {
 				status: ipComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 				receivedAt: mostRecentIpComment?.dateCreated.toISOString() ?? null,

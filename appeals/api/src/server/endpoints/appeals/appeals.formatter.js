@@ -11,7 +11,7 @@ import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
-import isFPA from '@pins/appeals/utils/is-fpa.js';
+import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { countBy } from 'lodash-es';
 
@@ -199,7 +199,7 @@ function formatAppealTimetable(appeal) {
 		appealTimetableId: appeal.appealTimetable.id,
 		lpaQuestionnaireDueDate: appeal.appealTimetable.lpaQuestionnaireDueDate?.toISOString() || null,
 		caseResubmissionDueDate: appeal.appealTimetable.caseResubmissionDueDate?.toISOString() || null,
-		...(isFPA(appeal.appealType?.key || '') && {
+		...(!isExpeditedAppealType(appeal.appealType?.key || '') && {
 			ipCommentsDueDate: appeal.appealTimetable.ipCommentsDueDate?.toISOString() || null,
 			appellantStatementDueDate:
 				appeal.appealTimetable.appellantStatementDueDate?.toISOString() || null,

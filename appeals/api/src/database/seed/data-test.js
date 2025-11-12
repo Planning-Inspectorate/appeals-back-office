@@ -30,7 +30,7 @@ import {
 } from '@planning-inspectorate/data-model';
 import { sub } from 'date-fns';
 
-import isFPA from '@pins/appeals/utils/is-fpa.js';
+import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
 import { randomBool, randomEnumValue } from './data-utilities.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AppealSite} AppealSite */
@@ -1254,7 +1254,7 @@ export async function seedTestData(databaseConnector) {
 		}
 
 		//REPS
-		if (isFPA(appealType)) {
+		if (!isExpeditedAppealType(appealType)) {
 			await databaseConnector.representation.create({
 				data: {
 					appeal: {
