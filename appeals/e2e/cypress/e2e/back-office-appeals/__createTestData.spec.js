@@ -12,21 +12,18 @@ describe('Create Test Data', () => {
 		cy.createCase().then((caseObj) => {
 			cy.login(users.appeals.caseAdmin);
 			cy.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'EVENT_READY_TO_SETUP', 'HAS');
-			happyPathHelper.viewCaseDetails(caseObj);
 		});
 	});
 	it('S78 Full Planning', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			cy.login(users.appeals.caseAdmin);
 			cy.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'S78', 'written');
-			happyPathHelper.viewCaseDetails(caseObj);
 		});
 	});
 	it('S20 Listed Building', () => {
 		cy.createCase({ caseType: 'Y' }).then((caseObj) => {
 			cy.login(users.appeals.caseAdmin);
 			cy.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'S20');
-			happyPathHelper.viewCaseDetails(caseObj);
 		});
 	});
 

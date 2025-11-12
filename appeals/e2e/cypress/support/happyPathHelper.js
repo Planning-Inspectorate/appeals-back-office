@@ -598,12 +598,9 @@ function updateCase(
 	for (let i = fromIndex; i < toIndex; i++) {
 		const current = flow[i];
 		const fn = baseActions[current];
-		if (fn) {
-			fn(caseObj, appealType, procedureType);
-		} else {
-			cy.log(`⚠️ No action defined for ${current}`);
-		}
+		fn(caseObj, appealType, procedureType);
 	}
+	happyPathHelper.viewCaseDetails(caseObj);
 }
 
 Cypress.Commands.add('updateCase', updateCase);
