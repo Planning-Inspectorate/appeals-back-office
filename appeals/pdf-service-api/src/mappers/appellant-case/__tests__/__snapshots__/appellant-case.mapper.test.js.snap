@@ -172,10 +172,10 @@ exports[`mapAppellantCaseData should map appellant case data for a s20 appeal 1`
         },
         {
           "key": "Was your application granted or refused?",
-          "text": "Refused",
+          "text": "I have not received a decision",
         },
         {
-          "key": "What’s the date on the decision letter from the local planning authority?",
+          "key": "What date was your decision due from the local planning authority?",
           "text": "3 June 2025",
         },
         {

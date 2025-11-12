@@ -985,7 +985,7 @@
 		},
 		"isAppellantNamedOnApplication": false,
 		"applicationDate": "2025-05-22T15:13:52.864Z",
-		"applicationDecision": "refused",
+		"applicationDecision": "not_received",
 		"applicationDecisionDate": "2025-06-03T15:13:52.864Z",
 		"hasAdvertisedAppeal": true,
 		"enforcementNotice": null,
