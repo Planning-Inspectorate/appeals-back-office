@@ -20,6 +20,7 @@ const inquirySectionPage = new InquirySectionPage();
 const overviewSectionPage = new OverviewSectionPage();
 const cyaSection = new CYASection();
 const documentationSectionPage = new DocumentationSectionPage();
+const currentDate = new Date();
 
 const previousInquiryAddress = {
 	line1: '1 Grove Cottage',
@@ -752,5 +753,207 @@ it('should accept LPA POE for inquiry', () => {
 			'Success',
 			'LPA proof of evidence and witnesses accepted'
 		);
+	});
+});
+
+it('should display the correct status tags when removing inquiry address', () => {
+	cy.createCase({ caseType: 'W', planningObligation: true }).then((ref) => {
+		// Set up a new case
+		caseObj = ref;
+		appeal = caseObj;
+		cy.addLpaqSubmissionToCase(caseObj);
+		happyPathHelper.assignCaseOfficer(caseObj);
+		caseDetailsPage.checkStatusOfCase('Validation', 0);
+		happyPathHelper.reviewAppellantCase(caseObj);
+		caseDetailsPage.checkStatusOfCase('Ready to start', 0);
+		happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');
+
+		cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+			dateTimeSection.enterInquiryDate(inquiryDate);
+			dateTimeSection.enterInquiryTime('12', '00');
+		});
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue('Yes');
+		caseDetailsPage.inputEstimatedInquiryDays(estimatedInquiryDays);
+
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue('Yes');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.addInquiryAddress(inquiryAddress);
+		caseDetailsPage.clickButtonByText('Continue');
+
+		// enter timetable dates
+		cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
+			inquirySectionPage.enterTimetableDueDates(timetableItems, startDate, 7);
+		});
+
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Start case');
+		caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
+		caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
+
+		happyPathHelper.reviewLPaStatement(caseObj);
+
+		// Verify evidence tag
+		caseDetailsPage.checkStatusOfCase('Evidence', 0);
+
+		// Process LPA proof of evidence submission (FO) via Api
+		inquirySectionPage.addProofOfEvidenceViaApi(caseObj, 'lpaProofOfEvidence');
+
+		// Complete the evidence review workflow
+		documentationSectionPage.navigateToAddProofOfEvidenceReview('lpa-proofs-evidence');
+		caseDetailsPage.selectRadioButtonByValue('Complete');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Accept LPA proof of evidence and witnesses');
+
+		// Verify successful acceptance
+		caseDetailsPage.validateBannerMessage(
+			'Success',
+			'LPA proof of evidence and witnesses accepted'
+		);
+
+		// Process appellant proof of evidence submission (FO) via Api
+		inquirySectionPage.addProofOfEvidenceViaApi(caseObj, 'appellantProofOfEvidence');
+
+		// Complete the evidence review workflow
+		documentationSectionPage.navigateToAddProofOfEvidenceReview('appellant-proofs-evidence');
+		caseDetailsPage.selectRadioButtonByValue('Complete');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Accept appellant proof of evidence and witnesses');
+
+		// Verify successful acceptance
+		caseDetailsPage.validateBannerMessage(
+			'Success',
+			'Appellant proof of evidence and witnesses accepted'
+		);
+
+		cy.get('a:contains("Progress to inquiry")').click();
+		caseDetailsPage.clickButtonByText('Share proof of evidence and witnesses');
+		caseDetailsPage.validateBannerMessage(
+			'Success',
+			'Progressed to proof of evidence and witnesses'
+		);
+
+		// Verify Awaiting inquiry tag - all cases page
+		cy.visit(urlPaths.appealsList);
+		inquirySectionPage.verifyTagOnAllCasesPage(caseObj.reference, 'Awaiting inquiry');
+
+		// navigate to details page
+		caseDetailsPage.clickLinkByText(caseObj.reference);
+
+		caseDetailsPage.clickRowChangeLink('whether-the-address-is-known-or-not');
+		inquirySectionPage.selectRadioButtonByValue('No');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Update inquiry');
+		caseDetailsPage.validateBannerMessage('Success', 'Inquiry updated');
+		caseDetailsPage.validateBannerMessage('Important', 'Add inquiry address');
+
+		// Verify Inquiry ready to set up tag - all cases page
+		cy.visit(urlPaths.appealsList);
+		inquirySectionPage.verifyTagOnAllCasesPage(caseObj.reference, 'Inquiry ready to set up');
+
+		// Verify Inquiry ready to set up tag - personal list page
+		cy.visit(urlPaths.personalListFilteredEventReadyToSetup);
+		inquirySectionPage.verifyTagOnPersonalListPage(caseObj.reference, 'Inquiry ready to set up');
+	});
+});
+
+it('should display the correct status tags when cancelling inquiry', () => {
+	cy.createCase({ caseType: 'W', planningObligation: true }).then((ref) => {
+		// Set up a new case
+		caseObj = ref;
+		appeal = caseObj;
+		cy.addLpaqSubmissionToCase(caseObj);
+		happyPathHelper.assignCaseOfficer(caseObj);
+		caseDetailsPage.checkStatusOfCase('Validation', 0);
+		happyPathHelper.reviewAppellantCase(caseObj);
+		caseDetailsPage.checkStatusOfCase('Ready to start', 0);
+		happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');
+
+		cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+			dateTimeSection.enterInquiryDate(inquiryDate);
+			dateTimeSection.enterInquiryTime('12', '00');
+		});
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue('Yes');
+		caseDetailsPage.inputEstimatedInquiryDays(estimatedInquiryDays);
+
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue('Yes');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.addInquiryAddress(inquiryAddress);
+		caseDetailsPage.clickButtonByText('Continue');
+
+		// enter timetable dates
+		cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
+			inquirySectionPage.enterTimetableDueDates(timetableItems, startDate, 7);
+		});
+
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Start case');
+		caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
+		caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
+
+		happyPathHelper.reviewLPaStatement(caseObj);
+
+		// Verify evidence tag
+		caseDetailsPage.checkStatusOfCase('Evidence', 0);
+
+		// Process LPA proof of evidence submission (FO) via Api
+		inquirySectionPage.addProofOfEvidenceViaApi(caseObj, 'lpaProofOfEvidence');
+
+		// Complete the evidence review workflow
+		documentationSectionPage.navigateToAddProofOfEvidenceReview('lpa-proofs-evidence');
+		caseDetailsPage.selectRadioButtonByValue('Complete');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Accept LPA proof of evidence and witnesses');
+
+		// Verify successful acceptance
+		caseDetailsPage.validateBannerMessage(
+			'Success',
+			'LPA proof of evidence and witnesses accepted'
+		);
+
+		// Process appellant proof of evidence submission (FO) via Api
+		inquirySectionPage.addProofOfEvidenceViaApi(caseObj, 'appellantProofOfEvidence');
+
+		// Complete the evidence review workflow
+		documentationSectionPage.navigateToAddProofOfEvidenceReview('appellant-proofs-evidence');
+		caseDetailsPage.selectRadioButtonByValue('Complete');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Accept appellant proof of evidence and witnesses');
+
+		// Verify successful acceptance
+		caseDetailsPage.validateBannerMessage(
+			'Success',
+			'Appellant proof of evidence and witnesses accepted'
+		);
+
+		cy.get('a:contains("Progress to inquiry")').click();
+		caseDetailsPage.clickButtonByText('Share proof of evidence and witnesses');
+		caseDetailsPage.validateBannerMessage(
+			'Success',
+			'Progressed to proof of evidence and witnesses'
+		);
+
+		// Verify Awaiting inquiry tag - all cases page
+		cy.visit(urlPaths.appealsList);
+		inquirySectionPage.verifyTagOnAllCasesPage(caseObj.reference, 'Awaiting inquiry');
+
+		// navigate to details page
+		caseDetailsPage.clickLinkByText(caseObj.reference);
+
+		caseDetailsPage.clickLinkByText('Cancel inquiry');
+		caseDetailsPage.clickButtonByText('Cancel inquiry');
+		caseDetailsPage.validateBannerMessage('Success', 'Inquiry cancelled');
+		caseDetailsPage.validateBannerMessage('Important', 'Set up inquiry');
+
+		// Verify Inquiry ready to set up tag - all cases page
+		cy.visit(urlPaths.appealsList);
+		inquirySectionPage.verifyTagOnAllCasesPage(caseObj.reference, 'Inquiry ready to set up');
+
+		// Verify Inquiry ready to set up tag - personal list page
+		cy.visit(urlPaths.personalListFilteredEventReadyToSetup);
+		inquirySectionPage.verifyTagOnPersonalListPage(caseObj.reference, 'Inquiry ready to set up');
 	});
 });

@@ -59,6 +59,7 @@ export class CaseDetailsPage extends Page {
 		setUpTimetableHearingDate: 'set up-timetable-hearing-date',
 		hearingBannerLink: 'setup-hearing',
 		hearingBannerAddressLink: 'add-hearing-address',
+		inquiryBannerLink: 'setup-inquiry',
 		pageHeading: 'h1',
 		changeInquiryDate: 'change-inquiry-date',
 		changeInquiryNumberOfDays: 'change-inquiry-expected-number-of-days',
@@ -221,6 +222,7 @@ export class CaseDetailsPage extends Page {
 		viewCaseHistory: () => cy.getByData(this._cyDataSelectors.viewCaseHistory),
 		cancelHearing: () => cy.get('#cancelHearing'),
 		hearingBannerLink: () => cy.getByData(this._cyDataSelectors.hearingBannerLink),
+		inquiryBannerLink: () => cy.getByData(this._cyDataSelectors.inquiryBannerLink),
 		hearingBannerAddressLink: () => cy.getByData(this._cyDataSelectors.hearingBannerAddressLink),
 		setUpTimetableHearingDate: () => cy.getByData(this._cyDataSelectors.setUpTimetableHearingDate),
 		timeTableRows: () => cy.get('.appeal-case-timetable dt'),
@@ -591,6 +593,10 @@ export class CaseDetailsPage extends Page {
 
 	clickHearingBannerLink() {
 		this.elements.hearingBannerLink().click();
+	}
+
+	clickInquiryBannerLink() {
+		this.elements.inquiryBannerLink().click();
 	}
 
 	clickHearingBannerAddressLink() {
