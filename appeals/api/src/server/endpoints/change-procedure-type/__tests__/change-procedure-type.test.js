@@ -136,7 +136,9 @@ describe('Change appeal procedure type route', () => {
 						'We have changed your appeal procedure to written representations and cancelled your hearing.',
 					lpa_statement_exists: true,
 					existing_appeal_procedure: 'hearing',
-					inquiry_address: ''
+					inquiry_address: '',
+					hearing_date: '',
+					hearing_time: ''
 				};
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
@@ -211,7 +213,9 @@ describe('Change appeal procedure type route', () => {
 					lpa_statement_exists: true,
 					existing_appeal_procedure: 'inquiry',
 					week_before_conference_date: '25 December 2998',
-					inquiry_address: ''
+					inquiry_address: '',
+					hearing_date: '',
+					hearing_time: ''
 				};
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
@@ -451,7 +455,9 @@ describe('Change appeal procedure type route', () => {
 						'We have changed your appeal procedure to inquiry and cancelled your hearing.',
 					lpa_statement_exists: true,
 					existing_appeal_procedure: 'hearing',
-					proof_of_evidence_due_date: '15 December 2025'
+					proof_of_evidence_due_date: '15 December 2025',
+					hearing_date: '1 January 2000',
+					hearing_time: '12:00am'
 				};
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
@@ -562,7 +568,9 @@ describe('Change appeal procedure type route', () => {
 						'We have changed your appeal procedure to inquiry and cancelled your site visit.',
 					lpa_statement_exists: true,
 					existing_appeal_procedure: 'written',
-					proof_of_evidence_due_date: '15 December 2025'
+					proof_of_evidence_due_date: '15 December 2025',
+					hearing_date: '1 January 2000',
+					hearing_time: '12:00am'
 				};
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);

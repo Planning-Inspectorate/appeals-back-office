@@ -131,11 +131,15 @@ describe('add representation', () => {
 				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
 				expect(unprettifiedHTML).toContain(
-					`Add ${proofOfEvidenceType.type} proof of evidence and witnesses</button>`
+					`Add ${
+						proofOfEvidenceType.type === 'lpa' ? 'LPA' : 'appellant'
+					}} proof of evidence and witnesses</button>`
 				);
 				expect(unprettifiedHTML).toContain('Appeal 351062</span>');
 				expect(unprettifiedHTML).toContain(
-					`Check details and add ${proofOfEvidenceType.type} proof of evidence and witnesses</h1>`
+					`Check details and add ${
+						proofOfEvidenceType.type === 'lpa' ? 'LPA' : 'appellant'
+					}} proof of evidence and witnesses</h1>`
 				);
 				expect(unprettifiedHTML).toContain('Proof of evidence and witnesses</dt>');
 				expect(unprettifiedHTML).toContain(`test-document.txt</a>`);
