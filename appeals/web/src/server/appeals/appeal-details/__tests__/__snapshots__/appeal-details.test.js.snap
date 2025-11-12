@@ -434,7 +434,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Ready to start</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--green pins-status-tag--full-width govuk-!-margin-bottom-6">Ready to start</strong>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -662,7 +662,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Received appeal</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width govuk-!-margin-bottom-6">Received appeal</strong>
             <strong             class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
         </div>
     </div>
@@ -1066,7 +1066,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Received appeal</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width govuk-!-margin-bottom-6">Received appeal</strong>
             <strong             class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4">Child</strong>
         </div>
     </div>
@@ -1295,7 +1295,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Received appeal</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width govuk-!-margin-bottom-6">Received appeal</strong>
             <strong             class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4">Lead</strong>
         </div>
     </div>
@@ -1686,7 +1686,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">LPA questionnaire</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--green pins-status-tag--full-width govuk-!-margin-bottom-6">LPA questionnaire</strong>
             <strong             class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4">Lead</strong>
         </div>
     </div>
@@ -2088,7 +2088,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">LPA questionnaire</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--green pins-status-tag--full-width govuk-!-margin-bottom-6">LPA questionnaire</strong>
             <strong             class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
         </div>
     </div>
@@ -2500,7 +2500,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Received appeal</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width govuk-!-margin-bottom-6">Received appeal</strong>
             <strong             class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
         </div>
     </div>
@@ -2903,7 +2903,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Received appeal</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width govuk-!-margin-bottom-6">Received appeal</strong>
             <strong             class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
         </div>
     </div>
@@ -3306,7 +3306,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Received appeal</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width govuk-!-margin-bottom-6">Received appeal</strong>
             <strong             class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
         </div>
     </div>
@@ -3723,7 +3723,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Received appeal</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width govuk-!-margin-bottom-6">Received appeal</strong>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4072,7 +4072,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Received appeal</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width govuk-!-margin-bottom-6">Received appeal</strong>
             <strong             class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
         </div>
     </div>
@@ -4601,7 +4601,7 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Issue decision</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--green pins-status-tag--full-width govuk-!-margin-bottom-6">Issue decision</strong>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5339,47 +5339,47 @@ exports[`appeal-details GET /:appealId Overview should render net-residence-gain
 
 exports[`appeal-details GET /:appealId Overview should render net-residence-gain-or-loss row as "Net loss" in the overview accordion for Planning listed building and conservation area appeal if numberOfResidencesNetChange has a negative value 1`] = `"<div class="govuk-summary-list__row appeal-net-residence-gain-or-loss"><dt class="govuk-summary-list__key"> Net loss</dt><dd class="govuk-summary-list__value"> 1</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="change-net-residence-gain-or-loss">Change<span class="govuk-visually-hidden"> Net loss</span></a></dd></div>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Assign case officer" and a green modifier class if appeal status is assign_case_officer 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Assign case officer</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Assign case officer" and a green modifier class if appeal status is assign_case_officer 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width govuk-!-margin-bottom-6">Assign case officer</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Awaiting hearing" and a yellow modifier class if appeal status is awaiting_hearing 1`] = `"<strong class="govuk-tag govuk-tag--yellow pins-status-tag--full-width">Awaiting hearing</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Awaiting hearing" and a yellow modifier class if appeal status is awaiting_hearing 1`] = `"<strong class="govuk-tag govuk-tag--yellow pins-status-tag--full-width govuk-!-margin-bottom-6">Awaiting hearing</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Awaiting inquiry" and a yellow modifier class if appeal status is awaiting_inquiry 1`] = `"<strong class="govuk-tag govuk-tag--yellow pins-status-tag--full-width">Awaiting inquiry</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Awaiting inquiry" and a yellow modifier class if appeal status is awaiting_inquiry 1`] = `"<strong class="govuk-tag govuk-tag--yellow pins-status-tag--full-width govuk-!-margin-bottom-6">Awaiting inquiry</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Awaiting site visit" and a yellow modifier class if appeal status is awaiting_site_visit 1`] = `"<strong class="govuk-tag govuk-tag--yellow pins-status-tag--full-width">Awaiting site visit</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Awaiting site visit" and a yellow modifier class if appeal status is awaiting_site_visit 1`] = `"<strong class="govuk-tag govuk-tag--yellow pins-status-tag--full-width govuk-!-margin-bottom-6">Awaiting site visit</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Awaiting transfer" and a green modifier class if appeal status is awaiting_transfer 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Awaiting transfer</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Awaiting transfer" and a green modifier class if appeal status is awaiting_transfer 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width govuk-!-margin-bottom-6">Awaiting transfer</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Complete" and a blue modifier class if appeal status is complete 1`] = `"<strong class="govuk-tag govuk-tag--blue pins-status-tag--full-width">Complete</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Complete" and a blue modifier class if appeal status is complete 1`] = `"<strong class="govuk-tag govuk-tag--blue pins-status-tag--full-width govuk-!-margin-bottom-6">Complete</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Evidence" and a green modifier class if appeal status is evidence 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Evidence</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Evidence" and a green modifier class if appeal status is evidence 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width govuk-!-margin-bottom-6">Evidence</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Final comments" and a green modifier class if appeal status is final_comments 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Final comments</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Final comments" and a green modifier class if appeal status is final_comments 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width govuk-!-margin-bottom-6">Final comments</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Hearing ready to set up" and a green modifier class if appeal status is hearing_ready_to_set_up 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Hearing ready to set up</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Hearing ready to set up" and a green modifier class if appeal status is hearing_ready_to_set_up 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width govuk-!-margin-bottom-6">Hearing ready to set up</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Hearing set up" and a grey modifier class if appeal status is hearing_set_up 1`] = `"<strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Hearing set up</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Hearing set up" and a grey modifier class if appeal status is hearing_set_up 1`] = `"<strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width govuk-!-margin-bottom-6">Hearing set up</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Hearing updated" and a grey modifier class if appeal status is hearing_updated 1`] = `"<strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Hearing updated</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Hearing updated" and a grey modifier class if appeal status is hearing_updated 1`] = `"<strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width govuk-!-margin-bottom-6">Hearing updated</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Inquiry ready to set up" and a green modifier class if appeal status is inquiry_ready_to_set_up 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Inquiry ready to set up</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Inquiry ready to set up" and a green modifier class if appeal status is inquiry_ready_to_set_up 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width govuk-!-margin-bottom-6">Inquiry ready to set up</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Invalid" and a grey modifier class if appeal status is invalid 1`] = `"<strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Invalid</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Invalid" and a grey modifier class if appeal status is invalid 1`] = `"<strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width govuk-!-margin-bottom-6">Invalid</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Issue decision" and a green modifier class if appeal status is issue_determination 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Issue decision</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Issue decision" and a green modifier class if appeal status is issue_determination 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width govuk-!-margin-bottom-6">Issue decision</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "LPA questionnaire" and a green modifier class if appeal status is lpa_questionnaire 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">LPA questionnaire</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "LPA questionnaire" and a green modifier class if appeal status is lpa_questionnaire 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width govuk-!-margin-bottom-6">LPA questionnaire</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Ready to start" and a green modifier class if appeal status is ready_to_start 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Ready to start</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Ready to start" and a green modifier class if appeal status is ready_to_start 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width govuk-!-margin-bottom-6">Ready to start</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Site visit ready to set up" and a green modifier class if appeal status is site_visit_ready_to_set_up 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Site visit ready to set up</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Site visit ready to set up" and a green modifier class if appeal status is site_visit_ready_to_set_up 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width govuk-!-margin-bottom-6">Site visit ready to set up</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Statements" and a green modifier class if appeal status is statements 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Statements</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Statements" and a green modifier class if appeal status is statements 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width govuk-!-margin-bottom-6">Statements</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Transferred" and a blue modifier class if appeal status is transferred 1`] = `"<strong class="govuk-tag govuk-tag--blue pins-status-tag--full-width">Transferred</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Transferred" and a blue modifier class if appeal status is transferred 1`] = `"<strong class="govuk-tag govuk-tag--blue pins-status-tag--full-width govuk-!-margin-bottom-6">Transferred</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Validation" and a green modifier class if appeal status is validation 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Validation</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Validation" and a green modifier class if appeal status is validation 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width govuk-!-margin-bottom-6">Validation</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Withdrawn" and a grey modifier class if appeal status is withdrawn 1`] = `"<strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Withdrawn</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Withdrawn" and a grey modifier class if appeal status is withdrawn 1`] = `"<strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width govuk-!-margin-bottom-6">Withdrawn</strong>"`;
 
 exports[`appeal-details GET /:appealId Team section should render the case-team section for appeal with not assigned displayed when no team is assigned" 1`] = `
 "<div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
@@ -5579,7 +5579,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--blue pins-status-tag--full-width">Complete</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--blue pins-status-tag--full-width govuk-!-margin-bottom-6">Complete</strong>
         </div>
     </div>
     <div class="govuk-inset-text">
@@ -5935,7 +5935,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--blue pins-status-tag--full-width">Complete</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--blue pins-status-tag--full-width govuk-!-margin-bottom-6">Complete</strong>
         </div>
     </div>
     <div class="govuk-inset-text">
@@ -6291,7 +6291,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Invalid</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width govuk-!-margin-bottom-6">Invalid</strong>
         </div>
     </div>
     <div class="govuk-inset-text">
@@ -6659,7 +6659,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Validation</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--green pins-status-tag--full-width govuk-!-margin-bottom-6">Validation</strong>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -7011,7 +7011,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Validation</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--green pins-status-tag--full-width govuk-!-margin-bottom-6">Validation</strong>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -7391,7 +7391,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Received appeal</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width govuk-!-margin-bottom-6">Received appeal</strong>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -7793,7 +7793,7 @@ exports[`appeal-details should not render a back button 1`] = `
                     </div>
                 </div>
                 <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Received appeal</strong>
+                    <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width govuk-!-margin-bottom-6">Received appeal</strong>
                     </div>
                 </div>
                 <div class="govuk-grid-row">
