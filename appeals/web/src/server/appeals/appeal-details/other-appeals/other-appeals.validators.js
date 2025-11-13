@@ -1,7 +1,7 @@
 import logger from '#lib/logger.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
-import { getLinkableAppealSummaryFromReference } from './other-appeals.service.js';
+import { getRelatableAppealSummaryFromReference } from './other-appeals.service.js';
 
 export const validateAddOtherAppealsReference = createValidator(
 	body('addOtherAppealsReference')
@@ -15,7 +15,7 @@ export const validateAddOtherAppealsReference = createValidator(
 		.bail()
 		.custom(async (reference, { req }) => {
 			try {
-				const linkableAppealSummary = await getLinkableAppealSummaryFromReference(
+				const linkableAppealSummary = await getRelatableAppealSummaryFromReference(
 					req.apiClient,
 					reference
 				).catch((error) => {

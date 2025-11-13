@@ -3257,6 +3257,25 @@ export const linkableAppeal = {
 	source: 'back-office'
 };
 
+export const relatableAppeal = {
+	appealId: 3,
+	appealReference: '12345',
+	appealType: 'Planning Appeal (W)',
+	appealStatus: 'Decision Issued',
+	siteAddress: {
+		siteAddressLine1: '123 Main Street',
+		siteAddressLine2: 'Brentry',
+		siteAddressTown: 'Bristol',
+		siteAddressCounty: 'Bristol, city of',
+		siteAddressPostcode: 'BS1 1AA'
+	},
+	localPlanningDepartment: 'Bristol City Council',
+	appellantName: 'Mr John Wick',
+	agentName: 'Mr John Smith (Smith Planning Agency)',
+	submissionDate: '2014-11-14T00:00:00+00:00',
+	source: 'back-office'
+};
+
 export const costsFolderInfoAppellantApplication = {
 	caseId: 1,
 	documents: [
