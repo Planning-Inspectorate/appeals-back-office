@@ -3,14 +3,17 @@ import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 import { HTTPError } from 'got';
-import { postUnlinkRequest } from '../linked-appeals/linked-appeals.service.js';
 import {
 	addOtherAppealsPage,
 	confirmOtherAppealsPage,
 	manageOtherAppealsPage,
 	removeAppealRelationshipPage
 } from './other-appeals.mapper.js';
-import { postAssociateAppeal, postAssociateLegacyAppeal } from './other-appeals.service.js';
+import {
+	postAssociateAppeal,
+	postAssociateLegacyAppeal,
+	postUnrelateRequest
+} from './other-appeals.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -327,7 +330,7 @@ export const postRemoveOtherAppeals = async (request, response) => {
 		} else if (removeAppealRelationship === 'yes') {
 			const appealRelationshipId = parseInt(relationshipId, 10);
 
-			await postUnlinkRequest(request.apiClient, appealId, appealRelationshipId);
+			await postUnrelateRequest(request.apiClient, appealId, appealRelationshipId);
 
 			addNotificationBannerToSession({
 				session: request.session,
