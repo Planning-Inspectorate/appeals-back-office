@@ -31,100 +31,118 @@ export const changeServiceUserPage = (
 	}
 
 	const shortAppealReference = appealShortReference(appealData.appealReference);
+	/** @type {PageComponent} */
+	const firstNameComponent = {
+		type: 'input',
+		parameters: {
+			id: 'first-name',
+			name: 'firstName',
+			type: 'text',
+			label: {
+				text: `First name`
+			},
+			value: serviceUserDetails?.firstName ?? '',
+			errorMessage: errors?.firstName
+				? {
+						text: errors.firstName.msg
+				  }
+				: undefined
+		}
+	};
+	/** @type {PageComponent} */
+	const lastNameComponent = {
+		type: 'input',
+		parameters: {
+			id: 'last-name',
+			name: 'lastName',
+			type: 'text',
+			label: {
+				text: `Last name`
+			},
+			value: serviceUserDetails?.lastName ?? '',
+			errorMessage: errors?.lastName
+				? {
+						text: errors.lastName.msg
+				  }
+				: undefined
+		}
+	};
+	/** @type {PageComponent} */
+	const organisationNameComponent = {
+		type: 'input',
+		parameters: {
+			id: 'organisation-name',
+			name: 'organisationName',
+			type: 'text',
+			label: {
+				text: `Company or organisation name`
+			},
+			value: serviceUserDetails?.organisationName ?? '',
+			errorMessage: errors?.organisationName
+				? {
+						text: errors.organisationName.msg
+				  }
+				: undefined
+		}
+	};
+	/** @type {PageComponent} */
+	const emailAddressComponent = {
+		type: 'input',
+		parameters: {
+			id: 'email-address',
+			name: 'emailAddress',
+			type: 'text',
+			label: {
+				text: `Email address`
+			},
+			value: serviceUserDetails?.email ?? '',
+			errorMessage: errors?.emailAddress
+				? {
+						text: errors.emailAddress.msg
+				  }
+				: undefined
+		}
+	};
+	/** @type {PageComponent} */
+	const phoneNumberComponent = {
+		type: 'input',
+		parameters: {
+			id: 'phone-number',
+			name: 'phoneNumber',
+			type: 'text',
+			label: {
+				text: `Phone number`
+			},
+			value: serviceUserDetails?.phoneNumber ?? '',
+			errorMessage: errors?.phoneNumber
+				? {
+						text: errors.phoneNumber.msg
+				  }
+				: undefined
+		}
+	};
+	/** @type {PageComponent[]} */
+
+	const pageComponents = [];
+	pageComponents.push(firstNameComponent);
+	pageComponents.push(lastNameComponent);
+	pageComponents.push(organisationNameComponent);
+
+	if (userType === 'agent' || (userType === 'appellant' && !appealData.agent)) {
+		pageComponents.push(emailAddressComponent);
+		pageComponents.push(phoneNumberComponent);
+	}
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Update ${userType} details`,
 		backLinkUrl: backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `${capitalize(userType)}'s contact details`,
-		pageComponents: [
-			{
-				type: 'input',
-				parameters: {
-					id: 'first-name',
-					name: 'firstName',
-					type: 'text',
-					label: {
-						text: `First name`
-					},
-					value: serviceUserDetails?.firstName ?? '',
-					errorMessage: errors?.firstName
-						? {
-								text: errors.firstName.msg
-						  }
-						: undefined
-				}
-			},
-			{
-				type: 'input',
-				parameters: {
-					id: 'last-name',
-					name: 'lastName',
-					type: 'text',
-					label: {
-						text: `Last name`
-					},
-					value: serviceUserDetails?.lastName ?? '',
-					errorMessage: errors?.lastName
-						? {
-								text: errors.lastName.msg
-						  }
-						: undefined
-				}
-			},
-			{
-				type: 'input',
-				parameters: {
-					id: 'organisation-name',
-					name: 'organisationName',
-					type: 'text',
-					label: {
-						text: `Company or organisation name`
-					},
-					value: serviceUserDetails?.organisationName ?? '',
-					errorMessage: errors?.organisationName
-						? {
-								text: errors.organisationName.msg
-						  }
-						: undefined
-				}
-			},
-			{
-				type: 'input',
-				parameters: {
-					id: 'email-address',
-					name: 'emailAddress',
-					type: 'text',
-					label: {
-						text: `Email address`
-					},
-					value: serviceUserDetails?.email ?? '',
-					errorMessage: errors?.emailAddress
-						? {
-								text: errors.emailAddress.msg
-						  }
-						: undefined
-				}
-			},
-			{
-				type: 'input',
-				parameters: {
-					id: 'phone-number',
-					name: 'phoneNumber',
-					type: 'text',
-					label: {
-						text: `Phone number`
-					},
-					value: serviceUserDetails?.phoneNumber ?? '',
-					errorMessage: errors?.phoneNumber
-						? {
-								text: errors.phoneNumber.msg
-						  }
-						: undefined
-				}
-			}
-		]
+		heading:
+			userType === 'appellant'
+				? `${capitalize(userType)}'s details`
+				: `${capitalize(userType)}'s contact details`,
+		pageComponents: pageComponents
 	};
 
 	if (removeLinkUrl) {

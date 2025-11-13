@@ -416,6 +416,101 @@ export const appealsApiClient = {
 			return false;
 		}
 	},
+	async shareCommentsAndStatements(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/share-comments-and-statement`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+			expect(response.status).eq(200);
+		} catch {
+			return false;
+		}
+	},
+
+	async reviewAppellantFinalComments(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/review-appellant-final-comments`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+			expect(response.status).eq(200);
+		} catch {
+			return false;
+		}
+	},
+
+	async reviewLpaFinalComments(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/review-lpa-final-comments`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+			expect(response.status).eq(200);
+		} catch {
+			return false;
+		}
+	},
+
+	async setupSiteVisit(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/set-up-site-visit`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+			expect(response.status).eq(201);
+		} catch {
+			return false;
+		}
+	},
+
+	async issueDecision(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/issue-decision`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+			expect(response.status).eq(201);
+		} catch {
+			return false;
+		}
+	},
+
+	async setupHearing(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/set-up-hearing`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+			expect(response.status).eq(201);
+		} catch {
+			return false;
+		}
+	},
 
 	async addEstimate(procedureType, appealId, estimate = null) {
 		try {
@@ -492,6 +587,40 @@ export const appealsApiClient = {
 				})
 			});
 			expect(response.status).eq(200);
+		} catch {
+			return false;
+		}
+	},
+
+	async startAppeal(appealReference) {
+		try {
+			const url = `${baseUrl}appeals/${appealReference}/start-appeal`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+			expect(response.status).eq(201);
+		} catch {
+			return false;
+		}
+	},
+
+	async reviewLpaq(appealReference) {
+		try {
+			const url = `${baseUrl}appeals/${appealReference}/review-lpaq`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+			expect(response.status).eq(200);
+			const body = await response.json();
+			expect(body.validationOutcome.name).eq('Complete');
 		} catch {
 			return false;
 		}

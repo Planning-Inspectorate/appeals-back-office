@@ -37,10 +37,6 @@ exports[`mapAppellantCaseData should map appellant case data for a householder a
           "key": "What is the application reference number?",
           "text": "44377/APP/3/218453",
         },
-        {
-          "key": "What date did you submit your application?",
-          "text": "22 May 2025",
-        },
       ],
     },
     {
@@ -176,19 +172,15 @@ exports[`mapAppellantCaseData should map appellant case data for a s20 appeal 1`
         },
         {
           "key": "Was your application granted or refused?",
-          "text": "Refused",
+          "text": "I have not received a decision",
         },
         {
-          "key": "What’s the date on the decision letter from the local planning authority?",
+          "key": "What date was your decision due from the local planning authority?",
           "text": "3 June 2025",
         },
         {
           "key": "What is the application reference number?",
           "text": "44377/APP/3/218453",
-        },
-        {
-          "key": "What date did you submit your application?",
-          "text": "22 May 2025",
         },
       ],
     },
@@ -386,10 +378,6 @@ exports[`mapAppellantCaseData should map appellant case data for a s78 appeal 1`
         {
           "key": "What is the application reference number?",
           "text": "44377/APP/3/218453",
-        },
-        {
-          "key": "What date did you submit your application?",
-          "text": "22 May 2025",
         },
       ],
     },

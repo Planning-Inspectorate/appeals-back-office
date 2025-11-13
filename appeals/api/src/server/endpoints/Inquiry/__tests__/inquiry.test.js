@@ -179,7 +179,7 @@ describe('inquiry routes', () => {
 				});
 
 				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(fullPlanningAppeal.id);
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(1);
 
 				expect(response.status).toEqual(201);
 			});
@@ -907,7 +907,7 @@ describe('inquiry routes', () => {
 				});
 
 				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(fullPlanningAppeal.id);
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(1);
 
 				expect(response.status).toEqual(201);
 			});
@@ -1620,7 +1620,7 @@ describe('inquiry routes', () => {
 					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 					lpa_reference: '48269/APP/2021/1482',
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-					appeal_type: 'Full Planning',
+					appeal_type: 'Planning',
 					inquiry_address:
 						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
 					inquiry_date: '1 January 2999',
@@ -1754,7 +1754,7 @@ describe('inquiry routes', () => {
 					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 					lpa_reference: '48269/APP/2021/1482',
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-					appeal_type: 'Full Planning',
+					appeal_type: 'Planning',
 					inquiry_address:
 						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
 					inquiry_date: '1 January 2999',

@@ -171,131 +171,147 @@ describe('decision routes', () => {
 		});
 
 		test.each([
-			['householdAppeal', householdAppeal],
-			['casPlanningAppeal', casPlanningAppeal],
-			['casAdvertAppeal', casAdvertAppeal],
-			['fullPlanningAppeal', fullPlanningAppeal],
-			['listedBuildingAppeal', listedBuildingAppeal]
-		])('returns 200 when all good, appeal type: %s', async (_, appeal) => {
-			const correctAppealState = {
-				...appeal,
-				appealStatus: [
-					{
-						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
-						valid: true
-					}
-				]
-			};
-			// @ts-ignore
-			databaseConnector.appeal.findUnique.mockResolvedValue(correctAppealState);
-			// @ts-ignore
-			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
-			// @ts-ignore
-			databaseConnector.inspectorDecision.create.mockResolvedValue({});
-
-			const tenDaysAgo = sub(new Date(), { days: 10 });
-			const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
-			const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
-			const outcome = 'allowed';
-
-			const response = await request
-				.post(`/appeals/${appeal.id}/decision`)
-				.send({
-					decisions: [
+			['householdAppeal', 'allowed', '', householdAppeal],
+			['casPlanningAppeal', 'allowed', '', casPlanningAppeal],
+			['casAdvertAppeal', 'allowed', '', casAdvertAppeal],
+			['fullPlanningAppeal', 'allowed', '', fullPlanningAppeal],
+			['listedBuildingAppeal', 'allowed', '', listedBuildingAppeal],
+			['householdAppeal', 'invalid', '', householdAppeal, 'invalid'],
+			['householdAppeal', 'invalid', 'Because it is.', householdAppeal, 'invalid']
+		])(
+			'returns 200 when all good, appeal type: %s, outcome: %s, reason: %s',
+			async (_, outcome, invalidReason, appeal, nextState = 'complete') => {
+				const correctAppealState = {
+					...appeal,
+					appealStatus: [
 						{
-							decisionType: DECISION_TYPE_INSPECTOR,
-							outcome,
-							documentDate: utcDate.toISOString(),
-							documentGuid: documentCreated.guid
-						},
-						{
-							decisionType: DECISION_TYPE_APPELLANT_COSTS,
-							documentDate: utcDate.toISOString(),
-							documentGuid: documentCreated.guid
-						},
-						{
-							decisionType: DECISION_TYPE_LPA_COSTS,
-							documentDate: utcDate.toISOString(),
-							documentGuid: documentCreated.guid
+							status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+							valid: true
 						}
 					]
-				})
-				.set('azureAdUserId', azureAdUserId);
+				};
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(correctAppealState);
+				// @ts-ignore
+				databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+				// @ts-ignore
+				databaseConnector.inspectorDecision.create.mockResolvedValue({});
 
-			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				const tenDaysAgo = sub(new Date(), { days: 10 });
+				const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
+				const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
 
-			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-				notifyClient: expect.any(Object),
-				personalisation: {
+				const response = await request
+					.post(`/appeals/${appeal.id}/decision`)
+					.send({
+						decisions: [
+							{
+								decisionType: DECISION_TYPE_INSPECTOR,
+								outcome,
+								invalidReason,
+								documentDate: utcDate.toISOString(),
+								documentGuid: documentCreated.guid
+							},
+							{
+								decisionType: DECISION_TYPE_APPELLANT_COSTS,
+								documentDate: utcDate.toISOString(),
+								documentGuid: documentCreated.guid
+							},
+							{
+								decisionType: DECISION_TYPE_LPA_COSTS,
+								documentDate: utcDate.toISOString(),
+								documentGuid: documentCreated.guid
+							}
+						]
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				const personalisation = {
 					appeal_reference_number: appeal.reference,
-					child_appeals: [],
 					lpa_reference: appeal.applicationReference,
-					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-					decision_date: formatDate(utcDate, false),
-					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
-				},
-				templateName: 'decision-is-allowed-split-dismissed-appellant',
-				recipientEmail: appeal.agent.email
-			});
+					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`
+				};
 
-			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-				notifyClient: expect.any(Object),
-				personalisation: {
-					appeal_reference_number: appeal.reference,
-					child_appeals: [],
-					lpa_reference: appeal.applicationReference,
-					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-					decision_date: formatDate(utcDate, false),
-					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
-				},
-				templateName: 'decision-is-allowed-split-dismissed-lpa',
-				recipientEmail: appeal.lpa.email
-			});
-
-			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(4);
-
-			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
-				data: {
-					appealId: appeal.id,
-					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
-						outcome[0].toUpperCase() + outcome.slice(1)
-					]),
-					loggedAt: expect.any(Date),
-					userId: appeal.caseOfficer.id
+				if (invalidReason) {
+					personalisation.has_costs_decision = false;
+					personalisation.reasons = ['Because it is.'];
+				} else {
+					personalisation.child_appeals = [];
+					personalisation.decision_date = formatDate(utcDate, false);
+					personalisation.front_office_url = `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`;
 				}
-			});
 
-			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
-				data: {
-					appealId: appeal.id,
-					details: AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
-					loggedAt: expect.any(Date),
-					userId: appeal.caseOfficer.id
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.any(Object),
+					personalisation,
+					templateName: invalidReason
+						? 'decision-is-invalid-appellant'
+						: 'decision-is-allowed-split-dismissed-appellant',
+					recipientEmail: appeal.agent.email
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.any(Object),
+					personalisation,
+					templateName: invalidReason
+						? 'decision-is-invalid-lpa'
+						: 'decision-is-allowed-split-dismissed-lpa',
+					recipientEmail: appeal.lpa.email
+				});
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(4);
+
+				let details = stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
+					outcome[0].toUpperCase() + outcome.slice(1)
+				]);
+
+				if (invalidReason) {
+					details = details + '\n\n Reason: Because it is.';
 				}
-			});
 
-			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
-				data: {
-					appealId: appeal.id,
-					details: AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED,
-					loggedAt: expect.any(Date),
-					userId: appeal.caseOfficer.id
-				}
-			});
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+					data: {
+						appealId: appeal.id,
+						details,
+						loggedAt: expect.any(Date),
+						userId: appeal.caseOfficer.id
+					}
+				});
 
-			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(4, {
-				data: {
-					appealId: appeal.id,
-					details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['complete']),
-					loggedAt: expect.any(Date),
-					userId: appeal.caseOfficer.id
-				}
-			});
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+					data: {
+						appealId: appeal.id,
+						details: AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
+						loggedAt: expect.any(Date),
+						userId: appeal.caseOfficer.id
+					}
+				});
 
-			expect(response.status).toEqual(201);
-		});
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
+					data: {
+						appealId: appeal.id,
+						details: AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED,
+						loggedAt: expect.any(Date),
+						userId: appeal.caseOfficer.id
+					}
+				});
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(4, {
+					data: {
+						appealId: appeal.id,
+						details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [nextState]),
+						loggedAt: expect.any(Date),
+						userId: appeal.caseOfficer.id
+					}
+				});
+
+				expect(response.status).toEqual(201);
+			}
+		);
 
 		test.each([
 			['householdAppeal', householdAppeal],

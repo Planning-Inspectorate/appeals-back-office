@@ -7,6 +7,7 @@ import {
 	mapDocumentDownloadUrl,
 	mapUncommittedDocumentDownloadUrl
 } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { isFeatureActive } from '#common/feature-flags.js';
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
@@ -20,6 +21,7 @@ import {
 } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { toSentenceCase } from '#lib/string-utilities.js';
 import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	CASE_OUTCOME_ALLOWED,
 	CASE_OUTCOME_DISMISSED,
@@ -132,11 +134,42 @@ export function issueDecisionPage(
 	];
 
 	if (!isLinkedAppeal(appealDetails)) {
-		items.push({
-			value: CASE_OUTCOME_INVALID,
-			text: toSentenceCase(CASE_OUTCOME_INVALID),
-			checked: inspectorDecision?.outcome === CASE_OUTCOME_INVALID
-		});
+		if (isFeatureActive(FEATURE_FLAG_NAMES.INVALID_DECISION_LETTER)) {
+			items.push({
+				value: CASE_OUTCOME_INVALID,
+				text: toSentenceCase(CASE_OUTCOME_INVALID),
+				checked: inspectorDecision?.outcome === CASE_OUTCOME_INVALID
+			});
+		} else {
+			items.push({
+				value: CASE_OUTCOME_INVALID,
+				text: toSentenceCase(CASE_OUTCOME_INVALID),
+				checked: inspectorDecision?.outcome === CASE_OUTCOME_INVALID,
+				// @ts-ignore
+				conditional: {
+					html: renderPageComponentsToHtml([
+						{
+							type: 'textarea',
+							parameters: {
+								name: 'invalidReason',
+								id: 'invalid-reason',
+								value: inspectorDecision?.invalidReason ?? '',
+								label: {
+									text: 'Reason',
+									classes: 'govuk-label--s'
+								},
+								hint: { text: 'We will share the reason with the relevant parties' },
+								errorMessage: errors?.invalidReason
+									? {
+											text: errors?.invalidReason.msg
+									  }
+									: null
+							}
+						}
+					])
+				}
+			});
+		}
 	}
 
 	/** @type {PageComponent} */
@@ -365,11 +398,31 @@ function checkAndConfirmPageRows(appealData, request) {
 
 	if (inspectorDecision) {
 		if (inspectorDecision.outcome) {
+			let outcomeHtml = toSentenceCase(inspectorDecision.outcome);
+			if (!isFeatureActive(FEATURE_FLAG_NAMES.INVALID_DECISION_LETTER)) {
+				let invalidReasonHtml = inspectorDecision.invalidReason ? `Reason: ` : '';
+				if (invalidReasonHtml) {
+					invalidReasonHtml = renderPageComponentsToHtml([
+						{
+							type: 'show-more',
+							parameters: {
+								text: `${invalidReasonHtml}${inspectorDecision.invalidReason}`,
+								maximumBeforeHiding: invalidReasonHtml.length + LENGTH_300, // 300 being the maximum length of the invalid reason before hiding
+								toggleTextCollapsed: 'Show more',
+								toggleTextExpanded: 'Show less'
+							}
+						}
+					]);
+				}
+				outcomeHtml = invalidReasonHtml
+					? `${outcomeHtml}<br><br>${invalidReasonHtml}`
+					: outcomeHtml;
+			}
 			rows.push({
 				key: childDecisionsExist
 					? `Decision for lead appeal ${appealShortReference(appealData.appealReference)}`
 					: 'Decision',
-				html: toSentenceCase(inspectorDecision.outcome),
+				html: outcomeHtml,
 				actions: [
 					{
 						text: 'Change',
@@ -417,7 +470,10 @@ function checkAndConfirmPageRows(appealData, request) {
 			});
 		}
 
-		if (inspectorDecision.invalidReason) {
+		if (
+			inspectorDecision.invalidReason &&
+			isFeatureActive(FEATURE_FLAG_NAMES.INVALID_DECISION_LETTER)
+		) {
 			const invalidReasonHtml = renderPageComponentsToHtml([
 				{
 					type: 'show-more',

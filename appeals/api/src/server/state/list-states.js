@@ -3,7 +3,7 @@ import {
 	APPEAL_TYPE_SHORTHAND_FPA,
 	APPEAL_TYPE_SHORTHAND_HAS
 } from '@pins/appeals/constants/support.js';
-import isFPA from '@pins/appeals/utils/is-fpa.js';
+import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import createStateMachine from './create-state-machine.js';
 
@@ -18,7 +18,7 @@ import createStateMachine from './create-state-machine.js';
  * @returns {StateStub[]}
  * */
 function listStates(appealType, procedureType, currentState) {
-	const appealTypeKey = isFPA(appealType.key)
+	const appealTypeKey = !isExpeditedAppealType(appealType.key)
 		? APPEAL_TYPE_SHORTHAND_FPA
 		: APPEAL_TYPE_SHORTHAND_HAS;
 	const stateMachine = createStateMachine(

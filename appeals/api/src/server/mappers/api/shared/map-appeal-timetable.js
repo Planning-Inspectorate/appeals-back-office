@@ -1,4 +1,4 @@
-import isFPA from '@pins/appeals/utils/is-fpa.js';
+import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Api.Timetable} Timetable */
@@ -22,7 +22,7 @@ export const mapAppealTimetable = (data) => {
 			caseResubmissionDueDate: appeal.appealTimetable.caseResubmissionDueDate
 				? appeal.appealTimetable.caseResubmissionDueDate.toISOString()
 				: null,
-			...(isFPA(appeal.appealType?.key || '') && {
+			...(!isExpeditedAppealType(appeal.appealType?.key || '') && {
 				ipCommentsDueDate:
 					(appeal.appealTimetable.ipCommentsDueDate &&
 						appeal.appealTimetable.ipCommentsDueDate.toISOString()) ||

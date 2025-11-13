@@ -18,8 +18,9 @@
 		"cy:ci:local": "npx cypress run --env isCI=true --config-file cypress.config.local.env.js",
 		"cy:ci:dev": "npx cypress run --env isCI=true --config-file cypress.config.dev.env.js",
 		"cy:ci:test": "npx cypress run --env isCI=true --config-file cypress.config.test.env.js",
+    "cy:ci:staging": "npx cypress run --env isCI=true --config-file cypress.config.staging.env.js"
 		"allure:generate": "allure generate allure-results --clean -o allure-report",
-  		"allure:open": "allure open allure-report",
+  	"allure:open": "allure open allure-report",
 		"clean:allure": "rm -rf allure-results allure-report",
 		"allure:report": "npm run allure:generate && npm run allure:open",
 		"test:allure": "npm run clean:allure && npx cypress run --env grepTags='test_allure'"
