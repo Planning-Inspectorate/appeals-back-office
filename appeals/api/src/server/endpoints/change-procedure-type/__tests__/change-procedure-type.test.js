@@ -411,6 +411,7 @@ describe('Change appeal procedure type route', () => {
 
 			test('returns 201 and calls delete hearing if changing from hearing to inquiry', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				mockTx.inquiry.findFirst.mockResolvedValue(null);
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/procedure-type-change-request`)
 					.send({
@@ -422,6 +423,7 @@ describe('Change appeal procedure type route', () => {
 						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
 						statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z',
 						proofOfEvidenceAndWitnessesDueDate: '2025-12-15T00:00:00.000Z',
+						estimationDays: '7',
 						address: {
 							addressLine1: '96 The Avenue',
 							addressLine2: 'Leftfield',
@@ -443,6 +445,16 @@ describe('Change appeal procedure type route', () => {
 				expect(mockTx.appeal.update).toHaveBeenCalledWith({
 					where: { id: fullPlanningAppeal.id },
 					data: { procedureTypeId: 1 }
+				});
+
+				expect(mockTx.inquiry.create).toHaveBeenCalledWith({
+					data: {
+						addressId: undefined,
+						appealId: 2,
+						estimatedDays: 7,
+						inquiryEndTime: null,
+						inquiryStartTime: '2025-12-20T00:00:00.000Z'
+					}
 				});
 
 				expect(mockTx.inquiry.deleteMany).not.toHaveBeenCalled();
