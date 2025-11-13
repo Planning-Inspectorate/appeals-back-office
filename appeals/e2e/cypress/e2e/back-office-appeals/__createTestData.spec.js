@@ -12,6 +12,7 @@ describe('Create Test Data', () => {
 		cy.createCase().then((caseObj) => {
 			cy.login(users.appeals.caseAdmin);
 			cy.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'EVENT_READY_TO_SETUP', 'HAS');
+			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'EVENT_READY_TO_SETUP');
 		});
 	});
 	it('S78 Full Planning', () => {

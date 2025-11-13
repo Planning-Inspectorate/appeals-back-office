@@ -261,49 +261,6 @@ export const happyPathHelper = {
 		caseDetailsPage.validateBannerMessage('Success', 'Site visit set up');
 	},
 
-	setupSiteHearingFromBanner(caseObj) {
-		caseDetailsPage.clickHearingBannerLink();
-
-		cy.getBusinessActualDate(currentDate, 2).then((hearingDate) => {
-			hearingDate.setHours(currentDate.getHours(), currentDate.getMinutes());
-			hearingSectionPage.setUpHearing(
-				hearingDate,
-				hearingDate.getHours(),
-				hearingDate.getMinutes()
-			);
-		});
-		hearingSectionPage.selectRadioButtonByValue('No');
-		hearingSectionPage.clickButtonByText('Continue');
-		hearingSectionPage.clickButtonByText('Set up hearing');
-		caseDetailsPage.validateBannerMessage('Success', 'Hearing set up');
-		//add address
-		const originalAddress = {
-			line1: 'e2e Hearing Test Address',
-			line2: 'Hearing Street',
-			town: 'Hearing Town',
-			county: 'Somewhere',
-			postcode: 'BS20 1BS'
-		};
-		const headers = {
-			hearingEstimate: {
-				checkDetails: 'Check details and add hearing estimates',
-				estimateForm: 'Hearing estimates'
-			},
-			hearing: {
-				checkDetails: 'Check details and set up hearing',
-				addressQuestion: 'Do you know the address of where the hearing will take place?',
-				addressForm: 'Address',
-				dateTime: 'Date and time',
-				confirmHearingCancellation: 'Confirm that you want to cancel the hearing'
-			}
-		};
-		caseDetailsPage.clickHearingBannerAddressLink();
-		hearingSectionPage.addHearingLocationAddress(originalAddress);
-		hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
-		caseDetailsPage.clickButtonByText('Update hearing');
-		caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
-	},
-
 	issueDecision(decision, route, appellantCostsBool = true, lpaCostsBool = true) {
 		caseDetailsPage.clickIssueDecision();
 		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(decision));
