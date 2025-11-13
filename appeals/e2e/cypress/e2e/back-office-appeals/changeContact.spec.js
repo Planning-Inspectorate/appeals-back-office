@@ -3,11 +3,13 @@
 
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
+import { ContactDetailsPage } from '../../page_objects/contactDetailsPage.js';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 
 const caseDetailsPage = new CaseDetailsPage();
 const listCasesPage = new ListCasesPage();
+const contactDetailsPage = new ContactDetailsPage();
 
 describe('change contacts', () => {
 	let caseObj;
@@ -36,17 +38,17 @@ describe('change contacts', () => {
 
 	it(`change contact appellant`, () => {
 		caseDetailsPage.clickChangeAppellant();
-		caseDetailsPage.inputAppellantEmailAddress('appellant@test.com');
-		caseDetailsPage.clickButtonByText('Continue');
+		contactDetailsPage.inputLastName('newLastName');
+		contactDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.validateBannerMessage('Success', `Appellant's contact details updated`);
-		caseDetailsPage.verifyAppellantEmailAddress('Appellant', 'appellant@test.com');
+		caseDetailsPage.verifyCaseDetailsValue('Appellant', 'newLastName');
 	});
 
 	it(`change contact agent`, () => {
 		caseDetailsPage.clickChangeAgent();
-		caseDetailsPage.inputAgentEmailAddress('agent@test.com');
-		caseDetailsPage.clickButtonByText('Continue');
+		contactDetailsPage.inputEmailAddress('agent@test.com');
+		contactDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.validateBannerMessage('Success', `Agent's contact details updated`);
-		caseDetailsPage.verifyAppellantEmailAddress('Agent', 'agent@test.com');
+		caseDetailsPage.verifyCaseDetailsValue('Agent', 'agent@test.com');
 	});
 });

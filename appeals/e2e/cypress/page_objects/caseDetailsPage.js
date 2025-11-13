@@ -137,8 +137,6 @@ export class CaseDetailsPage extends Page {
 		checkCaseNoteAdded: () => cy.get('section'),
 		changeAppellant: () => cy.getByData(this._cyDataSelectors.changeAppellant),
 		changeAgent: () => cy.getByData(this._cyDataSelectors.changeAgent),
-		getAppellantEmailAddress: () => cy.get('#email-address.govuk-input'),
-		getAgentEmailAddress: () => cy.get('#email-address.govuk-input'),
 		getCorrectioNotice: () => cy.get('#correction-notice'),
 		getWarningText: () => cy.get('.govuk-warning-text__text'),
 		manageCrossTeamCorrespondence: () =>
@@ -777,7 +775,7 @@ export class CaseDetailsPage extends Page {
 		});
 	}
 
-	verifyAppellantEmailAddress(rowName, text) {
+	verifyCaseDetailsValue(rowName, text) {
 		this.basePageElements
 			.summaryListKey()
 			.then(($elem) => {
