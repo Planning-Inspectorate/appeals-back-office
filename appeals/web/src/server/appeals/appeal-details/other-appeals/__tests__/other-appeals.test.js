@@ -1,4 +1,4 @@
-import { appealData, linkableAppeal } from '#testing/appeals/appeals.js';
+import { appealData, relatableAppeal } from '#testing/appeals/appeals.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
@@ -28,8 +28,8 @@ const appealDataWithOtherAppeals = {
 		}
 	]
 };
-const testValidLinkableAppealReference = '1234567';
-const testInvalidLinkableAppealReference = '7654321';
+const testValidRelatableAppealReference = '1234567';
+const testInvalidRelatableAppealReference = '7654321';
 
 describe('other-appeals', () => {
 	afterAll(() => {
@@ -182,11 +182,11 @@ describe('other-appeals', () => {
 
 		it('should re-render the "Enter the appeal reference number" page with error "Enter a valid appeal reference", if the provided appeal reference was invalid', async () => {
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testInvalidLinkableAppealReference}/related`)
+				.get(`/appeals/relatable-appeal/${testInvalidRelatableAppealReference}`)
 				.reply(404);
 			const response = await request
 				.post(`${baseUrl}/1/other-appeals/add`)
-				.send({ addOtherAppealsReference: testInvalidLinkableAppealReference });
+				.send({ addOtherAppealsReference: testInvalidRelatableAppealReference });
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
@@ -210,11 +210,11 @@ describe('other-appeals', () => {
 
 		it('should redirect to the "Related appeal details" page if related appeal reference is valid', async () => {
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/related`)
-				.reply(200, linkableAppeal);
+				.get(`/appeals/relatable-appeal/${testValidRelatableAppealReference}`)
+				.reply(200, relatableAppeal);
 			const response = await request
 				.post(`${baseUrl}/1/other-appeals/add`)
-				.send({ addOtherAppealsReference: testValidLinkableAppealReference });
+				.send({ addOtherAppealsReference: testValidRelatableAppealReference });
 			expect(response.statusCode).toBe(302);
 		});
 	});
@@ -222,17 +222,17 @@ describe('other-appeals', () => {
 	describe('GET /other-appeals/confirm', () => {
 		it('should render the "Related appeal details" page', async () => {
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/related`)
-				.reply(200, linkableAppeal);
+				.get(`/appeals/relatable-appeal/${testValidRelatableAppealReference}`)
+				.reply(200, relatableAppeal);
 			const addPageResponse = await request
 				.post(`${baseUrl}/1/other-appeals/add`)
-				.send({ addOtherAppealsReference: testValidLinkableAppealReference });
+				.send({ addOtherAppealsReference: testValidRelatableAppealReference });
 			expect(addPageResponse.statusCode).toBe(302);
 
 			nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataWithOtherAppeals);
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/related`)
-				.reply(200, linkableAppeal);
+				.get(`/appeals/relatable-appeal/${testValidRelatableAppealReference}`)
+				.reply(200, relatableAppeal);
 
 			const response = await request.get(`${baseUrl}/1/other-appeals/confirm`);
 			const element = parseHtml(response.text);
@@ -268,13 +268,13 @@ describe('other-appeals', () => {
 				.reply(200, appealDataWithOtherAppeals)
 				.persist();
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/related`)
-				.reply(200, linkableAppeal)
+				.get(`/appeals/relatable-appeal/${testValidRelatableAppealReference}`)
+				.reply(200, relatableAppeal)
 				.persist();
 
 			const addPageResponse = await request
 				.post(`${baseUrl}/1/other-appeals/add`)
-				.send({ addOtherAppealsReference: testValidLinkableAppealReference });
+				.send({ addOtherAppealsReference: testValidRelatableAppealReference });
 			expect(addPageResponse.statusCode).toBe(302);
 
 			const response = await request
@@ -300,12 +300,12 @@ describe('other-appeals', () => {
 				.reply(200, appealDataWithOtherAppeals)
 				.persist();
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/related`)
-				.reply(200, linkableAppeal);
+				.get(`/appeals/relatable-appeal/${testValidRelatableAppealReference}`)
+				.reply(200, relatableAppeal);
 
 			const addPageResponse = await request
 				.post(`${baseUrl}/1/other-appeals/add`)
-				.send({ addOtherAppealsReference: testValidLinkableAppealReference });
+				.send({ addOtherAppealsReference: testValidRelatableAppealReference });
 			expect(addPageResponse.statusCode).toBe(302);
 
 			await request.get(`${baseUrl}/1/other-appeals/confirm`);
@@ -322,14 +322,14 @@ describe('other-appeals', () => {
 				.reply(200, appealDataWithOtherAppeals)
 				.persist();
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/related`)
-				.reply(200, linkableAppeal)
+				.get(`/appeals/relatable-appeal/${testValidRelatableAppealReference}`)
+				.reply(200, relatableAppeal)
 				.persist();
 			nock('http://test/').post('/appeals/1/associate-appeal').reply(200);
 
 			const addPageResponse = await request
 				.post(`${baseUrl}/1/other-appeals/add`)
-				.send({ addOtherAppealsReference: testValidLinkableAppealReference });
+				.send({ addOtherAppealsReference: testValidRelatableAppealReference });
 			expect(addPageResponse.statusCode).toBe(302);
 
 			await request.get(`${baseUrl}/1/other-appeals/confirm`);
@@ -409,7 +409,7 @@ describe('other-appeals', () => {
 				.get('/appeals/1?include=all')
 				.reply(200, appealDataWithOtherAppeals)
 				.persist();
-			nock('http://test/').delete('/appeals/1/unlink-appeal').reply(200, { success: true });
+			nock('http://test/').delete('/appeals/1/unrelate-appeal').reply(200, { success: true });
 
 			const response = await request
 				.post(`${baseUrl}/1/other-appeals/remove/2/1`)
