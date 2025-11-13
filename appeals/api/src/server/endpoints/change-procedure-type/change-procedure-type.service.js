@@ -200,7 +200,7 @@ export const changeProcedureToInquiry = async (data, appealId) => {
 					where: { appealId },
 					data: {
 						inquiryStartTime: data.eventDate,
-						estimatedDays: data.estimatedDays ? Number(data.estimatedDays) : null,
+						estimatedDays: data.estimationDays ? Number(data.estimationDays) : null,
 						addressId: data.address ? address?.id : null
 					}
 				});
@@ -212,7 +212,7 @@ export const changeProcedureToInquiry = async (data, appealId) => {
 							inquiryEndTime: null,
 							appealId,
 							addressId: data?.address ? address?.id : null,
-							estimatedDays: data.estimatedDays ? Number(data.estimatedDays) : null
+							estimatedDays: data.estimationDays ? Number(data.estimationDays) : null
 						}
 					});
 				}
