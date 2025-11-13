@@ -141,6 +141,9 @@ export const appealDetailsInclude = /** @type {const} */ {
 	folders: {
 		include: {
 			documents: {
+				where: {
+					isDeleted: false
+				},
 				include: {
 					latestDocumentVersion: {
 						include: {

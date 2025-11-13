@@ -24,6 +24,9 @@ import { request } from '../../../app-test.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 describe('appeal withdrawal routes', () => {
+	beforeAll(() => {
+		jest.clearAllMocks();
+	});
 	beforeEach(() => {
 		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 	});

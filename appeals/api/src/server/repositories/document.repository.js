@@ -81,6 +81,9 @@ export const getDocumentWithAllVersionsById = (guid) => {
 				}
 			},
 			versions: {
+				where: {
+					document: { isDeleted: false }
+				},
 				include: {
 					redactionStatus: true
 				}
@@ -120,12 +123,12 @@ export const getDocumentsByAppealId = (caseId) => {
 };
 
 /**
- * @param {{folderId: number, skipValue: number, pageSize: number, documentVersion?: number}} folderId
+ * @param {{folderId: number, skipValue: number, pageSize: number, documentVersion?: number}} param0
  * @returns {PrismaPromise<Document[]>}
  */
 export const getDocumentsInFolder = ({ folderId, skipValue, pageSize }) => {
 	return databaseConnector.document.findMany({
-		where: { folderId },
+		where: { folderId, isDeleted: false },
 		orderBy: [{ createdAt: 'desc' }],
 		skip: skipValue,
 		take: pageSize,
