@@ -3,10 +3,12 @@ import {
 	clearIssueDecisionCache,
 	setSpecificDecisionType
 } from '#appeals/appeal-details/issue-decision/issue-decision.middleware.js';
+import { isFeatureActive } from '#common/feature-flags.js';
 import { permissionNames } from '#environment/permissions.js';
 import { clearSessionData } from '#lib/middleware/clear-session-data.js';
 import { saveBackUrl } from '#lib/middleware/save-back-url.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	DECISION_TYPE_APPELLANT_COSTS,
 	DECISION_TYPE_LPA_COSTS
@@ -29,6 +31,9 @@ router
 	)
 	.post(
 		validators.validateDecision,
+		isFeatureActive(FEATURE_FLAG_NAMES.INVALID_DECISION_LETTER)
+			? (_, __, next) => next()
+			: validators.validateInvalidReason,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.postIssueDecision)
 	);

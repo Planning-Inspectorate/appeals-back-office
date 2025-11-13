@@ -20,7 +20,7 @@ import {
 	CASE_RELATIONSHIP_LINKED,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
-import isFPA from '@pins/appeals/utils/is-fpa.js';
+import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { interpret } from 'xstate';
 import createStateMachine from './create-state-machine.js';
@@ -53,7 +53,7 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 	}
 
 	const procedureKey = procedureType?.key ?? APPEAL_CASE_PROCEDURE.WRITTEN;
-	const appealTypeKey = isFPA(appealType.key)
+	const appealTypeKey = !isExpeditedAppealType(appealType.key)
 		? APPEAL_TYPE_SHORTHAND_FPA
 		: APPEAL_TYPE_SHORTHAND_HAS;
 

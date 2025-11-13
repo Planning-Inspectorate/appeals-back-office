@@ -55,6 +55,7 @@ export const APPEAL_TYPE_SHORTHAND_FPA = 'W';
 export const APPEAL_TYPE_SHORTHAND_HAS = 'D';
 export const APPEAL_TYPE_SHORTHAND_HEARING = 'H';
 export const APPEAL_TYPE_SHORTHAND_INQUIRY = 'I';
+export const APPEAL_TYPE_SHORTHAND_LISTED_BUILDING = 'Y';
 
 export const AUDIT_TRAIL_ALLOCATION_DETAILS_ADDED = 'The allocation details were added';
 export const AUDIT_TRAIL_CASE_NOTE_ADDED = 'Case note added: "{replacement0}"';

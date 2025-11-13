@@ -1352,6 +1352,23 @@ export const spec = {
 				}
 			}
 		},
+		CreateHearing: {
+			type: 'object',
+			properties: {
+				appealId: {
+					type: 'number',
+					example: 428
+				},
+				hearingStartTime: {
+					type: 'string',
+					example: '2026-11-10T09:00:00.000Z'
+				},
+				hearingEndTime: {
+					type: 'string',
+					example: '2026-11-10T10:00:00.000Z'
+				}
+			}
+		},
 		UpdateHearingRequest: {
 			type: 'object',
 			properties: {

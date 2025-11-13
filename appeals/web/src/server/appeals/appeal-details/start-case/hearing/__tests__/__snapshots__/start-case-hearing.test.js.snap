@@ -590,7 +590,6 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
             <dd class="govuk-summary-list__value">
                 <ul class="govuk-list">
                     <li>Roger Simmons</li>
-                    <li>test3@example.com</li>
                 </ul>
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/appellant"

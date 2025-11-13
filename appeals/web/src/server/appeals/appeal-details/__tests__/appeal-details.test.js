@@ -5656,6 +5656,20 @@ describe('appeal-details', () => {
 				expect(unprettifiedHTML).not.toContain('Inquiry</span></h2>');
 			});
 
+			it('should not render appellantFinalComments and lpaFinalComments rows in documentation table when procedureType is "inquiry"', async () => {
+				const appealId = '123';
+				const appealDetails = { ...appealData, appealId, procedureType: 'inquiry' };
+
+				nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealDetails);
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+
+				const response = await request.get(`/appeals-service/appeal-details/${appealId}`);
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).not.toContain('appellantFinalComments');
+				expect(unprettifiedHTML).not.toContain('lpaFinalComments');
+			});
+
 			it('should render the Site accordion for HAS cases', async () => {
 				nock('http://test/')
 					.get(`/appeals/${appealId}`)

@@ -1080,6 +1080,7 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain('Planning officer’s report</dt>');
 			expect(element.innerHTML).not.toContain('Plans, drawings and list of plans</dt>'); // here CAS differs from HAS
 			expect(element.innerHTML).toContain('Relevant policies from statutory development plan</dt>');
+			expect(element.innerHTML).toContain('Emerging plan relevant to appeal</dt>');
 			expect(element.innerHTML).toContain('Supplementary planning documents</dt>');
 
 			expect(element.innerHTML).toContain('5. Site access</h2>');

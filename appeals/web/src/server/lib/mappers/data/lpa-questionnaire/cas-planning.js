@@ -4,6 +4,7 @@ import { mapAffectsListedBuildingDetails } from './submappers/map-affects-listed
 import { mapAppealNotification } from './submappers/map-appeal-notification.js';
 import { mapConservationAreaMap } from './submappers/map-conservation-area-map.js';
 import { mapDevelopmentPlanPolicies } from './submappers/map-development-plan-policies.js';
+import { mapEmergingPlan } from './submappers/map-emerging-plan.js';
 import { mapExtraConditions } from './submappers/map-extra-conditions.js';
 import { mapIsCorrectAppealType } from './submappers/map-is-correct-appeal-type.js';
 import { mapLettersToNeighbours } from './submappers/map-letters-to-neighbours.js';
@@ -34,6 +35,7 @@ export const submaps = {
 	representations: mapRepresentations,
 	officersReport: mapOfficersReport,
 	developmentPlanPolicies: mapDevelopmentPlanPolicies,
+	emergingPlan: mapEmergingPlan,
 	supplementaryPlanning: mapSupplementaryPlanning,
 	siteAccess: mapSiteAccess,
 	lpaHealthAndSafety: mapLpaHealthAndSafety,

@@ -423,6 +423,7 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 		it('should redirect to appeal details screen on success', async () => {
 			nock('http://test/')
 				.get('/appeals/1')
+				.times(5)
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealStatus: 'lpa_questionnaire',
@@ -441,7 +442,33 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 					procedureType: 'hearing',
 					dateKnown: 'yes'
 				});
-			nock('http://test/').post('/appeals/1/procedure-type-change-request').reply(200);
+
+			// set session data with post requests to previous pages
+			await request
+				.post(
+					`/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type`
+				)
+				.send({ appealProcedure: 'inquiry' });
+			await request
+				.post(`/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/date`)
+				.send({
+					'event-date-day': '01',
+					'event-date-month': '02',
+					'event-date-year': '3025',
+					'event-time-hour': '12',
+					'event-time-minute': '00'
+				});
+			await request
+				.post(`/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/address`)
+				.send({ addressKnown: 'no' });
+
+			let capturedRequestBody;
+			const changeProcedureTypeRequest = nock('http://test/')
+				.post('/appeals/1/procedure-type-change-request', (body) => {
+					capturedRequestBody = body;
+					return true;
+				})
+				.reply(200);
 
 			const response = await request
 				.post(
@@ -452,6 +479,19 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 			expect(response.statusCode).toBe(302);
 			expect(response.headers.location).toContain('/appeals-service/appeal-details/1');
 			expect(response.text).toContain('Found. Redirecting to /appeals-service/appeal-details/1');
+			expect(changeProcedureTypeRequest.isDone()).toBe(true);
+			expect(capturedRequestBody).toMatchObject({
+				existingAppealProcedure: 'hearing',
+				appealProcedure: 'inquiry',
+				eventDate: '3025-02-01T12:00:00.000Z',
+				lpaQuestionnaireDueDate: '2023-10-11T01:00:00.000Z',
+				ipCommentsDueDate: '2023-10-13T01:00:00.000Z',
+				lpaStatementDueDate: '2023-10-14T01:00:00.000Z',
+				finalCommentsDueDate: '2023-10-12T01:00:00.000Z',
+				statementOfCommonGroundDueDate: '2023-10-15T01:00:00.000Z',
+				planningObligationDueDate: '2023-10-16T01:00:00.000Z',
+				proofOfEvidenceAndWitnessesDueDate: ''
+			});
 		});
 	});
 });

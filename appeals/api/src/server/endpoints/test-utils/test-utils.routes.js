@@ -6,12 +6,14 @@ import {
 	simulateFinalCommentsElapsed,
 	simulateHearingElapsed,
 	simulateInquiryElapsed,
+	simulateIssueDecision,
 	simulateProofOfEvidenceElapsed,
 	simulateReviewAppellantFinalComments,
 	simulateReviewIpComment,
 	simulateReviewLpaFinalComments,
 	simulateReviewLPAQ,
 	simulateReviewLpaStatement,
+	simulateSetUpHearing,
 	simulateSetUpSiteVisit,
 	simulateShareIpCommentsAndLpaStatement,
 	simulateSiteVisitElapsed,
@@ -306,6 +308,23 @@ router.post(
 );
 
 router.post(
+	'/:appealReference/issue-decision',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/issue-decision'
+		#swagger.description = 'A test endpoint to simulate the completion of an issue decision event'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[201] = {}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(simulateIssueDecision)
+);
+
+router.post(
 	'/:appealReference/set-up-site-visit',
 	/*
 		#swagger.tags = ['Test Utilities']
@@ -323,6 +342,26 @@ router.post(
 		#swagger.responses[400] = {}
 	 */
 	asyncHandler(simulateSetUpSiteVisit)
+);
+
+router.post(
+	'/:appealReference/set-up-hearing',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/set-up-hearing'
+		#swagger.description = 'A test endpoint to simulate the completion of a set up hearing event'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[201] = {
+				description: 'Sets a single hearing by ID',
+				schema: { $ref: '#/components/schemas/CreateHearing' }
+		}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(simulateSetUpHearing)
 );
 
 export { router as testUtilsRoutes };

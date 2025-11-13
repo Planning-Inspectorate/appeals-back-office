@@ -59,6 +59,7 @@ export class CaseDetailsPage extends Page {
 		setUpTimetableHearingDate: 'set up-timetable-hearing-date',
 		hearingBannerLink: 'setup-hearing',
 		hearingBannerAddressLink: 'add-hearing-address',
+		inquiryBannerLink: 'setup-inquiry',
 		pageHeading: 'h1',
 		changeInquiryDate: 'change-inquiry-date',
 		changeInquiryNumberOfDays: 'change-inquiry-expected-number-of-days',
@@ -136,8 +137,6 @@ export class CaseDetailsPage extends Page {
 		checkCaseNoteAdded: () => cy.get('section'),
 		changeAppellant: () => cy.getByData(this._cyDataSelectors.changeAppellant),
 		changeAgent: () => cy.getByData(this._cyDataSelectors.changeAgent),
-		getAppellantEmailAddress: () => cy.get('#email-address.govuk-input'),
-		getAgentEmailAddress: () => cy.get('#email-address.govuk-input'),
 		getCorrectioNotice: () => cy.get('#correction-notice'),
 		getWarningText: () => cy.get('.govuk-warning-text__text'),
 		manageCrossTeamCorrespondence: () =>
@@ -221,6 +220,7 @@ export class CaseDetailsPage extends Page {
 		viewCaseHistory: () => cy.getByData(this._cyDataSelectors.viewCaseHistory),
 		cancelHearing: () => cy.get('#cancelHearing'),
 		hearingBannerLink: () => cy.getByData(this._cyDataSelectors.hearingBannerLink),
+		inquiryBannerLink: () => cy.getByData(this._cyDataSelectors.inquiryBannerLink),
 		hearingBannerAddressLink: () => cy.getByData(this._cyDataSelectors.hearingBannerAddressLink),
 		setUpTimetableHearingDate: () => cy.getByData(this._cyDataSelectors.setUpTimetableHearingDate),
 		timeTableRows: () => cy.get('.appeal-case-timetable dt'),
@@ -593,6 +593,10 @@ export class CaseDetailsPage extends Page {
 		this.elements.hearingBannerLink().click();
 	}
 
+	clickInquiryBannerLink() {
+		this.elements.inquiryBannerLink().click();
+	}
+
 	clickHearingBannerAddressLink() {
 		this.elements.hearingBannerAddressLink().click();
 	}
@@ -771,7 +775,7 @@ export class CaseDetailsPage extends Page {
 		});
 	}
 
-	verifyAppellantEmailAddress(rowName, text) {
+	verifyCaseDetailsValue(rowName, text) {
 		this.basePageElements
 			.summaryListKey()
 			.then(($elem) => {
