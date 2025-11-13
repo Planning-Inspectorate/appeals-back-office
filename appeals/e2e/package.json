@@ -10,6 +10,7 @@
 		"cy:open:test": "npx cypress open --browser chrome --e2e --config-file cypress.config.test.env.js",
 		"cy:open:staging": "npx cypress open --browser chrome --e2e --config-file cypress.config.staging.env.js",
 		"cy:open:test:data:generation": "npx cypress open --browser chrome --e2e --config-file cypress.test-generation.config.local.env.js",
+		"cy:open:test:data:generation:test": "npx cypress open --browser chrome --e2e --config-file cypress.test-generation.config.test.env.js",
 		"cy:run": "npx cypress run --config-file cypress.config.local.env.js", 
 		"cy:run:dev": "npx cypress run --config-file cypress.config.dev.env.js",
 		"cy:run:test": "npx cypress run --config-file cypress.config.test.env.js",
