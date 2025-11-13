@@ -500,7 +500,11 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 				]
 			},
 			status: {
-				in: [APPEAL_REPRESENTATION_STATUS.VALID, APPEAL_REPRESENTATION_STATUS.INCOMPLETE]
+				in: [
+					APPEAL_REPRESENTATION_STATUS.VALID,
+					APPEAL_REPRESENTATION_STATUS.INCOMPLETE,
+					APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+				]
 			}
 		},
 		{
@@ -514,10 +518,10 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 	await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 
 	try {
-		const hasLpaProofOfEvidence = result.some(
+		const lpaProofOfEvidence = appeal.representations?.find(
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE
 		);
-		const hasAppellantProofOfEvidence = result.some(
+		const appellantProofOfEvidence = appeal.representations?.find(
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
 		);
 
@@ -546,47 +550,60 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 			? `You need to attend the inquiry on ${inquiryDate}.`
 			: 'We will contact you by email when we set up the inquiry';
 
-		if (!hasLpaProofOfEvidence && hasAppellantProofOfEvidence) {
-			// TODO - Notify template to appellant but no LPA document to share
-		} else if (hasLpaProofOfEvidence && !hasAppellantProofOfEvidence) {
-			// TODO - Notify template to LPA but no appellant document to share
+		if (
+			lpaProofOfEvidence &&
+			lpaProofOfEvidence.status === APPEAL_REPRESENTATION_STATUS.VALID &&
+			appellantProofOfEvidence &&
+			appellantProofOfEvidence.status === APPEAL_REPRESENTATION_STATUS.VALID
+		) {
+			return result;
 		}
 
-		await notifyPublished({
-			appeal,
-			notifyClient,
-			isInquiryProcedure: true,
-			templateName: 'not-received-proof-of-evidence-and-witnesses',
-			recipientEmail: appeal.lpa?.email,
-			whatHappensNext,
-			azureAdUserId,
-			inquiryDetailWarningText,
-			inquiryWitnessesText,
-			inquiryDate,
-			inquiryTime,
-			inquiryExpectedDays,
-			inquiryAddress,
-			inquirySubjectLine:
-				'We did not receive any proof of evidence and witnesses from appellant or any other parties'
-		});
+		if (
+			!lpaProofOfEvidence ||
+			lpaProofOfEvidence.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+		) {
+			await notifyPublished({
+				appeal,
+				notifyClient,
+				isInquiryProcedure: true,
+				templateName: 'not-received-proof-of-evidence-and-witnesses',
+				recipientEmail: appeal.agent?.email || appeal.appellant?.email,
+				whatHappensNext,
+				azureAdUserId,
+				inquiryDetailWarningText,
+				inquiryWitnessesText,
+				inquiryDate,
+				inquiryTime,
+				inquiryExpectedDays,
+				inquiryAddress,
+				inquirySubjectLine:
+					'We did not receive any proof of evidence and witnesses from local planning authority or any other parties'
+			});
+		}
 
-		await notifyPublished({
-			appeal,
-			notifyClient,
-			isInquiryProcedure: true,
-			templateName: 'not-received-proof-of-evidence-and-witnesses',
-			recipientEmail: appeal.agent?.email || appeal.appellant?.email,
-			whatHappensNext,
-			azureAdUserId,
-			inquiryDetailWarningText,
-			inquiryWitnessesText,
-			inquiryDate,
-			inquiryTime,
-			inquiryExpectedDays,
-			inquiryAddress,
-			inquirySubjectLine:
-				'We did not receive any proof of evidence and witnesses from local planning authority or any other parties'
-		});
+		if (
+			!appellantProofOfEvidence ||
+			appellantProofOfEvidence.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+		) {
+			await notifyPublished({
+				appeal,
+				notifyClient,
+				isInquiryProcedure: true,
+				templateName: 'not-received-proof-of-evidence-and-witnesses',
+				recipientEmail: appeal.lpa?.email,
+				whatHappensNext,
+				azureAdUserId,
+				inquiryDetailWarningText,
+				inquiryWitnessesText,
+				inquiryDate,
+				inquiryTime,
+				inquiryExpectedDays,
+				inquiryAddress,
+				inquirySubjectLine:
+					'We did not receive any proof of evidence and witnesses from appellant or any other parties'
+			});
+		}
 	} catch (error) {
 		logger.error(error);
 	}
