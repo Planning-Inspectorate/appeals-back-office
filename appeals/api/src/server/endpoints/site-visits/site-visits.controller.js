@@ -14,7 +14,7 @@ import { formatSiteVisit } from './site-visits.formatter.js';
 import {
 	createSiteVisit,
 	createSiteVisitForLinkedChildAppeals,
-	deleteSiteVisit as deleteSiteVisitService,
+	deleteSiteVisit,
 	getMissedSiteVisit,
 	recordMissedSiteVisit,
 	updateSiteVisit,
@@ -252,24 +252,13 @@ const cancelSiteVisit = async (req, res) => {
 
 	const azureAdUserId = req.get('azureAdUserId') || '';
 	try {
-		// @ts-ignore
-		const result = await deleteSiteVisitService(
-			siteVisitId,
-			appeal,
-			notifyClient,
-			String(azureAdUserId)
-		);
-		if (!result) {
-			return res.status(404).send({ errors: { body: 'Site visit deletion failed' } });
-		}
+		await deleteSiteVisit(siteVisitId, appeal, notifyClient, String(azureAdUserId));
 
 		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.AWAITING_EVENT)) {
 			await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_INCOMPLETE);
 		}
 
-		return res.send({
-			siteVisitId
-		});
+		return res.status(200).send({ siteVisitId });
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });

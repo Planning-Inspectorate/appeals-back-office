@@ -15,151 +15,45 @@ import { schemas, validateFromSchema } from '../integrations.validators.js';
 /** @typedef {import('@pins/appeals.api').Schema.Hearing} Hearing */
 /** @typedef {import('@pins/appeals.api').Schema.Inquiry} Inquiry */
 /** @typedef {import('@pins/appeals.api').Schema.SiteVisit} SiteVisit */
+/** @typedef {Inquiry | Hearing | SiteVisit | undefined | null} ExistingEvent */
 
 /**
  *
  * @param {number} eventId
  * @param {string} eventType
  * @param {string} updateType
- * @param {Inquiry | Hearing | SiteVisit | undefined | null} existingEvent
+ * @param {ExistingEvent} existingEvent
  * @returns
  */
 export const broadcastEvent = async (eventId, eventType, updateType, existingEvent = undefined) => {
 	if (!config.serviceBusEnabled && config.NODE_ENV !== 'development') {
 		return false;
 	}
-	/** @type { AppealEvent | undefined } */
-	let msg = undefined;
+	let msg;
 
-	if (eventType === EVENT_TYPE.SITE_VISIT) {
-		const siteVisit = await databaseConnector.siteVisit.findUnique({
-			where: { id: eventId },
-			include: {
-				siteVisitType: true,
-				appeal: {
-					include: {
-						address: true
-					}
-				}
-			}
-		});
+	try {
+		switch (eventType) {
+			case EVENT_TYPE.SITE_VISIT:
+				msg = await handleSiteVisitEvent(eventId, updateType, existingEvent);
+				break;
 
-		if (!siteVisit) {
-			pino.error(
-				`Trying to broadcast info for event ${eventId} of type ${eventType}, but it was not found.`
-			);
-			return false;
-		}
+			case EVENT_TYPE.HEARING:
+				msg = await handleHearingEvent(eventId, updateType, existingEvent);
+				break;
 
-		// @ts-ignore
-		msg = mapSiteVisitEntity(siteVisit);
-	}
+			case EVENT_TYPE.INQUIRY:
+				msg = await handleInquiryEvent(eventId, updateType, existingEvent);
+				break;
 
-	if (eventType === EVENT_TYPE.HEARING) {
-		let hearing = await databaseConnector.hearing.findUnique({
-			where: { id: eventId },
-			include: {
-				address: true,
-				appeal: {
-					include: {
-						address: false
-					}
-				}
-			}
-		});
-
-		if (!hearing && updateType !== EventType.Delete) {
-			pino.error(
-				`Trying to broadcast info for event ${eventId} of type ${eventType}, but it was not found.`
-			);
-			return false;
-		}
-
-		// Handling Cancellation and deletion of hearing
-		if (updateType === EventType.Delete && existingEvent) {
-			const appeal = await databaseConnector.appeal.findUnique({
-				where: { id: existingEvent.appealId }
-			});
-
-			if (!appeal) {
-				pino.error(
-					`Trying to broadcast info for event ${eventId} of type ${eventType}, no appeal was found.`
-				);
+			default:
+				pino.warn(`Unknown eventType: ${eventType}. No broadcast will be sent.`);
 				return false;
-			}
-
-			hearing = {
-				id: eventId,
-				address: null,
-				appealId: appeal.id,
-				addressId: null,
-				// @ts-ignore
-				appeal: {
-					reference: appeal.reference
-				},
-				// @ts-ignore
-				hearingStartTime: existingEvent.hearingStartTime,
-				hearingEndTime: null
-			};
 		}
 
-		// @ts-ignore
-		msg = mapHearingEntity(hearing, updateType);
-	}
-
-	if (eventType === EVENT_TYPE.INQUIRY) {
-		let inquiry = await databaseConnector.inquiry.findUnique({
-			where: { id: eventId },
-			include: {
-				address: true,
-				appeal: {
-					include: {
-						address: false
-					}
-				}
-			}
-		});
-
-		if (!inquiry && updateType !== EventType.Delete) {
-			pino.error(
-				`Trying to broadcast info for event ${eventId} of type ${eventType}, but it was not found.`
-			);
+		if (!msg) {
 			return false;
 		}
 
-		// Handling Cancellation and deletion of inquiry
-		if (updateType === EventType.Delete && existingEvent) {
-			const appeal = await databaseConnector.appeal.findUnique({
-				where: { id: existingEvent.appealId }
-			});
-
-			if (!appeal) {
-				pino.error(
-					`Trying to broadcast info for event ${eventId} of type ${eventType}, no appeal was found.`
-				);
-				return false;
-			}
-
-			inquiry = {
-				id: eventId,
-				address: null,
-				appealId: appeal.id,
-				addressId: null,
-				// @ts-ignore
-				appeal: {
-					reference: appeal.reference
-				},
-				// @ts-ignore
-				inquiryStartTimeStartTime: existingEvent.inquiryStartTime,
-				inquiryEndTime: null
-			};
-		}
-
-		// @ts-ignore
-		msg = mapInquiryEntity(inquiry, updateType);
-	}
-
-	if (msg) {
 		const validationResult = await validateFromSchema(schemas.events.appealEvent, msg);
 		if (validationResult !== true && validationResult.errors) {
 			const errorDetails = validationResult.errors?.map(
@@ -179,7 +73,222 @@ export const broadcastEvent = async (eventId, eventType, updateType, existingEve
 		if (res) {
 			return true;
 		}
+		return false;
+	} catch (error) {
+		pino.error(error, `Failed to handle event ${eventId} of type ${eventType}`);
+		return false;
+	}
+};
+
+/**
+ * @param {number} eventId
+ * @param {string} updateType
+ * @param {ExistingEvent} existingEvent
+ */
+async function handleSiteVisitEvent(eventId, updateType, existingEvent) {
+	let siteVisit;
+
+	if (updateType === EventType.Delete) {
+		siteVisit = await reconstructDeletedSiteVisit(eventId, existingEvent);
+		if (!siteVisit) return false;
+	} else {
+		siteVisit = await databaseConnector.siteVisit.findUnique({
+			where: { id: eventId },
+			include: {
+				siteVisitType: true,
+				appeal: {
+					include: {
+						address: true
+					}
+				}
+			}
+		});
+
+		if (!siteVisit) {
+			logEventNotFoundError(eventId, EVENT_TYPE.SITE_VISIT);
+			return false;
+		}
 	}
 
-	return false;
-};
+	// @ts-ignore
+	return mapSiteVisitEntity(siteVisit, updateType);
+}
+
+/**
+ * @param {number} eventId
+ * @param {string} updateType
+ * @param {ExistingEvent} existingEvent
+ */
+async function handleHearingEvent(eventId, updateType, existingEvent) {
+	let hearing;
+
+	if (updateType === EventType.Delete) {
+		hearing = await reconstructDeletedHearing(eventId, existingEvent);
+		if (!hearing) return false;
+	} else {
+		hearing = await databaseConnector.hearing.findUnique({
+			where: { id: eventId },
+			include: {
+				address: true,
+				appeal: {
+					include: {
+						address: false
+					}
+				}
+			}
+		});
+
+		if (!hearing) {
+			logEventNotFoundError(eventId, EVENT_TYPE.HEARING);
+			return false;
+		}
+	}
+
+	// @ts-ignore
+	return mapHearingEntity(hearing, updateType);
+}
+
+/**
+ * @param {number} eventId
+ * @param {string} updateType
+ * @param {ExistingEvent} existingEvent
+ */
+async function handleInquiryEvent(eventId, updateType, existingEvent) {
+	let inquiry;
+
+	if (updateType === EventType.Delete) {
+		inquiry = await reconstructDeletedInquiry(eventId, existingEvent);
+		if (!inquiry) return false;
+	} else {
+		inquiry = await databaseConnector.inquiry.findUnique({
+			where: { id: eventId },
+			include: {
+				address: true,
+				appeal: {
+					include: {
+						address: false
+					}
+				}
+			}
+		});
+
+		if (!inquiry) {
+			logEventNotFoundError(eventId, EVENT_TYPE.INQUIRY);
+			return false;
+		}
+	}
+
+	// @ts-ignore
+	return mapInquiryEntity(inquiry, updateType);
+}
+
+/**
+ * @param {number} eventId
+ * @param {ExistingEvent} existingEvent
+ */
+async function reconstructDeletedSiteVisit(eventId, existingEvent) {
+	const appeal = await getAppealForEvent(existingEvent?.appealId, eventId, EVENT_TYPE.SITE_VISIT);
+	if (!appeal) return null;
+
+	return {
+		id: eventId,
+		appealId: appeal.id,
+		// @ts-ignore
+		appeal: {
+			reference: appeal.reference,
+			// @ts-ignore
+			address: appeal.address
+		},
+		// @ts-ignore
+		siteVisitType: existingEvent.siteVisitType,
+		siteVisitTypeId: null,
+		// @ts-ignore
+		visitDate: existingEvent.visitDate,
+		// @ts-ignore
+		visitStartTime: existingEvent?.visitStartTime,
+		visitEndTime: null,
+		whoMissedSiteVisit: null
+	};
+}
+
+/**
+ * @param {number} eventId
+ * @param {ExistingEvent} existingEvent
+ */
+async function reconstructDeletedHearing(eventId, existingEvent) {
+	const appeal = await getAppealForEvent(existingEvent?.appealId, eventId, EVENT_TYPE.HEARING);
+	if (!appeal) return null;
+
+	return {
+		id: eventId,
+		address: null,
+		appealId: appeal.id,
+		addressId: null,
+		// @ts-ignore
+		appeal: {
+			reference: appeal.reference
+		},
+		// @ts-ignore
+		hearingStartTime: existingEvent.hearingStartTime,
+		hearingEndTime: null
+	};
+}
+
+/**
+ * @param {number} eventId
+ * @param {ExistingEvent} existingEvent
+ */
+async function reconstructDeletedInquiry(eventId, existingEvent) {
+	const appeal = await getAppealForEvent(existingEvent?.appealId, eventId, EVENT_TYPE.INQUIRY);
+	if (!appeal) return null;
+
+	return {
+		id: eventId,
+		address: null,
+		appealId: appeal.id,
+		addressId: null,
+		// @ts-ignore
+		appeal: {
+			reference: appeal.reference
+		},
+		// @ts-ignore
+		inquiryStartTime: existingEvent.inquiryStartTime,
+		inquiryEndTime: null
+	};
+}
+
+/**
+ * @param {number} eventId
+ * @param {string} eventType
+ */
+function logEventNotFoundError(eventId, eventType) {
+	pino.error(
+		`Trying to broadcast info for event ${eventId} of type ${eventType}, but it was not found.`
+	);
+}
+
+/**
+ * @param {number|undefined} appealId
+ * @param {number} eventId
+ * @param {string} eventType
+ */
+async function getAppealForEvent(appealId, eventId, eventType) {
+	if (!appealId) {
+		pino.error(
+			`Trying to process delete for event ${eventId} (${eventType}), but existingEvent has no appealId.`
+		);
+		return null;
+	}
+
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: { id: appealId }
+	});
+
+	if (!appeal) {
+		pino.error(
+			`Trying to broadcast info for event ${eventId} of type ${eventType}, no appeal was found with id ${appealId}.`
+		);
+		return null;
+	}
+	return appeal;
+}
