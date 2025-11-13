@@ -372,6 +372,54 @@ Cypress.Commands.add('reviewIpCommentsViaApi', (caseObj) => {
 	});
 });
 
+Cypress.Commands.add('shareCommentsAndStatementsViaApi', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.shareCommentsAndStatements(caseObj.reference);
+		cy.log('Shared IP Comments and Statements for case ref ' + caseObj.reference);
+		return;
+	});
+});
+
+Cypress.Commands.add('reviewAppellantFinalCommentsViaApi', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.reviewAppellantFinalComments(caseObj.reference);
+		cy.log('Reviewed appellant final comments for case ref ' + caseObj.reference);
+		return;
+	});
+});
+
+Cypress.Commands.add('reviewLpaFinalCommentsViaApi', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.reviewLpaFinalComments(caseObj.reference);
+		cy.log('Reviewed LPA final comments for case ref ' + caseObj.reference);
+		return;
+	});
+});
+
+Cypress.Commands.add('setupSiteVisitViaAPI', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.setupSiteVisit(caseObj.reference);
+		cy.log('Setup site visit for case ref ' + caseObj.reference);
+		return;
+	});
+});
+
+Cypress.Commands.add('issueDecisionViaApi', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.issueDecision(caseObj.reference);
+		cy.log('Issue allowed decision for case ref ' + caseObj.reference);
+		return;
+	});
+});
+
+Cypress.Commands.add('setupHearingViaApi', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.setupHearing(caseObj.reference);
+		cy.log('Setup hearing for case ref' + caseObj.reference);
+		return;
+	});
+});
+
 Cypress.Commands.add('addEstimateViaApi', (procedureType, caseObj, estimate = null) => {
 	return cy.wrap(null).then(async () => {
 		const details = await appealsApiClient.loadCaseDetails(caseObj.reference);

@@ -735,39 +735,77 @@ describe('set up inquiry', () => {
 	describe('POST /inquiry/setup/address', () => {
 		const appealId = 2;
 
-		beforeEach(() => {
-			nock('http://test/')
-				.get(`/appeals/${appealId}`)
-				.reply(200, { ...appealData, appealId });
-		});
-
 		afterEach(() => {
 			nock.cleanAll();
 		});
 
-		it('should redirect to /inquiry/setup/timetable-due-dates when answering no', async () => {
-			const response = await request.post(`${baseUrl}/${appealId}/Inquiry/setup/address`).send({
-				addressKnown: 'no'
+		describe('when starting a case', () => {
+			beforeEach(async () => {
+				nock.cleanAll();
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, { ...appealData, appealId, procedureType: '' });
 			});
 
-			expect(response.statusCode).toBe(302);
-			expect(response.headers.location).toBe(
-				`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates`
-			);
+			it('should redirect to /inquiry/setup/timetable-due-dates when answering no', async () => {
+				const response = await request.post(`${baseUrl}/${appealId}/Inquiry/setup/address`).send({
+					addressKnown: 'no'
+				});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.headers.location).toBe(
+					`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates`
+				);
+			});
+
+			it('should redirect to /Inquiry/setup/address-details when answering yes', async () => {
+				const response = await request.post(`${baseUrl}/${appealId}/Inquiry/setup/address`).send({
+					addressKnown: 'yes'
+				});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.headers.location).toBe(
+					`${baseUrl}/${appealId}/inquiry/setup/address-details`
+				);
+			});
 		});
 
-		it('should redirect to /Inquiry/setup/address-details when answering yes', async () => {
-			const response = await request.post(`${baseUrl}/${appealId}/Inquiry/setup/address`).send({
-				addressKnown: 'yes'
+		describe('when not starting a case', () => {
+			beforeEach(async () => {
+				nock.cleanAll();
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, { ...appealData, appealId, procedureType: 'inquiry' });
 			});
 
-			expect(response.statusCode).toBe(302);
-			expect(response.headers.location).toBe(
-				`${baseUrl}/${appealId}/inquiry/setup/address-details`
-			);
+			it('should redirect to /inquiry/setup/check-details when answering no', async () => {
+				const response = await request.post(`${baseUrl}/${appealId}/Inquiry/setup/address`).send({
+					addressKnown: 'no'
+				});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.headers.location).toBe(
+					`${baseUrl}/${appealId}/inquiry/setup/check-details`
+				);
+			});
+
+			it('should redirect to /Inquiry/setup/address-details when answering yes', async () => {
+				const response = await request.post(`${baseUrl}/${appealId}/Inquiry/setup/address`).send({
+					addressKnown: 'yes'
+				});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.headers.location).toBe(
+					`${baseUrl}/${appealId}/inquiry/setup/address-details`
+				);
+			});
 		});
 
 		it('should return 400 on missing addressKnown with appropriate error message', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
 			const response = await request.post(`${baseUrl}/${appealId}/Inquiry/setup/address`).send({});
 
 			expect(response.statusCode).toBe(400);

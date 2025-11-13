@@ -5,7 +5,7 @@ import {
 	casPlanningAppeal,
 	fullPlanningAppeal,
 	householdAppeal,
-	listedBuildingAppeal
+	listedBuildingAppealAppellantCaseValid
 } from '#tests/appeals/mocks.js';
 import {
 	advertisementAppealWithTimetable,
@@ -1055,7 +1055,11 @@ describe('appeal timetables routes', () => {
 					{ ...fullPlanningAppeal, procedureType: { key: 'hearing' } },
 					{ statement_of_common_ground_deadline: '10 July 2024', planning_obligation_deadline: '' }
 				],
-				['listedBuilding', { ...listedBuildingAppeal, procedureType: { key: 'hearing' } }, {}]
+				[
+					'listedBuilding',
+					{ ...listedBuildingAppealAppellantCaseValid, procedureType: { key: 'hearing' } },
+					{}
+				]
 			])('for a %s appeal', (appealType, appeal, personalisation) => {
 				test(`start an appeal timetable with a hearing procedure type`, async () => {
 					databaseConnector.appeal.findUnique.mockResolvedValue({
@@ -1706,7 +1710,7 @@ describe('appeal timetables routes', () => {
 				'Your appeal started on 12 June 2024. The timetable for the appeal begins from this date'
 			);
 			expect(lpaPreview).toContain(
-				'You have a new full planning appeal against the application 48269/APP/2021/1482.'
+				'You have a new planning appeal against the application 48269/APP/2021/1482.'
 			);
 		});
 

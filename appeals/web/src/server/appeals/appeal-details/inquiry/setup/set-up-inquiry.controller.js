@@ -361,6 +361,8 @@ export const postInquiryAddress = async (request, response) => {
 
 	const { appealId, procedureType } = request.currentAppeal;
 
+	const isStartCase = procedureType.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY;
+
 	if (request.body.addressKnown === 'yes') {
 		return response.redirect(
 			preserveQueryString(
@@ -370,18 +372,19 @@ export const postInquiryAddress = async (request, response) => {
 		);
 	}
 
-	if (procedureType.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
+	if (isStartCase) {
 		return response.redirect(
 			preserveQueryString(
 				request,
-				`/appeals-service/appeal-details/${appealId}/inquiry/setup/check-details`
+				`/appeals-service/appeal-details/${appealId}/inquiry/setup/timetable-due-dates`
 			)
 		);
 	}
+
 	return response.redirect(
 		preserveQueryString(
 			request,
-			`/appeals-service/appeal-details/${appealId}/inquiry/setup/timetable-due-dates`
+			`/appeals-service/appeal-details/${appealId}/inquiry/setup/check-details`
 		)
 	);
 };

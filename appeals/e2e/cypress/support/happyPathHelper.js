@@ -66,6 +66,8 @@ export const happyPathHelper = {
 	startS78Case(caseObj, procedureType) {
 		if (procedureType === 'hearing') {
 			return happyPathHelper.startS78HearingCase(caseObj, procedureType);
+		} else if (procedureType === 'inquiry') {
+			return happyPathHelper.startS78InquiryCase(caseObj, procedureType);
 		}
 		happyPathHelper.viewCaseDetails(caseObj);
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);

@@ -949,36 +949,37 @@ describe('appellant cases routes', () => {
 				}
 			);
 
+			const FEEDBACK_LINK_FULL_PLANNING =
+				'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzg1SlNPQjA3V0FDNUFJTldHMlEzMDdMRS4u';
+
+			const FEEDBACK_LINK_HOUSEHOLDER =
+				'https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUOFg4UFdEUThGTlU3S0hFUTlERVYwMVRLTy4u&route=shorturl';
+
+			const FEEDBACK_LINK_LISTED_BUILDING =
+				'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQjI0R09ONVRVNVJZVk9XMzBYTFo2RDlQUy4u';
+
 			test.each([
-				['householdAppeal', householdAppeal],
-				['advertisementAppeal', advertisementAppeal],
-				['casAdvertAppeal', casAdvertAppeal],
-				['casPlanningAppeal', casPlanningAppeal],
-				['fullPlanningAppeal', fullPlanningAppeal],
-				['listedBuildingAppeal', listedBuildingAppeal]
+				['householdAppeal', householdAppeal, FEEDBACK_LINK_HOUSEHOLDER],
+				['advertisementAppeal', advertisementAppeal, FEEDBACK_LINK_HOUSEHOLDER],
+				['casAdvertAppeal', casAdvertAppeal, FEEDBACK_LINK_HOUSEHOLDER],
+				['casPlanningAppeal', casPlanningAppeal, FEEDBACK_LINK_HOUSEHOLDER],
+				['fullPlanningAppeal', fullPlanningAppeal, FEEDBACK_LINK_FULL_PLANNING],
+				['listedBuildingAppeal', listedBuildingAppeal, FEEDBACK_LINK_LISTED_BUILDING]
 			])(
 				'updates appellant case and sends a notify email when the validation outcome is Valid for %s appeal',
-				async (_, appeal) => {
+				async (_, appeal, expectedFeedbackLink) => {
+					// Mock DB responses
 					// @ts-ignore
 					databaseConnector.appeal.findUnique.mockResolvedValue({
 						...appeal,
-						appealStatus: [
-							{
-								status: 'validation',
-								valid: true
-							}
-						]
+						appealStatus: [{ status: 'validation', valid: true }]
 					});
-
 					// @ts-ignore
 					databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
 						appellantCaseValidationOutcomes[2]
 					);
 					// @ts-ignore
-					databaseConnector.user.upsert.mockResolvedValue({
-						id: 1,
-						azureAdUserId
-					});
+					databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
 					// @ts-ignore
 					databaseConnector.documentVersion.findMany.mockResolvedValue([]);
 					// @ts-ignore
@@ -990,10 +991,9 @@ describe('appellant cases routes', () => {
 					// @ts-ignore
 					databaseConnector.document.findUnique.mockResolvedValue(null);
 
-					const body = {
-						validationOutcome: 'valid'
-					};
+					const body = { validationOutcome: 'valid' };
 					const { appellantCase, id } = appeal;
+
 					const response = await request
 						.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
 						.send(body)
@@ -1001,9 +1001,7 @@ describe('appellant cases routes', () => {
 
 					expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
 						where: { id: appellantCase.id },
-						data: {
-							appellantCaseValidationOutcomeId: 3
-						}
+						data: { appellantCaseValidationOutcomeId: 3 }
 					});
 
 					expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith({
@@ -1024,8 +1022,7 @@ describe('appellant cases routes', () => {
 							appeal_reference_number: appeal.reference,
 							lpa_reference: appeal.applicationReference,
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-
-							feedback_link: 'https://forms.office.com/r/9U4Sq9rEff',
+							feedback_link: expectedFeedbackLink,
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.agent.email,
@@ -1035,6 +1032,7 @@ describe('appellant cases routes', () => {
 					expect(response.status).toEqual(200);
 				}
 			);
+
 			test('updates appellant case site area and procedure preferences', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				databaseConnector.user.upsert.mockResolvedValue({
