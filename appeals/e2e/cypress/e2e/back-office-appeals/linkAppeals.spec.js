@@ -301,6 +301,7 @@ describe('Net residences', () => {
 	});
 
 	//A2-4950
+	//more detailed updates required
 	it.skip('Net residence case history entries only appear on the lead appeal', () => {
 		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
 			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
@@ -383,8 +384,7 @@ describe('Timetable', () => {
 		});
 	});
 
-	//A2-4902
-	it.skip('Timetable changes are reflected in case history', () => {
+	it('Timetable changes are reflected in case history', () => {
 		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
 			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
 				cases = [leadCaseObj, childCaseObj];
