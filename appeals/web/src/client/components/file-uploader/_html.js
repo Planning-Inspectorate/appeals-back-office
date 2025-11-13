@@ -32,11 +32,11 @@ export const errorMessage = (type, replaceValue, additionalValues = {}) => {
 			'Please confirm that the document does not belong anywhere else',
 		TIMEOUT: 'There was a timeout and your files could not be uploaded',
 		NO_FILE: 'Select the {fileTitle}',
-		SIZE_SINGLE_FILE: `The selected file must be smaller than 25MB`,
+		SIZE_SINGLE_FILE: `The {fileTitle} must be smaller than 25MB`,
 		GENERIC_SINGLE_FILE: `{REPLACE_VALUE} could not be added`,
 		NAME_SINGLE_FILE: `{REPLACE_VALUE} could not be added because the file name is too long or contains special characters. Rename the file and try again.`,
 		DUPLICATE_NAME_SINGLE_FILE: `"{REPLACE_VALUE}" could not be added because a file with this name already exists. Files cannot have duplicate names.`,
-		DIFFERENT_FILE_EXTENSION: `The selected file must be a {fileExtension}`,
+		DIFFERENT_FILE_EXTENSION: `The {fileTitle} must be a {fileExtension}`,
 		SINGLE_FILE_ONLY: `You can only upload 1 file`
 	};
 
@@ -47,6 +47,9 @@ export const errorMessage = (type, replaceValue, additionalValues = {}) => {
 	}
 
 	if (additionalValues) {
+		if (!additionalValues?.fileTitle) {
+			additionalValues.fileTitle = 'selected file';
+		}
 		for (const [key, value] of Object.entries(additionalValues)) {
 			message = message.replace(`{${key}}`, value);
 		}

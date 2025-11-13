@@ -264,6 +264,7 @@ const clientActions = (container) => {
 			await showErrors(
 				{
 					message: 'FILE_SPECIFIC_ERRORS',
+					metadata: { fileTitle: container.dataset.documentTitle },
 					details: [
 						{
 							message: 'SINGLE_FILE_ONLY',
@@ -380,7 +381,7 @@ const clientActions = (container) => {
 
 	/**
 	 * @param {File} selectedFile
-	 * @returns {{message: string, metadata?: {fileExtension?: string}} | null}
+	 * @returns {{message: string, metadata?: {fileExtension?: string, fileTitle?: string}} | null}
 	 */
 	function validateSelectedFile(selectedFile) {
 		const allowedMimeTypes = (container.dataset.allowedTypes || '').split(',');
@@ -400,16 +401,25 @@ const clientActions = (container) => {
 		if (!allowedMimeTypes.includes(fileMimeType)) {
 			return {
 				message: 'DIFFERENT_FILE_EXTENSION',
-				metadata: { fileExtension: container.dataset.formattedAllowedTypes }
+				metadata: {
+					fileExtension: container.dataset.formattedAllowedTypes,
+					fileTitle: container.dataset.documentTitle
+				}
 			};
 		}
 
 		if (selectedFile.size > MAX_FILE_SIZE) {
-			return { message: 'SIZE_SINGLE_FILE' };
+			return {
+				message: 'SIZE_SINGLE_FILE',
+				metadata: { fileTitle: container.dataset.documentTitle }
+			};
 		}
 
 		if ([...filenamesInStagedFiles, ...filenamesInFolder].includes(selectedFile.name)) {
-			return { message: 'DUPLICATE_NAME_SINGLE_FILE' };
+			return {
+				message: 'DUPLICATE_NAME_SINGLE_FILE',
+				metadata: { fileTitle: container.dataset.documentTitle }
+			};
 		}
 
 		return null;
