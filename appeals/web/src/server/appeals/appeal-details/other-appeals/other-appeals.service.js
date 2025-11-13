@@ -4,8 +4,24 @@
  * @param {string} appealReference
  * @returns {Promise<import('@pins/appeals.api').Appeals.LinkableAppealSummary>}
  */
-export function getLinkableAppealSummaryFromReference(apiClient, appealReference) {
-	return apiClient.get(`appeals/linkable-appeal/${appealReference}/related`).json();
+export function getRelatableAppealSummaryFromReference(apiClient, appealReference) {
+	return apiClient.get(`appeals/relatable-appeal/${appealReference}`).json();
+}
+
+/**
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @param {number} relationshipId
+ * @returns {Promise<{}>}
+ */
+export function postUnrelateRequest(apiClient, appealId, relationshipId) {
+	const appealIdNumber = parseInt(appealId, 10);
+	return apiClient
+		.delete(`appeals/${appealIdNumber}/unrelate-appeal`, {
+			json: { relationshipId }
+		})
+		.json();
 }
 
 /**
