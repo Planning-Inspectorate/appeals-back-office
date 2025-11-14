@@ -20,4 +20,4 @@ Your appeal is now closed.
 This is a new service. Help us improve it and [give your feedback (opens in new tab)](https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u).
 
 The Planning Inspectorate
-allcustomerteam@planninginspectorate.gov.uk
+[Get help with your appeal decision](https://contact-us.planninginspectorate.gov.uk/hc/en-gb/requests/new)
