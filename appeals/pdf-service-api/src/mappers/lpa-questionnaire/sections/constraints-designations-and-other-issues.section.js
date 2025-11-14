@@ -22,7 +22,8 @@ export function constraintsDesignationsAndOtherIssuesSection(templateData) {
 		designatedSiteNames = [],
 		isGypsyOrTravellerSite,
 		preserveGrantLoan,
-		appealType
+		appealType,
+		isSiteInAreaOfSpecialControlAdverts
 	} = templateData;
 
 	const {
@@ -92,6 +93,14 @@ export function constraintsDesignationsAndOtherIssuesSection(templateData) {
 						{
 							key: 'Would the development affect a protected species?',
 							text: formatYesNo(hasProtectedSpecies)
+						}
+				  ]
+				: []),
+			...([APPEAL_TYPE.CAS_ADVERTISEMENT, APPEAL_TYPE.ADVERTISEMENT].includes(appealType)
+				? [
+						{
+							key: 'Is the site in an area of special control of advertisements?',
+							html: formatYesNo(isSiteInAreaOfSpecialControlAdverts)
 						}
 				  ]
 				: []),
