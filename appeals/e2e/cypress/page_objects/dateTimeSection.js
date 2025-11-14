@@ -165,11 +165,6 @@ export class DateTimeSection extends Page {
 		this.#setAllDateFields(this.selectorPrefix.inquiryDate, date);
 	}
 
-	enterInquiryTime(hour, minute) {
-		this.#set(this.elements.enterInquiryTimeHour(), hour);
-		this.#set(this.elements.enterInquiryTimeMinute(), minute);
-	}
-
 	verifyPrepopulatedInquiryValues(expectedValues) {
 		this.#verifyPrepopulatedValues(this.selectorPrefix.inquiry, expectedValues);
 	}
@@ -240,6 +235,7 @@ export class DateTimeSection extends Page {
 	}
 
 	#set(element, value, index = 0) {
+		cy.log('** #set with value - ', value);
 		element.eq(index).clear().type(value, { delay: 0 });
 	}
 
