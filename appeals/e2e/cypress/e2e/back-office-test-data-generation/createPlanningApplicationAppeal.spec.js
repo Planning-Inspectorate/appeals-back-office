@@ -14,11 +14,11 @@ let appeal;
 let testCaseConfig = {
 	addLpaq: true,
 	validateAppeal: true,
-	addInquiry: true,
-	addHearing: false,
-	assignCaseOfficer: false,
-	addAppellantPOE: true,
-	addLPAPOE: false
+	addInquiry: false,
+	addHearing: true,
+	assignCaseOfficer: true,
+	addAppellantPOE: false,
+	addLPAPOE: true
 };
 
 before(() => {});
@@ -51,6 +51,15 @@ describe('Create planning application', () => {
 				});
 			}
 
+			// add hearing
+			if (testCaseConfig.addHearing) {
+				cy.getBusinessActualDate(new Date(), 0).then((date) => {
+					// Set up hearing case
+					cy.addHearingDetails(caseObj, date);
+				});
+				cy.setupHearingViaApi(caseObj);
+			}
+
 			// Validate Appeal Via API
 			if (testCaseConfig.validateAppeal) {
 				cy.getBusinessActualDate(new Date(), 0).then((date) => {
@@ -63,6 +72,13 @@ describe('Create planning application', () => {
 				cy.simulateStatementsDeadlineElapsed(caseObj);
 				// Process proof of evidence submission (FO) via Api
 				inquirySectionPage.addProofOfEvidenceViaApi(caseObj, 'appellantProofOfEvidence');
+			}
+
+			// add LPA POE
+			if (testCaseConfig.addLPAPOE) {
+				cy.simulateStatementsDeadlineElapsed(caseObj);
+				// Process proof of evidence submission (FO) via Api
+				inquirySectionPage.addProofOfEvidenceViaApi(caseObj, 'lpaProofOfEvidence');
 			}
 
 			cy.log(`*** Created test case for ${caseObj.reference}`);
