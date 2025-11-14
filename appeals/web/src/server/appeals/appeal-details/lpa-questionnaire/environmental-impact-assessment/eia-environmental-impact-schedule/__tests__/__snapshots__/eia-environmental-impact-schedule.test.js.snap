@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`eia-environmental-impact-schedule GET /change should render the development category change page with "Other" radio option checked if eiaEnvironmentalImpactSchedule is null 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">

@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { eventClient } from '#infrastructure/event-client.js';
-import { request } from '#tests/../app-test.js';
+import { request } from '#server/app-test.js';
 import { householdAppeal, linkedAppeals } from '#tests/appeals/mocks.js';
 import { documentCreated, documentVersionCreated, savedFolder } from '#tests/documents/mocks.js';
 import { horizonGetCaseSuccessResponse } from '#tests/horizon/mocks.js';

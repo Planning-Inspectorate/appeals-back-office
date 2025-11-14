@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`interested-party-comments GET /interested-party-comments with data should render interestedPartyComments page with awaiting review comments 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">

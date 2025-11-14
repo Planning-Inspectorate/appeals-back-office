@@ -109,6 +109,7 @@
 		"#config/*": "./src/server/config/*",
 		"#state/*": "./src/server/state/*",
 		"#mappers/*": "./src/server/mappers/*",
-		"#notify/*": "./src/server/notify/*"
+		"#notify/*": "./src/server/notify/*",
+		"#server/*": "./src/server/*"
 	}
 }
