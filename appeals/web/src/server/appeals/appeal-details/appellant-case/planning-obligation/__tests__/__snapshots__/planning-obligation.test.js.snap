@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`planning-obligation GET /status/change should render the change planning obligation status page with "Finalised" radio option checked if planningObligation.status is "finalised" 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">

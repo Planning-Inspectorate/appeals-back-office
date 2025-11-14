@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-procedure-type/hearing/check-and-confirm should render the check details page with the expected content for hearing procedure type with no event date known 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">

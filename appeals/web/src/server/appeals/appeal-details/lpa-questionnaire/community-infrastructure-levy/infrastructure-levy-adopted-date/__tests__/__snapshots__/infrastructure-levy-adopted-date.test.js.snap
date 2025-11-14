@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`infrastructure-levy-adopted-date GET /change should render the infrastructure levy adopted date change page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
