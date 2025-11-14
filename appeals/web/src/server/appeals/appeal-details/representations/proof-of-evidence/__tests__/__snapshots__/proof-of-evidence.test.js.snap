@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`proof-of-evidence GET /add-document for appellant should render add document page with correct content for appellant 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">

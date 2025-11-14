@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`neighbouring-site-access change page GET /neighbouring-site-access/change should render the change neighbouring site access page with "No" radio option checked, and no text populated in the textarea, if reasonForNeighbourVisits is null 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">

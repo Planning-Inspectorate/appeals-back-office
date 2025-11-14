@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`GET /change-appeal-procedure-type/hearing/change-event-date-known should render and delete existing session data if procedure type is changed 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">

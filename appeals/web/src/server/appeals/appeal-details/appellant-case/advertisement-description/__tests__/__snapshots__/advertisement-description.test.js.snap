@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`advertisement-description GET /change should render the development description change page when accessed from the appellant case page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">

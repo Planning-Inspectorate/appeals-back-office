@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`extra-conditions GET /change should render the change new conditions page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">

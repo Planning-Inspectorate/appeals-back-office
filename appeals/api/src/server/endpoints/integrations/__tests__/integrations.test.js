@@ -1,4 +1,5 @@
-import { request } from '#tests/../app-test.js';
+// @ts-nocheck
+import { request } from '#server/app-test.js';
 import {
 	appealIngestionInput,
 	appealIngestionInputAdverts,

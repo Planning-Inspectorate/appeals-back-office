@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { request } from '#tests/../app-test.js';
+import { request } from '#server/app-test.js';
 import {
 	advertisementAppeal,
 	appealAdvert,

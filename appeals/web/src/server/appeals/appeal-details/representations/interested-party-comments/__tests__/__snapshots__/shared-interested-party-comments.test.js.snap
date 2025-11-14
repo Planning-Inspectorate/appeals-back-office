@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Interested Party Comments (Shared/Published View) GET /interested-party-comments when item count is 0 should render the shared interested party comments page with status 200 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">

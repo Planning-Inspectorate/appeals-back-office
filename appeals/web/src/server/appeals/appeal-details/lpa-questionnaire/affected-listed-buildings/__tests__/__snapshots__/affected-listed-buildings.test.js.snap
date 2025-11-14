@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`affected-listed-buildings GET /add should render the add affected listed building page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`notify preview tests /appeals/notify-preview/correction-notice-decision.content.md POST get notify preview for correction-notice-decision.content.md 1`] = `
 {
