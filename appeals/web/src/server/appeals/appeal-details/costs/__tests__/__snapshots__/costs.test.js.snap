@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`costs application, withdrawal and correspondence GET /costs/:costsCategory/:costsDocumentType/add-document-details/:folderId should render a 500 error page if fileUploadInfo is not present in the session (appellant application) 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">

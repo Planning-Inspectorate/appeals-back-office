@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`appeal-details GET /:appealId "Progress case" important banners should render a "Progress case" important banner with the link to progress case from final comments with the expected content when Final Comments Due Date has passed and both Appellant and LPA Final Comments are absent or invalid. 1`] = `
 "<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"

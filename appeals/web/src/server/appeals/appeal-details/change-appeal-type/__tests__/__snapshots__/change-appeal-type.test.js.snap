@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`change-appeal-type GET /change-appeal-type/add-horizon-reference should render the add horizon reference page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">

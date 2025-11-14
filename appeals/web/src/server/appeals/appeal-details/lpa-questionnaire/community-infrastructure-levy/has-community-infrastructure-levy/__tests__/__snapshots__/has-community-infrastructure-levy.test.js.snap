@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`has-community-infrastructure-levy GET /has-community-infrastructure-levy/change should render the change community infrastructure levy status page with "Does not have infrastructure levy" radio option checked if hasInfrastructureLevy is false 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
