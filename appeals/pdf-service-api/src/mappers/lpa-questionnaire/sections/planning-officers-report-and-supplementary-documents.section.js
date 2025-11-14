@@ -8,7 +8,9 @@ export function planningOfficersReportAndSupplementaryDocumentsSection(templateD
 		isInfrastructureLevyFormallyAdopted,
 		infrastructureLevyAdoptedDate,
 		infrastructureLevyExpectedDate,
-		appealType
+		appealType,
+		wasApplicationRefusedDueToHighwayOrTraffic,
+		didAppellantSubmitCompletePhotosAndPlans
 	} = templateData;
 
 	const {
@@ -27,6 +29,18 @@ export function planningOfficersReportAndSupplementaryDocumentsSection(templateD
 		heading: "Planning officer's report and supplementary documents",
 		items: [
 			{ key: "Planning officer's report", html: formatDocumentData(planningOfficerReport) },
+			...([APPEAL_TYPE.CAS_ADVERTISEMENT, APPEAL_TYPE.ADVERTISEMENT].includes(appealType)
+				? [
+						{
+							key: 'Did you refuse the application because of highway or traffic public safety?',
+							html: formatYesNo(wasApplicationRefusedDueToHighwayOrTraffic)
+						},
+						{
+							key: 'Did the appellant submit complete and accurate photographs and plans?',
+							html: formatYesNo(didAppellantSubmitCompletePhotosAndPlans)
+						}
+				  ]
+				: []),
 			// appears here for householder, in appellant case for other appeal types
 			...(isHASAppeal
 				? [

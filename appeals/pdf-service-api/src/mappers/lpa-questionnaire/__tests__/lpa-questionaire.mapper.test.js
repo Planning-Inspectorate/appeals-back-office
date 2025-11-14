@@ -18,4 +18,14 @@ describe('mapLpaQuestionnaireData', () => {
 		const result = mapLpaQuestionnaireData(mockLpaQuestionnaireData.s20lpaQuestionnaireData);
 		expect(result).toMatchSnapshot();
 	});
+
+	it('should map cas advert LPA questionnaire data correctly', () => {
+		const result = mapLpaQuestionnaireData(mockLpaQuestionnaireData.casAdvertLpaQuestionnaireData);
+		expect(result).toMatchSnapshot();
+	});
+
+	it('should map advert LPA questionnaire data correctly', () => {
+		const result = mapLpaQuestionnaireData(mockLpaQuestionnaireData.advertLpaQuestionnaireData);
+		expect(result).toMatchSnapshot();
+	});
 });

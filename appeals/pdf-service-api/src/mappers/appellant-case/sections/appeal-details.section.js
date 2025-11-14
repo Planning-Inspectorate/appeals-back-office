@@ -1,4 +1,5 @@
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { appealTypeToAppealCaseTypeMapper } from '@pins/appeals/utils/appeal-type-case.mapper.js';
+import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
 import { formatSentenceCase } from '../../../lib/nunjucks-filters/index.js';
 
 export function appealDetailsSection(templateData) {
@@ -10,9 +11,9 @@ export function appealDetailsSection(templateData) {
 		appealType
 	} = templateData;
 
-	const isHASAppeal = appealType === APPEAL_TYPE.HOUSEHOLDER;
+	const isExpeditedAppeal = isExpeditedAppealType(appealTypeToAppealCaseTypeMapper(appealType));
 
-	if (isHASAppeal) return;
+	if (isExpeditedAppeal) return;
 
 	return {
 		heading: 'Appeal details',

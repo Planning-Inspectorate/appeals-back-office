@@ -29,7 +29,10 @@ export function siteDetailsSection(templateData) {
 		siteOwnership,
 		agriculturalHolding,
 		siteAccessRequired,
-		healthAndSafety
+		healthAndSafety,
+		highwayLand,
+		advertisementInPosition,
+		landownerPermission
 	} = templateData;
 
 	return {
@@ -40,6 +43,18 @@ export function siteDetailsSection(templateData) {
 				key: 'What is the area of the appeal site?',
 				text: formatArea(siteAreaSquareMetres)
 			},
+			...([APPEAL_TYPE.CAS_ADVERTISEMENT, APPEAL_TYPE.ADVERTISEMENT].includes(appealType)
+				? [
+						{
+							key: 'Is the appeal site on highway land?',
+							text: formatYesNo(Boolean(highwayLand))
+						},
+						{
+							key: 'Is the advertisement in position?',
+							text: formatYesNo(Boolean(advertisementInPosition))
+						}
+				  ]
+				: []),
 			{ key: 'Is the appeal site in a green belt?', text: formatYesNo(isGreenBelt) },
 			{
 				key: 'Does the appellant own all of the land involved in the appeal?',
@@ -70,6 +85,14 @@ export function siteDetailsSection(templateData) {
 				key: 'Will an inspector need to access your land or property?',
 				html: formatSiteAccessDetails(siteAccessRequired)
 			},
+			...([APPEAL_TYPE.CAS_ADVERTISEMENT, APPEAL_TYPE.ADVERTISEMENT].includes(appealType)
+				? [
+						{
+							key: "Do you have the landowner's permission?",
+							html: formatYesNo(landownerPermission)
+						}
+				  ]
+				: []),
 			{
 				key: 'Are there any health and safety issues on the appeal site?',
 				html: formatHealthAndSafetyDetails(healthAndSafety)
