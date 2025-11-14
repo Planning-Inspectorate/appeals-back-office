@@ -660,6 +660,8 @@ class MockPrismaClient {
 		};
 	}
 
+	$on() {}
+
 	$transaction(queries = []) {
 		if (typeof queries === 'function') {
 			// transactions can be a function, run with an instance of the client
