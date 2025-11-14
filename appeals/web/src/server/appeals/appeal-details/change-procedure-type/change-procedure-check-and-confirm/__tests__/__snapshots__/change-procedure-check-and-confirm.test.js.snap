@@ -287,7 +287,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address of where the inquiry will take place</dt>
                     <dd                     class="govuk-summary-list__value">21 The Pavement
                         <br>Wandsworth</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/address"
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/address-details"
                             data-cy="change-inquiry-address">Change<span class="govuk-visually-hidden"> Address of where the inquiry will take place</span></a>
                         </dd>
                 </div>
