@@ -1,4 +1,5 @@
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { appealTypeToAppealCaseTypeMapper } from '@pins/appeals/utils/appeal-type-case.mapper.js';
+import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
 import { formatSentenceCase, formatYesNoDetails } from '../../../lib/nunjucks-filters/index.js';
 
 function formatOngoingAppeals(otherAppeals) {
@@ -23,13 +24,13 @@ export function appealProcessSection(templateData) {
 		appealType
 	} = templateData;
 
-	const isHASAppeal = appealType === APPEAL_TYPE.HOUSEHOLDER;
+	const isExpeditedAppeal = isExpeditedAppealType(appealTypeToAppealCaseTypeMapper(appealType));
 
 	return {
 		heading: 'Appeal process',
 		items: [
-			// does not appear for householder
-			...(!isHASAppeal
+			// does not appear for expedited appeals
+			...(!isExpeditedAppeal
 				? [
 						{
 							key: 'Which procedure do you think is most appropriate for this appeal?',

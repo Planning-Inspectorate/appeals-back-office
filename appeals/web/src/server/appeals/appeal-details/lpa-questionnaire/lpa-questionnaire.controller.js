@@ -1,6 +1,5 @@
 import * as appealDetailsService from '#appeals/appeal-details/appeal-details.service.js';
 import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
-import { appealTypeToAppealCaseTypeMapper } from '#common/feature-flags-appeal-types.js';
 import logger from '#lib/logger.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
@@ -8,6 +7,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { uncapitalizeFirstLetter } from '#lib/string-utilities.js';
 import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
 import { DOCUMENT_FOLDER_DISPLAY_LABELS } from '@pins/appeals/constants/documents.js';
+import { appealTypeToAppealCaseTypeMapper } from '@pins/appeals/utils/appeal-type-case.mapper.js';
 import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import {
@@ -35,7 +35,6 @@ import {
 	mapWebValidationOutcomeToApiValidationOutcome
 } from './lpa-questionnaire.mapper.js';
 import * as lpaQuestionnaireService from './lpa-questionnaire.service.js';
-
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import("@pins/express/types/express.js").ValidationErrors | string | null} errors
