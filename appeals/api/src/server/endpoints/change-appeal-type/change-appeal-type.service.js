@@ -1,17 +1,19 @@
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
+import { getFoldersForAppeal } from '#endpoints/documents/documents.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import timetableRepository from '#repositories/appeal-timetable.repository.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import commonRepository from '#repositories/common.repository.js';
+import * as documentMetadataRepository from '#repositories/document-metadata.repository.js';
 import transitionState from '#state/transition-state.js';
 import { isCurrentStatus } from '#utils/current-status.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE_CHANGE_APPEALS, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
 	AUDIT_TRAIL_APPEAL_TYPE_TRANSFERRED,
@@ -24,12 +26,23 @@ import {
 import { addDays, setTimeInTimeZone } from '@pins/appeals/utils/business-days.js';
 import { formatAppealTypeForNotify } from '@pins/appeals/utils/change-appeal-type.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_STAGE,
+	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE
+} from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
 /** @typedef {import('express').NextFunction} NextFunction */
+
+const commonAppellantCaseDocumentTypes = [
+	APPEAL_DOCUMENT_TYPE.APPELLANT_STATEMENT,
+	APPEAL_DOCUMENT_TYPE.APPLICATION_DECISION_LETTER,
+	APPEAL_DOCUMENT_TYPE.CHANGED_DESCRIPTION,
+	APPEAL_DOCUMENT_TYPE.ORIGINAL_APPLICATION_FORM
+].map((docType) => `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${docType}`);
 
 /**
  * @param {Appeal} appeal
@@ -174,6 +187,25 @@ const resubmitAndMarkInvalid = async (
 };
 
 /**
+ *
+ * @param {Appeal} appeal
+ * @returns {Promise<*[]>}
+ */
+const getSurplusDocumentsToDelete = async (appeal) => {
+	const appellantCaseFolders = await getFoldersForAppeal(
+		appeal.id,
+		APPEAL_CASE_STAGE.APPELLANT_CASE
+	);
+	const documentsToDelete =
+		appellantCaseFolders
+			?.filter((folder) => {
+				return folder.documents?.length && !commonAppellantCaseDocumentTypes.includes(folder.path);
+			})
+			.flatMap((folder) => folder.documents) || [];
+	return documentsToDelete;
+};
+
+/**
  * @param {Appeal} appeal
  * @param {number} newAppealTypeId
  * @param {string} newAppealType
@@ -188,19 +220,31 @@ const updateAppealType = async (
 	azureAdUserId,
 	notifyClient
 ) => {
-	Promise.all([
-		await databaseConnector.appeal.update({
-			where: { id: appeal.id },
-			data: {
-				appealTypeId: newAppealTypeId
-			}
-		}),
-		await createAuditTrail({
-			appealId: appeal.id,
-			azureAdUserId,
-			details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_TYPE_UPDATED, [newAppealType])
-		})
-	]);
+	const documentsToDelete =
+		newAppealType !== APPEAL_TYPE_CHANGE_APPEALS.HOUSEHOLDER
+			? []
+			: await getSurplusDocumentsToDelete(appeal);
+
+	await databaseConnector.$transaction((tx) =>
+		Promise.all([
+			tx.appeal.update({
+				where: { id: appeal.id },
+				data: {
+					appealTypeId: newAppealTypeId
+				}
+			}),
+			// delete documents not required for Householder
+			...documentsToDelete.map((document) =>
+				documentMetadataRepository.deleteDocumentAndVersions(tx, document.guid, document.name)
+			)
+		])
+	);
+
+	await createAuditTrail({
+		appealId: appeal.id,
+		azureAdUserId,
+		details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_TYPE_UPDATED, [newAppealType])
+	});
 
 	await broadcasters.broadcastAppeal(appeal.id);
 
