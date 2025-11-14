@@ -65,6 +65,7 @@ const mockDocumentMetdataFindFirst = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataFindUnique = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataUpsert = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataUpdate = jest.fn().mockResolvedValue({});
+const mockDocumentMetdataUpdateMany = jest.fn().mockResolvedValue({});
 const mockDocumentAvScanFindFirst = jest.fn().mockResolvedValue({});
 const mockDocumentAvScanUpsert = jest.fn().mockResolvedValue({});
 const mockDocumentVersionAvScanDeleteMany = jest.fn().mockResolvedValue({});
@@ -328,6 +329,7 @@ class MockPrismaClient {
 			findUnique: mockDocumentMetdataFindUnique,
 			upsert: mockDocumentMetdataUpsert,
 			update: mockDocumentMetdataUpdate,
+			updateMany: mockDocumentMetdataUpdateMany,
 			deleteMany: mockDocumentVersionDeleteMany
 		};
 	}
