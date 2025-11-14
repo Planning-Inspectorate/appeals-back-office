@@ -16,9 +16,10 @@ export function environmentalImpactAssessmentSection(templateData) {
 		appealType
 	} = templateData;
 
-	const isHASAppeal = appealType === APPEAL_TYPE.HOUSEHOLDER;
+	const isS78 = appealType === APPEAL_TYPE.S78;
+	const isS20 = appealType === APPEAL_TYPE.PLANNED_LISTED_BUILDING;
 
-	if (isHASAppeal) return;
+	if (!isS78 && !isS20) return;
 
 	const {
 		eiaEnvironmentalStatement,
