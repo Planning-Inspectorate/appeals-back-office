@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`is-infrastructure-levy-formally-adopted GET /is-infrastructure-levy-formally-adopted/change should render the change levy formally adopted page with "Formally adopted" radio option checked if isInfrastructureLevyFormallyAdopted is true 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">

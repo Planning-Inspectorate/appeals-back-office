@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`notification-methods GET /change should render the change notification methods page with the expected content, and with the correct checkboxes checked, according to the existing notification methods in the lpa questionnaire data 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">

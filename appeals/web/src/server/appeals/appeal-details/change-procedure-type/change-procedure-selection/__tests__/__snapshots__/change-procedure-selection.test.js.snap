@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Change procedure type GET /change-appeal-procedure-type/change-selected-procedure-type Written should render the select procedure page with the expected content 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
