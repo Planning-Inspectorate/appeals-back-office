@@ -23,8 +23,7 @@ function appealShortReference(reference) {
 export function applicationDetailsSection(templateData) {
 	const { applicationDate, developmentDescription, otherAppeals, developmentType, appealType } =
 		templateData;
-
-	const { applicationDecisionLetter } = templateData.documents || {};
+	const { applicationDecisionLetter, changedDescription } = templateData.documents || {};
 
 	const isHASAppeal = appealType === APPEAL_TYPE.HOUSEHOLDER;
 
@@ -36,9 +35,19 @@ export function applicationDetailsSection(templateData) {
 		items: [
 			{ key: 'What date did you submit your application?', text: formatDate(applicationDate) },
 			{
-				key: 'Enter the description of development that you submitted in your application',
+				key: [APPEAL_TYPE.CAS_ADVERTISEMENT, APPEAL_TYPE.ADVERTISEMENT].includes(appealType)
+					? 'Enter the description of the advertisement'
+					: `Enter the description of development that you submitted in your application`,
 				text: formatSentenceCase(developmentDescription?.details)
 			},
+			...([APPEAL_TYPE.CAS_ADVERTISEMENT, APPEAL_TYPE.ADVERTISEMENT].includes(appealType)
+				? [
+						{
+							key: 'Agreement to change the description of the advertisement',
+							text: formatDocumentData(changedDescription)
+						}
+				  ]
+				: []),
 			{
 				key: 'Are there other appeals linked to your development?',
 				html: formatBulletedList(otherAppealsList, 'No')

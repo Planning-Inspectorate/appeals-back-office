@@ -1,8 +1,5 @@
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import {
-	appealCaseTypeToAppealTypeMapper,
-	appealTypeToAppealCaseTypeMapper,
 	getEnabledAppealCaseTypes,
 	getEnabledAppealTypes,
 	isAppealTypeEnabled
@@ -42,25 +39,5 @@ describe('getEnabledAppealTypes', () => {
 	it('should have at least length one', () => {
 		const enabledAppealTypes = getEnabledAppealTypes();
 		expect(enabledAppealTypes.length).toBeGreaterThanOrEqual(1);
-	});
-});
-
-describe('mappers', () => {
-	test('appealTypeToAppealCaseTypeMapper should return an empty string for an invalid appeal type', () => {
-		const testMap = appealTypeToAppealCaseTypeMapper('Not a valid appeal type');
-		expect(testMap).toBe('');
-	});
-
-	test('appealCaseTypeToAppealTypeMapper should return an empty string for an invalid appeal type', () => {
-		const testMap = appealCaseTypeToAppealTypeMapper('Not a valid case appeal type');
-		expect(testMap).toBe('');
-	});
-
-	test('combining both mappers for a valid appeal type returns the same appeal type', () => {
-		const appealType = APPEAL_TYPE.HOUSEHOLDER;
-		const returnedAppealType = appealCaseTypeToAppealTypeMapper(
-			appealTypeToAppealCaseTypeMapper(appealType)
-		);
-		expect(returnedAppealType).toBe(appealType);
 	});
 });

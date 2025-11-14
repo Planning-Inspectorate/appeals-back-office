@@ -19,4 +19,14 @@ describe('mapAppellantCaseData', () => {
 
 		expect(result).toMatchSnapshot();
 	});
+
+	it('should map cas advert LPA questionnaire data correctly', () => {
+		const result = mapAppellantCaseData(mockAppellantCaseData.appellantCaseDataCasAdvert);
+		expect(result).toMatchSnapshot();
+	});
+
+	it('should map advert LPA questionnaire data correctly', () => {
+		const result = mapAppellantCaseData(mockAppellantCaseData.appellantCaseDataAdvert);
+		expect(result).toMatchSnapshot();
+	});
 });
