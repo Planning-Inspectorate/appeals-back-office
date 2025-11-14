@@ -77,10 +77,11 @@ export const addDocument = async (metadata, context) => {
 };
 
 /**
- * @param {any} metadata
+ * @param {any} params
  * @returns {Promise<DocumentVersion | null>}
  */
-export const addDocumentVersion = async ({ documentGuid, ...metadata }) => {
+export const addDocumentVersion = async (params) => {
+	const { documentGuid, ...metadata } = params;
 	const transaction = await databaseConnector.$transaction(async (tx) => {
 		const document = await tx.document.findFirst({
 			include: {
@@ -254,4 +255,18 @@ const setPreviousVersion = async (tx, document, version) => {
 			data: { latestVersionId: previousVersion }
 		});
 	}
+};
+
+/**
+ * @param {any} tx
+ * @param {string} documentGuid
+ * @param {string} name
+ */
+export const deleteDocumentAndVersions = async (tx, documentGuid, name) => {
+	console.log(`Deleting: ${name}`);
+	await deleteDocument(tx, documentGuid, name);
+	await tx.documentVersion.updateMany({
+		where: { documentGuid },
+		data: { isDeleted: true }
+	});
 };
