@@ -235,6 +235,7 @@ export class DateTimeSection extends Page {
 	}
 
 	#set(element, value, index = 0) {
+		cy.log('** #set with value - ', value);
 		element.eq(index).clear().type(value, { delay: 0 });
 	}
 
