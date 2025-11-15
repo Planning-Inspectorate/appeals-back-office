@@ -168,11 +168,15 @@ export const lpaNotificationMethods = [
 	},
 	{
 		key: 'letter',
-		name: 'Letter/email to interested parties'
+		name: 'Letters or emails to interested parties'
 	},
 	{
 		key: 'advert',
-		name: 'A press advert'
+		name: 'An advert in the local press'
+	},
+	{
+		key: 'none',
+		name: 'I did not notify the relevant parties'
 	}
 ];
 
