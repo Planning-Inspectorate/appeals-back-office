@@ -623,6 +623,12 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
             </dd>
         </div>
+        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+            <dd class="govuk-summary-list__value">No rule 6 party</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule6parties/add"
+                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
+            </dd>
+        </div>
     </dl>
     <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
@@ -989,6 +995,12 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
             </dd>
         </div>
+        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+            <dd class="govuk-summary-list__value">No rule 6 party</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule6parties/add"
+                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
+            </dd>
+        </div>
     </dl>
     <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
@@ -1252,6 +1264,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+            <dd class="govuk-summary-list__value">No rule 6 party</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule6parties/add"
+                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -1612,6 +1630,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+            <dd class="govuk-summary-list__value">No rule 6 party</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule6parties/add"
+                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -2013,6 +2037,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+            <dd class="govuk-summary-list__value">No rule 6 party</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule6parties/add"
+                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -2419,6 +2449,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
             </dd>
         </div>
+        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+            <dd class="govuk-summary-list__value">No rule 6 party</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule6parties/add"
+                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
+            </dd>
+        </div>
     </dl>
     <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
@@ -2821,6 +2857,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
             </dd>
         </div>
+        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+            <dd class="govuk-summary-list__value">No rule 6 party</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule6parties/add"
+                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
+            </dd>
+        </div>
     </dl>
     <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
@@ -3221,6 +3263,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+            <dd class="govuk-summary-list__value">No rule 6 party</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule6parties/add"
+                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -3639,6 +3687,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
             </dd>
         </div>
+        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+            <dd class="govuk-summary-list__value">No rule 6 party</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/rule6parties/add"
+                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
+            </dd>
+        </div>
     </dl>
     <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
@@ -3985,6 +4039,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+            <dd class="govuk-summary-list__value">No rule 6 party</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule6parties/add"
+                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -4387,6 +4447,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+            <dd class="govuk-summary-list__value">No rule 6 party</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule6parties/add"
+                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -4902,6 +4968,12 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+            <dd class="govuk-summary-list__value">No rule 6 party</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule6parties/add"
+                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -5854,6 +5926,12 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
             </dd>
         </div>
+        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+            <dd class="govuk-summary-list__value">No rule 6 party</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule6parties/add"
+                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
+            </dd>
+        </div>
     </dl>
     <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
@@ -6209,6 +6287,12 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
             </dd>
         </div>
+        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+            <dd class="govuk-summary-list__value">No rule 6 party</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule6parties/add"
+                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
+            </dd>
+        </div>
     </dl>
     <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
@@ -6556,6 +6640,12 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+            <dd class="govuk-summary-list__value">No rule 6 party</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule6parties/add"
+                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -6920,6 +7010,12 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
             </dd>
         </div>
+        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+            <dd class="govuk-summary-list__value">No rule 6 party</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule6parties/add"
+                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
+            </dd>
+        </div>
     </dl>
     <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
@@ -7269,6 +7365,12 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+            <dd class="govuk-summary-list__value">No rule 6 party</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule6parties/add"
+                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -7631,6 +7733,12 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+            <dd class="govuk-summary-list__value">No rule 6 party</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule6parties/add"
+                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -8046,6 +8154,12 @@ exports[`appeal-details should not render a back button 1`] = `
                         </dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
                             data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+                        <dd class="govuk-summary-list__value">No rule 6 party</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule6parties/add"
+                            data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
                         </dd>
                     </div>
                 </dl>
