@@ -551,6 +551,13 @@ describe('personal-list', () => {
 				expectedHtml: {
 					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/inquiry/change/address-details?backUrl=%2Fappeals-service%2Fpersonal-list">Add inquiry address<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				}
+			},
+			{
+				name: 'Awaiting inquiry',
+				requiredAction: 'awaitingEvent',
+				expectedHtml: {
+					caseOfficer: 'Awaiting inquiry'
+				}
 			}
 		];
 
