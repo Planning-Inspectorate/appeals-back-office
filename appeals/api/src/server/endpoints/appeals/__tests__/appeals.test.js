@@ -132,6 +132,16 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									status: 'not_received',
 									isRedacted: false
+								},
+								lpaProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								appellantProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -190,6 +200,16 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
+									isRedacted: false
+								},
+								lpaProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								appellantProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
 									isRedacted: false
 								}
 							},
@@ -313,6 +333,16 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									status: 'not_received',
 									isRedacted: false
+								},
+								lpaProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								appellantProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -430,6 +460,16 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
+									isRedacted: false
+								},
+								lpaProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								appellantProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
 									isRedacted: false
 								}
 							},
@@ -549,6 +589,16 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									status: 'not_received',
 									isRedacted: false
+								},
+								lpaProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								appellantProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -667,6 +717,16 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									status: 'not_received',
 									isRedacted: false
+								},
+								lpaProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								appellantProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -766,6 +826,16 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
+									isRedacted: false
+								},
+								lpaProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								appellantProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
 									isRedacted: false
 								}
 							},
@@ -869,6 +939,16 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									status: 'not_received',
 									isRedacted: false
+								},
+								lpaProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								appellantProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -967,6 +1047,16 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
+									isRedacted: false
+								},
+								lpaProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								appellantProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
 									isRedacted: false
 								}
 							},
@@ -1075,6 +1165,16 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									status: 'not_received',
 									isRedacted: false
+								},
+								lpaProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								appellantProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -1182,6 +1282,16 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									status: 'not_received',
 									isRedacted: false
+								},
+								lpaProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								appellantProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -1272,6 +1382,16 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
+									isRedacted: false
+								},
+								lpaProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								appellantProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
 									isRedacted: false
 								}
 							},
@@ -1587,6 +1707,16 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									isRedacted: false
+								},
+								lpaProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								appellantProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -1647,6 +1777,16 @@ describe('appeals list routes', () => {
 								appellantFinalComments: {
 									status: 'not_received',
 									receivedAt: null,
+									representationStatus: null,
+									isRedacted: false
+								},
+								lpaProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								appellantProofOfEvidence: {
+									status: 'not_received',
 									representationStatus: null,
 									isRedacted: false
 								}
