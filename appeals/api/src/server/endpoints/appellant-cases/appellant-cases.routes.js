@@ -1,4 +1,4 @@
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import checkLookupValueIsValidAndAddToRequest from '#middleware/check-lookup-value-is-valid-and-add-to-request.js';
 import checkLookupValuesAreValid from '#middleware/check-lookup-values-are-valid.js';
 import { ERROR_INVALID_APPELLANT_CASE_VALIDATION_OUTCOME } from '@pins/appeals/constants/support.js';
@@ -32,7 +32,19 @@ router.get(
 		#swagger.responses[404] = {}
 	 */
 	getAppellantCaseValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'appellantCase',
+		'address',
+		'agent',
+		'appellant',
+		'appealStatus',
+		'appealType',
+		'folders',
+		'lpa',
+		'procedureType',
+		'parentAppeals',
+		'childAppeals'
+	]),
 	checkAppellantCaseExists,
 	asyncHandler(getAppellantCaseById)
 );
@@ -62,7 +74,18 @@ router.patch(
 		#swagger.responses[404] = {}
 	 */
 	patchAppellantCaseValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'appellantCase',
+		'address',
+		'agent',
+		'appellant',
+		'appealStatus',
+		'appealType',
+		'lpa',
+		'procedureType',
+		'parentAppeals',
+		'childAppeals'
+	]),
 	checkAppellantCaseExists,
 	checkLookupValueIsValidAndAddToRequest(
 		'validationOutcome',

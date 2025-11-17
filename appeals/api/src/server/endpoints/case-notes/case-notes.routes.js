@@ -1,5 +1,5 @@
 import { getAppealValidator } from '#endpoints/appeal-details/appeal-details.validators.js';
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controller from './case-notes.controller.js';
@@ -26,7 +26,7 @@ router.get(
 	#swagger.responses[404] = {}
  */
 	getAppealValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest(['caseNotes']),
 	asyncHandler(controller.getAllCaseNotesByAppealId)
 );
 
@@ -56,7 +56,7 @@ router.post(
  */
 	getAppealValidator,
 	postCaseNoteValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest(['caseNotes']),
 	asyncHandler(controller.postAppealCaseNote)
 );
 
