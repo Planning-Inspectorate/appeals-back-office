@@ -39,7 +39,7 @@ exports[`proof-of-evidence GET / should render the accept lpa proof of evidence 
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Check details and accept appellant proof of evidence and witnesses</h1>
+            <h1 class="govuk-heading-l">Check details and accept LPA proof of evidence and witnesses</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -63,7 +63,7 @@ exports[`proof-of-evidence GET / should render the accept lpa proof of evidence 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <form action="" method="POST" novalidate>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Accept appellant proof of evidence and witnesses</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Accept LPA proof of evidence and witnesses</button>
             </form>
         </div>
     </div>
