@@ -65,9 +65,7 @@ describe('proof-of-evidence', () => {
 				);
 				expect(unprettifiedHTML).toContain('Appeal 351062</span>');
 				expect(unprettifiedHTML).toContain(
-					`Check details and accept ${
-						proofOfEvidenceType.label === 'lpa' ? 'LPA' : 'appellant'
-					} proof of evidence and witnesses</h1>`
+					`Check details and accept ${proofOfEvidenceType.label} proof of evidence and witnesses</h1>`
 				);
 				expect(unprettifiedHTML).toContain('Proof of evidence and witnesses</dt>');
 				expect(unprettifiedHTML).toContain(
@@ -79,9 +77,7 @@ describe('proof-of-evidence', () => {
 					`href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}`
 				);
 				expect(unprettifiedHTML).toContain(
-					`Accept ${
-						proofOfEvidenceType.label === 'lpa' ? 'LPA' : 'appellant'
-					} proof of evidence and witnesses</button>`
+					`Accept ${proofOfEvidenceType.label} proof of evidence and witnesses</button>`
 				);
 				expect(unprettifiedHTML).toContain(
 					`<a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}/manage-documents/135568/?backUrl=/proof-of-evidence/${proofOfEvidenceType.type}/accept">Change<span class="govuk-visually-hidden"> proof of evidence and witnesses</span></a>`
