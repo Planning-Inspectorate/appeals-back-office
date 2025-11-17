@@ -8,6 +8,7 @@ import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 /** @typedef {import('express').NextFunction} NextFunction */
 
 /**
+ * @deprecated too inefficient, use checkAppealExistsByIdAndAddPartialToRequest
  * @param {Request} req
  * @param {Response} res
  * @param {NextFunction} next
@@ -29,6 +30,7 @@ export const checkAppealExistsByIdAndAddToRequest = async (req, res, next) => {
 };
 
 /**
+ * @deprecated too inefficient, use checkAppealExistsByIdAndAddPartialToRequest
  * @param {Request} req
  * @param {Response} res
  * @param {NextFunction} next
@@ -50,6 +52,7 @@ export const checkAppealExistsByCaseReferenceAndAddToRequest = async (req, res, 
 };
 
 /**
+ * @deprecated too inefficient, use checkAppealExistsByIdAndAddPartialToRequest
  * @param {Request} req
  * @param {Response} res
  * @param {NextFunction} next
