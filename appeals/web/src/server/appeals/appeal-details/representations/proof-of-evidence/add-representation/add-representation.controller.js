@@ -13,6 +13,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { APPEAL_DOCUMENT_TYPE, APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
+import { formatProofOfEvidenceTypeText } from '../view-and-review/view-and-review.mapper.js';
 import { postRepresentationProofOfEvidence } from './add-representation.service.js';
 
 /** @type {import('@pins/express').RequestHandler<{}>}  */
@@ -85,17 +86,17 @@ export const renderCheckYourAnswers = (request, response) => {
 
 	return renderCheckYourAnswersComponent(
 		{
-			title: `Check details and add ${
-				proofOfEvidenceType === 'lpa' ? 'LPA' : 'appellant'
-			} proof of evidence and witnesses`,
-			heading: `Check details and add ${
-				proofOfEvidenceType === 'lpa' ? 'LPA' : 'appellant'
-			} proof of evidence and witnesses`,
+			title: `Check details and add ${formatProofOfEvidenceTypeText(
+				proofOfEvidenceType
+			)} proof of evidence and witnesses`,
+			heading: `Check details and add ${formatProofOfEvidenceTypeText(
+				proofOfEvidenceType
+			)} proof of evidence and witnesses`,
 			preHeading: `Appeal ${appealShortReference(appealReference)}`,
 			backLinkUrl: `${baseUrl}/add-document`,
-			submitButtonText: `Add ${
-				proofOfEvidenceType === 'lpa' ? 'LPA' : 'appellant'
-			}} proof of evidence and witnesses`,
+			submitButtonText: `Add ${formatProofOfEvidenceTypeText(
+				proofOfEvidenceType
+			)} proof of evidence and witnesses`,
 			responses: {
 				'Proof of evidence and witnesses': {
 					html: `<a class="govuk-link" download href="${blobStoreUrl ?? ''}">${name ?? ''}</a>`,
