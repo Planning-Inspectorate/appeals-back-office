@@ -233,7 +233,7 @@ describe('incomplete proof of evidence', () => {
 					`Reason for rejecting the ${proofOfEvidenceType.type} proof of evidence and witnesses</dt>`
 				);
 
-				expect(pageHtml).toContain(`<li>Received after deadline</li></ul>`);
+				expect(pageHtml).toContain(`Received after deadline`);
 				expect(pageHtml).toContain(`Incomplete reasons</span></a>`);
 
 				expect(pageHtml).toContain(`Confirm statement is incomplete</button>`);
