@@ -5,7 +5,7 @@ export const mapLandownerPermission = ({ appellantCaseData, currentRoute, userHa
 	booleanSummaryListItem({
 		id: 'landowner-permission',
 		text: "Do you have the landowner's permission?",
-		defaultText: 'No data',
+		defaultText: appellantCaseData.siteOwnership.ownsAllLand ? 'Not answered' : 'No data',
 		value: appellantCaseData.landownerPermission,
 		link: `${currentRoute}/landowner-permission/change`,
 		editable: userHasUpdateCase
