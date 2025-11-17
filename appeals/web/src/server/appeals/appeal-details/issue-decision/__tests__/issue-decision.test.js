@@ -433,6 +433,9 @@ describe('issue-decision', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<p id="invalid-reason-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter reason</p>'
 			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`aria-describedby="invalid-reason-hint invalid-reason-error"></textarea>`
+			);
 		});
 
 		it(`invalid reason must be less than or equal to 1000 characters`, async () => {
@@ -447,6 +450,9 @@ describe('issue-decision', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Reason must be 1000 characters or less</a>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<p id="invalid-reason-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Reason must be 1000 characters or less</p>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`aria-describedby="invalid-reason-hint invalid-reason-error">${invalidReason}</textarea>`
 			);
 		});
 
