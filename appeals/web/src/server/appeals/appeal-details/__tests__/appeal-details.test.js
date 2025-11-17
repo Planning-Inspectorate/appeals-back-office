@@ -6288,6 +6288,100 @@ describe('appeal-details', () => {
 		});
 	});
 
+	describe('Contacts section', () => {
+		it('should render the correct rows', async () => {
+			const appealId = 2;
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealData,
+					appealId
+				});
+			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+			const response = await request.get(`${baseUrl}/${appealId}`);
+
+			expect(response.statusCode).toBe(200);
+			const element = parseHtml(response.text);
+
+			expect(
+				element
+					.querySelector('.govuk-summary-list__row.appeal-appellant dt.govuk-summary-list__key')
+					.innerHTML.trim()
+			).toEqual('Appellant');
+			expect(
+				element
+					.querySelector(
+						'.govuk-summary-list__row.appeal-appellant dd.govuk-summary-list__value li'
+					)
+					.innerHTML.trim()
+			).toEqual('Roger Simmons');
+			expect(
+				element
+					.querySelector(
+						'.govuk-summary-list__row.appeal-appellant dd.govuk-summary-list__actions a'
+					)
+					.innerHTML.trim()
+			).toEqual('Change<span class="govuk-visually-hidden"> Appellant</span>');
+			expect(
+				element
+					.querySelector('.govuk-summary-list__row.appeal-agent dt.govuk-summary-list__key')
+					.innerHTML.trim()
+			).toEqual('Agent');
+			expect(
+				element
+					.querySelector('.govuk-summary-list__row.appeal-agent dd.govuk-summary-list__value li')
+					.innerHTML.trim()
+			).toEqual('Fiona Shell');
+			expect(
+				element
+					.querySelector('.govuk-summary-list__row.appeal-agent dd.govuk-summary-list__actions a')
+					.innerHTML.trim()
+			).toEqual('Change<span class="govuk-visually-hidden"> Agent</span>');
+			expect(
+				element
+					.querySelector(
+						'.govuk-summary-list__row.appeal-lpa-contact-details dt.govuk-summary-list__key'
+					)
+					.innerHTML.trim()
+			).toEqual('LPA');
+			expect(
+				element
+					.querySelector(
+						'.govuk-summary-list__row.appeal-lpa-contact-details dd.govuk-summary-list__value li'
+					)
+					.innerHTML.trim()
+			).toEqual('Wiltshire Council');
+			expect(
+				element
+					.querySelector(
+						'.govuk-summary-list__row.appeal-lpa-contact-details dd.govuk-summary-list__actions a'
+					)
+					.innerHTML.trim()
+			).toEqual('Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span>');
+			expect(
+				element
+					.querySelector(
+						'.govuk-summary-list__row.appeal-rule-6-party-contact-details dt.govuk-summary-list__key'
+					)
+					.innerHTML.trim()
+			).toEqual('Rule 6 parties');
+			expect(
+				element
+					.querySelector(
+						'.govuk-summary-list__row.appeal-rule-6-party-contact-details dd.govuk-summary-list__value'
+					)
+					.innerHTML.trim()
+			).toEqual('No rule 6 party');
+			expect(
+				element
+					.querySelector(
+						'.govuk-summary-list__row.appeal-rule-6-party-contact-details dd.govuk-summary-list__actions a'
+					)
+					.innerHTML.trim()
+			).toEqual('Add<span class="govuk-visually-hidden"> Rule 6 parties</span>');
+		});
+	});
+
 	it('should not render a back button', async () => {
 		const appealId = '2';
 

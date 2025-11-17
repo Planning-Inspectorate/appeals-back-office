@@ -15,7 +15,8 @@ export const getCaseContacts = (mappedData) => ({
 				key: {
 					text: 'LPA'
 				}
-			}
+			},
+			mappedData.appeal.rule6PartyContactDetails.display.summaryListItem
 		].filter(isDefined)
 	},
 	wrapperHtml: {
