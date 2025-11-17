@@ -31,16 +31,16 @@ export const confirmAcceptProofOfEvidencePage = (
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Check details and accept ${formatProofOfEvidenceTypeText(
-			proofOfEvidenceType
+			formatProofOfEvidenceTypeText(proofOfEvidenceType)
 		)} proof of evidence and witnesses`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/proof-of-evidence/${proofOfEvidenceType}`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: `Check details and accept ${formatProofOfEvidenceTypeText(
-			proofOfEvidenceType
+			formatProofOfEvidenceTypeText(proofOfEvidenceType)
 		)} proof of evidence and witnesses`,
 		forceRenderSubmitButton: true,
 		submitButtonText: `Accept ${formatProofOfEvidenceTypeText(
-			proofOfEvidenceType
+			formatProofOfEvidenceTypeText(proofOfEvidenceType)
 		)} proof of evidence and witnesses`,
 		pageComponents
 	};
