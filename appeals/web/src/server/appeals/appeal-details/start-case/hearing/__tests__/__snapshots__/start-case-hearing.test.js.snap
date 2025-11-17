@@ -618,6 +618,12 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
             </dd>
         </div>
+        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+            <dd class="govuk-summary-list__value">No rule 6 party</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule6parties/add"
+                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
+            </dd>
+        </div>
     </dl>
     <h2 class="govuk-heading-l">Team</h2>
     <dl class="govuk-summary-list">
