@@ -83,7 +83,7 @@ describe('issue-decision', () => {
 
 				expect(unprettifiedElement.innerHTML).toContain('Appeal 351062 - issue decision</span>');
 
-				expect(unprettifiedElement.innerHTML).toContain('What is the decision?</h1>');
+				expect(unprettifiedElement.innerHTML).toContain('Decision</h1>');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<input class="govuk-radios__input" id="decision" name="decision" type="radio" value="allowed">'
 				);
