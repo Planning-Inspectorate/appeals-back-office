@@ -1,5 +1,8 @@
 import { validateRepresentationsToPublish } from '#endpoints/representations/representations.middleware.js';
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import {
+	checkAppealExistsByIdAndAddPartialToRequest,
+	checkAppealExistsByIdAndAddToRequest
+} from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { checkRepresentationExistsById } from '#middleware/check-representation-exists.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
@@ -81,7 +84,7 @@ router.get(
 	#swagger.responses[404] = {}
  */
 	getRepresentationRouteValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	asyncHandler(controller.getRepresentations)
 );
 
