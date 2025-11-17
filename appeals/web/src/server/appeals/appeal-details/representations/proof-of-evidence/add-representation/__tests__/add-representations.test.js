@@ -139,7 +139,7 @@ describe('add representation', () => {
 				expect(unprettifiedHTML).toContain(
 					`Check details and add ${
 						proofOfEvidenceType.type === 'lpa' ? 'LPA' : 'appellant'
-					}} proof of evidence and witnesses</h1>`
+					} proof of evidence and witnesses</h1>`
 				);
 				expect(unprettifiedHTML).toContain('Proof of evidence and witnesses</dt>');
 				expect(unprettifiedHTML).toContain(`test-document.txt</a>`);

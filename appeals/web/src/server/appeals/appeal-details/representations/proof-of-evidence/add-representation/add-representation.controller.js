@@ -87,10 +87,10 @@ export const renderCheckYourAnswers = (request, response) => {
 		{
 			title: `Check details and add ${
 				proofOfEvidenceType === 'lpa' ? 'LPA' : 'appellant'
-			}} proof of evidence and witnesses`,
+			} proof of evidence and witnesses`,
 			heading: `Check details and add ${
 				proofOfEvidenceType === 'lpa' ? 'LPA' : 'appellant'
-			}} proof of evidence and witnesses`,
+			} proof of evidence and witnesses`,
 			preHeading: `Appeal ${appealShortReference(appealReference)}`,
 			backLinkUrl: `${baseUrl}/add-document`,
 			submitButtonText: `Add ${
