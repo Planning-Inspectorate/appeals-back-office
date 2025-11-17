@@ -22,6 +22,45 @@ export const getSingularRepresentationByType = async (apiClient, appealId, type)
 };
 
 /**
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @param {string} types
+ */
+export const getRepresentationsByTypes = async (apiClient, appealId, types) => {
+	const url = `appeals/${appealId}/reps?type=${types}`;
+	const apiResponse = await apiClient.get(url).json();
+	if (apiResponse.itemCount === 0) {
+		return {};
+	}
+
+	const groupedReps = apiResponse.items.reduce(
+		/**
+		 * @typedef {import("./types.js").Representation} Representation
+		 *
+		 * @param {Record<string, Representation[]>} formattedReps
+		 * @param {Representation} rep
+		 */
+		(formattedReps, rep) => {
+			(formattedReps[rep.representationType] ||= []).push(rep);
+			return formattedReps;
+		},
+		{}
+	);
+
+	const selected = Object.fromEntries(
+		Object.entries(groupedReps).map(([type, items]) => {
+			if (items.length > 1) {
+				logger.warn(`Multiple representations of type ${type} found on appeal ${appealId}`);
+			}
+			return [type, items[0]];
+		})
+	);
+
+	return selected;
+};
+
+/**
  * @param {import('got').Got} apiClient
  * @param {number|string} appealId
  * @param {number|string} repId

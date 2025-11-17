@@ -82,29 +82,6 @@ describe('appeal-details', () => {
 		usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
 
 		nock('http://test/')
-			.get('/appeals/1/reps?type=appellant_final_comment')
-			.reply(200, appellantFinalCommentsAwaitingReview)
-			.persist();
-		nock('http://test/')
-			.get('/appeals/1/reps?type=lpa_final_comment')
-			.reply(200, lpaFinalCommentsAwaitingReview)
-			.persist();
-
-		nock('http://test/')
-			.get('/appeals/2/reps?type=appellant_final_comment')
-			.reply(200, appellantFinalCommentsAwaitingReview);
-		nock('http://test/')
-			.get('/appeals/2/reps?type=lpa_final_comment')
-			.reply(200, lpaFinalCommentsAwaitingReview);
-
-		nock('http://test/')
-			.get('/appeals/3/reps?type=appellant_final_comment')
-			.reply(200, appellantFinalCommentsAwaitingReview);
-		nock('http://test/')
-			.get('/appeals/3/reps?type=lpa_final_comment')
-			.reply(200, lpaFinalCommentsAwaitingReview);
-
-		nock('http://test/')
 			.get(/appeals\/\d+\/appellant-cases\/\d+/)
 			.reply(200, { planningObligation: { hasObligation: false } });
 	});
@@ -226,12 +203,6 @@ describe('appeal-details', () => {
 						.get(`/appeals/${appealData.appealId}/case-notes`)
 						.reply(200, caseNotes);
 					nock('http://test/')
-						.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
-						.reply(200, appellantFinalCommentsAwaitingReview);
-					nock('http://test/')
-						.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
-						.reply(200, lpaFinalCommentsAwaitingReview);
-					nock('http://test/')
 						.get(/appeals\/\d+\/appellant-cases\/\d+/)
 						.reply(200, { planningObligation: { hasObligation: false } });
 
@@ -269,13 +240,6 @@ describe('appeal-details', () => {
 					nock('http://test/')
 						.get(`/appeals/${appealData.appealId}/case-notes`)
 						.reply(200, caseNotes);
-
-					nock('http://test/')
-						.get(`/appeals/${appealReference}/reps?type=appellant_final_comment`)
-						.reply(200, appellantFinalCommentsAwaitingReview);
-					nock('http://test/')
-						.get(`/appeals/${appealReference}/reps?type=lpa_final_comment`)
-						.reply(200, lpaFinalCommentsAwaitingReview);
 					nock('http://test/')
 						.get(/appeals\/\d+\/appellant-cases\/\d+/)
 						.reply(200, { planningObligation: { hasObligation: false } });
@@ -313,12 +277,6 @@ describe('appeal-details', () => {
 					nock('http://test/')
 						.get(`/appeals/${appealData.appealId}/case-notes`)
 						.reply(200, caseNotes);
-					nock('http://test/')
-						.get(`/appeals/${appealReference}/reps?type=appellant_final_comment`)
-						.reply(200, appellantFinalCommentsAwaitingReview);
-					nock('http://test/')
-						.get(`/appeals/${appealReference}/reps?type=lpa_final_comment`)
-						.reply(200, lpaFinalCommentsAwaitingReview);
 					nock('http://test/')
 						.get(/appeals\/\d+\/appellant-cases\/\d+/)
 						.reply(200, { planningObligation: { hasObligation: false } });
@@ -362,12 +320,6 @@ describe('appeal-details', () => {
 					nock('http://test/')
 						.get(`/appeals/${appealData.appealId}/case-notes`)
 						.reply(200, caseNotes);
-					nock('http://test/')
-						.get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`)
-						.reply(200, appellantFinalCommentsAwaitingReview);
-					nock('http://test/')
-						.get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`)
-						.reply(200, lpaFinalCommentsAwaitingReview);
 					nock('http://test/')
 						.get(/appeals\/\d+\/appellant-cases\/\d+/)
 						.reply(200, { planningObligation: { hasObligation: false } });
@@ -413,12 +365,6 @@ describe('appeal-details', () => {
 					nock('http://test/')
 						.get(`/appeals/${appealData.appealId}/case-notes`)
 						.reply(200, caseNotes);
-					nock('http://test/')
-						.get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`)
-						.reply(200, appellantFinalCommentsAwaitingReview);
-					nock('http://test/')
-						.get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`)
-						.reply(200, lpaFinalCommentsAwaitingReview);
 					nock('http://test/')
 						.get(/appeals\/\d+\/appellant-cases\/\d+/)
 						.reply(200, { planningObligation: { hasObligation: false } });
@@ -1193,6 +1139,15 @@ describe('appeal-details', () => {
 
 				it('should render an important notification banner when the appeal has unreviewed IP comments', async () => {
 					nock('http://test/')
+						.get('/appeals/2/reps?type=appellant_final_comment,lpa_final_comment')
+						.reply(200, {
+							itemCount: 2,
+							items: [
+								...appellantFinalCommentsAwaitingReview.items,
+								...lpaFinalCommentsAwaitingReview.items
+							]
+						});
+					nock('http://test/')
 						.get('/appeals/2')
 						.reply(200, {
 							...appealDataFullPlanning,
@@ -1397,12 +1352,11 @@ describe('appeal-details', () => {
 						nock.cleanAll();
 						nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 						nock('http://test/')
-							.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
-							.reply(200, finalCommentsForReview)
-							.persist();
-						nock('http://test/')
-							.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
-							.reply(200, finalCommentsForReview)
+							.get(`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment`)
+							.reply(200, {
+								itemCount: 2,
+								items: [...finalCommentsForReview.items, ...lpaFinalCommentsAwaitingReview.items]
+							})
 							.persist();
 					};
 
@@ -1496,12 +1450,6 @@ describe('appeal-details', () => {
 								appealId,
 								appealType: 'Householder'
 							});
-						nock('http://test/')
-							.get('/appeals/2/reps?type=appellant_final_comment')
-							.reply(200, appellantFinalCommentsAwaitingReview);
-						nock('http://test/')
-							.get('/appeals/2/reps?type=lpa_final_comment')
-							.reply(200, lpaFinalCommentsAwaitingReview);
 
 						nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 						nock('http://test/')
@@ -1531,12 +1479,6 @@ describe('appeal-details', () => {
 								appealId,
 								appealType: 'Householder'
 							});
-						nock('http://test/')
-							.get('/appeals/2/reps?type=appellant_final_comment')
-							.reply(200, appellantFinalCommentsAwaitingReview);
-						nock('http://test/')
-							.get('/appeals/2/reps?type=lpa_final_comment')
-							.reply(200, lpaFinalCommentsAwaitingReview);
 
 						nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 						nock('http://test/')
@@ -1566,12 +1508,6 @@ describe('appeal-details', () => {
 								appealId,
 								appealType: 'Householder'
 							});
-						nock('http://test/')
-							.get('/appeals/2/reps?type=appellant_final_comment')
-							.reply(200, appellantFinalCommentsAwaitingReview);
-						nock('http://test/')
-							.get('/appeals/2/reps?type=lpa_final_comment')
-							.reply(200, lpaFinalCommentsAwaitingReview);
 
 						nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 						nock('http://test/')
@@ -1613,17 +1549,14 @@ describe('appeal-details', () => {
 					}
 				];
 
+				const appellantFinalCommentsForReviewItems = {
+					...finalCommentsForReview.items,
+					representationType: 'appellant_final_comment'
+				};
+
 				const resetMocks = () => {
 					nock.cleanAll();
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
-					nock('http://test/')
-						.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
-						.reply(200, finalCommentsForReview)
-						.persist();
-					nock('http://test/')
-						.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
-						.reply(200, finalCommentsForReview)
-						.persist();
 					nock('http://test/')
 						.get(/appeals\/\d+\/appellant-cases\/\d+/)
 						.reply(200, { planningObligation: { hasObligation: false } });
@@ -1635,6 +1568,13 @@ describe('appeal-details', () => {
 
 				for (const testCase of testCases) {
 					it(`should render an "${testCase.importantBannerHeading}" important notification banner when the appeal has unreviewed ${testCase.name} final comments`, async () => {
+						nock('http://test/')
+							.get(`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment`)
+							.reply(200, {
+								itemCount: 2,
+								items: [appellantFinalCommentsForReviewItems, ...finalCommentsForReview.items]
+							})
+							.persist();
 						nock('http://test/')
 							.get(`/appeals/${appealId}`)
 							.reply(200, {
@@ -1669,6 +1609,14 @@ describe('appeal-details', () => {
 
 					it(`should render an "${testCase.successBannerHeading}" success notification banner, and not render an "${testCase.importantBannerHeading}" notification banner, when an ${testCase.name} final comment is redacted and accepted`, async () => {
 						nock('http://test/')
+							.get('/appeals/3/reps?type=appellant_final_comment')
+							.reply(200, appellantFinalCommentsAwaitingReview)
+							.persist();
+						nock('http://test/')
+							.get('/appeals/3/reps?type=lpa_final_comment')
+							.reply(200, lpaFinalCommentsAwaitingReview)
+							.persist();
+						nock('http://test/')
 							.get(`/appeals/${appealId}`)
 							.reply(200, {
 								...appealDataFullPlanning,
@@ -1680,7 +1628,7 @@ describe('appeal-details', () => {
 								},
 								documentationSummary: {
 									...appealDataFullPlanning.documentationSummary,
-									[`${testCase.name}FinalComments`]: {
+									[`${testCases[0].name}FinalComments`]: {
 										status: 'received',
 										receivedAt: pastDate,
 										representationStatus: 'awaiting_review'
@@ -1691,28 +1639,47 @@ describe('appeal-details', () => {
 
 						const redactedRepresentation = 'Test redacted final comment text';
 						const redactPagePostResponse = await request
-							.post(`${baseUrl}/${appealId}/final-comments/${testCase.name}/redact`)
+							.post(`${baseUrl}/${appealId}/final-comments/${testCases[0].name}/redact`)
 							.send({
 								redactedRepresentation
 							});
 
 						expect(redactPagePostResponse.statusCode).toBe(302);
-
 						nock('http://test/')
-							.patch(`/appeals/${appealId}/reps/3670`)
+							.patch(
+								`/appeals/${appealId}/reps/${appellantFinalCommentsAwaitingReview.items[0].id}`
+							)
 							.reply(200, {
 								...finalCommentsForReview.items[0],
-								origin: testCase.origin,
+								origin: testCases[0].origin,
+								status: 'valid'
+							});
+
+						nock('http://test/')
+							.patch(`/appeals/${appealId}/reps/${lpaFinalCommentsAwaitingReview.items[0].id}`)
+							.reply(200, {
+								...finalCommentsForReview.items[0],
+								origin: testCases[0].origin,
 								status: 'valid'
 							});
 
 						const confirmRedactPagePostResponse = await request
-							.post(`${baseUrl}/${appealId}/final-comments/${testCase.name}/redact/confirm`)
+							.post(`${baseUrl}/${appealId}/final-comments/${testCases[0].name}/redact/confirm`)
 							.send({});
 
 						expect(confirmRedactPagePostResponse.statusCode).toBe(302);
 
 						resetMocks();
+						nock('http://test/')
+							.get('/appeals/3/reps?type=appellant_final_comment,lpa_final_comment')
+							.reply(200, {
+								itemCount: 2,
+								items: [
+									...appellantFinalCommentsAwaitingReview.items,
+									...lpaFinalCommentsAwaitingReview.items
+								]
+							})
+							.persist();
 						nock('http://test/')
 							.get(`/appeals/${appealId}`)
 							.reply(200, {
@@ -1725,7 +1692,7 @@ describe('appeal-details', () => {
 								},
 								documentationSummary: {
 									...appealDataFullPlanning.documentationSummary,
-									[`${testCase.name}FinalComments`]: {
+									[`${testCases[0].name}FinalComments`]: {
 										status: 'received',
 										receivedAt: pastDate,
 										representationStatus: 'valid'
@@ -1734,17 +1701,16 @@ describe('appeal-details', () => {
 							});
 
 						const response = await request.get(`${baseUrl}/${appealId}`);
-
 						const unprettifiedElementHtml = parseHtml(response.text, {
 							skipPrettyPrint: true
 						}).innerHTML;
 
 						expect(unprettifiedElementHtml).toContain('Success</h3>');
 						expect(unprettifiedElementHtml).toContain(
-							`<p class="govuk-notification-banner__heading"> ${testCase.successBannerHeading}</p>`
+							`<p class="govuk-notification-banner__heading"> ${testCases[0].successBannerHeading}</p>`
 						);
 						expect(unprettifiedElementHtml).not.toContain(
-							`<p class="govuk-notification-banner__heading">${testCase.importantBannerHeading}</p>`
+							`<p class="govuk-notification-banner__heading">${testCases[0].importantBannerHeading}</p>`
 						);
 					});
 				}
@@ -2376,11 +2342,16 @@ describe('appeal-details', () => {
 					.get(`/appeals/${appealData.appealId}/case-notes`)
 					.reply(200, caseNotes);
 				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment`)
-					.reply(200, appellantFinalCommentsAwaitingReview);
-				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}/reps?type=lpa_final_comment`)
-					.reply(200, lpaFinalCommentsAwaitingReview);
+					.get(
+						`/appeals/${appealData.appealId}/reps?type=appellant_final_comment,lpa_final_comment`
+					)
+					.reply(200, {
+						itemsCount: 2,
+						items: [
+							...appellantFinalCommentsAwaitingReview.items,
+							...lpaFinalCommentsAwaitingReview.items
+						]
+					});
 				nock('http://test/')
 					.get(/appeals\/\d+\/appellant-cases\/\d+/)
 					.reply(200, { planningObligation: { hasObligation: false } });
@@ -2906,8 +2877,11 @@ describe('appeal-details', () => {
 				nock.cleanAll();
 				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 				nock('http://test/')
-					.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
-					.reply(200, finalCommentsForReview)
+					.get(`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment`)
+					.reply(200, {
+						itemCount: 1,
+						items: [...finalCommentsForReview.items]
+					})
 					.persist();
 				nock('http://test/')
 					.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
@@ -3247,6 +3221,15 @@ describe('appeal-details', () => {
 				beforeEach(() => {
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 					nock('http://test/')
+						.get(`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment`)
+						.reply(200, {
+							itemCount: 2,
+							items: [
+								...appellantFinalCommentsAwaitingReview.items,
+								...lpaFinalCommentsAwaitingReview.items
+							]
+						});
+					nock('http://test/')
 						.get(`/appeals/${appealId}/reps/count?status=awaiting_review`)
 						.reply(200, {
 							statement: 0,
@@ -3341,6 +3324,15 @@ describe('appeal-details', () => {
 
 				beforeEach(() => {
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment`)
+						.reply(200, {
+							itemCount: 2,
+							items: [
+								...appellantFinalCommentsAwaitingReview.items,
+								...lpaFinalCommentsAwaitingReview.items
+							]
+						});
 					nock('http://test/')
 						.get(`/appeals/${appealId}/reps/count?status=awaiting_review`)
 						.reply(200, {
@@ -3507,6 +3499,15 @@ describe('appeal-details', () => {
 				const appealId = 3;
 
 				beforeEach(() => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment`)
+						.reply(200, {
+							itemCount: 2,
+							items: [
+								...appellantFinalCommentsAwaitingReview.items,
+								...lpaFinalCommentsAwaitingReview.items
+							]
+						});
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 				});
 
@@ -3588,6 +3589,15 @@ describe('appeal-details', () => {
 				];
 
 				beforeEach(() => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment`)
+						.reply(200, {
+							itemCount: 2,
+							items: [
+								...appellantFinalCommentsAwaitingReview.items,
+								...lpaFinalCommentsAwaitingReview.items
+							]
+						});
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 				});
 
@@ -3655,6 +3665,15 @@ describe('appeal-details', () => {
 				nock.cleanAll();
 				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 				nock('http://test/')
+					.get(`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment`)
+					.reply(200, {
+						itemCount: 2,
+						items: [
+							...appellantFinalCommentsAwaitingReview.items,
+							...lpaFinalCommentsAwaitingReview.items
+						]
+					});
+				nock('http://test/')
 					.get(`/appeals/${appealId}/reps/count?status=awaiting_review`)
 					.reply(200, {
 						statement: 0,
@@ -3666,12 +3685,6 @@ describe('appeal-details', () => {
 
 			describe('Valid date', () => {
 				beforeEach(() => {
-					nock('http://test/')
-						.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
-						.reply(200, { items: [] });
-					nock('http://test/')
-						.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
-						.reply(200, { items: [] });
 					nock('http://test/')
 						.get(/appeals\/\d+\/appellant-cases\/\d+/)
 						.reply(200, { planningObligation: { hasObligation: false } });
@@ -3960,6 +3973,16 @@ describe('appeal-details', () => {
 			describe('Final comments', () => {
 				beforeEach(() => {
 					nock('http://test/')
+						.get(`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment`)
+						.reply(200, {
+							itemCount: 2,
+							items: [
+								...appellantFinalCommentsAwaitingReview.items,
+								...lpaFinalCommentsAwaitingReview.items
+							]
+						});
+
+					nock('http://test/')
 						.get(`/appeals/${appealId}`)
 						.reply(200, {
 							...appealDataFullPlanning,
@@ -3974,13 +3997,6 @@ describe('appeal-details', () => {
 				});
 
 				it(`should render an "Final comments due" row with the expected label, final comments due date, and a "Change" action link with the expected URL, if there are final comments awaiting review`, async () => {
-					nock('http://test/')
-						.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
-						.reply(200, appellantFinalCommentsAwaitingReview);
-					nock('http://test/')
-						.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
-						.reply(200, lpaFinalCommentsAwaitingReview);
-
 					const response = await request.get(`${baseUrl}/${appealId}`);
 
 					expect(response.statusCode).toBe(200);
@@ -4504,17 +4520,10 @@ describe('appeal-details', () => {
 			describe('for an inquiry case', () => {
 				beforeEach(() => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
-						.reply(200, { items: [] });
-					nock('http://test/')
-						.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
-						.reply(200, { items: [] });
-					nock('http://test/')
-						.get(`/appeals/${appealId}/reps?type=appellant_proofs_evidence`)
-						.reply(200, { items: [] });
-					nock('http://test/')
-						.get(`/appeals/${appealId}/reps?type=lpa_proofs_evidence`)
-						.reply(200, { items: [] });
+						.get(
+							`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+						)
+						.reply(200, { itemCount: 0 });
 				});
 
 				it('should render the correct rows when case procedure is Inquiry and case started and has no planning obligation', async () => {
@@ -4790,20 +4799,17 @@ describe('appeal-details', () => {
 				nock.cleanAll();
 				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 				nock('http://test/')
-					.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
-					.reply(200, appellantFinalCommentsAwaitingReview);
-				nock('http://test/')
-					.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
-					.reply(200, lpaFinalCommentsAwaitingReview);
+					.get(`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment`)
+					.reply(200, {
+						itemCount: 2,
+						items: [
+							...appellantFinalCommentsAwaitingReview.items,
+							...lpaFinalCommentsAwaitingReview.items
+						]
+					});
 				nock('http://test/')
 					.get(/appeals\/\d+\/appellant-cases\/\d+/)
 					.reply(200, { planningObligation: { hasObligation: false } });
-				nock('http://test/')
-					.get(`/appeals/${appealId}/reps?type=appellant_proofs_evidence`)
-					.reply(200, { items: [] });
-				nock('http://test/')
-					.get(`/appeals/${appealId}/reps?type=lpa_proofs_evidence`)
-					.reply(200, { items: [] });
 			});
 
 			it('should not render the Hearing accordion for HAS cases', async () => {
@@ -4869,6 +4875,15 @@ describe('appeal-details', () => {
 
 			for (const procedureType of [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.INQUIRY]) {
 				it(`should not render the Hearing accordion for s78 cases with a procedureType of ${procedureType}`, async () => {
+					if (procedureType === APPEAL_CASE_PROCEDURE.INQUIRY) {
+						nock('http://test/')
+							.get(
+								`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+							)
+							.reply(200, {
+								itemCount: 0
+							});
+					}
 					nock('http://test/')
 						.get(`/appeals/${appealId}`)
 						.reply(200, {
@@ -4934,6 +4949,16 @@ describe('appeal-details', () => {
 
 			for (const procedureType of [APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY]) {
 				it(`should not render the site accordion for s78 cases with a procedureType of ${procedureType}`, async () => {
+					if (procedureType === APPEAL_CASE_PROCEDURE.INQUIRY) {
+						nock('http://test/')
+							.get(
+								`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+							)
+							.reply(200, {
+								itemCount: 0
+							});
+					}
+
 					nock('http://test/')
 						.get(`/appeals/${appealId}`)
 						.reply(200, {
@@ -5620,17 +5645,16 @@ describe('appeal-details', () => {
 				nock.cleanAll();
 				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 				nock('http://test/')
-					.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
-					.reply(200, appellantFinalCommentsAwaitingReview);
-				nock('http://test/')
-					.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
-					.reply(200, lpaFinalCommentsAwaitingReview);
-				nock('http://test/')
-					.get(`/appeals/${appealId}/reps?type=appellant_proofs_evidence`)
-					.reply(200, { items: [] });
-				nock('http://test/')
-					.get(`/appeals/${appealId}/reps?type=lpa_proofs_evidence`)
-					.reply(200, { items: [] });
+					.get(
+						`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+					)
+					.reply(200, {
+						itemCount: 2,
+						items: [
+							...appellantFinalCommentsAwaitingReview.items,
+							...lpaFinalCommentsAwaitingReview.items
+						]
+					});
 				nock('http://test/')
 					.get(/appeals\/\d+\/appellant-cases\/\d+/)
 					.reply(200, { planningObligation: { hasObligation: false } });
@@ -5700,6 +5724,16 @@ describe('appeal-details', () => {
 							procedureType
 						});
 
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment`)
+						.reply(200, {
+							itemCount: 0,
+							items: [
+								...appellantFinalCommentsAwaitingReview.items,
+								...lpaFinalCommentsAwaitingReview.items
+							]
+						});
+
 					const response = await request.get(`${baseUrl}/${appealId}`);
 
 					expect(response.statusCode).toBe(200);
@@ -5720,6 +5754,16 @@ describe('appeal-details', () => {
 							...appealDataFullPlanning,
 							appealId,
 							procedureType
+						});
+
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment`)
+						.reply(200, {
+							itemCount: 0,
+							items: [
+								...appellantFinalCommentsAwaitingReview.items,
+								...lpaFinalCommentsAwaitingReview.items
+							]
 						});
 
 					const response = await request.get(`${baseUrl}/${appealId}`);
@@ -5772,6 +5816,18 @@ describe('appeal-details', () => {
 
 			it('should render the inquiry details summary list when inquiry is present with address', async () => {
 				nock('http://test/')
+					.get(
+						`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+					)
+					.reply(200, {
+						itemCount: 2,
+						items: [
+							...appellantFinalCommentsAwaitingReview.items,
+							...lpaFinalCommentsAwaitingReview.items
+						]
+					});
+
+				nock('http://test/')
 					.get(`/appeals/${appealId}`)
 					.reply(200, {
 						...appealDataFullPlanning,
@@ -5790,13 +5846,6 @@ describe('appeal-details', () => {
 							}
 						}
 					});
-				nock('http://test/')
-					.get(`/appeals/${appealId}/reps?type=appellant_proofs_evidence`)
-					.reply(200, {});
-
-				nock('http://test/')
-					.get(`/appeals/${appealId}/reps?type=lpa_proofs_evidence`)
-					.reply(200, {});
 
 				const response = await request.get(`${baseUrl}/${appealId}`);
 
@@ -5890,6 +5939,18 @@ describe('appeal-details', () => {
 
 			it('should render the inquiry details summary list when inquiry is present with no address', async () => {
 				nock('http://test/')
+					.get(
+						`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+					)
+					.reply(200, {
+						itemCount: 2,
+						items: [
+							...appellantFinalCommentsAwaitingReview.items,
+							...lpaFinalCommentsAwaitingReview.items
+						]
+					});
+
+				nock('http://test/')
 					.get(`/appeals/${appealId}`)
 					.reply(200, {
 						...appealDataFullPlanning,
@@ -5954,6 +6015,18 @@ describe('appeal-details', () => {
 			});
 
 			it('should render the Inquiry estimates summary list when estimates are present', async () => {
+				nock('http://test/')
+					.get(
+						`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+					)
+					.reply(200, {
+						itemCount: 2,
+						items: [
+							...appellantFinalCommentsAwaitingReview.items,
+							...lpaFinalCommentsAwaitingReview.items
+						]
+					});
+
 				nock('http://test/')
 					.get(`/appeals/${appealId}`)
 					.reply(200, {
@@ -6025,12 +6098,12 @@ describe('appeal-details', () => {
 						}
 					});
 				nock('http://test/')
-					.get(`/appeals/${appealId}/reps?type=appellant_proofs_evidence`)
-					.reply(200, {});
-
-				nock('http://test/')
-					.get(`/appeals/${appealId}/reps?type=lpa_proofs_evidence`)
-					.reply(200, {});
+					.get(
+						`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+					)
+					.reply(200, {
+						itemCount: 0
+					});
 
 				const response = await request.get(`${baseUrl}/${appealId}`);
 
@@ -6052,12 +6125,12 @@ describe('appeal-details', () => {
 						inquiry: null
 					});
 				nock('http://test/')
-					.get(`/appeals/${appealId}/reps?type=appellant_proofs_evidence`)
-					.reply(200, {});
-
-				nock('http://test/')
-					.get(`/appeals/${appealId}/reps?type=lpa_proofs_evidence`)
-					.reply(200, {});
+					.get(
+						`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+					)
+					.reply(200, {
+						itemCount: 0
+					});
 
 				const response = await request.get(`${baseUrl}/${appealId}`);
 
@@ -6077,12 +6150,6 @@ describe('appeal-details', () => {
 			beforeEach(() => {
 				nock.cleanAll();
 				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
-				nock('http://test/')
-					.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
-					.reply(200, appellantFinalCommentsAwaitingReview);
-				nock('http://test/')
-					.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
-					.reply(200, lpaFinalCommentsAwaitingReview);
 				nock('http://test/')
 					.get(/appeals\/\d+\/appellant-cases\/\d+/)
 					.reply(200, { planningObligation: { hasObligation: false } });
@@ -6138,12 +6205,6 @@ describe('appeal-details', () => {
 		beforeEach(() => {
 			nock.cleanAll();
 			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
-			nock('http://test/')
-				.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
-				.reply(200, appellantFinalCommentsAwaitingReview);
-			nock('http://test/')
-				.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
-				.reply(200, lpaFinalCommentsAwaitingReview);
 			nock('http://test/')
 				.get(/appeals\/\d+\/appellant-cases\/\d+/)
 				.reply(200, { planningObligation: { hasObligation: false } });
