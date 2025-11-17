@@ -63,6 +63,7 @@ variable "apps_config" {
       featureFlagSearchCaseOfficer      = bool
       featureFlagEnforcementNotice      = bool
       featureFlagInvalidDecisionLetter  = bool
+      featureFlagRule6Parties           = bool
     })
 
     logging = object({

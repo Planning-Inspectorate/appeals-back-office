@@ -105,6 +105,7 @@ module "app_web" {
     FEATURE_FLAG_SEARCH_CASE_OFFICER      = var.apps_config.featureFlags.featureFlagSearchCaseOfficer
     FEATURE_FLAG_ENFORCEMENT_NOTICE       = var.apps_config.featureFlags.featureFlagEnforcementNotice
     FEATURE_FLAG_INVALID_DECISION_LETTER  = var.apps_config.featureFlags.featureFlagInvalidDecisionLetter
+    FEATURE_FLAG_RULE_6_PARTIES           = var.apps_config.featureFlags.featureFlagRule6Parties
 
     #change LPA
     USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA = var.apps_config.use_system_test_bc_for_change_lpa
