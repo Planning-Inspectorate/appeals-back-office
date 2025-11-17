@@ -539,6 +539,16 @@ const removeAppealServiceUser = async (appealId, data) => {
 	});
 };
 
+const statusSelect = {
+	select: {
+		status: true,
+		valid: true
+	},
+	where: {
+		valid: true
+	}
+};
+
 const getAppealsWithCompletedEvents = () =>
 	databaseConnector.appeal.findMany({
 		where: {
@@ -585,7 +595,22 @@ const getAppealsWithCompletedEvents = () =>
 				}
 			]
 		},
-		include: appealDetailsInclude
+		select: {
+			id: true,
+			appealStatus: statusSelect,
+			childAppeals: {
+				select: {
+					childId: true,
+					type: true,
+					child: {
+						select: {
+							id: true,
+							appealStatus: statusSelect
+						}
+					}
+				}
+			}
+		}
 	});
 
 /**
