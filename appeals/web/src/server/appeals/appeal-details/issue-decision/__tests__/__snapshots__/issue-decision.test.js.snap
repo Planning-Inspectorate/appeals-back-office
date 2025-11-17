@@ -764,8 +764,8 @@ exports[`issue-decision POST /appellant-costs-decision-letter-upload should rend
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -781,8 +781,8 @@ exports[`issue-decision POST /appellant-costs-decision-letter-upload should rend
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -798,8 +798,8 @@ exports[`issue-decision POST /decision-letter-upload should render a 500 error p
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -815,8 +815,8 @@ exports[`issue-decision POST /decision-letter-upload should render a 500 error p
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -832,8 +832,8 @@ exports[`issue-decision POST /issue-appellant-costs-decision-letter-upload shoul
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -849,8 +849,8 @@ exports[`issue-decision POST /issue-appellant-costs-decision-letter-upload shoul
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -866,8 +866,8 @@ exports[`issue-decision POST /issue-decision/check-your-appellant-costs-decision
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -883,8 +883,8 @@ exports[`issue-decision POST /issue-decision/check-your-decision should render a
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -900,8 +900,8 @@ exports[`issue-decision POST /issue-decision/check-your-lpa-costs-decision shoul
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -917,8 +917,8 @@ exports[`issue-decision POST /issue-lpa-costs-decision-letter-upload should rend
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -934,8 +934,8 @@ exports[`issue-decision POST /issue-lpa-costs-decision-letter-upload should rend
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -951,8 +951,8 @@ exports[`issue-decision POST /lpa-costs-decision-letter-upload should render a 5
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -968,8 +968,8 @@ exports[`issue-decision POST /lpa-costs-decision-letter-upload should render a 5
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
