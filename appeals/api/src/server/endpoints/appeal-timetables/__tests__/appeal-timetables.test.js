@@ -602,7 +602,14 @@ describe('appeal timetables routes', () => {
 				[
 					'advertisementAppeal',
 					advertisementAppealWithTimetable,
-					{ lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z' },
+					{
+						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
+						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
+						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-24T22:59:00.000Z'
+					},
 					{}
 				],
 				[
@@ -842,7 +849,14 @@ describe('appeal timetables routes', () => {
 				[
 					'advertisementAppeal',
 					advertisementAppealWithTimetable,
-					{ lpaQuestionnaireDueDate: '2024-06-10T22:59:00.000Z' },
+					{
+						lpaQuestionnaireDueDate: '2024-06-10T22:59:00.000Z',
+						appellantStatementDueDate: '2024-07-08T22:59:00.000Z',
+						finalCommentsDueDate: '2024-07-22T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-08T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-08T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-22T22:59:00.000Z'
+					},
 					{}
 				],
 				[
@@ -970,8 +984,7 @@ describe('appeal timetables routes', () => {
 			test.each([
 				['householdAppeal', householdAppeal],
 				['casPlanningAppeal', casPlanningAppeal],
-				['casAdvertAppeal', casAdvertAppeal],
-				['advertisementAppeal', advertisementAppeal]
+				['casAdvertAppeal', casAdvertAppeal]
 			])('start a %s timetable', async (_, appeal) => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
@@ -1055,7 +1068,8 @@ describe('appeal timetables routes', () => {
 					{ ...fullPlanningAppeal, procedureType: { key: 'hearing' } },
 					{ statement_of_common_ground_deadline: '10 July 2024', planning_obligation_deadline: '' }
 				],
-				['listedBuilding', { ...listedBuildingAppeal, procedureType: { key: 'hearing' } }, {}]
+				['listedBuilding', { ...listedBuildingAppeal, procedureType: { key: 'hearing' } }, {}],
+				['advertisementAppeal', { ...advertisementAppeal, procedureType: { key: 'hearing' } }, {}]
 			])('for a %s appeal', (appealType, appeal, personalisation) => {
 				test(`start an appeal timetable with a hearing procedure type`, async () => {
 					databaseConnector.appeal.findUnique.mockResolvedValue({

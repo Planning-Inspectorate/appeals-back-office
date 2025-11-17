@@ -84,6 +84,8 @@ const appealTypeMap = (appealType) => {
 			return '-s78-';
 		case 'Y':
 			return '-s78-';
+		case 'H':
+			return '-s78-';
 		default:
 			return '-';
 	}
