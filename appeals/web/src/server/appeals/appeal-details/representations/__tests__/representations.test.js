@@ -115,12 +115,14 @@ describe('representations', () => {
 				// @ts-ignore
 				usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
 				nock('http://test/')
-					.get('/appeals/1/reps?type=appellant_final_comment')
-					.reply(200, appellantFinalCommentsAwaitingReview)
-					.persist();
-				nock('http://test/')
-					.get('/appeals/1/reps?type=lpa_final_comment')
-					.reply(200, lpaFinalCommentsAwaitingReview)
+					.get('/appeals/1/reps?type=appellant_final_comment,lpa_final_comment')
+					.reply(200, {
+						itemCount: 2,
+						items: [
+							...appellantFinalCommentsAwaitingReview.items,
+							...lpaFinalCommentsAwaitingReview.items
+						]
+					})
 					.persist();
 				nock('http://test/')
 					.get('/appeals/1/appellant-cases/0')
@@ -146,6 +148,7 @@ describe('representations', () => {
 						.get(`/appeals/${appealId}`)
 						.reply(200, {
 							...appealData,
+							appealType: 'Planning appeal',
 							appealId,
 							appealStatus: 'final_comments',
 							documentationSummary: {
@@ -198,6 +201,7 @@ describe('representations', () => {
 					.get(`/appeals/${appealId}`)
 					.reply(200, {
 						...appealData,
+						appealType: 'Planning appeal',
 						appealId,
 						appealStatus: 'final_comments',
 						documentationSummary: {

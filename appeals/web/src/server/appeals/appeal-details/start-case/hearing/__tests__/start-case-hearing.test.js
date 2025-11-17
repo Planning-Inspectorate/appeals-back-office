@@ -660,11 +660,14 @@ describe('start case hearing flow', () => {
 				});
 			nock('http://test/').get('/appeals/1/case-notes').reply(200, caseNotes);
 			nock('http://test/')
-				.get('/appeals/1/reps?type=appellant_final_comment')
-				.reply(200, appellantFinalCommentsAwaitingReview);
-			nock('http://test/')
-				.get('/appeals/1/reps?type=lpa_final_comment')
-				.reply(200, lpaFinalCommentsAwaitingReview);
+				.get(`/appeals/${appealData.appealId}/reps?type=appellant_final_comment,lpa_final_comment`)
+				.reply(200, {
+					itemsCount: 2,
+					items: [
+						...appellantFinalCommentsAwaitingReview.items,
+						...lpaFinalCommentsAwaitingReview.items
+					]
+				});
 			nock('http://test/')
 				.get(/appeals\/\d+\/appellant-cases\/\d+/)
 				.reply(200, { planningObligation: { hasObligation: false } });
