@@ -1,4 +1,8 @@
 parameters:
+  - name: runValidation
+    displayName: Run linting and tests
+    type: boolean
+    default: false
   - name: buildAppealsBoApi
     displayName: Build Appeals BO API
     type: boolean
@@ -37,11 +41,12 @@ resources:
 extends:
   template: stages/wrapper_ci.yml@templates
   parameters:
-    gitFetchDepth: 0
+    gitFetchDepth: 1
     globalVariables:
       - template: azure-pipelines-variables.yml@self
     validationJobs:
       - name: Run Linting & Tests
+        condition: ${{ eq(parameters.runValidation, true) }}
         steps:
           - task: Cache@2
             inputs:
@@ -87,8 +92,9 @@ extends:
               ne(variables['Build.Reason'], 'Manual')
             )
           )
-        dependsOn:
-          - Run Linting & Tests
+        ${{ if eq(parameters.runValidation, true) }}:
+          dependsOn:
+            - Run Linting & Tests
         steps:
           - template: ../steps/azure_web_app_docker_build_push.yml@templates
             parameters:
@@ -109,8 +115,9 @@ extends:
               ne(variables['Build.Reason'], 'Manual')
             )
           )
-        dependsOn:
-          - Run Linting & Tests
+        ${{ if eq(parameters.runValidation, true) }}:
+          dependsOn:
+            - Run Linting & Tests
         steps:
           - template: ../steps/azure_web_app_docker_build_push.yml@templates
             parameters:
@@ -131,8 +138,9 @@ extends:
               ne(variables['Build.Reason'], 'Manual')
             )
           )
-        dependsOn:
-          - Run Linting & Tests
+        ${{ if eq(parameters.runValidation, true) }}:
+          dependsOn:
+            - Run Linting & Tests
         steps:
           - template: ../steps/azure_web_app_docker_build_push.yml@templates
             parameters:
@@ -153,8 +161,9 @@ extends:
               ne(variables['Build.Reason'], 'Manual')
             )
           )
-        dependsOn:
-          - Run Linting & Tests
+        ${{ if eq(parameters.runValidation, true) }}:
+          dependsOn:
+            - Run Linting & Tests
         steps:
           # install only function deps
           - task: Cache@2
