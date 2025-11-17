@@ -3,6 +3,7 @@ import {
 	isOutcomeInvalid,
 	isOutcomeValid
 } from '#utils/check-validation-outcome.js';
+import { getFeedbackLinkFromAppealType } from '#utils/feedback-form-link.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
@@ -32,7 +33,6 @@ import {
 import { AUDIT_TRAIL_SUBMISSION_INVALID } from '@pins/appeals/constants/support.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
-import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import transitionState from '../../state/transition-state.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
@@ -312,33 +312,4 @@ export function renderAuditTrailDetail(data) {
 	}
 
 	return stringTokenReplacement(CONSTANTS[constantKey], [auditTrailParameters[constantKey]()]);
-}
-
-/**
- * @param {string} appealKey
- * @returns {string}
- */
-export function getFeedbackLinkFromAppealType(appealKey) {
-	const FEEDBACK_LINK_FULL_PLANNING =
-		'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzg1SlNPQjA3V0FDNUFJTldHMlEzMDdMRS4u';
-
-	const FEEDBACK_LINK_HOUSEHOLDER =
-		'https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUOFg4UFdEUThGTlU3S0hFUTlERVYwMVRLTy4u&route=shorturl';
-
-	const FEEDBACK_LINK_LISTED_BUILDING =
-		'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQjI0R09ONVRVNVJZVk9XMzBYTFo2RDlQUy4u';
-
-	switch (appealKey) {
-		case APPEAL_CASE_TYPE.H: // Householder
-			return FEEDBACK_LINK_HOUSEHOLDER;
-
-		case APPEAL_CASE_TYPE.W: // Full planning
-			return FEEDBACK_LINK_FULL_PLANNING;
-
-		case APPEAL_CASE_TYPE.Y: // Listed building appeal
-			return FEEDBACK_LINK_LISTED_BUILDING;
-
-		default:
-			return FEEDBACK_LINK_HOUSEHOLDER;
-	}
 }
