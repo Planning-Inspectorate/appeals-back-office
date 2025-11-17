@@ -120,12 +120,12 @@ describe('Manage docs on lpa case', () => {
 				caseDetailsPage.clickButtonByText('Continue');
 				// check for lpa heading
 				caseDetailsPage.validateSectionHeader(
-					'Check details and add lpa proof of evidence and witnesses'
+					'Check details and add LPA proof of evidence and witnesses'
 				);
 				caseDetailsPage.clickButtonByText('Add lpa proof of evidence and witness');
 
 				// check page header and success banner
-				caseDetailsPage.validateSectionHeader('Review lpa proof of evidence and witnesses');
+				caseDetailsPage.validateSectionHeader('Review LPA proof of evidence and witnesses');
 				caseDetailsPage.validateBannerMessage(
 					'Success',
 					'LPA proof of evidence and witnesses added'
