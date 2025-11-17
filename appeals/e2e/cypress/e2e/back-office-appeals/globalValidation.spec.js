@@ -1,10 +1,12 @@
 // @ts-nocheck
 /// <reference types="cypress"/>
 
+import * as allure from 'allure-js-commons';
 import { users } from '../../fixtures/users';
 import { InquirySectionPage } from '../../page_objects/caseDetails/inquirySectionPage.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { happyPathHelper } from '../../support/happyPathHelper';
+import { tag } from '../../support/tag';
 import { getDateAndTimeValues } from '../../support/utils/format.js';
 
 const caseDetailsPage = new CaseDetailsPage();
@@ -42,7 +44,13 @@ describe('Date Validation', { testIsolation: false }, () => {
 		inquirySectionPage.clearInquiryDateAndTime();
 	});
 
-	it('All fields are blank', () => {
+	it('All fields are blank', { tags: tag.test_allure }, () => {
+		allure.description(
+			'This test attempts checks that expected validation works when all date fields are empty.'
+		);
+		allure.displayName('Test Authentication');
+		allure.tags('Backoffice', 'Authentication');
+
 		inquirySectionPage.setUpInquiry('', '', '', '10', '00');
 
 		inquirySectionPage.verifyErrorMessages({
@@ -51,7 +59,13 @@ describe('Date Validation', { testIsolation: false }, () => {
 		});
 	});
 
-	it('Only day entered - month and year are blank', () => {
+	it('Only day entered - month and year are blank', { tags: tag.test_allure }, () => {
+		allure.description(
+			'This test attempts checks that expected validation works when all month and year fields are empty.'
+		);
+		allure.displayName('Test Authentication');
+		allure.tags('Backoffice', 'Authentication');
+
 		inquirySectionPage.setUpInquiry('08', '', '', '10', '00');
 
 		inquirySectionPage.verifyErrorMessages({
@@ -60,11 +74,17 @@ describe('Date Validation', { testIsolation: false }, () => {
 		});
 	});
 
-	it('Only month entered - day and year are blank', () => {
+	it('Only month entered - day and year are blank', { tags: tag.test_allure }, () => {
+		allure.description(
+			'This test attempts checks that expected validation works when all day and year fields are empty.'
+		);
+		allure.displayName('Test Authentication');
+		allure.tags('Backoffice', 'Authentication');
+
 		inquirySectionPage.setUpInquiry('', '08', '', '10', '00');
 
 		inquirySectionPage.verifyErrorMessages({
-			messages: ['Inquiry date must include a day and a year'],
+			messages: ['Inquiry date must include a day and a year and something else'],
 			fields: ['inquiry-date-day']
 		});
 	});
