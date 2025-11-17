@@ -186,7 +186,14 @@ const getAppealsWithoutIncludes = async (
 		appellantProcedurePreferencePreFilter
 	);
 
-	return databaseConnector.appeal.findMany({ where });
+	return databaseConnector.appeal.findMany({
+		where,
+		select: {
+			lpaId: true,
+			caseOfficerUserId: true,
+			inspectorUserId: true
+		}
+	});
 };
 
 /**
