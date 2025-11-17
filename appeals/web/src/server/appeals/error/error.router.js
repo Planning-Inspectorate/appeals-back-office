@@ -6,4 +6,8 @@ const router = createRouter();
 
 router.route('/').get(asyncHandler(controller.viewError));
 
+if (process.env.NODE_ENV !== 'production') {
+	router.route('/:errorCode').get(controller.getTestErrorPage);
+}
+
 export default router;
