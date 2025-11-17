@@ -1,6 +1,7 @@
 import { getSingularRepresentationByType } from '#appeals/appeal-details/representations/representations.service.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+import { formatProofOfEvidenceTypeText } from './view-and-review/view-and-review.mapper.js';
 
 const proofOfEvidenceTypeToAppealRepresentationTypeMap = {
 	appellant: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
@@ -54,9 +55,9 @@ export const addPageContentToLocals = async (req, _res, next) => {
 	req.locals.pageContent = {
 		preHeadingTextOverride: `Appeal ${shortAppealReference}`,
 		manageDocuments: {
-			pageHeadingTextOverride: `${
-				proofOfEvidenceType === 'lpa' ? 'LPA' : 'Appellant'
-			} proof of evidence and witnesses documents`,
+			pageHeadingTextOverride: `${formatProofOfEvidenceTypeText(
+				proofOfEvidenceType
+			)} proof of evidence and witnesses documents`,
 			addButtonTextOverride: 'Add document',
 			dateColumnLabelTextOverride: 'Submitted'
 		},
@@ -68,8 +69,12 @@ export const addPageContentToLocals = async (req, _res, next) => {
 			pageHeadingTextOverride: 'Received date'
 		},
 		checkYourAnswer: {
-			pageHeadingTextOverride: `Check details and add ${proofOfEvidenceType} proof of evidence and witnesses`,
-			submitButtonTextOverride: `Add ${proofOfEvidenceType} proof of evidence and witnesses`,
+			pageHeadingTextOverride: `Check details and add ${formatProofOfEvidenceTypeText(
+				proofOfEvidenceType
+			)} proof of evidence and witnesses`,
+			submitButtonTextOverride: `Add ${formatProofOfEvidenceTypeText(
+				proofOfEvidenceType
+			)} proof of evidence and witnesses`,
 			supportingDocumentTextOverride: 'Proof of evidence and witnesses',
 			dateSubmittedTextOverride: 'Date received'
 		},
