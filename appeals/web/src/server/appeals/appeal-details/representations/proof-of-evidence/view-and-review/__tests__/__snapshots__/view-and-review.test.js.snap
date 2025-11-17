@@ -4,7 +4,7 @@ exports[`proof-of-evidence GET /review-proof-of-evidence with data should render
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Review lpa proof of evidence and witnesses</h1>
+            <h1 class="govuk-heading-l">Review LPA proof of evidence and witnesses</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -111,7 +111,7 @@ exports[`proof-of-evidence POST /review-proof-of-evidence with data should rende
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Review lpa proof of evidence and witnesses</h1>
+            <h1 class="govuk-heading-l">Review LPA proof of evidence and witnesses</h1>
         </div>
     </div>
     <div class="govuk-grid-row">

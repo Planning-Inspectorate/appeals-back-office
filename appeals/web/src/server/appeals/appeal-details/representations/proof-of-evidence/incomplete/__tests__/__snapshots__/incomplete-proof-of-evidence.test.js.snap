@@ -48,7 +48,7 @@ exports[`incomplete proof of evidence GET /confirm should render the incomplete 
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Check details and reject lpa proof of evidence and witnesses</h1>
+            <h1 class="govuk-heading-l">Check details and reject LPA proof of evidence and witnesses</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -66,7 +66,7 @@ exports[`incomplete proof of evidence GET /confirm should render the incomplete 
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/lpa">Change <span class="govuk-visually-hidden">Review decision</span></a>
                     </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for rejecting the lpa proof of evidence and witnesses</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for rejecting the LPA proof of evidence and witnesses</dt>
                     <dd                     class="govuk-summary-list__value">
                         <div class="pins-show-more" data-label="Read more" data-mode="html">Received after deadline</div>
                         </dd>

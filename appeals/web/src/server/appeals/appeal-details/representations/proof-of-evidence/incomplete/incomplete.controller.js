@@ -16,6 +16,7 @@ import {
 	representationIncomplete,
 	updateRejectionReasons
 } from '../../representations.service.js';
+import { formatProofOfEvidenceTypeText } from '../view-and-review/view-and-review.mapper.js';
 import { incompleteProofOfEvidencePage } from './incomplete.mapper.js';
 
 /**
@@ -137,8 +138,12 @@ export const renderConfirm = async (
 
 	return renderCheckYourAnswersComponent(
 		{
-			title: `Check details and reject ${proofOfEvidenceType} proof of evidence and witnesses`,
-			heading: `Check details and reject ${proofOfEvidenceType} proof of evidence and witnesses`,
+			title: `Check details and reject ${formatProofOfEvidenceTypeText(
+				proofOfEvidenceType
+			)} proof of evidence and witnesses`,
+			heading: `Check details and reject ${formatProofOfEvidenceTypeText(
+				proofOfEvidenceType
+			)} proof of evidence and witnesses`,
 			preHeading: `Appeal ${appealShortReference(appealReference)}`,
 			backLinkUrl: `/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceType}/incomplete/reasons`,
 			submitButtonText: 'Confirm statement is incomplete',
@@ -162,7 +167,9 @@ export const renderConfirm = async (
 						}
 					}
 				},
-				[`Reason for rejecting the ${proofOfEvidenceType} proof of evidence and witnesses`]: {
+				[`Reason for rejecting the ${formatProofOfEvidenceTypeText(
+					proofOfEvidenceType
+				)} proof of evidence and witnesses`]: {
 					html: '',
 					pageComponents: [
 						{
