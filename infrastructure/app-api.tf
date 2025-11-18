@@ -80,6 +80,7 @@ module "app_api" {
     FEATURE_FLAG_ENFORCEMENT_NOTICE      = var.apps_config.featureFlags.featureFlagEnforcementNotice
     FEATURE_FLAG_INVALID_DECISION_LETTER = var.apps_config.featureFlags.featureFlagInvalidDecisionLetter
     FEATURE_FLAG_RULE_6_PARTIES          = var.apps_config.featureFlags.featureFlagRule6Parties
+    FEATURE_FLAG_EXPEDITED_APPEALS       = var.apps_config.featureFlags.featureFlagExpeditedAppeals
 
 
     # service bus topics
