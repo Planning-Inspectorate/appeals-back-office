@@ -155,6 +155,14 @@ variable "horizon_infra_config" {
   })
 }
 
+variable "monitoring_config" {
+  description = "Config for monitoring"
+  type = object({
+    web_app_insights_web_test_enabled = bool
+    log_daily_cap                     = number
+  })
+}
+
 variable "service_bus_config" {
   description = "Config for Service Bus"
   type = object({
@@ -279,4 +287,3 @@ variable "waf_rate_limits" {
     threshold           = number
   })
 }
-
