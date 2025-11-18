@@ -8,7 +8,6 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { clearEdits, editLink, isAtEditEntrypoint } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
-import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import config from '@pins/appeals.web/environment/config.js';
@@ -31,7 +30,7 @@ export const renderDocumentUpload = async (request, response) => {
 				exclude: ['editEntrypoint']
 		  })
 		: query.backUrl
-		? constructUrl(String(query.backUrl), currentAppeal.appealId)
+		? String(query.backUrl)
 		: `/appeals-service/appeal-details/${currentAppeal.appealId}`;
 
 	return renderDocumentUploadHelper({
