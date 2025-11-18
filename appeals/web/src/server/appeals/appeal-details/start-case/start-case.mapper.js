@@ -101,6 +101,11 @@ export function selectProcedurePage(
 ) {
 	const dataMappers = [
 		{
+			//TODO: Case should be updated in the dataModel repo in the next ticket and this hsould be updated
+			case: 'expeditedAppeals',
+			featureFlag: FEATURE_FLAG_NAMES.EXPEDITED_APPEALS
+		},
+		{
 			case: APPEAL_CASE_PROCEDURE.WRITTEN,
 			featureFlag: FEATURE_FLAG_NAMES.SECTION_78
 		},
@@ -198,6 +203,8 @@ function appealProcedureToLabelText(procedureType) {
 	switch (procedureType) {
 		case APPEAL_CASE_PROCEDURE.WRITTEN:
 			return 'Written representations';
+		case APPEAL_CASE_PROCEDURE.EXPEDITED_APPEALS:
+			return 'Part 1';
 		case APPEAL_CASE_PROCEDURE.HEARING:
 		case APPEAL_CASE_PROCEDURE.INQUIRY:
 			return capitalizeFirstLetter(procedureType);
