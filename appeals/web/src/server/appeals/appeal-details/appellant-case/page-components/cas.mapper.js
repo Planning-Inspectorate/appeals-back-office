@@ -26,22 +26,6 @@ export function generateCASComponents(
 		userHasUpdateCasePermission
 	);
 
-	const siteDetailsComponentIndex = pageComponents.findIndex(
-		(component) =>
-			component.type === 'summary-list' && component.parameters.attributes?.id === 'site-details'
-	);
-
-	if (siteDetailsComponentIndex !== -1) {
-		const rows = pageComponents[siteDetailsComponentIndex].parameters.rows;
-		const siteAddressIndex = rows.findIndex(
-			(/** @type {{ classes: string; }} */ row) => row.classes === 'appeal-site-address'
-		);
-		const siteArea = mappedAppellantCaseData.siteArea.display.summaryListItem;
-
-		// Inserting the site area row for CAS appeals, as it was removed from HAS appeals
-		rows.splice(siteAddressIndex + 1, 0, siteArea);
-	}
-
 	const uploadedDocumentsComponentIndex = pageComponents.findIndex(
 		(component) =>
 			component.type === 'summary-list' &&
