@@ -517,8 +517,8 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
+                <div class="govuk-!-margin-0">Level: A</div>
                 <ul class="govuk-!-margin-0">
-                    <li>Level: A</li>
                     <li>Historic heritage</li>
                     <li>Architecture design</li>
                 </ul>
@@ -757,8 +757,8 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
+                <div class="govuk-!-margin-0">Level: A</div>
                 <ul class="govuk-!-margin-0">
-                    <li>Level: A</li>
                     <li>Historic heritage</li>
                     <li>Architecture design</li>
                 </ul>
@@ -1160,8 +1160,8 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
+                <div class="govuk-!-margin-0">Level: A</div>
                 <ul class="govuk-!-margin-0">
-                    <li>Level: A</li>
                     <li>Historic heritage</li>
                     <li>Architecture design</li>
                 </ul>
@@ -1397,8 +1397,8 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
+                <div class="govuk-!-margin-0">Level: A</div>
                 <ul class="govuk-!-margin-0">
-                    <li>Level: A</li>
                     <li>Historic heritage</li>
                     <li>Architecture design</li>
                 </ul>
@@ -1793,8 +1793,8 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
+                <div class="govuk-!-margin-0">Level: A</div>
                 <ul class="govuk-!-margin-0">
-                    <li>Level: A</li>
                     <li>Historic heritage</li>
                     <li>Architecture design</li>
                 </ul>
@@ -2203,8 +2203,8 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
+                <div class="govuk-!-margin-0">Level: A</div>
                 <ul class="govuk-!-margin-0">
-                    <li>Level: A</li>
                     <li>Historic heritage</li>
                     <li>Architecture design</li>
                 </ul>
@@ -2620,8 +2620,8 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
+                <div class="govuk-!-margin-0">Level: A</div>
                 <ul class="govuk-!-margin-0">
-                    <li>Level: A</li>
                     <li>Historic heritage</li>
                     <li>Architecture design</li>
                 </ul>
@@ -3028,8 +3028,8 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
+                <div class="govuk-!-margin-0">Level: A</div>
                 <ul class="govuk-!-margin-0">
-                    <li>Level: A</li>
                     <li>Historic heritage</li>
                     <li>Architecture design</li>
                 </ul>
@@ -3436,8 +3436,8 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
+                <div class="govuk-!-margin-0">Level: A</div>
                 <ul class="govuk-!-margin-0">
-                    <li>Level: A</li>
                     <li>Historic heritage</li>
                     <li>Architecture design</li>
                 </ul>
@@ -3857,8 +3857,8 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
+                <div class="govuk-!-margin-0">Level: A</div>
                 <ul class="govuk-!-margin-0">
-                    <li>Level: A</li>
                     <li>Historic heritage</li>
                     <li>Architecture design</li>
                 </ul>
@@ -4212,8 +4212,8 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
+                <div class="govuk-!-margin-0">Level: A</div>
                 <ul class="govuk-!-margin-0">
-                    <li>Level: A</li>
                     <li>Historic heritage</li>
                     <li>Architecture design</li>
                 </ul>
@@ -4745,8 +4745,8 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
+                <div class="govuk-!-margin-0">Level: A</div>
                 <ul class="govuk-!-margin-0">
-                    <li>Level: A</li>
                     <li>Historic heritage</li>
                     <li>Architecture design</li>
                 </ul>
@@ -5736,8 +5736,8 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
+                <div class="govuk-!-margin-0">Level: A</div>
                 <ul class="govuk-!-margin-0">
-                    <li>Level: A</li>
                     <li>Historic heritage</li>
                     <li>Architecture design</li>
                 </ul>
@@ -6097,8 +6097,8 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
+                <div class="govuk-!-margin-0">Level: A</div>
                 <ul class="govuk-!-margin-0">
-                    <li>Level: A</li>
                     <li>Historic heritage</li>
                     <li>Architecture design</li>
                 </ul>
@@ -6458,8 +6458,8 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
+                <div class="govuk-!-margin-0">Level: A</div>
                 <ul class="govuk-!-margin-0">
-                    <li>Level: A</li>
                     <li>Historic heritage</li>
                     <li>Architecture design</li>
                 </ul>
@@ -6823,8 +6823,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
+                <div class="govuk-!-margin-0">Level: A</div>
                 <ul class="govuk-!-margin-0">
-                    <li>Level: A</li>
                     <li>Historic heritage</li>
                     <li>Architecture design</li>
                 </ul>
@@ -7180,8 +7180,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
+                <div class="govuk-!-margin-0">Level: A</div>
                 <ul class="govuk-!-margin-0">
-                    <li>Level: A</li>
                     <li>Historic heritage</li>
                     <li>Architecture design</li>
                 </ul>
@@ -7565,8 +7565,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
+                <div class="govuk-!-margin-0">Level: A</div>
                 <ul class="govuk-!-margin-0">
-                    <li>Level: A</li>
                     <li>Historic heritage</li>
                     <li>Architecture design</li>
                 </ul>
@@ -7972,8 +7972,8 @@ exports[`appeal-details should not render a back button 1`] = `
                     </div>
                     <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
                         <dd class="govuk-summary-list__value">
+                            <div class="govuk-!-margin-0">Level: A</div>
                             <ul class="govuk-!-margin-0">
-                                <li>Level: A</li>
                                 <li>Historic heritage</li>
                                 <li>Architecture design</li>
                             </ul>

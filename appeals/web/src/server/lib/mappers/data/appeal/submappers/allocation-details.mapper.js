@@ -26,6 +26,10 @@ const mapDetailsHtml = (details) => {
 	if (!details) {
 		return 'No allocation level for this appeal';
 	}
+	if (details.specialisms.length === 1) {
+		return `<div class="govuk-!-margin-0">Level: ${details.level}<br>${details.specialisms[0]}</div>`;
+	}
+
 	const specialismsList = details.specialisms.join('</li><li>');
-	return `<ul class="govuk-!-margin-0"><li>Level: ${details.level}</li><li>${specialismsList}</li></ul>`;
+	return `<div class="govuk-!-margin-0">Level: ${details.level}</div><ul class="govuk-!-margin-0"><li>${specialismsList}</li></ul>`;
 };

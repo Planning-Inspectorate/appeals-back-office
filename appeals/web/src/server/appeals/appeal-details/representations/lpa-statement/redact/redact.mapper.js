@@ -245,9 +245,12 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 								{
 									key: { text: 'Allocation specialisms' },
 									value: {
-										html: `<ul class="govuk-list govuk-list--bullet">
-                    ${specialisms.map((s) => `<li>${s}</li>`).join('')}
-                  </ul>`
+										html:
+											specialisms.length === 1
+												? specialisms[0]
+												: `<ul class="govuk-list govuk-list--bullet">
+												${specialisms.map((s) => `<li>${s}</li>`).join('')}
+											</ul>`
 									},
 									actions: {
 										items: [

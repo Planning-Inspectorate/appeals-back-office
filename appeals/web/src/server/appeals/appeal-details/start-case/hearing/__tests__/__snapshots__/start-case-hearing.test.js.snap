@@ -430,8 +430,8 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
+                <div class="govuk-!-margin-0">Level: A</div>
                 <ul class="govuk-!-margin-0">
-                    <li>Level: A</li>
                     <li>Historic heritage</li>
                     <li>Architecture design</li>
                 </ul>
