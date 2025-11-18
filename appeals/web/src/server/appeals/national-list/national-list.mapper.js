@@ -128,10 +128,6 @@ export function nationalListPage(
 		enabledAppealProcedures.push(APPEAL_CASE_PROCEDURE.INQUIRY);
 	}
 
-	if (isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS)) {
-		enabledAppealProcedures.push(APPEAL_CASE_PROCEDURE.EXPEDITED_APPEALS);
-	}
-
 	const appealTypeFilterItemsArray = [
 		{
 			text: 'All',
