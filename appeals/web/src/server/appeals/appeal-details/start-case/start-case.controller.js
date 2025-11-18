@@ -30,11 +30,7 @@ export const getStartDate = async (request, response) => {
 		delete session.startCaseAppealProcedure?.[appealId];
 	}
 
-	if (
-		appealType === APPEAL_TYPE.S78 &&
-		(featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_HEARING) ||
-			featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_INQUIRY))
-	) {
+	if (appealType === APPEAL_TYPE.S78) {
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/start-case/select-procedure${
 				request.query?.backUrl ? `?backUrl=${request.query?.backUrl}` : ''
