@@ -87,7 +87,6 @@ module "app_web" {
     FEATURE_FLAG_S78_HEARING              = var.apps_config.featureFlags.featureFlagS78Hearing
     FEATURE_FLAG_S78_INQUIRY              = var.apps_config.featureFlags.featureFlagS78Inquiry
     FEATURE_FLAG_LINKED_APPEALS           = var.apps_config.featureFlags.featureFlagLinkedAppeals
-    FEATURE_FLAG_S20                      = var.apps_config.featureFlags.featureFlagS20
     FEATURE_FLAG_CAS                      = var.apps_config.featureFlags.featureFlagCAS
     FEATURE_FLAG_CAS_ADVERT               = var.apps_config.featureFlags.featureFlagCasAdvert
     FEATURE_FLAG_ADVERTISEMENT            = var.apps_config.featureFlags.featureFlagAdvertisement
