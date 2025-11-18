@@ -148,6 +148,12 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row appeal-site-area"><dt class="govuk-summary-list__key"> What is the area of the appeal site?</dt>
+                            <dd                             class="govuk-summary-list__value">30.1 m²</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"
+                                    data-cy="change-site-area">Change<span class="govuk-visually-hidden"> What is the area of the appeal site? (2. Site details)</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the appeal site in a green belt?</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/green-belt/change/appellant">Change<span class="govuk-visually-hidden"> Is the appeal site in a green belt? (2. Site details)</span></a>
@@ -427,6 +433,12 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                             <dd                             class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-site-area"><dt class="govuk-summary-list__key"> What is the area of the appeal site?</dt>
+                            <dd                             class="govuk-summary-list__value">30.1 m²</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"
+                                    data-cy="change-site-area">Change<span class="govuk-visually-hidden"> What is the area of the appeal site? (2. Site details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the appeal site in a green belt?</dt>
@@ -746,6 +758,12 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row appeal-site-area"><dt class="govuk-summary-list__key"> What is the area of the appeal site?</dt>
+                            <dd                             class="govuk-summary-list__value">30.1 m²</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"
+                                    data-cy="change-site-area">Change<span class="govuk-visually-hidden"> What is the area of the appeal site? (2. Site details)</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the appeal site in a green belt?</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/green-belt/change/appellant">Change<span class="govuk-visually-hidden"> Is the appeal site in a green belt? (2. Site details)</span></a>
@@ -1035,6 +1053,12 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                             <dd                             class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-site-area"><dt class="govuk-summary-list__key"> What is the area of the appeal site?</dt>
+                            <dd                             class="govuk-summary-list__value">30.1 m²</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"
+                                    data-cy="change-site-area">Change<span class="govuk-visually-hidden"> What is the area of the appeal site? (2. Site details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the appeal site in a green belt?</dt>
@@ -1383,6 +1407,12 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row appeal-site-area"><dt class="govuk-summary-list__key"> What is the area of the appeal site?</dt>
+                            <dd                             class="govuk-summary-list__value">30.1 m²</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-area/change"
+                                    data-cy="change-site-area">Change<span class="govuk-visually-hidden"> What is the area of the appeal site? (2. Site details)</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the appeal site in a green belt?</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/green-belt/change/appellant">Change<span class="govuk-visually-hidden"> Is the appeal site in a green belt? (2. Site details)</span></a>
@@ -1671,6 +1701,12 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                             <dd                             class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-site-area"><dt class="govuk-summary-list__key"> What is the area of the appeal site?</dt>
+                            <dd                             class="govuk-summary-list__value">30.1 m²</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"
+                                    data-cy="change-site-area">Change<span class="govuk-visually-hidden"> What is the area of the appeal site? (2. Site details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the appeal site in a green belt?</dt>
@@ -3116,6 +3152,12 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                             <dd                             class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-site-area"><dt class="govuk-summary-list__key"> What is the area of the appeal site?</dt>
+                            <dd                             class="govuk-summary-list__value">30.1 m²</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"
+                                    data-cy="change-site-area">Change<span class="govuk-visually-hidden"> What is the area of the appeal site? (2. Site details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the appeal site in a green belt?</dt>
@@ -6222,6 +6264,12 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                             <dd                             class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-site-area"><dt class="govuk-summary-list__key"> What is the area of the appeal site?</dt>
+                            <dd                             class="govuk-summary-list__value">30.1 m²</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-area/change"
+                                    data-cy="change-site-area">Change<span class="govuk-visually-hidden"> What is the area of the appeal site? (2. Site details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the appeal site in a green belt?</dt>
