@@ -1281,7 +1281,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'P1425',
 		name: 'Lewes District Council',
-		email: 'planning@lewes.gov.uk',
+		email: 'planningfirst@lewes-eastbourne.gov.uk',
 		teamId: 12 // East2
 	},
 	{
@@ -1377,7 +1377,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'C3430',
 		name: 'South Staffordshire District Council',
-		email: 'dcapps@sstaffs.gov.uk',
+		email: 'Appeals@sstaffs.gov.uk',
 		teamId: 8 //West2
 	},
 	{
