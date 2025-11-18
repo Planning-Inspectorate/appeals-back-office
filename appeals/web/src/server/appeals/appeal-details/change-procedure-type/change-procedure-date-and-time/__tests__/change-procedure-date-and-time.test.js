@@ -15,7 +15,7 @@ describe('change to inquiry date and time', () => {
 	beforeEach(() => {
 		installMockApi();
 		nock('http://test/')
-			.get(`/appeals/${appealId}`)
+			.get(`/appeals/${appealId}?include=all`)
 			.reply(200, { ...appealData, appealId })
 			.persist();
 	});
@@ -37,7 +37,7 @@ describe('change to inquiry date and time', () => {
 			// Mock API call for the appeal
 			nock('http://test/')
 				.persist()
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId, procedureType: 'inquiry' });
 
 			appealData.procedureType = 'inquiry';
@@ -88,7 +88,7 @@ describe('change to inquiry date and time', () => {
 		beforeEach(() => {
 			nock('http://test/')
 				.persist()
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 		});
 

@@ -503,7 +503,7 @@ describe('LPA Questionnaire review', () => {
 		it('should render an "In, near or likely to effect designated sites changed" success notification banner when designated sites are changed', async () => {
 			nock.cleanAll();
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId: 2
@@ -686,7 +686,7 @@ describe('LPA Questionnaire review', () => {
 			beforeEach(() => {
 				nock.cleanAll();
 				nock('http://test/')
-					.get(`/appeals/${appealId}`)
+					.get(`/appeals/${appealId}?include=all`)
 					.reply(200, {
 						...lpaqAppealData,
 						appealId
@@ -795,7 +795,7 @@ describe('LPA Questionnaire review', () => {
 			describe(`${text} Field`, () => {
 				it(`should display "No" when ${fieldName} is false`, async () => {
 					nock('http://test/')
-						.get('/appeals/2')
+						.get('/appeals/2?include=all')
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId: 2
@@ -820,7 +820,7 @@ describe('LPA Questionnaire review', () => {
 
 				it(`should display "Yes" when ${fieldName} is true`, async () => {
 					nock('http://test/')
-						.get('/appeals/2')
+						.get('/appeals/2?include=all')
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId: 2
@@ -846,7 +846,7 @@ describe('LPA Questionnaire review', () => {
 
 				it(`should display ${undefinedValue} when ${fieldName} is undefined`, async () => {
 					nock('http://test/')
-						.get('/appeals/2')
+						.get('/appeals/2?include=all')
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId: 2
@@ -872,7 +872,7 @@ describe('LPA Questionnaire review', () => {
 
 				it(`should display ${undefinedValue} when ${fieldName} is null`, async () => {
 					nock('http://test/')
-						.get('/appeals/2')
+						.get('/appeals/2?include=all')
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId: 2
@@ -899,7 +899,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should display the mapped EIA development description when value exists', async () => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId: 2
@@ -920,7 +920,7 @@ describe('LPA Questionnaire review', () => {
 		});
 		it('should display "No Data" when EIA development description is missing', async () => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId: 2
@@ -1003,7 +1003,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render the S78 LPA Questionnaire page with the expected content', async () => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId: 2
@@ -1034,7 +1034,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render the CAS planning LPA Questionnaire page with the expected content', async () => {
 			nock('http://test/')
-				.get('/appeals/3')
+				.get('/appeals/3?include=all')
 				.reply(200, {
 					...appealDataCasPlanning,
 					appealId: 3
@@ -1102,7 +1102,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render the Cas Advert LPA Questionnaire page with the expected content', async () => {
 			nock('http://test/')
-				.get('/appeals/4')
+				.get('/appeals/4?include=all')
 				.reply(200, {
 					...appealDataCasAdvert,
 					appealId: 4
@@ -1200,7 +1200,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render the advert LPA Questionnaire page with the expected content', async () => {
 			nock('http://test/')
-				.get('/appeals/5')
+				.get('/appeals/5?include=all')
 				.reply(200, {
 					...appealDataAdvert,
 					appealId: 5
@@ -1298,7 +1298,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render review outcome form fields and controls when the appeal is in "LPA Questionnaire" status', async () => {
 			nock('http://test/')
-				.get(`/appeals/2`)
+				.get(`/appeals/2?include=all`)
 				.reply(200, {
 					...lpaqAppealData,
 					appealId: 2,
@@ -1522,7 +1522,7 @@ describe('LPA Questionnaire review', () => {
 
 			it('should render a designated sites row with the expected label for s78/full planning appeals', async () => {
 				nock('http://test/')
-					.get('/appeals/2')
+					.get('/appeals/2?include=all')
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId: 2
@@ -1549,7 +1549,7 @@ describe('LPA Questionnaire review', () => {
 
 			it('should render a designated sites row with the expected value of "No" as plaintext if LPAQ designatedSiteNames array is empty', async () => {
 				nock('http://test/')
-					.get('/appeals/2')
+					.get('/appeals/2?include=all')
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId: 2
@@ -1574,7 +1574,7 @@ describe('LPA Questionnaire review', () => {
 
 			it('should render a designated sites row with the expected value as plaintext if LPAQ designatedSiteNames array contains a single designated site item', async () => {
 				nock('http://test/')
-					.get('/appeals/2')
+					.get('/appeals/2?include=all')
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId: 2
@@ -1599,7 +1599,7 @@ describe('LPA Questionnaire review', () => {
 
 			it('should render a designated sites row with the expected values contained in a list if LPAQ designatedSiteNames array contains multiple designated site items', async () => {
 				nock('http://test/')
-					.get('/appeals/2')
+					.get('/appeals/2?include=all')
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId: 2
@@ -1626,7 +1626,7 @@ describe('LPA Questionnaire review', () => {
 
 			it('should render a designated sites row with the expected value of "Other: <custom designated site name>" if LPAQ designatedSiteNames array contains a custom item', async () => {
 				nock('http://test/')
-					.get('/appeals/2')
+					.get('/appeals/2?include=all')
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId: 2
@@ -1655,7 +1655,7 @@ describe('LPA Questionnaire review', () => {
 		beforeEach(() => {
 			nock.cleanAll();
 			nock('http://test/')
-				.get(`/appeals/${lpaqAppealData.appealId}`)
+				.get(`/appeals/${lpaqAppealData.appealId}?include=all`)
 				.reply(200, lpaqAppealData)
 				.persist();
 		});
@@ -2001,7 +2001,7 @@ describe('LPA Questionnaire review', () => {
 				.get('/appeals/lpa-questionnaire-incomplete-reasons')
 				.reply(200, lpaQuestionnaireIncompleteReasons);
 			nock('http://test/')
-				.get(`/appeals/1`)
+				.get(`/appeals/1?include=all`)
 				.reply(200, {
 					...lpaqAppealData,
 					appealId: 1
@@ -2014,7 +2014,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render the update due date page with correct pre-populated date values, if there is an existing due date', async () => {
 			nock('http://test/')
-				.get(`/appeals/2`)
+				.get(`/appeals/2?include=all`)
 				.reply(200, {
 					...lpaqAppealData,
 					appealId: 2,
@@ -2504,7 +2504,7 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-documents/:folderId/', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, lpaqAppealData);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(() => {
@@ -2645,7 +2645,7 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-documents/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, lpaqAppealData);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 			nock('http://test/')
 				.get('/appeals/1/documents/1/versions')
@@ -2791,7 +2791,7 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-document-details/:folderId/', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -2969,7 +2969,7 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-document-details/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -3615,7 +3615,7 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-documents/:folderId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -3683,7 +3683,7 @@ describe('LPA Questionnaire review', () => {
 	describe('POST /lpa-questionnaire/1/add-documents/:folderId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -3765,7 +3765,7 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-documents/:folderId/:documentId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -3834,7 +3834,7 @@ describe('LPA Questionnaire review', () => {
 	describe('POST /lpa-questionnaire/1/add-documents/:folderId/:documentId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)

@@ -25,7 +25,7 @@ describe('GET /change-appeal-procedure-type/hearing/change-event-date-known', ()
 
 	it('should render the change event date known page for hearing with the correct content', async () => {
 		nock('http://test/')
-			.get('/appeals/1')
+			.get('/appeals/1?include=all')
 			.reply(200, {
 				...appealDataWithoutStartDate,
 				appealStatus: 'lpa_questionnaire',
@@ -63,7 +63,7 @@ describe('GET /change-appeal-procedure-type/hearing/change-event-date-known', ()
 
 	it('should render and not delete existing session data if procedure type is not changed', async () => {
 		nock('http://test/')
-			.get('/appeals/1')
+			.get('/appeals/1?include=all')
 			.reply(200, {
 				...appealDataWithoutStartDate,
 				appealStatus: 'lpa_questionnaire',
@@ -124,7 +124,7 @@ describe('GET /change-appeal-procedure-type/hearing/change-event-date-known', ()
 
 	it('should render and delete existing session data if procedure type is changed', async () => {
 		nock('http://test/')
-			.get('/appeals/1')
+			.get('/appeals/1?include=all')
 			.reply(200, {
 				...appealDataWithoutStartDate,
 				appealStatus: 'lpa_questionnaire',
@@ -189,7 +189,7 @@ describe('POST /change-appeal-procedure-type/hearing/change-event-date-known', (
 
 	it('should post the change event date known page and redirect to the timetable due page if date is not known', async () => {
 		nock('http://test/')
-			.get('/appeals/1')
+			.get('/appeals/1?include=all')
 			.reply(200, {
 				...appealDataWithoutStartDate,
 				appealStatus: 'lpa_questionnaire',
@@ -223,7 +223,7 @@ describe('POST /change-appeal-procedure-type/hearing/change-event-date-known', (
 
 	it('should post the change event date known page and redirect to the timetable due page if date is known', async () => {
 		nock('http://test/')
-			.get('/appeals/1')
+			.get('/appeals/1?include=all')
 			.reply(200, {
 				...appealDataWithoutStartDate,
 				appealStatus: 'lpa_questionnaire',

@@ -31,7 +31,7 @@ describe('cancel', () => {
 	describe('POST /new', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 		});
 		afterEach(() => {
 			nock.cleanAll();

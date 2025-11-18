@@ -25,7 +25,10 @@ describe('audit', () => {
 			caseOfficer: activeDirectoryUsersData[0].id,
 			inspector: activeDirectoryUsersData[4].id
 		};
-		nock('http://test/').get('/appeals/1').reply(200, appealWithCaseOfficerAndInspector).persist();
+		nock('http://test/')
+			.get('/appeals/1?include=all')
+			.reply(200, appealWithCaseOfficerAndInspector)
+			.persist();
 		installMockApi();
 		usersService.getUsersByRole = jest.fn().mockResolvedValue(activeDirectoryUsersData);
 		usersService.getUserById = jest.fn((id) => {

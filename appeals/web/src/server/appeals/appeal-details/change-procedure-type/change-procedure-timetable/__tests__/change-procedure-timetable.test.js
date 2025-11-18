@@ -103,7 +103,7 @@ describe('Change procedure timetable', () => {
 				appealData.appealType = APPEAL_TYPE.S78;
 				appealData.appealStatus = 'lpa_questionnaire';
 
-				nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 				nock('http://test/')
 					.get('/appeals/1/appellant-cases/0')
 					.reply(200, { planningObligation: { hasObligation: false } })
@@ -139,7 +139,7 @@ describe('Change procedure timetable', () => {
 				appealData.appealType = APPEAL_TYPE.S78;
 				appealData.appealStatus = 'lpa_questionnaire';
 
-				nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 				nock('http://test/')
 					.get('/appeals/1/appellant-cases/0')
 					.reply(200, { planningObligation: { hasObligation: true } })
@@ -179,7 +179,7 @@ describe('Change procedure timetable', () => {
 
 			beforeEach(() => {
 				nock.cleanAll();
-				nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 				nock('http://test/')
 					.get('/appeals/1/appellant-cases/0')
 					.reply(200, { planningObligation: { hasObligation: false } })
@@ -390,7 +390,7 @@ describe('Change procedure timetable', () => {
 				nock('http://test/')
 					.get('/appeals/1/appellant-cases/0')
 					.reply(200, { planningObligation: { hasObligation: false } });
-				nock('http://test/').get('/appeals/1').reply(200, appeal).persist();
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appeal).persist();
 				nock('http://test/')
 					.post(`/appeals/validate-business-date`)
 					.reply(200, { result: true })
@@ -447,7 +447,7 @@ describe('Change procedure timetable', () => {
 				nock('http://test/')
 					.get('/appeals/1/appellant-cases/0')
 					.reply(200, { planningObligation: { hasObligation: false } });
-				nock('http://test/').get('/appeals/1').reply(200, appeal).persist();
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appeal).persist();
 				nock('http://test/')
 					.post(`/appeals/validate-business-date`)
 					.reply(200, { result: true })
@@ -490,7 +490,7 @@ describe('Change procedure timetable', () => {
 
 			beforeEach(() => {
 				nock.cleanAll();
-				nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 				nock('http://test/')
 					.get('/appeals/1/appellant-cases/0')
 					.reply(200, { planningObligation: { hasObligation: true } })

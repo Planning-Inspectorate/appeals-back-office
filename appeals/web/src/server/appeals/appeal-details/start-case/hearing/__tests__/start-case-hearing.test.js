@@ -32,7 +32,7 @@ describe('start case hearing flow', () => {
 		// @ts-ignore
 		usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
 		nock('http://test/')
-			.get('/appeals/1')
+			.get('/appeals/1?include=all')
 			.reply(200, {
 				...appealDataWithoutStartDate,
 				appealType: 'Planning appeal'
@@ -68,7 +68,7 @@ describe('start case hearing flow', () => {
 
 		it('should preselect a previously entered value', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -87,13 +87,13 @@ describe('start case hearing flow', () => {
 
 		it('should not preselect a previously entered value for a different appeal', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
 				});
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -112,7 +112,7 @@ describe('start case hearing flow', () => {
 
 		it('should render an edited value', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.twice()
 				.reply(200, {
 					...appealDataWithoutStartDate,
@@ -149,7 +149,7 @@ describe('start case hearing flow', () => {
 	describe('POST /start-case/hearing', () => {
 		it('should redirect to the date page when the date is known', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -164,7 +164,7 @@ describe('start case hearing flow', () => {
 
 		it('should redirect to the CYA page when the date is not known', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -179,7 +179,7 @@ describe('start case hearing flow', () => {
 
 		it('should return 400 on missing dateKnown with appropriate error message', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -228,7 +228,7 @@ describe('start case hearing flow', () => {
 
 		it('should render previously entered values', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -255,7 +255,7 @@ describe('start case hearing flow', () => {
 
 		it('should render edited values', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.twice()
 				.reply(200, {
 					...appealDataWithoutStartDate,
@@ -422,7 +422,7 @@ describe('start case hearing flow', () => {
 				name: 'standard email'
 			});
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.times(3)
 				.reply(200, {
 					...appealDataWithoutStartDate,
@@ -499,7 +499,7 @@ describe('start case hearing flow', () => {
 				name: 'standard email'
 			});
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.twice()
 				.reply(200, {
 					...appealDataWithoutStartDate,
@@ -576,7 +576,7 @@ describe('start case hearing flow', () => {
 				child_appeals: []
 			};
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.twice()
 				.reply(200, {
 					...appealDataWithoutStartDate,
@@ -638,7 +638,7 @@ describe('start case hearing flow', () => {
 	describe('POST /start-case/hearing/confirm', () => {
 		it('should redirect to the appeal details page when submitted', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.times(4)
 				.reply(200, {
 					...appealDataWithoutStartDate,

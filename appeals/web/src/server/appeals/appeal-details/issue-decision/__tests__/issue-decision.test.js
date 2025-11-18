@@ -107,7 +107,7 @@ describe('issue-decision', () => {
 				linkedAppealData.appealId = 3;
 				linkedAppealData.isParentAppeal = true;
 				linkedAppealData.linkedAppeals = [{ appealId: 4, appealReference: '351066' }];
-				nock('http://test/').get('/appeals/3').reply(200, linkedAppealData).persist();
+				nock('http://test/').get('/appeals/3?include=all').reply(200, linkedAppealData).persist();
 			});
 
 			describe('Linked lead appeal', () => {
@@ -170,7 +170,7 @@ describe('issue-decision', () => {
 
 	describe('POST /decision', () => {
 		beforeEach(() => {
-			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, inspectorDecisionData);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(teardown);
@@ -261,7 +261,7 @@ describe('issue-decision', () => {
 
 	describe('POST /decision-letter', () => {
 		beforeEach(() => {
-			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, inspectorDecisionData);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(teardown);
@@ -334,7 +334,10 @@ describe('issue-decision', () => {
 			issueDecisionAppealData.costs.appellantApplicationFolder.documents = [{}];
 			issueDecisionAppealData.costs.lpaApplicationFolder.documents = [{}];
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, issueDecisionAppealData)
+				.persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
@@ -416,7 +419,7 @@ describe('issue-decision', () => {
 
 	describe('POST /invalid-reason', () => {
 		beforeEach(() => {
-			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, inspectorDecisionData);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(teardown);
@@ -498,7 +501,7 @@ describe('issue-decision', () => {
 
 	describe('POST /appellant-costs-decision', () => {
 		beforeEach(() => {
-			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, inspectorDecisionData);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(teardown);
@@ -572,7 +575,10 @@ describe('issue-decision', () => {
 			issueDecisionAppealData = structuredClone(appealData);
 			issueDecisionAppealData.costs.lpaApplicationFolder.documents = [{}];
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, issueDecisionAppealData)
+				.persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
@@ -659,7 +665,7 @@ describe('issue-decision', () => {
 
 	describe('POST /lpa-costs-decision', () => {
 		beforeEach(() => {
-			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, inspectorDecisionData);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(teardown);
@@ -727,7 +733,7 @@ describe('issue-decision', () => {
 	describe('POST /lpa-costs-decision-letter-upload', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
@@ -798,7 +804,10 @@ describe('issue-decision', () => {
 
 		describe('Single appeal', () => {
 			beforeEach(async () => {
-				nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, issueDecisionAppealData)
+					.persist();
 				nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 				nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 				nock('http://test/')
@@ -890,7 +899,10 @@ describe('issue-decision', () => {
 				issueDecisionAppealData.isParentAppeal = true;
 				issueDecisionAppealData.linkedAppeals = [{ appealId: 2, appealReference: '351066' }];
 
-				nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, issueDecisionAppealData)
+					.persist();
 				nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 				nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 				nock('http://test/')
@@ -990,7 +1002,7 @@ describe('issue-decision', () => {
 
 	describe('POST /issue-decision/check-your-decision', () => {
 		beforeEach(async () => {
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/').post('/appeals/1/documents').reply(200, {}).persist();
 			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			nock('http://test/').post(`/appeals/1/decision`).reply(200, {});
@@ -1101,7 +1113,10 @@ describe('issue-decision', () => {
 			issueDecisionAppealData = structuredClone(appealData);
 			issueDecisionAppealData.costs.lpaApplicationFolder.documents = [{}];
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, issueDecisionAppealData)
+				.persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
@@ -1165,7 +1180,10 @@ describe('issue-decision', () => {
 			issueDecisionAppealData = structuredClone(appealData);
 			issueDecisionAppealData.costs.appellantApplicationFolder.documents = [{}];
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, issueDecisionAppealData)
+				.persist();
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			nock('http://test/')
@@ -1226,7 +1244,7 @@ describe('issue-decision', () => {
 
 	describe('POST /issue-decision/check-your-appellant-costs-decision', () => {
 		beforeEach(async () => {
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/').post('/appeals/1/documents').reply(200, {}).persist();
 			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			nock('http://test/').post(`/appeals/1/decision`).reply(200, {});
@@ -1304,7 +1322,10 @@ describe('issue-decision', () => {
 			issueDecisionAppealData = structuredClone(appealData);
 			issueDecisionAppealData.costs.lpaApplicationFolder.documents = [{}];
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, issueDecisionAppealData)
+				.persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
@@ -1368,7 +1389,10 @@ describe('issue-decision', () => {
 			issueDecisionAppealData = structuredClone(appealData);
 			issueDecisionAppealData.costs.lpaApplicationFolder.documents = [{}];
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, issueDecisionAppealData)
+				.persist();
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			nock('http://test/')
@@ -1429,7 +1453,7 @@ describe('issue-decision', () => {
 
 	describe('POST /issue-decision/check-your-lpa-costs-decision', () => {
 		beforeEach(async () => {
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/').post('/appeals/1/documents').reply(200, {}).persist();
 			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			nock('http://test/').post(`/appeals/1/decision`).reply(200, {});
@@ -1511,7 +1535,10 @@ describe('issue-decision', () => {
 		afterEach(teardown);
 
 		it('should render the view decision page', async () => {
-			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, issueDecisionAppealData)
+				.persist();
 			const response = await request.get(`${baseUrl}/1${issueDecisionPath}${viewDecisionPath}`);
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -1534,7 +1561,10 @@ describe('issue-decision', () => {
 		});
 
 		it('should render the view decision page with re issued decision', async () => {
-			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, issueDecisionAppealData)
+				.persist();
 			nock('http://test/')
 				.get('/appeals/1/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
 				.reply(200, documentFileVersionInfo);
@@ -1569,7 +1599,7 @@ describe('issue-decision', () => {
 			];
 
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, issueDecisionLinkedLeadAppealData)
 				.persist();
 
@@ -1602,7 +1632,7 @@ describe('issue-decision', () => {
 			issueDecisionLinkedChildAppealData.isChildAppeal = true;
 			issueDecisionLinkedChildAppealData.linkedAppeals = [{ isParentAppeal: true, appealId: 2 }];
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, issueDecisionLinkedChildAppealData)
 				.persist();
 			nock('http://test/')

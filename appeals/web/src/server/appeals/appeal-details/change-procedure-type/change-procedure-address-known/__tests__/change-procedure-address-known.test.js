@@ -15,7 +15,7 @@ describe('Change to  inquiry', () => {
 	beforeEach(() => {
 		installMockApi();
 		nock('http://test/')
-			.get(`/appeals/${appealId}`)
+			.get(`/appeals/${appealId}?include=all`)
 			.reply(200, { ...appealData, appealId })
 			.persist();
 
@@ -34,7 +34,7 @@ describe('Change to  inquiry', () => {
 
 		beforeAll(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.twice()
 				.reply(200, { ...appealData, appealId });
 
@@ -77,7 +77,7 @@ describe('Change to  inquiry', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId, procedureType: 'inquiry' });
 		});
 

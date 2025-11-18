@@ -33,7 +33,7 @@ describe('representations', () => {
 					}
 				}
 			};
-			nock('http://test/').get('/appeals/1').reply(200, appealWithStatments);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealWithStatments);
 			const response = await request.get(`${baseUrl}/1/share`);
 			const element = parseHtml(response.text);
 
@@ -51,7 +51,7 @@ describe('representations', () => {
 				appealStatus: 'statements',
 				documentationSummary: {}
 			};
-			nock('http://test/').get('/appeals/1').reply(200, appealWithStatments);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealWithStatments);
 			const response = await request.get(`${baseUrl}/1/share`);
 			const snapshotResponse = parseHtml(response.text);
 			const textResponse = parseHtml(response.text, {
@@ -81,7 +81,7 @@ describe('representations', () => {
 					proofOfEvidenceAndWitnessesDueDate: '2024-12-04'
 				}
 			};
-			nock('http://test/').get('/appeals/1').reply(200, appealWithStatments);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealWithStatments);
 			const response = await request.get(`${baseUrl}/1/share`);
 			const snapshotResponse = parseHtml(response.text);
 			const textResponse = parseHtml(response.text, {
@@ -145,7 +145,7 @@ describe('representations', () => {
 			for (const testCase of testCases) {
 				it(`should call the publish representations API endpoint, redirect to the case details page, and render a "Final comments shared" success banner, if ${testCase.name} final comments were shared`, async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}`)
+						.get(`/appeals/${appealId}?include=all`)
 						.reply(200, {
 							...appealData,
 							appealType: 'Planning appeal',
@@ -198,7 +198,7 @@ describe('representations', () => {
 
 			it('should call the publish representations API endpoint, redirect to the case details page, and render a "Case progressed" success banner, if no final comments were shared', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}`)
+					.get(`/appeals/${appealId}?include=all`)
 					.reply(200, {
 						...appealData,
 						appealType: 'Planning appeal',

@@ -35,7 +35,7 @@ describe('add-ip-comment', () => {
 
 		beforeEach(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(
@@ -72,7 +72,7 @@ describe('add-ip-comment', () => {
 
 		it('should render the correct back link when editing', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(
@@ -88,10 +88,10 @@ describe('add-ip-comment', () => {
 
 		it('should render any previous response', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			//set session data with post request
@@ -114,7 +114,7 @@ describe('add-ip-comment', () => {
 
 		it('should render the edited values if editing', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.times(3)
 				.reply(200, { ...appealData, appealId });
 
@@ -156,7 +156,7 @@ describe('add-ip-comment', () => {
 
 		beforeEach(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(
@@ -182,10 +182,10 @@ describe('add-ip-comment', () => {
 
 		it('should render any previous response', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			//set session data with post request
@@ -209,7 +209,7 @@ describe('add-ip-comment', () => {
 
 		it('should render the edited response if editing', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.times(3)
 				.reply(200, { ...appealData, appealId });
 
@@ -245,7 +245,7 @@ describe('add-ip-comment', () => {
 
 		it('should render the correct back link when editing from this page', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(
@@ -261,7 +261,7 @@ describe('add-ip-comment', () => {
 
 		it('should render the correct back link when editing from a previous page', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(
@@ -286,7 +286,7 @@ describe('add-ip-comment', () => {
 
 		beforeEach(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(
@@ -325,10 +325,10 @@ describe('add-ip-comment', () => {
 
 		it('should render any previous response', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			//set session data with post request
@@ -359,7 +359,7 @@ describe('add-ip-comment', () => {
 
 		it('should render the edited response if editing', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.times(3)
 				.reply(200, { ...appealData, appealId });
 
@@ -408,7 +408,7 @@ describe('add-ip-comment', () => {
 
 		it('should render the correct back link when editing from this page', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(
@@ -424,7 +424,7 @@ describe('add-ip-comment', () => {
 
 		it('should render the correct back link when editing from a previous page', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(
@@ -446,7 +446,7 @@ describe('add-ip-comment', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 		});
 
@@ -487,7 +487,7 @@ describe('add-ip-comment', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 		});
 
@@ -520,7 +520,7 @@ describe('add-ip-comment', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 		});
 
@@ -582,7 +582,7 @@ describe('add-ip-comment', () => {
 
 		beforeEach(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(
@@ -614,7 +614,7 @@ describe('add-ip-comment', () => {
 
 		beforeEach(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			jest
@@ -649,7 +649,7 @@ describe('add-ip-comment', () => {
 
 		it('should render any previous response', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.twice()
 				.reply(200, { ...appealData, appealId });
 
@@ -679,7 +679,7 @@ describe('add-ip-comment', () => {
 
 		it('should render the correct back link when editing from this page', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(
@@ -695,7 +695,7 @@ describe('add-ip-comment', () => {
 
 		it('should render the correct back link when editing from a previous page', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(
@@ -717,7 +717,7 @@ describe('add-ip-comment', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 			jest
 				.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
@@ -868,7 +868,7 @@ describe('add-ip-comment', () => {
 
 		beforeEach(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(
@@ -905,7 +905,7 @@ describe('add-ip-comment', () => {
 			nock('http://test/').post(`/appeals/${appealId}/reps/comment`).reply(200);
 			nock('http://test/').post(`/appeals/${appealId}/documents`).reply(200);
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 			jest.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] });
 		});

@@ -638,7 +638,9 @@ describe('site-visit', () => {
 			appealDataWithSiteVisit.appealId = appealId;
 			appealDataWithSiteVisit.inspector = activeDirectoryUsersData[0].id;
 			existingSiteVisit.siteVisitId = siteVisitId;
-			nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealDataWithSiteVisit);
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, appealDataWithSiteVisit);
 			nock('http://test/')
 				.patch(`/appeals/${appealId}/site-visits/${siteVisitId}`)
 				.reply(200, existingSiteVisit);

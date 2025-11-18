@@ -1,6 +1,6 @@
 import {
 	checkAppealExistsByCaseReferenceAndAddToRequest,
-	checkAppealExistsByIdAndAddToRequest
+	checkAppealExistsByIdAndAddPartialToRequest
 } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
@@ -32,7 +32,7 @@ router.get(
 		#swagger.responses[404] = {}
 	 */
 	getAppealValidator,
-	asyncHandler(checkAppealExistsByIdAndAddToRequest),
+	asyncHandler(checkAppealExistsByIdAndAddPartialToRequest([])),
 	asyncHandler(controller.getAppeal)
 );
 
@@ -85,7 +85,7 @@ router.patch(
 		#swagger.responses[500] = {}
 	 */
 	patchAppealValidator,
-	asyncHandler(checkAppealExistsByIdAndAddToRequest),
+	asyncHandler(checkAppealExistsByIdAndAddPartialToRequest([])),
 	asyncHandler(controller.updateAppealById)
 );
 

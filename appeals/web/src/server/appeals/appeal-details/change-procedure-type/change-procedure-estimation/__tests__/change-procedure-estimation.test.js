@@ -15,7 +15,7 @@ describe('change procedure estimation', () => {
 	beforeEach(() => {
 		installMockApi();
 		nock('http://test/')
-			.get(`/appeals/${appealId}`)
+			.get(`/appeals/${appealId}?include=all`)
 			.reply(200, { ...appealData, appealId, procedureType: 'inquiry' })
 			.persist();
 	});
@@ -31,7 +31,7 @@ describe('change procedure estimation', () => {
 
 		beforeAll(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.twice()
 				.reply(200, {
 					...appealData,
@@ -88,7 +88,7 @@ describe('change procedure estimation', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 		});
 

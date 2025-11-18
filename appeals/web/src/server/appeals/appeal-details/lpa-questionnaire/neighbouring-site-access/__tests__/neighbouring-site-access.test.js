@@ -27,7 +27,7 @@ describe('neighbouring-site-access', () => {
 				it(`should render a row for "Will the inspector need to enter a neighbour’s land or property?" with a value of "${testCase.expectedContent.join(
 					', '
 				)}" if reasonForNeighbourVisits is "${testCase.value}"`, async () => {
-					nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
 					nock('http://test/')
 						.get('/appeals/1/lpa-questionnaires/2')
 						.reply(200, {
@@ -57,7 +57,7 @@ describe('neighbouring-site-access', () => {
 			}
 
 			it('should render a row for "Will the inspector need to enter a neighbour’s land or property?" with the value wrapped in a "show more" component, if reasonForNeighbourVisits is more than 300 characters in length', async () => {
-				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get('/appeals/1/lpa-questionnaires/2')
 					.reply(200, {
@@ -82,7 +82,7 @@ describe('neighbouring-site-access', () => {
 
 		describe('GET /neighbouring-site-access/change', () => {
 			it('should render the change neighbouring site access page with "No" radio option checked, and no text populated in the textarea, if reasonForNeighbourVisits is null', async () => {
-				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 					.reply(200, {
@@ -115,7 +115,7 @@ describe('neighbouring-site-access', () => {
 			});
 
 			it('should render the change neighbouring site access page with "Yes" radio option checked, and "test neighbouring site access details" populated in the textarea, if reasonForNeighbourVisits is "test neighbouring site access details"', async () => {
-				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 					.reply(200, {
@@ -150,7 +150,7 @@ describe('neighbouring-site-access', () => {
 
 		describe('POST /neighbouring-site-access/change', () => {
 			it('should re-render the change neighbouring site access page with the expected validation error and the "yes" radio option checked, if "yes" was selected but no text was entered in the details textarea', async () => {
-				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 					.reply(200, {
@@ -191,7 +191,7 @@ describe('neighbouring-site-access', () => {
 			});
 
 			it('should re-render the change neighbouring site access page with the expected validation error, and the "yes" radio option checked, and the details textarea pre-populated with the submitted text, if "yes" was selected and the text entered in the details textarea exceeds 1000 characters in length', async () => {
-				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 					.reply(200, {

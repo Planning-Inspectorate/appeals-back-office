@@ -63,7 +63,9 @@ describe('service-user', () => {
 						agent: undefined
 					};
 
-					nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealWithNoAgent);
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, appealWithNoAgent);
 
 					const response = await request.get(
 						`${baseUrl}/${appealId}/service-user/change/appellant`
@@ -563,7 +565,7 @@ describe('service-user', () => {
 
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealWithNoAgent);
+			nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appealWithNoAgent);
 		});
 
 		const testCases = [
