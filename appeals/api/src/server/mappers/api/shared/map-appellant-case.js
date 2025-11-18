@@ -35,7 +35,15 @@ export const mapAppellantCase = (data) => {
 				appellantCase.applicationDecisionDate &&
 				appellantCase.applicationDecisionDate?.toISOString(),
 			hasAdvertisedAppeal: appellantCase.hasAdvertisedAppeal,
-			enforcementNotice: appellantCase?.enforcementNotice || null,
+			// @ts-ignore  Todo: remove this once the API is updated to include this structure
+			enforcementNotice: {
+				isReceived: appellantCase?.enforcementNotice || null,
+				isListedBuilding: appellantCase?.enforcementNoticeListedBuilding || null,
+				issueDate: appellantCase?.enforcementIssueDate || null,
+				effectiveDate: appellantCase?.enforcementEffectiveDate || null,
+				contactPlanningInspectorateDate: appellantCase?.contactPlanningInspectorateDate || null,
+				reference: appellantCase?.enforcementReference || null
+			},
 			appellantCostsAppliedFor: appellantCase.appellantCostsAppliedFor,
 			floorSpaceSquareMetres: Number(appellantCase?.floorSpaceSquareMetres) || null,
 			siteAreaSquareMetres: Number(appellantCase?.siteAreaSquareMetres) || null,
