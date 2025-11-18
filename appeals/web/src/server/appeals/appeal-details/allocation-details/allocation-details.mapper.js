@@ -117,9 +117,16 @@ export function allocationDetailsCheckAnswersPage(
 	appealDetails
 ) {
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
-	const selectedAllocationSpecialismsHtml = selectedAllocationSpecialisms
-		.map((selectedAllocationSpecialism) => `<li>${selectedAllocationSpecialism}</li>`)
-		.join('');
+
+	let selectedAllocationSpecialismsHtml;
+	if (selectedAllocationSpecialisms.length === 1) {
+		selectedAllocationSpecialismsHtml = selectedAllocationSpecialisms[0];
+	} else {
+		const listSpecialismItems = selectedAllocationSpecialisms
+			.map((selectedAllocationSpecialism) => `<li>${selectedAllocationSpecialism}</li>`)
+			.join('');
+		selectedAllocationSpecialismsHtml = `<ul class="govuk-!-padding-0 govuk-!-margin-0 govuk-!-margin-left-4">${listSpecialismItems}</ul>`;
+	}
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -160,7 +167,7 @@ export function allocationDetailsCheckAnswersPage(
 								text: 'Specialism'
 							},
 							value: {
-								html: `<ul class="govuk-!-padding-0 govuk-!-margin-0 govuk-!-margin-left-4">${selectedAllocationSpecialismsHtml}</ul>`
+								html: selectedAllocationSpecialismsHtml
 							},
 							actions: {
 								items: [
