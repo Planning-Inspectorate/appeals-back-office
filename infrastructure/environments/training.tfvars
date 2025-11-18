@@ -36,7 +36,6 @@ apps_config = {
     featureFlagS78Hearing             = true
     featureFlagS78Inquiry             = false
     featureFlagLinkedAppeals          = false
-    featureFlagS20                    = true
     featureFlagCAS                    = false
     featureFlagCasAdvert              = false
     featureFlagNotifyCaseHistory      = true
