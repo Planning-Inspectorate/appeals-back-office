@@ -63,19 +63,14 @@ export const checkAppealExistsByIdAndAddPartialToRequest =
 			params: { appealId }
 		} = req;
 
-		// for requests coming from FO
 		const include = req.query.include;
+		// for requests coming from the web
 		if (include) {
 			// @ts-ignore
 			selectedKeys = include.split(',');
 		}
 
-		const appeal = await appealRepository.getAppealById(
-			Number(appealId),
-			// @ts-ignore
-			selectedKeys,
-			true
-		);
+		const appeal = await appealRepository.getAppealById(Number(appealId), true, selectedKeys, true);
 
 		if (!appeal || !isAppealTypeEnabled(appeal.appealType?.key || '')) {
 			return res.status(404).send({ errors: { appealId: ERROR_NOT_FOUND } });
