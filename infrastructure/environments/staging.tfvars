@@ -117,6 +117,11 @@ horizon_infra_config = {
   }
 }
 
+monitoring_config = {
+  web_app_insights_web_test_enabled = false
+  log_daily_cap                     = 0.2
+}
+
 service_bus_shared = {
   name                = "pins-sb-appeals-bo-test"
   resource_group_name = "pins-rg-appeals-bo-test"

@@ -116,6 +116,11 @@ horizon_infra_config = {
   }
 }
 
+monitoring_config = {
+  web_app_insights_web_test_enabled = false
+  log_daily_cap                     = 0.2
+}
+
 service_bus_config = {
   sku                           = "Premium"
   capacity                      = 1
