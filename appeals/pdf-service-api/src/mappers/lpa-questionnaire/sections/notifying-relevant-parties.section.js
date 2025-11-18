@@ -15,10 +15,6 @@ export function notifyingRelevantPartiesSection(templateData) {
 		heading: 'Notifying relevant parties',
 		items: [
 			{
-				key: 'Who did you notify about this application?',
-				html: formatDocumentData(whoNotified)
-			},
-			{
 				key: 'How did you notify relevant parties about this application?',
 				html: formatList(
 					lpaNotificationMethods.map((item) => item.name || 'Unknown'),
@@ -36,6 +32,10 @@ export function notifyingRelevantPartiesSection(templateData) {
 			{
 				key: 'Press advertisement',
 				html: formatDocumentData(whoNotifiedPressAdvert)
+			},
+			{
+				key: 'Who did you notify about this application?',
+				html: formatDocumentData(whoNotified)
 			},
 			{
 				key: 'Appeal notification letter',
