@@ -319,6 +319,13 @@ model AppellantCase {
   siteGridReferenceNorthing                String?
   typeOfPlanningApplication                String?
 
+  //Enforcement fields
+  enforcementNoticeListedBuilding Boolean?
+  enforcementIssueDate            DateTime?
+  enforcementEffectiveDate        DateTime?
+  contactPlanningInspectorateDate DateTime?
+  enforcementReference            String?
+
   //Cas adverts fields
   landownerPermission Boolean?
 
@@ -480,7 +487,7 @@ model LPAQuestionnaire {
   historicEnglandConsultation Boolean?
   preserveGrantLoan           Boolean?
 
-  //Cas adverts fields 
+  //Cas adverts fields
   isSiteInAreaOfSpecialControlAdverts        Boolean?
   wasApplicationRefusedDueToHighwayOrTraffic Boolean?
   didAppellantSubmitCompletePhotosAndPlans   Boolean?

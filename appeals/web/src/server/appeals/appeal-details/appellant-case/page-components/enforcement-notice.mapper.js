@@ -26,6 +26,43 @@ export function generateEnforcementNoticeComponents(
 		userHasUpdateCasePermission
 	);
 
+	const beforeYouStartComponentIndex = pageComponents.findIndex(
+		(component) =>
+			component.type === 'summary-list' &&
+			component.parameters.attributes?.id === 'before-you-start'
+	);
+
+	if (beforeYouStartComponentIndex !== -1) {
+		/**
+		 * @type {PageComponent}
+		 */
+		const beforeYouStartSectionSummary = {
+			type: 'summary-list',
+			wrapperHtml: {
+				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+				closing: '</div></div>'
+			},
+			parameters: {
+				card: {
+					title: {
+						text: 'Before you start'
+					}
+				},
+				rows: [
+					mappedAppellantCaseData.enforcementNotice.display.summaryListItem,
+					mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
+					mappedAppellantCaseData.enforcementNoticeListedBuilding.display.summaryListItem,
+					mappedAppellantCaseData.enforcementIssueDate.display.summaryListItem,
+					mappedAppellantCaseData.enforcementEffectiveDate.display.summaryListItem,
+					mappedAppellantCaseData.contactPlanningInspectorateDate.display.summaryListItem,
+					mappedAppellantCaseData.enforcementReference.display.summaryListItem
+				]
+			}
+		};
+
+		pageComponents[beforeYouStartComponentIndex] = beforeYouStartSectionSummary;
+	}
+
 	const siteDetailsComponentIndex = pageComponents.findIndex(
 		(component) =>
 			component.type === 'summary-list' && component.parameters.attributes?.id === 'site-details'
