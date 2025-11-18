@@ -70,7 +70,7 @@ export const checkAppealExistsByIdAndAddPartialToRequest =
 			selectedKeys = include.split(',');
 		}
 
-		const appeal = await appealRepository.getAppealByIdWithSelect(
+		const appeal = await appealRepository.getAppealById(
 			Number(appealId),
 			// @ts-ignore
 			selectedKeys,
