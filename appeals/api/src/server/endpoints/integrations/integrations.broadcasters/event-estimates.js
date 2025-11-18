@@ -1,7 +1,7 @@
 import config from '#config/config.js';
 import { eventClient } from '#infrastructure/event-client.js';
 import { producers } from '#infrastructure/topics.js';
-import { mapHearingEstimateEntity } from '#mappers/integration/map-event-estimates-entity.js';
+import { mapEventEstimateEntity } from '#mappers/integration/map-event-estimates-entity.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import pino from '#utils/logger.js';
 import { EVENT_TYPE, ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
@@ -9,46 +9,56 @@ import { EventType } from '@pins/event-client';
 import { schemas, validateFromSchema } from '../integrations.validators.js';
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealEventEstimate} AppealEventEstimate */
 /** @typedef {import('@pins/appeals.api').Schema.HearingEstimate} HearingEstimate */
-
+/** @typedef {import('@pins/appeals.api').Schema.InquiryEstimate} InquiryEstimate */
 /**
  *
  * @param {number} eventId
  * @param {string} eventType
  * @param {string} updateType
- * @param {HearingEstimate | undefined | null} existingHearingEstimate
+ * @param {HearingEstimate | InquiryEstimate | undefined | null} existingEventEstimate
  * @returns
  */
 export const broadcastEventEstimates = async (
 	eventId,
 	eventType,
 	updateType,
-	existingHearingEstimate
+	existingEventEstimate
 ) => {
 	if (!config.serviceBusEnabled && config.NODE_ENV !== 'development') {
 		return false;
 	}
 	/** @type { AppealEventEstimate | undefined } */
 	let msg = undefined;
+	let eventEstimate = undefined;
 
 	if (eventType === EVENT_TYPE.HEARING) {
-		let hearingEstimate = await databaseConnector.hearingEstimate.findUnique({
+		eventEstimate = await databaseConnector.hearingEstimate.findUnique({
 			where: { id: eventId },
 			include: {
 				appeal: true
 			}
 		});
+	} else if (eventType === EVENT_TYPE.INQUIRY) {
+		eventEstimate = await databaseConnector.inquiryEstimate.findUnique({
+			where: { id: eventId },
+			include: {
+				appeal: true
+			}
+		});
+	}
 
-		if (!hearingEstimate && updateType !== EventType.Delete) {
+	if ([EVENT_TYPE.HEARING, EVENT_TYPE.INQUIRY].includes(eventType)) {
+		if (!eventEstimate && updateType !== EventType.Delete) {
 			pino.error(
-				`Trying to broadcast info for event ${eventId} of type ${eventType}, but hearing estimates was not found.`
+				`Trying to broadcast info for event ${eventId} of type ${eventType}, but ${eventType} estimates was not found.`
 			);
 			return false;
 		}
 
-		// Handling Cancellation and deletion of hearing
-		if (updateType === EventType.Delete && existingHearingEstimate) {
+		// Handling Cancellation and deletion of event
+		if (updateType === EventType.Delete && existingEventEstimate) {
 			const appeal = await databaseConnector.appeal.findUnique({
-				where: { id: existingHearingEstimate.appealId }
+				where: { id: existingEventEstimate.appealId }
 			});
 
 			if (!appeal) {
@@ -58,7 +68,7 @@ export const broadcastEventEstimates = async (
 				return false;
 			}
 
-			hearingEstimate = {
+			eventEstimate = {
 				id: eventId,
 				// @ts-ignore
 				appeal: {
@@ -71,7 +81,7 @@ export const broadcastEventEstimates = async (
 		}
 
 		// @ts-ignore
-		msg = mapHearingEstimateEntity(hearingEstimate);
+		msg = mapEventEstimateEntity(eventEstimate);
 	}
 
 	if (msg) {

@@ -28,7 +28,7 @@ export function generateAppealDetailsSections(appealDetails, mappedData, session
 			if (!isFeatureActive(FEATURE_FLAG_NAMES.ADVERTISEMENT)) {
 				throw new Error('Feature flag inactive for adverts');
 			}
-			return generateHasAppealDetailsPageComponents(appealDetails, mappedData, session);
+			return generateS78AppealDetailsPageComponents(appealDetails, mappedData, session);
 		}
 		case APPEAL_TYPE.S78: //TODO: Feature flag
 		case APPEAL_TYPE.PLANNED_LISTED_BUILDING:

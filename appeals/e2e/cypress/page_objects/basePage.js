@@ -377,6 +377,15 @@ export class Page {
 		this.basePageElements.sectionHeader().should('have.text', sectionHeader);
 	}
 
+	verifySectionHeaderExists(sectionHeader, shouldBeVisible) {
+		const assertionType = shouldBeVisible ? 'include' : 'not.include';
+		this.basePageElements.sectionHeader().then(($headers) => {
+			//create array of section headers
+			const headerTitles = Cypress.$.makeArray($headers).map((el) => el.innerText.trim());
+			cy.wrap(headerTitles).should(assertionType, sectionHeader);
+		});
+	}
+
 	checkErrorMessageDisplays(errorMessage) {
 		cy.get('li').contains(errorMessage).should('be.visible');
 	}

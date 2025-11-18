@@ -381,6 +381,7 @@ export const postInquiryAddress = async (request, response) => {
 		);
 	}
 
+	applyEditsForAppeal(request, 'setUpInquiry', appealId);
 	return response.redirect(
 		preserveQueryString(
 			request,
@@ -434,6 +435,10 @@ export const postInquiryAddressDetails = async (request, response) => {
 	}
 
 	const { appealId } = request.currentAppeal;
+
+	if (request.currentAppeal.procedureType.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
+		applyEditsForAppeal(request, 'setUpInquiry', appealId);
+	}
 
 	return response.redirect(
 		preserveQueryString(

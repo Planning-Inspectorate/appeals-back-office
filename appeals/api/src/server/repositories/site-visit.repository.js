@@ -60,9 +60,31 @@ const getMissedSiteVisitByAppealId = (appealId) => {
 	});
 };
 
+/**
+ *
+ * @param {number} id
+ * @returns
+ */
+const getSiteVisitById = (id) => {
+	return databaseConnector.siteVisit.findUnique({
+		where: {
+			id
+		},
+		include: {
+			siteVisitType: true,
+			appeal: {
+				include: {
+					address: true
+				}
+			}
+		}
+	});
+};
+
 export default {
 	createSiteVisitById,
 	updateSiteVisitById,
 	deleteSiteVisitById,
-	getMissedSiteVisitByAppealId
+	getMissedSiteVisitByAppealId,
+	getSiteVisitById
 };

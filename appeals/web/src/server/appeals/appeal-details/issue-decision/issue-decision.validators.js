@@ -1,8 +1,8 @@
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import { isFeatureActive } from '#common/feature-flags.js';
 import {
-	createTextareaCharacterValidator,
-	createTextareaConditionalValidator
+	createTextareaConditionalValidator,
+	createTextareaValidator
 } from '#lib/validators/textarea-validator.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { createValidator } from '@pins/express';
@@ -34,7 +34,7 @@ export const validateLpaCostsDecision = createValidator(
 );
 
 export const validateInvalidReason = isFeatureActive(FEATURE_FLAG_NAMES.INVALID_DECISION_LETTER)
-	? createTextareaCharacterValidator(
+	? createTextareaValidator(
 			'invalidReason',
 			'Enter reason',
 			textInputCharacterLimits.defaultTextareaLength,

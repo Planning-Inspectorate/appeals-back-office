@@ -4340,6 +4340,11 @@ export const appealDataToGetRequiredActions = {
 		inquiry: null,
 		appealStatus: APPEAL_CASE_STATUS.EVENT,
 		procedureType: APPEAL_CASE_PROCEDURE.INQUIRY
+	},
+	awaitingEvent: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
+		procedureType: APPEAL_CASE_PROCEDURE.INQUIRY
 	}
 };
 

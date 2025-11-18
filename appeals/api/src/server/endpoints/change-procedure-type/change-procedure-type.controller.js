@@ -56,7 +56,8 @@ export const requestChangeOfProcedureType = async (req, res) => {
 				data.existingAppealProcedure,
 				data.proofOfEvidenceAndWitnessesDueDate,
 				// @ts-ignore
-				data.address
+				data.address,
+				data.eventDate
 			);
 
 			await createAuditTrail({

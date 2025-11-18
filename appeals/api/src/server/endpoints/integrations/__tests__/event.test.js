@@ -86,7 +86,7 @@ describe('broadcastEvent', () => {
 	});
 
 	describe('Site Visits', () => {
-		it('should broadcast a valid site visit event', async () => {
+		it('should broadcast a valid create site visit event', async () => {
 			databaseConnector.siteVisit.findUnique.mockResolvedValue(mockSiteVisit);
 			eventClient.sendEvents.mockResolvedValue(true);
 
@@ -120,6 +120,88 @@ describe('broadcastEvent', () => {
 			expect(result).toBe(true);
 		});
 
+		it('should broadcast a valid update site visit event', async () => {
+			databaseConnector.siteVisit.findUnique.mockResolvedValue({
+				...mockSiteVisit,
+				address: { ...mockSiteVisit.address, addressLine1: '5' }
+			});
+			eventClient.sendEvents.mockResolvedValue(true);
+
+			const result = await broadcastEvent(2, EVENT_TYPE.SITE_VISIT, EventType.Update);
+
+			expect(databaseConnector.siteVisit.findUnique).toHaveBeenCalled();
+			expect(eventClient.sendEvents).toHaveBeenCalledWith(
+				expect.anything(),
+				[
+					{
+						addressCounty: 'London',
+						addressLine1: '1',
+						addressLine2: 'Bishopsgate',
+						addressPostcode: 'LA23 5GH',
+						addressTown: 'London City',
+						caseReference: '6000006',
+						eventEndDateTime: '2025-07-01T11:00:00.000Z',
+						eventId: '6000006-1',
+						eventName: 'Site visit #1',
+						eventPublished: true,
+						eventStartDateTime: '2025-07-01T10:00:00.000Z',
+						eventStatus: 'offered',
+						eventType: 'site_visit_unaccompanied',
+						isUrgent: false,
+						notificationOfSiteVisit: null
+					}
+				],
+				EventType.Update,
+				expect.anything()
+			);
+			expect(result).toBe(true);
+		});
+
+		it('should broadcast a valid delete site visit event', async () => {
+			databaseConnector.siteVisit.findUnique.mockResolvedValue(null);
+			databaseConnector.appeal.findUnique.mockResolvedValue({ id: 1, reference: '6000002' });
+			eventClient.sendEvents.mockResolvedValue(true);
+
+			const existingSiteVisit = {
+				appealId: 1,
+				visitStartTime: new Date('2025-01-01T13:00'),
+				siteVisitType: { key: 'site_visit_unaccompanied' }
+			};
+			const result = await broadcastEvent(
+				2,
+				EVENT_TYPE.SITE_VISIT,
+				EventType.Delete,
+				existingSiteVisit
+			);
+
+			expect(eventClient.sendEvents).toHaveBeenCalledWith(
+				expect.anything(),
+				[
+					{
+						addressCounty: '',
+						addressLine1: '',
+						addressLine2: '',
+						addressPostcode: '',
+						addressTown: '',
+						caseReference: '6000002',
+						eventEndDateTime: null,
+						eventId: '6000002-1',
+						eventName: 'Site visit #2',
+						eventPublished: true,
+						eventStartDateTime: '2025-01-01T13:00:00.000Z',
+						eventStatus: 'withdrawn',
+						eventType: 'site_visit_unaccompanied',
+						isUrgent: false,
+						notificationOfSiteVisit: null
+					}
+				],
+				EventType.Delete,
+				expect.anything()
+			);
+
+			expect(result).toBe(true);
+		});
+
 		it('should return false and log error if site visit not found', async () => {
 			databaseConnector.siteVisit.findUnique.mockResolvedValue(null);
 
@@ -143,6 +225,16 @@ describe('broadcastEvent', () => {
 			eventClient.sendEvents.mockResolvedValue(false);
 
 			const result = await broadcastEvent(1, EVENT_TYPE.SITE_VISIT, EventType.Create);
+
+			expect(result).toBe(false);
+		});
+
+		it('should return false if appeal not found when deleting a site visit', async () => {
+			databaseConnector.siteVisit.findUnique.mockResolvedValue(null);
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+			const existingHearing = { appealId: 1, hearingStartTime: '2025-01-01' };
+			const result = await broadcastEvent(2, EVENT_TYPE.HEARING, EventType.Delete, existingHearing);
 
 			expect(result).toBe(false);
 		});

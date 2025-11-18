@@ -153,4 +153,26 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 			}
 		);
 	});
+	test('should call notify sendEmail with the correct data when a inquiry procedure', async () => {
+		const expectedContent = [
+			"We have received the local planning authority's questionnaire, all statements and comments from interested parties.",
+			'You can [view this information in the appeals service](/mock-front-office-url/appeals/ABC45678).',
+			...expectedTailContent
+		].join('\n');
+
+		notifySendData.personalisation.is_inquiry_procedure = true;
+
+		await notifySend(notifySendData);
+		expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+			{
+				id: 'mock-appeal-generic-id'
+			},
+			'test@136s7.com',
+			{
+				content: expectedContent,
+				subject:
+					"We have received the local planning authority's questionnaire, all statements and comments from interested parties: ABC45678"
+			}
+		);
+	});
 });

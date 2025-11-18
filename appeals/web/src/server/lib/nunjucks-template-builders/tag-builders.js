@@ -29,6 +29,12 @@ export const buildHtmlList = ({
 	if (!items?.length) {
 		return '';
 	}
+	if (items.length === 1) {
+		const item = items[0];
+		return Array.isArray(item)
+			? buildHtmlList({ items: item, recursionDepth: recursionDepth + 1 })
+			: item;
+	}
 	const listTag = isOrderedList ? 'ol' : 'ul';
 	const listItems = items
 		.map(

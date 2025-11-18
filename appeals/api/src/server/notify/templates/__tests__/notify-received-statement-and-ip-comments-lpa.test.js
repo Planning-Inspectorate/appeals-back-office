@@ -215,4 +215,41 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 			}
 		);
 	});
+
+	test('should call notify sendEmail with the correct data when a inquiry procedure', async () => {
+		const notifySendData = {
+			doNotMockNotifySend: true,
+			templateName: 'received-statement-and-ip-comments-lpa',
+			notifyClient,
+			recipientEmail,
+			personalisation: {
+				...basePersonalisation,
+				is_inquiry_procedure: true,
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+			}
+		};
+
+		const expectedContent = [
+			'We did not receive any comments from interested parties.',
+			'# Appeal details',
+			'',
+			'^Appeal reference number: ABC45678',
+			'Address: 10, Test Street',
+			'Planning application reference: 12345XYZ',
+			'',
+			'The Planning Inspectorate',
+			'caseofficers@planninginspectorate.gov.uk'
+		].join('\n');
+
+		await notifySend(notifySendData);
+
+		expect(notifyClient.sendEmail).toHaveBeenCalledWith(
+			{ id: 'mock-appeal-generic-id' },
+			recipientEmail,
+			{
+				content: expectedContent,
+				subject: "We've received all statements and comments: ABC45678"
+			}
+		);
+	});
 });

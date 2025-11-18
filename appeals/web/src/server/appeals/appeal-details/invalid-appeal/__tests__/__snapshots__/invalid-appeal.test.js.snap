@@ -103,11 +103,7 @@ exports[`invalid-appeal GET /check should render the invalid appeal check page 1
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Why is the appeal invalid?</dt>
                     <dd                     class="govuk-summary-list__value">
-                        <div class="pins-show-more" data-label="Read more" data-mode="html">
-                            <ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet">
-                                <li>Appeal has not been submitted on time</li>
-                            </ul>
-                        </div>
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">Appeal has not been submitted on time</div>
                         </dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/invalid/new?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Finvalid%2Fcheck">Change <span class="govuk-visually-hidden">Why is the appeal invalid?</span></a>
                         </dd>

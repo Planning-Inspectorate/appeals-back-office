@@ -856,12 +856,12 @@ describe('appellant-case', () => {
 					'Incorrect name and/or missing documents</span>'
 				);
 				expect(unprettifiedNotificationBannerHTML).toContain(
-					'Appellant name is not the same on the application form and appeal form</li>'
+					'Appellant name is not the same on the application form and appeal form</div>'
 				);
 				expect(unprettifiedNotificationBannerHTML).toContain(
 					'Attachments and/or appendices have not been included to the full statement of case</span>'
 				);
-				expect(unprettifiedNotificationBannerHTML).toContain('test reason 1</li>');
+				expect(unprettifiedNotificationBannerHTML).toContain('test reason 1</div>');
 				expect(unprettifiedNotificationBannerHTML).toContain('Other</span>');
 				expect(unprettifiedNotificationBannerHTML).toContain('test reason 2</li>');
 				expect(unprettifiedNotificationBannerHTML).toContain('test reason 3</li>');
@@ -895,12 +895,12 @@ describe('appellant-case', () => {
 					'Incorrect name and/or missing documents</span>'
 				);
 				expect(unprettifiedNotificationBannerHTML).toContain(
-					'Appellant name is not the same on the application form and appeal form</li>'
+					'Appellant name is not the same on the application form and appeal form</div>'
 				);
 				expect(unprettifiedNotificationBannerHTML).toContain(
 					'Attachments and/or appendices have not been included to the full statement of case</span>'
 				);
-				expect(unprettifiedNotificationBannerHTML).toContain('test reason 1</li>');
+				expect(unprettifiedNotificationBannerHTML).toContain('test reason 1</div>');
 				expect(unprettifiedNotificationBannerHTML).toContain('Other</span>');
 				expect(unprettifiedNotificationBannerHTML).toContain('test reason 2</li>');
 				expect(unprettifiedNotificationBannerHTML).toContain('test reason 3</li>');

@@ -108,8 +108,23 @@ const appealFactory = ({
 	};
 	//allocation is nullable
 	const allocation = randomEnumValue(APPEAL_ALLOCATION_LEVEL);
-	const procedureKey = randomEnumValue(APPEAL_APPELLANT_PROCEDURE_PREFERENCE, false);
 	const appealTypeKey = typeShorthand || randomEnumValue(APPEAL_CASE_TYPE, false);
+
+	let procedureKey;
+
+	if (appealTypeKey === APPEAL_CASE_TYPE.W) {
+		procedureKey = randomEnumValue(APPEAL_APPELLANT_PROCEDURE_PREFERENCE, false);
+	} else if (appealTypeKey === APPEAL_CASE_TYPE.Y) {
+		procedureKey = randomEnumValue(
+			{
+				HEARING: APPEAL_APPELLANT_PROCEDURE_PREFERENCE.HEARING,
+				WRITTEN: APPEAL_APPELLANT_PROCEDURE_PREFERENCE.WRITTEN
+			},
+			false
+		);
+	} else {
+		procedureKey = APPEAL_APPELLANT_PROCEDURE_PREFERENCE.WRITTEN;
+	}
 
 	const appeal = {
 		...(appealTypeKey && {

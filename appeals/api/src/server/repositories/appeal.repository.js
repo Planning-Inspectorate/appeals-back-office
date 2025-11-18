@@ -37,6 +37,7 @@ const linkedAppealsInclude = isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)
 			appealType: true
 	  };
 
+/** @deprecated too inefficient, use specific selects only */
 export const appealDetailsInclude = /** @type {const} */ {
 	address: true,
 	procedureType: true,
@@ -141,6 +142,9 @@ export const appealDetailsInclude = /** @type {const} */ {
 	folders: {
 		include: {
 			documents: {
+				where: {
+					isDeleted: false
+				},
 				include: {
 					latestDocumentVersion: {
 						include: {

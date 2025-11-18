@@ -1209,20 +1209,12 @@ data-index="0">
         <details class="govuk-details">
             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Incorrect name and/or missing documents</span>
             </summary>
-            <div class="govuk-details__text">
-                <ul class="govuk-!-margin-top-0">
-                    <li>Appellant name is not the same on the application form and appeal form</li>
-                </ul>
-            </div>
+            <div class="govuk-details__text">Appellant name is not the same on the application form and appeal form</div>
         </details>
         <details class="govuk-details">
             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Attachments and/or appendices have not been included to the full statement of case</span>
             </summary>
-            <div class="govuk-details__text">
-                <ul class="govuk-!-margin-top-0">
-                    <li>test reason 1</li>
-                </ul>
-            </div>
+            <div class="govuk-details__text">test reason 1</div>
         </details>
         <details class="govuk-details">
             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Other</span>
@@ -1249,20 +1241,12 @@ data-index="0">
         <details class="govuk-details">
             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Incorrect name and/or missing documents</span>
             </summary>
-            <div class="govuk-details__text">
-                <ul class="govuk-!-margin-top-0">
-                    <li>Appellant name is not the same on the application form and appeal form</li>
-                </ul>
-            </div>
+            <div class="govuk-details__text">Appellant name is not the same on the application form and appeal form</div>
         </details>
         <details class="govuk-details">
             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Attachments and/or appendices have not been included to the full statement of case</span>
             </summary>
-            <div class="govuk-details__text">
-                <ul class="govuk-!-margin-top-0">
-                    <li>test reason 1</li>
-                </ul>
-            </div>
+            <div class="govuk-details__text">test reason 1</div>
         </details>
         <details class="govuk-details">
             <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Other</span>

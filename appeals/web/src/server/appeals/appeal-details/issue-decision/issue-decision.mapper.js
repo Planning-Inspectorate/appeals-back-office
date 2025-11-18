@@ -180,7 +180,7 @@ export function issueDecisionPage(
 			idPrefix: fieldName,
 			fieldset: {
 				legend: {
-					text: heading || 'What is the decision?',
+					text: heading || 'Decision',
 					isPageHeading: true,
 					classes: 'govuk-fieldset__legend--m'
 				}
@@ -196,7 +196,7 @@ export function issueDecisionPage(
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: heading || `What is the decision? - ${shortAppealReference}`,
+		title: heading || `Decision - ${shortAppealReference}`,
 		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: preHeadingText(appealDetails, 'issue decision'),
 		heading: heading || 'Decision',

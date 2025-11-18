@@ -209,7 +209,9 @@ describe('incomplete proof of evidence', () => {
 				);
 
 				expect(pageHtml).toContain(
-					`Check details and reject ${proofOfEvidenceType.type} proof of evidence and witnesses</h1>`
+					`Check details and reject ${
+						proofOfEvidenceType.type === 'lpa' ? 'LPA' : 'appellant'
+					} proof of evidence and witnesses</h1>`
 				);
 
 				expect(pageHtml).toContain(
@@ -230,10 +232,12 @@ describe('incomplete proof of evidence', () => {
 					`href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}">Change <span class="govuk-visually-hidden">Review decision</span></a>`
 				);
 				expect(pageHtml).toContain(
-					`Reason for rejecting the ${proofOfEvidenceType.type} proof of evidence and witnesses</dt>`
+					`Reason for rejecting the ${
+						proofOfEvidenceType.type === 'lpa' ? 'LPA' : 'appellant'
+					} proof of evidence and witnesses</dt>`
 				);
 
-				expect(pageHtml).toContain(`<li>Received after deadline</li></ul>`);
+				expect(pageHtml).toContain(`Received after deadline`);
 				expect(pageHtml).toContain(`Incomplete reasons</span></a>`);
 
 				expect(pageHtml).toContain(`Confirm statement is incomplete</button>`);

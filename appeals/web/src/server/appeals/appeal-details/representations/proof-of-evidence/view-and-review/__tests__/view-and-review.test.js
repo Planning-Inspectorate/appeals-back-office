@@ -45,7 +45,7 @@ describe('proof-of-evidence', () => {
 			const dom = parseHtml(response.text);
 			const elementInnerHtml = dom.innerHTML;
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Review lpa proof of evidence and witnesses</h1>');
+			expect(elementInnerHtml).toContain('Review LPA proof of evidence and witnesses</h1>');
 
 			const proofOfEvidenceRow = parseHtml(response.text, {
 				rootElement: '.govuk-summary-list__row:first-of-type'

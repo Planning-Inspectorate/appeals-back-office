@@ -30,7 +30,9 @@ import {
 	appellantCaseValidationOutcomes,
 	azureAdUserId
 } from '#tests/shared/mocks.js';
+import { FEEDBACK_FORM_LINKS } from '#utils/feedback-form-link.js';
 import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
 import {
 	AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED,
@@ -39,10 +41,8 @@ import {
 	ERROR_NOT_FOUND,
 	LENGTH_8
 } from '@pins/appeals/constants/support.js';
-import { request } from '../../../app-test.js';
-
-import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { request } from '../../../app-test.js';
 
 const { databaseConnector } = await import('../../../utils/database-connector.js');
 
@@ -949,22 +949,13 @@ describe('appellant cases routes', () => {
 				}
 			);
 
-			const FEEDBACK_LINK_FULL_PLANNING =
-				'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzg1SlNPQjA3V0FDNUFJTldHMlEzMDdMRS4u';
-
-			const FEEDBACK_LINK_HOUSEHOLDER =
-				'https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUOFg4UFdEUThGTlU3S0hFUTlERVYwMVRLTy4u&route=shorturl';
-
-			const FEEDBACK_LINK_LISTED_BUILDING =
-				'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQjI0R09ONVRVNVJZVk9XMzBYTFo2RDlQUy4u';
-
 			test.each([
-				['householdAppeal', householdAppeal, FEEDBACK_LINK_HOUSEHOLDER],
-				['advertisementAppeal', advertisementAppeal, FEEDBACK_LINK_HOUSEHOLDER],
-				['casAdvertAppeal', casAdvertAppeal, FEEDBACK_LINK_HOUSEHOLDER],
-				['casPlanningAppeal', casPlanningAppeal, FEEDBACK_LINK_HOUSEHOLDER],
-				['fullPlanningAppeal', fullPlanningAppeal, FEEDBACK_LINK_FULL_PLANNING],
-				['listedBuildingAppeal', listedBuildingAppeal, FEEDBACK_LINK_LISTED_BUILDING]
+				['householdAppeal', householdAppeal, FEEDBACK_FORM_LINKS.HAS],
+				['advertisementAppeal', advertisementAppeal, FEEDBACK_FORM_LINKS.FULL_ADVERTS],
+				['casAdvertAppeal', casAdvertAppeal, FEEDBACK_FORM_LINKS.CAS_ADVERTS],
+				['casPlanningAppeal', casPlanningAppeal, FEEDBACK_FORM_LINKS.CAS_PLANNING],
+				['fullPlanningAppeal', fullPlanningAppeal, FEEDBACK_FORM_LINKS.S78],
+				['listedBuildingAppeal', listedBuildingAppeal, FEEDBACK_FORM_LINKS.S20]
 			])(
 				'updates appellant case and sends a notify email when the validation outcome is Valid for %s appeal',
 				async (_, appeal, expectedFeedbackLink) => {

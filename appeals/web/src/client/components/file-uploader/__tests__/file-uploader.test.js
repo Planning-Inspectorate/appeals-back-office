@@ -7,6 +7,7 @@
 /* eslint-disable no-undef */
 import { fireEvent, waitFor } from '@testing-library/dom';
 import '@testing-library/jest-dom';
+import { errorMessage } from '../_html.js';
 
 const DOM = `<div class="govuk-grid-row pins-file-upload" data-next-page-url="/applications-service/case/437/project-documentation/13/project-management/" data-case-id="437" data-folder-id="13" data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff">
 <div class="top-errors-hook"></div>
@@ -146,5 +147,26 @@ describe('file upload', () => {
 
 		expect(uploadInput.files[0].name).toBe('file.pdf');
 		expect(uploadInput.files[1].name).toBe('file.xyz');
+	});
+});
+
+describe('errorMessage', () => {
+	it('should show "The decision letter" when fileTitle is "The decision letter"', () => {
+		const type = 'SIZE_SINGLE_FILE';
+
+		const metadata = { fileTitle: 'decision letter' };
+
+		const message = errorMessage(type, null, metadata);
+
+		expect(message).toBe('The decision letter must be smaller than 25MB');
+	});
+
+	it('should show "The selected file" when no fileTitle is provided', () => {
+		const type = 'SIZE_SINGLE_FILE';
+
+		const metadata = {};
+
+		const message = errorMessage(type, null, metadata);
+		expect(message).toBe('The selected file must be smaller than 25MB');
 	});
 });

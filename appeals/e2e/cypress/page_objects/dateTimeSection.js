@@ -165,11 +165,6 @@ export class DateTimeSection extends Page {
 		this.#setAllDateFields(this.selectorPrefix.inquiryDate, date);
 	}
 
-	enterInquiryTime(hour, minute) {
-		this.#set(this.elements.enterInquiryTimeHour(), hour);
-		this.#set(this.elements.enterInquiryTimeMinute(), minute);
-	}
-
 	verifyPrepopulatedInquiryValues(expectedValues) {
 		this.#verifyPrepopulatedValues(this.selectorPrefix.inquiry, expectedValues);
 	}

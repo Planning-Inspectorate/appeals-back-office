@@ -11,9 +11,10 @@ import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 /**
  *
  * @param {SiteVisitWithAppeal} siteVisit
+ * @param { EventType } updateType
  * @returns {AppealEvent}
  */
-export const mapSiteVisitEntity = (siteVisit) => {
+export const mapSiteVisitEntity = (siteVisit, updateType) => {
 	return {
 		eventId: `${siteVisit.appeal?.reference}-1`,
 		caseReference: siteVisit.appeal?.reference ?? '',
@@ -22,7 +23,7 @@ export const mapSiteVisitEntity = (siteVisit) => {
 				siteVisit.siteVisitType.key
 			),
 		eventName: `Site visit #${siteVisit.id}`,
-		eventStatus: 'offered',
+		eventStatus: updateType === EventType.Delete ? 'withdrawn' : 'offered',
 		isUrgent: false,
 		eventPublished: true,
 		eventStartDateTime: (siteVisit.visitStartTime ?? siteVisit.visitDate)?.toISOString() ?? '',

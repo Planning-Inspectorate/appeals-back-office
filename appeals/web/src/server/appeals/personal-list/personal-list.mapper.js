@@ -10,7 +10,7 @@ import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import * as authSession from '../../app/auth/auth-session.service.js';
 
 /** @typedef {import('@pins/appeals').AppealSummary} AppealSummary */
@@ -301,6 +301,7 @@ export function personalListPage(
  * @param {number} appealId
  * @param {number|null|undefined} lpaQuestionnaireId
  * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} procedureType
  * @returns {string|undefined}
  */
 function mapRequiredActionToPersonalListActionHtml(
@@ -309,7 +310,8 @@ function mapRequiredActionToPersonalListActionHtml(
 	isChildAppeal,
 	appealId,
 	lpaQuestionnaireId,
-	request
+	request,
+	procedureType
 ) {
 	switch (action) {
 		case 'addHorizonReference': {
@@ -537,6 +539,15 @@ function mapRequiredActionToPersonalListActionHtml(
 				`/appeals-service/appeal-details/${appealId}/proof-of-evidence/appellant`
 			)}">Review appellant proof of evidence and witnesses</a>`;
 		}
+		case 'awaitingEvent': {
+			return `Awaiting ${
+				[APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY].includes(
+					procedureType.toLowerCase()
+				)
+					? procedureType.toLowerCase()
+					: 'site visit'
+			}`;
+		}
 		default: {
 			return '';
 		}
@@ -558,7 +569,7 @@ export function mapActionLinksForAppeal(appeal, isCaseOfficer, request) {
 		'summary'
 	);
 
-	const { appealId, lpaQuestionnaireId } = appeal;
+	const { appealId, lpaQuestionnaireId, procedureType } = appeal;
 
 	if (appealId === undefined) {
 		return '';
@@ -572,7 +583,8 @@ export function mapActionLinksForAppeal(appeal, isCaseOfficer, request) {
 				isChildAppeal(appeal),
 				appealId,
 				lpaQuestionnaireId,
-				request
+				request,
+				procedureType ?? ''
 			);
 		})
 		.filter((action) => action?.trim())

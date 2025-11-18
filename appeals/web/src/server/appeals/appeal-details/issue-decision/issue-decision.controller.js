@@ -291,7 +291,7 @@ export const renderInvalidReason = async (request, response) => {
 
 	const mappedPageContent = invalidReasonPage(
 		currentAppeal,
-		request.session.inspectorDecision.invalidReason,
+		errors ? errors.invalidReason.value : request.session.inspectorDecision.invalidReason,
 		getBackLinkUrlFromQuery(request) || backUrl,
 		errors
 	);

@@ -222,7 +222,7 @@ export const getCheckAndConfirm = async (request, response) => {
 								id: `${newProcedureType}-address`,
 								text: `Address of where the ${newProcedureType} will take place`,
 								value: { html: addressToString(address, '<br>') },
-								link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/address`,
+								link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/address-details`,
 								editable: true,
 								cypressDataName: `change-${newProcedureType}-address`
 							})?.display.summaryListItem

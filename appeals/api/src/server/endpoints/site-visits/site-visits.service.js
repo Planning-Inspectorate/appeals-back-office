@@ -19,6 +19,7 @@ import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
+import logger from '#utils/logger.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
 import { AUDIT_TRAIL_SITE_VISIT_CANCELLED } from '@pins/appeals/constants/support.js';
@@ -494,49 +495,35 @@ const fetchRearrangeMissedSiteVisitTemplateIds = (visitTypeName) => {
  * @param {import('@pins/appeals.api').Schema.Appeal} appeal
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
- * @returns
  */
 const deleteSiteVisit = async (siteVisitId, appeal, notifyClient, azureAdUserId) => {
-	const result = await siteVisitRepository.deleteSiteVisitById(siteVisitId);
-	if (!result) {
+	try {
+		const existingSiteVisit = await siteVisitRepository.getSiteVisitById(siteVisitId);
+		await siteVisitRepository.deleteSiteVisitById(siteVisitId);
+
+		await broadcasters.broadcastEvent(
+			siteVisitId,
+			EVENT_TYPE.SITE_VISIT,
+			EventType.Delete,
+			// @ts-ignore
+			existingSiteVisit
+		);
+
+		await sendCancelledSiteVisitNotification({
+			appeal,
+			azureAdUserId,
+			notifyClient
+		});
+
+		await createAuditTrail({
+			appealId: appeal.id,
+			azureAdUserId: azureAdUserId,
+			details: AUDIT_TRAIL_SITE_VISIT_CANCELLED
+		});
+	} catch (error) {
+		logger.error(error, 'Failed to delete site visit');
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
-	const siteAddress = appeal.address
-		? formatAddressSingleLine(appeal.address)
-		: 'Address not available';
-	const personalisation = {
-		appeal_reference_number: appeal.reference,
-		lpa_reference: appeal.applicationReference || '',
-		site_address: siteAddress,
-		team_email_address: await getTeamEmailFromAppealId(appeal.id)
-	};
-	const templateName = 'site-visit-cancelled';
-	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-	if (appeal.appellant?.email) {
-		await notifySend({
-			azureAdUserId: azureAdUserId,
-			templateName: templateName,
-			notifyClient,
-			recipientEmail,
-			personalisation
-		});
-	}
-
-	if (appeal.lpa?.email) {
-		await notifySend({
-			azureAdUserId: azureAdUserId,
-			templateName: templateName,
-			notifyClient,
-			recipientEmail: appeal.lpa?.email,
-			personalisation
-		});
-	}
-	await createAuditTrail({
-		appealId: appeal.id,
-		azureAdUserId: azureAdUserId,
-		details: AUDIT_TRAIL_SITE_VISIT_CANCELLED
-	});
-	return result;
 };
 /**
  *
@@ -610,6 +597,52 @@ const recordMissedSiteVisit = async (
  */
 const getMissedSiteVisit = async (appealId) =>
 	await siteVisitRepository.getMissedSiteVisitByAppealId(appealId);
+
+/**
+ *
+ * @param {Object} params
+ * @param {import('@pins/appeals.api').Schema.Appeal}  params.appeal
+ * @param {string} params.azureAdUserId
+ * @param {import('#endpoints/appeals.js').NotifyClient}  params.notifyClient
+ */
+const sendCancelledSiteVisitNotification = async ({ appeal, azureAdUserId, notifyClient }) => {
+	const templateName = 'site-visit-cancelled';
+
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+
+	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
+
+	const personalisation = {
+		appeal_reference_number: appeal.reference,
+		lpa_reference: appeal.applicationReference || '',
+		site_address: siteAddress,
+		team_email_address: teamEmail
+	};
+
+	const appellantRecipientEmail = appeal.agent?.email || appeal.appellant?.email;
+
+	if (appellantRecipientEmail) {
+		await notifySend({
+			azureAdUserId,
+			templateName,
+			notifyClient,
+			recipientEmail: appellantRecipientEmail,
+			personalisation
+		});
+	}
+
+	if (appeal.lpa?.email) {
+		await notifySend({
+			azureAdUserId,
+			templateName,
+			notifyClient,
+			recipientEmail: appeal.lpa.email,
+			personalisation
+		});
+	}
+};
 
 export {
 	checkSiteVisitExists,

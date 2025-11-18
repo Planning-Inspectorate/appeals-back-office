@@ -16,6 +16,7 @@ export const getById = (id) => {
 		where: { id },
 		include: {
 			documents: {
+				where: { isDeleted: false },
 				include: {
 					latestDocumentVersion: {
 						include: {
@@ -43,6 +44,7 @@ export const getByCaseId = (caseId) => {
 		where: { caseId },
 		include: {
 			documents: {
+				where: { isDeleted: false },
 				include: {
 					latestDocumentVersion: {
 						include: {
@@ -73,6 +75,7 @@ export const getByCaseIdAndPaths = (caseId, paths) => {
 		},
 		include: {
 			documents: {
+				where: { isDeleted: false },
 				include: {
 					latestDocumentVersion: {
 						include: {

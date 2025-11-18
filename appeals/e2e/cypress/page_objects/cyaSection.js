@@ -17,7 +17,7 @@ export class CYASection extends CaseDetailsPage {
 		address: 'Address of where the inquiry will take place',
 		reasonForRejectAppellantPOE:
 			'Reason for rejecting the appellant proof of evidence and witnesses',
-		reasonForRejectLPAPOE: 'Reason for rejecting the lpa proof of evidence and witnesses'
+		reasonForRejectLPAPOE: 'Reason for rejecting the LPA proof of evidence and witnesses'
 	};
 
 	previewEmailSummary = {

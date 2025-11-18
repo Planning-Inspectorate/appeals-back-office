@@ -148,6 +148,7 @@ model AppealStatus {
   compoundStateName   String?
 
   @@index([appealId])
+  @@index([valid, appealId])
 }
 
 /// AppealAllocation model
@@ -168,6 +169,9 @@ model AppealSpecialism {
   specialismId Int
   appeal       Appeal     @relation(fields: [appealId], references: [id])
   appealId     Int
+
+  @@index([appealId])
+  @@index([specialismId])
 }
 
 /// Specialism model
@@ -379,6 +383,9 @@ model AppellantCaseIncompleteReasonText {
   appellantCaseIncompleteReasonsSelected AppellantCaseIncompleteReasonsSelected @relation(fields: [appellantCaseIncompleteReasonId, appellantCaseId], references: [appellantCaseIncompleteReasonId, appellantCaseId])
   appellantCaseIncompleteReasonId        Int
   appellantCaseId                        Int
+
+  @@index([appellantCaseId])
+  @@index([appellantCaseIncompleteReasonId])
 }
 
 /// AppellantCaseInvalidReasonText model
@@ -389,6 +396,9 @@ model AppellantCaseInvalidReasonText {
   appellantCaseInvalidReasonsSelected AppellantCaseInvalidReasonsSelected @relation(fields: [appellantCaseInvalidReasonId, appellantCaseId], references: [appellantCaseInvalidReasonId, appellantCaseId])
   appellantCaseInvalidReasonId        Int
   appellantCaseId                     Int
+
+  @@index([appellantCaseId])
+  @@index([appellantCaseInvalidReasonId])
 }
 
 /// KnowledgeOfOtherLandowners model

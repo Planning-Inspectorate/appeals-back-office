@@ -343,7 +343,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedNotificationBannerElementHTML).toContain('Due date</dt>');
 			expect(unprettifiedNotificationBannerElementHTML).toContain('11 October 2023</dd>');
 			expect(unprettifiedNotificationBannerElementHTML).toContain('Policies are missing</span>');
-			expect(unprettifiedNotificationBannerElementHTML).toContain('test reason 1</li>');
+			expect(unprettifiedNotificationBannerElementHTML).toContain('test reason 1</div>');
 			expect(unprettifiedNotificationBannerElementHTML).toContain(
 				'Other documents or information are missing</span>'
 			);

@@ -8,6 +8,7 @@ import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
+import { FEEDBACK_FORM_LINKS, getFeedbackLinkFromAppealType } from '#utils/feedback-form-link.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
@@ -249,7 +250,8 @@ export const publishCostsDecision = async (
 			appeal_reference_number: appeal.reference,
 			site_address: siteAddress,
 			lpa_reference: appeal.applicationReference || '',
-			front_office_url: environment.FRONT_OFFICE_URL || ''
+			front_office_url: environment.FRONT_OFFICE_URL || '',
+			feedback_link: getFeedbackLinkFromAppealType(appeal?.appealType?.key || '')
 		};
 		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 		const lpaEmail = appeal.lpa?.email || '';
@@ -270,7 +272,10 @@ export const publishCostsDecision = async (
 				templateName: lpaEmailTemplate,
 				notifyClient,
 				recipientEmail: lpaEmail,
-				personalisation
+				personalisation: {
+					...personalisation,
+					feedback_link: FEEDBACK_FORM_LINKS.LPA
+				}
 			});
 		}
 	}

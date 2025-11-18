@@ -613,6 +613,8 @@ interface DocumentationSummary {
 	lpaStatement?: DocumentationSummaryEntry;
 	lpaFinalComments?: DocumentationSummaryEntry;
 	appellantFinalComments?: DocumentationSummaryEntry;
+	lpaProofOfEvidence?: DocumentationSummaryEntry;
+	appellantProofOfEvidence?: DocumentationSummaryEntry;
 }
 
 interface DocumentationSummaryEntry {

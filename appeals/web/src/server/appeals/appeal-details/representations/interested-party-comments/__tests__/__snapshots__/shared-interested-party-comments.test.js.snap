@@ -47,22 +47,14 @@ exports[`Interested Party Comments (Shared/Published View) GET /interested-party
                 <td class="govuk-table__cell">
                     <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 1</div>
                 </td>
-                <td class="govuk-table__cell">
-                    <ol class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
-                        <li>No documents</li>
-                    </ol>
-                </td>
+                <td class="govuk-table__cell">No documents</td>
             </tr>
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">No address</td>
                 <td class="govuk-table__cell">
                     <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 2</div>
                 </td>
-                <td class="govuk-table__cell">
-                    <ol class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
-                        <li>No documents</li>
-                    </ol>
-                </td>
+                <td class="govuk-table__cell">No documents</td>
             </tr>
         </tbody>
     </table>

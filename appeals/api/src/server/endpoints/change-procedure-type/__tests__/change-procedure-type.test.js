@@ -136,7 +136,9 @@ describe('Change appeal procedure type route', () => {
 						'We have changed your appeal procedure to written representations and cancelled your hearing.',
 					lpa_statement_exists: true,
 					existing_appeal_procedure: 'hearing',
-					inquiry_address: ''
+					inquiry_address: '',
+					hearing_date: '',
+					hearing_time: ''
 				};
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
@@ -211,7 +213,9 @@ describe('Change appeal procedure type route', () => {
 					lpa_statement_exists: true,
 					existing_appeal_procedure: 'inquiry',
 					week_before_conference_date: '25 December 2998',
-					inquiry_address: ''
+					inquiry_address: '',
+					hearing_date: '',
+					hearing_time: ''
 				};
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
@@ -401,6 +405,7 @@ describe('Change appeal procedure type route', () => {
 
 			test('returns 201 and calls delete hearing if changing from hearing to inquiry', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				mockTx.inquiry.findFirst.mockResolvedValue(null);
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/procedure-type-change-request`)
 					.send({
@@ -412,6 +417,7 @@ describe('Change appeal procedure type route', () => {
 						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
 						statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z',
 						proofOfEvidenceAndWitnessesDueDate: '2025-12-15T00:00:00.000Z',
+						estimationDays: '7',
 						address: {
 							addressLine1: '96 The Avenue',
 							addressLine2: 'Leftfield',
@@ -435,6 +441,16 @@ describe('Change appeal procedure type route', () => {
 					data: { procedureTypeId: 1 }
 				});
 
+				expect(mockTx.inquiry.create).toHaveBeenCalledWith({
+					data: {
+						addressId: undefined,
+						appealId: 2,
+						estimatedDays: 7,
+						inquiryEndTime: null,
+						inquiryStartTime: '2025-12-20T00:00:00.000Z'
+					}
+				});
+
 				expect(mockTx.inquiry.deleteMany).not.toHaveBeenCalled();
 
 				// verify transaction itself was called
@@ -451,7 +467,9 @@ describe('Change appeal procedure type route', () => {
 						'We have changed your appeal procedure to inquiry and cancelled your hearing.',
 					lpa_statement_exists: true,
 					existing_appeal_procedure: 'hearing',
-					proof_of_evidence_due_date: '15 December 2025'
+					proof_of_evidence_due_date: '15 December 2025',
+					hearing_date: '1 January 2000',
+					hearing_time: '12:00am'
 				};
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
@@ -562,7 +580,9 @@ describe('Change appeal procedure type route', () => {
 						'We have changed your appeal procedure to inquiry and cancelled your site visit.',
 					lpa_statement_exists: true,
 					existing_appeal_procedure: 'written',
-					proof_of_evidence_due_date: '15 December 2025'
+					proof_of_evidence_due_date: '15 December 2025',
+					hearing_date: '1 January 2000',
+					hearing_time: '12:00am'
 				};
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);

@@ -139,6 +139,14 @@ const formatDocumentationSummary = (appeal) => {
 		appeal.representations?.filter(
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
 		) ?? [];
+	const lpaProofOfEvidence =
+		appeal.representations?.filter(
+			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE
+		) ?? [];
+	const appellantProofOfEvidence =
+		appeal.representations?.filter(
+			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
+		) ?? [];
 
 	return {
 		appellantCase: {
@@ -182,6 +190,22 @@ const formatDocumentationSummary = (appeal) => {
 				: null,
 			representationStatus: appellantFinalComments[0]?.status ?? null,
 			isRedacted: appellantFinalComments.some((comment) => Boolean(comment.redactedRepresentation))
+		},
+		lpaProofOfEvidence: {
+			status:
+				lpaProofOfEvidence.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+			representationStatus: lpaProofOfEvidence[0]?.status ?? null,
+			receivedAt: lpaProofOfEvidence[0]?.dateCreated,
+			isRedacted: Boolean(lpaProofOfEvidence[0]?.redactedRepresentation)
+		},
+		appellantProofOfEvidence: {
+			status:
+				appellantProofOfEvidence.length > 0
+					? DOCUMENT_STATUS_RECEIVED
+					: DOCUMENT_STATUS_NOT_RECEIVED,
+			representationStatus: appellantProofOfEvidence[0]?.status ?? null,
+			receivedAt: appellantProofOfEvidence[0]?.dateCreated,
+			isRedacted: Boolean(appellantProofOfEvidence[0]?.redactedRepresentation)
 		}
 	};
 };

@@ -47,6 +47,17 @@ const mockHearingEstimate = {
 	reportingTime: 20
 };
 
+const mockInquiryEstimate = {
+	id: 1,
+	appealId: 2,
+	appeal: {
+		reference: '6000002'
+	},
+	preparationTime: 9,
+	sittingTime: 2,
+	reportingTime: 15
+};
+
 describe('broadcastEvent', () => {
 	beforeEach(() => {
 		config.serviceBusEnabled = true;
@@ -160,6 +171,116 @@ describe('broadcastEvent', () => {
 				EVENT_TYPE.HEARING,
 				EventType.Delete,
 				existingHearing
+			);
+
+			expect(result).toBe(false);
+		});
+	});
+
+	describe('Inquiry Estimates', () => {
+		it('should broadcast a valid create inquiry estimate event', async () => {
+			databaseConnector.inquiryEstimate.findUnique.mockResolvedValue(mockInquiryEstimate);
+			eventClient.sendEvents.mockResolvedValue(true);
+
+			const result = await broadcastEventEstimates(2, EVENT_TYPE.INQUIRY, EventType.Create);
+
+			expect(databaseConnector.inquiryEstimate.findUnique).toHaveBeenCalled();
+			expect(eventClient.sendEvents).toHaveBeenCalledWith(
+				expect.anything(),
+				[
+					{
+						id: 1,
+						caseReference: '6000002',
+						preparationTime: 9,
+						reportingTime: 15,
+						sittingTime: 2
+					}
+				],
+				EventType.Create,
+				expect.anything()
+			);
+			expect(result).toBe(true);
+		});
+
+		it('should broadcast a valid update inquiry estimate event', async () => {
+			databaseConnector.inquiryEstimate.findUnique.mockResolvedValue({
+				...mockInquiryEstimate,
+				preparationTime: 20
+			});
+			eventClient.sendEvents.mockResolvedValue(true);
+
+			const result = await broadcastEventEstimates(2, EVENT_TYPE.INQUIRY, EventType.Update);
+
+			expect(databaseConnector.inquiryEstimate.findUnique).toHaveBeenCalled();
+			expect(eventClient.sendEvents).toHaveBeenCalledWith(
+				expect.anything(),
+				[
+					{
+						id: 1,
+						caseReference: '6000002',
+						preparationTime: 20,
+						reportingTime: 15,
+						sittingTime: 2
+					}
+				],
+				EventType.Update,
+				expect.anything()
+			);
+			expect(result).toBe(true);
+		});
+
+		it('should handle delete inquiry estimate with existing inquiry estimate and appeal', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({ id: 1, reference: '6000002' });
+			databaseConnector.inquiryEstimate.findUnique.mockResolvedValue(null);
+			databaseConnector.inquiry.findUnique.mockResolvedValue({ id: 1, reference: '6000002' });
+
+			eventClient.sendEvents.mockResolvedValue(true);
+
+			const existingInquiry = { appealId: 1, inquiryStartTime: new Date('2025-01-01T13:00') };
+			const result = await broadcastEventEstimates(
+				2,
+				EVENT_TYPE.INQUIRY,
+				EventType.Delete,
+				existingInquiry
+			);
+			expect(databaseConnector.appeal.findUnique).toHaveBeenCalledWith({ where: { id: 1 } });
+
+			expect(eventClient.sendEvents).toHaveBeenCalledWith(
+				expect.anything(),
+				[
+					{
+						id: 2,
+						caseReference: '6000002',
+						preparationTime: 0,
+						reportingTime: 0,
+						sittingTime: 0
+					}
+				],
+				EventType.Delete,
+				expect.anything()
+			);
+
+			expect(result).toBe(true);
+		});
+
+		it('should return false if inquiry estimate not found and not deleting', async () => {
+			databaseConnector.inquiryEstimate.findUnique.mockResolvedValue(null);
+
+			const result = await broadcastEventEstimates(2, EVENT_TYPE.INQUIRY, EventType.Update);
+
+			expect(result).toBe(false);
+		});
+
+		it('should return false if appeal not found when deleting a inquiry estimate', async () => {
+			databaseConnector.inquiryEstimate.findUnique.mockResolvedValue(null);
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+			const existingInquiry = { appealId: 1, inquiryStartTime: '2025-01-01' };
+			const result = await broadcastEventEstimates(
+				2,
+				EVENT_TYPE.INQUIRY,
+				EventType.Delete,
+				existingInquiry
 			);
 
 			expect(result).toBe(false);
