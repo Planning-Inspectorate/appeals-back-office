@@ -15,6 +15,7 @@ import {
 	fetchBankHolidaysForDivision,
 	getNumberOfBankHolidaysBetweenDates
 } from '@pins/appeals/utils/business-days.js';
+import { getCache, getUniqueCacheKey, setCache } from '@pins/appeals/utils/cache-data.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { addBusinessDays } from 'date-fns';
 import { compact, uniq, uniqBy } from 'lodash-es';
@@ -120,6 +121,7 @@ const mapAppeals = (appeals) =>
 	);
 
 /**
+ * @typedef {[string, string, string, string, number, number, boolean, number,number, number, string]} appealFilters
  *
  * @param {number} pageNumber
  * @param {number} pageSize
@@ -151,7 +153,7 @@ const retrieveAppealListData = async (
 	procedureTypeId,
 	appellantProcedurePreference
 ) => {
-	/** @type {[string, string, string, string, number, number, boolean, number,number, number, string]} */
+	/** @type {appealFilters} */
 	const appealFilters = [
 		searchTerm,
 		status,
@@ -166,13 +168,11 @@ const retrieveAppealListData = async (
 		appellantProcedurePreference
 	];
 	const appeals = await appealListRepository.getAllAppeals(...appealFilters, pageNumber, pageSize);
-	const allAppeals = await appealListRepository.getAppealsWithoutIncludes(...appealFilters);
 	const mappedAppeals = await mapAppeals(appeals);
 	const mappedStatuses = mapAppealStatuses(appeals);
-	const mappedLPAs = await mapAppealLPAs(allAppeals);
-	const users = await mapUsers(allAppeals);
-	const mappedInspectors = users.inspectors;
-	const mappedCaseOfficers = users.caseOfficers;
+	const { mappedLPAs, mappedInspectors, mappedCaseOfficers } = await getAllAppealsFilters(
+		appealFilters
+	);
 	const statusesInNationalList = await appealListRepository.getAppealsStatusesInNationalList();
 	const itemCount = await appealListRepository.getAllAppealsCount(...appealFilters);
 
@@ -186,6 +186,34 @@ const retrieveAppealListData = async (
 		itemCount
 	};
 };
+
+/**
+ * @param {appealFilters} appealFilters
+ * @returns { Promise<{
+ * 	mappedLPAs: {name:string, lpaCode:string}[],
+ *  mappedInspectors: User[],
+ *  mappedCaseOfficers: User[]
+ * }> }
+ */
+async function getAllAppealsFilters(appealFilters) {
+	const cacheKey = 'getAllAppealsFilters' + getUniqueCacheKey(appealFilters);
+	const value = getCache(cacheKey);
+
+	if (value !== null && value !== undefined) {
+		return value;
+	}
+
+	const allAppeals = await appealListRepository.getAppealsWithoutIncludes(...appealFilters);
+	const mappedLPAs = await mapAppealLPAs(allAppeals);
+	const users = await mapUsers(allAppeals);
+	const mappedInspectors = users.inspectors;
+	const mappedCaseOfficers = users.caseOfficers;
+
+	const result = { mappedLPAs, mappedInspectors, mappedCaseOfficers };
+	// many variations so don't cache for too long
+	setCache(cacheKey, result, 120);
+	return result;
+}
 
 /** @param {string} azureAdUserId */
 async function updateCompletedEvents(azureAdUserId) {
