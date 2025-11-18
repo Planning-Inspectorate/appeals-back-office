@@ -16,7 +16,7 @@ export const isAppealCaseTypeEnabled = (appealCaseType) => {
 			return isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78);
 		}
 		case APPEAL_CASE_TYPE.Y: {
-			return isFeatureActive(FEATURE_FLAG_NAMES.SECTION_20);
+			return true;
 		}
 		case APPEAL_CASE_TYPE.ZP: {
 			return isFeatureActive(FEATURE_FLAG_NAMES.CAS);

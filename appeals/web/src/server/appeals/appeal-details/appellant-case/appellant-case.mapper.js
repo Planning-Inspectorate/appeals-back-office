@@ -713,16 +713,12 @@ function generateCaseTypeSpecificComponents(
 				throw new Error('Feature flag inactive for S78');
 			}
 		case APPEAL_TYPE.PLANNED_LISTED_BUILDING:
-			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_20)) {
-				return generateS20Components(
-					appealDetails,
-					appellantCaseData,
-					mappedAppellantCaseData,
-					userHasUpdateCasePermission
-				);
-			} else {
-				throw new Error('Feature flag inactive for S20');
-			}
+			return generateS20Components(
+				appealDetails,
+				appellantCaseData,
+				mappedAppellantCaseData,
+				userHasUpdateCasePermission
+			);
 		case APPEAL_TYPE.CAS_PLANNING:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.CAS)) {
 				return generateCASComponents(
