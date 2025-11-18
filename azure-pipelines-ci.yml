@@ -26,6 +26,8 @@ extends:
     gitFetchDepth: 0
     globalVariables:
       - template: azure-pipelines-variables.yml@self
+      - group: e2e-dev
+      - group: cd_e2e-pr-checks
     validationJobs:
       - name: Run Linting & Tests
         variables:
@@ -84,3 +86,154 @@ extends:
                 TURBO_TEAM: $(TURBO_TEAM)
                 TURBO_API: $(TURBO_API)
                 TURBO_TOKEN: $(TURBO_TOKEN)
+      - name: Run cypress e2e tests
+        condition: eq(variables['Build.Reason'], 'PullRequest')
+        steps:
+          - script: |
+              PR_NUMBER=$(echo "$(Build.SourceBranch)" | sed -n 's#refs/pull/\([0-9]\+\)/.*#\1#p')
+              echo "PR_NUMBER: $PR_NUMBER"
+              curl -s https://api.github.com/repos/Planning-Inspectorate/appeals-back-office/issues/$PR_NUMBER/labels > pr.json
+            displayName: "Fetch PR metadata"
+          - task: ShellScript@2
+            inputs:
+              scriptPath: 'bin/check-pr-labels.sh'
+              args: '$(Build.SourcesDirectory)/pr.json'
+            displayName: 'Check PR labels'
+          - script: |
+              openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+                -keyout appeals/web/certificate-key.pem \
+                -out appeals/web/certificate.pem \
+                -subj "/C=UK/ST=./L=./O=./CN=pins_azurite" \
+                -addext "subjectAltName=DNS:pins_azurite,DNS:localhost,IP:127.0.0.1" \
+                -addext "keyUsage=digitalSignature,keyEncipherment" \
+                -addext "extendedKeyUsage=serverAuth,clientAuth"
+            condition: eq(variables['runE2E'], 'true')
+            displayName: "Generate certificate and key"
+          - script: |
+              SAS_URL=$(az storage container generate-sas \
+                --account-name devstoreaccount1 \
+                --account-key Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw== \
+                --name document-service-uploads \
+                --permissions rwl \
+                --expiry 2027-01-03T13:00:00Z \
+                --https-only \
+                --output tsv \
+                --connection-string "DefaultEndpointsProtocol=https;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=https://pins_azurite:10000/devstoreaccount1;")
+
+              echo "##vso[task.setvariable variable=AZURE_BLOB_EMULATOR_SAS_HOST]https://pins_azurite:10000/devstoreaccount1/document-service-uploads?${SAS_URL}"
+            condition: eq(variables['runE2E'], 'true')
+            displayName: "Generate SAS Url"
+          - script: |
+              SAS_URL=$(az storage container generate-sas \
+                --account-name devstoreaccount1 \
+                --account-key Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw== \
+                --name document-service-uploads \
+                --permissions rwl \
+                --expiry 2027-01-03T13:00:00Z \
+                --https-only \
+                --output tsv \
+                --connection-string "DefaultEndpointsProtocol=https;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=https://127.0.0.1:10000/devstoreaccount1;")
+
+              echo "##vso[task.setvariable variable=AZURE_BLOB_EMULATOR_SAS_HOST_WEB]https://127.0.0.1:10000/devstoreaccount1/document-service-uploads?${SAS_URL}"
+            condition: eq(variables['runE2E'], 'true')
+            displayName: "Generate SAS Url Web"
+          - script: AZURE_BLOB_EMULATOR_SAS_HOST=$(AZURE_BLOB_EMULATOR_SAS_HOST) AZURE_BLOB_EMULATOR_SAS_HOST_WEB=$(AZURE_BLOB_EMULATOR_SAS_HOST_WEB) AUTH_TENANT_ID=$(AZURE_TENANT_ID) AUTH_CLIENT_SECRET=$(AUTH_CLIENT_SECRET) AUTH_CLIENT_ID=$(AUTH_CLIENT_ID) GIT_SHA=$(Build.SourceVersion) docker-compose up -d
+            condition: eq(variables['runE2E'], 'true')
+            displayName: "Start database, azurite, api and web docker containers"
+          - script: docker ps
+            condition: eq(variables['runE2E'], 'true')
+            displayName: "Check all containers are up"
+          - script: |
+              export REQUESTS_CA_BUNDLE=appeals/web/certificate.pem
+
+              az storage cors add \
+                --services b \
+                --methods GET PUT OPTIONS \
+                --origins "*" \
+                --allowed-headers "*" \
+                --exposed-headers "*" \
+                --max-age 200 \
+                --connection-string "DefaultEndpointsProtocol=https;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=https://127.0.0.1:10000/devstoreaccount1;"
+
+              az storage container create \
+                --name document-service-uploads \
+                --connection-string "DefaultEndpointsProtocol=https;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=https://127.0.0.1:10000/devstoreaccount1;"
+            condition: eq(variables['runE2E'], 'true')
+            displayName: "Configure azurite"
+          - script: |
+              docker exec pins_azurite sha256sum /certs/certificate.pem
+              docker exec api sha256sum /usr/local/share/ca-certificates/azurite.crt
+            condition: eq(variables['runE2E'], 'true')
+          - script: docker exec -i api node -p "require('https').get('https://pins_azurite:10000', r => console.log('OK')).on('error', e => console.error(e))"
+            condition: eq(variables['runE2E'], 'true')
+          - script: docker inspect web
+            condition: eq(variables['runE2E'], 'true')
+          - script: docker inspect api
+            condition: eq(variables['runE2E'], 'true')
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 22
+              script: npm ci
+              condition: eq(variables['runE2E'], 'true')
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 22
+              script: npm --prefix ./appeals/api run db:migrate
+              environmentVariables:
+                NODE_ENV: test
+                DATABASE_URL: "sqlserver://127.0.0.1:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true"
+              condition: eq(variables['runE2E'], 'true')
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 22
+              script: npm --prefix ./appeals/api run db:seed
+              environmentVariables:
+                NODE_ENV: test
+                DATABASE_URL: "sqlserver://127.0.0.1:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true"
+              condition: eq(variables['runE2E'], 'true')
+          - script: curl -v http://localhost:3000/health
+            displayName: "Api healthcheck"
+            condition: eq(variables['runE2E'], 'true')
+          - script: curl --cacert appeals/web/certificate.pem -v https://localhost:8080/health
+            displayName: "Web healthcheck"
+            condition: eq(variables['runE2E'], 'true')
+          - script: docker logs pins_azurite
+            condition: eq(variables['runE2E'], 'true')
+            displayName: "Azurite healthcheck"
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 22
+              script: |
+                cd appeals/e2e
+                npm install
+              condition: eq(variables['runE2E'], 'true')
+          - script: |
+              echo "##vso[task.setvariable variable=BASE_URL]https://localhost:8080/"
+              echo "##vso[task.setvariable variable=API_BASE_URL]http://localhost:3000/"
+            condition: eq(variables['runE2E'], 'true')
+            displayName: Override BASE_URL and API_BASE_URL
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 22
+              script: |
+                cd appeals/e2e
+                npm run cy:run-smoke
+              environmentVariables:
+                BASE_URL: https://localhost:8080/
+                API_BASE_URL: http://localhost:3000/
+                CASE_TEAM_EMAIL: $(CASE_TEAM_APPEALS_EMAIL)
+                CASE_ADMIN_EMAIL: $(CASE_ADMIN_APPEALS_EMAIL)
+                INSPECTOR_EMAIL: $(INSPECTOR_APPEALS_EMAIL)
+                VALIDATION_OFFICER_EMAIL: $(VALIDATION_OFFICER_EMAIL)
+                USER_PASSWORD: $(USER_PASSWORD)
+                HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
+                APP: appeals
+                AZURE_TENANT_ID: $(AZURE_TENANT_ID)
+                NODE_EXTRA_CA_CERTS: $(Build.SourcesDirectory)/appeals/web/certificate.pem
+              condition: eq(variables['e2eSmoke'], 'true')
+          - script: docker logs api
+            condition: eq(variables['runE2E'], 'true')
+          - script: docker logs web
+            condition: eq(variables['runE2E'], 'true')
+          - script: docker logs pins_azurite
+            condition: eq(variables['runE2E'], 'true')
