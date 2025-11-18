@@ -1,0 +1,87 @@
+version: '3.7'
+services:
+    db:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        container_name: db
+        environment:
+            - 'ACCEPT_EULA=Y'
+            - 'MSSQL_SA_PASSWORD=SqlServer01'
+        ports:
+            - 1433:1433
+    api:
+        container_name: api
+        build:
+            context: .
+            dockerfile: appeals/api/Dockerfile
+            args:
+                GIT_SHA: ${GIT_SHA}
+        environment:
+            - 'NODE_ENV=test'
+            - 'DATABASE_URL=sqlserver://db:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true'
+            - 'BO_BLOB_STORAGE_ACCOUNT=https://pins_azurite:10000/'
+            - 'AZURE_BLOB_EMULATOR_SAS_HOST=${AZURE_BLOB_EMULATOR_SAS_HOST}'
+            - 'AZURE_BLOB_DEFAULT_CONTAINER=document-service-uploads'
+            - 'AZURE_BLOB_USE_EMULATOR=true'
+            - 'NOTIFY_SEND_MAIL_EMULATOR=true'
+            - 'ENABLE_TEST_ENDPOINTS=true'
+            - 'NODE_TLS_REJECT_UNAUTHORIZED=0'
+            - 'NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/azurite.crt'
+        volumes:
+             - ./appeals/web/certificate.pem:/usr/local/share/ca-certificates/azurite.crt
+        ports:
+            - 3000:3000
+    web:
+        container_name: web
+        build:
+            context: .
+            dockerfile: appeals/web/Dockerfile
+            args:
+                GIT_SHA: ${GIT_SHA}
+        environment:
+            - 'NODE_ENV=test'
+            - 'AUTH_CLIENT_SECRET=${AUTH_CLIENT_SECRET}'
+            - 'AUTH_CLIENT_ID=${AUTH_CLIENT_ID}'
+            - 'APP_HOSTNAME=localhost:8080'
+            - 'API_HOST=http://api:3000'
+            - 'AUTH_DISABLED=false'
+            - 'SESSION_SECRET=dummy-secret'
+            - 'AUTH_TENANT_ID=${AUTH_TENANT_ID}'
+            - 'APPEALS_CASE_OFFICER_GROUP_ID=cc4133e5-2319-4762-8a7b-33413701210a'
+            - 'APPEALS_INSPECTOR_GROUP_ID=0724c372-098d-4eef-acfb-bc85cd483dd1'
+            - 'APPEALS_LEGAL_TEAM_GROUP_ID=369caed5-fe22-445e-8cdc-8b2f6746afc7'
+            - 'APPEALS_CS_TEAM_GROUP_ID=455cbf03-f92f-4357-8daa-9f513b21fb73'
+            - 'APPEALS_PADS_GROUP_ID=5afda392-73c5-4c18-a76f-7e3b1933813c'
+            - 'APPEALS_READERS_GROUP_ID=60acabaa-6ac9-4462-828a-b79adc3d802c'
+            - 'HTTPS_ENABLED=true'
+            - 'HTTPS_PORT=8080'
+            - 'SSL_CERT_FILE=certificate.pem'
+            - 'SSL_KEY_FILE=certificate-key.pem'
+            - 'NODE_TLS_REJECT_UNAUTHORIZED=0'
+            - 'AUTH_REDIRECT_URI=https://localhost:8080/auth/redirect'
+            - 'AZURE_BLOB_STORE_HOST=https://127.0.0.1:10000/devstoreaccount1/'
+            - 'AZURE_BLOB_USE_EMULATOR=true'
+            - 'AZURE_BLOB_EMULATOR_SAS_HOST=${AZURE_BLOB_EMULATOR_SAS_HOST_WEB}'
+            - 'AZURE_BLOB_DEFAULT_CONTAINER=document-service-uploads'
+        ports:
+            - 8080:8080
+    pins_azurite:
+        image: mcr.microsoft.com/azure-storage/azurite
+        container_name: pins_azurite
+        command: >
+            azurite
+            --silent
+            --blobHost 0.0.0.0
+            --queueHost 0.0.0.0
+            --tableHost 0.0.0.0
+            --cert /certs/certificate.pem
+            --key /certs/certificate-key.pem
+            --oauth basic
+            --skipApiVersionCheck
+        volumes:
+            - ./appeals/web:/certs
+        ports:
+            - "10000:10000"
+            - "10001:10001"
+            - "10002:10002"
+        restart: unless-stopped
+
