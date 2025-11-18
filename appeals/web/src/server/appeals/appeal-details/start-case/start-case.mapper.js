@@ -203,7 +203,8 @@ function appealProcedureToLabelText(procedureType) {
 	switch (procedureType) {
 		case APPEAL_CASE_PROCEDURE.WRITTEN:
 			return 'Written representations';
-		case APPEAL_CASE_PROCEDURE.EXPEDITED_APPEALS:
+		//TODO: Case should be updated in the dataModel repo in the next ticket and this hsould be updated
+		case 'expeditedAppeals':
 			return 'Part 1';
 		case APPEAL_CASE_PROCEDURE.HEARING:
 		case APPEAL_CASE_PROCEDURE.INQUIRY:
