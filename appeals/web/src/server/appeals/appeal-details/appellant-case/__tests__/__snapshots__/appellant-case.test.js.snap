@@ -66,7 +66,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                     <h2 class="govuk-summary-card__title"> Before you start</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="before-you-start">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
@@ -350,7 +350,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                     <h2 class="govuk-summary-card__title"> Before you start</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="before-you-start">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
@@ -676,7 +676,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                     <h2 class="govuk-summary-card__title"> Before you start</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="before-you-start">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
@@ -973,7 +973,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                     <h2 class="govuk-summary-card__title"> Before you start</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="before-you-start">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
@@ -1325,7 +1325,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                     <h2 class="govuk-summary-card__title"> Before you start</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="before-you-start">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
@@ -1621,7 +1621,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h2 class="govuk-summary-card__title"> Before you start</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="before-you-start">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
@@ -1878,7 +1878,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h2 class="govuk-summary-card__title"> Before you start</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="before-you-start">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
@@ -2120,7 +2120,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h2 class="govuk-summary-card__title"> Before you start</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="before-you-start">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
@@ -2359,32 +2359,45 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have you received an enforcement notice?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/enforcement-notice/change">Change<span class="govuk-visually-hidden"> Have you received an enforcement notice? (Before you start)</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
-                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Local planning authority (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Full planning</dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
-                            <dd                             class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-outcome/change"
-                                    data-cy="change-application-decision">Change<span class="govuk-visually-hidden"> Was your application granted or refused? (Before you start)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is your enforcement notice about a listed building?</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/enforcement-notice-listed-building/change">Change<span class="govuk-visually-hidden"> Is your enforcement notice about a listed building? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the issue date on your enforcement notice?</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/enforcement-notice-issue-date/change"
+                                    data-cy="change-enforcement-issue-date">Change<span class="govuk-visually-hidden"> What is the issue date on your enforcement notice? (Before you start)</span></a>
+                                </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
-                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the effective date on your enforcement notice?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/enforcement-notice-effective-date/change"
+                                    data-cy="change-enforcement-effective-date">Change<span class="govuk-visually-hidden"> What is the effective date on your enforcement notice? (Before you start)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> When did you contact the Planning Inspectorate?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/contact-planning-inspectorate-date/add"
+                                    data-cy="add-contact-planning-inspectorate-date">Add<span class="govuk-visually-hidden"> When did you contact the Planning Inspectorate? (Before you start)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the reference number on the enforcement notice?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/enforcement-reference/change"
+                                    data-cy="change-enforcement-reference">Change<span class="govuk-visually-hidden"> What is the reference number on the enforcement notice? (Before you start)</span></a>
+                                </dd>
                         </div>
                     </dl>
                 </div>
@@ -2715,7 +2728,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h2 class="govuk-summary-card__title"> Before you start</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="before-you-start">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
@@ -3072,7 +3085,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h2 class="govuk-summary-card__title"> Before you start</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="before-you-start">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
@@ -3329,7 +3342,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h2 class="govuk-summary-card__title"> Before you start</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="before-you-start">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/change-appeal-details/local-planning-authority"
@@ -3671,7 +3684,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h2 class="govuk-summary-card__title"> Before you start</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="before-you-start">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
@@ -3950,7 +3963,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h2 class="govuk-summary-card__title"> Before you start</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="before-you-start">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
@@ -6426,7 +6439,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                     <h2 class="govuk-summary-card__title"> Before you start</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="before-you-start">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
