@@ -54,7 +54,8 @@ const displayProcedureChangeLink = (appealDetails) => {
 	const procedureTypes = [
 		FEATURE_FLAG_NAMES.SECTION_78_HEARING,
 		FEATURE_FLAG_NAMES.SECTION_78_INQUIRY,
-		FEATURE_FLAG_NAMES.SECTION_78
+		FEATURE_FLAG_NAMES.SECTION_78,
+		FEATURE_FLAG_NAMES.EXPEDITED_APPEALS
 	];
 
 	const activeFlags = procedureTypes.map((p) => {

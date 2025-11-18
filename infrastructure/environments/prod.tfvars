@@ -55,6 +55,7 @@ apps_config = {
     featureFlagEnforcementNotice      = false
     featureFlagInvalidDecisionLetter  = false
     featureFlagRule6Parties           = false
+    featureFlagExpeditedAppeals       = false
   }
 
   use_system_test_bc_for_change_lpa = false

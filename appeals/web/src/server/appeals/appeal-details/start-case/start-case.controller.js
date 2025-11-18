@@ -33,7 +33,8 @@ export const getStartDate = async (request, response) => {
 	if (
 		appealType === APPEAL_TYPE.S78 &&
 		(featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_HEARING) ||
-			featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_INQUIRY))
+			featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_INQUIRY) ||
+			featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS))
 	) {
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/start-case/select-procedure${
