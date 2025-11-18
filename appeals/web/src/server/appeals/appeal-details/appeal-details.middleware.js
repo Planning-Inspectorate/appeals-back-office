@@ -28,3 +28,36 @@ export const validateAppeal = async (req, res, next) => {
 		}
 	}
 };
+
+/**
+ *
+ * @param {Array<string>} [selectedKeys=[]]
+ * @returns {import("express").RequestHandler}
+ */
+export const validateSelectedAppeal =
+	(selectedKeys = []) =>
+	async (req, res, next) => {
+		const { appealId, caseId } = req.params;
+
+		if (!areIdParamsValid(appealId || caseId)) {
+			return res.status(400).render('app/400.njk');
+		}
+
+		const keys = selectedKeys.join(',');
+
+		try {
+			const appeal = await getAppealDetailsFromId(req.apiClient, appealId || caseId, keys);
+			if (!appeal) {
+				return res.status(404).render('app/404.njk');
+			}
+			req.currentAppeal = appeal;
+			next();
+		} catch (/** @type {any} */ error) {
+			switch (error?.response?.statusCode) {
+				case 404:
+					return res.status(404).render('app/404.njk');
+				default:
+					return res.status(500).render('app/500.njk');
+			}
+		}
+	};
