@@ -1,4 +1,4 @@
-import { checkAppealExistsById } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controller from './case-team.controller.js';
@@ -70,7 +70,7 @@ router.patch(
 		#swagger.responses[500] = {}
 	 */
 	updateAssignedCaseIdValidator,
-	asyncHandler(checkAppealExistsById),
+	asyncHandler(checkAppealExistsByIdAndAddPartialToRequest([])),
 	asyncHandler(controller.updateAssignedTeamId)
 );
 

@@ -292,39 +292,60 @@ export const appealDetailsIncludeMap = /** @type {const} */ {
  * @template {keyof typeof appealDetailsIncludeMap} K
  *
  * @param {K[]} selectedKeys
- * @param {boolean} [includeDetails]
- * @returns {Pick<typeof appealDetailsIncludeMap, K> | typeof appealDetailsInclude | null}
+ * @param {boolean} includeDetails
+ * @param {boolean} selectAppealTypeKey
+ * @returns {Partial<import('#db-client').Prisma.AppealInclude> | null}
  */
-export const buildAppealInclude = (selectedKeys = [], includeDetails = true) => {
+export const buildAppealInclude = (
+	selectedKeys = [],
+	includeDetails = true,
+	selectAppealTypeKey = false
+) => {
 	if (!includeDetails) {
+		if (selectAppealTypeKey) {
+			return {
+				appealType: { select: { key: true } }
+			};
+		}
 		// Only return appeal details
 		return null;
 	}
 
-	if (!selectedKeys.length) {
+	if (!selectedKeys.length && !selectAppealTypeKey) {
 		// Return everything if no keys are selected
 		return appealDetailsInclude;
 	}
 
-	/** @type {Partial<typeof appealDetailsIncludeMap>} */
-	const include = {};
+	/** @type {Partial<import('#db-client').Prisma.AppealInclude>} */
+	let include = {};
 	for (const key of selectedKeys) {
 		include[key] = appealDetailsIncludeMap[key];
 	}
 
-	return /** @type {Pick<typeof appealDetailsIncludeMap, K>} */ (include);
+	if (selectAppealTypeKey && !selectedKeys.some((key) => key === 'appealType')) {
+		// required for BO middleware to ensure appeal type is enabled
+		include = {
+			...include,
+			appealType: { select: { key: true } }
+		};
+	}
+
+	return include;
 };
 
 /**
+ * @description Gets an appeal and it's related entities.
+ *
  * @template {keyof typeof appealDetailsIncludeMap} K
  *
  * @param {number} id
  * @param {boolean} [includeDetails]
  * @param {K[]} selectedKeys
+ * @param {boolean} [selectAppealTypeKey]
  * @returns {Promise<Appeal|undefined>}
  */
-const getAppealById = async (id, includeDetails = true, selectedKeys = []) => {
-	const include = buildAppealInclude(selectedKeys, includeDetails);
+const getAppealById = async (id, includeDetails = true, selectedKeys = [], selectAppealTypeKey) => {
+	const include = buildAppealInclude(selectedKeys, includeDetails, selectAppealTypeKey);
 
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: {

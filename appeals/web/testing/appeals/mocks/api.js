@@ -9,7 +9,10 @@ export function installMockAppealsService() {
 	nock('http://test/').get('/appeals/').reply(200, appealsNationalList).persist();
 
 	// appeal details
-	nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData).persist();
+	nock('http://test/')
+		.get(`/appeals/${appealData.appealId}?include=all`)
+		.reply(200, appealData)
+		.persist();
 
 	nock('http://test/').get('/appeals/0').reply(500).persist();
 

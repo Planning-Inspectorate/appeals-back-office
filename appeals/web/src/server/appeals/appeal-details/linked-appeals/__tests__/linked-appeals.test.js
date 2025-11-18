@@ -64,13 +64,15 @@ const testInvalidLinkableAppealReference = '7654321';
 
 describe('linked-appeals', () => {
 	beforeEach(() => {
-		nock('http://test/').get('/appeals/1').reply(200, leadAppealDataWithLinkedAppeals);
+		nock('http://test/').get('/appeals/1?include=all').reply(200, leadAppealDataWithLinkedAppeals);
 	});
 	afterEach(teardown);
 
 	describe('GET /linked-appeals/manage', () => {
 		it('should render the manage linked appeals page with the expected content when the appeal is a lead', async () => {
-			nock('http://test/').get('/appeals/1').reply(200, leadAppealDataWithLinkedAppeals);
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, leadAppealDataWithLinkedAppeals);
 			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}${managePath}`);
 			const element = parseHtml(response.text);
 
@@ -81,8 +83,12 @@ describe('linked-appeals', () => {
 			expect(element.innerHTML).not.toContain('Other child appeals of');
 		});
 		it('should render the manage linked appeals page with the expected content when the appeal is a child', async () => {
-			nock('http://test/').get('/appeals/2').reply(200, childAppealDataWithLinkedAppeals);
-			nock('http://test/').get('/appeals/3').reply(200, leadAppealDataWithLinkedAppeals);
+			nock('http://test/')
+				.get('/appeals/2?include=all')
+				.reply(200, childAppealDataWithLinkedAppeals);
+			nock('http://test/')
+				.get('/appeals/3?include=all')
+				.reply(200, leadAppealDataWithLinkedAppeals);
 			const response = await request.get(`${baseUrl}/2${linkedAppealsPath}${managePath}`);
 			const element = parseHtml(response.text);
 
@@ -97,7 +103,7 @@ describe('linked-appeals', () => {
 	describe('GET /linked-appeals/add', () => {
 		it('should render the add linked appeal reference page with the expected content, and a back link to the case details page', async () => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 
 			const response = await request.get(linkedAppealsAddUrl);
 			const element = parseHtml(response.text, { rootElement: 'body' });
@@ -112,7 +118,7 @@ describe('linked-appeals', () => {
 	describe('POST /linked-appeals/add', () => {
 		it('should re-render the add linked appeal reference page with the expected error message if no reference was provided', async () => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 			nock('http://test/')
 				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, linkableAppealSummaryBackOffice);
@@ -136,7 +142,7 @@ describe('linked-appeals', () => {
 
 		it('should re-render the add linked appeal reference page with the expected error message if the provided appeal reference is less than 7 digits', async () => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 			nock('http://test/')
 				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, linkableAppealSummaryBackOffice);
@@ -160,7 +166,7 @@ describe('linked-appeals', () => {
 
 		it('should re-render the add linked appeal reference page with the expected error message if the provided appeal reference is greater than 7 digits', async () => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 			nock('http://test/')
 				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, linkableAppealSummaryBackOffice);
@@ -184,7 +190,7 @@ describe('linked-appeals', () => {
 
 		it('should re-render the add linked appeal reference page with the expected error message if the reference was provided but no matching appeal was found', async () => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 			nock('http://test/')
 				.get(`/appeals/linkable-appeal/${testInvalidLinkableAppealReference}/linked`)
 				.reply(404);
@@ -211,7 +217,7 @@ describe('linked-appeals', () => {
 			const appealReference = '6000123';
 			nock.cleanAll();
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, { ...appealData, appealReference });
 			nock('http://test/')
 				.get(`/appeals/linkable-appeal/${testInvalidLinkableAppealReference}/linked`)
@@ -243,7 +249,7 @@ describe('linked-appeals', () => {
 			'should re-render the add linked appeal reference page with the expected error message if the provided appeal reference is a horizon appeal (starting with %s)',
 			async (_, appealReference) => {
 				nock.cleanAll();
-				nock('http://test/').get('/appeals/1').reply(200, appealData);
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 				nock('http://test/')
 					.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 					.reply(200, linkableAppealSummaryBackOffice);
@@ -269,7 +275,7 @@ describe('linked-appeals', () => {
 		it('should redirect to the check and confirm page if the reference was provided, a matching appeal was found, is unlinked, and the current appeal is already a lead', async () => {
 			nock.cleanAll();
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, { ...appealData, isParentAppeal: true });
 			nock('http://test/')
 				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
@@ -289,7 +295,7 @@ describe('linked-appeals', () => {
 
 		it('should redirect to the check and confirm page if the reference was provided, a matching appeal was found, is already a lead, and the current appeal is unlinked', async () => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 			nock('http://test/')
 				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, {
@@ -311,7 +317,7 @@ describe('linked-appeals', () => {
 
 		it('should redirect to the lead appeal page if the reference was provided, a matching appeal was found, and neither appeals are already linked', async () => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 			nock('http://test/')
 				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, linkableAppealSummaryBackOffice);
@@ -326,7 +332,7 @@ describe('linked-appeals', () => {
 
 		it('should redirect to a drop out page if either appeal is already linked as a child', async () => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 			nock('http://test/')
 				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(409);
@@ -342,7 +348,7 @@ describe('linked-appeals', () => {
 		it('should redirect to a drop out page if both appeals are already linked as lead appeals', async () => {
 			nock.cleanAll();
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, { ...appealData, isParentAppeal: true });
 			nock('http://test/')
 				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
@@ -361,7 +367,7 @@ describe('linked-appeals', () => {
 
 		it('should redirect to a drop out page if the appeal cannot be linked due to an invalid case status', async () => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 			nock('http://test/')
 				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(432);
@@ -380,9 +386,9 @@ describe('linked-appeals', () => {
 	describe('GET /linked-appeals/add/check-and-confirm', () => {
 		it('should render the change lead appeal page', async () => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
-				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
+				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}?include=all`)
 				.reply(200, {
 					...appealData,
 					appealId: linkableAppealSummaryBackOffice.appealId,
@@ -428,11 +434,11 @@ describe('linked-appeals', () => {
 			const testNewValidLinkableAppealReference = '1234765';
 			nock.cleanAll();
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, { ...appealData, appealReference: testNewValidLinkableAppealReference })
 				.persist();
 			nock('http://test/')
-				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
+				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}?include=all`)
 				.reply(200, {
 					...appealData,
 					appealId: linkableAppealSummaryBackOffice.appealId,
@@ -491,11 +497,11 @@ describe('linked-appeals', () => {
 		it('should render the check and confirm page when a lead appeal has been chosen as it is already linked', async () => {
 			nock.cleanAll();
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, { ...appealData, isParentAppeal: true })
 				.persist();
 			nock('http://test/')
-				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
+				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}?include=all`)
 				.reply(200, {
 					...appealData,
 					appealId: linkableAppealSummaryBackOffice.appealId,
@@ -540,9 +546,9 @@ describe('linked-appeals', () => {
 	describe('GET /linked-appeals/add/lead-appeal', () => {
 		it('should render the change lead appeal page', async () => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
-				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
+				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}?include=all`)
 				.reply(200, {
 					...appealData,
 					appealId: linkableAppealSummaryBackOffice.appealId,
@@ -584,7 +590,7 @@ describe('linked-appeals', () => {
 	describe('POST /linked-appeals/add/lead-appeal', () => {
 		it('should update the lead appeal on the confirm page after submit', async () => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
 				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, {
@@ -623,7 +629,7 @@ describe('linked-appeals', () => {
 
 		it('should reload the page and show an error if no option is selected', async () => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
 				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, {
@@ -653,7 +659,7 @@ describe('linked-appeals', () => {
 		it('should re-render the check and confirm page with the expected error message if the API endpoint returns a 400 (validation) error', async () => {
 			nock.cleanAll();
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealData,
 					isParentAppeal: false,
@@ -662,7 +668,7 @@ describe('linked-appeals', () => {
 				})
 				.persist();
 			nock('http://test/')
-				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
+				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}?include=all`)
 				.reply(200, {
 					...appealData,
 					appealId: linkableAppealSummaryBackOffice.appealId,
@@ -720,7 +726,7 @@ describe('linked-appeals', () => {
 		it('should call the link-appeal endpoint to link the candidate as lead of the target, and redirect to the case details page for the target appeal, if the candidate is a back office appeal, and the "lead" radio option was selected', async () => {
 			nock.cleanAll();
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealData,
 					isParentAppeal: false,
@@ -729,7 +735,7 @@ describe('linked-appeals', () => {
 				})
 				.persist();
 			nock('http://test/')
-				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
+				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}?include=all`)
 				.reply(200, {
 					...appealData,
 					appealId: linkableAppealSummaryBackOffice.appealId,
@@ -762,7 +768,7 @@ describe('linked-appeals', () => {
 		it('should call the link-appeal endpoint to link the candidate as child of the target, and redirect to the case details page for the target appeal, if the candidate is a back office appeal, and the "child" radio option was selected', async () => {
 			nock.cleanAll();
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealData,
 					isParentAppeal: false,
@@ -771,7 +777,7 @@ describe('linked-appeals', () => {
 				})
 				.persist();
 			nock('http://test/')
-				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
+				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}?include=all`)
 				.reply(200, {
 					...appealData,
 					appealId: linkableAppealSummaryBackOffice.appealId,
@@ -804,7 +810,7 @@ describe('linked-appeals', () => {
 		it('should call the link-legacy-appeal endpoint to link the candidate as lead of the target, and redirect to the case details page for the target appeal, if the candidate is a legacy (Horizon) appeal, and the "lead" radio option was selected', async () => {
 			nock.cleanAll();
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealData,
 					isParentAppeal: false,
@@ -813,7 +819,7 @@ describe('linked-appeals', () => {
 				})
 				.persist();
 			nock('http://test/')
-				.get(`/appeals/${linkableAppealSummaryHorizon.appealId}`)
+				.get(`/appeals/${linkableAppealSummaryHorizon.appealId}?include=all`)
 				.reply(200, {
 					...appealData,
 					appealId: linkableAppealSummaryHorizon.appealId,
@@ -846,7 +852,7 @@ describe('linked-appeals', () => {
 		it('should call the link-legacy-appeal endpoint to link the candidate as child of the target, and redirect to the case details page for the target appeal, if the candidate is a legacy (Horizon) appeal, and the "child" radio option was selected', async () => {
 			nock.cleanAll();
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealData,
 					isParentAppeal: false,
@@ -855,7 +861,7 @@ describe('linked-appeals', () => {
 				})
 				.persist();
 			nock('http://test/')
-				.get(`/appeals/${linkableAppealSummaryHorizon.appealId}`)
+				.get(`/appeals/${linkableAppealSummaryHorizon.appealId}?include=all`)
 				.reply(200, {
 					...appealData,
 					appealId: linkableAppealSummaryHorizon.appealId,
@@ -888,7 +894,10 @@ describe('linked-appeals', () => {
 
 	describe('GET /change-appeal-type/unlink-appeal', () => {
 		it('should render the unlink-appeal page', async () => {
-			nock('http://test/').get('/appeals/1').reply(200, leadAppealDataWithLinkedAppeals).persist();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, leadAppealDataWithLinkedAppeals)
+				.persist();
 			const response = await request.get(
 				`${baseUrl}/1${linkedAppealsPath}${unlinkAppealPath}/1/1/1`
 			);
@@ -913,7 +922,10 @@ describe('linked-appeals', () => {
 
 	describe('POST /change-appeal-type/unlink-appeal', () => {
 		beforeEach(() => {
-			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData).persist();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, inspectorDecisionData)
+				.persist();
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(teardown);

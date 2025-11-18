@@ -26,7 +26,7 @@ describe('Timetable', () => {
 				}
 			};
 
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, { planningObligation: { hasObligation: false } });
@@ -55,7 +55,7 @@ describe('Timetable', () => {
 					appealData.appealType = appealType;
 					appealData.appealStatus = 'lpa_questionnaire';
 
-					nock('http://test/').get('/appeals/1').reply(200, appealData);
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/0')
 						.reply(200, { planningObligation: { hasObligation: false } });
@@ -98,7 +98,7 @@ describe('Timetable', () => {
 						}
 					};
 
-					nock('http://test/').get('/appeals/1').reply(200, appealData);
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/0')
 						.reply(200, { planningObligation: { hasObligation: false } });
@@ -130,7 +130,7 @@ describe('Timetable', () => {
 					appealData.appealType = appealType;
 					appealData.appealStatus = 'statements';
 
-					nock('http://test/').get('/appeals/1').reply(200, appealData);
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/0')
 						.reply(200, { planningObligation: { hasObligation: false } });
@@ -162,7 +162,7 @@ describe('Timetable', () => {
 					appealData.appealType = appealType;
 					appealData.appealStatus = 'final_comments';
 
-					nock('http://test/').get('/appeals/1').reply(200, appealData);
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/0')
 						.reply(200, { planningObligation: { hasObligation: false } });
@@ -197,7 +197,7 @@ describe('Timetable', () => {
 						procedureType: 'Hearing'
 					};
 
-					nock('http://test/').get('/appeals/1').reply(200, appealData);
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/0')
 						.reply(200, { planningObligation: { hasObligation: false } });
@@ -237,7 +237,7 @@ describe('Timetable', () => {
 						procedureType: 'Hearing'
 					};
 
-					nock('http://test/').get('/appeals/1').reply(200, appealData);
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/0')
 						.reply(200, { planningObligation: { hasObligation: true } });
@@ -280,7 +280,7 @@ describe('Timetable', () => {
 						procedureType: 'Inquiry'
 					};
 
-					nock('http://test/').get('/appeals/1').reply(200, appealData);
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/0')
 						.reply(200, { planningObligation: { hasObligation: false } });
@@ -329,7 +329,7 @@ describe('Timetable', () => {
 						procedureType: 'Inquiry'
 					};
 
-					nock('http://test/').get('/appeals/1').reply(200, appealData);
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/0')
 						.reply(200, { planningObligation: { hasObligation: true } });
@@ -376,7 +376,7 @@ describe('Timetable', () => {
 
 			beforeEach(() => {
 				nock.cleanAll();
-				nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 				nock('http://test/')
 					.get('/appeals/1/appellant-cases/0')
 					.reply(200, { planningObligation: { hasObligation: false } })
@@ -479,7 +479,7 @@ describe('Timetable', () => {
 
 				beforeEach(() => {
 					nock.cleanAll();
-					nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/0')
 						.reply(200, { planningObligation: { hasObligation: false } })
@@ -690,7 +690,7 @@ describe('Timetable', () => {
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/0')
 						.reply(200, { planningObligation: { hasObligation: false } });
-					nock('http://test/').get('/appeals/1').reply(200, appeal).persist();
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appeal).persist();
 					nock('http://test/')
 						.post(`/appeals/validate-business-date`)
 						.reply(200, { result: true })
@@ -747,7 +747,7 @@ describe('Timetable', () => {
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/0')
 						.reply(200, { planningObligation: { hasObligation: false } });
-					nock('http://test/').get('/appeals/1').reply(200, appeal).persist();
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appeal).persist();
 					nock('http://test/')
 						.post(`/appeals/validate-business-date`)
 						.reply(200, { result: true })
@@ -793,7 +793,7 @@ describe('Timetable', () => {
 
 				beforeEach(() => {
 					nock.cleanAll();
-					nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/0')
 						.reply(200, { planningObligation: { hasObligation: true } })
@@ -1024,7 +1024,7 @@ describe('Timetable', () => {
 
 				beforeEach(() => {
 					nock.cleanAll();
-					nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/0')
 						.reply(200, { planningObligation: { hasObligation: true } })
@@ -1266,7 +1266,7 @@ describe('Timetable', () => {
 
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, { planningObligation: { hasObligation: false } })
@@ -1337,7 +1337,7 @@ describe('Timetable', () => {
 						.post(`/appeals/validate-business-date`)
 						.reply(200, { result: true })
 						.persist();
-					nock('http://test/').get('/appeals/1').reply(200, appeal).persist();
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appeal).persist();
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/0')
 						.reply(200, { planningObligation: { hasObligation: false } })
@@ -1398,7 +1398,7 @@ describe('Timetable', () => {
 						.post(`/appeals/validate-business-date`)
 						.reply(200, { result: true })
 						.persist();
-					nock('http://test/').get('/appeals/1').reply(200, appeal).persist();
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appeal).persist();
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/0')
 						.reply(200, { planningObligation: { hasObligation: false } })
@@ -1454,7 +1454,7 @@ describe('Timetable', () => {
 						.post(`/appeals/validate-business-date`)
 						.reply(200, { result: true })
 						.persist();
-					nock('http://test/').get('/appeals/1').reply(200, appeal).persist();
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appeal).persist();
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/0')
 						.reply(200, { planningObligation: { hasObligation: false } })
@@ -1510,7 +1510,7 @@ describe('Timetable', () => {
 						.post(`/appeals/validate-business-date`)
 						.reply(200, { result: true })
 						.persist();
-					nock('http://test/').get('/appeals/1').reply(200, appeal).persist();
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appeal).persist();
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/0')
 						.reply(200, { planningObligation: { hasObligation: false } })
@@ -1557,7 +1557,7 @@ describe('Timetable', () => {
 						.post(`/appeals/validate-business-date`)
 						.reply(200, { result: true })
 						.persist();
-					nock('http://test/').get('/appeals/1').reply(200, appeal).persist();
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appeal).persist();
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/0')
 						.reply(200, { planningObligation: { hasObligation: false } })
@@ -1617,7 +1617,7 @@ describe('Timetable', () => {
 						.post(`/appeals/validate-business-date`)
 						.reply(200, { result: true })
 						.persist();
-					nock('http://test/').get('/appeals/1').reply(200, appeal).persist();
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appeal).persist();
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/0')
 						.reply(200, { planningObligation: { hasObligation: true } })
@@ -1672,7 +1672,7 @@ describe('Timetable', () => {
 
 			beforeEach(() => {
 				nock.cleanAll();
-				nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 				nock('http://test/')
 					.get('/appeals/1/appellant-cases/0')
 					.reply(200, { planningObligation: { hasObligation: false } })

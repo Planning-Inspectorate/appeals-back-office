@@ -16,7 +16,7 @@ describe('Change to inquiry address details', () => {
 	beforeEach(() => {
 		installMockApi();
 		nock('http://test/')
-			.get(`/appeals/${appealId}`)
+			.get(`/appeals/${appealId}?include=all`)
 			.reply(200, { ...appealData, appealId })
 			.persist();
 	});
@@ -32,7 +32,7 @@ describe('Change to inquiry address details', () => {
 
 		beforeAll(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(`${baseUrl}/${appealId}/Inquiry/setup/address-details`);
@@ -73,7 +73,7 @@ describe('Change to inquiry address details', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 		});
 

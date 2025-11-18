@@ -27,7 +27,7 @@ describe('cancel inquiry', () => {
 
 		beforeAll(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealWithInquiry, appealId });
 
 			const response = await request.get(`${baseUrl}/${appealId}/inquiry/cancel`);
@@ -60,7 +60,7 @@ describe('cancel inquiry', () => {
 	describe('POST /inquiry/cancel', () => {
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.times(4)
 				.reply(200, { ...appealWithInquiry, appealId });
 		});

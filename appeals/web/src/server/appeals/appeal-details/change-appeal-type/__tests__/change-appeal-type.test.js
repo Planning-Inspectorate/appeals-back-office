@@ -33,7 +33,10 @@ const invalidAppealChangeTypeStatuses = Object.values(APPEAL_CASE_STATUS).filter
 describe('change-appeal-type', () => {
 	beforeEach(() => {
 		installMockApi();
-		nock('http://test/').get('/appeals/1').reply(200, appealData);
+		nock('http://test/')
+			.get('/appeals/1?include=appealType,appealStatus')
+			.reply(200, appealData)
+			.persist();
 		nock('http://test/').get('/appeals/appeal-types').reply(200, appealTypesData);
 		//mocking the for example date for snapshots
 		Date.now = jest.fn(() => new Date(Date.UTC(2024, 8, 14)).valueOf());
@@ -50,7 +53,9 @@ describe('change-appeal-type', () => {
 				};
 
 				installMockApi();
-				nock('http://test/').get('/appeals/123943').reply(200, amendedAppeal);
+				nock('http://test/')
+					.get('/appeals/123943?include=appealType,appealStatus')
+					.reply(200, amendedAppeal);
 				nock('http://test/').get('/appeals/123943/appeal-types').reply(200, appealTypesData);
 
 				const response = await request.get(
@@ -73,7 +78,9 @@ describe('change-appeal-type', () => {
 				};
 
 				installMockApi();
-				nock('http://test/').get('/appeals/123943').reply(200, amendedAppeal);
+				nock('http://test/')
+					.get('/appeals/123943?include=appealType,appealStatus')
+					.reply(200, amendedAppeal);
 				nock('http://test/').get('/appeals/123943/appeal-types').reply(200, appealTypesData);
 
 				const response = await request.get(
@@ -113,7 +120,9 @@ describe('change-appeal-type', () => {
 				appealStatus: APPEAL_CASE_STATUS.VALIDATION
 			};
 
-			nock('http://test/').get('/appeals/123943').reply(200, amendedAppeal);
+			nock('http://test/')
+				.get('/appeals/123943?include=appealType,appealStatus')
+				.reply(200, amendedAppeal);
 			nock('http://test/').get('/appeals/123943/appeal-types').reply(200, appealTypesData);
 
 			const response = await request

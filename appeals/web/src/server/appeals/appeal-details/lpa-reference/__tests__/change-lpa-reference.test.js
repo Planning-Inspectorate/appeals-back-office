@@ -11,7 +11,7 @@ const baseUrl = '/appeals-service/appeal-details';
 describe('change-lpa-reference', () => {
 	beforeEach(() => {
 		nock('http://test/')
-			.get(`/appeals/${appealData.appealId}`)
+			.get(`/appeals/${appealData.appealId}?include=all`)
 			.reply(200, { ...appealData, lpaQuestionnaireId: null })
 			.persist();
 	});

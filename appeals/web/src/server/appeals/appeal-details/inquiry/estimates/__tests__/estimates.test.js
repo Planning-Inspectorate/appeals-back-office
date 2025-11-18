@@ -103,7 +103,7 @@ describe('add estimates', () => {
 
 		beforeAll(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(`${baseUrl}/${appealId}/inquiry/estimates/add/timings`);
@@ -132,10 +132,10 @@ describe('add estimates', () => {
 
 		it('should render any saved response', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			//set session data with post request
@@ -160,7 +160,7 @@ describe('add estimates', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 		});
 
@@ -213,7 +213,7 @@ describe('add estimates', () => {
 
 		beforeEach(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			// set session data with post request to previous page
@@ -250,7 +250,7 @@ describe('add estimates', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 		});
 
@@ -352,7 +352,7 @@ describe('change estimates', () => {
 
 		beforeAll(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealWithEstimates, appealId });
 
 			const response = await request.get(`${baseUrl}/${appealId}/inquiry/estimates/change/timings`);
@@ -381,10 +381,10 @@ describe('change estimates', () => {
 
 		it('should render any saved response', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealWithEstimates, appealId });
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealWithEstimates, appealId });
 
 			//set session data with post request
@@ -405,10 +405,10 @@ describe('change estimates', () => {
 
 		it('should render existing values if no session data is present', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealWithEstimates, appealId });
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealWithEstimates, appealId });
 
 			const response = await request.get(`${baseUrl}/${appealId}/inquiry/estimates/change/timings`);
@@ -426,7 +426,7 @@ describe('change estimates', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealWithEstimates, appealId });
 		});
 
@@ -479,7 +479,7 @@ describe('change estimates', () => {
 
 		beforeEach(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			// set session data with post request to previous page
@@ -516,7 +516,7 @@ describe('change estimates', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealWithEstimates, appealId });
 		});
 

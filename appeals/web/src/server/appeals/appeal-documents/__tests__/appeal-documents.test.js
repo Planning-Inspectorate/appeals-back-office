@@ -52,7 +52,7 @@ describe('appeal-documents', () => {
 		});
 
 		it('should return 404 if appeal ID is not found', async () => {
-			nock('http://test/').get(`/appeals/${invalidAppealId}`).reply(404);
+			nock('http://test/').get(`/appeals/${invalidAppealId}?include=all`).reply(404);
 			nock('http://test/').get(`/appeals/${invalidAppealId}/document-folders/1`).reply(404);
 
 			const response = await request.get(getControllerEndpoint(invalidAppealId, invalidFolderId));
@@ -61,7 +61,9 @@ describe('appeal-documents', () => {
 		});
 
 		it('should return 404 if folder ID is not found', async () => {
-			nock('http://test/').get(`/appeals/${validAppealId}`).reply(200, { id: validAppealId });
+			nock('http://test/')
+				.get(`/appeals/${validAppealId}?include=all`)
+				.reply(200, { id: validAppealId });
 			nock('http://test/')
 				.get(`/appeals/${validAppealId}/document-folders/1`)
 				.reply(200, validFolders);
@@ -71,7 +73,9 @@ describe('appeal-documents', () => {
 		});
 
 		it('should return 404 if document ID is not found', async () => {
-			nock('http://test/').get(`/appeals/${validAppealId}`).reply(200, { id: validAppealId });
+			nock('http://test/')
+				.get(`/appeals/${validAppealId}?include=all`)
+				.reply(200, { id: validAppealId });
 			nock('http://test/')
 				.get(`/appeals/${validAppealId}/document-folders/1`)
 				.reply(200, validFolders[0]);
@@ -84,7 +88,9 @@ describe('appeal-documents', () => {
 		});
 
 		it('should render upload form if appeal ID and folder ID are found', async () => {
-			nock('http://test/').get(`/appeals/${validAppealId}`).reply(200, { id: validAppealId });
+			nock('http://test/')
+				.get(`/appeals/${validAppealId}?include=all`)
+				.reply(200, { id: validAppealId });
 			nock('http://test/')
 				.get(`/appeals/${validAppealId}/document-folders/1`)
 				.reply(200, validFolders[0]);
@@ -104,7 +110,9 @@ describe('appeal-documents', () => {
 		});
 
 		it('should render upload form if appeal ID, folder ID and document ID are found', async () => {
-			nock('http://test/').get(`/appeals/${validAppealId}`).reply(200, { id: validAppealId });
+			nock('http://test/')
+				.get(`/appeals/${validAppealId}?include=all`)
+				.reply(200, { id: validAppealId });
 			nock('http://test/')
 				.get(`/appeals/${validAppealId}/document-folders/1`)
 				.reply(200, validFolders[0]);
@@ -141,7 +149,9 @@ describe('appeal-documents', () => {
 		});
 
 		it('should render appeal ID and folder ID as data attributes', async () => {
-			nock('http://test/').get(`/appeals/${validAppealId}`).reply(200, { id: validAppealId });
+			nock('http://test/')
+				.get(`/appeals/${validAppealId}?include=all`)
+				.reply(200, { id: validAppealId });
 			nock('http://test/')
 				.get(`/appeals/${validAppealId}/document-folders/1`)
 				.reply(200, validFolders[0]);
@@ -159,7 +169,9 @@ describe('appeal-documents', () => {
 		});
 
 		it('should render all necessary metadata attributes', async () => {
-			nock('http://test/').get(`/appeals/${validAppealId}`).reply(200, { id: validAppealId });
+			nock('http://test/')
+				.get(`/appeals/${validAppealId}?include=all`)
+				.reply(200, { id: validAppealId });
 			nock('http://test/')
 				.get(`/appeals/${validAppealId}/document-folders/1`)
 				.reply(200, validFolders[0]);
@@ -189,7 +201,9 @@ describe('appeal-documents', () => {
 		});
 
 		it('should render blob host and container', async () => {
-			nock('http://test/').get(`/appeals/${validAppealId}`).reply(200, { id: validAppealId });
+			nock('http://test/')
+				.get(`/appeals/${validAppealId}?include=all`)
+				.reply(200, { id: validAppealId });
 			nock('http://test/')
 				.get(`/appeals/${validAppealId}/document-folders/1`)
 				.reply(200, validFolders[0]);
@@ -226,7 +240,9 @@ describe('appeal-documents', () => {
 		};
 
 		beforeEach(() => {
-			nock('http://test/').get(`/appeals/${validAppealId}`).reply(200, { id: validAppealId });
+			nock('http://test/')
+				.get(`/appeals/${validAppealId}?include=all`)
+				.reply(200, { id: validAppealId });
 			nock('http://test/').get(`/appeals/${validAppealId}/document-folders/1`).reply(200, folder);
 			nock('http://test/')
 				.get(`/appeals/${validAppealId}/documents/${documentId}`)

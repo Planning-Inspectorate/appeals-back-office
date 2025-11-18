@@ -22,7 +22,7 @@ describe('environmental-impact-assessment', () => {
 
 			for (const testCase of testCases) {
 				it(`should render a row for "Meets or exceeds column 2 threshold criteria" with a value of "${testCase.expectedContent}" if eiaColumnTwoThreshold is ${testCase.value}`, async () => {
-					nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
 					nock('http://test/')
 						.get('/appeals/1/lpa-questionnaires/2')
 						.reply(200, {
@@ -57,7 +57,7 @@ describe('environmental-impact-assessment', () => {
 
 			for (const testCase of testCases) {
 				it(`should render a row for "Did your screening opinion say the development needed an environmental statement?" with a value of "${testCase.expectedContent}" if eiaRequiresEnvironmentalStatement is ${testCase.value}`, async () => {
-					nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
 					nock('http://test/')
 						.get('/appeals/1/lpa-questionnaires/2')
 						.reply(200, {
@@ -97,7 +97,7 @@ describe('environmental-impact-assessment', () => {
 				it(`should render a row for "In, partly in, or likely to affect a sensitive area" with a value of "${testCase.expectedContent.join(
 					', '
 				)}" if eiaSensitiveAreaDetails is "${testCase.value}"`, async () => {
-					nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
 					nock('http://test/')
 						.get('/appeals/1/lpa-questionnaires/2')
 						.reply(200, {
@@ -127,7 +127,7 @@ describe('environmental-impact-assessment', () => {
 			}
 
 			it('should render a row for "In, partly in, or likely to affect a sensitive area" with the value wrapped in a "show more" component, if eiaSensitiveAreaDetails is more than 300 characters in length', async () => {
-				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get('/appeals/1/lpa-questionnaires/2')
 					.reply(200, {
@@ -158,7 +158,7 @@ describe('environmental-impact-assessment', () => {
 				it(`should render a row for "Did you consult all the relevant statutory consultees about the development?" with a value of "${testCase.expectedContent.join(
 					', '
 				)}" if eiaConsultedBodiesDetails is "${testCase.value}"`, async () => {
-					nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
 					nock('http://test/')
 						.get('/appeals/1/lpa-questionnaires/2')
 						.reply(200, {
@@ -188,7 +188,7 @@ describe('environmental-impact-assessment', () => {
 			}
 
 			it('should render a row for "Did you consult all the relevant statutory consultees about the development?" with the value wrapped in a "show more" component, if eiaConsultedBodiesDetails is more than 300 characters in length', async () => {
-				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get('/appeals/1/lpa-questionnaires/2')
 					.reply(200, {
@@ -409,7 +409,7 @@ describe('environmental-impact-assessment', () => {
 
 		describe('GET /environmental-impact-assessment/sensitive-area-details/change', () => {
 			it('should render the change sensitive area details page with "No" radio option checked, and no text populated in the textarea, if eiaSensitiveAreaDetails is null', async () => {
-				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 					.reply(200, {
@@ -442,7 +442,7 @@ describe('environmental-impact-assessment', () => {
 			});
 
 			it('should render the change sensitive area details page with "Yes" radio option checked, and "test sensitive area details" populated in the textarea, if eiaSensitiveAreaDetails is "test sensitive area details"', async () => {
-				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 					.reply(200, {
@@ -477,7 +477,7 @@ describe('environmental-impact-assessment', () => {
 
 		describe('POST /environmental-impact-assessment/sensitive-area-details/change', () => {
 			it('should re-render the change sensitive area details page with the expected validation error and the "yes" radio option checked, if "yes" was selected but no text was entered in the details textarea', async () => {
-				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 					.reply(200, {
@@ -520,7 +520,7 @@ describe('environmental-impact-assessment', () => {
 			});
 
 			it('should re-render the change sensitive area details page with the expected validation error, and the "yes" radio option checked, and the details textarea pre-populated with the submitted text, if "yes" was selected and the text entered in the details textarea exceeds 1000 characters in length', async () => {
-				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 					.reply(200, {
@@ -610,7 +610,7 @@ describe('environmental-impact-assessment', () => {
 
 		describe('GET /environmental-impact-assessment/consulted-bodies-details/change', () => {
 			it('should render the change consulted bodies details page with "No" radio option checked, and no text populated in the textarea, if eiaConsultedBodiesDetails is null', async () => {
-				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 					.reply(200, {
@@ -643,7 +643,7 @@ describe('environmental-impact-assessment', () => {
 			});
 
 			it('should render the change consulted bodies details page with "Yes" radio option checked, and "test consulted bodies details" populated in the textarea, if eiaConsultedBodiesDetails is "test consulted bodies details"', async () => {
-				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 					.reply(200, {
@@ -678,7 +678,7 @@ describe('environmental-impact-assessment', () => {
 
 		describe('POST /environmental-impact-assessment/consulted-bodies-details/change', () => {
 			it('should re-render the change consulted bodies details page with the expected validation error and the "yes" radio option checked, if "yes" was selected but no text was entered in the details textarea', async () => {
-				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 					.reply(200, {
@@ -721,7 +721,7 @@ describe('environmental-impact-assessment', () => {
 			});
 
 			it('should re-render the change consulted bodies details page with the expected validation error, and the "yes" radio option checked, and the details textarea pre-populated with the submitted text, if "yes" was selected and the text entered in the details textarea exceeds 1000 characters in length', async () => {
-				nock('http://test/').get('/appeals/1').reply(200, appealDataFullPlanning);
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
 				nock('http://test/')
 					.get(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 					.reply(200, {

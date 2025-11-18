@@ -17,7 +17,7 @@ describe('proof-of-evidence', () => {
 		installMockApi();
 		// Common nock setup
 		nock('http://test/')
-			.get('/appeals/2')
+			.get('/appeals/2?include=all')
 			.reply(200, {
 				...appealDataFullPlanning,
 				appealId: 2,

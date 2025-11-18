@@ -18,7 +18,7 @@ describe('set up hearing', () => {
 	describe('GET /hearing/setup', () => {
 		it('should redirect to /hearing/setup/date', async () => {
 			nock('http://test/')
-				.get(`/appeals/2`)
+				.get(`/appeals/2?include=all`)
 				.reply(200, { ...appealData, appealId: 2 });
 
 			const response = await request.get(
@@ -38,7 +38,7 @@ describe('set up hearing', () => {
 
 		beforeAll(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(`${baseUrl}/${appealId}/hearing/setup/date`);
@@ -72,7 +72,7 @@ describe('set up hearing', () => {
 
 		it('should have a back link to the original page if specified', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(
@@ -85,7 +85,7 @@ describe('set up hearing', () => {
 
 		it('should have a back link to the CYA page if editing', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(
@@ -100,7 +100,7 @@ describe('set up hearing', () => {
 
 		it('should render any saved response', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.twice()
 				.reply(200, { ...appealData, appealId });
 
@@ -132,7 +132,7 @@ describe('set up hearing', () => {
 
 		it('should render an edited response', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.twice()
 				.reply(200, { ...appealData, appealId });
 
@@ -170,7 +170,7 @@ describe('set up hearing', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 		});
 
@@ -290,7 +290,7 @@ describe('set up hearing', () => {
 
 		beforeAll(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.twice()
 				.reply(200, { ...appealData, appealId });
 
@@ -335,7 +335,7 @@ describe('set up hearing', () => {
 
 		it('should have a back link to the CYA page if editing this page', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.twice()
 				.reply(200, { ...appealData, appealId });
 
@@ -361,7 +361,7 @@ describe('set up hearing', () => {
 
 		it('should have a back link to the date page if editing began on a previous page', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.twice()
 				.reply(200, { ...appealData, appealId });
 
@@ -387,7 +387,7 @@ describe('set up hearing', () => {
 
 		it('should check the edited value if editing', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.times(4)
 				.reply(200, { ...appealData, appealId });
 
@@ -420,7 +420,7 @@ describe('set up hearing', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 		});
 
@@ -486,7 +486,7 @@ describe('set up hearing', () => {
 
 		beforeAll(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(`${baseUrl}/${appealId}/hearing/setup/address-details`);
@@ -529,7 +529,7 @@ describe('set up hearing', () => {
 
 		it('should have a back link to the CYA page if editing this page', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.times(4)
 				.reply(200, { ...appealData, appealId });
 
@@ -555,7 +555,7 @@ describe('set up hearing', () => {
 
 		it('should have a back link to the address page if editing began on a previous page', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.times(4)
 				.reply(200, { ...appealData, appealId });
 
@@ -581,7 +581,7 @@ describe('set up hearing', () => {
 
 		it('should render the edited values if editing', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.times(5)
 				.reply(200, { ...appealData, appealId });
 
@@ -624,7 +624,7 @@ describe('set up hearing', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 		});
 
@@ -670,7 +670,7 @@ describe('set up hearing', () => {
 
 		beforeEach(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
 			// set session data with post requests to previous pages
@@ -737,7 +737,7 @@ describe('set up hearing', () => {
 
 		it('should have a back link to the address known page if no address was provided', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.times(3)
 				.reply(200, { ...appealData, appealId });
 
@@ -779,7 +779,7 @@ describe('set up hearing', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 		});
 

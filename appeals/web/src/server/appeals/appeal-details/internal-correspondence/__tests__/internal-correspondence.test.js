@@ -128,7 +128,7 @@ describe('internal correspondence', () => {
 	describe('POST /internal-correspondence/:correspondenceCategory/upload-documents/:folderId', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
@@ -251,7 +251,7 @@ describe('internal correspondence', () => {
 	describe('POST /internal-correspondence/:correspondenceCategory/upload-documents/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
@@ -1319,7 +1319,7 @@ describe('internal correspondence', () => {
 	describe('POST /internal-correspondence/:correspondenceCategory/check-your-answers/:folderId', () => {
 		beforeEach(async () => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
 				.get('/appeals/1/document-folders/10')
 				.reply(200, folderInfoCrossTeamCorrespondence)
@@ -1491,7 +1491,7 @@ describe('internal correspondence', () => {
 	describe('POST /internal-correspondence/:correspondenceCategory/check-your-answers/:folderId/:documentId', () => {
 		beforeEach(async () => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
 				.get('/appeals/1/document-folders/10')
 				.reply(200, folderInfoCrossTeamCorrespondence)

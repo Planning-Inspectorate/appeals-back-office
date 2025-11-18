@@ -48,7 +48,7 @@ describe('lpa statement valid', () => {
 	describe('GET /allocation-check', () => {
 		it('should render the allocation check page with expected content', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					allocationDetails: null,
@@ -75,7 +75,7 @@ describe('lpa statement valid', () => {
 
 		it('should render a back link to the review LPA statement page', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -102,7 +102,7 @@ describe('lpa statement valid', () => {
 	describe('GET /allocation-level', () => {
 		it('should render the allocation level page with expected content', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					allocationDetails: null,
@@ -130,7 +130,7 @@ describe('lpa statement valid', () => {
 
 		it('should render a back link to the review LPA statement page, if the appeal has no allocation level or allocation specialisms (i.e. review page was previous page, allocation check was skipped because user must update allocation info)', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					allocationDetails: null,
@@ -145,7 +145,7 @@ describe('lpa statement valid', () => {
 			expect(reviewPageResponse.statusCode).toBe(302);
 
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					allocationDetails: null,
@@ -171,7 +171,7 @@ describe('lpa statement valid', () => {
 
 		it('should render a back link to the allocation check page, if the appeal has both an allocation level and allocation specialisms (i.e. allocation check was previous page because user was given the option to update allocation info or not)', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -185,7 +185,7 @@ describe('lpa statement valid', () => {
 			expect(reviewPageResponse.statusCode).toBe(302);
 
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -212,7 +212,7 @@ describe('lpa statement valid', () => {
 	describe('GET /allocation-specialisms', () => {
 		it('should render the allocation specialisms page with expected content', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -243,7 +243,7 @@ describe('lpa statement valid', () => {
 
 		it('should render a back link to the valid journey version of the allocation level page', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,

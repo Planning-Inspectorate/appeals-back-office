@@ -19,7 +19,10 @@ const checkTransferPath = '/check-transfer';
 describe('change-appeal-type', () => {
 	beforeEach(() => {
 		installMockApi();
-		nock('http://test/').get('/appeals/1').reply(200, appealData);
+		nock('http://test/')
+			.get('/appeals/1?include=appealType,appealStatus')
+			.reply(200, appealData)
+			.persist();
 		nock('http://test/').get('/appeals/1/appeal-types').reply(200, appealTypesData);
 	});
 	afterEach(teardown);

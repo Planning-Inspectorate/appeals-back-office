@@ -35,7 +35,7 @@ const costsDocumentTypes = ['application', 'withdrawal', 'correspondence'];
 describe('costs', () => {
 	beforeEach(() => {
 		installMockApi();
-		nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+		nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 		nock('http://test/')
 			.get('/appeals/document-redaction-statuses')
 			.reply(200, documentRedactionStatuses)

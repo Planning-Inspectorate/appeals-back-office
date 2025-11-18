@@ -30,7 +30,7 @@ describe('environmental-assessment', () => {
 		usersService.getUserById = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
 		// @ts-ignore
 		usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
-		nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealData).persist();
+		nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appealData).persist();
 		nock('http://test/').post(`/appeals/${appealId}/documents`).reply(200);
 		nock('http://test/')
 			.get(`/appeals/${appealId}/documents/${documentId}`)

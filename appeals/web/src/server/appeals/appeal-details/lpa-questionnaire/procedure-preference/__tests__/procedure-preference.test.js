@@ -17,7 +17,7 @@ describe('procedure-preference', () => {
 	beforeEach(() => {
 		installMockApi();
 		nock('http://test/')
-			.get('/appeals/2')
+			.get('/appeals/2?include=all')
 			.reply(200, {
 				...appealDataFullPlanning,
 				appealId: 2

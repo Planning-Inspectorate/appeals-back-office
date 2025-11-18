@@ -29,7 +29,10 @@ describe('update-decision-letter', () => {
 	beforeEach(() => {
 		installMockApi();
 		nock.cleanAll();
-		nock('http://test/').get('/appeals/1').reply(200, appealDataIssuedDecision).persist();
+		nock('http://test/')
+			.get('/appeals/1?include=all')
+			.reply(200, appealDataIssuedDecision)
+			.persist();
 	});
 	afterEach(teardown);
 
@@ -130,7 +133,10 @@ describe('update-decision-letter', () => {
 
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, issueDecisionAppealData)
+				.persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
@@ -192,7 +198,10 @@ describe('update-decision-letter', () => {
 
 		beforeEach(async () => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, issueDecisionAppealData)
+				.persist();
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			nock('http://test/')

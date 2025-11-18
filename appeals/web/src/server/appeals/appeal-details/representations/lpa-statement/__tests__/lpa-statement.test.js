@@ -28,7 +28,7 @@ describe('lpa-statements', () => {
 		installMockApi();
 		// Common nock setup
 		nock('http://test/')
-			.get('/appeals/2')
+			.get('/appeals/2?include=all')
 			.reply(200, {
 				...appealDataFullPlanning,
 				appealId: 2,
@@ -57,7 +57,7 @@ describe('lpa-statements', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -214,7 +214,7 @@ describe('lpa-statements', () => {
 
 		it('should re-render the review page with the expected error message if a review status was not selected', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -237,7 +237,7 @@ describe('lpa-statements', () => {
 
 		it('should redirect to the allocation level page, if "valid" status was selected and the appeal has no allocation level', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -260,7 +260,7 @@ describe('lpa-statements', () => {
 
 		it('should redirect to the allocation level page, if "valid" status was selected and the appeal has no allocation specialisms', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -283,7 +283,7 @@ describe('lpa-statements', () => {
 
 		it('should redirect to the allocation check page, if "valid" status was selected and the appeal has both an allocation level and allocation specialisms', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -302,7 +302,7 @@ describe('lpa-statements', () => {
 
 		it('should redirect to the incomplete reasons page if "incomplete" status was selected', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -321,7 +321,7 @@ describe('lpa-statements', () => {
 
 		it('should redirect to the redact statement page if "redact and accept" status was selected', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -361,7 +361,7 @@ describe('lpa-statements', () => {
 
 			it('should display "Do you need to update the allocation level and specialisms?" row and allocation-specialisms row if allocation and specialisms were previously set', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}`)
+					.get(`/appeals/${appealId}?include=all`)
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId,
@@ -397,7 +397,7 @@ describe('lpa-statements', () => {
 
 			it('should not display "Do you need to update the allocation level and specialisms?" row and should display allocation-specialisms row if allocation and specialisms were not previously set', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}`)
+					.get(`/appeals/${appealId}?include=all`)
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId,
@@ -429,7 +429,7 @@ describe('lpa-statements', () => {
 
 			it('should display "Do you need to update the allocation level and specialisms?" row and should not display allocation-specialisms row if allocation and specialisms were previously set and asnwer to allocation check was "yes" at first, but later set to "no" at CYA', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}`)
+					.get(`/appeals/${appealId}?include=all`)
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId,
@@ -596,7 +596,7 @@ describe('lpa-statements', () => {
 	describe('GET change-document-name/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId: 2,
@@ -634,7 +634,7 @@ describe('lpa-statements', () => {
 	describe('GET change-document-details/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId: 2,

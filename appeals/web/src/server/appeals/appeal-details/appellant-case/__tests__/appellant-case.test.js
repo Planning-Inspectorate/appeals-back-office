@@ -161,7 +161,7 @@ describe('appellant-case', () => {
 
 		it('should render the appellant case page with the expected content (Full planning appeal / S78)', async () => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId: 2
@@ -217,7 +217,7 @@ describe('appellant-case', () => {
 		});
 		it('should render the appellant case page with the expected content (Listed building planning appeal / S20)', async () => {
 			nock('http://test/')
-				.get('/appeals/3')
+				.get('/appeals/3?include=all')
 				.reply(200, {
 					...appealDataListedBuilding,
 					appealId: 3
@@ -271,7 +271,7 @@ describe('appellant-case', () => {
 
 		it('should render the appellant case page with the expected content (CAS planning)', async () => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataCasPlanning,
 					appealId: 2
@@ -320,7 +320,7 @@ describe('appellant-case', () => {
 
 		it('should render the appellant case page with the expected content (CAS advert)', async () => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataCasAdvert,
 					appealId: 2
@@ -382,7 +382,7 @@ describe('appellant-case', () => {
 
 		it('should render the appellant case page with the expected content (advert) (owns all land)', async () => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataAdvert,
 					appealId: 2
@@ -457,7 +457,7 @@ describe('appellant-case', () => {
 
 		it('should render review outcome form fields and controls when the appeal is in "validation" status', async () => {
 			nock('http://test/')
-				.get(`/appeals/2`)
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealData,
 					appealId: 2,
@@ -496,7 +496,7 @@ describe('appellant-case', () => {
 		for (const appealStatus of appealStatusesWithoutValidation) {
 			it(`should not render review outcome form fields or controls when the appeal is not in "validation" status (${appealStatus})`, async () => {
 				nock('http://test/')
-					.get(`/appeals/2`)
+					.get('/appeals/2?include=all')
 					.reply(200, {
 						...appealData,
 						appealId: 2,
@@ -527,7 +527,7 @@ describe('appellant-case', () => {
 
 		it('should render the appellant case page with the expected content (Enforcement notice)', async () => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataEnforcementNotice,
 					appealId: 2
@@ -584,7 +584,7 @@ describe('appellant-case', () => {
 
 		it('should render the appellant case page with the expected content (Enforcement notice) when no enforcement data', async () => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataEnforcementNotice,
 					appealId: 2
@@ -649,7 +649,7 @@ describe('appellant-case', () => {
 
 		it('should render the appellant case page with the expected content (owns part land and knows some owners', async () => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataCasAdvert,
 					appealId: 2
@@ -714,7 +714,7 @@ describe('appellant-case', () => {
 				const appealId = appealData.appealId.toString();
 				nock.cleanAll();
 				nock('http://test/')
-					.get(`/appeals/${appealId}`)
+					.get(`/appeals/${appealId}?include=all`)
 					.reply(200, {
 						...appealData,
 						lpaQuestionnaireId: undefined
@@ -959,7 +959,7 @@ describe('appellant-case', () => {
 
 			it('should render an "Appeal is invalid" notification banner with the expected content when the appellant case has been reviewed with an outcome of "invalid"', async () => {
 				nock.cleanAll();
-				nock('http://test/').get('/appeals/1').reply(200, appealData);
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 				nock('http://test/')
 					.get('/appeals/1/appellant-cases/0')
 					.reply(200, appellantCaseDataInvalidOutcome);
@@ -996,7 +996,7 @@ describe('appellant-case', () => {
 
 			it('should render an "Appeal is incomplete" notification banner with the expected content when the appellant case has been reviewed with an outcome of "incomplete"', async () => {
 				nock.cleanAll();
-				nock('http://test/').get('/appeals/1').reply(200, appealData);
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 				nock('http://test/')
 					.get('/appeals/1/appellant-cases/0')
 					.reply(200, appellantCaseDataIncompleteOutcome);
@@ -1035,7 +1035,7 @@ describe('appellant-case', () => {
 
 			it('should not render an "Appeal is incomplete" notification banner when the appellant case has been reviewed with an outcome of "incomplete" and then re-reviewed with an outcome of "valid"', async () => {
 				nock.cleanAll();
-				nock('http://test/').get('/appeals/1').reply(200, appealData);
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 				nock('http://test/')
 					.get('/appeals/1/appellant-cases/0')
 					.reply(200, appellantCaseDataIncompleteOutcome);
@@ -1050,7 +1050,7 @@ describe('appellant-case', () => {
 				expect(unprettifiedNotificationBannerHTML).toContain('Appeal is incomplete</h3>');
 
 				nock.cleanAll();
-				nock('http://test/').get('/appeals/1').reply(200, appealData);
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 				nock('http://test/')
 					.get('/appeals/1/appellant-cases/0')
 					.reply(200, appellantCaseDataValidOutcome);
@@ -1160,7 +1160,7 @@ describe('appellant-case', () => {
 				const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
 
 				nock.cleanAll();
-				nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealData);
+				nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appealData);
 				nock('http://test/')
 					.get(`/appeals/${appealId}/appellant-cases/0`)
 					.reply(200, appellantCaseDataIncompleteOutcome);
@@ -1173,7 +1173,7 @@ describe('appellant-case', () => {
 					greenBeltRadio: 'yes'
 				});
 
-				nock('http://test/').get(`/appeals/${appealId}`).reply(200, appealData);
+				nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appealData);
 				nock('http://test/')
 					.get(`/appeals/${appealId}/appellant-cases/0`)
 					.reply(200, appellantCaseDataIncompleteOutcome);
@@ -1261,7 +1261,7 @@ describe('appellant-case', () => {
 				beforeEach(() => {
 					nock.cleanAll();
 					nock('http://test/')
-						.get(`/appeals/${appealId}`)
+						.get(`/appeals/${appealId}?include=all`)
 						.reply(200, {
 							...appealData,
 							appealId
@@ -1365,7 +1365,7 @@ describe('appellant-case', () => {
 			describe('inspector access required', () => {
 				it('should not render a "show more" component on the "inspector access required" row if the associated value is less than or equal to 300 characters in length', async () => {
 					nock('http://test/')
-						.get('/appeals/2')
+						.get('/appeals/2?include=all')
 						.reply(200, {
 							...appealData,
 							appellantCaseId: 3
@@ -1394,7 +1394,7 @@ describe('appellant-case', () => {
 
 				it('should render a "show more" component with the expected HTML on the "inspector access required" row if the associated value is over 300 characters in length', async () => {
 					nock('http://test/')
-						.get('/appeals/2')
+						.get('/appeals/2?include=all')
 						.reply(200, {
 							...appealData,
 							appellantCaseId: 3
@@ -1425,7 +1425,7 @@ describe('appellant-case', () => {
 			describe('potential safety risks', () => {
 				it('should not render a "show more" component on the "potential safety risks" row if the associated value is less than or equal to 300 characters in length', async () => {
 					nock('http://test/')
-						.get('/appeals/2')
+						.get('/appeals/2?include=all')
 						.reply(200, {
 							...appealData,
 							appellantCaseId: 3
@@ -1454,7 +1454,7 @@ describe('appellant-case', () => {
 
 				it('should render a "show more" component with the expected HTML on the "potential safety risks" row if the associated value is over 300 characters in length', async () => {
 					nock('http://test/')
-						.get('/appeals/2')
+						.get('/appeals/2?include=all')
 						.reply(200, {
 							...appealData,
 							appellantCaseId: 3
@@ -1485,7 +1485,7 @@ describe('appellant-case', () => {
 			describe('original development description', () => {
 				it('should not render a "show more" component on the "original development description" row if the associated value is less than or equal to 300 characters in length', async () => {
 					nock('http://test/')
-						.get('/appeals/2')
+						.get('/appeals/2?include=all')
 						.reply(200, {
 							...appealData,
 							appellantCaseId: 3
@@ -1513,7 +1513,7 @@ describe('appellant-case', () => {
 
 				it('should render a "show more" component with the expected HTML on the "original development description" row if the associated value is over 300 characters in length', async () => {
 					nock('http://test/')
-						.get('/appeals/2')
+						.get('/appeals/2?include=all')
 						.reply(200, {
 							...appealData,
 							appellantCaseId: 3
@@ -1543,7 +1543,7 @@ describe('appellant-case', () => {
 			describe('reason for preference', () => {
 				it('should not render a "show more" component on the "reason for preference" row if the associated value is less than or equal to 300 characters in length', async () => {
 					nock('http://test/')
-						.get('/appeals/2')
+						.get('/appeals/2?include=all')
 						.reply(200, {
 							...appealData,
 							appealId: 2,
@@ -1570,7 +1570,7 @@ describe('appellant-case', () => {
 
 				it('should render a "show more" component with the expected HTML on the "reason for preference" row if the associated value is over 300 characters in length', async () => {
 					nock('http://test/')
-						.get('/appeals/2')
+						.get('/appeals/2?include=all')
 						.reply(200, {
 							...appealData,
 							appealId: 2,
@@ -1601,7 +1601,10 @@ describe('appellant-case', () => {
 	describe('GET /appellant-case with unchecked documents', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData).persist();
+			nock('http://test/')
+				.get(`/appeals/${appealData.appealId}?include=all`)
+				.reply(200, appealData)
+				.persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
@@ -2287,7 +2290,7 @@ describe('appellant-case', () => {
 	describe('GET /appellant-case/incomplete/date', () => {
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/1`)
+				.get(`/appeals/1?include=all`)
 				.reply(200, {
 					...appealData,
 					appealId: 1
@@ -2300,7 +2303,7 @@ describe('appellant-case', () => {
 
 		it('should render the update due date page without pre-populated date values if there is no existing due date and applicationDecisionDate is not set', async () => {
 			nock('http://test/')
-				.get(`/appeals/2`)
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealData,
 					appealId: 2,
@@ -2352,7 +2355,7 @@ describe('appellant-case', () => {
 			const expectedValues = dateISOStringToDayMonthYearHourMinute(expectedDate?.toISOString());
 
 			nock('http://test/')
-				.get(`/appeals/2`)
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealData,
 					appealId: 2,
@@ -2393,7 +2396,7 @@ describe('appellant-case', () => {
 
 		it('should render the update due date page with correct pre-populated date values if there is an existing due date', async () => {
 			nock('http://test/')
-				.get(`/appeals/2`)
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealData,
 					appealId: 2,
@@ -3062,7 +3065,10 @@ describe('appellant-case', () => {
 	describe('POST /appellant-case/valid/date', () => {
 		beforeEach(async () => {
 			nock.cleanAll();
-			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData).persist();
+			nock('http://test/')
+				.get(`/appeals/${appealData.appealId}?include=all`)
+				.reply(200, appealData)
+				.persist();
 			nock('http://test/').patch(`/appeals/${appealData.appealId}`).reply(200);
 			nock('http://test/')
 				.patch('/appeals/1/appellant-cases/0')
@@ -3401,7 +3407,7 @@ describe('appellant-case', () => {
 	describe('GET /appellant-case/add-documents/:folderId/', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
@@ -3571,7 +3577,7 @@ describe('appellant-case', () => {
 	describe('GET /appellant-case/add-documents/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
@@ -3743,7 +3749,7 @@ describe('appellant-case', () => {
 	describe('POST /appellant-case/add-documents/:folderId/', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
@@ -3804,7 +3810,7 @@ describe('appellant-case', () => {
 	describe('POST /appellant-case/add-documents/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
@@ -3866,7 +3872,7 @@ describe('appellant-case', () => {
 	describe('GET /appellant-case/add-document-details/:folderId/', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -4511,7 +4517,7 @@ describe('appellant-case', () => {
 	describe('GET /appellant-case/add-document-details/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -5155,7 +5161,7 @@ describe('appellant-case', () => {
 	describe('GET /appellant-case/add-documents/:folderId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
 				.get('/appeals/1/document-folders/1')
 				.reply(200, documentFolderInfo)
@@ -5226,7 +5232,7 @@ describe('appellant-case', () => {
 	describe('POST /appellant-case/add-documents/:folderId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
 				.get('/appeals/1/document-folders/1')
 				.reply(200, documentFolderInfo)
@@ -5315,7 +5321,7 @@ describe('appellant-case', () => {
 	describe('GET /appellant-case/add-documents/:folderId/:documentId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
 				.get('/appeals/1/document-folders/1')
 				.reply(200, documentFolderInfo)
@@ -5387,7 +5393,7 @@ describe('appellant-case', () => {
 	describe('POST /appellant-case/add-documents/:folderId/:documentId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
 				.get('/appeals/1/document-folders/1')
 				.reply(200, documentFolderInfo)

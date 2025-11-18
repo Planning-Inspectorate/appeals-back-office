@@ -27,7 +27,7 @@ describe('final-comments', () => {
 		installMockApi();
 		// Common nock setup
 		nock('http://test/')
-			.get('/appeals/2')
+			.get('/appeals/2?include=all')
 			.reply(200, {
 				...appealDataFullPlanning,
 				appealId: 2,
@@ -297,7 +297,7 @@ describe('final-comments', () => {
 	describe('GET change-document-name/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId: 2,
@@ -335,7 +335,7 @@ describe('final-comments', () => {
 	describe('GET change-document-details/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId: 2,
@@ -440,7 +440,7 @@ describe('final-comments', () => {
 	describe('GET /manage-documents/:folderId/:documentId/:versionId/delete', () => {
 		beforeEach(() => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId: 2,
@@ -493,7 +493,7 @@ describe('final-comments', () => {
 	describe('GET /lpa-questionnaire/1/add-documents/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId: 2,
@@ -550,7 +550,7 @@ describe('final-comments', () => {
 	describe('should render the delete document page with the expected content', () => {
 		beforeEach(() => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId: 2,

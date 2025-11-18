@@ -1,4 +1,3 @@
-import { getAppealTypeByTypeId } from '#repositories/appeal-type.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import { isAppealTypeEnabled } from '#utils/feature-flags-appeal-types.js';
 import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
@@ -30,7 +29,6 @@ export const checkAppealExistsByIdAndAddToRequest = async (req, res, next) => {
 };
 
 /**
- * @deprecated too inefficient, use checkAppealExistsByIdAndAddPartialToRequest
  * @param {Request} req
  * @param {Response} res
  * @param {NextFunction} next
@@ -52,31 +50,7 @@ export const checkAppealExistsByCaseReferenceAndAddToRequest = async (req, res, 
 };
 
 /**
- * @deprecated too inefficient, use checkAppealExistsByIdAndAddPartialToRequest
- * @param {Request} req
- * @param {Response} res
- * @param {NextFunction} next
- * @returns {Promise<Response | void>}
- */
-export const checkAppealExistsById = async (req, res, next) => {
-	const {
-		params: { appealId }
-	} = req;
-
-	const appeal = await appealRepository.getAppealById(Number(appealId), false);
-	const appealType = appeal?.appealType?.key
-		? appeal?.appealType?.key
-		: (await getAppealTypeByTypeId(Number(appeal?.appealTypeId)))?.key;
-
-	if (!appeal || !isAppealTypeEnabled(appealType || '')) {
-		return res.status(404).send({ errors: { appealId: ERROR_NOT_FOUND } });
-	}
-
-	next();
-};
-
-/**
- * @typedef {import('#repositories/appeal.repository.js').appealDetailsIncludeMap} AppealDetailsInclude
+ * @typedef {import('#repositories/appeal.repository.js').appealDetailsInclude} AppealDetailsInclude
  *
  * @param {Array<keyof typeof import('#repositories/appeal.repository.js').appealDetailsIncludeMap>} [selectedKeys=[]]
  * @returns {(req: Request, res: Response, next: NextFunction) => Promise<Response | void>}
@@ -88,14 +62,33 @@ export const checkAppealExistsByIdAndAddPartialToRequest =
 			params: { appealId }
 		} = req;
 
-		if (selectedKeys.length) {
-			selectedKeys = [
-				.../** @type {Set<keyof typeof import('#repositories/appeal.repository.js').appealDetailsIncludeMap>} */
-				(new Set([...selectedKeys, 'appealType']))
-			];
+		let getAppealKeys = selectedKeys;
+		let includeDetails = false;
+		let selectAppealTypeKey = true;
+
+		// Handle requests coming from the web to appeal details endpoint
+		const include = req.query.include;
+		if (include) {
+			if (include === 'all') {
+				// for backwards compatability
+				includeDetails = true;
+				selectAppealTypeKey = false;
+			} else {
+				// @ts-ignore
+				getAppealKeys = include.split(',');
+			}
 		}
 
-		const appeal = await appealRepository.getAppealById(Number(appealId), true, selectedKeys);
+		if (getAppealKeys.length) {
+			includeDetails = true;
+		}
+
+		const appeal = await appealRepository.getAppealById(
+			Number(appealId),
+			includeDetails,
+			getAppealKeys,
+			selectAppealTypeKey
+		);
 
 		if (!appeal || !isAppealTypeEnabled(appeal.appealType?.key || '')) {
 			return res.status(404).send({ errors: { appealId: ERROR_NOT_FOUND } });
