@@ -172,7 +172,14 @@ interface SingleAppellantCaseResponse {
 	};
 	localPlanningDepartment: string;
 	procedureType?: string;
-	enforcementNotice?: boolean | null;
+	enforcementNotice?: {
+		isReceived: boolean | null;
+		isListedBuilding: boolean | null;
+		issueDate: string | null;
+		effectiveDate: string | null;
+		contactPlanningInspectorateDate: string | null;
+		reference: string | null;
+	};
 	siteAccessRequired?: {
 		details: string | null;
 		isRequired: boolean | null;
@@ -193,7 +200,6 @@ interface SingleAppellantCaseResponse {
 	applicationDecisionDate: string | null;
 	applicationDate: string | null;
 	applicationDecision: string | null;
-	enforcementNotice: null;
 	appellantCostsAppliedFor: boolean | null;
 	appellantProcedurePreference: string | null;
 	appellantProcedurePreferenceDetails: string | null;
