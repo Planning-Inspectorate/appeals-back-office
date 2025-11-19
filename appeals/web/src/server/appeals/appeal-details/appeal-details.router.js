@@ -10,7 +10,7 @@ import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import allocationDetailsRouter from './allocation-details/allocation-details.router.js';
 import * as controller from './appeal-details.controller.js';
-import { validateAppeal, validateSelectedAppeal } from './appeal-details.middleware.js';
+import { validateAppeal, validateAppealWithInclude } from './appeal-details.middleware.js';
 import appealTimetablesRouter from './appeal-timetables/appeal-timetables.router.js';
 import siteAddressRouter from './appellant-case/address/address.router.js';
 import appellantCaseRouter from './appellant-case/appellant-case.router.js';
@@ -114,7 +114,7 @@ router.use(
 );
 router.use(
 	'/:appealId/change-appeal-type',
-	validateSelectedAppeal(['appealType', 'appealStatus']),
+	validateAppealWithInclude(['appealType', 'appealStatus']),
 	assertUserHasPermission(permissionNames.updateCase),
 	changeAppealTypeMiddleware
 );

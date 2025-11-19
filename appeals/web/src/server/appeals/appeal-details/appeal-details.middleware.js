@@ -13,7 +13,7 @@ export const validateAppeal = async (req, res, next) => {
 	}
 
 	try {
-		const appeal = await getAppealDetailsFromId(req.apiClient, appealId || caseId);
+		const appeal = await getAppealDetailsFromId(req.apiClient, appealId || caseId, undefined);
 		if (!appeal) {
 			return res.status(404).render('app/404.njk');
 		}
@@ -31,11 +31,11 @@ export const validateAppeal = async (req, res, next) => {
 
 /**
  *
- * @param {Array<string>} [selectedKeys=[]]
+ * @param {Array<string>} [keysToInclude=[]]
  * @returns {import("express").RequestHandler}
  */
-export const validateSelectedAppeal =
-	(selectedKeys = []) =>
+export const validateAppealWithInclude =
+	(keysToInclude = []) =>
 	async (req, res, next) => {
 		const { appealId, caseId } = req.params;
 
@@ -43,10 +43,10 @@ export const validateSelectedAppeal =
 			return res.status(400).render('app/400.njk');
 		}
 
-		const keys = selectedKeys.join(',');
+		const include = keysToInclude.join(',');
 
 		try {
-			const appeal = await getAppealDetailsFromId(req.apiClient, appealId || caseId, keys);
+			const appeal = await getAppealDetailsFromId(req.apiClient, appealId || caseId, include);
 			if (!appeal) {
 				return res.status(404).render('app/404.njk');
 			}
