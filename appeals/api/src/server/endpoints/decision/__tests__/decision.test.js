@@ -8,9 +8,9 @@ import {
 } from '#tests/appeals/mocks.js';
 import { documentCreated, documentVersionCreated, savedFolder } from '#tests/documents/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
+import { FEEDBACK_FORM_LINKS, getFeedbackLinkFromAppealType } from '#utils/feedback-form-link.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
-import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
 	AUDIT_TRAIL_CORRECTION_NOTICE_ADDED,
