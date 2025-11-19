@@ -2,6 +2,8 @@ import { areIdParamsValid } from '#lib/validators/id-param.validator.js';
 import { getAppealDetailsFromId } from './appeal-details.service.js';
 
 /**
+ * @deprecated too inefficient, use validateAppealWithInclude
+ *
  * @type {import("express").RequestHandler}
  * @returns {Promise<void>}
  */
