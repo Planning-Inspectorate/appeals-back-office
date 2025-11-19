@@ -1,7 +1,7 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import appealRepository from '#repositories/appeal.repository.js';
-import { getAssignedTeam } from '#repositories/team.repository.js';
+import { getAssignedTeam, getTeamFromAppeal } from '#repositories/team.repository.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	AUDIT_TRAIL_ASSIGNED_TEAM_UPDATED,
@@ -39,12 +39,7 @@ export const setAssignedTeamId = async (appealId, assignedTeamId, azureAdUserId)
  */
 export const getTeamEmailFromAppealId = async (appealId) => {
 	const DEFAULT_EMAIL = 'caseofficers@planninginspectorate.gov.uk';
-
-	const appeal = await appealRepository.getAppealById(appealId);
-	const teamId = appeal?.assignedTeamId;
-	if (!teamId) return DEFAULT_EMAIL;
-
-	const team = await getAssignedTeam(teamId);
+	const team = await getTeamFromAppeal(appealId);
 	return team?.email || DEFAULT_EMAIL;
 };
 
