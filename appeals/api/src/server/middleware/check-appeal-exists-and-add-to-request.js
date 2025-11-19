@@ -64,16 +64,22 @@ export const checkAppealExistsByIdAndAddPartialToRequest =
 		} = req;
 
 		let getAppealKeys = selectedKeys;
+		let includeDetails = false;
+
+		// Requests coming from the web
 		const include = req.query.include;
-		// for requests coming from the web
 		if (include) {
 			// @ts-ignore
 			getAppealKeys = include.split(',');
 		}
 
+		if (getAppealKeys.length) {
+			includeDetails = true;
+		}
+
 		const appeal = await appealRepository.getAppealById(
 			Number(appealId),
-			true,
+			includeDetails,
 			getAppealKeys,
 			true
 		);

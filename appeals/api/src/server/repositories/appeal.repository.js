@@ -306,7 +306,7 @@ export const buildAppealInclude = (
 		return null;
 	}
 
-	if (!selectedKeys.length) {
+	if (!selectedKeys.length && !selectAppealTypeKey) {
 		// Return everything if no keys are selected
 		return appealDetailsInclude;
 	}
@@ -330,9 +330,6 @@ export const buildAppealInclude = (
 
 /**
  * @description Gets an appeal and it's related entities.
- * Built to be backwards compatable but not recommended to have both includeDetails=true && selectedKeys=[] for performance.
- * For just the appeal entity, set includeDetails=false
- * To join related entites, selectedKeys should contain a list of keys from appealDetailsIncludeMap
  *
  * @template {keyof typeof appealDetailsIncludeMap} K
  *

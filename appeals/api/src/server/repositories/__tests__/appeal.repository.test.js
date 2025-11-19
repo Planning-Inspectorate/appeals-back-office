@@ -36,4 +36,11 @@ describe('buildAppealInclude', () => {
 		const result = buildAppealInclude(['lpaQuestionnaire'], false);
 		expect(result).toBeNull();
 	});
+
+	it('returns appealType.key where includeDetails=true, selectAppealTypeKey=true and selectedKeys does not contain appealType', () => {
+		const result = buildAppealInclude([], true, true);
+		expect(result).not.toBeNull();
+		expect(Object.keys(result)).toEqual(['appealType']);
+		expect(result.appealType).toEqual({ select: { key: true } });
+	});
 });
