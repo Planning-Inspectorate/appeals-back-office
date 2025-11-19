@@ -1,4 +1,5 @@
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
+import enforcementNoticeRouter from '#appeals/appeal-details/appellant-case/enforcement-notice/enforcement-notice.router.js';
 import changeProcedureTypeRouter from '#appeals/appeal-details/change-procedure-type/change-procedure-type.router.js';
 import { permissionNames } from '#environment/permissions.js';
 import { extractAndProcessDocumentDateErrors } from '#lib/validators/date-input.validator.js';
@@ -214,6 +215,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	highwayLandRouter
+);
+
+router.use(
+	'/enforcement-notice',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	enforcementNoticeRouter
 );
 
 router
