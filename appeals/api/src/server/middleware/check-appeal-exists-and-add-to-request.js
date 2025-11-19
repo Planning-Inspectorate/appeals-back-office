@@ -65,12 +65,19 @@ export const checkAppealExistsByIdAndAddPartialToRequest =
 
 		let getAppealKeys = selectedKeys;
 		let includeDetails = false;
+		let selectAppealTypeKey = true;
 
-		// Requests coming from the web
+		// Handle requests coming from the web to appeal details endpoint
 		const include = req.query.include;
 		if (include) {
-			// @ts-ignore
-			getAppealKeys = include.split(',');
+			if (include === 'all') {
+				// for backwards compatability
+				includeDetails = true;
+				selectAppealTypeKey = false;
+			} else {
+				// @ts-ignore
+				getAppealKeys = include.split(',');
+			}
 		}
 
 		if (getAppealKeys.length) {
@@ -81,7 +88,7 @@ export const checkAppealExistsByIdAndAddPartialToRequest =
 			Number(appealId),
 			includeDetails,
 			getAppealKeys,
-			true
+			selectAppealTypeKey
 		);
 
 		if (!appeal || !isAppealTypeEnabled(appeal.appealType?.key || '')) {

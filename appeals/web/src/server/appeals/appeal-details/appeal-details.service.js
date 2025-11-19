@@ -6,7 +6,9 @@
  * @returns {Promise<import('./appeal-details.types.js').WebAppeal>}
  */
 export function getAppealDetailsFromId(apiClient, appealId, include) {
-	const url = include ? `appeals/${appealId}?include=${include}` : `appeals/${appealId}`;
+	const url = include
+		? `appeals/${appealId}?include=${include}`
+		: `appeals/${appealId}?include=all`;
 
 	return apiClient.get(url).json();
 }

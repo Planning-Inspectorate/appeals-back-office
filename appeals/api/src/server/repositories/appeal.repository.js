@@ -302,6 +302,11 @@ export const buildAppealInclude = (
 	selectAppealTypeKey = false
 ) => {
 	if (!includeDetails) {
+		if (selectAppealTypeKey) {
+			return {
+				appealType: { select: { key: true } }
+			};
+		}
 		// Only return appeal details
 		return null;
 	}
