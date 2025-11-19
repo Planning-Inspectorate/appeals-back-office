@@ -327,6 +327,7 @@ describe('Change appeal procedure type route', () => {
 					.post(`/appeals/${fullPlanningAppeal.id}/procedure-type-change-request`)
 					.send({
 						existingAppealProcedure: 'inquiry',
+						eventDate: '2000-01-01T12:00:00.000Z',
 						appealProcedure: 'hearing',
 						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
 						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
@@ -354,6 +355,51 @@ describe('Change appeal procedure type route', () => {
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
 
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'hearing', 'Create');
+
+				const personalisation = {
+					...expectedData,
+					appeal_reference_number: '1345264',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					lpa_reference: '48269/APP/2021/1482',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					appeal_procedure: 'hearing',
+					change_message:
+						'We have changed your appeal procedure to hearing and cancelled your inquiry.',
+					lpa_statement_exists: true,
+					existing_appeal_procedure: 'inquiry',
+					proof_of_evidence_due_date: '',
+					hearing_date: '1 January 2000',
+					hearing_time: '12:00pm',
+					inquiry_address: ''
+				};
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						...personalisation,
+						is_lpa: false,
+						subject: 'We have changed your appeal procedure: 1345264',
+						existing_appeal_procedure: 'inquiry',
+						week_before_conference_date: '25 December 2998'
+					},
+					recipientEmail: fullPlanningAppeal.appellant.email,
+					templateName: 'change-procedure-type'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						...personalisation,
+						is_lpa: true,
+						subject: 'We have changed the appeal procedure: 1345264',
+						existing_appeal_procedure: 'inquiry',
+						week_before_conference_date: '25 December 2998'
+					},
+					recipientEmail: fullPlanningAppeal.lpa.email,
+					templateName: 'change-procedure-type'
+				});
 			});
 
 			test('returns 201 and calls delete site visit if changing from written to hearing', async () => {
@@ -362,6 +408,7 @@ describe('Change appeal procedure type route', () => {
 					.post(`/appeals/${fullPlanningAppeal.id}/procedure-type-change-request`)
 					.send({
 						existingAppealProcedure: 'written',
+						eventDate: '2000-01-01T12:00:00.000Z',
 						appealProcedure: 'hearing',
 						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
 						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
@@ -385,6 +432,51 @@ describe('Change appeal procedure type route', () => {
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
 
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'hearing', 'Create');
+
+				const personalisation = {
+					...expectedData,
+					appeal_reference_number: '1345264',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					lpa_reference: '48269/APP/2021/1482',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					appeal_procedure: 'hearing',
+					change_message:
+						'We have changed your appeal procedure to hearing and cancelled your site visit.',
+					lpa_statement_exists: true,
+					existing_appeal_procedure: 'written',
+					proof_of_evidence_due_date: '',
+					hearing_date: '1 January 2000',
+					hearing_time: '12:00pm',
+					inquiry_address: ''
+				};
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						...personalisation,
+						is_lpa: false,
+						subject: 'We have changed your appeal procedure: 1345264',
+						existing_appeal_procedure: 'written',
+						week_before_conference_date: '25 December 2998'
+					},
+					recipientEmail: fullPlanningAppeal.appellant.email,
+					templateName: 'change-procedure-type'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						...personalisation,
+						is_lpa: true,
+						subject: 'We have changed the appeal procedure: 1345264',
+						existing_appeal_procedure: 'written',
+						week_before_conference_date: '25 December 2998'
+					},
+					recipientEmail: fullPlanningAppeal.lpa.email,
+					templateName: 'change-procedure-type'
+				});
 			});
 		});
 
@@ -476,7 +568,7 @@ describe('Change appeal procedure type route', () => {
 					lpa_statement_exists: true,
 					existing_appeal_procedure: 'hearing',
 					proof_of_evidence_due_date: '15 December 2025',
-					hearing_date: '1 January 2000',
+					hearing_date: '20 December 2025',
 					hearing_time: '12:00am'
 				};
 
@@ -592,7 +684,7 @@ describe('Change appeal procedure type route', () => {
 					lpa_statement_exists: true,
 					existing_appeal_procedure: 'written',
 					proof_of_evidence_due_date: '15 December 2025',
-					hearing_date: '1 January 2000',
+					hearing_date: '20 December 2025',
 					hearing_time: '12:00am'
 				};
 
