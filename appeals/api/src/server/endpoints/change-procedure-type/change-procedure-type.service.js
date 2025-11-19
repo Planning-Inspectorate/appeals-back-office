@@ -334,9 +334,7 @@ export const sendChangeProcedureTypeNotifications = async (
 			? dateISOStringToDisplayDate(proofOfEvidenceAndWitnessesDueDate)
 			: '',
 		existing_appeal_procedure: existingAppealProcedure ?? '',
-		hearing_date: dateISOStringToDisplayDate(
-			eventDate ? dateISOStringToDisplayDate(eventDate) : ''
-		),
+		hearing_date: eventDate ? dateISOStringToDisplayDate(eventDate) : '',
 		hearing_time: dateISOStringToDisplayTime12hr(eventDate ?? '')
 	};
 	await sendNotifications(notifyClient, templateName, appeal, lpaStatement, personalisation);
