@@ -5,11 +5,13 @@ export const mapEnforcementEffectiveDate = ({
 	appellantCaseData,
 	currentRoute,
 	userHasUpdateCase
-}) =>
-	textSummaryListItem({
+}) => {
+	const hasData = appellantCaseData.enforcementNotice?.effectiveDate !== null;
+	return textSummaryListItem({
 		id: 'enforcement-effective-date',
 		text: 'What is the effective date on your enforcement notice?',
 		value: appellantCaseData.enforcementNotice?.effectiveDate || 'No data',
 		link: `${currentRoute}/enforcement-notice-effective-date/change`,
-		editable: userHasUpdateCase
+		editable: hasData && userHasUpdateCase
 	});
+};
