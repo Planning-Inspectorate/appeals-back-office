@@ -6,17 +6,18 @@ export const mapContactPlanningInspectorateDate = ({
 	currentRoute,
 	userHasUpdateCase
 }) => {
+	const hasData = appellantCaseData.enforcementNotice?.contactPlanningInspectorateDate !== null;
 	const actionText = appellantCaseData.enforcementNotice?.contactPlanningInspectorateDate
 		? 'Change'
 		: 'Add';
 	return textSummaryListItem({
 		id: 'contact-planning-inspectorate-date',
 		text: 'When did you contact the Planning Inspectorate?',
-		value: appellantCaseData.enforcementNotice
-			? appellantCaseData.enforcementNotice.contactPlanningInspectorateDate || 'Not answered'
+		value: hasData
+			? appellantCaseData.enforcementNotice?.contactPlanningInspectorateDate || 'Not answered'
 			: 'No data',
 		link: `${currentRoute}/contact-planning-inspectorate-date/${actionText.toLowerCase()}`,
 		actionText,
-		editable: userHasUpdateCase
+		editable: hasData && userHasUpdateCase
 	});
 };
