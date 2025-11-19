@@ -10,6 +10,7 @@ import {
 import { documentCreated } from '#tests/documents/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
+import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import {
 	ERROR_CASE_OUTCOME_MUST_BE_ONE_OF,
 	ERROR_INVALID_APPEAL_STATE,
@@ -157,13 +158,13 @@ describe('appeal decision routes', () => {
 		});
 
 		test.each([
-			['householdAppeal', householdAppeal],
-			['advertisementAppeal', advertisementAppeal],
-			['casPlanningAppeal', casPlanningAppeal],
-			['casAdvertAppeal', casAdvertAppeal],
-			['fullPlanningAppeal', fullPlanningAppeal],
-			['listedBuildingAppeal', listedBuildingAppeal]
-		])('returns 200 when all good, appeal type: %s', async (_, appeal) => {
+			['householdAppeal', householdAppeal, FEEDBACK_FORM_LINKS.HAS],
+			['advertisementAppeal', advertisementAppeal, FEEDBACK_FORM_LINKS.FULL_ADVERTS],
+			['casPlanningAppeal', casPlanningAppeal, FEEDBACK_FORM_LINKS.CAS_PLANNING],
+			['casAdvertAppeal', casAdvertAppeal, FEEDBACK_FORM_LINKS.CAS_ADVERTS],
+			['fullPlanningAppeal', fullPlanningAppeal, FEEDBACK_FORM_LINKS.S78],
+			['listedBuildingAppeal', listedBuildingAppeal, FEEDBACK_FORM_LINKS.S20]
+		])('returns 200 when all good, appeal type: %s', async (_, appeal, expectedFeedbackLink) => {
 			const correctAppealState = {
 				...appeal,
 				appealStatus: [
@@ -204,7 +205,8 @@ describe('appeal decision routes', () => {
 					lpa_reference: appeal.applicationReference,
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					decision_date: formatDate(utcDate, false),
-					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
+					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`,
+					feedback_link: expectedFeedbackLink
 				},
 				recipientEmail: appeal.agent.email
 			});
@@ -217,7 +219,8 @@ describe('appeal decision routes', () => {
 					lpa_reference: appeal.applicationReference,
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					decision_date: formatDate(utcDate, false),
-					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
+					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`,
+					feedback_link: FEEDBACK_FORM_LINKS.LPA
 				},
 				templateName: 'decision-is-allowed-split-dismissed-lpa',
 				recipientEmail: appeal.lpa.email

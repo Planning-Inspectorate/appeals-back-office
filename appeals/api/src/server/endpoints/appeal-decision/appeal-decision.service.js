@@ -2,6 +2,8 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
+import { getFeedbackLinkFromAppealTypeKey } from '#utils/feedback-form-link';
+import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { loadEnvironment } from '@pins/platform';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
@@ -56,7 +58,10 @@ export const publishDecision = async (
 				templateName: 'decision-is-allowed-split-dismissed-appellant',
 				notifyClient,
 				recipientEmail,
-				personalisation
+				personalisation: {
+					...personalisation,
+					feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || '')
+				}
 			});
 		}
 
@@ -66,7 +71,7 @@ export const publishDecision = async (
 				templateName: 'decision-is-allowed-split-dismissed-lpa',
 				notifyClient,
 				recipientEmail: lpaEmail,
-				personalisation
+				personalisation: { ...personalisation, feedback_link: FEEDBACK_FORM_LINKS.LPA }
 			});
 		}
 
