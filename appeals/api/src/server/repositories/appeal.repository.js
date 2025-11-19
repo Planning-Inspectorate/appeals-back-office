@@ -292,6 +292,7 @@ export const appealDetailsIncludeMap = /** @type {const} */ {
  * @template {keyof typeof appealDetailsIncludeMap} K
  *
  * @param {K[]} selectedKeys
+ * @param {boolean} includeDetails
  * @param {boolean} selectAppealTypeKey
  * @returns {Partial<import('#db-client').Prisma.AppealInclude> | null}
  */
