@@ -657,6 +657,14 @@ export const appellantCaseDataNotValidated = {
 		isPartOfAgriculturalHolding: true,
 		isTenant: true,
 		hasOtherTenants: false
+	},
+	enforcementNotice: {
+		isReceived: true,
+		isListedBuilding: true,
+		issueDate: '2024-06-19T00:00:00.000Z',
+		effectiveDate: '2024-06-20T00:00:00.000Z',
+		contactPlanningInspectorateDate: '',
+		reference: '1234'
 	}
 };
 

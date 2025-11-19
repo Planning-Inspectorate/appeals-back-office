@@ -5,12 +5,14 @@ export const mapEnforcementNoticeListedBuilding = ({
 	appellantCaseData,
 	currentRoute,
 	userHasUpdateCase
-}) =>
-	booleanSummaryListItem({
+}) => {
+	const hasData = appellantCaseData.enforcementNotice?.isListedBuilding !== null;
+	return booleanSummaryListItem({
 		id: 'enforcement-notice-listed-building',
 		text: 'Is your enforcement notice about a listed building?',
 		value: appellantCaseData.enforcementNotice?.isListedBuilding,
 		defaultText: 'No data',
 		link: `${currentRoute}/enforcement-notice-listed-building/change`,
-		editable: userHasUpdateCase
+		editable: hasData && userHasUpdateCase
 	});
+};
