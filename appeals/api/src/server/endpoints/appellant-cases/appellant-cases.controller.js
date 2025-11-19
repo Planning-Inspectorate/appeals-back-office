@@ -71,7 +71,8 @@ const updateAppellantCaseById = async (req, res) => {
 			advertInPosition,
 			landownerPermission,
 			siteGridReferenceEasting,
-			siteGridReferenceNorthing
+			siteGridReferenceNorthing,
+			enforcementNotice
 		},
 		params,
 		validationOutcome
@@ -148,7 +149,8 @@ const updateAppellantCaseById = async (req, res) => {
 					advertInPosition,
 					landownerPermission,
 					siteGridReferenceEasting,
-					siteGridReferenceNorthing
+					siteGridReferenceNorthing,
+					enforcementNotice
 			  });
 
 		await updatePersonalList(appeal.id);
