@@ -144,8 +144,15 @@ export const publishDecision = async (
 				notifyClient,
 				recipientEmail,
 				personalisation: invalidDecisionReason
-					? { ...personalisation, has_costs_decision: hasAppellantCostsDecision }
-					: personalisation
+					? {
+							...personalisation,
+							has_costs_decision: hasAppellantCostsDecision,
+							feedback_link: getFeedbackLinkFromAppealType(appeal?.appealType?.key || '')
+					  }
+					: {
+							...personalisation,
+							feedback_link: getFeedbackLinkFromAppealType(appeal?.appealType?.key || '')
+					  }
 			});
 		}
 
@@ -158,8 +165,15 @@ export const publishDecision = async (
 				notifyClient,
 				recipientEmail: lpaEmail,
 				personalisation: invalidDecisionReason
-					? { ...personalisation, has_costs_decision: hasLpaCostsDecision }
-					: personalisation
+					? {
+							...personalisation,
+							has_costs_decision: hasLpaCostsDecision,
+							feedback_link: FEEDBACK_FORM_LINKS.LPA
+					  }
+					: {
+							...personalisation,
+							feedback_link: FEEDBACK_FORM_LINKS.LPA
+					  }
 			});
 		}
 
