@@ -253,7 +253,7 @@ describe('mapRepresentationDocumentSummaryActionLink', () => {
 			);
 		});
 
-		it('should return an empty string when LPA statement is not received', () => {
+		it('should return "Add" link for LPA statement when is not received', () => {
 			const link = mapRepresentationDocumentSummaryActionLink(
 				baseRoute,
 				'not_received',
@@ -264,7 +264,10 @@ describe('mapRepresentationDocumentSummaryActionLink', () => {
 					originalUrl: baseRoute
 				}
 			);
-			expect(link).toBe('');
+			expect(link).toContain(
+				'<a href="/appeals-service/appeal-details/4419/lpa-statement/add-document?backUrl='
+			);
+			expect(link).toContain('Add<span class="govuk-visually-hidden"> LPA statement</span></a>');
 		});
 	});
 
@@ -435,7 +438,7 @@ describe('Final comments links', () => {
 		);
 	});
 
-	it('should return an empty string when (any) final comment is not received', () => {
+	it('should return "Add" link for LPA final comments when is not received', () => {
 		const link = mapRepresentationDocumentSummaryActionLink(
 			baseRoute,
 			'not_received',
@@ -446,7 +449,12 @@ describe('Final comments links', () => {
 				originalUrl: baseRoute
 			}
 		);
-		expect(link).toBe('');
+		expect(link).toContain(
+			'<a href="/appeals-service/appeal-details/4419/final-comments/appellant/add-document?backUrl='
+		);
+		expect(link).toContain(
+			'Add<span class="govuk-visually-hidden"> Appellant final comments</span></a>'
+		);
 	});
 });
 

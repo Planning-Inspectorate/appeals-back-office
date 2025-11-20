@@ -488,7 +488,9 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
                 <th scope="row" class="govuk-table__header">LPA statement</th>
                 <td class="govuk-table__cell">Awaiting start date</td>
                 <td class="govuk-table__cell">Not applicable</td>
-                <td class="govuk-table__cell govuk-!-text-align-right"></td>
+                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/1/lpa-statement/add-document?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+                    data-cy="add-lpa-statement" class="govuk-link"> Add<span class="govuk-visually-hidden"> LPA statement</span></a>
+                </td>
             </tr>
             <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header">Interested party comments</th>
@@ -502,13 +504,17 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
                 <th scope="row" class="govuk-table__header">Appellant final comments</th>
                 <td class="govuk-table__cell">Awaiting start date</td>
                 <td class="govuk-table__cell">Not applicable</td>
-                <td class="govuk-table__cell govuk-!-text-align-right"></td>
+                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/1/final-comments/appellant/add-document?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+                    data-cy="add-appellant-final-comments" class="govuk-link"> Add<span class="govuk-visually-hidden"> Appellant final comments</span></a>
+                </td>
             </tr>
             <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header">LPA final comments</th>
                 <td class="govuk-table__cell">Awaiting start date</td>
                 <td class="govuk-table__cell">Not applicable</td>
-                <td class="govuk-table__cell govuk-!-text-align-right"></td>
+                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/1/final-comments/lpa/add-document?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+                    data-cy="add-lpa-final-comments" class="govuk-link"> Add<span class="govuk-visually-hidden"> LPA final comments</span></a>
+                </td>
             </tr>
         </tbody>
     </table>
