@@ -36,7 +36,6 @@ apps_config = {
     featureFlagS78Hearing             = true
     featureFlagS78Inquiry             = true
     featureFlagLinkedAppeals          = true
-    featureFlagS20                    = true
     featureFlagCAS                    = true
     featureFlagCasAdvert              = true
     featureFlagNotifyCaseHistory      = true
@@ -54,6 +53,8 @@ apps_config = {
     featureFlagSearchCaseOfficer      = true
     featureFlagEnforcementNotice      = true
     featureFlagInvalidDecisionLetter  = true
+    featureFlagRule6Parties           = true
+    featureFlagExpeditedAppeals       = true
   }
 
   use_system_test_bc_for_change_lpa = true
@@ -113,6 +114,11 @@ horizon_infra_config = {
     name = "VNPRE-10.0.0.0-16"
     rg   = "PREHZN"
   }
+}
+
+monitoring_config = {
+  web_app_insights_web_test_enabled = false
+  log_daily_cap                     = 0.2
 }
 
 service_bus_config = {

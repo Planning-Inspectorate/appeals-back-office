@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`start case hearing flow GET /start-case/hearing should render the date known page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
@@ -616,6 +616,12 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
+            <dd class="govuk-summary-list__value">No rule 6 party</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule6parties/add"
+                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>

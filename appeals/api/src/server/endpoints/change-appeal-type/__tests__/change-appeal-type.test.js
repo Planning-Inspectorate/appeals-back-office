@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { request } from '#tests/../app-test.js';
+import { request } from '#server/app-test.js';
 import {
 	advertisementAppeal,
 	casAdvertAppeal,
@@ -754,6 +754,90 @@ describe('appeal change update routes', () => {
 				},
 				recipientEmail: appealWithValidCaseStatus.lpa.email,
 				templateName: 'appeal-type-change-in-manage-appeals-lpa'
+			});
+
+			expect(response.status).toEqual(200);
+		});
+
+		test('successfully deletes surplus appellant documents when type is changed from planning appeal to householder appeal', async () => {
+			const appealWithValidCaseStatus = {
+				...fullPlanningAppeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER
+					},
+					{
+						status: APPEAL_CASE_STATUS.VALIDATION,
+						valid: true
+					}
+				]
+			};
+
+			const folders = [
+				{
+					id: '1',
+					appealId: fullPlanningAppeal.id,
+					path: 'appellant-case/applicationDecisionLetter',
+					documents: [{ id: '1', guid: 'guid-1', name: 'required.pdf' }]
+				},
+				{
+					id: '2',
+					appealId: fullPlanningAppeal.id,
+					path: 'appellant-case/surplusDocumentsA',
+					documents: [{ id: '2', guid: 'guid-A', name: 'surplus-a.pdf' }]
+				},
+				{
+					id: '3',
+					appealId: fullPlanningAppeal.id,
+					path: 'appellant-case/surplusDocumentsB',
+					documents: [{ id: '3', guid: 'guid-B', name: 'surplus-b.pdf' }]
+				}
+			];
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(appealWithValidCaseStatus);
+			// @ts-ignore
+			databaseConnector.appealType.findMany.mockResolvedValue(appealTypes);
+			// @ts-ignore
+			databaseConnector.folder.findMany.mockResolvedValue(folders);
+
+			const response = await request
+				.post(`/appeals/${fullPlanningAppeal.id}/appeal-update-request`)
+				.send({
+					newAppealTypeId: 1
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.document.update).toHaveBeenCalledTimes(2);
+
+			expect(databaseConnector.document.update).toHaveBeenNthCalledWith(1, {
+				where: { guid: 'guid-A' },
+				data: expect.objectContaining({
+					isDeleted: true
+				})
+			});
+
+			expect(databaseConnector.document.update).toHaveBeenNthCalledWith(2, {
+				where: { guid: 'guid-B' },
+				data: expect.objectContaining({
+					isDeleted: true
+				})
+			});
+
+			expect(databaseConnector.documentVersion.updateMany).toHaveBeenCalledTimes(2);
+
+			expect(databaseConnector.documentVersion.updateMany).toHaveBeenNthCalledWith(1, {
+				where: { documentGuid: 'guid-A' },
+				data: expect.objectContaining({
+					isDeleted: true
+				})
+			});
+
+			expect(databaseConnector.documentVersion.updateMany).toHaveBeenNthCalledWith(2, {
+				where: { documentGuid: 'guid-B' },
+				data: expect.objectContaining({
+					isDeleted: true
+				})
 			});
 
 			expect(response.status).toEqual(200);

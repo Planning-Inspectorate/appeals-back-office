@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`environmental-impact-assessment change pages GET /environmental-impact-assessment/column-two-threshold/change should render the change eia column two threshold page with "No" radio option checked if eiaColumnTwoThreshold is false 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`change-appeal-details/local-planning-authority GET change-appeal-details/local-planning-authority should render the local planning authority page 1`] = `
+exports[`change-appeal-details/local-planning-authority GET change-appeal-details/local-planning-authority should render the local planning authority page pre-selected 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
@@ -24,7 +24,7 @@ exports[`change-appeal-details/local-planning-authority GET change-appeal-detail
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="local-planning-authority-2" name="localPlanningAuthority"
-                                        type="radio" value="2">
+                                        type="radio" value="2" checked>
                                         <label class="govuk-label govuk-radios__label" for="local-planning-authority-2">Maidstone Borough Council</label>
                                     </div>
                                 </div>
@@ -81,7 +81,7 @@ exports[`change-appeal-details/local-planning-authority POST change-appeal-detai
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="local-planning-authority-2" name="localPlanningAuthority"
-                                        type="radio" value="2">
+                                        type="radio" value="2" checked>
                                         <label class="govuk-label govuk-radios__label" for="local-planning-authority-2">Maidstone Borough Council</label>
                                     </div>
                                 </div>

@@ -235,6 +235,12 @@ export const happyPathHelper = {
 		});
 	},
 
+	shareFinalComments(caseObj) {
+		caseDetailsPage.basePageElements.bannerLink().click();
+		caseDetailsPage.clickButtonByText('Share final comments');
+		caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
+	},
+
 	progressSiteVisit(caseObj) {
 		caseDetailsPage.clickSetUpSiteVisitType();
 		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Accompanied'));
@@ -319,41 +325,56 @@ export const happyPathHelper = {
 	},
 
 	issueLinkedAppealDecisions(
-		caseObj,
 		decision,
 		numOfChildren,
+		route,
 		appellantCostsBool = true,
 		lpaCostsBool = true
 	) {
-		caseDetailsPage.clickIssueDecision();
-		for (let i = 0; i <= numOfChildren; i++) {
-			basePage.selectRadioButtonByValue(basePage.exactMatch(decision));
-			basePage.clickButtonByText('Continue');
-		}
+		const issueMainDecision = (numOfChildren, decision) => {
+			caseDetailsPage.clickIssueDecision();
+			for (let i = 0; i <= numOfChildren; i++) {
+				basePage.selectRadioButtonByValue(basePage.exactMatch(decision));
+				basePage.clickButtonByText('Continue');
+			}
 
-		fileUploader.uploadFiles(sampleFiles.pdf);
-		fileUploader.clickButtonByText('Continue');
-
-		//Appellant costs
-		if (appellantCostsBool) {
-			basePage.selectRadioButtonByValue('Yes');
-			basePage.clickButtonByText('Continue');
 			fileUploader.uploadFiles(sampleFiles.pdf);
 			fileUploader.clickButtonByText('Continue');
-		} else {
-			basePage.selectRadioButtonByValue('No');
-			basePage.clickButtonByText('Continue');
-		}
+		};
 
-		//LPA costs
-		if (lpaCostsBool) {
-			basePage.selectRadioButtonByValue('Yes');
-			basePage.clickButtonByText('Continue');
-			fileUploader.uploadFiles(sampleFiles.pdf);
-			fileUploader.clickButtonByText('Continue');
-		} else {
-			basePage.selectRadioButtonByValue('No');
-			basePage.clickButtonByText('Continue');
+		const issueCosts = (bool) => {
+			if (bool) {
+				basePage.selectRadioButtonByValue('Yes');
+				basePage.clickButtonByText('Continue');
+				fileUploader.uploadFiles(sampleFiles.pdf);
+				fileUploader.clickButtonByText('Continue');
+			} else {
+				basePage.selectRadioButtonByValue('No');
+				basePage.clickButtonByText('Continue');
+			}
+		};
+
+		//this is not for which costs are issued but which costs are eligible to be issued
+		switch (route) {
+			case 'both costs':
+				issueMainDecision(numOfChildren, decision);
+				issueCosts(appellantCostsBool);
+				issueCosts(lpaCostsBool);
+				break;
+
+			case 'appellant only':
+				issueMainDecision(numOfChildren, decision);
+				issueCosts(appellantCostsBool);
+				break;
+
+			case 'lpa only':
+				issueMainDecision(numOfChildren, decision);
+				issueCosts(lpaCostsBool);
+				break;
+
+			case 'no costs':
+				issueMainDecision(numOfChildren, decision);
+				break;
 		}
 
 		//CYA

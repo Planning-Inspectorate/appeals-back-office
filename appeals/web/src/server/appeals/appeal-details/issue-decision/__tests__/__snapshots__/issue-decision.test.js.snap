@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`issue-decision GET /appellant-costs-decision should render the appellant cost decision page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
@@ -232,7 +232,7 @@ exports[`issue-decision GET /decision Single appeal should render the 'what is t
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                                    <h1 class="govuk-fieldset__heading"> What is the decision?</h1>
+                                    <h1 class="govuk-fieldset__heading"> Decision</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">

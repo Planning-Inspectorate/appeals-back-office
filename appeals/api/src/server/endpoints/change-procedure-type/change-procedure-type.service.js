@@ -5,16 +5,18 @@ import {
 	formatAddressSingleLine
 } from '#endpoints/addresses/addresses.formatter.js';
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import logger from '#utils/logger.js';
-import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_REPRESENTATION_TYPE, EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
 import {
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_NO_RECIPIENT_EMAIL
 } from '@pins/appeals/constants/support.js';
 import { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
+import { EventType } from '@pins/event-client';
 import { formatInTimeZone } from 'date-fns-tz';
 
 /**
@@ -77,7 +79,7 @@ export const changeProcedureToWritten = async (data, appealId) => {
  */
 export const changeProcedureToHearing = async (data, appealId) => {
 	try {
-		await databaseConnector.$transaction(async (tx) => {
+		const result = await databaseConnector.$transaction(async (tx) => {
 			const procedureType = await tx.procedureType.findFirst({
 				where: { key: data.appealProcedure }
 			});
@@ -90,9 +92,9 @@ export const changeProcedureToHearing = async (data, appealId) => {
 			});
 
 			const hearing = await tx.hearing.findFirst({ where: { appealId } });
-
+			let updatedHearing;
 			if (hearing) {
-				await tx.hearing.update({
+				updatedHearing = await tx.hearing.update({
 					where: { appealId },
 					data: {
 						hearingStartTime: data.eventDate
@@ -100,7 +102,7 @@ export const changeProcedureToHearing = async (data, appealId) => {
 				});
 			} else {
 				if (data.eventDate) {
-					await tx.hearing.create({
+					updatedHearing = await tx.hearing.create({
 						data: {
 							appealId,
 							hearingStartTime: data.eventDate
@@ -131,8 +133,16 @@ export const changeProcedureToHearing = async (data, appealId) => {
 					where: { appealId }
 				});
 			}
-			return { updatedAppeal };
+			return { updatedAppeal, updatedHearing };
 		});
+
+		if (result.updatedHearing) {
+			await broadcasters.broadcastEvent(
+				result.updatedHearing.id,
+				EVENT_TYPE.HEARING,
+				data.appealProcedure === data.existingAppealProcedure ? EventType.Update : EventType.Create
+			);
+		}
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
@@ -145,7 +155,7 @@ export const changeProcedureToHearing = async (data, appealId) => {
  */
 export const changeProcedureToInquiry = async (data, appealId) => {
 	try {
-		await databaseConnector.$transaction(async (tx) => {
+		const result = await databaseConnector.$transaction(async (tx) => {
 			const procedureType = await tx.procedureType.findFirst({
 				where: { key: data.appealProcedure }
 			});
@@ -184,25 +194,25 @@ export const changeProcedureToInquiry = async (data, appealId) => {
 					}
 				});
 			}
-
+			let updatedInquiry;
 			if (inquiry) {
-				await tx.inquiry.update({
+				updatedInquiry = await tx.inquiry.update({
 					where: { appealId },
 					data: {
 						inquiryStartTime: data.eventDate,
-						estimatedDays: data.estimatedDays ? Number(data.estimatedDays) : null,
+						estimatedDays: data.estimationDays ? Number(data.estimationDays) : null,
 						addressId: data.address ? address?.id : null
 					}
 				});
 			} else {
 				if (data.eventDate) {
-					await tx.inquiry.create({
+					updatedInquiry = await tx.inquiry.create({
 						data: {
 							inquiryStartTime: data.eventDate,
 							inquiryEndTime: null,
 							appealId,
 							addressId: data?.address ? address?.id : null,
-							estimatedDays: data.estimatedDays ? Number(data.estimatedDays) : null
+							estimatedDays: data.estimationDays ? Number(data.estimationDays) : null
 						}
 					});
 				}
@@ -232,8 +242,16 @@ export const changeProcedureToInquiry = async (data, appealId) => {
 					where: { appealId }
 				});
 			}
-			return { updatedAppeal };
+			return { updatedAppeal, updatedInquiry };
 		});
+
+		if (result.updatedInquiry) {
+			await broadcasters.broadcastEvent(
+				result.updatedInquiry.id,
+				EVENT_TYPE.INQUIRY,
+				data.appealProcedure === data.existingAppealProcedure ? EventType.Update : EventType.Create
+			);
+		}
 	} catch (error) {
 		logger.error(error);
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
@@ -248,6 +266,7 @@ export const changeProcedureToInquiry = async (data, appealId) => {
  * @param {string | undefined} existingAppealProcedure
  * @param {string | undefined} proofOfEvidenceAndWitnessesDueDate
  * @param {import('#endpoints/appeals.js').SingleAddressResponse | undefined} address
+ * @param {string | undefined} eventDate
  * @returns {Promise<void>}
  */
 export const sendChangeProcedureTypeNotifications = async (
@@ -257,7 +276,8 @@ export const sendChangeProcedureTypeNotifications = async (
 	appealProcedure,
 	existingAppealProcedure,
 	proofOfEvidenceAndWitnessesDueDate,
-	address
+	address,
+	eventDate
 ) => {
 	const lpaStatement = await databaseConnector.representation.findFirst({
 		where: { appealId: appeal.id, representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT }
@@ -313,7 +333,9 @@ export const sendChangeProcedureTypeNotifications = async (
 		proof_of_evidence_due_date: proofOfEvidenceAndWitnessesDueDate
 			? dateISOStringToDisplayDate(proofOfEvidenceAndWitnessesDueDate)
 			: '',
-		existing_appeal_procedure: existingAppealProcedure ?? ''
+		existing_appeal_procedure: existingAppealProcedure ?? '',
+		hearing_date: eventDate ? dateISOStringToDisplayDate(eventDate) : '',
+		hearing_time: dateISOStringToDisplayTime12hr(eventDate ?? '')
 	};
 	await sendNotifications(notifyClient, templateName, appeal, lpaStatement, personalisation);
 };

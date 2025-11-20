@@ -39,6 +39,7 @@ import { mapLpaQuestionnaire } from './submappers/lpa-questionnaire.mapper.js';
 import { mapLpaReference } from './submappers/lpa-reference.mapper.js';
 import { mapMainPartyCorrespondence } from './submappers/main-party-correspondence.mapper.js';
 import { mapOtherAppeals } from './submappers/other-appeals.mapper.js';
+import { mapRule6PartyContactDetails } from './submappers/rule-6-party-contact-details.mapper.js';
 import { mapSiteAddress } from './submappers/site-address.mapper.js';
 import {
 	mapSiteVisitDate,
@@ -76,6 +77,7 @@ export const submaps = {
 	siteAddress: mapSiteAddress,
 	localPlanningAuthority: mapLocalPlanningAuthority,
 	lpaContactDetails: mapLpaContactDetails,
+	rule6PartyContactDetails: mapRule6PartyContactDetails,
 	appealStatus: mapAppealStatus,
 	inspectorNeighbouringSites: mapInspectorNeighbouringSites,
 	visitType: mapVisitType,

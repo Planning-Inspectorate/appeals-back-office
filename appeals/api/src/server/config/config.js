@@ -51,7 +51,6 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_S78_INQUIRY && environment.FEATURE_FLAG_S78_INQUIRY === 'true',
 		featureFlagLinkedAppeals:
 			environment.FEATURE_FLAG_LINKED_APPEALS && environment.FEATURE_FLAG_LINKED_APPEALS === 'true',
-		featureFlagS20: environment.FEATURE_FLAG_S20 && environment.FEATURE_FLAG_S20 === 'true',
 		featureFlagCAS: environment.FEATURE_FLAG_CAS && environment.FEATURE_FLAG_CAS === 'true',
 		featureFlagCasAdvert:
 			environment.FEATURE_FLAG_CAS_ADVERT && environment.FEATURE_FLAG_CAS_ADVERT === 'true',
@@ -76,7 +75,12 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_ENFORCEMENT_NOTICE === 'true',
 		featureFlagInvalidDecisionLetter:
 			environment.FEATURE_FLAG_INVALID_DECISION_LETTER &&
-			environment.FEATURE_FLAG_INVALID_DECISION_LETTER === 'true'
+			environment.FEATURE_FLAG_INVALID_DECISION_LETTER === 'true',
+		featureFlagRule6Parties:
+			environment.FEATURE_FLAG_RULE_6_PARTIES && environment.FEATURE_FLAG_RULE_6_PARTIES === 'true',
+		featureFlagExpeditedAppeals:
+			environment.FEATURE_FLAG_EXPEDITED_APPEALS &&
+			environment.FEATURE_FLAG_EXPEDITED_APPEALS === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	enableTestEndpoints:

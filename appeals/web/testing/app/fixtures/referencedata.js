@@ -632,12 +632,167 @@ export const appellantCaseDataNotValidated = {
 	isAppellantNamedOnApplication: true,
 	localPlanningDepartment: 'Worthing Borough Council',
 	siteOwnership: {
-		areAllOwnersKnown: null,
+		areAllOwnersKnown: 'No',
 		hasAttemptedToIdentifyOwners: null,
 		hasToldOwners: null,
 		ownsAllLand: true,
 		ownsSomeLand: null,
 		knowsOtherLandowners: null
+	},
+	siteAreaSquareMetres: '30.1',
+	developmentDescription: {
+		details: 'Test development description details',
+		isChanged: false
+	},
+	validation: null,
+	visibility: {
+		details: null,
+		isVisible: true
+	},
+	planningObligation: {
+		hasObligation: true,
+		status: 'finalised'
+	},
+	agriculturalHolding: {
+		isPartOfAgriculturalHolding: true,
+		isTenant: true,
+		hasOtherTenants: false
+	},
+	enforcementNotice: {
+		isReceived: true,
+		isListedBuilding: true,
+		issueDate: '2024-06-19T00:00:00.000Z',
+		effectiveDate: '2024-06-20T00:00:00.000Z',
+		contactPlanningInspectorateDate: '',
+		reference: '1234'
+	}
+};
+
+export const appellantCaseDataOwnsPartLand = {
+	appealId: 1,
+	appealReference: 'TEST/919276',
+	typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING,
+	appealSite: {
+		addressId: 1,
+		addressLine1: '96 The Avenue',
+		addressLine2: 'Maidstone',
+		county: 'Kent',
+		postCode: 'MD21 5XY'
+	},
+	appellantCaseId: 1,
+	appellant: {
+		firstName: 'Fiona',
+		surname: 'Burgess'
+	},
+	applicant: {
+		firstName: null,
+		surname: null
+	},
+	planningApplicationReference: '48269/APP/2021/1482',
+	documents: {
+		appellantCaseCorrespondence: {
+			documents: [
+				{
+					id: '00c43c8c-829a-4aa8-883a-fd6fc1f52c3d',
+					name: 'ph1.jpeg',
+					folderId: 3420,
+					caseId: 111,
+					isLateEntry: true,
+					latestDocumentVersion: {
+						blobStorageContainer: 'document-service-uploads',
+						blobStoragePath: 'appeal/6000111/115fbb69-b485-45c6-abd2-341e43139582/v1/ph1.jpeg',
+						dateReceived: '2024-06-19T00:00:00.000Z',
+						documentId: '115fbb69-b485-45c6-abd2-341e43139582',
+						documentType: 'appellantCaseCorrespondence',
+						documentURI:
+							'https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/appeal/6000035/115fbb69-b485-45c6-abd2-341e43139582/v1/ph1.jpeg',
+						fileName: 'ph1.jpeg',
+						isDeleted: false,
+						isLateEntry: false,
+						mime: 'image/jpeg',
+						originalFilename: 'ph1.jpeg',
+						redactionStatus: 'Unredacted',
+						size: '58861',
+						stage: 'appellant-case',
+						version: 1,
+						virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED
+					}
+				},
+				{
+					id: 'a78446aa-167a-4bef-89b7-18bcb0da11c1',
+					name: 'ph0.jpeg',
+					folderId: 3420,
+					caseId: 111,
+					isLateEntry: false,
+					latestDocumentVersion: {
+						blobStorageContainer: 'document-service-uploads',
+						blobStoragePath: 'appeal/6000111/115fbb69-b485-45c6-abd2-341e43139582/v1/ph0.jpeg',
+						dateReceived: '2024-06-19T00:00:00.000Z',
+						documentId: '115fbb69-b485-45c6-abd2-341e43139582',
+						documentType: 'appellantCaseCorrespondence',
+						documentURI:
+							'https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/appeal/6000035/115fbb69-b485-45c6-abd2-341e43139582/v1/ph0.jpeg',
+						fileName: 'ph0.jpeg',
+						isDeleted: false,
+						isLateEntry: false,
+						mime: 'image/jpeg',
+						originalFilename: 'ph0.jpeg',
+						redactionStatus: 'Unredacted',
+						size: '58861',
+						stage: 'appellant-case',
+						version: 1,
+						virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED
+					}
+				}
+			],
+			folderId: 70461,
+			path: 'appellant-case/appellantCaseCorrespondence'
+		},
+		appellantCaseWithdrawalLetter: {
+			documents: [],
+			folderId: 70460,
+			path: 'appellant-case/appellantCaseWithdrawalLetter'
+		},
+		appellantStatement: {
+			documents: [],
+			folderId: 70456,
+			path: 'appellant-case/appellantStatement'
+		},
+		applicationDecisionLetter: {
+			documents: [],
+			folderId: 70458,
+			path: 'appellant-case/applicationDecisionLetter'
+		},
+		changedDescription: {
+			documents: [],
+			folderId: 70459,
+			path: 'appellant-case/changedDescription'
+		},
+		originalApplicationForm: {
+			documents: [],
+			folderId: 70457,
+			path: 'appellant-case/originalApplicationForm'
+		},
+		statementCommonGround: {
+			documents: [],
+			folderId: 70458,
+			path: 'appellant-case/statementCommonGround'
+		}
+	},
+	hasAdvertisedAppeal: null,
+	healthAndSafety: {
+		details: null,
+		hasIssues: false
+	},
+	isAppellantNamedOnApplication: true,
+	localPlanningDepartment: 'Worthing Borough Council',
+	siteOwnership: {
+		areAllOwnersKnown: null,
+		hasAttemptedToIdentifyOwners: null,
+		hasToldOwners: null,
+		ownsAllLand: false,
+		ownsSomeLand: true,
+		knowsOtherLandowners: 'Some'
 	},
 	siteAreaSquareMetres: '30.1',
 	developmentDescription: {
@@ -4339,6 +4494,11 @@ export const appealDataToGetRequiredActions = {
 		...baseAppealDataToGetRequiredActions,
 		inquiry: null,
 		appealStatus: APPEAL_CASE_STATUS.EVENT,
+		procedureType: APPEAL_CASE_PROCEDURE.INQUIRY
+	},
+	awaitingEvent: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 		procedureType: APPEAL_CASE_PROCEDURE.INQUIRY
 	}
 };

@@ -4,6 +4,7 @@ import {
 	activeDirectoryUsersData,
 	additionalDocumentsFolderInfo,
 	appealData,
+	appellantCaseDataNotValidated,
 	designatedSiteNames,
 	documentFileInfo,
 	documentFileMultipleVersionsInfoWithLatestAsLateEntry,
@@ -343,7 +344,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedNotificationBannerElementHTML).toContain('Due date</dt>');
 			expect(unprettifiedNotificationBannerElementHTML).toContain('11 October 2023</dd>');
 			expect(unprettifiedNotificationBannerElementHTML).toContain('Policies are missing</span>');
-			expect(unprettifiedNotificationBannerElementHTML).toContain('test reason 1</li>');
+			expect(unprettifiedNotificationBannerElementHTML).toContain('test reason 1</div>');
 			expect(unprettifiedNotificationBannerElementHTML).toContain(
 				'Other documents or information are missing</span>'
 			);
@@ -4322,6 +4323,9 @@ describe('LPA Questionnaire review', () => {
 
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/local-planning-authorities').reply(200, lpaList);
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
 		});
 		afterEach(teardown);
 

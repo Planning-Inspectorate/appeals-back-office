@@ -1,12 +1,16 @@
 /** @type {import('@babel/core').ConfigFunction} */
-export default function () {
+export default function (api) {
+	const isTest = api.env('test');
+
 	const presets = [
 		[
 			'@babel/preset-env',
 			// some comments
 			{
 				// Do not transform modules to CJS, Webpack, Rollup will take care of that
-				modules: false,
+				// modules: false,
+				// When running under Jest, convert modules → CJS
+				modules: isTest ? 'auto' : false,
 				useBuiltIns: 'entry',
 				// Don't log anything on the console
 				debug: false,

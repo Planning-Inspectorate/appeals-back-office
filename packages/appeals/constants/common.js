@@ -11,7 +11,6 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	SECTION_78: 'featureFlagS78Written',
 	SECTION_78_HEARING: 'featureFlagS78Hearing',
 	SECTION_78_INQUIRY: 'featureFlagS78Inquiry',
-	SECTION_20: 'featureFlagS20',
 	NET_RESIDENCE: 'featureFlagNetResidence',
 	NET_RESIDENCE_S20: 'featureFlagNetResidenceS20',
 	CAS: 'featureFlagCAS',
@@ -24,7 +23,9 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	AUTO_ASSIGN_TEAM: 'featureFlagAutoAssignTeam',
 	SEARCH_CASE_OFFICER: 'featureFlagSearchCaseOfficer',
 	ENFORCEMENT_NOTICE: 'featureFlagEnforcementNotice',
-	INVALID_DECISION_LETTER: 'featureFlagInvalidDecisionLetter'
+	INVALID_DECISION_LETTER: 'featureFlagInvalidDecisionLetter',
+	RULE_6_PARTIES: 'featureFlagRule6Parties',
+	EXPEDITED_APPEALS: 'featureFlagExpeditedAppeals'
 });
 
 export const APPEAL_TYPE = Object.freeze({

@@ -37,7 +37,134 @@ const linkedAppealsInclude = isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)
 			appealType: true
 	  };
 
+/**
+ * @deprecated too inefficient, use specific selects only
+ * @type {Omit<typeof appealDetailsIncludeMap, 'caseNotes'>}
+ * legacy all data include
+ **/
 export const appealDetailsInclude = /** @type {const} */ {
+	address: true,
+	procedureType: true,
+	parentAppeals: {
+		include: {
+			parent: {
+				include: linkedAppealsInclude
+			}
+		}
+	},
+	childAppeals: {
+		include: {
+			child: {
+				include: linkedAppealsInclude
+			}
+		}
+	},
+	neighbouringSites: {
+		include: { address: true }
+	},
+	allocation: true,
+	specialisms: {
+		include: {
+			specialism: true
+		}
+	},
+	appellantCase: {
+		include: {
+			appellantCaseIncompleteReasonsSelected: {
+				include: {
+					appellantCaseIncompleteReason: true,
+					appellantCaseIncompleteReasonText: true
+				}
+			},
+			appellantCaseInvalidReasonsSelected: {
+				include: {
+					appellantCaseInvalidReason: true,
+					appellantCaseInvalidReasonText: true
+				}
+			},
+			appellantCaseValidationOutcome: true,
+			knowsOtherOwners: true,
+			knowsAllOwners: true,
+			appellantCaseAdvertDetails: true
+		}
+	},
+	appellant: true,
+	agent: true,
+	lpa: true,
+	appealStatus: true,
+	appealTimetable: true,
+	appealType: true,
+	assignedTeam: true,
+	caseOfficer: true,
+	inspector: true,
+	inspectorDecision: true,
+	lpaQuestionnaire: {
+		include: {
+			listedBuildingDetails: {
+				include: {
+					listedBuilding: true
+				}
+			},
+			designatedSiteNames: {
+				include: {
+					designatedSite: true
+				}
+			},
+			lpaNotificationMethods: {
+				include: {
+					lpaNotificationMethod: true
+				}
+			},
+			lpaQuestionnaireIncompleteReasonsSelected: {
+				include: {
+					lpaQuestionnaireIncompleteReason: true,
+					lpaQuestionnaireIncompleteReasonText: true
+				}
+			},
+			lpaQuestionnaireValidationOutcome: true
+		}
+	},
+	siteVisit: {
+		where: {
+			whoMissedSiteVisit: null
+		},
+		include: {
+			siteVisitType: true
+		}
+	},
+	hearing: {
+		include: {
+			address: true
+		}
+	},
+	inquiry: {
+		include: {
+			address: true
+		}
+	},
+	folders: {
+		include: {
+			documents: {
+				where: {
+					isDeleted: false
+				},
+				include: {
+					latestDocumentVersion: {
+						include: {
+							redactionStatus: true
+						}
+					}
+				}
+			}
+		}
+	},
+	representations: true,
+	hearingEstimate: true,
+	inquiryEstimate: true
+};
+
+/** all includes, can be selected from, don't include this, just select from it */
+export const appealDetailsIncludeMap = /** @type {const} */ {
 	address: true,
 	procedureType: true,
 	parentAppeals: {
@@ -141,6 +268,9 @@ export const appealDetailsInclude = /** @type {const} */ {
 	folders: {
 		include: {
 			documents: {
+				where: {
+					isDeleted: false
+				},
 				include: {
 					latestDocumentVersion: {
 						include: {
@@ -159,11 +289,11 @@ export const appealDetailsInclude = /** @type {const} */ {
 /**
  * Build obj to include for an appeal
  *
- * @template {keyof typeof appealDetailsInclude} K
+ * @template {keyof typeof appealDetailsIncludeMap} K
  *
  * @param {K[]} selectedKeys
  * @param {boolean} [includeDetails]
- * @returns {Pick<typeof appealDetailsInclude, K> | typeof appealDetailsInclude | null}
+ * @returns {Pick<typeof appealDetailsIncludeMap, K> | typeof appealDetailsInclude | null}
  */
 export const buildAppealInclude = (selectedKeys = [], includeDetails = true) => {
 	if (!includeDetails) {
@@ -176,17 +306,17 @@ export const buildAppealInclude = (selectedKeys = [], includeDetails = true) => 
 		return appealDetailsInclude;
 	}
 
-	/** @type {Partial<typeof appealDetailsInclude>} */
+	/** @type {Partial<typeof appealDetailsIncludeMap>} */
 	const include = {};
 	for (const key of selectedKeys) {
-		include[key] = appealDetailsInclude[key];
+		include[key] = appealDetailsIncludeMap[key];
 	}
 
-	return /** @type {Pick<typeof appealDetailsInclude, K>} */ (include);
+	return /** @type {Pick<typeof appealDetailsIncludeMap, K>} */ (include);
 };
 
 /**
- * @template {keyof typeof appealDetailsInclude} K
+ * @template {keyof typeof appealDetailsIncludeMap} K
  *
  * @param {number} id
  * @param {boolean} [includeDetails]
@@ -536,6 +666,16 @@ const removeAppealServiceUser = async (appealId, data) => {
 	});
 };
 
+const statusSelect = {
+	select: {
+		status: true,
+		valid: true
+	},
+	where: {
+		valid: true
+	}
+};
+
 const getAppealsWithCompletedEvents = () =>
 	databaseConnector.appeal.findMany({
 		where: {
@@ -582,7 +722,22 @@ const getAppealsWithCompletedEvents = () =>
 				}
 			]
 		},
-		include: appealDetailsInclude
+		select: {
+			id: true,
+			appealStatus: statusSelect,
+			childAppeals: {
+				select: {
+					childId: true,
+					type: true,
+					child: {
+						select: {
+							id: true,
+							appealStatus: statusSelect
+						}
+					}
+				}
+			}
+		}
 	});
 
 /**

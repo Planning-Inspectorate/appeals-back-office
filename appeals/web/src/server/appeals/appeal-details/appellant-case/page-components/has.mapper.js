@@ -38,6 +38,9 @@ export function generateHASComponents(
 			closing: '</div></div>'
 		},
 		parameters: {
+			attributes: {
+				id: 'before-you-start'
+			},
 			card: {
 				title: {
 					text: 'Before you start'
@@ -110,6 +113,7 @@ export function generateHASComponents(
 			},
 			rows: [
 				mappedAppellantCaseData.siteAddress.display.summaryListItem,
+				mappedAppellantCaseData.siteArea.display.summaryListItem,
 				mappedAppellantCaseData.inGreenBelt.display.summaryListItem,
 				mappedAppellantCaseData.siteOwnership.display.summaryListItem,
 				mappedAppellantCaseData.ownersKnown.display.summaryListItem,

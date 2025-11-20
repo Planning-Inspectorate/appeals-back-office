@@ -45,7 +45,6 @@ variable "apps_config" {
       featureFlagS78Hearing             = bool
       featureFlagS78Inquiry             = bool
       featureFlagLinkedAppeals          = bool
-      featureFlagS20                    = bool
       featureFlagCAS                    = bool
       featureFlagCasAdvert              = bool
       featureFlagNotifyCaseHistory      = bool
@@ -63,6 +62,8 @@ variable "apps_config" {
       featureFlagSearchCaseOfficer      = bool
       featureFlagEnforcementNotice      = bool
       featureFlagInvalidDecisionLetter  = bool
+      featureFlagRule6Parties           = bool
+      featureFlagExpeditedAppeals       = bool
     })
 
     logging = object({
@@ -151,6 +152,14 @@ variable "horizon_infra_config" {
       name = string
       rg   = string
     })
+  })
+}
+
+variable "monitoring_config" {
+  description = "Config for monitoring"
+  type = object({
+    web_app_insights_web_test_enabled = bool
+    log_daily_cap                     = number
   })
 }
 
@@ -278,4 +287,3 @@ variable "waf_rate_limits" {
     threshold           = number
   })
 }
-

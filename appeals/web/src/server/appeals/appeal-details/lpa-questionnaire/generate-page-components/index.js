@@ -51,11 +51,7 @@ export function generateCaseTypeSpecificComponents(
 				throw new Error('Feature flag inactive for S78');
 			}
 		case APPEAL_TYPE.PLANNED_LISTED_BUILDING:
-			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_20)) {
-				return generateS20LpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
-			} else {
-				throw new Error('Feature flag inactive for S20');
-			}
+			return generateS20LpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
 		default:
 			throw new Error('Invalid appealType, unable to generate display page');
 	}

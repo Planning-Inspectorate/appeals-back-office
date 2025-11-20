@@ -8,11 +8,11 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { clearEdits, editLink, isAtEditEntrypoint } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
-import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { APPEAL_DOCUMENT_TYPE, APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
+import { formatProofOfEvidenceTypeText } from '../view-and-review/view-and-review.mapper.js';
 import { postRepresentationProofOfEvidence } from './add-representation.service.js';
 
 /** @type {import('@pins/express').RequestHandler<{}>}  */
@@ -30,7 +30,7 @@ export const renderDocumentUpload = async (request, response) => {
 				exclude: ['editEntrypoint']
 		  })
 		: query.backUrl
-		? constructUrl(String(query.backUrl), currentAppeal.appealId)
+		? String(query.backUrl)
 		: `/appeals-service/appeal-details/${currentAppeal.appealId}`;
 
 	return renderDocumentUploadHelper({
@@ -85,11 +85,17 @@ export const renderCheckYourAnswers = (request, response) => {
 
 	return renderCheckYourAnswersComponent(
 		{
-			title: `Check details and add ${proofOfEvidenceType} proof of evidence and witnesses`,
-			heading: `Check details and add ${proofOfEvidenceType} proof of evidence and witnesses`,
+			title: `Check details and add ${formatProofOfEvidenceTypeText(
+				proofOfEvidenceType
+			)} proof of evidence and witnesses`,
+			heading: `Check details and add ${formatProofOfEvidenceTypeText(
+				proofOfEvidenceType
+			)} proof of evidence and witnesses`,
 			preHeading: `Appeal ${appealShortReference(appealReference)}`,
 			backLinkUrl: `${baseUrl}/add-document`,
-			submitButtonText: `Add ${proofOfEvidenceType} proof of evidence and witnesses`,
+			submitButtonText: `Add ${formatProofOfEvidenceTypeText(
+				proofOfEvidenceType
+			)} proof of evidence and witnesses`,
 			responses: {
 				'Proof of evidence and witnesses': {
 					html: `<a class="govuk-link" download href="${blobStoreUrl ?? ''}">${name ?? ''}</a>`,

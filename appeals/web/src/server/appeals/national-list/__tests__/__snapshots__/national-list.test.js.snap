@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`national-list GET / should render national list - 10 pages - all page indexes in one row 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">

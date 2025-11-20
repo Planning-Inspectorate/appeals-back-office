@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`final-comments GET /lpa-questionnaire/1/add-documents/:folderId/:documentId should render a document upload page with a file upload component 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
@@ -298,12 +298,8 @@ exports[`final-comments GET /review-comments with data should render review LPA 
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
-                    <dd class="govuk-summary-list__value">
-                        <ol class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
-                            <li><a class="govuk-link" href="/documents/4881/download/ed52cdc1-3cc2-462a-8623-c1ae256969d6/blank copy 5.pdf"
-                                target="_blank">blank copy 5.pdf</a>
-                            </li>
-                        </ol>
+                    <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/4881/download/ed52cdc1-3cc2-462a-8623-c1ae256969d6/blank copy 5.pdf"
+                        target="_blank">blank copy 5.pdf</a>
                     </dd>
                     <dd class="govuk-summary-list__actions">
                         <ul class="govuk-summary-list__actions-list">
@@ -654,12 +650,8 @@ exports[`final-comments POST /review-comments with data should render review LPA
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
-                    <dd class="govuk-summary-list__value">
-                        <ol class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
-                            <li><a class="govuk-link" href="/documents/4881/download/ed52cdc1-3cc2-462a-8623-c1ae256969d6/blank copy 5.pdf"
-                                target="_blank">blank copy 5.pdf</a>
-                            </li>
-                        </ol>
+                    <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/4881/download/ed52cdc1-3cc2-462a-8623-c1ae256969d6/blank copy 5.pdf"
+                        target="_blank">blank copy 5.pdf</a>
                     </dd>
                     <dd class="govuk-summary-list__actions">
                         <ul class="govuk-summary-list__actions-list">

@@ -1,3 +1,4 @@
+import { getAppellantCaseFromAppealId } from '#appeals/appeal-details/appellant-case/appellant-case.service.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
@@ -62,10 +63,18 @@ const renderChangeLpa = async (request, response) => {
 	try {
 		const { currentAppeal, apiClient, errors } = request;
 
+		const appellantCaseData = await getAppellantCaseFromAppealId(
+			apiClient,
+			currentAppeal.appealId,
+			currentAppeal.appellantCaseId
+		);
+
 		const lpaList = await getLpaList(apiClient);
 		const backlinkUrl = generateBacklinkUrl(request.originalUrl);
 
-		const mappedPageContent = changeLpaPage(currentAppeal, lpaList, backlinkUrl, errors);
+		const lpa = lpaList.find((lpa) => lpa.name === appellantCaseData?.localPlanningDepartment);
+
+		const mappedPageContent = changeLpaPage(currentAppeal, lpa?.id, lpaList, backlinkUrl, errors);
 
 		return response.status(200).render('patterns/change-page.pattern.njk', {
 			pageContent: mappedPageContent,

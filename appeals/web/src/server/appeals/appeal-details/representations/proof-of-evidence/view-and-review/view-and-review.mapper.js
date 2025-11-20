@@ -34,7 +34,9 @@ export function reviewProofOfEvidencePage(
 		proofOfEvidence
 	);
 
-	const title = `Review ${proofOfEvidenceType.toLowerCase()} proof of evidence and witnesses`;
+	const title = `Review ${formatProofOfEvidenceTypeText(
+		proofOfEvidenceType
+	)} proof of evidence and witnesses`;
 
 	const pageContent = {
 		title,
@@ -86,5 +88,7 @@ export function reviewProofOfEvidencePage(
  * @returns {string}
  */
 export function formatProofOfEvidenceTypeText(proofOfEvidenceType, capitaliseFirstLetter = false) {
-	return proofOfEvidenceType === 'lpa' ? 'LPA' : `${capitaliseFirstLetter ? 'A' : 'a'}ppellant`;
+	return proofOfEvidenceType.toLowerCase() === 'lpa'
+		? 'LPA'
+		: `${capitaliseFirstLetter ? 'A' : 'a'}ppellant`;
 }

@@ -68,7 +68,6 @@ module "app_api" {
     FEATURE_FLAG_S78_HEARING             = var.apps_config.featureFlags.featureFlagS78Hearing
     FEATURE_FLAG_S78_INQUIRY             = var.apps_config.featureFlags.featureFlagS78Inquiry
     FEATURE_FLAG_LINKED_APPEALS          = var.apps_config.featureFlags.featureFlagLinkedAppeals
-    FEATURE_FLAG_S20                     = var.apps_config.featureFlags.featureFlagS20
     FEATURE_FLAG_CAS                     = var.apps_config.featureFlags.featureFlagCAS
     FEATURE_FLAG_CAS_ADVERT              = var.apps_config.featureFlags.featureFlagCasAdvert
     FEATURE_FLAG_NET_RESIDENCE           = var.apps_config.featureFlags.featureFlagNetResidence
@@ -79,6 +78,8 @@ module "app_api" {
     FEATURE_FLAG_SEARCH_CASE_OFFICER     = var.apps_config.featureFlags.featureFlagSearchCaseOfficer
     FEATURE_FLAG_ENFORCEMENT_NOTICE      = var.apps_config.featureFlags.featureFlagEnforcementNotice
     FEATURE_FLAG_INVALID_DECISION_LETTER = var.apps_config.featureFlags.featureFlagInvalidDecisionLetter
+    FEATURE_FLAG_RULE_6_PARTIES          = var.apps_config.featureFlags.featureFlagRule6Parties
+    FEATURE_FLAG_EXPEDITED_APPEALS       = var.apps_config.featureFlags.featureFlagExpeditedAppeals
 
 
     # service bus topics

@@ -2801,7 +2801,7 @@ export interface ChangeProcedureTypeRequest {
 	 * Estimated number of days
 	 * @example 5
 	 */
-	estimatedDays?: string;
+	estimationDays?: string;
 	/**
 	 * Date string of the lpaQuestionnaireDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM
 	 * @example "2026-11-10T00:00:00.000Z"

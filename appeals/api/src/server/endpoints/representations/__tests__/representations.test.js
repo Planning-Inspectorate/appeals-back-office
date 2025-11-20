@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { request } from '#tests/../app-test.js';
+import { request } from '#server/app-test.js';
 import {
 	advertisementAppeal,
 	appealAdvert,
@@ -3180,7 +3180,7 @@ describe('/appeals/:id/reps', () => {
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					azureAdUserId: expect.anything(),
 					notifyClient: expect.anything(),
 					personalisation: {
@@ -3203,7 +3203,7 @@ describe('/appeals/:id/reps', () => {
 					templateName: 'not-received-proof-of-evidence-and-witnesses'
 				});
 
-				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					azureAdUserId: expect.anything(),
 					notifyClient: expect.anything(),
 					personalisation: {
@@ -3284,7 +3284,7 @@ describe('/appeals/:id/reps', () => {
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					azureAdUserId: expect.anything(),
 					notifyClient: expect.anything(),
 					personalisation: {
@@ -3307,7 +3307,7 @@ describe('/appeals/:id/reps', () => {
 					templateName: 'not-received-proof-of-evidence-and-witnesses'
 				});
 
-				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					azureAdUserId: expect.anything(),
 					notifyClient: expect.anything(),
 					personalisation: {
@@ -3325,6 +3325,244 @@ describe('/appeals/:id/reps', () => {
 							'Your witnesses should be available for the duration of the inquiry.',
 						inquiry_subject_line:
 							'We did not receive any proof of evidence and witnesses from local planning authority or any other parties'
+					},
+					recipientEmail: appealS78.appellant.email,
+					templateName: 'not-received-proof-of-evidence-and-witnesses'
+				});
+			});
+
+			test('send notify to lpa and when appellant proof of evidence is not provided but LPA is completed', async () => {
+				mockS78Appeal = {
+					...mockS78Appeal,
+					representations: [
+						...mockS78Appeal.representations,
+						{
+							id: 4488,
+							appealId: 2377,
+							representationType: 'lpa_proofs_evidence',
+							dateCreated: new Date('2024-11-27T15:08:55.704Z'),
+							dateLastUpdated: new Date('2024-11-27T15:08:55.704Z'),
+							originalRepresentation: 'Proof of evidence from lpa',
+							redactedRepresentation: null,
+							representedId: 5875,
+							representativeId: null,
+							lpaCode: null,
+							status: 'valid',
+							reviewer: null,
+							notes: null,
+							siteVisitRequested: false,
+							source: 'citizen'
+						}
+					],
+					inquiry: {
+						id: 1,
+						inquiryStartTime: '2025-12-13 14:00',
+						estimatedDays: 8,
+						address: {
+							addressLine1: '10 Mole lane',
+							addressLine2: 'Test address 2',
+							addressTown: 'London',
+							addressCounty: 'London',
+							postcode: 'WL3 6GH',
+							addressCountry: 'United Kingdom'
+						}
+					}
+				};
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => mockS78Appeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedinquiryAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => mockS78Appeal.inquiry.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedEmailPayload = {
+					lpa_reference: mockS78Appeal.applicationReference,
+					has_ip_comments: false,
+					has_statement: false,
+					is_hearing_procedure: false,
+					is_inquiry_procedure: false,
+					appeal_reference_number: mockS78Appeal.reference,
+					final_comments_deadline: '',
+					site_address: expectedSiteAddress,
+					user_type: ''
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([
+					{ representationType: 'appellant_proofs_evidence' },
+					{ representationType: 'lpa_proofs_evidence' }
+				]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'evidence' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						what_happens_next: 'You need to attend the inquiry on 13 December 2025.',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						inquiry_address: expectedinquiryAddress,
+						inquiry_date: '13 December 2025',
+						inquiry_detail_warning_text:
+							'The details of the inquiry are subject to change. We will contact you by email if we make any changes.',
+						inquiry_expected_days: '8',
+						inquiry_time: '2:00pm',
+						inquiry_witnesses_text:
+							'Your witnesses should be available for the duration of the inquiry.',
+						inquiry_subject_line:
+							'We did not receive any proof of evidence and witnesses from appellant or any other parties',
+						is_inquiry_procedure: true
+					},
+					recipientEmail: appealS78.lpa.email,
+					templateName: 'not-received-proof-of-evidence-and-witnesses'
+				});
+			});
+
+			test('send notify to appellant and when lpa proof of evidence is not provided but appellant is completed', async () => {
+				mockS78Appeal = {
+					...mockS78Appeal,
+					representations: [
+						...mockS78Appeal.representations,
+						{
+							id: 4488,
+							appealId: 2377,
+							representationType: 'appellant_proofs_evidence',
+							dateCreated: new Date('2024-11-27T15:08:55.704Z'),
+							dateLastUpdated: new Date('2024-11-27T15:08:55.704Z'),
+							originalRepresentation: 'Proof of evidence from appellant',
+							redactedRepresentation: null,
+							representedId: 5875,
+							representativeId: null,
+							lpaCode: null,
+							status: 'valid',
+							reviewer: null,
+							notes: null,
+							siteVisitRequested: false,
+							source: 'citizen'
+						}
+					],
+					inquiry: {
+						id: 1,
+						inquiryStartTime: '2025-12-13 14:00',
+						estimatedDays: 8,
+						address: {
+							addressLine1: '10 Mole lane',
+							addressLine2: 'Test address 2',
+							addressTown: 'London',
+							addressCounty: 'London',
+							postcode: 'WL3 6GH',
+							addressCountry: 'United Kingdom'
+						}
+					}
+				};
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => mockS78Appeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedinquiryAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => mockS78Appeal.inquiry.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedEmailPayload = {
+					lpa_reference: mockS78Appeal.applicationReference,
+					has_ip_comments: false,
+					has_statement: false,
+					is_hearing_procedure: false,
+					is_inquiry_procedure: false,
+					appeal_reference_number: mockS78Appeal.reference,
+					final_comments_deadline: '',
+					site_address: expectedSiteAddress,
+					user_type: ''
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([
+					{ representationType: 'appellant_proofs_evidence' },
+					{ representationType: 'lpa_proofs_evidence' }
+				]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'evidence' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						what_happens_next: 'You need to attend the inquiry on 13 December 2025.',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						inquiry_address: expectedinquiryAddress,
+						inquiry_date: '13 December 2025',
+						inquiry_detail_warning_text:
+							'The details of the inquiry are subject to change. We will contact you by email if we make any changes.',
+						inquiry_expected_days: '8',
+						inquiry_time: '2:00pm',
+						inquiry_witnesses_text:
+							'Your witnesses should be available for the duration of the inquiry.',
+						inquiry_subject_line:
+							'We did not receive any proof of evidence and witnesses from local planning authority or any other parties',
+						is_inquiry_procedure: true
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'not-received-proof-of-evidence-and-witnesses'

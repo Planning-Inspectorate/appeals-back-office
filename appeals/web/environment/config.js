@@ -56,7 +56,6 @@ export function loadConfig() {
 		FEATURE_FLAG_S78_HEARING,
 		FEATURE_FLAG_S78_INQUIRY,
 		FEATURE_FLAG_LINKED_APPEALS,
-		FEATURE_FLAG_S20,
 		FEATURE_FLAG_CAS,
 		FEATURE_FLAG_CAS_ADVERT,
 		FEATURE_FLAG_ADVERTISEMENT,
@@ -67,6 +66,7 @@ export function loadConfig() {
 		FEATURE_FLAG_NET_RESIDENCE,
 		FEATURE_FLAG_NET_RESIDENCE_S20,
 		FEATURE_FLAG_HEARING_POST_MVP,
+		FEATURE_FLAG_EXPEDITED_APPEALS,
 		HORIZON_APPEAL_BASE_URL,
 		HTTP_PORT = 8080,
 		HTTPS_ENABLED,
@@ -88,7 +88,8 @@ export function loadConfig() {
 		FEATURE_FLAG_CANCEL_SITE_VISIT,
 		FEATURE_FLAG_SEARCH_CASE_OFFICER,
 		FEATURE_FLAG_ENFORCEMENT_NOTICE,
-		FEATURE_FLAG_INVALID_DECISION_LETTER
+		FEATURE_FLAG_INVALID_DECISION_LETTER,
+		FEATURE_FLAG_RULE_6_PARTIES
 	} = environment;
 
 	const config = {
@@ -147,7 +148,6 @@ export function loadConfig() {
 			featureFlagS78Hearing: FEATURE_FLAG_S78_HEARING === 'true',
 			featureFlagS78Inquiry: FEATURE_FLAG_S78_INQUIRY === 'true',
 			featureFlagLinkedAppeals: FEATURE_FLAG_LINKED_APPEALS === 'true',
-			featureFlagS20: FEATURE_FLAG_S20 === 'true',
 			featureFlagCAS: FEATURE_FLAG_CAS === 'true',
 			featureFlagCasAdvert: FEATURE_FLAG_CAS_ADVERT === 'true',
 			featureFlagAdvertisement: FEATURE_FLAG_ADVERTISEMENT === 'true',
@@ -164,7 +164,9 @@ export function loadConfig() {
 			featureFlagCancelSiteVisit: FEATURE_FLAG_CANCEL_SITE_VISIT === 'true',
 			featureFlagSearchCaseOfficer: FEATURE_FLAG_SEARCH_CASE_OFFICER === 'true',
 			featureFlagEnforcementNotice: FEATURE_FLAG_ENFORCEMENT_NOTICE === 'true',
-			featureFlagInvalidDecisionLetter: FEATURE_FLAG_INVALID_DECISION_LETTER === 'true'
+			featureFlagInvalidDecisionLetter: FEATURE_FLAG_INVALID_DECISION_LETTER === 'true',
+			featureFlagRule6Parties: FEATURE_FLAG_RULE_6_PARTIES === 'true',
+			featureFlagExpeditedAppeals: FEATURE_FLAG_EXPEDITED_APPEALS === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		pdfServiceHost: PDF_SERVICE_HOST

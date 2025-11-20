@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { request } from '#tests/../app-test.js';
+import { request } from '#server/app-test.js';
 import { caseNotes, householdAppeal } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';

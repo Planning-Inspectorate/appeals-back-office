@@ -16,8 +16,8 @@ let testCaseConfig = {
 	approveLpaq: true,
 	validateAppeal: true,
 	startCase: true,
-	addInquiry: false,
-	addHearing: true,
+	addInquiry: true,
+	addHearing: false,
 	assignCaseOfficer: true,
 	addAppellantPOE: false,
 	addLPAPOE: true

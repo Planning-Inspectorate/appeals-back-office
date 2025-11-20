@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Timetable GET /edit S78 and S20 should render correct "Timetable due dates" page for Planning appeal type and status final_comments 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">

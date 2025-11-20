@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { request } from '#tests/../app-test.js';
+import { request } from '#server/app-test.js';
 import { fullPlanningAppeal as fullPlanningAppealData } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
@@ -50,10 +50,10 @@ describe('Change appeal procedure type route', () => {
 		mockTx.procedureType.findFirst.mockResolvedValue({ id: 1 });
 		mockTx.appeal.update.mockResolvedValue({});
 		mockTx.appealTimetable.update.mockResolvedValue({});
-		mockTx.inquiry.update.mockResolvedValue({});
-		mockTx.inquiry.create.mockResolvedValue({});
-		mockTx.hearing.update.mockResolvedValue({});
-		mockTx.hearing.create.mockResolvedValue({});
+		mockTx.inquiry.update.mockResolvedValue({ id: 2 });
+		mockTx.inquiry.create.mockResolvedValue({ id: 2 });
+		mockTx.hearing.update.mockResolvedValue({ id: 2 });
+		mockTx.hearing.create.mockResolvedValue({ id: 2 });
 		mockTx.address.create.mockResolvedValue({});
 		mockTx.address.update.mockResolvedValue({ id: 1 });
 		mockTx.siteVisit.deleteMany.mockResolvedValue({});
@@ -136,7 +136,9 @@ describe('Change appeal procedure type route', () => {
 						'We have changed your appeal procedure to written representations and cancelled your hearing.',
 					lpa_statement_exists: true,
 					existing_appeal_procedure: 'hearing',
-					inquiry_address: ''
+					inquiry_address: '',
+					hearing_date: '',
+					hearing_time: ''
 				};
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
@@ -211,7 +213,9 @@ describe('Change appeal procedure type route', () => {
 					lpa_statement_exists: true,
 					existing_appeal_procedure: 'inquiry',
 					week_before_conference_date: '25 December 2998',
-					inquiry_address: ''
+					inquiry_address: '',
+					hearing_date: '',
+					hearing_time: ''
 				};
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
@@ -313,6 +317,8 @@ describe('Change appeal procedure type route', () => {
 
 				// verify transaction itself was called
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
+
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'hearing', 'Update');
 			});
 
 			test('returns 201 and calls delete inquiry if changing from inquiry to hearing', async () => {
@@ -321,6 +327,7 @@ describe('Change appeal procedure type route', () => {
 					.post(`/appeals/${fullPlanningAppeal.id}/procedure-type-change-request`)
 					.send({
 						existingAppealProcedure: 'inquiry',
+						eventDate: '2000-01-01T12:00:00.000Z',
 						appealProcedure: 'hearing',
 						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
 						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
@@ -346,6 +353,53 @@ describe('Change appeal procedure type route', () => {
 
 				// verify transaction itself was called
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
+
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'hearing', 'Create');
+
+				const personalisation = {
+					...expectedData,
+					appeal_reference_number: '1345264',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					lpa_reference: '48269/APP/2021/1482',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					appeal_procedure: 'hearing',
+					change_message:
+						'We have changed your appeal procedure to hearing and cancelled your inquiry.',
+					lpa_statement_exists: true,
+					existing_appeal_procedure: 'inquiry',
+					proof_of_evidence_due_date: '',
+					hearing_date: '1 January 2000',
+					hearing_time: '12:00pm',
+					inquiry_address: ''
+				};
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						...personalisation,
+						is_lpa: false,
+						subject: 'We have changed your appeal procedure: 1345264',
+						existing_appeal_procedure: 'inquiry',
+						week_before_conference_date: '25 December 2998'
+					},
+					recipientEmail: fullPlanningAppeal.appellant.email,
+					templateName: 'change-procedure-type'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						...personalisation,
+						is_lpa: true,
+						subject: 'We have changed the appeal procedure: 1345264',
+						existing_appeal_procedure: 'inquiry',
+						week_before_conference_date: '25 December 2998'
+					},
+					recipientEmail: fullPlanningAppeal.lpa.email,
+					templateName: 'change-procedure-type'
+				});
 			});
 
 			test('returns 201 and calls delete site visit if changing from written to hearing', async () => {
@@ -354,6 +408,7 @@ describe('Change appeal procedure type route', () => {
 					.post(`/appeals/${fullPlanningAppeal.id}/procedure-type-change-request`)
 					.send({
 						existingAppealProcedure: 'written',
+						eventDate: '2000-01-01T12:00:00.000Z',
 						appealProcedure: 'hearing',
 						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
 						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
@@ -375,6 +430,53 @@ describe('Change appeal procedure type route', () => {
 
 				// verify transaction itself was called
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
+
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'hearing', 'Create');
+
+				const personalisation = {
+					...expectedData,
+					appeal_reference_number: '1345264',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					lpa_reference: '48269/APP/2021/1482',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					appeal_procedure: 'hearing',
+					change_message:
+						'We have changed your appeal procedure to hearing and cancelled your site visit.',
+					lpa_statement_exists: true,
+					existing_appeal_procedure: 'written',
+					proof_of_evidence_due_date: '',
+					hearing_date: '1 January 2000',
+					hearing_time: '12:00pm',
+					inquiry_address: ''
+				};
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						...personalisation,
+						is_lpa: false,
+						subject: 'We have changed your appeal procedure: 1345264',
+						existing_appeal_procedure: 'written',
+						week_before_conference_date: '25 December 2998'
+					},
+					recipientEmail: fullPlanningAppeal.appellant.email,
+					templateName: 'change-procedure-type'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						...personalisation,
+						is_lpa: true,
+						subject: 'We have changed the appeal procedure: 1345264',
+						existing_appeal_procedure: 'written',
+						week_before_conference_date: '25 December 2998'
+					},
+					recipientEmail: fullPlanningAppeal.lpa.email,
+					templateName: 'change-procedure-type'
+				});
 			});
 		});
 
@@ -401,6 +503,7 @@ describe('Change appeal procedure type route', () => {
 
 			test('returns 201 and calls delete hearing if changing from hearing to inquiry', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				mockTx.inquiry.findFirst.mockResolvedValue(null);
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/procedure-type-change-request`)
 					.send({
@@ -412,6 +515,7 @@ describe('Change appeal procedure type route', () => {
 						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
 						statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z',
 						proofOfEvidenceAndWitnessesDueDate: '2025-12-15T00:00:00.000Z',
+						estimationDays: '7',
 						address: {
 							addressLine1: '96 The Avenue',
 							addressLine2: 'Leftfield',
@@ -435,10 +539,22 @@ describe('Change appeal procedure type route', () => {
 					data: { procedureTypeId: 1 }
 				});
 
+				expect(mockTx.inquiry.create).toHaveBeenCalledWith({
+					data: {
+						addressId: undefined,
+						appealId: 2,
+						estimatedDays: 7,
+						inquiryEndTime: null,
+						inquiryStartTime: '2025-12-20T00:00:00.000Z'
+					}
+				});
+
 				expect(mockTx.inquiry.deleteMany).not.toHaveBeenCalled();
 
 				// verify transaction itself was called
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
+
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'inquiry', 'Create');
 
 				const personalisation = {
 					...expectedData,
@@ -451,7 +567,9 @@ describe('Change appeal procedure type route', () => {
 						'We have changed your appeal procedure to inquiry and cancelled your hearing.',
 					lpa_statement_exists: true,
 					existing_appeal_procedure: 'hearing',
-					proof_of_evidence_due_date: '15 December 2025'
+					proof_of_evidence_due_date: '15 December 2025',
+					hearing_date: '20 December 2025',
+					hearing_time: '12:00am'
 				};
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
@@ -512,6 +630,7 @@ describe('Change appeal procedure type route', () => {
 				// verify transaction itself was called
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
 				expect(mockNotifySend).not.toHaveBeenCalled();
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'inquiry', 'Update');
 			});
 
 			test('returns 201 and calls delete siteVisit if changing from written to inquiry', async () => {
@@ -549,6 +668,8 @@ describe('Change appeal procedure type route', () => {
 				// verify transaction itself was called
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
 
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'inquiry', 'Create');
+
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 				const personalisation = {
@@ -562,7 +683,9 @@ describe('Change appeal procedure type route', () => {
 						'We have changed your appeal procedure to inquiry and cancelled your site visit.',
 					lpa_statement_exists: true,
 					existing_appeal_procedure: 'written',
-					proof_of_evidence_due_date: '15 December 2025'
+					proof_of_evidence_due_date: '15 December 2025',
+					hearing_date: '20 December 2025',
+					hearing_time: '12:00am'
 				};
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);

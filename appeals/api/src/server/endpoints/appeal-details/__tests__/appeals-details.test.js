@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { notifySend } from '#notify/notify-send.js';
-import { request } from '#tests/../app-test.js';
+import { request } from '#server/app-test.js';
 import { mocks } from '#tests/appeals/index.js';
 import { savedFolder } from '#tests/documents/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';

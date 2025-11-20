@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`start-case GET /start-case/select-procedure should render the select procedure page with the expected content 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
@@ -19,18 +19,23 @@ exports[`start-case GET /start-case/select-procedure should render the select pr
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure" name="appealProcedure"
-                                        type="radio" value="written">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations</label>
+                                        type="radio" value="expeditedAppeals">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Part 1</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure-2" name="appealProcedure"
-                                        type="radio" value="hearing">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure-2">Hearing</label>
+                                        type="radio" value="written">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure-2">Written representations</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure-3" name="appealProcedure"
+                                        type="radio" value="hearing">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure-3">Hearing</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-procedure-4" name="appealProcedure"
                                         type="radio" value="inquiry">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure-3">Inquiry</label>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure-4">Inquiry</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -110,18 +115,23 @@ exports[`start-case POST /start-case/select-procedure should re-render the selec
                                 <div                                 class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure" name="appealProcedure"
-                                        type="radio" value="written">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations</label>
+                                        type="radio" value="expeditedAppeals">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Part 1</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure-2" name="appealProcedure"
-                                        type="radio" value="hearing">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure-2">Hearing</label>
+                                        type="radio" value="written">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure-2">Written representations</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure-3" name="appealProcedure"
+                                        type="radio" value="hearing">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure-3">Hearing</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-procedure-4" name="appealProcedure"
                                         type="radio" value="inquiry">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure-3">Inquiry</label>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure-4">Inquiry</label>
                                     </div>
                         </div>
                         </fieldset>

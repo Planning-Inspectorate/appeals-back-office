@@ -8,6 +8,7 @@ import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 /** @typedef {import('express').NextFunction} NextFunction */
 
 /**
+ * @deprecated too inefficient, use checkAppealExistsByIdAndAddPartialToRequest
  * @param {Request} req
  * @param {Response} res
  * @param {NextFunction} next
@@ -29,6 +30,7 @@ export const checkAppealExistsByIdAndAddToRequest = async (req, res, next) => {
 };
 
 /**
+ * @deprecated too inefficient, use checkAppealExistsByIdAndAddPartialToRequest
  * @param {Request} req
  * @param {Response} res
  * @param {NextFunction} next
@@ -50,6 +52,7 @@ export const checkAppealExistsByCaseReferenceAndAddToRequest = async (req, res, 
 };
 
 /**
+ * @deprecated too inefficient, use checkAppealExistsByIdAndAddPartialToRequest
  * @param {Request} req
  * @param {Response} res
  * @param {NextFunction} next
@@ -73,9 +76,9 @@ export const checkAppealExistsById = async (req, res, next) => {
 };
 
 /**
- * @typedef {import('#repositories/appeal.repository.js').appealDetailsInclude} AppealDetailsInclude
+ * @typedef {import('#repositories/appeal.repository.js').appealDetailsIncludeMap} AppealDetailsInclude
  *
- * @param {Array<keyof typeof import('#repositories/appeal.repository.js').appealDetailsInclude>} [selectedKeys=[]]
+ * @param {Array<keyof typeof import('#repositories/appeal.repository.js').appealDetailsIncludeMap>} [selectedKeys=[]]
  * @returns {(req: Request, res: Response, next: NextFunction) => Promise<Response | void>}
  */
 export const checkAppealExistsByIdAndAddPartialToRequest =
@@ -87,7 +90,7 @@ export const checkAppealExistsByIdAndAddPartialToRequest =
 
 		if (selectedKeys.length) {
 			selectedKeys = [
-				.../** @type {Set<keyof typeof import('#repositories/appeal.repository.js').appealDetailsInclude>} */
+				.../** @type {Set<keyof typeof import('#repositories/appeal.repository.js').appealDetailsIncludeMap>} */
 				(new Set([...selectedKeys, 'appealType']))
 			];
 		}
