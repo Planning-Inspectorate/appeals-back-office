@@ -6,7 +6,6 @@ import {
 	DEFAULT_TIMEZONE
 } from '@pins/appeals/constants/dates.js';
 import {
-	APPEAL_TYPE_SHORTHAND_FPA,
 	APPEAL_TYPE_SHORTHAND_HAS,
 	APPEAL_TYPE_SHORTHAND_HEARING,
 	APPEAL_TYPE_SHORTHAND_INQUIRY,
@@ -14,6 +13,7 @@ import {
 	CONFIG_APPEAL_TIMETABLE,
 	CONFIG_BANKHOLIDAYS_FEED_URL
 } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { addBusinessDays, isAfter, isBefore, isSameDay, isWeekend, parseISO } from 'date-fns';
 import { formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
 import fetch from 'node-fetch';
@@ -197,16 +197,18 @@ const calculateTimetable = async (appealType, startedAt, procedureType = 'writte
 
 		/** @type {Record<string, string>} */
 		const procedureTypeMap = {
+			written: 'W',
 			hearing: APPEAL_TYPE_SHORTHAND_HEARING,
 			inquiry: APPEAL_TYPE_SHORTHAND_INQUIRY
 		};
 
-		const appealTypeKey = !isExpeditedAppealType(appealType)
-			? procedureTypeMap[procedureType] ?? APPEAL_TYPE_SHORTHAND_FPA
-			: APPEAL_TYPE_SHORTHAND_HAS;
+		const procedureTypeKey = procedureTypeMap[procedureType];
+		const fullAppealTypeKey = appealType === APPEAL_CASE_TYPE.H ? appealType : APPEAL_CASE_TYPE.W;
+		const expeditedAppealTypeKey = APPEAL_TYPE_SHORTHAND_HAS;
 
-		// @ts-ignore
-		const appealTimetableConfig = CONFIG_APPEAL_TIMETABLE[appealTypeKey];
+		const appealTimetableConfig = !isExpeditedAppealType(appealType)
+			? CONFIG_APPEAL_TIMETABLE[fullAppealTypeKey][procedureTypeKey]
+			: CONFIG_APPEAL_TIMETABLE[expeditedAppealTypeKey];
 
 		if (appealTimetableConfig) {
 			const bankHolidays = await fetchBankHolidaysForDivision();
