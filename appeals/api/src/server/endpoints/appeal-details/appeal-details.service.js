@@ -140,16 +140,25 @@ const assignUser = async (
 			details,
 			azureAdUserId: azureAdUserId || AUDIT_TRAIL_SYSTEM_UUID
 		});
-		const recipientEmail = caseData.agent?.email || caseData.appellant?.email;
 
-		if (recipientEmail && notifyAppellant) {
-			await notifySend({
-				azureAdUserId: azureAdUserId || '',
-				templateName: templateName,
-				notifyClient,
-				recipientEmail,
-				personalisation: personalisation
-			});
+		const recipientEmailList = [];
+
+		caseData.agent?.email && recipientEmailList.push(caseData.agent.email);
+		caseData.appellant?.email && recipientEmailList.push(caseData.appellant.email);
+		caseData.lpa?.email && recipientEmailList.push(caseData.lpa.email);
+
+		if (notifyAppellant) {
+			Promise.all(
+				recipientEmailList.map((recipientEmail) => {
+					notifySend({
+						azureAdUserId: azureAdUserId || '',
+						templateName: templateName,
+						notifyClient,
+						recipientEmail,
+						personalisation: personalisation
+					});
+				})
+			);
 		}
 
 		if (shouldTransitionState && caseData.appealType) {

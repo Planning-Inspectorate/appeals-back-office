@@ -4056,6 +4056,7 @@ export type AppellantCase = {
 	siteAreaSquareMetres?: number | null;
 	floorSpaceSquareMetres?: number | null;
 	enforcementNotice?: boolean | null;
+	enforcementNoticeListedBuilding?: boolean | null;
 	isGreenBelt?: boolean | null;
 	planningObligation?: any;
 	statusPlanningObligation?: string | null;
@@ -12357,6 +12358,7 @@ export interface AppellantCaseUpdateRequest {
 	siteAreaSquareMetres?: number | null;
 	floorSpaceSquareMetres?: number | null;
 	enforcementNotice?: boolean | null;
+	enforcementNoticeListedBuilding?: boolean | null;
 	isGreenBelt?: boolean | null;
 	planningObligation?: boolean | null;
 	statusPlanningObligation?: string | null;
