@@ -17,7 +17,7 @@ describe('Change procedure type', () => {
 	describe('GET /change-appeal-procedure-type/change-selected-procedure-type Written', () => {
 		it('should render the select procedure page with the expected content', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -59,7 +59,7 @@ describe('Change procedure type', () => {
 
 		it('should render the select procedure page with the expected back link URL, if the backLink query parameter was passed', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -97,7 +97,7 @@ describe('Change procedure type', () => {
 
 		it('should render the select procedure page with the expected radio option preselected if an appeal procedure is found in the session', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal',
@@ -118,7 +118,7 @@ describe('Change procedure type', () => {
 			);
 
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -146,7 +146,7 @@ describe('Change procedure type', () => {
 	describe('POST /change-appeal-procedure-type/change-selected-procedure-type Written to Written', () => {
 		it('should re-render the select procedure page with the expected error message if no radio option was selected', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -179,7 +179,7 @@ describe('Change procedure type', () => {
 
 		it('should redirect to the timetable due page if a existing procedure is Written and change to Written', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal',
@@ -204,7 +204,7 @@ describe('Change procedure type', () => {
 	describe('POST /change-appeal-procedure-type/change-selected-procedure-type Written to Hearing', () => {
 		it('should re-render the select procedure page with the expected error message if no radio option was selected', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal',
@@ -238,7 +238,7 @@ describe('Change procedure type', () => {
 
 		// it('should redirect to the timetable due page if a existing procedure is Written and change to Hearing', async () => {
 		// 	nock('http://test/')
-		// 		.get('/appeals/1')
+		// 		.get('/appeals/1?include=all')
 		// 		.reply(200, {
 		// 			...appealDataWithoutStartDate,
 		// 			appealType: 'Planning appeal'
