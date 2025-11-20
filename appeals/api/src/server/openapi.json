@@ -15667,6 +15667,10 @@
 						"type": "boolean",
 						"nullable": true
 					},
+					"enforcementNoticeListedBuilding": {
+						"type": "boolean",
+						"nullable": true
+					},
 					"isGreenBelt": {
 						"type": "boolean",
 						"nullable": true
@@ -34892,6 +34896,10 @@
 						"nullable": true
 					},
 					"enforcementNotice": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"enforcementNoticeListedBuilding": {
 						"type": "boolean",
 						"nullable": true
 					},
