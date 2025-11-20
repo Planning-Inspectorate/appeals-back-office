@@ -9,6 +9,7 @@ import {
 } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
+import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import {
 	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
 	ERROR_MUST_NOT_BE_IN_FUTURE
@@ -73,13 +74,13 @@ describe('appeal withdrawal routes', () => {
 		});
 
 		test.each([
-			['household', householdAppeal],
-			['casPlanning', casPlanningAppeal],
-			['casAdvert', casAdvertAppeal],
-			['advertisement', advertisementAppeal],
-			['fullPlanning', fullPlanningAppeal],
-			['listedBuilding', listedBuildingAppeal]
-		])('returns 200 when appeal: %s is withdrawn', async (_, appeal) => {
+			['household', householdAppeal, FEEDBACK_FORM_LINKS.HAS],
+			['casPlanning', casPlanningAppeal, FEEDBACK_FORM_LINKS.CAS_PLANNING],
+			['casAdvert', casAdvertAppeal, FEEDBACK_FORM_LINKS.CAS_ADVERTS],
+			['advertisement', advertisementAppeal, FEEDBACK_FORM_LINKS.FULL_ADVERTS],
+			['fullPlanning', fullPlanningAppeal, FEEDBACK_FORM_LINKS.S78],
+			['listedBuilding', listedBuildingAppeal, FEEDBACK_FORM_LINKS.S20]
+		])('returns 200 when appeal: %s is withdrawn', async (_, appeal, expectedFeedbackLink) => {
 			const correctAppealState = {
 				...appeal,
 				appealStatus: [
@@ -112,6 +113,7 @@ describe('appeal withdrawal routes', () => {
 					appeal_reference_number: appeal.reference,
 					lpa_reference: appeal.applicationReference,
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+					feedback_link: expectedFeedbackLink,
 					withdrawal_date: formatDate(utcDate, false),
 					event_set: true,
 					event_type: 'site visit',
@@ -128,6 +130,7 @@ describe('appeal withdrawal routes', () => {
 					appeal_reference_number: appeal.reference,
 					lpa_reference: appeal.applicationReference,
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+					feedback_link: FEEDBACK_FORM_LINKS.LPA,
 					withdrawal_date: formatDate(utcDate, false),
 					event_set: true,
 					event_type: 'site visit',
