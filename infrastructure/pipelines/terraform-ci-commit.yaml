@@ -34,7 +34,8 @@ extends:
               nodeVersion: 22
               script: npm run commitlint
       - name: Run cypress e2e tests
-        if: github.event.action == 'labeled' && github.event.label.name == 'e2eTests'
+        dependantOn: Check PR labels
+        condition: eq(variables['Build.Reason'], 'PullRequest')
         steps:
           - task: ShellScript@2
             inputs:
@@ -45,20 +46,11 @@ extends:
             parameters:
               nodeVersion: 22
               script: npm ci
-          -   template: ../steps/node_script.yml
-              parameters:
-                  nodeVersion: 22
-                  script: npm run api
-          -   template: ../steps/node_script.yml
-              parameters:
-                  nodeVersion: 22
-                  script: npm run web
-          -   template: ../steps/node_script.yml
-              parameters:
-                  nodeVersion: 22
-                  script: npm run api
-          -   template: ../steps/node_script.yml
-              parameters:
-                  nodeVersion: 22
-                  script: npm run e2e
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 22
+              script: |
+                NODE_ENV=development npm run api
+                NODE_ENV=development npm run web
+                npx cypress run --spec "cypress/e2e/back-office-appeals/**/*.spec.js"
 
