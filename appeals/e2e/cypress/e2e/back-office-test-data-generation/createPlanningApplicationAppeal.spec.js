@@ -16,8 +16,8 @@ let testCaseConfig = {
 	approveLpaq: true,
 	validateAppeal: true,
 	startCase: true,
-	addInquiry: true,
-	addHearing: false,
+	addInquiry: false,
+	addHearing: true,
 	assignCaseOfficer: true,
 	addAppellantPOE: false,
 	addLPAPOE: true
@@ -40,14 +40,11 @@ describe('Create planning application', () => {
 				cy.assignCaseOfficerViaApi(caseObj);
 			}
 
-			// add lpaq
-			if (testCaseConfig.addLpaq) {
-				cy.addLpaqSubmissionToCase(caseObj);
-			}
-
-			// add lpaq
-			if (testCaseConfig.approveLpaq) {
-				cy.reviewLpaqSubmission(caseObj);
+			// Validate Appeal Via API
+			if (testCaseConfig.validateAppeal) {
+				cy.getBusinessActualDate(new Date(), 0).then((date) => {
+					cy.updateAppealDetailsViaApi(caseObj, { validationOutcome: 'valid', validAt: date });
+				});
 			}
 
 			// add inquiry
@@ -67,11 +64,14 @@ describe('Create planning application', () => {
 				cy.setupHearingViaApi(caseObj);
 			}
 
-			// Validate Appeal Via API
-			if (testCaseConfig.validateAppeal) {
-				cy.getBusinessActualDate(new Date(), 0).then((date) => {
-					cy.updateAppealDetailsViaApi(caseObj, { validationOutcome: 'valid', validAt: date });
-				});
+			// add lpaq
+			if (testCaseConfig.addLpaq) {
+				cy.addLpaqSubmissionToCase(caseObj);
+			}
+
+			// approve lpaq
+			if (testCaseConfig.approveLpaq) {
+				cy.reviewLpaqSubmission(caseObj);
 			}
 
 			// add appellant POE
