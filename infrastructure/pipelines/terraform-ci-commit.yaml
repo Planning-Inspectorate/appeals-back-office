@@ -42,10 +42,19 @@ extends:
                 scriptPath: 'appeals/e2e/install-chromium.sh'
             displayName: 'Install Chromium'
             condition: eq(variables['agent.os'], 'Linux')
+          - task: DockerInstaller@0
+            inputs:
+              dockerVersion: '17.09.0-ce'
+          - script:
+              docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=SqlServer01" -p 1433:1433 --name pins-sql-server -d mcr.microsoft.com/mssql/server:2022-latest
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
               script: npm ci
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 22
+              script: npm --prefix ./appeals/api run db:seed
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
