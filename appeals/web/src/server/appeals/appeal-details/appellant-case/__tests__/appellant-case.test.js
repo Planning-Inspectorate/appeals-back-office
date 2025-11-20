@@ -5847,6 +5847,9 @@ describe('appellant-case', () => {
 
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/local-planning-authorities').reply(200, lpaList);
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
 		});
 		afterEach(teardown);
 		describe('GET /appellant-case/change-appeal-details/local-planning-authority', () => {

@@ -9,17 +9,19 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 /**
  *
  * @param {Appeal} appealDetails
+ * @param {number|null|undefined} lpaId
  * @param {LPA[]} lpaList
  * @param {string} backLinkUrl
  * @param {import('@pins/express').ValidationErrors|null|undefined} errors
  * @returns {PageContent}
  */
-export function changeLpaPage(appealDetails, lpaList, backLinkUrl, errors) {
+export function changeLpaPage(appealDetails, lpaId, lpaList, backLinkUrl, errors) {
 	/** @type {PageComponent} */
 	const selectLpaRadiosComponent = {
 		type: 'radios',
 		parameters: {
 			name: 'localPlanningAuthority',
+			value: lpaId,
 			idPrefix: 'local-planning-authority',
 			fieldset: {
 				legend: {

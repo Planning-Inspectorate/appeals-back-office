@@ -4,6 +4,7 @@ import {
 	activeDirectoryUsersData,
 	additionalDocumentsFolderInfo,
 	appealData,
+	appellantCaseDataNotValidated,
 	designatedSiteNames,
 	documentFileInfo,
 	documentFileMultipleVersionsInfoWithLatestAsLateEntry,
@@ -4322,6 +4323,9 @@ describe('LPA Questionnaire review', () => {
 
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/local-planning-authorities').reply(200, lpaList);
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
 		});
 		afterEach(teardown);
 
