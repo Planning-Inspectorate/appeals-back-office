@@ -13,9 +13,11 @@ let appeal;
 
 let testCaseConfig = {
 	addLpaq: true,
+	approveLpaq: true,
 	validateAppeal: true,
-	addInquiry: false,
-	addHearing: true,
+	startCase: true,
+	addInquiry: true,
+	addHearing: false,
 	assignCaseOfficer: true,
 	addAppellantPOE: false,
 	addLPAPOE: true
@@ -41,6 +43,11 @@ describe('Create planning application', () => {
 			// add lpaq
 			if (testCaseConfig.addLpaq) {
 				cy.addLpaqSubmissionToCase(caseObj);
+			}
+
+			// add lpaq
+			if (testCaseConfig.approveLpaq) {
+				cy.reviewLpaqSubmission(caseObj);
 			}
 
 			// add inquiry
@@ -79,6 +86,11 @@ describe('Create planning application', () => {
 				cy.simulateStatementsDeadlineElapsed(caseObj);
 				// Process proof of evidence submission (FO) via Api
 				inquirySectionPage.addProofOfEvidenceViaApi(caseObj, 'lpaProofOfEvidence');
+			}
+
+			// start case
+			if (testCaseConfig.startCase) {
+				cy.startAppeal(caseObj);
 			}
 
 			cy.log(`*** Created test case for ${caseObj.reference}`);
