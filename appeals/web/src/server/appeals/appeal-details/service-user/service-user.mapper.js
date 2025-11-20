@@ -140,8 +140,8 @@ export const changeServiceUserPage = (
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading:
 			userType === 'appellant'
-				? `${capitalize(userType)}'s details`
-				: `${capitalize(userType)}'s contact details`,
+				? `${capitalize(userType)} details`
+				: `${capitalize(userType)} contact details`,
 		pageComponents: pageComponents
 	};
 
