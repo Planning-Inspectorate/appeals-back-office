@@ -30,13 +30,13 @@ describe('Progress S78 to decision', () => {
 
 	let appeal;
 
-	afterEach(() => {
-		cy.deleteAppeals(appeal);
-	});
+	// afterEach(() => {
+	// 	cy.deleteAppeals(appeal);
+	// });
 
 	it(`Completes a S78 appeal to decision`, { tags: tag.smoke }, () => {
 		cy.createCase({
-			caseType: 'ZA'
+			caseType: 'H'
 		}).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -46,7 +46,8 @@ describe('Progress S78 to decision', () => {
 			happyPathHelper.reviewAppellantCase(caseObj);
 			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 
-			happyPathHelper.startS78Case(caseObj, 'written');
+			// happyPathHelper.startS78Case(caseObj, 'written');
+			happyPathHelper.startCase(caseObj);
 			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 			// Display all expected case detail sections for written cases
