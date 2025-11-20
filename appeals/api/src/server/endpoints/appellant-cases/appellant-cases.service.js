@@ -3,7 +3,8 @@ import {
 	isOutcomeInvalid,
 	isOutcomeValid
 } from '#utils/check-validation-outcome.js';
-import { getFeedbackLinkFromAppealType } from '#utils/feedback-form-link.js';
+import { getFeedbackLinkFromAppealTypeKey } from '#utils/feedback-form-link.js';
+import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
@@ -118,7 +119,7 @@ export const updateAppellantCaseValidationOutcome = async (
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
-			feedback_link: getFeedbackLinkFromAppealType(appeal.appealType.key),
+			feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key),
 			team_email_address: teamEmail
 		};
 		await notifySend({
@@ -196,7 +197,10 @@ export const updateAppellantCaseValidationOutcome = async (
 				templateName: 'appeal-invalid',
 				notifyClient,
 				recipientEmail,
-				personalisation
+				personalisation: {
+					...personalisation,
+					feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key)
+				}
 			});
 
 			if (updatedAppeal.lpa?.email) {
@@ -205,7 +209,10 @@ export const updateAppellantCaseValidationOutcome = async (
 					templateName: 'appeal-invalid-lpa',
 					notifyClient,
 					recipientEmail: updatedAppeal.lpa.email,
-					personalisation
+					personalisation: {
+						...personalisation,
+						feedback_link: FEEDBACK_FORM_LINKS.LPA
+					}
 				});
 			}
 

@@ -119,3 +119,24 @@ export const REVERT_BUTTON_TEXT = Object.freeze({
 	APPELLANT_FINAL_COMMENT: 'Revert to original appellant final comments',
 	DEFAULT_TEXT: 'Revert to original comment'
 });
+
+export const FEEDBACK_FORM_LINKS = Object.freeze({
+	ALL: 'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UOUlNRkhaQjNXTDQyNEhSRExNOFVGSkNJTS4u',
+
+	S78: 'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzg1SlNPQjA3V0FDNUFJTldHMlEzMDdMRS4u',
+
+	HAS: 'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQ0wyTE9UVDIyWlVaQlBBTEM0TFYyU01YVC4u',
+
+	S20: 'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQjI0R09ONVRVNVJZVk9XMzBYTFo2RDlQUy4u',
+
+	CAS_PLANNING:
+		'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5URE1RMzFNSVQzUjBWRlQ2VFFPUTI3TkVSVC4u',
+
+	CAS_ADVERTS:
+		'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UOVZRWTJSOUdWUDk3T0owQTVFNExTUzlVSC4u',
+
+	FULL_ADVERTS:
+		'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UREdSMUZXUFhUMUdBUERBUFFGVkRQVEFBTS4u',
+
+	LPA: 'https://forms.office.com.mcas.ms/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UNzVFTElMSEJIWlhXWkZFM1E1WDg3RTFPUy4u'
+});
