@@ -50,14 +50,12 @@ extends:
             parameters:
               nodeVersion: 22
               script: |
-                ENV_PATH=appeals/api/.env.test
-                npm run api &
+                  NODE_ENV=test npm run api &
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
               script: |
-                  ENV_PATH=appeals/web/.env.test
-                  NODE_ENV=development npm run web &
+                  NODE_ENV=test npm run web &
           - template: ../steps/node_script.yml
             parameters:
                 nodeVersion: 22
