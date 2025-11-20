@@ -1,4 +1,5 @@
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
+import enforcementNoticeListedBuildingRouter from '#appeals/appeal-details/appellant-case/enforcement-notice-listed-building/enforcement-notice-listed-building.router.js';
 import enforcementNoticeRouter from '#appeals/appeal-details/appellant-case/enforcement-notice/enforcement-notice.router.js';
 import changeProcedureTypeRouter from '#appeals/appeal-details/change-procedure-type/change-procedure-type.router.js';
 import { permissionNames } from '#environment/permissions.js';
@@ -222,6 +223,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	enforcementNoticeRouter
+);
+
+router.use(
+	'/enforcement-notice-listed-building',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	enforcementNoticeListedBuildingRouter
 );
 
 router
