@@ -38,6 +38,12 @@ The following notifications are sent from the back-office using these [Notify Te
 - **Notify Template:** [appeal-invalid](../appeals/api/src/server/notify/templates/appeal-invalid.content.md)
 - **Trigger:** Select "Invalid" when answering "What is the outcome of your review?", Pick some reasons and then confirm.
 
+### Appeal invalid lpa
+
+- **Appeal type:** all
+- **Notify Template:** [appeal-invalid-lpa](../appeals/api/src/server/notify/templates/appeal-invalid-lpa.content.md)
+- **Trigger:** Select "Invalid" when answering "What is the outcome of your review?", Pick some reasons and then confirm.
+
 ### Appeal confirmed
 
 - **Appeal type:** all

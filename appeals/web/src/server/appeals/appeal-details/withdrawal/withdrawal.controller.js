@@ -1,8 +1,10 @@
 import { addressToString } from '#lib/address-formatter.js';
 import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
+import { getFeedbackLinkFromAppealTypeName } from '#lib/feedback-form-link.js';
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { getEventType } from '@pins/appeals/utils/event-type.js';
 import {
@@ -213,14 +215,20 @@ export const renderCheckYourAnswers = async (request, response) => {
 	const appealWithdrawnAppellantTemplate = await generateNotifyPreview(
 		request.apiClient,
 		appealWithdrawnAppellantTemplateName,
-		personalisation
+		{
+			...personalisation,
+			feedback_link: getFeedbackLinkFromAppealTypeName(currentAppeal.appealType)
+		}
 	);
 
 	const appealWithdrawnLPATemplateName = 'appeal-withdrawn-lpa.content.md';
 	const appealWithdrawnLPATemplate = await generateNotifyPreview(
 		request.apiClient,
 		appealWithdrawnLPATemplateName,
-		personalisation
+		{
+			...personalisation,
+			feedback_link: FEEDBACK_FORM_LINKS.LPA
+		}
 	);
 	const mappedPageContent = checkAndConfirmPage(
 		currentAppeal,

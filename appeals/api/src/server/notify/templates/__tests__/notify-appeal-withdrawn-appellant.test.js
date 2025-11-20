@@ -13,6 +13,7 @@ test('should call notify sendEmail for appeal-withdrawn-appellant with the corre
 			appeal_reference_number: '134526',
 			lpa_reference: '48269/APP/2021/1482',
 			site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+			feedback_link: '/mock-feedback-link',
 			withdrawal_date: '01 January 2025',
 			event_set: true,
 			event_type: 'site visit',
@@ -44,7 +45,7 @@ test('should call notify sendEmail for appeal-withdrawn-appellant with the corre
 		'',
 		'# Feedback',
 		'',
-		'We welcome your feedback on our appeals process. Tell us on this short [feedback form](https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u).',
+		'We welcome your feedback on our appeals process. Tell us on this short [feedback form](/mock-feedback-link).',
 		'',
 		'The Planning Inspectorate',
 		'caseofficers@planninginspectorate.gov.uk'
@@ -76,6 +77,7 @@ test('should call notify sendEmail for appeal-withdrawn-appellant without event_
 			appeal_reference_number: '134526',
 			lpa_reference: '48269/APP/2021/1482',
 			site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+			feedback_link: '/mock-feedback-link',
 			withdrawal_date: '01 January 2025',
 			event_set: false,
 			team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -106,7 +108,7 @@ test('should call notify sendEmail for appeal-withdrawn-appellant without event_
 		'',
 		'# Feedback',
 		'',
-		'We welcome your feedback on our appeals process. Tell us on this short [feedback form](https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u).',
+		'We welcome your feedback on our appeals process. Tell us on this short [feedback form](/mock-feedback-link).',
 		'',
 		'The Planning Inspectorate',
 		'caseofficers@planninginspectorate.gov.uk'

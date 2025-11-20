@@ -3,6 +3,8 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
+import { getFeedbackLinkFromAppealTypeKey } from '#utils/feedback-form-link.js';
+import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { getEventType } from '@pins/appeals/utils/event-type.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
@@ -50,7 +52,10 @@ export const publishWithdrawal = async (
 			templateName: 'appeal-withdrawn-appellant',
 			notifyClient,
 			recipientEmail,
-			personalisation
+			personalisation: {
+				...personalisation,
+				feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType?.key)
+			}
 		});
 
 		await notifySend({
@@ -58,7 +63,10 @@ export const publishWithdrawal = async (
 			templateName: 'appeal-withdrawn-lpa',
 			notifyClient,
 			recipientEmail: lpaEmail,
-			personalisation
+			personalisation: {
+				...personalisation,
+				feedback_link: FEEDBACK_FORM_LINKS.LPA
+			}
 		});
 	}
 

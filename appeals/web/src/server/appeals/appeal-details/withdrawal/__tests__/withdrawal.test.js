@@ -1,11 +1,18 @@
+import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import {
 	appealData,
+	appealDataAdvert,
+	appealDataCasAdvert,
+	appealDataCasPlanning,
+	appealDataFullPlanning,
+	appealDataListedBuilding,
 	documentFileInfo,
 	documentRedactionStatuses,
 	fileUploadInfo,
 	withdrawalRequestData
 } from '#testing/appeals/appeals.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -83,51 +90,75 @@ describe('withdrawal', () => {
 	});
 
 	describe('GET /withdrawal/check-your-answers', () => {
-		beforeEach(async () => {
-			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
-			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
-				id: 1,
-				email: 'caseofficers@planninginspectorate.gov.uk',
-				name: 'standard email'
+		describe.each([
+			['householder', appealData, FEEDBACK_FORM_LINKS.HAS],
+			['full planning', appealDataFullPlanning, FEEDBACK_FORM_LINKS.S78],
+			['listed building', appealDataListedBuilding, FEEDBACK_FORM_LINKS.S20],
+			['cas planning', appealDataCasPlanning, FEEDBACK_FORM_LINKS.CAS_PLANNING],
+			['cas advert', appealDataCasAdvert, FEEDBACK_FORM_LINKS.CAS_ADVERTS],
+			['full advert', appealDataAdvert, FEEDBACK_FORM_LINKS.FULL_ADVERTS]
+		])('for %s appeal', (_, appealData, expectedAppealFeedbackLink) => {
+			beforeEach(async () => {
+				nock.cleanAll();
+				nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+				nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+					id: 1,
+					email: 'caseofficers@planninginspectorate.gov.uk',
+					name: 'standard email'
+				});
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses)
+					.persist();
+				nock('http://test/')
+					.post(`/appeals/notify-preview/appeal-withdrawn-appellant.content.md`)
+					.reply(200, appellantEmailTemplate);
+				nock('http://test/')
+					.post(`/appeals/notify-preview/appeal-withdrawn-lpa.content.md`)
+					.reply(200, lpaEmailTemplate);
+
+				await request
+					.post(`${baseUrl}/${mockAppealId}${withdrawalPath}${withdrawalRequestStartPath}`)
+					.send({ 'upload-info': fileUploadInfo });
 			});
-			nock('http://test/')
-				.get('/appeals/document-redaction-statuses')
-				.reply(200, documentRedactionStatuses)
-				.persist();
-			nock('http://test/')
-				.post(`/appeals/notify-preview/appeal-withdrawn-appellant.content.md`)
-				.reply(200, appellantEmailTemplate);
-			nock('http://test/')
-				.post(`/appeals/notify-preview/appeal-withdrawn-lpa.content.md`)
-				.reply(200, lpaEmailTemplate);
 
-			await request
-				.post(`${baseUrl}/${mockAppealId}${withdrawalPath}${withdrawalRequestStartPath}`)
-				.send({ 'upload-info': fileUploadInfo });
-		});
+			afterEach(teardown);
 
-		afterEach(teardown);
+			it('should render the check your answers page', async () => {
+				const response = await request.get(
+					`${baseUrl}/${mockAppealId}${withdrawalPath}${checkYourAnswersPath}`
+				);
+				nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+					id: 1,
+					email: 'caseofficers@planninginspectorate.gov.uk',
+					name: 'standard email'
+				});
+				const element = parseHtml(response.text);
 
-		it('should render the check your asnwers page', async () => {
-			const response = await request.get(
-				`${baseUrl}/${mockAppealId}${withdrawalPath}${checkYourAnswersPath}`
-			);
-			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
-				id: 1,
-				email: 'caseofficers@planninginspectorate.gov.uk',
-				name: 'standard email'
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Check details and withdraw appeal</h1>');
+				expect(element.innerHTML).toContain('Request to withdraw appeal');
+				expect(element.innerHTML).toContain('Preview email to appellant</span>');
+				expect(element.innerHTML).toContain('Preview email to LPA</span>');
+
+				expect(generateNotifyPreview).toHaveBeenCalledWith(
+					expect.anything(),
+					'appeal-withdrawn-appellant.content.md',
+					expect.objectContaining({
+						feedback_link: expectedAppealFeedbackLink
+					})
+				);
+				expect(generateNotifyPreview).toHaveBeenCalledWith(
+					expect.anything(),
+					'appeal-withdrawn-lpa.content.md',
+					expect.objectContaining({
+						feedback_link: FEEDBACK_FORM_LINKS.LPA
+					})
+				);
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				expect(unprettifiedElement.innerHTML).toContain('Withdraw appeal</button>');
 			});
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Check details and withdraw appeal</h1>');
-			expect(element.innerHTML).toContain('Request to withdraw appeal');
-			expect(element.innerHTML).toContain('Preview email to appellant</span>');
-			expect(element.innerHTML).toContain('Preview email to LPA</span>');
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-			expect(unprettifiedElement.innerHTML).toContain('Withdraw appeal</button>');
 		});
 	});
 

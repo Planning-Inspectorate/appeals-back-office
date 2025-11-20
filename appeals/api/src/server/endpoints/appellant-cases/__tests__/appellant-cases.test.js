@@ -30,10 +30,10 @@ import {
 	appellantCaseValidationOutcomes,
 	azureAdUserId
 } from '#tests/shared/mocks.js';
-import { FEEDBACK_FORM_LINKS } from '#utils/feedback-form-link.js';
 import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
+import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED,
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
@@ -869,15 +869,23 @@ describe('appellant cases routes', () => {
 			});
 
 			test.each([
-				['householdAppeal', householdAppealAppellantCaseInvalid],
-				['advertisementAppeal', advertisementAppealAppellantCaseInvalid],
-				['casPlanningAppeal', casPlanningAppealAppellantCaseInvalid],
-				['casAdvertAppeal', casAdvertAppealAppellantCaseInvalid],
-				['fullPlanningAppeal', fullPlanningAppealAppellantCaseInvalid],
-				['listedBuildingAppeal', listedBuildingAppealAppellantCaseInvalid]
+				['householdAppeal', householdAppealAppellantCaseInvalid, FEEDBACK_FORM_LINKS.HAS],
+				[
+					'advertisementAppeal',
+					advertisementAppealAppellantCaseInvalid,
+					FEEDBACK_FORM_LINKS.FULL_ADVERTS
+				],
+				[
+					'casPlanningAppeal',
+					casPlanningAppealAppellantCaseInvalid,
+					FEEDBACK_FORM_LINKS.CAS_PLANNING
+				],
+				['casAdvertAppeal', casAdvertAppealAppellantCaseInvalid, FEEDBACK_FORM_LINKS.CAS_ADVERTS],
+				['fullPlanningAppeal', fullPlanningAppealAppellantCaseInvalid, FEEDBACK_FORM_LINKS.S78],
+				['listedBuildingAppeal', listedBuildingAppealAppellantCaseInvalid, FEEDBACK_FORM_LINKS.S20]
 			])(
 				'sends a correctly formatted notify email when the validation outcome is Invalid for %s appeal',
-				async (_, appeal) => {
+				async (_, appeal, expectedFeedbackLink) => {
 					// @ts-ignore
 					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
 					// @ts-ignore
@@ -918,6 +926,7 @@ describe('appellant cases routes', () => {
 							appeal_reference_number: appeal.reference,
 							lpa_reference: appeal.applicationReference,
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							feedback_link: expectedFeedbackLink,
 							reasons: [
 								'Appeal has not been submitted on time',
 								'Other: The appeal site address does not match'
@@ -935,6 +944,7 @@ describe('appellant cases routes', () => {
 							appeal_reference_number: appeal.reference,
 							lpa_reference: appeal.applicationReference,
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							feedback_link: FEEDBACK_FORM_LINKS.LPA,
 							reasons: [
 								'Appeal has not been submitted on time',
 								'Other: The appeal site address does not match'

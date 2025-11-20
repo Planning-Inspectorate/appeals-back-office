@@ -14,6 +14,7 @@ describe('appeal-invalid.md', () => {
 				lpa_reference: '48269/APP/2021/1482',
 				appeal_reference_number: '134526',
 				site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+				feedback_link: '/mock-feedback-link',
 				reasons: [
 					'Appeal has not been submitted on time',
 					'Other: The appeal site address does not match'
@@ -44,7 +45,7 @@ describe('appeal-invalid.md', () => {
 			'',
 			'# Feedback',
 			'',
-			'This is a new service. Help us improve it and [give your feedback (opens in new tab)](https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u).',
+			'This is a new service. Help us improve it and [give your feedback (opens in new tab)](/mock-feedback-link).',
 			'',
 			'The Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'

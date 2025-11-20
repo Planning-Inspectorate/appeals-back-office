@@ -8,10 +8,10 @@ import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
-import { FEEDBACK_FORM_LINKS, getFeedbackLinkFromAppealType } from '#utils/feedback-form-link.js';
+import { getFeedbackLinkFromAppealTypeKey } from '#utils/feedback-form-link.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { FEATURE_FLAG_NAMES, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
 	AUDIT_TRAIL_CORRECTION_NOTICE_ADDED,
@@ -251,7 +251,7 @@ export const publishCostsDecision = async (
 			site_address: siteAddress,
 			lpa_reference: appeal.applicationReference || '',
 			front_office_url: environment.FRONT_OFFICE_URL || '',
-			feedback_link: getFeedbackLinkFromAppealType(appeal?.appealType?.key || '')
+			feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || '')
 		};
 		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 		const lpaEmail = appeal.lpa?.email || '';
