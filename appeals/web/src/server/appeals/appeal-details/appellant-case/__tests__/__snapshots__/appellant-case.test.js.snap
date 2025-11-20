@@ -2376,8 +2376,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the issue date on your enforcement notice?</dt>
-                            <dd                             class="govuk-summary-list__value">2024-06-19T00:00:00.000Z</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/enforcement-notice-issue-date/change"
+                            <dd                             class="govuk-summary-list__value">19 June 2024</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/enforcement-issue-date/change"
                                     data-cy="change-enforcement-issue-date">Change<span class="govuk-visually-hidden"> What is the issue date on your enforcement notice? (Before you start)</span></a>
                                 </dd>
                         </div>

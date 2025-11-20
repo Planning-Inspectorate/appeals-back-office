@@ -53,6 +53,11 @@ const updateableFields = {
 		type: 'boolean',
 		nullable: true
 	},
+	enforcementIssueDate: {
+		type: 'string',
+		format: 'date-time',
+		nullable: true
+	},
 	isGreenBelt: {
 		type: 'boolean',
 		nullable: true
