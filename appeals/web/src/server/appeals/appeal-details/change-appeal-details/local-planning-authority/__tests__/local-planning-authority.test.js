@@ -1,3 +1,4 @@
+import { appellantCaseDataNotValidated } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
@@ -39,11 +40,14 @@ describe('change-appeal-details/local-planning-authority', () => {
 	beforeEach(() => {
 		installMockApi();
 		nock('http://test/').get('/appeals/local-planning-authorities').reply(200, lpaList);
+		nock('http://test/')
+			.get('/appeals/1/appellant-cases/0')
+			.reply(200, { ...appellantCaseDataNotValidated, localPlanningDepartment: lpaList[1].name });
 	});
 	afterEach(teardown);
 
 	describe('GET change-appeal-details/local-planning-authority', () => {
-		it('should render the local planning authority page', async () => {
+		it('should render the local planning authority page pre-selected', async () => {
 			const response = await request.get(
 				`${baseUrl}/1/change-appeal-details/local-planning-authority`
 			);
@@ -56,7 +60,7 @@ describe('change-appeal-details/local-planning-authority', () => {
 			expect(element.innerHTML).toContain(lpaList[1].name);
 			expect(element.innerHTML).toContain(lpaList[2].name);
 			expect(element.innerHTML).not.toContain(lpaList[3].name);
-			expect(element.innerHTML).not.toContain(`checked`);
+			expect(element.innerHTML).toContain(`type="radio" value="${lpaList[1].id}" checked>`);
 			expect(element.innerHTML).toContain('Continue</button>');
 		});
 	});
@@ -64,6 +68,9 @@ describe('change-appeal-details/local-planning-authority', () => {
 	describe('POST change-appeal-details/local-planning-authority', () => {
 		beforeEach(() => {
 			nock('http://test/').post('/appeals/1/lpa').reply(200, { success: true });
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
 		});
 
 		afterEach(() => {
