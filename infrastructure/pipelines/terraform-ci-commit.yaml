@@ -34,31 +34,69 @@ extends:
               nodeVersion: 22
               script: npm run commitlint
       - name: Run cypress e2e tests
-        if: github.event.action == 'labeled' && github.event.label.name == 'e2eTests'
+        dependantOn: Check PR labels
+        condition: eq(variables['Build.Reason'], 'PullRequest')
+        env:
+          BASE_URL: https://localhost:8080/
+          API_BASE_URL: http://localhost:3000/
+          VALIDATION_OFFICER_EMAIL: validationofficer.test@planninginspectorate.gov.uk
+          CASE_ADMIN_EMAIL: caseteamofficer.test@planninginspectorate.gov.uk
+          INSPECTOR_EMAIL: inspectorappeals.test@planninginspectorate.gov.uk
+          APP: appeals
         steps:
           - task: ShellScript@2
             inputs:
                 scriptPath: 'appeals/e2e/install-chromium.sh'
             displayName: 'Install Chromium'
             condition: eq(variables['agent.os'], 'Linux')
+          - task: DockerInstaller@0
+            inputs:
+              dockerVersion: '17.09.0-ce'
+          - script:
+              docker network create localNetwork
+            displayName: "Create Local Docker Network"
+          - script:
+              docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=password" -p 1433:1433 --name pins-sql-server -d --network localNetwork mcr.microsoft.com/mssql/server:2022-latest
+            displayName: "Start Database"
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
               script: npm ci
-          -   template: ../steps/node_script.yml
-              parameters:
-                  nodeVersion: 22
-                  script: npm run api
-          -   template: ../steps/node_script.yml
-              parameters:
-                  nodeVersion: 22
-                  script: npm run web
-          -   template: ../steps/node_script.yml
-              parameters:
-                  nodeVersion: 22
-                  script: npm run api
-          -   template: ../steps/node_script.yml
-              parameters:
-                  nodeVersion: 22
-                  script: npm run e2e
-
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 22
+              script: npm --prefix ./appeals/api run db:migrate
+              environmentVariables:
+                NODE_ENV: test
+                DATABASE_URL: "sqlserver://127.0.0.1:1433;database=pins_development;user=sa;password=password;trustServerCertificate=true"
+          - script: |
+              docker build . -f appeals/api/Dockerfile -t pins/api:local --build-arg APP_ENV=test --build-arg GIT_SHA=$(Build.SourceVersion)
+              docker run -p 3000:3000 -e "DATABASE_URL=sqlserver://pins-sql-server:1433;database=pins_development;user=sa;password=password;trustServerCertificate=true" --name api -d --network localNetwork pins/api:local
+            displayName: "Build and Run App"
+          - script: |
+              docker build . -f appeals/web/Dockerfile -t pins/web:local --build-arg GIT_SHA=$(Build.SourceVersion)
+              docker run -p 8080:8080 -e "NODE_ENV=test" -d --network localNetwork pins/web:local
+            displayName: "Build and Run Web"
+          - script: docker ps
+            displayName: "Check all containers are up"
+          - script: curl -v http://localhost:3000/health
+          - script: curl -v http://localhost:8080/health
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 22
+              script: |
+                cd appeals/e2e
+                npm install
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 22
+              script: |
+                cd appeals/e2e
+                npx cypress run --spec "cypress/e2e/back-office-appeals/**/*.spec.js"
+              environmentVariables:
+                BASE_URL: http://localhost:8080/
+                API_BASE_URL: http://localhost:3000/
+                VALIDATION_OFFICER_EMAIL: validationofficer.test@planninginspectorate.gov.uk
+                CASE_ADMIN_EMAIL: caseteamofficer.test@planninginspectorate.gov.uk
+                INSPECTOR_EMAIL: inspectorappeals.test@planninginspectorate.gov.uk
+                APP: appeals
