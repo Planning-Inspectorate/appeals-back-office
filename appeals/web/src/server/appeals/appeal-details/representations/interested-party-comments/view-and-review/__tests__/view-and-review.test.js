@@ -29,7 +29,7 @@ describe('interested-party-comments', () => {
 
 		// Common nock setup
 		nock('http://test/')
-			.get('/appeals/2')
+			.get('/appeals/2?include=all')
 			.reply(200, {
 				...appealDataFullPlanning,
 				appealId: 2,
@@ -488,7 +488,7 @@ describe('interested-party-comments', () => {
 	describe('GET change-document-name/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId: 2,
@@ -530,7 +530,7 @@ describe('interested-party-comments', () => {
 	describe('GET change-document-details/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId: 2,

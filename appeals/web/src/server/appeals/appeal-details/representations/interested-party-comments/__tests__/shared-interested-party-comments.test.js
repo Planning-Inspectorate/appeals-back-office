@@ -15,7 +15,7 @@ const baseUrl = '/appeals-service/appeal-details';
 describe('Interested Party Comments (Shared/Published View)', () => {
 	beforeEach(() => {
 		installMockApi();
-		nock('http://test/').get('/appeals/2').reply(200, publishedAppealData);
+		nock('http://test/').get('/appeals/2?include=all').reply(200, publishedAppealData);
 	});
 
 	afterEach(teardown);
@@ -95,7 +95,7 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 					pageCount: 0,
 					pageSize: paginationDefaultSettings.pageSize
 				});
-			nock('http://test/').get('/appeals/2').reply(200, publishedAppealData);
+			nock('http://test/').get('/appeals/2?include=all').reply(200, publishedAppealData);
 		});
 
 		it('should render the shared interested party comments page with status 200', async () => {

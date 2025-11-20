@@ -19,7 +19,7 @@ describe('interested-party-comments', () => {
 
 		// Common nock setup
 		nock('http://test/')
-			.get('/appeals/2')
+			.get('/appeals/2?include=all')
 			.reply(200, {
 				...appealDataFullPlanning,
 				appealId: 2,
@@ -112,7 +112,7 @@ describe('interested-party-comments', () => {
 
 		it('should render a back link to the originally specified backUrl', async () => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.twice()
 				.reply(200, {
 					...appealDataFullPlanning,
@@ -255,7 +255,7 @@ describe('interested-party-comments', () => {
 
 		it('should show the backUrl for the previous page if backUrl was more recently set on the main landing page', async () => {
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.twice()
 				.reply(200, {
 					...appealDataFullPlanning,
