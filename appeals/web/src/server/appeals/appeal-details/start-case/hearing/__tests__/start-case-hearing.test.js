@@ -93,7 +93,7 @@ describe('start case hearing flow', () => {
 					appealType: 'Planning appeal'
 				});
 			nock('http://test/')
-				.get('/appeals/2')
+				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'

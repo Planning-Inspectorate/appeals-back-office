@@ -29,7 +29,6 @@ export const checkAppealExistsByIdAndAddToRequest = async (req, res, next) => {
 };
 
 /**
- * @deprecated too inefficient, use checkAppealExistsByIdAndAddPartialToRequest
  * @param {Request} req
  * @param {Response} res
  * @param {NextFunction} next

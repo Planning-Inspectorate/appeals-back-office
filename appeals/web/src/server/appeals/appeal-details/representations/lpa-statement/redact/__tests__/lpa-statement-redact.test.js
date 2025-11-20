@@ -48,7 +48,7 @@ describe('redact', () => {
 	describe('GET /', () => {
 		it('should render the redact lpa statement page with expected content', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -80,7 +80,7 @@ describe('redact', () => {
 	describe('POST /', () => {
 		it(`should redirect to the redact lpa statement allocation check page if allocation details already present`, async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -113,7 +113,7 @@ describe('redact', () => {
 				});
 
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -135,7 +135,7 @@ describe('redact', () => {
 	describe('GET /allocation-check', () => {
 		it('should render the allocation check page with expected content', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					allocationDetails: null,
@@ -162,7 +162,7 @@ describe('redact', () => {
 
 		it('should render a back link to the redact LPA statement page', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -189,7 +189,7 @@ describe('redact', () => {
 	describe('GET /allocation-level', () => {
 		it('should render the allocation level page with expected content', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					allocationDetails: null,
@@ -217,7 +217,7 @@ describe('redact', () => {
 
 		it('should render a back link to the redact LPA statement page, if the appeal has no allocation level or allocation specialisms (i.e. redact page was previous page, allocation check was skipped because user must update allocation info)', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					allocationDetails: null,
@@ -232,7 +232,7 @@ describe('redact', () => {
 			expect(reviewPageResponse.statusCode).toBe(302);
 
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					allocationDetails: null,
@@ -249,7 +249,7 @@ describe('redact', () => {
 			expect(redactPageResponse.statusCode).toBe(302);
 
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					allocationDetails: null,
@@ -275,7 +275,7 @@ describe('redact', () => {
 
 		it('should render a back link to the allocation check page, if the appeal has both an allocation level and allocation specialisms (i.e. allocation check was previous page because user was given the option to update allocation info or not)', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -289,7 +289,7 @@ describe('redact', () => {
 			expect(reviewPageResponse.statusCode).toBe(302);
 
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -305,7 +305,7 @@ describe('redact', () => {
 			expect(redactPageResponse.statusCode).toBe(302);
 
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -332,7 +332,7 @@ describe('redact', () => {
 	describe('GET /allocation-specialisms', () => {
 		it('should render the allocation specialisms page with expected content', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -363,7 +363,7 @@ describe('redact', () => {
 
 		it('should render a back link to the redact journey version of the allocation level page', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -389,7 +389,7 @@ describe('redact', () => {
 	describe('GET /confirm', () => {
 		it('should render the CYA redaction page with expected content', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}`)
+				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
