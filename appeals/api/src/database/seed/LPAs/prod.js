@@ -1065,7 +1065,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'W0530',
 		name: 'South Cambridgeshire District Council',
-		email: 'appeals@scambs.gov.uk',
+		email: 'DSAppeals@scambs.gov.uk',
 		teamId: 18 // North4
 	},
 	{
