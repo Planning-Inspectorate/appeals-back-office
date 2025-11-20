@@ -54,7 +54,7 @@ extends:
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
-              script: npm --prefix ./appeals/api run db:seed
+              script: NODE_ENV=test npm --prefix ./appeals/api run db:seed
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
