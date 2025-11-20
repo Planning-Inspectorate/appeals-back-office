@@ -6,8 +6,8 @@
 
 /**
  * @param {import('got').Got} apiClient
- * @param {number} appealId
- * @param {number} appellantCaseId
+ * @param {number|string} appealId
+ * @param {number|string} appellantCaseId
  */
 export function getAppellantCaseFromAppealId(apiClient, appealId, appellantCaseId) {
 	return apiClient.get(`appeals/${appealId}/appellant-cases/${appellantCaseId}`).json();
