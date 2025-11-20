@@ -603,12 +603,12 @@ describe('appeal timetables routes', () => {
 					'advertisementAppeal',
 					advertisementAppealWithTimetable,
 					{
-						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
-						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
-						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
-						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
-						lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
-						s106ObligationDueDate: '2024-07-24T22:59:00.000Z'
+						appellantStatementDueDate: '2024-07-17T22:59:00.000Z',
+						finalCommentsDueDate: '2024-08-07T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-17T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-17T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-17T22:59:00.000Z'
 					},
 					{}
 				],
@@ -673,7 +673,9 @@ describe('appeal timetables routes', () => {
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
 								comment_deadline: '',
-								due_date: '12 June 2024',
+								due_date: dateISOStringToDisplayDate(
+									expectedResponse.lpaQuestionnaireDueDate || ''
+								),
 								final_comments_deadline: dateISOStringToDisplayDate(
 									expectedResponse.finalCommentsDueDate || ''
 								),
@@ -686,7 +688,9 @@ describe('appeal timetables routes', () => {
 									expectedResponse.lpaStatementDueDate || ''
 								),
 								procedure_type: 'written representations',
-								questionnaire_due_date: '12 June 2024',
+								questionnaire_due_date: dateISOStringToDisplayDate(
+									expectedResponse.lpaQuestionnaireDueDate || ''
+								),
 								site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 								start_date: '5 June 2024',
 								we_will_email_when:
@@ -709,7 +713,9 @@ describe('appeal timetables routes', () => {
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
 								comment_deadline: '',
-								due_date: '12 June 2024',
+								due_date: dateISOStringToDisplayDate(
+									expectedResponse.lpaQuestionnaireDueDate || ''
+								),
 								final_comments_deadline: dateISOStringToDisplayDate(
 									expectedResponse.finalCommentsDueDate || ''
 								),
@@ -722,7 +728,9 @@ describe('appeal timetables routes', () => {
 									expectedResponse.lpaStatementDueDate || ''
 								),
 								procedure_type: 'written representations',
-								questionnaire_due_date: '12 June 2024',
+								questionnaire_due_date: dateISOStringToDisplayDate(
+									expectedResponse.lpaQuestionnaireDueDate || ''
+								),
 								site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 								start_date: '5 June 2024',
 								statement_of_common_ground_deadline: '',
@@ -764,7 +772,9 @@ describe('appeal timetables routes', () => {
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
 								comment_deadline: '',
-								due_date: '12 June 2024',
+								due_date: dateISOStringToDisplayDate(
+									expectedResponse.lpaQuestionnaireDueDate || ''
+								),
 								final_comments_deadline: dateISOStringToDisplayDate(
 									expectedResponse.finalCommentsDueDate || ''
 								),
@@ -777,7 +787,9 @@ describe('appeal timetables routes', () => {
 									expectedResponse.lpaStatementDueDate || ''
 								),
 								procedure_type: 'written representations',
-								questionnaire_due_date: '12 June 2024',
+								questionnaire_due_date: dateISOStringToDisplayDate(
+									expectedResponse.lpaQuestionnaireDueDate || ''
+								),
 								site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 								start_date: '5 June 2024',
 								we_will_email_when:
@@ -800,7 +812,9 @@ describe('appeal timetables routes', () => {
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
 								comment_deadline: '',
-								due_date: '12 June 2024',
+								due_date: dateISOStringToDisplayDate(
+									expectedResponse.lpaQuestionnaireDueDate || ''
+								),
 								final_comments_deadline: dateISOStringToDisplayDate(
 									expectedResponse.finalCommentsDueDate || ''
 								),
@@ -813,7 +827,9 @@ describe('appeal timetables routes', () => {
 									expectedResponse.lpaStatementDueDate || ''
 								),
 								procedure_type: 'written representations',
-								questionnaire_due_date: '12 June 2024',
+								questionnaire_due_date: dateISOStringToDisplayDate(
+									expectedResponse.lpaQuestionnaireDueDate || ''
+								),
 								site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 								start_date: '5 June 2024',
 								statement_of_common_ground_deadline: '',
@@ -850,12 +866,12 @@ describe('appeal timetables routes', () => {
 					'advertisementAppeal',
 					advertisementAppealWithTimetable,
 					{
-						lpaQuestionnaireDueDate: '2024-06-10T22:59:00.000Z',
-						appellantStatementDueDate: '2024-07-08T22:59:00.000Z',
-						finalCommentsDueDate: '2024-07-22T22:59:00.000Z',
-						ipCommentsDueDate: '2024-07-08T22:59:00.000Z',
-						lpaStatementDueDate: '2024-07-08T22:59:00.000Z',
-						s106ObligationDueDate: '2024-07-22T22:59:00.000Z'
+						appellantStatementDueDate: '2024-07-15T22:59:00.000Z',
+						finalCommentsDueDate: '2024-08-05T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-15T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-17T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-15T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-15T22:59:00.000Z'
 					},
 					{}
 				],
@@ -919,7 +935,7 @@ describe('appeal timetables routes', () => {
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
 							comment_deadline: '',
-							due_date: '10 June 2024',
+							due_date: dateISOStringToDisplayDate(expectedResponse.lpaQuestionnaireDueDate || ''),
 							final_comments_deadline: dateISOStringToDisplayDate(
 								expectedResponse.finalCommentsDueDate || ''
 							),
@@ -932,7 +948,9 @@ describe('appeal timetables routes', () => {
 								expectedResponse.lpaStatementDueDate || ''
 							),
 							procedure_type: 'written representations',
-							questionnaire_due_date: '10 June 2024',
+							questionnaire_due_date: dateISOStringToDisplayDate(
+								expectedResponse.lpaQuestionnaireDueDate || ''
+							),
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '3 June 2024', // the following working day
 							we_will_email_when:
@@ -955,7 +973,7 @@ describe('appeal timetables routes', () => {
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
 							comment_deadline: '',
-							due_date: '10 June 2024',
+							due_date: dateISOStringToDisplayDate(expectedResponse.lpaQuestionnaireDueDate || ''),
 							final_comments_deadline: dateISOStringToDisplayDate(
 								expectedResponse.finalCommentsDueDate || ''
 							),
@@ -968,7 +986,9 @@ describe('appeal timetables routes', () => {
 								expectedResponse.lpaStatementDueDate || ''
 							),
 							procedure_type: 'written representations',
-							questionnaire_due_date: '10 June 2024',
+							questionnaire_due_date: dateISOStringToDisplayDate(
+								expectedResponse.lpaQuestionnaireDueDate || ''
+							),
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '3 June 2024', // the following working day
 							statement_of_common_ground_deadline: '',
@@ -1066,15 +1086,46 @@ describe('appeal timetables routes', () => {
 				[
 					'fullPlanning',
 					{ ...fullPlanningAppeal, procedureType: { key: 'hearing' } },
+					{
+						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
+						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-24T22:59:00.000Z',
+						statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
+					},
 					{ statement_of_common_ground_deadline: '10 July 2024', planning_obligation_deadline: '' }
 				],
 				[
 					'listedBuilding',
 					{ ...listedBuildingAppealAppellantCaseValid, procedureType: { key: 'hearing' } },
+					{
+						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
+						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-24T22:59:00.000Z',
+						statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
+					},
 					{}
 				],
-				['advertisementAppeal', { ...advertisementAppeal, procedureType: { key: 'hearing' } }, {}]
-			])('for a %s appeal', (appealType, appeal, personalisation) => {
+				[
+					'advertisementAppeal',
+					{ ...advertisementAppeal, procedureType: { key: 'hearing' } },
+					{
+						appellantStatementDueDate: '2024-07-17T22:59:00.000Z',
+						finalCommentsDueDate: '2024-08-07T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-17T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-17T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-17T22:59:00.000Z',
+						statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
+					},
+					{}
+				]
+			])('for a %s appeal', (appealType, appeal, expectedTimetableDto, personalisation) => {
 				test(`start an appeal timetable with a hearing procedure type`, async () => {
 					databaseConnector.appeal.findUnique.mockResolvedValue({
 						...appeal
@@ -1084,17 +1135,7 @@ describe('appeal timetables routes', () => {
 						id: 1,
 						azureAdUserId
 					});
-
-					const s78timetableDto = {
-						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
-						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
-						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
-						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
-						lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
-						s106ObligationDueDate: '2024-07-24T22:59:00.000Z',
-						statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
-					};
-					const s78timetable = mapValues(s78timetableDto, (date) => new Date(date));
+					const timetable = mapValues(expectedTimetableDto, (date) => new Date(date));
 
 					const { id } = appeal;
 					const response = await request
@@ -1103,11 +1144,11 @@ describe('appeal timetables routes', () => {
 						.set('azureAdUserId', azureAdUserId);
 
 					expect(response.status).toEqual(201);
-					expect(response.body).toEqual(s78timetableDto);
+					expect(response.body).toEqual(expectedTimetableDto);
 
 					expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith({
-						create: { ...s78timetable, appealId: id },
-						update: { ...s78timetable },
+						create: { ...timetable, appealId: id },
+						update: { ...timetable },
 						where: { appealId: id },
 						include: { appeal: true }
 					});
@@ -1139,14 +1180,22 @@ describe('appeal timetables routes', () => {
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
 							comment_deadline: '',
-							due_date: '12 June 2024',
-							final_comments_deadline: '24 July 2024',
-							ip_comments_deadline: '10 July 2024',
+							due_date: dateISOStringToDisplayDate(expectedTimetableDto.lpaQuestionnaireDueDate),
+							final_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.finalCommentsDueDate
+							),
+							ip_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.ipCommentsDueDate
+							),
 							local_planning_authority: appeal.lpa.name,
 							lpa_reference: appeal.applicationReference,
-							lpa_statement_deadline: '10 July 2024',
+							lpa_statement_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaStatementDueDate
+							),
 							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
-							questionnaire_due_date: '12 June 2024',
+							questionnaire_due_date: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaQuestionnaireDueDate
+							),
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
 							we_will_email_when: [
@@ -1155,7 +1204,9 @@ describe('appeal timetables routes', () => {
 							],
 							site_visit: false,
 							costs_info: false,
-							statement_of_common_ground_deadline: '10 July 2024',
+							statement_of_common_ground_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.statementOfCommonGroundDueDate
+							),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.appellant.email,
@@ -1171,18 +1222,28 @@ describe('appeal timetables routes', () => {
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
 							comment_deadline: '',
-							due_date: '12 June 2024',
-							final_comments_deadline: '24 July 2024',
-							ip_comments_deadline: '10 July 2024',
+							due_date: dateISOStringToDisplayDate(expectedTimetableDto.lpaQuestionnaireDueDate),
+							final_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.finalCommentsDueDate
+							),
+							ip_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.ipCommentsDueDate
+							),
 							local_planning_authority: appeal.lpa.name,
 							lpa_reference: appeal.applicationReference,
-							lpa_statement_deadline: '10 July 2024',
+							lpa_statement_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaStatementDueDate
+							),
 							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
-							questionnaire_due_date: '12 June 2024',
+							questionnaire_due_date: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaQuestionnaireDueDate
+							),
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
 							...personalisation,
-							statement_of_common_ground_deadline: '10 July 2024',
+							statement_of_common_ground_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.statementOfCommonGroundDueDate
+							),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.lpa.email,
@@ -1200,16 +1261,7 @@ describe('appeal timetables routes', () => {
 						azureAdUserId
 					});
 
-					const s78timetableDto = {
-						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
-						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
-						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
-						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
-						lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
-						s106ObligationDueDate: '2024-07-24T22:59:00.000Z',
-						statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
-					};
-					const s78timetable = mapValues(s78timetableDto, (date) => new Date(date));
+					const timetable = mapValues(expectedTimetableDto, (date) => new Date(date));
 
 					const { id } = appeal;
 					const response = await request
@@ -1218,11 +1270,11 @@ describe('appeal timetables routes', () => {
 						.set('azureAdUserId', azureAdUserId);
 
 					expect(response.status).toEqual(201);
-					expect(response.body).toEqual(s78timetableDto);
+					expect(response.body).toEqual(expectedTimetableDto);
 
 					expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith({
-						create: { ...s78timetable, appealId: id },
-						update: { ...s78timetable },
+						create: { ...timetable, appealId: id },
+						update: { ...timetable },
 						where: { appealId: id },
 						include: { appeal: true }
 					});
@@ -1279,14 +1331,22 @@ describe('appeal timetables routes', () => {
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
 							comment_deadline: '',
-							due_date: '12 June 2024',
-							final_comments_deadline: '24 July 2024',
-							ip_comments_deadline: '10 July 2024',
+							due_date: dateISOStringToDisplayDate(expectedTimetableDto.lpaQuestionnaireDueDate),
+							final_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.finalCommentsDueDate
+							),
+							ip_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.ipCommentsDueDate
+							),
 							local_planning_authority: appeal.lpa.name,
 							lpa_reference: appeal.applicationReference,
-							lpa_statement_deadline: '10 July 2024',
+							lpa_statement_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaStatementDueDate
+							),
 							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
-							questionnaire_due_date: '12 June 2024',
+							questionnaire_due_date: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaQuestionnaireDueDate
+							),
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
 							we_will_email_when: [
@@ -1295,7 +1355,9 @@ describe('appeal timetables routes', () => {
 							],
 							site_visit: false,
 							costs_info: false,
-							statement_of_common_ground_deadline: '10 July 2024',
+							statement_of_common_ground_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.statementOfCommonGroundDueDate
+							),
 							hearing_date: '10 July 2024',
 							hearing_time: '2:45pm',
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -1313,17 +1375,27 @@ describe('appeal timetables routes', () => {
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
 							comment_deadline: '',
-							due_date: '12 June 2024',
-							final_comments_deadline: '24 July 2024',
-							ip_comments_deadline: '10 July 2024',
+							due_date: dateISOStringToDisplayDate(expectedTimetableDto.lpaQuestionnaireDueDate),
+							final_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.finalCommentsDueDate
+							),
+							ip_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.ipCommentsDueDate
+							),
 							local_planning_authority: appeal.lpa.name,
 							lpa_reference: appeal.applicationReference,
-							lpa_statement_deadline: '10 July 2024',
+							lpa_statement_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaStatementDueDate
+							),
 							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
-							questionnaire_due_date: '12 June 2024',
+							questionnaire_due_date: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaQuestionnaireDueDate
+							),
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
-							statement_of_common_ground_deadline: '10 July 2024',
+							statement_of_common_ground_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.statementOfCommonGroundDueDate
+							),
 							hearing_date: '10 July 2024',
 							hearing_time: '2:45pm',
 							...personalisation,
@@ -1345,16 +1417,7 @@ describe('appeal timetables routes', () => {
 						azureAdUserId
 					});
 
-					const s78timetableDto = {
-						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
-						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
-						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
-						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
-						lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
-						s106ObligationDueDate: '2024-07-24T22:59:00.000Z',
-						statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
-					};
-					const s78timetable = mapValues(s78timetableDto, (date) => new Date(date));
+					const timetable = mapValues(expectedTimetableDto, (date) => new Date(date));
 
 					const { id } = appeal;
 					const response = await request
@@ -1363,11 +1426,11 @@ describe('appeal timetables routes', () => {
 						.set('azureAdUserId', azureAdUserId);
 
 					expect(response.status).toEqual(201);
-					expect(response.body).toEqual(s78timetableDto);
+					expect(response.body).toEqual(expectedTimetableDto);
 
 					expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith({
-						create: { ...s78timetable, appealId: id },
-						update: { ...s78timetable },
+						create: { ...timetable, appealId: id },
+						update: { ...timetable },
 						where: { appealId: id },
 						include: { appeal: true }
 					});
@@ -1399,14 +1462,22 @@ describe('appeal timetables routes', () => {
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
 							comment_deadline: '',
-							due_date: '12 June 2024',
-							final_comments_deadline: '24 July 2024',
-							ip_comments_deadline: '10 July 2024',
+							due_date: dateISOStringToDisplayDate(expectedTimetableDto.lpaQuestionnaireDueDate),
+							final_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.finalCommentsDueDate
+							),
+							ip_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.ipCommentsDueDate
+							),
 							local_planning_authority: appeal.lpa.name,
 							lpa_reference: appeal.applicationReference,
-							lpa_statement_deadline: '10 July 2024',
+							lpa_statement_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaStatementDueDate
+							),
 							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
-							questionnaire_due_date: '12 June 2024',
+							questionnaire_due_date: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaQuestionnaireDueDate
+							),
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
 							we_will_email_when: [
@@ -1415,7 +1486,9 @@ describe('appeal timetables routes', () => {
 							],
 							site_visit: false,
 							costs_info: false,
-							statement_of_common_ground_deadline: '10 July 2024',
+							statement_of_common_ground_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.statementOfCommonGroundDueDate
+							),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.appellant.email,
@@ -1431,17 +1504,27 @@ describe('appeal timetables routes', () => {
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
 							comment_deadline: '',
-							due_date: '12 June 2024',
-							final_comments_deadline: '24 July 2024',
-							ip_comments_deadline: '10 July 2024',
+							due_date: dateISOStringToDisplayDate(expectedTimetableDto.lpaQuestionnaireDueDate),
+							final_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.finalCommentsDueDate
+							),
+							ip_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.ipCommentsDueDate
+							),
 							local_planning_authority: appeal.lpa.name,
 							lpa_reference: appeal.applicationReference,
-							lpa_statement_deadline: '10 July 2024',
+							lpa_statement_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaStatementDueDate
+							),
 							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
-							questionnaire_due_date: '12 June 2024',
+							questionnaire_due_date: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaQuestionnaireDueDate
+							),
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
-							statement_of_common_ground_deadline: '10 July 2024',
+							statement_of_common_ground_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.statementOfCommonGroundDueDate
+							),
 							...personalisation,
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -1465,16 +1548,7 @@ describe('appeal timetables routes', () => {
 						azureAdUserId
 					});
 
-					const s78timetableDto = {
-						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
-						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
-						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
-						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
-						lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
-						s106ObligationDueDate: '2024-07-24T22:59:00.000Z',
-						statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
-					};
-					const s78timetable = mapValues(s78timetableDto, (date) => new Date(date));
+					const timetable = mapValues(expectedTimetableDto, (date) => new Date(date));
 
 					const { id } = appeal;
 					const response = await request
@@ -1483,11 +1557,11 @@ describe('appeal timetables routes', () => {
 						.set('azureAdUserId', azureAdUserId);
 
 					expect(response.status).toEqual(201);
-					expect(response.body).toEqual(s78timetableDto);
+					expect(response.body).toEqual(expectedTimetableDto);
 
 					expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith({
-						create: { ...s78timetable, appealId: id },
-						update: { ...s78timetable },
+						create: { ...timetable, appealId: id },
+						update: { ...timetable },
 						where: { appealId: id },
 						include: { appeal: true }
 					});
@@ -1519,14 +1593,22 @@ describe('appeal timetables routes', () => {
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: ['1111111', '3333333'],
 							comment_deadline: '',
-							due_date: '12 June 2024',
-							final_comments_deadline: '24 July 2024',
-							ip_comments_deadline: '10 July 2024',
+							due_date: dateISOStringToDisplayDate(expectedTimetableDto.lpaQuestionnaireDueDate),
+							final_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.finalCommentsDueDate
+							),
+							ip_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.ipCommentsDueDate
+							),
 							local_planning_authority: appeal.lpa.name,
 							lpa_reference: appeal.applicationReference,
-							lpa_statement_deadline: '10 July 2024',
+							lpa_statement_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaStatementDueDate
+							),
 							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
-							questionnaire_due_date: '12 June 2024',
+							questionnaire_due_date: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaQuestionnaireDueDate
+							),
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
 							we_will_email_when: [
@@ -1535,7 +1617,9 @@ describe('appeal timetables routes', () => {
 							],
 							site_visit: false,
 							costs_info: false,
-							statement_of_common_ground_deadline: '10 July 2024',
+							statement_of_common_ground_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.statementOfCommonGroundDueDate
+							),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.appellant.email,
@@ -1551,17 +1635,27 @@ describe('appeal timetables routes', () => {
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: ['1111111', '3333333'],
 							comment_deadline: '',
-							due_date: '12 June 2024',
-							final_comments_deadline: '24 July 2024',
-							ip_comments_deadline: '10 July 2024',
+							due_date: dateISOStringToDisplayDate(expectedTimetableDto.lpaQuestionnaireDueDate),
+							final_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.finalCommentsDueDate
+							),
+							ip_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.ipCommentsDueDate
+							),
 							local_planning_authority: appeal.lpa.name,
 							lpa_reference: appeal.applicationReference,
-							lpa_statement_deadline: '10 July 2024',
+							lpa_statement_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaStatementDueDate
+							),
 							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
-							questionnaire_due_date: '12 June 2024',
+							questionnaire_due_date: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaQuestionnaireDueDate
+							),
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
-							statement_of_common_ground_deadline: '10 July 2024',
+							statement_of_common_ground_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.statementOfCommonGroundDueDate
+							),
 							...personalisation,
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},

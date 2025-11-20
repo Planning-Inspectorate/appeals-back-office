@@ -416,20 +416,59 @@ const s78timetable = {
 	}
 };
 
+const advertTimetable = {
+	lpaQuestionnaireDueDate: {
+		daysFromStartDate: 10
+	},
+	ipCommentsDueDate: {
+		daysFromStartDate: 30
+	},
+	appellantStatementDueDate: {
+		daysFromStartDate: 30
+	},
+	lpaStatementDueDate: {
+		daysFromStartDate: 30
+	},
+	finalCommentsDueDate: {
+		daysFromStartDate: 45
+	},
+	s106ObligationDueDate: {
+		daysFromStartDate: 30
+	}
+};
+
+/** @type {Record<string, Record<string, any>>} */
 export const CONFIG_APPEAL_TIMETABLE = {
 	W: {
-		...s78timetable
-	},
-	H: {
-		...s78timetable,
-		statementOfCommonGroundDueDate: {
-			daysFromStartDate: 25
+		W: { ...s78timetable },
+		H: {
+			...s78timetable,
+			statementOfCommonGroundDueDate: {
+				daysFromStartDate: 25
+			}
+		},
+		I: {
+			...s78timetable,
+			statementOfCommonGroundDueDate: {
+				daysFromStartDate: 25
+			}
 		}
 	},
-	I: {
-		...s78timetable,
-		statementOfCommonGroundDueDate: {
-			daysFromStartDate: 25
+	H: {
+		W: { ...advertTimetable },
+		H: {
+			...advertTimetable,
+			//Needs updating when inquiries with adverts is supported
+			statementOfCommonGroundDueDate: {
+				daysFromStartDate: 25
+			}
+		},
+		I: {
+			...advertTimetable,
+			//Needs updating when inquiries with adverts is supported
+			statementOfCommonGroundDueDate: {
+				daysFromStartDate: 25
+			}
 		}
 	},
 	D: {
