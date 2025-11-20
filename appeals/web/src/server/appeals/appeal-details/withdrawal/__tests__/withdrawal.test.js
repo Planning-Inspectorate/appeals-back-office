@@ -26,6 +26,7 @@ describe('withdrawal', () => {
 
 	describe('GET /new', () => {
 		it('should render the withdrawal request upload page with a file upload component', async () => {
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 			const response = await request.get(
 				`${baseUrl}/${mockAppealId}${withdrawalPath}${withdrawalRequestStartPath}`
 			);
@@ -40,7 +41,7 @@ describe('withdrawal', () => {
 	describe('POST /new', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -85,7 +86,7 @@ describe('withdrawal', () => {
 	describe('GET /withdrawal/check-your-answers', () => {
 		beforeEach(async () => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
 				id: 1,
 				email: 'caseofficers@planninginspectorate.gov.uk',
@@ -134,7 +135,7 @@ describe('withdrawal', () => {
 	describe('POST /withdrawal/check-details', () => {
 		beforeEach(async () => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -168,7 +169,7 @@ describe('withdrawal', () => {
 		afterEach(teardown);
 
 		it('should render a 404 error page for the view withdrawal request document folder page of the appeal that is not withdrawn', async () => {
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 
 			const response = await request.get(
 				`${baseUrl}/${mockAppealId}${withdrawalPath}${withdrawalRequestViewPath}`
@@ -187,7 +188,7 @@ describe('withdrawal', () => {
 				appealStatus: 'withdrawn'
 			};
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealDataWithWithdrawalData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataWithWithdrawalData);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 
 			const response = await request.get(

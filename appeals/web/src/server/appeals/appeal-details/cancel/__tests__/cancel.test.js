@@ -16,6 +16,7 @@ describe('cancel', () => {
 
 	describe('GET /new', () => {
 		it('should render the cancel appeal page with radio components', async () => {
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 			const response = await request.get(`${baseUrl}/${mockAppealId}${cancelPath}`);
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
@@ -31,7 +32,7 @@ describe('cancel', () => {
 	describe('POST /new', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 		});
 		afterEach(() => {
 			nock.cleanAll();

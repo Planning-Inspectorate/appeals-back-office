@@ -21,7 +21,7 @@ describe('start-case', () => {
 	describe('GET /start-case/add', () => {
 		it('should render the start case page with the expected content if the appeal type is Householder', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Householder'
@@ -49,7 +49,7 @@ describe('start-case', () => {
 			featureFlags.isFeatureActive = () => false;
 
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -77,7 +77,7 @@ describe('start-case', () => {
 			featureFlags.isFeatureActive = () => true;
 
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -95,7 +95,7 @@ describe('start-case', () => {
 			featureFlags.isFeatureActive = () => true;
 
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -113,7 +113,7 @@ describe('start-case', () => {
 			featureFlags.isFeatureActive = () => true;
 
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -131,7 +131,7 @@ describe('start-case', () => {
 			);
 
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -148,7 +148,7 @@ describe('start-case', () => {
 
 	describe('POST /start-case/add', () => {
 		it('should redirect to appeal details page', async () => {
-			nock('http://test/').get('/appeals/1').reply(200, appealDataWithoutStartDate);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataWithoutStartDate);
 			nock('http://test/').post(`/appeals/1/appeal-timetables`).reply(200, {});
 
 			const response = await request.post(`${baseUrl}/1/start-case/add`).send({});
@@ -169,7 +169,7 @@ describe('start-case', () => {
 					.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
 					.setSystemTime(new Date(dateString));
 				try {
-					nock('http://test/').get('/appeals/1').reply(200, appealData);
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 
 					const response = await request.get(`${baseUrl}/1/start-case/change`);
 					const element = parseHtml(response.text);
@@ -191,7 +191,7 @@ describe('start-case', () => {
 
 	describe('POST /start-case/change', () => {
 		it('should redirect to the appeal details page', async () => {
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 			nock('http://test/').post(`/appeals/1/appeal-timetables`).reply(200, {});
 
 			const response = await request.post(`${baseUrl}/1/start-case/change`).send({});
@@ -204,7 +204,7 @@ describe('start-case', () => {
 	describe('GET /start-case/select-procedure', () => {
 		it('should render the select procedure page with the expected content', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -244,7 +244,7 @@ describe('start-case', () => {
 
 		it('should render the select procedure page with the expected back link URL, if the backLink query parameter was passed', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -287,7 +287,7 @@ describe('start-case', () => {
 			describe(`with featureFlagHearingPostMvp set to ${featureFlag}`, () => {
 				it('should render the select procedure page with the expected radio option preselected if an appeal procedure is found in the session', async () => {
 					nock('http://test/')
-						.get('/appeals/1')
+						.get('/appeals/1?include=all')
 						.reply(200, {
 							...appealDataWithoutStartDate,
 							appealType: 'Planning appeal'
@@ -306,7 +306,7 @@ describe('start-case', () => {
 					);
 
 					nock('http://test/')
-						.get('/appeals/1')
+						.get('/appeals/1?include=all')
 						.reply(200, {
 							...appealDataWithoutStartDate,
 							appealType: 'Planning appeal'
@@ -338,7 +338,7 @@ describe('start-case', () => {
 			featureFlags.isFeatureActive = () => true;
 
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -356,7 +356,7 @@ describe('start-case', () => {
 			);
 
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -372,7 +372,7 @@ describe('start-case', () => {
 			);
 
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -397,7 +397,7 @@ describe('start-case', () => {
 	describe('POST /start-case/select-procedure', () => {
 		it('should re-render the select procedure page with the expected error message if no radio option was selected', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -433,7 +433,7 @@ describe('start-case', () => {
 			describe(`with featureFlagHearingPostMvp set to ${featureFlag}`, () => {
 				it(`should redirect to ${redirectPath} if a radio option was selected`, async () => {
 					nock('http://test/')
-						.get('/appeals/1')
+						.get('/appeals/1?include=all')
 						.reply(200, {
 							...appealDataWithoutStartDate,
 							appealType: 'Planning appeal'
@@ -458,7 +458,7 @@ describe('start-case', () => {
 	describe('GET /start-case/select-procedure/check-and-confirm', () => {
 		it('should render a 500 error page if an appeal procedure is not found in the session', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -477,7 +477,7 @@ describe('start-case', () => {
 
 		it('should render the check details and start case page with the expected content if an appeal procedure is found in the session', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -492,7 +492,7 @@ describe('start-case', () => {
 			expect(selectProcedurePostResponse.statusCode).toBe(302);
 
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -526,7 +526,7 @@ describe('start-case', () => {
 	describe('POST /start-case/select-procedure/check-and-confirm', () => {
 		it('should render a 500 error page if an appeal procedure is not found in the session', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -545,7 +545,7 @@ describe('start-case', () => {
 
 		it('should send a post request to the appeal timetables endpoint and redirect to the case details page if an appeal procedure is found in the session', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
@@ -560,7 +560,7 @@ describe('start-case', () => {
 			expect(selectProcedurePostResponse.statusCode).toBe(302);
 
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'

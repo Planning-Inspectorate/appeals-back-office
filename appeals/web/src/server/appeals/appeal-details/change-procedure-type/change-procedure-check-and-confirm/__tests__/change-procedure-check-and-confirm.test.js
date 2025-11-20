@@ -26,7 +26,7 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 	describe('GET /change-appeal-procedure-type/written/check-and-confirm', () => {
 		it('should render the check details page with the expected content for written procedure type if an appeal procedure is found in the session', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealStatus: 'lpa_questionnaire',
@@ -85,7 +85,7 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 	describe('GET /change-appeal-procedure-type/hearing/check-and-confirm', () => {
 		it('should render the check details page with the expected content for hearing procedure type with planning obligation if an appeal procedure is found in the session', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealStatus: 'lpa_questionnaire',
@@ -150,7 +150,7 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 
 		it('should render the check details page with the expected content for hearing procedure type with no event date known', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.twice()
 				.reply(200, {
 					...appealDataWithoutStartDate,
@@ -193,7 +193,7 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 
 		it('should render the check details page with the expected content for hearing procedure type without planning obligation if an appeal procedure is found in the session', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealStatus: 'lpa_questionnaire',
@@ -258,7 +258,7 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 	describe('GET /change-appeal-procedure-type/inquiry/check-and-confirm', () => {
 		it('should render the check details page with the expected content for inquiry procedure type', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealStatus: 'lpa_questionnaire',
@@ -346,7 +346,7 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 
 		it('should render the check details page with the expected content for inquiry procedure type with no estimated days', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealStatus: 'lpa_questionnaire',
@@ -385,7 +385,7 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 
 		it('should render the check details page with the expected content for inquiry procedure type with no selected address when address is unknown', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealStatus: 'lpa_questionnaire',
@@ -422,7 +422,7 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 	describe('POST /change-appeal-procedure-type/inquiry/check-and-confirm', () => {
 		it('should redirect to appeal details screen on success', async () => {
 			nock('http://test/')
-				.get('/appeals/1')
+				.get('/appeals/1?include=all')
 				.times(5)
 				.reply(200, {
 					...appealDataWithoutStartDate,

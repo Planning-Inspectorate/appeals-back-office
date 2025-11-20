@@ -19,7 +19,7 @@ const finalCommentReviewData = {
 describe('Appeal Timetables', () => {
 	afterEach(teardown);
 	it('should render "Change final comments due date" page', async () => {
-		nock('http://test/').get('/appeals/1').reply(200, finalCommentReviewData);
+		nock('http://test/').get('/appeals/1?include=all').reply(200, finalCommentReviewData);
 
 		const response = await request.get(`${baseUrl}/final-comments`);
 		const element = parseHtml(response.text);
@@ -42,7 +42,7 @@ describe('Appeal Timetables', () => {
 	});
 
 	it('should render "Change final comments due date" with error (no answer provided)', async () => {
-		nock('http://test/').get('/appeals/1').reply(200, finalCommentReviewData);
+		nock('http://test/').get('/appeals/1?include=all').reply(200, finalCommentReviewData);
 
 		const response = await request.post(`${baseUrl}/final-comments`).send({
 			'due-date-day': '',
@@ -58,7 +58,7 @@ describe('Appeal Timetables', () => {
 	});
 
 	it('should render "Change final comments due date" with error (api error)', async () => {
-		nock('http://test/').get('/appeals/1').reply(200, finalCommentReviewData);
+		nock('http://test/').get('/appeals/1?include=all').reply(200, finalCommentReviewData);
 		nock('http://test/')
 			.patch('/appeals/1/appeal-timetables/1')
 			.reply(400, {
@@ -83,7 +83,7 @@ describe('Appeal Timetables', () => {
 	it('should redirect to the case details page', async () => {
 		const monthVariants = ['1', 'January', 'Jan'];
 		for (const month of monthVariants) {
-			nock('http://test/').get('/appeals/1').reply(200, finalCommentReviewData);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, finalCommentReviewData);
 			nock('http://test/').patch('/appeals/1/appeal-timetables/1').reply(200, {
 				finalCommentReviewDate: '2050-01-02T01:00:00.000Z'
 			});
@@ -106,7 +106,7 @@ describe('Appeal Timetables', () => {
 			}
 		};
 
-		nock('http://test/').get('/appeals/1').reply(200, appealData);
+		nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 
 		const response = await request.get(`${baseUrl}/lpa-questionnaire`);
 		const element = parseHtml(response.text);
@@ -128,7 +128,7 @@ describe('Appeal Timetables', () => {
 			}
 		};
 
-		nock('http://test/').get('/appeals/1').reply(200, appealData);
+		nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 
 		const response = await request.get(`${baseUrl}/lpa-questionnaire`);
 		const element = parseHtml(response.text);
@@ -155,7 +155,7 @@ describe('Appeal Timetables', () => {
 			}
 		};
 
-		nock('http://test/').get('/appeals/1').reply(200, appealData);
+		nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 
 		const response = await request.get(`${baseUrl}/lpa-statement`);
 		const element = parseHtml(response.text);
@@ -177,7 +177,7 @@ describe('Appeal Timetables', () => {
 			}
 		};
 
-		nock('http://test/').get('/appeals/1').reply(200, appealData);
+		nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 
 		const response = await request.get(`${baseUrl}/lpa-statement`);
 		const element = parseHtml(response.text);
