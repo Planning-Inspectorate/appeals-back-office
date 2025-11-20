@@ -49,6 +49,10 @@ const updateableFields = {
 		type: 'boolean',
 		nullable: true
 	},
+	enforcementNoticeListedBuilding: {
+		type: 'boolean',
+		nullable: true
+	},
 	isGreenBelt: {
 		type: 'boolean',
 		nullable: true
