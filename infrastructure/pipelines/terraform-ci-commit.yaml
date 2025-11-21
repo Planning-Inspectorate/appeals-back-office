@@ -36,6 +36,13 @@ extends:
       - name: Run cypress e2e tests
         dependantOn: Check PR labels
         condition: eq(variables['Build.Reason'], 'PullRequest')
+        env:
+          BASE_URL: https://localhost:8080/
+          API_BASE_URL: http://localhost:3000/
+          VALIDATION_OFFICER_EMAIL: validationofficer.test@planninginspectorate.gov.uk
+          CASE_ADMIN_EMAIL: caseteamofficer.test@planninginspectorate.gov.uk
+          INSPECTOR_EMAIL: inspectorappeals.test@planninginspectorate.gov.uk
+          APP: appeals
         steps:
           - task: ShellScript@2
             inputs:
@@ -77,10 +84,3 @@ extends:
               script: |
                 cd appeals/e2e
                 npx cypress run --spec "cypress/e2e/back-office-appeals/**/*.spec.js"
-            env:
-              BASE_URL: https://localhost:8080/
-              API_BASE_URL: http://localhost:3000/
-              VALIDATION_OFFICER_EMAIL: validationofficer.test@planninginspectorate.gov.uk
-              CASE_ADMIN_EMAIL: caseteamofficer.test@planninginspectorate.gov.uk
-              INSPECTOR_EMAIL: inspectorappeals.test@planninginspectorate.gov.uk
-              APP: appeals
