@@ -74,4 +74,6 @@ extends:
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
-              script: npx cypress run --spec "cypress/e2e/back-office-appeals/**/*.spec.js"
+              script: |
+                echo "$PWD"
+                npx cypress run --spec "cypress/e2e/back-office-appeals/**/*.spec.js"
