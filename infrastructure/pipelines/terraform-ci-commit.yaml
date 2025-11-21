@@ -54,7 +54,7 @@ extends:
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
-              script: NODE_ENV=test npm --prefix ./appeals/api run db:migrate
+              script: DATABASE_URL="sqlserver://127.0.0.1:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true" npm --prefix ./appeals/api run db:migrate
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
