@@ -75,13 +75,3 @@ extends:
             parameters:
               nodeVersion: 22
               script: npx cypress run --spec "cypress/e2e/back-office-appeals/**/*.spec.js"
-              env:
-                TZ: 'Europe/London'
-                BASE_URL: $(APPEALS_BASE_URL)
-                CASE_TEAM_EMAIL: $(CASE_TEAM_APPEALS_EMAIL)
-                CASE_ADMIN_EMAIL: $(CASE_ADMIN_APPEALS_EMAIL)
-                INSPECTOR_EMAIL: $(INSPECTOR_APPEALS_EMAIL)
-                VALIDATION_OFFICER_EMAIL: $(VALIDATION_OFFICER_EMAIL)
-                USER_PASSWORD: $(USER_PASSWORD)
-                HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
-
