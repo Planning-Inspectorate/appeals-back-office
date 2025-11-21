@@ -25,7 +25,8 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	ENFORCEMENT_NOTICE: 'featureFlagEnforcementNotice',
 	INVALID_DECISION_LETTER: 'featureFlagInvalidDecisionLetter',
 	RULE_6_PARTIES: 'featureFlagRule6Parties',
-	EXPEDITED_APPEALS: 'featureFlagExpeditedAppeals'
+	EXPEDITED_APPEALS: 'featureFlagExpeditedAppeals',
+	MANUALLY_ADD_REPS: 'featureFlagManuallyAddReps'
 });
 
 export const APPEAL_TYPE = Object.freeze({

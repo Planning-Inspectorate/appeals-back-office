@@ -1,5 +1,9 @@
+import { isFeatureActive } from '#common/feature-flags.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
-import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_REPRESENTATION_STATUS,
+	FEATURE_FLAG_NAMES
+} from '@pins/appeals/constants/common.js';
 
 /**
  * @param {string} representationStatus
@@ -26,6 +30,13 @@ export function mapRepresentationDocumentSummaryActionLink(
 	representationType,
 	request
 ) {
+	if (
+		documentationStatus !== 'received' &&
+		!isFeatureActive(FEATURE_FLAG_NAMES.MANUALLY_ADD_REPS)
+	) {
+		return '';
+	}
+
 	const reviewRequired = (() => {
 		if (typeof representationStatus === 'string') {
 			return [
@@ -62,11 +73,7 @@ export function mapRepresentationDocumentSummaryActionLink(
 	};
 
 	if (documentationStatus !== 'received') {
-		return `<a href="${addBackLinkQueryToUrl(
-			request,
-			`${hrefs[representationType]}/add-document`
-		)}" data-cy="add-${representationType}" class="govuk-link">
-		Add<span class="govuk-visually-hidden"> ${visuallyHiddenTexts[representationType]}</span></a>`;
+		return `<a href="${hrefs[representationType]}/add-document" data-cy="add-${representationType}" class="govuk-link">Add<span class="govuk-visually-hidden"> ${visuallyHiddenTexts[representationType]}</span></a>`;
 	}
 
 	return `<a href="${addBackLinkQueryToUrl(request, hrefs[representationType])}" data-cy="${

@@ -64,6 +64,7 @@ variable "apps_config" {
       featureFlagInvalidDecisionLetter  = bool
       featureFlagRule6Parties           = bool
       featureFlagExpeditedAppeals       = bool
+      featureFlagManuallyAddReps        = bool
     })
 
     logging = object({

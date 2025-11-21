@@ -35,8 +35,7 @@ describe('appellant-final-comments.mapper', () => {
 	it('should display appellant final comments row if the procedure type is written', () => {
 		data.appealDetails.procedureType = 'Written';
 		const result = mapAppellantFinalComments(data);
-		const expectedHref =
-			'/test/final-comments/appellant/add-document?backUrl=%2Fappeals-service%2Fappeal-details%2F8526';
+		const expectedHref = '/test/final-comments/appellant/add-document';
 		const expectedText = 'Add<span class="govuk-visually-hidden"> Appellant final comments</span>';
 		const receivedHtml = result.display.tableItem[3].html;
 		expect(result).toEqual(

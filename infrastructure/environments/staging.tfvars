@@ -55,6 +55,8 @@ apps_config = {
     featureFlagInvalidDecisionLetter  = true
     featureFlagRule6Parties           = true
     featureFlagExpeditedAppeals       = true
+    featureFlagManuallyAddReps        = true
+
   }
 
   use_system_test_bc_for_change_lpa = true
