@@ -437,7 +437,7 @@ describe('Final comments links', () => {
 		);
 	});
 
-	it('should return an empty string when (any) final comment is not received', () => {
+	it('should return "Add" link for LPA final comments when is not received', () => {
 		const link = mapRepresentationDocumentSummaryActionLink(
 			baseRoute,
 			'not_received',
