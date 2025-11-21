@@ -44,7 +44,7 @@ describe('appellant-final-comments.mapper', () => {
 					},
 					{
 						classes: 'govuk-!-text-align-right',
-						html: ''
+						html: '<a href="/test/final-comments/appellant/add-document" data-cy="add-appellant-final-comments" class="govuk-link">Add<span class="govuk-visually-hidden"> Appellant final comments</span></a>'
 					}
 				]
 			},

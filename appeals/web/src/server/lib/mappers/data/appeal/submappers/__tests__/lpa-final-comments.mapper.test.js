@@ -44,7 +44,7 @@ describe('lpa-final-comments.mapper', () => {
 					},
 					{
 						classes: 'govuk-!-text-align-right',
-						html: ''
+						html: '<a href="/test/final-comments/lpa/add-document" data-cy="add-lpa-final-comments" class="govuk-link">Add<span class="govuk-visually-hidden"> LPA final comments</span></a>'
 					}
 				]
 			},

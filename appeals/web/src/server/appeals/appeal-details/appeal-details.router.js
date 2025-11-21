@@ -2,9 +2,9 @@ import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { validateCaseNoteTextArea } from '#appeals/appeal-details/appeals-details.validator.js';
 import { postCaseNote } from '#appeals/appeal-details/case-notes/case-notes.controller.js';
 import changeAppealProcedureTypeRouter from '#appeals/appeal-details/change-procedure-type/change-procedure-type.router.js';
-import { clearUncommittedFilesFromSession } from '#appeals/appeal-documents/appeal-documents.middleware.js';
 import config from '#environment/config.js';
 import { permissionNames } from '#environment/permissions.js';
+import { clearSessionData } from '#lib/middleware/clear-session-data.js';
 import { saveBackUrl } from '#lib/middleware/save-back-url.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
@@ -60,7 +60,7 @@ router
 	.get(
 		saveBackUrl('appeals-detail'),
 		validateAppeal,
-		clearUncommittedFilesFromSession,
+		clearSessionData,
 		assertUserHasPermission(
 			permissionNames.viewCaseDetails,
 			permissionNames.viewAssignedCaseDetails
