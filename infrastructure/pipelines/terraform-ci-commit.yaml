@@ -75,5 +75,5 @@ extends:
             parameters:
               nodeVersion: 22
               script: |
-                echo "$PWD"
+                cd appeals/e2e
                 npx cypress run --spec "cypress/e2e/back-office-appeals/**/*.spec.js"
