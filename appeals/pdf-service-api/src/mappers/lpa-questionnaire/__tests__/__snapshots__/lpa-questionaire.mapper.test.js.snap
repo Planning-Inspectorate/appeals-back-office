@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`mapLpaQuestionnaireData should map advert LPA questionnaire data correctly 1`] = `
 {
@@ -638,6 +638,18 @@ exports[`mapLpaQuestionnaireData should map advert LPA questionnaire data correc
     {
       "heading": "Appeal process",
       "items": [
+        {
+          "key": "Which procedure do you think is most appropriate for this appeal?",
+          "text": "N/A",
+        },
+        {
+          "key": "Why would you prefer this procedure?",
+          "text": "N/A",
+        },
+        {
+          "key": "How many days would you expect the inquiry/hearing to last?",
+          "text": "N/A",
+        },
         {
           "html": "No",
           "key": "Are there any other ongoing appeals next to, or close to the site?",
