@@ -42,6 +42,7 @@ import finalCommentsRouter from './representations/final-comments/final-comments
 import interestedPartyCommentsRouter from './representations/interested-party-comments/interested-party-comments.router.js';
 import proofOfEvidenceRouter from './representations/proof-of-evidence/proof-of-evidence.router.js';
 import representationsRouter from './representations/representations.router.js';
+import rule6PartiesRouter from './rule-6-parties/rule-6-parties.router.js';
 import safetyRisksRouter from './safety-risks/safety-risks.router.js';
 import serviceUserRouter from './service-user/service-user.router.js';
 import siteVisitRouter from './site-visit/site-visit.router.js';
@@ -268,6 +269,12 @@ router.use(
 	updateCaseTeamRouter
 );
 
+router.use(
+	'/:appealId/rule-6-parties',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	rule6PartiesRouter
+);
 router.use('/:appealId', validateAppeal, representationsRouter);
 
 export default router;

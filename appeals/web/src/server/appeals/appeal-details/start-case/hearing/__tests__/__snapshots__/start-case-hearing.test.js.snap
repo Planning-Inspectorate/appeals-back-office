@@ -620,7 +620,7 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
         </div>
         <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
             <dd class="govuk-summary-list__value">No rule 6 party</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule6parties/add"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                 data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>

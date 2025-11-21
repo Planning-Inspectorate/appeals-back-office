@@ -5,7 +5,7 @@ import { camelCaseToWords } from '#lib/string-utilities.js';
 import stringTokenReplacement from '@pins/appeals/utils/string-token-replacement.js';
 import { capitalize } from 'lodash-es';
 
-const TEXT_INPUT_MAX_CHARACTERS = 300;
+export const TEXT_INPUT_MAX_CHARACTERS = 300;
 
 export const createTextInputValidator = (
 	fieldName = 'text',
