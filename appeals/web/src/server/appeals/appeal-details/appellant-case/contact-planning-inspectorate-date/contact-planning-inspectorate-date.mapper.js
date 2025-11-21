@@ -1,7 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { dateInput } from '#lib/mappers/index.js';
-import { enforcementIssueDateField } from './enforcement-issue-date.constants.js';
+import { contactPlanningInspectorateDateField } from './contact-planning-inspectorate-date.constants.js';
 
 /**
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
@@ -15,7 +15,7 @@ import { enforcementIssueDateField } from './enforcement-issue-date.constants.js
  * @param {{day: string, month: string, year: string}} dateEntered
  * @returns {PageContent}
  */
-export const changeEnforcementIssueDatePage = (
+export const changeContactPlanningInspectorateDatePage = (
 	appealData,
 	appellantCaseData,
 	errors,
@@ -25,9 +25,9 @@ export const changeEnforcementIssueDatePage = (
 
 	let { day, month, year } = dateEntered;
 
-	if (!errors && appellantCaseData.enforcementNotice?.issueDate) {
+	if (!errors && appellantCaseData.enforcementNotice?.contactPlanningInspectorateDate) {
 		const formattedDate = dateISOStringToDayMonthYearHourMinute(
-			appellantCaseData.enforcementNotice.issueDate
+			appellantCaseData.enforcementNotice.contactPlanningInspectorateDate
 		);
 
 		day = String(formattedDate.day);
@@ -36,35 +36,31 @@ export const changeEnforcementIssueDatePage = (
 	}
 
 	// Correct automatic error formatting
-	if (errors && errors['enforcement-issue-date-day']?.msg) {
-		errors['enforcement-issue-date-day'].msg = errors['enforcement-issue-date-day'].msg.replace(
-			'The the',
-			'the'
-		);
-	}
-
-	if (errors && `${day}${month}${year}`.trim() === '') {
-		errors['enforcement-issue-date-day'].msg = 'Enter the issue date on your enforcement notice';
+	if (errors && errors['contact-planning-inspectorate-date-day']?.msg) {
+		const msg = errors['contact-planning-inspectorate-date-day'].msg;
+		errors['contact-planning-inspectorate-date-day'].msg = msg
+			.replace('The the', 'the')
+			.replace('planning inspectorate', 'Planning Inspectorate');
 	}
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Enforcement issue date - validation - ${shortAppealReference}`,
+		title: `Contact Planning Inspectorate date - validation - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		// /** @type {PageComponent} */
 
 		pageComponents: [
 			dateInput({
-				name: enforcementIssueDateField,
-				id: enforcementIssueDateField,
-				namePrefix: enforcementIssueDateField,
+				name: contactPlanningInspectorateDateField,
+				id: contactPlanningInspectorateDateField,
+				namePrefix: contactPlanningInspectorateDateField,
 				value: {
 					day: day,
 					month: month,
 					year: year
 				},
-				legendText: `What is the issue date on your enforcement notice?`,
+				legendText: `When did you contact the Planning Inspectorate?`,
 				legendIsPageHeading: true,
 				hint: 'For example, 31 3 2024',
 				errors: errors

@@ -4061,6 +4061,8 @@ export type AppellantCase = {
 	enforcementIssueDate?: string | null;
 	/** @format date-time */
 	enforcementEffectiveDate?: string | null;
+	/** @format date-time */
+	contactPlanningInspectorateDate?: string | null;
 	isGreenBelt?: boolean | null;
 	planningObligation?: any;
 	statusPlanningObligation?: string | null;
@@ -12367,6 +12369,8 @@ export interface AppellantCaseUpdateRequest {
 	enforcementIssueDate?: string | null;
 	/** @format date-time */
 	enforcementEffectiveDate?: string | null;
+	/** @format date-time */
+	contactPlanningInspectorateDate?: string | null;
 	isGreenBelt?: boolean | null;
 	planningObligation?: boolean | null;
 	statusPlanningObligation?: string | null;
