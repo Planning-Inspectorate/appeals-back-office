@@ -22,13 +22,18 @@ export const renderDocumentUpload = async (request, response) => {
 	const baseUrl = request.baseUrl;
 	const representationBaseUrl = request.baseUrl.replace('/add-document', '');
 
-	const backButtonUrl = isAtEditEntrypoint(request)
+	let backButtonUrl = isAtEditEntrypoint(request)
 		? preserveQueryString(request, `${baseUrl}/check-your-answers`, {
 				exclude: ['editEntrypoint']
 		  })
 		: query.backUrl
 		? constructUrl(String(query.backUrl), currentAppeal.appealId)
 		: representationBaseUrl;
+
+	if (session.createRepresentation) {
+		const appealDetailsUrlPattern = /^(\/appeals-service\/appeal-details\/[^/]+).*$/;
+		backButtonUrl = request.baseUrl.replace(appealDetailsUrlPattern, '$1');
+	}
 
 	return renderDocumentUploadHelper({
 		request,

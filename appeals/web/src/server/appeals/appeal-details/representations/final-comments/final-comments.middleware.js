@@ -30,10 +30,10 @@ export const withSingularRepresentation = async (req, res, next) => {
 		);
 
 		if (!representation) {
-			return res.status(404).render('app/404.njk');
+			req.session.createRepresentation = true;
+		} else {
+			req.currentRepresentation = representation;
 		}
-
-		req.currentRepresentation = representation;
 	} catch (/** @type {any} */ error) {
 		return res.status(500).render('app/500.njk');
 	}

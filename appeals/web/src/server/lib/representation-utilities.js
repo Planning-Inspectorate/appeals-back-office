@@ -26,10 +26,6 @@ export function mapRepresentationDocumentSummaryActionLink(
 	representationType,
 	request
 ) {
-	// if (documentationStatus !== 'received') {
-	// 	return '';
-	// }
-
 	const reviewRequired = (() => {
 		if (typeof representationStatus === 'string') {
 			return [
@@ -66,11 +62,7 @@ export function mapRepresentationDocumentSummaryActionLink(
 	};
 
 	if (documentationStatus !== 'received') {
-		return `<a href="${addBackLinkQueryToUrl(
-			request,
-			`${hrefs[representationType]}/add-document`
-		)}" data-cy="add-${representationType}" class="govuk-link">
-		Add<span class="govuk-visually-hidden"> ${visuallyHiddenTexts[representationType]}</span></a>`;
+		return `<a href="${hrefs[representationType]}/add-document" data-cy="add-${representationType}" class="govuk-link">Add<span class="govuk-visually-hidden"> ${visuallyHiddenTexts[representationType]}</span></a>`;
 	}
 
 	return `<a href="${addBackLinkQueryToUrl(request, hrefs[representationType])}" data-cy="${
