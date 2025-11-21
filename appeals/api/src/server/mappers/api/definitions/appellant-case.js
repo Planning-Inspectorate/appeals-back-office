@@ -63,6 +63,11 @@ const updateableFields = {
 		format: 'date-time',
 		nullable: true
 	},
+	contactPlanningInspectorateDate: {
+		type: 'string',
+		format: 'date-time',
+		nullable: true
+	},
 	isGreenBelt: {
 		type: 'boolean',
 		nullable: true

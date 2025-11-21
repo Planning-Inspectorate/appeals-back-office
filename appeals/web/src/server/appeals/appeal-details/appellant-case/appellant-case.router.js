@@ -1,4 +1,5 @@
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
+import contactPlanningInspectorateDateRouter from '#appeals/appeal-details/appellant-case/contact-planning-inspectorate-date/contact-planning-inspectorate-date.router.js';
 import enforcementEffectiveDateRouter from '#appeals/appeal-details/appellant-case/enforcement-effective-date/enforcement-effective-date.router.js';
 import enforcementIssueDateRouter from '#appeals/appeal-details/appellant-case/enforcement-issue-date/enforcement-issue-date.router.js';
 import enforcementNoticeListedBuildingRouter from '#appeals/appeal-details/appellant-case/enforcement-notice-listed-building/enforcement-notice-listed-building.router.js';
@@ -237,6 +238,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	enforcementEffectiveDateRouter
+);
+router.use(
+	'/contact-planning-inspectorate-date',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	contactPlanningInspectorateDateRouter
 );
 
 router.use(
