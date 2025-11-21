@@ -74,6 +74,7 @@ const updateAppellantCaseById = async (req, res) => {
 			siteGridReferenceNorthing,
 			enforcementNotice,
 			enforcementIssueDate,
+			enforcementEffectiveDate,
 			enforcementNoticeListedBuilding
 		},
 		params,
@@ -154,6 +155,7 @@ const updateAppellantCaseById = async (req, res) => {
 					siteGridReferenceNorthing,
 					enforcementNotice,
 					enforcementIssueDate,
+					enforcementEffectiveDate,
 					enforcementNoticeListedBuilding
 			  });
 

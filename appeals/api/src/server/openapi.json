@@ -15676,6 +15676,11 @@
 						"format": "date-time",
 						"nullable": true
 					},
+					"enforcementEffectiveDate": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
 					"isGreenBelt": {
 						"type": "boolean",
 						"nullable": true
@@ -34909,6 +34914,11 @@
 						"nullable": true
 					},
 					"enforcementIssueDate": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"enforcementEffectiveDate": {
 						"type": "string",
 						"format": "date-time",
 						"nullable": true
