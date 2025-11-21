@@ -79,13 +79,16 @@ extends:
               script: |
                 cd appeals/e2e
                 npm install
-          - script: npx cypress run --spec "cypress/e2e/back-office-appeals/**/*.spec.js"
-            workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e
-            env:
-              BASE_URL: https://localhost:8080/
-              API_BASE_URL: http://localhost:3000/
-              VALIDATION_OFFICER_EMAIL: validationofficer.test@planninginspectorate.gov.uk
-              CASE_ADMIN_EMAIL: caseteamofficer.test@planninginspectorate.gov.uk
-              INSPECTOR_EMAIL: inspectorappeals.test@planninginspectorate.gov.uk
-              APP: appeals
-            displayName: "Run Cypress Tests"
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 22
+              script: |
+                cd appeals/e2e
+                npx cypress run --spec "cypress/e2e/back-office-appeals/**/*.spec.js"
+              env:
+                BASE_URL: https://localhost:8080/
+                API_BASE_URL: http://localhost:3000/
+                VALIDATION_OFFICER_EMAIL: validationofficer.test@planninginspectorate.gov.uk
+                CASE_ADMIN_EMAIL: caseteamofficer.test@planninginspectorate.gov.uk
+                INSPECTOR_EMAIL: inspectorappeals.test@planninginspectorate.gov.uk
+                APP: appeals
