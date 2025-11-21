@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`enforcement-issue-date GET /change should render the enforcementIssueDate change page 1`] = `
+exports[`contact-planning-inspectorate-date GET /change should render the contactPlanningInspectorateDate change page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
@@ -12,34 +12,34 @@ exports[`enforcement-issue-date GET /change should render the enforcementIssueDa
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="enforcement-issue-date-hint">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="contact-planning-inspectorate-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the issue date on your enforcement notice?</h1>
+                                    <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="enforcement-issue-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <div class="govuk-date-input" id="enforcement-issue-date">
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
+                                <div class="govuk-date-input" id="contact-planning-inspectorate-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-day" name="enforcement-issue-date-day" type="text"
-                                            value="19" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-day" name="contact-planning-inspectorate-date-day"
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-month" name="enforcement-issue-date-month" type="text"
-                                            value="6" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-month" name="contact-planning-inspectorate-date-month"
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-year" name="enforcement-issue-date-year" type="text"
-                                            value="2024" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-year" name="contact-planning-inspectorate-date-year"
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -55,7 +55,7 @@ exports[`enforcement-issue-date GET /change should render the enforcementIssueDa
 </main>"
 `;
 
-exports[`enforcement-issue-date POST /change should re-render application submission date change page if day is not valid 1`] = `
+exports[`contact-planning-inspectorate-date POST /change should re-render application submission date change page if day is not valid 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -64,7 +64,7 @@ exports[`enforcement-issue-date POST /change should re-render application submis
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#enforcement-issue-date-day">The issue date must include a day</a>
+                            <li><a href="#contact-planning-inspectorate-date-day">The date you contacted the Planning Inspectorate must include a day</a>
                             </li>
                         </ul>
                     </div>
@@ -82,36 +82,38 @@ exports[`enforcement-issue-date POST /change should re-render application submis
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="enforcement-issue-date-hint enforcement-issue-date-error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="contact-planning-inspectorate-date-hint contact-planning-inspectorate-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the issue date on your enforcement notice?</h1>
+                                    <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="enforcement-issue-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="enforcement-issue-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The issue date must include
-                                    a day</p>
-                                <div class="govuk-date-input" id="enforcement-issue-date">
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
+                                <p id="contact-planning-inspectorate-date-error"
+                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                    the Planning Inspectorate must include a day</p>
+                                <div class="govuk-date-input"
+                                id="contact-planning-inspectorate-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
-                                            id="enforcement-issue-date-day" name="enforcement-issue-date-day" type="text"
-                                            value="" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-day" name="contact-planning-inspectorate-date-day"
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-month" name="enforcement-issue-date-month" type="text"
-                                            value="06" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-month" name="contact-planning-inspectorate-date-month"
+                                            type="text" value="06" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-year" name="enforcement-issue-date-year" type="text"
-                                            value="2021" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-year" name="contact-planning-inspectorate-date-year"
+                                            type="text" value="2021" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -127,7 +129,7 @@ exports[`enforcement-issue-date POST /change should re-render application submis
 </main>"
 `;
 
-exports[`enforcement-issue-date POST /change should re-render application submission date change page if day is not valid 2`] = `
+exports[`contact-planning-inspectorate-date POST /change should re-render application submission date change page if day is not valid 2`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -136,7 +138,7 @@ exports[`enforcement-issue-date POST /change should re-render application submis
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#enforcement-issue-date-day">The issue date day must be a number</a>
+                            <li><a href="#contact-planning-inspectorate-date-day">The date you contacted the Planning Inspectorate day must be a number</a>
                             </li>
                         </ul>
                     </div>
@@ -154,36 +156,38 @@ exports[`enforcement-issue-date POST /change should re-render application submis
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="enforcement-issue-date-hint enforcement-issue-date-error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="contact-planning-inspectorate-date-hint contact-planning-inspectorate-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the issue date on your enforcement notice?</h1>
+                                    <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="enforcement-issue-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="enforcement-issue-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The issue date day must
-                                    be a number</p>
-                                <div class="govuk-date-input" id="enforcement-issue-date">
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
+                                <p id="contact-planning-inspectorate-date-error"
+                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                    the Planning Inspectorate day must be a number</p>
+                                <div class="govuk-date-input"
+                                id="contact-planning-inspectorate-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
-                                            id="enforcement-issue-date-day" name="enforcement-issue-date-day" type="text"
-                                            value="a" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-day" name="contact-planning-inspectorate-date-day"
+                                            type="text" value="a" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-month" name="enforcement-issue-date-month" type="text"
-                                            value="06" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-month" name="contact-planning-inspectorate-date-month"
+                                            type="text" value="06" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-year" name="enforcement-issue-date-year" type="text"
-                                            value="2021" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-year" name="contact-planning-inspectorate-date-year"
+                                            type="text" value="2021" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -199,7 +203,7 @@ exports[`enforcement-issue-date POST /change should re-render application submis
 </main>"
 `;
 
-exports[`enforcement-issue-date POST /change should re-render application submission date change page if day is not valid 3`] = `
+exports[`contact-planning-inspectorate-date POST /change should re-render application submission date change page if day is not valid 3`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -208,7 +212,7 @@ exports[`enforcement-issue-date POST /change should re-render application submis
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#enforcement-issue-date-day">The issue date day must be between 1 and 31</a>
+                            <li><a href="#contact-planning-inspectorate-date-day">The date you contacted the Planning Inspectorate day must be between 1 and 31</a>
                             </li>
                         </ul>
                     </div>
@@ -226,36 +230,38 @@ exports[`enforcement-issue-date POST /change should re-render application submis
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="enforcement-issue-date-hint enforcement-issue-date-error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="contact-planning-inspectorate-date-hint contact-planning-inspectorate-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the issue date on your enforcement notice?</h1>
+                                    <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="enforcement-issue-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="enforcement-issue-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The issue date day must
-                                    be between 1 and 31</p>
-                                <div class="govuk-date-input" id="enforcement-issue-date">
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
+                                <p id="contact-planning-inspectorate-date-error"
+                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                    the Planning Inspectorate day must be between 1 and 31</p>
+                                <div class="govuk-date-input"
+                                id="contact-planning-inspectorate-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
-                                            id="enforcement-issue-date-day" name="enforcement-issue-date-day" type="text"
-                                            value="0" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-day" name="contact-planning-inspectorate-date-day"
+                                            type="text" value="0" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-month" name="enforcement-issue-date-month" type="text"
-                                            value="06" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-month" name="contact-planning-inspectorate-date-month"
+                                            type="text" value="06" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-year" name="enforcement-issue-date-year" type="text"
-                                            value="2021" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-year" name="contact-planning-inspectorate-date-year"
+                                            type="text" value="2021" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -271,7 +277,7 @@ exports[`enforcement-issue-date POST /change should re-render application submis
 </main>"
 `;
 
-exports[`enforcement-issue-date POST /change should re-render application submission date change page if day is not valid 4`] = `
+exports[`contact-planning-inspectorate-date POST /change should re-render application submission date change page if day is not valid 4`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -280,7 +286,7 @@ exports[`enforcement-issue-date POST /change should re-render application submis
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#enforcement-issue-date-day">The issue date day must be between 1 and 31</a>
+                            <li><a href="#contact-planning-inspectorate-date-day">The date you contacted the Planning Inspectorate day must be between 1 and 31</a>
                             </li>
                         </ul>
                     </div>
@@ -298,36 +304,38 @@ exports[`enforcement-issue-date POST /change should re-render application submis
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="enforcement-issue-date-hint enforcement-issue-date-error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="contact-planning-inspectorate-date-hint contact-planning-inspectorate-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the issue date on your enforcement notice?</h1>
+                                    <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="enforcement-issue-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="enforcement-issue-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The issue date day must
-                                    be between 1 and 31</p>
-                                <div class="govuk-date-input" id="enforcement-issue-date">
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
+                                <p id="contact-planning-inspectorate-date-error"
+                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                    the Planning Inspectorate day must be between 1 and 31</p>
+                                <div class="govuk-date-input"
+                                id="contact-planning-inspectorate-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
-                                            id="enforcement-issue-date-day" name="enforcement-issue-date-day" type="text"
-                                            value="32" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-day" name="contact-planning-inspectorate-date-day"
+                                            type="text" value="32" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-month" name="enforcement-issue-date-month" type="text"
-                                            value="06" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-month" name="contact-planning-inspectorate-date-month"
+                                            type="text" value="06" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-year" name="enforcement-issue-date-year" type="text"
-                                            value="2021" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-year" name="contact-planning-inspectorate-date-year"
+                                            type="text" value="2021" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -343,7 +351,7 @@ exports[`enforcement-issue-date POST /change should re-render application submis
 </main>"
 `;
 
-exports[`enforcement-issue-date POST /change should re-render the Date page with an error message if the provided date month is invalid 1`] = `
+exports[`contact-planning-inspectorate-date POST /change should re-render the Date page with an error message if the provided date month is invalid 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -352,7 +360,7 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#enforcement-issue-date-month">The issue date must include a month</a>
+                            <li><a href="#contact-planning-inspectorate-date-month">The date you contacted the Planning Inspectorate must include a month</a>
                             </li>
                         </ul>
                     </div>
@@ -370,36 +378,38 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="enforcement-issue-date-hint enforcement-issue-date-error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="contact-planning-inspectorate-date-hint contact-planning-inspectorate-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the issue date on your enforcement notice?</h1>
+                                    <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="enforcement-issue-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="enforcement-issue-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The issue date must include
-                                    a month</p>
-                                <div class="govuk-date-input" id="enforcement-issue-date">
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
+                                <p id="contact-planning-inspectorate-date-error"
+                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                    the Planning Inspectorate must include a month</p>
+                                <div class="govuk-date-input"
+                                id="contact-planning-inspectorate-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-day" name="enforcement-issue-date-day" type="text"
-                                            value="1" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-day" name="contact-planning-inspectorate-date-day"
+                                            type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
-                                            id="enforcement-issue-date-month" name="enforcement-issue-date-month" type="text"
-                                            value="" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-month" name="contact-planning-inspectorate-date-month"
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-year" name="enforcement-issue-date-year" type="text"
-                                            value="2021" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-year" name="contact-planning-inspectorate-date-year"
+                                            type="text" value="2021" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -415,7 +425,7 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
 </main>"
 `;
 
-exports[`enforcement-issue-date POST /change should re-render the Date page with an error message if the provided date month is invalid 2`] = `
+exports[`contact-planning-inspectorate-date POST /change should re-render the Date page with an error message if the provided date month is invalid 2`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -424,7 +434,7 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#enforcement-issue-date-month">The issue date must be a real date</a>
+                            <li><a href="#contact-planning-inspectorate-date-month">The date you contacted the Planning Inspectorate must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -442,36 +452,38 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="enforcement-issue-date-hint enforcement-issue-date-error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="contact-planning-inspectorate-date-hint contact-planning-inspectorate-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the issue date on your enforcement notice?</h1>
+                                    <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="enforcement-issue-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="enforcement-issue-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The issue date must be
-                                    a real date</p>
-                                <div class="govuk-date-input" id="enforcement-issue-date">
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
+                                <p id="contact-planning-inspectorate-date-error"
+                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                    the Planning Inspectorate must be a real date</p>
+                                <div class="govuk-date-input"
+                                id="contact-planning-inspectorate-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-day" name="enforcement-issue-date-day" type="text"
-                                            value="1" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-day" name="contact-planning-inspectorate-date-day"
+                                            type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
-                                            id="enforcement-issue-date-month" name="enforcement-issue-date-month" type="text"
-                                            value="a" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-month" name="contact-planning-inspectorate-date-month"
+                                            type="text" value="a" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-year" name="enforcement-issue-date-year" type="text"
-                                            value="2021" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-year" name="contact-planning-inspectorate-date-year"
+                                            type="text" value="2021" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -487,7 +499,7 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
 </main>"
 `;
 
-exports[`enforcement-issue-date POST /change should re-render the Date page with an error message if the provided date month is invalid 3`] = `
+exports[`contact-planning-inspectorate-date POST /change should re-render the Date page with an error message if the provided date month is invalid 3`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -496,7 +508,7 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#enforcement-issue-date-month">The issue date month must be between 1 and 12</a>
+                            <li><a href="#contact-planning-inspectorate-date-month">The date you contacted the Planning Inspectorate month must be between 1 and 12</a>
                             </li>
                         </ul>
                     </div>
@@ -514,36 +526,38 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="enforcement-issue-date-hint enforcement-issue-date-error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="contact-planning-inspectorate-date-hint contact-planning-inspectorate-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the issue date on your enforcement notice?</h1>
+                                    <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="enforcement-issue-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="enforcement-issue-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The issue date month
-                                    must be between 1 and 12</p>
-                                <div class="govuk-date-input" id="enforcement-issue-date">
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
+                                <p id="contact-planning-inspectorate-date-error"
+                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                    the Planning Inspectorate month must be between 1 and 12</p>
+                                <div class="govuk-date-input"
+                                id="contact-planning-inspectorate-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-day" name="enforcement-issue-date-day" type="text"
-                                            value="1" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-day" name="contact-planning-inspectorate-date-day"
+                                            type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
-                                            id="enforcement-issue-date-month" name="enforcement-issue-date-month" type="text"
-                                            value="0" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-month" name="contact-planning-inspectorate-date-month"
+                                            type="text" value="0" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-year" name="enforcement-issue-date-year" type="text"
-                                            value="2021" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-year" name="contact-planning-inspectorate-date-year"
+                                            type="text" value="2021" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -559,7 +573,7 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
 </main>"
 `;
 
-exports[`enforcement-issue-date POST /change should re-render the Date page with an error message if the provided date month is invalid 4`] = `
+exports[`contact-planning-inspectorate-date POST /change should re-render the Date page with an error message if the provided date month is invalid 4`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -568,7 +582,7 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#enforcement-issue-date-month">The issue date month must be between 1 and 12</a>
+                            <li><a href="#contact-planning-inspectorate-date-month">The date you contacted the Planning Inspectorate month must be between 1 and 12</a>
                             </li>
                         </ul>
                     </div>
@@ -586,36 +600,38 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="enforcement-issue-date-hint enforcement-issue-date-error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="contact-planning-inspectorate-date-hint contact-planning-inspectorate-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the issue date on your enforcement notice?</h1>
+                                    <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="enforcement-issue-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="enforcement-issue-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The issue date month
-                                    must be between 1 and 12</p>
-                                <div class="govuk-date-input" id="enforcement-issue-date">
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
+                                <p id="contact-planning-inspectorate-date-error"
+                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                    the Planning Inspectorate month must be between 1 and 12</p>
+                                <div class="govuk-date-input"
+                                id="contact-planning-inspectorate-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-day" name="enforcement-issue-date-day" type="text"
-                                            value="1" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-day" name="contact-planning-inspectorate-date-day"
+                                            type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
-                                            id="enforcement-issue-date-month" name="enforcement-issue-date-month" type="text"
-                                            value="13" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-month" name="contact-planning-inspectorate-date-month"
+                                            type="text" value="13" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-year" name="enforcement-issue-date-year" type="text"
-                                            value="2021" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-year" name="contact-planning-inspectorate-date-year"
+                                            type="text" value="2021" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -631,7 +647,7 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
 </main>"
 `;
 
-exports[`enforcement-issue-date POST /change should re-render the Date page with an error message if the provided date year is invalid 1`] = `
+exports[`contact-planning-inspectorate-date POST /change should re-render the Date page with an error message if the provided date year is invalid 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -640,7 +656,7 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#enforcement-issue-date-year">The issue date must include a year</a>
+                            <li><a href="#contact-planning-inspectorate-date-year">The date you contacted the Planning Inspectorate must include a year</a>
                             </li>
                         </ul>
                     </div>
@@ -658,36 +674,38 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="enforcement-issue-date-hint enforcement-issue-date-error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="contact-planning-inspectorate-date-hint contact-planning-inspectorate-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the issue date on your enforcement notice?</h1>
+                                    <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="enforcement-issue-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="enforcement-issue-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The issue date must include
-                                    a year</p>
-                                <div class="govuk-date-input" id="enforcement-issue-date">
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
+                                <p id="contact-planning-inspectorate-date-error"
+                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                    the Planning Inspectorate must include a year</p>
+                                <div class="govuk-date-input"
+                                id="contact-planning-inspectorate-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-day" name="enforcement-issue-date-day" type="text"
-                                            value="1" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-day" name="contact-planning-inspectorate-date-day"
+                                            type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-month" name="enforcement-issue-date-month" type="text"
-                                            value="Jul" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-month" name="contact-planning-inspectorate-date-month"
+                                            type="text" value="Jul" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
-                                            id="enforcement-issue-date-year" name="enforcement-issue-date-year" type="text"
-                                            value="" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-year" name="contact-planning-inspectorate-date-year"
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -703,7 +721,7 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
 </main>"
 `;
 
-exports[`enforcement-issue-date POST /change should re-render the Date page with an error message if the provided date year is invalid 2`] = `
+exports[`contact-planning-inspectorate-date POST /change should re-render the Date page with an error message if the provided date year is invalid 2`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -712,7 +730,7 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#enforcement-issue-date-year">The issue date year must be a number</a>
+                            <li><a href="#contact-planning-inspectorate-date-year">The date you contacted the Planning Inspectorate year must be a number</a>
                             </li>
                         </ul>
                     </div>
@@ -730,36 +748,38 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="enforcement-issue-date-hint enforcement-issue-date-error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="contact-planning-inspectorate-date-hint contact-planning-inspectorate-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the issue date on your enforcement notice?</h1>
+                                    <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="enforcement-issue-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="enforcement-issue-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The issue date year must
-                                    be a number</p>
-                                <div class="govuk-date-input" id="enforcement-issue-date">
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
+                                <p id="contact-planning-inspectorate-date-error"
+                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                    the Planning Inspectorate year must be a number</p>
+                                <div class="govuk-date-input"
+                                id="contact-planning-inspectorate-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-day" name="enforcement-issue-date-day" type="text"
-                                            value="1" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-day" name="contact-planning-inspectorate-date-day"
+                                            type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-month" name="enforcement-issue-date-month" type="text"
-                                            value="Jul" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-month" name="contact-planning-inspectorate-date-month"
+                                            type="text" value="Jul" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
-                                            id="enforcement-issue-date-year" name="enforcement-issue-date-year" type="text"
-                                            value="a" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-year" name="contact-planning-inspectorate-date-year"
+                                            type="text" value="a" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -775,7 +795,7 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
 </main>"
 `;
 
-exports[`enforcement-issue-date POST /change should re-render the Date page with an error message if the provided date year is invalid 3`] = `
+exports[`contact-planning-inspectorate-date POST /change should re-render the Date page with an error message if the provided date year is invalid 3`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -784,7 +804,7 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#enforcement-issue-date-year">The issue date year must be 4 digits</a>
+                            <li><a href="#contact-planning-inspectorate-date-year">The date you contacted the Planning Inspectorate year must be 4 digits</a>
                             </li>
                         </ul>
                     </div>
@@ -802,36 +822,38 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="enforcement-issue-date-hint enforcement-issue-date-error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="contact-planning-inspectorate-date-hint contact-planning-inspectorate-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the issue date on your enforcement notice?</h1>
+                                    <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="enforcement-issue-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="enforcement-issue-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The issue date year must
-                                    be 4 digits</p>
-                                <div class="govuk-date-input" id="enforcement-issue-date">
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
+                                <p id="contact-planning-inspectorate-date-error"
+                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                    the Planning Inspectorate year must be 4 digits</p>
+                                <div class="govuk-date-input"
+                                id="contact-planning-inspectorate-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-day" name="enforcement-issue-date-day" type="text"
-                                            value="1" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-day" name="contact-planning-inspectorate-date-day"
+                                            type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="enforcement-issue-date-month" name="enforcement-issue-date-month" type="text"
-                                            value="Jul" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-month" name="contact-planning-inspectorate-date-month"
+                                            type="text" value="Jul" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
-                                            id="enforcement-issue-date-year" name="enforcement-issue-date-year" type="text"
-                                            value="202" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-year" name="contact-planning-inspectorate-date-year"
+                                            type="text" value="202" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -847,7 +869,7 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
 </main>"
 `;
 
-exports[`enforcement-issue-date POST /change should re-render the Date page with an error message if the provided date year is invalid 4`] = `
+exports[`contact-planning-inspectorate-date POST /change should re-render the Date page with an error message if the provided date year is invalid 4`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -856,7 +878,7 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#enforcement-issue-date-day">The issue date must be today or in the past</a>
+                            <li><a href="#contact-planning-inspectorate-date-day">The date you contacted the Planning Inspectorate must be today or in the past</a>
                             </li>
                         </ul>
                     </div>
@@ -874,36 +896,38 @@ exports[`enforcement-issue-date POST /change should re-render the Date page with
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="enforcement-issue-date-hint enforcement-issue-date-error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="contact-planning-inspectorate-date-hint contact-planning-inspectorate-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the issue date on your enforcement notice?</h1>
+                                    <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="enforcement-issue-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="enforcement-issue-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The issue date must be
-                                    today or in the past</p>
-                                <div class="govuk-date-input" id="enforcement-issue-date">
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
+                                <p id="contact-planning-inspectorate-date-error"
+                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                    the Planning Inspectorate must be today or in the past</p>
+                                <div class="govuk-date-input"
+                                id="contact-planning-inspectorate-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-day">Day</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
-                                            id="enforcement-issue-date-day" name="enforcement-issue-date-day" type="text"
-                                            value="1" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-day" name="contact-planning-inspectorate-date-day"
+                                            type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-month">Month</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
-                                            id="enforcement-issue-date-month" name="enforcement-issue-date-month" type="text"
-                                            value="Jul" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-month" name="contact-planning-inspectorate-date-month"
+                                            type="text" value="Jul" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="enforcement-issue-date-year">Year</label>
+                                            <label class="govuk-label govuk-date-input__label" for="contact-planning-inspectorate-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
-                                            id="enforcement-issue-date-year" name="enforcement-issue-date-year" type="text"
-                                            value="3000" inputmode="numeric">
+                                            id="contact-planning-inspectorate-date-year" name="contact-planning-inspectorate-date-year"
+                                            type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
