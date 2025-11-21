@@ -122,6 +122,54 @@ async function getAllForeignKeys(databaseConnector) {
 }
 
 /**
+ * @typedef {{seedIndex: number, increment: number, currentIndex: number}} IndexInfo
+ */
+
+/**
+ * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
+ * @param {string} schemaName
+ * @param {string} tableName
+ * @returns {Promise<IndexInfo>}
+ */
+async function getTableIndexes(databaseConnector, schemaName, tableName) {
+	console.info(`Fetching indexes for table ${schemaName}.${tableName}...`);
+
+	const indexInfoStatement = `
+		SELECT 
+  			IDENT_SEED('${schemaName}.${tableName}') AS seedIndex,
+  			IDENT_INCR('${schemaName}.${tableName}') AS increment,
+  			IDENT_CURRENT('${schemaName}.${tableName}') AS currentIndex;
+	`;
+
+	console.info(indexInfoStatement);
+	/**
+	 * @type {Array<IndexInfo>}
+	 */
+	const indexInfo = await databaseConnector.$queryRawUnsafe(indexInfoStatement);
+
+	console.info(`Found ${JSON.stringify(indexInfo)} indexes on table ${schemaName}.${tableName}\n`);
+
+	return indexInfo[0];
+}
+
+/**
+ * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
+ * @param {string} schemaName
+ * @param {string} tableName
+ * @param {number} currentIndex
+ */
+async function resetTableIndex(databaseConnector, schemaName, tableName, currentIndex) {
+	const newIndex = currentIndex + 1;
+
+	console.info(`Old index was ${currentIndex} for table ${schemaName}.${tableName}...`);
+
+	const resetIndexStatement = `DBCC CHECKIDENT ('${schemaName}.${tableName}', RESEED, ${newIndex})`;
+	await databaseConnector.$executeRawUnsafe(resetIndexStatement);
+
+	console.info(`Index set to ${newIndex} on table ${schemaName}.${tableName}\n`);
+}
+
+/**
  * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
  */
 async function dropAllForeignKeys(databaseConnector) {
@@ -267,11 +315,21 @@ async function truncateAllTables(databaseConnector) {
  */
 export async function deleteExistingData(databaseConnector) {
 	try {
+		const appealndexInfo = await getTableIndexes(databaseConnector, 'dbo', 'Appeal');
+		const serviceUserIndexInfo = await getTableIndexes(databaseConnector, 'dbo', 'ServiceUser');
 		const initialForeignKeys = await dropAllForeignKeys(databaseConnector);
+
 		await truncateAllTables(databaseConnector);
 		await recreateForeignKeys(initialForeignKeys, databaseConnector);
 
 		const recreatedForeignKeys = await getAllForeignKeys(databaseConnector);
+		await resetTableIndex(databaseConnector, 'dbo', 'Appeal', Number(appealndexInfo.currentIndex));
+		await resetTableIndex(
+			databaseConnector,
+			'dbo',
+			'ServiceUser',
+			Number(serviceUserIndexInfo.currentIndex)
+		);
 
 		if (
 			JSON.stringify(initialForeignKeys).localeCompare(JSON.stringify(recreatedForeignKeys)) !== 0
