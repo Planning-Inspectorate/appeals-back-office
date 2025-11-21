@@ -9,8 +9,8 @@ import {
 } from '#tests/appeals/mocks.js';
 import { documentCreated } from '#tests/documents/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { FEEDBACK_FORM_LINKS } from '#utils/feedback-form-link.js';
 import { jest } from '@jest/globals';
+import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import {
 	ERROR_CASE_OUTCOME_MUST_BE_ONE_OF,
 	ERROR_INVALID_APPEAL_STATE,

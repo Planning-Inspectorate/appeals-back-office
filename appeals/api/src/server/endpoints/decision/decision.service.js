@@ -147,11 +147,11 @@ export const publishDecision = async (
 					? {
 							...personalisation,
 							has_costs_decision: hasAppellantCostsDecision,
-							feedback_link: getFeedbackLinkFromAppealType(appeal?.appealType?.key || '')
+							feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || '')
 					  }
 					: {
 							...personalisation,
-							feedback_link: getFeedbackLinkFromAppealType(appeal?.appealType?.key || '')
+							feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || '')
 					  }
 			});
 		}

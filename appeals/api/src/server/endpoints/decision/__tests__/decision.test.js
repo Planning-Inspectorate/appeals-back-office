@@ -8,9 +8,10 @@ import {
 } from '#tests/appeals/mocks.js';
 import { documentCreated, documentVersionCreated, savedFolder } from '#tests/documents/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { FEEDBACK_FORM_LINKS, getFeedbackLinkFromAppealType } from '#utils/feedback-form-link.js';
+import { getFeedbackLinkFromAppealTypeKey } from '#utils/feedback-form-link';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
+import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
 	AUDIT_TRAIL_CORRECTION_NOTICE_ADDED,
@@ -606,7 +607,7 @@ describe('decision routes', () => {
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					decision_date: formatDate(utcDate, false),
 					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`,
-					feedback_link: getFeedbackLinkFromAppealType(appeal.appealType.key)
+					feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key)
 				},
 				templateName: 'decision-is-allowed-split-dismissed-appellant',
 				recipientEmail: appeal.agent.email
