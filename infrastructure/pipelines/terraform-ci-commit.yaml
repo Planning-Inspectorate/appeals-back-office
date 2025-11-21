@@ -68,13 +68,13 @@ extends:
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
-              script: npm install
-              workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e
+              script: |
+                cd appeals/e2e
+                npm install
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
               script: npx cypress run --spec "cypress/e2e/back-office-appeals/**/*.spec.js"
-              workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e
               env:
                 TZ: 'Europe/London'
                 BASE_URL: $(APPEALS_BASE_URL)
