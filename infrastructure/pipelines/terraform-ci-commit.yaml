@@ -54,6 +54,7 @@ extends:
               dockerVersion: '17.09.0-ce'
           - script:
               docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=SqlServer01" -p 1433:1433 --name pins-sql-server -d mcr.microsoft.com/mssql/server:2022-latest
+            displayName: "Start Database"
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
@@ -78,9 +79,13 @@ extends:
               script: |
                 cd appeals/e2e
                 npm install
-          - template: ../steps/node_script.yml
-            parameters:
-              nodeVersion: 22
-              script: |
-                cd appeals/e2e
-                npx cypress run --spec "cypress/e2e/back-office-appeals/**/*.spec.js"
+          - script: npx cypress run --spec "cypress/e2e/back-office-appeals/**/*.spec.js"
+            workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e
+            env:
+              BASE_URL: https://localhost:8080/
+              API_BASE_URL: http://localhost:3000/
+              VALIDATION_OFFICER_EMAIL: validationofficer.test@planninginspectorate.gov.uk
+              CASE_ADMIN_EMAIL: caseteamofficer.test@planninginspectorate.gov.uk
+              INSPECTOR_EMAIL: inspectorappeals.test@planninginspectorate.gov.uk
+              APP: appeals
+            displayName: "Run Cypress Tests"
