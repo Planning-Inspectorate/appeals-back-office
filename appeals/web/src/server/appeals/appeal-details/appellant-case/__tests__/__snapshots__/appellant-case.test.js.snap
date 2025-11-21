@@ -4571,8 +4571,8 @@ exports[`appellant-case GET /appellant-case/add-document-details/:folderId/ shou
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -4588,8 +4588,8 @@ exports[`appellant-case GET /appellant-case/add-document-details/:folderId/:docu
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -5197,8 +5197,8 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId/
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -5214,8 +5214,8 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/check-your-a
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -5231,8 +5231,8 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -5744,8 +5744,9 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
-            <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists</p>
+            <p             class="govuk-body">If the web address is correct or you selected a link or button, <a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">report an IT problem.</a>
+                </p>
         </div>
     </div>
 </main>"
@@ -6010,8 +6011,9 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
-            <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists</p>
+            <p             class="govuk-body">If the web address is correct or you selected a link or button, <a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">report an IT problem.</a>
+                </p>
         </div>
     </div>
 </main>"
@@ -6028,8 +6030,9 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">If you typed the web address, check it is correct.</p>
             <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
-            <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists</p>
+            <p             class="govuk-body">If the web address is correct or you selected a link or button, <a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">report an IT problem.</a>
+                </p>
         </div>
     </div>
 </main>"
@@ -7034,8 +7037,8 @@ exports[`appellant-case POST /appellant-case/add-documents/:folderId/ should ren
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -7051,8 +7054,8 @@ exports[`appellant-case POST /appellant-case/add-documents/:folderId/ should ren
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -7068,8 +7071,8 @@ exports[`appellant-case POST /appellant-case/add-documents/:folderId/:documentId
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -7085,8 +7088,8 @@ exports[`appellant-case POST /appellant-case/add-documents/:folderId/:documentId
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -7102,8 +7105,8 @@ exports[`appellant-case POST /appellant-case/add-documents/:folderId/:documentId
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -7119,8 +7122,8 @@ exports[`appellant-case POST /appellant-case/add-documents/:folderId/check-your-
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
@@ -9456,8 +9459,8 @@ exports[`appellant-case POST /appellant-case/incomplete/date should render a 500
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
         </div>
     </div>
 </main>"
