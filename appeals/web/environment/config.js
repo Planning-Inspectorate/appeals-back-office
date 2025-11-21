@@ -67,6 +67,7 @@ export function loadConfig() {
 		FEATURE_FLAG_NET_RESIDENCE_S20,
 		FEATURE_FLAG_HEARING_POST_MVP,
 		FEATURE_FLAG_EXPEDITED_APPEALS,
+		FEATURE_FLAG_MANUALLY_ADD_REP,
 		HORIZON_APPEAL_BASE_URL,
 		HTTP_PORT = 8080,
 		HTTPS_ENABLED,
@@ -166,7 +167,8 @@ export function loadConfig() {
 			featureFlagEnforcementNotice: FEATURE_FLAG_ENFORCEMENT_NOTICE === 'true',
 			featureFlagInvalidDecisionLetter: FEATURE_FLAG_INVALID_DECISION_LETTER === 'true',
 			featureFlagRule6Parties: FEATURE_FLAG_RULE_6_PARTIES === 'true',
-			featureFlagExpeditedAppeals: FEATURE_FLAG_EXPEDITED_APPEALS === 'true'
+			featureFlagExpeditedAppeals: FEATURE_FLAG_EXPEDITED_APPEALS === 'true',
+			featureFlagManuallyAddReps: FEATURE_FLAG_MANUALLY_ADD_REP === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		pdfServiceHost: PDF_SERVICE_HOST
