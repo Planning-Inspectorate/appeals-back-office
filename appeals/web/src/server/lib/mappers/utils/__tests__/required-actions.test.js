@@ -1339,7 +1339,7 @@ describe('required actions', () => {
 						},
 						'detail'
 					)
-				).toContain('awaitingProofOfEvidenceAndWitnesses');
+				).toEqual(['reviewAppellantProofOfEvidence', 'awaitingLpaProofOfEvidenceAndWitnesses']);
 			});
 
 			it('should return "awaitingProofOfEvidenceAndWitnesses" if appellant proof of evidence is not received', () => {
@@ -1373,7 +1373,7 @@ describe('required actions', () => {
 						},
 						'detail'
 					)
-				).toContain('awaitingProofOfEvidenceAndWitnesses');
+				).toEqual(['reviewLpaProofOfEvidence', 'awaitingAppellantProofOfEvidenceAndWitnesses']);
 			});
 
 			it('should return "awaitingProofOfEvidenceAndWitnesses" if both LPA and appellant proof of evidence is not received', () => {
@@ -1577,7 +1577,7 @@ describe('required actions', () => {
 						},
 						'detail'
 					)
-				).toEqual(['reviewAppellantProofOfEvidence', 'awaitingProofOfEvidenceAndWitnesses']);
+				).toEqual(['reviewAppellantProofOfEvidence', 'awaitingLpaProofOfEvidenceAndWitnesses']);
 			});
 
 			it('should return "progressToInquiry" if appellant proof of evidence is not received and proof of evidence dure date has passed', () => {
@@ -1611,7 +1611,7 @@ describe('required actions', () => {
 						},
 						'detail'
 					)
-				).toEqual(['reviewLpaProofOfEvidence', 'awaitingProofOfEvidenceAndWitnesses']);
+				).toEqual(['reviewLpaProofOfEvidence', 'awaitingAppellantProofOfEvidenceAndWitnesses']);
 			});
 
 			it('should return "progressToInquiry" if both appellant and LPA proof of evidence is not received and proof of evidence dure date has passed', () => {

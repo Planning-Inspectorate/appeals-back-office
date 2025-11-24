@@ -4429,6 +4429,46 @@ export const appealDataToGetRequiredActions = {
 			}
 		}
 	},
+	awaitingLpaProofOfEvidenceAndWitnesses: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
+		appealTimetable: {
+			appealTimetableId: 1053,
+			proofOfEvidenceAndWitnessesDueDate: futureDate
+		},
+		documentationSummary: {
+			lpaProofOfEvidence: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				receivedAt: null,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			},
+			appellantProofOfEvidence: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+			}
+		}
+	},
+	awaitingAppellantProofOfEvidenceAndWitnesses: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
+		appealTimetable: {
+			appealTimetableId: 1053,
+			proofOfEvidenceAndWitnessesDueDate: futureDate
+		},
+		documentationSummary: {
+			lpaProofOfEvidence: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+			},
+			appellantProofOfEvidence: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				receivedAt: null,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			}
+		}
+	},
 	progressToProofOfEvidenceAndWitnessesComplete: {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
