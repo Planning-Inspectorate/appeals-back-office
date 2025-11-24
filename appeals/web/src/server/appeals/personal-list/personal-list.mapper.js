@@ -527,6 +527,12 @@ function mapRequiredActionToPersonalListActionHtml(
 		case 'awaitingProofOfEvidenceAndWitnesses': {
 			return 'Awaiting proof of evidence and witnesses';
 		}
+		case 'awaitingLpaProofOfEvidenceAndWitnesses': {
+			return 'Awaiting LPA proof of evidence and witnesses';
+		}
+		case 'awaitingAppellantProofOfEvidenceAndWitnesses': {
+			return 'Awaiting appellant proof of evidence and witnesses';
+		}
 		case 'reviewLpaProofOfEvidence': {
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 				request,

@@ -539,6 +539,20 @@ describe('personal-list', () => {
 				}
 			},
 			{
+				name: 'Awaiting LPA proof of evidence and witnesses',
+				requiredAction: 'awaitingLpaProofOfEvidenceAndWitnesses',
+				expectedHtml: {
+					caseOfficer: 'Awaiting LPA proof of evidence and witnesses'
+				}
+			},
+			{
+				name: 'Awaiting appellant proof of evidence and witnesses',
+				requiredAction: 'awaitingAppellantProofOfEvidenceAndWitnesses',
+				expectedHtml: {
+					caseOfficer: 'Awaiting appellant proof of evidence and witnesses'
+				}
+			},
+			{
 				name: 'Progress to inquiry',
 				requiredAction: 'progressToInquiry',
 				expectedHtml: {
