@@ -1296,7 +1296,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'F5540',
 		name: 'London Borough of Hounslow',
 		email: 'planningappeals@example.gov.uk',
-		teamId: 8 //West2
+		teamId: 17 // North3
 	},
 	{
 		lpaCode: 'T5720',
