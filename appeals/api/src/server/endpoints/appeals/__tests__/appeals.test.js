@@ -16,7 +16,6 @@ import {
 	ERROR_PAGENUMBER_AND_PAGESIZE_ARE_REQUIRED
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { omit } from 'lodash-es';
 import { request } from '../../../app-test.js';
 import { getIdsOfReferencedAppeals } from '../appeals.formatter.js';
 import { mapAppealStatuses } from '../appeals.service.js';
@@ -58,6 +57,12 @@ const allAppeals = [householdAppeal, fullPlanningAppeal].map((appeal) => ({
 	inspectorUserId: inspectors[0].id,
 	caseOfficerUserId: caseOfficers[0].id
 }));
+
+const expectedAllAppealsLookup = {
+	caseOfficerUserId: true,
+	inspectorUserId: true,
+	lpaId: true
+};
 
 describe('appeals list routes', () => {
 	afterEach(() => {
@@ -273,10 +278,10 @@ describe('appeals list routes', () => {
 
 				expect(databaseConnector.appeal.findMany).toHaveBeenCalledTimes(2);
 				expect(databaseConnector.appeal.findMany).toHaveBeenNthCalledWith(1, expectedQuery);
-				expect(databaseConnector.appeal.findMany).toHaveBeenNthCalledWith(
-					2,
-					omit(expectedQuery, 'include', 'orderBy', 'skip', 'take')
-				);
+				expect(databaseConnector.appeal.findMany).toHaveBeenNthCalledWith(2, {
+					where: expectedQuery.where,
+					select: expectedAllAppealsLookup
+				});
 				expect(databaseConnector.appeal.count).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.appeal.count).toHaveBeenNthCalledWith(1, {
 					where: expectedQuery.where
