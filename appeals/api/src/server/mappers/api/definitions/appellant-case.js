@@ -53,6 +53,10 @@ const updateableFields = {
 		type: 'boolean',
 		nullable: true
 	},
+	enforcementReference: {
+		type: 'string',
+		nullable: true
+	},
 	enforcementIssueDate: {
 		type: 'string',
 		format: 'date-time',

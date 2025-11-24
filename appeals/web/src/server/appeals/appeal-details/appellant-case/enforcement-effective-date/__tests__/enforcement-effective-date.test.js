@@ -72,7 +72,7 @@ describe('enforcement-effective-date', () => {
 				const response = await request
 					.post(`${appellantCaseUrl}/enforcement-effective-date/change`)
 					.send(invalidData);
-				expect(response.statusCode).toBe(200);
+				expect(response.statusCode).toBe(400);
 
 				const elementInnerHtml = parseHtml(response.text).innerHTML;
 
@@ -113,7 +113,7 @@ describe('enforcement-effective-date', () => {
 				const response = await request
 					.post(`${appellantCaseUrl}/enforcement-effective-date/change`)
 					.send(invalidData);
-				expect(response.statusCode).toBe(200);
+				expect(response.statusCode).toBe(400);
 
 				const elementInnerHtml = parseHtml(response.text).innerHTML;
 
@@ -151,7 +151,7 @@ describe('enforcement-effective-date', () => {
 				const response = await request
 					.post(`${appellantCaseUrl}/enforcement-effective-date/change`)
 					.send(invalidData);
-				expect(response.statusCode).toBe(200);
+				expect(response.statusCode).toBe(400);
 
 				const elementInnerHtml = parseHtml(response.text).innerHTML;
 

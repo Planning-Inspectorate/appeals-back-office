@@ -87,7 +87,7 @@ describe('contact-planning-inspectorate-date', () => {
 				const response = await request
 					.post(`${appellantCaseUrl}/contact-planning-inspectorate-date/change`)
 					.send(invalidData);
-				expect(response.statusCode).toBe(200);
+				expect(response.statusCode).toBe(400);
 
 				const elementInnerHtml = parseHtml(response.text).innerHTML;
 
@@ -137,7 +137,7 @@ describe('contact-planning-inspectorate-date', () => {
 				const response = await request
 					.post(`${appellantCaseUrl}/contact-planning-inspectorate-date/change`)
 					.send(invalidData);
-				expect(response.statusCode).toBe(200);
+				expect(response.statusCode).toBe(400);
 
 				const elementInnerHtml = parseHtml(response.text).innerHTML;
 
@@ -187,7 +187,7 @@ describe('contact-planning-inspectorate-date', () => {
 				const response = await request
 					.post(`${appellantCaseUrl}/contact-planning-inspectorate-date/change`)
 					.send(invalidData);
-				expect(response.statusCode).toBe(200);
+				expect(response.statusCode).toBe(400);
 
 				const elementInnerHtml = parseHtml(response.text).innerHTML;
 

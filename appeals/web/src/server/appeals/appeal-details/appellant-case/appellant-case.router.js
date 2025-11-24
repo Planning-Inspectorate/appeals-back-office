@@ -4,6 +4,7 @@ import enforcementEffectiveDateRouter from '#appeals/appeal-details/appellant-ca
 import enforcementIssueDateRouter from '#appeals/appeal-details/appellant-case/enforcement-issue-date/enforcement-issue-date.router.js';
 import enforcementNoticeListedBuildingRouter from '#appeals/appeal-details/appellant-case/enforcement-notice-listed-building/enforcement-notice-listed-building.router.js';
 import enforcementNoticeRouter from '#appeals/appeal-details/appellant-case/enforcement-notice/enforcement-notice.router.js';
+import enforcementReferenceRouter from '#appeals/appeal-details/appellant-case/enforcement-reference/enforcement-reference.router.js';
 import changeProcedureTypeRouter from '#appeals/appeal-details/change-procedure-type/change-procedure-type.router.js';
 import { permissionNames } from '#environment/permissions.js';
 import { extractAndProcessDocumentDateErrors } from '#lib/validators/date-input.validator.js';
@@ -251,6 +252,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	enforcementNoticeListedBuildingRouter
+);
+
+router.use(
+	'/enforcement-reference',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	enforcementReferenceRouter
 );
 
 router

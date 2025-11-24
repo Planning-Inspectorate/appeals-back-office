@@ -42,7 +42,7 @@ const renderChangeContactPlanningInspectorateDate = async (request, response) =>
 		);
 
 		return response
-			.status(200)
+			.status(errors ? 400 : 200)
 			.render('patterns/change-page.pattern.njk', { pageContent: mappedPageContents, errors });
 	} catch (error) {
 		logger.error(error);

@@ -76,6 +76,7 @@ const updateAppellantCaseById = async (req, res) => {
 			enforcementIssueDate,
 			enforcementEffectiveDate,
 			contactPlanningInspectorateDate,
+			enforcementReference,
 			enforcementNoticeListedBuilding
 		},
 		params,
@@ -158,6 +159,7 @@ const updateAppellantCaseById = async (req, res) => {
 					enforcementIssueDate,
 					enforcementEffectiveDate,
 					contactPlanningInspectorateDate,
+					enforcementReference,
 					enforcementNoticeListedBuilding
 			  });
 
