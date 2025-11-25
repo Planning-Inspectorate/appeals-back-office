@@ -40,7 +40,6 @@ apps_config = {
     featureFlagCasAdvert              = false
     featureFlagNotifyCaseHistory      = true
     featureFlagSimplifyTeamAssignment = true
-    featureFlagChangeAppealType       = true
     featureFlagPdfDownload            = true
     featureFlagNetResidence           = true
     featureFlagNetResidenceS20        = true

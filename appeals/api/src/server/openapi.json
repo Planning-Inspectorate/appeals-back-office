@@ -6675,55 +6675,6 @@
 				}
 			}
 		},
-		"/appeals/transferred-appeal/{appealReference}": {
-			"get": {
-				"tags": ["Transferred appeals"],
-				"description": "Gets appeal from Horizon returns found status (true/false). If mocking use 1000000 for valid case on horizon, 2000000 for unpublished case on horizon, any for case not found on horizon",
-				"parameters": [
-					{
-						"name": "appealReference",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						},
-						"description": "Appeal Reference"
-					},
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Gets appeal from Horizon returns found status (true/false)",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/ExistsOnHorizonResponse"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/ExistsOnHorizonResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					},
-					"404": {
-						"description": "Not Found"
-					}
-				}
-			}
-		},
 		"/appeals/{appealId}/hearing-estimates": {
 			"post": {
 				"tags": ["Hearing Estimates"],

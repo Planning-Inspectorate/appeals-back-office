@@ -97,9 +97,8 @@ const displayProcedureChangeLink = (appealDetails) => {
  * @returns {boolean}
  */
 const displayHorizonReference = (appealDetails) => {
-	const featureActive = featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.CHANGE_APPEAL_TYPE);
 	const appealCaseStatusTransfer =
 		appealDetails.appealStatus === APPEAL_CASE_STATUS.AWAITING_TRANSFER ||
 		appealDetails.appealStatus === APPEAL_CASE_STATUS.TRANSFERRED;
-	return featureActive && appealCaseStatusTransfer;
+	return appealCaseStatusTransfer;
 };

@@ -11,9 +11,8 @@ import * as documentMetadataRepository from '#repositories/document-metadata.rep
 import transitionState from '#state/transition-state.js';
 import { isCurrentStatus } from '#utils/current-status.js';
 import { databaseConnector } from '#utils/database-connector.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { APPEAL_TYPE_CHANGE_APPEALS, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE_CHANGE_APPEALS } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
 	AUDIT_TRAIL_APPEAL_TYPE_TRANSFERRED,
@@ -293,20 +292,15 @@ const updateAppealType = async (
  * @returns {Promise<void>}
  */
 const markAwaitingTransfer = async (appeal, newAppealTypeId, azureAdUserId) => {
-	/** @type {Partial<import('#db-client').Prisma.AppealUpdateInput>} data */
-	let data = {
-		caseResubmittedTypeId: newAppealTypeId,
-		caseUpdatedDate: new Date()
-	};
+	const currentDate = new Date();
+	const caseExtensionDate = await addDays(currentDate, 5);
 
-	if (isFeatureActive(FEATURE_FLAG_NAMES.CHANGE_APPEAL_TYPE)) {
-		const currentDate = new Date();
-		const caseExtensionDate = await addDays(currentDate, 5);
-		data = {
-			...data,
-			caseExtensionDate
-		};
-	}
+	/** @type {Partial<import('#db-client').Prisma.AppealUpdateInput>} data */
+	const data = {
+		caseResubmittedTypeId: newAppealTypeId,
+		caseUpdatedDate: new Date(),
+		caseExtensionDate
+	};
 
 	Promise.all([
 		await databaseConnector.appeal.update({
@@ -316,13 +310,11 @@ const markAwaitingTransfer = async (appeal, newAppealTypeId, azureAdUserId) => {
 		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.AWAITING_TRANSFER)
 	]);
 
-	if (isFeatureActive(FEATURE_FLAG_NAMES.CHANGE_APPEAL_TYPE)) {
-		await createAuditTrail({
-			appealId: appeal.id,
-			azureAdUserId,
-			details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_TYPE_TRANSFERRED, ['awaiting transfer'])
-		});
-	}
+	await createAuditTrail({
+		appealId: appeal.id,
+		azureAdUserId,
+		details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_TYPE_TRANSFERRED, ['awaiting transfer'])
+	});
 
 	await broadcasters.broadcastAppeal(appeal.id);
 };
@@ -351,13 +343,11 @@ const markTransferred = async (appeal, newAppealReference, azureAdUserId) => {
 		details = AUDIT_TRAIL_HORIZON_REFERENCE_UPDATED;
 	}
 
-	if (isFeatureActive(FEATURE_FLAG_NAMES.CHANGE_APPEAL_TYPE)) {
-		await createAuditTrail({
-			appealId: appeal.id,
-			azureAdUserId,
-			details
-		});
-	}
+	await createAuditTrail({
+		appealId: appeal.id,
+		azureAdUserId,
+		details
+	});
 
 	await broadcasters.broadcastAppeal(appeal.id);
 };
