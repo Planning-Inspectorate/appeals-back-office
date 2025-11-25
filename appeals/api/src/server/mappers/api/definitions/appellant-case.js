@@ -282,6 +282,38 @@ const appellantCase = {
 				otherNewDocuments: { ...Folder },
 				statementCommonGround: { ...Folder }
 			}
+		},
+		enforcementNotice: {
+			type: 'object',
+			properties: {
+				isReceived: {
+					type: 'boolean',
+					nullable: true
+				},
+				isListedBuilding: {
+					type: 'boolean',
+					nullable: true
+				},
+				issueDate: {
+					type: 'string',
+					format: 'date-time',
+					nullable: true
+				},
+				effectiveDate: {
+					type: 'string',
+					format: 'date-time',
+					nullable: true
+				},
+				contactPlanningInspectorateDate: {
+					type: 'string',
+					format: 'date-time',
+					nullable: true
+				},
+				reference: {
+					type: 'string',
+					nullable: true
+				}
+			}
 		}
 	}
 };

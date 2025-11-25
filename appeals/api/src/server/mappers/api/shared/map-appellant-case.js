@@ -22,9 +22,6 @@ export const mapAppellantCase = (data) => {
 			  ) || undefined
 			: undefined;
 
-		// @ts-ignore
-		const hasEnforcementData = [true, false].includes(appellantCase?.enforcementNotice);
-
 		return {
 			validation,
 			applicant: {
@@ -38,19 +35,6 @@ export const mapAppellantCase = (data) => {
 				appellantCase.applicationDecisionDate &&
 				appellantCase.applicationDecisionDate?.toISOString(),
 			hasAdvertisedAppeal: appellantCase.hasAdvertisedAppeal,
-			// @ts-ignore  Todo: remove this once the API is updated to include this structure
-			enforcementNotice: {
-				isReceived: hasEnforcementData ? appellantCase.enforcementNotice : null,
-				isListedBuilding: hasEnforcementData
-					? appellantCase?.enforcementNoticeListedBuilding
-					: null,
-				issueDate: hasEnforcementData ? appellantCase?.enforcementIssueDate : null,
-				effectiveDate: hasEnforcementData ? appellantCase?.enforcementEffectiveDate : null,
-				contactPlanningInspectorateDate: hasEnforcementData
-					? appellantCase?.contactPlanningInspectorateDate
-					: null,
-				reference: hasEnforcementData ? appellantCase?.enforcementReference : null
-			},
 			appellantCostsAppliedFor: appellantCase.appellantCostsAppliedFor,
 			floorSpaceSquareMetres: Number(appellantCase?.floorSpaceSquareMetres) || null,
 			siteAreaSquareMetres: Number(appellantCase?.siteAreaSquareMetres) || null,

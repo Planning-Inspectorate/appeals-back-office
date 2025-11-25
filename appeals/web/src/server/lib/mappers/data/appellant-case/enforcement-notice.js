@@ -1,3 +1,4 @@
+import { mapOtherAppellants } from '#lib/mappers/data/appellant-case/submappers/other-appellants.js';
 import { submaps as s78Submaps } from './s78.js';
 import { mapContactPlanningInspectorateDate } from './submappers/contact-planning-inspectorate-date.js';
 import { mapEnforcementEffectiveDate } from './submappers/enforcement-effective-date.js';
@@ -14,5 +15,6 @@ export const submaps = {
 	enforcementIssueDate: mapEnforcementIssueDate,
 	enforcementEffectiveDate: mapEnforcementEffectiveDate,
 	contactPlanningInspectorateDate: mapContactPlanningInspectorateDate,
-	enforcementReference: mapEnforcementReference
+	enforcementReference: mapEnforcementReference,
+	otherAppellants: mapOtherAppellants
 };

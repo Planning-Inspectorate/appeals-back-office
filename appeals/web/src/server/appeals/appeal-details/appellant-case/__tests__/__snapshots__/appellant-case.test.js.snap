@@ -106,7 +106,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                     <h2 class="govuk-summary-card__title"> 1. Appellant details</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="appellant-details">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
@@ -393,7 +393,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                     <h2 class="govuk-summary-card__title"> 1. Appellant details</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="appellant-details">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
@@ -716,7 +716,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                     <h2 class="govuk-summary-card__title"> 1. Appellant details</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="appellant-details">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
@@ -1013,7 +1013,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                     <h2 class="govuk-summary-card__title"> 1. Appellant details</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="appellant-details">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
@@ -1365,7 +1365,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                     <h2 class="govuk-summary-card__title"> 1. Appellant details</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="appellant-details">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
@@ -1661,7 +1661,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h2 class="govuk-summary-card__title"> 1. Appellant details</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="appellant-details">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
@@ -1918,7 +1918,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h2 class="govuk-summary-card__title"> 1. Appellant details</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="appellant-details">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
@@ -2160,7 +2160,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h2 class="govuk-summary-card__title"> 1. Appellant details</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="appellant-details">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
@@ -2358,7 +2358,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h2 class="govuk-summary-card__title"> Before you start</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="before-you-start">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have you received an enforcement notice?</dt>
                             <dd                             class="govuk-summary-list__value">Yes</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/enforcement-notice/change">Change<span class="govuk-visually-hidden"> Have you received an enforcement notice? (Before you start)</span></a>
@@ -2411,7 +2411,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h2 class="govuk-summary-card__title"> 1. Appellant details</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="appellant-details">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
@@ -2433,6 +2433,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/service-user/change/agent"
                                 data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent’s contact details (1. Appellant details)</span></a>
                             </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-other-appellants"><dt class="govuk-summary-list__key"> Other appellants</dt>
+                            <dd class="govuk-summary-list__value">No data</dd>
                         </div>
                     </dl>
                 </div>
@@ -2728,7 +2731,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h2 class="govuk-summary-card__title"> Before you start</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="before-you-start">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have you received an enforcement notice?</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                         </div>
@@ -2765,7 +2768,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h2 class="govuk-summary-card__title"> 1. Appellant details</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="appellant-details">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
@@ -2787,6 +2790,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/service-user/change/agent"
                                 data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent’s contact details (1. Appellant details)</span></a>
                             </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-other-appellants"><dt class="govuk-summary-list__key"> Other appellants</dt>
+                            <dd class="govuk-summary-list__value">No data</dd>
                         </div>
                     </dl>
                 </div>
@@ -3122,7 +3128,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h2 class="govuk-summary-card__title"> 1. Appellant details</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="appellant-details">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
@@ -3479,7 +3485,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h2 class="govuk-summary-card__title"> 1. Appellant details</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="appellant-details">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
@@ -3736,7 +3742,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h2 class="govuk-summary-card__title"> 1. Appellant details</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="appellant-details">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
@@ -4078,7 +4084,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h2 class="govuk-summary-card__title"> 1. Appellant details</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="appellant-details">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
@@ -4357,7 +4363,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <h2 class="govuk-summary-card__title"> 1. Appellant details</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="appellant-details">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">
@@ -6836,7 +6842,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                     <h2 class="govuk-summary-card__title"> 1. Appellant details</h2>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
+                    <dl class="govuk-summary-list" id="appellant-details">
                         <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Update appellant details</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list">

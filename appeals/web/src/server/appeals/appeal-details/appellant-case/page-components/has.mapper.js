@@ -81,6 +81,9 @@ export function generateHASComponents(
 			closing: '</div></div>'
 		},
 		parameters: {
+			attributes: {
+				id: 'appellant-details'
+			},
 			card: {
 				title: {
 					text: '1. Appellant details'
