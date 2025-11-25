@@ -160,7 +160,8 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Wiltshire Council</span>
                         </td>
-                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Householder</span>
+                        </td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong>
                         </td>
                     </tr>
@@ -174,7 +175,8 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
                         </td>
-                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Householder</span>
+                        </td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Issue decision</strong>
                         </td>
                     </tr>
@@ -386,7 +388,8 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Wiltshire Council</span>
                         </td>
-                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Householder</span>
+                        </td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong>
                         </td>
                     </tr>
@@ -400,7 +403,8 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
                         </td>
-                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Householder</span>
+                        </td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Issue decision</strong>
                         </td>
                     </tr>
@@ -593,7 +597,8 @@ exports[`national-list GET / should render national list - appeal procedure type
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Wiltshire Council</span>
                         </td>
-                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Householder</span>
+                        </td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong>
                         </td>
                     </tr>
@@ -765,7 +770,8 @@ exports[`national-list GET / should render national list - appeal type filter ap
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Wiltshire Council</span>
                         </td>
-                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Householder</span>
+                        </td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong>
                         </td>
                     </tr>
@@ -937,7 +943,8 @@ exports[`national-list GET / should render national list - case team filter appl
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Wiltshire Council</span>
                         </td>
-                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Householder</span>
+                        </td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong>
                         </td>
                     </tr>
@@ -1108,7 +1115,8 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Wiltshire Council</span>
                         </td>
-                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Householder</span>
+                        </td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong>
                         </td>
                     </tr>
@@ -1122,7 +1130,8 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
                         </td>
-                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Householder</span>
+                        </td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Issue decision</strong>
                         </td>
                     </tr>
@@ -1303,7 +1312,8 @@ exports[`national-list GET / should render national list - no search term - filt
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Wiltshire Council</span>
                         </td>
-                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Householder</span>
+                        </td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong>
                         </td>
                     </tr>
@@ -1486,7 +1496,8 @@ exports[`national-list GET / should render national list - search term - filter 
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Wiltshire Council</span>
                         </td>
-                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Householder</span>
+                        </td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong>
                         </td>
                     </tr>
@@ -1804,7 +1815,8 @@ exports[`national-list GET / should render national list - search term 1`] = `
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Wiltshire Council</span>
                         </td>
-                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Householder</span>
+                        </td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong>
                         </td>
                     </tr>
@@ -1818,7 +1830,8 @@ exports[`national-list GET / should render national list - search term 1`] = `
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
                         </td>
-                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Householder</span>
+                        </td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Issue decision</strong>
                         </td>
                     </tr>
@@ -1989,7 +2002,8 @@ exports[`national-list GET / should render the header with navigation containing
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Wiltshire Council</span>
                         </td>
-                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Householder</span>
+                        </td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong>
                         </td>
                     </tr>
@@ -2003,7 +2017,8 @@ exports[`national-list GET / should render the header with navigation containing
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Dorset Council</span>
                         </td>
-                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Householder</span>
+                        </td>
                         <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Issue decision</strong>
                         </td>
                     </tr>

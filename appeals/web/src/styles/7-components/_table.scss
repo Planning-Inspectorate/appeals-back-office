@@ -25,13 +25,11 @@
 		table-layout: fixed;
 	}
 
-	@include mixins.govuk-media-query($from: 0, $until: 1024px) {
-		.govuk-table__body {
-			word-break: break-word;
+	.govuk-table__body {
+		word-break: break-word;
 
-			.govuk-tag {
-				word-break: normal;
-			}
+		.govuk-tag {
+			word-break: normal;
 		}
 	}
 }
