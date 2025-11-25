@@ -1,4 +1,6 @@
+import { isFeatureActive } from '#utils/feature-flags.js';
 import mergeMaps from '#utils/merge-maps.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	APPEAL_CASE_STAGE,
 	APPEAL_CASE_TYPE,
@@ -71,6 +73,13 @@ function createDataMap(mappingRequest) {
 		case APPEAL_CASE_TYPE.H: {
 			const advert = createMap(apiMappers.apiAdvertMappers, mappingRequest);
 			return mergeMaps(caseData, advert);
+		}
+		case APPEAL_CASE_TYPE.C: {
+			if (!isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
+				return caseData;
+			}
+			const enforcement = createMap(apiMappers.apiEnforcementMappers, mappingRequest);
+			return mergeMaps(caseData, enforcement);
 		}
 		default:
 			return caseData;
@@ -148,6 +157,7 @@ function createDataLayout(caseMap, mappingRequest) {
 		representations,
 		folders,
 		appealTransferStatus,
+		otherAppellants,
 		...appealDetails
 	} = Object.fromEntries(caseMap);
 
@@ -155,6 +165,7 @@ function createDataLayout(caseMap, mappingRequest) {
 		case contextEnum.appellantCase:
 			return {
 				appellantCaseId: appeal.appellantCase?.id,
+				...otherAppellants,
 				...appealSummary,
 				...appellantCase,
 				transferStatus: appealTransferStatus,

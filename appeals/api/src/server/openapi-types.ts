@@ -4055,7 +4055,17 @@ export type AppellantCase = {
 	ownsSomeLand?: boolean | null;
 	siteAreaSquareMetres?: number | null;
 	floorSpaceSquareMetres?: number | null;
-	enforcementNotice?: boolean | null;
+	enforcementNotice?: {
+		isReceived?: boolean | null;
+		isListedBuilding?: boolean | null;
+		/** @format date-time */
+		issueDate?: string | null;
+		/** @format date-time */
+		effectiveDate?: string | null;
+		/** @format date-time */
+		contactPlanningInspectorateDate?: string | null;
+		reference?: string | null;
+	};
 	enforcementNoticeListedBuilding?: boolean | null;
 	enforcementReference?: string | null;
 	/** @format date-time */

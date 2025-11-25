@@ -160,7 +160,12 @@ export const appealDetailsInclude = /** @type {const} */ {
 	},
 	representations: true,
 	hearingEstimate: true,
-	inquiryEstimate: true
+	inquiryEstimate: true,
+	otherAppellants: {
+		include: {
+			appellant: true
+		}
+	}
 };
 
 /** all includes, can be selected from, don't include this, just select from it */
@@ -283,7 +288,12 @@ export const appealDetailsIncludeMap = /** @type {const} */ {
 	},
 	representations: true,
 	hearingEstimate: true,
-	inquiryEstimate: true
+	inquiryEstimate: true,
+	otherAppellants: {
+		include: {
+			appellant: true
+		}
+	}
 };
 
 /**

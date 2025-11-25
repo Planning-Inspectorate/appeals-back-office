@@ -34,6 +34,7 @@ export interface Appeal extends schema.Appeal {
 	hearingEstimate?: HearingEstimate | null;
 	inquiry?: Inquiry | null;
 	inquiryEstimate?: InquiryEstimate | null;
+	otherAppellants?: ServiceUser[] | null;
 }
 export interface CaseNote extends schema.CaseNote {
 	user: User;

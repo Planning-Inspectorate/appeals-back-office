@@ -103,6 +103,11 @@ describe('appeals api mappers', () => {
 			folders: []
 		};
 
+		const appealEnforcement = {
+			...mocks.enforcementAppeal,
+			folders: []
+		};
+
 		// @ts-ignore
 		const hasAppCaseOutput = mapCase({ appeal: appealHAS, context: contextEnum.appellantCase });
 
@@ -143,6 +148,15 @@ describe('appeals api mappers', () => {
 		const s20LpaqOutput = mapCase({ appeal: appealS20, context: contextEnum.lpaQuestionnaire });
 
 		expect(s20LpaqOutput).toHaveProperty('preserveGrantLoan');
+
+		const enforcementAppCaseOutput = mapCase({
+			// @ts-ignore
+			appeal: appealEnforcement,
+			context: contextEnum.appellantCase
+		});
+
+		expect(enforcementAppCaseOutput).toHaveProperty('otherAppellants');
+		expect(enforcementAppCaseOutput).toHaveProperty('enforcementNotice');
 	});
 
 	test('should only map the data model fields specific to the case type', async () => {
@@ -191,6 +205,8 @@ describe('appeals api mappers', () => {
 
 		expect(hasAppCaseOutput).not.toHaveProperty('appellantProcedurePreference');
 		expect(hasAppCaseOutput).not.toHaveProperty('agriculturalHolding');
+		expect(hasAppCaseOutput).not.toHaveProperty('otherAppellants');
+		expect(hasAppCaseOutput).not.toHaveProperty('enforcementNotice');
 
 		expect(s78AppCaseOutput).toHaveProperty('appellantProcedurePreference');
 		expect(s78AppCaseOutput).toHaveProperty('agriculturalHolding');

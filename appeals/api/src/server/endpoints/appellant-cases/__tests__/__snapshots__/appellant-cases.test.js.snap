@@ -44,14 +44,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "isChanged": false,
   },
   "documents": {},
-  "enforcementNotice": {
-    "contactPlanningInspectorateDate": null,
-    "effectiveDate": null,
-    "isListedBuilding": null,
-    "isReceived": null,
-    "issueDate": null,
-    "reference": null,
-  },
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
   "healthAndSafety": {
@@ -126,14 +118,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "isChanged": false,
   },
   "documents": {},
-  "enforcementNotice": {
-    "contactPlanningInspectorateDate": null,
-    "effectiveDate": null,
-    "isListedBuilding": null,
-    "isReceived": null,
-    "issueDate": null,
-    "reference": null,
-  },
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
   "healthAndSafety": {
@@ -205,14 +189,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "isChanged": false,
   },
   "documents": {},
-  "enforcementNotice": {
-    "contactPlanningInspectorateDate": null,
-    "effectiveDate": null,
-    "isListedBuilding": null,
-    "isReceived": null,
-    "issueDate": null,
-    "reference": null,
-  },
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
   "healthAndSafety": {
@@ -303,14 +279,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "isChanged": false,
   },
   "documents": {},
-  "enforcementNotice": {
-    "contactPlanningInspectorateDate": null,
-    "effectiveDate": null,
-    "isListedBuilding": null,
-    "isReceived": null,
-    "issueDate": null,
-    "reference": null,
-  },
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
   "healthAndSafety": {
@@ -401,14 +369,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "isChanged": false,
   },
   "documents": {},
-  "enforcementNotice": {
-    "contactPlanningInspectorateDate": null,
-    "effectiveDate": null,
-    "isListedBuilding": null,
-    "isReceived": null,
-    "issueDate": null,
-    "reference": null,
-  },
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
   "healthAndSafety": {
@@ -483,14 +443,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "isChanged": false,
   },
   "documents": {},
-  "enforcementNotice": {
-    "contactPlanningInspectorateDate": null,
-    "effectiveDate": null,
-    "isListedBuilding": null,
-    "isReceived": null,
-    "issueDate": null,
-    "reference": null,
-  },
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
   "healthAndSafety": {
@@ -562,14 +514,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "isChanged": false,
   },
   "documents": {},
-  "enforcementNotice": {
-    "contactPlanningInspectorateDate": null,
-    "effectiveDate": null,
-    "isListedBuilding": null,
-    "isReceived": null,
-    "issueDate": null,
-    "reference": null,
-  },
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
   "healthAndSafety": {
@@ -660,14 +604,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "isChanged": false,
   },
   "documents": {},
-  "enforcementNotice": {
-    "contactPlanningInspectorateDate": null,
-    "effectiveDate": null,
-    "isListedBuilding": null,
-    "isReceived": null,
-    "issueDate": null,
-    "reference": null,
-  },
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
   "healthAndSafety": {
@@ -764,14 +700,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   },
   "developmentType": null,
   "documents": {},
-  "enforcementNotice": {
-    "contactPlanningInspectorateDate": null,
-    "effectiveDate": null,
-    "isListedBuilding": null,
-    "isReceived": null,
-    "issueDate": null,
-    "reference": null,
-  },
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
   "healthAndSafety": {
@@ -853,14 +781,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   },
   "developmentType": null,
   "documents": {},
-  "enforcementNotice": {
-    "contactPlanningInspectorateDate": null,
-    "effectiveDate": null,
-    "isListedBuilding": null,
-    "isReceived": null,
-    "issueDate": null,
-    "reference": null,
-  },
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
   "healthAndSafety": {
@@ -939,14 +859,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   },
   "developmentType": null,
   "documents": {},
-  "enforcementNotice": {
-    "contactPlanningInspectorateDate": null,
-    "effectiveDate": null,
-    "isListedBuilding": null,
-    "isReceived": null,
-    "issueDate": null,
-    "reference": null,
-  },
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
   "healthAndSafety": {
@@ -1044,14 +956,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   },
   "developmentType": null,
   "documents": {},
-  "enforcementNotice": {
-    "contactPlanningInspectorateDate": null,
-    "effectiveDate": null,
-    "isListedBuilding": null,
-    "isReceived": null,
-    "issueDate": null,
-    "reference": null,
-  },
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
   "healthAndSafety": {
@@ -1143,14 +1047,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "isChanged": false,
   },
   "documents": {},
-  "enforcementNotice": {
-    "contactPlanningInspectorateDate": null,
-    "effectiveDate": null,
-    "isListedBuilding": null,
-    "isReceived": null,
-    "issueDate": null,
-    "reference": null,
-  },
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
   "healthAndSafety": {
@@ -1225,14 +1121,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "isChanged": false,
   },
   "documents": {},
-  "enforcementNotice": {
-    "contactPlanningInspectorateDate": null,
-    "effectiveDate": null,
-    "isListedBuilding": null,
-    "isReceived": null,
-    "issueDate": null,
-    "reference": null,
-  },
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
   "healthAndSafety": {
@@ -1304,14 +1192,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "isChanged": false,
   },
   "documents": {},
-  "enforcementNotice": {
-    "contactPlanningInspectorateDate": null,
-    "effectiveDate": null,
-    "isListedBuilding": null,
-    "isReceived": null,
-    "issueDate": null,
-    "reference": null,
-  },
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
   "healthAndSafety": {
@@ -1402,14 +1282,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "isChanged": false,
   },
   "documents": {},
-  "enforcementNotice": {
-    "contactPlanningInspectorateDate": null,
-    "effectiveDate": null,
-    "isListedBuilding": null,
-    "isReceived": null,
-    "issueDate": null,
-    "reference": null,
-  },
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
   "healthAndSafety": {
@@ -1505,14 +1377,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   },
   "developmentType": null,
   "documents": {},
-  "enforcementNotice": {
-    "contactPlanningInspectorateDate": null,
-    "effectiveDate": null,
-    "isListedBuilding": null,
-    "isReceived": null,
-    "issueDate": null,
-    "reference": null,
-  },
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
   "healthAndSafety": {
@@ -1590,14 +1454,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   },
   "developmentType": null,
   "documents": {},
-  "enforcementNotice": {
-    "contactPlanningInspectorateDate": null,
-    "effectiveDate": null,
-    "isListedBuilding": null,
-    "isReceived": null,
-    "issueDate": null,
-    "reference": null,
-  },
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
   "healthAndSafety": {
@@ -1675,14 +1531,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   },
   "developmentType": null,
   "documents": {},
-  "enforcementNotice": {
-    "contactPlanningInspectorateDate": null,
-    "effectiveDate": null,
-    "isListedBuilding": null,
-    "isReceived": null,
-    "issueDate": null,
-    "reference": null,
-  },
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
   "healthAndSafety": {
@@ -1779,14 +1627,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   },
   "developmentType": null,
   "documents": {},
-  "enforcementNotice": {
-    "contactPlanningInspectorateDate": null,
-    "effectiveDate": null,
-    "isListedBuilding": null,
-    "isReceived": null,
-    "issueDate": null,
-    "reference": null,
-  },
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
   "healthAndSafety": {
