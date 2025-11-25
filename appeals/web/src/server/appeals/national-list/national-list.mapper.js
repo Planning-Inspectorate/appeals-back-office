@@ -527,7 +527,7 @@ export function nationalListPage(
 									html: `<span class="govuk-!-width-one-third">${appeal.localPlanningDepartment}</span>`
 								},
 								{
-									text: appeal.appealType
+									html: `<span class="govuk-!-width-one-third">${appeal.appealType}</span>`
 								},
 								{
 									html: '',
