@@ -66,8 +66,10 @@ function generateLpaReference() {
  * @param {string} level
  */
 function allocationBandLookup(level) {
-	if (['A', 'B'].includes(level.toLocaleUpperCase())) return 3;
-	if (['C', 'D'].includes(level.toLocaleUpperCase())) return 2;
+	if ([APPEAL_ALLOCATION_LEVEL.A, APPEAL_ALLOCATION_LEVEL.B].includes(level.toLocaleUpperCase()))
+		return 3;
+	if ([APPEAL_ALLOCATION_LEVEL.C, APPEAL_ALLOCATION_LEVEL.D].includes(level.toLocaleUpperCase()))
+		return 2;
 	return 1;
 }
 

@@ -1,13 +1,15 @@
 import {
-	APPEAL_TYPE_SHORTHAND_FPA,
-	APPEAL_TYPE_SHORTHAND_HAS,
 	VALIDATION_OUTCOME_CANCEL,
 	VALIDATION_OUTCOME_COMPLETE,
 	VALIDATION_OUTCOME_INCOMPLETE,
 	VALIDATION_OUTCOME_INVALID,
 	VALIDATION_OUTCOME_VALID
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_CASE_STATUS,
+	APPEAL_CASE_TYPE
+} from '@planning-inspectorate/data-model';
 import { interpret } from 'xstate';
 import createStateMachine from '../create-state-machine';
 
@@ -20,7 +22,7 @@ import createStateMachine from '../create-state-machine';
  **/
 const nextStateHAS = (initial, event, siteVisitElapsed = false) => {
 	const machine = createStateMachine(
-		APPEAL_TYPE_SHORTHAND_HAS,
+		APPEAL_CASE_TYPE.D,
 		APPEAL_CASE_PROCEDURE.WRITTEN,
 		initial,
 		siteVisitElapsed
@@ -40,12 +42,7 @@ const nextStateHAS = (initial, event, siteVisitElapsed = false) => {
  * @return {import('xstate').StateValue} - The next state of the appeal.
  **/
 const nextStateFPA = (initial, event, procedureType, siteVisitElapsed = false) => {
-	const machine = createStateMachine(
-		APPEAL_TYPE_SHORTHAND_FPA,
-		procedureType,
-		initial,
-		siteVisitElapsed
-	);
+	const machine = createStateMachine(APPEAL_CASE_TYPE.W, procedureType, initial, siteVisitElapsed);
 	const service = interpret(machine).start();
 
 	service.send(event);

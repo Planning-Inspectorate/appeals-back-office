@@ -19,7 +19,6 @@ import {
 } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
-	APPEAL_TYPE_SHORTHAND_HAS,
 	AUDIT_TRAIL_CASE_STARTED,
 	AUDIT_TRAIL_CASE_TIMELINE_CREATED,
 	AUDIT_TRAIL_HEARING_SET_UP,
@@ -80,11 +79,11 @@ const checkAppealTimetableExists = async (req, res, next) => {
  */
 const appealTypeMap = (appealType) => {
 	switch (appealType) {
-		case 'W':
+		case APPEAL_CASE_TYPE.W:
 			return '-s78-';
-		case 'Y':
+		case APPEAL_CASE_TYPE.Y:
 			return '-s78-';
-		case 'H':
+		case APPEAL_CASE_TYPE.H:
 			return '-s78-';
 		default:
 			return '-';
@@ -115,7 +114,7 @@ const getStartCaseNotifyParams = async (
 ) => {
 	const hearingSuffix = hearingStartTime ? '-hearing' : '';
 
-	const { type = '', key: appealTypeKey = 'D' } = appeal.appealType || {};
+	const { type = '', key: appealTypeKey = APPEAL_CASE_TYPE.D } = appeal.appealType || {};
 	const appealType = trimAppealType(type);
 
 	const appellantTemplate = appeal.caseStartedDate
@@ -612,9 +611,9 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, az
 	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 	const lpaEmail = appeal.lpa?.email || '';
 	const templateName =
-		appeal.appealType?.key === APPEAL_TYPE_SHORTHAND_HAS ||
-		appeal.appealType?.key === 'ZP' ||
-		appeal.appealType?.key === 'ZA'
+		appeal.appealType?.key === APPEAL_CASE_TYPE.D ||
+		appeal.appealType?.key === APPEAL_CASE_TYPE.ZP ||
+		appeal.appealType?.key === APPEAL_CASE_TYPE.ZA
 			? 'has-appeal-timetable-updated'
 			: 'appeal-timetable-updated';
 
@@ -646,12 +645,14 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, az
  */
 const shouldSendNotify = (appealTypeShorthand, procedureType) => {
 	return (
-		appealTypeShorthand === APPEAL_TYPE_SHORTHAND_HAS ||
-		appealTypeShorthand === 'ZP' ||
-		appealTypeShorthand === 'ZA' ||
-		appealTypeShorthand === 'H' ||
-		(appealTypeShorthand === 'W' && procedureType === APPEAL_CASE_PROCEDURE.WRITTEN) ||
-		(appealTypeShorthand === 'Y' && procedureType === APPEAL_CASE_PROCEDURE.WRITTEN) ||
+		appealTypeShorthand === APPEAL_CASE_TYPE.D ||
+		appealTypeShorthand === APPEAL_CASE_TYPE.ZP ||
+		appealTypeShorthand === APPEAL_CASE_TYPE.ZA ||
+		appealTypeShorthand === APPEAL_CASE_TYPE.H ||
+		(appealTypeShorthand === APPEAL_CASE_TYPE.W &&
+			procedureType === APPEAL_CASE_PROCEDURE.WRITTEN) ||
+		(appealTypeShorthand === APPEAL_CASE_TYPE.Y &&
+			procedureType === APPEAL_CASE_PROCEDURE.WRITTEN) ||
 		procedureType === undefined
 	);
 };

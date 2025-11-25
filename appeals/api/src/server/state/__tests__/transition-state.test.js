@@ -5,7 +5,7 @@ import {
 	VALIDATION_OUTCOME_INCOMPLETE,
 	VALIDATION_OUTCOME_VALID
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import transitionState, { transitionLinkedChildAppealsState } from '../transition-state.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 const appealStatusRepository = (await import('#repositories/appeal-status.repository.js')).default;
@@ -51,7 +51,7 @@ describe('transitionState', () => {
 			}
 		],
 		appealType: { key: APPEAL_CASE_TYPE.W },
-		procedureType: { key: 'W' }
+		procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN }
 	};
 
 	describe('transitionState (per-status rules)', () => {
@@ -116,7 +116,7 @@ describe('transitionState', () => {
 				}
 			],
 			appealType: { key: APPEAL_CASE_TYPE.W },
-			procedureType: { key: 'W' }
+			procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN }
 		};
 		beforeEach(() => {
 			jest.clearAllMocks();
@@ -237,7 +237,7 @@ describe('transitionState', () => {
 								id: 11,
 								appealStatus: [{ status: 'validation', valid: true }],
 								appealType: { key: APPEAL_CASE_TYPE.W },
-								procedureType: { key: 'W' }
+								procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN }
 							}
 						}
 					]
@@ -265,7 +265,7 @@ describe('transitionState', () => {
 								id: 11,
 								appealStatus: [{ status: 'validation', valid: true }],
 								appealType: { key: APPEAL_CASE_TYPE.W },
-								procedureType: { key: 'W' }
+								procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN }
 							}
 						}
 					]

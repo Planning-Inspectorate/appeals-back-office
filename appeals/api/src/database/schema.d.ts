@@ -152,8 +152,14 @@ export interface DocumentRedactionStatus extends schema.DocumentRedactionStatus 
 	key: string;
 	name: string;
 }
+
+export interface AuditTrailDoc {
+	document: Document | null;
+}
+
 export interface AuditTrail extends schema.AuditTrail {
 	user?: User | null;
+	doc?: AuditTrailDoc | null;
 }
 
 export interface Representation extends schema.Representation {

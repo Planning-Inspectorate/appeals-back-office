@@ -1,4 +1,5 @@
 import { appealData } from '#testing/app/fixtures/referencedata.js';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { appealTypePage } from '../change-appeal-type.mapper.js';
 
 const appealTypes = [
@@ -6,7 +7,7 @@ const appealTypes = [
 		id: 1016,
 		type: 'Householder',
 		changeAppealType: 'Householder',
-		key: 'D',
+		key: APPEAL_CASE_TYPE.D,
 		processCode: 'HAS',
 		enabled: true
 	},
@@ -14,7 +15,7 @@ const appealTypes = [
 		id: 1020,
 		type: 'Advertisement appeal',
 		changeAppealType: 'Advertisement',
-		key: 'H',
+		key: APPEAL_CASE_TYPE.H,
 		processCode: null,
 		enabled: false
 	}

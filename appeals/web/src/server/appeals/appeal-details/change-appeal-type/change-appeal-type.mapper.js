@@ -2,7 +2,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { getExampleDateHint } from '#lib/dates.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { dateInput, simpleHtmlComponent } from '#lib/mappers/index.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { changeAppealTypeDateField } from './change-appeal-types.constants.js';
 
 /**
@@ -110,15 +110,15 @@ function mapAppealTypesToSelectItemParameters(appealTypes, changeAppeal, current
 	return appealTypes
 		.sort((a, b) => {
 			// CAS Planning should be listed before CAS Advert
-			if (a.key === 'ZP' && b.key === 'ZA') {
+			if (a.key === APPEAL_CASE_TYPE.ZP && b.key === APPEAL_CASE_TYPE.ZA) {
 				return -1;
 			}
-			if (a.key === 'ZA' && b.key === 'ZP') {
+			if (a.key === APPEAL_CASE_TYPE.ZA && b.key === APPEAL_CASE_TYPE.ZP) {
 				return 1;
 			}
 			return a.key.localeCompare(b.key);
 		})
-		.filter((appealType) => appealType.key !== 'Z') // Don't show old CAS type
+		.filter((appealType) => appealType.key !== APPEAL_CASE_TYPE.Z) // Don't show old CAS type
 		.map((appealType) => ({
 			value: appealType.id.toString(),
 			text: appealType.changeAppealType,

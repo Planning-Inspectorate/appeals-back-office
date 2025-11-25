@@ -17,6 +17,7 @@ import {
 import { EventType } from '@pins/event-client';
 import {
 	APPEAL_APPELLANT_PROCEDURE_PREFERENCE,
+	APPEAL_CASE_TYPE,
 	APPEAL_REPRESENTATION_TYPE,
 	SERVICE_USER_TYPE
 } from '@planning-inspectorate/data-model';
@@ -44,10 +45,11 @@ export const importAppeal = async (req, res) => {
 	let appellantProcedurePreference = APPEAL_APPELLANT_PROCEDURE_PREFERENCE.WRITTEN;
 
 	if (
-		req.body.casedata.caseType === 'W' ||
-		req.body.casedata.caseType === 'Y' ||
-		req.body.casedata.caseType === 'H'
+		req.body.casedata.caseType === APPEAL_CASE_TYPE.W ||
+		req.body.casedata.caseType === APPEAL_CASE_TYPE.Y ||
+		req.body.casedata.caseType === APPEAL_CASE_TYPE.H
 	) {
+		// @ts-ignore
 		appellantProcedurePreference =
 			req.body.casedata.appellantProcedurePreference ||
 			APPEAL_APPELLANT_PROCEDURE_PREFERENCE.WRITTEN;

@@ -1,5 +1,6 @@
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 describe('appeal-type-change-non-has.md', () => {
 	test('should call notify sendEmail with the correct data', async () => {
@@ -17,7 +18,7 @@ describe('appeal-type-change-non-has.md', () => {
 				start_date: '01 January 2025',
 				local_planning_authority: 'Bristol City Council',
 				existing_appeal_type: 'Householder',
-				appeal_type: 'D',
+				appeal_type: APPEAL_CASE_TYPE.D,
 				due_date: '01 January 2025',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},

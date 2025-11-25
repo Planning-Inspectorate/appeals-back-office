@@ -1,7 +1,3 @@
-import {
-	APPEAL_TYPE_SHORTHAND_FPA,
-	APPEAL_TYPE_SHORTHAND_HAS
-} from '@pins/appeals/constants/support.js';
 import advert from './advert.js';
 import has from './has.js';
 import s20 from './s20.js';
@@ -15,9 +11,9 @@ import {
 	invalidAppellantCaseOutcome,
 	validAppellantCaseOutcome
 } from '#tests/shared/mocks.js';
-import { APPEAL_TYPE_SHORTHAND_LISTED_BUILDING } from '@pins/appeals/constants/support.js';
 import {
 	APPEAL_CASE_STATUS,
+	APPEAL_CASE_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
 
@@ -162,7 +158,7 @@ export const householdAppeal = {
 	},
 	appealType: {
 		id: 2,
-		key: APPEAL_TYPE_SHORTHAND_HAS,
+		key: APPEAL_CASE_TYPE.D,
 		processCode: 'HAS',
 		type: 'Householder',
 		changeAppealType: 'Householder'
@@ -294,7 +290,7 @@ export const advertisementAppeal = {
 	appealType: {
 		id: 14,
 		type: 'Advertisement',
-		key: 'H'
+		key: APPEAL_CASE_TYPE.H
 	},
 	appellantCase: {
 		...householdAppeal.appellantCase,
@@ -328,7 +324,7 @@ export const casPlanningAppeal = {
 	appealType: {
 		id: 14,
 		type: 'CAS planning',
-		key: 'ZP'
+		key: APPEAL_CASE_TYPE.ZP
 	},
 	appellantCase: {
 		...householdAppeal.appellantCase,
@@ -343,7 +339,7 @@ export const casAdvertAppeal = {
 	appealType: {
 		id: 13,
 		type: 'CAS advert',
-		key: 'ZA'
+		key: APPEAL_CASE_TYPE.ZA
 	},
 	appellantCase: {
 		...householdAppeal.appellantCase,
@@ -385,7 +381,7 @@ export const fullPlanningAppeal = {
 	id: 2,
 	appealType: {
 		id: 1,
-		key: APPEAL_TYPE_SHORTHAND_FPA,
+		key: APPEAL_CASE_TYPE.W,
 		type: 'Planning'
 	},
 	appellantCase: {
@@ -415,7 +411,7 @@ export const listedBuildingAppeal = {
 	appealType: {
 		id: 12,
 		type: 'Planning listed building and conservation area',
-		key: APPEAL_TYPE_SHORTHAND_LISTED_BUILDING
+		key: APPEAL_CASE_TYPE.Y
 	},
 	representations: []
 };
@@ -426,7 +422,7 @@ export const listedBuildingAppealAppellantCaseValid = {
 	appealType: {
 		id: 12,
 		type: 'Planning listed building and conservation area',
-		key: APPEAL_TYPE_SHORTHAND_LISTED_BUILDING
+		key: APPEAL_CASE_TYPE.Y
 	},
 	representations: []
 };
@@ -436,7 +432,7 @@ export const listedBuildingAppealAppellantCaseIncomplete = {
 	appealType: {
 		id: 12,
 		type: 'Planning listed building and conservation area',
-		key: APPEAL_TYPE_SHORTHAND_LISTED_BUILDING
+		key: APPEAL_CASE_TYPE.Y
 	},
 	appellantCase: {
 		...householdAppeal.appellantCase,
@@ -464,7 +460,7 @@ export const listedBuildingAppealAppellantCaseInvalid = {
 	appealType: {
 		id: 12,
 		type: 'Planning listed building and conservation area appeal',
-		key: APPEAL_TYPE_SHORTHAND_LISTED_BUILDING
+		key: APPEAL_CASE_TYPE.Y
 	},
 	appellantCase: {
 		...householdAppeal.appellantCase,
@@ -489,7 +485,7 @@ export const fullPlanningAppealCaseValid = {
 	id: 2,
 	appealType: {
 		id: 1,
-		key: APPEAL_TYPE_SHORTHAND_FPA,
+		key: APPEAL_CASE_TYPE.W,
 		type: 'Full Planning'
 	},
 	appellantCase: {
@@ -677,7 +673,7 @@ export const linkedAppeals = [
 		childRef: '76215416',
 		child: {
 			appealType: {
-				key: 'ZP',
+				key: APPEAL_CASE_TYPE.ZP,
 				type: 'Another appeal type'
 			}
 		},

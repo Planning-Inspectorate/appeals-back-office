@@ -1,10 +1,6 @@
 import logger from '#utils/logger.js';
-import {
-	APPEAL_TYPE_SHORTHAND_FPA,
-	APPEAL_TYPE_SHORTHAND_HAS
-} from '@pins/appeals/constants/support.js';
 import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
-import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import createStateMachine from './create-state-machine.js';
 
 /** @typedef {import('#db-client').AppealType} AppealType */
@@ -19,8 +15,8 @@ import createStateMachine from './create-state-machine.js';
  * */
 function listStates(appealType, procedureType, currentState) {
 	const appealTypeKey = !isExpeditedAppealType(appealType.key)
-		? APPEAL_TYPE_SHORTHAND_FPA
-		: APPEAL_TYPE_SHORTHAND_HAS;
+		? APPEAL_CASE_TYPE.W
+		: APPEAL_CASE_TYPE.D;
 	const stateMachine = createStateMachine(
 		appealTypeKey,
 		procedureType?.key || APPEAL_CASE_PROCEDURE.WRITTEN,
