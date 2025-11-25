@@ -148,11 +148,9 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
  * @returns {string}
  */
 function getSchemaForCaseType(caseType) {
-	//TODO: Align data model - currently defaulting to S78 schema
 	switch (caseType) {
 		case APPEAL_CASE_TYPE.D:
 		case APPEAL_CASE_TYPE.ZP:
-		case APPEAL_CASE_TYPE.H: // todo: probably will be s78
 		case APPEAL_CASE_TYPE.ZA:
 			return schemas.events.appealHas;
 		default:
@@ -169,7 +167,6 @@ function getTopicForCaseType(caseType) {
 	switch (caseType) {
 		case APPEAL_CASE_TYPE.D:
 		case APPEAL_CASE_TYPE.ZP:
-		case APPEAL_CASE_TYPE.H: // todo: probably will be s78
 		case APPEAL_CASE_TYPE.ZA:
 			return producers.boCaseData;
 		default:
