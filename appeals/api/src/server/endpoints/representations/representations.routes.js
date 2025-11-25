@@ -162,7 +162,7 @@ router.post(
 	}
 	#swagger.responses[400] = {}
  */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest(['appealStatus']),
 	createRepresentationValidator,
 	asyncHandler(controller.createRepresentation('comment'))
 );
