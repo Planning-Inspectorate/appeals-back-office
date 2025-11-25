@@ -19,8 +19,8 @@ describe('broadcastAppeal', () => {
 		},
 		{
 			type: APPEAL_CASE_TYPE.H,
-			expectedTopic: producers.boCaseData,
-			mockAppeal: householdAppeal
+			expectedTopic: producers.boCaseDataS78,
+			mockAppeal: fullPlanningAppeal
 		},
 		{
 			type: APPEAL_CASE_TYPE.ZA,
@@ -46,8 +46,11 @@ describe('broadcastAppeal', () => {
 	it.each(caseTypes)(
 		'broadcasts correct schema and topic for appeal type %s',
 		async ({ expectedTopic, mockAppeal }) => {
+			const testCase = structuredClone(mockAppeal);
 			// @ts-ignore
-			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+			testCase.appealType = { key: mockAppeal.appealType.key };
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(testCase);
 
 			await broadcastAppeal(123);
 
