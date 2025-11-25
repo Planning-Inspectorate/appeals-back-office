@@ -60,6 +60,10 @@ module "app_api" {
     TEST_MAILBOX          = local.key_vault_refs["appeals-bo-test-mailbox"]
     ENABLE_TEST_ENDPOINTS = var.apps_config.integrations.enable_test_endpoints
 
+    # logging
+    LOG_LEVEL_FILE   = var.apps_config.logging.level_file
+    LOG_LEVEL_STDOUT = var.apps_config.logging.level_stdout
+
     # notify template
     GOV_NOTIFY_APPEAL_GENERIC_ID = var.apps_config.integrations.notify_template_ids.appeal_generic_id
 
