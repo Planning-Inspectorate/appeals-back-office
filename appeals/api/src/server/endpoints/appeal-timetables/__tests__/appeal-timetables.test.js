@@ -88,6 +88,12 @@ describe('appeal timetables routes', () => {
 					casPlanningAppealWithTimetable,
 					householdAppealRequestBody,
 					householdAppealResponseBody
+				],
+				[
+					'cas advert',
+					casAdvertAppealWithTimetable,
+					householdAppealRequestBody,
+					householdAppealResponseBody
 				]
 			])(
 				'updates a %s appeal timetable and sends notify',
@@ -175,12 +181,6 @@ describe('appeal timetables routes', () => {
 					fullPlanningAppealWithTimetable,
 					fullPlanningAppealRequestBody,
 					fullPlanningAppealResponseBody
-				],
-				[
-					'cas advert',
-					casAdvertAppealWithTimetable,
-					householdAppealRequestBody,
-					householdAppealResponseBody
 				],
 				[
 					'advert',

@@ -612,7 +612,9 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, az
 	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 	const lpaEmail = appeal.lpa?.email || '';
 	const templateName =
-		appeal.appealType?.key === APPEAL_TYPE_SHORTHAND_HAS || appeal.appealType?.key === 'ZP'
+		appeal.appealType?.key === APPEAL_TYPE_SHORTHAND_HAS ||
+		appeal.appealType?.key === 'ZP' ||
+		appeal.appealType?.key === 'ZA'
 			? 'has-appeal-timetable-updated'
 			: 'appeal-timetable-updated';
 
