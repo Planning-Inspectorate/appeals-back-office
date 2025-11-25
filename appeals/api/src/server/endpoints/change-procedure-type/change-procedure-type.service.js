@@ -26,7 +26,7 @@ import { formatInTimeZone } from 'date-fns-tz';
  */
 export const changeProcedureToWritten = async (data, appealId) => {
 	try {
-		await databaseConnector.$transaction(async (tx) => {
+		const result = await databaseConnector.$transaction(async (tx) => {
 			const procedureType = await tx.procedureType.findFirst({
 				where: { key: data.appealProcedure }
 			});
@@ -48,7 +48,12 @@ export const changeProcedureToWritten = async (data, appealId) => {
 				}
 			});
 
+			let existingHearing;
+			let existingInquiry;
 			if (data.existingAppealProcedure === 'hearing') {
+				existingHearing = await tx.hearing.findFirst({
+					where: { appealId }
+				});
 				await tx.hearing.deleteMany({
 					where: { appealId }
 				});
@@ -56,6 +61,9 @@ export const changeProcedureToWritten = async (data, appealId) => {
 					where: { appealId }
 				});
 			} else if (data.existingAppealProcedure === 'inquiry') {
+				existingInquiry = await tx.inquiry.findFirst({
+					where: { appealId }
+				});
 				await tx.inquiry.deleteMany({
 					where: { appealId }
 				});
@@ -63,8 +71,23 @@ export const changeProcedureToWritten = async (data, appealId) => {
 					where: { appealId }
 				});
 			}
-			return { updatedAppeal };
+			return { updatedAppeal, existingHearing, existingInquiry };
 		});
+
+		if (result.existingInquiry) {
+			await broadcasters.broadcastEvent(
+				result.existingInquiry.id,
+				EVENT_TYPE.INQUIRY,
+				EventType.Delete
+			);
+		}
+		if (result.existingHearing) {
+			await broadcasters.broadcastEvent(
+				result.existingHearing.id,
+				EVENT_TYPE.HEARING,
+				EventType.Delete
+			);
+		}
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
@@ -121,11 +144,19 @@ export const changeProcedureToHearing = async (data, appealId) => {
 					planningObligationDueDate: data.planningObligationDueDate
 				}
 			});
+			let existingSiteVisit;
+			let existingInquiry;
 			if (data.existingAppealProcedure === 'written') {
+				existingSiteVisit = await tx.siteVisit.findFirst({
+					where: { appealId }
+				});
 				await tx.siteVisit.deleteMany({
 					where: { appealId }
 				});
 			} else if (data.existingAppealProcedure === 'inquiry') {
+				existingInquiry = await tx.inquiry.findFirst({
+					where: { appealId }
+				});
 				await tx.inquiry.deleteMany({
 					where: { appealId }
 				});
@@ -133,7 +164,7 @@ export const changeProcedureToHearing = async (data, appealId) => {
 					where: { appealId }
 				});
 			}
-			return { updatedAppeal, updatedHearing };
+			return { updatedAppeal, updatedHearing, existingInquiry, existingSiteVisit };
 		});
 
 		if (result.updatedHearing) {
@@ -141,6 +172,20 @@ export const changeProcedureToHearing = async (data, appealId) => {
 				result.updatedHearing.id,
 				EVENT_TYPE.HEARING,
 				data.appealProcedure === data.existingAppealProcedure ? EventType.Update : EventType.Create
+			);
+		}
+		if (result.existingInquiry) {
+			await broadcasters.broadcastEvent(
+				result.existingInquiry.id,
+				EVENT_TYPE.INQUIRY,
+				EventType.Delete
+			);
+		}
+		if (result.existingSiteVisit) {
+			await broadcasters.broadcastEvent(
+				result.existingSiteVisit.id,
+				EVENT_TYPE.SITE_VISIT,
+				EventType.Delete
 			);
 		}
 	} catch (error) {
@@ -229,8 +274,12 @@ export const changeProcedureToInquiry = async (data, appealId) => {
 					proofOfEvidenceAndWitnessesDueDate: data.proofOfEvidenceAndWitnessesDueDate
 				}
 			});
-
+			let existingHearing;
+			let existingSiteVisit;
 			if (data.existingAppealProcedure === 'hearing') {
+				existingHearing = await tx.hearing.findFirst({
+					where: { appealId }
+				});
 				await tx.hearing.deleteMany({
 					where: { appealId }
 				});
@@ -238,11 +287,14 @@ export const changeProcedureToInquiry = async (data, appealId) => {
 					where: { appealId }
 				});
 			} else if (data.existingAppealProcedure === 'written') {
+				existingSiteVisit = await tx.siteVisit.findFirst({
+					where: { appealId }
+				});
 				await tx.siteVisit.deleteMany({
 					where: { appealId }
 				});
 			}
-			return { updatedAppeal, updatedInquiry };
+			return { updatedAppeal, updatedInquiry, existingHearing, existingSiteVisit };
 		});
 
 		if (result.updatedInquiry) {
@@ -250,6 +302,20 @@ export const changeProcedureToInquiry = async (data, appealId) => {
 				result.updatedInquiry.id,
 				EVENT_TYPE.INQUIRY,
 				data.appealProcedure === data.existingAppealProcedure ? EventType.Update : EventType.Create
+			);
+		}
+		if (result.existingHearing) {
+			await broadcasters.broadcastEvent(
+				result.existingHearing.id,
+				EVENT_TYPE.HEARING,
+				EventType.Delete
+			);
+		}
+		if (result.existingSiteVisit) {
+			await broadcasters.broadcastEvent(
+				result.existingSiteVisit.id,
+				EVENT_TYPE.SITE_VISIT,
+				EventType.Delete
 			);
 		}
 	} catch (error) {
