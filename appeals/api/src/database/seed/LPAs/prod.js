@@ -1317,7 +1317,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'H5960',
 		name: 'London Borough of Wandsworth',
-		email: 'planningappeals@wandsworth.gov.uk',
+		email: 'WandsworthPlanningAppeals@richmondandwandsworth.gov.uk',
 		teamId: 7 //West1
 	},
 	{
