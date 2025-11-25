@@ -8,6 +8,7 @@ import {
 import {
 	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_STATUS,
+	APPEAL_CASE_TYPE,
 	APPEAL_REDACTED_STATUS,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION,
 	APPEAL_VIRUS_CHECK_STATUS
@@ -1768,7 +1769,7 @@ export const appealTypesData = [
 		id: 66,
 		type: 'Householder',
 		shorthand: 'HAS',
-		key: 'D',
+		key: APPEAL_CASE_TYPE.D,
 		enabled: true,
 		changeAppealType: 'Householder'
 	},
@@ -1776,7 +1777,7 @@ export const appealTypesData = [
 		id: 75,
 		type: 'Planning appeal',
 		shorthand: 'FPA',
-		key: 'W',
+		key: APPEAL_CASE_TYPE.W,
 		enabled: false,
 		changeAppealType: 'Planning'
 	},
@@ -1784,21 +1785,21 @@ export const appealTypesData = [
 		id: 77,
 		type: 'Planning listed building and conservation area appeal',
 		shorthand: 'S20',
-		key: 'Y',
+		key: APPEAL_CASE_TYPE.Y,
 		enabled: false,
 		changeAppealType: 'Planning listed building and conservation area'
 	},
 	{
 		id: 78,
 		type: 'CAS advert',
-		key: 'ZA',
+		key: APPEAL_CASE_TYPE.ZA,
 		enabled: false,
 		changeAppealType: 'Commercial advertisement (CAS)'
 	},
 	{
 		id: 79,
 		type: 'CAS planning',
-		key: 'ZP',
+		key: APPEAL_CASE_TYPE.ZP,
 		enabled: false,
 		changeAppealType: 'Commercial planning (CAS)'
 	}

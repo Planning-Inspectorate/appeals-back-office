@@ -2,6 +2,7 @@ import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 export const VALIDATION_OUTCOME_COMPLETE = 'Complete';
 export const VALIDATION_OUTCOME_INCOMPLETE = 'Incomplete';
@@ -50,12 +51,6 @@ export const AUDIT_TRAIL_REP_APPELLANT_FINAL_COMMENT_STATUS_INVALID =
 	'Appellant final comments rejected';
 export const AUDIT_TRAIL_REP_APPELLANT_FINAL_COMMENT_STATUS_REDACTED_AND_ACCEPTED =
 	'Appellant final comments redacted and accepted';
-
-export const APPEAL_TYPE_SHORTHAND_FPA = 'W';
-export const APPEAL_TYPE_SHORTHAND_HAS = 'D';
-export const APPEAL_TYPE_SHORTHAND_HEARING = 'H';
-export const APPEAL_TYPE_SHORTHAND_INQUIRY = 'I';
-export const APPEAL_TYPE_SHORTHAND_LISTED_BUILDING = 'Y';
 
 export const AUDIT_TRAIL_ALLOCATION_DETAILS_ADDED = 'The allocation details were added';
 export const AUDIT_TRAIL_CASE_NOTE_ADDED = 'Case note added: "{replacement0}"';
@@ -281,7 +276,6 @@ export const ERROR_GOV_NOTIFY_CONNECTIVITY =
 export const ERROR_NO_RECIPIENT_EMAIL = 'recipient email not found';
 export const ERROR_GOV_NOTIFY_API_KEY_NOT_SET = 'gov notify api key is not set';
 export const ERROR_NOTIFICATION_PERSONALISATION = 'email personalisation is incorrect';
-export const ERROR_INVALID_APPEAL_TYPE = `must be one of ${APPEAL_TYPE_SHORTHAND_FPA}, ${APPEAL_TYPE_SHORTHAND_HAS}`;
 export const ERROR_INVALID_APPEAL_TYPE_REP = `Representations not accepted on this appeal type`;
 export const ERROR_INVALID_APPELLANT_CASE_VALIDATION_OUTCOME = `must be one of ${VALIDATION_OUTCOME_INCOMPLETE}, ${VALIDATION_OUTCOME_INVALID}, ${VALIDATION_OUTCOME_VALID}`;
 export const ERROR_INVALID_LPA_QUESTIONNAIRE_VALIDATION_OUTCOME = `must be one of ${VALIDATION_OUTCOME_COMPLETE}, ${VALIDATION_OUTCOME_INCOMPLETE}`;
@@ -439,31 +433,31 @@ const advertTimetable = {
 
 /** @type {Record<string, Record<string, any>>} */
 export const CONFIG_APPEAL_TIMETABLE = {
-	W: {
-		W: { ...s78timetable },
-		H: {
+	[APPEAL_CASE_TYPE.W]: {
+		[APPEAL_CASE_PROCEDURE.WRITTEN]: { ...s78timetable },
+		[APPEAL_CASE_PROCEDURE.HEARING]: {
 			...s78timetable,
 			statementOfCommonGroundDueDate: {
 				daysFromStartDate: 25
 			}
 		},
-		I: {
+		[APPEAL_CASE_PROCEDURE.INQUIRY]: {
 			...s78timetable,
 			statementOfCommonGroundDueDate: {
 				daysFromStartDate: 25
 			}
 		}
 	},
-	H: {
-		W: { ...advertTimetable },
-		H: {
+	[APPEAL_CASE_TYPE.H]: {
+		[APPEAL_CASE_PROCEDURE.WRITTEN]: { ...advertTimetable },
+		[APPEAL_CASE_PROCEDURE.HEARING]: {
 			...advertTimetable,
 			//Needs updating when inquiries with adverts is supported
 			statementOfCommonGroundDueDate: {
 				daysFromStartDate: 25
 			}
 		},
-		I: {
+		[APPEAL_CASE_PROCEDURE.INQUIRY]: {
 			...advertTimetable,
 			//Needs updating when inquiries with adverts is supported
 			statementOfCommonGroundDueDate: {
@@ -471,7 +465,7 @@ export const CONFIG_APPEAL_TIMETABLE = {
 			}
 		}
 	},
-	D: {
+	[APPEAL_CASE_TYPE.D]: {
 		lpaQuestionnaireDueDate: {
 			daysFromStartDate: 5
 		}

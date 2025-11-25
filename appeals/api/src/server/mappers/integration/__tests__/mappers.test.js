@@ -8,6 +8,7 @@ import { REP_ATTACHMENT_DOCTYPE } from '@pins/appeals/constants/documents.js';
 import {
 	APPEAL_CASE_STAGE,
 	APPEAL_CASE_STATUS,
+	APPEAL_CASE_TYPE,
 	APPEAL_DOCUMENT_TYPE
 } from '@planning-inspectorate/data-model';
 import { mapAppellantCaseIn } from '../commands/appellant-case.mapper.js';
@@ -303,7 +304,7 @@ describe('map-document-entity', () => {
 			guid: 'doc-123',
 			caseId: 'case-456',
 			name: '123e4567-e89b-12d3-a456-426614174000_test.pdf',
-			case: { reference: 'REF-1', appealType: { key: 'D' } },
+			case: { reference: 'REF-1', appealType: { key: APPEAL_CASE_TYPE.D } },
 			versions: [
 				{
 					version: 1,
@@ -409,7 +410,9 @@ describe('mapAppellantCaseIn', () => {
 		},
 		{
 			desc: 'S20 case',
-			input: { casedata: { caseType: 'Y', knowsAllOwners: 'yes', knowsOtherOwners: 'no' } },
+			input: {
+				casedata: { caseType: APPEAL_CASE_TYPE.Y, knowsAllOwners: 'yes', knowsOtherOwners: 'no' }
+			},
 			expected: expect.objectContaining({
 				knowsAllOwners: { connect: { key: 'yes' } },
 				knowsOtherOwners: { connect: { key: 'no' } }
@@ -419,7 +422,7 @@ describe('mapAppellantCaseIn', () => {
 			desc: 'S78 case',
 			input: {
 				casedata: {
-					caseType: 'W',
+					caseType: APPEAL_CASE_TYPE.W,
 					agriculturalHolding: true,
 					tenantAgriculturalHolding: false,
 					otherTenantsAgriculturalHolding: true,
@@ -437,7 +440,7 @@ describe('mapAppellantCaseIn', () => {
 			desc: 'CAS adverts case (ZA)',
 			input: {
 				casedata: {
-					caseType: 'ZA',
+					caseType: APPEAL_CASE_TYPE.ZA,
 					advertDetails: [
 						{
 							isAdvertInPosition: true,
@@ -465,7 +468,7 @@ describe('mapAppellantCaseIn', () => {
 			desc: 'Adverts case (H)',
 			input: {
 				casedata: {
-					caseType: 'H',
+					caseType: APPEAL_CASE_TYPE.H,
 					advertDetails: [
 						{
 							isAdvertInPosition: true,
@@ -516,7 +519,7 @@ describe('mapQuestionnaireIn', () => {
 			desc: 'common fields D',
 			input: {
 				casedata: {
-					caseType: 'D',
+					caseType: APPEAL_CASE_TYPE.D,
 					lpaQuestionnaireSubmittedDate: '2025-10-22',
 					siteAccessDetails: ['access1'],
 					siteSafetyDetails: ['safety1'],
@@ -555,7 +558,7 @@ describe('mapQuestionnaireIn', () => {
 			desc: 'S78 case',
 			input: {
 				casedata: {
-					caseType: 'W',
+					caseType: APPEAL_CASE_TYPE.W,
 					lpaQuestionnaireSubmittedDate: '2025-10-22',
 					siteAccessDetails: ['access1'],
 					siteSafetyDetails: ['safety1'],
@@ -582,7 +585,7 @@ describe('mapQuestionnaireIn', () => {
 			desc: 'S20 case',
 			input: {
 				casedata: {
-					caseType: 'Y',
+					caseType: APPEAL_CASE_TYPE.Y,
 					lpaQuestionnaireSubmittedDate: '2025-10-22',
 					siteAccessDetails: ['access1'],
 					siteSafetyDetails: ['safety1'],
@@ -612,7 +615,7 @@ describe('mapQuestionnaireIn', () => {
 			desc: 'CAS adverts case (ZA)',
 			input: {
 				casedata: {
-					caseType: 'ZA',
+					caseType: APPEAL_CASE_TYPE.ZA,
 					lpaQuestionnaireSubmittedDate: '2025-10-22',
 					siteAccessDetails: ['access1'],
 					siteSafetyDetails: ['safety1'],
@@ -663,7 +666,7 @@ describe('mapQuestionnaireIn', () => {
 			desc: 'CAS adverts case (H)',
 			input: {
 				casedata: {
-					caseType: 'H',
+					caseType: APPEAL_CASE_TYPE.H,
 					lpaQuestionnaireSubmittedDate: '2025-10-22',
 					siteAccessDetails: ['access1'],
 					siteSafetyDetails: ['safety1'],

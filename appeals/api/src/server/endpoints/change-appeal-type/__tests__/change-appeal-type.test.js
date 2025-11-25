@@ -17,7 +17,7 @@ import {
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -25,7 +25,7 @@ const appealTypes = [
 	{
 		id: 1,
 		type: 'Householder',
-		key: 'D',
+		key: APPEAL_CASE_TYPE.D,
 		processCode: 'HAS',
 		enabled: true,
 		changeAppealType: 'Householder'
@@ -33,63 +33,63 @@ const appealTypes = [
 	{
 		id: 2,
 		type: 'Enforcement notice appeal',
-		key: 'C',
+		key: APPEAL_CASE_TYPE.C,
 		processCode: null,
 		enabled: false
 	},
 	{
 		id: 3,
 		type: 'Enforcement listed building and conservation area appeal',
-		key: 'F',
+		key: APPEAL_CASE_TYPE.F,
 		processCode: null,
 		enabled: false
 	},
 	{
 		id: 4,
 		type: 'Discontinuance notice appeal',
-		key: 'G',
+		key: APPEAL_CASE_TYPE.G,
 		processCode: null,
 		enabled: false
 	},
 	{
 		id: 5,
 		type: 'Advertisement appeal',
-		key: 'H',
+		key: APPEAL_CASE_TYPE.H,
 		processCode: null,
 		enabled: false
 	},
 	{
 		id: 6,
 		type: 'Community infrastructure levy',
-		key: 'L',
+		key: APPEAL_CASE_TYPE.L,
 		processCode: null,
 		enabled: false
 	},
 	{
 		id: 7,
 		type: 'Planning obligation appeal',
-		key: 'Q',
+		key: APPEAL_CASE_TYPE.Q,
 		processCode: null,
 		enabled: false
 	},
 	{
 		id: 8,
 		type: 'Affordable housing obligation appeal',
-		key: 'S',
+		key: APPEAL_CASE_TYPE.S,
 		processCode: null,
 		enabled: false
 	},
 	{
 		id: 9,
 		type: 'Call-in application',
-		key: 'V',
+		key: APPEAL_CASE_TYPE.V,
 		processCode: null,
 		enabled: false
 	},
 	{
 		id: 10,
 		type: 'Planning appeal',
-		key: 'W',
+		key: APPEAL_CASE_TYPE.W,
 		processCode: null,
 		enabled: false,
 		changeAppealType: 'Planning'
@@ -97,21 +97,21 @@ const appealTypes = [
 	{
 		id: 11,
 		type: 'Lawful development certificate appeal',
-		key: 'X',
+		key: APPEAL_CASE_TYPE.X,
 		processCode: null,
 		enabled: false
 	},
 	{
 		id: 12,
 		type: 'Planning listed building and conservation area appeal',
-		key: 'Y',
+		key: APPEAL_CASE_TYPE.Y,
 		processCode: null,
 		enabled: false
 	},
 	{
 		id: 13,
 		type: 'CAS planning',
-		key: 'ZP',
+		key: APPEAL_CASE_TYPE.ZP,
 		processCode: null,
 		enabled: false,
 		changeAppealType: 'Commercial planning (CAS)'

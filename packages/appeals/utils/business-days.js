@@ -6,9 +6,6 @@ import {
 	DEFAULT_TIMEZONE
 } from '@pins/appeals/constants/dates.js';
 import {
-	APPEAL_TYPE_SHORTHAND_HAS,
-	APPEAL_TYPE_SHORTHAND_HEARING,
-	APPEAL_TYPE_SHORTHAND_INQUIRY,
 	BANK_HOLIDAY_FEED_DIVISION_ENGLAND,
 	CONFIG_APPEAL_TIMETABLE,
 	CONFIG_BANKHOLIDAYS_FEED_URL
@@ -195,19 +192,10 @@ const calculateTimetable = async (appealType, startedAt, procedureType = 'writte
 	if (startedAt) {
 		const startDate = setTimeInTimeZone(startedAt, DAYTIME_HOUR, DAYTIME_MINUTE);
 
-		/** @type {Record<string, string>} */
-		const procedureTypeMap = {
-			written: 'W',
-			hearing: APPEAL_TYPE_SHORTHAND_HEARING,
-			inquiry: APPEAL_TYPE_SHORTHAND_INQUIRY
-		};
-
-		const procedureTypeKey = procedureTypeMap[procedureType];
 		const fullAppealTypeKey = appealType === APPEAL_CASE_TYPE.H ? appealType : APPEAL_CASE_TYPE.W;
-		const expeditedAppealTypeKey = APPEAL_TYPE_SHORTHAND_HAS;
-
+		const expeditedAppealTypeKey = APPEAL_CASE_TYPE.D;
 		const appealTimetableConfig = !isExpeditedAppealType(appealType)
-			? CONFIG_APPEAL_TIMETABLE[fullAppealTypeKey][procedureTypeKey]
+			? CONFIG_APPEAL_TIMETABLE[fullAppealTypeKey][procedureType]
 			: CONFIG_APPEAL_TIMETABLE[expeditedAppealTypeKey];
 
 		if (appealTimetableConfig) {

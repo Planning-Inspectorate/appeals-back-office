@@ -1,22 +1,19 @@
-import {
-	APPEAL_TYPE_SHORTHAND_FPA,
-	APPEAL_TYPE_SHORTHAND_HAS
-} from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+
 /**
- * @typedef {typeof APPEAL_TYPE_SHORTHAND_HAS | typeof APPEAL_TYPE_SHORTHAND_FPA} BaseAppealType
+ * @typedef {typeof APPEAL_CASE_TYPE['D'] | typeof APPEAL_CASE_TYPE['W']} BaseAppealType
  * @typedef {Record<string, BaseAppealType>} BaseCaseType
  */
 
 /** @type {BaseCaseType} */
 const baseCaseType = {
-	[APPEAL_CASE_TYPE.D]: APPEAL_TYPE_SHORTHAND_HAS,
-	[APPEAL_CASE_TYPE.ZP]: APPEAL_TYPE_SHORTHAND_HAS,
-	[APPEAL_CASE_TYPE.ZA]: APPEAL_TYPE_SHORTHAND_HAS,
-	[APPEAL_CASE_TYPE.H]: APPEAL_TYPE_SHORTHAND_FPA,
-	[APPEAL_CASE_TYPE.W]: APPEAL_TYPE_SHORTHAND_FPA,
-	[APPEAL_CASE_TYPE.Y]: APPEAL_TYPE_SHORTHAND_FPA,
-	[APPEAL_CASE_TYPE.C]: APPEAL_TYPE_SHORTHAND_FPA
+	[APPEAL_CASE_TYPE.D]: APPEAL_CASE_TYPE.D,
+	[APPEAL_CASE_TYPE.ZP]: APPEAL_CASE_TYPE.D,
+	[APPEAL_CASE_TYPE.ZA]: APPEAL_CASE_TYPE.D,
+	[APPEAL_CASE_TYPE.H]: APPEAL_CASE_TYPE.W,
+	[APPEAL_CASE_TYPE.W]: APPEAL_CASE_TYPE.W,
+	[APPEAL_CASE_TYPE.Y]: APPEAL_CASE_TYPE.W,
+	[APPEAL_CASE_TYPE.C]: APPEAL_CASE_TYPE.W
 };
 
 /**
@@ -31,7 +28,7 @@ const isExpeditedAppealType = (appealType) => {
 			`Appeal type - ${appealType} not defined in isExpeditedAppealType baseCaseType`
 		);
 	}
-	return Boolean(baseCaseType[appealType] === APPEAL_TYPE_SHORTHAND_HAS);
+	return Boolean(baseCaseType[appealType] === APPEAL_CASE_TYPE.D);
 };
 
 export default isExpeditedAppealType;

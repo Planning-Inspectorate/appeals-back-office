@@ -1,6 +1,7 @@
 import { auditTrails, householdAppeal } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import supertest from 'supertest';
 import { app } from '../../../app-test.js';
 
@@ -54,7 +55,7 @@ describe('audit trails routes', () => {
 				databaseConnector.auditTrail.findMany.mockResolvedValue(auditTrails);
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue({
-					appealType: { key: 'ZA' }
+					appealType: { key: APPEAL_CASE_TYPE.ZA }
 				});
 
 				const { id } = householdAppeal;

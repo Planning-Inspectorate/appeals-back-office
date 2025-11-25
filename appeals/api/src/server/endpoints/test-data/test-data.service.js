@@ -3,6 +3,7 @@ import { databaseConnector } from '#utils/database-connector.js';
 import { AUDIT_TRAIL_SYSTEM_UUID } from '@pins/appeals/constants/support.js';
 import {
 	APPEAL_CASE_STATUS,
+	APPEAL_CASE_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
 import { sub } from 'date-fns';
@@ -131,7 +132,7 @@ export const createRepresentationWithAttachments = async (tx, appealId, folderId
  * @returns {import('#db-client').Prisma.AppealCreateInput}
  */
 export function createMockAppeal(type = 'has', userEmails = []) {
-	const typeKey = type === 'has' ? 'D' : 'W';
+	const typeKey = type === 'has' ? APPEAL_CASE_TYPE.D : APPEAL_CASE_TYPE.W;
 	const now = new Date();
 	const daysAgo90 = sub(new Date(), { days: 90 });
 	const daysAgo60 = sub(new Date(), { days: 60 });
@@ -270,7 +271,7 @@ export const getRandomisedAppellantCaseCreateInput = (appealTypeShorthand) => {
 	};
 
 	switch (appealTypeShorthand) {
-		case 'W': // S78 Full Planning Appeal
+		case APPEAL_CASE_TYPE.W: // S78 Full Planning Appeal
 			return {
 				...base,
 				typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
@@ -280,7 +281,7 @@ export const getRandomisedAppellantCaseCreateInput = (appealTypeShorthand) => {
 				informedTenantsAgriculturalHolding: true
 			};
 
-		case 'D': // HAS (Householder)
+		case APPEAL_CASE_TYPE.D: // HAS (Householder)
 		default:
 			return {
 				...base,
@@ -294,7 +295,7 @@ export const getRandomisedAppellantCaseCreateInput = (appealTypeShorthand) => {
  * @returns {import('#db-client').Prisma.LPAQuestionnaireCreateWithoutAppealInput | undefined}
  */
 export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
-	if (appealTypeShorthand !== 'D') {
+	if (appealTypeShorthand !== APPEAL_CASE_TYPE.D) {
 		return undefined;
 	}
 

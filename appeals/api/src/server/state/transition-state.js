@@ -13,15 +13,17 @@ import {
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
 import {
-	APPEAL_TYPE_SHORTHAND_FPA,
-	APPEAL_TYPE_SHORTHAND_HAS,
 	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
 	AUDIT_TRIAL_AUTOMATIC_EVENT_UUID,
 	CASE_RELATIONSHIP_LINKED,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
 import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_CASE_STATUS,
+	APPEAL_CASE_TYPE
+} from '@planning-inspectorate/data-model';
 import { interpret } from 'xstate';
 import createStateMachine from './create-state-machine.js';
 
@@ -54,8 +56,8 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 
 	const procedureKey = procedureType?.key ?? APPEAL_CASE_PROCEDURE.WRITTEN;
 	const appealTypeKey = !isExpeditedAppealType(appealType.key)
-		? APPEAL_TYPE_SHORTHAND_FPA
-		: APPEAL_TYPE_SHORTHAND_HAS;
+		? APPEAL_CASE_TYPE.W
+		: APPEAL_CASE_TYPE.D;
 
 	const eventElapsed = getEventElapsed(appeal, appealType, procedureKey);
 
@@ -96,7 +98,7 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 
 	if (
 		newState === APPEAL_CASE_STATUS.EVENT &&
-		[APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA].includes(appealTypeKey) &&
+		[APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.W].includes(appealTypeKey) &&
 		((procedureKey === APPEAL_CASE_PROCEDURE.WRITTEN && appeal.siteVisit) ||
 			(procedureKey === APPEAL_CASE_PROCEDURE.HEARING &&
 				appeal.hearing &&
@@ -110,7 +112,7 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 
 	if (
 		newState === APPEAL_CASE_STATUS.EVIDENCE &&
-		[APPEAL_TYPE_SHORTHAND_FPA].includes(appealTypeKey) &&
+		[APPEAL_CASE_TYPE.W].includes(appealTypeKey) &&
 		procedureKey === APPEAL_CASE_PROCEDURE.INQUIRY
 	) {
 		const evidenceRepresentations = await representationRepository.getRepresentations(appealId, {
