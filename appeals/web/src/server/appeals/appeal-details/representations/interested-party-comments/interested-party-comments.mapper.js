@@ -1,4 +1,5 @@
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { isFeatureActive } from '#common/feature-flags.js';
 import { addressToString } from '#lib/address-formatter.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
@@ -12,6 +13,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { highlightRedactedSections } from '#lib/redaction-string-formatter.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse */
@@ -122,11 +124,25 @@ function generateTableRows(items, isReview = false) {
 /**
  * @param {Appeal} appealDetails
  * @param {Representation[]} comments
+ * @param {string} addInterestedPartCommentsLink
+ * @param {import('@pins/express').Session} session
  * @param {string} [backUrl]
  * @returns {PageContent}
  * */
-export function sharedIpCommentsPage(appealDetails, comments, backUrl) {
+export function sharedIpCommentsPage(
+	appealDetails,
+	comments,
+	addInterestedPartCommentsLink,
+	session,
+	backUrl
+) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
+
+	const notificationBanners = mapNotificationBannersFromSession(
+		session,
+		'sharedIpComments',
+		appealDetails.appealId
+	);
 
 	/** @type {PageComponent} */
 	const table = {
@@ -204,6 +220,28 @@ export function sharedIpCommentsPage(appealDetails, comments, backUrl) {
 				closing: '</p>'
 			}
 		),
+		...notificationBanners,
+		// Only include the "Add interested party comment" link if the feature is NOT active
+		...(isFeatureActive(FEATURE_FLAG_NAMES.MANUALLY_ADD_REPS)
+			? [
+					wrapComponents(
+						[
+							simpleHtmlComponent(
+								'a',
+								{
+									href: addInterestedPartCommentsLink,
+									class: 'govuk-link'
+								},
+								'Add interested party comment'
+							)
+						],
+						{
+							opening: '<p class="govuk-body">',
+							closing: '</p>'
+						}
+					)
+			  ]
+			: []),
 		simpleHtmlComponent('h2', {}, 'Shared IP comments'),
 		table
 	];

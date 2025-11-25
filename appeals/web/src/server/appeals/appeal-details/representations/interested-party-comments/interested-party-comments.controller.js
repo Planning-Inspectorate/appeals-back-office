@@ -1,4 +1,7 @@
+import { isStatePassed } from '#lib/appeal-status.js';
 import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
 	interestedPartyCommentsPage,
 	sharedIpCommentsPage
@@ -11,7 +14,8 @@ import * as interestedPartyCommentsService from './interested-party-comments.ser
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const handleInterestedPartyComments = (request, response) =>
-	((request.currentAppeal?.documentationSummary?.ipComments?.counts?.published ?? 0) === 0
+	((request.currentAppeal?.documentationSummary?.ipComments?.counts?.published ?? 0) === 0 ||
+		isStatePassed(request.currentAppeal?.appealStatus, APPEAL_CASE_STATUS.STATEMENTS)
 		? renderInterestedPartyComments
 		: renderSharedInterestedPartyComments)(request, response);
 
@@ -85,9 +89,15 @@ export async function renderSharedInterestedPartyComments(request, response) {
 		'published'
 	);
 
+	const addInterestedPartCommentsLink = addBackLinkQueryToUrl(
+		request,
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add`
+	);
 	const pageContent = sharedIpCommentsPage(
 		currentAppeal,
 		comments.items,
+		addInterestedPartCommentsLink,
+		request.session,
 		getSavedBackUrl(request, 'manageIpComments')
 	);
 

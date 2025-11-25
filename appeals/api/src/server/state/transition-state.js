@@ -176,7 +176,7 @@ async function transitionLinkedChildAppealsState(appeal, azureAdUserId, trigger)
  * @param {string} newState
  * @returns {boolean}
  */
-const isStatePassed = (appeal, newState) => {
+export const isStatePassed = (appeal, newState) => {
 	const completedStateList = mapCompletedStateList({ appeal });
 	return completedStateList.includes(newState);
 };
