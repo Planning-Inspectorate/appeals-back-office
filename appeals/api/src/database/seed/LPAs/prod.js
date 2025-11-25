@@ -195,7 +195,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'J1860',
 		name: 'Malvern Hills District Council',
-		email: 'developmentcontrol@malvernhills.gov.uk',
+		email: 'planningappeals@malvernhills.gov.uk',
 		teamId: 10 // West4
 	},
 	{
@@ -1317,7 +1317,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'H5960',
 		name: 'London Borough of Wandsworth',
-		email: 'planningappeals@wandsworth.gov.uk',
+		email: 'WandsworthPlanningAppeals@richmondandwandsworth.gov.uk',
 		teamId: 7 //West1
 	},
 	{
