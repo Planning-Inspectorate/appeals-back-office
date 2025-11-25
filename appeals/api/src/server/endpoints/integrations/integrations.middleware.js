@@ -11,7 +11,7 @@ import {
 	ERROR_INVALID_REP_DATA,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
 import { schemas, validateFromSchema } from './integrations.validators.js';
 
 /**
@@ -138,12 +138,7 @@ export const validateRepresentation = async (req, res, next) => {
 		});
 	}
 
-	const validAppealTypesAcceptingReps = [
-		APPEAL_CASE_TYPE.W, // S78
-		APPEAL_CASE_TYPE.Y // S20
-	];
-
-	if (validAppealTypesAcceptingReps.indexOf(referenceData.appeal.appealType?.key ?? '') === -1) {
+	if (isExpeditedAppealType(referenceData.appeal.appealType?.key)) {
 		pino.error(
 			`The reference appeal '${body?.caseReference}' does not accept representations (${referenceData.appeal.appealType?.key})`
 		);

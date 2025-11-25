@@ -31,6 +31,7 @@ import {
 	validRepresentationIp,
 	validRepresentationLpaStatement
 } from '#tests/integrations/mocks.js';
+import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 import { jest } from '@jest/globals';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import {
@@ -38,6 +39,7 @@ import {
 	ERROR_INVALID_APPEAL_TYPE_REP,
 	ERROR_INVALID_APPELLANT_CASE_DATA
 } from '@pins/appeals/constants/support.js';
+import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
 import {
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE,
@@ -550,254 +552,271 @@ describe('/appeals/representation-submission', () => {
 			expect(response.status).toEqual(404);
 		});
 
-		test('invalid rep payload: incorrect appeal type', async () => {
-			// @ts-ignore
-			databaseConnector.appeal.findUnique.mockResolvedValue({
-				id: 1,
-				reference: validRepresentationLpaStatement.caseReference,
-				appealType: {
-					key: 'D'
-				}
-			});
+		test.each(getEnabledAppealTypes().filter((type) => isExpeditedAppealType(type)))(
+			'invalid rep payload: incorrect appeal type (%s)',
+			async (appealCaseType) => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					id: 1,
+					reference: validRepresentationLpaStatement.caseReference,
+					appealType: {
+						key: appealCaseType
+					}
+				});
 
-			const response = await request
-				.post('/appeals/representation-submission')
-				.send(validRepresentationLpaStatement);
+				const response = await request
+					.post('/appeals/representation-submission')
+					.send(validRepresentationLpaStatement);
 
-			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({ errors: { appeal: ERROR_INVALID_APPEAL_TYPE_REP } });
-		});
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({ errors: { appeal: ERROR_INVALID_APPEAL_TYPE_REP } });
+			}
+		);
 	});
 
 	describe('POST valid representation', () => {
-		test('valid rep payload: LPA statement', async () => {
-			const validRepresentation = {
-				...validRepresentationLpaStatement,
-				lpaCode: 'Q9999'
-			};
-
-			// @ts-ignore
-			databaseConnector.folder.findMany.mockResolvedValue(
-				FOLDERS.map((/** @type {string} */ folder, /** @type {number} */ ix) => {
-					return {
-						id: ix + 1,
-						path: folder
+		describe.each(getEnabledAppealTypes().filter((type) => !isExpeditedAppealType(type)))(
+			'for a %s appeal',
+			(appealCaseType) => {
+				afterEach(() => {
+					jest.clearAllMocks();
+				});
+				test('valid rep payload: LPA statement', async () => {
+					const validRepresentation = {
+						...validRepresentationLpaStatement,
+						lpaCode: 'Q9999'
 					};
-				})
-			);
 
-			// @ts-ignore
-			databaseConnector.documentVersion.findMany.mockResolvedValue([
-				{
-					dateCreated: '2024-03-01T13:48:35.847Z',
-					documentGuid: '001',
-					documentType: 'lpaStatement',
-					documentURI:
-						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
-					filename: 'img3.jpg',
-					mime: 'image/jpeg',
-					originalFilename: 'oimg.jpg',
-					size: 10293
-				}
-			]);
+					// @ts-ignore
+					databaseConnector.appealRelationship.findFirst.mockResolvedValue({
+						parentRef: validRepresentationLpaStatement.caseReference,
+						type: CASE_RELATIONSHIP_LINKED
+					});
 
-			// @ts-ignore
-			databaseConnector.appeal.findUnique.mockResolvedValue({
-				id: 2,
-				reference: validRepresentationLpaStatement.caseReference,
-				appealType: {
-					key: 'W'
-				},
-				appealStatus: [
-					{
-						id: 1,
-						status: 'lpa_questionnaire',
-						createdAt: new Date('2024-05-27T14:08:50.414Z'),
-						valid: true,
-						appealId: 2
-					}
-				],
-				lpa: {
-					lpaCode: 'Q9999'
-				}
-			});
+					// @ts-ignore
+					databaseConnector.folder.findMany.mockResolvedValue(
+						FOLDERS.map((/** @type {string} */ folder, /** @type {number} */ ix) => {
+							return {
+								id: ix + 1,
+								path: folder
+							};
+						})
+					);
 
-			const response = await request
-				.post('/appeals/representation-submission')
-				.send(validRepresentation);
+					// @ts-ignore
+					databaseConnector.documentVersion.findMany.mockResolvedValue([
+						{
+							dateCreated: '2024-03-01T13:48:35.847Z',
+							documentGuid: '001',
+							documentType: 'lpaStatement',
+							documentURI:
+								'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+							filename: 'img3.jpg',
+							mime: 'image/jpeg',
+							originalFilename: 'oimg.jpg',
+							size: 10293
+						}
+					]);
 
-			expect(databaseConnector.appealRelationship.findFirst).toHaveBeenCalledWith({
-				where: {
-					childRef: validRepresentationLpaStatement.caseReference,
-					type: CASE_RELATIONSHIP_LINKED
-				}
-			});
-			expect(databaseConnector.appeal.findUnique).toHaveBeenCalledWith({
-				where: { reference: validRepresentationLpaStatement.caseReference },
-				include: {
-					appealStatus: true,
-					appealType: true
-				}
-			});
-			expect(databaseConnector.representation.create).toHaveBeenCalled();
-			expect(databaseConnector.document.createMany).toHaveBeenCalled();
-			expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
-			expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
-			expect(databaseConnector.representationAttachment.createMany).toHaveBeenCalled();
-			expect(response.status).toEqual(201);
-		});
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						id: 2,
+						reference: validRepresentationLpaStatement.caseReference,
+						appealType: {
+							key: appealCaseType
+						},
+						appealStatus: [
+							{
+								id: 1,
+								status: 'lpa_questionnaire',
+								createdAt: new Date('2024-05-27T14:08:50.414Z'),
+								valid: true,
+								appealId: 2
+							}
+						],
+						lpa: {
+							lpaCode: 'Q9999'
+						}
+					});
 
-		test('valid rep payload: LPA statement for linked child appeal', async () => {
-			const validRepresentation = {
-				...validRepresentationLpaStatement,
-				lpaCode: 'Q9999'
-			};
+					const response = await request
+						.post('/appeals/representation-submission')
+						.send(validRepresentation);
 
-			const leadAppealCaseReference = '6004742';
+					expect(databaseConnector.appealRelationship.findFirst).toHaveBeenCalledWith({
+						where: {
+							childRef: validRepresentationLpaStatement.caseReference,
+							type: CASE_RELATIONSHIP_LINKED
+						}
+					});
+					expect(databaseConnector.appeal.findUnique).toHaveBeenCalledWith({
+						where: { reference: validRepresentationLpaStatement.caseReference },
+						include: {
+							appealStatus: true,
+							appealType: true
+						}
+					});
+					expect(databaseConnector.representation.create).toHaveBeenCalled();
+					expect(databaseConnector.document.createMany).toHaveBeenCalled();
+					expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
+					expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
+					expect(databaseConnector.representationAttachment.createMany).toHaveBeenCalled();
+					expect(response.status).toEqual(201);
+				});
 
-			// @ts-ignore
-			databaseConnector.appealRelationship.findFirst.mockResolvedValue({
-				parentRef: leadAppealCaseReference,
-				type: CASE_RELATIONSHIP_LINKED
-			});
-
-			// @ts-ignore
-			databaseConnector.folder.findMany.mockResolvedValue(
-				FOLDERS.map((/** @type {string} */ folder, /** @type {number} */ ix) => {
-					return {
-						id: ix + 1,
-						path: folder
+				test('valid rep payload: LPA statement for linked child appeal', async () => {
+					const validRepresentation = {
+						...validRepresentationLpaStatement,
+						lpaCode: 'Q9999'
 					};
-				})
-			);
 
-			// @ts-ignore
-			databaseConnector.documentVersion.findMany.mockResolvedValue([
-				{
-					dateCreated: '2024-03-01T13:48:35.847Z',
-					documentGuid: '001',
-					documentType: 'lpaStatement',
-					documentURI:
-						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
-					filename: 'img3.jpg',
-					mime: 'image/jpeg',
-					originalFilename: 'oimg.jpg',
-					size: 10293
-				}
-			]);
+					const leadAppealCaseReference = '6004742';
 
-			// @ts-ignore
-			databaseConnector.appeal.findUnique.mockResolvedValue({
-				id: 2,
-				reference: validRepresentationLpaStatement.caseReference,
-				appealType: {
-					key: 'W'
-				},
-				appealStatus: [
-					{
-						id: 1,
-						status: 'lpa_questionnaire',
-						createdAt: new Date('2024-05-27T14:08:50.414Z'),
-						valid: true,
-						appealId: 2
-					}
-				],
-				lpa: {
-					lpaCode: 'Q9999'
-				}
-			});
+					// @ts-ignore
+					databaseConnector.appealRelationship.findFirst.mockResolvedValue({
+						parentRef: leadAppealCaseReference,
+						type: CASE_RELATIONSHIP_LINKED
+					});
 
-			const response = await request
-				.post('/appeals/representation-submission')
-				.send(validRepresentation);
+					// @ts-ignore
+					databaseConnector.folder.findMany.mockResolvedValue(
+						FOLDERS.map((/** @type {string} */ folder, /** @type {number} */ ix) => {
+							return {
+								id: ix + 1,
+								path: folder
+							};
+						})
+					);
 
-			expect(databaseConnector.appealRelationship.findFirst).toHaveBeenCalledWith({
-				where: {
-					childRef: validRepresentationLpaStatement.caseReference,
-					type: CASE_RELATIONSHIP_LINKED
-				}
-			});
-			expect(databaseConnector.appeal.findUnique).toHaveBeenCalledWith({
-				where: { reference: leadAppealCaseReference },
-				include: {
-					appealStatus: true,
-					appealType: true
-				}
-			});
-			expect(databaseConnector.representation.create).toHaveBeenCalled();
-			expect(databaseConnector.document.createMany).toHaveBeenCalled();
-			expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
-			expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
-			expect(databaseConnector.representationAttachment.createMany).toHaveBeenCalled();
-			expect(response.status).toEqual(201);
-		});
+					// @ts-ignore
+					databaseConnector.documentVersion.findMany.mockResolvedValue([
+						{
+							dateCreated: '2024-03-01T13:48:35.847Z',
+							documentGuid: '001',
+							documentType: 'lpaStatement',
+							documentURI:
+								'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+							filename: 'img3.jpg',
+							mime: 'image/jpeg',
+							originalFilename: 'oimg.jpg',
+							size: 10293
+						}
+					]);
 
-		test('valid rep payload: Appellant final comments', async () => {
-			const validRepresentation = {
-				...validRepresentationAppellantFinalComment,
-				serviceUserId: (200000000 + 1).toString()
-			};
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						id: 2,
+						reference: validRepresentationLpaStatement.caseReference,
+						appealType: {
+							key: appealCaseType
+						},
+						appealStatus: [
+							{
+								id: 1,
+								status: 'lpa_questionnaire',
+								createdAt: new Date('2024-05-27T14:08:50.414Z'),
+								valid: true,
+								appealId: 2
+							}
+						],
+						lpa: {
+							lpaCode: 'Q9999'
+						}
+					});
 
-			// @ts-ignore
-			databaseConnector.serviceUser.findUnique.mockResolvedValue({ id: 1 });
+					const response = await request
+						.post('/appeals/representation-submission')
+						.send(validRepresentation);
 
-			// @ts-ignore
-			databaseConnector.folder.findMany.mockResolvedValue(
-				FOLDERS.map((/** @type {string} */ folder, /** @type {number} */ ix) => {
-					return {
-						id: ix + 1,
-						path: folder
+					expect(databaseConnector.appealRelationship.findFirst).toHaveBeenCalledWith({
+						where: {
+							childRef: validRepresentationLpaStatement.caseReference,
+							type: CASE_RELATIONSHIP_LINKED
+						}
+					});
+					expect(databaseConnector.appeal.findUnique).toHaveBeenCalledWith({
+						where: { reference: leadAppealCaseReference },
+						include: {
+							appealStatus: true,
+							appealType: true
+						}
+					});
+					expect(databaseConnector.representation.create).toHaveBeenCalled();
+					expect(databaseConnector.document.createMany).toHaveBeenCalled();
+					expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
+					expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
+					expect(databaseConnector.representationAttachment.createMany).toHaveBeenCalled();
+					expect(response.status).toEqual(201);
+				});
+
+				test('valid rep payload: Appellant final comments', async () => {
+					const validRepresentation = {
+						...validRepresentationAppellantFinalComment,
+						serviceUserId: (200000000 + 1).toString()
 					};
-				})
-			);
 
-			// @ts-ignore
-			databaseConnector.documentVersion.findMany.mockResolvedValue([
-				{
-					dateCreated: '2024-03-01T13:48:35.847Z',
-					documentGuid: '001',
-					documentType: 'appellantFinalComment',
-					documentURI:
-						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
-					filename: 'img3.jpg',
-					mime: 'image/jpeg',
-					originalFilename: 'oimg.jpg',
-					size: 10293
-				}
-			]);
+					// @ts-ignore
+					databaseConnector.serviceUser.findUnique.mockResolvedValue({ id: 1 });
 
-			// @ts-ignore
-			databaseConnector.appeal.findUnique.mockResolvedValue({
-				id: 2,
-				reference: validRepresentationLpaStatement.caseReference,
-				appealType: {
-					key: 'W'
-				},
-				appealStatus: [
-					{
-						id: 1,
-						status: 'lpa_questionnaire',
-						createdAt: new Date('2024-05-27T14:08:50.414Z'),
-						valid: true,
-						appealId: 2
-					}
-				],
-				lpa: {
-					lpaCode: 'Q9999'
-				}
-			});
+					// @ts-ignore
+					databaseConnector.folder.findMany.mockResolvedValue(
+						FOLDERS.map((/** @type {string} */ folder, /** @type {number} */ ix) => {
+							return {
+								id: ix + 1,
+								path: folder
+							};
+						})
+					);
 
-			const response = await request
-				.post('/appeals/representation-submission')
-				.send(validRepresentation);
+					// @ts-ignore
+					databaseConnector.documentVersion.findMany.mockResolvedValue([
+						{
+							dateCreated: '2024-03-01T13:48:35.847Z',
+							documentGuid: '001',
+							documentType: 'appellantFinalComment',
+							documentURI:
+								'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+							filename: 'img3.jpg',
+							mime: 'image/jpeg',
+							originalFilename: 'oimg.jpg',
+							size: 10293
+						}
+					]);
 
-			expect(databaseConnector.representation.create).toHaveBeenCalled();
-			expect(databaseConnector.document.createMany).toHaveBeenCalled();
-			expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
-			expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
-			expect(databaseConnector.representationAttachment.createMany).toHaveBeenCalled();
-			expect(response.status).toEqual(201);
-		});
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						id: 2,
+						reference: validRepresentationLpaStatement.caseReference,
+						appealType: {
+							key: appealCaseType
+						},
+						appealStatus: [
+							{
+								id: 1,
+								status: 'lpa_questionnaire',
+								createdAt: new Date('2024-05-27T14:08:50.414Z'),
+								valid: true,
+								appealId: 2
+							}
+						],
+						lpa: {
+							lpaCode: 'Q9999'
+						}
+					});
+
+					const response = await request
+						.post('/appeals/representation-submission')
+						.send(validRepresentation);
+
+					expect(databaseConnector.representation.create).toHaveBeenCalled();
+					expect(databaseConnector.document.createMany).toHaveBeenCalled();
+					expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
+					expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
+					expect(databaseConnector.representationAttachment.createMany).toHaveBeenCalled();
+					expect(response.status).toEqual(201);
+				});
+			}
+		);
 	});
 });
 
