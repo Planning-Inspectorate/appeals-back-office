@@ -41,7 +41,7 @@ describe('Change appeal procedure type route', () => {
 			appeal: { update: jest.fn() },
 			appealTimetable: { update: jest.fn() },
 			address: { update: jest.fn(), create: jest.fn() },
-			siteVisit: { deleteMany: jest.fn() }
+			siteVisit: { deleteMany: jest.fn(), findFirst: jest.fn() }
 		};
 		mockTx.hearing.deleteMany.mockResolvedValue({});
 		mockTx.hearingEstimate.deleteMany.mockResolvedValue({});
@@ -57,8 +57,9 @@ describe('Change appeal procedure type route', () => {
 		mockTx.address.create.mockResolvedValue({});
 		mockTx.address.update.mockResolvedValue({ id: 1 });
 		mockTx.siteVisit.deleteMany.mockResolvedValue({});
-		mockTx.inquiry.findFirst.mockResolvedValue({});
-		mockTx.hearing.findFirst.mockResolvedValue({});
+		mockTx.siteVisit.findFirst.mockResolvedValue({ id: 3 });
+		mockTx.inquiry.findFirst.mockResolvedValue({ id: 3 });
+		mockTx.hearing.findFirst.mockResolvedValue({ id: 3 });
 		const inquiry = {
 			...fullPlanningAppealData.inquiry,
 			inquiryStartTime: new Date('2999-01-01T12:00:00.000Z'),
@@ -319,6 +320,7 @@ describe('Change appeal procedure type route', () => {
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
 
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'hearing', 'Update');
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(1);
 			});
 
 			test('returns 201 and calls delete inquiry if changing from inquiry to hearing', async () => {
@@ -355,6 +357,7 @@ describe('Change appeal procedure type route', () => {
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
 
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'hearing', 'Create');
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'inquiry', 'Delete');
 
 				const personalisation = {
 					...expectedData,
@@ -432,6 +435,7 @@ describe('Change appeal procedure type route', () => {
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
 
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'hearing', 'Create');
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'siteVisit', 'Delete');
 
 				const personalisation = {
 					...expectedData,
@@ -555,6 +559,7 @@ describe('Change appeal procedure type route', () => {
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
 
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'inquiry', 'Create');
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'hearing', 'Delete');
 
 				const personalisation = {
 					...expectedData,
@@ -631,6 +636,7 @@ describe('Change appeal procedure type route', () => {
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
 				expect(mockNotifySend).not.toHaveBeenCalled();
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'inquiry', 'Update');
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(1);
 			});
 
 			test('returns 201 and calls delete siteVisit if changing from written to inquiry', async () => {
@@ -669,6 +675,7 @@ describe('Change appeal procedure type route', () => {
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
 
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'inquiry', 'Create');
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'siteVisit', 'Delete');
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
