@@ -1,11 +1,14 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "../server/utils/db-client"
+  provider   = "prisma-client-js"
+  output     = "../server/utils/db-client"
+  engineType = "client"
+  runtime    = "nodejs"
+  // generatedFileExtension = "js"
+  // importFileExtension    = "js"
 }
 
 datasource db {
   provider = "sqlserver"
-  url      = env("DATABASE_URL")
 }
 
 /// Appeal model
