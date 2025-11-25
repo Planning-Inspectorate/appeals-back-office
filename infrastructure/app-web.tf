@@ -91,7 +91,6 @@ module "app_web" {
     FEATURE_FLAG_CAS_ADVERT               = var.apps_config.featureFlags.featureFlagCasAdvert
     FEATURE_FLAG_ADVERTISEMENT            = var.apps_config.featureFlags.featureFlagAdvertisement
     FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT = var.apps_config.featureFlags.featureFlagSimplifyTeamAssignment
-    FEATURE_FLAG_CHANGE_APPEAL_TYPE       = var.apps_config.featureFlags.featureFlagChangeAppealType
     FEATURE_FLAG_PDF_DOWNLOAD             = var.apps_config.featureFlags.featureFlagPdfDownload
     FEATURE_FLAG_NOTIFY_CASE_HISTORY      = var.apps_config.featureFlags.featureFlagNotifyCaseHistory
     FEATURE_FLAG_NET_RESIDENCE            = var.apps_config.featureFlags.featureFlagNetResidence

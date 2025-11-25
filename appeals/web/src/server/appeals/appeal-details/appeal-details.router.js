@@ -23,7 +23,7 @@ import assignUserRouter from './assign-user/assign-user.router.js';
 import { auditRouter } from './audit/audit.router.js';
 import cancelAppealRouter from './cancel/cancel.router.js';
 import changeAppealDetailsRouter from './change-appeal-details/change-appeal-details.router.js';
-import changeAppealTypeMiddleware from './change-appeal-type.middleware.js';
+import appealTypeChangeRouter from './change-appeal-type/change-appeal-type.router.js';
 import costsRouter from './costs/costs.router.js';
 import environmentalAssessmentRouter from './environmental-assessment/environmental-assessment.router.js';
 import hearingRouter from './hearing/hearing.router.js';
@@ -115,9 +115,9 @@ router.use(
 );
 router.use(
 	'/:appealId/change-appeal-type',
-	validateAppealWithInclude(['appealType', 'appealStatus']),
+	validateAppealWithInclude(['appealType', 'appealStatus', 'appellantCase']),
 	assertUserHasPermission(permissionNames.updateCase),
-	changeAppealTypeMiddleware
+	appealTypeChangeRouter
 );
 router.use(
 	'/:appealId/linked-appeals',

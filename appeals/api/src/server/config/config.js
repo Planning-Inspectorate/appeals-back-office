@@ -62,9 +62,6 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_NET_RESIDENCE_S20 === 'true',
 		featureFlagAdvertisement:
 			environment.FEATURE_FLAG_ADVERTISEMENT && environment.FEATURE_FLAG_ADVERTISEMENT === 'true',
-		featureFlagChangeAppealType:
-			environment.FEATURE_FLAG_CHANGE_APPEAL_TYPE &&
-			environment.FEATURE_FLAG_CHANGE_APPEAL_TYPE === 'true',
 		featureFlagHearingPostMvp:
 			environment.FEATURE_FLAG_HEARING_POST_MVP &&
 			environment.FEATURE_FLAG_HEARING_POST_MVP === 'true',

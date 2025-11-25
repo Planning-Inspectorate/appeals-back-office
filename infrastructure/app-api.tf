@@ -77,7 +77,6 @@ module "app_api" {
     FEATURE_FLAG_NET_RESIDENCE           = var.apps_config.featureFlags.featureFlagNetResidence
     FEATURE_FLAG_NET_RESIDENCE_S20       = var.apps_config.featureFlags.featureFlagNetResidenceS20
     FEATURE_FLAG_ADVERTISEMENT           = var.apps_config.featureFlags.featureFlagAdvertisement
-    FEATURE_FLAG_CHANGE_APPEAL_TYPE      = var.apps_config.featureFlags.featureFlagChangeAppealType
     FEATURE_FLAG_HEARING_POST_MVP        = var.apps_config.featureFlags.featureFlagHearingPostMvp
     FEATURE_FLAG_SEARCH_CASE_OFFICER     = var.apps_config.featureFlags.featureFlagSearchCaseOfficer
     FEATURE_FLAG_ENFORCEMENT_NOTICE      = var.apps_config.featureFlags.featureFlagEnforcementNotice

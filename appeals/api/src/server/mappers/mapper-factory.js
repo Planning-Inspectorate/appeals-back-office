@@ -196,11 +196,11 @@ function createDataLayout(caseMap, mappingRequest) {
 				appellantCaseId: appeal.appellantCase?.id,
 				lpaQuestionnaireId: appeal.lpaQuestionnaire?.id,
 				healthAndSafety: {
-					appellantCase: { ...appellantCase.healthAndSafety },
+					appellantCase: { ...appellantCase?.healthAndSafety },
 					lpaQuestionnaire: { ...(lpaQuestionnaire?.healthAndSafety ?? null) }
 				},
 				inspectorAccess: {
-					appellantCase: { ...appellantCase.siteAccessRequired },
+					appellantCase: { ...appellantCase?.siteAccessRequired },
 					lpaQuestionnaire: { ...(lpaQuestionnaire?.siteAccessRequired ?? null) }
 				},
 				eiaScreeningRequired: appeal.eiaScreeningRequired,

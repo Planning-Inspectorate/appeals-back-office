@@ -40,7 +40,6 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 	const ALLOWED_CHILD_APPEAL_BANNERS = [
 		'awaitingLinkedAppeal',
 		'appealAwaitingTransfer',
-		'appealAwaitingTransferOld',
 		'assignCaseOfficer',
 		'readyForValidation',
 		'readyForLpaQuestionnaireReview',
@@ -69,14 +68,6 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 					request,
 					`/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/add-horizon-reference`
 				)}">Mark as transferred</a></p>`
-			});
-		case 'appealAwaitingTransferOld':
-			return createNotificationBanner({
-				bannerDefinitionKey,
-				html: `<p class="govuk-notification-banner__heading">This appeal is awaiting transfer</p><p class="govuk-body">The appeal must be transferred to Horizon. When this is done, <a class="govuk-link" data-cy="awaiting-transfer" href="${addBackLinkQueryToUrl(
-					request,
-					`/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/add-horizon-reference`
-				)}">update the appeal with the new horizon reference</a>.</p>`
 			});
 		case 'readyForSetUpSiteVisit':
 			return createNotificationBanner({

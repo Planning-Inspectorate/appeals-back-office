@@ -34,7 +34,7 @@ describe('change-appeal-type', () => {
 	beforeEach(() => {
 		installMockApi();
 		nock('http://test/')
-			.get('/appeals/1?include=appealType,appealStatus')
+			.get('/appeals/1?include=appealType,appealStatus,appellantCase')
 			.reply(200, appealData)
 			.persist();
 		nock('http://test/').get('/appeals/appeal-types').reply(200, appealTypesData);
@@ -54,7 +54,7 @@ describe('change-appeal-type', () => {
 
 				installMockApi();
 				nock('http://test/')
-					.get('/appeals/123943?include=appealType,appealStatus')
+					.get('/appeals/123943?include=appealType,appealStatus,appellantCase')
 					.reply(200, amendedAppeal);
 				nock('http://test/').get('/appeals/123943/appeal-types').reply(200, appealTypesData);
 
@@ -79,7 +79,7 @@ describe('change-appeal-type', () => {
 
 				installMockApi();
 				nock('http://test/')
-					.get('/appeals/123943?include=appealType,appealStatus')
+					.get('/appeals/123943?include=appealType,appealStatus,appellantCase')
 					.reply(200, amendedAppeal);
 				nock('http://test/').get('/appeals/123943/appeal-types').reply(200, appealTypesData);
 
@@ -121,7 +121,7 @@ describe('change-appeal-type', () => {
 			};
 
 			nock('http://test/')
-				.get('/appeals/123943?include=appealType,appealStatus')
+				.get('/appeals/123943?include=appealType,appealStatus,appellantCase')
 				.reply(200, amendedAppeal);
 			nock('http://test/').get('/appeals/123943/appeal-types').reply(200, appealTypesData);
 
@@ -594,9 +594,6 @@ describe('change-appeal-type', () => {
 		});
 
 		it('should redirect to the case details page if the required data is present in the session and the confirmation checkbox was checked', async () => {
-			nock('http://test/').get('/appeals/transferred-appeal/123').reply(200, {
-				caseFound: true
-			});
 			nock('http://test/')
 				.post('/appeals/1/appeal-transfer-confirmation')
 				.reply(200, { success: true });
