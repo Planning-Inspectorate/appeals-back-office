@@ -15,7 +15,7 @@ import { schemas, validateFromSchema } from '../integrations.validators.js';
 /** @typedef {import('@pins/appeals.api').Schema.Hearing} Hearing */
 /** @typedef {import('@pins/appeals.api').Schema.Inquiry} Inquiry */
 /** @typedef {import('@pins/appeals.api').Schema.SiteVisit} SiteVisit */
-/** @typedef {Inquiry | Hearing | SiteVisit | undefined | null} ExistingEvent */
+/** @typedef {import('#utils/db-client').Hearing | import('#utils/db-client').Inquiry | import('#utils/db-client').SiteVisit | undefined | null} ExistingEvent */
 
 /**
  *
