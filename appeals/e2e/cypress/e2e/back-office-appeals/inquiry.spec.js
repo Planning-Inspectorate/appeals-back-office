@@ -829,10 +829,7 @@ it('should display the correct status tags when removing inquiry address', () =>
 
 		cy.get('a:contains("Progress to inquiry")').click();
 		caseDetailsPage.clickButtonByText('Share proof of evidence and witnesses');
-		caseDetailsPage.validateBannerMessage(
-			'Success',
-			'Progressed to proof of evidence and witnesses'
-		);
+		caseDetailsPage.validateBannerMessage('Success', 'Progressed to inquiry');
 
 		// Verify Awaiting inquiry tag - all cases page
 		cy.visit(urlPaths.appealsList);
@@ -931,10 +928,7 @@ it('should display the correct status tags when cancelling inquiry', () => {
 
 		cy.get('a:contains("Progress to inquiry")').click();
 		caseDetailsPage.clickButtonByText('Share proof of evidence and witnesses');
-		caseDetailsPage.validateBannerMessage(
-			'Success',
-			'Progressed to proof of evidence and witnesses'
-		);
+		caseDetailsPage.validateBannerMessage('Success', 'Progressed to inquiry');
 
 		// Verify Awaiting inquiry tag - all cases page
 		cy.visit(urlPaths.appealsList);
