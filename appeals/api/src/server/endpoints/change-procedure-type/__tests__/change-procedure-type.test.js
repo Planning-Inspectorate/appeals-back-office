@@ -357,7 +357,9 @@ describe('Change appeal procedure type route', () => {
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
 
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'hearing', 'Create');
-				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'inquiry', 'Delete');
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'inquiry', 'Delete', {
+					id: 3
+				});
 
 				const personalisation = {
 					...expectedData,
@@ -435,7 +437,9 @@ describe('Change appeal procedure type route', () => {
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
 
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'hearing', 'Create');
-				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'siteVisit', 'Delete');
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'siteVisit', 'Delete', {
+					id: 3
+				});
 
 				const personalisation = {
 					...expectedData,
@@ -559,7 +563,9 @@ describe('Change appeal procedure type route', () => {
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
 
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'inquiry', 'Create');
-				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'hearing', 'Delete');
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'hearing', 'Delete', {
+					id: 3
+				});
 
 				const personalisation = {
 					...expectedData,
@@ -675,7 +681,9 @@ describe('Change appeal procedure type route', () => {
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
 
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'inquiry', 'Create');
-				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'siteVisit', 'Delete');
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'siteVisit', 'Delete', {
+					id: 3
+				});
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
