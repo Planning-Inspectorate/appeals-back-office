@@ -1,13 +1,12 @@
 FROM node:22-alpine3.20
 WORKDIR /src/app
 ARG GIT_SHA
-ARG APP_ENV=production
 COPY package*.json ./
 
 COPY packages ./packages
 
 COPY appeals/api appeals/api
-ENV NODE_ENV=$APP_ENV
+ENV NODE_ENV=production
 RUN npm ci
 
 # relative to cwd

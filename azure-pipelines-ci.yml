@@ -1,3 +1,6 @@
+variables:
+  - group: e2e-dev
+
 trigger:
   branches:
     include:
@@ -79,24 +82,38 @@ extends:
         dependantOn: Check PR labels
         condition: eq(variables['Build.Reason'], 'PullRequest')
         steps:
-          - task: ShellScript@2
-            inputs:
-              scriptPath: 'appeals/e2e/install-chromium.sh'
-            displayName: 'Install Chromium'
-            condition: eq(variables['agent.os'], 'Linux')
-          - task: DockerInstaller@0
-            inputs:
-              dockerVersion: '17.09.0-ce'
+          - script: |
+              PR_NUMBER=$(echo "$(Build.SourceBranch)" | sed -n 's#refs/pull/\([0-9]\+\)/.*#\1#p')
+              echo "PR_NUMBER: $PR_NUMBER"
+              curl -s https://api.github.com/repos/Planning-Inspectorate/appeals-back-office/issues/$PR_NUMBER/labels > pr.json
+            displayName: "Fetch PR metadata"
+          - script: |
+              if grep -q "bug" pr.json; then
+                echo "Found 'bug' label in PR"
+                echo "##vso[task.setvariable variable=runE2E]true"
+              else
+                echo "No 'bug' label found"
+              fi
+            displayName: "Check for label"
+          - template: ../steps/azure_get_secrets.yml
+            parameters:
+              keyVaultName: pins-kv-appeals-bo-dev
+              secrets:
+                - name: appeals-bo-client-secret
+                  variable: appeals-bo-client-secret
           - script:
               docker network create localNetwork
+            condition: eq(variables['runE2E'], 'true')
             displayName: "Create Local Docker Network"
           - script:
               docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=SqlServer01" -p 1433:1433 --name pins-sql-server -d --network localNetwork mcr.microsoft.com/mssql/server:2022-latest
+            condition: eq(variables['runE2E'], 'true')
             displayName: "Start Database"
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
               script: npm ci
+              condition: eq(variables['runE2E'], 'true')
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
@@ -104,34 +121,49 @@ extends:
               environmentVariables:
                 NODE_ENV: test
                 DATABASE_URL: "sqlserver://127.0.0.1:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true"
+              condition: eq(variables['runE2E'], 'true')
           - script: |
-              docker build . -f appeals/api/Dockerfile -t pins/api:local --build-arg APP_ENV=test --build-arg GIT_SHA=$(Build.SourceVersion)
-              docker run -p 3000:3000 -e "DATABASE_URL=sqlserver://pins-sql-server:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true" --name api -d --network localNetwork pins/api:local
+              docker build . -f appeals/api/Dockerfile -t pins/api:local --build-arg GIT_SHA=$(Build.SourceVersion)
+              docker run -p 3000:3000 -e "NODE_ENV=test" -e "DATABASE_URL=sqlserver://pins-sql-server:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true" --name api -d --network localNetwork pins/api:local
+            condition: eq(variables['runE2E'], 'true')
             displayName: "Build and Run App"
           - script: |
               docker build . -f appeals/web/Dockerfile -t pins/web:local --build-arg GIT_SHA=$(Build.SourceVersion)
-              docker run -p 8080:8080 -e "NODE_ENV=test" -d --network localNetwork pins/web:local
+              docker run -p 8080:8080 -e "NODE_ENV=test" -e "AUTH_CLIENT_SECRET=$(appeals-bo-client-secret)" -e "AUTH_CLIENT_ID=64c20f53-becf-4b7e-ba62-c1dc9b03ccf9" -e "AUTH_DISABLED=false" -e "SESSION_SECRET=dummy-secret" --name web -d --network localNetwork pins/web:local
+            condition: eq(variables['runE2E'], 'true')
             displayName: "Build and Run Web"
           - script: docker ps
+            condition: eq(variables['runE2E'], 'true')
             displayName: "Check all containers are up"
           - script: curl -v http://localhost:3000/health
+            condition: eq(variables['runE2E'], 'true')
           - script: curl -v http://localhost:8080/health
+            condition: eq(variables['runE2E'], 'true')
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
               script: |
                 cd appeals/e2e
                 npm install
+              condition: eq(variables['runE2E'], 'true')
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
               script: |
                 cd appeals/e2e
-                npx cypress run --spec "cypress/e2e/back-office-appeals/**/*.spec.js"
+                npm run cy:run-smoke
               environmentVariables:
                 BASE_URL: http://localhost:8080/
                 API_BASE_URL: http://localhost:3000/
-                VALIDATION_OFFICER_EMAIL: validationofficer.test@planninginspectorate.gov.uk
-                CASE_ADMIN_EMAIL: caseteamofficer.test@planninginspectorate.gov.uk
-                INSPECTOR_EMAIL: inspectorappeals.test@planninginspectorate.gov.uk
+                CASE_TEAM_EMAIL: $(CASE_TEAM_APPEALS_EMAIL)
+                CASE_ADMIN_EMAIL: $(CASE_ADMIN_APPEALS_EMAIL)
+                INSPECTOR_EMAIL: $(INSPECTOR_APPEALS_EMAIL)
+                VALIDATION_OFFICER_EMAIL: $(VALIDATION_OFFICER_EMAIL)
+                USER_PASSWORD: $(USER_PASSWORD)
+                HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
                 APP: appeals
+              condition: eq(variables['runE2E'], 'true')
+          - script: docker logs api
+            condition: eq(variables['runE2E'], 'true')
+          - script: docker logs web
+            condition: eq(variables['runE2E'], 'true')
