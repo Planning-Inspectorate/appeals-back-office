@@ -4250,7 +4250,13 @@ describe('LPA Questionnaire review', () => {
 			const response = await request.get(`${baseUrl}/environment-service-team-review-case`);
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toContain(
-				'Does the environmental services team need to review the case?</h1>'
+				'<h1 class="govuk-heading-l">Environmental services team review</h1>'
+			);
+			const fieldset = element.querySelector('.govuk-form-group fieldset');
+			expect(fieldset).not.toBeNull();
+			const fieldsetLegend = element.querySelector('.govuk-fieldset__legend');
+			expect(fieldsetLegend?.textContent).toContain(
+				'Does the environmental services team need to review the case?'
 			);
 			expect(element.innerHTML).toMatchSnapshot();
 		});
@@ -4269,7 +4275,13 @@ describe('LPA Questionnaire review', () => {
 			const response = await request.post(`${baseUrl}/environment-service-team-review-case`).send();
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toContain(
-				'Does the environmental services team need to review the case?</h1>'
+				'<h1 class="govuk-heading-l">Environmental services team review</h1>'
+			);
+			const fieldset = element.querySelector('.govuk-form-group fieldset');
+			expect(fieldset).not.toBeNull();
+			const fieldsetLegend = element.querySelector('.govuk-fieldset__legend');
+			expect(fieldsetLegend?.textContent).toContain(
+				'Does the environmental services team need to review the case?'
 			);
 			expect(element.innerHTML).toContain('There is a problem');
 			expect(element.innerHTML).toContain(
