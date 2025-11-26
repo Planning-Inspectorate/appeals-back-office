@@ -40,9 +40,9 @@ beforeEach(() => {
 	cy.login(users.appeals.caseAdmin);
 });
 
-// afterEach(() => {
-// 	cy.deleteAppeals(cases);
-// });
+afterEach(() => {
+	cy.deleteAppeals(cases);
+});
 
 describe('Link appeals', () => {
 	it('Link an unlinked appeal to an unlinked appeal (from lead)', () => {
