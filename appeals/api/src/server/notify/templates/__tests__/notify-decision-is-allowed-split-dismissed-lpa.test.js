@@ -15,7 +15,8 @@ const genericNotifySendData = {
 		site_address: '10, Test Street',
 		lpa_reference: '12345XYZ',
 		decision_date: '01 January 2021',
-		front_office_url: '/mock-front-office-url'
+		front_office_url: '/mock-front-office-url',
+		feedback_link: '/mock-feedback-link'
 	}
 };
 
@@ -40,7 +41,7 @@ const expectedContentRows = (replacementRows) => [
 	'',
 	'# Feedback',
 	'',
-	'We welcome your feedback on our appeals service. Tell us on this short [feedback form](https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u).',
+	'We welcome your feedback on our appeals service. Tell us on this short [feedback form](/mock-feedback-link).',
 	'',
 	'The Planning Inspectorate',
 	'enquiries@planninginspectorate.gov.uk'
