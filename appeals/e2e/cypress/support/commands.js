@@ -323,6 +323,12 @@ Cypress.Commands.add('updateAppealDetailsViaApi', (caseObj, caseDetails) => {
 	});
 });
 
+Cypress.Commands.add('linkAppeals', (leadCaseObj, childCaseObj) => {
+	return cy.wrap(null).then(async () => {
+		return await appealsApiClient.linkAppeals(leadCaseObj.id, childCaseObj.id);
+	});
+});
+
 Cypress.Commands.add('updateTimeTableDetails', (caseObj, timeTableDetails) => {
 	return cy.wrap(null).then(async () => {
 		const details = await appealsApiClient.loadCaseDetails(caseObj.reference);
