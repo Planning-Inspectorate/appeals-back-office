@@ -92,7 +92,7 @@ export const renderCheckYourAnswers = (request, response) => {
 				proofOfEvidenceType
 			)} proof of evidence and witnesses`,
 			preHeading: `Appeal ${appealShortReference(appealReference)}`,
-			backLinkUrl: `${baseUrl}/add-document`,
+			backLinkUrl: baseUrl,
 			submitButtonText: `Add ${formatProofOfEvidenceTypeText(
 				proofOfEvidenceType
 			)} proof of evidence and witnesses`,
