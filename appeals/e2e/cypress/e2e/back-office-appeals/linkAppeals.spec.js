@@ -40,9 +40,9 @@ beforeEach(() => {
 	cy.login(users.appeals.caseAdmin);
 });
 
-afterEach(() => {
-	cy.deleteAppeals(cases);
-});
+// afterEach(() => {
+// 	cy.deleteAppeals(cases);
+// });
 
 describe('Link appeals', () => {
 	it('Link an unlinked appeal to an unlinked appeal (from lead)', () => {
@@ -510,13 +510,13 @@ describe('Site visit', () => {
 				basePage.verifySectionHeaderExists('Site', false);
 
 				//personal list
-				cy.visit(urlPaths.personalList);
+				cy.visit(urlPaths.personalListFilteredEventReadyToSetup);
 				cases.forEach((caseObj) => {
 					basePage.verifyTagOnPersonalListPage(caseObj.reference, readyTagText);
 				});
 
 				//all cases
-				cy.visit(urlPaths.allCases);
+				cy.visit(urlPaths.appealsList);
 				cases.forEach((caseObj) => {
 					basePage.verifyTagOnAllCasesPage(caseObj.reference, readyTagText);
 				});
@@ -531,14 +531,14 @@ describe('Site visit', () => {
 				});
 
 				//personal list
-				cy.visit(urlPaths.personalList);
+				cy.visit(urlPaths.personalListFilteredAwaitingEvent);
 				cases.forEach((caseObj) => {
 					basePage.verifyTagOnPersonalListPage(caseObj.reference, awaitingTagText);
 					cy.log(leadCaseObj.reference);
 				});
 
 				//all cases
-				cy.visit(urlPaths.allCases);
+				cy.visit(urlPaths.appealsList);
 				cases.forEach((caseObj) => {
 					basePage.verifyTagOnAllCasesPage(caseObj.reference, awaitingTagText);
 				});

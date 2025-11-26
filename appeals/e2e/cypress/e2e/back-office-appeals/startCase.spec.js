@@ -128,7 +128,8 @@ describe('Start case', () => {
 
 			happyPathHelper.viewCaseDetails(caseObj);
 			caseDetailsPage.clickReadyToStartCase();
-			procedureTypePage.selectProcedureType('hearing');
+			caseDetailsPage.selectRadioButtonByValue('Hearing');
+			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('no');
 			caseDetailsPage.clickButtonByText('Continue');
 			cyaSection.verifyPreviewEmail('appellant');
