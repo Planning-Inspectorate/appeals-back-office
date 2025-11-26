@@ -78,14 +78,16 @@ export const changeProcedureToWritten = async (data, appealId) => {
 			await broadcasters.broadcastEvent(
 				result.existingInquiry.id,
 				EVENT_TYPE.INQUIRY,
-				EventType.Delete
+				EventType.Delete,
+				result.existingInquiry
 			);
 		}
 		if (result.existingHearing) {
 			await broadcasters.broadcastEvent(
 				result.existingHearing.id,
 				EVENT_TYPE.HEARING,
-				EventType.Delete
+				EventType.Delete,
+				result.existingHearing
 			);
 		}
 	} catch (error) {
@@ -167,25 +169,27 @@ export const changeProcedureToHearing = async (data, appealId) => {
 			return { updatedAppeal, updatedHearing, existingInquiry, existingSiteVisit };
 		});
 
-		if (result.updatedHearing) {
-			await broadcasters.broadcastEvent(
-				result.updatedHearing.id,
-				EVENT_TYPE.HEARING,
-				data.appealProcedure === data.existingAppealProcedure ? EventType.Update : EventType.Create
-			);
-		}
 		if (result.existingInquiry) {
 			await broadcasters.broadcastEvent(
 				result.existingInquiry.id,
 				EVENT_TYPE.INQUIRY,
-				EventType.Delete
+				EventType.Delete,
+				result.existingInquiry
 			);
 		}
 		if (result.existingSiteVisit) {
 			await broadcasters.broadcastEvent(
 				result.existingSiteVisit.id,
 				EVENT_TYPE.SITE_VISIT,
-				EventType.Delete
+				EventType.Delete,
+				result.existingSiteVisit
+			);
+		}
+		if (result.updatedHearing) {
+			await broadcasters.broadcastEvent(
+				result.updatedHearing.id,
+				EVENT_TYPE.HEARING,
+				data.appealProcedure === data.existingAppealProcedure ? EventType.Update : EventType.Create
 			);
 		}
 	} catch (error) {
@@ -297,25 +301,27 @@ export const changeProcedureToInquiry = async (data, appealId) => {
 			return { updatedAppeal, updatedInquiry, existingHearing, existingSiteVisit };
 		});
 
-		if (result.updatedInquiry) {
-			await broadcasters.broadcastEvent(
-				result.updatedInquiry.id,
-				EVENT_TYPE.INQUIRY,
-				data.appealProcedure === data.existingAppealProcedure ? EventType.Update : EventType.Create
-			);
-		}
 		if (result.existingHearing) {
 			await broadcasters.broadcastEvent(
 				result.existingHearing.id,
 				EVENT_TYPE.HEARING,
-				EventType.Delete
+				EventType.Delete,
+				result.existingHearing
 			);
 		}
 		if (result.existingSiteVisit) {
 			await broadcasters.broadcastEvent(
 				result.existingSiteVisit.id,
 				EVENT_TYPE.SITE_VISIT,
-				EventType.Delete
+				EventType.Delete,
+				result.existingSiteVisit
+			);
+		}
+		if (result.updatedInquiry) {
+			await broadcasters.broadcastEvent(
+				result.updatedInquiry.id,
+				EVENT_TYPE.INQUIRY,
+				data.appealProcedure === data.existingAppealProcedure ? EventType.Update : EventType.Create
 			);
 		}
 	} catch (error) {
