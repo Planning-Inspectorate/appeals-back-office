@@ -3,8 +3,6 @@ generator client {
   output     = "../server/utils/db-client"
   engineType = "client"
   runtime    = "nodejs"
-  // generatedFileExtension = "js"
-  // importFileExtension    = "js"
 }
 
 datasource db {
