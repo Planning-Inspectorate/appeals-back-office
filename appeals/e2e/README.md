@@ -45,6 +45,26 @@ cy:ci:test - run tests for test
 
 Alternatively you can run tests from the root via `npm run e2e` or `npm run e2e:open` to run in interactive mode.
 
+## Generating test data 
+
+There is a secondary suite of tests which can be used to create and delete test appeals - these can be found in the `back-office-test-data-generation` folder in `cypress/e2e` 
+It functions as with the main test suite, in that can launch the cypress UI in an environment and select a spec to run depending on which case type you want to create 
+
+Commands to open 
+```
+cy:open:test:data:generation: local,
+cy:open:test:data:generation:dev: dev
+cy:open:test:data:generation:test: test
+cy:open:test:data:generation:staging: staging
+```
+
+Then select the spec required and it should then run and generate output confirming the test appeal that was created 
+
+### Configuring specs 
+
+In each spec there is a configuration object `testCaseConfig` which determines how the test appeal is created - this can be updated as required before running the test 
+For deleting appeals update the `testAppealsIdsToDelete` list with id's of appeals that wish to delete 
+
 ## Getting Started
 
 ### Prerequisites
