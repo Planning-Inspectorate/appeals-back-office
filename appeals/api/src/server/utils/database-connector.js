@@ -17,7 +17,7 @@ function createPrismaClient() {
 			throw new Error('connectionString not provided to create Prisma Client');
 		}
 
-		prismaConfig.adapter = new PrismaMssql(process.env.DATABASE_URL);
+		prismaConfig.adapter = new PrismaMssql(prismaConfig.datasourceUrl);
 
 		prismaConfig.log = [
 			{
