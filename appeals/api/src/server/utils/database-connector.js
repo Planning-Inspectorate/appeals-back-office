@@ -12,7 +12,13 @@ function createPrismaClient() {
 	if (!prismaClient) {
 		/** @type {prismaConfig} */
 		const prismaConfig = {};
-		prismaConfig.adapter = new PrismaMssql(process.env.DATABASE_URL || '');
+
+		if (!process.env.DATABASE_URL) {
+			throw new Error('connectionString not provided to create Prisma Client');
+		}
+
+		prismaConfig.adapter = new PrismaMssql(process.env.DATABASE_URL);
+
 		prismaConfig.log = [
 			{
 				emit: 'event',
