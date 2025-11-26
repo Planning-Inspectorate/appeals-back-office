@@ -147,7 +147,10 @@ describe('add representation', () => {
 
 				expect(response.statusCode).toBe(200);
 
-				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+				const unprettifiedHTML = parseHtml(response.text, {
+					skipPrettyPrint: true,
+					rootElement: 'body'
+				}).innerHTML;
 
 				expect(unprettifiedHTML).toContain(
 					`Add ${
@@ -167,6 +170,9 @@ describe('add representation', () => {
 				);
 				expect(unprettifiedHTML).toContain(
 					`Change <span class="govuk-visually-hidden">proof of evidence and witnesses</span></a>`
+				);
+				expect(unprettifiedHTML).toContain(
+					`<a href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}/add-representation" class="govuk-back-link">Back</a>`
 				);
 			});
 		}

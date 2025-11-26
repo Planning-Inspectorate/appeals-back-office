@@ -66,12 +66,13 @@ export const getManageFolder = async (request, response) => {
 export const goToManageDocuments = async (request, response) => {
 	const { currentFolder } = request;
 	const baseUrl = request.baseUrl;
+	const rawQuery = request.originalUrl.split('?')[1];
 
 	if (!currentFolder) {
 		return response.status(404).render('app/404');
 	}
 
-	return response.redirect(`${baseUrl}/${currentFolder.folderId}`);
+	return response.redirect(`${baseUrl}/${currentFolder.folderId}${rawQuery ? `?${rawQuery}` : ''}`);
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
