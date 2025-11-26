@@ -20,7 +20,8 @@ describe('decision-is-invalid-appellant.md', () => {
 				site_address: '10, Test Street',
 				lpa_reference: '12345XYZ',
 				decision_date: '01 January 2021',
-				reasons: ['Reason one', 'Reason two', 'Reason three']
+				reasons: ['Reason one', 'Reason two', 'Reason three'],
+				feedback_link: '/mock-feedback-link'
 			}
 		};
 
@@ -48,7 +49,7 @@ describe('decision-is-invalid-appellant.md', () => {
 		expectedContentB = [
 			'# Feedback',
 			'',
-			'This is a new service. Help us improve it and [give your feedback (opens in new tab)](https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u).',
+			'This is a new service. Help us improve it and [give your feedback (opens in new tab)](/mock-feedback-link).',
 			'',
 			'The Planning Inspectorate',
 			'[Get help with your appeal decision](https://contact-us.planninginspectorate.gov.uk/hc/en-gb/requests/new)'
