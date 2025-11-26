@@ -240,13 +240,15 @@ export async function lpaQuestionnairePage(
  * @returns {PageContent}
  */
 export function environmentServiceTeamReviewCasePage(appealData, lpaQuestionnaireData) {
-	const title = 'Does the environmental services team need to review the case?';
+	const title = 'Environmental services team review';
+	const formLabel = 'Does the environmental services team need to review the case?';
 	const { lpaQuestionnaireId } = lpaQuestionnaireData;
 	const { appealId, appealReference, eiaScreeningRequired } = appealData;
 	const emailAddress = 'environmentalservices@planninginspectorate.gov.uk';
 	/** @type {PageContent} */
 	const pageContent = {
 		title,
+		heading: title,
 		backLinkUrl: `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		submitButtonProperties: {
@@ -254,16 +256,19 @@ export function environmentServiceTeamReviewCasePage(appealData, lpaQuestionnair
 			type: 'submit'
 		},
 		pageComponents: [
+			{
+				type: 'html',
+				parameters: {
+					html:
+						'<p class="govuk-body">Select yes if there is an environmental statement or if the case needs an environmental screening.</p>' +
+						`<p class="govuk-body">You also need to email <a class="govuk-link" href="mailTo:${emailAddress}">${emailAddress}</a> to request a review. Include whether the team needs to review the environmental statement or issue an environmental screening in your email.</p>`
+				}
+			},
 			yesNoInput({
 				name: 'eiaScreeningRequired',
 				value: eiaScreeningRequired,
-				hint: {
-					html:
-						'<p>Select yes if there is an environmental statement or if the case needs an environmental screening.</p>' +
-						`<p>You also need to email <a class="govuk-link" href="mailTo:${emailAddress}">${emailAddress}</a> to request a review. Include whether the team needs to review the environmental statement or issue an environmental screening in your email.</p>`
-				},
-				legendText: title,
-				legendIsPageHeading: true
+				legendText: formLabel,
+				legendIsPageHeading: false
 			})
 		],
 		postPageComponents: [
