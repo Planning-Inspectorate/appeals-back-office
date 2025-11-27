@@ -13305,9 +13305,9 @@
 						"description": "Date string of the lpaQuestionnaireDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM",
 						"example": "2026-11-10T00:00:00.000Z"
 					},
-					"statementDueDate": {
+					"lpaStatementDueDate": {
 						"type": "string",
-						"description": "Date string of the statementDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"description": "Date string of the lpaStatementDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM",
 						"example": "2026-11-10T00:00:00.000Z"
 					},
 					"ipCommentsDueDate": {

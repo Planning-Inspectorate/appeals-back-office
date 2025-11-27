@@ -126,6 +126,21 @@ describe('Change appeal procedure type route', () => {
 				// verify transaction itself was called
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
 
+				expect(mockTx.appealTimetable.update).toHaveBeenCalledWith({
+					where: { appealId: fullPlanningAppeal.id },
+					data: {
+						appellantStatementDueDate: '2025-12-01T00:00:00.000Z',
+						finalCommentsDueDate: '2025-12-15T00:00:00.000Z',
+						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
+						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
+						lpaStatementDueDate: '2025-12-01T00:00:00.000Z'
+					}
+				});
+
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'hearing', 'Delete', {
+					id: 3
+				});
+
 				const personalisation = {
 					...expectedData,
 					appeal_reference_number: '1345264',
@@ -201,6 +216,20 @@ describe('Change appeal procedure type route', () => {
 
 				// verify transaction itself was called
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
+				expect(mockTx.appealTimetable.update).toHaveBeenCalledWith({
+					where: { appealId: fullPlanningAppeal.id },
+					data: {
+						appellantStatementDueDate: '2025-12-01T00:00:00.000Z',
+						finalCommentsDueDate: '2025-12-15T00:00:00.000Z',
+						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
+						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
+						lpaStatementDueDate: '2025-12-01T00:00:00.000Z'
+					}
+				});
+
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'inquiry', 'Delete', {
+					id: 3
+				});
 
 				const personalisation = {
 					...expectedData,
@@ -268,6 +297,17 @@ describe('Change appeal procedure type route', () => {
 					data: { procedureTypeId: 1 }
 				});
 
+				expect(mockTx.appealTimetable.update).toHaveBeenCalledWith({
+					where: { appealId: fullPlanningAppeal.id },
+					data: {
+						appellantStatementDueDate: '2025-12-01T00:00:00.000Z',
+						finalCommentsDueDate: '2025-12-15T00:00:00.000Z',
+						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
+						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
+						lpaStatementDueDate: '2025-12-01T00:00:00.000Z'
+					}
+				});
+
 				// verify transaction itself was called
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
 			});
@@ -319,6 +359,17 @@ describe('Change appeal procedure type route', () => {
 				// verify transaction itself was called
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
 
+				expect(mockTx.appealTimetable.update).toHaveBeenCalledWith({
+					where: { appealId: fullPlanningAppeal.id },
+					data: {
+						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
+						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
+						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
+						planningObligationDueDate: '2025-12-10T00:00:00.000Z',
+						statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z'
+					}
+				});
+
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'hearing', 'Update');
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(1);
 			});
@@ -355,6 +406,17 @@ describe('Change appeal procedure type route', () => {
 
 				// verify transaction itself was called
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
+
+				expect(mockTx.appealTimetable.update).toHaveBeenCalledWith({
+					where: { appealId: fullPlanningAppeal.id },
+					data: {
+						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
+						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
+						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
+						planningObligationDueDate: '2025-12-10T00:00:00.000Z',
+						statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z'
+					}
+				});
 
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'hearing', 'Create');
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'inquiry', 'Delete', {
@@ -435,6 +497,17 @@ describe('Change appeal procedure type route', () => {
 
 				// verify transaction itself was called
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
+
+				expect(mockTx.appealTimetable.update).toHaveBeenCalledWith({
+					where: { appealId: fullPlanningAppeal.id },
+					data: {
+						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
+						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
+						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
+						planningObligationDueDate: '2025-12-10T00:00:00.000Z',
+						statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z'
+					}
+				});
 
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'hearing', 'Create');
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'siteVisit', 'Delete', {
@@ -523,6 +596,7 @@ describe('Change appeal procedure type route', () => {
 						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
 						statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z',
 						proofOfEvidenceAndWitnessesDueDate: '2025-12-15T00:00:00.000Z',
+						planningObligationDueDate: '2025-12-17T00:00:00.000Z',
 						estimationDays: '7',
 						address: {
 							addressLine1: '96 The Avenue',
@@ -561,6 +635,18 @@ describe('Change appeal procedure type route', () => {
 
 				// verify transaction itself was called
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
+
+				expect(mockTx.appealTimetable.update).toHaveBeenCalledWith({
+					where: { appealId: fullPlanningAppeal.id },
+					data: {
+						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
+						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
+						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
+						planningObligationDueDate: '2025-12-17T00:00:00.000Z',
+						proofOfEvidenceAndWitnessesDueDate: '2025-12-15T00:00:00.000Z',
+						statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z'
+					}
+				});
 
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'inquiry', 'Create');
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'hearing', 'Delete', {
@@ -624,7 +710,8 @@ describe('Change appeal procedure type route', () => {
 						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
 						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
 						statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z',
-						proofOfEvidenceAndWitnessesDueDate: '2025-12-15T00:00:00.000Z'
+						proofOfEvidenceAndWitnessesDueDate: '2025-12-15T00:00:00.000Z',
+						planningObligationDueDate: '2025-12-16T00:00:00.000Z'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -637,6 +724,18 @@ describe('Change appeal procedure type route', () => {
 				});
 
 				expect(mockTx.hearing.deleteMany).not.toHaveBeenCalled();
+
+				expect(mockTx.appealTimetable.update).toHaveBeenCalledWith({
+					where: { appealId: fullPlanningAppeal.id },
+					data: {
+						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
+						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
+						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
+						planningObligationDueDate: '2025-12-16T00:00:00.000Z',
+						proofOfEvidenceAndWitnessesDueDate: '2025-12-15T00:00:00.000Z',
+						statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z'
+					}
+				});
 
 				// verify transaction itself was called
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
@@ -658,6 +757,7 @@ describe('Change appeal procedure type route', () => {
 						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
 						statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z',
 						proofOfEvidenceAndWitnessesDueDate: '2025-12-15T00:00:00.000Z',
+						planningObligationDueDate: '2025-12-17T00:00:00.000Z',
 						address: {
 							addressLine1: '96 The Avenue',
 							addressLine2: 'Leftfield',
@@ -679,6 +779,18 @@ describe('Change appeal procedure type route', () => {
 
 				// verify transaction itself was called
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
+
+				expect(mockTx.appealTimetable.update).toHaveBeenCalledWith({
+					where: { appealId: fullPlanningAppeal.id },
+					data: {
+						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
+						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
+						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
+						planningObligationDueDate: '2025-12-17T00:00:00.000Z',
+						proofOfEvidenceAndWitnessesDueDate: '2025-12-15T00:00:00.000Z',
+						statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z'
+					}
+				});
 
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'inquiry', 'Create');
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'siteVisit', 'Delete', {
