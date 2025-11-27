@@ -145,3 +145,26 @@ export const updateRejectionReasons = (apiClient, appealId, commentId, rejection
  * */
 export const publishRepresentations = (apiClient, appealId) =>
 	apiClient.post(`appeals/${appealId}/reps/publish`).json();
+
+export const DOCUMENT_STAGE = 'appellant-case';
+export const DOCUMENT_TYPE = 'appellantStatement';
+/** @typedef {import('#appeals/appeal-details/representations/types.js').RepresentationRequest} RepresentationRequest */
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {number} appealId
+ * @param {RepresentationRequest} payload
+ * @param {string} representationType
+ * @returns {Promise<any>}
+ */
+export async function postRepresentation(apiClient, appealId, payload, representationType) {
+	try {
+		const response = await apiClient.post(`appeals/${appealId}/reps/${representationType}`, {
+			json: payload
+		});
+		return response.body;
+	} catch (error) {
+		console.error('Error posting representation:', error);
+		throw new Error('Failed to post representation');
+	}
+}
