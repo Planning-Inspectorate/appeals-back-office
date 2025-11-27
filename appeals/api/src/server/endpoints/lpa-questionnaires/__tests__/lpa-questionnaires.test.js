@@ -279,13 +279,11 @@ describe('lpa questionnaires routes', () => {
 					'casAdvertAppeal',
 					{
 						appeal: casAdvertAppeal,
-						templateName: 'lpaq-complete-appellant',
+						templateName: 'lpaq-complete-has-appellant',
 						personalisation: {
 							lpa_reference: casAdvertAppeal.applicationReference,
 							appeal_reference_number: casAdvertAppeal.reference,
 							site_address: `${fullPlanningAppeal.address.addressLine1}, ${fullPlanningAppeal.address.addressLine2}, ${fullPlanningAppeal.address.addressTown}, ${fullPlanningAppeal.address.addressCounty}, ${fullPlanningAppeal.address.postcode}, ${fullPlanningAppeal.address.addressCountry}`,
-							what_happens_next:
-								'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.',
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						}
 					}

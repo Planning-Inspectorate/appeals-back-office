@@ -2,6 +2,7 @@ import { createNewDocument } from '#app/components/file-uploader.component.js';
 import { postDocumentUpload } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
+import { isStatePassed } from '#lib/appeal-status.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dayMonthYearHourMinuteToDisplayDate } from '#lib/dates.js';
 import { clearEdits, editLink, getSessionValues } from '#lib/edit-utilities.js';
@@ -11,7 +12,7 @@ import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-uplo
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
-import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STATUS, APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 import { getAttachmentsFolder } from '../../document-attachments/attachments-service.js';
 import {
 	postDateSubmittedFactory,
@@ -331,7 +332,9 @@ export async function postIPComment(request, response) {
 
 			addNotificationBannerToSession({
 				session: request.session,
-				bannerDefinitionKey: 'interestedPartyCommentAdded',
+				bannerDefinitionKey: isStatePassed(currentAppeal, APPEAL_CASE_STATUS.STATEMENTS)
+					? 'interestedPartyCommentAddedAndShared'
+					: 'interestedPartyCommentAdded',
 				appealId: currentAppeal.appealId
 			});
 

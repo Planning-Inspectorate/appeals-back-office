@@ -973,6 +973,147 @@ describe('/appeals/:id/reps', () => {
 		});
 	});
 
+	describe('POST representation/comments auto-publish', () => {
+		test('200 and auto-publishes when appeal has PASSED statements state', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealStatus: [{ valid: false, status: 'statements' }]
+			});
+			databaseConnector.representation.create.mockResolvedValue({
+				id: 1,
+				status: 'published'
+			});
+
+			const response = await request
+				.post('/appeals/1/reps/comments')
+				.send({
+					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
+					ipAddress: { postCode: '', addressLine1: '' },
+					redactionStatus: 'unredacted',
+					attachments: []
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						status: 'published'
+					})
+				})
+			);
+			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
+				expect.anything(),
+				'Create'
+			);
+		});
+
+		test('200 and does not auto-publish when appeal is NOT in statements state', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealStatus: [{ valid: true, status: 'lpa_questionnaire' }]
+			});
+			databaseConnector.representation.create.mockResolvedValue({
+				id: 1,
+				status: 'awaiting_review'
+			});
+
+			const response = await request
+				.post('/appeals/1/reps/comments')
+				.send({
+					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
+					ipAddress: { postCode: '', addressLine1: '' },
+					redactionStatus: 'unredacted',
+					attachments: []
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.not.objectContaining({
+						status: 'published'
+					})
+				})
+			);
+			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
+				expect.anything(),
+				'Update'
+			);
+		});
+
+		test('200 and does not auto-publish when appeal is CURRENTLY in statements state', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealStatus: [{ valid: true, status: 'statements' }]
+			});
+			databaseConnector.representation.create.mockResolvedValue({
+				id: 1,
+				status: 'awaiting_review'
+			});
+
+			const response = await request
+				.post('/appeals/1/reps/comments')
+				.send({
+					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
+					ipAddress: { postCode: '', addressLine1: '' },
+					redactionStatus: 'unredacted',
+					attachments: []
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.not.objectContaining({
+						status: 'published'
+					})
+				})
+			);
+			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
+				expect.anything(),
+				'Update'
+			);
+		});
+
+		test('200 and auto-publishes when appeal is in final_comments state', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealStatus: [
+					{ valid: true, status: 'final_comments' },
+					{ valid: false, status: 'statements' }
+				]
+			});
+			databaseConnector.representation.create.mockResolvedValue({
+				id: 1,
+				status: 'published'
+			});
+
+			const response = await request
+				.post('/appeals/1/reps/comments')
+				.send({
+					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
+					ipAddress: { postCode: '', addressLine1: '' },
+					redactionStatus: 'unredacted',
+					attachments: []
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						status: 'published'
+					})
+				})
+			);
+			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
+				expect.anything(),
+				'Create'
+			);
+		});
+	});
+
 	describe('POST representation/:proofOfEvidenceType/proof-of-evidence', () => {
 		beforeEach(() => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);

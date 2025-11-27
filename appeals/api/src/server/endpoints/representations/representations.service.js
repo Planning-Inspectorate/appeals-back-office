@@ -113,6 +113,7 @@ export const getRepStatusAuditLogDetails = (status, repType, redactedRep) => {
  * @property {string | undefined} dateCreated
  * @property {string} redactionStatus
  * @property {string} source
+ * @property {string} [status]
  *
  * @param {number} appealId
  * @param {CreateRepresentationInput} input
@@ -144,7 +145,8 @@ export const createRepresentation = async (appealId, input) => {
 		representedId: represented.id,
 		representationType: input.representationType,
 		source: input.source,
-		dateCreated: input.dateCreated
+		dateCreated: input.dateCreated,
+		status: input.status
 	});
 
 	if (input.attachments.length > 0) {

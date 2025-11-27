@@ -1,6 +1,7 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import representationRepository from '#repositories/representation.repository.js';
+import { isStatePassed } from '#state/transition-state.js';
 import BackOfficeAppError from '#utils/app-error.js';
 import { currentStatus } from '#utils/current-status.js';
 import { getPageCount } from '#utils/database-pagination.js';
@@ -212,12 +213,23 @@ export async function updateRepresentation(request, response) {
 export const createRepresentation = (representationType) => async (req, res) => {
 	const { appealId } = req.params;
 
+	const shouldAutoPublish =
+		representationType === APPEAL_REPRESENTATION_TYPE.COMMENT &&
+		isStatePassed(req.appeal, APPEAL_CASE_STATUS.STATEMENTS);
+
+	const updatePayload = shouldAutoPublish
+		? { ...req.body, status: APPEAL_REPRESENTATION_STATUS.PUBLISHED }
+		: req.body;
+
 	const rep = await representationService.createRepresentation(parseInt(appealId), {
 		representationType,
-		...req.body
+		...updatePayload
 	});
 
-	await broadcasters.broadcastRepresentation(rep.id, EventType.Create);
+	await broadcasters.broadcastRepresentation(
+		rep.id,
+		shouldAutoPublish ? EventType.Create : EventType.Update
+	);
 	return res.status(201).send(rep);
 };
 
@@ -356,4 +368,11 @@ export async function publish(req, res) {
 
 	await broadcasters.broadcastAppeal(appeal.id);
 	return res.send(updatedReps);
+}
+/**
+ * @param {number} repId
+ * @returns {Promise<any>}
+ */
+export async function publishAfterStatePassed(repId) {
+	await broadcasters.broadcastRepresentation(repId, EventType.Update);
 }
