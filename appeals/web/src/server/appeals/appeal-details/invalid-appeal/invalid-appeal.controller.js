@@ -1,11 +1,13 @@
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { getFeedbackLinkFromAppealTypeName } from '#lib/feedback-form-link.js';
 import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
+import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import { CHANGE_APPEAL_TYPE_INVALID_REASON } from '@pins/appeals/constants/support.js';
 import { mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters } from '../appellant-case/appellant-case.mapper.js';
 import * as appellantCaseService from '../appellant-case/appellant-case.service.js';
@@ -211,7 +213,8 @@ export const getCheckPage = async (request, response) => {
 
 		const { appellantTemplate, lpaTemplate } = await generateInvalidAppealNotifyPreviews(
 			request.apiClient,
-			personalisation
+			personalisation,
+			currentAppeal.appealType
 		);
 
 		return renderCheckYourAnswersComponent(
@@ -314,15 +317,22 @@ export const getInvalidPage = async (request, response) => {
  * Generate Notify preview templates for appellant and LPA
  * @param {import('got').Got} apiClient
  * @param {object} personalisation
+ * @param {string} appeal_type
  * @returns {Promise<{appellantTemplate: any, lpaTemplate: any}>}
  */
-const generateInvalidAppealNotifyPreviews = async (apiClient, personalisation) => {
+const generateInvalidAppealNotifyPreviews = async (apiClient, personalisation, appeal_type) => {
 	const appellantTemplateName = 'appeal-invalid.content.md';
 	const lpaTemplateName = 'appeal-invalid-lpa.content.md';
 
 	const [appellantTemplate, lpaTemplate] = await Promise.all([
-		generateNotifyPreview(apiClient, appellantTemplateName, personalisation),
-		generateNotifyPreview(apiClient, lpaTemplateName, personalisation)
+		generateNotifyPreview(apiClient, appellantTemplateName, {
+			...personalisation,
+			feedback_link: getFeedbackLinkFromAppealTypeName(appeal_type)
+		}),
+		generateNotifyPreview(apiClient, lpaTemplateName, {
+			...personalisation,
+			feedback_link: FEEDBACK_FORM_LINKS.LPA
+		})
 	]);
 	return { appellantTemplate, lpaTemplate };
 };
