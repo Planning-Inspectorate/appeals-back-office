@@ -1,11 +1,18 @@
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import {
 	appealData,
+	appealDataAdvert,
+	appealDataCasAdvert,
+	appealDataCasPlanning,
+	appealDataFullPlanning,
+	appealDataListedBuilding,
 	appellantCaseDataInvalidOutcome,
 	appellantCaseDataNotValidated,
 	appellantCaseInvalidReasons
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -27,11 +34,11 @@ const invalidReasonsWithoutTextIds = invalidReasonsWithoutText.map((reason) => r
 const invalidReasonsWithTextIds = invalidReasonsWithText.map((reason) => reason.id);
 
 describe('invalid-appeal', () => {
-	beforeEach(installMockApi);
 	afterEach(teardown);
 
 	describe('GET / , /new', () => {
 		beforeEach(() => {
+			installMockApi();
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
@@ -67,6 +74,7 @@ describe('invalid-appeal', () => {
 
 	describe('POST  / , /new', () => {
 		beforeEach(async () => {
+			installMockApi();
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
@@ -263,6 +271,7 @@ describe('invalid-appeal', () => {
 
 	describe('GET /check', () => {
 		beforeEach(() => {
+			nock('http://test/').get('/appeals/0').reply(500).persist();
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
@@ -281,27 +290,55 @@ describe('invalid-appeal', () => {
 			nock.cleanAll();
 		});
 
-		it('should render the invalid appeal check page', async () => {
-			await request.post(`${baseUrl}/invalid/new`).send({
-				invalidReason: invalidReasonsWithoutTextIds[0]
-			});
-			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
-				id: 1,
-				email: 'caseofficers@planninginspectorate.gov.uk',
-				name: 'standard email'
-			});
-			const response = await request.get(`${baseUrl}/invalid/check`);
-			const element = parseHtml(response.text);
+		it.each([
+			['householder', appealData, FEEDBACK_FORM_LINKS.HAS],
+			['full planning', appealDataFullPlanning, FEEDBACK_FORM_LINKS.S78],
+			['listed building', appealDataListedBuilding, FEEDBACK_FORM_LINKS.S20],
+			['cas planning', appealDataCasPlanning, FEEDBACK_FORM_LINKS.CAS_PLANNING],
+			['cas advert', appealDataCasAdvert, FEEDBACK_FORM_LINKS.CAS_ADVERTS],
+			['full advert', appealDataAdvert, FEEDBACK_FORM_LINKS.FULL_ADVERTS]
+		])(
+			'should render the invalid appeal check page for %s appeal',
+			async (_, appealData, expectedAppealFeedbackLink) => {
+				nock('http://test/').get(`/appeals/1?include=all`).reply(200, appealData).persist();
 
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Check details and mark appeal as invalid</h1>');
-			expect(element.innerHTML).toContain('Preview email to appellant');
-			expect(element.innerHTML).toContain('Preview email to LPA');
-		});
+				await request.post(`${baseUrl}/invalid/new`).send({
+					invalidReason: invalidReasonsWithoutTextIds[0]
+				});
+				nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+					id: 1,
+					email: 'caseofficers@planninginspectorate.gov.uk',
+					name: 'standard email'
+				});
+				const response = await request.get(`${baseUrl}/invalid/check`);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Check details and mark appeal as invalid</h1>');
+				expect(element.innerHTML).toContain('Preview email to appellant');
+				expect(element.innerHTML).toContain('Preview email to LPA');
+
+				expect(generateNotifyPreview).toHaveBeenCalledWith(
+					expect.anything(),
+					'appeal-invalid.content.md',
+					expect.objectContaining({
+						feedback_link: expectedAppealFeedbackLink
+					})
+				);
+				expect(generateNotifyPreview).toHaveBeenCalledWith(
+					expect.anything(),
+					'appeal-invalid-lpa.content.md',
+					expect.objectContaining({
+						feedback_link: FEEDBACK_FORM_LINKS.LPA
+					})
+				);
+			}
+		);
 	});
 
 	describe('GET /view', () => {
 		beforeEach(() => {
+			installMockApi();
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataInvalidOutcome);
