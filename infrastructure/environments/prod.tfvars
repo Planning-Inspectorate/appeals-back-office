@@ -126,7 +126,7 @@ sql_config = {
     login_username = "pins-odt-sql-prod-appeals-bo"
     object_id      = "0fff01c6-b8bc-4b32-8f2d-1a1d122b7189"
   }
-  sku_name    = "S3"
+  sku_name    = "S4"
   max_size_gb = 250
   retention = {
     audit_days             = 120
