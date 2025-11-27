@@ -43,10 +43,12 @@ export const mapAppellantCaseIn = (command) => {
 			: null;
 
 	const advertDetails =
-		(casedata.caseType === 'ZA' || casedata.caseType === 'H') &&
+		(casedata.caseType === APPEAL_CASE_TYPE.ZA || casedata.caseType === APPEAL_CASE_TYPE.H) &&
 		casedata.advertDetails &&
+		// @ts-ignore - type resolved in v2 of data model
 		casedata.advertDetails.length > 0
 			? casedata.advertDetails
+					// @ts-ignore - type resolved in v2 of data model
 					.map((detail) => ({
 						advertInPosition: detail.isAdvertInPosition,
 						highwayLand: detail.isSiteOnHighwayLand

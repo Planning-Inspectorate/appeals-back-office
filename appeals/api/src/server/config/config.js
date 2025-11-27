@@ -1,4 +1,5 @@
 import { loadEnvironment } from '@pins/platform';
+import { APPEAL_ALLOCATION_LEVEL } from '@planning-inspectorate/data-model';
 import path from 'node:path';
 import url from 'node:url';
 import schema from './schema.js';
@@ -100,14 +101,14 @@ const { value, error } = schema.validate({
 		testMailbox: environment.TEST_MAILBOX || 'test@example.com'
 	},
 	appealAllocationLevels: [
-		{ level: 'A', band: 3 },
-		{ level: 'B', band: 3 },
-		{ level: 'C', band: 2 },
-		{ level: 'D', band: 2 },
-		{ level: 'E', band: 1 },
-		{ level: 'F', band: 1 },
-		{ level: 'G', band: 1 },
-		{ level: 'H', band: 1 }
+		{ level: APPEAL_ALLOCATION_LEVEL.A, band: 3 },
+		{ level: APPEAL_ALLOCATION_LEVEL.B, band: 3 },
+		{ level: APPEAL_ALLOCATION_LEVEL.C, band: 2 },
+		{ level: APPEAL_ALLOCATION_LEVEL.D, band: 2 },
+		{ level: APPEAL_ALLOCATION_LEVEL.E, band: 1 },
+		{ level: APPEAL_ALLOCATION_LEVEL.F, band: 1 },
+		{ level: APPEAL_ALLOCATION_LEVEL.G, band: 1 },
+		{ level: APPEAL_ALLOCATION_LEVEL.H, band: 1 }
 	],
 	horizon: {
 		url: environment.SRV_HORIZON_URL,

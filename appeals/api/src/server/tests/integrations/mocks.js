@@ -1,4 +1,5 @@
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 export const validAppellantCase = {
 	casedata: {
@@ -12,7 +13,7 @@ export const validAppellantCase = {
 		caseProcedure: 'written',
 		caseSubmissionDueDate: '2024-03-25T23:59:59.999Z',
 		caseSubmittedDate: '2024-03-25T23:59:59.999Z',
-		caseType: 'D',
+		caseType: APPEAL_CASE_TYPE.D,
 		changedDevelopmentDescription: false,
 		enforcementNotice: false,
 		floorSpaceSquareMetres: 22,
@@ -77,7 +78,7 @@ export const validAppellantCaseAdverts = {
 		caseProcedure: 'written',
 		caseSubmissionDueDate: '2024-03-25T23:59:59.999Z',
 		caseSubmittedDate: '2024-03-25T23:59:59.999Z',
-		caseType: 'H',
+		caseType: APPEAL_CASE_TYPE.H,
 		changedDevelopmentDescription: false,
 		enforcementNotice: false,
 		floorSpaceSquareMetres: 22,
@@ -143,7 +144,7 @@ export const validAppellantCaseCasAdverts = {
 		caseProcedure: 'written',
 		caseSubmissionDueDate: '2024-03-25T23:59:59.999Z',
 		caseSubmittedDate: '2024-03-25T23:59:59.999Z',
-		caseType: 'ZA',
+		caseType: APPEAL_CASE_TYPE.ZA,
 		changedDevelopmentDescription: false,
 		enforcementNotice: false,
 		floorSpaceSquareMetres: 22,
@@ -201,7 +202,7 @@ export const validAppellantCaseCasPlanning = {
 	...validAppellantCase,
 	casedata: {
 		...validAppellantCase.casedata,
-		caseType: 'ZP'
+		caseType: APPEAL_CASE_TYPE.ZP
 	}
 };
 
@@ -209,7 +210,7 @@ export const validAppellantCaseS78 = {
 	...validAppellantCase,
 	casedata: {
 		...validAppellantCase.casedata,
-		caseType: 'W',
+		caseType: APPEAL_CASE_TYPE.W,
 		appellantProcedurePreference: 'inquiry',
 		appellantProcedurePreferenceDetails: 'Reason for preference',
 		appellantProcedurePreferenceDuration: 3,
@@ -228,7 +229,7 @@ export const validAppellantCaseS20 = {
 	...validAppellantCase,
 	casedata: {
 		...validAppellantCase.casedata,
-		caseType: 'Y',
+		caseType: APPEAL_CASE_TYPE.Y,
 		appellantProcedurePreference: 'inquiry',
 		appellantProcedurePreferenceDetails: 'Reason for preference',
 		appellantProcedurePreferenceDuration: 3,
@@ -292,7 +293,7 @@ const validLpaQuestionnaireCommon = {
 export const validLpaQuestionnaireHas = {
 	casedata: {
 		...validLpaQuestionnaireCommon.casedata,
-		caseType: 'D',
+		caseType: APPEAL_CASE_TYPE.D,
 		lpaStatement: 'cupidatat ipsum eu culpa',
 		isCorrectAppealType: true,
 		isGreenBelt: false,
@@ -308,7 +309,7 @@ export const validLpaQuestionnaireHas = {
 export const validLpaQuestionnaireCasPlanning = {
 	casedata: {
 		...validLpaQuestionnaireHas.casedata,
-		caseType: 'ZP'
+		caseType: APPEAL_CASE_TYPE.ZP
 	},
 	documents: validLpaQuestionnaireCommon.documents
 };
@@ -317,7 +318,7 @@ export const validLpaQuestionnaireS78 = {
 	casedata: {
 		...validLpaQuestionnaireCommon.casedata,
 		...validLpaQuestionnaireHas.casedata,
-		caseType: 'W',
+		caseType: APPEAL_CASE_TYPE.W,
 		changedListedBuildingNumbers: ['10023', '17824'],
 		designatedSitesNames: ['SSSI'],
 		affectsScheduledMonument: true,
@@ -388,7 +389,7 @@ export const validLpaQuestionnaireS78 = {
 export const validLpaQuestionnaireS20 = {
 	casedata: {
 		...validLpaQuestionnaireS78.casedata,
-		caseType: 'Y',
+		caseType: APPEAL_CASE_TYPE.Y,
 		preserveGrantLoan: true
 	},
 	documents: validLpaQuestionnaireS78.documents
@@ -398,7 +399,7 @@ export const validLpaQuestionnaireAdverts = {
 	casedata: {
 		...validLpaQuestionnaireCommon.casedata,
 		...validLpaQuestionnaireHas.casedata,
-		caseType: 'H',
+		caseType: APPEAL_CASE_TYPE.H,
 		changedListedBuildingNumbers: ['10023', '17824'],
 		designatedSitesNames: ['SSSI'],
 		affectsScheduledMonument: true,
@@ -446,7 +447,7 @@ export const validLpaQuestionnaireCasAdverts = {
 	casedata: {
 		...validLpaQuestionnaireCommon.casedata,
 		...validLpaQuestionnaireHas.casedata,
-		caseType: 'ZA',
+		caseType: APPEAL_CASE_TYPE.ZA,
 		designatedSitesNames: ['SSSI'],
 		affectsScheduledMonument: true,
 		hasProtectedSpecies: true,
@@ -563,7 +564,7 @@ export const validRepresentationAppellantFinalComment = {
 export const appealIngestionInput = {
 	appealType: {
 		connect: {
-			key: 'D'
+			key: APPEAL_CASE_TYPE.D
 		}
 	},
 	appellant: {
@@ -641,7 +642,7 @@ export const appealIngestionInput = {
 export const appealIngestionInputAdverts = {
 	appealType: {
 		connect: {
-			key: 'H'
+			key: APPEAL_CASE_TYPE.H
 		}
 	},
 	appellant: {
@@ -727,7 +728,7 @@ export const appealIngestionInputAdverts = {
 export const appealIngestionInputCasAdverts = {
 	appealType: {
 		connect: {
-			key: 'ZA'
+			key: APPEAL_CASE_TYPE.ZA
 		}
 	},
 	appellant: {
@@ -809,7 +810,7 @@ export const appealIngestionInputCasAdverts = {
 export const appealIngestionInputCasPlanning = {
 	appealType: {
 		connect: {
-			key: 'ZP'
+			key: APPEAL_CASE_TYPE.ZP
 		}
 	},
 	appellant: {
@@ -888,7 +889,7 @@ export const appealIngestionInputS78 = {
 	...appealIngestionInput,
 	appealType: {
 		connect: {
-			key: 'W'
+			key: APPEAL_CASE_TYPE.W
 		}
 	},
 	appellantCase: {
@@ -919,7 +920,7 @@ export const appealIngestionInputS78Written = {
 	...appealIngestionInput,
 	appealType: {
 		connect: {
-			key: 'W'
+			key: APPEAL_CASE_TYPE.W
 		}
 	},
 	appellantCase: {
@@ -950,7 +951,7 @@ export const appealIngestionInputS78AssignedTeamId = {
 	...appealIngestionInput,
 	appealType: {
 		connect: {
-			key: 'W'
+			key: APPEAL_CASE_TYPE.W
 		}
 	},
 	appellantCase: {
@@ -981,7 +982,7 @@ export const appealIngestionInputS20 = {
 	...appealIngestionInput,
 	appealType: {
 		connect: {
-			key: 'Y'
+			key: APPEAL_CASE_TYPE.Y
 		}
 	},
 	appellantCase: {
@@ -1008,7 +1009,7 @@ export const appealIngestionInputS20Written = {
 	...appealIngestionInput,
 	appealType: {
 		connect: {
-			key: 'Y'
+			key: APPEAL_CASE_TYPE.Y
 		}
 	},
 	appellantCase: {

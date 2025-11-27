@@ -15,7 +15,7 @@ import {
 	ERROR_MUST_BE_VALID_APPEAL_STATE,
 	ERROR_PAGENUMBER_AND_PAGESIZE_ARE_REQUIRED
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { omit } from 'lodash-es';
 import { request } from '../../../app-test.js';
 import { getIdsOfReferencedAppeals } from '../appeals.formatter.js';
@@ -239,7 +239,19 @@ describe('appeals list routes', () => {
 				const expectedQuery = {
 					where: {
 						appealStatus: { some: { valid: true } },
-						appealType: { key: { in: ['D', 'W', 'Y', 'ZP', 'ZA', 'H', 'C'] } }
+						appealType: {
+							key: {
+								in: [
+									APPEAL_CASE_TYPE.D,
+									APPEAL_CASE_TYPE.W,
+									APPEAL_CASE_TYPE.Y,
+									APPEAL_CASE_TYPE.ZP,
+									APPEAL_CASE_TYPE.ZA,
+									APPEAL_CASE_TYPE.H,
+									APPEAL_CASE_TYPE.C
+								]
+							}
+						}
 					},
 					include: {
 						address: true,
@@ -1639,7 +1651,7 @@ describe('appeals list routes', () => {
 			proofOfEvidenceAndWitnessesDueDate: new Date('2025-11-08T00:00:00.000Z'),
 			s106ObligationDueDate: new Date('2025-11-09T00:00:00.000Z')
 		};
-		const appeal = { id: 1, appealTimetable, appealType: { key: 'W' } };
+		const appeal = { id: 1, appealTimetable, appealType: { key: APPEAL_CASE_TYPE.W } };
 
 		beforeEach(() => {
 			databaseConnector.personalList.findMany

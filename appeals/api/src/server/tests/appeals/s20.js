@@ -1,3 +1,5 @@
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+
 export default {
 	id: 2,
 	reference: '6000002',
@@ -200,7 +202,7 @@ export default {
 	appealType: {
 		id: 12,
 		type: 'Planning listed building and conservation area appeal',
-		key: 'Y',
+		key: APPEAL_CASE_TYPE.Y,
 		processCode: null,
 		enabled: false
 	},

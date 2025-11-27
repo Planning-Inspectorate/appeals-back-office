@@ -25,7 +25,7 @@ const createAuditTrail = ({ appealId, details, loggedAt, userId }) =>
 
 /**
  * @param {number} appealId
- * @returns {PrismaPromise<*>}
+ * @returns {PrismaPromise<AuditTrail[]>}
  */
 const getAuditTrail = (appealId) =>
 	databaseConnector.auditTrail.findMany({

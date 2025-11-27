@@ -1,6 +1,4 @@
 import {
-	APPEAL_TYPE_SHORTHAND_FPA,
-	APPEAL_TYPE_SHORTHAND_HAS,
 	STATE_TYPE_FINAL,
 	VALIDATION_OUTCOME_CANCEL,
 	VALIDATION_OUTCOME_COMPLETE,
@@ -8,7 +6,11 @@ import {
 	VALIDATION_OUTCOME_INVALID,
 	VALIDATION_OUTCOME_VALID
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_CASE_STATUS,
+	APPEAL_CASE_TYPE
+} from '@planning-inspectorate/data-model';
 import { createMachine } from 'xstate';
 
 /**
@@ -46,7 +48,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 					[VALIDATION_OUTCOME_INVALID]: { target: APPEAL_CASE_STATUS.INVALID }
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validAppealTypes: [APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.W],
 					validProcedureTypes: [
 						APPEAL_CASE_PROCEDURE.WRITTEN,
 						APPEAL_CASE_PROCEDURE.HEARING,
@@ -68,7 +70,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 					}
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validAppealTypes: [APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.W],
 					validProcedureTypes: [
 						APPEAL_CASE_PROCEDURE.WRITTEN,
 						APPEAL_CASE_PROCEDURE.HEARING,
@@ -91,7 +93,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 					[VALIDATION_OUTCOME_INVALID]: { target: APPEAL_CASE_STATUS.INVALID }
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validAppealTypes: [APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.W],
 					validProcedureTypes: [
 						APPEAL_CASE_PROCEDURE.WRITTEN,
 						APPEAL_CASE_PROCEDURE.HEARING,
@@ -115,7 +117,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 					[VALIDATION_OUTCOME_INVALID]: { target: APPEAL_CASE_STATUS.INVALID }
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validAppealTypes: [APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.W],
 					validProcedureTypes: [
 						APPEAL_CASE_PROCEDURE.WRITTEN,
 						APPEAL_CASE_PROCEDURE.HEARING,
@@ -144,7 +146,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 					[VALIDATION_OUTCOME_INVALID]: { target: APPEAL_CASE_STATUS.INVALID }
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_FPA],
+					validAppealTypes: [APPEAL_CASE_TYPE.W],
 					validProcedureTypes: [
 						APPEAL_CASE_PROCEDURE.WRITTEN,
 						APPEAL_CASE_PROCEDURE.HEARING,
@@ -179,7 +181,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 					[VALIDATION_OUTCOME_INVALID]: { target: APPEAL_CASE_STATUS.INVALID }
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_FPA],
+					validAppealTypes: [APPEAL_CASE_TYPE.W],
 					validProcedureTypes: [APPEAL_CASE_PROCEDURE.WRITTEN]
 				}
 			},
@@ -199,7 +201,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 					[VALIDATION_OUTCOME_INVALID]: { target: APPEAL_CASE_STATUS.INVALID }
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validAppealTypes: [APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.W],
 					validProcedureTypes: [
 						APPEAL_CASE_PROCEDURE.WRITTEN,
 						APPEAL_CASE_PROCEDURE.HEARING,
@@ -232,7 +234,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 					[VALIDATION_OUTCOME_INVALID]: { target: APPEAL_CASE_STATUS.INVALID }
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_FPA],
+					validAppealTypes: [APPEAL_CASE_TYPE.W],
 					validProcedureTypes: [APPEAL_CASE_PROCEDURE.INQUIRY]
 				}
 			},
@@ -251,7 +253,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 					[VALIDATION_OUTCOME_INVALID]: { target: APPEAL_CASE_STATUS.INVALID }
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validAppealTypes: [APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.W],
 					validProcedureTypes: [
 						APPEAL_CASE_PROCEDURE.WRITTEN,
 						APPEAL_CASE_PROCEDURE.HEARING,
@@ -275,7 +277,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 					}
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validAppealTypes: [APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.W],
 					validProcedureTypes: [
 						APPEAL_CASE_PROCEDURE.WRITTEN,
 						APPEAL_CASE_PROCEDURE.HEARING,
@@ -288,7 +290,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 					[APPEAL_CASE_STATUS.TRANSFERRED]: { target: APPEAL_CASE_STATUS.TRANSFERRED }
 				},
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validAppealTypes: [APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.W],
 					validProcedureTypes: [
 						APPEAL_CASE_PROCEDURE.WRITTEN,
 						APPEAL_CASE_PROCEDURE.HEARING,
@@ -299,7 +301,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 			[APPEAL_CASE_STATUS.INVALID]: {
 				type: STATE_TYPE_FINAL,
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validAppealTypes: [APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.W],
 					validProcedureTypes: [
 						APPEAL_CASE_PROCEDURE.WRITTEN,
 						APPEAL_CASE_PROCEDURE.HEARING,
@@ -310,7 +312,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 			[APPEAL_CASE_STATUS.TRANSFERRED]: {
 				type: STATE_TYPE_FINAL,
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validAppealTypes: [APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.W],
 					validProcedureTypes: [
 						APPEAL_CASE_PROCEDURE.WRITTEN,
 						APPEAL_CASE_PROCEDURE.HEARING,
@@ -321,7 +323,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 			[APPEAL_CASE_STATUS.CLOSED]: {
 				type: STATE_TYPE_FINAL,
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validAppealTypes: [APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.W],
 					validProcedureTypes: [
 						APPEAL_CASE_PROCEDURE.WRITTEN,
 						APPEAL_CASE_PROCEDURE.HEARING,
@@ -332,7 +334,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 			[APPEAL_CASE_STATUS.WITHDRAWN]: {
 				type: STATE_TYPE_FINAL,
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validAppealTypes: [APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.W],
 					validProcedureTypes: [
 						APPEAL_CASE_PROCEDURE.WRITTEN,
 						APPEAL_CASE_PROCEDURE.HEARING,
@@ -343,7 +345,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 			[APPEAL_CASE_STATUS.COMPLETE]: {
 				type: STATE_TYPE_FINAL,
 				meta: {
-					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
+					validAppealTypes: [APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.W],
 					validProcedureTypes: [
 						APPEAL_CASE_PROCEDURE.WRITTEN,
 						APPEAL_CASE_PROCEDURE.HEARING,
@@ -413,8 +415,8 @@ const targetStateOnEventCancelled = {
 };
 
 const targetStateOnLpaqComplete = {
-	[APPEAL_TYPE_SHORTHAND_FPA]: APPEAL_CASE_STATUS.STATEMENTS,
-	[APPEAL_TYPE_SHORTHAND_HAS]: APPEAL_CASE_STATUS.EVENT
+	[APPEAL_CASE_TYPE.W]: APPEAL_CASE_STATUS.STATEMENTS,
+	[APPEAL_CASE_TYPE.D]: APPEAL_CASE_STATUS.EVENT
 };
 
 export default createStateMachine;

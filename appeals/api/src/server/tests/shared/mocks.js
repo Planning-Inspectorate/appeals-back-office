@@ -4,22 +4,23 @@ import {
 	VALIDATION_OUTCOME_INVALID,
 	VALIDATION_OUTCOME_VALID
 } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 const lookupListData = [
 	{
 		id: 1,
 		name: 'Value 1',
-		key: 'D'
+		key: APPEAL_CASE_TYPE.D
 	},
 	{
 		id: 2,
 		name: 'Value 2',
-		key: 'ZA'
+		key: APPEAL_CASE_TYPE.ZA
 	},
 	{
 		id: 3,
 		name: 'Other',
-		key: 'W'
+		key: APPEAL_CASE_TYPE.W
 	}
 ];
 

@@ -1,3 +1,5 @@
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+
 export default {
 	id: 1,
 	reference: '60000001',
@@ -208,7 +210,7 @@ export default {
 	appealType: {
 		id: 1,
 		type: 'Householder',
-		key: 'D',
+		key: APPEAL_CASE_TYPE.D,
 		processCode: 'HAS',
 		enabled: true
 	},
