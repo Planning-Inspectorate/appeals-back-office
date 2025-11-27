@@ -42,9 +42,10 @@ export const changeProcedureToWritten = async (data, appealId) => {
 				where: { appealId },
 				data: {
 					lpaQuestionnaireDueDate: data.lpaQuestionnaireDueDate,
-					lpaStatementDueDate: data.statementDueDate,
-					appellantStatementDueDate: data.statementDueDate,
-					ipCommentsDueDate: data.ipCommentsDueDate
+					lpaStatementDueDate: data.lpaStatementDueDate,
+					appellantStatementDueDate: data.lpaStatementDueDate,
+					ipCommentsDueDate: data.ipCommentsDueDate,
+					finalCommentsDueDate: data.finalCommentsDueDate
 				}
 			});
 
@@ -140,7 +141,7 @@ export const changeProcedureToHearing = async (data, appealId) => {
 				where: { appealId },
 				data: {
 					lpaQuestionnaireDueDate: data.lpaQuestionnaireDueDate,
-					lpaStatementDueDate: data.statementDueDate,
+					lpaStatementDueDate: data.lpaStatementDueDate,
 					ipCommentsDueDate: data.ipCommentsDueDate,
 					statementOfCommonGroundDueDate: data.statementOfCommonGroundDueDate,
 					planningObligationDueDate: data.planningObligationDueDate
@@ -271,7 +272,7 @@ export const changeProcedureToInquiry = async (data, appealId) => {
 				where: { appealId },
 				data: {
 					lpaQuestionnaireDueDate: data.lpaQuestionnaireDueDate,
-					lpaStatementDueDate: data.statementDueDate,
+					lpaStatementDueDate: data.lpaStatementDueDate,
 					ipCommentsDueDate: data.ipCommentsDueDate,
 					statementOfCommonGroundDueDate: data.statementOfCommonGroundDueDate,
 					planningObligationDueDate: data.planningObligationDueDate,

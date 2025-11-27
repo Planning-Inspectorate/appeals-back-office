@@ -2808,10 +2808,10 @@ export interface ChangeProcedureTypeRequest {
 	 */
 	lpaQuestionnaireDueDate?: string;
 	/**
-	 * Date string of the statementDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * Date string of the lpaStatementDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM
 	 * @example "2026-11-10T00:00:00.000Z"
 	 */
-	statementDueDate?: string;
+	lpaStatementDueDate?: string;
 	/**
 	 * Date string of the ipCommentsDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM
 	 * @example "2026-11-10T00:00:00.000Z"
