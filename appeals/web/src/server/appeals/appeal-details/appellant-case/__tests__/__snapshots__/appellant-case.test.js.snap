@@ -2376,25 +2376,25 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the issue date on your enforcement notice?</dt>
-                            <dd                             class="govuk-summary-list__value">19 June 2024</dd>
+                            <dd                             class="govuk-summary-list__value">1 January 2021</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/enforcement-issue-date/change"
                                     data-cy="change-enforcement-issue-date">Change<span class="govuk-visually-hidden"> What is the issue date on your enforcement notice? (Before you start)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the effective date on your enforcement notice?</dt>
-                            <dd                             class="govuk-summary-list__value">20 June 2024</dd>
+                            <dd                             class="govuk-summary-list__value">2 January 2021</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/enforcement-effective-date/change"
                                     data-cy="change-enforcement-effective-date">Change<span class="govuk-visually-hidden"> What is the effective date on your enforcement notice? (Before you start)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> When did you contact the Planning Inspectorate?</dt>
-                            <dd                             class="govuk-summary-list__value">Not answered</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/contact-planning-inspectorate-date/add"
-                                    data-cy="add-contact-planning-inspectorate-date">Add<span class="govuk-visually-hidden"> When did you contact the Planning Inspectorate? (Before you start)</span></a>
+                            <dd                             class="govuk-summary-list__value">3 January 2021</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/contact-planning-inspectorate-date/change"
+                                    data-cy="change-contact-planning-inspectorate-date">Change<span class="govuk-visually-hidden"> When did you contact the Planning Inspectorate? (Before you start)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the reference number on the enforcement notice?</dt>
-                            <dd                             class="govuk-summary-list__value">1234</dd>
+                            <dd                             class="govuk-summary-list__value">123456789</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/enforcement-reference/change"
                                     data-cy="change-enforcement-reference">Change<span class="govuk-visually-hidden"> What is the reference number on the enforcement notice? (Before you start)</span></a>
                                 </dd>
@@ -2435,7 +2435,25 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-other-appellants"><dt class="govuk-summary-list__key"> Other appellants</dt>
-                            <dd class="govuk-summary-list__value">No data</dd>
+                            <dd class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>
+                                        <ul class="govuk-list">
+                                            <li>John Smith</li>
+                                            <li>john.test@example.pins.test</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <ul class="govuk-list">
+                                            <li>Malcolm Jones</li>
+                                            <li>malcolm.test@example.pins.test</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/other-appellants/change"
+                                data-cy="other-appellants">Change<span class="govuk-visually-hidden"> Other appellants (1. Appellant details)</span></a>
+                            </dd>
                         </div>
                     </dl>
                 </div>

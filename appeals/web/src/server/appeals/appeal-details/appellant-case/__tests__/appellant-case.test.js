@@ -536,6 +536,26 @@ describe('appellant-case', () => {
 				.get('/appeals/2/appellant-cases/0')
 				.reply(200, {
 					...appellantCaseDataNotValidated,
+					enforcementNotice: {
+						isReceived: true,
+						isListedBuilding: true,
+						issueDate: '2021-01-01',
+						effectiveDate: '2021-01-02',
+						contactPlanningInspectorateDate: '2021-01-03',
+						reference: '123456789'
+					},
+					otherAppellants: [
+						{
+							firstName: 'John',
+							lastName: 'Smith',
+							email: 'john.test@example.pins.test'
+						},
+						{
+							firstName: 'Malcolm',
+							lastName: 'Jones',
+							email: 'malcolm.test@example.pins.test'
+						}
+					],
 					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
 				});
 
