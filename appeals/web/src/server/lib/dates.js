@@ -35,6 +35,14 @@ export const dateIsInTheFuture = (dayMonthYearHourMinute) => {
  */
 export const dateIsInThePast = (dayMonthYearHourMinute) => {
 	const dateISOString = dayMonthYearHourMinuteToISOString(dayMonthYearHourMinute);
+	return dateIsInThePastIsoString(dateISOString);
+};
+
+/**
+ * @param {string} dateISOString
+ * @returns {boolean}
+ */
+export const dateIsInThePastIsoString = (dateISOString) => {
 	const todaysISOString = getTodaysISOString();
 
 	const date = new Date(dateISOString);

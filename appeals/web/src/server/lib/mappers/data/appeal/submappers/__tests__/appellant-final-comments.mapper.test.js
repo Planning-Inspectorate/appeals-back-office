@@ -35,9 +35,6 @@ describe('appellant-final-comments.mapper', () => {
 	it('should display appellant final comments row if the procedure type is written', () => {
 		data.appealDetails.procedureType = 'Written';
 		const result = mapAppellantFinalComments(data);
-		const expectedHref = '/test/final-comments/appellant/add-document';
-		const expectedText = 'Add<span class="govuk-visually-hidden"> Appellant final comments</span>';
-		const receivedHtml = result.display.tableItem[3].html;
 		expect(result).toEqual(
 			expect.objectContaining({
 				display: {
@@ -47,15 +44,13 @@ describe('appellant-final-comments.mapper', () => {
 						{ text: 'Due by ' },
 						expect.objectContaining({
 							classes: 'govuk-!-text-align-right',
-							html: expect.stringContaining(`href="${expectedHref}"`)
+							html: ''
 						})
 					]
 				},
 				id: 'appellant-final-comments'
 			})
 		);
-
-		expect(receivedHtml).toContain(expectedText);
 	});
 
 	it('should not display appellant final comments row if the procedure type is hearing', () => {

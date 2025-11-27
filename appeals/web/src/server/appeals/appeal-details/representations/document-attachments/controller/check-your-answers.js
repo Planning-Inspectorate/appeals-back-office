@@ -12,7 +12,14 @@ import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import config from '@pins/appeals.web/environment/config.js';
+import {
+	APPEAL_REPRESENTATION_TYPE,
+	REPRESENTATION_ADDED_AS_DOCUMENT
+} from '@pins/appeals/constants/common.js';
 import { patchRepresentationAttachments } from '../../document-attachments/attachments-service.js';
+import { postRepresentation } from '../../representations.service.js';
+
+/** @typedef {import('#appeals/appeal-details/representations/types.js').RepresentationRequest} RepresentationRequest */
 
 /**
  * @param {import('@pins/express').Request} request
@@ -90,8 +97,12 @@ export const postCheckYourAnswers = async (request, response) => {
 		apiClient,
 		session,
 		currentAppeal: { appealId },
-		currentRepresentation: { id, representationType }
+		currentRepresentation
 	} = request;
+
+	const representationType =
+		currentRepresentation?.representationType ?? getRepresentationType(request.baseUrl);
+	const id = currentRepresentation?.id;
 
 	const {
 		fileUploadInfo: {
@@ -114,6 +125,8 @@ export const postCheckYourAnswers = async (request, response) => {
 			);
 		}
 
+		const createdDate = new Date(`${year}-${month}-${day}`).toISOString();
+
 		try {
 			await createNewDocument(apiClient, appealId, {
 				blobStorageHost:
@@ -129,14 +142,17 @@ export const postCheckYourAnswers = async (request, response) => {
 						stage: document.stage,
 						folderId: folderId,
 						GUID: document.GUID,
-						receivedDate: new Date(`${year}-${month}-${day}`).toISOString(),
+						receivedDate: createdDate,
 						redactionStatusId,
 						blobStoragePath: document.blobStoreUrl
 					}
 				]
 			});
 
-			await patchRepresentationAttachments(apiClient, appealId, id, [document.GUID]);
+			const payload = buildPayload(representationType, document.GUID, redactionStatus, createdDate);
+			session.createRepresentation
+				? await postRepresentation(request.apiClient, appealId, payload, representationType)
+				: await patchRepresentationAttachments(apiClient, appealId, id, [document.GUID]);
 		} catch (error) {
 			logger.error(
 				error,
@@ -167,7 +183,9 @@ export const postCheckYourAnswers = async (request, response) => {
 			bannerDefinitionKey = 'interestedPartyCommentsDocumentAddedSuccess';
 			break;
 		case 'lpa_statement':
-			bannerDefinitionKey = 'lpaStatementDocumentAddedSuccess';
+			bannerDefinitionKey = session.createRepresentation
+				? 'lpaStatementAddedSuccess'
+				: 'lpaStatementDocumentAddedSuccess';
 			break;
 		case 'lpa_proofs_evidence':
 			nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
@@ -176,6 +194,16 @@ export const postCheckYourAnswers = async (request, response) => {
 		case 'appellant_proofs_evidence':
 			nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
 			bannerDefinitionKey = 'appellantProofOfEvidenceDocumentAddedSuccess';
+			break;
+		case 'lpa_final_comment':
+			bannerDefinitionKey = session.createRepresentation
+				? 'lpaFinalCommentsAddedSuccess'
+				: 'finalCommentsDocumentAddedSuccess';
+			break;
+		case 'appellant_final_comment':
+			bannerDefinitionKey = session.createRepresentation
+				? 'appellantFinalCommentsAddedSuccess'
+				: 'finalCommentsDocumentAddedSuccess';
 			break;
 		default:
 			bannerDefinitionKey = 'finalCommentsDocumentAddedSuccess';
@@ -188,4 +216,39 @@ export const postCheckYourAnswers = async (request, response) => {
 		appealId
 	});
 	return response.redirect(nextPageUrl);
+};
+
+/**
+ * @param {string} representationType
+ * @param {string} documentGuid
+ * @param {string} redactionStatus
+ * @param {string} createdDate
+ * @return {RepresentationRequest}
+ */
+const buildPayload = (representationType, documentGuid, redactionStatus, createdDate) => {
+	return {
+		attachments: [documentGuid],
+		redactionStatus,
+		source:
+			representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT ? 'citizen' : 'lpa',
+		dateCreated: createdDate,
+		representationText: REPRESENTATION_ADDED_AS_DOCUMENT
+	};
+};
+
+/**
+ * @param {string} url
+ * @return {string}
+ */
+const getRepresentationType = (url) => {
+	const parts = url.split('/');
+
+	const immediateParent = parts[parts.length - 2];
+	const grandParent = parts[parts.length - 3];
+
+	if (grandParent === 'final-comments') {
+		return `${immediateParent}_final_comment`;
+	}
+
+	return immediateParent.replace(/-/g, '_');
 };

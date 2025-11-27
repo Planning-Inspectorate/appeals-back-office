@@ -107,46 +107,56 @@ export const getRepStatusAuditLogDetails = (status, repType, redactedRep) => {
 /**
  * @typedef {Object} CreateRepresentationInput
  * @property {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment' | 'lpa_proofs_evidence' | 'appellant_proofs_evidence'} representationType
- * @property {{ firstName: string, lastName: string, email: string }} ipDetails
- * @property {{ addressLine1: string, addressLine2?: string, town: string, county?: string, postCode: string }} ipAddress
+ * @property {{ firstName: string, lastName: string, email: string }} [ipDetails]
+ * @property {{ addressLine1: string, addressLine2?: string, town: string, county?: string, postCode: string }} [ipAddress]
  * @property {string[]} attachments
  * @property {string | undefined} dateCreated
  * @property {string} redactionStatus
  * @property {string} source
  * @property {string} [status]
- *
+ * @property {string} [lpaCode]
+ * @property {string} [appellantId]
+ * @property {string} [representationText]
+
  * @param {number} appealId
  * @param {CreateRepresentationInput} input
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
  * */
 export const createRepresentation = async (appealId, input) => {
-	const { ipDetails, ipAddress } = input;
+	let representedId;
+	if (input.representationType == APPEAL_REPRESENTATION_TYPE.COMMENT) {
+		const { ipDetails, ipAddress } = input;
+		const address =
+			ipAddress?.addressLine1 &&
+			ipAddress?.postCode &&
+			(await addressRepository.createAddress({
+				addressLine1: ipAddress.addressLine1,
+				addressLine2: ipAddress.addressLine2,
+				addressTown: ipAddress.town,
+				addressCounty: ipAddress.county,
+				postcode: ipAddress.postCode
+			}));
 
-	const address =
-		ipAddress?.addressLine1 &&
-		ipAddress?.postCode &&
-		(await addressRepository.createAddress({
-			addressLine1: ipAddress.addressLine1,
-			addressLine2: ipAddress.addressLine2,
-			addressTown: ipAddress.town,
-			addressCounty: ipAddress.county,
-			postcode: ipAddress.postCode
-		}));
-
-	const represented = await serviceUserRepository.createServiceUser({
-		firstName: ipDetails.firstName,
-		lastName: ipDetails.lastName,
-		email: ipDetails.email,
-		addressId: address ? address.id : undefined
-	});
+		const represented = await serviceUserRepository.createServiceUser({
+			firstName: ipDetails?.firstName,
+			lastName: ipDetails?.lastName,
+			email: ipDetails?.email,
+			addressId: address ? address.id : undefined
+		});
+		representedId = represented.id;
+	} else if (input.representationType == APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT) {
+		representedId = Number(input.appellantId);
+	}
 
 	const representation = await representationRepository.createRepresentation({
 		appealId,
-		representedId: represented.id,
+		representedId,
 		representationType: input.representationType,
 		source: input.source,
 		dateCreated: input.dateCreated,
-		status: input.status
+		status: input.status,
+		lpaCode: input.lpaCode,
+		originalRepresentation: input.representationText
 	});
 
 	if (input.attachments.length > 0) {

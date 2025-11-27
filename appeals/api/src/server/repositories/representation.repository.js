@@ -63,29 +63,32 @@ const getRepresentations = async (appealId, options, pageNumber, pageSize) => {
 		}),
 		databaseConnector.representation.findMany({
 			where: whereClause,
-			include: {
+			select: {
 				representative: true,
 				represented: {
-					include: {
-						address: true
+					select: {
+						address: true,
+						email: true
 					}
 				},
 				lpa: true,
 				attachments: {
-					include: {
+					select: {
 						documentVersion: {
-							include: {
+							select: {
 								document: true
 							}
 						}
 					}
 				},
 				representationRejectionReasonsSelected: {
-					include: {
+					select: {
 						representationRejectionReason: true,
 						representationRejectionReasonText: true
 					}
-				}
+				},
+				representationType: true,
+				status: true
 			},
 			orderBy: { dateCreated: 'desc' },
 			...(pageNumber && pageSize ? { skip: pageNumber * pageSize } : {}),

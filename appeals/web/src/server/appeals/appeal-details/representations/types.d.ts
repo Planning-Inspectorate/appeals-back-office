@@ -76,14 +76,15 @@ export interface interestedPartyComment {
 }
 
 export interface RepresentationRequest {
-	ipDetails: {
+	ipDetails?: {
 		firstName: string;
 		lastName: string;
 		email: string;
 	};
-	ipAddress: Address;
+	ipAddress?: Address;
 	attachments: any[];
 	redactionStatus: string;
 	dateCreated: string;
-	source: 'citizen' | ODW_SYSTEM_ID;
+	source: 'citizen' | 'lpa' | ODW_SYSTEM_ID;
+	representationText?: string;
 }

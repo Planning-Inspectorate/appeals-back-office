@@ -35,7 +35,6 @@ describe('lpa-final-comments.mapper', () => {
 	it('should display lpa final comments row if the procedure type is written', () => {
 		data.appealDetails.procedureType = 'Written';
 		const result = mapLPAFinalComments(data);
-		const expectedText = 'Add<span class="govuk-visually-hidden"> LPA final comments</span>';
 		expect(result).toEqual({
 			display: {
 				tableItem: [
@@ -44,14 +43,12 @@ describe('lpa-final-comments.mapper', () => {
 					{ text: 'Due by ' },
 					{
 						classes: 'govuk-!-text-align-right',
-						html: '<a href="/test/final-comments/lpa/add-document" data-cy="add-lpa-final-comments" class="govuk-link">Add<span class="govuk-visually-hidden"> LPA final comments</span></a>'
+						html: ''
 					}
 				]
 			},
 			id: 'lpa-final-comments'
 		});
-
-		expect(result.display.tableItem[3].html).toContain(expectedText);
 	});
 
 	it('should not display lpa final comments row if the procedure type is hearing', () => {

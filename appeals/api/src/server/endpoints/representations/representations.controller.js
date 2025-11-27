@@ -28,6 +28,7 @@ import { getRepStatusAuditLogDetails } from './representations.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 
 /**
  * @param {Request} req
@@ -207,19 +208,25 @@ export async function updateRepresentation(request, response) {
 }
 
 /**
- * @param {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment' | 'appellant_proofs_evidence' | 'lpa_proofs_evidence'} representationType
  * @returns {(req: Request, res: Response) => Promise<Response>}
  * */
-export const createRepresentation = (representationType) => async (req, res) => {
-	const { appealId } = req.params;
+export const createRepresentation = () => async (req, res) => {
+	const { appealId, representationType } = req.params;
 
-	const shouldAutoPublish =
-		representationType === APPEAL_REPRESENTATION_TYPE.COMMENT &&
-		isStatePassed(req.appeal, APPEAL_CASE_STATUS.STATEMENTS);
+	const shouldAutoPublish = shouldAutoPublishRep(req.appeal, representationType);
 
 	const updatePayload = shouldAutoPublish
 		? { ...req.body, status: APPEAL_REPRESENTATION_STATUS.PUBLISHED }
 		: req.body;
+
+	if (
+		[
+			APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT,
+			APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
+		].includes(representationType)
+	) {
+		updatePayload.lpaCode = req.appeal.lpa?.lpaCode;
+	}
 
 	const rep = await representationService.createRepresentation(parseInt(appealId), {
 		representationType,
@@ -376,3 +383,28 @@ export async function publish(req, res) {
 export async function publishAfterStatePassed(repId) {
 	await broadcasters.broadcastRepresentation(repId, EventType.Update);
 }
+
+/**
+ * @param {Appeal} appeal
+ * @param {string} representationType
+ * @returns {boolean}
+ */
+const shouldAutoPublishRep = (appeal, representationType) => {
+	switch (representationType) {
+		case APPEAL_REPRESENTATION_TYPE.COMMENT:
+			return isStatePassed(appeal, APPEAL_CASE_STATUS.STATEMENTS);
+		case APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT:
+			return (
+				isStatePassed(appeal, APPEAL_CASE_STATUS.STATEMENTS) ||
+				appeal.appealStatus.some((status) => status.status === APPEAL_CASE_STATUS.STATEMENTS)
+			);
+		case APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT:
+		case APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT:
+			return (
+				isStatePassed(appeal, APPEAL_CASE_STATUS.FINAL_COMMENTS) ||
+				appeal.appealStatus.some((status) => status.status === APPEAL_CASE_STATUS.FINAL_COMMENTS)
+			);
+		default:
+			return false;
+	}
+};

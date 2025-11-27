@@ -11,6 +11,7 @@ import { isEqual } from 'lodash-es';
 import { initialiseAndMapAppealData } from '../data/appeal/mapper.js';
 import { initialiseAndMapLPAQData } from '../data/lpa-questionnaire/mapper.js';
 import { mapPagination } from '../index.js';
+const isoDateInPast = '2011-10-05T14:48:00.000Z';
 
 /** @typedef {import('../../../app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 
@@ -261,8 +262,11 @@ describe('mapRepresentationDocumentSummaryActionLink', () => {
 				'lpa-statement',
 				// @ts-ignore
 				{
-					originalUrl: baseRoute
-				}
+					originalUrl: baseRoute,
+					currentAppeal: { appealStatus: 'statements' }
+				},
+				undefined,
+				isoDateInPast
 			);
 			expect(link).toBe(
 				`<a href="${baseRoute}/lpa-statement/add-document" data-cy="add-lpa-statement" class="govuk-link">Add<span class="govuk-visually-hidden"> LPA statement</span></a>`
@@ -437,7 +441,7 @@ describe('Final comments links', () => {
 		);
 	});
 
-	it('should return "Add" link for LPA final comments when is not received', () => {
+	it('should return "Add" link for LPA final comments when is not received, deadline has passed and is in final comments state', () => {
 		const link = mapRepresentationDocumentSummaryActionLink(
 			baseRoute,
 			'not_received',
@@ -445,15 +449,18 @@ describe('Final comments links', () => {
 			'lpa-final-comments',
 			// @ts-ignore
 			{
-				originalUrl: baseRoute
-			}
+				originalUrl: baseRoute,
+				currentAppeal: { appealStatus: 'final_comments' }
+			},
+			undefined,
+			isoDateInPast
 		);
 		expect(link).toBe(
 			`<a href="${baseRoute}/final-comments/lpa/add-document" data-cy="add-lpa-final-comments" class="govuk-link">Add<span class="govuk-visually-hidden"> LPA final comments</span></a>`
 		);
 	});
 
-	it('should return "Add" link for Appellant final comments when is not received', () => {
+	it('should return "Add" link for Appellant final comments when is not received, deadline has passed and is in final comments state', () => {
 		const link = mapRepresentationDocumentSummaryActionLink(
 			baseRoute,
 			'not_received',
@@ -461,8 +468,11 @@ describe('Final comments links', () => {
 			'appellant-final-comments',
 			// @ts-ignore
 			{
-				originalUrl: baseRoute
-			}
+				originalUrl: baseRoute,
+				currentAppeal: { appealStatus: 'final_comments' }
+			},
+			undefined,
+			isoDateInPast
 		);
 		expect(link).toBe(
 			`<a href="${baseRoute}/final-comments/appellant/add-document" data-cy="add-appellant-final-comments" class="govuk-link">Add<span class="govuk-visually-hidden"> Appellant final comments</span></a>`
