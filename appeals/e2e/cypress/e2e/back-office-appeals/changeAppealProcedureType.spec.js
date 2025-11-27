@@ -6,6 +6,7 @@ import { AddressSection } from '../../page_objects/addressSection.js';
 import { OverviewSectionPage } from '../../page_objects/caseDetails/overviewSectionPage';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { CYASection } from '../../page_objects/cyaSection.js';
+import { DateTimeQuestionPage } from '../../page_objects/dateTimeQuestionPage.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { EstimatedDaysSection } from '../../page_objects/estimatedDaysSection.js';
 import { ProcedureTypePage } from '../../page_objects/procedureTypePage';
@@ -19,6 +20,7 @@ const dateTimeSection = new DateTimeSection();
 const estimatedDaysSection = new EstimatedDaysSection();
 const addressSection = new AddressSection();
 const cyaSection = new CYASection();
+const dateTimeQuestionPage = new DateTimeQuestionPage();
 const currentDate = new Date();
 
 describe('change appeal procedure types', () => {
@@ -67,9 +69,6 @@ describe('change appeal procedure types', () => {
 			editable: true
 		}
 	];
-
-	const procedureTypeCaption = (description) =>
-		`Appeal ${caseObj.reference} - update appeal procedure`;
 
 	beforeEach(() => {
 		setupTestCase();
@@ -184,8 +183,10 @@ describe('change appeal procedure types', () => {
 		);
 	});
 
-	// A2-3934 (Ticket is blocked due to post hearing mvp updates)
-	it.skip('should change appeal procedure type - written in LPAQ state', () => {
+	it('should change appeal procedure type - written (in LPAQ state) to written', () => {
+		// caption that should be shown when changing appeal procedure type
+		const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
+
 		happyPathHelper.startS78Case(caseObj, 'written');
 		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
@@ -194,12 +195,12 @@ describe('change appeal procedure types', () => {
 
 		overviewSectionPage.clickRowChangeLink('case-procedure');
 
-		procedureTypePage.verifyHeader(procedureTypeCaption());
+		procedureTypePage.verifyHeader(procedureTypeCaption);
 		procedureTypePage.selectProcedureType('written');
 
 		// verify previous values are prepopulated
 		cy.loadAppealDetails(caseObj).then((appealDetails) => {
-			procedureTypePage.verifyHeader(procedureTypeCaption());
+			procedureTypePage.verifyHeader(procedureTypeCaption);
 			const appealTimetable = appealDetails?.appealTimetable;
 			const lpaQuestionnaireDueDate = new Date(appealTimetable.lpaQuestionnaireDueDate);
 			const lpaStatementDueDate = new Date(appealTimetable.lpaStatementDueDate);
@@ -223,6 +224,8 @@ describe('change appeal procedure types', () => {
 				caseDetailsPage.changeTimetableDates(timetableItems.slice(0, 1), dueDate, 0); //update and continue
 				const updateFinalCommentsDueDate = new Date(dueDate);
 
+				cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Written representations');
+
 				cyaSection.verifyCheckYourAnswers(
 					'LPA questionnaire due',
 					formatDateAndTime(lpaQuestionnaireDueDate).date
@@ -243,28 +246,33 @@ describe('change appeal procedure types', () => {
 		});
 	});
 
-	// A2-3934 (Ticket is blocked due to post hearing mvp updates)
-	it.skip('should change appeal procedure type - hearing in LPAQ state', () => {
+	it('should change appeal procedure type - hearing (in LPAQ state) to hearing', () => {
+		// caption that should be shown when changing appeal procedure type
+		const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
+
 		happyPathHelper.startS78Case(caseObj, 'hearing');
 		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 		// Add planning obligation
-		cy.updateAppealDetails(caseObj, { planningObligation: true });
+		cy.updateAppealDetailsViaApi(caseObj, { planningObligation: true });
 		cy.getBusinessActualDate(currentDate, 1).then((date) => {
 			cy.updateTimeTableDetails(caseObj, { planningObligationDueDate: date });
 		});
 
 		const hearingDetails = { ...overviewDetails, appealProcedure: 'Hearing' };
-		overviewSectionPage.verifyCaseOverviewDetails(hearingDetails);
+		overviewSectionPage.verifyCaseOverviewDetails(hearingDetails, false);
 
 		overviewSectionPage.clickRowChangeLink('case-procedure');
 
-		procedureTypePage.verifyHeader(procedureTypeCaption());
+		procedureTypePage.verifyHeader(procedureTypeCaption);
 		procedureTypePage.selectProcedureType('hearing');
+
+		dateTimeQuestionPage.selectDateTimeOption('No');
+		dateTimeQuestionPage.clickButtonByText('Continue');
 
 		// verify previous values are prepopulated
 		cy.loadAppealDetails(caseObj).then((appealDetails) => {
-			procedureTypePage.verifyHeader(procedureTypeCaption());
+			procedureTypePage.verifyHeader(procedureTypeCaption);
 			const appealTimetable = appealDetails?.appealTimetable;
 			const lpaQuestionnaireDueDate = new Date(appealTimetable.lpaQuestionnaireDueDate);
 			const lpaStatementDueDate = new Date(appealTimetable.lpaStatementDueDate);
@@ -293,8 +301,11 @@ describe('change appeal procedure types', () => {
 
 			// update statement of common ground due date and check CYA page
 			cy.getBusinessActualDate(new Date(), 10).then((dueDate) => {
-				caseDetailsPage.changeTimetableDates(timetableItems.slice(1, 2), dueDate, 0); //update and continue
+				dateTimeSection.enterDueDates(timetableItems.slice(1, 2), dueDate, 0);
+				dateTimeSection.clickButtonByText('Continue');
 				const updateStatementOfCommonGroundDueDate = new Date(dueDate);
+
+				cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Hearing');
 
 				cyaSection.verifyCheckYourAnswers(
 					'LPA questionnaire due',
