@@ -195,7 +195,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'J1860',
 		name: 'Malvern Hills District Council',
-		email: 'developmentcontrol@malvernhills.gov.uk',
+		email: 'planningappeals@malvernhills.gov.uk',
 		teamId: 10 // West4
 	},
 	{
@@ -1294,7 +1294,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'F5540',
 		name: 'London Borough of Hounslow',
 		email: 'planningappeals@hounslow.gov.uk',
-		teamId: 8 //West2
+		teamId: 17 // North3
 	},
 	{
 		lpaCode: 'T5720',
@@ -1479,7 +1479,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'W1525',
 		name: 'Chelmsford City Council',
-		email: 'planning.appeals@chelmsford.gov.uk',
+		email: 'appeals.planning@chelmsford.gov.uk',
 		teamId: 11 // East1
 	},
 	{
@@ -1498,7 +1498,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'D2320',
 		name: 'Chorley Borough Council',
 		email: 'dcon@chorley.gov.uk',
-		teamId: 12 // East2
+		teamId: 15 // North1
 	},
 	{
 		lpaCode: 'W4705',
@@ -1804,7 +1804,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'W4223',
 		name: 'Oldham Metropolitan Borough Council',
 		email: 'planning@oldham.gov.uk',
-		teamId: 16 // North2
+		teamId: 15 // North1
 	},
 	{
 		lpaCode: 'Q1825',

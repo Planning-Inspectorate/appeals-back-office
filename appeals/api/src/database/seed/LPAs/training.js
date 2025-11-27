@@ -1296,7 +1296,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'F5540',
 		name: 'London Borough of Hounslow',
 		email: 'planningappeals@example.gov.uk',
-		teamId: 8 //West2
+		teamId: 17 // North3
 	},
 	{
 		lpaCode: 'T5720',
@@ -1500,7 +1500,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'D2320',
 		name: 'Chorley Borough Council',
 		email: 'dcon@example.gov.uk',
-		teamId: 12 // East2
+		teamId: 15 // North1
 	},
 	{
 		lpaCode: 'W4705',
@@ -1806,7 +1806,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'W4223',
 		name: 'Oldham Metropolitan Borough Council',
 		email: 'planning@example.gov.uk',
-		teamId: 16 // North2
+		teamId: 15 // North1
 	},
 	{
 		lpaCode: 'Q1825',
