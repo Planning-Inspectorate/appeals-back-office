@@ -12,20 +12,19 @@ describe('unlink appeals', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	//27-11-2025: ficed test flow, though flow for unlinking appeal seems to be broken in dev/test/stgaing (sorry is problem with service error)
 	it.skip('Unlink the only linked appeal from a child appeal', () => {
 		cy.createCase().then((caseObj) => {
 			cy.createCase().then((caseObjToLink) => {
 				happyPathHelper.assignCaseOfficer(caseObj);
 				caseDetailsPage.clickAddLinkedAppeal();
-				caseDetailsPage.fillInput(caseObjToLink);
+				caseDetailsPage.fillInput(caseObjToLink.reference);
 				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.selectRadioButtonByValue('Yes, make this the lead appeal for ' + caseObj);
+				caseDetailsPage.selectRadioButtonByValue(caseObj.reference);
 				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.validateBannerMessage(
-					'Success',
-					'This appeal is now a child appeal of ' + caseObjToLink
-				);
-				caseDetailsPage.checkStatusOfCase('Child', 1);
+				caseDetailsPage.clickButtonByText('Add linked appeal');
+				caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
+				caseDetailsPage.checkStatusOfCase('Lead', 1);
 				caseDetailsPage.clickManageLinkedAppeals();
 				caseDetailsPage.clickLinkByText('Unlink');
 				caseDetailsPage.selectRadioButtonByValue('Yes');
@@ -38,6 +37,7 @@ describe('unlink appeals', () => {
 		});
 	});
 
+	//27-11-2025: flow for unlinking appeal seems to be broken in dev/test/stgaing (sorry is problem with service error)
 	it.skip('Unlink the only linked appeal from a lead appeal', () => {
 		cy.createCase().then((caseObj) => {
 			cy.createCase().then((caseObjToLinkAsLead) => {
@@ -66,6 +66,7 @@ describe('unlink appeals', () => {
 		});
 	});
 
+	//27-11-2025: flow for unlinking appeal seems to be broken in dev/test/stgaing (sorry is problem with service error)
 	it.skip('unlink an appeal from a lead appeal that has more than 1 linked appeal', () => {
 		cy.createCase().then((caseObjToLinkAsLead) => {
 			cy.createCase().then((caseObjToLinkAsChild) => {
