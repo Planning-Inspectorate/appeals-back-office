@@ -140,11 +140,38 @@ router.patch(
 	asyncHandler(controller.updateRepresentation)
 );
 
+// router.post(
+// 	'/:appealId/reps/comments',
+// 	/*
+// 	#swagger.tags = ['Representations']
+// 	#swagger.path = '/appeals/{appealId}/reps/comments'
+// 	#swagger.description = Create a representation
+// 	#swagger.parameters['azureAdUserId'] = {
+// 		in: 'header',
+// 		required: true,
+// 		example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+// 	}
+// 	#swagger.requestBody = {
+// 		in: 'body',
+// 		required: true,
+// 		schema: { $ref: '#/components/schemas/CreateRepRequest' },
+// 	}
+// 	#swagger.responses[201] = {
+// 		description: 'Create a Representation against an appeal',
+// 		schema: { $ref: '#/components/schemas/RepResponse' }
+// 	}
+// 	#swagger.responses[400] = {}
+//  */
+// 	checkAppealExistsByIdAndAddToRequest,
+// 	createRepresentationValidator,
+// 	asyncHandler(controller.createRepresentation('comment'))
+// );
+
 router.post(
-	'/:appealId/reps/comments',
+	'/:appealId/reps/:representationType',
 	/*
 	#swagger.tags = ['Representations']
-	#swagger.path = '/appeals/{appealId}/reps/comments'
+	#swagger.path = '/appeals/{appealId}/reps/{representationType}'
 	#swagger.description = Create a representation
 	#swagger.parameters['azureAdUserId'] = {
 		in: 'header',
@@ -164,7 +191,7 @@ router.post(
  */
 	checkAppealExistsByIdAndAddPartialToRequest(['appealStatus']),
 	createRepresentationValidator,
-	asyncHandler(controller.createRepresentation('comment'))
+	asyncHandler(controller.createRepresentation())
 );
 
 router.post(
