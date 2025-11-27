@@ -15,9 +15,9 @@ const formatOtherAppellantsAsHtmlList = (otherAppellants) => {
 	return otherAppellants.length === 1
 		? formatServiceUserAsHtmlList(otherAppellants[0])
 		: `<ul class="govuk-list govuk-list--bullet">
-	${otherAppellants.map(
-		(otherAppellant) => '<li>' + formatServiceUserAsHtmlList(otherAppellant) + '</li>'
-	)}</ul>`;
+	${otherAppellants
+		.map((otherAppellant) => '<li>' + formatServiceUserAsHtmlList(otherAppellant) + '</li>')
+		.join('')}</ul>`;
 };
 
 /** @type {import('../mapper.js').SubMapper} */
