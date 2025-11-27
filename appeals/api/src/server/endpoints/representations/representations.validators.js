@@ -1,11 +1,15 @@
 import validateIdParameter from '#common/validators/id-parameter.js';
 import { validationErrorHandler } from '#middleware/error-handler.js';
-import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_REPRESENTATION_TYPE
+} from '@pins/appeals/constants/common.js';
 import {
 	ERROR_ATTACHMENTS_EMPTY,
 	ERROR_ATTACHMENTS_REQUIRED,
 	ERROR_INVALID_EMAIL,
 	ERROR_INVALID_PROOF_OF_EVIDENCE_TYPE,
+	ERROR_INVALID_REPRESENTATION_TYPE,
 	ERROR_MUST_BE_ARRAY_OF_STRINGS,
 	ERROR_MUST_BE_STRING,
 	ERROR_REP_OUTCOME_MUST_BE_ONE_OF
@@ -38,8 +42,11 @@ export const getRepresentationUpdateValidator = composeMiddleware(
 
 export const createRepresentationValidator = composeMiddleware(
 	validateIdParameter('appealId'),
-	body('ipDetails.firstName').isString().withMessage(ERROR_MUST_BE_STRING),
-	body('ipDetails.lastName').isString().withMessage(ERROR_MUST_BE_STRING),
+	param('representationType')
+		.isIn(Object.values(APPEAL_REPRESENTATION_TYPE))
+		.withMessage(ERROR_INVALID_REPRESENTATION_TYPE),
+	body('ipDetails.firstName').optional().isString().withMessage(ERROR_MUST_BE_STRING),
+	body('ipDetails.lastName').optional().isString().withMessage(ERROR_MUST_BE_STRING),
 	body('ipDetails.email').optional({ checkFalsy: true }).isEmail().withMessage(ERROR_INVALID_EMAIL),
 	body('attachments')
 		.optional()
@@ -47,6 +54,7 @@ export const createRepresentationValidator = composeMiddleware(
 		.custom((value) => value.every((/** @type {*} */ item) => typeof item === 'string'))
 		.withMessage(ERROR_MUST_BE_ARRAY_OF_STRINGS),
 	body('redactionStatus').isString(),
+	body('representationText').optional().isString().withMessage(ERROR_MUST_BE_STRING),
 	validationErrorHandler
 );
 

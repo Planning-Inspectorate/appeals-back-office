@@ -14,6 +14,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import { APPEAL_CASE_STATUS, APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 import { getAttachmentsFolder } from '../../document-attachments/attachments-service.js';
+import { postRepresentation } from '../../representations.service.js';
 import {
 	postDateSubmittedFactory,
 	postRedactionStatusFactory,
@@ -32,7 +33,6 @@ import {
 	mapSessionToRepresentationRequest,
 	uploadPage
 } from './add-ip-comment.mapper.js';
-import { postRepresentationComment } from './add-ip-comment.service.js';
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -325,7 +325,7 @@ export async function postIPComment(request, response) {
 				addDocumentsRequestPayload
 			);
 
-			await postRepresentationComment(request.apiClient, currentAppeal.appealId, payload);
+			await postRepresentation(request.apiClient, currentAppeal.appealId, payload, 'comment');
 
 			delete request.session.addIpComment;
 			delete request.session.fileUploadInfo;

@@ -69,7 +69,9 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute, request
 				appealDetails?.documentationSummary?.appellantFinalComments?.status,
 				appealDetails?.documentationSummary?.appellantFinalComments?.representationStatus,
 				'appellant-final-comments',
-				request
+				request,
+				undefined,
+				appealDetails.appealTimetable?.finalCommentsDueDate || ''
 			)
 		});
 	}

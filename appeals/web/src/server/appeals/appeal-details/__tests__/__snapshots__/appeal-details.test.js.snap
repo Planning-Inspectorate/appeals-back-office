@@ -202,9 +202,7 @@ exports[`appeal-details GET /:appealId Documentation Appellant statement should 
                 <th scope="row" class="govuk-table__header">LPA statement</th>
                 <td class="govuk-table__cell"></td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/lpa-statement/add-document"
-                    data-cy="add-lpa-statement" class="govuk-link">Add<span class="govuk-visually-hidden"> LPA statement</span></a>
-                </td>
+                <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
             <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header">Interested party comments</th>
@@ -271,9 +269,7 @@ exports[`appeal-details GET /:appealId Documentation Appellant statement should 
                 <th scope="row" class="govuk-table__header">LPA statement</th>
                 <td class="govuk-table__cell"></td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/lpa-statement/add-document"
-                    data-cy="add-lpa-statement" class="govuk-link">Add<span class="govuk-visually-hidden"> LPA statement</span></a>
-                </td>
+                <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
             <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header">Interested party comments</th>
@@ -340,9 +336,7 @@ exports[`appeal-details GET /:appealId Documentation Rule 6 party statements and
                 <th scope="row" class="govuk-table__header">LPA statement</th>
                 <td class="govuk-table__cell"></td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/lpa-statement/add-document"
-                    data-cy="add-lpa-statement" class="govuk-link">Add<span class="govuk-visually-hidden"> LPA statement</span></a>
-                </td>
+                <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
             <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header">Test Rule 6 Party statement</th>
@@ -425,9 +419,7 @@ exports[`appeal-details GET /:appealId Documentation Rule 6 party statements and
                 <th scope="row" class="govuk-table__header">LPA statement</th>
                 <td class="govuk-table__cell"></td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/lpa-statement/add-document"
-                    data-cy="add-lpa-statement" class="govuk-link">Add<span class="govuk-visually-hidden"> LPA statement</span></a>
-                </td>
+                <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
             <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header">Test Rule 6 Party statement</th>

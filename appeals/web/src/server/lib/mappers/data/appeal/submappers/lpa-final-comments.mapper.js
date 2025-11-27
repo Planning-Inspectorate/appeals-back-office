@@ -69,7 +69,9 @@ export const mapLPAFinalComments = ({ appealDetails, currentRoute, request }) =>
 				appealDetails?.documentationSummary?.lpaFinalComments?.status,
 				appealDetails?.documentationSummary?.lpaFinalComments?.representationStatus,
 				'lpa-final-comments',
-				request
+				request,
+				undefined,
+				appealDetails.appealTimetable?.finalCommentsDueDate || ''
 			)
 		});
 	}

@@ -143,3 +143,5 @@ export const FEEDBACK_FORM_LINKS = Object.freeze({
 
 	LPA: 'https://forms.office.com.mcas.ms/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UNzVFTElMSEJIWlhXWkZFM1E1WDg3RTFPUy4u'
 });
+
+export const REPRESENTATION_ADDED_AS_DOCUMENT = 'Added as a document';

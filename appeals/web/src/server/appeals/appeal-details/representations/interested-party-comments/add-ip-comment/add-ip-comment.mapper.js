@@ -12,7 +12,7 @@ import {
 } from '#lib/error-handlers/change-screen-error-handlers.js';
 import { dateInput } from '#lib/mappers/index.js';
 import config from '@pins/appeals.web/environment/config.js';
-import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
+import { ODW_SYSTEM_ID, REPRESENTATION_ADDED_AS_DOCUMENT } from '@pins/appeals/constants/common.js';
 import { DOCUMENT_STAGE, DOCUMENT_TYPE } from '../../document-attachments/attachments-service.js';
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
@@ -215,7 +215,8 @@ export const mapSessionToRepresentationRequest = (values, fileUpload) => ({
 		day: values.day,
 		month: values.month,
 		year: values.year
-	})
+	}),
+	representationText: REPRESENTATION_ADDED_AS_DOCUMENT
 });
 
 /**

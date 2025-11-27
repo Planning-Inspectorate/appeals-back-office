@@ -5348,67 +5348,6 @@
 				}
 			}
 		},
-		"/appeals/{appealId}/reps/comments": {
-			"post": {
-				"tags": ["Representations"],
-				"description": "Create a representation",
-				"parameters": [
-					{
-						"name": "appealId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"201": {
-						"description": "Create a Representation against an appeal",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/RepResponse"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/RepResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					}
-				},
-				"requestBody": {
-					"in": "body",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/CreateRepRequest"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/CreateRepRequest"
-							}
-						}
-					}
-				}
-			}
-		},
 		"/appeals/{appealId}/reps/{proofOfEvidenceType}/proof-of-evidence": {
 			"post": {
 				"tags": ["Representations"],
@@ -5718,6 +5657,75 @@
 								"schema": {
 									"$ref": "#/components/schemas/RepResponse"
 								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/reps/{representationType}": {
+			"post": {
+				"tags": ["Representations"],
+				"description": "Create a representation",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "representationType",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Create a Representation against an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateRepRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateRepRequest"
 							}
 						}
 					}
@@ -8372,7 +8380,7 @@
 							},
 							"lpaQuestionnaireSubmittedDate": {
 								"type": "string",
-								"example": "2024-05-31T23:00:00.000Z"
+								"example": "2024-06-01T00:00:00.000Z"
 							},
 							"siteAccessDetails": {
 								"type": "array",

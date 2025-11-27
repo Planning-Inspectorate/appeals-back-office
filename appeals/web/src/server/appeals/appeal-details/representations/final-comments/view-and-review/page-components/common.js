@@ -3,6 +3,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { newLine2LineBreak } from '#lib/string-utilities.js';
 import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
+import { REPRESENTATION_ADDED_AS_DOCUMENT } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
@@ -67,7 +68,7 @@ export function generateCommentsSummaryList(appealId, comment, isReview = false)
 						: 'Final comments'
 			},
 			value: commentIsDocument
-				? { text: 'Added as a document' }
+				? { text: REPRESENTATION_ADDED_AS_DOCUMENT }
 				: {
 						html: '',
 						pageComponents: [
