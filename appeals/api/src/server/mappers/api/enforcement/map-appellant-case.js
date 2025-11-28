@@ -25,7 +25,15 @@ export const mapEnforcementAppellantCase = (data) => {
 			contactPlanningInspectorateDate: hasEnforcementData
 				? appellantCase?.contactPlanningInspectorateDate?.toISOString()
 				: null,
-			reference: hasEnforcementData ? appellantCase?.enforcementReference : null
+			reference: hasEnforcementData ? appellantCase?.enforcementReference : null,
+			interestInLand: hasEnforcementData ? appellantCase?.interestInLand : null,
+			writtenOrVerbalPermission: hasEnforcementData
+				? appellantCase?.writtenOrVerbalPermission
+				: null,
+			contactAddress: hasEnforcementData
+				? // @ts-ignore
+				  appellantCase?.contactAddress
+				: null
 		}
 	};
 };

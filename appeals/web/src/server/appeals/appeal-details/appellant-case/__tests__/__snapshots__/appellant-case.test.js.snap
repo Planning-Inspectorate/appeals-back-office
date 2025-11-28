@@ -2464,66 +2464,40 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title"> 2. Site details</h2>
+                    <h2 class="govuk-summary-card__title"> 2. Land</h2>
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="site-details">
                         <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
                             <dd                             class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
-                                    data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
+                                    data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Land)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-site-area"><dt class="govuk-summary-list__key"> What is the area of the appeal site?</dt>
-                            <dd                             class="govuk-summary-list__value">30.1 m²</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-area/change"
-                                    data-cy="change-site-area">Change<span class="govuk-visually-hidden"> What is the area of the appeal site? (2. Site details)</span></a>
+                        <div class="govuk-summary-list__row appeal-contact-address"><dt class="govuk-summary-list__key"> What is your contact address?</dt>
+                            <dd                             class="govuk-summary-list__value">Not answered</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/contact-address/add"
+                                    data-cy="change-contact-address">Change<span class="govuk-visually-hidden"> What is your contact address? (2. Land)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the appeal site in a green belt?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your interest in the land?</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/green-belt/change/appellant">Change<span class="govuk-visually-hidden"> Is the appeal site in a green belt? (2. Site details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Does the appellant own all of the land involved in the appeal?</dt>
-                            <dd                             class="govuk-summary-list__value">Fully owned</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-ownership/change"
-                                    data-cy="change-site-ownership">Change<span class="govuk-visually-hidden"> Does the appellant own all of the land involved in the appeal? (2. Site details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Does the appellant know who owns the land involved in the appeal?</dt>
-                            <dd                             class="govuk-summary-list__value">No</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/owners-known/change"
-                                    data-cy="change-owners-known">Change<span class="govuk-visually-hidden"> Does the appellant know who owns the land involved in the appeal? (2. Site details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the appeal site part of an agricultural holding?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/agricultural-holding/change">Change<span class="govuk-visually-hidden"> Is the appeal site part of an agricultural holding? (2. Site details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Are you a tenant of the agricultural holding?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/agricultural-holding/tenant/change">Change<span class="govuk-visually-hidden"> Are you a tenant of the agricultural holding? (2. Site details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Are there any other tenants?</dt>
-                            <dd                             class="govuk-summary-list__value">No</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/agricultural-holding/other-tenants/change">Change<span class="govuk-visually-hidden"> Are there any other tenants? (2. Site details)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/interest-in-land/change"
+                                    data-cy="change-interest-in-land">Change<span class="govuk-visually-hidden"> What is your interest in the land? (2. Land)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Will an inspector need to access your land or property?</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/inspector-access/change/appellant"
-                                    data-cy="change-inspector-access">Change<span class="govuk-visually-hidden"> Will an inspector need to access your land or property? (2. Site details)</span></a>
+                                    data-cy="change-inspector-access">Change<span class="govuk-visually-hidden"> Will an inspector need to access your land or property? (2. Land)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Are there any health and safety issues on the appeal site?</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/safety-risks/change/appellant"
-                                    data-cy="change-appellant-case-health-and-safety">Change<span class="govuk-visually-hidden"> Are there any health and safety issues on the appeal site? (2. Site details)</span></a>
+                                    data-cy="change-appellant-case-health-and-safety">Change<span class="govuk-visually-hidden"> Are there any health and safety issues on the appeal site? (2. Land)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -2821,66 +2795,40 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title"> 2. Site details</h2>
+                    <h2 class="govuk-summary-card__title"> 2. Land</h2>
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="site-details">
                         <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
                             <dd                             class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
-                                    data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
+                                    data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Land)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-site-area"><dt class="govuk-summary-list__key"> What is the area of the appeal site?</dt>
-                            <dd                             class="govuk-summary-list__value">30.1 m²</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-area/change"
-                                    data-cy="change-site-area">Change<span class="govuk-visually-hidden"> What is the area of the appeal site? (2. Site details)</span></a>
+                        <div class="govuk-summary-list__row appeal-contact-address"><dt class="govuk-summary-list__key"> What is your contact address?</dt>
+                            <dd                             class="govuk-summary-list__value">Not answered</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/contact-address/add"
+                                    data-cy="change-contact-address">Change<span class="govuk-visually-hidden"> What is your contact address? (2. Land)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the appeal site in a green belt?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your interest in the land?</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/green-belt/change/appellant">Change<span class="govuk-visually-hidden"> Is the appeal site in a green belt? (2. Site details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Does the appellant own all of the land involved in the appeal?</dt>
-                            <dd                             class="govuk-summary-list__value">Fully owned</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-ownership/change"
-                                    data-cy="change-site-ownership">Change<span class="govuk-visually-hidden"> Does the appellant own all of the land involved in the appeal? (2. Site details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Does the appellant know who owns the land involved in the appeal?</dt>
-                            <dd                             class="govuk-summary-list__value">No</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/owners-known/change"
-                                    data-cy="change-owners-known">Change<span class="govuk-visually-hidden"> Does the appellant know who owns the land involved in the appeal? (2. Site details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the appeal site part of an agricultural holding?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/agricultural-holding/change">Change<span class="govuk-visually-hidden"> Is the appeal site part of an agricultural holding? (2. Site details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Are you a tenant of the agricultural holding?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/agricultural-holding/tenant/change">Change<span class="govuk-visually-hidden"> Are you a tenant of the agricultural holding? (2. Site details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Are there any other tenants?</dt>
-                            <dd                             class="govuk-summary-list__value">No</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/agricultural-holding/other-tenants/change">Change<span class="govuk-visually-hidden"> Are there any other tenants? (2. Site details)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/interest-in-land/change"
+                                    data-cy="change-interest-in-land">Change<span class="govuk-visually-hidden"> What is your interest in the land? (2. Land)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Will an inspector need to access your land or property?</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/inspector-access/change/appellant"
-                                    data-cy="change-inspector-access">Change<span class="govuk-visually-hidden"> Will an inspector need to access your land or property? (2. Site details)</span></a>
+                                    data-cy="change-inspector-access">Change<span class="govuk-visually-hidden"> Will an inspector need to access your land or property? (2. Land)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Are there any health and safety issues on the appeal site?</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/safety-risks/change/appellant"
-                                    data-cy="change-appellant-case-health-and-safety">Change<span class="govuk-visually-hidden"> Are there any health and safety issues on the appeal site? (2. Site details)</span></a>
+                                    data-cy="change-appellant-case-health-and-safety">Change<span class="govuk-visually-hidden"> Are there any health and safety issues on the appeal site? (2. Land)</span></a>
                                 </dd>
                         </div>
                     </dl>
