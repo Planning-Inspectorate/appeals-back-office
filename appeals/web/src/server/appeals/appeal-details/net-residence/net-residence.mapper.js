@@ -18,6 +18,9 @@ import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page
  */
 export function addNetResidence(appealData, errors, netResidence, netLoss, netGain, backUrl) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
+
+	const title = 'Is there a net gain or loss of residential units?';
+
 	/** @type {PageComponent} */
 	const selectResubmitAppealComponent = {
 		type: 'radios',
@@ -25,6 +28,13 @@ export function addNetResidence(appealData, errors, netResidence, netLoss, netGa
 			name: 'net-residence',
 			idPrefix: 'net-residence',
 			value: netResidence,
+			fieldset: {
+				legend: {
+					text: title,
+					isPageHeading: true,
+					classes: 'govuk-fieldset__legend--l'
+				}
+			},
 			items: [
 				{
 					text: 'Net gain',
@@ -87,10 +97,9 @@ export function addNetResidence(appealData, errors, netResidence, netLoss, netGa
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Is there a net gain or loss of residential units?',
+		title: title,
 		backLinkUrl: backUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Is there a net gain or loss of residential units?',
 		pageComponents: [selectResubmitAppealComponent],
 		submitButtonText: 'Save and return'
 	};

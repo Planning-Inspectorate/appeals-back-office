@@ -330,7 +330,9 @@ exports[`set up hearing GET /hearing/setup/date should match the snapshot 1`] = 
                                     <div class="govuk-form-group">
                                         <fieldset class="govuk-fieldset" role="group" aria-describedby="hearing-date-hint">
                                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Date</legend>
-                                            <div id="hearing-date-hint" class="govuk-hint">For example, 31 3 2025</div>
+                                            <div id="hearing-date-hint" class="govuk-hint">
+                                                <div class="govuk-hint">For example, 31 3 2025</div>
+                                            </div>
                                             <div class="govuk-date-input" id="hearing-date">
                                                 <div class="govuk-date-input__item">
                                                     <div class="govuk-form-group">

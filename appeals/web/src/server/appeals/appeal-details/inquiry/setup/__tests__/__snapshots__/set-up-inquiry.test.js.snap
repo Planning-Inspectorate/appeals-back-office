@@ -337,7 +337,9 @@ exports[`set up inquiry GET /inquiry/setup/date setup inquiry should match the s
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="inquiry-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Date</legend>
-                                <div id="inquiry-date-hint" class="govuk-hint">For example, 31 3 2025</div>
+                                <div id="inquiry-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2025</div>
+                                </div>
                                 <div class="govuk-date-input" id="inquiry-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -411,7 +413,9 @@ exports[`set up inquiry GET /inquiry/setup/date should match the snapshot 1`] = 
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="inquiry-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Date</legend>
-                                <div id="inquiry-date-hint" class="govuk-hint">For example, 31 3 2025</div>
+                                <div id="inquiry-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2025</div>
+                                </div>
                                 <div class="govuk-date-input" id="inquiry-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -488,7 +492,9 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due date</legend>
                                 <div id="lpa-questionnaire-due-date-hint"
-                                class="govuk-hint">For example, 31 3 2025</div>
+                                class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2025</div>
+                                </div>
                                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -520,7 +526,9 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-due-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement due date</legend>
-                                <div id="statement-due-date-hint" class="govuk-hint">For example, 31 3 2025</div>
+                                <div id="statement-due-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2025</div>
+                                </div>
                                 <div class="govuk-date-input" id="statement-due-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -553,7 +561,9 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments</legend>
                                 <div id="ip-comments-due-date-hint"
-                                class="govuk-hint">For example, 31 3 2025</div>
+                                class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2025</div>
+                                </div>
                                 <div class="govuk-date-input" id="ip-comments-due-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -586,7 +596,9 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due date</legend>
                                 <div id="statement-of-common-ground-due-date-hint"
-                                class="govuk-hint">For example, 31 3 2025</div>
+                                class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2025</div>
+                                </div>
                                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -619,7 +631,9 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="proof-of-evidence-and-witnesses-due-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Proof of evidence and witnesses due date</legend>
                                 <div id="proof-of-evidence-and-witnesses-due-date-hint"
-                                class="govuk-hint">For example, 31 3 2025</div>
+                                class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2025</div>
+                                </div>
                                 <div class="govuk-date-input" id="proof-of-evidence-and-witnesses-due-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -652,7 +666,9 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due date</legend>
                                 <div id="planning-obligation-due-date-hint"
-                                class="govuk-hint">For example, 31 3 2025</div>
+                                class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2025</div>
+                                </div>
                                 <div class="govuk-date-input" id="planning-obligation-due-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">

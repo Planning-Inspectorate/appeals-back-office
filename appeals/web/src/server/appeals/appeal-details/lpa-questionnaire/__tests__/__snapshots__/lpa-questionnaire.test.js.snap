@@ -3315,7 +3315,9 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <div id="due-date-hint" class="govuk-hint">
+                <div class="govuk-hint">For example, 27 3 2023</div>
+            </div>
             <div class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
@@ -6782,7 +6784,9 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group govuk-form-group--error">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <div id="due-date-hint" class="govuk-hint">
+                <div class="govuk-hint">For example, 27 3 2023</div>
+            </div>
             <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date must be a real date</p>
             <div             class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
@@ -6844,7 +6848,9 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group govuk-form-group--error">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <div id="due-date-hint" class="govuk-hint">
+                <div class="govuk-hint">For example, 27 3 2023</div>
+            </div>
             <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date day must be between
                 1 and 31</p>
             <div class="govuk-date-input" id="due-date">
@@ -6907,7 +6913,9 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group govuk-form-group--error">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <div id="due-date-hint" class="govuk-hint">
+                <div class="govuk-hint">For example, 27 3 2023</div>
+            </div>
             <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date day must be between
                 1 and 31</p>
             <div class="govuk-date-input" id="due-date">
@@ -6970,7 +6978,9 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group govuk-form-group--error">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <div id="due-date-hint" class="govuk-hint">
+                <div class="govuk-hint">For example, 27 3 2023</div>
+            </div>
             <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date day must be a number</p>
             <div             class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
@@ -7032,7 +7042,9 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group govuk-form-group--error">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <div id="due-date-hint" class="govuk-hint">
+                <div class="govuk-hint">For example, 27 3 2023</div>
+            </div>
             <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date month must be between
                 1 and 12</p>
             <div class="govuk-date-input" id="due-date">
@@ -7095,7 +7107,9 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group govuk-form-group--error">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <div id="due-date-hint" class="govuk-hint">
+                <div class="govuk-hint">For example, 27 3 2023</div>
+            </div>
             <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date month must be between
                 1 and 12</p>
             <div class="govuk-date-input" id="due-date">
@@ -7158,7 +7172,9 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group govuk-form-group--error">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <div id="due-date-hint" class="govuk-hint">
+                <div class="govuk-hint">For example, 27 3 2023</div>
+            </div>
             <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date must be a real date</p>
             <div             class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
@@ -7220,7 +7236,9 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group govuk-form-group--error">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <div id="due-date-hint" class="govuk-hint">
+                <div class="govuk-hint">For example, 27 3 2023</div>
+            </div>
             <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date year must be 4 digits</p>
             <div             class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
@@ -7282,7 +7300,9 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group govuk-form-group--error">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <div id="due-date-hint" class="govuk-hint">
+                <div class="govuk-hint">For example, 27 3 2023</div>
+            </div>
             <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date year must be a number</p>
             <div             class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
@@ -7344,7 +7364,9 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group govuk-form-group--error">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <div id="due-date-hint" class="govuk-hint">
+                <div class="govuk-hint">For example, 27 3 2023</div>
+            </div>
             <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the date</p>
             <div             class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
@@ -7406,7 +7428,9 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group govuk-form-group--error">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <div id="due-date-hint" class="govuk-hint">
+                <div class="govuk-hint">For example, 27 3 2023</div>
+            </div>
             <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date must be in the
                 future</p>
             <div class="govuk-date-input" id="due-date">

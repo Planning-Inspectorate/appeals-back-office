@@ -15,7 +15,9 @@ exports[`change to inquiry date and time GET /change-appeal-procedure-type/inqui
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="event-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Date</legend>
-                                <div id="event-date-hint" class="govuk-hint">For example, 31 3 2025</div>
+                                <div id="event-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2025</div>
+                                </div>
                                 <div class="govuk-date-input" id="event-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">

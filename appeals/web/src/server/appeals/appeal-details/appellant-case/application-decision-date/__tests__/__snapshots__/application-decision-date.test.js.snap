@@ -14,7 +14,9 @@ exports[`application-decision-date GET /change should render the application dec
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="application-decision-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What’s the date on the decision letter from the local planning authority?​</legend>
-                                <div                                 id="application-decision-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                                <div                                 id="application-decision-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2007</div>
+                        </div>
                         <div class="govuk-date-input" id="application-decision-date">
                             <div class="govuk-date-input__item">
                                 <div class="govuk-form-group">
@@ -67,7 +69,9 @@ exports[`application-decision-date GET /change should render the application dec
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="application-decision-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What date was your decision due from the local planning authority?</legend>
-                                <div                                 id="application-decision-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                                <div                                 id="application-decision-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2007</div>
+                        </div>
                         <div class="govuk-date-input" id="application-decision-date">
                             <div class="govuk-date-input__item">
                                 <div class="govuk-form-group">
@@ -135,7 +139,9 @@ exports[`application-decision-date POST /change should re-render applicationdeci
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="application-decision-date-hint application-decision-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What’s the date on the decision letter from the local planning authority?​</legend>
-                                <div                                 id="application-decision-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                                <div                                 id="application-decision-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2007</div>
+                        </div>
                         <p id="application-decision-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date day must be between
                             1 and 31</p>
                         <div class="govuk-date-input" id="application-decision-date">
@@ -205,7 +211,9 @@ exports[`application-decision-date POST /change should re-render applicationdeci
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="application-decision-date-hint application-decision-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What’s the date on the decision letter from the local planning authority?​</legend>
-                                <div                                 id="application-decision-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                                <div                                 id="application-decision-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2007</div>
+                        </div>
                         <p id="application-decision-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date month must be between
                             1 and 12</p>
                         <div class="govuk-date-input" id="application-decision-date">
@@ -275,7 +283,9 @@ exports[`application-decision-date POST /change should re-render to applicationd
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="application-decision-date-hint application-decision-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What’s the date on the decision letter from the local planning authority?​</legend>
-                                <div                                 id="application-decision-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                                <div                                 id="application-decision-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2007</div>
+                        </div>
                         <p id="application-decision-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date year must be a number</p>
                         <div                         class="govuk-date-input" id="application-decision-date">
                             <div class="govuk-date-input__item">

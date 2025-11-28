@@ -16,7 +16,9 @@ exports[`contact-planning-inspectorate-date GET /change should render the contac
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                                     <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2024</div>
+                                </div>
                                 <div class="govuk-date-input" id="contact-planning-inspectorate-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -86,9 +88,10 @@ exports[`contact-planning-inspectorate-date POST /change should re-render applic
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                                     <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="contact-planning-inspectorate-date-error"
-                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2024</div>
+                                </div>
+                                <p id="contact-planning-inspectorate-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
                                     the Planning Inspectorate must include a day</p>
                                 <div class="govuk-date-input"
                                 id="contact-planning-inspectorate-date">
@@ -160,9 +163,10 @@ exports[`contact-planning-inspectorate-date POST /change should re-render applic
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                                     <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="contact-planning-inspectorate-date-error"
-                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2024</div>
+                                </div>
+                                <p id="contact-planning-inspectorate-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
                                     the Planning Inspectorate day must be a number</p>
                                 <div class="govuk-date-input"
                                 id="contact-planning-inspectorate-date">
@@ -234,9 +238,10 @@ exports[`contact-planning-inspectorate-date POST /change should re-render applic
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                                     <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="contact-planning-inspectorate-date-error"
-                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2024</div>
+                                </div>
+                                <p id="contact-planning-inspectorate-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
                                     the Planning Inspectorate day must be between 1 and 31</p>
                                 <div class="govuk-date-input"
                                 id="contact-planning-inspectorate-date">
@@ -308,9 +313,10 @@ exports[`contact-planning-inspectorate-date POST /change should re-render applic
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                                     <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="contact-planning-inspectorate-date-error"
-                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2024</div>
+                                </div>
+                                <p id="contact-planning-inspectorate-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
                                     the Planning Inspectorate day must be between 1 and 31</p>
                                 <div class="govuk-date-input"
                                 id="contact-planning-inspectorate-date">
@@ -382,9 +388,10 @@ exports[`contact-planning-inspectorate-date POST /change should re-render the Da
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                                     <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="contact-planning-inspectorate-date-error"
-                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2024</div>
+                                </div>
+                                <p id="contact-planning-inspectorate-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
                                     the Planning Inspectorate must include a month</p>
                                 <div class="govuk-date-input"
                                 id="contact-planning-inspectorate-date">
@@ -456,9 +463,10 @@ exports[`contact-planning-inspectorate-date POST /change should re-render the Da
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                                     <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="contact-planning-inspectorate-date-error"
-                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2024</div>
+                                </div>
+                                <p id="contact-planning-inspectorate-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
                                     the Planning Inspectorate must be a real date</p>
                                 <div class="govuk-date-input"
                                 id="contact-planning-inspectorate-date">
@@ -530,9 +538,10 @@ exports[`contact-planning-inspectorate-date POST /change should re-render the Da
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                                     <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="contact-planning-inspectorate-date-error"
-                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2024</div>
+                                </div>
+                                <p id="contact-planning-inspectorate-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
                                     the Planning Inspectorate month must be between 1 and 12</p>
                                 <div class="govuk-date-input"
                                 id="contact-planning-inspectorate-date">
@@ -604,9 +613,10 @@ exports[`contact-planning-inspectorate-date POST /change should re-render the Da
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                                     <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="contact-planning-inspectorate-date-error"
-                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2024</div>
+                                </div>
+                                <p id="contact-planning-inspectorate-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
                                     the Planning Inspectorate month must be between 1 and 12</p>
                                 <div class="govuk-date-input"
                                 id="contact-planning-inspectorate-date">
@@ -678,9 +688,10 @@ exports[`contact-planning-inspectorate-date POST /change should re-render the Da
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                                     <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="contact-planning-inspectorate-date-error"
-                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2024</div>
+                                </div>
+                                <p id="contact-planning-inspectorate-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
                                     the Planning Inspectorate must include a year</p>
                                 <div class="govuk-date-input"
                                 id="contact-planning-inspectorate-date">
@@ -752,9 +763,10 @@ exports[`contact-planning-inspectorate-date POST /change should re-render the Da
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                                     <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="contact-planning-inspectorate-date-error"
-                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2024</div>
+                                </div>
+                                <p id="contact-planning-inspectorate-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
                                     the Planning Inspectorate year must be a number</p>
                                 <div class="govuk-date-input"
                                 id="contact-planning-inspectorate-date">
@@ -826,9 +838,10 @@ exports[`contact-planning-inspectorate-date POST /change should re-render the Da
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                                     <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="contact-planning-inspectorate-date-error"
-                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2024</div>
+                                </div>
+                                <p id="contact-planning-inspectorate-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
                                     the Planning Inspectorate year must be 4 digits</p>
                                 <div class="govuk-date-input"
                                 id="contact-planning-inspectorate-date">
@@ -900,9 +913,10 @@ exports[`contact-planning-inspectorate-date POST /change should re-render the Da
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                                     <h1 class="govuk-fieldset__heading"> When did you contact the Planning Inspectorate?</h1>
                                 </legend>
-                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">For example, 31 3 2024</div>
-                                <p id="contact-planning-inspectorate-date-error"
-                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
+                                <div id="contact-planning-inspectorate-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2024</div>
+                                </div>
+                                <p id="contact-planning-inspectorate-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date you contacted
                                     the Planning Inspectorate must be today or in the past</p>
                                 <div class="govuk-date-input"
                                 id="contact-planning-inspectorate-date">

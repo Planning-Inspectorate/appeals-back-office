@@ -14,7 +14,9 @@ exports[`Appeal Timetables should render "Change LPA questionnaire Date" page 1`
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+            <div id="due-date-hint" class="govuk-hint">
+                <div class="govuk-hint">For example, 27 3 2007</div>
+            </div>
             <div class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
@@ -60,7 +62,9 @@ exports[`Appeal Timetables should render "Change final comments due date" page 1
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+            <div id="due-date-hint" class="govuk-hint">
+                <div class="govuk-hint">For example, 27 3 2007</div>
+            </div>
             <div class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
@@ -121,7 +125,9 @@ exports[`Appeal Timetables should render "Change final comments due date" with e
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group govuk-form-group--error">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+            <div id="due-date-hint" class="govuk-hint">
+                <div class="govuk-hint">For example, 27 3 2007</div>
+            </div>
             <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date must be a business
                 day</p>
             <div class="govuk-date-input" id="due-date">
@@ -184,7 +190,9 @@ exports[`Appeal Timetables should render "Change final comments due date" with e
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group govuk-form-group--error">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+            <div id="due-date-hint" class="govuk-hint">
+                <div class="govuk-hint">For example, 27 3 2007</div>
+            </div>
             <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the date</p>
             <div             class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
@@ -231,7 +239,9 @@ exports[`Appeal Timetables should render "Change statement review Date" page 1`]
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+            <div id="due-date-hint" class="govuk-hint">
+                <div class="govuk-hint">For example, 27 3 2007</div>
+            </div>
             <div class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
@@ -275,7 +285,9 @@ exports[`Appeal Timetables should render "Schedule LPA questionnaire Date" page 
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+            <div id="due-date-hint" class="govuk-hint">
+                <div class="govuk-hint">For example, 27 3 2007</div>
+            </div>
             <div class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
@@ -319,7 +331,9 @@ exports[`Appeal Timetables should render "Schedule statement review Date" page 1
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+            <div id="due-date-hint" class="govuk-hint">
+                <div class="govuk-hint">For example, 27 3 2007</div>
+            </div>
             <div class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
