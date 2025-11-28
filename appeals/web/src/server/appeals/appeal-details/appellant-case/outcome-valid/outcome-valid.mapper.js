@@ -20,13 +20,8 @@ export function updateValidDatePage(
 ) {
 	const title = 'Enter valid date for case';
 
-	/** @type {PageComponent} */
-	const validDateTextComponent = {
-		type: 'html',
-		parameters: {
-			html: `<p class="govuk-body">This is the date all case documentation was received and the appeal was valid.</p>`
-		}
-	};
+	const descriptiveHtml = `<p class="govuk-body">This is the date all case documentation was received and the appeal was valid.</p>`;
+
 	const selectDateComponent = dateInput({
 		name: 'valid-date',
 		id: 'valid-date',
@@ -36,7 +31,9 @@ export function updateValidDatePage(
 			month: dateValidMonth,
 			year: dateValidYear
 		},
-		legendText: '',
+		legendText: title,
+		legendIsPageHeading: true,
+		descriptionHtml: descriptiveHtml,
 		hint: 'For example, 27 3 2023',
 		errors: errors
 	});
@@ -50,13 +47,11 @@ export function updateValidDatePage(
 	};
 
 	const pageContent = {
-		title,
+		title: title,
 		backLinkUrl: `/appeals-service/appeal-details/${appealId}/appellant-case`,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		backLinkText: 'Back',
-		heading: title,
 		submitButtonText: 'Confirm',
-		prePageComponents: [validDateTextComponent],
 		pageComponents: [selectDateComponent, insetTextComponent]
 	};
 

@@ -4,7 +4,6 @@ exports[`net-residence GET /residential-units/new should render net gain or loss
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Is there a net gain or loss of residential units?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -13,39 +12,44 @@ exports[`net-residence GET /residential-units/new should render net gain or loss
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence" name="net-residence"
-                                    type="radio" value="gain" data-aria-controls="conditional-net-residence">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence">Net gain</label>
-                                </div>
-                                <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                id="conditional-net-residence">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="net-gain">Net gain</label>
-                                        <input class="govuk-input govuk-input--width-3" id="net-gain"
-                                        name="net-gain" type="text" value="">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Is there a net gain or loss of residential units?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence" name="net-residence"
+                                        type="radio" value="gain" data-aria-controls="conditional-net-residence">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence">Net gain</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-net-residence">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="net-gain">Net gain</label>
+                                            <input class="govuk-input govuk-input--width-3" id="net-gain"
+                                            name="net-gain" type="text" value="">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence-2" name="net-residence"
+                                        type="radio" value="loss" data-aria-controls="conditional-net-residence-2">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence-2">Net loss</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-net-residence-2">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="net-loss">Net loss</label>
+                                            <input class="govuk-input govuk-input--width-3" id="net-loss"
+                                            name="net-loss" type="text" value="">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence-3" name="net-residence"
+                                        type="radio" value="noChange">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence-3">No change in number of residential units</label>
                                     </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence-2" name="net-residence"
-                                    type="radio" value="loss" data-aria-controls="conditional-net-residence-2">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence-2">Net loss</label>
-                                </div>
-                                <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                id="conditional-net-residence-2">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="net-loss">Net loss</label>
-                                        <input class="govuk-input govuk-input--width-3" id="net-loss"
-                                        name="net-loss" type="text" value="">
-                                    </div>
-                                </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence-3" name="net-residence"
-                                    type="radio" value="noChange">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence-3">No change in number of residential units</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Save and return</button>
@@ -76,7 +80,6 @@ exports[`net-residence POST /residential-units/new should return error when net 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Is there a net gain or loss of residential units?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -85,40 +88,45 @@ exports[`net-residence POST /residential-units/new should return error when net 
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence" name="net-residence"
-                                    type="radio" value="gain" checked data-aria-controls="conditional-net-residence">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence">Net gain</label>
-                                </div>
-                                <div class="govuk-radios__conditional" id="conditional-net-residence">
-                                    <div class="govuk-form-group govuk-form-group--error">
-                                        <label class="govuk-label" for="net-gain">Net gain</label>
-                                        <p id="net-gain-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Net gain must be a number,
-                                            like 5</p>
-                                        <input class="govuk-input govuk-input--width-3 govuk-input--error"
-                                        id="net-gain" name="net-gain" type="text" value="1.0" aria-describedby="net-gain-error">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Is there a net gain or loss of residential units?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence" name="net-residence"
+                                        type="radio" value="gain" checked data-aria-controls="conditional-net-residence">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence">Net gain</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional" id="conditional-net-residence">
+                                        <div class="govuk-form-group govuk-form-group--error">
+                                            <label class="govuk-label" for="net-gain">Net gain</label>
+                                            <p id="net-gain-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Net gain must be a number,
+                                                like 5</p>
+                                            <input class="govuk-input govuk-input--width-3 govuk-input--error"
+                                            id="net-gain" name="net-gain" type="text" value="1.0" aria-describedby="net-gain-error">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence-2" name="net-residence"
+                                        type="radio" value="loss" data-aria-controls="conditional-net-residence-2">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence-2">Net loss</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-net-residence-2">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="net-loss">Net loss</label>
+                                            <input class="govuk-input govuk-input--width-3" id="net-loss"
+                                            name="net-loss" type="text" value="">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence-3" name="net-residence"
+                                        type="radio" value="noChange">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence-3">No change in number of residential units</label>
                                     </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence-2" name="net-residence"
-                                    type="radio" value="loss" data-aria-controls="conditional-net-residence-2">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence-2">Net loss</label>
-                                </div>
-                                <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                id="conditional-net-residence-2">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="net-loss">Net loss</label>
-                                        <input class="govuk-input govuk-input--width-3" id="net-loss"
-                                        name="net-loss" type="text" value="">
-                                    </div>
-                                </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence-3" name="net-residence"
-                                    type="radio" value="noChange">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence-3">No change in number of residential units</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Save and return</button>
@@ -149,7 +157,6 @@ exports[`net-residence POST /residential-units/new should return error when net 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Is there a net gain or loss of residential units?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -158,40 +165,45 @@ exports[`net-residence POST /residential-units/new should return error when net 
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence" name="net-residence"
-                                    type="radio" value="gain" checked data-aria-controls="conditional-net-residence">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence">Net gain</label>
-                                </div>
-                                <div class="govuk-radios__conditional" id="conditional-net-residence">
-                                    <div class="govuk-form-group govuk-form-group--error">
-                                        <label class="govuk-label" for="net-gain">Net gain</label>
-                                        <p id="net-gain-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Net gain must be a number,
-                                            like 5</p>
-                                        <input class="govuk-input govuk-input--width-3 govuk-input--error"
-                                        id="net-gain" name="net-gain" type="text" value="1.43" aria-describedby="net-gain-error">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Is there a net gain or loss of residential units?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence" name="net-residence"
+                                        type="radio" value="gain" checked data-aria-controls="conditional-net-residence">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence">Net gain</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional" id="conditional-net-residence">
+                                        <div class="govuk-form-group govuk-form-group--error">
+                                            <label class="govuk-label" for="net-gain">Net gain</label>
+                                            <p id="net-gain-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Net gain must be a number,
+                                                like 5</p>
+                                            <input class="govuk-input govuk-input--width-3 govuk-input--error"
+                                            id="net-gain" name="net-gain" type="text" value="1.43" aria-describedby="net-gain-error">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence-2" name="net-residence"
+                                        type="radio" value="loss" data-aria-controls="conditional-net-residence-2">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence-2">Net loss</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-net-residence-2">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="net-loss">Net loss</label>
+                                            <input class="govuk-input govuk-input--width-3" id="net-loss"
+                                            name="net-loss" type="text" value="">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence-3" name="net-residence"
+                                        type="radio" value="noChange">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence-3">No change in number of residential units</label>
                                     </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence-2" name="net-residence"
-                                    type="radio" value="loss" data-aria-controls="conditional-net-residence-2">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence-2">Net loss</label>
-                                </div>
-                                <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                id="conditional-net-residence-2">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="net-loss">Net loss</label>
-                                        <input class="govuk-input govuk-input--width-3" id="net-loss"
-                                        name="net-loss" type="text" value="">
-                                    </div>
-                                </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence-3" name="net-residence"
-                                    type="radio" value="noChange">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence-3">No change in number of residential units</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Save and return</button>
@@ -222,7 +234,6 @@ exports[`net-residence POST /residential-units/new should return error when net 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Is there a net gain or loss of residential units?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -231,40 +242,45 @@ exports[`net-residence POST /residential-units/new should return error when net 
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence" name="net-residence"
-                                    type="radio" value="gain" checked data-aria-controls="conditional-net-residence">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence">Net gain</label>
-                                </div>
-                                <div class="govuk-radios__conditional" id="conditional-net-residence">
-                                    <div class="govuk-form-group govuk-form-group--error">
-                                        <label class="govuk-label" for="net-gain">Net gain</label>
-                                        <p id="net-gain-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Net gain must be a number,
-                                            like 5</p>
-                                        <input class="govuk-input govuk-input--width-3 govuk-input--error"
-                                        id="net-gain" name="net-gain" type="text" value="asdffe" aria-describedby="net-gain-error">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Is there a net gain or loss of residential units?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence" name="net-residence"
+                                        type="radio" value="gain" checked data-aria-controls="conditional-net-residence">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence">Net gain</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional" id="conditional-net-residence">
+                                        <div class="govuk-form-group govuk-form-group--error">
+                                            <label class="govuk-label" for="net-gain">Net gain</label>
+                                            <p id="net-gain-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Net gain must be a number,
+                                                like 5</p>
+                                            <input class="govuk-input govuk-input--width-3 govuk-input--error"
+                                            id="net-gain" name="net-gain" type="text" value="asdffe" aria-describedby="net-gain-error">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence-2" name="net-residence"
+                                        type="radio" value="loss" data-aria-controls="conditional-net-residence-2">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence-2">Net loss</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-net-residence-2">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="net-loss">Net loss</label>
+                                            <input class="govuk-input govuk-input--width-3" id="net-loss"
+                                            name="net-loss" type="text" value="">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence-3" name="net-residence"
+                                        type="radio" value="noChange">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence-3">No change in number of residential units</label>
                                     </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence-2" name="net-residence"
-                                    type="radio" value="loss" data-aria-controls="conditional-net-residence-2">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence-2">Net loss</label>
-                                </div>
-                                <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                id="conditional-net-residence-2">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="net-loss">Net loss</label>
-                                        <input class="govuk-input govuk-input--width-3" id="net-loss"
-                                        name="net-loss" type="text" value="">
-                                    </div>
-                                </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence-3" name="net-residence"
-                                    type="radio" value="noChange">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence-3">No change in number of residential units</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Save and return</button>
@@ -295,7 +311,6 @@ exports[`net-residence POST /residential-units/new should return error when net 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Is there a net gain or loss of residential units?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -304,39 +319,44 @@ exports[`net-residence POST /residential-units/new should return error when net 
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence" name="net-residence"
-                                    type="radio" value="gain" checked data-aria-controls="conditional-net-residence">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence">Net gain</label>
-                                </div>
-                                <div class="govuk-radios__conditional" id="conditional-net-residence">
-                                    <div class="govuk-form-group govuk-form-group--error">
-                                        <label class="govuk-label" for="net-gain">Net gain</label>
-                                        <p id="net-gain-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the net gain</p>
-                                        <input                                         class="govuk-input govuk-input--width-3 govuk-input--error" id="net-gain"
-                                        name="net-gain" type="text" value="" aria-describedby="net-gain-error">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Is there a net gain or loss of residential units?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence" name="net-residence"
+                                        type="radio" value="gain" checked data-aria-controls="conditional-net-residence">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence">Net gain</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional" id="conditional-net-residence">
+                                        <div class="govuk-form-group govuk-form-group--error">
+                                            <label class="govuk-label" for="net-gain">Net gain</label>
+                                            <p id="net-gain-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the net gain</p>
+                                            <input                                             class="govuk-input govuk-input--width-3 govuk-input--error" id="net-gain"
+                                            name="net-gain" type="text" value="" aria-describedby="net-gain-error">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence-2" name="net-residence"
+                                        type="radio" value="loss" data-aria-controls="conditional-net-residence-2">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence-2">Net loss</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-net-residence-2">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="net-loss">Net loss</label>
+                                            <input class="govuk-input govuk-input--width-3" id="net-loss"
+                                            name="net-loss" type="text" value="">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence-3" name="net-residence"
+                                        type="radio" value="noChange">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence-3">No change in number of residential units</label>
                                     </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence-2" name="net-residence"
-                                    type="radio" value="loss" data-aria-controls="conditional-net-residence-2">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence-2">Net loss</label>
-                                </div>
-                                <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                id="conditional-net-residence-2">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="net-loss">Net loss</label>
-                                        <input class="govuk-input govuk-input--width-3" id="net-loss"
-                                        name="net-loss" type="text" value="">
-                                    </div>
-                                </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence-3" name="net-residence"
-                                    type="radio" value="noChange">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence-3">No change in number of residential units</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Save and return</button>
@@ -367,7 +387,6 @@ exports[`net-residence POST /residential-units/new should return error when net 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Is there a net gain or loss of residential units?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -376,40 +395,45 @@ exports[`net-residence POST /residential-units/new should return error when net 
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence" name="net-residence"
-                                    type="radio" value="gain" data-aria-controls="conditional-net-residence">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence">Net gain</label>
-                                </div>
-                                <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                id="conditional-net-residence">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="net-gain">Net gain</label>
-                                        <input class="govuk-input govuk-input--width-3" id="net-gain"
-                                        name="net-gain" type="text" value="">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Is there a net gain or loss of residential units?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence" name="net-residence"
+                                        type="radio" value="gain" data-aria-controls="conditional-net-residence">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence">Net gain</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-net-residence">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="net-gain">Net gain</label>
+                                            <input class="govuk-input govuk-input--width-3" id="net-gain"
+                                            name="net-gain" type="text" value="">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence-2" name="net-residence"
+                                        type="radio" value="loss" checked data-aria-controls="conditional-net-residence-2">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence-2">Net loss</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional" id="conditional-net-residence-2">
+                                        <div class="govuk-form-group govuk-form-group--error">
+                                            <label class="govuk-label" for="net-loss">Net loss</label>
+                                            <p id="net-loss-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Net loss must be a whole
+                                                number, like 5</p>
+                                            <input class="govuk-input govuk-input--width-3 govuk-input--error"
+                                            id="net-loss" name="net-loss" type="text" value="0" aria-describedby="net-loss-error">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence-3" name="net-residence"
+                                        type="radio" value="noChange">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence-3">No change in number of residential units</label>
                                     </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence-2" name="net-residence"
-                                    type="radio" value="loss" checked data-aria-controls="conditional-net-residence-2">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence-2">Net loss</label>
-                                </div>
-                                <div class="govuk-radios__conditional" id="conditional-net-residence-2">
-                                    <div class="govuk-form-group govuk-form-group--error">
-                                        <label class="govuk-label" for="net-loss">Net loss</label>
-                                        <p id="net-loss-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Net loss must be a whole
-                                            number, like 5</p>
-                                        <input class="govuk-input govuk-input--width-3 govuk-input--error"
-                                        id="net-loss" name="net-loss" type="text" value="0" aria-describedby="net-loss-error">
-                                    </div>
-                                </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence-3" name="net-residence"
-                                    type="radio" value="noChange">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence-3">No change in number of residential units</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Save and return</button>
@@ -440,7 +464,6 @@ exports[`net-residence POST /residential-units/new should return error when net 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Is there a net gain or loss of residential units?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -449,40 +472,45 @@ exports[`net-residence POST /residential-units/new should return error when net 
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence" name="net-residence"
-                                    type="radio" value="gain" data-aria-controls="conditional-net-residence">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence">Net gain</label>
-                                </div>
-                                <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                id="conditional-net-residence">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="net-gain">Net gain</label>
-                                        <input class="govuk-input govuk-input--width-3" id="net-gain"
-                                        name="net-gain" type="text" value="">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Is there a net gain or loss of residential units?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence" name="net-residence"
+                                        type="radio" value="gain" data-aria-controls="conditional-net-residence">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence">Net gain</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-net-residence">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="net-gain">Net gain</label>
+                                            <input class="govuk-input govuk-input--width-3" id="net-gain"
+                                            name="net-gain" type="text" value="">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence-2" name="net-residence"
+                                        type="radio" value="loss" checked data-aria-controls="conditional-net-residence-2">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence-2">Net loss</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional" id="conditional-net-residence-2">
+                                        <div class="govuk-form-group govuk-form-group--error">
+                                            <label class="govuk-label" for="net-loss">Net loss</label>
+                                            <p id="net-loss-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Net loss must be a number,
+                                                like 5</p>
+                                            <input class="govuk-input govuk-input--width-3 govuk-input--error"
+                                            id="net-loss" name="net-loss" type="text" value="1.43" aria-describedby="net-loss-error">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence-3" name="net-residence"
+                                        type="radio" value="noChange">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence-3">No change in number of residential units</label>
                                     </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence-2" name="net-residence"
-                                    type="radio" value="loss" checked data-aria-controls="conditional-net-residence-2">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence-2">Net loss</label>
-                                </div>
-                                <div class="govuk-radios__conditional" id="conditional-net-residence-2">
-                                    <div class="govuk-form-group govuk-form-group--error">
-                                        <label class="govuk-label" for="net-loss">Net loss</label>
-                                        <p id="net-loss-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Net loss must be a number,
-                                            like 5</p>
-                                        <input class="govuk-input govuk-input--width-3 govuk-input--error"
-                                        id="net-loss" name="net-loss" type="text" value="1.43" aria-describedby="net-loss-error">
-                                    </div>
-                                </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence-3" name="net-residence"
-                                    type="radio" value="noChange">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence-3">No change in number of residential units</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Save and return</button>
@@ -513,7 +541,6 @@ exports[`net-residence POST /residential-units/new should return error when net 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Is there a net gain or loss of residential units?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -522,40 +549,45 @@ exports[`net-residence POST /residential-units/new should return error when net 
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence" name="net-residence"
-                                    type="radio" value="gain" data-aria-controls="conditional-net-residence">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence">Net gain</label>
-                                </div>
-                                <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                id="conditional-net-residence">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="net-gain">Net gain</label>
-                                        <input class="govuk-input govuk-input--width-3" id="net-gain"
-                                        name="net-gain" type="text" value="">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Is there a net gain or loss of residential units?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence" name="net-residence"
+                                        type="radio" value="gain" data-aria-controls="conditional-net-residence">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence">Net gain</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-net-residence">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="net-gain">Net gain</label>
+                                            <input class="govuk-input govuk-input--width-3" id="net-gain"
+                                            name="net-gain" type="text" value="">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence-2" name="net-residence"
+                                        type="radio" value="loss" checked data-aria-controls="conditional-net-residence-2">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence-2">Net loss</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional" id="conditional-net-residence-2">
+                                        <div class="govuk-form-group govuk-form-group--error">
+                                            <label class="govuk-label" for="net-loss">Net loss</label>
+                                            <p id="net-loss-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Net loss must be a number,
+                                                like 5</p>
+                                            <input class="govuk-input govuk-input--width-3 govuk-input--error"
+                                            id="net-loss" name="net-loss" type="text" value="asdffe" aria-describedby="net-loss-error">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence-3" name="net-residence"
+                                        type="radio" value="noChange">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence-3">No change in number of residential units</label>
                                     </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence-2" name="net-residence"
-                                    type="radio" value="loss" checked data-aria-controls="conditional-net-residence-2">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence-2">Net loss</label>
-                                </div>
-                                <div class="govuk-radios__conditional" id="conditional-net-residence-2">
-                                    <div class="govuk-form-group govuk-form-group--error">
-                                        <label class="govuk-label" for="net-loss">Net loss</label>
-                                        <p id="net-loss-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Net loss must be a number,
-                                            like 5</p>
-                                        <input class="govuk-input govuk-input--width-3 govuk-input--error"
-                                        id="net-loss" name="net-loss" type="text" value="asdffe" aria-describedby="net-loss-error">
-                                    </div>
-                                </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence-3" name="net-residence"
-                                    type="radio" value="noChange">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence-3">No change in number of residential units</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Save and return</button>
@@ -586,7 +618,6 @@ exports[`net-residence POST /residential-units/new should return error when net 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Is there a net gain or loss of residential units?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -595,39 +626,44 @@ exports[`net-residence POST /residential-units/new should return error when net 
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence" name="net-residence"
-                                    type="radio" value="gain" data-aria-controls="conditional-net-residence">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence">Net gain</label>
-                                </div>
-                                <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                id="conditional-net-residence">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="net-gain">Net gain</label>
-                                        <input class="govuk-input govuk-input--width-3" id="net-gain"
-                                        name="net-gain" type="text" value="">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Is there a net gain or loss of residential units?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence" name="net-residence"
+                                        type="radio" value="gain" data-aria-controls="conditional-net-residence">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence">Net gain</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-net-residence">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="net-gain">Net gain</label>
+                                            <input class="govuk-input govuk-input--width-3" id="net-gain"
+                                            name="net-gain" type="text" value="">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence-2" name="net-residence"
+                                        type="radio" value="loss" checked data-aria-controls="conditional-net-residence-2">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence-2">Net loss</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional" id="conditional-net-residence-2">
+                                        <div class="govuk-form-group govuk-form-group--error">
+                                            <label class="govuk-label" for="net-loss">Net loss</label>
+                                            <p id="net-loss-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the net loss</p>
+                                            <input                                             class="govuk-input govuk-input--width-3 govuk-input--error" id="net-loss"
+                                            name="net-loss" type="text" value="" aria-describedby="net-loss-error">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence-3" name="net-residence"
+                                        type="radio" value="noChange">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence-3">No change in number of residential units</label>
                                     </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence-2" name="net-residence"
-                                    type="radio" value="loss" checked data-aria-controls="conditional-net-residence-2">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence-2">Net loss</label>
-                                </div>
-                                <div class="govuk-radios__conditional" id="conditional-net-residence-2">
-                                    <div class="govuk-form-group govuk-form-group--error">
-                                        <label class="govuk-label" for="net-loss">Net loss</label>
-                                        <p id="net-loss-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the net loss</p>
-                                        <input                                         class="govuk-input govuk-input--width-3 govuk-input--error" id="net-loss"
-                                        name="net-loss" type="text" value="" aria-describedby="net-loss-error">
-                                    </div>
-                                </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence-3" name="net-residence"
-                                    type="radio" value="noChange">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence-3">No change in number of residential units</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Save and return</button>
@@ -658,7 +694,6 @@ exports[`net-residence POST /residential-units/new should return error when radi
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Is there a net gain or loss of residential units?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -667,41 +702,46 @@ exports[`net-residence POST /residential-units/new should return error when radi
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
-                            <p id="net-residence-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select if there is a
-                                net gain or loss of residential units</p>
-                            <div class="govuk-radios" data-module="govuk-radios">
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence" name="net-residence"
-                                    type="radio" value="gain" data-aria-controls="conditional-net-residence">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence">Net gain</label>
-                                </div>
-                                <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                id="conditional-net-residence">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="net-gain">Net gain</label>
-                                        <input class="govuk-input govuk-input--width-3" id="net-gain"
-                                        name="net-gain" type="text" value="">
+                            <fieldset class="govuk-fieldset" aria-describedby="net-residence-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Is there a net gain or loss of residential units?</h1>
+                                </legend>
+                                <p id="net-residence-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select if there is a
+                                    net gain or loss of residential units</p>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence" name="net-residence"
+                                        type="radio" value="gain" data-aria-controls="conditional-net-residence">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence">Net gain</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-net-residence">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="net-gain">Net gain</label>
+                                            <input class="govuk-input govuk-input--width-3" id="net-gain"
+                                            name="net-gain" type="text" value="">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence-2" name="net-residence"
+                                        type="radio" value="loss" data-aria-controls="conditional-net-residence-2">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence-2">Net loss</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-net-residence-2">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="net-loss">Net loss</label>
+                                            <input class="govuk-input govuk-input--width-3" id="net-loss"
+                                            name="net-loss" type="text" value="">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="net-residence-3" name="net-residence"
+                                        type="radio" value="noChange">
+                                        <label class="govuk-label govuk-radios__label" for="net-residence-3">No change in number of residential units</label>
                                     </div>
                                 </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence-2" name="net-residence"
-                                    type="radio" value="loss" data-aria-controls="conditional-net-residence-2">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence-2">Net loss</label>
-                                </div>
-                                <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                id="conditional-net-residence-2">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="net-loss">Net loss</label>
-                                        <input class="govuk-input govuk-input--width-3" id="net-loss"
-                                        name="net-loss" type="text" value="">
-                                    </div>
-                                </div>
-                                <div class="govuk-radios__item">
-                                    <input class="govuk-radios__input" id="net-residence-3" name="net-residence"
-                                    type="radio" value="noChange">
-                                    <label class="govuk-label govuk-radios__label" for="net-residence-3">No change in number of residential units</label>
-                                </div>
-                            </div>
+                            </fieldset>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Save and return</button>

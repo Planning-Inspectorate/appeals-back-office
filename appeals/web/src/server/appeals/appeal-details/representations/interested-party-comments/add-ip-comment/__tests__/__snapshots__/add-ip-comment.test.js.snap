@@ -420,7 +420,9 @@ exports[`add-ip-comment GET /date-submitted should match the snapshot 1`] = `
                                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                                                 <h1 class="govuk-fieldset__heading"> When did the interested party submit the comment?</h1>
                                             </legend>
-                                            <div id="date-hint" class="govuk-hint">For example, 27 3 2024</div>
+                                            <div id="date-hint" class="govuk-hint">
+                                                <div class="govuk-hint">For example, 27 3 2024</div>
+                                            </div>
                                             <div class="govuk-date-input" id="date">
                                                 <div class="govuk-date-input__item">
                                                     <div class="govuk-form-group">
