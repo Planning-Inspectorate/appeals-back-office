@@ -1,3 +1,4 @@
+import { Address } from '@pins/appeals';
 import { Schema } from 'index';
 
 declare global {
@@ -179,6 +180,9 @@ interface SingleAppellantCaseResponse {
 		effectiveDate: string | null;
 		contactPlanningInspectorateDate: string | null;
 		reference: string | null;
+		contactAddress: Address | null;
+		interestInLand: string | null;
+		writtenOrVerbalPermission: string | null;
 	};
 	siteAccessRequired?: {
 		details: string | null;

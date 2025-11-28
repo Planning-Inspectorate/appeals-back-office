@@ -265,6 +265,7 @@ model Address {
   NeighbouringSites NeighbouringSite[]
   Hearing           Hearing[]
   Inquiry           Inquiry[]
+  AppellantCase     AppellantCase[]
 }
 
 /// NeighbouringSite model
@@ -340,6 +341,10 @@ model AppellantCase {
   enforcementEffectiveDate        DateTime?
   contactPlanningInspectorateDate DateTime?
   enforcementReference            String?
+  interestInLand                  String?
+  writtenOrVerbalPermission       String?
+  contactAddress                  Address?  @relation(fields: [contactAddressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  contactAddressId                Int?
 
   //Cas adverts fields
   landownerPermission Boolean?

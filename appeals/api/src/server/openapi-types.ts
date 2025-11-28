@@ -4065,6 +4065,16 @@ export type AppellantCase = {
 		/** @format date-time */
 		contactPlanningInspectorateDate?: string | null;
 		reference?: string | null;
+		interestInLand?: string | null;
+		writtenOrVerbalPermission?: string | null;
+		contactAddress?: {
+			addressId?: number;
+			addressLine1: string;
+			addressLine2?: string | null;
+			addressTown?: string | null;
+			addressCounty?: string | null;
+			postCode: string;
+		};
 	};
 	enforcementNoticeListedBuilding?: boolean | null;
 	enforcementReference?: string | null;
@@ -4074,6 +4084,16 @@ export type AppellantCase = {
 	enforcementEffectiveDate?: string | null;
 	/** @format date-time */
 	contactPlanningInspectorateDate?: string | null;
+	interestInLand?: string | null;
+	writtenOrVerbalPermission?: string | null;
+	contactAddress?: {
+		addressId?: number;
+		addressLine1: string;
+		addressLine2?: string | null;
+		addressTown?: string | null;
+		addressCounty?: string | null;
+		postCode: string;
+	};
 	isGreenBelt?: boolean | null;
 	planningObligation?: any;
 	statusPlanningObligation?: string | null;
@@ -12383,6 +12403,16 @@ export interface AppellantCaseUpdateRequest {
 	enforcementEffectiveDate?: string | null;
 	/** @format date-time */
 	contactPlanningInspectorateDate?: string | null;
+	interestInLand?: string | null;
+	writtenOrVerbalPermission?: string | null;
+	contactAddress?: {
+		addressId?: number;
+		addressLine1: string;
+		addressLine2?: string | null;
+		addressTown?: string | null;
+		addressCounty?: string | null;
+		postCode: string;
+	};
 	isGreenBelt?: boolean | null;
 	planningObligation?: boolean | null;
 	statusPlanningObligation?: string | null;

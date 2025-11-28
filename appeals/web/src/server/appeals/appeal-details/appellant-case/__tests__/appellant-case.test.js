@@ -575,14 +575,15 @@ describe('appellant-case', () => {
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Planning obligation</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Is the appeal site part of an agricultural holding?</dt>'
+				'What is the address of the appeal site?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('What is your contact address?</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('What is your interest in the land?</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Will an inspector need to access your land or property?</dt>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Are you a tenant of the agricultural holding?</dt>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Are there any other tenants?</dt>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Separate ownership certificate and agricultural land declaration</dt>'
+				'Are there any health and safety issues on the appeal site?</dt>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Other new supporting documents</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
@@ -640,14 +641,15 @@ describe('appellant-case', () => {
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Planning obligation</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Is the appeal site part of an agricultural holding?</dt>'
+				'What is the address of the appeal site?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('What is your contact address?</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('What is your interest in the land?</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Will an inspector need to access your land or property?</dt>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Are you a tenant of the agricultural holding?</dt>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Are there any other tenants?</dt>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Separate ownership certificate and agricultural land declaration</dt>'
+				'Are there any health and safety issues on the appeal site?</dt>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Other new supporting documents</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
