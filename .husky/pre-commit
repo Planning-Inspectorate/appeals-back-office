@@ -3,3 +3,4 @@
 
 npm run tscheck
 npx lint-staged
+./packages/scripts/verify_openapi_docs.sh

@@ -10,8 +10,9 @@ const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
 const endpointsFiles = ['./src/server/endpoints/**/*.routes.js'];
 
-const specFile = path.join(__dirname, 'openapi.json');
-const typesFile = path.join(__dirname, 'openapi-types.ts');
+const outputDir = process.env.OPENAPI_OUTPUT_DIR || __dirname;
+const specFile = path.join(outputDir, 'openapi.json');
+const typesFile = path.join(outputDir, 'openapi-types.ts');
 
 /**
  * Generate the API spec and types
@@ -39,7 +40,7 @@ async function run() {
 	await formatWrite(specFile, JSON.stringify(specContent, null, 2));
 
 	for (const f of files) {
-		const filePath = path.join(__dirname, f.fileName + f.fileExtension);
+		const filePath = path.join(outputDir, f.fileName + f.fileExtension);
 		await formatWrite(filePath, f.fileContent);
 	}
 	console.log(`done`);
@@ -52,9 +53,11 @@ async function run() {
  * @param {string} content
  */
 async function formatWrite(filePath, content) {
-	const options = await prettier.resolveConfig(filePath);
+	// Resolve config from the project directory, not the output path (which may be a temp dir)
+	const configPath = path.join(__dirname, path.basename(filePath));
+	const options = await prettier.resolveConfig(configPath);
 	if (options === null) {
-		throw new Error(`no prettier config for ${filePath}`);
+		throw new Error(`no prettier config for ${configPath}`);
 	}
 	options.filepath = filePath;
 	const formatted = await prettier.format(content, options);
