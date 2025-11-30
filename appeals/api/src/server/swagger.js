@@ -1564,7 +1564,7 @@ export const spec = {
 					description: 'Date string of the event date and time: YYYY-MM-DDTHH:MM:SS+HH:MM',
 					example: '2026-11-10T00:00:00.000Z'
 				},
-				estimatedDays: {
+				estimationDays: {
 					type: 'string',
 					description: 'Estimated number of days',
 					example: 5
