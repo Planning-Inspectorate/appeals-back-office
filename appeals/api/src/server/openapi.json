@@ -10372,6 +10372,10 @@
 						"type": "string",
 						"example": "John Smith"
 					},
+					"padsInspectorId": {
+						"type": "string",
+						"example": "123456"
+					},
 					"prevUserName": {
 						"type": "string",
 						"example": "John Smith Jr"
@@ -10391,6 +10395,10 @@
 					"inspectorId": {
 						"type": "string",
 						"example": "f7ea429b-65d8-4c44-8fc2-7f1a34069855"
+					},
+					"padsInspectorId": {
+						"type": "string",
+						"example": "123456"
 					}
 				},
 				"xml": {
@@ -13891,6 +13899,10 @@
 					"inspector": {
 						"type": "string",
 						"format": "uuid",
+						"nullable": true
+					},
+					"padsInspector": {
+						"type": "string",
 						"nullable": true
 					}
 				}
@@ -29460,6 +29472,10 @@
 					"inspector": {
 						"type": "string",
 						"format": "uuid",
+						"nullable": true
+					},
+					"padsInspector": {
+						"type": "string",
 						"nullable": true
 					},
 					"assignedTeamId": {

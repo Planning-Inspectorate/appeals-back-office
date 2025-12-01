@@ -11,6 +11,10 @@ const team = {
 			type: 'string',
 			format: 'uuid',
 			nullable: true
+		},
+		padsInspector: {
+			type: 'string',
+			nullable: true
 		}
 	}
 };

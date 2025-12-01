@@ -22,12 +22,14 @@ import {
  * @param {string} log
  * @param {DocInfo | undefined } docInfo
  * @param {SessionWithAuth} session
+ * @param {import('got').Got} apiClient
  * @returns {Promise<string>}
  */
-export const mapMessageContent = async (appeal, log, docInfo, session) => {
+export const mapMessageContent = async (appeal, log, docInfo, session, apiClient) => {
 	let result = log;
 	if (log.toLowerCase().indexOf('document') === -1) {
-		result = await tryMapUsers(result, session);
+		console.log('no document found in log');
+		result = await tryMapUsers(result, session, apiClient);
 	}
 
 	result = tryMapDocumentRedactionStatus(result);
@@ -46,14 +48,15 @@ export const mapMessageContent = async (appeal, log, docInfo, session) => {
  */
 const uuidRegex =
 	/^(.*)([0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12})(.*)$/;
-
+const sapIdRegex = /^(.*)([0-9]{8})(.*)$/;
 /**
  *
  * @param {string} log
  * @param {SessionWithAuth} session
+ * @param {import('got').Got} apiClient
  * @returns {Promise<string>}
  */
-export const tryMapUsers = async (log, session) => {
+export const tryMapUsers = async (log, session, apiClient) => {
 	const result = log
 		.replace(AUDIT_TRAIL_SYSTEM_UUID, 'System')
 		.replace(AUDIT_TRIAL_APPELLANT_UUID, 'Appellant')
@@ -61,9 +64,13 @@ export const tryMapUsers = async (log, session) => {
 		.replace(AUDIT_TRAIL_LPA_UUID, 'Local planning authority')
 		.replace(AUDIT_TRIAL_AUTOMATIC_EVENT_UUID, 'Automatic event');
 	const uuid = uuidRegex.exec(result);
-
 	if (!uuid) {
-		return result;
+		const sapId = sapIdRegex.exec(result);
+		if (!sapId) {
+			return result;
+		}
+		const padsUser = await usersService.getPadsUserById(sapId[2], apiClient);
+		return result.replace(sapId[2], padsUser?.name || 'User not found!');
 	}
 
 	const user = await usersService.getUserById(uuid[2], session);

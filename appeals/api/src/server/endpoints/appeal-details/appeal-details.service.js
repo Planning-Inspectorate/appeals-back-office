@@ -181,6 +181,7 @@ const assignUser = async (
 		caseData.lpa?.email && recipientEmailList.push(caseData.lpa.email);
 
 		if (notifyAppellant) {
+
 			Promise.all(
 				recipientEmailList.map((recipientEmail) => {
 					notifySend({
