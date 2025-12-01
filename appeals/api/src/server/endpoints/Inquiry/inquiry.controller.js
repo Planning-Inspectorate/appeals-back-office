@@ -25,7 +25,7 @@ import formatDate, {
 	formatTime12h
 } from '@pins/appeals/utils/date-formatter.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { isSameDay, isSameHour, isSameMinute } from 'date-fns';
+import { isSameDay } from 'date-fns';
 import { createInquiry, deleteInquiry, updateInquiry } from './inquiry.service.js';
 
 /** @typedef {import('express').Request} Request */
@@ -163,31 +163,32 @@ export const patchInquiry = async (req, res) => {
 		}
 
 		if (existingInquiry) {
-			if (!isSameDay(existingInquiry.inquiryStartTime, inquiryStartTime)) {
+			const existingEnquiryStartTimeDate = new Date(existingInquiry.inquiryStartTime);
+			const newEnquiryStartTimeDate = new Date(inquiryStartTime);
+			if (!isSameDay(existingEnquiryStartTimeDate, newEnquiryStartTimeDate)) {
 				await createAuditTrail({
 					appealId: appeal.id,
 					azureAdUserId,
 					details: stringTokenReplacement(AUDIT_TRAIL_INQUIRY_DATE_UPDATED, [
-						formatDate(new Date(inquiryStartTime))
+						formatDate(newEnquiryStartTimeDate)
 					])
 				});
 			}
 
-			if (
-				!isSameHour(existingInquiry.inquiryStartTime, inquiryStartTime) ||
-				!isSameMinute(existingInquiry.inquiryStartTime, inquiryStartTime)
-			) {
+			const existingTime = existingEnquiryStartTimeDate.toTimeString().slice(0, 5); // "11:30"
+			const newTime = newEnquiryStartTimeDate.toTimeString().slice(0, 5);
+			if (existingTime !== newTime) {
 				await createAuditTrail({
 					appealId: appeal.id,
 					azureAdUserId,
 					details: stringTokenReplacement(AUDIT_TRAIL_INQUIRY_TIME_UPDATED, [
-						formatTime12h(new Date(inquiryStartTime))
+						formatTime12h(newEnquiryStartTimeDate)
 					])
 				});
 			}
 		}
 
-		if (address) {
+		if (address && address !== existingInquiry?.address) {
 			const details = existingInquiry?.address
 				? stringTokenReplacement(AUDIT_TRAIL_INQUIRY_ADDRESS_UPDATED, [
 						formatAddressSingleLine(formatAddressForDb(address))
