@@ -833,10 +833,10 @@ describe('/appeals/:id/reps', () => {
 		});
 	});
 
-	describe('POST representation/comments', () => {
+	describe('POST representation/comment', () => {
 		test('400 when missing first name', async () => {
 			const response = await request
-				.post('/appeals/1/reps/comments')
+				.post('/appeals/1/reps/comment')
 				.send({ ipDetails: { lastName: 'test' }, redactionStatus: 'test' })
 				.set('azureAdUserId', '732652365');
 
@@ -850,7 +850,7 @@ describe('/appeals/:id/reps', () => {
 
 		test('400 when missing last name', async () => {
 			const response = await request
-				.post('/appeals/1/reps/comments')
+				.post('/appeals/1/reps/comment')
 				.send({ ipDetails: { firstName: 'test' }, redactionStatus: 'test' })
 				.set('azureAdUserId', '732652365');
 
@@ -864,7 +864,7 @@ describe('/appeals/:id/reps', () => {
 
 		test('400 when missing redaction status', async () => {
 			const response = await request
-				.post('/appeals/1/reps/comments')
+				.post('/appeals/1/reps/comment')
 				.send({ ipDetails: { firstName: 'test', lastName: 'test' } })
 				.set('azureAdUserId', '732652365');
 
@@ -878,7 +878,7 @@ describe('/appeals/:id/reps', () => {
 
 		test('400 when email is invalid', async () => {
 			const response = await request
-				.post('/appeals/1/reps/comments')
+				.post('/appeals/1/reps/comment')
 				.send({
 					ipDetails: { firstName: 'test', lastName: 'test', email: 'invalid email' },
 					redactionStatus: 'test'
@@ -895,7 +895,7 @@ describe('/appeals/:id/reps', () => {
 
 		test('400 when attachment guids are invalid', async () => {
 			const response = await request
-				.post('/appeals/1/reps/comments')
+				.post('/appeals/1/reps/comment')
 				.send({
 					ipDetails: { firstName: 'test', lastName: 'test' },
 					redactionStatus: 'test',
@@ -913,7 +913,7 @@ describe('/appeals/:id/reps', () => {
 
 		test('400 when attachment guids are invalid and email is empty', async () => {
 			const response = await request
-				.post('/appeals/1/reps/comments')
+				.post('/appeals/1/reps/comment')
 				.send({
 					ipDetails: { firstName: 'test', lastName: 'test', email: '' },
 					redactionStatus: 'test',
@@ -933,7 +933,7 @@ describe('/appeals/:id/reps', () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 			const response = await request
-				.post('/appeals/1/reps/comments')
+				.post('/appeals/1/reps/comment')
 				.send({
 					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
 					ipAddress: { postCode: '', addressLine1: '' },
@@ -955,7 +955,7 @@ describe('/appeals/:id/reps', () => {
 			databaseConnector.document.findUnique.mockResolvedValue(mockDocument);
 
 			const response = await request
-				.post('/appeals/1/reps/comments')
+				.post('/appeals/1/reps/comment')
 				.send({
 					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
 					ipAddress: { postCode: 'abc 123', addressLine1: 'line 1' },
@@ -985,7 +985,7 @@ describe('/appeals/:id/reps', () => {
 			});
 
 			const response = await request
-				.post('/appeals/1/reps/comments')
+				.post('/appeals/1/reps/comment')
 				.send({
 					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
 					ipAddress: { postCode: '', addressLine1: '' },
@@ -1019,7 +1019,7 @@ describe('/appeals/:id/reps', () => {
 			});
 
 			const response = await request
-				.post('/appeals/1/reps/comments')
+				.post('/appeals/1/reps/comment')
 				.send({
 					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
 					ipAddress: { postCode: '', addressLine1: '' },
@@ -1053,7 +1053,7 @@ describe('/appeals/:id/reps', () => {
 			});
 
 			const response = await request
-				.post('/appeals/1/reps/comments')
+				.post('/appeals/1/reps/comment')
 				.send({
 					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
 					ipAddress: { postCode: '', addressLine1: '' },
@@ -1090,7 +1090,7 @@ describe('/appeals/:id/reps', () => {
 			});
 
 			const response = await request
-				.post('/appeals/1/reps/comments')
+				.post('/appeals/1/reps/comment')
 				.send({
 					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
 					ipAddress: { postCode: '', addressLine1: '' },
@@ -1204,6 +1204,7 @@ describe('/appeals/:id/reps', () => {
 				}
 			});
 		});
+		
 		test('400 when payload is invalid', async () => {
 			const response = await request
 				.patch('/appeals/1/reps/1/rejection-reasons')
@@ -1495,7 +1496,6 @@ describe('/appeals/:id/reps', () => {
 					.query({ type: 'lpa_statement' })
 					.set('azureAdUserId', '732652365');
 
-				console.log(response.body);
 				expect(response.status).toEqual(409);
 			});
 
@@ -1508,7 +1508,6 @@ describe('/appeals/:id/reps', () => {
 					.query({ type: 'lpa_statement' })
 					.set('azureAdUserId', '732652365');
 
-				console.log(response.body);
 				expect(response.status).toEqual(400);
 			});
 
@@ -1524,7 +1523,6 @@ describe('/appeals/:id/reps', () => {
 					.query({ type: 'lpa_statement' })
 					.set('azureAdUserId', '732652365');
 
-				console.log(response.body);
 				expect(response.status).toEqual(400);
 			});
 
@@ -1540,7 +1538,6 @@ describe('/appeals/:id/reps', () => {
 					.query({ type: 'lpa_statement' })
 					.set('azureAdUserId', '732652365');
 
-				console.log(response.body);
 				expect(response.status).toEqual(400);
 			});
 
@@ -2629,7 +2626,6 @@ describe('/appeals/:id/reps', () => {
 					.query({ type: 'final_comments' })
 					.set('azureAdUserId', '732652365');
 
-				console.log(response.body);
 				expect(response.status).toEqual(409);
 			});
 
@@ -2642,7 +2638,6 @@ describe('/appeals/:id/reps', () => {
 					.query({ type: 'final_comments' })
 					.set('azureAdUserId', '732652365');
 
-				console.log(response.body);
 				expect(response.status).toEqual(400);
 			});
 
@@ -2658,7 +2653,6 @@ describe('/appeals/:id/reps', () => {
 					.query({ type: 'final_comments' })
 					.set('azureAdUserId', '732652365');
 
-				console.log(response.body);
 				expect(response.status).toEqual(400);
 			});
 
@@ -3242,7 +3236,6 @@ describe('/appeals/:id/reps', () => {
 					.query({ type: 'evidence' })
 					.set('azureAdUserId', '732652365');
 
-				console.log(response.body);
 				expect(response.status).toEqual(409);
 			});
 
