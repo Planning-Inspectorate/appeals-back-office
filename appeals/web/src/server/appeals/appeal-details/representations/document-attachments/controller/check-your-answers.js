@@ -13,6 +13,7 @@ import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-co
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { patchRepresentationAttachments } from '../../document-attachments/attachments-service.js';
+import { postRepresentation } from '../../representations.service.js';
 
 /**
  * @param {import('@pins/express').Request} request
@@ -90,8 +91,11 @@ export const postCheckYourAnswers = async (request, response) => {
 		apiClient,
 		session,
 		currentAppeal: { appealId },
-		currentRepresentation: { id, representationType }
+		currentRepresentation,
 	} = request;
+	
+	const representationType = currentRepresentation?.representationType
+	const id = currentRepresentation?.id
 
 	const {
 		fileUploadInfo: {
@@ -136,7 +140,10 @@ export const postCheckYourAnswers = async (request, response) => {
 				]
 			});
 
-			await patchRepresentationAttachments(apiClient, appealId, id, [document.GUID]);
+			session.createRepresentation 
+			? await postRepresentation(request.apiClient, appealId, payload, representationType)
+			: await patchRepresentationAttachments(apiClient, appealId, id, [document.GUID]);
+			
 		} catch (error) {
 			logger.error(
 				error,
@@ -189,3 +196,33 @@ export const postCheckYourAnswers = async (request, response) => {
 	});
 	return response.redirect(nextPageUrl);
 };
+
+const buildPayload = (representationType,) => {
+	return {
+		// id: 1373,
+		origin: "citizen OR LPA",
+		author: "something", //TODO: so that it's automatically shared
+		status: "valid", //TODO: so that it's automatically shared
+		originalRepresentation: 'added as a document',
+		redactedRepresentation: '',
+		created: "2025-11-05T09:54:15.167Z",
+		notes: "",
+		attachments: [
+		],
+		representationType,
+		siteVisitRequested: false,
+		source: "citizen OR LPA",
+		represented: {
+			id: 1899, //maybe use appellant ID here? 
+			name: "Haley Eland - Source: Front Office - Has email: true",
+			email: "test2@example.com",
+			address: {
+				addressLine1: "",
+				postCode: "",
+			},
+		},
+		rejectionReasons: [
+		],
+}
+}
+

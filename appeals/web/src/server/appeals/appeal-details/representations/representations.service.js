@@ -1,4 +1,5 @@
 /** @typedef {import('./types.js').Representation} Representation */
+/** @typedef {import('#appeals/appeal-details/representations/types.js').RepresentationRequest} RepresentationRequest */
 
 import logger from '#lib/logger.js';
 
@@ -145,10 +146,6 @@ export const updateRejectionReasons = (apiClient, appealId, commentId, rejection
  * */
 export const publishRepresentations = (apiClient, appealId) =>
 	apiClient.post(`appeals/${appealId}/reps/publish`).json();
-
-export const DOCUMENT_STAGE = 'appellant-case';
-export const DOCUMENT_TYPE = 'appellantStatement';
-/** @typedef {import('#appeals/appeal-details/representations/types.js').RepresentationRequest} RepresentationRequest */
 
 /**
  * @param {import('got').Got} apiClient

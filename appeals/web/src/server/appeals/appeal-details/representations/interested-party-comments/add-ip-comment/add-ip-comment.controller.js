@@ -32,7 +32,7 @@ import {
 	mapSessionToRepresentationRequest,
 	uploadPage
 } from './add-ip-comment.mapper.js';
-import { postRepresentationComment } from './add-ip-comment.service.js';
+import { postRepresentation } from '../../representations.service.js';
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -325,7 +325,7 @@ export async function postIPComment(request, response) {
 				addDocumentsRequestPayload
 			);
 
-			await postRepresentationComment(request.apiClient, currentAppeal.appealId, payload);
+			await postRepresentation(request.apiClient, currentAppeal.appealId, payload, 'comment');
 
 			delete request.session.addIpComment;
 			delete request.session.fileUploadInfo;
