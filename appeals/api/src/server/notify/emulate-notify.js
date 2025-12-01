@@ -143,9 +143,17 @@ export const generateNotifyPreview = (content, noBottomBorder) => {
 
 	return processedHtml;
 };
-const processLinks = (/** @type {string} */ line) => {
-	const linkPattern = /\[([^\]]+)\]\(([^)]+)\)/g;
+/**
+ *
+ * @param {string} line
+ * @returns
+ */
+export const processLinks = (line) => {
+	const linkPattern = /\[([^[\]]*)\]\(([^()\s]+)\)/g;
 	return line.replace(linkPattern, (match, linkText, url) => {
-		return `<a href="${url}" class="govuk-link">${linkText}</a>`;
+		if (url.trim()) {
+			return `<a href="${url}" class="govuk-link">${linkText}</a>`;
+		}
+		return match;
 	});
 };
