@@ -1422,7 +1422,7 @@ export interface UpdateCaseTeamResponse {
 	caseOfficerId?: string;
 	/** @example "f7ea429b-65d8-4c44-8fc2-7f1a34069855" */
 	inspectorId?: string;
-	/** @example "123456" */
+	/** @example "12345678" */
 	padsInspectorId?: string;
 }
 
@@ -2805,7 +2805,7 @@ export interface ChangeProcedureTypeRequest {
 	 * Estimated number of days
 	 * @example 5
 	 */
-	estimatedDays?: string;
+	estimationDays?: string;
 	/**
 	 * Date string of the lpaQuestionnaireDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM
 	 * @example "2026-11-10T00:00:00.000Z"
@@ -3055,6 +3055,32 @@ export interface UpdateAsssignedTeamRequest {
 
 export interface DeleteAppealsRequest {
 	appealIds?: number[];
+}
+
+export interface CreateRule6PartyRequest {
+	serviceUser?: {
+		/** @example "Conserned Locals Consortium" */
+		organisationName?: string;
+		/** @example "concernedlocals@gmail.com" */
+		email?: string;
+	};
+}
+
+export interface Rule6PartyResponse {
+	/** @example 1 */
+	id?: number;
+	/** @example 1 */
+	appealId?: number;
+	/** @example 1 */
+	serviceUserId?: number;
+	serviceUser?: {
+		serviceUserId?: number;
+		firstName?: string;
+		lastName?: string;
+		organisationName?: string | null;
+		email?: string | null;
+		phoneNumber?: string | null;
+	};
 }
 
 export interface Address {
@@ -4070,6 +4096,16 @@ export type AppellantCase = {
 		/** @format date-time */
 		contactPlanningInspectorateDate?: string | null;
 		reference?: string | null;
+		interestInLand?: string | null;
+		writtenOrVerbalPermission?: string | null;
+		contactAddress?: {
+			addressId?: number;
+			addressLine1: string;
+			addressLine2?: string | null;
+			addressTown?: string | null;
+			addressCounty?: string | null;
+			postCode: string;
+		};
 	};
 	enforcementNoticeListedBuilding?: boolean | null;
 	enforcementReference?: string | null;
@@ -4079,6 +4115,16 @@ export type AppellantCase = {
 	enforcementEffectiveDate?: string | null;
 	/** @format date-time */
 	contactPlanningInspectorateDate?: string | null;
+	interestInLand?: string | null;
+	writtenOrVerbalPermission?: string | null;
+	contactAddress?: {
+		addressId?: number;
+		addressLine1: string;
+		addressLine2?: string | null;
+		addressTown?: string | null;
+		addressCounty?: string | null;
+		postCode: string;
+	};
 	isGreenBelt?: boolean | null;
 	planningObligation?: any;
 	statusPlanningObligation?: string | null;
@@ -12389,6 +12435,16 @@ export interface AppellantCaseUpdateRequest {
 	enforcementEffectiveDate?: string | null;
 	/** @format date-time */
 	contactPlanningInspectorateDate?: string | null;
+	interestInLand?: string | null;
+	writtenOrVerbalPermission?: string | null;
+	contactAddress?: {
+		addressId?: number;
+		addressLine1: string;
+		addressLine2?: string | null;
+		addressTown?: string | null;
+		addressCounty?: string | null;
+		postCode: string;
+	};
 	isGreenBelt?: boolean | null;
 	planningObligation?: boolean | null;
 	statusPlanningObligation?: string | null;

@@ -119,7 +119,9 @@ exports[`site-visit GET /site-visit/manage-visit should render the manage visit 
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -435,7 +437,9 @@ exports[`site-visit GET /site-visit/schedule-visit should render the schedule vi
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -654,7 +658,9 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date must
                                     be a real date</p>
                                 <div class="govuk-date-input" id="visit-date">
@@ -795,7 +801,9 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date day must
                                     be between 1 and 31</p>
                                 <div class="govuk-date-input" id="visit-date">
@@ -936,7 +944,9 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date day must
                                     be between 1 and 31</p>
                                 <div class="govuk-date-input" id="visit-date">
@@ -1077,7 +1087,9 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date month
                                     must be between 1 and 12</p>
                                 <div class="govuk-date-input" id="visit-date">
@@ -1218,7 +1230,9 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date month
                                     must be between 1 and 12</p>
                                 <div class="govuk-date-input" id="visit-date">
@@ -1359,7 +1373,9 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date year
                                     must be 4 digits</p>
                                 <div class="govuk-date-input" id="visit-date">
@@ -1500,7 +1516,9 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date year
                                     must be 4 digits</p>
                                 <div class="govuk-date-input" id="visit-date">
@@ -1641,7 +1659,9 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -1784,7 +1804,9 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -1927,7 +1949,9 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -2070,7 +2094,9 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -2213,7 +2239,9 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -2361,7 +2389,9 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                 <div class="govuk-form-group govuk-form-group--error">
                     <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                        <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                        <div id="visit-date-hint" class="govuk-hint">
+                            <div class="govuk-hint">For example, 27 3 2023</div>
+                        </div>
                         <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the site visit
                             date</p>
                         <div class="govuk-date-input" id="visit-date">
@@ -2563,7 +2593,9 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date must
                                     be a real date</p>
                                 <div class="govuk-date-input" id="visit-date">
@@ -2704,7 +2736,9 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date day must
                                     be between 1 and 31</p>
                                 <div class="govuk-date-input" id="visit-date">
@@ -2845,7 +2879,9 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date day must
                                     be between 1 and 31</p>
                                 <div class="govuk-date-input" id="visit-date">
@@ -2986,7 +3022,9 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date month
                                     must be between 1 and 12</p>
                                 <div class="govuk-date-input" id="visit-date">
@@ -3127,7 +3165,9 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date month
                                     must be between 1 and 12</p>
                                 <div class="govuk-date-input" id="visit-date">
@@ -3268,7 +3308,9 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date year
                                     must be 4 digits</p>
                                 <div class="govuk-date-input" id="visit-date">
@@ -3409,7 +3451,9 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date year
                                     must be 4 digits</p>
                                 <div class="govuk-date-input" id="visit-date">
@@ -3550,7 +3594,9 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -3693,7 +3739,9 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -3836,7 +3884,9 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -3979,7 +4029,9 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -4122,7 +4174,9 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -4265,7 +4319,9 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -4408,7 +4464,9 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -4551,7 +4609,9 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <div id="visit-date-hint" class="govuk-hint">
+                                    <div class="govuk-hint">For example, 27 3 2023</div>
+                                </div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -4699,7 +4759,9 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                 <div class="govuk-form-group govuk-form-group--error">
                     <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                        <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                        <div id="visit-date-hint" class="govuk-hint">
+                            <div class="govuk-hint">For example, 27 3 2023</div>
+                        </div>
                         <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the site visit
                             date</p>
                         <div class="govuk-date-input" id="visit-date">

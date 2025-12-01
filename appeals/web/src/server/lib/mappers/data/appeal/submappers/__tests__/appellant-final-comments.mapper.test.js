@@ -61,7 +61,6 @@ describe('appellant-final-comments.mapper', () => {
 	it('should not display appellant final comments row if the procedure type is hearing', () => {
 		data.appealDetails.procedureType = 'Hearing';
 		const result = mapAppellantFinalComments(data);
-		console.log(result);
 		expect(result).toEqual({ id: 'start-case-date', display: {} });
 	});
 });

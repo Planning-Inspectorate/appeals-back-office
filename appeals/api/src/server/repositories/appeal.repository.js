@@ -165,6 +165,11 @@ export const appealDetailsInclude = /** @type {const} */ {
 		include: {
 			appellant: true
 		}
+	},
+	appealRule6Parties: {
+		include: {
+			serviceUser: true
+		}
 	}
 };
 
@@ -292,6 +297,11 @@ export const appealDetailsIncludeMap = /** @type {const} */ {
 	otherAppellants: {
 		include: {
 			appellant: true
+		}
+	},
+	appealRule6Parties: {
+		include: {
+			serviceUser: true
 		}
 	}
 };
@@ -435,9 +445,9 @@ const updateAppealById = (
 			...(applicationReference && { applicationReference }),
 			...(hasValueOrIsNull(caseOfficer) && { caseOfficerUserId: caseOfficer }),
 			...(hasValueOrIsNull(inspector) && { inspectorUserId: inspector }),
-			...(hasValueOrIsNull(padsInspector) && { padsInspectorUserId: padsInspector }),
 			...(hasValueOrIsNull(agent) && { agentId: agent }),
 			...(hasValueOrIsNull(procedureTypeId) && { procedureTypeId }),
+			...(hasValueOrIsNull(padsInspector) && { padsInspectorUserId: padsInspector }),
 			caseUpdatedDate: new Date(),
 			...(hearingStartTime && {
 				hearing: {

@@ -53,10 +53,6 @@ const updateAppealById = async (req, res) => {
 	} = req;
 	const appealId = Number(params.appealId);
 	const azureAdUserId = req.get('azureAdUserId');
-console.log(await appealDetailService.loadAndFormatAppeal({
-		appeal,
-		context: /** @type {keyof contextEnum} */ (contextEnum.appealDetails)
-	}),'appeal inside update appeal by id');
 	const notifyClient = req.notifyClient;
 	try {
 		if (

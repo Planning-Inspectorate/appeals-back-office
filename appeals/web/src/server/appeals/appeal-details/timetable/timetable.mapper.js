@@ -1,7 +1,8 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDayMonthYearHourMinute, getExampleDateHint } from '#lib/dates.js';
 import { dateInput } from '#lib/mappers/index.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { appealTypeToAppealCaseTypeMapper } from '@pins/appeals/utils/appeal-type-case.mapper.js';
+import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /**
@@ -148,36 +149,32 @@ export const getAppealTimetableTypes = (appeal, appellantCase) => {
 	/** @type {AppealTimetableType[]} */
 	let validAppealTimetableType = [];
 
-	switch (appeal.appealType) {
-		case APPEAL_TYPE.HOUSEHOLDER:
-			validAppealTimetableType = ['lpaQuestionnaireDueDate'];
-			break;
-		case APPEAL_TYPE.PLANNED_LISTED_BUILDING:
-		case APPEAL_TYPE.S78:
-			validAppealTimetableType = [];
-			if (
-				appeal.appealStatus === APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE &&
-				appeal.documentationSummary?.lpaQuestionnaire?.status !== 'received'
-			) {
-				validAppealTimetableType.push('lpaQuestionnaireDueDate');
-			}
-			if (
-				appeal.appealStatus === APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE ||
-				appeal.appealStatus === APPEAL_CASE_STATUS.STATEMENTS
-			) {
-				validAppealTimetableType.push('lpaStatementDueDate', 'ipCommentsDueDate');
-			}
-			if (appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN) {
-				validAppealTimetableType.push('finalCommentsDueDate');
-			}
-			if (appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING) {
-				addHearingOrInquiryTimetableTypes(validAppealTimetableType, appellantCase);
-			}
-			if (appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
-				addHearingOrInquiryTimetableTypes(validAppealTimetableType, appellantCase);
-				validAppealTimetableType.push('proofOfEvidenceAndWitnessesDueDate');
-			}
-			break;
+	if (isExpeditedAppealType(appealTypeToAppealCaseTypeMapper(appeal.appealType))) {
+		validAppealTimetableType = ['lpaQuestionnaireDueDate'];
+	} else {
+		validAppealTimetableType = [];
+		if (
+			appeal.appealStatus === APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE &&
+			appeal.documentationSummary?.lpaQuestionnaire?.status !== 'received'
+		) {
+			validAppealTimetableType.push('lpaQuestionnaireDueDate');
+		}
+		if (
+			appeal.appealStatus === APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE ||
+			appeal.appealStatus === APPEAL_CASE_STATUS.STATEMENTS
+		) {
+			validAppealTimetableType.push('lpaStatementDueDate', 'ipCommentsDueDate');
+		}
+		if (appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN) {
+			validAppealTimetableType.push('finalCommentsDueDate');
+		}
+		if (appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING) {
+			addHearingOrInquiryTimetableTypes(validAppealTimetableType, appellantCase);
+		}
+		if (appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
+			addHearingOrInquiryTimetableTypes(validAppealTimetableType, appellantCase);
+			validAppealTimetableType.push('proofOfEvidenceAndWitnessesDueDate');
+		}
 	}
 	return validAppealTimetableType;
 };

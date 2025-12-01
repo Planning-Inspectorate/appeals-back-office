@@ -100,11 +100,6 @@ export async function initialiseAndMapAppealData(
 		? await usersService.getPadsUserById(appealDetails.padsInspector, request.apiClient)
 		: null;
 
-	console.log(
-		padsInspectorUser,
-		'padsInspectorUser in initialiseAndMapAppealData',
-		padsInspectorUser ? true : false
-	);
 	const userHasUpdateCasePermission = userHasPermission(permissionNames.updateCase, session);
 
 	/** @type {Record<string, SubMapper>} */

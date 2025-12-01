@@ -134,8 +134,10 @@ export const uploadPage = (appealDetails, errors, backButtonUrl, folderId, fileU
 	backButtonUrl,
 	appealId: String(appealDetails.appealId),
 	appealReference: appealDetails.appealReference,
-	preHeadingText: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
-	multiple: false,
+	preHeadingText: `Appeal ${appealShortReference(
+		appealDetails.appealReference
+	)} - add interested party comment`,
+	multiple: true,
 	// TODO: replace with real values
 	folderId: String(folderId),
 	useBlobEmulator: config.useBlobEmulator,
@@ -150,7 +152,14 @@ export const uploadPage = (appealDetails, errors, backButtonUrl, folderId, fileU
 	blobStorageContainer: config.blobStorageDefaultContainer,
 	documentStage: DOCUMENT_STAGE,
 	pageHeadingText: 'Upload interested party comment',
-	pageBodyComponents: [],
+	pageBodyComponents: [
+		{
+			type: 'html',
+			parameters: {
+				html: `<p class="govuk-body">If you have a redacted version of the comment, you can upload this later.</p>`
+			}
+		}
+	],
 	documentType: DOCUMENT_TYPE,
 	allowedTypes: [],
 	nextPageUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/redaction-status`,

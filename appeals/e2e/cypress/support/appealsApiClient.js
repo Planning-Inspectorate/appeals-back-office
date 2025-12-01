@@ -608,6 +608,26 @@ export const appealsApiClient = {
 		}
 	},
 
+	async linkAppeals(leadAppeaId, childAppealId) {
+		try {
+			const url = `${baseUrl}appeals/${leadAppeaId}/link-appeal`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				},
+				body: JSON.stringify({
+					linkedAppealId: childAppealId,
+					isCurrentAppealParent: true
+				})
+			});
+			expect(response.status).eq(201);
+		} catch {
+			return false;
+		}
+	},
+
 	async reviewLpaq(appealReference) {
 		try {
 			const url = `${baseUrl}appeals/${appealReference}/review-lpaq`;

@@ -82,15 +82,7 @@ export async function postShareRepresentations(request, response) {
 					? 'finalCommentsShared'
 					: 'caseProgressed';
 			case APPEAL_CASE_STATUS.EVIDENCE:
-				if (
-					publishedReps.filter(
-						(rep) =>
-							rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE ||
-							rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
-					).length > 0
-				) {
-					return 'progressedToInquiry';
-				}
+				return 'progressedToInquiry';
 		}
 	})();
 

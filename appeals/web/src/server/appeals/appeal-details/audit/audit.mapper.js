@@ -28,7 +28,6 @@ import {
 export const mapMessageContent = async (appeal, log, docInfo, session, apiClient) => {
 	let result = log;
 	if (log.toLowerCase().indexOf('document') === -1) {
-		console.log('no document found in log');
 		result = await tryMapUsers(result, session, apiClient);
 	}
 

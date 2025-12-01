@@ -18,6 +18,7 @@ import { kebabCase } from 'lodash-es';
  * @param {string} params.legendText
  * @param {boolean} [params.legendIsPageHeading=false]
  * @param {string} [params.legendClasses]
+ * @param {string} [params.descriptionHtml]
  * @param {string} [params.hint]
  * @param {import("@pins/express").ValidationErrors | undefined} [params.errors]
  *
@@ -31,6 +32,7 @@ export function dateInput({
 	legendText,
 	legendIsPageHeading = false,
 	legendClasses = 'govuk-fieldset__legend--l',
+	descriptionHtml,
 	hint,
 	errors
 }) {
@@ -42,6 +44,20 @@ export function dateInput({
 
 	const classes = assembleClassesFromErrors(errors, formattedNamePrefix);
 	const defaultId = id || kebabCase(name);
+
+	let finalHint;
+
+	if (descriptionHtml || hint) {
+		let hintHtml = descriptionHtml || '';
+
+		if (hint) {
+			hintHtml += `<div class="govuk-hint">${hint}</div>`;
+		}
+
+		finalHint = {
+			html: hintHtml
+		};
+	}
 
 	/** @type {PageComponent} */
 	const component = {
@@ -71,9 +87,7 @@ export function dateInput({
 					value: value?.year
 				}
 			],
-			hint: hint && {
-				text: hint
-			},
+			hint: finalHint,
 			errorMessage:
 				errors && hasErrors
 					? {

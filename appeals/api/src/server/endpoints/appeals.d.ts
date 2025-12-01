@@ -1,3 +1,4 @@
+import { Address } from '@pins/appeals';
 import { Schema } from 'index';
 
 declare global {
@@ -146,7 +147,7 @@ interface UpdateAppealRequest {
 	applicationReference?: string;
 	caseOfficer?: number | null;
 	inspector?: number | null;
-	padsInspector?: number | null;
+	padsInspector?: string | null;
 	agent?: number | null;
 	procedureTypeId?: number | null;
 	hearingStartTime?: string;
@@ -181,6 +182,9 @@ interface SingleAppellantCaseResponse {
 		effectiveDate: string | null;
 		contactPlanningInspectorateDate: string | null;
 		reference: string | null;
+		contactAddress: Address | null;
+		interestInLand: string | null;
+		writtenOrVerbalPermission: string | null;
 	};
 	siteAccessRequired?: {
 		details: string | null;

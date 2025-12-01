@@ -52,7 +52,6 @@ export async function appealDetailsPage(
 		appellantProofOfEvidence,
 		lpaProofOfEvidence
 	);
-	console.log(mappedData,"mappedData in appeal-details.mapper.js",appealDetails);
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
 	/**

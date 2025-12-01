@@ -93,7 +93,6 @@ const assignUser = async (
 	notifyClient
 ) => {
 	const assignedUserId = caseOfficer || inspector || padsInspector;
-
 	const typeOfAssignedUser = assignedUserType({ caseOfficer, inspector, padsInspector });
 	if (typeOfAssignedUser) {
 		let userId = null;
@@ -154,11 +153,11 @@ const assignUser = async (
 				notifyAppellant = true;
 			}
 		} else if (inspector == null && prevUserName) {
-			if(caseData.inspector?.azureAdUserId) {
-				azureAdUserId=caseData.inspector.azureAdUserId;
+			if (caseData.inspector?.azureAdUserId) {
+				azureAdUserId = caseData.inspector.azureAdUserId;
 				details = stringTokenReplacement(AUDIT_TRAIL_UNASSIGNED_INSPECTOR, [azureAdUserId]);
 			} else if (caseData.padsInspectorUserId) {
-				azureAdUserId=caseData.padsInspectorUserId;
+				azureAdUserId = caseData.padsInspectorUserId;
 				details = stringTokenReplacement(AUDIT_TRAIL_UNASSIGNED_INSPECTOR, [azureAdUserId]);
 			}
 			if (prevUserName) {
@@ -181,7 +180,6 @@ const assignUser = async (
 		caseData.lpa?.email && recipientEmailList.push(caseData.lpa.email);
 
 		if (notifyAppellant) {
-
 			Promise.all(
 				recipientEmailList.map((recipientEmail) => {
 					notifySend({

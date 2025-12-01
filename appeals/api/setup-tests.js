@@ -182,6 +182,10 @@ const mockAppellantCaseAdvertDetailCreate = jest.fn().mockResolvedValue({});
 const mockAppellantCaseAdvertDetailUpdate = jest.fn().mockResolvedValue({});
 const mockPadUsersFindMany = jest.fn().mockResolvedValue({});
 const mockPadUsersFindUnique = jest.fn().mockResolvedValue({});
+const mockAppellantCaseAdvertDetailDeleteMany = jest.fn().mockResolvedValue({});
+const mockAppealRule6PartyFindMany = jest.fn().mockResolvedValue({});
+const mockAppealRule6PartyCreate = jest.fn().mockResolvedValue({});
+const mockAppealRule6PartyDeleteMany = jest.fn().mockResolvedValue({});
 
 const mockNotifySend = jest.fn().mockImplementation(async (params) => {
 	const { doNotMockNotifySend = false, ...options } = params || {};
@@ -658,7 +662,16 @@ class MockPrismaClient {
 		return {
 			findFirst: mockAppellantCaseAdvertDetailFindFirst,
 			create: mockAppellantCaseAdvertDetailCreate,
-			update: mockAppellantCaseAdvertDetailUpdate
+			update: mockAppellantCaseAdvertDetailUpdate,
+			deleteMany: mockAppellantCaseAdvertDetailDeleteMany
+		};
+	}
+
+	get appealRule6Party() {
+		return {
+			findMany: mockAppealRule6PartyFindMany,
+			create: mockAppealRule6PartyCreate,
+			deleteMany: mockAppealRule6PartyDeleteMany
 		};
 	}
 	get pADUsers() {

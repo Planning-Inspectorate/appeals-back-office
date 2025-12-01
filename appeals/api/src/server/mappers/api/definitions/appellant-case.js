@@ -2,6 +2,7 @@ import {
 	APPEAL_DEVELOPMENT_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
+import { Address } from './address.js';
 import { AppealSummary } from './appeal-summary.js';
 import { Folder } from './folders-documents.js';
 import { InvalidIncompleteReason } from './invalid-incomplete.js';
@@ -71,6 +72,17 @@ const updateableFields = {
 		type: 'string',
 		format: 'date-time',
 		nullable: true
+	},
+	interestInLand: {
+		type: 'string',
+		nullable: true
+	},
+	writtenOrVerbalPermission: {
+		type: 'string',
+		nullable: true
+	},
+	contactAddress: {
+		...Address
 	},
 	isGreenBelt: {
 		type: 'boolean',
@@ -312,6 +324,17 @@ const appellantCase = {
 				reference: {
 					type: 'string',
 					nullable: true
+				},
+				interestInLand: {
+					type: 'string',
+					nullable: true
+				},
+				writtenOrVerbalPermission: {
+					type: 'string',
+					nullable: true
+				},
+				contactAddress: {
+					...Address
 				}
 			}
 		}

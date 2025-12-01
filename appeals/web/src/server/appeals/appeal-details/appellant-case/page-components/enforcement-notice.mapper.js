@@ -43,27 +43,26 @@ export function generateEnforcementNoticeComponents(
 			mappedAppellantCaseData.enforcementEffectiveDate.display.summaryListItem,
 			mappedAppellantCaseData.contactPlanningInspectorateDate.display.summaryListItem,
 			mappedAppellantCaseData.enforcementReference.display.summaryListItem
-		];
+		].filter((row) => row);
 	}
 
-	getComponentParameters('appellant-details', pageComponents)?.parameters.rows.push(
-		mappedAppellantCaseData.otherAppellants.display.summaryListItem
-	);
+	if (mappedAppellantCaseData.otherAppellants.display.summaryListItem) {
+		getComponentParameters('appellant-details', pageComponents)?.parameters.rows.push(
+			mappedAppellantCaseData.otherAppellants.display.summaryListItem
+		);
+	}
 
 	const appealSiteAddressComponents = getComponentParameters('site-details', pageComponents);
 	if (appealSiteAddressComponents) {
+		appealSiteAddressComponents.parameters.card.title.text = '2. Land';
 		appealSiteAddressComponents.parameters.rows = [
 			mappedAppellantCaseData.siteAddress.display.summaryListItem,
-			mappedAppellantCaseData.siteArea.display.summaryListItem,
-			mappedAppellantCaseData.inGreenBelt.display.summaryListItem,
-			mappedAppellantCaseData.siteOwnership.display.summaryListItem,
-			mappedAppellantCaseData.ownersKnown.display.summaryListItem,
-			mappedAppellantCaseData.partOfAgriculturalHolding.display.summaryListItem,
-			mappedAppellantCaseData.tenantOfAgriculturalHolding.display.summaryListItem,
-			mappedAppellantCaseData.otherTenantsOfAgriculturalHolding.display.summaryListItem,
+			mappedAppellantCaseData.contactAddress.display.summaryListItem,
+			mappedAppellantCaseData.interestInLand.display.summaryListItem,
+			mappedAppellantCaseData.writtenOrVerbalPermission.display.summaryListItem,
 			mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
 			mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem
-		];
+		].filter((row) => row);
 	}
 
 	return pageComponents;

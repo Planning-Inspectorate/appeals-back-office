@@ -71,6 +71,7 @@ model Appeal {
   assignedTeamId        Int?
   PersonalList          PersonalList?        @relation("appeal")
   otherAppellants       OtherAppellant[]     @relation("otherAppellants")
+  appealRule6Parties    AppealRule6Party[]   @relation("appealRule6Parties")
 
   @@index([addressId])
   @@index([appealTypeId])
@@ -211,7 +212,7 @@ model LPA {
 /// ServiceUser model
 /// Contains data of people who submitted appeals (agents and appellants).
 model ServiceUser {
-  id                      Int              @id @default(autoincrement())
+  id                      Int                @id @default(autoincrement())
   organisationName        String?
   salutation              String?
   firstName               String?
@@ -220,13 +221,14 @@ model ServiceUser {
   email                   String?
   website                 String?
   phoneNumber             String?
-  address                 Address?         @relation(fields: [addressId], references: [id])
+  address                 Address?           @relation(fields: [addressId], references: [id])
   addressId               Int?
-  appeals                 Appeal[]         @relation("appellant")
-  appealsOnBehalf         Appeal[]         @relation("agent")
-  representations         Representation[] @relation("represented")
-  representationsOnBehalf Representation[] @relation("representative")
-  otherAppellant          OtherAppellant[] @relation("otherAppellant")
+  appeals                 Appeal[]           @relation("appellant")
+  appealsOnBehalf         Appeal[]           @relation("agent")
+  representations         Representation[]   @relation("represented")
+  representationsOnBehalf Representation[]   @relation("representative")
+  otherAppellant          OtherAppellant[]   @relation("otherAppellant")
+  appealRule6Parties      AppealRule6Party[] @relation("appealRule6PartyServiceUser")
 }
 
 /// OtherAppellant model
@@ -267,6 +269,7 @@ model Address {
   NeighbouringSites NeighbouringSite[]
   Hearing           Hearing[]
   Inquiry           Inquiry[]
+  AppellantCase     AppellantCase[]
 }
 
 /// NeighbouringSite model
@@ -342,6 +345,10 @@ model AppellantCase {
   enforcementEffectiveDate        DateTime?
   contactPlanningInspectorateDate DateTime?
   enforcementReference            String?
+  interestInLand                  String?
+  writtenOrVerbalPermission       String?
+  contactAddress                  Address?  @relation(fields: [contactAddressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  contactAddressId                Int?
 
   //Cas adverts fields
   landownerPermission Boolean?
@@ -993,4 +1000,16 @@ model PADUsers {
   sapId         String   @unique
   name          String
   padsInspector Appeal[] @relation("padsInspector")
+}
+
+/// AppealRule6Party model
+model AppealRule6Party {
+  id            Int         @id @default(autoincrement())
+  appealId      Int
+  appeal        Appeal      @relation("appealRule6Parties", fields: [appealId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  serviceUserId Int
+  serviceUser   ServiceUser @relation("appealRule6PartyServiceUser", fields: [serviceUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([appealId])
+  @@index([serviceUserId])
 }

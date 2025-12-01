@@ -548,7 +548,7 @@ export const spec = {
 		UpdateCaseTeamResponse: {
 			caseOfficerId: '13de469c-8de6-4908-97cd-330ea73df618',
 			inspectorId: 'f7ea429b-65d8-4c44-8fc2-7f1a34069855',
-			padsInspectorId: '123456'
+			padsInspectorId: '12345678'
 		},
 		StartCaseRequest: {
 			startDate: '2024-05-09',
@@ -1566,7 +1566,7 @@ export const spec = {
 					description: 'Date string of the event date and time: YYYY-MM-DDTHH:MM:SS+HH:MM',
 					example: '2026-11-10T00:00:00.000Z'
 				},
-				estimatedDays: {
+				estimationDays: {
 					type: 'string',
 					description: 'Estimated number of days',
 					example: 5
@@ -1941,6 +1941,47 @@ export const spec = {
 					type: 'array',
 					items: {
 						type: 'number'
+					}
+				}
+			}
+		},
+		CreateRule6PartyRequest: {
+			type: 'object',
+			properties: {
+				serviceUser: {
+					type: 'object',
+					properties: {
+						organisationName: {
+							type: 'string',
+							example: 'Conserned Locals Consortium'
+						},
+						email: {
+							type: 'string',
+							example: 'concernedlocals@gmail.com'
+						}
+					}
+				}
+			}
+		},
+		Rule6PartyResponse: {
+			type: 'object',
+			properties: {
+				id: {
+					type: 'number',
+					example: 1
+				},
+				appealId: {
+					type: 'number',
+					example: 1
+				},
+				serviceUserId: {
+					type: 'number',
+					example: 1
+				},
+				serviceUser: {
+					type: 'object',
+					properties: {
+						...ApiDefinitions.ServiceUser.properties
 					}
 				}
 			}

@@ -1,15 +1,12 @@
 // @ts-nocheck
 import { jest } from '@jest/globals';
 
-
-// now import everything dynamically so imports see the mock
 const supertest = (await import('supertest')).default;
 const { app } = await import('../../../app-test.js');
 const { azureAdUserId } = await import('#tests/shared/mocks.js');
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
-// ...existing code...
 const request = supertest(app);
 
 const padsUserOne = { id: 47, name: 'Tom Jack', sapId: '12345' };

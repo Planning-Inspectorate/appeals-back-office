@@ -51,19 +51,6 @@ const displayProcedureChangeLink = (appealDetails) => {
 		return false;
 	}
 
-	const procedureTypes = [
-		FEATURE_FLAG_NAMES.SECTION_78_HEARING,
-		FEATURE_FLAG_NAMES.SECTION_78_INQUIRY,
-		FEATURE_FLAG_NAMES.SECTION_78,
-		FEATURE_FLAG_NAMES.EXPEDITED_APPEALS
-	];
-
-	const activeFlags = procedureTypes.map((p) => {
-		return featureFlags.isFeatureActive(p);
-	});
-
-	const areMultipleFlagsActive = activeFlags.filter((x) => x === true).length >= 2;
-
 	const { representationStatus: lpaStatementrepresentationStatus } =
 		appealDetails.documentationSummary?.lpaStatement ?? {};
 	const { representationStatus: ipCommentsrepresentationStatus } =
@@ -81,7 +68,6 @@ const displayProcedureChangeLink = (appealDetails) => {
 
 	if (
 		appealDetails.appealType !== APPEAL_TYPE.S78 ||
-		!areMultipleFlagsActive ||
 		lpaStatementrepresentationStatus === APPEAL_REPRESENTATION_STATUS.PUBLISHED ||
 		ipCommentsrepresentationStatus === APPEAL_REPRESENTATION_STATUS.PUBLISHED ||
 		lpaStatementDueDateElapsed ||

@@ -5,11 +5,9 @@ import { getLookupDataByValue } from '#common/controllers/lookup-data.controller
  * @param {Request} request
  * @param {Response} response
  * @returns {Promise<Response>}
- */
+ *  */
 export const getPADsUserFromSapId = async (request, response) => {
-	console.log('inside getPADsUserFromSapId controller');
 	const { sapId } = request.params;
-	const result = await getLookupDataByValue('pADUsers', {key:"sapId",value:sapId});
+	const result = await getLookupDataByValue('pADUsers', { key: 'sapId', value: sapId });
 	return response.send(result);
 };
-

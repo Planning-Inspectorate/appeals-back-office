@@ -162,12 +162,13 @@ describe('assign-user', () => {
 
 	describe('POST /assign-case-officer/check-details', () => {
 		it('should redirect to the case details page when user clicks on "Assign case officer"', async () => {
-			nock('http://test/').patch('/appeals/1').reply(200, { caseOfficer: 'updatedCaseOfficerId' });
+			nock('http://test/')
+				.patch('/appeals/1?include=all')
+				.reply(200, { caseOfficer: 'updatedCaseOfficerId' });
 			await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
 				user: '{"id": "923ac03b-9031-4cf4-8b17-348c274321f9", "name": "Smith, John", "email": "John.Smith@planninginspectorate.gov.uk"}'
 			});
 			const response = await request.post(`${baseUrl}/assign-case-officer/check-details`).send();
-
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
@@ -238,7 +239,9 @@ describe('assign-user', () => {
 
 	describe('POST /assign-inspector/check-details', () => {
 		it('should redirect to the case details page when user clicks on "Assign inspector"', async () => {
-			nock('http://test/').patch('/appeals/1').reply(200, { caseOfficer: 'updatedCaseOfficerId' });
+			nock('http://test/')
+				.patch('/appeals/1?include=all')
+				.reply(200, { caseOfficer: 'updatedCaseOfficerId' });
 			await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
 				user: '{"id": "923ac03b-9031-4cf4-8b17-348c274321f9", "name": "Smith, John", "email": "John.Smith@planninginspectorate.gov.uk"}'
 			});
@@ -249,7 +252,9 @@ describe('assign-user', () => {
 		});
 
 		it('should redirect to the case details page when user clicks on "Unassign inspector"', async () => {
-			nock('http://test/').patch('/appeals/1').reply(200, { caseOfficer: 'updatedCaseOfficerId' });
+			nock('http://test/')
+				.patch('/appeals/1?include=all')
+				.reply(200, { caseOfficer: 'updatedCaseOfficerId' });
 			await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
 				user: '{"id": "0", "name": "Remove", "email": "Remove"}'
 			});

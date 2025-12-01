@@ -371,9 +371,6 @@ export async function renderCheckYourAnswers(request, response) {
 		errors,
 		currentAppeal: { appealReference, appealId } = {},
 		session: {
-			fileUploadInfo: { files: [{ name, blobStoreUrl }] } = {
-				files: [{ name: '', blobStoreUrl: '' }]
-			},
 			addIpComment: {
 				[redactionStatusFieldName]: redactionStatus,
 				'date-day': day,
@@ -458,7 +455,13 @@ export async function renderCheckYourAnswers(request, response) {
 					}
 				}),
 				Comment: {
-					html: `<a class="govuk-link" download href="${blobStoreUrl ?? ''}">${name ?? ''}</a>`,
+					html: (request.session.fileUploadInfo?.files || [])
+						.map(
+							// @ts-ignore
+							({ name, blobStoreUrl }) =>
+								`<a class="govuk-link" download href="${blobStoreUrl ?? ''}">${name ?? ''}</a>`
+						)
+						.join('<br>'),
 					actions: {
 						Change: {
 							href: editLink(baseUrl, 'upload'),
