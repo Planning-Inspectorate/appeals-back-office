@@ -5,7 +5,11 @@ import { body } from 'express-validator';
 
 /**
  * @param {string} parameterName
+ * @param {boolean} [optional=true]
  * @returns {ValidationChain}
  */
-export const validateEmailParameter = (parameterName) =>
-	body(parameterName).optional({ checkFalsy: true }).isEmail().withMessage(ERROR_INVALID_EMAIL);
+export const validateEmailParameter = (parameterName, optional = true) => {
+	/** @type {boolean | { values: 'falsy' }} */
+	const options = optional ? { values: 'falsy' } : false;
+	return body(parameterName).optional(options).isEmail().withMessage(ERROR_INVALID_EMAIL);
+};

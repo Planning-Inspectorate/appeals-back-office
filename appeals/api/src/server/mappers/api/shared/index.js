@@ -3,6 +3,7 @@ import { mapCompletedStateList } from '#mappers/api/shared/map-completed-state-l
 import { mapAllocationDetails } from './map-allocation-details.js';
 import { mapAppealDecision } from './map-appeal-decision.js';
 import { mapAppealRelationships } from './map-appeal-relationships.js';
+import { mapAppealRule6Parties } from './map-appeal-rule-6-parties.js';
 import { mapAppealStatus } from './map-appeal-status.js';
 import { mapAppealSummary } from './map-appeal-summary.js';
 import { mapAppealTeam } from './map-appeal-team.js';
@@ -45,5 +46,6 @@ export const apiSharedMappers = {
 	withdrawal: mapAppealWithdrawal,
 	folders: mapAppealFolders,
 	hearingEstimate: mapHearingEstimate,
-	inquiryEstimate: mapInquiryEstimate
+	inquiryEstimate: mapInquiryEstimate,
+	appealRule6Parties: mapAppealRule6Parties
 };

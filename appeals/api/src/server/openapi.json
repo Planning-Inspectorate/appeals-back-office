@@ -366,6 +366,117 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/rule-6-parties": {
+			"get": {
+				"tags": ["Appeal Rule 6 Parties"],
+				"description": "Gets all rule 6 parties for an appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Gets all rule 6 parties for an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Rule6PartyResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Rule6PartyResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			},
+			"post": {
+				"tags": ["Appeal Rule 6 Parties"],
+				"description": "Adds a rule 6 party to an appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Adds a rule 6 party to an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Rule6PartyResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Rule6PartyResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Rule 6 party details to add",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateRule6PartyRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateRule6PartyRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/appeal-status/roll-back": {
 			"post": {
 				"tags": ["Appeal Status"],
@@ -13668,6 +13779,67 @@
 						"type": "array",
 						"items": {
 							"type": "number"
+						}
+					}
+				}
+			},
+			"CreateRule6PartyRequest": {
+				"type": "object",
+				"properties": {
+					"serviceUser": {
+						"type": "object",
+						"properties": {
+							"organisationName": {
+								"type": "string",
+								"example": "Conserned Locals Consortium"
+							},
+							"email": {
+								"type": "string",
+								"example": "concernedlocals@gmail.com"
+							}
+						}
+					}
+				}
+			},
+			"Rule6PartyResponse": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "number",
+						"example": 1
+					},
+					"appealId": {
+						"type": "number",
+						"example": 1
+					},
+					"serviceUserId": {
+						"type": "number",
+						"example": 1
+					},
+					"serviceUser": {
+						"type": "object",
+						"properties": {
+							"serviceUserId": {
+								"type": "number"
+							},
+							"firstName": {
+								"type": "string"
+							},
+							"lastName": {
+								"type": "string"
+							},
+							"organisationName": {
+								"type": "string",
+								"nullable": true
+							},
+							"email": {
+								"type": "string",
+								"nullable": true
+							},
+							"phoneNumber": {
+								"type": "string",
+								"nullable": true
+							}
 						}
 					}
 				}
