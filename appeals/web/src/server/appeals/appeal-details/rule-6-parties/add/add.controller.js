@@ -6,8 +6,11 @@ import {
 } from '#lib/edit-utilities.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
+import { logger } from '@azure/storage-blob';
 import { emailPage, namePage } from '../rule-6-parties.mapper.js';
+import { addRule6Party } from '../rule-6-parties.service.js';
 
 /**
  * @param {string} path
@@ -180,4 +183,31 @@ export const getCheckDetails = async (request, response) => {
 		response,
 		errors
 	);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postCheckDetails = async (request, response) => {
+	const { appealId } = request.currentAppeal;
+	const sessionValues = getSessionValuesForAppeal(request, 'addRule6Party', appealId);
+
+	try {
+		await addRule6Party(request, sessionValues);
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'rule6PartyAdded',
+			appealId
+		});
+
+		delete request.session.setUpHearing;
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+	} catch (error) {
+		logger.error(error);
+	}
+
+	return response.status(500).render('app/500.njk');
 };

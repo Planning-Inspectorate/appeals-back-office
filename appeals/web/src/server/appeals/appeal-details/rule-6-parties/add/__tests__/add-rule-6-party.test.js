@@ -384,4 +384,44 @@ describe('add rule 6 party', () => {
 			);
 		});
 	});
+
+	describe('POST /rule-6-parties/add/check-details', () => {
+		const appealId = 2;
+
+		beforeEach(() => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, { ...appealData, appealId });
+		});
+
+		it('should redirect to the appeal details page with valid inputs', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.times(3)
+				.reply(200, { ...appealData, appealId });
+			const addRule6PartyMock = nock('http://test/')
+				.post(`/appeals/${appealId}/rule-6-parties`, {
+					serviceUser: {
+						organisationName: 'Test Organisation',
+						email: 'test@example.com'
+					}
+				})
+				.reply(201, { id: 1 });
+
+			// set session data with post requests to previous pages
+			await request.post(`${baseUrl}/${appealId}/rule-6-parties/add/name`).send({
+				organisationName: 'Test Organisation'
+			});
+			await request.post(`${baseUrl}/${appealId}/rule-6-parties/add/email`).send({
+				email: 'test@example.com'
+			});
+			const response = await request.post(
+				`${baseUrl}/${appealId}/rule-6-parties/add/check-details`
+			);
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe(`/appeals-service/appeal-details/${appealId}`);
+			expect(addRule6PartyMock.isDone()).toBe(true);
+		});
+	});
 });

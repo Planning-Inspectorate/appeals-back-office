@@ -68,6 +68,186 @@ exports[`appeal-details GET /:appealId Costs should render a "Appellant applicat
 
 exports[`appeal-details GET /:appealId Costs should render a "Appellant application" row in the costs accordion 2`] = `"<td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>"`;
 
+exports[`appeal-details GET /:appealId Costs with rule 6 parties should render the correct rows 1`] = `
+"
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Documentation</th>
+                <th scope="col" class="govuk-table__header">Status</th>
+                <th scope="col" class="govuk-table__header govuk-!-text-align-right">Action</th>
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
+                <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
+                <td class="govuk-table__cell appeal-costs-appellant-application-actions govuk-!-text-align-right">
+                    <ul class="govuk-summary-list__actions-list">
+                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant application</span></a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header appeal-costs-appellant-withdrawal-documentation">Appellant withdrawal</th>
+                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status">No documents available</td>
+                <td class="govuk-table__cell appeal-costs-appellant-withdrawal-actions govuk-!-text-align-right">
+                    <ul class="govuk-summary-list__actions-list">
+                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-withdrawal" href="/appeals-service/appeal-details/2/costs/appellant/withdrawal/upload-documents/2">Add<span class="govuk-visually-hidden"> Appellant withdrawal</span></a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header appeal-costs-appellant-correspondence-documentation">Appellant correspondence</th>
+                <td class="govuk-table__cell appeal-costs-appellant-correspondence-status">No documents available</td>
+                <td class="govuk-table__cell appeal-costs-appellant-correspondence-actions govuk-!-text-align-right">
+                    <ul class="govuk-summary-list__actions-list">
+                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-correspondence" href="/appeals-service/appeal-details/2/costs/appellant/correspondence/upload-documents/3">Add<span class="govuk-visually-hidden"> Appellant correspondence</span></a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header appeal-costs-lpa-application-documentation">LPA application</th>
+                <td class="govuk-table__cell appeal-costs-lpa-application-status">No documents available</td>
+                <td class="govuk-table__cell appeal-costs-lpa-application-actions govuk-!-text-align-right">
+                    <ul class="govuk-summary-list__actions-list">
+                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-application" href="/appeals-service/appeal-details/2/costs/lpa/application/upload-documents/4">Add<span class="govuk-visually-hidden"> LPA application</span></a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header appeal-costs-lpa-withdrawal-documentation">LPA withdrawal</th>
+                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status">No documents available</td>
+                <td class="govuk-table__cell appeal-costs-lpa-withdrawal-actions govuk-!-text-align-right">
+                    <ul class="govuk-summary-list__actions-list">
+                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-withdrawal" href="/appeals-service/appeal-details/2/costs/lpa/withdrawal/upload-documents/5">Add<span class="govuk-visually-hidden"> LPA withdrawal</span></a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header appeal-costs-lpa-correspondence-documentation">LPA correspondence</th>
+                <td class="govuk-table__cell appeal-costs-lpa-correspondence-status">No documents available</td>
+                <td class="govuk-table__cell appeal-costs-lpa-correspondence-actions govuk-!-text-align-right">
+                    <ul class="govuk-summary-list__actions-list">
+                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-correspondence" href="/appeals-service/appeal-details/2/costs/lpa/correspondence/upload-documents/6">Add<span class="govuk-visually-hidden"> LPA correspondence</span></a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header appeal-rule-6-party-costs-application-0-documentation">Test Rule 6 Party application</th>
+                <td class="govuk-table__cell appeal-rule-6-party-costs-application-0-status">No documents available</td>
+                <td class="govuk-table__cell appeal-rule-6-party-costs-application-0-actions govuk-!-text-align-right">
+                    <ul class="govuk-summary-list__actions-list">
+                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-rule-6-party-costs-application-0" href="#/upload-documents/undefined">Add<span class="govuk-visually-hidden"> Test Rule 6 Party application</span></a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header appeal-rule-6-party-costs-withdrawal-0-documentation">Test Rule 6 Party withdrawal</th>
+                <td class="govuk-table__cell appeal-rule-6-party-costs-withdrawal-0-status">No documents available</td>
+                <td class="govuk-table__cell appeal-rule-6-party-costs-withdrawal-0-actions govuk-!-text-align-right">
+                    <ul class="govuk-summary-list__actions-list">
+                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-rule-6-party-costs-withdrawal-0" href="#/upload-documents/undefined">Add<span class="govuk-visually-hidden"> Test Rule 6 Party withdrawal</span></a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header appeal-rule-6-party-costs-correspondence-0-documentation">Test Rule 6 Party correspondence</th>
+                <td class="govuk-table__cell appeal-rule-6-party-costs-correspondence-0-status">No documents available</td>
+                <td class="govuk-table__cell appeal-rule-6-party-costs-correspondence-0-actions govuk-!-text-align-right">
+                    <ul class="govuk-summary-list__actions-list">
+                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-rule-6-party-costs-correspondence-0"
+                            href="#/upload-documents/undefined">Add<span class="govuk-visually-hidden"> Test Rule 6 Party correspondence</span></a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    "
+`;
+
+exports[`appeal-details GET /:appealId Documentation Rule 6 party statements and proofs should render the correct rows 1`] = `
+"
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Documentation</th>
+                <th scope="col" class="govuk-table__header">Status</th>
+                <th scope="col" class="govuk-table__header">Date</th>
+                <th scope="col" class="govuk-table__header govuk-!-text-align-right">Action</th>
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Appeal</th>
+                <td class="govuk-table__cell">Ready to review</td>
+                <td class="govuk-table__cell">2 August 2024</td>
+                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/appellant-case?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                    data-cy="review-appellant-case" class="govuk-link">Review<span class="govuk-visually-hidden"> appellant case</span></a>
+                </td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">LPA questionnaire</th>
+                <td class="govuk-table__cell">Overdue</td>
+                <td class="govuk-table__cell">Due by 11 October 2023</td>
+                <td class="govuk-table__cell govuk-!-text-align-right"></td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">LPA statement</th>
+                <td class="govuk-table__cell"></td>
+                <td class="govuk-table__cell"></td>
+                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/lpa-statement/add-document"
+                    data-cy="add-lpa-statement" class="govuk-link">Add<span class="govuk-visually-hidden"> LPA statement</span></a>
+                </td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Test Rule 6 Party statement</th>
+                <td class="govuk-table__cell">Not received</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right"><a href="#" class="govuk-link" data-cy="add-rule-6-party-statement-0">Add</a>
+                </td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Interested party comments</th>
+                <td class="govuk-table__cell">0 interested party comments</td>
+                <td class="govuk-table__cell"></td>
+                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/interested-party-comments?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                    data-cy="review-ip-comments" class="govuk-link">View<span class="govuk-visually-hidden"> interested party comments</span></a>
+                </td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Appellant proof of evidence and witness</th>
+                <td class="govuk-table__cell">Awaiting proof of evidence and witness</td>
+                <td class="govuk-table__cell"></td>
+                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/proof-of-evidence/appellant/add-representation?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                    data-cy="add-appellant-proofs-evidence" class="govuk-link">Add<span class="govuk-visually-hidden"> Appellant proof of evidence</span></a>
+                </td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">LPA proof of evidence and witness</th>
+                <td class="govuk-table__cell">Awaiting proof of evidence and witness</td>
+                <td class="govuk-table__cell"></td>
+                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/proof-of-evidence/lpa/add-representation?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                    data-cy="add-lpa-proofs-evidence" class="govuk-link">Add<span class="govuk-visually-hidden"> LPA proof of evidence</span></a>
+                </td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Test Rule 6 Party proof of evidence and witness</th>
+                <td class="govuk-table__cell">Not received</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right"><a href="#" class="govuk-link" data-cy="add-rule-6-party-proof-0">Add</a>
+                </td>
+            </tr>
+        </tbody>
+    "
+`;
+
 exports[`appeal-details GET /:appealId Hearing should render empty states for Hearing accordion when hearing is not set up and user is read only 1`] = `
 "<div id="case-details-hearing-section">
     <p class="govuk-body govuk-!-margin-bottom-7">Not set up</p>
@@ -623,12 +803,6 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
             </dd>
         </div>
-        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
-            <dd class="govuk-summary-list__value">No rule 6 party</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
-            </dd>
-        </div>
     </dl>
     <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
@@ -890,7 +1064,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
-    <table class="govuk-table">
+    <table class="govuk-table" id="case-costs-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Documentation</th>
@@ -993,12 +1167,6 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
-            <dd class="govuk-summary-list__value">No rule 6 party</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
-                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -1266,12 +1434,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
             </dd>
         </div>
-        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
-            <dd class="govuk-summary-list__value">No rule 6 party</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
-                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
-            </dd>
-        </div>
     </dl>
     <h2 class="govuk-heading-l">Case management</h2>
     <dl class="govuk-summary-list">
@@ -1527,7 +1689,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
-    <table class="govuk-table">
+    <table class="govuk-table" id="case-costs-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Documentation</th>
@@ -1630,12 +1792,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
-            <dd class="govuk-summary-list__value">No rule 6 party</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
-                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -1934,7 +2090,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
-    <table class="govuk-table">
+    <table class="govuk-table" id="case-costs-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Documentation</th>
@@ -2037,12 +2193,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
-            <dd class="govuk-summary-list__value">No rule 6 party</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
-                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -2344,7 +2494,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
-    <table class="govuk-table">
+    <table class="govuk-table" id="case-costs-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Documentation</th>
@@ -2447,12 +2597,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
-            <dd class="govuk-summary-list__value">No rule 6 party</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
-                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -2752,7 +2896,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
-    <table class="govuk-table">
+    <table class="govuk-table" id="case-costs-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Documentation</th>
@@ -2855,12 +2999,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
-            <dd class="govuk-summary-list__value">No rule 6 party</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
-                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -3160,7 +3298,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
-    <table class="govuk-table">
+    <table class="govuk-table" id="case-costs-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Documentation</th>
@@ -3263,12 +3401,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
-            <dd class="govuk-summary-list__value">No rule 6 party</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
-                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -3582,7 +3714,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
-    <table class="govuk-table">
+    <table class="govuk-table" id="case-costs-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Documentation</th>
@@ -3685,12 +3817,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
-            <dd class="govuk-summary-list__value">No rule 6 party</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
-                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -3936,7 +4062,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
-    <table class="govuk-table">
+    <table class="govuk-table" id="case-costs-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Documentation</th>
@@ -4039,12 +4165,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
-            <dd class="govuk-summary-list__value">No rule 6 party</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
-                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -4344,7 +4464,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
-    <table class="govuk-table">
+    <table class="govuk-table" id="case-costs-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Documentation</th>
@@ -4447,12 +4567,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
-            <dd class="govuk-summary-list__value">No rule 6 party</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -4865,7 +4979,7 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
-    <table class="govuk-table">
+    <table class="govuk-table" id="case-costs-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Documentation</th>
@@ -4968,12 +5082,6 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
-            <dd class="govuk-summary-list__value">No rule 6 party</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -5821,7 +5929,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
-    <table class="govuk-table">
+    <table class="govuk-table" id="case-costs-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Documentation</th>
@@ -5924,12 +6032,6 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
-            <dd class="govuk-summary-list__value">No rule 6 party</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -6182,7 +6284,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
-    <table class="govuk-table">
+    <table class="govuk-table" id="case-costs-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Documentation</th>
@@ -6285,12 +6387,6 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
-            <dd class="govuk-summary-list__value">No rule 6 party</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -6537,7 +6633,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
-    <table class="govuk-table">
+    <table class="govuk-table" id="case-costs-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Documentation</th>
@@ -6640,12 +6736,6 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
-            <dd class="govuk-summary-list__value">No rule 6 party</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -6906,7 +6996,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
-    <table class="govuk-table">
+    <table class="govuk-table" id="case-costs-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Documentation</th>
@@ -7009,12 +7099,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
-            <dd class="govuk-summary-list__value">No rule 6 party</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -7263,7 +7347,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
-    <table class="govuk-table">
+    <table class="govuk-table" id="case-costs-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Documentation</th>
@@ -7366,12 +7450,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
-            <dd class="govuk-summary-list__value">No rule 6 party</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -7631,7 +7709,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
-    <table class="govuk-table">
+    <table class="govuk-table" id="case-costs-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Documentation</th>
@@ -7734,12 +7812,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
-            <dd class="govuk-summary-list__value">No rule 6 party</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>
@@ -8052,7 +8124,7 @@ exports[`appeal-details should not render a back button 1`] = `
                     </tbody>
                 </table>
                 <h2 class="govuk-heading-l">Costs</h2>
-                <table class="govuk-table">
+                <table class="govuk-table" id="case-costs-table">
                     <thead class="govuk-table__head">
                         <tr class="govuk-table__row">
                             <th scope="col" class="govuk-table__header">Documentation</th>
@@ -8155,12 +8227,6 @@ exports[`appeal-details should not render a back button 1`] = `
                         </dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
                             data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
-                        </dd>
-                    </div>
-                    <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
-                        <dd class="govuk-summary-list__value">No rule 6 party</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                            data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
                         </dd>
                     </div>
                 </dl>

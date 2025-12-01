@@ -2,6 +2,7 @@ import { mapAppellantProofOfEvidence } from '#lib/mappers/data/appeal/submappers
 import { mapLPAProofOfEvidence } from '#lib/mappers/data/appeal/submappers/lpa-proof-of-evidence-and-witness.mapper.js';
 import { submaps as hasSubmaps } from './has.js';
 import { mapAppellantFinalComments } from './submappers/appellant-final-comments.mapper.js';
+import { mapCostsRule6Parties } from './submappers/costs-rule-6-parties.mapper.js';
 import { mapEnvironmentalAssessment } from './submappers/environmental-assessment.mapper.js';
 import { mapFinalCommentDueDate } from './submappers/final-comment-due-date.mapper.js';
 import { mapAddHearingEstimates } from './submappers/hearing-add-hearing-estimates.js';
@@ -26,6 +27,9 @@ import { mapNetResidenceChange } from './submappers/net-residence-change.mapper.
 import { mapNetResidenceGainOrLoss } from './submappers/net-residence-gain-or-less.mapper.js';
 import { mapPlanningObligationDueDate } from './submappers/planning-obligation-due-date.mapper.js';
 import { mapProofOfEvidenceAndWitnessesDueDate } from './submappers/proof-of-evidence-and-witnesses-due-date.mapper.js';
+import { mapRule6PartyContactDetails } from './submappers/rule-6-party-contact-details.mapper.js';
+import { mapRule6PartyProofs } from './submappers/rule-6-party-proofs.mapper.js';
+import { mapRule6PartyStatements } from './submappers/rule-6-party-statements.mapper.js';
 import { mapStatementOfCommonGroundDueDate } from './submappers/statement-of-common-ground-due-date.mapper.js';
 
 /** @type {Record<string, import('./mapper.js').SubMapper>} */
@@ -58,5 +62,9 @@ export const submaps = {
 	lpaProofOfEvidence: mapLPAProofOfEvidence,
 	horizonReference: mapHorizonReference,
 	cancelInquiry: mapCancelInquiry,
-	setUpInquiry: mapSetUpInquiry
+	setUpInquiry: mapSetUpInquiry,
+	rule6PartyContactDetails: mapRule6PartyContactDetails,
+	rule6PartyStatements: mapRule6PartyStatements,
+	rule6PartyProofs: mapRule6PartyProofs,
+	costsRule6Parties: mapCostsRule6Parties
 };

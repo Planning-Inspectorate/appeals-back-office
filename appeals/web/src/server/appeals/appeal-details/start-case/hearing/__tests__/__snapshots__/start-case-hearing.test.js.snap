@@ -462,7 +462,7 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
     </dl>
     <h2 class="govuk-heading-l">Timetable<dl class="govuk-summary-list appeal-case-timetable"><div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt><dd class="govuk-summary-list__value"> 23 May 2023</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/date" data-cy="-valid-date"><span class="govuk-visually-hidden"> Valid date</span></a></dd></div><div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt><dd class="govuk-summary-list__value"> Not started</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/add?backUrl=/appeals-service/appeal-details/1" data-cy="start-start-case-date">Start<span class="govuk-visually-hidden"> Start date</span></a></dd></div></dl></h2>
     <h2 class="govuk-heading-l">Documentation</h2>
-    <table class="govuk-table">
+    <table class="govuk-table" id="case-documentation-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Documentation</th>
@@ -521,7 +521,7 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
-    <table class="govuk-table">
+    <table class="govuk-table" id="case-costs-table">
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Documentation</th>
@@ -624,12 +624,6 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
                 data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-rule-6-party-contact-details"><dt class="govuk-summary-list__key"> Rule 6 parties</dt>
-            <dd class="govuk-summary-list__value">No rule 6 party</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/rule-6-parties/add?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
-                data-cy="add-rule-6-party-contact-details">Add<span class="govuk-visually-hidden"> Rule 6 parties</span></a>
             </dd>
         </div>
     </dl>

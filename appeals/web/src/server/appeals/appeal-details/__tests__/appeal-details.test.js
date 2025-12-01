@@ -3314,6 +3314,69 @@ describe('appeal-details', () => {
 				});
 			});
 
+			describe('Rule 6 party statements and proofs', () => {
+				it('should render the correct rows', async () => {
+					const appealId = 2;
+					const appeal = {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+						appealRule6Parties: [
+							{
+								id: 1,
+								serviceUserId: 1,
+								serviceUser: {
+									organisationName: 'Test Rule 6 Party'
+								}
+							}
+						]
+					};
+					nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appeal);
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+					nock('http://test/')
+						.get(
+							`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+						)
+						.reply(200, {
+							itemCount: 0
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const element = parseHtml(response.text);
+					const table = element.querySelector('#case-documentation-table');
+					expect(table.innerHTML).toMatchSnapshot();
+
+					const rows = table.querySelectorAll('.govuk-table__body .govuk-table__row');
+					expect(rows[3].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+						'Test Rule 6 Party statement'
+					);
+					expect(rows[3].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+						'Not received'
+					);
+					expect(rows[3].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
+						'Not applicable'
+					);
+					expect(rows[3].querySelector('.govuk-table__cell:nth-child(4)').innerHTML.trim()).toBe(
+						'<a href="#" class="govuk-link" data-cy="add-rule-6-party-statement-0">Add</a>'
+					);
+					expect(rows[7].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+						'Test Rule 6 Party proof of evidence and witness'
+					);
+					expect(rows[7].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+						'Not received'
+					);
+					expect(rows[7].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
+						'Not applicable'
+					);
+					expect(rows[7].querySelector('.govuk-table__cell:nth-child(4)').innerHTML.trim()).toBe(
+						'<a href="#" class="govuk-link" data-cy="add-rule-6-party-proof-0">Add</a>'
+					);
+				});
+			});
+
 			describe('Final comments', () => {
 				const appealId = 3;
 				const testCases = [
@@ -5452,6 +5515,72 @@ describe('appeal-details', () => {
 				expect(statusHtml).toMatchSnapshot();
 				expect(statusHtml).toContain('No documents available</td>');
 			});
+
+			describe('with rule 6 parties', () => {
+				it('should render the correct rows', async () => {
+					const appealId = 2;
+					const appeal = {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+						appealRule6Parties: [
+							{
+								id: 1,
+								serviceUserId: 1,
+								serviceUser: {
+									organisationName: 'Test Rule 6 Party'
+								}
+							}
+						]
+					};
+					nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appeal);
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+					nock('http://test/')
+						.get(
+							`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+						)
+						.reply(200, {
+							itemCount: 0
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const element = parseHtml(response.text);
+					const table = element.querySelector('#case-costs-table');
+					expect(table.innerHTML).toMatchSnapshot();
+
+					const rows = table.querySelectorAll('.govuk-table__body .govuk-table__row');
+					expect(rows[6].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+						'Test Rule 6 Party application'
+					);
+					expect(rows[6].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+						'No documents available'
+					);
+					expect(
+						rows[6].querySelector('.govuk-table__cell:nth-child(3) a.govuk-link').innerHTML.trim()
+					).toBe('Add<span class="govuk-visually-hidden"> Test Rule 6 Party application</span>');
+					expect(rows[7].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+						'Test Rule 6 Party withdrawal'
+					);
+					expect(rows[7].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+						'No documents available'
+					);
+					expect(
+						rows[7].querySelector('.govuk-table__cell:nth-child(3) a.govuk-link').innerHTML.trim()
+					).toBe('Add<span class="govuk-visually-hidden"> Test Rule 6 Party withdrawal</span>');
+					expect(rows[8].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+						'Test Rule 6 Party correspondence'
+					);
+					expect(rows[8].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+						'No documents available'
+					);
+					expect(
+						rows[8].querySelector('.govuk-table__cell:nth-child(3) a.govuk-link').innerHTML.trim()
+					).toBe('Add<span class="govuk-visually-hidden"> Test Rule 6 Party correspondence</span>');
+				});
+			});
 		});
 
 		describe('Appeal decision', () => {
@@ -6434,6 +6563,86 @@ describe('appeal-details', () => {
 					)
 					.innerHTML.trim()
 			).toEqual('Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span>');
+		});
+
+		it('should render the correct rows for an inquiry appeal', async () => {
+			const appealId = 2;
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId,
+					procedureType: APPEAL_CASE_PROCEDURE.INQUIRY
+				});
+			nock('http://test/')
+				.get(
+					`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+				)
+				.reply(200, {
+					itemCount: 0
+				});
+			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+			const response = await request.get(`${baseUrl}/${appealId}`);
+
+			expect(response.statusCode).toBe(200);
+			const element = parseHtml(response.text);
+
+			expect(
+				element
+					.querySelector('.govuk-summary-list__row.appeal-appellant dt.govuk-summary-list__key')
+					.innerHTML.trim()
+			).toEqual('Appellant');
+			expect(
+				element
+					.querySelector(
+						'.govuk-summary-list__row.appeal-appellant dd.govuk-summary-list__value li'
+					)
+					.innerHTML.trim()
+			).toEqual('Roger Simmons');
+			expect(
+				element
+					.querySelector(
+						'.govuk-summary-list__row.appeal-appellant dd.govuk-summary-list__actions a'
+					)
+					.innerHTML.trim()
+			).toEqual('Change<span class="govuk-visually-hidden"> Appellant</span>');
+			expect(
+				element
+					.querySelector('.govuk-summary-list__row.appeal-agent dt.govuk-summary-list__key')
+					.innerHTML.trim()
+			).toEqual('Agent');
+			expect(
+				element
+					.querySelector('.govuk-summary-list__row.appeal-agent dd.govuk-summary-list__value li')
+					.innerHTML.trim()
+			).toEqual('Fiona Shell');
+			expect(
+				element
+					.querySelector('.govuk-summary-list__row.appeal-agent dd.govuk-summary-list__actions a')
+					.innerHTML.trim()
+			).toEqual('Change<span class="govuk-visually-hidden"> Agent</span>');
+			expect(
+				element
+					.querySelector(
+						'.govuk-summary-list__row.appeal-lpa-contact-details dt.govuk-summary-list__key'
+					)
+					.innerHTML.trim()
+			).toEqual('LPA');
+			expect(
+				element
+					.querySelector(
+						'.govuk-summary-list__row.appeal-lpa-contact-details dd.govuk-summary-list__value li'
+					)
+					.innerHTML.trim()
+			).toEqual('Wiltshire Council');
+			expect(
+				element
+					.querySelector(
+						'.govuk-summary-list__row.appeal-lpa-contact-details dd.govuk-summary-list__actions a'
+					)
+					.innerHTML.trim()
+			).toEqual('Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span>');
+
 			expect(
 				element
 					.querySelector(

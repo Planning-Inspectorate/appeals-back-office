@@ -23,6 +23,7 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 				...(!isChildAppeal(appealDetails)
 					? [
 							mappedData.appeal.lpaStatement.display.tableItem,
+							...(mappedData.appeal.rule6PartyStatements?.display?.tableItems || []),
 							mappedData.appeal.ipComments.display.tableItem,
 							...(appealDetails.procedureType?.toLowerCase() !==
 							APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase()
@@ -32,12 +33,16 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 								  ]
 								: []),
 							mappedData.appeal.appellantProofOfEvidence.display.tableItem,
-							mappedData.appeal.lpaProofOfEvidence.display.tableItem
+							mappedData.appeal.lpaProofOfEvidence.display.tableItem,
+							...(mappedData.appeal.rule6PartyProofs?.display?.tableItems || [])
 					  ]
 					: []),
 				mappedData.appeal.environmentalAssessment.display.tableItem
 			].filter(isDefined),
-			firstCellIsHeader: true
+			firstCellIsHeader: true,
+			attributes: {
+				id: 'case-documentation-table'
+			}
 		},
 		wrapperHtml: {
 			opening: '<h2 class="govuk-heading-l">Documentation</h2>',

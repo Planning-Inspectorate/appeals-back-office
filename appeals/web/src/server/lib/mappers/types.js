@@ -18,6 +18,7 @@
  * @property {CardProperties} [cardItem] To create a card
  * @property {StatusTagProperties} [statusTag] To create a Status Tag
  * @property {TableCellProperties[]} [tableItem] To create a table row
+ * @property {TableCellProperties[][]} [tableItems] To create multiple table rows
  * @property {HtmlPageComponent} [htmlItem]
  * @property {ButtonPageComponent} [buttonItem]
  */
