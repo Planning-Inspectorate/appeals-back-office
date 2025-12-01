@@ -37,6 +37,7 @@ export interface Appeal extends schema.Appeal {
 	inquiryEstimate?: InquiryEstimate | null;
 	otherAppellants?: ServiceUser[] | null;
 	appealRule6Parties?: AppealRule6Party[] | null;
+	appealGrounds?: AppealGround[] | null;
 }
 export interface CaseNote extends schema.CaseNote {
 	user: User;
@@ -201,3 +202,6 @@ export interface InquiryEstimate extends schema.InquiryEstimate {}
 export interface AppealRelationship extends schema.AppealRelationship {}
 
 export interface PersonalList extends schema.PersonalList {}
+
+export interface Ground extends schema.Ground {}
+export interface AppealGround extends AppealGround {}

@@ -185,6 +185,7 @@ interface SingleAppellantCaseResponse {
 		contactAddress: Address | null;
 		interestInLand: string | null;
 		writtenOrVerbalPermission: string | null;
+		descriptionOfAllegedBreach: string | null;
 	};
 	siteAccessRequired?: {
 		details: string | null;

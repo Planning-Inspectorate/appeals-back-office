@@ -21,7 +21,11 @@ import { submaps as s78Submaps } from './s78.js';
  * @typedef {(params: SubMapperParams) => Instructions} SubMapper
  */
 
-/** @type {Record<string, Record<string, SubMapper>>} */
+/**
+ * @typedef {(params: SubMapperParams) => Instructions[]} SubMapperList
+ */
+
+/** @type {Record<string, Record<string, SubMapper | SubMapperList>>} */
 const submaps = {
 	[APPEAL_TYPE.HOUSEHOLDER]: hasSubmaps,
 	[APPEAL_TYPE.S78]: s78Submaps,
@@ -62,7 +66,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		currentRoute,
 		userHasUpdateCase
 	};
-	/** @type {Record<string, SubMapper>} */
+	/** @type {Record<string, SubMapper | SubMapperList>} */
 	const submappers = submaps[appealDetails.appealType];
 
 	if (!submappers) {
@@ -73,6 +77,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	const mappedData = {};
 
 	Object.entries(submappers).forEach(([key, submapper]) => {
+		// @ts-ignore
 		mappedData[key] = submapper(submapperParams);
 	});
 

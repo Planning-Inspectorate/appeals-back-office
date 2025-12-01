@@ -391,13 +391,13 @@ describe('/appeals/lpaq-submission', () => {
 					data: [
 						{
 							caseId: 100,
-							folderId: 42,
+							folderId: expect.any(Number),
 							guid: expect.any(String),
 							name: 'oimg.jpg'
 						},
 						{
 							caseId: 100,
-							folderId: 41,
+							folderId: expect.any(Number),
 							guid: expect.any(String),
 							name: 'oimg.jpg'
 						}

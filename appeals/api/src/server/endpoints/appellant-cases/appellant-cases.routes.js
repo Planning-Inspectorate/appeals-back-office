@@ -43,7 +43,8 @@ router.get(
 		'lpa',
 		'procedureType',
 		'parentAppeals',
-		'childAppeals'
+		'childAppeals',
+		'appealGrounds'
 	]),
 	checkAppellantCaseExists,
 	asyncHandler(getAppellantCaseById)
