@@ -277,19 +277,31 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 				azureAdUserId || AUDIT_TRAIL_SYSTEM_UUID,
 				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
 			);
+
+			await sendInquiryDetailsNotifications(
+				notifyClient,
+				'start-case-inquiry-set-up',
+				appeal,
+				inquiryStartTime,
+				estimatedDays,
+				timetableData,
+				address,
+				startDateWithTimeCorrection
+			);
+		} else {
+			await sendInquiryDetailsNotifications(
+				notifyClient,
+				'inquiry-set-up',
+				appeal,
+				inquiryStartTime,
+				estimatedDays,
+				timetableData,
+				address,
+				startDateWithTimeCorrection
+			);
 		}
 		await broadcasters.broadcastAppeal(appeal.id);
 		await broadcasters.broadcastEvent(result.inquiry.id, EVENT_TYPE.INQUIRY, EventType.Create);
-		await sendInquiryDetailsNotifications(
-			notifyClient,
-			'inquiry-set-up',
-			appeal,
-			inquiryStartTime,
-			estimatedDays,
-			timetableData,
-			address,
-			startDateWithTimeCorrection
-		);
 	} catch (error) {
 		logger.error(error, 'Failed to create inquiry');
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);

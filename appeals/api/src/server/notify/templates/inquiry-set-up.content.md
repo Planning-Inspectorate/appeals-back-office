@@ -1,50 +1,7 @@
-{% if is_lpa %}
-You have a new {{appeal_type | lower}} appeal against the application {{lpa_reference}}.
-
-We will decide the appeal by inquiry. You can tell us if you think a different procedure is more appropriate in the questionnaire.
-{%- else %}
-We have set up your timetable.
-{% endif %}
 
 {% include 'parts/appeal-details.md' %}
-{% if is_lpa -%}
-Start date: {{start_date}}
-{% endif %}
-# Timetable
 
-## Local planning authority questionnaire
-
-Due by {{questionnaire_due_date}}.
-
-## Statements from the local planning authority and any Rule 6 groups
-
-Due by {{lpa_statement_deadline}}.
-
-## Interested party comments
-
-Due by {{ip_comments_deadline}}.
-
-{% if statement_of_common_ground_deadline -%}
-
-## Statement of common ground
-
-Due by {{statement_of_common_ground_deadline}}.
-
-{% endif -%}
-
-## Proof of evidence and witnesses
-
-Due by {{proof_of_evidence_and_witnesses_deadline}}.
-
-{% if planning_obligation_deadline -%}
-
-## Planning obligation
-
-Due by {{planning_obligation_deadline}}.
-
-{% endif -%}
-
-# Inquiry details
+# About the inquiry
 
 ^Date: {{inquiry_date}}
 Time: {{inquiry_time}}
@@ -54,25 +11,14 @@ Expected days: {{inquiry_expected_days}}
 {% if inquiry_address -%}
 Venue address: {{inquiry_address}}
 {% endif %}
-The details of the inquiry are subject to change. We will contact you:
-
-- if we make any changes to the inquiry
-- when we set up the case management conference
 
 # What happens next
 
-{% if not inquiry_address and is_lpa -%}
+You need to attend the inquiry on {{inquiry_date}}.
 
-1. [Submit your questionnaire and other documents]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}), including your appeal notification letter and a list of those notified by {{questionnaire_due_date}}.
+The details of the inquiry are subject to change. We will contact you by email if we make any changes.
 
-2. Email {{team_email_address}} to confirm the venue address for the inquiry.
-{% elseif inquiry_address and is_lpa -%}
-[Submit your questionnaire and other documents]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}), including your appeal notification letter and a list of those notified by {{questionnaire_due_date}}.
-{% elseif not is_lpa -%}
-We will let you know when you can:
+We expect the inquiry to finish on the same day. If the inquiry needs more time, you will arrange the next steps on the day.
 
-- view information from other parties in the appeals service
-- submit your proof of evidence and witnesses
-{% endif %}
 The Planning Inspectorate
 {{team_email_address}}
