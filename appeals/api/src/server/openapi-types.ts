@@ -4134,6 +4134,7 @@ export type AppellantCase = {
 		reference?: string | null;
 		interestInLand?: string | null;
 		writtenOrVerbalPermission?: string | null;
+		descriptionOfAllegedBreach?: string | null;
 		contactAddress?: {
 			addressId?: number;
 			addressLine1: string;
@@ -4153,6 +4154,7 @@ export type AppellantCase = {
 	contactPlanningInspectorateDate?: string | null;
 	interestInLand?: string | null;
 	writtenOrVerbalPermission?: string | null;
+	descriptionOfAllegedBreach?: string | null;
 	contactAddress?: {
 		addressId?: number;
 		addressLine1: string;
@@ -12473,6 +12475,7 @@ export interface AppellantCaseUpdateRequest {
 	contactPlanningInspectorateDate?: string | null;
 	interestInLand?: string | null;
 	writtenOrVerbalPermission?: string | null;
+	descriptionOfAllegedBreach?: string | null;
 	contactAddress?: {
 		addressId?: number;
 		addressLine1: string;

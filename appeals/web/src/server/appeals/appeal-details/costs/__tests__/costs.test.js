@@ -33,6 +33,10 @@ const costsCategoriesNotIncludingDecision = ['appellant', 'lpa'];
 const costsDocumentTypes = ['application', 'withdrawal', 'correspondence'];
 
 describe('costs', () => {
+	beforeAll(() => {
+		jest.clearAllMocks();
+	});
+
 	beforeEach(() => {
 		installMockApi();
 		nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);

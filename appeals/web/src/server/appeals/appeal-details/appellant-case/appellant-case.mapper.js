@@ -25,6 +25,7 @@ import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
 import { mapReasonOptionsToCheckboxItemParameters } from '#lib/validation-outcome-reasons-formatter.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
+import { GROUND_SUPPORTING_DOCTYPE } from '@pins/appeals/constants/documents.js';
 import {
 	APPEAL_CASE_STATUS,
 	APPEAL_DOCUMENT_TYPE,
@@ -799,6 +800,20 @@ export function getPageHeadingTextOverrideForFolder(folder) {
 			return 'Decision letter from the local planning authority';
 		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
 			return 'Other new supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.A:
+			return 'Ground (a) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.B:
+			return 'Ground (b) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.C:
+			return 'Ground (c) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.D:
+			return 'Ground (d) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.E:
+			return 'Ground (e) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.F:
+			return 'Ground (f) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.G:
+			return 'Ground (g) supporting documents';
 		default:
 			return;
 	}
@@ -832,6 +847,20 @@ export function getPageHeadingTextOverrideForAddDocuments(folder) {
 			return 'Upload your new plans or drawings';
 		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
 			return 'Upload your other new supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.A:
+			return 'Upload your ground (a) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.B:
+			return 'Upload your ground (b) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.C:
+			return 'Upload your ground (c) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.D:
+			return 'Upload your ground (d) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.E:
+			return 'Upload your ground (e) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.F:
+			return 'Upload your ground (f) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.G:
+			return 'Upload your ground (g) supporting documents';
 		default:
 			break;
 	}
@@ -865,5 +894,19 @@ export function getDocumentNameFromFolder(folderPath) {
 			return 'new plans or drawings';
 		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
 			return 'other new supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.A:
+			return 'ground (a) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.B:
+			return 'ground (b) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.C:
+			return 'ground (b) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.D:
+			return 'ground (d) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.E:
+			return 'ground (e) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.F:
+			return 'ground (f) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.G:
+			return 'ground (g) supporting documents';
 	}
 }

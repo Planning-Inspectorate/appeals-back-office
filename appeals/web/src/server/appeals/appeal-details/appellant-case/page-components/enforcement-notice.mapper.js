@@ -65,5 +65,51 @@ export function generateEnforcementNoticeComponents(
 		].filter((row) => row);
 	}
 
-	return pageComponents;
+	/**
+	 *
+	 * @param {Instructions[]} subMapperList
+	 * @returns {SummaryListRowProperties[]}
+	 */
+	const getSummaryListItems = (subMapperList) =>
+		// @ts-ignore
+		subMapperList?.map((subMapper) => subMapper.display.summaryListItem);
+
+	/**
+	 * @type {PageComponent}
+	 */
+	const groundsAndFactsSummary = {
+		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
+		parameters: {
+			attributes: {
+				id: 'grounds-and-facts'
+			},
+			card: {
+				title: {
+					text: 'Grounds and facts'
+				}
+			},
+			rows: [
+				mappedAppellantCaseData.descriptionOfAllegedBreach.display.summaryListItem,
+				mappedAppellantCaseData.grounds.display.summaryListItem,
+				// @ts-ignore
+				...getSummaryListItems(mappedAppellantCaseData.factsForGrounds),
+				// @ts-ignore
+				...getSummaryListItems(mappedAppellantCaseData.supportingDocumentsForGrounds)
+			]
+		}
+	};
+
+	const insertIndex =
+		pageComponents.findIndex(
+			(component) => component.parameters.attributes?.id === 'site-details'
+		) + 1;
+
+	return pageComponents
+		.slice(0, insertIndex)
+		.concat(groundsAndFactsSummary)
+		.concat(pageComponents.slice(insertIndex));
 }

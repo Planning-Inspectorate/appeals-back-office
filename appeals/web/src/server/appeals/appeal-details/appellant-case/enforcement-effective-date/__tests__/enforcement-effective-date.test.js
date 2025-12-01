@@ -1,5 +1,6 @@
 import { appealData, appellantCaseDataNotValidated } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -12,6 +13,7 @@ const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-
 const legendText = 'What is the effective date on your enforcement notice?';
 
 describe('enforcement-effective-date', () => {
+	beforeAll(jest.clearAllMocks);
 	beforeEach(installMockApi);
 	afterEach(teardown);
 

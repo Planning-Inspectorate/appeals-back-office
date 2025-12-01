@@ -318,5 +318,6 @@ export default {
 	siteVisit: null,
 	caseNotes: [],
 	representations: [],
-	otherAppellants: []
+	otherAppellants: [],
+	appealGrounds: []
 };

@@ -132,7 +132,7 @@ const renderCheckAndConfirm = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getAppellantCase = async (request, response) => {
-	renderAppellantCase(request, response);
+	return renderAppellantCase(request, response);
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */

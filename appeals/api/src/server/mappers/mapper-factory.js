@@ -158,6 +158,7 @@ function createDataLayout(caseMap, mappingRequest) {
 		folders,
 		appealTransferStatus,
 		otherAppellants,
+		appealGrounds,
 		...appealDetails
 	} = Object.fromEntries(caseMap);
 
@@ -166,6 +167,7 @@ function createDataLayout(caseMap, mappingRequest) {
 			return {
 				appellantCaseId: appeal.appellantCase?.id,
 				...otherAppellants,
+				...appealGrounds,
 				...appealSummary,
 				...appellantCase,
 				transferStatus: appealTransferStatus,
