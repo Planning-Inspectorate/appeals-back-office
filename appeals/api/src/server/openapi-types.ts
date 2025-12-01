@@ -1411,6 +1411,8 @@ export interface UpdateCaseTeamRequest {
 	inspectorId?: string;
 	/** @example "John Smith" */
 	inspectorName?: string;
+	/** @example "123456" */
+	padsInspectorId?: string;
 	/** @example "John Smith Jr" */
 	prevUserName?: string;
 }
@@ -1420,6 +1422,8 @@ export interface UpdateCaseTeamResponse {
 	caseOfficerId?: string;
 	/** @example "f7ea429b-65d8-4c44-8fc2-7f1a34069855" */
 	inspectorId?: string;
+	/** @example "123456" */
+	padsInspectorId?: string;
 }
 
 export interface StartCaseRequest {
@@ -3146,6 +3150,7 @@ export interface Team {
 	caseOfficer?: string | null;
 	/** @format uuid */
 	inspector?: string | null;
+	padsInspector?: string | null;
 }
 
 export interface AppealSummary {
@@ -11888,6 +11893,7 @@ export interface Appeal {
 	caseOfficer?: string | null;
 	/** @format uuid */
 	inspector?: string | null;
+	padsInspector?: string | null;
 	assignedTeamId?: number | null;
 	assignedTeam?: {
 		id?: number | null;

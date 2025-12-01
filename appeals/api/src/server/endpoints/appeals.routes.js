@@ -44,6 +44,7 @@ import { lpaQuestionnairesRoutes } from './lpa-questionnaires/lpa-questionnaires
 import { neighbouringSitesRoutes } from './neighbouring-sites/neighbouring-sites.routes.js';
 import { appealNotificationRouter } from './notifications/notifications.routes.js';
 import { notifyPreviewRouter } from './notify-preview/notify-preview.routes.js';
+import { planningAppealDecisionSuppliersRoutes } from './planning-appeal-decision-suppliers/planning-appeal-decision-suppliers.routes.js';
 import { procedureTypesRoutes } from './procedure-types/procedure-types.routes.js';
 import { representationRejectionReasonsRoutes } from './representation-rejection-reasons/representation-rejection-reasons.routes.js';
 import { representationRoutes } from './representations/representations.routes.js';
@@ -83,6 +84,7 @@ router.use(procedureTypesRoutes);
 router.use(siteVisitTypesRoutes);
 router.use(representationRejectionReasonsRoutes);
 router.use(localPlanningAuthoritiesRoutes);
+router.use(planningAppealDecisionSuppliersRoutes);
 
 router.use(appealsRoutes);
 router.use(appealDetailsRoutes);
@@ -123,5 +125,4 @@ router.use(appealStatusRoutes);
 router.use(changeProcedureTypeRoutes);
 
 router.use(appealRule6PartiesRoutes);
-
 export { router as appealsRoutes };

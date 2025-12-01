@@ -35,6 +35,19 @@ const getLookupListValueByName = (databaseTable, value) =>
 	});
 
 /**
+ * @param {string} databaseTable
+ * @param {{key:string,value:string}} param1
+ * @returns {Promise<LookupTables | null>}
+ */
+const getLookupListValueByKey = (databaseTable, { key, value }) =>
+	// @ts-ignore
+	databaseConnector[databaseTable].findUnique({
+		where: {
+			[key]: value
+		}
+	});
+
+/**
  * @param {{
  *  id: number,
  *  data: (number | string)[],
@@ -107,5 +120,6 @@ export default {
 	createIncompleteInvalidReasons,
 	getLookupList,
 	getLookupListValueByName,
-	updateManyToManyRelationTable
+	updateManyToManyRelationTable,
+	getLookupListValueByKey
 };

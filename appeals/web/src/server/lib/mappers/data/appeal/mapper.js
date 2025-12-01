@@ -96,6 +96,9 @@ export async function initialiseAndMapAppealData(
 				appealDetails.inspector
 		  )
 		: null;
+	const padsInspectorUser = appealDetails.padsInspector
+		? await usersService.getPadsUserById(appealDetails.padsInspector, request.apiClient)
+		: null;
 
 	const userHasUpdateCasePermission = userHasPermission(permissionNames.updateCase, session);
 
@@ -115,7 +118,7 @@ export async function initialiseAndMapAppealData(
 			skipAssignedUsersData,
 			userHasUpdateCasePermission,
 			caseOfficerUser,
-			inspectorUser,
+			inspectorUser: padsInspectorUser ? padsInspectorUser : inspectorUser,
 			appellantFinalComments,
 			lpaFinalComments,
 			appellantCase,

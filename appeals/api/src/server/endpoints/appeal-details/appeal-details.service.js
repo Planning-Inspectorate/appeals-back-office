@@ -28,7 +28,8 @@ const {
 	AUDIT_TRAIL_MODIFIED_APPEAL,
 	AUDIT_TRAIL_SYSTEM_UUID,
 	USER_TYPE_CASE_OFFICER,
-	USER_TYPE_INSPECTOR
+	USER_TYPE_INSPECTOR,
+	USER_TYPE_PADS_INSPECTOR
 } = SUPPORT_CONSTANTS;
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
@@ -61,14 +62,16 @@ const loadAndFormatAppeal = async ({
 };
 
 /**
- * @param {Pick<UsersToAssign, 'caseOfficer' | 'inspector'>} param0
+ * @param {Pick<UsersToAssign, 'caseOfficer' | 'inspector' | 'padsInspector'>} param0
  * @returns {AssignedUser | null}
  */
-const assignedUserType = ({ caseOfficer, inspector }) => {
+const assignedUserType = ({ caseOfficer, inspector, padsInspector }) => {
 	if (hasValueOrIsNull(caseOfficer)) {
 		return USER_TYPE_CASE_OFFICER;
-	} else if (hasValueOrIsNull(inspector)) {
+	} else if (hasValueOrIsNull(inspector) && !padsInspector) {
 		return USER_TYPE_INSPECTOR;
+	} else if (hasValueOrIsNull(padsInspector)) {
+		return USER_TYPE_PADS_INSPECTOR;
 	}
 	return null;
 };
@@ -83,23 +86,41 @@ const assignedUserType = ({ caseOfficer, inspector }) => {
  */
 const assignUser = async (
 	caseData,
-	{ caseOfficer, inspector },
+	{ caseOfficer, inspector, padsInspector },
 	// eslint-disable-next-line no-unused-vars
 	{ caseOfficerName, inspectorName, prevUserName },
 	azureAdUserId,
 	notifyClient
 ) => {
-	const assignedUserId = caseOfficer || inspector;
+	const assignedUserId = caseOfficer || inspector || padsInspector;
 
-	const typeOfAssignedUser = assignedUserType({ caseOfficer, inspector });
+	const typeOfAssignedUser = assignedUserType({ caseOfficer, inspector, padsInspector });
 	if (typeOfAssignedUser) {
 		let userId = null;
-		if (assignedUserId) {
-			({ id: userId } = await userRepository.findOrCreateUser(assignedUserId));
+
+		if (typeOfAssignedUser) {
+			userId = assignedUserId
+				? typeOfAssignedUser === USER_TYPE_PADS_INSPECTOR
+					? assignedUserId
+					: await userRepository.findOrCreateUser(assignedUserId).then((user) => user.id)
+				: null;
+			if (typeOfAssignedUser === USER_TYPE_INSPECTOR) {
+				await appealRepository.updateAppealById(caseData.id, {
+					[typeOfAssignedUser]: userId,
+					[USER_TYPE_PADS_INSPECTOR]: null
+				});
+			} else if (typeOfAssignedUser === USER_TYPE_PADS_INSPECTOR) {
+				await appealRepository.updateAppealById(caseData.id, {
+					[typeOfAssignedUser]: userId,
+					[USER_TYPE_INSPECTOR]: null
+				});
+			} else {
+				await appealRepository.updateAppealById(caseData.id, { [typeOfAssignedUser]: userId });
+			}
 		}
+
 		const shouldTransitionState =
 			caseData.caseOfficerUserId === null && typeOfAssignedUser === 'caseOfficer';
-		await appealRepository.updateAppealById(caseData.id, { [typeOfAssignedUser]: userId });
 
 		let details = '';
 		const siteAddress = caseData.address
@@ -116,23 +137,35 @@ const assignUser = async (
 
 		let notifyAppellant = false;
 		let templateName = '';
-		if (caseOfficer) {
-			details = stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_CASE_OFFICER, [caseOfficer]);
-		} else if (inspector) {
-			details = stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [inspector]);
+		if (typeOfAssignedUser == USER_TYPE_CASE_OFFICER && assignedUserId) {
+			details = stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_CASE_OFFICER, [assignedUserId]);
+		} else if (typeOfAssignedUser == USER_TYPE_INSPECTOR && assignedUserId) {
+			details = stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [assignedUserId]);
 			if (inspectorName) {
 				personalisation.inspector_name = inspectorName || '';
 				templateName = 'appeal-assign-inspector';
 				notifyAppellant = true;
 			}
-		} else if (inspector == null && prevUserName && caseData.inspector?.azureAdUserId) {
-			azureAdUserId = caseData.inspector.azureAdUserId;
+		} else if (padsInspector) {
+			details = stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [padsInspector]);
+			if (inspectorName) {
+				personalisation.inspector_name = inspectorName || '';
+				templateName = 'appeal-assign-inspector';
+				notifyAppellant = true;
+			}
+		} else if (inspector == null && prevUserName) {
+			if (caseData.inspector?.azureAdUserId) {
+				azureAdUserId = caseData.inspector.azureAdUserId;
+				details = stringTokenReplacement(AUDIT_TRAIL_UNASSIGNED_INSPECTOR, [azureAdUserId]);
+			} else if (caseData.padsInspectorUserId) {
+				azureAdUserId = caseData.padsInspectorUserId;
+				details = stringTokenReplacement(AUDIT_TRAIL_UNASSIGNED_INSPECTOR, [azureAdUserId]);
+			}
 			if (prevUserName) {
 				personalisation.inspector_name = prevUserName || '';
 				templateName = 'appeal-unassign-inspector';
 				notifyAppellant = true;
 			}
-			details = stringTokenReplacement(AUDIT_TRAIL_UNASSIGNED_INSPECTOR, [azureAdUserId]);
 		}
 
 		await createAuditTrail({

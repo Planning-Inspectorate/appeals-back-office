@@ -1,0 +1,31 @@
+BEGIN TRY
+
+BEGIN TRAN;
+
+-- AlterTable
+ALTER TABLE [dbo].[Appeal] ADD [padsInspectorUserId] NVARCHAR(1000);
+
+-- CreateTable
+CREATE TABLE [dbo].[PADSUser] (
+    [id] INT NOT NULL IDENTITY(1,1),
+    [sapId] NVARCHAR(1000) NOT NULL,
+    [name] NVARCHAR(1000) NOT NULL,
+    CONSTRAINT [PADSUser_pkey] PRIMARY KEY CLUSTERED ([id]),
+    CONSTRAINT [PADSUser_sapId_key] UNIQUE NONCLUSTERED ([sapId])
+);
+
+-- AddForeignKey
+ALTER TABLE [dbo].[Appeal] ADD CONSTRAINT [Appeal_padsInspectorUserId_fkey] FOREIGN KEY ([padsInspectorUserId]) REFERENCES [dbo].[PADSUser]([sapId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH

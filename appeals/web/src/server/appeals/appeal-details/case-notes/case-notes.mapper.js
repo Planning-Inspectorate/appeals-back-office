@@ -9,7 +9,11 @@ import { caseNotesWithMappedUsers } from './case-notes.formatter.js';
  * @returns {Promise<PageComponent>}
  */
 export const generateCaseNotes = async (appealCaseNotes, request) => {
-	const mappedCaseNotes = await caseNotesWithMappedUsers(appealCaseNotes, request.session);
+	const mappedCaseNotes = await caseNotesWithMappedUsers(
+		appealCaseNotes,
+		request.session,
+		request.apiClient
+	);
 
 	return {
 		type: 'details',

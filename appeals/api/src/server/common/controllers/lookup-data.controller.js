@@ -24,4 +24,23 @@ const getLookupData = (databaseTable) => async (req, res) => {
 	}
 };
 
-export { getLookupData };
+/**
+ * @param {string} databaseTable
+ * @param {{key: string;value: string;}} lookupData
+ * @return {Promise<object | void>}
+ *
+ */
+const getLookupDataByValue = async (databaseTable, lookupData) => {
+	try {
+		const result = await commonRepository.getLookupListValueByKey(databaseTable, lookupData);
+		if (!lookupData) {
+			return { errors: ERROR_NOT_FOUND };
+		}
+		return result;
+	} catch (error) {
+		logger.error(error);
+		return { errors: ERROR_FAILED_TO_GET_DATA };
+	}
+};
+
+export { getLookupData, getLookupDataByValue };

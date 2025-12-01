@@ -542,11 +542,13 @@ export const spec = {
 			caseOfficerName: 'John Smith',
 			inspectorId: 'f7ea429b-65d8-4c44-8fc2-7f1a34069855',
 			inspectorName: 'John Smith',
+			padsInspectorId: '123456',
 			prevUserName: 'John Smith Jr'
 		},
 		UpdateCaseTeamResponse: {
 			caseOfficerId: '13de469c-8de6-4908-97cd-330ea73df618',
-			inspectorId: 'f7ea429b-65d8-4c44-8fc2-7f1a34069855'
+			inspectorId: 'f7ea429b-65d8-4c44-8fc2-7f1a34069855',
+			padsInspectorId: '123456'
 		},
 		StartCaseRequest: {
 			startDate: '2024-05-09',
