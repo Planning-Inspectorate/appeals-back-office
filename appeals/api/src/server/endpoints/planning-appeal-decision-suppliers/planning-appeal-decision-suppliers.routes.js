@@ -22,7 +22,7 @@ router.get(
         }
         #swagger.responses[400] = {}
      */
-	asyncHandler(getLookupData('PADUsers'))
+	asyncHandler(getLookupData('pADUsers'))
 );
 
 router.get(

@@ -180,6 +180,8 @@ const mockPersonalListDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseAdvertDetailFindFirst = jest.fn().mockResolvedValue({});
 const mockAppellantCaseAdvertDetailCreate = jest.fn().mockResolvedValue({});
 const mockAppellantCaseAdvertDetailUpdate = jest.fn().mockResolvedValue({});
+const mockPadUsersFindMany = jest.fn().mockResolvedValue({});
+const mockPadUsersFindUnique = jest.fn().mockResolvedValue({});
 
 const mockNotifySend = jest.fn().mockImplementation(async (params) => {
 	const { doNotMockNotifySend = false, ...options } = params || {};
@@ -657,6 +659,12 @@ class MockPrismaClient {
 			findFirst: mockAppellantCaseAdvertDetailFindFirst,
 			create: mockAppellantCaseAdvertDetailCreate,
 			update: mockAppellantCaseAdvertDetailUpdate
+		};
+	}
+	get pADUsers() {
+		return {
+			findMany: mockPadUsersFindMany,
+			findUnique: mockPadUsersFindUnique
 		};
 	}
 
