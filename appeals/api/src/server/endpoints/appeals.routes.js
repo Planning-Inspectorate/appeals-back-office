@@ -7,6 +7,7 @@ import { addressesRoutes } from './addresses/addresses.routes.js';
 import { appealAllocationRouter } from './appeal-allocation/appeal-allocation-routes.js';
 import { appealsDecisionRoutes } from './appeal-decision/appeal-decision.routes.js';
 import { default as appealDetailsRoutes } from './appeal-details/appeal-details.routes.js';
+import { appealRule6PartiesRoutes } from './appeal-rule-6-parties/appeal-rule-6-parties.routes.js';
 import { appealStatusRoutes } from './appeal-status/appeal-status.routes.js';
 import { appealTimetablesRoutes } from './appeal-timetables/appeal-timetables.routes.js';
 import { appealTypeRoutes } from './appeal-types/appeal-types.routes.js';
@@ -120,5 +121,7 @@ router.use(inquiryEstimatesRoutes);
 
 router.use(appealStatusRoutes);
 router.use(changeProcedureTypeRoutes);
+
+router.use(appealRule6PartiesRoutes);
 
 export { router as appealsRoutes };

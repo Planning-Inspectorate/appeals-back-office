@@ -3053,6 +3053,32 @@ export interface DeleteAppealsRequest {
 	appealIds?: number[];
 }
 
+export interface CreateRule6PartyRequest {
+	serviceUser?: {
+		/** @example "Conserned Locals Consortium" */
+		organisationName?: string;
+		/** @example "concernedlocals@gmail.com" */
+		email?: string;
+	};
+}
+
+export interface Rule6PartyResponse {
+	/** @example 1 */
+	id?: number;
+	/** @example 1 */
+	appealId?: number;
+	/** @example 1 */
+	serviceUserId?: number;
+	serviceUser?: {
+		serviceUserId?: number;
+		firstName?: string;
+		lastName?: string;
+		organisationName?: string | null;
+		email?: string | null;
+		phoneNumber?: string | null;
+	};
+}
+
 export interface Address {
 	addressId?: number;
 	addressLine1: string;

@@ -415,6 +415,36 @@ describe('Appeal detail routes', () => {
 					}
 				});
 			});
+
+			test('gets an appeal with rule 6 parties', async () => {
+				const rule6Party = {
+					id: '123',
+					appealId: fullPlanningAppeal.id,
+					serviceUserId: '123',
+					serviceUser: {
+						id: '123',
+						organisationName: 'Test Organisation',
+						email: 'test@example.com'
+					}
+				};
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					folders,
+					appealRule6Parties: [rule6Party]
+				});
+
+				const response = await request
+					.get(`/appeals/${fullPlanningAppeal.id}?include=all`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					...s78AppealDto,
+					appealRule6Parties: [rule6Party]
+				});
+			});
 		});
 
 		describe('PATCH', () => {

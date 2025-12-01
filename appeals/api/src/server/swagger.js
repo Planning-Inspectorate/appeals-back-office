@@ -1943,6 +1943,47 @@ export const spec = {
 				}
 			}
 		},
+		CreateRule6PartyRequest: {
+			type: 'object',
+			properties: {
+				serviceUser: {
+					type: 'object',
+					properties: {
+						organisationName: {
+							type: 'string',
+							example: 'Conserned Locals Consortium'
+						},
+						email: {
+							type: 'string',
+							example: 'concernedlocals@gmail.com'
+						}
+					}
+				}
+			}
+		},
+		Rule6PartyResponse: {
+			type: 'object',
+			properties: {
+				id: {
+					type: 'number',
+					example: 1
+				},
+				appealId: {
+					type: 'number',
+					example: 1
+				},
+				serviceUserId: {
+					type: 'number',
+					example: 1
+				},
+				serviceUser: {
+					type: 'object',
+					properties: {
+						...ApiDefinitions.ServiceUser.properties
+					}
+				}
+			}
+		},
 		...ApiDefinitions
 	},
 	components: {}

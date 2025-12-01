@@ -196,6 +196,16 @@ const deleteAppealData = async (
 			}
 		});
 
+	const deleteAppellantCasesAdvertDetails = databaseConnector.appellantCaseAdvertDetails.deleteMany(
+		{
+			where: {
+				appellantCaseId: {
+					in: appellantCasesIDs
+				}
+			}
+		}
+	);
+
 	const deleteLpaQuestionnaires = databaseConnector.lPAQuestionnaire.deleteMany({
 		where: {
 			appealId: {
@@ -369,6 +379,14 @@ const deleteAppealData = async (
 		}
 	});
 
+	const deleteAppealRule6Parties = databaseConnector.appealRule6Party.deleteMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		}
+	});
+
 	const updateDocumentVersions = databaseConnector.document.updateMany({
 		data: {
 			latestVersionId: null
@@ -422,6 +440,7 @@ const deleteAppealData = async (
 		deleteAppellantCasesInvalidCustomReasons,
 		deleteAppellantCasesIncompleteReasons,
 		deleteAppellantCasesInvalidReasons,
+		deleteAppellantCasesAdvertDetails,
 		deleteLpaQuestionnaireDesignatedSites,
 		deleteLpaQuestionnairesIncompleteCustomReasons,
 		deleteLpaQuestionnairesIncompleteReasons,
@@ -440,6 +459,7 @@ const deleteAppealData = async (
 		deleteInquiry,
 		deleteInquiryEstimate,
 		deletePersonalList,
+		deleteAppealRule6Parties,
 		deleteAppeals
 	]);
 };
