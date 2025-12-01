@@ -7,10 +7,7 @@ import userRepository from '#repositories/user.repository.js';
 import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
-import {
-	CASE_RELATIONSHIP_LINKED,
-	VALIDATION_OUTCOME_COMPLETE
-} from '@pins/appeals/constants/support.js';
+import { VALIDATION_OUTCOME_COMPLETE } from '@pins/appeals/constants/support.js';
 import {
 	fetchBankHolidaysForDivision,
 	getNumberOfBankHolidaysBetweenDates
@@ -104,23 +101,6 @@ const mapUsers = async (appeals) => {
 
 /**
  *
- * @param {DBAppeals} appeals
- * @returns {Promise<Awaited<unknown>[]>}
- */
-const mapAppeals = (appeals) =>
-	Promise.all(
-		appeals.map(async (appeal) => {
-			const linkedAppeals = await appealRepository.getLinkedAppeals(
-				appeal.reference,
-				CASE_RELATIONSHIP_LINKED
-			);
-
-			return formatAppeal(appeal, linkedAppeals);
-		})
-	);
-
-/**
- *
  * @param {number} pageNumber
  * @param {number} pageSize
  * @param {string} searchTerm
@@ -165,16 +145,18 @@ const retrieveAppealListData = async (
 		procedureTypeId || 0,
 		appellantProcedurePreference
 	];
-	const appeals = await appealListRepository.getAllAppeals(...appealFilters, pageNumber, pageSize);
-	const allAppeals = await appealListRepository.getAppealsWithoutIncludes(...appealFilters);
-	const mappedAppeals = await mapAppeals(appeals);
+
+	const [appeals, allAppeals, statusesInNationalList, itemCount] = await Promise.all([
+		appealListRepository.getAllAppeals(...appealFilters, pageNumber, pageSize),
+		appealListRepository.getAppealsWithoutIncludes(...appealFilters),
+		appealListRepository.getAppealsStatusesInNationalList(),
+		appealListRepository.getAllAppealsCount(...appealFilters)
+	]);
+	const [mappedLPAs, users] = await Promise.all([mapAppealLPAs(allAppeals), mapUsers(allAppeals)]);
+	const mappedAppeals = appeals.map((appeal) => formatAppeal(appeal, []));
 	const mappedStatuses = mapAppealStatuses(appeals);
-	const mappedLPAs = await mapAppealLPAs(allAppeals);
-	const users = await mapUsers(allAppeals);
 	const mappedInspectors = users.inspectors;
 	const mappedCaseOfficers = users.caseOfficers;
-	const statusesInNationalList = await appealListRepository.getAppealsStatusesInNationalList();
-	const itemCount = await appealListRepository.getAllAppealsCount(...appealFilters);
 
 	return {
 		mappedStatuses,
