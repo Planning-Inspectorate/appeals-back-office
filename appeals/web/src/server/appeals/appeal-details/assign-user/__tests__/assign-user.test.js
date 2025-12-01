@@ -80,6 +80,12 @@ describe('assign-user', () => {
 
 	describe('GET /assign-inspector/search-inspector', () => {
 		it('should render the search for inspector page with expected content', async () => {
+			nock('http://test')
+				.get('/appeals/planning-appeal-decision-suppliers')
+				.reply(200, [
+					{ id: 47, name: 'Tom Jack', sapId: '12345' },
+					{ id: 43, name: 'Tom Jackson', sapId: '12125' }
+				]);
 			const response = await request.get(`${baseUrl}/assign-inspector/search-inspector`);
 			const element = parseHtml(response.text);
 
@@ -92,6 +98,12 @@ describe('assign-user', () => {
 
 	describe('POST /assign-inspector/search-inspector', () => {
 		it('should re-render the assign inspector page with the expected error message if a user is not provided', async () => {
+			nock('http://test')
+				.get('/appeals/planning-appeal-decision-suppliers')
+				.reply(200, [
+					{ id: 47, name: 'Tom Jack', sapId: '12345' },
+					{ id: 43, name: 'Tom Jackson', sapId: '12125' }
+				]);
 			const response = await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
 				user: ''
 			});
@@ -150,7 +162,9 @@ describe('assign-user', () => {
 
 	describe('POST /assign-case-officer/check-details', () => {
 		it('should redirect to the case details page when user clicks on "Assign case officer"', async () => {
-			nock('http://test/').patch('/appeals/1').reply(200, { caseOfficer: 'updatedCaseOfficerId' });
+			nock('http://test/')
+				.patch('/appeals/1?include=all')
+				.reply(200, { caseOfficer: 'updatedCaseOfficerId' });
 			await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
 				user: '{"id": "923ac03b-9031-4cf4-8b17-348c274321f9", "name": "Smith, John", "email": "John.Smith@planninginspectorate.gov.uk"}'
 			});
@@ -226,7 +240,9 @@ describe('assign-user', () => {
 
 	describe('POST /assign-inspector/check-details', () => {
 		it('should redirect to the case details page when user clicks on "Assign inspector"', async () => {
-			nock('http://test/').patch('/appeals/1').reply(200, { caseOfficer: 'updatedCaseOfficerId' });
+			nock('http://test/')
+				.patch('/appeals/1?include=all')
+				.reply(200, { caseOfficer: 'updatedCaseOfficerId' });
 			await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
 				user: '{"id": "923ac03b-9031-4cf4-8b17-348c274321f9", "name": "Smith, John", "email": "John.Smith@planninginspectorate.gov.uk"}'
 			});
@@ -237,7 +253,9 @@ describe('assign-user', () => {
 		});
 
 		it('should redirect to the case details page when user clicks on "Unassign inspector"', async () => {
-			nock('http://test/').patch('/appeals/1').reply(200, { caseOfficer: 'updatedCaseOfficerId' });
+			nock('http://test/')
+				.patch('/appeals/1?include=all')
+				.reply(200, { caseOfficer: 'updatedCaseOfficerId' });
 			await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
 				user: '{"id": "0", "name": "Remove", "email": "Remove"}'
 			});

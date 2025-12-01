@@ -12,6 +12,7 @@ export const mapAppealTeam = (data) => {
 
 	return {
 		caseOfficer: appeal.caseOfficer?.azureAdUserId,
-		inspector: appeal.inspector?.azureAdUserId
+		inspector: appeal.inspector?.azureAdUserId,
+		padsInspector: appeal.padsInspectorUserId || null
 	};
 };

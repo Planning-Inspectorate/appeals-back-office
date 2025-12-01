@@ -106,6 +106,7 @@ interface SingleAppealDetailsResponse {
 			isRequired: boolean;
 		};
 	};
+	padsInspector?: string | null;
 	isParentAppeal?: boolean | null;
 	isChildAppeal?: boolean | null;
 	awaitingLinkedAppeal?: boolean | null;
@@ -146,6 +147,7 @@ interface UpdateAppealRequest {
 	applicationReference?: string;
 	caseOfficer?: number | null;
 	inspector?: number | null;
+	padsInspector?: string | null;
 	agent?: number | null;
 	procedureTypeId?: number | null;
 	hearingStartTime?: string;
