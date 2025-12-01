@@ -18,9 +18,13 @@ export const getCaseCosts = (mappedData) => ({
 			mappedData.appeal.costsAppellantCorrespondence.display.tableItem,
 			mappedData.appeal.costsLpaApplication.display.tableItem,
 			mappedData.appeal.costsLpaWithdrawal.display.tableItem,
-			mappedData.appeal.costsLpaCorrespondence.display.tableItem
+			mappedData.appeal.costsLpaCorrespondence.display.tableItem,
+			...(mappedData.appeal.costsRule6Parties?.display?.tableItems || [])
 		].filter(isDefined),
-		firstCellIsHeader: true
+		firstCellIsHeader: true,
+		attributes: {
+			id: 'case-costs-table'
+		}
 	},
 	wrapperHtml: {
 		opening: '<h2 class="govuk-heading-l">Costs</h2>',

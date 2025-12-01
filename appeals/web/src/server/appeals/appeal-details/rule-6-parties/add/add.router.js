@@ -27,10 +27,9 @@ router
 		asyncHandler(controller.postEmail)
 	);
 
-router.route('/check-details').get(asyncHandler(controller.getCheckDetails));
-// .post(
-// 	saveBodyToSession('addRule6Party'),
-// 	asyncHandler(controller.postCheckDetails)
-// );
+router
+	.route('/check-details')
+	.get(asyncHandler(controller.getCheckDetails))
+	.post(saveBodyToSession('addRule6Party'), asyncHandler(controller.postCheckDetails));
 
 export default router;
