@@ -86,7 +86,7 @@ export function generateHASComponents(
 			},
 			card: {
 				title: {
-					text: '1. Appellant details'
+					text: 'Appellant details'
 				}
 			},
 			rows: [
@@ -111,7 +111,7 @@ export function generateHASComponents(
 			},
 			card: {
 				title: {
-					text: '2. Site details'
+					text: 'Site details'
 				}
 			},
 			rows: [
@@ -141,7 +141,7 @@ export function generateHASComponents(
 			},
 			card: {
 				title: {
-					text: '3. Application details'
+					text: 'Application details'
 				}
 			},
 			rows: [
@@ -168,7 +168,7 @@ export function generateHASComponents(
 			},
 			card: {
 				title: {
-					text: '4. Upload documents'
+					text: 'Upload documents'
 				}
 			},
 			rows: [

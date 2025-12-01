@@ -47,7 +47,7 @@ export function generateS78Components(
 				},
 				card: {
 					title: {
-						text: '2. Site details'
+						text: 'Site details'
 					}
 				},
 				rows: [

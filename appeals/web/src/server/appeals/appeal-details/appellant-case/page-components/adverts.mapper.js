@@ -41,7 +41,7 @@ export function generateAdvertComponents(
 			},
 			card: {
 				title: {
-					text: '4. Appeal details'
+					text: 'Appeal details'
 				}
 			},
 			rows: [
@@ -55,7 +55,7 @@ export function generateAdvertComponents(
 	const beforeToLastPosition = pageComponents.length - 1;
 	pageComponents.splice(beforeToLastPosition, 0, appealSummary);
 
-	pageComponents[pageComponents.length - 1].parameters.card.title.text = '5. Upload documents';
+	pageComponents[pageComponents.length - 1].parameters.card.title.text = 'Upload documents';
 
 	return pageComponents;
 }

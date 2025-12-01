@@ -48,7 +48,7 @@ export function generateS20Components(
 				},
 				card: {
 					title: {
-						text: '2. Site details'
+						text: 'Site details'
 					}
 				},
 				rows: [
@@ -88,7 +88,7 @@ export function generateS20Components(
 				},
 				card: {
 					title: {
-						text: '3. Application details'
+						text: 'Application details'
 					}
 				},
 				rows: [
@@ -118,7 +118,7 @@ export function generateS20Components(
 			},
 			card: {
 				title: {
-					text: '4. Appeal details'
+					text: 'Appeal details'
 				}
 			},
 			rows: [
@@ -154,7 +154,7 @@ export function generateS20Components(
 				},
 				card: {
 					title: {
-						text: '5. Upload documents'
+						text: 'Upload documents'
 					}
 				},
 				rows: [

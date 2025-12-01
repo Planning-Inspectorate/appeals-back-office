@@ -54,7 +54,7 @@ export function generateEnforcementNoticeComponents(
 
 	const appealSiteAddressComponents = getComponentParameters('site-details', pageComponents);
 	if (appealSiteAddressComponents) {
-		appealSiteAddressComponents.parameters.card.title.text = '2. Land';
+		appealSiteAddressComponents.parameters.card.title.text = 'Land';
 		appealSiteAddressComponents.parameters.rows = [
 			mappedAppellantCaseData.siteAddress.display.summaryListItem,
 			mappedAppellantCaseData.contactAddress.display.summaryListItem,

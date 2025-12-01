@@ -307,7 +307,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                     </ul>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list pins-summary-list--fullwidth-value">
+                    <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
@@ -665,7 +665,7 @@ exports[`LPA Questionnaire review GET / should render the CAS planning LPA Quest
                     </ul>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list pins-summary-list--fullwidth-value">
+                    <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
@@ -1070,7 +1070,7 @@ exports[`LPA Questionnaire review GET / should render the Cas Advert LPA Questio
                     </ul>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list pins-summary-list--fullwidth-value">
+                    <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
@@ -1398,7 +1398,7 @@ exports[`LPA Questionnaire review GET / should render the Householder LPA Questi
                     </ul>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list pins-summary-list--fullwidth-value">
+                    <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
@@ -1912,7 +1912,7 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                     </ul>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list pins-summary-list--fullwidth-value">
+                    <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
@@ -2330,7 +2330,7 @@ exports[`LPA Questionnaire review GET / should render the advert LPA Questionnai
                     </ul>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list pins-summary-list--fullwidth-value">
+                    <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
@@ -2715,7 +2715,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                     </ul>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list pins-summary-list--fullwidth-value">
+                    <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
@@ -3060,7 +3060,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                     </ul>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list pins-summary-list--fullwidth-value">
+                    <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">
@@ -5506,7 +5506,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                     </ul>
                 </div>
                 <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list pins-summary-list--fullwidth-value">
+                    <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ol class="govuk-list govuk-list--number pins-file-list">

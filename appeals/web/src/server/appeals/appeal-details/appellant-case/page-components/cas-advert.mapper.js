@@ -100,7 +100,7 @@ export function generateCASAdvertComponents(
 				},
 				card: {
 					title: {
-						text: '4. Upload documents'
+						text: 'Upload documents'
 					}
 				},
 				rows: [
