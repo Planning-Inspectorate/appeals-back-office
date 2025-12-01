@@ -5173,13 +5173,21 @@
 				}
 			}
 		},
-		"/appeals/{appealId}/reps/comments": {
+		"/appeals/{appealId}/reps/{representationType}": {
 			"post": {
 				"tags": ["Representations"],
 				"description": "Create a representation",
 				"parameters": [
 					{
 						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "representationType",
 						"in": "path",
 						"required": true,
 						"schema": {
@@ -8197,7 +8205,7 @@
 							},
 							"lpaQuestionnaireSubmittedDate": {
 								"type": "string",
-								"example": "2024-05-31T23:00:00.000Z"
+								"example": "2024-06-01T00:00:00.000Z"
 							},
 							"siteAccessDetails": {
 								"type": "array",
