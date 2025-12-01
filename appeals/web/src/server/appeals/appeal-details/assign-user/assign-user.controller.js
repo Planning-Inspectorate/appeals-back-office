@@ -21,6 +21,7 @@ const renderAssignUser = async (request, response, isInspector = false) => {
 		appealDetails,
 		isInspector,
 		request.session,
+		request.apiClient,
 		errors
 	);
 
@@ -55,7 +56,9 @@ export const postAssignUser = async (request, response, isInspector = false) => 
 	request.session.user = JSON.parse(request.body.user);
 	request.session.prevUser =
 		userTypeText === 'inspector'
-			? await usersService.getUserById(currentAppeal.inspector, request.session)
+			? currentAppeal?.padsInspector
+				? await usersService.getPadsUserById(currentAppeal.padsInspector, request.apiClient)
+				: await usersService.getUserById(currentAppeal.inspector, request.session)
 			: await usersService.getUserById(currentAppeal.caseOfficer, request.session);
 
 	return response.redirect(

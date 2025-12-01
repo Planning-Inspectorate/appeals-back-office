@@ -5,8 +5,10 @@ import { seedTestData } from './data-test.js';
 import { localPlanningDepartmentList } from './LPAs/dev.js';
 import { seedLPAs } from './seed-lpas.js';
 import { seedTeams } from './seed-teams.js';
+import { seedPADs } from './seed-pads.js';
 import { deleteExistingData } from './seed-truncate.js';
 import { teamsToCreate } from './teams/dev.js';
+import { padsList } from './PADs/dev.js';
 
 /**
  * Clear the dev database, then add in the static and test data
@@ -22,6 +24,8 @@ const seedDevelopment = async () => {
 		console.info('Seeded teams into development database\n');
 		await seedLPAs(databaseConnector, localPlanningDepartmentList);
 		console.info('Seeded LPAs into development database\n');
+		await seedPADs(databaseConnector, padsList);
+		console.info('Seeded PADs into development database\n');
 		await seedStaticData(databaseConnector);
 		console.info('Seeded static data into development database\n');
 		await seedTestData(databaseConnector);

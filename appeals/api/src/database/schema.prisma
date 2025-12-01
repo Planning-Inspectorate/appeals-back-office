@@ -49,6 +49,8 @@ model Appeal {
   caseOfficerUserId     Int?
   inspector             User?                @relation("inspector", fields: [inspectorUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   inspectorUserId       Int?
+  padsInspector         PADUsers?            @relation("padsInspector", fields: [padsInspectorUserId], references: [sapId], onDelete: NoAction, onUpdate: NoAction)
+  padsInspectorUserId   String?
   appellantCase         AppellantCase?
   lpaQuestionnaire      LPAQuestionnaire?
   siteVisit             SiteVisit?
@@ -983,4 +985,12 @@ model AdvertType {
   name String @unique
 
   appealAdvertDetails AppellantCaseAdvertDetails[]
+}
+
+/// PADUsers model
+model PADUsers {
+  id            Int      @id @default(autoincrement())
+  sapId         String   @unique
+  name          String
+  padsInspector Appeal[] @relation("padsInspector")
 }

@@ -53,6 +53,7 @@ import { testDataRoutes } from './test-data/test-data.routes.js';
 import { testUtilsRoutes } from './test-utils/test-utils.routes.js';
 import { transferredAppealsRoutes } from './transferred-appeals/transferred-appeal.routes.js';
 import { withdrawalRoutes } from './withdrawal/withdrawal.routes.js';
+import {planningAppealDecisionSuppliersRoutes} from './planning-appeal-decision-suppliers/planning-appeal-decision-suppliers.routes.js';
 
 const router = createRouter();
 router.use(caseTeamRouter);
@@ -82,6 +83,7 @@ router.use(procedureTypesRoutes);
 router.use(siteVisitTypesRoutes);
 router.use(representationRejectionReasonsRoutes);
 router.use(localPlanningAuthoritiesRoutes);
+router.use(planningAppealDecisionSuppliersRoutes);
 
 router.use(appealsRoutes);
 router.use(appealDetailsRoutes);
@@ -120,5 +122,4 @@ router.use(inquiryEstimatesRoutes);
 
 router.use(appealStatusRoutes);
 router.use(changeProcedureTypeRoutes);
-
 export { router as appealsRoutes };

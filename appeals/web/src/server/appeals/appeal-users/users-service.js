@@ -161,8 +161,26 @@ const getUserName = (user) => {
 	return '';
 };
 
+/**
+ * Get a user by id from any group
+ * Requires the web project to run over https, with auth enabled. An empty array will be returned if these conditions are not met.
+ * @param {string} id - GUID representing the user in AD (same as user.id in returned data)
+ * @param {import('got').Got} apiClient
+ * @returns {Promise<Object<string, any>|null>}
+ */
+const getPadsUserById = async (id, apiClient) => {
+	const caseOfficerUser = await apiClient
+		.get(`appeals/planning-appeal-decision-suppliers/${id}`)
+		console.log(caseOfficerUser, "caseOfficerUser in getPadsUserById");
+	if (!caseOfficerUser) {
+		return null;
+	}
+	return caseOfficerUser;
+};
+
 export default {
 	getUsersByRole,
 	getUserById,
-	getUserByRoleAndId
+	getUserByRoleAndId,
+	getPadsUserById
 };

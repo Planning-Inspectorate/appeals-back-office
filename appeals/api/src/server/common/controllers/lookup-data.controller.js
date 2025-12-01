@@ -11,6 +11,7 @@ import logger from '../../utils/logger.js';
  */
 const getLookupData = (databaseTable) => async (req, res) => {
 	try {
+		console.log('here in getLookupData controller');
 		const lookupData = await commonRepository.getLookupList(databaseTable);
 
 		if (!lookupData.length) {
@@ -20,8 +21,29 @@ const getLookupData = (databaseTable) => async (req, res) => {
 		return res.send(lookupData);
 	} catch (error) {
 		logger.error(error);
+		console.log(error,'error in lookup data controller');
 		return res.status(500).send({ errors: ERROR_FAILED_TO_GET_DATA });
 	}
 };
 
-export { getLookupData };
+/**
+ * @param {string} databaseTable
+ * @param {{key: string;value: string;}} lookupData
+ * @return {Promise<object | void>}
+ *
+ */
+const getLookupDataByValue = async (databaseTable, lookupData) => {
+	console.log('inside getLookupDataByValue controller');
+	try {
+		const result = await commonRepository.getLookupListValueByKey(databaseTable, lookupData);
+		if (!lookupData) {
+			return { errors: ERROR_NOT_FOUND };
+		}
+		return result;
+	} catch (error) {
+		logger.error(error);
+		return { errors: ERROR_FAILED_TO_GET_DATA };
+	}
+};
+
+export { getLookupData, getLookupDataByValue };

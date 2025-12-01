@@ -80,6 +80,12 @@ describe('assign-user', () => {
 
 	describe('GET /assign-inspector/search-inspector', () => {
 		it('should render the search for inspector page with expected content', async () => {
+			nock('http://test')
+				.get('/appeals/planning-appeal-decision-suppliers')
+				.reply(200, [
+					{ id: 47, name: 'Tom Jack', sapId: '12345' },
+					{ id: 43, name: 'Tom Jackson', sapId: '12125' }
+				]);
 			const response = await request.get(`${baseUrl}/assign-inspector/search-inspector`);
 			const element = parseHtml(response.text);
 
@@ -92,6 +98,12 @@ describe('assign-user', () => {
 
 	describe('POST /assign-inspector/search-inspector', () => {
 		it('should re-render the assign inspector page with the expected error message if a user is not provided', async () => {
+			nock('http://test')
+				.get('/appeals/planning-appeal-decision-suppliers')
+				.reply(200, [
+					{ id: 47, name: 'Tom Jack', sapId: '12345' },
+					{ id: 43, name: 'Tom Jackson', sapId: '12125' }
+				]);
 			const response = await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
 				user: ''
 			});
