@@ -1549,6 +1549,19 @@ describe('inquiry routes', () => {
 					addressCountry: inquiryAddress.country
 				}
 			};
+			const existingInquiry = {
+				id: 1,
+				inquiryStartTime: new Date('2999-01-01T12:00:00.000Z'),
+				inquiryEndTime: new Date('2999-01-01T13:00:00.000Z'),
+				address: {
+					addressLine1: 'Court 2',
+					addressLine2: '24 Court Street',
+					addressTown: 'Test Town',
+					addressCounty: 'Test County',
+					postcode: 'AB12 3CD',
+					addressCountry: 'United Kingdom'
+				}
+			};
 
 			test('updates a single inquiry with address', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
@@ -1689,6 +1702,328 @@ describe('inquiry routes', () => {
 					'inquiry',
 					'Update'
 				);
+			});
+
+			test('does not create audit trail for date when date or time has not changed', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					inquiry: existingInquiry,
+					appealStatus: [
+						{
+							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
+							valid: true
+						}
+					]
+				});
+				databaseConnector.inquiry.findUnique.mockResolvedValue(existingInquiry);
+				databaseConnector.inquiry.update.mockResolvedValue(existingInquiry);
+
+				const response = await request
+					.patch(`/appeals/${fullPlanningAppeal.id}/inquiry/${existingInquiry.id}`)
+					.send({
+						inquiryStartTime: '2999-01-01T12:00:00.000Z',
+						estimatedDays: 6
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+
+				expect(databaseConnector.auditTrail.create).not.toHaveBeenCalled();
+			});
+
+			test('creates audit trail for date when only date changes', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					inquiry: existingInquiry,
+					appealStatus: [
+						{
+							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
+							valid: true
+						}
+					]
+				});
+				databaseConnector.inquiry.findUnique.mockResolvedValue(existingInquiry);
+				databaseConnector.inquiry.update.mockResolvedValue({
+					...existingInquiry,
+					inquiryStartTime: new Date('2999-01-02T12:00:00.000Z')
+				});
+
+				const response = await request
+					.patch(`/appeals/${fullPlanningAppeal.id}/inquiry/${existingInquiry.id}`)
+					.send({
+						inquiryStartTime: '2999-01-02T12:00:00.000Z',
+						estimatedDays: 6
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: fullPlanningAppeal.id,
+						details: 'Inquiry date updated to 2 Jan 2999',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+			});
+
+			test('creates audit trail for time when only time changes', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					inquiry: existingInquiry,
+					appealStatus: [
+						{
+							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
+							valid: true
+						}
+					]
+				});
+				databaseConnector.inquiry.findUnique.mockResolvedValue(existingInquiry);
+				databaseConnector.inquiry.update.mockResolvedValue({
+					...existingInquiry,
+					inquiryStartTime: new Date('2999-01-01T14:30:00.000Z')
+				});
+
+				const response = await request
+					.patch(`/appeals/${fullPlanningAppeal.id}/inquiry/${existingInquiry.id}`)
+					.send({
+						inquiryStartTime: '2999-01-01T14:30:00.000Z'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: fullPlanningAppeal.id,
+						details: 'Inquiry time updated to 2:30pm',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+			});
+
+			test('creates audit trails for both date and time when both change', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					inquiry: existingInquiry,
+					appealStatus: [
+						{
+							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
+							valid: true
+						}
+					]
+				});
+				databaseConnector.inquiry.findUnique.mockResolvedValue(existingInquiry);
+				databaseConnector.inquiry.update.mockResolvedValue({
+					...existingInquiry,
+					inquiryStartTime: new Date('2999-01-02T14:30:00.000Z')
+				});
+
+				const response = await request
+					.patch(`/appeals/${fullPlanningAppeal.id}/inquiry/${existingInquiry.id}`)
+					.send({
+						inquiryStartTime: '2999-01-02T14:30:00.000Z',
+						estimatedDays: 6
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+					data: {
+						appealId: fullPlanningAppeal.id,
+						details: 'Inquiry date updated to 2 Jan 2999',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+					data: {
+						appealId: fullPlanningAppeal.id,
+						details: 'Inquiry time updated to 2:30pm',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+			});
+
+			test('does not create audit trail for address when address is not provided', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					inquiry: existingInquiry,
+					appealStatus: [
+						{
+							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
+							valid: true
+						}
+					]
+				});
+				databaseConnector.inquiry.findUnique.mockResolvedValue(existingInquiry);
+				databaseConnector.inquiry.update.mockResolvedValue(existingInquiry);
+
+				const response = await request
+					.patch(`/appeals/${fullPlanningAppeal.id}/inquiry/${existingInquiry.id}`)
+					.send({
+						inquiryStartTime: '2999-01-01T12:00:00.000Z',
+						estimatedDays: 6
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+
+				expect(databaseConnector.auditTrail.create).not.toHaveBeenCalled();
+			});
+
+			test('creates audit trail when address is added for the first time', async () => {
+				const inquiryAddress = {
+					addressLine1: 'Court 2',
+					addressLine2: '24 Court Street',
+					country: 'United Kingdom',
+					county: 'Test County',
+					postcode: 'AB12 3CD',
+					town: 'Test Town'
+				};
+
+				const existingInquiry = {
+					id: 1,
+					inquiryStartTime: new Date('2999-01-01T12:00:00.000Z'),
+					inquiryEndTime: new Date('2999-01-01T13:00:00.000Z'),
+					address: null
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					inquiry: existingInquiry,
+					appealStatus: [
+						{
+							status: APPEAL_CASE_STATUS.EVENT,
+							valid: true
+						}
+					]
+				});
+				databaseConnector.inquiry.findUnique.mockResolvedValue({
+					...existingInquiry,
+					addressId: null
+				});
+				databaseConnector.inquiry.update.mockResolvedValue({
+					...existingInquiry,
+					address: {
+						addressLine1: inquiryAddress.addressLine1,
+						addressLine2: inquiryAddress.addressLine2,
+						addressTown: inquiryAddress.town,
+						addressCounty: inquiryAddress.county,
+						postcode: inquiryAddress.postcode,
+						addressCountry: inquiryAddress.country
+					}
+				});
+
+				const response = await request
+					.patch(`/appeals/${fullPlanningAppeal.id}/inquiry/${existingInquiry.id}`)
+					.send({
+						inquiryStartTime: '2999-01-01T12:00:00.000Z',
+						estimatedDays: 6,
+						address: inquiryAddress
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+					data: {
+						appealId: fullPlanningAppeal.id,
+						details: 'Case progressed to awaiting_event',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+					data: {
+						appealId: fullPlanningAppeal.id,
+						details: 'The inquiry address has been added',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+			});
+
+			test('creates audit trail when address is updated', async () => {
+				const oldAddress = {
+					addressLine1: 'Old Court',
+					addressLine2: 'Old Street',
+					addressTown: 'Old Town',
+					addressCounty: 'Old County',
+					postcode: 'AB1 2CD',
+					addressCountry: 'United Kingdom'
+				};
+
+				const newAddress = {
+					addressLine1: 'New Court',
+					addressLine2: 'New Street',
+					town: 'New Town',
+					county: 'New County',
+					postcode: 'EF3 4GH',
+					country: 'United Kingdom'
+				};
+				const existingInquiry = {
+					id: 1,
+					inquiryStartTime: new Date('2999-01-01T12:00:00.000Z'),
+					inquiryEndTime: new Date('2999-01-01T13:00:00.000Z'),
+					address: oldAddress
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					inquiry: existingInquiry,
+					appealStatus: [
+						{
+							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
+							valid: true
+						}
+					]
+				});
+				databaseConnector.inquiry.findUnique.mockResolvedValue({
+					...existingInquiry,
+					addressId: 99
+				});
+				databaseConnector.inquiry.update.mockResolvedValue({
+					...existingInquiry,
+					address: {
+						addressLine1: newAddress.addressLine1,
+						addressLine2: newAddress.addressLine2,
+						addressTown: newAddress.town,
+						addressCounty: newAddress.county,
+						postcode: newAddress.postcode,
+						addressCountry: newAddress.country
+					}
+				});
+
+				const response = await request
+					.patch(`/appeals/${fullPlanningAppeal.id}/inquiry/${existingInquiry.id}`)
+					.send({
+						inquiryStartTime: '2999-01-01T12:00:00.000Z',
+						estimatedDays: 6,
+						address: newAddress
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: fullPlanningAppeal.id,
+						details:
+							'Inquiry address updated to New Court, New Street, New Town, New County, EF3 4GH, United Kingdom',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
 			});
 
 			test('updates a single inquiry with addressId', async () => {
