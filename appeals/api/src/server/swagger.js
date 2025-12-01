@@ -39,7 +39,7 @@ export const spec = {
 		// by default: ''
 		description: 'PINS Back Office Appeals API documentation from Swagger'
 	},
-	// by default: 'localhost:3000'
+	// by default: 'localhost:3999'
 	host: '',
 	// by default: '/'
 	basePath: '',
