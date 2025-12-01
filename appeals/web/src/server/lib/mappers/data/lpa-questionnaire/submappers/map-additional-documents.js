@@ -11,6 +11,9 @@ export const mapAdditionalDocuments = ({ lpaQuestionnaireData, session, ...param
 	display: {
 		cardItem: {
 			classes: 'pins-summary-list--fullwidth-value',
+			attributes: {
+				id: 'additional-documents'
+			},
 			card: {
 				title: {
 					text: 'Additional documents'

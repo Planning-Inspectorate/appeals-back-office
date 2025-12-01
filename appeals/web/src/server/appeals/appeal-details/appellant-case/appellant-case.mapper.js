@@ -182,6 +182,19 @@ export async function appellantCasePage(
 
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
+	// Add section numbers to the start of each card title other than before you start and additional documents
+	appealTypeSpecificComponents.forEach((component, index) => {
+		const { title } = component?.parameters?.card || {};
+		switch (component.parameters.attributes.id) {
+			case 'before-you-start':
+				break;
+			case 'additional-documents':
+				break;
+			default:
+				title.text = `${index}. ${title.text}`;
+		}
+	});
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Appellant case - ${shortAppealReference}`,
