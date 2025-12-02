@@ -13,7 +13,9 @@ services:
             - db
         container_name: api
         entrypoint: npm run db:migrate && npm run start
-        build: ./appeals/api
+        build:
+            context: .
+            dockerfile: appeals/api/Dockerfile
         environment:
             - 'NODE_ENV=test'
             - 'DATABASE_URL="sqlserver://pins-sql-server:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true"'
@@ -21,7 +23,9 @@ services:
             - 3000:3000
     web:
         container_name: web
-        build: ./appeals/web
+        build:
+            context: .
+            dockerfile: appeals/web/Dockerfile
         environment:
             - 'NODE_ENV=test'
             - 'AUTH_CLIENT_SECRET=${AUTH_CLIENT_SECRET}'
