@@ -17,9 +17,8 @@ function createPrismaClient() {
 			throw new Error('connectionString not provided to create Prisma Client');
 		}
 
-		prismaConfig.adapter = new PrismaMssql(
-			`${process.env.DATABASE_URL};connection_limit=15;max_idle_connection_lifetime=300`
-		);
+		// `${process.env.DATABASE_URL};connection_limit=15;max_idle_connection_lifetime=300` - 2h 38
+		prismaConfig.adapter = new PrismaMssql(`${process.env.DATABASE_URL};connection_limit=20`);
 
 		prismaConfig.log = [
 			{
