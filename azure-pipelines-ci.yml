@@ -99,37 +99,9 @@ extends:
               secrets:
                 - name: appeals-bo-client-secret
                   variable: appeals-bo-client-secret
-          - script:
-              docker network create localNetwork
+          - script: AUTH_CLIENT_SECRET=$(appeals-bo-client-secret) AUTH_CLIENT_ID=64c20f53-becf-4b7e-ba62-c1dc9b03ccf9 docker compose up -d
             condition: eq(variables['runE2E'], 'true')
-            displayName: "Create Local Docker Network"
-          - script:
-              docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=SqlServer01" -p 1433:1433 --name pins-sql-server -d --network localNetwork mcr.microsoft.com/mssql/server:2022-latest
-            condition: eq(variables['runE2E'], 'true')
-            displayName: "Start Database"
-          - template: ../steps/node_script.yml
-            parameters:
-              nodeVersion: 22
-              script: npm ci
-              condition: eq(variables['runE2E'], 'true')
-          - template: ../steps/node_script.yml
-            parameters:
-              nodeVersion: 22
-              script: npm --prefix ./appeals/api run db:migrate
-              environmentVariables:
-                NODE_ENV: test
-                DATABASE_URL: "sqlserver://127.0.0.1:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true"
-              condition: eq(variables['runE2E'], 'true')
-          - script: |
-              docker build . -f appeals/api/Dockerfile -t pins/api:local --build-arg GIT_SHA=$(Build.SourceVersion)
-              docker run -p 3000:3000 -e "NODE_ENV=test" -e "DATABASE_URL=sqlserver://pins-sql-server:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true" --name api -d --network localNetwork pins/api:local
-            condition: eq(variables['runE2E'], 'true')
-            displayName: "Build and Run App"
-          - script: |
-              docker build . -f appeals/web/Dockerfile -t pins/web:local --build-arg GIT_SHA=$(Build.SourceVersion)
-              docker run -p 8080:8080 -e "NODE_ENV=test" -e "AUTH_CLIENT_SECRET=$(appeals-bo-client-secret)" -e "AUTH_CLIENT_ID=64c20f53-becf-4b7e-ba62-c1dc9b03ccf9" -e "AUTH_DISABLED=false" -e "SESSION_SECRET=dummy-secret" --name web -d --network localNetwork pins/web:local
-            condition: eq(variables['runE2E'], 'true')
-            displayName: "Build and Run Web"
+            displayName: "Start database, api and web docker containers"
           - script: docker ps
             condition: eq(variables['runE2E'], 'true')
             displayName: "Check all containers are up"
