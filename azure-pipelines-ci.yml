@@ -1,3 +1,6 @@
+variables:
+  - group: e2e-dev
+
 trigger:
   branches:
     include:
