@@ -77,7 +77,6 @@ extends:
                 TURBO_API: $(TURBO_API)
                 TURBO_TOKEN: $(TURBO_TOKEN)
       - name: Run cypress e2e tests
-        dependantOn: Check PR labels
         condition: eq(variables['Build.Reason'], 'PullRequest')
         steps:
           - script: |
@@ -99,7 +98,7 @@ extends:
               secrets:
                 - name: appeals-bo-client-secret
                   variable: appeals-bo-client-secret
-          - script: AUTH_CLIENT_SECRET=$(appeals-bo-client-secret) AUTH_CLIENT_ID=64c20f53-becf-4b7e-ba62-c1dc9b03ccf9 docker-compose up -d
+          - script: AUTH_CLIENT_SECRET=$(appeals-bo-client-secret) AUTH_CLIENT_ID=64c20f53-becf-4b7e-ba62-c1dc9b03ccf9 GIT_SHA=$(Build.SourceVersion) docker-compose up -d
             condition: eq(variables['runE2E'], 'true')
             displayName: "Start database, api and web docker containers"
           - script: docker ps

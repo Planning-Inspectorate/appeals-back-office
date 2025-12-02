@@ -34,6 +34,7 @@ services:
             - 'API_HOST=http://api:3000'
             - 'AUTH_DISABLED=false'
             - 'SESSION_SECRET=dummy-secret'
+            - 'GIT_SHA=${GIT_SHA}'
         ports:
             - 8080:8080
 
