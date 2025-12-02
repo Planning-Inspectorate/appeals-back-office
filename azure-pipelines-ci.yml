@@ -104,6 +104,10 @@ extends:
           - script: docker ps
             condition: eq(variables['runE2E'], 'true')
             displayName: "Check all containers are up"
+          - script: docker logs api
+            condition: eq(variables['runE2E'], 'true')
+          - script: docker logs web
+            condition: eq(variables['runE2E'], 'true')
           - script: curl -v http://localhost:3000/health
             condition: eq(variables['runE2E'], 'true')
           - script: curl -v http://localhost:8080/health
