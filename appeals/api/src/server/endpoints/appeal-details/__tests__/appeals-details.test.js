@@ -77,6 +77,7 @@ const householdAppealDto = {
 		awaitingAppellantCostsDecision: false,
 		awaitingLpaCostsDecision: false
 	},
+	padsInspector: null,
 	internalCorrespondence: {},
 	decision: {
 		folderId: savedFolder.id,
@@ -176,6 +177,7 @@ const s78AppealDto = {
 	},
 	awaitingLinkedAppeal: false,
 	caseOfficer: fullPlanningAppeal.caseOfficer.azureAdUserId,
+	padsInspector: null,
 	costs: {},
 	costsDecision: {
 		awaitingAppellantCostsDecision: false,
@@ -276,7 +278,7 @@ const folders = [
 ];
 
 describe('Appeal detail routes', () => {
-	beforeAll(() => {
+	beforeEach(() => {
 		jest.clearAllMocks();
 	});
 	afterEach(() => {
@@ -585,7 +587,8 @@ describe('Appeal detail routes', () => {
 					.patch(`/appeals/${householdAppeal.id}`)
 					.send({
 						inspectorId: inspectorId,
-						inspectorName: 'Tom Harry'
+						inspectorName: 'Tom Harry',
+						padsInspectorId: null
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -594,7 +597,8 @@ describe('Appeal detail routes', () => {
 				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
 					data: {
 						inspectorUserId: 10,
-						caseUpdatedDate: expect.any(Date)
+						caseUpdatedDate: expect.any(Date),
+						padsInspectorUserId: null
 					},
 					where: {
 						id: householdAppeal.id
@@ -605,7 +609,58 @@ describe('Appeal detail routes', () => {
 					}
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
-				expect(notifySend).toHaveBeenCalledTimes(1);
+
+				const site_address =
+					householdAppeal.address.addressLine1 +
+					', ' +
+					(householdAppeal.address.addressLine2
+						? householdAppeal.address.addressLine2 + ', '
+						: '') +
+					householdAppeal.address.addressTown +
+					', ' +
+					householdAppeal.address.postcode;
+
+				expect(notifySend).toHaveBeenCalledWith({
+					azureAdUserId: azureAdUserId,
+					templateName: 'appeal-assign-inspector',
+					notifyClient: expect.any(Object),
+					recipientEmail: householdAppeal.appellant.email,
+					personalisation: {
+						appeal_reference_number: householdAppeal.reference,
+						site_address: site_address,
+						lpa_reference: householdAppeal.applicationReference,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						inspector_name: 'Tom Harry'
+					}
+				});
+				expect(notifySend).toHaveBeenCalledWith({
+					azureAdUserId: azureAdUserId,
+					templateName: 'appeal-assign-inspector',
+					notifyClient: expect.any(Object),
+					recipientEmail: householdAppeal.lpa.email,
+					personalisation: {
+						appeal_reference_number: householdAppeal.reference,
+						site_address: site_address,
+						lpa_reference: householdAppeal.applicationReference,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						inspector_name: 'Tom Harry'
+					}
+				});
+
+				expect(notifySend).toHaveBeenCalledWith({
+					azureAdUserId: azureAdUserId,
+					templateName: 'appeal-assign-inspector',
+					notifyClient: expect.any(Object),
+					recipientEmail: householdAppeal.agent.email,
+					personalisation: {
+						appeal_reference_number: householdAppeal.reference,
+						site_address: site_address,
+						lpa_reference: householdAppeal.applicationReference,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						inspector_name: 'Tom Harry'
+					}
+				});
+				expect(notifySend).toHaveBeenCalledTimes(3);
 
 				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
@@ -618,7 +673,8 @@ describe('Appeal detail routes', () => {
 				});
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
-					inspectorId
+					inspectorId,
+					padsInspectorId: null
 				});
 			});
 
@@ -637,6 +693,7 @@ describe('Appeal detail routes', () => {
 					.send({
 						inspectorId: null,
 						inspectorName: null,
+						padsInspectorId: null,
 						prevUserName: 'Tom Harry'
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -645,7 +702,8 @@ describe('Appeal detail routes', () => {
 				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
 					data: {
 						inspectorUserId: null,
-						caseUpdatedDate: expect.any(Date)
+						caseUpdatedDate: expect.any(Date),
+						padsInspectorUserId: null
 					},
 					where: {
 						id: householdAppeal.id
@@ -656,7 +714,59 @@ describe('Appeal detail routes', () => {
 					}
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
-				expect(notifySend).toHaveBeenCalledTimes(1);
+
+				const site_address =
+					householdAppeal.address.addressLine1 +
+					', ' +
+					(householdAppeal.address.addressLine2
+						? householdAppeal.address.addressLine2 + ', '
+						: '') +
+					householdAppeal.address.addressTown +
+					', ' +
+					householdAppeal.address.postcode;
+
+				expect(notifySend).toHaveBeenCalledWith({
+					azureAdUserId: azureAdUserId,
+					templateName: 'appeal-unassign-inspector',
+					notifyClient: expect.any(Object),
+					recipientEmail: householdAppeal.appellant.email,
+					personalisation: {
+						appeal_reference_number: householdAppeal.reference,
+						site_address: site_address,
+						lpa_reference: householdAppeal.applicationReference,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						inspector_name: 'Tom Harry'
+					}
+				});
+				expect(notifySend).toHaveBeenCalledWith({
+					azureAdUserId: azureAdUserId,
+					templateName: 'appeal-unassign-inspector',
+					notifyClient: expect.any(Object),
+					recipientEmail: householdAppeal.lpa.email,
+					personalisation: {
+						appeal_reference_number: householdAppeal.reference,
+						site_address: site_address,
+						lpa_reference: householdAppeal.applicationReference,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						inspector_name: 'Tom Harry'
+					}
+				});
+
+				expect(notifySend).toHaveBeenCalledWith({
+					azureAdUserId: azureAdUserId,
+					templateName: 'appeal-unassign-inspector',
+					notifyClient: expect.any(Object),
+					recipientEmail: householdAppeal.agent.email,
+					personalisation: {
+						appeal_reference_number: householdAppeal.reference,
+						site_address: site_address,
+						lpa_reference: householdAppeal.applicationReference,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						inspector_name: 'Tom Harry'
+					}
+				});
+				expect(notifySend).toHaveBeenCalledTimes(3);
+				expect(notifySend).toHaveBeenCalledTimes(3);
 
 				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
@@ -669,7 +779,204 @@ describe('Appeal detail routes', () => {
 				});
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
+					inspectorId: null,
+					padsInspectorId: null
+				});
+			});
+
+			test('assigns a PADS inspector to an appeal', async () => {
+				const padsInspectorId = '123345';
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				// @ts-ignore
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						inspectorId: null,
+						inspectorName: 'Tom Harry',
+						padsInspectorId: padsInspectorId
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+					data: {
+						inspectorUserId: null,
+						caseUpdatedDate: expect.any(Date),
+						padsInspectorUserId: padsInspectorId
+					},
+					where: {
+						id: householdAppeal.id
+					},
+					include: {
+						appealStatus: true,
+						appealType: true
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+
+				const site_address =
+					householdAppeal.address.addressLine1 +
+					', ' +
+					(householdAppeal.address.addressLine2
+						? householdAppeal.address.addressLine2 + ', '
+						: '') +
+					householdAppeal.address.addressTown +
+					', ' +
+					householdAppeal.address.postcode;
+
+				expect(notifySend).toHaveBeenCalledWith({
+					azureAdUserId: azureAdUserId,
+					templateName: 'appeal-assign-inspector',
+					notifyClient: expect.any(Object),
+					recipientEmail: householdAppeal.appellant.email,
+					personalisation: {
+						appeal_reference_number: householdAppeal.reference,
+						site_address: site_address,
+						lpa_reference: householdAppeal.applicationReference,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						inspector_name: 'Tom Harry'
+					}
+				});
+				expect(notifySend).toHaveBeenCalledWith({
+					azureAdUserId: azureAdUserId,
+					templateName: 'appeal-assign-inspector',
+					notifyClient: expect.any(Object),
+					recipientEmail: householdAppeal.lpa.email,
+					personalisation: {
+						appeal_reference_number: householdAppeal.reference,
+						site_address: site_address,
+						lpa_reference: householdAppeal.applicationReference,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						inspector_name: 'Tom Harry'
+					}
+				});
+
+				expect(notifySend).toHaveBeenCalledWith({
+					azureAdUserId: azureAdUserId,
+					templateName: 'appeal-assign-inspector',
+					notifyClient: expect.any(Object),
+					recipientEmail: householdAppeal.agent.email,
+					personalisation: {
+						appeal_reference_number: householdAppeal.reference,
+						site_address: site_address,
+						lpa_reference: householdAppeal.applicationReference,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						inspector_name: 'Tom Harry'
+					}
+				});
+				expect(notifySend).toHaveBeenCalledTimes(3);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: householdAppeal.id,
+						details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [padsInspectorId]),
+						loggedAt: expect.any(Date),
+						userId: 10
+					}
+				});
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					padsInspectorId,
 					inspectorId: null
+				});
+			});
+
+			test('unassigns a PADS inspector from an appeal', async () => {
+				const padsInspector = azureAdUserId;
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...householdAppeal,
+					padsInspector: { azureAdUserId: padsInspector }
+				});
+
+				// @ts-ignore
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						inspectorId: null,
+						inspectorName: null,
+						padsInspectorId: null,
+						prevUserName: 'Tom Harry'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+					data: {
+						inspectorUserId: null,
+						caseUpdatedDate: expect.any(Date),
+						padsInspectorUserId: null
+					},
+					where: {
+						id: householdAppeal.id
+					},
+					include: {
+						appealStatus: true,
+						appealType: true
+					}
+				});
+
+				const site_address =
+					householdAppeal.address.addressLine1 +
+					', ' +
+					(householdAppeal.address.addressLine2
+						? householdAppeal.address.addressLine2 + ', '
+						: '') +
+					householdAppeal.address.addressTown +
+					', ' +
+					householdAppeal.address.postcode;
+
+				expect(notifySend).toHaveBeenCalledWith({
+					azureAdUserId: azureAdUserId,
+					templateName: 'appeal-unassign-inspector',
+					notifyClient: expect.any(Object),
+					recipientEmail: householdAppeal.appellant.email,
+					personalisation: {
+						appeal_reference_number: householdAppeal.reference,
+						site_address: site_address,
+						lpa_reference: householdAppeal.applicationReference,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						inspector_name: 'Tom Harry'
+					}
+				});
+				expect(notifySend).toHaveBeenCalledWith({
+					azureAdUserId: azureAdUserId,
+					templateName: 'appeal-unassign-inspector',
+					notifyClient: expect.any(Object),
+					recipientEmail: householdAppeal.lpa.email,
+					personalisation: {
+						appeal_reference_number: householdAppeal.reference,
+						site_address: site_address,
+						lpa_reference: householdAppeal.applicationReference,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						inspector_name: 'Tom Harry'
+					}
+				});
+
+				expect(notifySend).toHaveBeenCalledWith({
+					azureAdUserId: azureAdUserId,
+					templateName: 'appeal-unassign-inspector',
+					notifyClient: expect.any(Object),
+					recipientEmail: householdAppeal.agent.email,
+					personalisation: {
+						appeal_reference_number: householdAppeal.reference,
+						site_address: site_address,
+						lpa_reference: householdAppeal.applicationReference,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						inspector_name: 'Tom Harry'
+					}
+				});
+				expect(notifySend).toHaveBeenCalledTimes(3);
+				expect(notifySend).toHaveBeenCalledTimes(3);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					inspectorId: null,
+					padsInspectorId: null
 				});
 			});
 
@@ -898,7 +1205,8 @@ describe('Appeal detail routes', () => {
 				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(1, {
 					data: {
 						inspectorUserId: 10,
-						caseUpdatedDate: expect.any(Date)
+						caseUpdatedDate: expect.any(Date),
+						padsInspectorUserId: null
 					},
 					where: {
 						id: leadAppeal.id
@@ -911,7 +1219,8 @@ describe('Appeal detail routes', () => {
 				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(2, {
 					data: {
 						inspectorUserId: 10,
-						caseUpdatedDate: expect.any(Date)
+						caseUpdatedDate: expect.any(Date),
+						padsInspectorUserId: null
 					},
 					where: {
 						id: leadAppeal.childAppeals[0].childId
@@ -924,7 +1233,8 @@ describe('Appeal detail routes', () => {
 				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(3, {
 					data: {
 						inspectorUserId: 10,
-						caseUpdatedDate: expect.any(Date)
+						caseUpdatedDate: expect.any(Date),
+						padsInspectorUserId: null
 					},
 					where: {
 						id: leadAppeal.childAppeals[2].childId

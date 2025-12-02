@@ -26,7 +26,6 @@ const getAppeal = async (req, res) => {
 	if (!result) {
 		return res.status(404).end();
 	}
-
 	return res.send(result);
 };
 
@@ -47,22 +46,26 @@ const updateAppealById = async (req, res) => {
 			startedAt,
 			validAt,
 			planningApplicationReference,
-			agent
+			agent,
+			padsInspectorId
 		},
 		params
 	} = req;
-
 	const appealId = Number(params.appealId);
 	const azureAdUserId = req.get('azureAdUserId');
 
 	const notifyClient = req.notifyClient;
 	try {
 		if (
-			appealDetailService.assignedUserType({ caseOfficer: caseOfficerId, inspector: inspectorId })
+			appealDetailService.assignedUserType({
+				caseOfficer: caseOfficerId,
+				inspector: inspectorId,
+				padsInspector: padsInspectorId
+			})
 		) {
 			await appealDetailService.assignUser(
 				appeal,
-				{ caseOfficer: caseOfficerId, inspector: inspectorId },
+				{ caseOfficer: caseOfficerId, inspector: inspectorId, padsInspector: padsInspectorId },
 				{
 					caseOfficerName: caseOfficerName,
 					inspectorName: inspectorName,
@@ -74,7 +77,7 @@ const updateAppealById = async (req, res) => {
 			if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) && appeal.childAppeals?.length) {
 				await appealDetailService.assignUserForLinkedAppeals(
 					appeal,
-					{ caseOfficer: caseOfficerId, inspector: inspectorId },
+					{ caseOfficer: caseOfficerId, inspector: inspectorId, padsInspector: padsInspectorId },
 					{
 						caseOfficerName: caseOfficerName,
 						inspectorName: inspectorName,
@@ -110,6 +113,7 @@ const updateAppealById = async (req, res) => {
 	const response = {
 		...(caseOfficerId !== undefined && { caseOfficerId }),
 		...(inspectorId !== undefined && { inspectorId }),
+		...(padsInspectorId !== undefined && { padsInspectorId }),
 		...(startedAt !== undefined && { startedAt }),
 		...(validAt !== undefined && { validAt }),
 		...(planningApplicationReference !== undefined && { planningApplicationReference })

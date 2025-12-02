@@ -22,6 +22,7 @@ export interface Appeal extends schema.Appeal {
 	assignedTeam?: AssignedTeam | null;
 	caseOfficer?: User | null;
 	inspector?: User | null;
+	padsInspector?: PADSUser | null;
 	siteVisit?: SiteVisit | null;
 	inspectorDecision?: InspectorDecision | null;
 	neighbouringSites?: NeighbouringSite[] | null;

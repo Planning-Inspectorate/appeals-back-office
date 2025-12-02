@@ -46,7 +46,13 @@ export const renderAudit = async (request, response) => {
 
 	const auditTrails = await Promise.all(
 		auditInfo.map(async (audit) => {
-			const details = await mapMessageContent(appeal, audit.details, audit.doc, request.session);
+			const details = await mapMessageContent(
+				appeal,
+				audit.details,
+				audit.doc,
+				request.session,
+				request.apiClient
+			);
 			let detailsHtml = details || '';
 			if (detailsHtml.length > 300) {
 				detailsHtml = nunjucksEnvironments.render('appeals/components/page-component.njk', {
@@ -66,7 +72,7 @@ export const renderAudit = async (request, response) => {
 				date: dateISOStringToDisplayDate(audit.loggedDate),
 				time: dateISOStringToDisplayTime12hr(audit.loggedDate),
 				details: detailsHtml,
-				user: await tryMapUsers(audit.azureAdUserId, request.session)
+				user: await tryMapUsers(audit.azureAdUserId, request.session, request.apiClient)
 			};
 		})
 	);
@@ -79,7 +85,7 @@ export const renderAudit = async (request, response) => {
 				date: dateISOStringToDisplayDate(note.createdAt),
 				time: dateISOStringToDisplayTime12hr(note.createdAt),
 				details: 'Case note added: <br>' + note.comment,
-				user: await tryMapUsers(note.azureAdUserId, request.session)
+				user: await tryMapUsers(note.azureAdUserId, request.session, request.apiClient)
 			};
 		})
 	);
@@ -100,8 +106,8 @@ export const renderAudit = async (request, response) => {
 				const opening = `${notification.subject} sent to ${mapEmailToRecipientType(
 					notification.recipient,
 					appeal,
-					await tryMapUsers(appeal.caseOfficer || '', request.session),
-					await tryMapUsers(appeal.inspector || '', request.session),
+					await tryMapUsers(appeal.caseOfficer || '', request.session, request.apiClient),
+					await tryMapUsers(appeal.inspector || '', request.session, request.apiClient),
 					ipComments
 				)}`;
 				const finalHtml = await nunjucksEnvironments.render(
@@ -120,7 +126,11 @@ export const renderAudit = async (request, response) => {
 						}
 					}
 				);
-				const user = await tryMapUsers(notification.sender || '', request.session);
+				const user = await tryMapUsers(
+					notification.sender || '',
+					request.session,
+					request.apiClient
+				);
 				return {
 					dateTime: createdAt.getTime(),
 					date: dateISOStringToDisplayDate(notification.dateCreated),

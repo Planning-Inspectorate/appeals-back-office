@@ -538,12 +538,17 @@ export const spec = {
 			siteGridReferenceNorthing: '654321'
 		},
 		UpdateCaseTeamRequest: {
-			caseOfficer: '13de469c-8de6-4908-97cd-330ea73df618',
-			inspector: 'f7ea429b-65d8-4c44-8fc2-7f1a34069855'
+			caseOfficerId: '13de469c-8de6-4908-97cd-330ea73df618',
+			caseOfficerName: 'John Smith',
+			inspectorId: 'f7ea429b-65d8-4c44-8fc2-7f1a34069855',
+			inspectorName: 'John Smith',
+			padsInspectorId: '12345678',
+			prevUserName: 'John Smith Jr'
 		},
 		UpdateCaseTeamResponse: {
-			caseOfficer: '13de469c-8de6-4908-97cd-330ea73df618',
-			inspector: 'f7ea429b-65d8-4c44-8fc2-7f1a34069855'
+			caseOfficerId: '13de469c-8de6-4908-97cd-330ea73df618',
+			inspectorId: 'f7ea429b-65d8-4c44-8fc2-7f1a34069855',
+			padsInspectorId: '12345678'
 		},
 		StartCaseRequest: {
 			startDate: '2024-05-09',
