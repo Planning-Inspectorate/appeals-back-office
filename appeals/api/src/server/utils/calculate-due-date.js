@@ -139,6 +139,16 @@ export const calculateDueDate = async (appeal, costsDecision) => {
 			if (appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.HEARING) {
 				return appeal.hearing ? new Date(appeal.hearing?.hearingStartTime || 0) : undefined;
 			}
+			if (appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.INQUIRY) {
+				const date = appeal.inquiry ? new Date(appeal.inquiry?.inquiryStartTime || 0) : undefined;
+				if (date) {
+					date.setDate(
+						date.getDate() +
+							(appeal.inquiry?.estimatedDays ? Number(appeal.inquiry?.estimatedDays) : 0)
+					);
+				}
+				return date;
+			}
 			return appeal.siteVisit ? new Date(appeal.siteVisit?.visitDate || 0) : undefined;
 		}
 		case APPEAL_CASE_STATUS.EVENT: {
