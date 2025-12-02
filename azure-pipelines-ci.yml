@@ -1,6 +1,3 @@
-variables:
-  - group: e2e-dev
-
 trigger:
   branches:
     include:
@@ -29,6 +26,7 @@ extends:
     gitFetchDepth: 0
     globalVariables:
       - template: azure-pipelines-variables.yml@self
+      - group: e2e-dev
     validationJobs:
       - name: Run Linting & Tests
         variables:
