@@ -269,7 +269,7 @@ router.use(
 
 router.use(
 	'/:appealId/rule-6-parties',
-	validateAppeal,
+	validateAppealWithInclude(['appealRule6Parties']),
 	assertUserHasPermission(permissionNames.updateCase),
 	rule6PartiesRouter
 );

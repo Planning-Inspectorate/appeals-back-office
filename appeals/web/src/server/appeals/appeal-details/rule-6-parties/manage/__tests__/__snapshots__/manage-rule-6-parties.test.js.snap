@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`manage rule 6 parties GET /rule-6-parties/manage should render the manage rule 6 parties page with the expected content 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Manage rule 6 parties</h1>
+        </div>
+    </div>
+    <dl class="govuk-summary-list" id="rule-6-parties-summary-list">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Test Organisation</dt>
+            <dd class="govuk-summary-list__value">test@example.com</dd>
+            <dd class="govuk-summary-list__actions">
+                <ul class="govuk-summary-list__actions-list">
+                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-parties/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F2%2Frule-6-parties%2Fmanage"
+                        data-cy="change-rule-6-party-1">Change</a>
+                    </li>
+                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-parties/remove/1?backUrl=%2Fappeals-service%2Fappeal-details%2F2%2Frule-6-parties%2Fmanage"
+                        data-cy="remove-rule-6-party-1">Remove</a>
+                    </li>
+                </ul>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Test Organisation 2</dt>
+            <dd class="govuk-summary-list__value">test2@example.com</dd>
+            <dd class="govuk-summary-list__actions">
+                <ul class="govuk-summary-list__actions-list">
+                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-parties/change/2?backUrl=%2Fappeals-service%2Fappeal-details%2F2%2Frule-6-parties%2Fmanage"
+                        data-cy="change-rule-6-party-2">Change</a>
+                    </li>
+                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-parties/remove/2?backUrl=%2Fappeals-service%2Fappeal-details%2F2%2Frule-6-parties%2Fmanage"
+                        data-cy="remove-rule-6-party-2">Remove</a>
+                    </li>
+                </ul>
+            </dd>
+        </div>
+    </dl>
+</main>"
+`;
