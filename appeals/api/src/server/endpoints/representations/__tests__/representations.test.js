@@ -1204,7 +1204,7 @@ describe('/appeals/:id/reps', () => {
 				}
 			});
 		});
-		
+
 		test('400 when payload is invalid', async () => {
 			const response = await request
 				.patch('/appeals/1/reps/1/rejection-reasons')

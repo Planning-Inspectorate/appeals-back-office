@@ -135,7 +135,7 @@ describe('interested-party-comments', () => {
 
 	describe('GET /review-comment with no data', () => {
 		beforeEach(() => {
-			nock('http://test/').get('/appeals/2/reps/comment/999').reply(404, {});
+			nock('http://test/').get('/appeals/2/reps/comments/999').reply(404, {});
 		});
 
 		it('should render 404 page when the comment is not found', async () => {
@@ -181,7 +181,7 @@ describe('interested-party-comments', () => {
 
 	describe('GET /view-comment with no data', () => {
 		beforeEach(() => {
-			nock('http://test/').get('/appeals/2/reps/comment/999').reply(404, {});
+			nock('http://test/').get('/appeals/2/reps/comments/999').reply(404, {});
 		});
 
 		it('should render 404 page when the comment is not found', async () => {

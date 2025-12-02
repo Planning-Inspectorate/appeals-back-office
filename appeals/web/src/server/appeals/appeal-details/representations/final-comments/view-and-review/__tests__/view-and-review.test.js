@@ -127,7 +127,7 @@ describe('final-comments', () => {
 
 	describe('GET /review-comments with no data', () => {
 		beforeEach(() => {
-			nock('http://test/').get('/appeals/2/reps/comment/999').reply(404, {});
+			nock('http://test/').get('/appeals/2/reps/comments/999').reply(404, {});
 		});
 
 		it('should render 404 page when the comments is not found', async () => {
