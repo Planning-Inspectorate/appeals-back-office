@@ -1,0 +1,36 @@
+version: '3.7'
+services:
+    db:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        container_name: pins-sql-server
+        environment:
+            - 'ACCEPT_EULA=Y'
+            - 'MSSQL_SA_PASSWORD=SqlServer01'
+        ports:
+            - 1433:1433
+    api:
+        image: appeals-back-office/api
+        depends_on: db
+        container_name: api
+        entrypoint: npm run db:migrate && npm run start
+        build:
+            dockerfile: appeals/api/Dockerfile
+        environment:
+            - 'NODE_ENV=test'
+            - 'DATABASE_URL="sqlserver://pins-sql-server:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true"'
+        ports:
+            - 3000:3000
+    web:
+        image: appeals-back-office/web
+        container_name: web
+        build:
+            dockerfile: appeals/web/Dockerfile
+        environment:
+            - 'NODE_ENV=test'
+            - 'AUTH_CLIENT_SECRET=${AUTH_CLIENT_SECRET}'
+            - 'AUTH_CLIENT_ID=${AUTH_CLIENT_ID}'
+            - 'APP_HOSTNAME=api:8080'
+            - 'API_HOST=http://api:3000'
+        ports:
+            - 8080:8080
+
