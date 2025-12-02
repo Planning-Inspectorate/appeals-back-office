@@ -200,7 +200,7 @@ export async function lpaQuestionnairePage(
 		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'LPA questionnaire',
-		headingClasses: 'govuk-heading-xl govuk-!-margin-bottom-3',
+		headingClasses: 'govuk-heading-l govuk-!-margin-bottom-3',
 		pageComponents: [
 			...errorSummaryPageComponents,
 			...notificationBanners,
