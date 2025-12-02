@@ -31,6 +31,8 @@ services:
             - 'AUTH_CLIENT_ID=${AUTH_CLIENT_ID}'
             - 'APP_HOSTNAME=api:8080'
             - 'API_HOST=http://api:3000'
+            - 'AUTH_DISABLED=false'
+            - 'SESSION_SECRET=dummy-secret'
         ports:
             - 8080:8080
 
