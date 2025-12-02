@@ -161,8 +161,23 @@ const getUserName = (user) => {
 	return '';
 };
 
+/**
+ * Get a PAD user by sap id from PADSUser group
+ * @param {string} sapId
+ * @param {import('got').Got} apiClient
+ * @returns {Promise<Object<string, any>|null>}
+ */
+const getPadsUserById = async (sapId, apiClient) => {
+	const PADSUser = await apiClient.get(`appeals/planning-appeal-decision-suppliers/${sapId}`);
+	if (!PADSUser) {
+		return null;
+	}
+	return PADSUser;
+};
+
 export default {
 	getUsersByRole,
 	getUserById,
-	getUserByRoleAndId
+	getUserByRoleAndId,
+	getPadsUserById
 };

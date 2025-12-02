@@ -2012,6 +2012,43 @@
 				}
 			}
 		},
+		"/appeals/planning-appeal-decision-suppliers": {
+			"get": {
+				"tags": ["PADs List"],
+				"description": "Get PADUser by sapId",
+				"parameters": [
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Planning Appeal Decision Suppliers",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PADSUser"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/PADSUser"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
 		"/appeals": {
 			"get": {
 				"tags": ["Appeal Lists"],
@@ -10313,6 +10350,18 @@
 					"inspector": {
 						"type": "string",
 						"example": "f7ea429b-65d8-4c44-8fc2-7f1a34069855"
+					},
+					"inspectorName": {
+						"type": "string",
+						"example": "John Smith"
+					},
+					"padsInspectorId": {
+						"type": "string",
+						"example": "123456"
+					},
+					"prevUserName": {
+						"type": "string",
+						"example": "John Smith Jr"
 					}
 				},
 				"xml": {
@@ -10329,6 +10378,10 @@
 					"inspector": {
 						"type": "string",
 						"example": "f7ea429b-65d8-4c44-8fc2-7f1a34069855"
+					},
+					"padsInspectorId": {
+						"type": "string",
+						"example": "123456"
 					}
 				},
 				"xml": {
@@ -13812,6 +13865,10 @@
 					"inspector": {
 						"type": "string",
 						"format": "uuid",
+						"nullable": true
+					},
+					"padsInspector": {
+						"type": "string",
 						"nullable": true
 					}
 				}
@@ -29330,6 +29387,10 @@
 					"inspector": {
 						"type": "string",
 						"format": "uuid",
+						"nullable": true
+					},
+					"padsInspector": {
+						"type": "string",
 						"nullable": true
 					},
 					"assignedTeamId": {

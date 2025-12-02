@@ -20,7 +20,7 @@ export const mapInspector = ({
 		}
 
 		return `<ul class="govuk-list"><li>${surnameFirstToFullName(inspectorUser.name)}</li><li>${
-			inspectorUser.email
+			inspectorUser.email || ''
 		}</li></ul>`;
 	})();
 	const inspectorRoute = config.featureFlags.featureFlagSimplifyTeamAssignment
@@ -36,6 +36,6 @@ export const mapInspector = ({
 		link: `${currentRoute}/${inspectorRoute}`,
 		editable: userHasUpdateCasePermission,
 		classes: 'appeal-inspector',
-		actionText: appealDetails.inspector ? 'Change' : 'Assign'
+		actionText: appealDetails.inspector || appealDetails.padsInspector ? 'Change' : 'Assign'
 	});
 };

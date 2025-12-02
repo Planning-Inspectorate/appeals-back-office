@@ -10,9 +10,11 @@ import {
  *
  * @param {GetCaseNotesResponse} unmappedCaseNotes
  * @param {import('express-session').Session & Partial<import('express-session').SessionData>}session
+ * @param {import('got').Got} apiClient
+ *
  * @returns {Promise<CaseNotesProperties>}
  */
-export const caseNotesWithMappedUsers = async (unmappedCaseNotes, session) => {
+export const caseNotesWithMappedUsers = async (unmappedCaseNotes, session, apiClient) => {
 	const caseNotes = [...unmappedCaseNotes];
 
 	return {
@@ -24,7 +26,7 @@ export const caseNotesWithMappedUsers = async (unmappedCaseNotes, session) => {
 					dayOfWeek: getDayFromISODate(caseNote.createdAt),
 					time: dateISOStringToDisplayTime12hr(caseNote.createdAt),
 					commentText: caseNote.comment,
-					userName: (await tryMapUsers(caseNote.azureAdUserId, session)).split('@')[0]
+					userName: (await tryMapUsers(caseNote.azureAdUserId, session, apiClient)).split('@')[0]
 				};
 			})
 		)

@@ -2,6 +2,7 @@ import config from '#environment/config.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { capitalize } from 'lodash-es';
 import usersService from '../../appeal-users/users-service.js';
+import { getPADSList } from './assign-user.service.js';
 
 /** @typedef {import('../../../app/auth/auth-session.service.js').SessionWithAuth} SessionWithAuth */
 
@@ -15,12 +16,20 @@ import usersService from '../../appeal-users/users-service.js';
  * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
  * @param {boolean} isInspector
  * @param {SessionWithAuth} session
+ * @param {import('got').Got} apiClient
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {Promise<PageContent>}
  */
-export async function assignUserPage(appealDetails, isInspector, session, errors = undefined) {
+export async function assignUserPage(
+	appealDetails,
+	isInspector,
+	session,
+	apiClient,
+	errors = undefined
+) {
 	const userTypeText = isInspector ? 'inspector' : 'case officer';
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
+	const padsUserList = isInspector ? await getPADSList(apiClient) : [];
 	const users = await usersService.getUsersByRole(
 		isInspector
 			? config.referenceData.appeals.inspectorGroupId
@@ -33,10 +42,24 @@ export async function assignUserPage(appealDetails, isInspector, session, errors
 		...users
 			.filter((user) => user.email && user.name)
 			.map((user) => ({
-				value: JSON.stringify(user),
+				value: JSON.stringify({ ...user, type: isInspector ? 'inspector' : 'case officer' }),
 				text: `${user.name} (${user.email})`
 			}))
 	];
+
+	padsUserList
+		.filter((padsUser) => padsUser.name && padsUser.sapId)
+		.forEach((padsUser) => {
+			userArray.push({
+				value: JSON.stringify({
+					id: padsUser.sapId,
+					name: padsUser.name,
+					email: '',
+					type: 'PADSUser'
+				}),
+				text: `${padsUser.name}`
+			});
+		});
 
 	const unassignUser = {
 		value: JSON.stringify({ id: '0', name: 'Unassign', email: 'Unassign' }),
@@ -47,7 +70,9 @@ export async function assignUserPage(appealDetails, isInspector, session, errors
 		text: 'Remove'
 	};
 
-	isInspector && appealDetails?.inspector ? userArray.push(unassignUser, removeUser) : null;
+	isInspector && (appealDetails?.inspector || appealDetails?.padsInspector)
+		? userArray.push(unassignUser, removeUser)
+		: null;
 
 	/** @type {PageComponent} */
 	const selectSearchPageComponent = {

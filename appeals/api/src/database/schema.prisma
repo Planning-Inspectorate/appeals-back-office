@@ -48,6 +48,8 @@ model Appeal {
   caseOfficerUserId     Int?
   inspector             User?                @relation("inspector", fields: [inspectorUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   inspectorUserId       Int?
+  padsInspector         PADSUser?            @relation("padsInspector", fields: [padsInspectorUserId], references: [sapId], onDelete: NoAction, onUpdate: NoAction)
+  padsInspectorUserId   String?
   appellantCase         AppellantCase?
   lpaQuestionnaire      LPAQuestionnaire?
   siteVisit             SiteVisit?
@@ -926,4 +928,12 @@ model PersonalList {
   appeal       Appeal    @relation("appeal", fields: [appealId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([dueDate, leadAppealId, linkType(sort: Desc), appealId])
+}
+
+/// PADSUser model
+model PADSUser {
+  id            Int      @id @default(autoincrement())
+  sapId         String   @unique
+  name          String
+  padsInspector Appeal[] @relation("padsInspector")
 }

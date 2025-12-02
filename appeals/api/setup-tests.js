@@ -176,6 +176,8 @@ const mockPersonalListUpsert = jest.fn().mockResolvedValue({});
 const mockPersonalListCount = jest.fn().mockResolvedValue({});
 const mockPersonalListFindMany = jest.fn().mockResolvedValue({});
 const mockPersonalListDeleteMany = jest.fn().mockResolvedValue({});
+const mockPadsUserFindMany = jest.fn().mockResolvedValue({});
+const mockPadsUserFindUnique = jest.fn().mockResolvedValue({});
 
 const mockNotifySend = jest.fn().mockImplementation(async (params) => {
 	const { doNotMockNotifySend = false, ...options } = params || {};
@@ -647,6 +649,14 @@ class MockPrismaClient {
 			findMany: mockTeamFindMany
 		};
 	}
+	get pADSUser() {
+		return {
+			findMany: mockPadsUserFindMany,
+			findUnique: mockPadsUserFindUnique
+		};
+	}
+
+	$on() {}
 
 	$transaction(queries = []) {
 		if (typeof queries === 'function') {
