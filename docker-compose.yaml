@@ -26,6 +26,8 @@ services:
         build:
             context: .
             dockerfile: appeals/web/Dockerfile
+            args:
+                GIT_SHA: ${GIT_SHA}
         environment:
             - 'NODE_ENV=test'
             - 'AUTH_CLIENT_SECRET=${AUTH_CLIENT_SECRET}'
@@ -34,7 +36,6 @@ services:
             - 'API_HOST=http://api:3000'
             - 'AUTH_DISABLED=false'
             - 'SESSION_SECRET=dummy-secret'
-            - 'GIT_SHA=${GIT_SHA}'
         ports:
             - 8080:8080
 
