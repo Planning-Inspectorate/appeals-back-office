@@ -12,7 +12,7 @@ services:
         depends_on:
             - db
         container_name: api
-        entrypoint: npm run db:migrate && npm run start
+        entrypoint: ["/bin/sh", "-c", "npm run db:migrate && npm run start"]
         build:
             context: .
             dockerfile: appeals/api/Dockerfile
