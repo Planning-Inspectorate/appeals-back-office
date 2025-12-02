@@ -237,6 +237,24 @@ describe('calculateDueDate Tests', () => {
 		});
 	});
 
+	test('handles STATE_TARGET_AWAITING_INQUIRY', async () => {
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.AWAITING_EVENT;
+		mockAppeal.inquiry = {
+			inquiryStartTime: new Date('2023-02-01T00:00:00.000Z'),
+			estimatedDays: 3
+		};
+		mockAppeal.procedureType = {
+			key: APPEAL_CASE_PROCEDURE.INQUIRY
+		};
+
+		// @ts-ignore
+		const dueDate = await calculateDueDate(mockAppeal, '');
+		const expectedDate = mockAppeal.inquiry.inquiryStartTime;
+
+		expectedDate.setDate(expectedDate.getDate() + mockAppeal.inquiry?.estimatedDays);
+		expect(dueDate).toEqual(expectedDate);
+	});
+
 	test('handles STATE_TARGET_COMPLETE', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.COMPLETE;
 		mockAppeal.appellantCase = { numberOfResidencesNetChange: 5 };
