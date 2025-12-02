@@ -4,7 +4,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">LPA questionnaire</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">LPA questionnaire</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -367,7 +367,7 @@ exports[`LPA Questionnaire review GET / should render the CAS planning LPA Quest
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">LPA questionnaire</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">LPA questionnaire</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -690,7 +690,7 @@ exports[`LPA Questionnaire review GET / should render the Cas Advert LPA Questio
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">LPA questionnaire</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">LPA questionnaire</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1095,7 +1095,7 @@ exports[`LPA Questionnaire review GET / should render the Householder LPA Questi
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">LPA questionnaire</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">LPA questionnaire</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1423,7 +1423,7 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">LPA questionnaire</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">LPA questionnaire</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1937,7 +1937,7 @@ exports[`LPA Questionnaire review GET / should render the advert LPA Questionnai
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">LPA questionnaire</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">LPA questionnaire</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2410,7 +2410,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">LPA questionnaire</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">LPA questionnaire</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2755,7 +2755,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">LPA questionnaire</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">LPA questionnaire</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5203,7 +5203,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">LPA questionnaire</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">LPA questionnaire</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
