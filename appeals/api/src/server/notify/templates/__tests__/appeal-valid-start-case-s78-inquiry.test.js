@@ -5,7 +5,7 @@ describe('inquiry-set-up.content.md', () => {
 	test('should call notify sendEmail with the correct data when is LPA', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'start-case-inquiry-set-up',
+			templateName: 'appeal-valid-start-case-s78-inquiry',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -115,7 +115,7 @@ describe('inquiry-set-up.content.md', () => {
 	test('should call notify sendEmail with the correct data when is LPA and no inquiry address', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'start-case-inquiry-set-up',
+			templateName: 'appeal-valid-start-case-s78-inquiry',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -225,7 +225,7 @@ describe('inquiry-set-up.content.md', () => {
 	test('should call notify sendEmail with the correct data when is not LPA', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'start-case-inquiry-set-up',
+			templateName: 'appeal-valid-start-case-s78-inquiry',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},

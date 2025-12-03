@@ -1,3 +1,5 @@
+import { getStartCaseNotifyPreviews } from '#appeals/appeal-details/start-case/start-case.service.js';
+import { addressToString } from '#lib/address-formatter.js';
 import {
 	dateISOStringToDayMonthYearHourMinute,
 	dayMonthYearHourMinuteToISOString,
@@ -640,13 +642,98 @@ export const getInquiryCheckDetails = async (request, response) => {
 
 	clearEdits(request, 'setUpInquiry');
 
+	/** @type {string} */
+	let appellantPreview = '';
+	/** @type {string} */
+	let lpaPreview = '';
+
+	if (procedureType.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY) {
+		const errorMessage = 'Failed to generate email preview';
+		try {
+			const result = await getStartCaseNotifyPreviews(
+				request.apiClient,
+				appealId,
+				undefined,
+				session.startCaseAppealProcedure?.[appealId].appealProcedure,
+				undefined,
+				{
+					inquiryStartTime: dayMonthYearHourMinuteToISOString({
+						day: session.setUpInquiry?.[appealId]['inquiry-date-day'],
+						month: session.setUpInquiry?.[appealId]['inquiry-date-month'],
+						year: session.setUpInquiry?.[appealId]['inquiry-date-year'],
+						hour: session.setUpInquiry?.[appealId]['inquiry-time-hour'],
+						minute: session.setUpInquiry?.[appealId]['inquiry-time-minute']
+					}),
+					inquiryAddress:
+						session.setUpInquiry?.[appealId]['addressKnown'] === 'yes'
+							? addressToString(
+									pick(session.setUpInquiry?.[appealId], [
+										'addressLine1',
+										'addressLine2',
+										'town',
+										'county',
+										'postCode'
+									]),
+									', '
+							  )
+							: '',
+					inquiryEstimationDays:
+						session.setUpInquiry?.[appealId]['inquiryEstimationYesNo'] === 'yes'
+							? session.setUpInquiry?.[appealId].inquiryEstimationDays
+							: '',
+					timetable: {
+						lpaQuestionnaireDueDate: dayMonthYearHourMinuteToISOString({
+							day: session.setUpInquiry?.[appealId]['lpa-questionnaire-due-date-day'],
+							month: session.setUpInquiry?.[appealId]['lpa-questionnaire-due-date-month'],
+							year: session.setUpInquiry?.[appealId]['lpa-questionnaire-due-date-year']
+						}),
+						statementDueDate: dayMonthYearHourMinuteToISOString({
+							day: session.setUpInquiry?.[appealId]['statement-due-date-day'],
+							month: session.setUpInquiry?.[appealId]['statement-due-date-month'],
+							year: session.setUpInquiry?.[appealId]['statement-due-date-year']
+						}),
+						ipCommentsDueDate: dayMonthYearHourMinuteToISOString({
+							day: session.setUpInquiry?.[appealId]['ip-comments-due-date-day'],
+							month: session.setUpInquiry?.[appealId]['ip-comments-due-date-month'],
+							year: session.setUpInquiry?.[appealId]['ip-comments-due-date-year']
+						}),
+						statementOfCommonGroundDueDate: dayMonthYearHourMinuteToISOString({
+							day: session.setUpInquiry?.[appealId]['statement-of-common-ground-due-date-day'],
+							month: session.setUpInquiry?.[appealId]['statement-of-common-ground-due-date-month'],
+							year: session.setUpInquiry?.[appealId]['statement-of-common-ground-due-date-year']
+						}),
+						proofOfEvidenceAndWitnessesDueDate: dayMonthYearHourMinuteToISOString({
+							day: session.setUpInquiry?.[appealId]['proof-of-evidence-and-witnesses-due-date-day'],
+							month:
+								session.setUpInquiry?.[appealId]['proof-of-evidence-and-witnesses-due-date-month'],
+							year: session.setUpInquiry?.[appealId][
+								'proof-of-evidence-and-witnesses-due-date-year'
+							]
+						}),
+						planningObligationDueDate: dayMonthYearHourMinuteToISOString({
+							day: session.setUpInquiry?.[appealId]['planning-obligation-due-date-day'],
+							month: session.setUpInquiry?.[appealId]['planning-obligation-due-date-month'],
+							year: session.setUpInquiry?.[appealId]['planning-obligation-due-date-year']
+						})
+					}
+				}
+			);
+			appellantPreview = result.appellant || errorMessage;
+			lpaPreview = result.lpa || errorMessage;
+		} catch (error) {
+			logger.error(error);
+		}
+	}
+
 	const mappedPageContent = confirmInquiryPage(
 		appealId,
 		appealReference,
 		appellantCase?.planningObligation?.hasObligation,
 		'setup',
 		session,
-		procedureType.toLowerCase()
+		procedureType.toLowerCase(),
+		appellantPreview,
+		lpaPreview
 	);
 
 	return response.render('patterns/change-page.pattern.njk', {

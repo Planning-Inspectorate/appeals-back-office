@@ -12,6 +12,7 @@ import {
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
 import { editLink } from '#lib/edit-utilities.js';
+import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
 import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
@@ -314,6 +315,8 @@ export const getDueDateFieldNameAndID = (dateField) => {
  * @param {'setup'|'change'} action
  * @param {import('@pins/express').Session} session
  * @param {string} procedureType
+ * @param {string} appellantEmailPreview
+ * @param {string} lpaEmailPreview
  * @returns {PageContent}
  */
 export function confirmInquiryPage(
@@ -322,7 +325,9 @@ export function confirmInquiryPage(
 	hasObligation,
 	action,
 	session,
-	procedureType
+	procedureType,
+	appellantEmailPreview,
+	lpaEmailPreview
 ) {
 	/**@type {PageComponent[]} */
 	const pageComponents = [];
@@ -364,7 +369,15 @@ export function confirmInquiryPage(
 					class: 'govuk-body'
 				},
 				`We'll start the timetable now and send emails to the relevant parties.`
-			)
+			),
+			detailsComponent({
+				summaryText: `Preview email to appellant`,
+				html: appellantEmailPreview
+			}),
+			detailsComponent({
+				summaryText: `Preview email to LPA`,
+				html: lpaEmailPreview
+			})
 		);
 	}
 

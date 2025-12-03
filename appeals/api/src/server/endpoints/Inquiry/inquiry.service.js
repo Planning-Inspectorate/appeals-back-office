@@ -280,7 +280,7 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 
 			await sendInquiryDetailsNotifications(
 				notifyClient,
-				'start-case-inquiry-set-up',
+				'appeal-valid-start-case-s78-inquiry',
 				appeal,
 				inquiryStartTime,
 				estimatedDays,

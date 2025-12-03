@@ -1392,6 +1392,16 @@ describe('set up inquiry', () => {
 					...validData
 				});
 
+			nock('http://test/')
+				.post('/appeals/${appealId}/appeal-timetables/notify-preview', {
+					procedureType: 'inquiry',
+					inquiry: {}
+				})
+				.reply(200, {
+					appellant: 'Rendered HTML for appellant preview',
+					lpa: 'Rendered HTML for LPA preview'
+				});
+
 			// set session data with post requests to previous pages
 			await request.post(`${baseUrl}/${appealId}/start-case/select-procedure`).send({
 				appealProcedure: 'inquiry'

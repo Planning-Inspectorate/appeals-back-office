@@ -553,7 +553,20 @@ export const spec = {
 		StartCaseRequest: {
 			startDate: '2024-05-09',
 			procedureType: 'written',
-			hearingStartTime: '2024-05-09T12:00:00.000Z'
+			hearingStartTime: '2024-05-09T12:00:00.000Z',
+			inquiry: {
+				inquiryStartTime: '2024-05-09T12:00:00.000Z',
+				inquiryAddress: '123 my home, London',
+				inquiryEstimationDays: '5',
+				timetable: {
+					lpaQuestionnaireDueDate: '2024-05-09T00:00:00.000Z',
+					statementDueDate: '2024-05-10T00:00:00.000Z',
+					ipCommentsDueDate: '2024-05-11T00:00:00.000Z',
+					statementOfCommonGroundDueDate: '2024-05-12T00:00:00.000Z',
+					proofOfEvidenceAndWitnessesDueDate: '2024-05-13T00:00:00.000Z',
+					planningObligationDueDate: '2024-05-14T00:00:00.000Z'
+				}
+			}
 		},
 		StartCaseResponse: {
 			finalCommentReviewDate: '2024-08-09',

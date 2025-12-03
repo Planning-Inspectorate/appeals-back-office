@@ -144,14 +144,14 @@ describe('inquiry routes', () => {
 					notifyClient: expect.anything(),
 					personalisation,
 					recipientEmail: fullPlanningAppeal.appellant.email,
-					templateName: 'start-case-inquiry-set-up'
+					templateName: 'appeal-valid-start-case-s78-inquiry'
 				});
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					notifyClient: expect.anything(),
 					personalisation: { ...personalisation, is_lpa: true },
 					recipientEmail: fullPlanningAppeal.lpa.email,
-					templateName: 'start-case-inquiry-set-up'
+					templateName: 'appeal-valid-start-case-s78-inquiry'
 				});
 
 				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(fullPlanningAppeal.id);
