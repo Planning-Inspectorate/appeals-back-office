@@ -14,6 +14,7 @@ import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { highlightRedactedSections } from '#lib/redaction-string-formatter.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse */
@@ -143,6 +144,12 @@ export function sharedIpCommentsPage(
 		'sharedIpComments',
 		appealDetails.appealId
 	);
+	const disableAddIPComment = [
+		APPEAL_CASE_STATUS.COMPLETE,
+		APPEAL_CASE_STATUS.CLOSED,
+		APPEAL_CASE_STATUS.WITHDRAWN,
+		APPEAL_CASE_STATUS.INVALID
+	].includes(appealDetails.appealStatus);
 
 	/** @type {PageComponent} */
 	const table = {
@@ -221,8 +228,7 @@ export function sharedIpCommentsPage(
 			}
 		),
 		...notificationBanners,
-		// Only include the "Add interested party comment" link if the feature is NOT active
-		...(isFeatureActive(FEATURE_FLAG_NAMES.MANUALLY_ADD_REPS)
+		...(isFeatureActive(FEATURE_FLAG_NAMES.MANUALLY_ADD_REPS) && !disableAddIPComment
 			? [
 					wrapComponents(
 						[
