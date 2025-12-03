@@ -36,6 +36,12 @@ services:
             - 'AUTH_DISABLED=false'
             - 'SESSION_SECRET=dummy-secret'
             - 'AZURE_TENANT_ID=${AZURE_TENANT_ID}'
+            - 'APPEALS_CASE_OFFICER_GROUP_ID=cc4133e5-2319-4762-8a7b-33413701210a'
+            - 'APPEALS_INSPECTOR_GROUP_ID=0724c372-098d-4eef-acfb-bc85cd483dd1'
+            - 'APPEALS_LEGAL_TEAM_GROUP_ID=369caed5-fe22-445e-8cdc-8b2f6746afc7'
+            - 'APPEALS_CS_TEAM_GROUP_ID=455cbf03-f92f-4357-8daa-9f513b21fb73'
+            - 'APPEALS_PADS_GROUP_ID=5afda392-73c5-4c18-a76f-7e3b1933813c'
+            - 'APPEALS_READERS_GROUP_ID=60acabaa-6ac9-4462-828a-b79adc3d802c'
         ports:
             - 8080:8080
 
