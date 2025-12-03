@@ -8,6 +8,11 @@ services:
             - 'MSSQL_SA_PASSWORD=SqlServer01'
         ports:
             - 1433:1433
+        healthcheck:
+            test: [ "CMD-SHELL", "sqlcmd -S localhost -U sa -P SqlServer01 -Q 'SELECT 1'" ]
+            interval: 10s
+            timeout: 5s
+            retries: 10
     db-init:
         container_name: db-init
         build:
@@ -21,7 +26,8 @@ services:
                 condition: service_healthy
     api:
         depends_on:
-            - db-init
+            db-init:
+                condition: service_completed_successfully
         container_name: api
         build:
             context: .
