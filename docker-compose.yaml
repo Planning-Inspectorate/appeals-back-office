@@ -42,6 +42,8 @@ services:
             - 'APPEALS_CS_TEAM_GROUP_ID=455cbf03-f92f-4357-8daa-9f513b21fb73'
             - 'APPEALS_PADS_GROUP_ID=5afda392-73c5-4c18-a76f-7e3b1933813c'
             - 'APPEALS_READERS_GROUP_ID=60acabaa-6ac9-4462-828a-b79adc3d802c'
+            - 'HTTPS_ENABLED=true'
+            - 'HTTPS_PORT=8080'
         ports:
             - 8080:8080
 
