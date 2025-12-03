@@ -9,7 +9,7 @@ services:
         ports:
             - 1433:1433
         healthcheck:
-            test: [ "CMD-SHELL", "sqlcmd -S localhost -U sa -P SqlServer01 -Q 'SELECT 1'" ]
+            test: [ "CMD-SHELL", "sqlcmd -S localhost -U sa -P SqlServer01 -Q 'SELECT 1 FROM sys.databases'" ]
             interval: 10s
             timeout: 5s
             retries: 10
