@@ -706,7 +706,7 @@ MockPrismaClient.prototype.$use = mockPrismaUse;
 
 class MockPrisma {}
 
-jest.unstable_mockModule('#db-client', () => ({
+jest.unstable_mockModule('#db-client/client.js', () => ({
 	PrismaClient: MockPrismaClient,
 	Prisma: MockPrisma,
 	default: {

@@ -15,7 +15,7 @@ import { randomUUID } from 'node:crypto';
  *
  * @param {AppellantSubmissionDocument|LPAQuestionnaireCommandDocument|RepAttachment} doc
  * @param {string | null} stage
- * @returns {import('#db-client').Prisma.DocumentVersionCreateInput}
+ * @returns {import('#db-client/models.ts').DocumentVersionCreateInput}
  */
 export const mapDocumentIn = (doc, stage = null) => {
 	const { filename, documentId, ...metadata } = doc;

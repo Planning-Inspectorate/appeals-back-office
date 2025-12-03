@@ -34,7 +34,7 @@ import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorat
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAddressRequest} UpdateAddressRequest */
-/** @typedef {import('#db-client').Prisma.RepresentationUpdateInput} RepresentationUpdateInput */
+/** @typedef {import('#db-client/models.ts').RepresentationUpdateInput} RepresentationUpdateInput */
 
 /**
  * @param {number} appealId
