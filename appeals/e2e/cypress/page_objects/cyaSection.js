@@ -11,13 +11,13 @@ export class CYASection extends CaseDetailsPage {
 
 	// E L E M E N T S
 
-	elements = {};
-
 	cyaSectionFields = {
 		address: 'Address of where the inquiry will take place',
 		reasonForRejectAppellantPOE:
 			'Reason for rejecting the appellant proof of evidence and witnesses',
-		reasonForRejectLPAPOE: 'Reason for rejecting the LPA proof of evidence and witnesses'
+		reasonForRejectLPAPOE: 'Reason for rejecting the LPA proof of evidence and witnesses',
+		rule6PartyName: 'Rule 6 party name',
+		rule6PartyEmailAddress: 'Rule 6 party email address'
 	};
 
 	previewEmailSummary = {
@@ -39,6 +39,10 @@ export class CYASection extends CaseDetailsPage {
 
 	selectChangeAnswer(answer) {
 		cy.getByData('change-' + answer).click();
+	}
+
+	changeAnswer(answer) {
+		this.clickChangeLinkByLabel(answer);
 	}
 
 	verifyAnswerUpdated(fieldValue) {
