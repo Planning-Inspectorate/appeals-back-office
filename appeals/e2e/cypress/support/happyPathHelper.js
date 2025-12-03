@@ -286,22 +286,19 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 
 		//this is not for which costs are issued but which costs are eligible to be issued
-		switch (costs) {
-			case 'both costs':
-				issueCosts(appellantCostsBool);
-				issueCosts(lpaCostsBool);
-				break;
+		const eligibleCosts = {
+			both: 'both costs',
+			appellantOnly: 'appellant only',
+			lpaOnly: 'lpa only',
+			noCosts: 'no costs'
+		};
 
-			case 'appellant only':
-				issueCosts(appellantCostsBool);
-				break;
+		if (costs === eligibleCosts.both || costs === eligibleCosts.appellantOnly) {
+			issueCosts(appellantCostsBool);
+		}
 
-			case 'lpa only':
-				issueCosts(lpaCostsBool);
-				break;
-
-			case 'no costs':
-				break;
+		if (costs === eligibleCosts.both || costs === eligibleCosts.lpaOnly) {
+			issueCosts(lpaCostsBool);
 		}
 
 		//CYA
@@ -342,22 +339,19 @@ export const happyPathHelper = {
 		}
 
 		//this is not for which costs are issued but which costs are eligible to be issued
-		switch (costs) {
-			case 'both costs':
-				issueCosts(appellantCostsBool);
-				issueCosts(lpaCostsBool);
-				break;
+		const eligibleCosts = {
+			both: 'both costs',
+			appellantOnly: 'appellant only',
+			lpaOnly: 'lpa only',
+			noCosts: 'no costs'
+		};
 
-			case 'appellant only':
-				issueCosts(appellantCostsBool);
-				break;
+		if (costs === eligibleCosts.both || costs === eligibleCosts.appellantOnly) {
+			issueCosts(appellantCostsBool);
+		}
 
-			case 'lpa only':
-				issueCosts(lpaCostsBool);
-				break;
-
-			case 'no costs':
-				break;
+		if (costs === eligibleCosts.both || costs === eligibleCosts.lpaOnly) {
+			issueCosts(lpaCostsBool);
 		}
 
 		//CYA
@@ -402,26 +396,21 @@ export const happyPathHelper = {
 		};
 
 		//this is not for which costs are issued but which costs are eligible to be issued
-		switch (route) {
-			case 'both costs':
-				issueMainDecision(numOfChildren, decision);
-				issueCosts(appellantCostsBool);
-				issueCosts(lpaCostsBool);
-				break;
+		const eligibleCosts = {
+			both: 'both costs',
+			appellantOnly: 'appellant only',
+			lpaOnly: 'lpa only',
+			noCosts: 'no costs'
+		};
 
-			case 'appellant only':
-				issueMainDecision(numOfChildren, decision);
-				issueCosts(appellantCostsBool);
-				break;
+		issueMainDecision(numOfChildren, decision);
 
-			case 'lpa only':
-				issueMainDecision(numOfChildren, decision);
-				issueCosts(lpaCostsBool);
-				break;
+		if (route === eligibleCosts.both || route === eligibleCosts.appellantOnly) {
+			issueCosts(appellantCostsBool);
+		}
 
-			case 'no costs':
-				issueMainDecision(numOfChildren, decision);
-				break;
+		if (route === eligibleCosts.both || route === eligibleCosts.lpaOnly) {
+			issueCosts(lpaCostsBool);
 		}
 
 		//CYA
