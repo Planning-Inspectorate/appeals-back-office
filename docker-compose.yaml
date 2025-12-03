@@ -17,7 +17,8 @@ services:
                 NODE_ENV: test
                 DATABASE_URL: sqlserver://db:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true
         depends_on:
-            - db
+            db:
+                condition: service_healthy
     api:
         depends_on:
             - db-init
