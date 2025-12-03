@@ -1456,7 +1456,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'C0440',
 		name: 'Buckinghamshire Council',
 		email: 'planning.appeals@buckinghamshire.gov.uk',
-		teamId: 1
+		teamId: 7 // West1
 	},
 	{
 		lpaCode: 'T4210',
