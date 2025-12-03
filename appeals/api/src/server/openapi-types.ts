@@ -2438,6 +2438,20 @@ export type LPAs = {
 	email?: string;
 }[];
 
+export type PADSUsers = {
+	/** @example "12345678" */
+	sapId?: string;
+	/** @example "John Smith" */
+	name?: string;
+}[];
+
+export interface PADSUser {
+	/** @example "12345678" */
+	sapId?: string;
+	/** @example "John Smith" */
+	name?: string;
+}
+
 export interface LPAChangeRequest {
 	/** @example 2 */
 	newLpaId?: number;
