@@ -101,6 +101,16 @@ extends:
           - script: AUTH_CLIENT_SECRET=$(appeals-bo-client-secret) AUTH_CLIENT_ID=64c20f53-becf-4b7e-ba62-c1dc9b03ccf9 GIT_SHA=$(Build.SourceVersion) docker-compose up -d
             condition: eq(variables['runE2E'], 'true')
             displayName: "Start database, api and web docker containers"
+          - script: |
+              openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+                -keyout certificate-key.pem \
+                -out certificate.pem \
+                -subj "/C=UK/ST=./L=./O=./CN=localhost" \
+                -addext "subjectAltName=DNS:localhost,IP:127.0.0.1" \
+                -addext "keyUsage=digitalSignature,keyEncipherment" \
+                -addext "extendedKeyUsage=serverAuth,clientAuth"
+            condition: eq(variables['runE2E'], 'true')
+            displayName: "Generate certificate and key"
           - script: docker ps
             condition: eq(variables['runE2E'], 'true')
             displayName: "Check all containers are up"
@@ -145,6 +155,7 @@ extends:
           - script: |
               echo "##vso[task.setvariable variable=BASE_URL]https://localhost:8080/"
               echo "##vso[task.setvariable variable=API_BASE_URL]http://localhost:3000/"
+            condition: eq(variables['runE2E'], 'true')
             displayName: Override BASE_URL and API_BASE_URL
           - template: ../steps/node_script.yml
             parameters:
