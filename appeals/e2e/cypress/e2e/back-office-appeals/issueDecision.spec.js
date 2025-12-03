@@ -211,43 +211,54 @@ describe('Withdrawn costs', () => {
 });
 
 describe('Invalid decision', () => {
-	it('Issue `Invalid` decision', { tags: tag.smoke }, () => {
-		cy.createCase().then((caseObj) => {
-			appeal = caseObj;
-			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			happyPathHelper.startCase(caseObj);
-			happyPathHelper.reviewLpaq(caseObj);
-			happyPathHelper.setupSiteVisitFromBanner(caseObj);
-			cy.simulateSiteVisit(caseObj).then((caseObj) => {
-				cy.reload();
-			});
+	const hasDecisionLetter = [true, false];
 
-			//Issue invalid decision
-			happyPathHelper.issueDecision('Invalid', 'both costs');
+	hasDecisionLetter.forEach((hasLetter) => {
+		it(
+			`Issue invalid decision - ${hasLetter ? 'with' : 'without'} decision letter`,
+			{ tags: tag.smoke },
+			() => {
+				cy.createCase().then((caseObj) => {
+					appeal = caseObj;
+					cy.addLpaqSubmissionToCase(caseObj);
+					happyPathHelper.assignCaseOfficer(caseObj);
+					happyPathHelper.reviewAppellantCase(caseObj);
+					happyPathHelper.startCase(caseObj);
+					happyPathHelper.reviewLpaq(caseObj);
+					happyPathHelper.setupSiteVisitFromBanner(caseObj);
+					cy.simulateSiteVisit(caseObj).then((caseObj) => {
+						cy.reload();
+					});
 
-			//Case details inset text
-			caseDetailsPage.checkDecisionOutcome('Decision: Invalid');
-			caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
-			caseDetailsPage.checkDecisionOutcome('Appellant costs decision: Issued');
-			caseDetailsPage.checkDecisionOutcome('LPA costs decision: Issued');
-			caseDetailsPage.viewDecisionLetter('View decision');
+					//Issue invalid decision with/without decision letter
+					happyPathHelper.issueInvalidDecision(hasLetter, 'both costs');
 
-			//Notify
-			const expectedNotifies = [
-				{
-					template: 'decision-is-invalid-lpa',
-					recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
-				},
-				{
-					template: 'decision-is-invalid-appellant',
-					recipient: 'agent@test.com'
-				}
-			];
+					//Case details inset text
+					caseDetailsPage.checkDecisionOutcome('Decision: Invalid');
+					caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
+					caseDetailsPage.checkDecisionOutcome('Appellant costs decision: Issued');
+					caseDetailsPage.checkDecisionOutcome('LPA costs decision: Issued');
+					caseDetailsPage.viewDecisionLetter('View decision');
 
-			cy.checkNotifySent(caseObj, expectedNotifies);
-		});
+					//Notify
+					const expectedNotifies = [
+						{
+							template: hasLetter
+								? 'decision-is-allowed-split-dismissed-lpa'
+								: 'decision-is-invalid-lpa',
+							recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+						},
+						{
+							template: hasLetter
+								? 'decision-is-allowed-split-dismissed-appellant'
+								: 'decision-is-invalid-appellant',
+							recipient: 'agent@test.com'
+						}
+					];
+					cy.checkNotifySent(caseObj, expectedNotifies);
+				});
+			}
+		);
 	});
 });
 

@@ -265,7 +265,7 @@ export const happyPathHelper = {
 		caseDetailsPage.validateBannerMessage('Success', 'Site visit set up');
 	},
 
-	issueDecision(decision, route, appellantCostsBool = true, lpaCostsBool = true) {
+	issueDecision(decision, costs, appellantCostsBool = true, lpaCostsBool = true) {
 		caseDetailsPage.clickIssueDecision();
 		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(decision));
 
@@ -281,20 +281,12 @@ export const happyPathHelper = {
 			}
 		};
 
-		if (decision === 'Invalid') {
-			caseDetailsPage.clickButtonByText('Continue');
-			// this is actually choosing not to upload the decision letter for an invalid appeal
-			issueCosts(false);
-			caseDetailsPage.fillTextArea('The appeal is invalid because of X reason', 0);
-			caseDetailsPage.clickButtonByText('Continue');
-		} else {
-			caseDetailsPage.clickButtonByText('Continue');
-			fileUploader.uploadFiles(sampleFiles.pdf);
-			caseDetailsPage.clickButtonByText('Continue');
-		}
+		caseDetailsPage.clickButtonByText('Continue');
+		fileUploader.uploadFiles(sampleFiles.pdf);
+		caseDetailsPage.clickButtonByText('Continue');
 
 		//this is not for which costs are issued but which costs are eligible to be issued
-		switch (route) {
+		switch (costs) {
 			case 'both costs':
 				issueCosts(appellantCostsBool);
 				issueCosts(lpaCostsBool);
@@ -315,14 +307,68 @@ export const happyPathHelper = {
 		//CYA
 		caseDetailsPage.clickButtonByText('Issue decision');
 
-		//Banner & inset text
-		if (decision === 'Invalid') {
-			caseDetailsPage.validateBannerMessage('Success', 'Appeal marked as invalid');
-			caseDetailsPage.checkStatusOfCase('Invalid', 0);
+		//Banner
+		caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
+		caseDetailsPage.checkStatusOfCase('Complete', 0);
+	},
+
+	issueInvalidDecision(decisionLetter, costs, appellantCostsBool = true, lpaCostsBool = true) {
+		caseDetailsPage.clickIssueDecision();
+		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Invalid'));
+		caseDetailsPage.clickButtonByText('Continue');
+
+		const issueCosts = (bool) => {
+			if (bool) {
+				basePage.selectRadioButtonByValue('Yes');
+				basePage.clickButtonByText('Continue');
+				fileUploader.uploadFiles(sampleFiles.pdf);
+				fileUploader.clickButtonByText('Continue');
+			} else {
+				basePage.selectRadioButtonByValue('No');
+				basePage.clickButtonByText('Continue');
+			}
+		};
+
+		if (decisionLetter) {
+			caseDetailsPage.selectRadioButtonByValue('Yes');
+			caseDetailsPage.clickButtonByText('Continue');
+			fileUploader.uploadFiles(sampleFiles.pdf);
+			caseDetailsPage.clickButtonByText('Continue');
 		} else {
-			caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
-			caseDetailsPage.checkStatusOfCase('Complete', 0);
+			//skips letter upload
+			issueCosts(false);
+			caseDetailsPage.fillTextArea('The appeal is invalid because of X reason', 0);
+			caseDetailsPage.clickButtonByText('Continue');
 		}
+
+		//this is not for which costs are issued but which costs are eligible to be issued
+		switch (costs) {
+			case 'both costs':
+				issueCosts(appellantCostsBool);
+				issueCosts(lpaCostsBool);
+				break;
+
+			case 'appellant only':
+				issueCosts(appellantCostsBool);
+				break;
+
+			case 'lpa only':
+				issueCosts(lpaCostsBool);
+				break;
+
+			case 'no costs':
+				break;
+		}
+
+		//CYA
+		caseDetailsPage.clickButtonByText('Issue decision');
+
+		//Banner
+		decisionLetter
+			? caseDetailsPage.validateBannerMessage('Success', 'Decision issued')
+			: caseDetailsPage.validateBannerMessage('Success', 'Appeal marked as invalid');
+
+		caseDetailsPage.checkStatusOfCase('Invalid', 0);
 	},
 
 	issueLinkedAppealDecisions(
