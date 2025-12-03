@@ -79,6 +79,7 @@ extends:
       - name: Run cypress e2e tests
         condition: eq(variables['Build.Reason'], 'PullRequest')
         steps:
+          - script: echo "$(AZURE_TENANT_ID)"
           - script: |
               PR_NUMBER=$(echo "$(Build.SourceBranch)" | sed -n 's#refs/pull/\([0-9]\+\)/.*#\1#p')
               echo "PR_NUMBER: $PR_NUMBER"
