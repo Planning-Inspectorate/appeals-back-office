@@ -105,6 +105,19 @@ extends:
           - script: docker ps
             condition: eq(variables['runE2E'], 'true')
             displayName: "Check all containers are up"
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 22
+              script: npm ci
+              condition: eq(variables['runE2E'], 'true')
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 22
+              script: npm --prefix ./appeals/api run db:migrate
+              environmentVariables:
+                NODE_ENV: test
+                DATABASE_URL: "sqlserver://127.0.0.1:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true"
+              condition: eq(variables['runE2E'], 'true')
           - script: docker logs db
             condition: eq(variables['runE2E'], 'true')
           - script: docker logs db-init
