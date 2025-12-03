@@ -1,4 +1,7 @@
-import { databaseConnector } from '../server/utils/database-connector.js';
+import dotenv from 'dotenv';
+dotenv.config();
+
+import { createPrismaClient } from './create-client.js';
 
 /**
  * Truncates a table in the DB, removing all data.
@@ -9,5 +12,6 @@ import { databaseConnector } from '../server/utils/database-connector.js';
  * @returns {Promise<any>}
  */
 export const truncateTable = async (tableName) => {
+	const databaseConnector = createPrismaClient();
 	await databaseConnector.$queryRawUnsafe(`TRUNCATE TABLE "${tableName}";`);
 };
