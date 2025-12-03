@@ -114,6 +114,8 @@ extends:
           - script: docker ps
             condition: eq(variables['runE2E'], 'true')
             displayName: "Check all containers are up"
+          - script: docker logs web
+            condition: eq(variables['runE2E'], 'true')
           - script: docker inspect api
             condition: eq(variables['runE2E'], 'true')
           - script: docker inspect web
