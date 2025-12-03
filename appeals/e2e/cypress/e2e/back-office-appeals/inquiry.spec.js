@@ -551,7 +551,7 @@ it('Validates rule 6 party name and email address', () => {
 		// proceeed without entering name
 		contactDetailsPage.clickButtonByText('Continue');
 
-		// check erorr messge displayed
+		// check error messge displayed
 		contactDetailsPage.verifyErrorMessages({
 			messages: ['Enter a name'],
 			fields: ['organisation-name']
