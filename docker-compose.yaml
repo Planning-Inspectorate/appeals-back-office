@@ -9,14 +9,13 @@ services:
         ports:
             - 1433:1433
     db-init:
-        image: node:22-alpine3.20
         container_name: db-init
+        build: .
         depends_on:
             - db
         environment:
             - 'NODE_ENV=test'
             - 'DATABASE_URL=sqlserver://db:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true'
-        command: sh -c "npm ci; npm run db:migrate"
     api:
         depends_on:
             - db-init
