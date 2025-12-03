@@ -3,8 +3,8 @@ import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import createStateMachine from './create-state-machine.js';
 
-/** @typedef {import('#db-client').AppealType} AppealType */
-/** @typedef {import('#db-client').ProcedureType} ProcedureType */
+/** @typedef {import('#db-client/client.ts').AppealType} AppealType */
+/** @typedef {import('#db-client/client.ts').ProcedureType} ProcedureType */
 /** @typedef {import('@pins/appeals.api').Appeals.StateStub} StateStub */
 
 /**

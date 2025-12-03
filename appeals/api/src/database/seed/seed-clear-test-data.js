@@ -2,7 +2,7 @@ import appealDataFns from '#repositories/delete-appeal-data/delete-appeal-data.j
 import { localPlanningDepartmentList } from './LPAs/training.js';
 
 /**
- * @typedef {import('../../server/utils/db-client/index.js').PrismaClient} DatabaseConnector
+ * @typedef {import('#db-client/client.ts').PrismaClient} DatabaseConnector
  */
 
 async function deleteTestRecords() {

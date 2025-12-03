@@ -2,7 +2,7 @@ import appealRule6PartyRepository from '#repositories/appeal-rule-6-party.reposi
 import logger from '#utils/logger.js';
 import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
 
-/** @typedef {import('#db-client').ServiceUser} ServiceUser */
+/** @typedef {import('#db-client/client.ts').ServiceUser} ServiceUser */
 
 /**
  * @param {number} appealId

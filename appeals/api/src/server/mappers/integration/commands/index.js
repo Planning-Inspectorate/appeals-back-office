@@ -22,14 +22,14 @@ import { renameDuplicateDocuments } from '#endpoints/integrations/integrations.u
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealHASCase} AppealHASCase */
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealDocument} AppealDocument */
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealEvent} AppealEvent */
-/** @typedef {import('#db-client').Prisma.ServiceUserCreateInput} ServiceUserCreateInput */
-/** @typedef {import('#db-client').Prisma.ServiceUserCreateNestedOneWithoutRepresentationsInput} ServiceUserConnectInput */
-/** @typedef {import('#db-client').Prisma.RepresentationCreateInput & {represented: ServiceUserCreateInput|ServiceUserConnectInput}} RepresentationCreateInput */
-/** @typedef {import('#db-client').Prisma.DocumentVersionCreateInput} DocumentVersionCreateInput */
+/** @typedef {import('#db-client/models.ts').ServiceUserCreateInput} ServiceUserCreateInput */
+/** @typedef {import('#db-client/models.ts').ServiceUserCreateNestedOneWithoutRepresentationsInput} ServiceUserConnectInput */
+/** @typedef {import('#db-client/models.ts').RepresentationCreateInput & {represented: ServiceUserCreateInput|ServiceUserConnectInput}} RepresentationCreateInput */
+/** @typedef {import('#db-client/models.ts').DocumentVersionCreateInput} DocumentVersionCreateInput */
 
 /**
  * @param {AppellantSubmissionCommand} data
- * @returns {{ appeal: import('#db-client').Prisma.AppealCreateInput, documents: import('#db-client').Prisma.DocumentVersionCreateInput[], relatedReferences: string[] }}
+ * @returns {{ appeal: import('#db-client/models.ts').AppealCreateInput, documents: import('#db-client/models.ts').DocumentVersionCreateInput[], relatedReferences: string[] }}
  */
 const mapAppealSubmission = (data) => {
 	const { casedata, documents, users } = data;
@@ -49,7 +49,7 @@ const mapAppealSubmission = (data) => {
 		})
 	};
 
-	/** @type {import('#db-client').Prisma.AppealCreateInput} */
+	/** @type {import('#db-client/models.ts').AppealCreateInput} */
 	const appealInput = {
 		reference: randomUUID(),
 		submissionId: casedata.submissionId,
@@ -90,7 +90,7 @@ const mapAppealSubmission = (data) => {
  * @param {LPAQuestionnaireCommand} data
  * @param {Appeal|undefined} appeal
  * @param {DesignatedSite[]} designatedSites
- * @returns {{ questionnaire: Omit<import('#db-client').Prisma.LPAQuestionnaireCreateInput,'appeal'>, documents: import('#db-client').Prisma.DocumentVersionCreateInput[], relatedReferences: string[], caseReference: string }}
+ * @returns {{ questionnaire: Omit<import('#db-client/models.ts').LPAQuestionnaireCreateInput,'appeal'>, documents: import('#db-client/models.ts').DocumentVersionCreateInput[], relatedReferences: string[], caseReference: string }}
  */
 const mapQuestionnaireSubmission = (data, appeal, designatedSites) => {
 	const { casedata, documents } = data;
@@ -123,7 +123,7 @@ const mapQuestionnaireSubmission = (data, appeal, designatedSites) => {
 /**
  *
  * @param {AppealRepresentationSubmission} data
- * @returns {{representation: Omit<import('#db-client').Prisma.RepresentationCreateInput, 'appeal'>, attachments: DocumentVersionCreateInput[]}}
+ * @returns {{representation: Omit<import('#db-client/models.ts').RepresentationCreateInput, 'appeal'>, attachments: DocumentVersionCreateInput[]}}
  */
 const mapRepresentation = (data) => {
 	return mapRepresentationIn(data);

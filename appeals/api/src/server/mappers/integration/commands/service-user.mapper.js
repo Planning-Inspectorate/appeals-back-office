@@ -3,7 +3,7 @@ import { mapAddressIn } from './address.mapper.js';
 /**
  *
  * @param {*} data
- * @returns {import('#db-client').Prisma.ServiceUserCreateInput|undefined}
+ * @returns {import('#db-client/models.ts').ServiceUserCreateInput|undefined}
  */
 export const mapServiceUserIn = (data, createAddress = false) => {
 	if (data) {
