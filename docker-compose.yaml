@@ -35,6 +35,7 @@ services:
             - 'API_HOST=http://api:3000'
             - 'AUTH_DISABLED=false'
             - 'SESSION_SECRET=dummy-secret'
+            - 'AZURE_TENANT_ID=${AZURE_TENANT_ID}'
         ports:
             - 8080:8080
 
