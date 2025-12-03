@@ -1,5 +1,6 @@
 import { PrismaClient } from '#db-client';
 import { PrismaMssql } from '@prisma/adapter-mssql';
+import { parseConnectionString } from './connection-string.js';
 
 /** @type {PrismaClient} */
 let prismaClient;
@@ -17,7 +18,16 @@ export const createPrismaClient = (logger) => {
 			throw new Error('connectionString not provided to create Prisma Client');
 		}
 
-		prismaConfig.adapter = new PrismaMssql(process.env.DATABASE_URL);
+		const connectionSettings = parseConnectionString(process.env.DATABASE_URL);
+
+		prismaConfig.adapter = new PrismaMssql({
+			...connectionSettings,
+			pool: {
+				max: 5,
+				idleTimeoutMillis: 300000
+			},
+			connectionTimeout: 5000
+		});
 
 		prismaConfig.log = [
 			{
