@@ -117,6 +117,14 @@ extends:
                 NODE_ENV: test
                 DATABASE_URL: "sqlserver://127.0.0.1:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true"
               condition: eq(variables['runE2E'], 'true')
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 22
+              script: npm --prefix ./appeals/api run db:seed
+              environmentVariables:
+                NODE_ENV: test
+                DATABASE_URL: "sqlserver://127.0.0.1:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true"
+              condition: eq(variables['runE2E'], 'true')
           - script: curl -v http://localhost:3000/health
             displayName: "Api healthcheck"
             condition: eq(variables['runE2E'], 'true')
