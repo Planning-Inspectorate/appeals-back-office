@@ -1433,6 +1433,28 @@ export interface StartCaseRequest {
 	procedureType?: string;
 	/** @example "2024-05-09T12:00:00.000Z" */
 	hearingStartTime?: string;
+	inquiry?: {
+		/** @example "2024-05-09T12:00:00.000Z" */
+		inquiryStartTime?: string;
+		/** @example "123 my home, London" */
+		inquiryAddress?: string;
+		/** @example "5" */
+		inquiryEstimationDays?: string;
+		timetable?: {
+			/** @example "2024-05-09T00:00:00.000Z" */
+			lpaQuestionnaireDueDate?: string;
+			/** @example "2024-05-10T00:00:00.000Z" */
+			statementDueDate?: string;
+			/** @example "2024-05-11T00:00:00.000Z" */
+			ipCommentsDueDate?: string;
+			/** @example "2024-05-12T00:00:00.000Z" */
+			statementOfCommonGroundDueDate?: string;
+			/** @example "2024-05-13T00:00:00.000Z" */
+			proofOfEvidenceAndWitnessesDueDate?: string;
+			/** @example "2024-05-14T00:00:00.000Z" */
+			planningObligationDueDate?: string;
+		};
+	};
 }
 
 export interface StartCaseResponse {

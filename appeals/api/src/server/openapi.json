@@ -10530,6 +10530,52 @@
 					"hearingStartTime": {
 						"type": "string",
 						"example": "2024-05-09T12:00:00.000Z"
+					},
+					"inquiry": {
+						"type": "object",
+						"properties": {
+							"inquiryStartTime": {
+								"type": "string",
+								"example": "2024-05-09T12:00:00.000Z"
+							},
+							"inquiryAddress": {
+								"type": "string",
+								"example": "123 my home, London"
+							},
+							"inquiryEstimationDays": {
+								"type": "string",
+								"example": "5"
+							},
+							"timetable": {
+								"type": "object",
+								"properties": {
+									"lpaQuestionnaireDueDate": {
+										"type": "string",
+										"example": "2024-05-09T00:00:00.000Z"
+									},
+									"statementDueDate": {
+										"type": "string",
+										"example": "2024-05-10T00:00:00.000Z"
+									},
+									"ipCommentsDueDate": {
+										"type": "string",
+										"example": "2024-05-11T00:00:00.000Z"
+									},
+									"statementOfCommonGroundDueDate": {
+										"type": "string",
+										"example": "2024-05-12T00:00:00.000Z"
+									},
+									"proofOfEvidenceAndWitnessesDueDate": {
+										"type": "string",
+										"example": "2024-05-13T00:00:00.000Z"
+									},
+									"planningObligationDueDate": {
+										"type": "string",
+										"example": "2024-05-14T00:00:00.000Z"
+									}
+								}
+							}
+						}
 					}
 				},
 				"xml": {

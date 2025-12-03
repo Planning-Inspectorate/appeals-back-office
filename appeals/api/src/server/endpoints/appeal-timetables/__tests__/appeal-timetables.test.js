@@ -1794,7 +1794,7 @@ describe('appeal timetables routes', () => {
 		});
 	});
 
-	describe('POST /appeals/:appealId/appeal-timetables/notify-preview', () => {
+	describe('POST /appeals/:appealId/appeal-timetables/notify-preview for hearing', () => {
 		test('returns the rendered HTML of the emails that would be sent to the relevant parties', async () => {
 			const appeal = {
 				...fullPlanningAppeal
@@ -1820,6 +1820,106 @@ describe('appeal timetables routes', () => {
 			expect(lpaPreview).toContain(
 				'You have a new planning appeal against the application 48269/APP/2021/1482.'
 			);
+		});
+
+		test('returns an error if the appeal is a child appeal', async () => {
+			const appeal = {
+				...fullPlanningAppeal,
+				parentAppeals: [{ type: CASE_RELATIONSHIP_LINKED }]
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+			const { id } = fullPlanningAppeal;
+			const response = await request
+				.post(`/appeals/${id}/appeal-timetables/notify-preview`)
+				.set('azureAdUserId', azureAdUserId)
+				.send({
+					startDate: '2024-06-12T22:59:00.000Z',
+					procedureType: 'hearing',
+					hearingStartTime: '2024-06-12T12:00:00.000Z'
+				});
+
+			expect(response.status).toEqual(500);
+			expect(response.body).toMatchObject({
+				errors: {
+					body: 'failed to populate notification email due to Emails are not sent for child appeals.'
+				}
+			});
+		});
+
+		test('returns an error if the appeal is not found', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+			const { id } = fullPlanningAppeal;
+			const response = await request
+				.post(`/appeals/${id}/appeal-timetables/notify-preview`)
+				.set('azureAdUserId', azureAdUserId)
+				.send({
+					startDate: '2024-06-12T22:59:00.000Z',
+					procedureType: 'hearing',
+					hearingStartTime: '2024-06-12T12:00:00.000Z'
+				});
+
+			expect(response.status).toEqual(404);
+			expect(response.body).toMatchObject({
+				errors: { appealId: 'Not found' }
+			});
+		});
+	});
+
+	describe('POST /appeals/:appealId/appeal-timetables/notify-preview for inquiry', () => {
+		test('returns the rendered HTML of the emails that would be sent to the relevant parties', async () => {
+			const appeal = {
+				...fullPlanningAppeal
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+
+			const { id } = fullPlanningAppeal;
+			const response = await request
+				.post(`/appeals/${id}/appeal-timetables/notify-preview`)
+				.set('azureAdUserId', azureAdUserId)
+				.send({
+					startDate: '2024-06-12T22:59:00.000Z',
+					procedureType: 'inquiry',
+					inquiry: {
+						inquiryStartTime: '2024-06-12T12:00:00.000Z',
+						inquiryAddress: '123 my home, London',
+						inquiryEstimationDays: '5',
+						timetable: {
+							lpaQuestionnaireDueDate: '2024-05-09T00:00:00.000Z',
+							statementDueDate: '2024-05-10T00:00:00.000Z',
+							ipCommentsDueDate: '2024-05-11T00:00:00.000Z',
+							statementOfCommonGroundDueDate: '2024-05-12T00:00:00.000Z',
+							proofOfEvidenceAndWitnessesDueDate: '2024-05-13T00:00:00.000Z',
+							planningObligationDueDate: '2024-05-14T00:00:00.000Z'
+						}
+					}
+				});
+
+			expect(response.status).toEqual(200);
+			const appellantPreview = response.body.appellant;
+			const lpaPreview = response.body.lpa;
+			expect(appellantPreview).toContain('We have set up your timetable');
+			expect(appellantPreview).not.toContain(
+				'We will decide the appeal by inquiry. You can tell us if you think a different procedure is more appropriate in the questionnaire'
+			);
+			expect(appellantPreview).toContain('Proof of evidence and witnesses');
+			expect(appellantPreview).toContain('Due by 13 May 2024.');
+			expect(appellantPreview).toContain('Inquiry details');
+			expect(appellantPreview).toContain('Date: 12 June 2024');
+			expect(appellantPreview).toContain('Expected days: 5');
+			expect(appellantPreview).toContain('Venue address: 123 my home, London');
+
+			expect(lpaPreview).toContain(
+				'You have a new planning appeal against the application 48269/APP/2021/1482.'
+			);
+			expect(lpaPreview).toContain(
+				'We will decide the appeal by inquiry. You can tell us if you think a different procedure is more appropriate in the questionnaire'
+			);
+			expect(lpaPreview).toContain('Proof of evidence and witnesses');
+			expect(lpaPreview).toContain('Due by 13 May 2024.');
+			expect(lpaPreview).toContain('Inquiry details');
+			expect(lpaPreview).toContain('Date: 12 June 2024');
+			expect(lpaPreview).toContain('Expected days: 5');
+			expect(lpaPreview).toContain('Venue address: 123 my home, London');
 		});
 
 		test('returns an error if the appeal is a child appeal', async () => {

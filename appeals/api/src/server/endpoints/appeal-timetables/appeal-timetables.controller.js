@@ -113,7 +113,8 @@ const startAppealNotifyPreview = async (req, res) => {
 				notifyClient,
 				req.get('azureAdUserId') || '',
 				body.procedureType || appeal.procedureType?.key,
-				body.hearingStartTime
+				body.hearingStartTime,
+				body.inquiry
 			);
 			return res.status(200).send(result);
 		} catch (/** @type {any} */ error) {

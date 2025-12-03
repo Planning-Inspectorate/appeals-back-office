@@ -48,6 +48,7 @@ export async function setStartDate(
  * @param {string} [startDate]
  * @param {string} [procedureType]
  * @param {string} [hearingStartTime]
+ * @param {any} [inquiry]
  * @returns {Promise<{appellant?: string, lpa?: string}>}
  */
 export async function getStartCaseNotifyPreviews(
@@ -55,14 +56,16 @@ export async function getStartCaseNotifyPreviews(
 	appealId,
 	startDate,
 	procedureType,
-	hearingStartTime
+	hearingStartTime,
+	inquiry
 ) {
 	const result = await apiClient
 		.post(`appeals/${appealId}/appeal-timetables/notify-preview`, {
 			json: {
 				...(startDate && { startDate }),
 				...(procedureType && { procedureType }),
-				...(hearingStartTime && { hearingStartTime })
+				...(hearingStartTime && { hearingStartTime }),
+				...(inquiry && { inquiry })
 			}
 		})
 		.json();
