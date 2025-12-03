@@ -66,6 +66,7 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                             name="appealStatusFilter" data-cy="filter-by-case-status">
                                 <option value="all">All</option>
                                 <option value="assign_case_officer">Assign case officer</option>
+                                <option value="evidence">Evidence</option>
                                 <option value="final_comments">Final comments</option>
                                 <option value="invalid">Invalid</option>
                                 <option value="issue_determination">Issue decision</option>
@@ -294,6 +295,7 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                             name="appealStatusFilter" data-cy="filter-by-case-status">
                                 <option value="all">All</option>
                                 <option value="assign_case_officer">Assign case officer</option>
+                                <option value="evidence">Evidence</option>
                                 <option value="final_comments">Final comments</option>
                                 <option value="invalid">Invalid</option>
                                 <option value="issue_determination">Issue decision</option>
@@ -1021,6 +1023,7 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                             name="appealStatusFilter" data-cy="filter-by-case-status">
                                 <option value="all">All</option>
                                 <option value="assign_case_officer">Assign case officer</option>
+                                <option value="evidence">Evidence</option>
                                 <option value="final_comments">Final comments</option>
                                 <option value="invalid">Invalid</option>
                                 <option value="issue_determination">Issue decision</option>
@@ -1211,6 +1214,7 @@ exports[`national-list GET / should render national list - no search term - filt
                             name="appealStatusFilter" data-cy="filter-by-case-status">
                                 <option value="all">All</option>
                                 <option value="assign_case_officer">Assign case officer</option>
+                                <option value="evidence">Evidence</option>
                                 <option value="final_comments">Final comments</option>
                                 <option value="invalid">Invalid</option>
                                 <option value="issue_determination">Issue decision</option>
@@ -1395,6 +1399,7 @@ exports[`national-list GET / should render national list - search term - filter 
                             name="appealStatusFilter" data-cy="filter-by-case-status">
                                 <option value="all">All</option>
                                 <option value="assign_case_officer">Assign case officer</option>
+                                <option value="evidence">Evidence</option>
                                 <option value="final_comments">Final comments</option>
                                 <option value="invalid">Invalid</option>
                                 <option value="issue_determination">Issue decision</option>
@@ -1721,6 +1726,7 @@ exports[`national-list GET / should render national list - search term 1`] = `
                             name="appealStatusFilter" data-cy="filter-by-case-status">
                                 <option value="all">All</option>
                                 <option value="assign_case_officer">Assign case officer</option>
+                                <option value="evidence">Evidence</option>
                                 <option value="final_comments">Final comments</option>
                                 <option value="invalid">Invalid</option>
                                 <option value="issue_determination">Issue decision</option>
@@ -1908,6 +1914,7 @@ exports[`national-list GET / should render the header with navigation containing
                             name="appealStatusFilter" data-cy="filter-by-case-status">
                                 <option value="all">All</option>
                                 <option value="assign_case_officer">Assign case officer</option>
+                                <option value="evidence">Evidence</option>
                                 <option value="final_comments">Final comments</option>
                                 <option value="invalid">Invalid</option>
                                 <option value="issue_determination">Issue decision</option>
