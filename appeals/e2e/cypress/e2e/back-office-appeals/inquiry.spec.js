@@ -562,7 +562,7 @@ it('Validates rule 6 party name and email address', () => {
 		contactDetailsPage.clickButtonByText('Continue');
 		contactDetailsPage.clickButtonByText('Continue');
 
-		// check erorr messge displayed
+		// check error messge displayed
 		contactDetailsPage.verifyErrorMessages({
 			messages: ['Enter an email address'],
 			fields: ['email']
