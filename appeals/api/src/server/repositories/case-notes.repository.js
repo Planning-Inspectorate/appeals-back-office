@@ -2,7 +2,7 @@ import { databaseConnector } from '#utils/database-connector.js';
 import { DATABASE_ORDER_BY_DESC } from '@pins/appeals/constants/support.js';
 
 /**
- * @typedef {import('#db-client').Prisma.PrismaPromise<T>} PrismaPromise
+ * @typedef {import('#db-client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
  * @template T
  */
 /** @typedef {import('@pins/appeals.api').Schema.CaseNote } CaseNote */

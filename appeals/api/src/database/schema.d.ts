@@ -1,4 +1,4 @@
-import * as schema from '#utils/db-client';
+import * as schema from '#db-client/client.ts';
 import { AssignedTeam } from '@pins/appeals.api';
 
 export interface Appeal extends schema.Appeal {

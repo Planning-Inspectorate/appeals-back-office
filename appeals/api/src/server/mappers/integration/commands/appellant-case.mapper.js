@@ -7,7 +7,7 @@ import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 /**
  *
  * @param {Pick<AppellantSubmissionCommand, 'casedata'>} command
- * @returns {Omit<import('#db-client').Prisma.AppellantCaseCreateInput, 'appeal'>}
+ * @returns {Omit<import('#db-client/models.ts').AppellantCaseCreateInput, 'appeal'>}
  */
 export const mapAppellantCaseIn = (command) => {
 	const casedata = command.casedata;
