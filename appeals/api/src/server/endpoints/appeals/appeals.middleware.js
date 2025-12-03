@@ -44,7 +44,8 @@ export const validateAppealStatus = async (req, res, next) => {
 		APPEAL_CASE_STATUS.AWAITING_EVENT,
 		//S78
 		APPEAL_CASE_STATUS.FINAL_COMMENTS,
-		APPEAL_CASE_STATUS.STATEMENTS
+		APPEAL_CASE_STATUS.STATEMENTS,
+		APPEAL_CASE_STATUS.EVIDENCE
 	];
 
 	const isValidStatus = typeof status === 'string' ? validStatuses.includes(status) : !status;

@@ -183,6 +183,7 @@ export const appealsNationalList = {
 		'assign_case_officer',
 		'lpa_questionnaire',
 		'statements',
+		'evidence',
 		'ready_to_start',
 		'validation',
 		'final_comments',
