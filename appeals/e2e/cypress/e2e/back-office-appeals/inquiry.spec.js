@@ -2,10 +2,12 @@
 /// <reference types="cypress"/>
 
 import { users } from '../../fixtures/users';
+import { ContactsSectionPage } from '../../page_objects/caseDetails/contactsSectionPage.js';
 import { DocumentationSectionPage } from '../../page_objects/caseDetails/documentationSectionPage';
 import { InquirySectionPage } from '../../page_objects/caseDetails/inquirySectionPage';
 import { OverviewSectionPage } from '../../page_objects/caseDetails/overviewSectionPage.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+import { ContactDetailsPage } from '../../page_objects/contactDetailsPage.js';
 import { CYASection } from '../../page_objects/cyaSection.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
@@ -20,6 +22,8 @@ const inquirySectionPage = new InquirySectionPage();
 const overviewSectionPage = new OverviewSectionPage();
 const cyaSection = new CYASection();
 const documentationSectionPage = new DocumentationSectionPage();
+const contactsSectionPage = new ContactsSectionPage();
+const contactDetailsPage = new ContactDetailsPage();
 const currentDate = new Date();
 
 const previousInquiryAddress = {
@@ -36,6 +40,13 @@ const inquiryAddress = {
 	town: 'Inquiry Town',
 	county: 'Somewhere',
 	postcode: 'BS20 1BS'
+};
+
+const rule6Details = {
+	partyName: 'TestRule6Party',
+	partyEmailAddress: 'testrule6party@test.com',
+	partyNameUpdated: 'TestRule6PartyUpdated',
+	partyEmailAddressUpdated: 'testrule6partyupdated@test.com'
 };
 
 const initialEstimates = { preparationTime: 0.5, sittingTime: 1.0, reportingTime: 89.5 };
@@ -456,6 +467,105 @@ it('Can update answer from CYA page - change address', () => {
 		cyaSection.verifyAnswerUpdated({
 			field: cyaSection.cyaSectionFields.address,
 			value: expectedAddress
+		});
+	});
+});
+
+it('Can add rule 6 party', () => {
+	// Setup: Add inquiry via API
+	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+		cy.addInquiryViaApi(caseObj, inquiryDate);
+
+		// find case and open inquiry section
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseObj);
+
+		// select to add rule 6 contact
+		contactsSectionPage.selectAddContact('rule-6-party-contact-details');
+
+		// check page caption and input party name
+		contactDetailsPage.verifyPageCaption(`Appeal ${caseObj.reference} - Add rule 6 party`);
+		contactDetailsPage.inputOrganisationName(rule6Details.partyName);
+		contactDetailsPage.clickButtonByText('Continue');
+
+		// check page caption and enter party email address
+		contactDetailsPage.verifyPageCaption(`Appeal ${caseObj.reference} - Add rule 6 party`);
+		contactDetailsPage.inputOrganisationEmail(rule6Details.partyEmailAddress);
+		contactDetailsPage.clickButtonByText('Continue');
+
+		// verify details on cya page
+		cyaSection.verifyAnswerUpdated({
+			field: cyaSection.cyaSectionFields.rule6PartyName,
+			value: rule6Details.partyName
+		});
+		cyaSection.verifyAnswerUpdated({
+			field: cyaSection.cyaSectionFields.rule6PartyEmailAddress,
+			value: rule6Details.partyEmailAddress
+		});
+
+		// update party name
+		cyaSection.changeAnswer(cyaSection.cyaSectionFields.rule6PartyName);
+		contactDetailsPage.verifyValuePrepopulated(
+			contactDetailsPage.contactSelectors.organisationName,
+			rule6Details.partyName
+		);
+		contactDetailsPage.inputOrganisationName(rule6Details.partyNameUpdated);
+		contactDetailsPage.clickButtonByText('Continue');
+		contactDetailsPage.clickButtonByText('Continue');
+
+		// verify party name updated on cya page
+		cyaSection.verifyAnswerUpdated({
+			field: cyaSection.cyaSectionFields.rule6PartyName,
+			value: rule6Details.partyNameUpdated
+		});
+
+		// update party email
+		cyaSection.changeAnswer(cyaSection.cyaSectionFields.rule6PartyEmailAddress);
+		contactDetailsPage.verifyValuePrepopulated(
+			contactDetailsPage.contactSelectors.organisationEmail,
+			rule6Details.partyEmailAddress
+		);
+		contactDetailsPage.inputOrganisationEmail(rule6Details.partyEmailAddressUpdated);
+		contactDetailsPage.clickButtonByText('Continue');
+
+		// verify party email address updated on cya page
+		cyaSection.verifyAnswerUpdated({
+			field: cyaSection.cyaSectionFields.rule6PartyEmailAddress,
+			value: rule6Details.partyEmailAddressUpdated
+		});
+	});
+});
+
+it.only('Validates rule 6 party name and email address', () => {
+	// Setup: Add inquiry via API
+	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+		cy.addInquiryViaApi(caseObj, inquiryDate);
+
+		// find case and open inquiry section
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseObj);
+
+		// select to add rule 6 contact
+		contactsSectionPage.selectAddContact('rule-6-party-contact-details');
+
+		// proceeed without entering name
+		contactDetailsPage.clickButtonByText('Continue');
+
+		// check erorr messge displayed
+		contactDetailsPage.verifyErrorMessages({
+			messages: ['Enter a name'],
+			fields: ['organisation-name']
+		});
+
+		// proceed without entering party email address
+		contactDetailsPage.inputOrganisationName(rule6Details.partyName);
+		contactDetailsPage.clickButtonByText('Continue');
+		contactDetailsPage.clickButtonByText('Continue');
+
+		// check erorr messge displayed
+		contactDetailsPage.verifyErrorMessages({
+			messages: ['Enter an email address'],
+			fields: ['email']
 		});
 	});
 });
