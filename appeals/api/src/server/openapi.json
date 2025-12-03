@@ -2060,9 +2060,54 @@
 		},
 		"/appeals/planning-appeal-decision-suppliers": {
 			"get": {
-				"tags": ["PADs List"],
-				"description": "Get PADUser by sapId",
+				"tags": ["PADS Inspectors"],
+				"description": "Gets list of PADSUsers",
 				"parameters": [
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Planning Appeal Decision Suppliers",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PADSUsers"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/PADSUsers"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
+		"/appeals/planning-appeal-decision-suppliers/{sapId}": {
+			"get": {
+				"tags": ["PADS Inspectors"],
+				"description": "Get PADSUser by sapId",
+				"parameters": [
+					{
+						"name": "sapId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
 					{
 						"name": "azureAdUserId",
 						"in": "header",
@@ -12862,6 +12907,41 @@
 				},
 				"xml": {
 					"name": "LPAs"
+				}
+			},
+			"PADSUsers": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"sapId": {
+							"type": "string",
+							"example": "12345678"
+						},
+						"name": {
+							"type": "string",
+							"example": "John Smith"
+						}
+					}
+				},
+				"xml": {
+					"name": "PADSUsers"
+				}
+			},
+			"PADSUser": {
+				"type": "object",
+				"properties": {
+					"sapId": {
+						"type": "string",
+						"example": "12345678"
+					},
+					"name": {
+						"type": "string",
+						"example": "John Smith"
+					}
+				},
+				"xml": {
+					"name": "PADSUser"
 				}
 			},
 			"LPAChangeRequest": {

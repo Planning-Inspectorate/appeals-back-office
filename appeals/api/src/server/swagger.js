@@ -1031,6 +1031,16 @@ export const spec = {
 				email: 'bris@lpa-email.gov.uk'
 			}
 		],
+		PADSUsers: [
+			{
+				sapId: '12345678',
+				name: 'John Smith'
+			}
+		],
+		PADSUser: {
+			sapId: '12345678',
+			name: 'John Smith'
+		},
 		LPAChangeRequest: {
 			newLpaId: 2
 		},
@@ -1958,6 +1968,7 @@ export const spec = {
 				}
 			}
 		},
+
 		CreateRule6PartyRequest: {
 			type: 'object',
 			properties: {
