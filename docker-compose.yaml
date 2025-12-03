@@ -10,6 +10,7 @@ services:
             - 1433:1433
     db-init:
         image: node:22-alpine3.20
+        container_name: db-init
         depends_on:
             - db
         environment:
