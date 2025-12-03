@@ -1,4 +1,7 @@
-import { databaseConnector } from '../../server/utils/database-connector.js';
+import dotenv from 'dotenv';
+dotenv.config();
+
+import { createPrismaClient } from '../create-client.js';
 import { seedStaticData } from './data-static.js';
 import { localPlanningDepartmentList } from './LPAs/training.js';
 import { seedLPAs } from './seed-lpas.js';
@@ -14,6 +17,7 @@ import { teamsToCreate } from './teams/training.js';
  * @returns {Promise<void>}
  */
 const seedTraining = async () => {
+	const databaseConnector = createPrismaClient();
 	try {
 		await seedStaticData(databaseConnector);
 		await seedTeams(databaseConnector, teamsToCreate);
