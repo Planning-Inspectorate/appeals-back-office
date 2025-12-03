@@ -38,10 +38,19 @@ jobs:
           steps:
             - download: none
             - checkout: self
+            - task: Cache@2
+              inputs:
+                key: 'npm | "$(Agent.OS)" | package-lock.json'
+                restoreKeys: |
+                  npm | "$(Agent.OS)" | package-lock.json
+                path: $(npm_config_cache)
+              displayName: Cache NPM
             - template: steps/node_script.yml@templates
               parameters:
                 script: npm ci
                 nodeVersion: 22
+                environmentVariables:
+                  npm_config_cache: $(npm_config_cache)
             - template: steps/azure_auth.yml@templates
             # kv name is different in the training env (had to be shorter)
             - bash: |
