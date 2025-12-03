@@ -387,8 +387,9 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                 data-maxlength="500">
-                                    <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                    name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                    <textarea class="govuk-textarea govuk-js-character-count"
+                                    id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                     <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>

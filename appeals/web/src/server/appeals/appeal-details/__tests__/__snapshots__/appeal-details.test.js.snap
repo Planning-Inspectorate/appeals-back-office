@@ -62,7 +62,7 @@ exports[`appeal-details GET /:appealId Appellant costs decision should render a 
 
 exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion, if the appeal status is "issue_determination", "withdrawn" or after (withdrawn) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/issue-appellant-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="issue-appellant-costs-decision">Issue<span class="govuk-visually-hidden"> Appellant costs decision</span></a></dd></div>"`;
 
-exports[`appeal-details GET /:appealId Case notes should render the case note details 1`] = `"<details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span></summary><div class="govuk-details__text"><form method="POST" novalidate="novalidate"><div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds"><div class="govuk-form-group govuk-character-count" data-module="govuk-character-count" data-maxlength="500"><textarea class="govuk-textarea govuk-js-character-count" id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea><div id="comment-info" class="govuk-hint govuk-character-count__message"> You can enter up to 500 characters</div></div></div></div><button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1" data-module="govuk-button"> Add case note</button></form><div><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"><section><p class="govuk-body govuk-!-margin-bottom-1"> A case note you should see.</p><p class="govuk-hint govuk-!-margin-bottom-6"> 11:00am on Tuesday 1 October 2024 by Smith, John</p><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></section><section><p class="govuk-body govuk-!-margin-bottom-1"> A case note you should see.</p><p class="govuk-hint govuk-!-margin-bottom-6"> 11:00am on Tuesday 1 October 2024 by Smith, John</p><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></section></div></div></details>"`;
+exports[`appeal-details GET /:appealId Case notes should render the case note details 1`] = `"<details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span></summary><div class="govuk-details__text"><form method="POST" novalidate="novalidate"><div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds"><div class="govuk-form-group govuk-character-count" data-module="govuk-character-count" data-maxlength="500"><label class="govuk-label govuk-visually-hidden" for="comment"> Add a case note</label><textarea class="govuk-textarea govuk-js-character-count" id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea><div id="comment-info" class="govuk-hint govuk-character-count__message"> You can enter up to 500 characters</div></div></div></div><button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1" data-module="govuk-button"> Add case note</button></form><div><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"><section><p class="govuk-body govuk-!-margin-bottom-1"> A case note you should see.</p><p class="govuk-hint govuk-!-margin-bottom-6"> 11:00am on Tuesday 1 October 2024 by Smith, John</p><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></section><section><p class="govuk-body govuk-!-margin-bottom-1"> A case note you should see.</p><p class="govuk-hint govuk-!-margin-bottom-6"> 11:00am on Tuesday 1 October 2024 by Smith, John</p><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></section></div></div></details>"`;
 
 exports[`appeal-details GET /:appealId Costs should render a "Appellant application" row in the costs accordion 1`] = `"<th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>"`;
 
@@ -658,8 +658,9 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                 data-maxlength="500">
-                                    <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                    name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                    <textarea class="govuk-textarea govuk-js-character-count"
+                                    id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                     <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
@@ -889,8 +890,9 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                 data-maxlength="500">
-                                    <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                    name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                    <textarea class="govuk-textarea govuk-js-character-count"
+                                    id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                     <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
@@ -1289,8 +1291,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                 data-maxlength="500">
-                                    <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                    name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                    <textarea class="govuk-textarea govuk-js-character-count"
+                                    id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                     <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
@@ -1520,8 +1523,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                 data-maxlength="500">
-                                    <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                    name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                    <textarea class="govuk-textarea govuk-js-character-count"
+                                    id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                     <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
@@ -1910,8 +1914,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                 data-maxlength="500">
-                                    <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                    name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                    <textarea class="govuk-textarea govuk-js-character-count"
+                                    id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                     <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
@@ -2311,8 +2316,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                 data-maxlength="500">
-                                    <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                    name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                    <textarea class="govuk-textarea govuk-js-character-count"
+                                    id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                     <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
@@ -2722,8 +2728,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                 data-maxlength="500">
-                                    <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                    name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                    <textarea class="govuk-textarea govuk-js-character-count"
+                                    id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                     <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
@@ -3124,8 +3131,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                 data-maxlength="500">
-                                    <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                    name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                    <textarea class="govuk-textarea govuk-js-character-count"
+                                    id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                     <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
@@ -3526,8 +3534,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                 data-maxlength="500">
-                                    <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                    name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                    <textarea class="govuk-textarea govuk-js-character-count"
+                                    id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                     <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
@@ -3941,8 +3950,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                 data-maxlength="500">
-                                    <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                    name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                    <textarea class="govuk-textarea govuk-js-character-count"
+                                    id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                     <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
@@ -4290,8 +4300,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                 data-maxlength="500">
-                                    <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                    name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                    <textarea class="govuk-textarea govuk-js-character-count"
+                                    id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                     <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
@@ -4817,8 +4828,9 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                 data-maxlength="500">
-                                    <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                    name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                    <textarea class="govuk-textarea govuk-js-character-count"
+                                    id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                     <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
@@ -5802,8 +5814,9 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                 data-maxlength="500">
-                                    <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                    name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                    <textarea class="govuk-textarea govuk-js-character-count"
+                                    id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                     <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
@@ -6157,8 +6170,9 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                 data-maxlength="500">
-                                    <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                    name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                    <textarea class="govuk-textarea govuk-js-character-count"
+                                    id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                     <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
@@ -6512,8 +6526,9 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                 data-maxlength="500">
-                                    <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                    name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                    <textarea class="govuk-textarea govuk-js-character-count"
+                                    id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                     <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
@@ -6872,8 +6887,9 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                 data-maxlength="500">
-                                    <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                    name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                    <textarea class="govuk-textarea govuk-js-character-count"
+                                    id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                     <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
@@ -7223,8 +7239,9 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                 data-maxlength="500">
-                                    <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                    name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                    <textarea class="govuk-textarea govuk-js-character-count"
+                                    id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                     <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
@@ -7602,8 +7619,9 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                 data-maxlength="500">
-                                    <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                    name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                    <textarea class="govuk-textarea govuk-js-character-count"
+                                    id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                     <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
@@ -8003,8 +8021,9 @@ exports[`appeal-details should not render a back button 1`] = `
                                         <div class="govuk-grid-column-two-thirds">
                                             <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                             data-maxlength="500">
-                                                <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                                name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                                <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                                <textarea class="govuk-textarea govuk-js-character-count"
+                                                id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                                 <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                             </div>
                                         </div>
