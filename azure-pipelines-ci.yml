@@ -104,6 +104,8 @@ extends:
           - script: docker ps
             condition: eq(variables['runE2E'], 'true')
             displayName: "Check all containers are up"
+          - script: docker exec -it api env
+          - script: docker exec -it web env
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
