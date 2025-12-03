@@ -536,7 +536,7 @@ it('Can add rule 6 party', () => {
 	});
 });
 
-it.only('Validates rule 6 party name and email address', () => {
+it('Validates rule 6 party name and email address', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		cy.addInquiryViaApi(caseObj, inquiryDate);
