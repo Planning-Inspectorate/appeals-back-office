@@ -118,13 +118,7 @@ extends:
                 NODE_ENV: test
                 DATABASE_URL: "sqlserver://127.0.0.1:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true"
               condition: eq(variables['runE2E'], 'true')
-          - script: docker logs db
-            condition: eq(variables['runE2E'], 'true')
-          - script: docker logs db-init
-            condition: eq(variables['runE2E'], 'true')
           - script: curl -v http://localhost:3000/health
-            condition: eq(variables['runE2E'], 'true')
-          - script: docker logs api
             condition: eq(variables['runE2E'], 'true')
           - script: curl -v http://localhost:8080/health
             condition: eq(variables['runE2E'], 'true')
