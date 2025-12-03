@@ -2,17 +2,24 @@ version: '3.7'
 services:
     db:
         image: mcr.microsoft.com/mssql/server:2022-latest
-        container_name: pins-sql-server
+        container_name: db
         environment:
             - 'ACCEPT_EULA=Y'
             - 'MSSQL_SA_PASSWORD=SqlServer01'
         ports:
             - 1433:1433
-    api:
+    db-init:
+        image: node:22-alpine3.20
         depends_on:
             - db
+        environment:
+            - 'NODE_ENV=test'
+            - 'DATABASE_URL=sqlserver://db:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true'
+        command: sh -c "npm ci; npm run db:migrate"
+    api:
+        depends_on:
+            - db-init
         container_name: api
-        entrypoint: ["/bin/sh", "-c", "npm run db:migrate; npm run start"]
         build:
             context: .
             dockerfile: appeals/api/Dockerfile
