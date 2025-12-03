@@ -220,7 +220,7 @@ export class Page {
 	}
 
 	fillTextArea(text, index = 0) {
-		this.basePageElements.textArea().eq(index).clear().type(text);
+		this.basePageElements.textArea().eq(index).clear().type(text, { delay: 0 });
 	}
 
 	fillUsersInput(text, index = 0) {
