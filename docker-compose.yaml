@@ -9,8 +9,6 @@ services:
         ports:
             - 1433:1433
     api:
-        depends_on:
-            - db-init
         container_name: api
         build:
             context: .
