@@ -8,7 +8,7 @@ const router = createRouter();
 router.get(
 	'/planning-appeal-decision-suppliers',
 	/*
-        #swagger.tags = ['PADs List']
+        #swagger.tags = ['PADS Inspectors']
         #swagger.path = '/appeals/planning-appeal-decision-suppliers'
         #swagger.description = 'Gets list of PADSUsers'
         #swagger.parameters['azureAdUserId'] = {
@@ -28,9 +28,9 @@ router.get(
 router.get(
 	'/planning-appeal-decision-suppliers/:sapId',
 	/*
-        #swagger.tags = ['PADs List']
-        #swagger.path = '/appeals/planning-appeal-decision-suppliers'
-        #swagger.description = 'Get PADUser by sapId'
+        #swagger.tags = ['PADS Inspectors']
+        #swagger.path = '/appeals/planning-appeal-decision-suppliers/{sapId}'
+        #swagger.description = 'Get PADSUser by sapId'
         #swagger.parameters['azureAdUserId'] = {
             in: 'header',
             required: true,
