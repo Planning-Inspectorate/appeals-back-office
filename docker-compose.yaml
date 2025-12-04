@@ -47,6 +47,7 @@ services:
             - 'SSL_CERT_FILE=certificate.pem'
             - 'SSL_KEY_FILE=certificate-key.pem'
             - 'NODE_TLS_REJECT_UNAUTHORIZED=0'
+            - 'AUTH_REDIRECT_URI=https://localhost:8080/auth/redirect'
         ports:
             - 8080:8080
 
