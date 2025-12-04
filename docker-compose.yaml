@@ -46,6 +46,7 @@ services:
             - 'HTTPS_PORT=8080'
             - 'SSL_CERT_FILE=certificate.pem'
             - 'SSL_KEY_FILE=certificate-key.pem'
+            - 'NODE_TLS_REJECT_UNAUTHORIZED=0'
         ports:
             - 8080:8080
 
