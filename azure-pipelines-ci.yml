@@ -188,7 +188,7 @@ extends:
                 HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
                 APP: appeals
                 AZURE_TENANT_ID: $(AZURE_TENANT_ID)
-                NODE_EXTRA_CA_CERTS: certificate.pem
+                NODE_EXTRA_CA_CERTS: $(Build.SourcesDirectory)/appeals/e2e/certificate.pem
               condition: eq(variables['runE2E'], 'true')
           - script: docker logs api
             condition: eq(variables['runE2E'], 'true')
