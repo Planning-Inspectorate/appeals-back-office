@@ -1,5 +1,4 @@
 import { PrismaClient } from '#db-client';
-import { PrismaMssql } from '@prisma/adapter-mssql';
 
 /** @type {PrismaClient} */
 let prismaClient;
@@ -10,35 +9,26 @@ let prismaClient;
  */
 export const createPrismaClient = (logger) => {
 	if (!prismaClient) {
-		/** @type {prismaConfig} */
-		const prismaConfig = {};
-
-		if (!process.env.DATABASE_URL) {
-			throw new Error('connectionString not provided to create Prisma Client');
-		}
-
-		prismaConfig.adapter = new PrismaMssql(process.env.DATABASE_URL);
-
-		prismaConfig.log = [
-			{
-				emit: 'event',
-				level: 'query'
-			},
-			{
-				emit: 'event',
-				level: 'error'
-			}
-			// {
-			// 	emit: 'event',
-			// 	level: 'info'
-			// },
-			// {
-			// 	emit: 'event',
-			// 	level: 'warn'
-			// }
-		];
-
-		prismaClient = new PrismaClient(prismaConfig);
+		prismaClient = new PrismaClient({
+			log: [
+				{
+					emit: 'event',
+					level: 'query'
+				},
+				{
+					emit: 'event',
+					level: 'error'
+				}
+				// {
+				// 	emit: 'event',
+				// 	level: 'info'
+				// },
+				// {
+				// 	emit: 'event',
+				// 	level: 'warn'
+				// }
+			]
+		});
 
 		if (logger) {
 			/** @param {import('#db-client').Prisma.QueryEvent} e */

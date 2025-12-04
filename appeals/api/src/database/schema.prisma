@@ -1,12 +1,11 @@
 generator client {
-  provider   = "prisma-client-js"
-  output     = "../server/utils/db-client"
-  engineType = "client"
-  runtime    = "nodejs"
+  provider = "prisma-client-js"
+  output   = "../server/utils/db-client"
 }
 
 datasource db {
   provider = "sqlserver"
+  url      = env("DATABASE_URL")
 }
 
 /// Appeal model
@@ -70,6 +69,7 @@ model Appeal {
   assignedTeam          Team?                @relation(fields: [assignedTeamId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   assignedTeamId        Int?
   PersonalList          PersonalList?        @relation("appeal")
+  otherAppellants       OtherAppellant[]     @relation("otherAppellants")
   appealRule6Parties    AppealRule6Party[]   @relation("appealRule6Parties")
 
   @@index([addressId])
@@ -226,7 +226,20 @@ model ServiceUser {
   appealsOnBehalf         Appeal[]           @relation("agent")
   representations         Representation[]   @relation("represented")
   representationsOnBehalf Representation[]   @relation("representative")
+  otherAppellant          OtherAppellant[]   @relation("otherAppellant")
   appealRule6Parties      AppealRule6Party[] @relation("appealRule6PartyServiceUser")
+}
+
+/// OtherAppellant model
+/// Contains information on Back-Office other appellants (Other appellants in enforcements).
+model OtherAppellant {
+  id          Int          @id @default(autoincrement())
+  appeal      Appeal?      @relation("otherAppellants", fields: [appealId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+  appealId    Int?
+  appellant   ServiceUser? @relation("otherAppellant", fields: [appellantId], references: [id])
+  appellantId Int?
+
+  @@unique([appealId, appellantId])
 }
 
 /// User model
@@ -325,7 +338,7 @@ model AppellantCase {
   siteGridReferenceNorthing                String?
   typeOfPlanningApplication                String?
 
-  // Enforcement fields
+  //Enforcement fields
   enforcementNoticeListedBuilding Boolean?
   enforcementIssueDate            DateTime?
   enforcementEffectiveDate        DateTime?
@@ -336,7 +349,7 @@ model AppellantCase {
   contactAddress                  Address?  @relation(fields: [contactAddressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   contactAddressId                Int?
 
-  // Cas adverts fields
+  //Cas adverts fields
   landownerPermission Boolean?
 
   appellantCaseAdvertDetails AppellantCaseAdvertDetails[]
@@ -493,11 +506,11 @@ model LPAQuestionnaire {
   designatedSiteNameCustom            String?
   designatedSiteNames                 DesignatedSiteSelected[]
 
-  // S20 fields
+  //S20 fields
   historicEnglandConsultation Boolean?
   preserveGrantLoan           Boolean?
 
-  // Cas adverts fields
+  //Cas adverts fields
   isSiteInAreaOfSpecialControlAdverts        Boolean?
   wasApplicationRefusedDueToHighwayOrTraffic Boolean?
   didAppellantSubmitCompletePhotosAndPlans   Boolean?
