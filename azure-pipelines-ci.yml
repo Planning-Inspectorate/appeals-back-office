@@ -100,17 +100,15 @@ extends:
                   variable: appeals-bo-client-secret
           - script: |
               openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-                -keyout certificate-key.pem \
-                -out certificate.pem \
+                -keyout appeals/web/certificate-key.pem \
+                -out appeals/web/certificate.pem \
                 -subj "/C=UK/ST=./L=./O=./CN=localhost" \
                 -addext "subjectAltName=DNS:localhost,IP:127.0.0.1" \
                 -addext "keyUsage=digitalSignature,keyEncipherment" \
                 -addext "extendedKeyUsage=serverAuth,clientAuth"
             condition: eq(variables['runE2E'], 'true')
             displayName: "Generate certificate and key"
-          - script: pwd
-            condition: eq(variables['runE2E'], 'true')
-          - script: ls
+          - script: ls appeals/web
             condition: eq(variables['runE2E'], 'true')
           - script: AUTH_CLIENT_SECRET=$(appeals-bo-client-secret) AUTH_CLIENT_ID=64c20f53-becf-4b7e-ba62-c1dc9b03ccf9 GIT_SHA=$(Build.SourceVersion) docker-compose up -d
             condition: eq(variables['runE2E'], 'true')

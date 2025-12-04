@@ -44,8 +44,8 @@ services:
             - 'APPEALS_READERS_GROUP_ID=60acabaa-6ac9-4462-828a-b79adc3d802c'
             - 'HTTPS_ENABLED=true'
             - 'HTTPS_PORT=8080'
-            - 'SSL_CERT_FILE=../../certificate.pem'
-            - 'SSL_KEY_FILE=../../certificate-key.pem'
+            - 'SSL_CERT_FILE=certificate.pem'
+            - 'SSL_KEY_FILE=certificate-key.pem'
         ports:
             - 8080:8080
 
