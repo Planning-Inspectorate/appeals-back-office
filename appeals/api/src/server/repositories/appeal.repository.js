@@ -161,11 +161,6 @@ export const appealDetailsInclude = /** @type {const} */ {
 	representations: true,
 	hearingEstimate: true,
 	inquiryEstimate: true,
-	otherAppellants: {
-		include: {
-			appellant: true
-		}
-	},
 	appealRule6Parties: {
 		include: {
 			serviceUser: true
@@ -294,11 +289,6 @@ export const appealDetailsIncludeMap = /** @type {const} */ {
 	representations: true,
 	hearingEstimate: true,
 	inquiryEstimate: true,
-	otherAppellants: {
-		include: {
-			appellant: true
-		}
-	},
 	appealRule6Parties: {
 		include: {
 			serviceUser: true
