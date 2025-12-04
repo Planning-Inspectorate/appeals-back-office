@@ -144,7 +144,7 @@ extends:
           - script: curl -v http://localhost:3000/health
             displayName: "Api healthcheck"
             condition: eq(variables['runE2E'], 'true')
-          - script: curl -v https://localhost:8080/health
+          - script: curl --cacert appeals/web/certificate.pem -v https://localhost:8080/health
             displayName: "Web healthcheck"
             condition: eq(variables['runE2E'], 'true')
           - script: docker logs web
