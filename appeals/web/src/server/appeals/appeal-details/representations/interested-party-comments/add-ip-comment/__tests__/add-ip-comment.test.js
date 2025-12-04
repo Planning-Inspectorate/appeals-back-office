@@ -70,7 +70,7 @@ describe('add-ip-comment', () => {
 			);
 		});
 
-		it('should render a checkbox with id "do-not-share-ip-name"', () => {
+		it('should render a checkbox with label text "Do not share this interested party name"', () => {
 			const checkbox = pageHtml.querySelector('input[type="checkbox"]');
 			const label = pageHtml.querySelector('label[for="do-not-share-ip-name"]');
 			expect(checkbox).not.toBeNull();
