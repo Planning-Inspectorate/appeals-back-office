@@ -6,7 +6,7 @@ import {
 } from '#appeals/appeal-details/representations/interested-party-comments/common/redaction-status.js';
 import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { dayMonthYearHourMinuteToDisplayDate } from '#lib/dates.js';
+import { dayMonthYearHourMinuteToDisplayDate, dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
 import { clearEdits, editLink } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
@@ -14,6 +14,10 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { patchRepresentationAttachments } from '../../document-attachments/attachments-service.js';
 import { postRepresentation } from '../../representations.service.js';
+import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+
+
+/** @typedef {import('#appeals/appeal-details/representations/types.js').RepresentationRequest} RepresentationRequest */
 
 /**
  * @param {import('@pins/express').Request} request
@@ -90,11 +94,11 @@ export const postCheckYourAnswers = async (request, response) => {
 	const {
 		apiClient,
 		session,
-		currentAppeal: { appealId },
+		currentAppeal: { appealId, lpaCode },
 		currentRepresentation,
 	} = request;
 	
-	const representationType = currentRepresentation?.representationType
+	const representationType = currentRepresentation?.representationType ?? getRepresentationType(request.baseUrl)
 	const id = currentRepresentation?.id
 
 	const {
@@ -118,6 +122,8 @@ export const postCheckYourAnswers = async (request, response) => {
 			);
 		}
 
+		const createdDate =new Date(`${year}-${month}-${day}`).toISOString()
+
 		try {
 			await createNewDocument(apiClient, appealId, {
 				blobStorageHost:
@@ -133,12 +139,14 @@ export const postCheckYourAnswers = async (request, response) => {
 						stage: document.stage,
 						folderId: folderId,
 						GUID: document.GUID,
-						receivedDate: new Date(`${year}-${month}-${day}`).toISOString(),
+						receivedDate: createdDate,
 						redactionStatusId,
 						blobStoragePath: document.blobStoreUrl
 					}
 				]
 			});
+
+			const payload = buildPayload(representationType, document.GUID, redactionStatus, createdDate, lpaCode);
 
 			session.createRepresentation 
 			? await postRepresentation(request.apiClient, appealId, payload, representationType)
@@ -197,32 +205,38 @@ export const postCheckYourAnswers = async (request, response) => {
 	return response.redirect(nextPageUrl);
 };
 
-const buildPayload = (representationType,) => {
+/**
+ * @param {string} representationType
+ * @param {string} documentGuid
+ * @param {string} redactionStatus
+ * @param {string} createdDate
+ * @param {string} lpaCode
+ * @return {RepresentationRequest}
+ */
+const buildPayload = (representationType, documentGuid, redactionStatus, createdDate, lpaCode) => {
 	return {
-		// id: 1373,
-		origin: "citizen OR LPA",
-		author: "something", //TODO: so that it's automatically shared
-		status: "valid", //TODO: so that it's automatically shared
-		originalRepresentation: 'added as a document',
-		redactedRepresentation: '',
-		created: "2025-11-05T09:54:15.167Z",
-		notes: "",
-		attachments: [
-		],
-		representationType,
-		siteVisitRequested: false,
-		source: "citizen OR LPA",
-		represented: {
-			id: 1899, //maybe use appellant ID here? 
-			name: "Haley Eland - Source: Front Office - Has email: true",
-			email: "test2@example.com",
-			address: {
-				addressLine1: "",
-				postCode: "",
-			},
-		},
-		rejectionReasons: [
-		],
+		attachments: [documentGuid],
+		redactionStatus,
+		source: representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT ? 'citizen' : 'lpa',
+		lpaCode,
+		dateCreated: createdDate
+	}
 }
+
+/**
+ * @param {string} url
+ * @return {string}
+ */
+const getRepresentationType = url => {
+  const parts = url.split('/');
+
+  const immediateParent = parts[parts.length - 2];
+  const grandParent = parts[parts.length - 3];
+
+  if (grandParent === 'final-comments') {
+    return `${immediateParent}_final_comment`;
+  }
+
+  return immediateParent.replace(/-/g, '_');
 }
 
