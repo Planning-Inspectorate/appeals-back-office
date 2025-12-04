@@ -161,16 +161,6 @@ extends:
               echo "##vso[task.setvariable variable=API_BASE_URL]http://localhost:3000/"
             condition: eq(variables['runE2E'], 'true')
             displayName: Override BASE_URL and API_BASE_URL
-          - script: |
-              openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-                -keyout appeals/e2e/certificate-key.pem \
-                -out appeals/e2e/certificate.pem \
-                -subj "/C=UK/ST=./L=./O=./CN=localhost" \
-                -addext "subjectAltName=DNS:localhost,IP:127.0.0.1" \
-                -addext "keyUsage=digitalSignature,keyEncipherment" \
-                -addext "extendedKeyUsage=serverAuth,clientAuth"
-            condition: eq(variables['runE2E'], 'true')
-            displayName: "Generate certificate and key"
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
@@ -188,7 +178,7 @@ extends:
                 HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
                 APP: appeals
                 AZURE_TENANT_ID: $(AZURE_TENANT_ID)
-                NODE_EXTRA_CA_CERTS: $(Build.SourcesDirectory)/appeals/e2e/certificate.pem
+                NODE_EXTRA_CA_CERTS: $(Build.SourcesDirectory)/appeals/web/certificate.pem
               condition: eq(variables['runE2E'], 'true')
           - script: docker logs api
             condition: eq(variables['runE2E'], 'true')
