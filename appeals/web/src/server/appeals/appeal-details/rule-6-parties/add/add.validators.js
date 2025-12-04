@@ -1,14 +1,21 @@
 import { createEmailInputValidator } from '#lib/validators/email-input.validator.js';
 import {
-	createTextInputValidator,
-	TEXT_INPUT_MAX_CHARACTERS
+	createTextInputValidatorMinMax,
+	TEXT_INPUT_MAX_CHARACTERS,
+	TEXT_INPUT_MIN_CHARACTERS
 } from '#lib/validators/text-input-validator.js';
 
-export const validateName = createTextInputValidator(
+export const validateName = createTextInputValidatorMinMax(
 	'organisationName',
-	'Enter a name',
+	'Enter a Rule 6 party name',
 	TEXT_INPUT_MAX_CHARACTERS,
-	`Name must be ${TEXT_INPUT_MAX_CHARACTERS} characters or less`
+	TEXT_INPUT_MIN_CHARACTERS,
+	/^[A-Za-z .,'!&-]+$/,
+	`The name must be between ${TEXT_INPUT_MIN_CHARACTERS} and ${TEXT_INPUT_MAX_CHARACTERS} characters`,
+	`The name must not include numbers`
 );
 
-export const validateEmail = createEmailInputValidator();
+export const validateEmail = createEmailInputValidator(
+	'email',
+	'Enter a Rule 6 party email address'
+);
