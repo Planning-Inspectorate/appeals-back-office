@@ -207,11 +207,10 @@ export async function updateRepresentation(request, response) {
 }
 
 /**
- * @param {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment' | 'appellant_proofs_evidence' | 'lpa_proofs_evidence'} representationType
  * @returns {(req: Request, res: Response) => Promise<Response>}
  * */
-export const createRepresentation = (representationType) => async (req, res) => {
-	const { appealId } = req.params;
+export const createRepresentation = () => async (req, res) => {
+	const { appealId, representationType } = req.params;
 
 	const shouldAutoPublish =
 		representationType === APPEAL_REPRESENTATION_TYPE.COMMENT &&

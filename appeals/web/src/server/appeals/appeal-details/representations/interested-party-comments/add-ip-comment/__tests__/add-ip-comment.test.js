@@ -981,7 +981,7 @@ describe('add-ip-comment', () => {
 				redactionStatus: 'unredacted'
 			};
 
-			nock('http://test/').post(`/appeals/${appealId}/comments`, comment).reply(302);
+			nock('http://test/').post(`/appeals/${appealId}/comment`, comment).reply(302);
 
 			const response = await request.get(`${baseUrl}/${appealId}/interested-party-comments/add`);
 

@@ -38,8 +38,8 @@ export const getRepresentationUpdateValidator = composeMiddleware(
 
 export const createRepresentationValidator = composeMiddleware(
 	validateIdParameter('appealId'),
-	body('ipDetails.firstName').isString().withMessage(ERROR_MUST_BE_STRING),
-	body('ipDetails.lastName').isString().withMessage(ERROR_MUST_BE_STRING),
+	body('ipDetails.firstName').optional().isString().withMessage(ERROR_MUST_BE_STRING),
+	body('ipDetails.lastName').optional().isString().withMessage(ERROR_MUST_BE_STRING),
 	body('ipDetails.email').optional({ checkFalsy: true }).isEmail().withMessage(ERROR_INVALID_EMAIL),
 	body('attachments')
 		.optional()
