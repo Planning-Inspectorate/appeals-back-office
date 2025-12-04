@@ -147,6 +147,9 @@ extends:
           - script: curl --cacert appeals/web/certificate.pem -v https://localhost:8080/health
             displayName: "Web healthcheck"
             condition: eq(variables['runE2E'], 'true')
+          - script: curl --cacert appeals/web/certificate.pem -v https://localhost:8080/
+            displayName: "Web healthcheck"
+            condition: eq(variables['runE2E'], 'true')
           - script: docker logs web
             condition: eq(variables['runE2E'], 'true')
           - template: ../steps/node_script.yml
