@@ -163,7 +163,7 @@ describe('add rule 6 party', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a name');
+			expect(errorSummaryHtml).toContain('Enter a Rule 6 party name');
 		});
 
 		it('should return 400 on name over 300 characters with appropriate error message', async () => {
@@ -179,7 +179,39 @@ describe('add rule 6 party', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Name must be 300 characters or less');
+			expect(errorSummaryHtml).toContain('The name must be between 3 and 300 characters');
+		});
+
+		it('should return 400 on name under 3 characters with appropriate error message', async () => {
+			const response = await request.post(`${baseUrl}/${appealId}/rule-6-parties/add/name`).send({
+				organisationName: 'T'.repeat(2)
+			});
+
+			expect(response.statusCode).toBe(400);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('The name must be between 3 and 300 characters');
+		});
+
+		it('should return 400 on name that contains numbers with appropriate error message', async () => {
+			const response = await request.post(`${baseUrl}/${appealId}/rule-6-parties/add/name`).send({
+				organisationName: '1'.repeat(10)
+			});
+
+			expect(response.statusCode).toBe(400);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('The name must not include numbers');
 		});
 	});
 
@@ -308,7 +340,23 @@ describe('add rule 6 party', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter an email address');
+			expect(errorSummaryHtml).toContain('Enter a Rule 6 party email address');
+		});
+
+		it('should return 400 on email greater than 264 characters', async () => {
+			const response = await request.post(`${baseUrl}/${appealId}/rule-6-parties/add/email`).send({
+				email: `${'a'.repeat(265)}@email.com`
+			});
+
+			expect(response.statusCode).toBe(400);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Email must be 254 characters or less');
 		});
 
 		it('should return 400 on invalid email address with appropriate error message', async () => {

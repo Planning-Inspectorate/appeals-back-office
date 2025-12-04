@@ -23,11 +23,11 @@ export const createEmailInputValidator = (
 				}
 			})
 			.bail()
-			.isEmail()
-			.withMessage(INVALID_EMAIL_MESSAGE)
-			.bail()
 			.isLength({ max: maxLength })
 			.withMessage(maxLengthErrorMessage)
+			.bail()
+			.isEmail()
+			.withMessage(INVALID_EMAIL_MESSAGE)
 	);
 
 export const createEmailInputOptionalValidator = (
