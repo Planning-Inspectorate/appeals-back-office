@@ -31,7 +31,7 @@ services:
             - 'NODE_ENV=test'
             - 'AUTH_CLIENT_SECRET=${AUTH_CLIENT_SECRET}'
             - 'AUTH_CLIENT_ID=${AUTH_CLIENT_ID}'
-            - 'APP_HOSTNAME=api:8080'
+            - 'APP_HOSTNAME=localhost:8080'
             - 'API_HOST=http://api:3000'
             - 'AUTH_DISABLED=false'
             - 'SESSION_SECRET=dummy-secret'
