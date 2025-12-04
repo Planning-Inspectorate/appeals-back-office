@@ -4,7 +4,7 @@ import { databaseConnector } from '#utils/database-connector.js';
  * @param {Array<{id: number, reference: string}>} appeals
  */
 export async function deleteAppealsInBatches(appeals) {
-	const BATCH_SIZE = 200;
+	const BATCH_SIZE = 100;
 	const noIterations = appeals.length / BATCH_SIZE;
 
 	try {
