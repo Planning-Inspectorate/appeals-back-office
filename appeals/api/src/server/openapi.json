@@ -412,6 +412,79 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/rule-6-parties/{rule6PartyId}": {
+			"patch": {
+				"tags": ["Appeal Rule 6 Parties"],
+				"description": "Updates a rule 6 party for an appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "rule6PartyId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Updates a rule 6 party for an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Rule6PartyResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Rule6PartyResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Rule 6 party details to update",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateRule6PartyRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateRule6PartyRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/appeal-status/roll-back": {
 			"post": {
 				"tags": ["Appeal Status"],

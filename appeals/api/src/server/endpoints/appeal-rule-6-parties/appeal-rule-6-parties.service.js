@@ -3,7 +3,7 @@ import logger from '#utils/logger.js';
 import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('#db-client').ServiceUser} ServiceUser */
-
+/** @typedef {import('#db-client').AppealRule6Party} AppealRule6Party */
 /**
  * @param {number} appealId
  * @param {ServiceUser} serviceUser
@@ -23,4 +23,20 @@ const addRule6Party = async (appealId, serviceUser, azureAdUserId) => {
 	}
 };
 
-export { addRule6Party };
+/**
+ * @param {number} rule6PartyId
+ * @param {ServiceUser} serviceUser
+ * @param {string} azureAdUserId
+ * @returns {Promise<AppealRule6Party>}
+ */
+// eslint-disable-next-line no-unused-vars
+const updateRule6Party = async (rule6PartyId, serviceUser, azureAdUserId) => {
+	try {
+		return await appealRule6PartyRepository.updateRule6Party({ rule6PartyId, serviceUser });
+	} catch (error) {
+		logger.error(error, 'Failed to update rule 6 party');
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+	}
+};
+
+export { addRule6Party, updateRule6Party };

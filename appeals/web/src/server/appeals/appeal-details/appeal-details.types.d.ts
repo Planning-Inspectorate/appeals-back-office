@@ -383,6 +383,11 @@ export interface WebDocumentationSummary extends DocumentationSummary {
 	lpaProofOfEvidence?: WebDocumentationSummaryEntry;
 }
 
+export interface AppealRule6Party {
+	id: number;
+	serviceUser: WebServiceUser;
+}
+
 export interface WebAppeal extends SingleAppealDetailsResponse {
 	lpaEmailAddress?: string;
 	appealTimetable: WebAppealTimetable | null;

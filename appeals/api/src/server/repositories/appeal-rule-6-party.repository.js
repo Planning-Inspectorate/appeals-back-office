@@ -64,4 +64,34 @@ const createAppealRule6Party = ({ appealId, serviceUser }) => {
 	return databaseConnector.appealRule6Party.create({ data });
 };
 
-export default { getRule6PartiesForAppeal, createAppealRule6Party };
+/**
+ * @param {{rule6PartyId: number, serviceUser: ServiceUser}} data
+ * @returns {Promise<AppealRule6Party>}
+ */
+const updateRule6Party = async ({ rule6PartyId, serviceUser }) => {
+	return databaseConnector.appealRule6Party.update({
+		where: { id: rule6PartyId },
+		select: {
+			id: true,
+			appealId: true,
+			serviceUserId: true,
+			serviceUser: {
+				select: {
+					id: true,
+					organisationName: true,
+					email: true
+				}
+			}
+		},
+		data: {
+			serviceUser: {
+				update: {
+					organisationName: serviceUser.organisationName,
+					email: serviceUser.email
+				}
+			}
+		}
+	});
+};
+
+export default { createAppealRule6Party, getRule6PartiesForAppeal, updateRule6Party };

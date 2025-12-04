@@ -185,6 +185,7 @@ const mockPadsUserFindUnique = jest.fn().mockResolvedValue({});
 const mockAppellantCaseAdvertDetailDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppealRule6PartyFindMany = jest.fn().mockResolvedValue({});
 const mockAppealRule6PartyCreate = jest.fn().mockResolvedValue({});
+const mockAppealRule6PartyUpdate = jest.fn().mockResolvedValue({});
 const mockAppealRule6PartyDeleteMany = jest.fn().mockResolvedValue({});
 const mockGroundFindMany = jest.fn().mockResolvedValue({});
 const mockGroundUpsert = jest.fn().mockResolvedValue({});
@@ -673,6 +674,7 @@ class MockPrismaClient {
 		return {
 			findMany: mockAppealRule6PartyFindMany,
 			create: mockAppealRule6PartyCreate,
+			update: mockAppealRule6PartyUpdate,
 			deleteMany: mockAppealRule6PartyDeleteMany
 		};
 	}

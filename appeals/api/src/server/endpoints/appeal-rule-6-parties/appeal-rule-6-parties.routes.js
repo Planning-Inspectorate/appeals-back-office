@@ -58,4 +58,33 @@ router.post(
 	asyncHandler(controller.addRule6Party)
 );
 
+router.patch(
+	'/:appealId/rule-6-parties/:rule6PartyId',
+	/*
+        #swagger.tags = ['Appeal Rule 6 Parties']
+        #swagger.path = '/appeals/{appealId}/rule-6-parties/{rule6PartyId}'
+        #swagger.description = 'Updates a rule 6 party for an appeal'
+        #swagger.parameters['azureAdUserId'] = {
+            in: 'header',
+            required: true,
+            example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+        }
+        #swagger.requestBody = {
+			in: 'body',
+			description: 'Rule 6 party details to update',
+			schema: { $ref: '#/components/schemas/CreateRule6PartyRequest' },
+			required: true
+		}
+        #swagger.responses[200] = {
+            description: 'Updates a rule 6 party for an appeal',
+            schema: { $ref: '#/components/schemas/Rule6PartyResponse' }
+        }
+        #swagger.responses[400] = {}
+        #swagger.responses[404] = {}
+	 */
+	validators.updateRule6PartyValidator,
+	checkAppealExistsByIdAndAddPartialToRequest(['appealRule6Parties']),
+	asyncHandler(controller.updateRule6Party)
+);
+
 export { router as appealRule6PartiesRoutes };
