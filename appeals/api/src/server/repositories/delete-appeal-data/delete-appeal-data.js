@@ -4,7 +4,7 @@ import { databaseConnector } from '#utils/database-connector.js';
  * @param {Array<{id: number, reference: string}>} appeals
  */
 export async function deleteAppealsInBatches(appeals) {
-	const BATCH_SIZE = 100;
+	const BATCH_SIZE = 10;
 	const noIterations = appeals.length / BATCH_SIZE;
 
 	try {
@@ -23,6 +23,8 @@ export async function deleteAppealsInBatches(appeals) {
 			const appellantCaseIDs = await getAppellantCases(appealIDs);
 			const lpaqIDs = await getLpaQuestionnaires(appealIDs);
 			const docIDs = await getDocuments(appealIDs);
+			console.log(appealIDs);
+			console.log(docIDs.length);
 
 			await deleteAppealData(
 				appealIDs,
