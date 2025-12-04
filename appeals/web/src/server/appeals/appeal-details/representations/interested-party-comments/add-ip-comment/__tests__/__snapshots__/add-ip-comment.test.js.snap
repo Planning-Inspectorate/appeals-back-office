@@ -222,8 +222,8 @@ exports[`add-ip-comment GET /add/ip-details should match the snapshot 1`] = `
             <main class="govuk-main-wrapper"
             id="main-content">
                 <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-                        <h1 class="govuk-heading-l">Interested party&#39;s details</h1>
+                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - add interested party comment</span>
+                        <h1                         class="govuk-heading-l">Interested party&#39;s details</h1>
                     </div>
                 </div>
                 <div class="govuk-grid-row">
@@ -232,17 +232,28 @@ exports[`add-ip-comment GET /add/ip-details should match the snapshot 1`] = `
                             <div class="govuk-grid-column-full">
                                 <form method="POST" novalidate="novalidate">
                                     <div class="govuk-form-group">
-                                        <label class="govuk-label" for="first-name">First name</label>
+                                        <label class="govuk-label govuk-!-font-weight-bold" for="first-name">First name</label>
+                                        <div id="first-name-hint" class="govuk-hint">Or given name</div>
                                         <input class="govuk-input" id="first-name" name="firstName"
-                                        type="text">
+                                        type="text" aria-describedby="first-name-hint">
                                     </div>
                                     <div class="govuk-form-group">
-                                        <label class="govuk-label" for="last-name">Last name</label>
+                                        <label class="govuk-label govuk-!-font-weight-bold" for="last-name">Last name</label>
+                                        <div id="last-name-hint" class="govuk-hint">Or family name</div>
                                         <input class="govuk-input" id="last-name" name="lastName"
-                                        type="text">
+                                        type="text" aria-describedby="last-name-hint">
                                     </div>
                                     <div class="govuk-form-group">
-                                        <label class="govuk-label" for="email-address">Email address (optional)</label>
+                                        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                                            <div class="govuk-checkboxes__item">
+                                                <input class="govuk-checkboxes__input" id="do-not-share-ip-name" name="do-not-share-ip-name"
+                                                type="checkbox" value="">
+                                                <label class="govuk-label govuk-checkboxes__label" for="do-not-share-ip-name">Do not share this interested party name</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-!-font-weight-bold" for="email-address">Email address (optional)</label>
                                         <input class="govuk-input" id="email-address"
                                         name="emailAddress" type="text">
                                     </div>
