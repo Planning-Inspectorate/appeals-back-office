@@ -182,4 +182,60 @@ describe('appeal rule 6 parties routes', () => {
 			});
 		});
 	});
+
+	describe('/:appealId/rule-6-parties/:rule6PartyId', () => {
+		describe('PATCH', () => {
+			test('updates a rule 6 party', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					appealRule6Parties: [rule6Party]
+				});
+				// @ts-ignore
+				databaseConnector.appealRule6Party.update.mockResolvedValue({
+					...rule6Party,
+					serviceUser: { organisationName: 'Test Organisation', email: 'test@example.com' }
+				});
+
+				const response = await request
+					.patch(`/appeals/${appealId}/rule-6-parties/${rule6Party.id}`)
+					.send({
+						serviceUser: { organisationName: 'Test Organisation', email: 'test@example.com' }
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appealRule6Party.update).toHaveBeenCalledWith({
+					where: {
+						id: Number(rule6Party.id)
+					},
+					data: {
+						serviceUser: {
+							update: {
+								organisationName: 'Test Organisation',
+								email: 'test@example.com'
+							}
+						}
+					},
+					select: {
+						id: true,
+						appealId: true,
+						serviceUserId: true,
+						serviceUser: {
+							select: {
+								id: true,
+								organisationName: true,
+								email: true
+							}
+						}
+					}
+				});
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					...rule6Party,
+					serviceUser: { organisationName: 'Test Organisation', email: 'test@example.com' }
+				});
+			});
+		});
+	});
 });

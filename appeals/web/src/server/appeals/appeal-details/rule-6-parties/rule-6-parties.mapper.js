@@ -6,12 +6,13 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 
 /**
  * @param {Appeal} appealData
+ * @param {'Add' | 'Update'} action
  * @param {string} backLinkUrl
  * @param {Record<string, string>} values
  * @param {import("@pins/express").ValidationErrors} [errors]
  * @returns {PageContent}
  */
-export function namePage(appealData, backLinkUrl, values = {}, errors) {
+export function namePage(appealData, action, backLinkUrl, values = {}, errors) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageComponent} */
@@ -34,21 +35,22 @@ export function namePage(appealData, backLinkUrl, values = {}, errors) {
 
 	/** @type {PageContent} */
 	return {
-		title: `Appeal ${shortAppealReference} - Add rule 6 party`,
+		title: `Appeal ${shortAppealReference} - ${action} rule 6 party`,
 		backLinkUrl,
-		preHeading: `Appeal ${shortAppealReference} - Add rule 6 party`,
+		preHeading: `Appeal ${shortAppealReference} - ${action} rule 6 party`,
 		pageComponents: [nameInput]
 	};
 }
 
 /**
  * @param {Appeal} appealData
+ * @param {'Add' | 'Update'} action
  * @param {string} backLinkUrl
  * @param {Record<string, string>} values
  * @param {import("@pins/express").ValidationErrors} [errors]
  * @returns {PageContent}
  */
-export function emailPage(appealData, backLinkUrl, values = {}, errors) {
+export function emailPage(appealData, action, backLinkUrl, values = {}, errors) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageComponent} */
@@ -71,9 +73,9 @@ export function emailPage(appealData, backLinkUrl, values = {}, errors) {
 
 	/** @type {PageContent} */
 	return {
-		title: `Appeal ${shortAppealReference} - Add rule 6 party`,
+		title: `Appeal ${shortAppealReference} - ${action} rule 6 party`,
 		backLinkUrl,
-		preHeading: `Appeal ${shortAppealReference} - Add rule 6 party`,
+		preHeading: `Appeal ${shortAppealReference} - ${action} rule 6 party`,
 		pageComponents: [emailInput]
 	};
 }

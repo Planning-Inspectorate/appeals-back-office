@@ -38,3 +38,29 @@ export const addRule6Party = async (req, res) => {
 
 	return res.status(201).send({ appealId, serviceUser });
 };
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const updateRule6Party = async (req, res) => {
+	const {
+		body: { serviceUser },
+		params
+	} = req;
+
+	const rule6PartyId = Number(params.rule6PartyId);
+	const azureAdUserId = String(req.get('azureAdUserId'));
+	try {
+		const result = await appealRule6PartiesService.updateRule6Party(
+			rule6PartyId,
+			serviceUser,
+			azureAdUserId
+		);
+		return res.status(200).send(result);
+	} catch (error) {
+		logger.error(error);
+		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
+	}
+};
