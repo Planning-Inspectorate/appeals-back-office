@@ -13,6 +13,8 @@ import { SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING } from '#lib/constants.js';
  * @param {string} [options.showMoreLabelText]
  * @param {string} [options.classes]
  * @param {string} [options.actionText]
+ * @param {string} [options.toggleTextCollapsed]
+ * @param {string} [options.toggleTextExpanded]
  * @param {string} [options.cypressDataName]
  * @returns {Instructions}
  */
@@ -26,6 +28,8 @@ export function textSummaryListItem({
 	showMoreLabelText,
 	classes,
 	actionText = 'Change',
+	toggleTextCollapsed,
+	toggleTextExpanded,
 	cypressDataName = actionText.toLowerCase() + '-' + id
 }) {
 	/** @type {TextProperty & ClassesProperty | HtmlProperty & ClassesProperty} */
@@ -47,7 +51,9 @@ export function textSummaryListItem({
 					type: 'show-more',
 					parameters: {
 						text: value,
-						labelText: showMoreLabelText || text
+						labelText: showMoreLabelText || text,
+						toggleTextCollapsed,
+						toggleTextExpanded
 					}
 				}
 			]
