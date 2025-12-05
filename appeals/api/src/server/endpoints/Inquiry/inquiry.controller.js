@@ -8,6 +8,7 @@ import transitionState from '#state/transition-state.js';
 import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
 	AUDIT_TRAIL_INQUIRY_ADDRESS_ADDED,
 	AUDIT_TRAIL_INQUIRY_ADDRESS_UPDATED,
@@ -20,6 +21,7 @@ import {
 	VALIDATION_OUTCOME_COMPLETE,
 	VALIDATION_OUTCOME_INCOMPLETE
 } from '@pins/appeals/constants/support.js';
+import { setTimeInTimeZone } from '@pins/appeals/utils/business-days.js';
 import formatDate, {
 	dateISOStringToDisplayDate,
 	formatTime12h
@@ -39,20 +41,7 @@ import { createInquiry, deleteInquiry, updateInquiry } from './inquiry.service.j
  */
 export const postInquiry = async (req, res) => {
 	const {
-		body: {
-			inquiryStartTime,
-			inquiryEndTime,
-			address,
-			startDate,
-			estimatedDays,
-			lpaQuestionnaireDueDate,
-			statementDueDate,
-			ipCommentsDueDate,
-			statementOfCommonGroundDueDate,
-			proofOfEvidenceAndWitnessesDueDate,
-			planningObligationDueDate,
-			isStartCase
-		},
+		body: { inquiryStartTime, inquiryEndTime, address, startDate, estimatedDays, isStartCase },
 		params,
 		appeal
 	} = req;
@@ -60,6 +49,27 @@ export const postInquiry = async (req, res) => {
 	const appealId = Number(params.appealId);
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	try {
+		const dueDateFields = [
+			'lpaQuestionnaireDueDate',
+			'statementDueDate',
+			'ipCommentsDueDate',
+			'statementOfCommonGroundDueDate',
+			'proofOfEvidenceAndWitnessesDueDate',
+			'planningObligationDueDate'
+		];
+
+		const dueDates = dueDateFields.reduce((acc, field) => {
+			if (req.body[field]) {
+				// @ts-ignore
+				acc[field] = setTimeInTimeZone(
+					req.body[field],
+					DEADLINE_HOUR,
+					DEADLINE_MINUTE
+				).toISOString();
+			}
+			return acc;
+		}, {});
+
 		await createInquiry(
 			{
 				appealId,
@@ -67,12 +77,7 @@ export const postInquiry = async (req, res) => {
 				inquiryStartTime,
 				inquiryEndTime,
 				estimatedDays,
-				lpaQuestionnaireDueDate,
-				statementDueDate,
-				ipCommentsDueDate,
-				statementOfCommonGroundDueDate,
-				proofOfEvidenceAndWitnessesDueDate,
-				planningObligationDueDate,
+				...dueDates,
 				isStartCase,
 				...(address && {
 					address: {
