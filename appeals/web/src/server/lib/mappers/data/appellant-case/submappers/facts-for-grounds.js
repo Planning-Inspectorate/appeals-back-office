@@ -22,7 +22,7 @@ export const mapFactsForGrounds = ({ appellantCaseData, currentRoute, userHasUpd
 			value: {
 				html: !hasData ? 'No data' : appealGround.factsForGround
 			},
-			link: `${currentRoute}/ground/${groundRef}/facts-for-ground/${actionText.toLowerCase()}`,
+			link: `${currentRoute}/facts-for-ground/${groundRef}/${actionText.toLowerCase()}`,
 			editable: hasData && userHasUpdateCase,
 			classes: 'facts-for-ground',
 			actionText,
