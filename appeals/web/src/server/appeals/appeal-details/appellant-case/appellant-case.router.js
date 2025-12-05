@@ -5,6 +5,7 @@ import enforcementIssueDateRouter from '#appeals/appeal-details/appellant-case/e
 import enforcementNoticeListedBuildingRouter from '#appeals/appeal-details/appellant-case/enforcement-notice-listed-building/enforcement-notice-listed-building.router.js';
 import enforcementNoticeRouter from '#appeals/appeal-details/appellant-case/enforcement-notice/enforcement-notice.router.js';
 import enforcementReferenceRouter from '#appeals/appeal-details/appellant-case/enforcement-reference/enforcement-reference.router.js';
+import groundsForAppealRouter from '#appeals/appeal-details/appellant-case/grounds-for-appeal/grounds-for-appeal.router.js';
 import changeProcedureTypeRouter from '#appeals/appeal-details/change-procedure-type/change-procedure-type.router.js';
 import { permissionNames } from '#environment/permissions.js';
 import { extractAndProcessDocumentDateErrors } from '#lib/validators/date-input.validator.js';
@@ -264,8 +265,15 @@ router.use(
 );
 
 router.use(
+	'/grounds-for-appeal',
+	validateAppealWithInclude(['appellantCase', 'appealGrounds']),
+	assertUserHasPermission(permissionNames.updateCase),
+	groundsForAppealRouter
+);
+
+router.use(
 	'/facts-for-ground',
-	validateAppeal,
+	validateAppealWithInclude(['appellantCase', 'appealGrounds']),
 	assertUserHasPermission(permissionNames.updateCase),
 	factsForGroundRouter
 );

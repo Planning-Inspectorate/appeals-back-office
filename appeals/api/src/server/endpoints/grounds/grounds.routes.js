@@ -5,23 +5,23 @@ import { Router as createRouter } from 'express';
 const router = createRouter();
 
 router.get(
-	'/site-visit-types',
+	'/grounds',
 	/*
-		#swagger.tags = ['Site Visit Types']
-		#swagger.path = '/appeals/site-visit-types'
-		#swagger.description = 'Gets site visit types'
+		#swagger.tags = ['Grounds']
+		#swagger.path = '/appeals/grounds'
+		#swagger.description = 'Gets grounds'
 		#swagger.parameters['azureAdUserId'] = {
 			in: 'header',
 			required: true,
 			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 		}
 		#swagger.responses[200] = {
-			description: 'Site visit types',
-			schema: { $ref: '#/components/schemas/AllSiteVisitTypesResponse' },
+			description: 'Grounds',
+			schema: { $ref: '#/components/schemas/AllGroundsResponse' },
 		}
 		#swagger.responses[400] = {}
 	 */
-	asyncHandler(getLookupData('siteVisitType'))
+	asyncHandler(getLookupData('ground'))
 );
 
-export { router as siteVisitTypesRoutes };
+export { router as groundsRoutes };

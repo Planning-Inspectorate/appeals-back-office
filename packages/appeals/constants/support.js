@@ -261,8 +261,10 @@ export const AUDIT_TRAIL_CONTACT_PLANNING_INSPECTORATE_DATE_UPDATED =
 	'Contact planning inspectorate date updated to {replacement0}';
 export const AUDIT_TRAIL_ENFORCEMENT_NOTICE_CONTACT_ADDRESS =
 	'Contact address updated to {replacement0}';
+export const AUDIT_TRAIL_ENFORCEMENT_GROUND_ADDED = 'Ground ({replacement0}) added';
 export const AUDIT_TRAIL_ENFORCEMENT_GROUND_UPDATED =
 	'Facts for ground ({replacement0}) updated to {replacement1}';
+export const AUDIT_TRAIL_ENFORCEMENT_GROUND_REMOVED = 'Ground ({replacement0}) removed';
 
 export const DATABASE_ORDER_BY_ASC = 'asc';
 export const DATABASE_ORDER_BY_DESC = 'desc';

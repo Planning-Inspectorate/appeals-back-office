@@ -301,6 +301,71 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/grounds-for-appeal": {
+			"patch": {
+				"tags": ["Grounds for appeal"],
+				"description": "Updates grounds for appeal for a single appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": false,
+						"nullable": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Updates a single appeal by id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateCaseGroundsForAppealResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateCaseGroundsForAppealResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Grounds for appeal to update",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateCaseGroundsForAppealRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateCaseGroundsForAppealRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/grounds-for-appeal/{groundRef}": {
 			"patch": {
 				"tags": ["Grounds for appeal"],
@@ -2115,6 +2180,43 @@
 							"application/xml": {
 								"schema": {
 									"$ref": "#/components/schemas/AllSiteVisitTypesResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
+		"/appeals/grounds": {
+			"get": {
+				"tags": ["Grounds"],
+				"description": "Gets grounds",
+				"parameters": [
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Grounds",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AllGroundsResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/AllGroundsResponse"
 								}
 							}
 						}
@@ -12534,6 +12636,25 @@
 				},
 				"xml": {
 					"name": "AllSiteVisitTypesResponse"
+				}
+			},
+			"AllGroundsResponse": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"name": {
+							"type": "string",
+							"example": "Access required"
+						},
+						"id": {
+							"type": "number",
+							"example": 1
+						}
+					}
+				},
+				"xml": {
+					"name": "AllGroundsResponse"
 				}
 			},
 			"AllAppellantCaseValidationOutcomesResponse": {

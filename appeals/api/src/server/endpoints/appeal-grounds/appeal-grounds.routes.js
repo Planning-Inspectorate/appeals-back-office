@@ -7,6 +7,36 @@ import { controller } from './appeal-grounds.controller.js';
 const router = createRouter();
 
 router.patch(
+	'/:appealId/grounds-for-appeal',
+	/*
+		#swagger.tags = ['Grounds for appeal']
+		#swagger.path = '/appeals/{appealId}/grounds-for-appeal'
+		#swagger.description = 'Updates grounds for appeal for a single appeal'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: false,
+			type: 'string',
+			nullable: true
+		}
+		#swagger.requestBody = {
+			in: 'body',
+			description: 'Grounds for appeal to update',
+			schema: { $ref: '#/components/schemas/UpdateCaseGroundsForAppealRequest' },
+			required: true
+		}
+		#swagger.responses[200] = {
+			description: 'Updates a single appeal by id',
+			schema: { $ref: '#/components/schemas/UpdateCaseGroundsForAppealResponse' }
+		}
+		#swagger.responses[400] = {}
+		#swagger.responses[500] = {}
+	 */
+	patchAppealValidator,
+	asyncHandler(checkAppealExistsByIdAndAddPartialToRequest(['appealGrounds'])),
+	asyncHandler(controller.updateGroundsForAppealByAppealId)
+);
+
+router.patch(
 	'/:appealId/grounds-for-appeal/:groundRef',
 	/*
 		#swagger.tags = ['Grounds for appeal']

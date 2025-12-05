@@ -1,7 +1,11 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import appealGroundRepository from '#repositories/appeal-ground.repository.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { AUDIT_TRAIL_ENFORCEMENT_GROUND_UPDATED } from '@pins/appeals/constants/support.js';
+import {
+	AUDIT_TRAIL_ENFORCEMENT_GROUND_ADDED,
+	AUDIT_TRAIL_ENFORCEMENT_GROUND_REMOVED,
+	AUDIT_TRAIL_ENFORCEMENT_GROUND_UPDATED
+} from '@pins/appeals/constants/support.js';
 
 /**
  * @param {string} groundRef
@@ -9,11 +13,18 @@ import { AUDIT_TRAIL_ENFORCEMENT_GROUND_UPDATED } from '@pins/appeals/constants/
  * @returns {string}
  */
 const getDetails = (groundRef, data) => {
-	const { factsForGround = '' } = data;
-	return stringTokenReplacement(AUDIT_TRAIL_ENFORCEMENT_GROUND_UPDATED, [
-		groundRef,
-		factsForGround || ''
-	]);
+	const { isDeleted, factsForGround = '' } = data;
+	switch (isDeleted) {
+		case true:
+			return stringTokenReplacement(AUDIT_TRAIL_ENFORCEMENT_GROUND_REMOVED, [groundRef]);
+		case false:
+			return stringTokenReplacement(AUDIT_TRAIL_ENFORCEMENT_GROUND_ADDED, [groundRef]);
+		default:
+			return stringTokenReplacement(AUDIT_TRAIL_ENFORCEMENT_GROUND_UPDATED, [
+				groundRef,
+				factsForGround || ''
+			]);
+	}
 };
 
 /**
@@ -24,7 +35,7 @@ const getDetails = (groundRef, data) => {
  */
 const updateAppealGround = async (azureAdUserId, appealGround) => {
 	const { appealId, groundId, groundRef, ...data } = appealGround;
-	const response = appealGroundRepository.updateAppealGroundByAppealIdAndGroundId(
+	const response = await appealGroundRepository.updateAppealGroundByAppealIdAndGroundId(
 		appealId,
 		groundId,
 		data
