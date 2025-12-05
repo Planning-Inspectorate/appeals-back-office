@@ -221,11 +221,13 @@ export const simulateInquiryElapsed = async (req, res) => {
 	if (event !== null) {
 		const { id, ...inquiryData } = event;
 
+		const estimationDays = inquiryData?.estimatedDays ?? 0;
+
 		if (inquiryData.inquiryStartTime !== null) {
-			inquiryData.inquiryStartTime = sub(new Date(), { days: 3 });
+			inquiryData.inquiryStartTime = sub(new Date(), { days: 3 + estimationDays });
 		}
 		if (inquiryData.inquiryEndTime !== null) {
-			inquiryData.inquiryEndTime = sub(new Date(), { days: 3 });
+			inquiryData.inquiryEndTime = sub(new Date(), { days: 3 + estimationDays });
 		}
 
 		await databaseConnector.inquiry.update({
