@@ -17,6 +17,7 @@ import * as authService from './auth.service.js';
  * @type {import('express').RequestHandler<?, ?, ?, { redirect_to: string }>}
  */
 export async function startMsalAuthentication(request, response) {
+	pino.info('Starting MSAL Authentication...');
 	// A nonce is generated to identify the OIDC as originating from our
 	// application, and for this OIDC attempt only. The nonce is later returned as
 	// idTokenClaim within the authentication result fetched by the authentication
@@ -29,6 +30,8 @@ export async function startMsalAuthentication(request, response) {
 	// end of the authentication journey.
 	const postSigninRedirectUri = request.query.redirect_to || '/';
 
+	pino.info(postSigninRedirectUri);
+
 	// Set the data that will exist throughout the OpenID Connect flow lifecycle.
 	// This will be consumed in phase 2 to verify the inbound redirect from the
 	// MSAL authentication.
@@ -36,9 +39,11 @@ export async function startMsalAuthentication(request, response) {
 		nonce,
 		postSigninRedirectUri
 	});
+	const redirectUrl = await authService.getAuthCodeUrl({ nonce }, request.session.id);
+	pino.info(redirectUrl);
 	// Generate – and then redirect to – a url where the user will authenticate
 	// against MSAL using their PINS account.
-	response.redirect(await authService.getAuthCodeUrl({ nonce }, request.session.id));
+	response.redirect(redirectUrl);
 	return;
 }
 
