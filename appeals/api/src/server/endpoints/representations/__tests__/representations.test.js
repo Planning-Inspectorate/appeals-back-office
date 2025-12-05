@@ -3709,6 +3709,147 @@ describe('/appeals/:id/reps', () => {
 					templateName: 'not-received-proof-of-evidence-and-witnesses'
 				});
 			});
+
+			test('send notify to lpa and appellant when both appellant and lpa proof of evidence have been provided', async () => {
+				mockS78Appeal = {
+					...mockS78Appeal,
+					representations: [
+						...mockS78Appeal.representations,
+						{
+							id: 4488,
+							appealId: 2377,
+							representationType: 'lpa_proofs_evidence',
+							dateCreated: new Date('2024-11-27T15:08:55.704Z'),
+							dateLastUpdated: new Date('2024-11-27T15:08:55.704Z'),
+							originalRepresentation: 'Proof of evidence from lpa',
+							redactedRepresentation: null,
+							representedId: 5875,
+							representativeId: null,
+							lpaCode: null,
+							status: 'valid',
+							reviewer: null,
+							notes: null,
+							siteVisitRequested: false,
+							source: 'citizen'
+						},
+						{
+							id: 4489,
+							appealId: 2377,
+							representationType: 'appellant_proofs_evidence',
+							dateCreated: new Date('2024-11-27T15:08:55.704Z'),
+							dateLastUpdated: new Date('2024-11-27T15:08:55.704Z'),
+							originalRepresentation: 'Proof of evidence from appellant',
+							redactedRepresentation: null,
+							representedId: 5875,
+							representativeId: null,
+							lpaCode: null,
+							status: 'valid',
+							reviewer: null,
+							notes: null,
+							siteVisitRequested: false,
+							source: 'citizen'
+						}
+					],
+					inquiry: {
+						id: 1,
+						inquiryStartTime: '2025-12-13 14:00',
+						estimatedDays: 8,
+						address: {
+							addressLine1: '10 Mole lane',
+							addressLine2: 'Test address 2',
+							addressTown: 'London',
+							addressCounty: 'London',
+							postcode: 'WL3 6GH',
+							addressCountry: 'United Kingdom'
+						}
+					}
+				};
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => mockS78Appeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedEmailPayload = {
+					lpa_reference: mockS78Appeal.applicationReference,
+					has_ip_comments: false,
+					has_statement: false,
+					is_hearing_procedure: false,
+					is_inquiry_procedure: false,
+					appeal_reference_number: mockS78Appeal.reference,
+					final_comments_deadline: '',
+					site_address: expectedSiteAddress,
+					user_type: ''
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([
+					{ representationType: 'appellant_proofs_evidence' },
+					{ representationType: 'lpa_proofs_evidence' }
+				]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'evidence' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						what_happens_next: 'appeals',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						inquiry_address: '',
+						inquiry_date: '13 December 2025',
+						inquiry_detail_warning_text: '',
+						inquiry_expected_days: '',
+						inquiry_time: '',
+						inquiry_witnesses_text: '',
+						inquiry_subject_line: 'local planning authority',
+						is_inquiry_procedure: true
+					},
+					recipientEmail: appealS78.appellant.email,
+					templateName: 'proof-of-evidence-and-witnesses-shared'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						what_happens_next: 'manage-appeals',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						inquiry_address: '',
+						inquiry_date: '13 December 2025',
+						inquiry_detail_warning_text: '',
+						inquiry_expected_days: '',
+						inquiry_time: '',
+						inquiry_witnesses_text: '',
+						inquiry_subject_line: 'appellant',
+						is_inquiry_procedure: true
+					},
+					recipientEmail: appealS78.lpa.email,
+					templateName: 'proof-of-evidence-and-witnesses-shared'
+				});
+			});
 		});
 	});
 });

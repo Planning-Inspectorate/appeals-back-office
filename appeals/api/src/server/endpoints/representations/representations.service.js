@@ -553,15 +553,6 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 			: 'We will contact you by email when we set up the inquiry';
 
 		if (
-			lpaProofOfEvidence &&
-			lpaProofOfEvidence.status === APPEAL_REPRESENTATION_STATUS.VALID &&
-			appellantProofOfEvidence &&
-			appellantProofOfEvidence.status === APPEAL_REPRESENTATION_STATUS.VALID
-		) {
-			return result;
-		}
-
-		if (
 			!lpaProofOfEvidence ||
 			lpaProofOfEvidence.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 		) {
@@ -605,6 +596,33 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 				inquirySubjectLine:
 					'We did not receive any proof of evidence and witnesses from appellant or any other parties'
 			});
+		}
+
+		if (lpaProofOfEvidence && appellantProofOfEvidence) {
+			await notifyPublished({
+				appeal,
+				notifyClient,
+				isInquiryProcedure: true,
+				templateName: 'proof-of-evidence-and-witnesses-shared',
+				recipientEmail: appeal.agent?.email || appeal.appellant?.email,
+				whatHappensNext: 'appeals',
+				azureAdUserId,
+				inquiryDate,
+				inquirySubjectLine: 'local planning authority'
+			});
+
+			await notifyPublished({
+				appeal,
+				notifyClient,
+				isInquiryProcedure: true,
+				templateName: 'proof-of-evidence-and-witnesses-shared',
+				recipientEmail: appeal.lpa?.email,
+				whatHappensNext: 'manage-appeals',
+				azureAdUserId,
+				inquiryDate,
+				inquirySubjectLine: 'appellant'
+			});
+			return result;
 		}
 	} catch (error) {
 		logger.error(error);

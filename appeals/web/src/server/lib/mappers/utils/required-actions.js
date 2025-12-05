@@ -342,16 +342,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				actions.push('reviewLpaProofOfEvidence');
 			}
 
-			const lpaProofOfEvidenceAwaitingReview =
-				lpaProofOfEvidenceReceived && !lpaProofOfEvidenceDone;
-			const appellantProofOfEvidenceAwaitingReview =
-				appellantProofOfEvidenceReceived && !appellantProofOfEvidenceDone;
-			if (
-				(proofOfEvidenceDueDatePassed &&
-					!lpaProofOfEvidenceAwaitingReview &&
-					!appellantProofOfEvidenceAwaitingReview) ||
-				(appellantProofOfEvidenceDone && lpaProofOfEvidenceDone)
-			) {
+			if (proofOfEvidenceDueDatePassed) {
 				actions.push('progressToInquiry');
 			} else if (!lpaProofOfEvidenceReceived && !appellantProofOfEvidenceReceived) {
 				actions.push('awaitingProofOfEvidenceAndWitnesses');
