@@ -2,6 +2,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} Appeal
+ * @typedef {import('#appeals/appeal-details/appeal-details.types.js').AppealRule6Party} AppealRule6Party
  */
 
 /**
@@ -78,4 +79,30 @@ export function emailPage(appealData, action, backLinkUrl, values = {}, errors) 
 		preHeading: `Appeal ${shortAppealReference} - ${action} rule 6 party`,
 		pageComponents: [emailInput]
 	};
+}
+
+/**
+ * @param {Appeal} appealData
+ * @param {AppealRule6Party} rule6Party
+ * @param {string} backLinkUrl
+ * @returns {PageContent}
+ */
+export function confirmRemoveRule6PartyPage(appealData, rule6Party, backLinkUrl) {
+	const shortAppealReference = appealShortReference(appealData.appealReference);
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: `Confirm you want to remove ${rule6Party.serviceUser.organisationName} - ${shortAppealReference}`,
+		backLinkUrl,
+		preHeading: `Appeal ${shortAppealReference} - remove rule 6 party`,
+		heading: `Confirm you want to remove ${rule6Party.serviceUser.organisationName}`,
+		submitButtonProperties: {
+			id: 'confirmRemoveRule6Party',
+			text: 'Confirm and remove rule 6 party',
+			type: 'submit',
+			preventDoubleClick: true
+		}
+	};
+
+	return pageContent;
 }

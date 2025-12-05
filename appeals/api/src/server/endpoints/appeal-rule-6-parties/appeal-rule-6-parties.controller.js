@@ -64,3 +64,21 @@ export const updateRule6Party = async (req, res) => {
 		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
 	}
 };
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const deleteRule6Party = async (req, res) => {
+	const { params } = req;
+	const { appealId, rule6PartyId } = params;
+	const azureAdUserId = String(req.get('azureAdUserId'));
+	try {
+		await appealRule6PartiesService.deleteRule6Party(Number(rule6PartyId), azureAdUserId);
+		return res.status(200).send({ appealId, rule6PartyId });
+	} catch (error) {
+		logger.error(error);
+		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
+	}
+};

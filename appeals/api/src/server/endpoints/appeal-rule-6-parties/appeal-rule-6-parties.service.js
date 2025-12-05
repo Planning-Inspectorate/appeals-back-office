@@ -39,4 +39,19 @@ const updateRule6Party = async (rule6PartyId, serviceUser, azureAdUserId) => {
 	}
 };
 
-export { addRule6Party, updateRule6Party };
+/**
+ * @param {number} rule6PartyId
+ * @param {string} azureAdUserId
+ * @returns {Promise<{ appealId: number, id: number, serviceUserId: number }>}
+ */
+// eslint-disable-next-line no-unused-vars
+const deleteRule6Party = async (rule6PartyId, azureAdUserId) => {
+	try {
+		return await appealRule6PartyRepository.deleteRule6Party(rule6PartyId);
+	} catch (error) {
+		logger.error(error, 'Failed to delete rule 6 party');
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+	}
+};
+
+export { addRule6Party, deleteRule6Party, updateRule6Party };
