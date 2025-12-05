@@ -2190,6 +2190,13 @@ export type AllSiteVisitTypesResponse = {
 	id?: number;
 }[];
 
+export type AllGroundsResponse = {
+	/** @example "Access required" */
+	name?: string;
+	/** @example 1 */
+	id?: number;
+}[];
+
 export type AllAppellantCaseValidationOutcomesResponse = {
 	/** @example "Valid" */
 	name?: string;

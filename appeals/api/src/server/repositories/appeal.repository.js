@@ -163,6 +163,9 @@ export const appealDetailsInclude = /** @type {const} */ {
 	hearingEstimate: true,
 	inquiryEstimate: true,
 	appealGrounds: {
+		where: {
+			isDeleted: false
+		},
 		include: {
 			ground: true
 		}
@@ -297,6 +300,9 @@ export const appealDetailsIncludeMap = /** @type {const} */ {
 	hearingEstimate: true,
 	inquiryEstimate: true,
 	appealGrounds: {
+		where: {
+			isDeleted: false
+		},
 		include: {
 			ground: true
 		}

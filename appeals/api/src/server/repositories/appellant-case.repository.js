@@ -17,6 +17,8 @@ import commonRepository from './common.repository.js';
  * @returns {Promise<PrismaPromise<object>>}
  */
 const updateAppellantCaseById = async (id, data) => {
+	const { advertInPosition, highwayLand, ...mainUpdates } = data;
+
 	const knowsOtherOwners =
 		data.knowsOtherOwners !== undefined
 			? data.knowsOtherOwners === null
@@ -37,8 +39,6 @@ const updateAppellantCaseById = async (id, data) => {
 			}
 		});
 	}
-
-	const { advertInPosition, highwayLand, ...mainUpdates } = data;
 
 	const transaction = [];
 
