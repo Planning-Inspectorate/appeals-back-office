@@ -32,7 +32,9 @@ import { DOCUMENT_STAGE, DOCUMENT_TYPE } from '../../document-attachments/attach
 export const ipDetailsPage = (appealDetails, values, backLinkUrl, errors) => ({
 	title: "Interested party's details",
 	backLinkUrl,
-	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
+	preHeading: `Appeal ${appealShortReference(
+		appealDetails.appealReference
+	)} - add interested party comment`,
 	heading: "Interested party's details",
 	pageComponents: [
 		{
@@ -42,7 +44,11 @@ export const ipDetailsPage = (appealDetails, values, backLinkUrl, errors) => ({
 				name: 'firstName',
 				type: 'text',
 				label: {
-					text: 'First name'
+					text: 'First name',
+					classes: 'govuk-!-font-weight-bold'
+				},
+				hint: {
+					text: 'Or given name'
 				},
 				value: values.firstName,
 				errorMessage: errorFirstName(errors)
@@ -55,10 +61,27 @@ export const ipDetailsPage = (appealDetails, values, backLinkUrl, errors) => ({
 				name: 'lastName',
 				type: 'text',
 				label: {
-					text: 'Last name'
+					text: 'Last name',
+					classes: 'govuk-!-font-weight-bold'
+				},
+				hint: {
+					text: 'Or family name'
 				},
 				value: values.lastName,
 				errorMessage: errorLastName(errors)
+			}
+		},
+		{
+			type: 'checkboxes',
+			parameters: {
+				id: 'do-not-share-ip-name',
+				name: 'do-not-share-ip-name',
+				items: [
+					{
+						text: 'Do not share this interested party name',
+						value: null
+					}
+				]
 			}
 		},
 		{
@@ -68,7 +91,8 @@ export const ipDetailsPage = (appealDetails, values, backLinkUrl, errors) => ({
 				name: 'emailAddress',
 				type: 'text',
 				label: {
-					text: 'Email address (optional)'
+					text: 'Email address (optional)',
+					classes: 'govuk-!-font-weight-bold'
 				},
 				value: values.emailAddress,
 				errorMessage: errorEmail(errors)
