@@ -191,6 +191,7 @@ const mockAppealRule6PartyDelete = jest.fn().mockResolvedValue({});
 const mockGroundFindMany = jest.fn().mockResolvedValue({});
 const mockGroundUpsert = jest.fn().mockResolvedValue({});
 const mockGroundDeleteMany = jest.fn().mockResolvedValue({});
+const mockAppealGroundUpsert = jest.fn().mockResolvedValue({});
 
 const mockNotifySend = jest.fn().mockImplementation(async (params) => {
 	const { doNotMockNotifySend = false, ...options } = params || {};
@@ -693,6 +694,12 @@ class MockPrismaClient {
 			upsert: mockGroundUpsert,
 			findMany: mockGroundFindMany,
 			deleteMany: mockGroundDeleteMany
+		};
+	}
+
+	get appealGround() {
+		return {
+			upsert: mockAppealGroundUpsert
 		};
 	}
 

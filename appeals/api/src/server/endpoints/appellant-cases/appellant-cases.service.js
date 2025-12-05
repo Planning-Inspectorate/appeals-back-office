@@ -311,12 +311,19 @@ export function renderAuditTrailDetail(data) {
 			PLANNING_OBLIGATION_STATUSES.find(
 				(/** @type {{value: string, label: string}} */ item) =>
 					item.value === data.statusPlanningObligation
-			)?.label || 'Not applicable'
+			)?.label || 'Not applicable',
+		AUDIT_TRAIL_APPEAL_GROUND_UPDATED: () => {
+			// @ts-ignore
+			return Object.values(data.appealGround);
+		}
 	};
 
 	if (!auditTrailParameters[constantKey]) {
 		return constantKey in auditTrailParameters ? CONSTANTS[constantKey] : genericResult;
 	}
 
-	return stringTokenReplacement(CONSTANTS[constantKey], [auditTrailParameters[constantKey]()]);
+	return stringTokenReplacement(
+		CONSTANTS[constantKey],
+		[auditTrailParameters[constantKey]()].flat()
+	);
 }
