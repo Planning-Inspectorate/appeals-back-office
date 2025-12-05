@@ -85,7 +85,8 @@ router.patch(
 		'lpa',
 		'procedureType',
 		'parentAppeals',
-		'childAppeals'
+		'childAppeals',
+		'appealGrounds'
 	]),
 	checkAppellantCaseExists,
 	checkLookupValueIsValidAndAddToRequest(
