@@ -94,4 +94,19 @@ const updateRule6Party = async ({ rule6PartyId, serviceUser }) => {
 	});
 };
 
-export default { createAppealRule6Party, getRule6PartiesForAppeal, updateRule6Party };
+/**
+ * @param {number} rule6PartyId
+ * @returns {Promise<{ appealId: number, id: number, serviceUserId: number }>}
+ */
+const deleteRule6Party = async (rule6PartyId) => {
+	return databaseConnector.appealRule6Party.delete({
+		where: { id: rule6PartyId }
+	});
+};
+
+export default {
+	createAppealRule6Party,
+	deleteRule6Party,
+	getRule6PartiesForAppeal,
+	updateRule6Party
+};

@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`remove rule 6 party GET /rule-6-parties/remove/:rule6PartyId should render the confirmation page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - remove rule 6 party</span>
+            <h1             class="govuk-heading-l">Confirm you want to remove Test Organisation</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button" id="confirmRemoveRule6Party">Confirm and remove rule 6 party</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
