@@ -11,9 +11,16 @@ export class ServiceBusEventClient {
 	 */
 	constructor(logger, serviceBusHostname) {
 		this.logger = logger;
-		this.client = new ServiceBusClient(serviceBusHostname, new DefaultAzureCredential(), {
-			retryOptions: { maxRetries: 3 }
-		});
+		if (serviceBusHostname.startsWith('Endpoint=')) {
+			logger.info('Using development service bus');
+			this.client = new ServiceBusClient(serviceBusHostname, {
+				retryOptions: { maxRetries: 3 }
+			});
+		} else {
+			this.client = new ServiceBusClient(serviceBusHostname, new DefaultAzureCredential(), {
+				retryOptions: { maxRetries: 3 }
+			});
+		}
 	}
 
 	/**

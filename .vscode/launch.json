@@ -35,6 +35,28 @@
 			"cwd": "${workspaceFolder}",
 			"console": "integratedTerminal",
 			"internalConsoleOptions": "neverOpen"
+		},
+		{
+			"name": "API APP: Attach",
+			"type": "node",
+			"request": "attach",
+			"port": 9239,
+			"address": "localhost",
+			"localRoot": "${workspaceFolder}/appeals/api",
+			"remoteRoot": "/opt/appeals/api",
+			"restart": true,
+			"sourceMaps": true
+		},
+		{
+			"name": "Docker: Attach to Web",
+			"type": "node",
+			"request": "attach",
+			"port": 9230,
+			"address": "localhost",
+			"localRoot": "${workspaceFolder}/appeals/web",
+			"remoteRoot": "/opt/appeals/web",
+			"restart": true,
+			"sourceMaps": true
 		}
 	]
 }

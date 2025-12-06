@@ -1,0 +1,106 @@
+{
+	"UserConfig": {
+		"Namespaces": [
+			{
+				"Name": "appeals-servicebus",
+				"Queues": [],
+				"Topics": [
+					{
+						"Name": "appeal-fo-appellant-submission",
+						"Subscriptions": [
+							{
+								"Name": "back-office-processor"
+							},
+							{
+								"Name": "appeal-fo-appellant-submission-bo-sub"
+							}
+						]
+					},
+					{
+						"Name": "appeal-fo-lpa-response-submission",
+						"Subscriptions": [
+							{
+								"Name": "back-office-processor"
+							}
+						]
+					},
+					{
+						"Name": "appeal-fo-representation-submission",
+						"Subscriptions": [
+							{
+								"Name": "back-office-processor"
+							}
+						]
+					},
+					{
+						"Name": "appeal-has",
+						"Subscriptions": [
+							{
+								"Name": "front-office-listener"
+							}
+						]
+					},
+					{
+						"Name": "appeal-s78",
+						"Subscriptions": [
+							{
+								"Name": "front-office-listener"
+							}
+						]
+					},
+					{
+						"Name": "appeal-document",
+						"Subscriptions": [
+							{
+								"Name": "front-office-listener"
+							}
+						]
+					},
+					{
+						"Name": "appeal-service-user",
+						"Subscriptions": [
+							{
+								"Name": "front-office-listener"
+							}
+						]
+					},
+					{
+						"Name": "appeal-event",
+						"Subscriptions": [
+							{
+								"Name": "front-office-listener"
+							}
+						]
+					},
+					{
+						"Name": "appeal-event-estimate",
+						"Subscriptions": [
+							{
+								"Name": "front-office-listener"
+							}
+						]
+					},
+					{
+						"Name": "appeal-document-to-move",
+						"Subscriptions": [
+							{
+								"Name": "front-office-listener"
+							}
+						]
+					},
+					{
+						"Name": "appeal-representation",
+						"Subscriptions": [
+							{
+								"Name": "front-office-listener"
+							}
+						]
+					}
+				]
+			}
+		],
+		"Logging": {
+			"Type": "File"
+		}
+	}
+}

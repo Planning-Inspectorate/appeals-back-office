@@ -4,14 +4,20 @@ services:
     image: node:22-alpine3.20
     ports:
       - 3999:3999
+      - 9239:9229
     volumes:
       - ./:/opt
     working_dir: /opt/appeals/api
     depends_on:
       - pins_azurite
       - pins_sql_server
+      - servicebus_emulator
     environment:
       - SQL_HOST=pins_sql_server:1433
+      - PORT=3999
+      - SERVICE_BUS_CONNECTION_STRING=Endpoint=sb://servicebus_emulator;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;
+      - SERVICE_BUS_HOSTNAME=Endpoint=sb://servicebus_emulator;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;
+      - SERVICE_BUS_ENABLED=true
     command: npm run dev
 
   web:
@@ -20,10 +26,17 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./:/opt    
+      - ./:/opt
     working_dir: /opt/appeals/web
     depends_on:
       - api
+    environment:
+      - DISABLE_REDIS=true
+      - HTTPS_ENABLED=true
+      - HTTPS_PORT=8080
+      - SSL_CERT_FILE=/opt/appeals/web/certificate.pem
+      - SSL_KEY_FILE=/opt/appeals/web/certificate-key.pem
+      - API_HOST=http://api:3999
     command: npm run dev
 
   pdf-service-api:
@@ -62,3 +75,30 @@ services:
     ports:
       - 1434:1433
     hostname: pins_sql_server
+
+  servicebus_sql:
+    profiles: ['all', 'servicebus']
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    platform: 'linux/amd64'
+    container_name: servicebus_sql
+    environment:
+      - 'ACCEPT_EULA=1'
+      - 'MSSQL_SA_PASSWORD=<YourStrong@Passw0rd>'
+    ports:
+      - 1435:1433
+    hostname: servicebus_sql
+
+  servicebus_emulator:
+    profiles: ['all', 'servicebus']
+    image: mcr.microsoft.com/azure-messaging/servicebus-emulator:latest
+    container_name: servicebus_emulator
+    depends_on:
+      - servicebus_sql
+    ports:
+      - '5672:5672'   # AMQP
+    environment:
+      - ACCEPT_EULA=Y
+      - 'MSSQL_SA_PASSWORD=<YourStrong@Passw0rd>'
+      - SQL_SERVER=servicebus_sql
+    volumes:
+      - ./servicebus-config.json:/ServiceBus_Emulator/ConfigFiles/Config.json

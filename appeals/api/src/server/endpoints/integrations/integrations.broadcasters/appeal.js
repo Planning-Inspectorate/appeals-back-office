@@ -4,7 +4,7 @@ import { producers } from '#infrastructure/topics.js';
 import { contextEnum } from '#mappers/context-enum.js';
 import { mapCase } from '#mappers/mapper-factory.js';
 import { databaseConnector } from '#utils/database-connector.js';
-import pino from '#utils/logger.js';
+import { default as logger, default as pino } from '#utils/logger.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
@@ -13,13 +13,13 @@ import {
 import { EventType } from '@pins/event-client';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { schemas, validateFromSchema } from '../integrations.validators.js';
-
 /**
  *
  * @param {number} appealId
  * @param {string} updateType
  */
 export const broadcastAppeal = async (appealId, updateType = EventType.Update) => {
+	logger.info({ appealId, updateType }, 'Broadcasting appeal');
 	if (!config.serviceBusEnabled && config.NODE_ENV !== 'development') {
 		return false;
 	}
