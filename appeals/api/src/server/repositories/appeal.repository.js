@@ -762,6 +762,23 @@ const getAppealsWithCompletedEvents = () =>
 							}
 						]
 					}
+				},
+				{
+					inquiry: {
+						OR: [
+							{
+								inquiryStartTime: {
+									lte: new Date()
+								}
+							},
+							{
+								inquiryEndTime: null,
+								inquiryStartTime: {
+									lte: new Date()
+								}
+							}
+						]
+					}
 				}
 			]
 		},
