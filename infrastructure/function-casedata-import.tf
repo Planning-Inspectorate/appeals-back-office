@@ -32,7 +32,8 @@ module "function_casedata_import" {
   function_node_version = var.apps_config.functions_node_version
   app_settings = {
     # Runtime env variables
-    ServiceBusConnection__fullyQualifiedNamespace = local.service_bus_hostname
+    ServiceBusConnection__fullyQualifiedNamespace         = local.service_bus_hostname
+    AzureFunctionsJobHost__serviceBus__maxConcurrentCalls = "2"
     # Function env variables
     API_HOST = module.app_api.default_site_hostname
 
