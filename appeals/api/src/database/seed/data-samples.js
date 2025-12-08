@@ -550,7 +550,7 @@ export const getRandomisedAppellantCaseCreateInput = (appealTypeShorthand) => {
 			appellantCaseCreateInput.informedTenantsAgriculturalHolding = true;
 			break;
 		case APPEAL_CASE_TYPE.C:
-			appellantCaseCreateInput.enforcementNotice = randomBool();
+			appellantCaseCreateInput.enforcementNotice = true;
 			break;
 		default:
 			break;

@@ -126,7 +126,8 @@ const householdAppealDto = {
 	procedureType: 'Written',
 	createdAt: householdAppeal.caseCreatedDate.toISOString(),
 	startedAt: householdAppeal.caseStartedDate?.toISOString(),
-	validAt: householdAppeal.caseValidDate?.toISOString()
+	validAt: householdAppeal.caseValidDate?.toISOString(),
+	enforcementNotice: { appellantCase: {} }
 };
 
 const s78AppealDto = {
@@ -267,7 +268,8 @@ const s78AppealDto = {
 	procedureType: 'Written',
 	createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
 	startedAt: fullPlanningAppeal.caseStartedDate?.toISOString(),
-	validAt: fullPlanningAppeal.caseValidDate?.toISOString()
+	validAt: fullPlanningAppeal.caseValidDate?.toISOString(),
+	enforcementNotice: { appellantCase: {} }
 };
 
 const folders = [

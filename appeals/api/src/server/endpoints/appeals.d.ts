@@ -1,4 +1,4 @@
-import { Address } from '@pins/appeals';
+import { Address, ContactAddress } from '@pins/appeals';
 import { Schema } from 'index';
 
 declare global {
@@ -138,6 +138,9 @@ interface SingleAppealDetailsResponse {
 	inquiry?: Inquiry | null;
 	inquiryEstimate?: InquiryEstimate | null;
 	numberOfResidencesNetChange?: number | null;
+	enforcementNotice?: {
+		appellantCase: EnforcementNoticeAppellantCase;
+	};
 }
 
 interface UpdateAppealRequest {
@@ -868,6 +871,15 @@ interface CreateAuditTrailRequest {
 	details: string;
 	loggedAt: Date;
 	userId: number;
+}
+
+interface EnforcementNoticeAppellantCase {
+	contactAddress?: ContactAddress | null;
+	interestInLand?: string | null;
+	isListedBuilding?: boolean | null;
+	isRecieved?: boolean | null;
+	reference?: string | null;
+	writtenOrVerbalPermission?: string | null;
 }
 
 export interface CreateCaseNote {

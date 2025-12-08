@@ -13,6 +13,7 @@ export const mapEnforcementAppellantCase = (data) => {
 
 	// @ts-ignore
 	const hasEnforcementData = [true, false].includes(appellantCase?.enforcementNotice);
+	const { id: addressId, postcode, ...restOfAddress } = appellantCase?.contactAddress || {};
 
 	return {
 		enforcementNotice: {
@@ -33,9 +34,13 @@ export const mapEnforcementAppellantCase = (data) => {
 			descriptionOfAllegedBreach: hasEnforcementData
 				? appellantCase?.descriptionOfAllegedBreach
 				: null,
+			// @ts-ignore
 			contactAddress: hasEnforcementData
-				? // @ts-ignore
-				  appellantCase?.contactAddress
+				? {
+						...restOfAddress,
+						addressId,
+						postCode: postcode ?? ''
+				  }
 				: null
 		}
 	};

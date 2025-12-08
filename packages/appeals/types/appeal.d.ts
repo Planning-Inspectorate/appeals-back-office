@@ -7,6 +7,16 @@ export interface Address {
 	postCode: string;
 }
 
+export interface ContactAddress {
+	addressId?: number;
+	addressLine1?: string;
+	addressLine2?: string;
+	addressTown?: string;
+	addressCounty?: string;
+	addressCountry?: string;
+	postCode: string;
+}
+
 export interface AppealSummary {
 	appealId: number;
 	appealReference: string;

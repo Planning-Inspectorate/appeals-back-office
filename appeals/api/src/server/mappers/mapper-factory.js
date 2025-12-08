@@ -208,6 +208,9 @@ function createDataLayout(caseMap, mappingRequest) {
 				eiaScreeningRequired: appeal.eiaScreeningRequired,
 				lpaEmailAddress: appeal.lpa?.email,
 				transferStatus: appealTransferStatus,
+				enforcementNotice: {
+					appellantCase: { ...appellantCase?.enforcementNotice }
+				},
 				...createFoldersLayout(folders, contextEnum.appealDetails)
 			};
 		}

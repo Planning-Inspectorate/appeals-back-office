@@ -1,14 +1,23 @@
 import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealTypeIsEnabled } from '#middleware/check-appeal-type-is-enabled.js';
 import checkLookupValueIsValidAndAddToRequest from '#middleware/check-lookup-value-is-valid-and-add-to-request.js';
 import checkLookupValuesAreValid from '#middleware/check-lookup-values-are-valid.js';
 import { ERROR_INVALID_APPELLANT_CASE_VALIDATION_OUTCOME } from '@pins/appeals/constants/support.js';
 import { asyncHandler } from '@pins/express';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { Router as createRouter } from 'express';
-import { getAppellantCaseById, updateAppellantCaseById } from './appellant-cases.controller.js';
+import {
+	createAppellantCaseContactAddress,
+	getAppellantCaseById,
+	updateAppellantCaseById,
+	updateAppellantCaseContactAddress
+} from './appellant-cases.controller.js';
 import { checkAppellantCaseExists } from './appellant-cases.service.js';
 import {
+	createContactAddressValidator,
 	getAppellantCaseValidator,
-	patchAppellantCaseValidator
+	patchAppellantCaseValidator,
+	updateContactAddressValidator
 } from './appellant-cases.validators.js';
 
 const router = createRouter();
@@ -97,6 +106,20 @@ router.patch(
 	checkLookupValuesAreValid('incompleteReasons', 'appellantCaseIncompleteReason'),
 	checkLookupValuesAreValid('invalidReasons', 'appellantCaseInvalidReason'),
 	asyncHandler(updateAppellantCaseById)
+);
+
+router.post(
+	'/:appealId/appellant-cases/:appellantCaseId/contact-address',
+	checkAppealTypeIsEnabled(APPEAL_CASE_TYPE.C),
+	createContactAddressValidator,
+	asyncHandler(createAppellantCaseContactAddress)
+);
+
+router.patch(
+	'/:appealId/appellant-cases/:appellantCaseId/contact-address/:contactAddressId',
+	checkAppealTypeIsEnabled(APPEAL_CASE_TYPE.C),
+	updateContactAddressValidator,
+	asyncHandler(updateAppellantCaseContactAddress)
 );
 
 export { router as appellantCasesRoutes };

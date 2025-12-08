@@ -85,7 +85,8 @@ export const appealDetailsInclude = /** @type {const} */ {
 			appellantCaseValidationOutcome: true,
 			knowsOtherOwners: true,
 			knowsAllOwners: true,
-			appellantCaseAdvertDetails: true
+			appellantCaseAdvertDetails: true,
+			contactAddress: true
 		}
 	},
 	appellant: true,
@@ -217,7 +218,8 @@ export const appealDetailsIncludeMap = /** @type {const} */ {
 			appellantCaseValidationOutcome: true,
 			knowsOtherOwners: true,
 			knowsAllOwners: true,
-			appellantCaseAdvertDetails: true
+			appellantCaseAdvertDetails: true,
+			contactAddress: true
 		}
 	},
 	appellant: true,

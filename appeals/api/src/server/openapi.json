@@ -2682,6 +2682,62 @@
 				}
 			}
 		},
+		"/{appealId}/appellant-cases/{appellantCaseId}/contact-address": {
+			"post": {
+				"description": "",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "appellantCaseId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {}
+			}
+		},
+		"/{appealId}/appellant-cases/{appellantCaseId}/contact-address/{contactAddressId}": {
+			"patch": {
+				"description": "",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "appellantCaseId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "contactAddressId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {}
+			}
+		},
 		"/appeals/{appealId}/audit-trails": {
 			"get": {
 				"tags": ["Audit Trails"],

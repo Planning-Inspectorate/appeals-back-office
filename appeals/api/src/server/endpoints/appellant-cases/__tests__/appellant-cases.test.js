@@ -11,6 +11,7 @@ import {
 	casPlanningAppealAppellantCaseIncomplete,
 	casPlanningAppealAppellantCaseInvalid,
 	casPlanningAppealAppellantCaseValid,
+	enforcementNoticeAppeal,
 	fullPlanningAppeal,
 	fullPlanningAppealAppellantCaseIncomplete,
 	fullPlanningAppealAppellantCaseInvalid,
@@ -1336,6 +1337,127 @@ describe('appellant cases routes', () => {
 			});
 
 			expect(response.status).toEqual(200);
+		});
+	});
+
+	describe('POST /appeals/:appealId/appellant-cases/:appellantCaseId/contact-address', () => {
+		test('creates a new contact address and updates appellant case and case history', async () => {
+			const { postCode: postcode, ...restAddress } =
+				enforcementNoticeAppeal.appellantCase.contactAddress;
+			const body = {
+				...restAddress,
+				postcode
+			};
+
+			const mockTx = {
+				address: {
+					create: jest.fn().mockResolvedValue(body)
+				},
+				appellantCase: {
+					update: jest.fn().mockResolvedValue({ count: 1 })
+				}
+			};
+
+			const {
+				id: appealId,
+				appellantCase: { id: appellantCaseId }
+			} = enforcementNoticeAppeal;
+
+			const transactionSpy = jest.spyOn(databaseConnector, '$transaction');
+			transactionSpy.mockImplementation(async (callback) => {
+				const result = await callback(mockTx);
+				return result;
+			});
+
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
+
+			const response = await request
+				.post(`/appeals/${appealId}/appellant-cases/${appellantCaseId}/contact-address`)
+				.send(body)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+
+			expect(databaseConnector.$transaction).toHaveBeenCalled();
+			expect(mockTx.address.create).toHaveBeenCalledWith({
+				data: body
+			});
+			expect(mockTx.appellantCase.update).toHaveBeenCalledWith({
+				data: {
+					contactAddressId: body.id
+				},
+				where: {
+					id: appellantCaseId,
+					appealId
+				}
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: enforcementNoticeAppeal.id,
+					details: 'Contact address updated to Address, Town, Country, Postcode',
+					loggedAt: expect.any(Date),
+					userId: 1
+				}
+			});
+		});
+	});
+
+	describe('PATCH /:appealId/appellant-cases/:appellantCaseId/contact-address/:contactAddressId', () => {
+		test('updates the contact address details of an appellant case', async () => {
+			const body = {
+				addressLine1: 'New address line'
+			};
+
+			// @ts-ignore
+			databaseConnector.address.update.mockResolvedValue({
+				addressLine1: body.addressLine1,
+				...enforcementNoticeAppeal.address
+			});
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
+
+			const {
+				id: appealId,
+				appellantCase: { id: appellantCaseId, contactAddressId }
+			} = enforcementNoticeAppeal;
+			const response = await request
+				.patch(
+					`/appeals/${appealId}/appellant-cases/${appellantCaseId}/contact-address/${contactAddressId}`
+				)
+				.send(body)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+
+			expect(databaseConnector.address.update).toHaveBeenCalledWith({
+				where: {
+					id: contactAddressId,
+					AppellantCase: {
+						every: { id: appellantCaseId, appealId }
+					}
+				},
+				data: {
+					addressLine1: body.addressLine1
+				}
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: enforcementNoticeAppeal.id,
+					details:
+						'Contact address updated to 96 The Avenue, Leftfield, United Kingdom, Kent, 1, MD21 5XY, Maidstone',
+					loggedAt: expect.any(Date),
+					userId: 1
+				}
+			});
 		});
 	});
 });
