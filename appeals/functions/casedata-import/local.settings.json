@@ -3,7 +3,8 @@
 	"Values": {
 		"FUNCTIONS_WORKER_RUNTIME": "node",
 		"AzureWebJobsStorage": "UseDevelopmentStorage=true",
-		"API_HOST": "http://localhost:3999",
-		"ServiceBusConnection": "Endpoint=sb://localhost:5672;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;"
+		"API_HOST": "localhost:3999",
+		"ServiceBusConnection": "Endpoint=sb://localhost:5672;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;",
+		"NODE_TLS_REJECT_UNAUTHORIZED": "0"
 	}
 }

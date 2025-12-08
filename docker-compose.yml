@@ -17,6 +17,7 @@ services:
       - PORT=3999
       - SERVICE_BUS_CONNECTION_STRING=Endpoint=sb://servicebus_emulator;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;
       - SERVICE_BUS_HOSTNAME=Endpoint=sb://servicebus_emulator;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;
+      - SERVICE_BUS_HOSTNAME=Endpoint=sb://servicebus_emulator;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;
       - SERVICE_BUS_ENABLED=true
     command: npm run dev
 

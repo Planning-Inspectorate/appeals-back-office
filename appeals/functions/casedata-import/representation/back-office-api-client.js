@@ -7,7 +7,7 @@ import config from './config.js';
  */
 async function post(submission) {
 	return await got
-		.post(`https://${config.API_HOST}/appeals/representation-submission`, {
+		.post(`http://${config.API_HOST}/appeals/representation-submission`, {
 			json: submission
 		})
 		.json();

@@ -17,10 +17,24 @@
 						]
 					},
 					{
+						"Name": "appeal-fo-lpa-questionnaire-submission",
+						"Subscriptions": [
+							{
+								"Name": "back-office-processor"
+							},
+							{
+								"Name": "appeal-fo-lpa-questionnaire-submission-bo-sub"
+							}
+						]
+					},
+					{
 						"Name": "appeal-fo-lpa-response-submission",
 						"Subscriptions": [
 							{
 								"Name": "back-office-processor"
+							},
+							{
+								"Name": "appeal-fo-lpa-questionnaire-submission-bo-sub"
 							}
 						]
 					},
@@ -29,6 +43,9 @@
 						"Subscriptions": [
 							{
 								"Name": "back-office-processor"
+							},
+							{
+								"Name": "appeal-fo-representation-submission-bo-sub"
 							}
 						]
 					},
@@ -37,6 +54,9 @@
 						"Subscriptions": [
 							{
 								"Name": "front-office-listener"
+							},
+							{
+								"Name": "appeal-has-fo-sub"
 							}
 						]
 					},
@@ -45,6 +65,9 @@
 						"Subscriptions": [
 							{
 								"Name": "front-office-listener"
+							},
+							{
+								"Name": "appeal-s78-fo-sub"
 							}
 						]
 					},
@@ -53,6 +76,9 @@
 						"Subscriptions": [
 							{
 								"Name": "front-office-listener"
+							},
+							{
+								"Name": "appeal-document-fo-sub"
 							}
 						]
 					},
@@ -61,6 +87,9 @@
 						"Subscriptions": [
 							{
 								"Name": "front-office-listener"
+							},
+							{
+								"Name": "appeal-service-user-fo-sub"
 							}
 						]
 					},
@@ -69,6 +98,9 @@
 						"Subscriptions": [
 							{
 								"Name": "front-office-listener"
+							},
+							{
+								"Name": "appeal-event-fo-sub"
 							}
 						]
 					},
@@ -93,6 +125,17 @@
 						"Subscriptions": [
 							{
 								"Name": "front-office-listener"
+							},
+							{
+								"Name": "appeal-representation-fo-sub"
+							}
+						]
+					},
+					{
+						"Name": "listed-building",
+						"Subscriptions": [
+							{
+								"Name": "listed-building-fo-sub"
 							}
 						]
 					}
