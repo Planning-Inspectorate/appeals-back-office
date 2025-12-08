@@ -32,28 +32,28 @@ apps_config = {
   }
 
   featureFlags = {
-    featureFlagS78Written             = true
-    featureFlagS78Inquiry             = true
-    featureFlagLinkedAppeals          = false
-    featureFlagCAS                    = false
-    featureFlagCasAdvert              = false
-    featureFlagNotifyCaseHistory      = true
-    featureFlagSimplifyTeamAssignment = true
-    featureFlagPdfDownload            = true
-    featureFlagNetResidence           = true
-    featureFlagNetResidenceS20        = true
-    featureFlagCancelCase             = true
-    featureFlagChangeProcedureType    = true
-    featureFlagAdvertisement          = false
-    featureFlagHearingPostMvp         = true
-    featureFlagAutoAssignTeam         = true
-    featureFlagCancelSiteVisit        = true
-    featureFlagSearchCaseOfficer      = true
-    featureFlagEnforcementNotice      = false
-    featureFlagInvalidDecisionLetter  = false
-    featureFlagRule6Parties           = false
-    featureFlagExpeditedAppeals       = false
-    featureFlagManuallyAddReps        = false
+		featureFlagS78Written             = true
+		featureFlagS78Inquiry             = true
+		featureFlagLinkedAppeals          = false
+		featureFlagCAS                    = true
+		featureFlagCasAdvert              = true
+		featureFlagNotifyCaseHistory      = true
+		featureFlagSimplifyTeamAssignment = true
+		featureFlagPdfDownload            = true
+		featureFlagNetResidence           = true
+		featureFlagNetResidenceS20        = true
+		featureFlagCancelCase             = true
+		featureFlagChangeProcedureType    = true
+		featureFlagAdvertisement          = true
+		featureFlagHearingPostMvp         = true
+		featureFlagAutoAssignTeam         = true
+		featureFlagCancelSiteVisit        = true
+		featureFlagSearchCaseOfficer      = true
+		featureFlagEnforcementNotice      = false
+		featureFlagInvalidDecisionLetter  = false
+		featureFlagRule6Parties           = false
+		featureFlagExpeditedAppeals       = false
+		featureFlagManuallyAddReps        = false
 
   }
 

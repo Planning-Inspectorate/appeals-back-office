@@ -32,7 +32,6 @@ apps_config = {
   }
 
   featureFlags = {
-    featureFlags = {
 		featureFlagS78Written             = true
 		featureFlagS78Inquiry             = true
 		featureFlagLinkedAppeals          = false
