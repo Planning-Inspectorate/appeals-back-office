@@ -49,4 +49,15 @@ const trimAppealType = (appealType) => {
 	return appealType.endsWith(' appeal') ? appealType.replace(' appeal', '') : appealType;
 };
 
-export { camelToScreamingSnake, capitalizeFirstLetter, trimAppealType };
+/**
+ * converts a multi part address to a single string
+ * @typedef {import('@pins/appeals.api').Schema.Address} Address
+ *
+ * @param {Address} address
+ * @returns {string}
+ */
+const addressToString = (address) => {
+	return Object.values(address).join(', ');
+};
+
+export { addressToString, camelToScreamingSnake, capitalizeFirstLetter, trimAppealType };

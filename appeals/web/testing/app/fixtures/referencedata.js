@@ -460,7 +460,18 @@ export const appealData = {
 		documents: []
 	},
 	assignedTeamId: 1,
-	assignedTeam: { name: 'Test Team', email: 'test@emai.com' }
+	assignedTeam: { name: 'Test Team', email: 'test@emai.com' },
+	enforcementNotice: {
+		appellantCase: {
+			contactAddress: {
+				addressId: 1,
+				addressLine1: '96 The Avenue',
+				addressLine2: 'Maidstone',
+				addressCounty: 'Kent',
+				postCode: 'MD21 5XY'
+			}
+		}
+	}
 };
 
 export const appealDataIssuedDecision = {

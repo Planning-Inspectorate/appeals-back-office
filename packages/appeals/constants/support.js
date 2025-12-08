@@ -246,6 +246,10 @@ export const AUDIT_TRAIL_HORIZON_REFERENCE_UPDATED = 'Horizon reference updated'
 export const AUDIT_TRAIL_ASSIGNED_TEAM_UPDATED = 'Case team {replacement0} assigned';
 export const BANK_HOLIDAY_FEED_DIVISION_ENGLAND = 'england-and-wales';
 
+// Enforcement notice - appellant case
+export const AUDIT_TRAIL_ENFORCEMENT_NOTICE_CONTACT_ADDRESS =
+	'Contact address updated to {replacement0}';
+
 export const DATABASE_ORDER_BY_ASC = 'asc';
 export const DATABASE_ORDER_BY_DESC = 'desc';
 
