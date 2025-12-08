@@ -140,12 +140,13 @@ sql_config = {
   sku_name    = "Basic"
   max_size_gb = 2
   retention = {
-    audit_days             = 7
-    short_term_days        = 7
-    long_term_weekly       = "P1W"
-    long_term_monthly      = "P1M"
-    long_term_yearly       = "P1Y"
-    long_term_week_of_year = 1
+    audit_days               = 7
+    backup_interval_in_hours = 24
+    short_term_days          = 7
+    long_term_weekly         = "P1W"
+    long_term_monthly        = "P1M"
+    long_term_yearly         = "P1Y"
+    long_term_week_of_year   = 1
   }
   public_network_access_enabled = true
 }
