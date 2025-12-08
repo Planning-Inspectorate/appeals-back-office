@@ -54,7 +54,7 @@
 		"date-fns": "2.28.0",
 		"date-fns-tz": "^2.0.0",
 		"dotenv": "16.0.3",
-		"express": "^5.1.0",
+		"express": "^5.2.0",
 		"express-pino-logger": "^7.0.0",
 		"express-validator": "^7.2.1",
 		"got": "^12.5.2",
