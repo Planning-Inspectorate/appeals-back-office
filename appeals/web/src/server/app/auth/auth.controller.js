@@ -38,6 +38,7 @@ export async function startMsalAuthentication(request, response) {
 	});
 
 	const redirectUrl = await authService.getAuthCodeUrl({ nonce }, request.session.id);
+	pino.info(redirectUrl);
 	// Generate – and then redirect to – a url where the user will authenticate
 	// against MSAL using their PINS account.
 	response.redirect(redirectUrl);
