@@ -245,7 +245,7 @@ export interface QuestionnaireData {
 		caseReference?: string;
 		/** @example ["1000000"] */
 		nearbyCaseReferences?: string[];
-		/** @example "2024-05-31T23:00:00.000Z" */
+		/** @example "2024-06-01T00:00:00.000Z" */
 		lpaQuestionnaireSubmittedDate?: string;
 		/** @example ["Here it is"] */
 		siteAccessDetails?: string[];

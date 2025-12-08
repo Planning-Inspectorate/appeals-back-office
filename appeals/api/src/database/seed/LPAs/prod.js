@@ -1461,7 +1461,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'T4210',
 		name: 'Bury Metropolitan Borough Council',
-		email: 'planningappeals@bury.gov.uk',
+		email: 'development.control@bury.gov.uk',
 		teamId: 15 // North1
 	},
 	{
@@ -1647,7 +1647,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'Z4310',
 		name: 'Liverpool City Council',
-		email: 'planningandbuildingcontrol@liverpool.gov.uk',
+		email: 'planningappeals@liverpool.gov.uk',
 		teamId: 15 // North1
 	},
 	{
@@ -1779,7 +1779,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'P2745',
 		name: 'North Yorkshire Council',
-		email: 'planning.control@northyorks.gov.uk',
+		email: 'NYCplanningappeals@northyorks.gov.uk',
 		teamId: 16 // North2
 	},
 	{
@@ -1845,7 +1845,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'E3335',
 		name: 'Somerset Council',
-		email: 'planning@somerset.gov.uk',
+		email: 'planningappeals@somerset.gov.uk',
 		teamId: 8 // West2
 	},
 	{
@@ -1985,5 +1985,23 @@ export const localPlanningDepartmentList = [
 		name: 'Worcestershire County Council',
 		email: 'DevControlTeam@worcestershire.gov.uk',
 		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'F0745',
+		name: 'Hartlepool Development Corporation',
+		email: 'HDCplanning@teesvalley-ca.gov.uk',
+		teamId: 16 // North2
+	},
+	{
+		lpaCode: 'K0750',
+		name: 'Middlesbrough Development Corporation',
+		email: 'MDCplanning@teesvalley-ca.gov.uk',
+		teamId: 16 // North2
+	},
+	{
+		lpaCode: 'J1155 ',
+		name: 'Devon County Council',
+		email: 'planning@devon.gov.uk',
+		teamId: 9 // West3
 	}
 ];
