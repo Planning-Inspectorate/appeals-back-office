@@ -1463,7 +1463,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'T4210',
 		name: 'Bury Metropolitan Borough Council',
-		email: 'planningappeals@example.gov.uk',
+		email: 'development.control@example.gov.uk',
 		teamId: 15 // North1
 	},
 	{
@@ -1649,7 +1649,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'Z4310',
 		name: 'Liverpool City Council',
-		email: 'planningandbuildingcontrol@example.gov.uk',
+		email: 'planningappeals@example.gov.uk',
 		teamId: 15 // North1
 	},
 	{
@@ -1781,7 +1781,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'P2745',
 		name: 'North Yorkshire Council',
-		email: 'planning.control@example.gov.uk',
+		email: 'NYCplanningappeals@example.gov.uk',
 		teamId: 16 // North2
 	},
 	{
@@ -1987,5 +1987,23 @@ export const localPlanningDepartmentList = [
 		name: 'Worcestershire County Council',
 		email: 'DevControlTeam@example.gov.uk',
 		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'F0745',
+		name: 'Hartlepool Development Corporation',
+		email: 'HDCplanning@example.gov.uk',
+		teamId: 16 // North2
+	},
+	{
+		lpaCode: 'K0750',
+		name: 'Middlesbrough Development Corporation',
+		email: 'MDCplanning@example.gov.uk',
+		teamId: 16 // North2
+	},
+	{
+		lpaCode: 'J1155 ',
+		name: 'Devon County Council',
+		email: 'planning@example.gov.uk',
+		teamId: 9 // West3
 	}
 ];
