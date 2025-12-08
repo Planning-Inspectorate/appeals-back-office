@@ -27,6 +27,7 @@ extends:
     globalVariables:
       - template: azure-pipelines-variables.yml@self
       - group: e2e-dev
+      - group: cd_e2e-pr-checks
     validationJobs:
       - name: Run Linting & Tests
         variables:
@@ -92,12 +93,6 @@ extends:
                 echo "No 'bug' label found"
               fi
             displayName: "Check for label"
-          - template: ../steps/azure_get_secrets.yml
-            parameters:
-              keyVaultName: pins-kv-appeals-bo-dev
-              secrets:
-                - name: appeals-bo-client-secret
-                  variable: appeals-bo-client-secret
           - script: |
               openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
                 -keyout appeals/web/certificate-key.pem \
@@ -110,7 +105,7 @@ extends:
             displayName: "Generate certificate and key"
           - script: ls appeals/web
             condition: eq(variables['runE2E'], 'true')
-          - script: AUTH_TENANT_ID=$(AZURE_TENANT_ID) AUTH_CLIENT_SECRET=$(appeals-bo-client-secret) AUTH_CLIENT_ID=64c20f53-becf-4b7e-ba62-c1dc9b03ccf9 GIT_SHA=$(Build.SourceVersion) docker-compose up -d
+          - script: AUTH_TENANT_ID=$(AZURE_TENANT_ID) AUTH_CLIENT_SECRET=$(AUTH_CLIENT_SECRET) AUTH_CLIENT_ID=$(AUTH_CLIENT_ID) GIT_SHA=$(Build.SourceVersion) docker-compose up -d
             condition: eq(variables['runE2E'], 'true')
             displayName: "Start database, api and web docker containers"
           - script: docker ps
