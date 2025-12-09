@@ -12,6 +12,7 @@ import { reviewFinalCommentsPage } from './view-and-review.mapper.js';
  * @returns {import('@pins/express').RenderHandler<any, any, any>}
  */
 export const render = (contentMapper, templatePath) => (request, response) => {
+	console.log('Rendering page with template:', templatePath);
 	const { errors, currentRepresentation, currentAppeal, session, query } = request;
 	const backUrl = query.backUrl ? String(query.backUrl) : '/';
 

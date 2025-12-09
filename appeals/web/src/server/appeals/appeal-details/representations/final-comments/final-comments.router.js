@@ -1,6 +1,7 @@
 import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
 import { Router as createRouter } from 'express';
 import addDocumentRouter from '../document-attachments/add-document.router.js';
+
 import { getRepresentationAttachmentsFolder } from '../document-attachments/attachments-middleware.js';
 import manageDocumentsRouter from '../document-attachments/manage-documents.router.js';
 import acceptFinalCommentsRouter from './accept/accept.router.js';
@@ -34,6 +35,13 @@ router.use(
 
 router.use(
 	'/:finalCommentsType/add-document',
+	withSingularRepresentation,
+	getRepresentationAttachmentsFolder,
+	addDocumentRouter
+);
+
+router.use(
+	'/:finalCommentsType/replace',
 	withSingularRepresentation,
 	getRepresentationAttachmentsFolder,
 	addDocumentRouter

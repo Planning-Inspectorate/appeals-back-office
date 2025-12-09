@@ -1,4 +1,4 @@
-import { createNewDocument } from '#app/components/file-uploader.component.js';
+import { createNewDocument, replaceDocument } from '#app/components/file-uploader.component.js';
 import {
 	isValidRedactionStatus,
 	name as redactionStatusFieldName,
@@ -90,7 +90,7 @@ export const postCheckYourAnswers = async (request, response) => {
 		apiClient,
 		session,
 		currentAppeal: { appealId },
-		currentRepresentation: { id, representationType }
+		currentRepresentation: { id, representationType,attachments }
 	} = request;
 
 	const {
@@ -113,30 +113,57 @@ export const postCheckYourAnswers = async (request, response) => {
 				'Submitted redaction status did not correspond with a known redaction status key'
 			);
 		}
-
+console.log('Attempting to submit document:', attachments);
+console.log(request)
 		try {
-			await createNewDocument(apiClient, appealId, {
-				blobStorageHost:
-					config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
-				blobStorageContainer: config.blobStorageDefaultContainer,
-				documents: [
-					{
-						caseId: appealId,
-						documentName: document.name,
-						documentType: document.documentType,
-						mimeType: document.mimeType,
-						documentSize: document.size,
-						stage: document.stage,
-						folderId: folderId,
-						GUID: document.GUID,
-						receivedDate: new Date(`${year}-${month}-${day}`).toISOString(),
-						redactionStatusId,
-						blobStoragePath: document.blobStoreUrl
-					}
-				]
-			});
+			if(request.baseUrl.includes('/replace')){
+				console.log('Replacing existing document');
+				await replaceDocument(apiClient, appealId, attachments[0].GUID, {
+					blobStorageHost:
+						config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
+					blobStorageContainer: config.blobStorageDefaultContainer,
+					documents: [
+						{
+							caseId: appealId,
+							documentName: document.name,
+							documentType: document.documentType,
+							mimeType: document.mimeType,
+							documentSize: document.size,
+							stage: document.stage,
+							folderId: folderId,
+							GUID: document.GUID,
+							receivedDate: new Date(`${year}-${month}-${day}`).toISOString(),
+							redactionStatusId,
+							blobStoragePath: document.blobStoreUrl
+						}
+					]
+				});
+			}else{
+				console.log('Adding new document');
+				await createNewDocument(apiClient, appealId, {
+					blobStorageHost:
+						config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
+					blobStorageContainer: config.blobStorageDefaultContainer,
+					documents: [
+						{
+							caseId: appealId,
+							documentName: document.name,
+							documentType: document.documentType,
+							mimeType: document.mimeType,
+							documentSize: document.size,
+							stage: document.stage,
+							folderId: folderId,
+							GUID: document.GUID,
+							receivedDate: new Date(`${year}-${month}-${day}`).toISOString(),
+							redactionStatusId,
+							blobStoragePath: document.blobStoreUrl
+						}
+					]
+				});
 
-			await patchRepresentationAttachments(apiClient, appealId, id, [document.GUID]);
+				await patchRepresentationAttachments(apiClient, appealId, id, [document.GUID]);
+			}
+
 		} catch (error) {
 			logger.error(
 				error,

@@ -8,7 +8,7 @@ export function mapAppellantFinalComments(templateData) {
 
 	return {
 		details: templateData,
-		heading: 'Appellant final comments',
+		heading: 'Appellant final commentsz',
 		dateReceived: created ? formatDate(created, 'd MMMM yyyy, HH:mm') : 'N/A',
 		status: formatSentenceCase(status),
 		sections: [

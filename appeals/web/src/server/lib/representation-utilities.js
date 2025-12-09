@@ -14,13 +14,14 @@ export function isRepresentationReviewRequired(representationStatus) {
 }
 
 /**
- * @typedef {'appellant-final-comments'|'lpa-final-comments'|'lpa-statement' |'appellant-proofs-evidence' |'lpa-proofs-evidence'} RepresentationType
+ * @typedef {'appellant-final-comments'| 'appellant-rejected-final-comments'|'lpa-final-comments'|'lpa-statement' |'appellant-proofs-evidence' |'lpa-proofs-evidence'} RepresentationType
  *
  * @param {string} currentRoute
  * @param {string|undefined} documentationStatus
  * @param {string|null|undefined} representationStatus
  * @param {RepresentationType} representationType
  * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} statusText
  * @returns {string} action link html
  */
 export function mapRepresentationDocumentSummaryActionLink(
@@ -28,8 +29,10 @@ export function mapRepresentationDocumentSummaryActionLink(
 	documentationStatus,
 	representationStatus,
 	representationType,
-	request
+	request,
+	statusText
 ) {
+	console.log(statusText, 'statusText in mapRepresentationDocumentSummaryActionLink');
 	if (
 		documentationStatus !== 'received' &&
 		!isFeatureActive(FEATURE_FLAG_NAMES.MANUALLY_ADD_REPS)
@@ -56,7 +59,8 @@ export function mapRepresentationDocumentSummaryActionLink(
 		'appellant-final-comments': 'Appellant final comments',
 		'lpa-final-comments': 'LPA final comments',
 		'appellant-proofs-evidence': 'Appellant proof of evidence',
-		'lpa-proofs-evidence': 'LPA proof of evidence'
+		'lpa-proofs-evidence': 'LPA proof of evidence',
+		'appellant-rejected-final-comments': 'Appellant final comments'
 	};
 
 	/** @type {Record<RepresentationType, string>} */
@@ -69,18 +73,31 @@ export function mapRepresentationDocumentSummaryActionLink(
 			: `${currentRoute}/proof-of-evidence/appellant/manage-documents`,
 		'lpa-proofs-evidence': reviewRequired
 			? `${currentRoute}/proof-of-evidence/lpa`
-			: `${currentRoute}/proof-of-evidence/lpa/manage-documents`
+			: `${currentRoute}/proof-of-evidence/lpa/manage-documents`,
+		'appellant-rejected-final-comments': `${currentRoute}/final-comments/appellant/replace`
 	};
 
 	if (documentationStatus !== 'received') {
 		return `<a href="${hrefs[representationType]}/add-document" data-cy="add-${representationType}" class="govuk-link">Add<span class="govuk-visually-hidden"> ${visuallyHiddenTexts[representationType]}</span></a>`;
 	}
-
-	return `<a href="${addBackLinkQueryToUrl(request, hrefs[representationType])}" data-cy="${
-		reviewRequired ? 'review' : 'view'
-	}-${representationType}" class="govuk-link">${
-		reviewRequired ? 'Review' : 'View'
-	}<span class="govuk-visually-hidden"> ${visuallyHiddenTexts[representationType]}</span></a>`;
+	console.log(hrefs[representationType], 'hrefs[representationType]');
+	const additionalRejectLink =
+		statusText === 'Rejected'
+			? `<a href="${addBackLinkQueryToUrl(
+					request,
+					hrefs['appellant-rejected-final-comments']
+			  )}" data-cy="${'add'}-${'appellant-rejected-final-comments'}" class="govuk-link">${'Add'}<span class="govuk-visually-hidden"> ${
+					visuallyHiddenTexts['appellant-rejected-final-comments']
+			  }</span></a>`
+			: '';
+	return (
+		`<a href="${addBackLinkQueryToUrl(request, hrefs[representationType])}" data-cy="${
+			reviewRequired ? 'review' : 'view'
+		}-${representationType}" class="govuk-link">${
+			reviewRequired ? 'Review' : 'View'
+		}<span class="govuk-visually-hidden"> ${visuallyHiddenTexts[representationType]}</span></a> ` +
+		additionalRejectLink
+	);
 }
 
 /**

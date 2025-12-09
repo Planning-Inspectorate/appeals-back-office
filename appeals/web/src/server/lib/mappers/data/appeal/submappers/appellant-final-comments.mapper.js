@@ -61,7 +61,7 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute, request
 	} else {
 		return documentationFolderTableItem({
 			id: 'appellant-final-comments',
-			text: 'Appellant final comments',
+			text: 'Appellant final commentss',
 			statusText,
 			receivedText,
 			actionHtml: mapRepresentationDocumentSummaryActionLink(
@@ -69,7 +69,8 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute, request
 				appealDetails?.documentationSummary?.appellantFinalComments?.status,
 				appealDetails?.documentationSummary?.appellantFinalComments?.representationStatus,
 				'appellant-final-comments',
-				request
+				request,
+				statusText
 			)
 		});
 	}

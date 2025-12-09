@@ -144,7 +144,8 @@ export async function updateRepresentation(request, response) {
 		params: { appealId, repId },
 		body: { allowResubmit, redactedRepresentation }
 	} = request;
-
+console.log('Updating representation', { appealId, repId });
+console.log('Request body:', request.body,request.params);
 	const existingRep = await representationService.getRepresentation(parseInt(repId));
 	if (!existingRep) {
 		return response.status(404).send({ errors: { repId: ERROR_NOT_FOUND } });

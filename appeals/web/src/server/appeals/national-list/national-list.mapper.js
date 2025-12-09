@@ -82,7 +82,6 @@ export function nationalListPage(
 			selected: inspectorStatusFilter === inspectorStatus
 		})
 	);
-
 	const localPlanningAuthorityFilterItemsArray = [
 		{ name: 'All', lpaCode: 'all' },
 		...(appeals?.lpas || [])
@@ -103,6 +102,7 @@ export function nationalListPage(
 		selected: caseOfficerFilter === String(caseOfficer?.id)
 	}));
 
+console.log(appeals,'appeals');
 	const inspectorFilterItemsArray = [
 		{ name: 'All', id: 'all' },
 		...(appeals?.inspectors.map(({ azureAdUserId }) =>
@@ -113,7 +113,7 @@ export function nationalListPage(
 		value: inspector?.id,
 		selected: inspectorFilter === String(inspector?.id)
 	}));
-
+console.log(inspectorFilterItemsArray,'inspectorFilterItemsArray');
 	const enabledAppealTypes = getEnabledAppealCaseTypes();
 
 	let enabledAppealProcedures = [];

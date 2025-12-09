@@ -16,10 +16,19 @@ export const renderDocumentUpload = async (request, response) => {
 		currentAppeal,
 		session,
 		query,
+		currentRepresentation,
 		locals: { pageContent }
 	} = request;
-
-	const baseUrl = request.baseUrl;
+	let baseUrl
+if(request.path.endsWith('/replace')){
+	console.log('Rendering replace document upload page');
+	console.log('Appeal', currentAppeal);
+	console.log(currentRepresentation);
+	 baseUrl = request.baseUrl+'/replace';
+} else {
+	console.log('Rendering add document upload page');
+	 baseUrl = request.baseUrl;
+}
 	const representationBaseUrl = request.baseUrl.replace('/add-document', '');
 
 	let backButtonUrl = isAtEditEntrypoint(request)
@@ -34,7 +43,7 @@ export const renderDocumentUpload = async (request, response) => {
 		const appealDetailsUrlPattern = /^(\/appeals-service\/appeal-details\/[^/]+).*$/;
 		backButtonUrl = request.baseUrl.replace(appealDetailsUrlPattern, '$1');
 	}
-
+console.log(baseUrl,'baseUrl');
 	return renderDocumentUploadHelper({
 		request,
 		response,

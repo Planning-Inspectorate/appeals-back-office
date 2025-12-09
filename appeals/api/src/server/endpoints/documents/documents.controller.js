@@ -259,6 +259,7 @@ const deleteDocumentVersion = async (req, res) => {
  * @param {Response} res
  */
 const updateDocuments = async (req, res) => {
+	console.log('Updating documents with data:', req.body);
 	const { body, appeal } = req;
 	const responseDocuments = [];
 
@@ -475,6 +476,52 @@ const updateDocumentsAvCheckStatus = async (req, res) => {
 	res.send({ documents: responseDocuments });
 };
 
+/**
+ * @param {Request} req
+ * @param {Response} res
+ */
+const replaceDocument = async (req, res) => {
+	const { body, appeal, params } = req;
+	const { document } = body;
+	const { documentId } = params;
+
+	try {
+		const latestDocument = await documentRepository.getDocumentById(documentId);
+
+		if (latestDocument && latestDocument.name) {
+			await documentRepository.replaceDocumentById(latestDocument.guid, document);
+			if (document.fileName && document.fileName !== latestDocument.name) {
+				const nameChangedMessage = stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_NAME_CHANGED, [
+					latestDocument.name,
+					document.fileName
+				]);
+
+				await logAuditTrail(
+					latestDocument.name,
+					latestDocument.latestDocumentVersion.version,
+					nameChangedMessage,
+					req,
+					appeal.id,
+					latestDocument.guid
+				);
+
+				await broadcasters.broadcastDocument(
+					latestDocument.guid,
+					latestDocument.latestDocumentVersion.version,
+					EventType.Update
+				);
+			}
+		}
+	} catch (error) {
+		if (error) {
+			logger.error(error);
+			return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
+		}
+	}
+
+	res.send({ document });
+}
+
 export {
 	addDocuments,
 	addDocumentVersion,
@@ -485,7 +532,8 @@ export {
 	getFolders,
 	updateDocumentFileName,
 	updateDocuments,
-	updateDocumentsAvCheckStatus
+	updateDocumentsAvCheckStatus,
+	replaceDocument
 };
 
 /**
@@ -522,3 +570,4 @@ export const mapDocumentDownloadUrl = (appealId, documentId, filename, documentV
 	}
 	return `/documents/${appealId}/download/${documentId}/${filename}`;
 };
+

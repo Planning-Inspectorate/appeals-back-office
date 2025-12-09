@@ -290,4 +290,35 @@ router.delete(
 	asyncHandler(controller.deleteDocumentVersion)
 );
 
+router.post(
+	'/:appealId/documents/replace/:documentId',
+	/*
+		#swagger.tags = ['Documents']
+		#swagger.path = '/appeals/{appealId}/documents'
+		#swagger.description = Upload documents to a case
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.requestBody = {
+			in: 'body',
+			description: 'Appeal documents to post',
+			schema: { $ref: '#/components/schemas/AddDocumentsRequest' },
+			required: true
+		}
+		#swagger.responses[204] = {
+			description: 'Document metadata successfully added',
+			schema: { $ref: '#/components/schemas/AddDocumentsResponse' }
+		}
+		#swagger.responses[400] = {}
+		#swagger.responses[404] = {}
+	 */
+	getAppealValidator,
+	checkAppealExistsByIdAndAddToRequest,
+	getDocumentsValidator,
+	asyncHandler(controller.replaceDocument)
+);
+
+
 export { router as documentsRoutes };

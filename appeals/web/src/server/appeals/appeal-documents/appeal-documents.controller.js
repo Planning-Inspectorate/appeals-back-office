@@ -149,7 +149,7 @@ export const renderDocumentUpload = async ({
 			.map((versionInfo) => versionInfo.version)
 			.sort((a, b) => b - a)[0];
 	}
-
+console.log(nextPageUrl,'nextPageUrl');
 	const mappedPageContent = await documentUploadPage({
 		appealId,
 		appealReference: appealDetails.appealReference,

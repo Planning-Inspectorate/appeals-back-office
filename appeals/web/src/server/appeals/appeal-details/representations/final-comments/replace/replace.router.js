@@ -4,9 +4,9 @@ import {
 	createDateInputDateValidityValidator,
 	createDateInputFieldsValidator
 } from '#lib/validators/date-input.validator.js';
+import { validateRedactionStatus } from '#lib/validators/redaction-status-validator.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
-import { validateRedactionStatus } from '../representations.validators.js';
 import {
 	postDateSubmitted,
 	postDocumentUpload,
@@ -14,32 +14,31 @@ import {
 	renderDateSubmitted,
 	renderDocumentUpload,
 	renderRedactionStatus
-} from './add-document.controller.js';
-import { postCheckYourAnswers, renderCheckYourAnswers } from './controller/check-your-answers.js';
+} from '../../document-attachments/add-document.controller.js';
+import {
+	postCheckYourAnswers,
+	renderCheckYourAnswers
+} from '../../document-attachments/controller/check-your-answers.js';
 
 const router = createRouter({ mergeParams: true });
 
 router.get('/', asyncHandler(renderDocumentUpload));
 router.post('/', asyncHandler(postDocumentUpload));
 
-router.get('/replace', asyncHandler(renderDocumentUpload));
-router.post('/replace', asyncHandler(postDocumentUpload));
-
-
 router.get('/redaction-status', asyncHandler(renderRedactionStatus));
 router.post(
 	'/redaction-status',
 	validateRedactionStatus,
-	saveBodyToSession('addDocument'),
+	saveBodyToSession('replaceRejectedDocument'),
 	asyncHandler(postRedactionStatus)
 );
 
 router.get('/date-submitted', asyncHandler(renderDateSubmitted));
 router.post(
 	'/date-submitted',
-	createDateInputFieldsValidator('', 'Date', 'day', 'month', 'year'),
-	createDateInputDateValidityValidator('', 'Date', 'day', 'month', 'year'),
-	saveBodyToSession('addDocument'),
+	createDateInputFieldsValidator('', '', 'day', 'month', 'year'),
+	createDateInputDateValidityValidator('', '', 'day', 'month', 'year'),
+	saveBodyToSession('replaceRejectedDocument'),
 	createDateInputDateInPastOrTodayValidator('', '', 'day', 'month', 'year'),
 	asyncHandler(postDateSubmitted)
 );

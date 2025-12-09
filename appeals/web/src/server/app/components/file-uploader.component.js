@@ -38,3 +38,16 @@ export const createNewDocumentVersion = async (apiClient, caseId, documentId, pa
 		.json();
 	return result;
 };
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {string|number} caseId
+ * @param {string} documentId
+ * @param {AddDocumentsRequest} payload
+ * @returns {Promise<AddDocumentsResponse|undefined>}
+ */
+export const replaceDocument = async (apiClient, caseId, documentId, payload) => {
+	console.log('Replacing document with payload:', payload);
+	const result = apiClient.patch(`appeals/${caseId}/documents/replace/${documentId}`, { json: payload }).json();
+	return result;
+};
