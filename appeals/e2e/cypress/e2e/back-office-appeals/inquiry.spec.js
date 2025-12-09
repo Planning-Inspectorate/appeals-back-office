@@ -462,13 +462,13 @@ it('Can update answer from CYA page - change address', () => {
 		cyaSection.selectChangeAnswer('inquiry-address');
 		inquirySectionPage.changeAddress(newAddress, previousInquiryAddress);
 
-		// const expectedAddress = formatObjectAsString(newAddress);
-		//
-		// // check address is correct
-		// cyaSection.verifyAnswerUpdated({
-		// 	field: cyaSection.cyaSectionFields.address,
-		// 	value: expectedAddress
-		// });
+		const expectedAddress = formatObjectAsString(newAddress);
+
+		// check address is correct
+		cyaSection.verifyAnswerUpdated({
+			field: cyaSection.cyaSectionFields.address,
+			value: expectedAddress
+		});
 	});
 });
 
@@ -1078,20 +1078,7 @@ it('should complete inquiry appeal to decision`', () => {
 
 		cy.simulateInquiryElapsed(caseObj);
 
-		caseDetailsPage.clickIssueDecision(caseObj);
-		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Allowed'));
-		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.uploadSampleFile(caseDetailsPage.sampleFiles.pdf);
-		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.selectRadioButtonByValue('No');
-		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.selectRadioButtonByValue('No');
-		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.clickButtonByText('Issue Decision');
-		caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
-		caseDetailsPage.checkStatusOfCase('Complete', 0);
-		caseDetailsPage.checkDecisionOutcome('Allowed');
-		caseDetailsPage.viewDecisionLetter('View decision');
+		happyPathHelper.issueDecision('Allowed', 'both costs');
 
 		const expectedNotifies = [
 			{
