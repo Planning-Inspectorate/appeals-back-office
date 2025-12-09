@@ -48,6 +48,25 @@ services:
             - 'SSL_KEY_FILE=certificate-key.pem'
             - 'NODE_TLS_REJECT_UNAUTHORIZED=0'
             - 'AUTH_REDIRECT_URI=https://localhost:8080/auth/redirect'
+            - 'AZURE_BLOB_STORE_HOST=https://pins_azurite:10000/devstoreaccount1/'
+            - 'AZURE_BLOB_USE_EMULATOR=true'
+            - 'AZURE_BLOB_EMULATOR_SAS_HOST=${AZURE_BLOB_EMULATOR_SAS_HOST}'
         ports:
             - 8080:8080
+    pins_azurite:
+        image: mcr.microsoft.com/azure-storage/azurite
+        container_name: pins_azurite
+        command: >
+            azurite
+            --silent
+            --blobHost 0.0.0.0
+            --cert ./appeals/web/certificate.pem
+            --key ./appeals/web/certificate-key.pem
+            --oauth basic
+            --skipApiVersionCheck
+        ports:
+            - "10000:10000"
+            - "10001:10001"
+            - "10002:10002"
+        restart: unless-stopped
 
