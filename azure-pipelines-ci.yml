@@ -119,7 +119,7 @@ extends:
               echo "##vso[task.setvariable variable=AZURE_BLOB_EMULATOR_SAS_HOST]$FULL_URL"
             displayName: "Generate SAS Url"
           - script:   docker-compose up -d
-            environmentVariables:
+            parameters:
               AUTH_TENANT_ID: $(AZURE_TENANT_ID)
               AUTH_CLIENT_SECRET: $(AUTH_CLIENT_SECRET)
               AUTH_CLIENT_ID: $(AUTH_CLIENT_ID)
