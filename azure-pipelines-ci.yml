@@ -106,7 +106,7 @@ extends:
           - script: |
               SAS_URL=$(az storage container generate-sas \
                 --account-name devstoreaccount1 \
-                --account-key Eby8vdM02xNOcqFeqCnb+VmJGFHb...== \
+                --account-key Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw== \
                 --name document-service-uploads \
                 --permissions rwl \
                 --expiry 2027-01-03T13:00:00Z \
