@@ -23,6 +23,7 @@ export const getRule6Parties = async (req, res) => {
  */
 export const addRule6Party = async (req, res) => {
 	const {
+		appeal,
 		body: { serviceUser },
 		params
 	} = req;
@@ -30,7 +31,12 @@ export const addRule6Party = async (req, res) => {
 	const appealId = Number(params.appealId);
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	try {
-		await appealRule6PartiesService.addRule6Party(appealId, serviceUser, azureAdUserId);
+		await appealRule6PartiesService.addRule6Party(
+			appealId,
+			appeal.reference,
+			serviceUser,
+			azureAdUserId
+		);
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
@@ -46,6 +52,7 @@ export const addRule6Party = async (req, res) => {
  */
 export const updateRule6Party = async (req, res) => {
 	const {
+		appeal,
 		body: { serviceUser },
 		params
 	} = req;
@@ -54,6 +61,7 @@ export const updateRule6Party = async (req, res) => {
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	try {
 		const result = await appealRule6PartiesService.updateRule6Party(
+			appeal.reference,
 			rule6PartyId,
 			serviceUser,
 			azureAdUserId
