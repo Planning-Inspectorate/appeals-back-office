@@ -112,7 +112,7 @@ extends:
                 --expiry 2027-01-03T13:00:00Z \
                 --https-only \
                 --output tsv \
-                --connection-string "DefaultEndpointsProtocol=https;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFeqCnb+...==;BlobEndpoint=https://127.0.0.1:10000/devstoreaccount1;")
+                --connection-string "DefaultEndpointsProtocol=https;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=https://127.0.0.1:10000/devstoreaccount1;")
 
               FULL_URL="https://127.0.0.1:10000/devstoreaccount1/document-service-uploads?${SAS_URL}"
 
