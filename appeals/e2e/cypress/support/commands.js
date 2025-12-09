@@ -148,7 +148,7 @@ Cypress.Commands.add('addLpaqSubmissionToCase', (caseObj) => {
 	return cy.wrap(null).then(async () => {
 		await appealsApiClient.lpqaSubmission(caseObj.reference);
 		cy.log('Added LPA submission to case ref ' + caseObj.reference);
-		return;
+		cy.reload();
 	});
 });
 
@@ -156,14 +156,14 @@ Cypress.Commands.add('simulateSiteVisit', (caseObj) => {
 	return cy.wrap(null).then(async () => {
 		await appealsApiClient.simulateSiteVisitElapsed(caseObj.reference);
 		cy.log('Simulated site visit elapsed for case ref ' + caseObj.reference);
-		return;
+		cy.reload();
 	});
 });
 
 Cypress.Commands.add('simulateStatementsDeadlineElapsed', (caseObj) => {
 	return cy.wrap(null).then(async () => {
 		await appealsApiClient.simulateStatementsElapsed(caseObj.reference);
-		return;
+		cy.reload();
 	});
 });
 
@@ -171,7 +171,7 @@ Cypress.Commands.add('simulateFinalCommentsDeadlineElapsed', (caseObj) => {
 	return cy.wrap(null).then(async () => {
 		await appealsApiClient.simulateFinalCommentsElapsed(caseObj.reference);
 		cy.log('Simulated site visit elapsed for case ref ' + caseObj.reference);
-		return;
+		cy.reload();
 	});
 });
 
@@ -188,8 +188,7 @@ Cypress.Commands.add('addRepresentation', (caseObj, type, serviceUserId, represe
 
 Cypress.Commands.add('loadAppealDetails', (caseObj) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(caseObj.reference);
-		return details;
+		return await appealsApiClient.loadCaseDetails(caseObj.reference);
 	});
 });
 
@@ -346,6 +345,24 @@ Cypress.Commands.add('simulateHearingElapsed', (caseObj) => {
 	});
 });
 
+Cypress.Commands.add('simulateInquiryElapsed', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		return appealsApiClient.simulateInquiryElapsed(caseObj.reference).then(() => {
+			cy.log(`Simulated inquiry elapsed for case ref ${caseObj.reference}`);
+			cy.reload();
+		});
+	});
+});
+
+Cypress.Commands.add('simulateProofOfEvidenceElapsed', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		return appealsApiClient.simulateProofOfEvidenceElapsed(caseObj.reference).then(() => {
+			cy.log(`Simulated POE elapsed for case ref ${caseObj.reference}`);
+			cy.reload();
+		});
+	});
+});
+
 Cypress.Commands.add('navigateToAppealDetailsPage', (caseObj) => {
 	return cy.wrap(null).then(async () => {
 		const details = await appealsApiClient.loadCaseDetails(caseObj.reference);
@@ -366,7 +383,7 @@ Cypress.Commands.add('reviewStatementViaApi', (caseObj) => {
 	return cy.wrap(null).then(async () => {
 		await appealsApiClient.reviewStatement(caseObj.reference);
 		cy.log('Reviewed lpa statement for case ref ' + caseObj.reference);
-		return;
+		cy.reload();
 	});
 });
 
@@ -374,7 +391,7 @@ Cypress.Commands.add('reviewIpCommentsViaApi', (caseObj) => {
 	return cy.wrap(null).then(async () => {
 		await appealsApiClient.reviewIpComments(caseObj.reference);
 		cy.log('Reviewed IP comments for case ref ' + caseObj.reference);
-		return;
+		cy.reload();
 	});
 });
 
@@ -382,7 +399,7 @@ Cypress.Commands.add('shareCommentsAndStatementsViaApi', (caseObj) => {
 	return cy.wrap(null).then(async () => {
 		await appealsApiClient.shareCommentsAndStatements(caseObj.reference);
 		cy.log('Shared IP Comments and Statements for case ref ' + caseObj.reference);
-		return;
+		cy.reload();
 	});
 });
 
@@ -390,7 +407,7 @@ Cypress.Commands.add('reviewAppellantFinalCommentsViaApi', (caseObj) => {
 	return cy.wrap(null).then(async () => {
 		await appealsApiClient.reviewAppellantFinalComments(caseObj.reference);
 		cy.log('Reviewed appellant final comments for case ref ' + caseObj.reference);
-		return;
+		cy.reload();
 	});
 });
 
@@ -398,7 +415,7 @@ Cypress.Commands.add('reviewLpaFinalCommentsViaApi', (caseObj) => {
 	return cy.wrap(null).then(async () => {
 		await appealsApiClient.reviewLpaFinalComments(caseObj.reference);
 		cy.log('Reviewed LPA final comments for case ref ' + caseObj.reference);
-		return;
+		cy.reload();
 	});
 });
 
@@ -406,7 +423,7 @@ Cypress.Commands.add('setupSiteVisitViaAPI', (caseObj) => {
 	return cy.wrap(null).then(async () => {
 		await appealsApiClient.setupSiteVisit(caseObj.reference);
 		cy.log('Setup site visit for case ref ' + caseObj.reference);
-		return;
+		cy.reload();
 	});
 });
 
@@ -414,7 +431,7 @@ Cypress.Commands.add('issueDecisionViaApi', (caseObj) => {
 	return cy.wrap(null).then(async () => {
 		await appealsApiClient.issueDecision(caseObj.reference);
 		cy.log('Issue allowed decision for case ref ' + caseObj.reference);
-		return;
+		cy.reload();
 	});
 });
 
@@ -422,7 +439,7 @@ Cypress.Commands.add('setupHearingViaApi', (caseObj) => {
 	return cy.wrap(null).then(async () => {
 		await appealsApiClient.setupHearing(caseObj.reference);
 		cy.log('Setup hearing for case ref' + caseObj.reference);
-		return;
+		cy.reload();
 	});
 });
 
@@ -503,7 +520,7 @@ Cypress.Commands.add('startAppeal', (caseObj) => {
 	return cy.wrap(null).then(async () => {
 		await appealsApiClient.startAppeal(caseObj.reference);
 		cy.log('Started case for ref ' + caseObj.reference);
-		return;
+		cy.reload();
 	});
 });
 
@@ -511,6 +528,6 @@ Cypress.Commands.add('reviewLpaqSubmission', (caseObj) => {
 	return cy.wrap(null).then(async () => {
 		await appealsApiClient.reviewLpaq(caseObj.reference);
 		cy.log('Reviewed lpaq submission for case ref ' + caseObj.reference);
-		return;
+		cy.reload();
 	});
 });

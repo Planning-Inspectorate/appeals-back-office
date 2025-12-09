@@ -6,5 +6,7 @@ export const urlPaths = {
 	personalListFilteredAwaitingEvent:
 		'/appeals-service/personal-list?pageSize=1000&pageNumber=1&appealStatusFilter=awaiting_event',
 	allCases: '/appeals-service/all-cases?pageSize=1000&pageNumber=1',
-	caseDetails: '/appeals-service/appeal-details'
+	caseDetails: '/appeals-service/appeal-details',
+	personalListFilteredEvidence:
+		'/appeals-service/personal-list?pageSize=1000&pageNumber=1&appealStatusFilter=evidence'
 };
