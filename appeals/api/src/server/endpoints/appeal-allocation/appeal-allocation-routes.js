@@ -1,4 +1,4 @@
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import { getLookupData } from '../../common/controllers/lookup-data.controller.js';
@@ -72,7 +72,7 @@ router.patch(
 	 */
 	getAllocationValidator,
 	validateSpecialism,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	asyncHandler(saveAllocation)
 );
 
