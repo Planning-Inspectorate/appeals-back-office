@@ -118,7 +118,13 @@ extends:
 
               echo "##vso[task.setvariable variable=AZURE_BLOB_EMULATOR_SAS_HOST]$FULL_URL"
             displayName: "Generate SAS Url"
-          - script: AUTH_TENANT_ID=$(AZURE_TENANT_ID) AUTH_CLIENT_SECRET=$(AUTH_CLIENT_SECRET) AUTH_CLIENT_ID=$(AUTH_CLIENT_ID) AZURE_BLOB_EMULATOR_SAS_HOST=$(AZURE_BLOB_EMULATOR_SAS_HOST) GIT_SHA=$(Build.SourceVersion) docker-compose up -d
+          - script:   docker-compose up -d
+            environmentVariables:
+              AUTH_TENANT_ID: $(AZURE_TENANT_ID)
+              AUTH_CLIENT_SECRET: $(AUTH_CLIENT_SECRET)
+              AUTH_CLIENT_ID: $(AUTH_CLIENT_ID)
+              AZURE_BLOB_EMULATOR_SAS_HOST: $(AZURE_BLOB_EMULATOR_SAS_HOST)
+              GIT_SHA: $(Build.SourceVersion)
             condition: eq(variables['runE2E'], 'true')
             displayName: "Start database, api and web docker containers"
           - script: docker ps
