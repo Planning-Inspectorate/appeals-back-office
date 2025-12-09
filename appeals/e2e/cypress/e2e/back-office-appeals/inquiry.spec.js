@@ -156,7 +156,7 @@ beforeEach(() => {
 let appeal;
 
 afterEach(() => {
-	// cy.deleteAppeals(appeal);
+	cy.deleteAppeals(appeal);
 });
 
 it('Can start case as inquiry with address and estimated days', () => {
