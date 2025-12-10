@@ -137,14 +137,15 @@ export const createRepresentation = async (appealId, input) => {
 				postcode: ipAddress.postCode
 			}));
 
-		representedId = await serviceUserRepository.createServiceUser({
+		const represented = await serviceUserRepository.createServiceUser({
 			firstName: ipDetails?.firstName,
 			lastName: ipDetails?.lastName,
 			email: ipDetails?.email,
 			addressId: address ? address.id : undefined
-		}).id;
+		});
+		representedId = represented.id;
 	} else if (input.representationType == APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT) {
-		representedId = input.appellantId
+		representedId = Number(input.appellantId);
 	} 
 
 	const representation = await representationRepository.createRepresentation({
@@ -155,6 +156,7 @@ export const createRepresentation = async (appealId, input) => {
 		dateCreated: input.dateCreated,
 		status: input.status,
 		lpaCode: input.lpaCode,
+		originalRepresentation: 'Added as a document'
 	});
 
 	if (input.attachments.length > 0) {

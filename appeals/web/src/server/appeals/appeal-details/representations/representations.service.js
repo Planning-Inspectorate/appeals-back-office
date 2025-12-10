@@ -142,7 +142,7 @@ export const updateRejectionReasons = (apiClient, appealId, commentId, rejection
 /**
  * @param {import('got').Got} apiClient
  * @param {number} appealId
- * @returns {Promise<Representation[]>}
+ * @returns {Promise<any>}
  * */
 export const publishRepresentations = (apiClient, appealId) =>
 	apiClient.post(`appeals/${appealId}/reps/publish`).json();
@@ -158,7 +158,7 @@ export async function postRepresentation(apiClient, appealId, payload, represent
 	try {
 		const response = await apiClient.post(`appeals/${appealId}/reps/${representationType}`, {
 			json: payload
-		});
+		}).json();
 		return response.body;
 	} catch (error) {
 		console.error('Error posting representation:', error);

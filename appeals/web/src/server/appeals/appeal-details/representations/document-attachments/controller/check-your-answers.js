@@ -6,7 +6,7 @@ import {
 } from '#appeals/appeal-details/representations/interested-party-comments/common/redaction-status.js';
 import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { dayMonthYearHourMinuteToDisplayDate, dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
+import { dayMonthYearHourMinuteToDisplayDate } from '#lib/dates.js';
 import { clearEdits, editLink } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
@@ -94,7 +94,7 @@ export const postCheckYourAnswers = async (request, response) => {
 	const {
 		apiClient,
 		session,
-		currentAppeal: { appealId, lpaCode },
+		currentAppeal: { appealId},
 		currentRepresentation,
 	} = request;
 	
@@ -146,8 +146,7 @@ export const postCheckYourAnswers = async (request, response) => {
 				]
 			});
 
-			const payload = buildPayload(representationType, document.GUID, redactionStatus, createdDate, lpaCode);
-
+			const payload = buildPayload(representationType, document.GUID, redactionStatus, createdDate);
 			session.createRepresentation 
 			? await postRepresentation(request.apiClient, appealId, payload, representationType)
 			: await patchRepresentationAttachments(apiClient, appealId, id, [document.GUID]);
@@ -210,15 +209,13 @@ export const postCheckYourAnswers = async (request, response) => {
  * @param {string} documentGuid
  * @param {string} redactionStatus
  * @param {string} createdDate
- * @param {string} lpaCode
  * @return {RepresentationRequest}
  */
-const buildPayload = (representationType, documentGuid, redactionStatus, createdDate, lpaCode) => {
+const buildPayload = (representationType, documentGuid, redactionStatus, createdDate) => {
 	return {
 		attachments: [documentGuid],
 		redactionStatus,
 		source: representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT ? 'citizen' : 'lpa',
-		lpaCode,
 		dateCreated: createdDate
 	}
 }

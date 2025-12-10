@@ -213,12 +213,17 @@ export const createRepresentation = () => async (req, res) => {
 	const { appealId, representationType } = req.params;
 
 	const shouldAutoPublish =
-		representationType === APPEAL_REPRESENTATION_TYPE.COMMENT &&
+		(representationType === APPEAL_REPRESENTATION_TYPE.COMMENT || representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT) &&
 		isStatePassed(req.appeal, APPEAL_CASE_STATUS.STATEMENTS);
 
 	const updatePayload = shouldAutoPublish
 		? { ...req.body, status: APPEAL_REPRESENTATION_STATUS.PUBLISHED }
 		: req.body;
+
+
+	if([APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT, APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT].includes(representationType)) {
+		updatePayload.lpaCode = req.appeal.lpa?.lpaCode
+	}
 
 	const rep = await representationService.createRepresentation(parseInt(appealId), {
 		representationType,

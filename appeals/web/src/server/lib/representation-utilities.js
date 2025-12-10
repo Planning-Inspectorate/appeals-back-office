@@ -4,6 +4,7 @@ import {
 	APPEAL_REPRESENTATION_STATUS,
 	FEATURE_FLAG_NAMES
 } from '@pins/appeals/constants/common.js';
+import { dateIsInThePastIsoString } from './dates.js';
 
 /**
  * @param {string} representationStatus
@@ -21,6 +22,7 @@ export function isRepresentationReviewRequired(representationStatus) {
  * @param {string|null|undefined} representationStatus
  * @param {RepresentationType} representationType
  * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string|undefined} representationDueDate
  * @returns {string} action link html
  */
 export function mapRepresentationDocumentSummaryActionLink(
@@ -28,15 +30,9 @@ export function mapRepresentationDocumentSummaryActionLink(
 	documentationStatus,
 	representationStatus,
 	representationType,
-	request
+	request,
+	representationDueDate = undefined
 ) {
-	if (
-		documentationStatus !== 'received' &&
-		!isFeatureActive(FEATURE_FLAG_NAMES.MANUALLY_ADD_REPS)
-	) {
-		return '';
-	}
-
 	const reviewRequired = (() => {
 		if (typeof representationStatus === 'string') {
 			return [
@@ -73,7 +69,10 @@ export function mapRepresentationDocumentSummaryActionLink(
 	};
 
 	if (documentationStatus !== 'received') {
-		return `<a href="${hrefs[representationType]}/add-document" data-cy="add-${representationType}" class="govuk-link">Add<span class="govuk-visually-hidden"> ${visuallyHiddenTexts[representationType]}</span></a>`;
+		// @ts-ignore
+		return isFeatureActive(FEATURE_FLAG_NAMES.MANUALLY_ADD_REPS) && dateIsInThePastIsoString(representationDueDate)
+		? `<a href="${hrefs[representationType]}/add-document" data-cy="add-${representationType}" class="govuk-link">Add<span class="govuk-visually-hidden"> ${visuallyHiddenTexts[representationType]}</span></a>` 
+		: '';
 	}
 
 	return `<a href="${addBackLinkQueryToUrl(request, hrefs[representationType])}" data-cy="${
