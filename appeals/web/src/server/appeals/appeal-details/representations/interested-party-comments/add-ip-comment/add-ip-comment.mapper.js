@@ -35,7 +35,7 @@ export const ipDetailsPage = (appealDetails, values, backLinkUrl, errors) => ({
 	preHeading: `Appeal ${appealShortReference(
 		appealDetails.appealReference
 	)} - add interested party comment`,
-	heading: "Interested party's details",
+	heading: 'Interested party details',
 	pageComponents: [
 		{
 			type: 'input',
