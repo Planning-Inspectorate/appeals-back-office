@@ -3784,6 +3784,11 @@ export const lpaStatementAwaitingReview = {
 	rejectionReasons: []
 };
 
+export const lpaStatementPublished = {
+	...lpaStatementAwaitingReview,
+	status: 'published'
+};
+
 export const proofOfEvidenceForReview = {
 	itemCount: 1,
 	items: [
