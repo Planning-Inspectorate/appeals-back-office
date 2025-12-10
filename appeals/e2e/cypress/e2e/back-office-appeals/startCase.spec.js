@@ -10,7 +10,7 @@ import { EstimatedDaysSection } from '../../page_objects/estimatedDaysSection.js
 import { ProcedureTypePage } from '../../page_objects/procedureTypePage';
 import { happyPathHelper } from '../../support/happyPathHelper';
 import { tag } from '../../support/tag';
-import { formatDateAndTime } from '../../support/utils/format';
+import { formatDateAndTime, formatObjectAsString } from '../../support/utils/format';
 
 const caseDetailsPage = new CaseDetailsPage();
 const cyaSection = new CYASection();
@@ -76,6 +76,14 @@ describe('Start case', () => {
 		}
 	];
 
+	const inquiryAddress = {
+		line1: 'e2e Inquiry Test Address',
+		line2: 'Inquiry Street',
+		town: 'Inquiry Town',
+		county: 'Somewhere',
+		postcode: 'BS20 1BS'
+	};
+
 	const safeAddedDays = 7;
 
 	beforeEach(() => {
@@ -91,8 +99,13 @@ describe('Start case', () => {
 	it('Start case', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
+
+			// Assign Case Officer Via API
+			cy.assignCaseOfficerViaApi(caseObj);
+
+			// Validate Appeal Via API
+			cy.validateAppeal(caseObj);
+
 			happyPathHelper.startCase(caseObj);
 			cy.loadAppealDetails(caseObj).then((appealDetails) => {
 				const startedAt = appealDetails?.startedAt;
@@ -108,8 +121,13 @@ describe('Start case', () => {
 			caseType: 'W'
 		}).then((caseObj) => {
 			appeal = caseObj;
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
+
+			// Assign Case Officer Via API
+			cy.assignCaseOfficerViaApi(caseObj);
+
+			// Validate Appeal Via API
+			cy.validateAppeal(caseObj);
+
 			happyPathHelper.startS78Case(caseObj, 'written');
 			caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
 			cy.loadAppealDetails(caseObj).then((appealDetails) => {
@@ -126,8 +144,13 @@ describe('Start case', () => {
 			caseType: 'Y'
 		}).then((caseObj) => {
 			appeal = caseObj;
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
+
+			// Assign Case Officer Via API
+			cy.assignCaseOfficerViaApi(caseObj);
+
+			// Validate Appeal Via API
+			cy.validateAppeal(caseObj);
+
 			happyPathHelper.startCase(caseObj);
 			caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
 			caseDetailsPage.verifyAppealType('Planning listed building and conservation area appeal');
@@ -150,10 +173,7 @@ describe('Start case', () => {
 			cy.assignCaseOfficerViaApi(caseObj);
 
 			// Validate Appeal Via API
-			cy.getBusinessActualDate(new Date(), 0).then((date) => {
-				cy.updateAppealDetailsViaApi(caseObj, { validationOutcome: 'valid', validAt: date });
-			});
-			cy.reload();
+			cy.validateAppeal(caseObj);
 
 			happyPathHelper.viewCaseDetails(caseObj);
 			caseDetailsPage.clickReadyToStartCase();
@@ -182,11 +202,7 @@ describe('Start case', () => {
 			cy.assignCaseOfficerViaApi(caseObj);
 
 			// Validate Appeal Via API
-			cy.getBusinessActualDate(new Date(), 0).then((date) => {
-				cy.updateAppealDetailsViaApi(caseObj, { validationOutcome: 'valid', validAt: date });
-			});
-
-			cy.reload();
+			cy.validateAppeal(caseObj);
 
 			happyPathHelper.viewCaseDetails(caseObj);
 			caseDetailsPage.clickReadyToStartCase();
@@ -223,11 +239,7 @@ describe('Start case', () => {
 			cy.assignCaseOfficerViaApi(caseObj);
 
 			// Validate Appeal Via API
-			cy.getBusinessActualDate(new Date(), 0).then((date) => {
-				cy.updateAppealDetailsViaApi(caseObj, { validationOutcome: 'valid', validAt: date });
-			});
-
-			cy.reload();
+			cy.validateAppeal(caseObj);
 
 			happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');
 
@@ -250,15 +262,15 @@ describe('Start case', () => {
 				estimatedDaysSection.enterEstimatedInquiryDays(6);
 				estimatedDaysSection.clickButtonByText('Continue');
 
-				// do not enter an address
+				// enter an address
 				addressSection.selectAddressOption('Yes');
 				addressSection.clickButtonByText('Continue');
-				addressSection.enterAddress();
+				addressSection.enterAddress(inquiryAddress);
+				addressSection.clickButtonByText('Continue');
 
 				// enter timetable dates
 				cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
 					dateTimeSection.enterInquiryDueDates(timetableItems, startDate, 7);
-					//inquirySectionPage.enterTimetableDueDates(timetableItems, startDate, 7);
 				});
 
 				dateTimeSection.clickButtonByText('Continue');
@@ -266,7 +278,8 @@ describe('Start case', () => {
 				const appealDetails = {
 					date: expectedDateTime.date,
 					time: expectedDateTime.time,
-					expectedDays: 6
+					expectedDays: 6,
+					venueAddress: formatObjectAsString(inquiryAddress, ', ')
 				};
 
 				// check email previews
@@ -285,11 +298,7 @@ describe('Start case', () => {
 			cy.assignCaseOfficerViaApi(caseObj);
 
 			// Validate Appeal Via API
-			cy.getBusinessActualDate(new Date(), 0).then((date) => {
-				cy.updateAppealDetailsViaApi(caseObj, { validationOutcome: 'valid', validAt: date });
-			});
-
-			cy.reload();
+			cy.validateAppeal(caseObj);
 
 			happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');
 
@@ -319,7 +328,6 @@ describe('Start case', () => {
 				// enter timetable dates
 				cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
 					dateTimeSection.enterInquiryDueDates(timetableItems, startDate, 7);
-					//inquirySectionPage.enterTimetableDueDates(timetableItems, startDate, 7);
 				});
 
 				dateTimeSection.clickButtonByText('Continue');
