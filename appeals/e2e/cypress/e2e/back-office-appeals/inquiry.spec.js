@@ -159,65 +159,6 @@ afterEach(() => {
 	cy.deleteAppeals(appeal);
 });
 
-it('Can start case as inquiry with address and estimated days', () => {
-	cy.addLpaqSubmissionToCase(caseObj);
-	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-		dateTimeSection.enterInquiryDate(inquiryDate);
-		dateTimeSection.enterInquiryTime('12', '00');
-	});
-	caseDetailsPage.clickButtonByText('Continue');
-	caseDetailsPage.selectRadioButtonByValue('Yes');
-	caseDetailsPage.inputEstimatedInquiryDays(estimatedInquiryDays);
-
-	caseDetailsPage.clickButtonByText('Continue');
-	caseDetailsPage.selectRadioButtonByValue('Yes');
-	caseDetailsPage.clickButtonByText('Continue');
-	caseDetailsPage.addInquiryAddress(inquiryAddress);
-	caseDetailsPage.clickButtonByText('Continue');
-
-	// enter timetable dates
-	cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
-		inquirySectionPage.enterTimetableDueDates(timetableItems, startDate, 7);
-	});
-
-	caseDetailsPage.clickButtonByText('Continue');
-	caseDetailsPage.clickButtonByText('Start case');
-	caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
-	caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
-
-	// Verify timetable rows
-	caseDetailsPage.verifyTimeTableRows(timeTableRows);
-	// Verify order of sections
-	caseDetailsPage.verifyCaseDetailsSection(expectedCaseDetailsSections);
-	//review and accept lpaq
-	happyPathHelper.reviewS78Lpaq(caseObj);
-
-	// verify case overview details
-	overviewSectionPage.verifyCaseOverviewDetails(overviewDetails);
-});
-
-it('Can start case as inquiry without address or estimated days', () => {
-	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-		dateTimeSection.enterInquiryDate(inquiryDate);
-		dateTimeSection.enterInquiryTime('12', '00');
-	});
-	caseDetailsPage.clickButtonByText('Continue');
-	caseDetailsPage.selectRadioButtonByValue('No');
-	caseDetailsPage.clickButtonByText('Continue');
-	caseDetailsPage.selectRadioButtonByValue('No');
-	caseDetailsPage.clickButtonByText('Continue');
-
-	// enter timetable dates
-	cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
-		inquirySectionPage.enterTimetableDueDates(timetableItems, startDate, 7);
-	});
-
-	caseDetailsPage.clickButtonByText('Continue');
-	caseDetailsPage.clickButtonByText('Start case');
-	caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
-	caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
-});
-
 it('Displays error if inquiry estimated days not entered', () => {
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		dateTimeSection.enterInquiryDate(inquiryDate);

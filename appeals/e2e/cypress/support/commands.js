@@ -318,7 +318,19 @@ Cypress.Commands.add('updateAppealDetailsViaApi', (caseObj, caseDetails) => {
 		const details = await appealsApiClient.loadCaseDetails(caseObj.reference);
 		const appealId = details.appealId;
 		const appellantCaseId = details.appellantCaseId;
-		return await appealsApiClient.updateAppealCases(appealId, appellantCaseId, caseDetails);
+		return appealsApiClient.updateAppealCases(appealId, appellantCaseId, caseDetails).then(() => {
+			cy.log(`Updated appeal details for case ref ${caseObj.reference}`);
+			cy.reload();
+		});
+	});
+});
+
+Cypress.Commands.add('validateAppeal', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		// Validate Appeal Via API
+		cy.getBusinessActualDate(new Date(), 0).then((date) => {
+			return cy.updateAppealDetailsViaApi(caseObj, { validationOutcome: 'valid', validAt: date });
+		});
 	});
 });
 
