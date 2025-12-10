@@ -54,7 +54,8 @@ resource "azurerm_mssql_database" "primary" {
   max_size_gb = var.sql_config.max_size_gb
 
   short_term_retention_policy {
-    retention_days = var.sql_config.retention.short_term_days
+    backup_interval_in_hours = var.sql_config.retention.backup_interval_in_hours
+    retention_days           = var.sql_config.retention.short_term_days
   }
 
   long_term_retention_policy {

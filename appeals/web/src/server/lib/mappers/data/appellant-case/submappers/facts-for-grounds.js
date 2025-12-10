@@ -19,11 +19,12 @@ export const mapFactsForGrounds = ({ appellantCaseData, currentRoute, userHasUpd
 		return textSummaryListItem({
 			id,
 			text: `Facts for ground (${groundRef})`,
-			value: {
-				html: !hasData ? 'No data' : appealGround.factsForGround
-			},
-			link: `${currentRoute}/ground/${groundRef}/facts-for-ground/${actionText.toLowerCase()}`,
+			value: !hasData ? 'No data' : appealGround.factsForGround,
+			link: `${currentRoute}/facts-for-ground/${groundRef}/${actionText.toLowerCase()}`,
 			editable: hasData && userHasUpdateCase,
+			withShowMore: true,
+			toggleTextCollapsed: 'Show more',
+			toggleTextExpanded: 'Show less',
 			classes: 'facts-for-ground',
 			actionText,
 			cypressDataName: id

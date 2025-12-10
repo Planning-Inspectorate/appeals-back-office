@@ -64,6 +64,11 @@ describe('appeal rule 6 parties routes', () => {
 			test('creates a single rule 6 party', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				databaseConnector.appealRule6Party.create.mockResolvedValue({
+					appealId: fullPlanningAppeal.id,
+					id: 10,
+					serviceUserId: 20
+				});
 
 				const response = await request
 					.post(`/appeals/${appealId}/rule-6-parties`)
@@ -90,6 +95,13 @@ describe('appeal rule 6 parties routes', () => {
 						}
 					}
 				});
+
+				expect(mockBroadcasters.broadcastServiceUser).toHaveBeenCalledWith(
+					20,
+					'Create',
+					'Rule6Party',
+					fullPlanningAppeal.reference
+				);
 
 				expect(response.status).toEqual(201);
 			});
@@ -229,6 +241,13 @@ describe('appeal rule 6 parties routes', () => {
 						}
 					}
 				});
+
+				expect(mockBroadcasters.broadcastServiceUser).toHaveBeenCalledWith(
+					rule6Party.serviceUserId,
+					'Update',
+					'Rule6Party',
+					fullPlanningAppeal.reference
+				);
 
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({

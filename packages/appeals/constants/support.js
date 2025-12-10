@@ -62,6 +62,7 @@ export const AUDIT_TRAIL_ASSIGNED_INSPECTOR =
 export const AUDIT_TRAIL_UNASSIGNED_INSPECTOR =
 	'The inspector {replacement0} was unassigned from the case';
 export const AUDIT_TRAIL_MODIFIED_APPEAL = 'The {replacement0} property was updated';
+export const AUDIT_TRAIL_ENVIRONMENTAL_SERVICES_TEAM_REVIEW = 'Environmental services team review';
 export const AUDIT_TRAIL_CASE_STARTED = 'Appeal started\nAppeal procedure: {replacement0}';
 export const AUDIT_TRAIL_CASE_TIMELINE_CREATED = 'The case timeline was created';
 export const AUDIT_TRAIL_CASE_TIMELINE_UPDATED = 'The case timeline was updated';
@@ -124,6 +125,8 @@ export const AUDIT_TRAIL_LANDOWNER_PERMISSION_UPDATED =
 	"'Do you have the landowner's permission?' updated to {replacement0}";
 export const AUDIT_TRAIL_ADVERT_IN_POSITION_UPDATED =
 	"'Is the advertisement in position?' updated to {replacement0}'";
+export const AUDIT_TRAIL_APPEAL_GROUND_UPDATED =
+	'Facts for ground ({replacement0}) updated to {replacement1}';
 export const AUDIT_TRAIL_SITE_OWNERSHIP_UPDATED =
 	"'Does the appellant own all of the land involved in the appeal?' updated to {replacement0}";
 export const AUDIT_TRAIL_KNOWS_OTHER_OWNERS_UPDATED =

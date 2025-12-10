@@ -135,12 +135,13 @@ sql_config = {
   sku_name    = "S4"
   max_size_gb = 250
   retention = {
-    audit_days             = 120
-    short_term_days        = 30
-    long_term_weekly       = "P1W"
-    long_term_monthly      = "P1M"
-    long_term_yearly       = "P1Y"
-    long_term_week_of_year = 1
+    audit_days               = 120
+    backup_interval_in_hours = 12
+    short_term_days          = 30
+    long_term_weekly         = "P1W"
+    long_term_monthly        = "P1M"
+    long_term_yearly         = "P1Y"
+    long_term_week_of_year   = 1
   }
   public_network_access_enabled = false
 }

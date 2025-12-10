@@ -1,0 +1,125 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`facts-for-ground GET /change should render the facts for ground  change page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Facts for ground (a)</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <p id="facts-for-ground-hint-1" class="govuk-body govuk-hint">Enter your grounds of appeal and supporting facts. Do not repeat the local
+                            planning authority’s reasons for issuing the enforcement notice.</p>
+                        <p                         id="facts-for-ground-hint-2" class="govuk-body govuk-hint">You can upload supporting documents later.</p>
+                            <div class="govuk-form-group">
+                                <label class="govuk-label govuk-label--m" for="facts-for-ground">Facts for ground (a)</label>
+                                <textarea class="govuk-textarea" id="facts-for-ground"
+                                name="factsForGround" rows="5" aria-describedby="facts-for-ground-hint-1 facts-for-ground-hint-2"></textarea>
+                            </div>
+                            <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                            data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`facts-for-ground POST /change should re-render the page with an error if the field is empty 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#facts-for-ground">Enter facts for ground (a)</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Facts for ground (a)</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <p id="facts-for-ground-hint-1" class="govuk-body govuk-hint">Enter your grounds of appeal and supporting facts. Do not repeat the local
+                            planning authority’s reasons for issuing the enforcement notice.</p>
+                        <p                         id="facts-for-ground-hint-2" class="govuk-body govuk-hint">You can upload supporting documents later.</p>
+                            <div class="govuk-form-group govuk-form-group--error">
+                                <label class="govuk-label govuk-label--m" for="facts-for-ground">Facts for ground (a)</label>
+                                <p id="facts-for-ground-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter facts for ground
+                                    (a)</p>
+                                <textarea class="govuk-textarea govuk-textarea--error" id="facts-for-ground"
+                                name="factsForGround" rows="5" aria-describedby="facts-for-ground-hint-1 facts-for-ground-hint-2 facts-for-ground-error"></textarea>
+                            </div>
+                            <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                            data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`facts-for-ground POST /change should re-render the page with an error if the field is greater than 1000 characters 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#facts-for-ground">Facts must be 1000 characters or less</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Facts for ground (a)</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <p id="facts-for-ground-hint-1" class="govuk-body govuk-hint">Enter your grounds of appeal and supporting facts. Do not repeat the local
+                            planning authority’s reasons for issuing the enforcement notice.</p>
+                        <p                         id="facts-for-ground-hint-2" class="govuk-body govuk-hint">You can upload supporting documents later.</p>
+                            <div class="govuk-form-group govuk-form-group--error">
+                                <label class="govuk-label govuk-label--m" for="facts-for-ground">Facts for ground (a)</label>
+                                <p id="facts-for-ground-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Facts must be 1000 characters
+                                    or less</p>
+                                <textarea class="govuk-textarea govuk-textarea--error" id="facts-for-ground"
+                                name="factsForGround" rows="5" aria-describedby="facts-for-ground-hint-1 facts-for-ground-hint-2 facts-for-ground-error">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</textarea>
+                            </div>
+                            <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                            data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;

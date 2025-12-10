@@ -1617,6 +1617,40 @@ describe('appellant-case', () => {
 					);
 				});
 			});
+
+			describe('facts for ground', () => {
+				const testGroundRef = 'a';
+				it('should render a "show more" component with the expected HTML on the "facts for ground" row', async () => {
+					nock('http://test/')
+						.get('/appeals/2?include=all')
+						.reply(200, {
+							...appealDataEnforcementNotice,
+							appealId: 2
+						});
+					nock('http://test/')
+						.get('/appeals/2/appellant-cases/0')
+						.reply(200, {
+							...appellantCaseDataNotValidated,
+							enforcementNotice: {
+								isReceived: true
+							},
+							appealGrounds: [
+								{ ground: { groundRef: testGroundRef }, factsForGround: text301Characters }
+							],
+							typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+						});
+					const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+
+					const unprettifiedElement = parseHtml(response.text, {
+						rootElement: '#grounds-and-facts',
+						skipPrettyPrint: true
+					});
+
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<div class="pins-show-more" data-label="Facts for ground (a)" data-mode="text"data-toggle-text-collapsed="Show more"data-toggle-text-expanded="Show less">${text301Characters}</div>`
+					);
+				});
+			});
 		});
 	});
 
