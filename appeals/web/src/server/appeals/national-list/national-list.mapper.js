@@ -32,6 +32,7 @@ import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
  * @param {string|undefined} caseTeamFilter
  * @param {string|undefined} appealProcedureFilter
  * @param {string|undefined} greenBeltFilter
+ * @param {{sapId: string, id: number, name: string}[]} padsUsers
  * @returns {PageContent}
  */
 
@@ -52,7 +53,8 @@ export function nationalListPage(
 	appealTypeFilter,
 	caseTeamFilter,
 	appealProcedureFilter,
-	greenBeltFilter
+	greenBeltFilter,
+	padsUsers
 ) {
 	const filtersApplied =
 		greenBeltFilter ||
@@ -104,7 +106,7 @@ export function nationalListPage(
 	}));
 
 	const inspectorFilterItemsArray = [
-		{ name: 'All', id: 'all' },
+		{ name: 'All', id: 'all', sapId: 'all' },
 		...(appeals?.inspectors.map(({ azureAdUserId }) =>
 			users.find((user) => user.azureAdUserId === azureAdUserId)
 		) || [])
@@ -114,6 +116,11 @@ export function nationalListPage(
 		selected: inspectorFilter === String(inspector?.id)
 	}));
 
+	const padsInspectorFilterItemsArray = [...padsUsers].map((inspector) => ({
+		text: inspector?.name,
+		value: inspector?.sapId,
+		selected: inspectorFilter === String(inspector?.sapId)
+	}));
 	const enabledAppealTypes = getEnabledAppealCaseTypes();
 
 	let enabledAppealProcedures = [];
@@ -436,7 +443,7 @@ export function nationalListPage(
 							},
 							name: 'inspectorFilter',
 							value: 'all',
-							items: inspectorFilterItemsArray,
+							items: [...inspectorFilterItemsArray, ...padsInspectorFilterItemsArray],
 							attributes: { 'data-cy': 'filter-by-inspector' }
 						}
 					},

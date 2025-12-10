@@ -12,11 +12,23 @@ import logger from '../../utils/logger.js';
 const getLookupData = (databaseTable) => async (req, res) => {
 	try {
 		const lookupData = await commonRepository.getLookupList(databaseTable);
-
 		if (!lookupData.length) {
 			return res.status(404).send({ errors: ERROR_NOT_FOUND });
 		}
+		return res.send(lookupData);
+	} catch (error) {
+		logger.error(error);
+		return res.status(500).send({ errors: ERROR_FAILED_TO_GET_DATA });
+	}
+};
 
+/**
+ * @param {string} databaseTable
+ * @returns {(req: Request, res: Response) => Promise<object | void>}
+ */
+const getLookupDataByTableName = (databaseTable) => async (req, res) => {
+	try {
+		const lookupData = await commonRepository.getLookupList(databaseTable);
 		return res.send(lookupData);
 	} catch (error) {
 		logger.error(error);
@@ -33,9 +45,6 @@ const getLookupData = (databaseTable) => async (req, res) => {
 const getLookupDataByValue = async (databaseTable, lookupData) => {
 	try {
 		const result = await commonRepository.getLookupListValueByKey(databaseTable, lookupData);
-		if (!lookupData) {
-			return { errors: ERROR_NOT_FOUND };
-		}
 		return result;
 	} catch (error) {
 		logger.error(error);
@@ -43,4 +52,4 @@ const getLookupDataByValue = async (databaseTable, lookupData) => {
 	}
 };
 
-export { getLookupData, getLookupDataByValue };
+export { getLookupData, getLookupDataByTableName, getLookupDataByValue };
