@@ -11,3 +11,14 @@ export const mapLpa = (data) => {
 
 	return appeal.lpa?.name || '';
 };
+
+/**
+ *
+ * @param {MappingRequest} data
+ * @returns {string}
+ */
+export const mapLpaCode = (data) => {
+	const { appeal } = data;
+
+	return appeal.lpa?.lpaCode || '';
+};

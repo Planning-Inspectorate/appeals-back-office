@@ -7,7 +7,7 @@ import { mapAgent } from './map-agent.js';
 import { mapAppealType } from './map-appeal-type.js';
 import { mapAppellant } from './map-appellant.js';
 import { mapApplicationReference } from './map-application-reference.js';
-import { mapLpa } from './map-lpa.js';
+import { mapLpa, mapLpaCode } from './map-lpa.js';
 import { mapProcedureType } from './map-procedure-type.js';
 
 /**
@@ -33,6 +33,7 @@ export const mapAppealSummary = (data) => {
 		},
 		appealType: mapAppealType(data),
 		agent: mapAgent(data),
-		appellant: mapAppellant(data)
+		appellant: mapAppellant(data),
+		lpaCode: mapLpaCode(data)
 	};
 };

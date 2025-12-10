@@ -17,6 +17,7 @@ import { paginationDefaultSettings } from '../appeal.constants.js';
  * @param {string|undefined} appellantProcedurePreferencePreFilter
  * @param {number} pageNumber
  * @param {number} pageSize
+ * @param {string|undefined} excludedLpaCodes
  * @returns {Promise<AppealList>}
  */
 export const getAppeals = (
@@ -33,7 +34,8 @@ export const getAppeals = (
 	appealProcedureFilter,
 	appellantProcedurePreferencePreFilter,
 	pageNumber = paginationDefaultSettings.firstPageNumber,
-	pageSize = paginationDefaultSettings.pageSize
+	pageSize = paginationDefaultSettings.pageSize,
+	excludedLpaCodes
 ) => {
 	let urlAppendix = '';
 
@@ -86,6 +88,10 @@ export const getAppeals = (
 
 	if (appellantProcedurePreferencePreFilter && appellantProcedurePreferencePreFilter !== 'all') {
 		urlAppendix += `&appellantProcedurePreference=${appellantProcedurePreferencePreFilter}`;
+	}
+
+	if (excludedLpaCodes) {
+		urlAppendix += `&excludeLpaCode=${excludedLpaCodes}`;
 	}
 
 	return apiClient
