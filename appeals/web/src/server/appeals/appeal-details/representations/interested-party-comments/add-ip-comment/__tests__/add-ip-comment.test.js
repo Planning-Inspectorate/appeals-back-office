@@ -49,7 +49,7 @@ describe('add-ip-comment', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Interested party&#39;s details');
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Interested party details');
 		});
 
 		it('should render a First name field', () => {
