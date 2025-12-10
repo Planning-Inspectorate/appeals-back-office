@@ -3,6 +3,7 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import appealListRepository from '#repositories/appeal-lists.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import lpaRepository from '#repositories/lpa.repository.js';
+import padsUserRepository from '#repositories/pads-user.repository.js';
 import userRepository from '#repositories/user.repository.js';
 import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
@@ -20,6 +21,7 @@ import { compact, uniq, uniqBy } from 'lodash-es';
 /** @typedef {import('@pins/appeals.api').Appeals.UsersToAssign} UsersToAssign */
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.User} User */
+/** @typedef {import('@pins/appeals.api').Schema.PADSUser} PADSUser */
 /** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
 
 const allStatusesOrdered = [
@@ -86,16 +88,19 @@ const mapAppealLPAs = async (appeals) => {
 };
 
 /**
- * @param {{ inspectorUserId: number | null, caseOfficerUserId: number | null }[]} appeals
- * @returns {Promise<{ inspectors: User[], caseOfficers: User[] }>}
+ * @param {{ inspectorUserId: number | null, caseOfficerUserId: number | null, padsInspectorUserId: string | null }[]} appeals
+ * @returns {Promise<{ inspectors: User[], caseOfficers: User[], padsInspectors: PADSUser[] }>}
  * */
 const mapUsers = async (appeals) => {
 	const inspectorIds = compact(appeals.map(({ inspectorUserId }) => inspectorUserId));
 	const caseOfficerIds = compact(appeals.map(({ caseOfficerUserId }) => caseOfficerUserId));
+	const padsInspectorIds = compact(appeals.map(({ padsInspectorUserId }) => padsInspectorUserId));
 	const users = await userRepository.getUsersByIds(uniq([...inspectorIds, ...caseOfficerIds]));
+	const padsUsers = await padsUserRepository.getPadsUsersByIds(uniq(padsInspectorIds));
 	return {
 		inspectors: users.filter((user) => inspectorIds.includes(user.id)),
-		caseOfficers: users.filter((user) => caseOfficerIds.includes(user.id))
+		caseOfficers: users.filter((user) => caseOfficerIds.includes(user.id)),
+		padsInspectors: padsUsers.filter((user) => padsInspectorIds.includes(user.sapId))
 	};
 };
 
@@ -109,12 +114,22 @@ const mapUsers = async (appeals) => {
  * @param {string} lpaCode
  * @param {number} inspectorId
  * @param {number} caseOfficerId
+ * @param {string} padsInspectorId
  * @param {boolean} isGreenBelt
  * @param {number} appealTypeId
  * @param {number} assignedTeamId
  * @param {number} procedureTypeId
  * @param {string} appellantProcedurePreference
- * @returns {Promise<{mappedStatuses: string[], statusesInNationalList: string[], mappedLPAs: any[], mappedInspectors: any[], mappedCaseOfficers: any[], mappedAppeals: any[], itemCount: number}>}
+ * @returns {Promise<{
+ * 	mappedStatuses: string[],
+ * 	statusesInNationalList: string[],
+ * 	mappedLPAs: { name:string, lpaCode:string }[],
+ * 	mappedInspectors: User[],
+ * 	mappedCaseOfficers: User[],
+ * 	mappedPadsInspectors: PADSUser[],
+ * 	mappedAppeals: any[],
+ * 	itemCount: number
+ * }>}
  */
 const retrieveAppealListData = async (
 	pageNumber,
@@ -125,13 +140,14 @@ const retrieveAppealListData = async (
 	lpaCode,
 	inspectorId,
 	caseOfficerId,
+	padsInspectorId,
 	isGreenBelt,
 	appealTypeId,
 	assignedTeamId,
 	procedureTypeId,
 	appellantProcedurePreference
 ) => {
-	/** @type {[string, string, string, string, number, number, boolean, number,number, number, string]} */
+	/** @type {[string, string, string, string, number, number, string, boolean, number,number, number, string]} */
 	const appealFilters = [
 		searchTerm,
 		status,
@@ -139,6 +155,7 @@ const retrieveAppealListData = async (
 		lpaCode,
 		inspectorId ? Number(inspectorId) : 0,
 		caseOfficerId ? Number(caseOfficerId) : 0,
+		padsInspectorId ? String(padsInspectorId) : '',
 		isGreenBelt,
 		appealTypeId || 0,
 		assignedTeamId || 0,
@@ -157,6 +174,7 @@ const retrieveAppealListData = async (
 	const mappedStatuses = mapAppealStatuses(appeals);
 	const mappedInspectors = users.inspectors;
 	const mappedCaseOfficers = users.caseOfficers;
+	const mappedPadsInspectors = users.padsInspectors;
 
 	return {
 		mappedStatuses,
@@ -164,6 +182,7 @@ const retrieveAppealListData = async (
 		mappedLPAs,
 		mappedInspectors,
 		mappedCaseOfficers,
+		mappedPadsInspectors,
 		mappedAppeals,
 		itemCount
 	};

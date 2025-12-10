@@ -62,7 +62,11 @@ export const getAppeals = (
 	}
 
 	if (inspectorFilter && inspectorFilter !== 'all') {
-		urlAppendix += `&inspectorId=${inspectorFilter}`;
+		if (inspectorFilter.length <= 5) {
+			urlAppendix += `&inspectorId=${inspectorFilter}`;
+		} else {
+			urlAppendix += `&padsInspectorId=${inspectorFilter}`;
+		}
 	}
 
 	if (greenBeltFilter) {

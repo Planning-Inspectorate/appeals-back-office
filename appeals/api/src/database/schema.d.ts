@@ -68,6 +68,7 @@ export interface ServiceUser extends schema.ServiceUser {
 	address?: Address;
 }
 export interface User extends schema.User {}
+export interface PADSUser extends schema.PADSUser {}
 export interface Address extends schema.Address {}
 export interface NeighbouringSite extends schema.NeighbouringSite {
 	address: Address;

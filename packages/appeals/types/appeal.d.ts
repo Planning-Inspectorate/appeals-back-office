@@ -52,6 +52,7 @@ export interface AppealList {
 	lpas: { name: string; lpaCode: string }[];
 	inspectors: { azureAdUserId: string; id: number }[];
 	caseOfficers: { azureAdUserId: string; id: number }[];
+	padsInspectors: { sapId: string; id: number; name: string }[];
 	page: number;
 	pageCount: number;
 	pageSize: number;

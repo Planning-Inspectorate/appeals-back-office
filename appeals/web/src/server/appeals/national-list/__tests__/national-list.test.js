@@ -47,6 +47,12 @@ const caseOfficers = activeDirectoryUsersData.map(({ id }, index) => ({
 	id: index
 }));
 
+/**
+ *
+ * @type {{ sapId: string; id: number,name:string }[]}
+ */
+const padsInspectors = [];
+
 describe('national-list', () => {
 	beforeAll(teardown);
 
@@ -172,6 +178,7 @@ describe('national-list', () => {
 				lpas,
 				inspectors,
 				caseOfficers,
+				padsInspectors,
 				page: 1,
 				pageCount: 0,
 				pageSize: 30
@@ -255,6 +262,7 @@ describe('national-list', () => {
 					lpas,
 					inspectors,
 					caseOfficers,
+					padsInspectors,
 					page: 1,
 					pageCount: 0,
 					pageSize: 30
@@ -293,6 +301,7 @@ describe('national-list', () => {
 					lpas,
 					inspectors,
 					caseOfficers,
+					padsInspectors,
 					page: 1,
 					pageCount: 0,
 					pageSize: 30
@@ -349,6 +358,7 @@ describe('national-list', () => {
 					lpas,
 					inspectors,
 					caseOfficers,
+					padsInspectors,
 					page: 1,
 					pageCount: 0,
 					pageSize: 30
@@ -381,6 +391,7 @@ describe('national-list', () => {
 					lpas,
 					inspectors,
 					caseOfficers,
+					padsInspectors,
 					page: 1,
 					pageCount: 0,
 					pageSize: 30
@@ -414,6 +425,7 @@ describe('national-list', () => {
 					lpas,
 					inspectors,
 					caseOfficers,
+					padsInspectors,
 					page: 1,
 					pageCount: 0,
 					pageSize: 30

@@ -21,7 +21,8 @@ import { retrieveAppealListData, updateCompletedEvents } from './appeals.service
  */
 const getAppeals = async (req, res) => {
 	const { query } = req;
-	let { searchTerm, status, hasInspector, lpaCode, inspectorId, caseOfficerId } = query;
+	let { searchTerm, status, hasInspector, lpaCode, inspectorId, caseOfficerId, padsInspectorId } =
+		query;
 	const pageNumber = Number(query.pageNumber) || DEFAULT_PAGE_NUMBER;
 	const pageSize = Number(query.pageSize) || DEFAULT_PAGE_SIZE;
 	const isGreenBelt = query.isGreenBelt === 'true';
@@ -37,7 +38,8 @@ const getAppeals = async (req, res) => {
 		statusesInNationalList,
 		mappedLPAs,
 		mappedInspectors,
-		mappedCaseOfficers
+		mappedCaseOfficers,
+		mappedPadsInspectors
 	} = await retrieveAppealListData(
 		pageNumber,
 		pageSize,
@@ -48,6 +50,7 @@ const getAppeals = async (req, res) => {
 		lpaCode,
 		inspectorId,
 		caseOfficerId,
+		padsInspectorId,
 		isGreenBelt,
 		appealTypeId,
 		assignedTeamId,
@@ -63,6 +66,7 @@ const getAppeals = async (req, res) => {
 		lpas: mappedLPAs,
 		inspectors: mappedInspectors,
 		caseOfficers: mappedCaseOfficers,
+		padsInspectors: mappedPadsInspectors,
 		page: pageNumber,
 		pageCount: getPageCount(itemCount, pageSize),
 		pageSize
