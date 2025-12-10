@@ -365,6 +365,15 @@ export const appealsApiClient = {
 			});
 
 			expect(response.status).eq(201);
+
+			const responseBody = await response.json();
+			expect(responseBody).to.be.an('object');
+			expect(responseBody).to.deep.equal({
+				appealId,
+				hearingStartTime: appealsApiRequests.hearingDetails.hearingStartTime,
+				hearingEndTime: appealsApiRequests.hearingDetails.hearingEndTime
+			});
+
 			return await response.json();
 		} catch {
 			return false;
@@ -382,6 +391,14 @@ export const appealsApiClient = {
 				}
 			});
 			expect(response.status).eq(200);
+
+			const responseBody = await response.json();
+			expect(responseBody).to.be.an('object');
+			expect(responseBody).to.deep.equal({
+				appealId,
+				hearingId
+			});
+
 			return await response.json();
 		} catch {
 			return false;
@@ -582,6 +599,18 @@ export const appealsApiClient = {
 				}
 			});
 			expect(response.status).eq(201);
+
+			const responseBody = await response.json();
+
+			expect(responseBody).to.be.an('object');
+			expect(responseBody).to.have.keys([
+				'visitDate',
+				'visitStartTime',
+				'visitEndTime',
+				'visitType',
+				'appealId',
+				'siteVisitId'
+			]);
 		} catch {
 			return false;
 		}
@@ -614,6 +643,11 @@ export const appealsApiClient = {
 				}
 			});
 			expect(response.status).eq(201);
+
+			const responseBody = await response.json();
+
+			expect(responseBody).to.be.an('object');
+			expect(responseBody).to.have.keys(['appealId', 'hearingStartTime', 'hearingEndTime']);
 		} catch {
 			return false;
 		}
@@ -637,6 +671,12 @@ export const appealsApiClient = {
 			});
 
 			expect(response.status).eq(201);
+
+			const responseBody = await response.json();
+
+			expect(responseBody).to.be.an('object');
+			expect(responseBody).to.have.keys(['preparationTime', 'sittingTime', 'reportingTime']);
+
 			return await response.json();
 		} catch {
 			return false;
