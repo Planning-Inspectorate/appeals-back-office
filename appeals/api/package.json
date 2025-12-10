@@ -4,7 +4,7 @@
 	"private": true,
 	"description": "PINS Back Office Appeals API",
 	"engines": {
-		"node": ">=22.0.0 <= 22.14.0"
+		"node": ">=22 < 23"
 	},
 	"prisma": {
 		"schema": "src/database/schema.prisma",
