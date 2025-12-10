@@ -2,6 +2,7 @@ import * as api from '#lib/api/allocation-details.api.js';
 import { ensureArray } from '#lib/array-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { render } from '../../common/render.js';
 import { redactAndAccept } from '../../representations.service.js';
 import {
@@ -44,6 +45,12 @@ export function postRedact(request, response) {
 	} = request;
 
 	session.redactLPAStatement.lpaStatementId = currentRepresentation.id;
+
+	if (currentRepresentation.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED) {
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/lpa-statement/redact/confirm`
+		);
+	}
 
 	if (
 		!currentAppeal.allocationDetails?.level ||
@@ -188,6 +195,7 @@ export function postAllocationSpecialisms(request, response) {
 		`/appeals-service/appeal-details/${appealId}/lpa-statement/redact/confirm`
 	);
 }
+
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
