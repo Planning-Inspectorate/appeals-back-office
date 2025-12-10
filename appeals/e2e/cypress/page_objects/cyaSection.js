@@ -69,14 +69,13 @@ export class CYASection extends CaseDetailsPage {
 			cy.wrap($el).should('have.attr', 'open');
 			cy.wrap($el).find('.govuk-details__text').should('be.visible');
 			cy.wrap($el).find('.govuk-details__summary-text').should('contain', expectedText);
+
+			// are there appeal details to check (e.g. for inquiry or hearing)
 			if (appealDetails) {
 				Object.keys(appealDetails).forEach((key) => {
 					const appealValue = `${formatCamelCaseToWords(key)}: ${appealDetails[key]}`;
-					cy.log('** appealValue ', appealValue);
 					cy.wrap($el).find('.govuk-details__text').should('contain', appealValue);
 				});
-				///cy.wrap($el).find('.govuk-details__text').should('contain', `Date: ${appealDetails.date}`);
-				//cy.wrap($el).find('.govuk-details__text').should('contain', `Time ${appealDetails.time}`);
 			}
 
 			// Collapse and verify
