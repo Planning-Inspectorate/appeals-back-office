@@ -115,7 +115,7 @@ export const postChangeContactPlanningInspectorateDate = async (request, respons
 			session: request.session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			text: 'Date application submitted updated'
+			text: 'Appeal updated'
 		});
 
 		return response.redirect(

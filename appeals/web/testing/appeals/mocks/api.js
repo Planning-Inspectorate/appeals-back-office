@@ -14,6 +14,12 @@ export function installMockAppealsService() {
 		.reply(200, appealData)
 		.persist();
 
+	// appeal details with appellant case
+	nock('http://test/')
+		.get(`/appeals/${appealData.appealId}?include=appellantCase`)
+		.reply(200, appealData)
+		.persist();
+
 	nock('http://test/').get('/appeals/0').reply(500).persist();
 
 	nock('http://test/')
