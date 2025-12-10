@@ -133,7 +133,9 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 			? `<a href="${addBackLinkQueryToUrl(
 					request,
 					`/appeals-service/appeal-details/${appeal.appealId}/interested-party-comments#valid`
-			  )}" class="govuk-link">${numIpComments} interested party comments</a>`
+			  )}" class="govuk-link">${numIpComments} interested party comment${
+					numIpComments === 1 ? '' : 's'
+			  }</a>`
 			: null;
 	})();
 
