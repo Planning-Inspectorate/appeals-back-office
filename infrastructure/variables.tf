@@ -27,6 +27,7 @@ variable "apps_config" {
         legal        = string
         pads         = string
         read_only    = string
+        dev_team     = string
       })
     })
 

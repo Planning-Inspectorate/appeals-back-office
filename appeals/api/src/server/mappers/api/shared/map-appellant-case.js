@@ -3,6 +3,7 @@
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
 
 import formatValidationOutcomeResponse from '#utils/format-validation-outcome-response.js';
+import { mapLpaCode } from './map-lpa.js';
 
 /**
  *
@@ -60,7 +61,8 @@ export const mapAppellantCase = (data) => {
 			},
 			// @ts-ignore
 			typeOfPlanningApplication: appellantCase?.typeOfPlanningApplication || null,
-			numberOfResidencesNetChange: appellantCase?.numberOfResidencesNetChange
+			numberOfResidencesNetChange: appellantCase?.numberOfResidencesNetChange,
+			lpaCode: mapLpaCode(data)
 		};
 	}
 };

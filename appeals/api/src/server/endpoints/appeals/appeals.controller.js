@@ -31,6 +31,19 @@ const getAppeals = async (req, res) => {
 	const procedureTypeId = Number(query.procedureTypeId) || null;
 	const appellantProcedurePreference = query.appellantProcedurePreference || null;
 
+	let lpaCodes = null;
+	if (lpaCode) {
+		lpaCodes =
+			typeof lpaCode === 'string' ? lpaCode.split(',').map((code) => code.trim()) : lpaCode;
+	}
+	let excludedLpaCodes = null;
+	if (query.excludeLpaCode) {
+		excludedLpaCodes =
+			typeof query.excludeLpaCode === 'string'
+				? query.excludeLpaCode.split(',').map((code) => code.trim())
+				: query.excludeLpaCode;
+	}
+
 	const {
 		itemCount,
 		mappedAppeals,
@@ -47,7 +60,8 @@ const getAppeals = async (req, res) => {
 		searchTerm,
 		status,
 		hasInspector,
-		lpaCode,
+		lpaCodes,
+		excludedLpaCodes,
 		inspectorId,
 		caseOfficerId,
 		padsInspectorId,

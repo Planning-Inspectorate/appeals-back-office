@@ -11,6 +11,7 @@ import config from '#environment/config.js';
  * @property {boolean} setStageOutcome 					- Can validate a stage (e.g. appellant case, LPA questionnaire)
  * @property {boolean} setCaseOutcome 					- Can issue a decision on the case outcome
  * @property {boolean} setEvents 								- Can book site visits and other events
+ * @property {boolean} isDev 										- Can only see test appeals
  */
 
 /**
@@ -21,6 +22,7 @@ export const calculatePermissions = (currentUserGroups) => {
 	const isCaseOfficer = currentUserGroups.includes(config.referenceData.appeals.caseOfficerGroupId);
 	const isInspector = currentUserGroups.includes(config.referenceData.appeals.inspectorGroupId);
 	const isPads = currentUserGroups.includes(config.referenceData.appeals.padsGroupId);
+	const isDev = currentUserGroups.includes(config.referenceData.appeals.devTeamGroupId);
 
 	const perms = {
 		viewCaseList: !isPads,
@@ -30,7 +32,8 @@ export const calculatePermissions = (currentUserGroups) => {
 		updateCase: isCaseOfficer,
 		setStageOutcome: isCaseOfficer,
 		setCaseOutcome: isCaseOfficer || isInspector,
-		setEvents: isCaseOfficer || isInspector
+		setEvents: isCaseOfficer || isInspector,
+		viewTestAppeals: isDev
 	};
 
 	return perms;
@@ -44,5 +47,6 @@ export const permissionNames = {
 	updateCase: 'updateCase',
 	setStageOutcome: 'setStageOutcome',
 	setCaseOutcome: 'setCaseOutcome',
-	setEvents: 'setEvents'
+	setEvents: 'setEvents',
+	viewTestAppeals: 'viewTestAppeals'
 };

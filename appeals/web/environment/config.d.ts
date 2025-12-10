@@ -70,6 +70,7 @@ export interface EnvironmentConfig extends BaseEnvironmentConfig {
 			customerServiceGroupId: string;
 			padsGroupId: string;
 			readerGroupId: string;
+			devTeamGroupId: string;
 		};
 	};
 	featureFlags: {

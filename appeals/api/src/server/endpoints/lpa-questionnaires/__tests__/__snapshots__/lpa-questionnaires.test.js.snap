@@ -53,6 +53,7 @@ exports[`lpa questionnaires routes /appeals/:appealId/lpa-questionnaires/:lpaQue
     },
   ],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "lpaCode": "MAID",
   "lpaNotificationMethods": [
     {
       "name": "A site notice",
@@ -126,6 +127,7 @@ exports[`lpa questionnaires routes /appeals/:appealId/lpa-questionnaires/:lpaQue
     },
   ],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "lpaCode": "MAID",
   "lpaNotificationMethods": [
     {
       "name": "A site notice",
@@ -217,6 +219,7 @@ exports[`lpa questionnaires routes /appeals/:appealId/lpa-questionnaires/:lpaQue
     },
   ],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "lpaCode": "MAID",
   "lpaNotificationMethods": [
     {
       "name": "A site notice",

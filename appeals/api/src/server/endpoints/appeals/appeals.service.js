@@ -111,7 +111,8 @@ const mapUsers = async (appeals) => {
  * @param {string} searchTerm
  * @param {string} status
  * @param {string} hasInspector
- * @param {string} lpaCode
+ * @param {string[]|null} lpaCodes
+ * @param {string[]|null} excludedLpaCodes
  * @param {number} inspectorId
  * @param {number} caseOfficerId
  * @param {string} padsInspectorId
@@ -137,7 +138,8 @@ const retrieveAppealListData = async (
 	searchTerm,
 	status,
 	hasInspector,
-	lpaCode,
+	lpaCodes,
+	excludedLpaCodes,
 	inspectorId,
 	caseOfficerId,
 	padsInspectorId,
@@ -147,12 +149,13 @@ const retrieveAppealListData = async (
 	procedureTypeId,
 	appellantProcedurePreference
 ) => {
-	/** @type {[string, string, string, string, number, number, string, boolean, number,number, number, string]} */
+	/** @type {[string, string, string, string[]|null, string[]|null, number, number, string, boolean, number, number, number, string]} */
 	const appealFilters = [
 		searchTerm,
 		status,
 		hasInspector,
-		lpaCode,
+		lpaCodes,
+		excludedLpaCodes,
 		inspectorId ? Number(inspectorId) : 0,
 		caseOfficerId ? Number(caseOfficerId) : 0,
 		padsInspectorId ? String(padsInspectorId) : '',

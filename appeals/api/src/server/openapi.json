@@ -14636,6 +14636,9 @@
 							}
 						},
 						"nullable": true
+					},
+					"lpaCode": {
+						"type": "string"
 					}
 				}
 			},
@@ -16316,6 +16319,9 @@
 							}
 						},
 						"nullable": true
+					},
+					"lpaCode": {
+						"type": "string"
 					},
 					"applicationDate": {
 						"type": "string",
@@ -21661,6 +21667,9 @@
 							}
 						},
 						"nullable": true
+					},
+					"lpaCode": {
+						"type": "string"
 					},
 					"isCorrectAppealType": {
 						"type": "boolean",
@@ -30202,6 +30211,9 @@
 							}
 						},
 						"nullable": true
+					},
+					"lpaCode": {
+						"type": "string"
 					},
 					"caseOfficer": {
 						"type": "string",

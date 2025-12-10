@@ -39,6 +39,7 @@ export function loadConfig() {
 		APPEALS_CS_TEAM_GROUP_ID,
 		APPEALS_PADS_GROUP_ID,
 		APPEALS_READERS_GROUP_ID,
+		APPEALS_DEV_TEAM_GROUP_ID,
 		AUTH_CLIENT_ID = '*',
 		AUTH_CLIENT_SECRET = '*',
 		AUTH_DISABLED_GROUP_IDS = '',
@@ -138,7 +139,8 @@ export function loadConfig() {
 				legalGroupId: APPEALS_LEGAL_TEAM_GROUP_ID,
 				customerServiceGroupId: APPEALS_CS_TEAM_GROUP_ID,
 				padsGroupId: APPEALS_PADS_GROUP_ID,
-				readerGroupId: APPEALS_READERS_GROUP_ID
+				readerGroupId: APPEALS_READERS_GROUP_ID,
+				devTeamGroupId: APPEALS_DEV_TEAM_GROUP_ID
 			}
 		},
 		// flag name convention: featureFlag[ jira number ][feature short description]
