@@ -1,4 +1,4 @@
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import {
@@ -39,7 +39,13 @@ router.post(
 		#swagger.responses[400] = {}
 		#swagger.responses[500] = {}
 	 */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'appealType',
+		'parentAppeals',
+		'childAppeals',
+		'procedureType',
+		'address'
+	]),
 	createAppealTimetableValidator,
 	asyncHandler(startAppeal)
 );
@@ -69,7 +75,16 @@ router.post(
 		#swagger.responses[404] = {}
 		#swagger.responses[500] = {}
 	 */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'appealType',
+		'procedureType',
+		'parentAppeals',
+		'childAppeals',
+		'address',
+		'appellant',
+		'agent',
+		'lpa'
+	]),
 	asyncHandler(startAppealNotifyPreview)
 );
 
@@ -97,7 +112,16 @@ router.patch(
 		#swagger.responses[400] = {}
 		#swagger.responses[500] = {}
 	 */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'appealTimetable',
+		'childAppeals',
+		'appealType',
+		'procedureType',
+		'address',
+		'appellant',
+		'agent',
+		'lpa'
+	]),
 	checkAppealTimetableExists,
 	patchAppealTimetableValidator,
 	asyncHandler(updateAppealTimetableById)
@@ -132,7 +156,7 @@ router.get(
 		#swagger.responses[404] = {}
 		#swagger.responses[500] = {}
 	 */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest(['appealType']),
 	asyncHandler(getCalculatedAppealTimetable)
 );
 
