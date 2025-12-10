@@ -24,6 +24,16 @@ export function formatObjectAsString(object, seperator = '') {
 }
 
 /**
+ *
+ * @param {string} value string to format
+ * @returns value formatted with spaces - e.g. thisIsAProperty is formatted as 'This is a property'
+ */
+export function formatCamelCaseToWords(value) {
+	const spaced = value.replace(/([A-Z])/g, ' $1').trim();
+	return spaced.charAt(0).toUpperCase() + spaced.slice(1).toLowerCase();
+}
+
+/**
  * Takes a date object and returns formatted date and time
  * @param {Date} date - Date to format
  * @param {boolean} isOrdinal - Whether to use ordinal format (short month, 24-hour time)
