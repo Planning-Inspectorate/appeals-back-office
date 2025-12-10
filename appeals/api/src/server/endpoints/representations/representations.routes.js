@@ -1,8 +1,5 @@
 import { validateRepresentationsToPublish } from '#endpoints/representations/representations.middleware.js';
-import {
-	checkAppealExistsByIdAndAddPartialToRequest,
-	checkAppealExistsByIdAndAddToRequest
-} from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { checkRepresentationExistsById } from '#middleware/check-representation-exists.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
@@ -41,7 +38,7 @@ router.get(
 	#swagger.responses[404] = {}
  */
 	getRepresentationRouteValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	asyncHandler(controller.getRepresentationCounts)
 );
 
@@ -107,7 +104,7 @@ router.get(
 	#swagger.responses[404] = {}
  */
 	getRepresentationRouteValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	asyncHandler(controller.getRepresentation)
 );
 
@@ -135,7 +132,7 @@ router.patch(
 	#swagger.responses[404] = {}
  */
 	getRepresentationUpdateValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	checkRepresentationExistsById,
 	asyncHandler(controller.updateRepresentation)
 );
@@ -189,7 +186,7 @@ router.post(
 	}
 	#swagger.responses[400] = {}
  */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	createRepresentationProofOfEvidenceValidator,
 	asyncHandler(controller.createRepresentationProofOfEvidence)
 );
@@ -217,7 +214,7 @@ router.patch(
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
 	 */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	validateRejectionReasonsPayload,
 	checkRepresentationExistsById,
 	asyncHandler(controller.updateRejectionReasons)
@@ -273,7 +270,11 @@ router.post(
 		schema: { $ref: '#/components/schemas/RepResponse' }
 	}
 	*/
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'appealStatus',
+		'representations',
+		'appealTimetable'
+	]),
 	validateRepresentationsToPublish,
 	asyncHandler(controller.publish)
 );
