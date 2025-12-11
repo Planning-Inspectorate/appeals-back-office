@@ -1633,6 +1633,96 @@ describe('lpa questionnaires routes', () => {
 				expect(response.body).toEqual(body);
 			});
 
+			test('updates hasStatutoryConsultees to true when consultedBodiesDetails is present', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const body = {
+					consultedBodiesDetails: 'test'
+				};
+
+				const { id, lpaQuestionnaire } = householdAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
+					where: { id: householdAppeal.lpaQuestionnaire.id },
+					data: {
+						consultedBodiesDetails: 'test',
+						hasStatutoryConsultees: true
+					}
+				});
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({});
+			});
+
+			test('updates hasStatutoryConsultees to false when consultedBodiesDetails is null', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const body = {
+					consultedBodiesDetails: null
+				};
+
+				const { id, lpaQuestionnaire } = householdAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
+					where: { id: householdAppeal.lpaQuestionnaire.id },
+					data: {
+						consultedBodiesDetails: null,
+						hasStatutoryConsultees: false
+					}
+				});
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({});
+			});
+
+			test('does not update hasStatutoryConsultees when consultedBodiesDetails is undefined', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const body = {
+					consultedBodiesDetails: undefined
+				};
+
+				const { id, lpaQuestionnaire } = householdAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
+					where: { id: householdAppeal.lpaQuestionnaire.id },
+					data: {}
+				});
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({});
+			});
+
 			test('updates newConditionDetails when given string is less than 8000 characters', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
