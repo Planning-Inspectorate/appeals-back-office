@@ -1563,7 +1563,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'J1915',
 		name: 'East Hertfordshire District Council',
-		email: 'planning@eastherts.gov.uk',
+		email: 'planning.tech@eastherts.gov.uk',
 		teamId: 13 // East3
 	},
 	{
