@@ -58,6 +58,20 @@ describe('required actions', () => {
 			).toEqual(['arrangeSiteVisit']);
 		});
 
+		it('should return "arrangeSiteVisit" if appeal procedure is null, appeal status is "EVENT" and no siteVisit exists', () => {
+			expect(
+				getRequiredActionsForAppeal(
+					{
+						...appealData,
+						procedureType: null,
+						siteVisit: undefined,
+						appealStatus: APPEAL_CASE_STATUS.EVENT
+					},
+					'detail'
+				)
+			).toEqual(['arrangeSiteVisit']);
+		});
+
 		it('should return "issueDecision" if appeal status is "ISSUE_DETERMINATION"', () => {
 			expect(
 				getRequiredActionsForAppeal(
