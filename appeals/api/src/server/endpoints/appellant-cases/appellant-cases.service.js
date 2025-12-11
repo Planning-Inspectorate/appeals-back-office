@@ -317,6 +317,23 @@ export function renderAuditTrailDetail(data) {
 			data.appellantProcedurePreferenceDuration,
 		AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_WITNESS_COUNT_UPDATED: () =>
 			data.appellantProcedurePreferenceWitnessCount,
+		AUDIT_TRAIL_ENFORCEMENT_NOTICE_UPDATED: () => (data.enforcementNotice ? 'Yes' : 'No'),
+		AUDIT_TRAIL_ENFORCEMENT_NOTICE_LISTED_BUILDING_UPDATED: () =>
+			data.enforcementNoticeListedBuilding ? 'Yes' : 'No',
+		AUDIT_TRAIL_ENFORCEMENT_ISSUE_DATE_UPDATED: () =>
+			data.enforcementIssueDate
+				? formatDate(new Date(/** @type {string} */ (data.enforcementIssueDate)), false)
+				: undefined,
+		AUDIT_TRAIL_ENFORCEMENT_EFFECTIVE_DATE_UPDATED: () =>
+			data.enforcementEffectiveDate
+				? formatDate(new Date(/** @type {string} */ (data.enforcementEffectiveDate)), false)
+				: undefined,
+		AUDIT_TRAIL_CONTACT_PLANNING_INSPECTORATE_DATE_UPDATED: () =>
+			data.contactPlanningInspectorateDate
+				? formatDate(new Date(/** @type {string} */ (data.contactPlanningInspectorateDate)), false)
+				: undefined,
+		AUDIT_TRAIL_ENFORCEMENT_REFERENCE_UPDATE: () => data.enforcementRefrence,
+		AUDIT_TRAIL_DESCRIPTION_OF_ALLEGED_BREACH_UPDATE: () => data.descriptionOfAllegedBreach,
 		AUDIT_TRAIL_STATUS_PLANNING_OBLIGATION_UPDATED: () =>
 			PLANNING_OBLIGATION_STATUSES.find(
 				(/** @type {{value: string, label: string}} */ item) =>
