@@ -75,7 +75,7 @@ export async function postShareRepresentations(request, response) {
 				}
 			case APPEAL_CASE_STATUS.FINAL_COMMENTS:
 				return publishedReps.filter(
-					(rep) =>
+					(/** @type {{ representationType: any; }} */ rep) =>
 						rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT ||
 						rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
 				).length > 0

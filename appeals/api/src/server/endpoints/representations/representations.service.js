@@ -116,16 +116,16 @@ export const getRepStatusAuditLogDetails = (status, repType, redactedRep) => {
  * @property {string} [status]
  * @property {string} [lpaCode]
  * @property {string} [appellantId]
- *
+ * @property {string} [representationText]
+
  * @param {number} appealId
  * @param {CreateRepresentationInput} input
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
  * */
 export const createRepresentation = async (appealId, input) => {
-
 	let representedId;
 	if (input.representationType == APPEAL_REPRESENTATION_TYPE.COMMENT) {
-		const {ipDetails, ipAddress} = input;
+		const { ipDetails, ipAddress } = input;
 		const address =
 			ipAddress?.addressLine1 &&
 			ipAddress?.postCode &&
@@ -146,7 +146,7 @@ export const createRepresentation = async (appealId, input) => {
 		representedId = represented.id;
 	} else if (input.representationType == APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT) {
 		representedId = Number(input.appellantId);
-	} 
+	}
 
 	const representation = await representationRepository.createRepresentation({
 		appealId,
@@ -156,7 +156,7 @@ export const createRepresentation = async (appealId, input) => {
 		dateCreated: input.dateCreated,
 		status: input.status,
 		lpaCode: input.lpaCode,
-		originalRepresentation: 'Added as a document'
+		originalRepresentation: input.representationText
 	});
 
 	if (input.attachments.length > 0) {

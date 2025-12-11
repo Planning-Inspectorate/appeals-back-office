@@ -85,6 +85,6 @@ export interface RepresentationRequest {
 	attachments: any[];
 	redactionStatus: string;
 	dateCreated: string;
-	source: 'citizen' | 'lpa'| ODW_SYSTEM_ID;
-	lpaCode?: string;
+	source: 'citizen' | 'lpa' | ODW_SYSTEM_ID;
+	representationText?: string;
 }
