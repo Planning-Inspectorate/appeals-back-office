@@ -36,13 +36,13 @@ describe('Create advertisement application', () => {
 
 			// Assign Case Officer Via API
 			if (testCaseConfig.assignCaseOfficer) {
-				cy.assignCaseOfficerViaApi(caseObj);
+				cy.assignCaseOfficer(caseObj);
 			}
 
 			// Validate Appeal Via API
 			if (testCaseConfig.validateAppeal) {
 				cy.getBusinessActualDate(new Date(), 0).then((date) => {
-					cy.updateAppealDetailsViaApi(caseObj, { validationOutcome: 'valid', validAt: date });
+					cy.updateAppealDetails(caseObj, { validationOutcome: 'valid', validAt: date });
 				});
 			}
 

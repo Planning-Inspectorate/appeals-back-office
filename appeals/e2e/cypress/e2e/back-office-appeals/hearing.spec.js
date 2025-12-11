@@ -492,7 +492,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		caseDetailsPage.verifyTimeTableRows(rowsWithNoObligationPlanning);
 
 		// Add planning obligation
-		cy.updateAppealDetailsViaApi(caseObj, { planningObligation: true });
+		cy.updateAppealDetails(caseObj, { planningObligation: true });
 		cy.getBusinessActualDate(currentDate, 1).then((date) => {
 			cy.updateTimeTableDetails(caseObj, { planningObligationDueDate: date });
 		});

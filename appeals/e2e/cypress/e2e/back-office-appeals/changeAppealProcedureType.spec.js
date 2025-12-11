@@ -254,7 +254,7 @@ describe('change appeal procedure types', () => {
 		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 		// Add planning obligation
-		cy.updateAppealDetailsViaApi(caseObj, { planningObligation: true });
+		cy.updateAppealDetails(caseObj, { planningObligation: true });
 		cy.getBusinessActualDate(currentDate, 1).then((date) => {
 			cy.updateTimeTableDetails(caseObj, { planningObligationDueDate: date });
 		});
@@ -337,7 +337,7 @@ describe('change appeal procedure types', () => {
 			caseObj = ref;
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
-			cy.assignCaseOfficerViaApi(caseObj);
+			cy.assignCaseOfficer(caseObj);
 			happyPathHelper.viewCaseDetails(caseObj);
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
 			happyPathHelper.reviewAppellantCase(caseObj);
