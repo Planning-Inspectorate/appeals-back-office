@@ -8,7 +8,7 @@ import { mapEnforcementNoticeListedBuilding } from './submappers/enforcement-not
 import { mapEnforcementNotice } from './submappers/enforcement-notice.js';
 import { mapEnforcementReference } from './submappers/enforcement-reference.js';
 import { mapFactsForGrounds } from './submappers/facts-for-grounds.js';
-import { mapGrounds } from './submappers/grounds.js';
+import { mapGroundsForAppeal } from './submappers/grounds-for-appeal.js';
 import { mapInterestInLand } from './submappers/interest-in-land.js';
 import { mapOtherAppellants } from './submappers/other-appellants.js';
 import { mapSupportingDocumentsForGrounds } from './submappers/supporting-documents-for-grounds.js';
@@ -28,7 +28,7 @@ export const submaps = {
 	writtenOrVerbalPermission: mapWrittenOrVerbalPermission,
 	descriptionOfAllegedBreach: mapDescriptionOfAllegedBreach,
 	otherAppellants: mapOtherAppellants,
-	grounds: mapGrounds,
+	groundsForAppeal: mapGroundsForAppeal,
 	factsForGrounds: mapFactsForGrounds,
 	supportingDocumentsForGrounds: mapSupportingDocumentsForGrounds
 };

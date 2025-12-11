@@ -27,14 +27,14 @@ const formatGroundsAsHtmlList = (grounds) => {
 };
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapGrounds = ({ appellantCaseData, currentRoute, userHasUpdateCase }) => {
+export const mapGroundsForAppeal = ({ appellantCaseData, currentRoute, userHasUpdateCase }) => {
 	// @ts-ignore
 	const { appealGrounds } = appellantCaseData;
 	const hasData = !!appealGrounds;
 	const actionText = appealGrounds?.length ? 'Change' : 'Add';
 
 	return textSummaryListItem({
-		id: 'appeal-grounds',
+		id: 'grounds-for-appeal',
 		text: 'Grounds of appeal',
 		value: {
 			html: !hasData
@@ -44,10 +44,10 @@ export const mapGrounds = ({ appellantCaseData, currentRoute, userHasUpdateCase 
 				  formatGroundsAsHtmlList(appealGrounds.map((appealGround) => appealGround?.ground))
 				: ''
 		},
-		link: `${currentRoute}/grounds/${actionText.toLowerCase()}`,
+		link: `${currentRoute}/grounds-for-appeal/change`,
 		editable: hasData && userHasUpdateCase,
-		classes: 'appeal-grounds',
+		classes: 'grounds-for-appeal',
 		actionText,
-		cypressDataName: 'appeal-grounds'
+		cypressDataName: 'grounds-for-appeal'
 	});
 };

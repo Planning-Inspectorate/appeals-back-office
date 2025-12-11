@@ -94,7 +94,7 @@ export function generateEnforcementNoticeComponents(
 			},
 			rows: [
 				mappedAppellantCaseData.descriptionOfAllegedBreach.display.summaryListItem,
-				mappedAppellantCaseData.grounds.display.summaryListItem,
+				mappedAppellantCaseData.groundsForAppeal.display.summaryListItem,
 				// @ts-ignore
 				...getSummaryListItems(mappedAppellantCaseData.factsForGrounds),
 				// @ts-ignore

@@ -125,8 +125,6 @@ export const AUDIT_TRAIL_LANDOWNER_PERMISSION_UPDATED =
 	"'Do you have the landowner's permission?' updated to {replacement0}";
 export const AUDIT_TRAIL_ADVERT_IN_POSITION_UPDATED =
 	"'Is the advertisement in position?' updated to {replacement0}'";
-export const AUDIT_TRAIL_APPEAL_GROUND_UPDATED =
-	'Facts for ground ({replacement0}) updated to {replacement1}';
 export const AUDIT_TRAIL_SITE_OWNERSHIP_UPDATED =
 	"'Does the appellant own all of the land involved in the appeal?' updated to {replacement0}";
 export const AUDIT_TRAIL_KNOWS_OTHER_OWNERS_UPDATED =
@@ -157,20 +155,6 @@ export const AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_DURATION_UPDATED =
 	"'How many days would you expect the inquiry to last?' updated to {replacement0}";
 export const AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_WITNESS_COUNT_UPDATED =
 	"'How many witnesses would you expect to give evidence at the inquiry?' updated to {replacement0}";
-export const AUDIT_TRAIL_ENFORCEMENT_NOTICE_UPDATED =
-	"'Have you received an enforcement notice?' updated to {replacement0}";
-export const AUDIT_TRAIL_ENFORCEMENT_NOTICE_LISTED_BUILDING_UPDATED =
-	"'Is your enforcement notice about a listed building?' updated to {replacement0}";
-export const AUDIT_TRAIL_ENFORCEMENT_REFERENCE_UPDATE =
-	'Enforcement notice reference updated to {replacement0}';
-export const AUDIT_TRAIL_DESCRIPTION_OF_ALLEGED_BREACH_UPDATE =
-	'Description of the alleged breach updated to {replacement0}';
-export const AUDIT_TRAIL_ENFORCEMENT_ISSUE_DATE_UPDATED =
-	'Enforcement notice issue date updated to {replacement0}';
-export const AUDIT_TRAIL_ENFORCEMENT_EFFECTIVE_DATE_UPDATED =
-	'Enforcement notice effective date updated to {replacement0}';
-export const AUDIT_TRAIL_CONTACT_PLANNING_INSPECTORATE_DATE_UPDATED =
-	'Contact planning inspectorate date updated to {replacement0}';
 export const AUDIT_TRAIL_STATUS_PLANNING_OBLIGATION_UPDATED =
 	"'What is the status of your planning obligation?' updated to {replacement0}";
 export const AUDIT_TRAIL_LPAQ_UPDATED = 'LPA questionnaire updated';
@@ -261,8 +245,24 @@ export const AUDIT_TRAIL_ASSIGNED_TEAM_UPDATED = 'Case team {replacement0} assig
 export const BANK_HOLIDAY_FEED_DIVISION_ENGLAND = 'england-and-wales';
 
 // Enforcement notice - appellant case
+export const AUDIT_TRAIL_ENFORCEMENT_NOTICE_UPDATED =
+	"'Have you received an enforcement notice?' updated to {replacement0}";
+export const AUDIT_TRAIL_ENFORCEMENT_NOTICE_LISTED_BUILDING_UPDATED =
+	"'Is your enforcement notice about a listed building?' updated to {replacement0}";
+export const AUDIT_TRAIL_ENFORCEMENT_REFERENCE_UPDATED =
+	'Enforcement notice reference updated to {replacement0}';
+export const AUDIT_TRAIL_DESCRIPTION_OF_ALLEGED_BREACH_UPDATED =
+	'Description of the alleged breach updated to {replacement0}';
+export const AUDIT_TRAIL_ENFORCEMENT_ISSUE_DATE_UPDATED =
+	'Enforcement notice issue date updated to {replacement0}';
+export const AUDIT_TRAIL_ENFORCEMENT_EFFECTIVE_DATE_UPDATED =
+	'Enforcement notice effective date updated to {replacement0}';
+export const AUDIT_TRAIL_CONTACT_PLANNING_INSPECTORATE_DATE_UPDATED =
+	'Contact planning inspectorate date updated to {replacement0}';
 export const AUDIT_TRAIL_ENFORCEMENT_NOTICE_CONTACT_ADDRESS =
 	'Contact address updated to {replacement0}';
+export const AUDIT_TRAIL_ENFORCEMENT_GROUND_UPDATED =
+	'Facts for ground ({replacement0}) updated to {replacement1}';
 
 export const DATABASE_ORDER_BY_ASC = 'asc';
 export const DATABASE_ORDER_BY_DESC = 'desc';

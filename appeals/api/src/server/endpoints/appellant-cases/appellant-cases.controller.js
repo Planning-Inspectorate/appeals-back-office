@@ -3,7 +3,6 @@ import { appealDetailService } from '#endpoints/appeal-details/appeal-details.se
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { contextEnum } from '#mappers/context-enum.js';
-import appealGroundRepository from '#repositories/appeal-ground.repository.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import logger from '#utils/logger.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
@@ -80,8 +79,7 @@ const updateAppellantCaseById = async (req, res) => {
 			enforcementEffectiveDate,
 			contactPlanningInspectorateDate,
 			enforcementReference,
-			enforcementNoticeListedBuilding,
-			appealGround
+			enforcementNoticeListedBuilding
 		},
 		params,
 		validationOutcome
@@ -94,14 +92,6 @@ const updateAppellantCaseById = async (req, res) => {
 		? formatAddressSingleLine(appeal.address)
 		: 'Address not available';
 	const notifyClient = req.notifyClient;
-
-	const originalAppealGround =
-		appealGround &&
-		appeal.appealGrounds?.find(
-			// @ts-ignore
-			({ ground }) => ground.groundRef === appealGround.groundRef
-			// @ts-ignore
-		);
 
 	try {
 		validationOutcome
@@ -126,14 +116,6 @@ const updateAppellantCaseById = async (req, res) => {
 						siteAddress
 					},
 					notifyClient
-			  )
-			: appealGround
-			? await appealGroundRepository.updateAppealGroundByAppealIdAndGroundId(
-					appeal.id,
-					originalAppealGround.ground.id,
-					{
-						factsForGround: appealGround.factsForGround
-					}
 			  )
 			: await appellantCaseRepository.updateAppellantCaseById(appellantCaseId, {
 					applicantFirstName,

@@ -2519,7 +2519,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                     data-cy="change-description-of-alleged-breach">Change<span class="govuk-visually-hidden"> Description of the alleged breach (3. Grounds and facts)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-grounds"><dt class="govuk-summary-list__key"> Grounds of appeal</dt>
+                        <div class="govuk-summary-list__row grounds-for-appeal"><dt class="govuk-summary-list__key"> Grounds of appeal</dt>
                             <dd class="govuk-summary-list__value">No data</dd>
                         </div>
                     </dl>
@@ -2869,7 +2869,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                     data-cy="change-description-of-alleged-breach">Change<span class="govuk-visually-hidden"> Description of the alleged breach (3. Grounds and facts)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row appeal-grounds"><dt class="govuk-summary-list__key"> Grounds of appeal</dt>
+                        <div class="govuk-summary-list__row grounds-for-appeal"><dt class="govuk-summary-list__key"> Grounds of appeal</dt>
                             <dd class="govuk-summary-list__value">No data</dd>
                         </div>
                     </dl>
