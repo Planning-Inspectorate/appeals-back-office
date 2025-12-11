@@ -1565,7 +1565,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'J1915',
 		name: 'East Hertfordshire District Council',
-		email: 'planning@example.gov.uk',
+		email: 'planning.tech@example.gov.uk',
 		teamId: 13 // East3
 	},
 	{
@@ -1847,7 +1847,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'E3335',
 		name: 'Somerset Council',
-		email: 'planning@example.gov.uk',
+		email: 'planningappeals@example.gov.uk',
 		teamId: 8 // West2
 	},
 	{
