@@ -246,7 +246,7 @@ describe('interested-party-comments', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Interested party&#39;s details</h1>');
+			expect(elementInnerHtml).toContain('Interested party details</h1>');
 
 			const backLinkHtml = parseHtml(response.text, { rootElement: '.govuk-back-link' }).innerHTML;
 
