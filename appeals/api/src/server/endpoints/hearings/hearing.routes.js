@@ -1,4 +1,4 @@
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import {
@@ -37,7 +37,7 @@ router.get(
         #swagger.responses[404] = {}
      */
 	getHearingValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest(['hearing']),
 	checkHearingExists,
 	asyncHandler(getHearingById)
 );
@@ -67,7 +67,14 @@ router.post(
         #swagger.responses[404] = {}
 	 */
 	postHearingValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'hearing',
+		'appealStatus',
+		'appellant',
+		'agent',
+		'lpa',
+		'address'
+	]),
 	asyncHandler(postHearing)
 );
 
@@ -96,7 +103,14 @@ router.patch(
         #swagger.responses[500] = {}
      */
 	patchHearingValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'hearing',
+		'appealStatus',
+		'appellant',
+		'agent',
+		'lpa',
+		'address'
+	]),
 	checkHearingExists,
 	asyncHandler(rearrangeHearing)
 );
@@ -120,7 +134,14 @@ router.delete(
         #swagger.responses[500] = {}
      */
 	deleteHearingParamsValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'hearing',
+		'appealStatus',
+		'appellant',
+		'agent',
+		'lpa',
+		'address'
+	]),
 	checkHearingExists,
 	deleteHearingDateValidator,
 	asyncHandler(cancelHearing)
