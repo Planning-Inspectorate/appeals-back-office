@@ -183,7 +183,9 @@ export const postCheckYourAnswers = async (request, response) => {
 			bannerDefinitionKey = 'interestedPartyCommentsDocumentAddedSuccess';
 			break;
 		case 'lpa_statement':
-			bannerDefinitionKey = 'lpaStatementDocumentAddedSuccess';
+			bannerDefinitionKey = session.createRepresentation
+				? 'lpaStatementAddedSuccess'
+				: 'lpaStatementDocumentAddedSuccess';
 			break;
 		case 'lpa_proofs_evidence':
 			nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
