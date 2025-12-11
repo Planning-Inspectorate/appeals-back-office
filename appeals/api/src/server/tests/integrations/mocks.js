@@ -561,6 +561,48 @@ export const validRepresentationAppellantFinalComment = {
 	]
 };
 
+export const validRepresentationRule6PartyStatement = {
+	caseReference: '6004741',
+	representation: 'Rule 6 party statement text',
+	representationType: 'statement',
+	representationSubmittedDate: '2025-01-22T13:48:35.847Z',
+	serviceUserId: '729',
+	documents: [
+		{
+			dateCreated: '2024-03-01T13:48:35.847Z',
+			documentId: '001',
+			documentType: 'rule6Statement',
+			documentURI:
+				'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+			filename: 'img3.jpg',
+			mime: 'image/jpeg',
+			originalFilename: 'oimg.jpg',
+			size: 10293
+		}
+	]
+};
+
+export const validRepresentationRule6PartyProofsEvidence = {
+	caseReference: '6004741',
+	representation: 'Rule 6 party proof of evidence and witness text',
+	representationType: 'proofs_evidence',
+	representationSubmittedDate: '2025-01-22T13:48:35.847Z',
+	serviceUserId: '730',
+	documents: [
+		{
+			dateCreated: '2024-03-01T13:48:35.847Z',
+			documentId: '001',
+			documentType: 'rule6ProofOfEvidence',
+			documentURI:
+				'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+			filename: 'img3.jpg',
+			mime: 'image/jpeg',
+			originalFilename: 'oimg.jpg',
+			size: 10293
+		}
+	]
+};
+
 export const appealIngestionInput = {
 	appealType: {
 		connect: {

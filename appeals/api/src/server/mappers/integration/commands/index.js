@@ -123,10 +123,11 @@ const mapQuestionnaireSubmission = (data, appeal, designatedSites) => {
 /**
  *
  * @param {AppealRepresentationSubmission} data
+ * @param {boolean} isRule6Party
  * @returns {{representation: Omit<import('#db-client').Prisma.RepresentationCreateInput, 'appeal'>, attachments: DocumentVersionCreateInput[]}}
  */
-const mapRepresentation = (data) => {
-	return mapRepresentationIn(data);
+const mapRepresentation = (data, isRule6Party) => {
+	return mapRepresentationIn(data, isRule6Party);
 };
 
 export const commandMappers = {

@@ -77,11 +77,13 @@ export const PROCEDURE_TYPE_ID_MAP = Object.freeze({
 export const APPEAL_REPRESENTATION_TYPE = Object.freeze({
 	LPA_STATEMENT: 'lpa_statement',
 	APPELLANT_STATEMENT: 'appellant_statement',
+	RULE_6_PARTY_STATEMENT: 'rule_6_party_statement',
 	COMMENT: 'comment',
 	LPA_FINAL_COMMENT: 'lpa_final_comment',
 	APPELLANT_FINAL_COMMENT: 'appellant_final_comment',
 	LPA_PROOFS_EVIDENCE: 'lpa_proofs_evidence',
-	APPELLANT_PROOFS_EVIDENCE: 'appellant_proofs_evidence'
+	APPELLANT_PROOFS_EVIDENCE: 'appellant_proofs_evidence',
+	RULE_6_PARTY_PROOFS_EVIDENCE: 'rule_6_party_proofs_evidence'
 });
 
 export const APPEAL_PROOF_OF_EVIDENCE_STATUS = Object.freeze({

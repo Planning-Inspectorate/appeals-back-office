@@ -29,7 +29,9 @@ import {
 	validLpaQuestionnaireS78,
 	validRepresentationAppellantFinalComment,
 	validRepresentationIp,
-	validRepresentationLpaStatement
+	validRepresentationLpaStatement,
+	validRepresentationRule6PartyProofsEvidence,
+	validRepresentationRule6PartyStatement
 } from '#tests/integrations/mocks.js';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 import { jest } from '@jest/globals';
@@ -373,7 +375,8 @@ describe('/appeals/lpaq-submission', () => {
 				expect(databaseConnector.appeal.findUnique).toHaveBeenCalledWith({
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						appealRule6Parties: true
 					},
 					where: {
 						reference: '6000000'
@@ -653,7 +656,8 @@ describe('/appeals/representation-submission', () => {
 						where: { reference: validRepresentationLpaStatement.caseReference },
 						include: {
 							appealStatus: true,
-							appealType: true
+							appealType: true,
+							appealRule6Parties: true
 						}
 					});
 					expect(databaseConnector.representation.create).toHaveBeenCalled();
@@ -738,7 +742,8 @@ describe('/appeals/representation-submission', () => {
 						where: { reference: leadAppealCaseReference },
 						include: {
 							appealStatus: true,
-							appealType: true
+							appealType: true,
+							appealRule6Parties: true
 						}
 					});
 					expect(databaseConnector.representation.create).toHaveBeenCalled();
@@ -809,6 +814,170 @@ describe('/appeals/representation-submission', () => {
 						.send(validRepresentation);
 
 					expect(databaseConnector.representation.create).toHaveBeenCalled();
+					expect(databaseConnector.document.createMany).toHaveBeenCalled();
+					expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
+					expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
+					expect(databaseConnector.representationAttachment.createMany).toHaveBeenCalled();
+					expect(response.status).toEqual(201);
+				});
+
+				test('valid rep payload: Rule 6 party statement', async () => {
+					const validRepresentation = {
+						...validRepresentationRule6PartyStatement,
+						serviceUserId: (200000000 + 729).toString()
+					};
+
+					// @ts-ignore
+					databaseConnector.serviceUser.findUnique.mockResolvedValue({ id: 729 });
+
+					// @ts-ignore
+					databaseConnector.folder.findMany.mockResolvedValue(
+						FOLDERS.map((/** @type {string} */ folder, /** @type {number} */ ix) => {
+							return {
+								id: ix + 1,
+								path: folder
+							};
+						})
+					);
+
+					// @ts-ignore
+					databaseConnector.documentVersion.findMany.mockResolvedValue([
+						{
+							dateCreated: '2024-03-01T13:48:35.847Z',
+							documentGuid: '001',
+							documentType: 'appellantFinalComment',
+							documentURI:
+								'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+							filename: 'img3.jpg',
+							mime: 'image/jpeg',
+							originalFilename: 'oimg.jpg',
+							size: 10293
+						}
+					]);
+
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						id: 2,
+						reference: validRepresentationRule6PartyStatement.caseReference,
+						appealType: {
+							key: appealCaseType
+						},
+						appealStatus: [
+							{
+								id: 1,
+								status: 'lpa_questionnaire',
+								createdAt: new Date('2024-05-27T14:08:50.414Z'),
+								valid: true,
+								appealId: 2
+							}
+						],
+						lpa: {
+							lpaCode: 'Q9999'
+						},
+						appealRule6Parties: [
+							{
+								id: 1,
+								appealId: 2,
+								serviceUserId: 729,
+								serviceUser: {
+									id: 729,
+									organisationName: 'Test Organisation',
+									email: 'test@example.com'
+								}
+							}
+						]
+					});
+
+					const response = await request
+						.post('/appeals/representation-submission')
+						.send(validRepresentation);
+
+					expect(databaseConnector.representation.create).toHaveBeenCalled();
+					expect(
+						databaseConnector.representation.create.mock.calls[0][0].data.representationType
+					).toEqual('rule_6_party_statement');
+					expect(databaseConnector.document.createMany).toHaveBeenCalled();
+					expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
+					expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
+					expect(databaseConnector.representationAttachment.createMany).toHaveBeenCalled();
+					expect(response.status).toEqual(201);
+				});
+
+				test('valid rep payload: Rule 6 party PoE', async () => {
+					const validRepresentation = {
+						...validRepresentationRule6PartyProofsEvidence,
+						serviceUserId: (200000000 + 730).toString()
+					};
+
+					// @ts-ignore
+					databaseConnector.serviceUser.findUnique.mockResolvedValue({ id: 730 });
+
+					// @ts-ignore
+					databaseConnector.folder.findMany.mockResolvedValue(
+						FOLDERS.map((/** @type {string} */ folder, /** @type {number} */ ix) => {
+							return {
+								id: ix + 1,
+								path: folder
+							};
+						})
+					);
+
+					// @ts-ignore
+					databaseConnector.documentVersion.findMany.mockResolvedValue([
+						{
+							dateCreated: '2024-03-01T13:48:35.847Z',
+							documentGuid: '001',
+							documentType: 'appellantFinalComment',
+							documentURI:
+								'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+							filename: 'img3.jpg',
+							mime: 'image/jpeg',
+							originalFilename: 'oimg.jpg',
+							size: 10293
+						}
+					]);
+
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						id: 2,
+						reference: validRepresentationRule6PartyProofsEvidence.caseReference,
+						appealType: {
+							key: appealCaseType
+						},
+						appealStatus: [
+							{
+								id: 1,
+								status: 'lpa_questionnaire',
+								createdAt: new Date('2024-05-27T14:08:50.414Z'),
+								valid: true,
+								appealId: 2
+							}
+						],
+						lpa: {
+							lpaCode: 'Q9999'
+						},
+						appealRule6Parties: [
+							{
+								id: 1,
+								appealId: 2,
+								serviceUserId: 730,
+								serviceUser: {
+									id: 730,
+									organisationName: 'Test Organisation',
+									email: 'test@example.com'
+								}
+							}
+						]
+					});
+
+					const response = await request
+						.post('/appeals/representation-submission')
+						.send(validRepresentation);
+
+					expect(databaseConnector.representation.create).toHaveBeenCalled();
+					expect(
+						databaseConnector.representation.create.mock.calls[0][0].data.representationType
+					).toEqual('rule_6_party_proofs_evidence');
 					expect(databaseConnector.document.createMany).toHaveBeenCalled();
 					expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
 					expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();

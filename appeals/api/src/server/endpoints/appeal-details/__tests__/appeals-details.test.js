@@ -226,6 +226,7 @@ const s78AppealDto = {
 			representationStatus: null,
 			isRedacted: false
 		},
+		rule6PartyStatements: {},
 		appellantProofOfEvidence: {
 			status: 'received',
 			receivedAt: '2024-11-27T15:08:55.704Z',
@@ -235,7 +236,8 @@ const s78AppealDto = {
 			status: 'received',
 			receivedAt: '2024-11-27T15:08:55.711Z',
 			representationStatus: 'awaiting_review'
-		}
+		},
+		rule6PartyProofs: {}
 	},
 	healthAndSafety: {
 		appellantCase: {
@@ -424,9 +426,9 @@ describe('Appeal detail routes', () => {
 				const rule6Party = {
 					id: '123',
 					appealId: fullPlanningAppeal.id,
-					serviceUserId: '123',
+					serviceUserId: '234',
 					serviceUser: {
-						id: '123',
+						id: '234',
 						organisationName: 'Test Organisation',
 						email: 'test@example.com'
 					}
@@ -446,7 +448,26 @@ describe('Appeal detail routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					...s78AppealDto,
-					appealRule6Parties: [rule6Party]
+					appealRule6Parties: [rule6Party],
+					documentationSummary: {
+						...s78AppealDto.documentationSummary,
+						rule6PartyStatements: {
+							234: {
+								isRedacted: false,
+								receivedAt: null,
+								representationStatus: null,
+								status: 'not_received'
+							}
+						},
+						rule6PartyProofs: {
+							234: {
+								isRedacted: false,
+								receivedAt: null,
+								representationStatus: null,
+								status: 'not_received'
+							}
+						}
+					}
 				});
 			});
 		});
