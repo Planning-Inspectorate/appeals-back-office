@@ -185,7 +185,8 @@ const loadReferenceData = async (reference, useLeadAppealIfLinked = false) => {
 			where: { reference },
 			include: {
 				appealStatus: true,
-				appealType: true
+				appealType: true,
+				appealRule6Parties: true
 			}
 		});
 

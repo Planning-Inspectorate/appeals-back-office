@@ -622,15 +622,18 @@ interface AppealListResponse {
 	isInquirySetup: boolean | null;
 	hasInquiryAddress: boolean | null;
 }
+
 interface DocumentationSummary {
 	appellantCase?: DocumentationSummaryEntry;
 	lpaQuestionnaire?: DocumentationSummaryEntry;
 	ipComments?: DocumentationSummaryEntry;
 	lpaStatement?: DocumentationSummaryEntry;
+	rule6PartyStatements?: { [serviceUserId: string]: DocumentationSummaryEntry };
 	lpaFinalComments?: DocumentationSummaryEntry;
 	appellantFinalComments?: DocumentationSummaryEntry;
 	lpaProofOfEvidence?: DocumentationSummaryEntry;
 	appellantProofOfEvidence?: DocumentationSummaryEntry;
+	rule6PartyProofs?: { [serviceUserId: string]: DocumentationSummaryEntry };
 }
 
 interface DocumentationSummaryEntry {

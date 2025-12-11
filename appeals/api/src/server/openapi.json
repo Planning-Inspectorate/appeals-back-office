@@ -14568,6 +14568,39 @@
 								"nullable": true
 							}
 						}
+					},
+					"rule6PartyStatements": {
+						"type": "object",
+						"additionalProperties": {
+							"type": "object",
+							"properties": {
+								"status": {
+									"type": "string"
+								},
+								"dueDate": {
+									"type": "string",
+									"format": "date-time",
+									"nullable": true
+								},
+								"receivedAt": {
+									"type": "string",
+									"format": "date-time",
+									"nullable": true
+								},
+								"representationStatus": {
+									"type": "string",
+									"nullable": true
+								},
+								"counts": {
+									"type": "object",
+									"nullable": true
+								},
+								"isRedacted": {
+									"type": "boolean",
+									"nullable": true
+								}
+							}
+						}
 					}
 				}
 			},

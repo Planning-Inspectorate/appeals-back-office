@@ -12,11 +12,11 @@ describe('appeal rule 6 parties routes', () => {
 	let fullPlanningAppeal;
 
 	const rule6Party = {
-		id: '123',
+		id: 385,
 		appealId: fullPlanningAppealData.id,
-		serviceUserId: '123',
+		serviceUserId: 473,
 		serviceUser: {
-			id: '123',
+			id: 473,
 			organisationName: 'Test Organisation',
 			email: 'test@example.com'
 		}
@@ -369,7 +369,6 @@ describe('appeal rule 6 parties routes', () => {
 				// @ts-ignore
 				databaseConnector.appealRule6Party.delete.mockResolvedValue({
 					appealId,
-					id: Number(rule6Party.id),
 					serviceUserId: Number(rule6Party.serviceUserId)
 				});
 
@@ -381,10 +380,17 @@ describe('appeal rule 6 parties routes', () => {
 					where: { id: Number(rule6Party.id) }
 				});
 
+				expect(mockBroadcasters.broadcastServiceUser).toHaveBeenCalledWith(
+					rule6Party.serviceUserId,
+					'Delete',
+					'Rule6Party',
+					fullPlanningAppeal.reference
+				);
+
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
-					appealId: String(appealId),
-					rule6PartyId: rule6Party.id
+					appealId: appealId,
+					serviceUserId: rule6Party.serviceUserId
 				});
 			});
 

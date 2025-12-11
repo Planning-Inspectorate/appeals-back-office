@@ -53,6 +53,15 @@ const documentationSummary = {
 			properties: {
 				...commonDocumentationSummaryProperties
 			}
+		},
+		rule6PartyStatements: {
+			type: 'object',
+			additionalProperties: {
+				type: 'object',
+				properties: {
+					...commonDocumentationSummaryProperties
+				}
+			}
 		}
 	}
 };

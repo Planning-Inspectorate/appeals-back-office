@@ -64,14 +64,23 @@ const updateRule6Party = async (appealReference, rule6PartyId, serviceUser, azur
 };
 
 /**
+ * @param {string} appealReference
  * @param {number} rule6PartyId
  * @param {string} azureAdUserId
  * @returns {Promise<{ appealId: number, id: number, serviceUserId: number }>}
  */
 // eslint-disable-next-line no-unused-vars
-const deleteRule6Party = async (rule6PartyId, azureAdUserId) => {
+const deleteRule6Party = async (appealReference, rule6PartyId, azureAdUserId) => {
 	try {
-		return await appealRule6PartyRepository.deleteRule6Party(rule6PartyId);
+		const result = await appealRule6PartyRepository.deleteRule6Party(rule6PartyId);
+
+		await broadcasters.broadcastServiceUser(
+			result.serviceUserId,
+			EventType.Delete,
+			SERVICE_USER_TYPE.RULE_6_PARTY,
+			appealReference
+		);
+		return result;
 	} catch (error) {
 		logger.error(error, 'Failed to delete rule 6 party');
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
