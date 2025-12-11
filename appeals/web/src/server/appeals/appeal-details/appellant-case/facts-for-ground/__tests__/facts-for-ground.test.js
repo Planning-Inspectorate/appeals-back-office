@@ -62,7 +62,7 @@ describe('facts-for-ground', () => {
 			};
 
 			const apiCall = nock('http://test/')
-				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+				.patch(`/appeals/${appealId}/grounds-for-appeal/${groundRef}`)
 				.reply(200, {});
 
 			const response = await request
@@ -82,7 +82,7 @@ describe('facts-for-ground', () => {
 			};
 
 			const apiCall = nock('http://test/')
-				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+				.patch(`/appeals/${appealId}/grounds-for-appeal/${groundRef}`)
 				.reply(200, {});
 
 			const response = await request
@@ -104,7 +104,7 @@ describe('facts-for-ground', () => {
 			};
 
 			const apiCall = nock('http://test/')
-				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+				.patch(`/appeals/${appealId}/grounds-for-appeal/${groundRef}`)
 				.reply(200, {});
 
 			const response = await request

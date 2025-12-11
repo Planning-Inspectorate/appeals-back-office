@@ -17,7 +17,7 @@ export const mapSupportingDocumentsForGrounds = ({ appellantCaseData, userHasUpd
 	// @ts-ignore
 	return appealGrounds.map((appealGround) => {
 		const { ground } = appealGround || {};
-		const { groundRef } = ground || {};
+		const { groundRef = '' } = ground || {};
 		const id = `supporting-documents-for-ground-${groundRef}`;
 		const docType = GROUND_SUPPORTING_DOCTYPE[groundRef.toUpperCase()];
 		return documentSummaryListItem({

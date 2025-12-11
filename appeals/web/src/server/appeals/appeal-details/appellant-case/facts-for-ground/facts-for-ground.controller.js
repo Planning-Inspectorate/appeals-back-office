@@ -1,6 +1,6 @@
 import { getAppellantCaseFromAppealId } from '#appeals/appeal-details/appellant-case/appellant-case.service.js';
 import { ChangeFactsForGroundPage } from '#appeals/appeal-details/appellant-case/facts-for-ground/facts-for-ground.mapper.js';
-import { ChangeFactsForGround } from '#appeals/appeal-details/appellant-case/facts-for-ground/facts-for-ground.service.js';
+import { changeFactsForGround } from '#appeals/appeal-details/appellant-case/facts-for-ground/facts-for-ground.service.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
@@ -60,7 +60,7 @@ export const postChangeFactsForGround = async (request, response) => {
 	const { groundRef } = request.params;
 
 	try {
-		await ChangeFactsForGround(
+		await changeFactsForGround(
 			request.apiClient,
 			appealId,
 			appellantCaseId,

@@ -1,4 +1,5 @@
 import config from '#config/config.js';
+import { appealGroundsRoutes } from '#endpoints/appeal-grounds/appeal-grounds.routes.js';
 import checkAzureAdUserIdHeaderExists from '#middleware/check-azure-ad-user-id-header-exists.js';
 import { Router as createRouter } from 'express';
 import initNotifyClientAndAddToRequest from '../middleware/init-notify-client-and-add-to-request.js';
@@ -87,6 +88,7 @@ router.use(planningAppealDecisionSuppliersRoutes);
 
 router.use(appealsRoutes);
 router.use(appealDetailsRoutes);
+router.use(appealGroundsRoutes);
 router.use(decisionRoutes);
 router.use(addressesRoutes);
 router.use(appealTimetablesRoutes);
