@@ -416,7 +416,6 @@ export const getAvScanStatus = (documentVersion) => {
  */
 export const deleteDocument = async (document, version) => {
 	const result = await deleteDocumentVersion(document.guid, version);
-	await broadcasters.broadcastDocument(document.guid, version, EventType.Delete);
 	return result !== null;
 };
 
