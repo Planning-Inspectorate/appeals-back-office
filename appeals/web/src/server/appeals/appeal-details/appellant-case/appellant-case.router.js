@@ -42,6 +42,7 @@ import developmentDescriptionRouter from './development-description/development-
 import factsForGroundRouter from './facts-for-ground/facts-for-ground.router.js';
 import gridReferenceRouter from './grid-reference/grid-reference.router.js';
 import highwayLandRouter from './highway-land/highway-land.router.js';
+import interestInLandRouter from './interest-in-land/interest-in-land.router.js';
 import landownerPermissionRouter from './landowner-permission/landowner-permission.router.js';
 import outcomeIncompleteRouter from './outcome-incomplete/outcome-incomplete.router.js';
 import outcomeValidRouter from './outcome-valid/outcome-valid.router.js';
@@ -284,6 +285,13 @@ router.use(
 	validateAppealWithInclude(['appellantCase', 'appealGrounds']),
 	assertUserHasPermission(permissionNames.updateCase),
 	factsForGroundRouter
+);
+
+router.use(
+	'/interest-in-land',
+	validateAppealWithInclude(['appellantCase']),
+	assertUserHasPermission(permissionNames.updateCase),
+	interestInLandRouter
 );
 
 router

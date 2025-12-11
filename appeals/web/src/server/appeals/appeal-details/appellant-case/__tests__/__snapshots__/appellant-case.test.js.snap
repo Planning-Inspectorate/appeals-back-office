@@ -2481,7 +2481,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your interest in the land?</dt>
-                            <dd                             class="govuk-summary-list__value">No data</dd>
+                            <dd                             class="govuk-summary-list__value">Not answered</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/interest-in-land/change"
                                     data-cy="change-interest-in-land">Change<span class="govuk-visually-hidden"> What is your interest in the land? (2. Land)</span></a>
                                 </dd>
@@ -2828,10 +2828,13 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-contact-address"><dt class="govuk-summary-list__key"> What is your contact address?</dt>
-                            <dd                             class="govuk-summary-list__value">No data</dd>
+                            <dd                             class="govuk-summary-list__value">Not answered</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/contact-address/add"
+                                    data-cy="add-contact-address">Add<span class="govuk-visually-hidden"> What is your contact address? (2. Land)</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your interest in the land?</dt>
-                            <dd                             class="govuk-summary-list__value">No data</dd>
+                            <dd                             class="govuk-summary-list__value">Not answered</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/interest-in-land/change"
                                     data-cy="change-interest-in-land">Change<span class="govuk-visually-hidden"> What is your interest in the land? (2. Land)</span></a>
                                 </dd>
