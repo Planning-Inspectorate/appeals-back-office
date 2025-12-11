@@ -49,7 +49,10 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			actions.push('awaitingEvent');
 			break;
 		case APPEAL_CASE_STATUS.EVENT:
+			// appeal types that can't have hearings/inquiries have no procedure type set
+			// i.e. HAS is null, S20 before feature flag is turned on is null etc.
 			if (
+				!appealDetails.procedureType ||
 				appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN.toLowerCase()
 			) {
 				actions.push('arrangeSiteVisit');
