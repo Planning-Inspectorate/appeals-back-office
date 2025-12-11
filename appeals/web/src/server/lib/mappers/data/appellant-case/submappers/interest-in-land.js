@@ -6,8 +6,9 @@ export const mapInterestInLand = ({ appellantCaseData, currentRoute, userHasUpda
 	return textSummaryListItem({
 		id: 'interest-in-land',
 		text: 'What is your interest in the land?',
-		value: appellantCaseData.enforcementNotice?.interestInLand || 'No data',
+		value: appellantCaseData.enforcementNotice?.interestInLand || 'Not answered',
 		link: `${currentRoute}/interest-in-land/change`,
-		editable: hasData && userHasUpdateCase
+		editable: userHasUpdateCase,
+		actionText: hasData ? 'Change' : 'Add'
 	});
 };
