@@ -101,7 +101,7 @@ describe('Start case', () => {
 			appeal = caseObj;
 
 			// Assign Case Officer Via API
-			cy.assignCaseOfficerViaApi(caseObj);
+			cy.assignCaseOfficer(caseObj);
 
 			// Validate Appeal Via API
 			cy.validateAppeal(caseObj);
@@ -123,7 +123,7 @@ describe('Start case', () => {
 			appeal = caseObj;
 
 			// Assign Case Officer Via API
-			cy.assignCaseOfficerViaApi(caseObj);
+			cy.assignCaseOfficer(caseObj);
 
 			// Validate Appeal Via API
 			cy.validateAppeal(caseObj);
@@ -146,7 +146,7 @@ describe('Start case', () => {
 			appeal = caseObj;
 
 			// Assign Case Officer Via API
-			cy.assignCaseOfficerViaApi(caseObj);
+			cy.assignCaseOfficer(caseObj);
 
 			// Validate Appeal Via API
 			cy.validateAppeal(caseObj);
@@ -170,7 +170,7 @@ describe('Start case', () => {
 			happyPathHelper.viewCaseDetails(caseObj);
 
 			// Assign Case Officer Via API
-			cy.assignCaseOfficerViaApi(caseObj);
+			cy.assignCaseOfficer(caseObj);
 
 			// Validate Appeal Via API
 			cy.validateAppeal(caseObj);
@@ -199,7 +199,7 @@ describe('Start case', () => {
 			happyPathHelper.viewCaseDetails(caseObj);
 
 			// Assign Case Officer Via API
-			cy.assignCaseOfficerViaApi(caseObj);
+			cy.assignCaseOfficer(caseObj);
 
 			// Validate Appeal Via API
 			cy.validateAppeal(caseObj);
@@ -236,7 +236,7 @@ describe('Start case', () => {
 			happyPathHelper.viewCaseDetails(caseObj);
 
 			// Assign Case Officer Via API
-			cy.assignCaseOfficerViaApi(caseObj);
+			cy.assignCaseOfficer(caseObj);
 
 			// Validate Appeal Via API
 			cy.validateAppeal(caseObj);
@@ -295,7 +295,7 @@ describe('Start case', () => {
 			happyPathHelper.viewCaseDetails(caseObj);
 
 			// Assign Case Officer Via API
-			cy.assignCaseOfficerViaApi(caseObj);
+			cy.assignCaseOfficer(caseObj);
 
 			// Validate Appeal Via API
 			cy.validateAppeal(caseObj);

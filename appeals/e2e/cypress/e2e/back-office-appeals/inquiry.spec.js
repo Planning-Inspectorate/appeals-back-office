@@ -135,11 +135,11 @@ const setupTestCase = () => {
 		happyPathHelper.viewCaseDetails(caseObj);
 
 		// Assign Case Officer Via API
-		cy.assignCaseOfficerViaApi(caseObj);
+		cy.assignCaseOfficer(caseObj);
 
 		// Validate Appeal Via API
 		cy.getBusinessActualDate(new Date(), 0).then((date) => {
-			cy.updateAppealDetailsViaApi(caseObj, { validationOutcome: 'valid', validAt: date });
+			cy.updateAppealDetails(caseObj, { validationOutcome: 'valid', validAt: date });
 		});
 
 		cy.reload();
@@ -197,7 +197,7 @@ it('Can update inquiry date', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		inquiryDate.setHours(14);
-		cy.addInquiryViaApi(caseObj, inquiryDate);
+		cy.addInquiry(caseObj, inquiryDate);
 
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
@@ -229,7 +229,7 @@ it('Can update inquiry time', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		inquiryDate.setHours(14);
-		cy.addInquiryViaApi(caseObj, inquiryDate);
+		cy.addInquiry(caseObj, inquiryDate);
 
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
@@ -260,7 +260,7 @@ it('Can update inquiry time', () => {
 it('Can update inquiry estimated days when already set - using do you know link', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-		cy.addInquiryViaApi(caseObj, inquiryDate);
+		cy.addInquiry(caseObj, inquiryDate);
 
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
@@ -293,7 +293,7 @@ it('Can update inquiry estimated days when already set - using do you know link'
 it('Can update inquiry estimated days when already set - using estimated days link', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-		cy.addInquiryViaApi(caseObj, inquiryDate);
+		cy.addInquiry(caseObj, inquiryDate);
 
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
@@ -325,7 +325,7 @@ it('Can update inquiry estimated days when not already set', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		// setting estimate days to '0' has effect of 'No' in inquiry UI
-		cy.addInquiryViaApi(caseObj, inquiryDate, { estimatedDays: '0' });
+		cy.addInquiry(caseObj, inquiryDate, { estimatedDays: '0' });
 
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
@@ -358,7 +358,7 @@ it('Can update inquiry estimated days when not already set', () => {
 it('Can update inquiry address', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-		cy.addInquiryViaApi(caseObj, inquiryDate);
+		cy.addInquiry(caseObj, inquiryDate);
 
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
@@ -385,7 +385,7 @@ it('Can update inquiry address', () => {
 it('Can update answer from CYA page - change address', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-		cy.addInquiryViaApi(caseObj, inquiryDate);
+		cy.addInquiry(caseObj, inquiryDate);
 
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
@@ -416,7 +416,7 @@ it('Can update answer from CYA page - change address', () => {
 it('Can add rule 6 party', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-		cy.addInquiryViaApi(caseObj, inquiryDate);
+		cy.addInquiry(caseObj, inquiryDate);
 
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
@@ -481,7 +481,7 @@ it('Can add rule 6 party', () => {
 it('Validates rule 6 party name and email address', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-		cy.addInquiryViaApi(caseObj, inquiryDate);
+		cy.addInquiry(caseObj, inquiryDate);
 
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
@@ -514,7 +514,7 @@ it('Validates rule 6 party name and email address', () => {
 
 it('should not accept invalid input - inquiry Estimate', () => {
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-		cy.addInquiryViaApi(caseObj, inquiryDate);
+		cy.addInquiry(caseObj, inquiryDate);
 	});
 
 	cy.visit(urlPaths.appealsList);
@@ -549,7 +549,7 @@ it('should not accept invalid input - inquiry Estimate', () => {
 it('should add inquiry Estimates', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-		cy.addInquiryViaApi(caseObj, inquiryDate);
+		cy.addInquiry(caseObj, inquiryDate);
 	});
 
 	cy.visit(urlPaths.appealsList);
@@ -607,7 +607,7 @@ it('should add inquiry Estimates', () => {
 it('should update inquiry timetable dates from case details page', () => {
 	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
 		// Setup initial timetable
-		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+		cy.addInquiry(caseObj, currentDate, timeTable);
 
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
@@ -671,7 +671,7 @@ it('should update inquiry timetable dates from case details page', () => {
 it('should validate inquiry timetable chronology', () => {
 	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
 		// Setup initial timetable
-		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+		cy.addInquiry(caseObj, currentDate, timeTable);
 
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
@@ -712,7 +712,7 @@ it('should validate inquiry timetable chronology', () => {
 it('should show business day validation errors for all timetable fields', () => {
 	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
 		// Setup initial timetable
-		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+		cy.addInquiry(caseObj, currentDate, timeTable);
 
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
@@ -760,7 +760,7 @@ it.only('should progress to evidence stage with no statements or IP comments', (
 	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseObj);
-		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+		cy.addInquiry(caseObj, currentDate, timeTable);
 		cy.addLpaqSubmissionToCase(caseObj);
 		cy.reviewLpaqSubmission(caseObj);
 		caseDetailsPage.checkStatusOfCase('Statements', 0);
@@ -808,17 +808,17 @@ it('should progress to evidence stage after sharing statements and IP comments',
 	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseObj);
-		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+		cy.addInquiry(caseObj, currentDate, timeTable);
 		cy.addLpaqSubmissionToCase(caseObj);
 		cy.reviewLpaqSubmission(caseObj);
 		caseDetailsPage.checkStatusOfCase('Statements', 0);
 
 		// Add & Review statement & IP comment Via Api
 		cy.addRepresentation(caseObj, 'lpaStatement', null);
-		cy.reviewStatementViaApi(caseObj);
+		cy.reviewStatement(caseObj);
 
 		cy.addRepresentation(caseObj, 'interestedPartyComment', null);
-		cy.reviewIpCommentsViaApi(caseObj);
+		cy.reviewIpComments(caseObj);
 
 		cy.simulateStatementsDeadlineElapsed(caseObj);
 
@@ -851,20 +851,20 @@ it('should complete LPA/Appellant POE and progress to awaiting inquiry', () => {
 	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseObj);
-		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+		cy.addInquiry(caseObj, currentDate, timeTable);
 		cy.addLpaqSubmissionToCase(caseObj);
 		cy.reviewLpaqSubmission(caseObj);
 
 		// Add & Review statement & IP comment Via Api
 		cy.addRepresentation(caseObj, 'lpaStatement', null);
-		cy.reviewStatementViaApi(caseObj);
+		cy.reviewStatement(caseObj);
 
 		cy.addRepresentation(caseObj, 'interestedPartyComment', null);
-		cy.reviewIpCommentsViaApi(caseObj);
+		cy.reviewIpComments(caseObj);
 
 		cy.simulateStatementsDeadlineElapsed(caseObj);
 
-		cy.shareCommentsAndStatementsViaApi(caseObj);
+		cy.shareCommentsAndStatements(caseObj);
 
 		caseDetailsPage.checkStatusOfCase('Evidence', 0);
 
@@ -968,20 +968,20 @@ it('should complete inquiry appeal to decision`', () => {
 	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseObj);
-		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+		cy.addInquiry(caseObj, currentDate, timeTable);
 		cy.addLpaqSubmissionToCase(caseObj);
 		cy.reviewLpaqSubmission(caseObj);
 
 		// Add & Review statement & IP comment Via Api
 		cy.addRepresentation(caseObj, 'lpaStatement', null);
-		cy.reviewStatementViaApi(caseObj);
+		cy.reviewStatement(caseObj);
 
 		cy.addRepresentation(caseObj, 'interestedPartyComment', null);
-		cy.reviewIpCommentsViaApi(caseObj);
+		cy.reviewIpComments(caseObj);
 
 		cy.simulateStatementsDeadlineElapsed(caseObj);
 
-		cy.shareCommentsAndStatementsViaApi(caseObj);
+		cy.shareCommentsAndStatements(caseObj);
 
 		caseDetailsPage.checkStatusOfCase('Evidence', 0);
 
@@ -1040,20 +1040,20 @@ it('should display the correct status tags when removing inquiry address', () =>
 	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseObj);
-		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+		cy.addInquiry(caseObj, currentDate, timeTable);
 		cy.addLpaqSubmissionToCase(caseObj);
 		cy.reviewLpaqSubmission(caseObj);
 
 		// Add & Review statement & IP comment Via Api
 		cy.addRepresentation(caseObj, 'lpaStatement', null);
-		cy.reviewStatementViaApi(caseObj);
+		cy.reviewStatement(caseObj);
 
 		cy.addRepresentation(caseObj, 'interestedPartyComment', null);
-		cy.reviewIpCommentsViaApi(caseObj);
+		cy.reviewIpComments(caseObj);
 
 		cy.simulateStatementsDeadlineElapsed(caseObj);
 
-		cy.shareCommentsAndStatementsViaApi(caseObj);
+		cy.shareCommentsAndStatements(caseObj);
 
 		// Verify evidence tag
 		caseDetailsPage.checkStatusOfCase('Evidence', 0);

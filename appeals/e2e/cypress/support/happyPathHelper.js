@@ -505,8 +505,8 @@ export const happyPathHelper = {
 
 	updateCase(caseObj, currentStatus, targetStatus, appealType, procedureType = 'written') {
 		const baseActions = {
-			[STATUSES.ASSIGN_CASE_OFFICER]: (c) => cy.assignCaseOfficerViaApi(c),
-			[STATUSES.VALIDATION]: (c) => cy.updateAppealDetailsViaApi(c, { validationOutcome: 'valid' }),
+			[STATUSES.ASSIGN_CASE_OFFICER]: (c) => cy.assignCaseOfficer(c),
+			[STATUSES.VALIDATION]: (c) => cy.updateAppealDetails(c, { validationOutcome: 'valid' }),
 			[STATUSES.READY_TO_START]: (c, appealType, procedureType) => cy.startAppeal(c),
 			[STATUSES.LPA_QUESTIONNAIRE]: (c) => {
 				cy.addLpaqSubmissionToCase(c);
@@ -514,19 +514,19 @@ export const happyPathHelper = {
 			},
 			[STATUSES.STATEMENTS]: (c) => {
 				cy.addRepresentation(c, 'lpaStatement', null);
-				cy.reviewStatementViaApi(c);
+				cy.reviewStatement(c);
 				cy.simulateStatementsDeadlineElapsed(c);
-				cy.shareCommentsAndStatementsViaApi(c);
+				cy.shareCommentsAndStatements(c);
 			},
 			[STATUSES.FINAL_COMMENTS]: (c) => {
 				cy.addRepresentation(c, 'lpaFinalComment', null);
-				cy.reviewLpaFinalCommentsViaApi(c);
+				cy.reviewLpaFinalComments(c);
 				cy.simulateFinalCommentsDeadlineElapsed(c);
-				cy.shareCommentsAndStatementsViaApi(c);
+				cy.shareCommentsAndStatements(c);
 			},
-			[STATUSES.EVENT_READY_TO_SETUP]: (c) => cy.setupSiteVisitViaAPI(c),
+			[STATUSES.EVENT_READY_TO_SETUP]: (c) => cy.setupSiteVisit(c),
 			[STATUSES.AWAITING_EVENT]: (c) => cy.simulateSiteVisit(c),
-			[STATUSES.ISSUE_DECISION]: (c) => cy.issueDecisionViaApi(c)
+			[STATUSES.ISSUE_DECISION]: (c) => cy.issueDecision(c)
 		};
 
 		const flow = FLOWS[appealType];
