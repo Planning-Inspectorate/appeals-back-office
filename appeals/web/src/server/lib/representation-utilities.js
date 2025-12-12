@@ -4,6 +4,11 @@ import {
 	APPEAL_REPRESENTATION_STATUS,
 	FEATURE_FLAG_NAMES
 } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { isStatePassed } from './appeal-status.js';
+import { dateIsInThePastIsoString } from './dates.js';
+
+/** @typedef {import('#appeals/appeal-details/appeal-details.types.d.ts').WebAppeal} WebAppeal */
 
 /**
  * @param {string} representationStatus
@@ -21,6 +26,7 @@ export function isRepresentationReviewRequired(representationStatus) {
  * @param {string|null|undefined} representationStatus
  * @param {RepresentationType} representationType
  * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string|undefined} representationDueDate
  * @returns {string} action link html
  */
 export function mapRepresentationDocumentSummaryActionLink(
@@ -28,15 +34,9 @@ export function mapRepresentationDocumentSummaryActionLink(
 	documentationStatus,
 	representationStatus,
 	representationType,
-	request
+	request,
+	representationDueDate = undefined
 ) {
-	if (
-		documentationStatus !== 'received' &&
-		!isFeatureActive(FEATURE_FLAG_NAMES.MANUALLY_ADD_REPS)
-	) {
-		return '';
-	}
-
 	const reviewRequired = (() => {
 		if (typeof representationStatus === 'string') {
 			return [
@@ -73,7 +73,12 @@ export function mapRepresentationDocumentSummaryActionLink(
 	};
 
 	if (documentationStatus !== 'received') {
-		return `<a href="${hrefs[representationType]}/add-document" data-cy="add-${representationType}" class="govuk-link">Add<span class="govuk-visually-hidden"> ${visuallyHiddenTexts[representationType]}</span></a>`;
+		return isFeatureActive(FEATURE_FLAG_NAMES.MANUALLY_ADD_REPS) &&
+			representationDueDate != undefined &&
+			dateIsInThePastIsoString(representationDueDate) &&
+			isInCorrectCaseStatusOrLater(request.currentAppeal, representationType)
+			? `<a href="${hrefs[representationType]}/add-document" data-cy="add-${representationType}" class="govuk-link">Add<span class="govuk-visually-hidden"> ${visuallyHiddenTexts[representationType]}</span></a>`
+			: '';
 	}
 
 	return `<a href="${addBackLinkQueryToUrl(request, hrefs[representationType])}" data-cy="${
@@ -135,3 +140,26 @@ export function mapFinalCommentRepresentationStatusToLabelText(representationSta
 		}
 	}
 }
+
+/**
+ * @param {WebAppeal} appeal
+ * @param {string} representationType
+ * @returns {boolean}
+ */
+const isInCorrectCaseStatusOrLater = (appeal, representationType) => {
+	switch (representationType) {
+		case 'lpa-statement':
+			return (
+				appeal.appealStatus === APPEAL_CASE_STATUS.STATEMENTS ||
+				isStatePassed(appeal, APPEAL_CASE_STATUS.STATEMENTS)
+			);
+		case 'lpa-final-comments':
+		case 'appellant-final-comments':
+			return (
+				appeal.appealStatus === APPEAL_CASE_STATUS.FINAL_COMMENTS ||
+				isStatePassed(appeal, APPEAL_CASE_STATUS.FINAL_COMMENTS)
+			);
+		default:
+			return false;
+	}
+};

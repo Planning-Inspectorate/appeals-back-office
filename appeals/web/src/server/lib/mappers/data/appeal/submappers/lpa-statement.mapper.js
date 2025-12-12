@@ -68,7 +68,8 @@ export const mapLpaStatement = ({ appealDetails, currentRoute, request }) => {
 			appealDetails?.documentationSummary?.lpaStatement?.status,
 			appealDetails?.documentationSummary?.lpaStatement?.representationStatus,
 			'lpa-statement',
-			request
+			request,
+			appealDetails.appealTimetable?.lpaStatementDueDate || ''
 		)
 	});
 };
