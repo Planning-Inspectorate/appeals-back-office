@@ -147,6 +147,10 @@ const formatDocumentationSummary = (appeal) => {
 		appeal.representations?.filter(
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
 		) ?? [];
+	const appellantStatement =
+		appeal.representations?.filter(
+			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT
+		) ?? [];
 
 	return {
 		appellantCase: {
@@ -206,6 +210,13 @@ const formatDocumentationSummary = (appeal) => {
 			representationStatus: appellantProofOfEvidence[0]?.status ?? null,
 			receivedAt: appellantProofOfEvidence[0]?.dateCreated,
 			isRedacted: Boolean(appellantProofOfEvidence[0]?.redactedRepresentation)
+		},
+		appellantStatement: {
+			status:
+				appellantStatement.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+			representationStatus: appellantStatement[0]?.status ?? null,
+			receivedAt: appellantStatement[0]?.dateCreated,
+			isRedacted: Boolean(appellantStatement[0]?.redactedRepresentation)
 		}
 	};
 };

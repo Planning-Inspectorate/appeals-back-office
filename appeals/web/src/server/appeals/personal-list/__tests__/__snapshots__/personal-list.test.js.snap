@@ -79,7 +79,7 @@ exports[`personal-list GET / should render a child status tag in the lead or chi
                             </td>
                             <td class="govuk-table__cell"></td>
                             <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28526/interested-party-comments?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30">Review IP comments<span class="govuk-visually-hidden"> for appeal 28526</span></a>
-                            </td>
+                                <br>Awaiting appellant statement</td>
                             <td class="govuk-table__cell">7 February 2025</td>
                             <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Statements</strong>
                             </td>
@@ -210,7 +210,7 @@ exports[`personal-list GET / should render a lead status tag in the lead or chil
                             </td>
                             <td class="govuk-table__cell"></td>
                             <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28526/interested-party-comments?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30">Review IP comments<span class="govuk-visually-hidden"> for appeal 28526</span></a>
-                            </td>
+                                <br>Awaiting appellant statement</td>
                             <td class="govuk-table__cell">7 February 2025</td>
                             <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Statements</strong>
                             </td>
@@ -358,7 +358,7 @@ exports[`personal-list GET / should render an empty cell in the lead or child co
                             </td>
                             <td class="govuk-table__cell"></td>
                             <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28526/interested-party-comments?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30">Review IP comments<span class="govuk-visually-hidden"> for appeal 28526</span></a>
-                            </td>
+                                <br>Awaiting appellant statement</td>
                             <td class="govuk-table__cell">7 February 2025</td>
                             <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Statements</strong>
                             </td>
@@ -722,7 +722,7 @@ exports[`personal-list GET / should render the first page of the personal list w
                             </td>
                             <td class="govuk-table__cell"></td>
                             <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28526/interested-party-comments?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D5">Review IP comments<span class="govuk-visually-hidden"> for appeal 28526</span></a>
-                            </td>
+                                <br>Awaiting appellant statement</td>
                             <td class="govuk-table__cell">7 February 2025</td>
                             <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Statements</strong>
                             </td>
@@ -800,6 +800,72 @@ role="banner" data-module="govuk-header">
         </div>
     </div>
 </header>"
+`;
+
+exports[`personal-list GET / should render the personal list with a "Review appellant statement" action when appellant statement is received and awaiting review 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Your appeals</h1>
+        </div>
+    </div><a class="govuk-link" href=personal-list/search-case-officer?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30
+    data-cy="change-case-officer">View another case officer’s appeals</a>
+    <div     class=" govuk-!-margin-top-2 govuk-!-margin-bottom-6"></div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <details class="govuk-details">
+                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Filters</span>
+                    </summary>
+                    <div class="govuk-details__text">
+                        <form method="GET">
+                            <input type="hidden" name="pageNumber" value="1">
+                            <input type="hidden" name="pageSize" value="30">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="filters-select">Show cases with status</label>
+                                <select class="govuk-select" id="filters-select"
+                                name="appealStatusFilter">
+                                    <option value="all">All</option>
+                                    <option value="statements">Statements</option>
+                                </select>
+                            </div>
+                            <div class="govuk-button-group">
+                                <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
+                                id="filters-submit">Apply</button><a class="govuk-link" href="/appeals-service/personal-list">Clear filter</a>
+                            </div>
+                        </form>
+                    </div>
+                </details>
+            </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <table class="govuk-table">
+                    <thead class="govuk-table__head">
+                        <tr class="govuk-table__row">
+                            <th scope="col" class="govuk-table__header">Appeal reference</th>
+                            <th scope="col" class="govuk-table__header">Lead or child</th>
+                            <th scope="col" class="govuk-table__header">Action required</th>
+                            <th scope="col" class="govuk-table__header">Due by</th>
+                            <th scope="col" class="govuk-table__header">Case status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row">
+                            <td class="govuk-table__cell"><strong><a class="govuk-link" href=/appeals-service/appeal-details/28540?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30 aria-label="Appeal 6 0 2 8 5 4 0">6028540</a></strong>
+                            </td>
+                            <td class="govuk-table__cell"></td>
+                            <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28540/interested-party-comments?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30">Review IP comments<span class="govuk-visually-hidden"> for appeal 28540</span></a>
+                                <br><a class="govuk-link" href="/appeals-service/appeal-details/28540/statement/appellant?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30">Review appellant statement</a>
+                            </td>
+                            <td class="govuk-table__cell">23 April 2025</td>
+                            <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Statements</strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</main>"
 `;
 
 exports[`personal-list GET / should render the second page of the personal list with applied filter, the expected content and pagination 1`] = `

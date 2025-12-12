@@ -381,6 +381,7 @@ export interface WebDocumentationSummary extends DocumentationSummary {
 	lpaFinalComments?: WebDocumentationSummaryEntry;
 	appellantProofOfEvidence?: WebDocumentationSummaryEntry;
 	lpaProofOfEvidence?: WebDocumentationSummaryEntry;
+	appellantStatement?: WebDocumentationSummaryEntry;
 }
 
 export interface AppealRule6Party {

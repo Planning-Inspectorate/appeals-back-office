@@ -7,6 +7,7 @@ import {
 	assignedAppealsPage1,
 	assignedAppealsPage2,
 	assignedAppealsPage3,
+	assignedAppealsPage4,
 	baseAppealDataToGetRequiredActions
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
@@ -240,6 +241,27 @@ describe('personal-list', () => {
 					'aria-label="Appeal 6 0 2 8 5 2 6">6028526</a>' +
 					'</strong></td>' +
 					'<td class="govuk-table__cell"></td>'
+			);
+		});
+
+		it('should render the personal list with a "Review appellant statement" action when appellant statement is received and awaiting review', async () => {
+			nock('http://test/')
+				.get('/appeals/personal-list?pageNumber=1&pageSize=30')
+				.reply(200, assignedAppealsPage4);
+
+			const response = await request.get(`${baseUrl}${'?pageNumber=1&pageSize=30'}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Your appeals</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'href="/appeals-service/appeal-details/28540/interested-party-comments?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30">Review IP comments<span class="govuk-visually-hidden"> for appeal 28540</span></a>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/28540/statement/appellant?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30">Review appellant statement</a>'
 			);
 		});
 
@@ -571,6 +593,20 @@ describe('personal-list', () => {
 				requiredAction: 'awaitingEvent',
 				expectedHtml: {
 					caseOfficer: 'Awaiting inquiry'
+				}
+			},
+			{
+				name: 'Awaiting appellant statement',
+				requiredAction: 'awaitingAppellantStatement',
+				expectedHtml: {
+					caseOfficer: 'Awaiting appellant statement'
+				}
+			},
+			{
+				name: 'Review appellant statement',
+				requiredAction: 'reviewAppellantStatement',
+				expectedHtml: {
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/statement/appellant?backUrl=%2Fappeals-service%2Fpersonal-list">Review appellant statement</a>`
 				}
 			}
 		];

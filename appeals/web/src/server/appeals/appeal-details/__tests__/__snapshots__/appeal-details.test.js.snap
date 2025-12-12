@@ -244,6 +244,14 @@ exports[`appeal-details GET /:appealId Documentation Rule 6 party statements and
                 <td class="govuk-table__cell govuk-!-text-align-right"><a href="#" class="govuk-link" data-cy="add-rule-6-party-proof-0">Add</a>
                 </td>
             </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Appellant statement</th>
+                <td class="govuk-table__cell"></td>
+                <td class="govuk-table__cell"></td>
+                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/statement/appellant/add-document"
+                    data-cy="add-appellant-statement" class="govuk-link">Add<span class="govuk-visually-hidden"> Appellant statement</span></a>
+                </td>
+            </tr>
         </tbody>
     "
 `;

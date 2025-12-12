@@ -227,6 +227,11 @@ const s78AppealDto = {
 			isRedacted: false
 		},
 		rule6PartyStatements: {},
+		appellantStatement: {
+			status: 'not_received',
+			receivedAt: null,
+			representationStatus: null
+		},
 		appellantProofOfEvidence: {
 			status: 'received',
 			receivedAt: '2024-11-27T15:08:55.704Z',
