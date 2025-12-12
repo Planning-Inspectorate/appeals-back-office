@@ -14,7 +14,7 @@ export function isRepresentationReviewRequired(representationStatus) {
 }
 
 /**
- * @typedef {'appellant-final-comments' | 'lpa-final-comments' | 'lpa-statement' | 'rule-6-party-statement' | 'appellant-proofs-evidence' | 'lpa-proofs-evidence' | 'rule-6-party-proofs-evidence'} RepresentationType
+ * @typedef {'appellant-final-comments' | 'lpa-final-comments' | 'lpa-statement' | 'rule-6-party-statement' | 'appellant-proofs-evidence' | 'lpa-proofs-evidence' | 'rule-6-party-proofs-evidence' | 'appellant-statement'} RepresentationType
  *
  * @param {string} currentRoute
  * @param {string|undefined} documentationStatus
@@ -64,7 +64,8 @@ export function mapRepresentationDocumentSummaryActionLink(
 		'lpa-final-comments': 'LPA final comments',
 		'appellant-proofs-evidence': 'Appellant proof of evidence',
 		'lpa-proofs-evidence': 'LPA proof of evidence',
-		'rule-6-party-proofs-evidence': `${rule6Party?.serviceUser?.organisationName} proof of evidence`
+		'rule-6-party-proofs-evidence': `${rule6Party?.serviceUser?.organisationName} proof of evidence`,
+		'appellant-statement': 'Appellant statement'
 	};
 
 	/** @type {Record<RepresentationType, string>} */
@@ -81,7 +82,8 @@ export function mapRepresentationDocumentSummaryActionLink(
 			: `${currentRoute}/proof-of-evidence/lpa/manage-documents`,
 		'rule-6-party-proofs-evidence': reviewRequired
 			? `${currentRoute}/proof-of-evidence/rule-6-party/${rule6Party?.id}`
-			: `${currentRoute}/proof-of-evidence/rule-6-party/${rule6Party?.id}/manage-documents`
+			: `${currentRoute}/proof-of-evidence/rule-6-party/${rule6Party?.id}/manage-documents`,
+		'appellant-statement': `${currentRoute}/appellant-statement`
 	};
 
 	if (documentationStatus !== 'received') {
@@ -112,14 +114,16 @@ export function mapAddRepresentationSummaryActionLink(
 	const visuallyHiddenTexts = {
 		'appellant-proofs-evidence': 'Appellant proof of evidence',
 		'lpa-proofs-evidence': 'LPA proof of evidence',
-		'rule-6-party-proofs-evidence': `${rule6Party?.serviceUser?.organisationName} proof of evidence`
+		'rule-6-party-proofs-evidence': `${rule6Party?.serviceUser?.organisationName} proof of evidence`,
+		'appellant-statement': 'Appellant statement'
 	};
 
 	/** @type {Record<string, string>} */
 	const hrefs = {
 		'appellant-proofs-evidence': `${currentRoute}/proof-of-evidence/appellant/add-representation`,
 		'lpa-proofs-evidence': `${currentRoute}/proof-of-evidence/lpa/add-representation`,
-		'rule-6-party-proofs-evidence': `${currentRoute}/proof-of-evidence/rule-6-party/add-representation`
+		'rule-6-party-proofs-evidence': `${currentRoute}/proof-of-evidence/rule-6-party/add-representation`,
+		'appellant-statement': `${currentRoute}/appellant-statement`
 	};
 
 	return `<a href="${addBackLinkQueryToUrl(

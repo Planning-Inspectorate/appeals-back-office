@@ -657,6 +657,10 @@ describe('appeal-details', () => {
 						.persist();
 					nock('http://test/').post('/appeals/1/documents').reply(200);
 					nock('http://test/').get(`/appeals/1/case-notes`).reply(200, caseNotes);
+					nock('http://test/')
+						.get('/appeals/1/appellant-cases/0')
+						.reply(200, { planningObligation: { hasObligation: false } })
+						.persist();
 
 					const addDocumentsResponse = await request
 						.post(`${baseUrl}/1/costs/decision/upload-documents/3`)
@@ -3480,6 +3484,107 @@ describe('appeal-details', () => {
 							.getAttribute('href')
 					).toBe(
 						'/appeals-service/appeal-details/2/proof-of-evidence/rule-6-party/1?backUrl=%2Fappeals-service%2Fappeal-details%2F2'
+					);
+				});
+			});
+
+			describe('Appellant statement', () => {
+				it('should render the correct row without appellant statement', async () => {
+					const appealId = 2;
+					const appeal = {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.INQUIRY
+					};
+					nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appeal);
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+					nock('http://test/')
+						.get(
+							`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+						)
+						.reply(200, {
+							itemCount: 0
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const element = parseHtml(response.text);
+					const table = element.querySelector('#case-documentation-table');
+					expect(table.innerHTML).toMatchSnapshot();
+
+					const rows = table.querySelectorAll('.govuk-table__body .govuk-table__row');
+					expect(rows[6].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+						'Appellant statement'
+					);
+					expect(rows[6].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+						''
+					);
+					expect(rows[6].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
+						''
+					);
+					expect(
+						rows[6].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
+					).toBe('Add<span class="govuk-visually-hidden"> Appellant statement</span>');
+					expect(
+						rows[6]
+							.querySelector('.govuk-table__cell:nth-child(4) a.govuk-link')
+							.getAttribute('href')
+					).toBe('/appeals-service/appeal-details/2/appellant-statement/add-document');
+				});
+
+				it('should render the correct row with appellant statement awaiting review', async () => {
+					const appealId = 2;
+					const appeal = {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+						documentationSummary: {
+							appellantStatement: {
+								status: 'received',
+								receivedAt: '2025-01-01T00:00:00.000Z',
+								representationStatus: 'awaiting_review'
+							}
+						}
+					};
+					nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appeal);
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+					nock('http://test/')
+						.get(
+							`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+						)
+						.reply(200, {
+							itemCount: 0
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const element = parseHtml(response.text);
+					const table = element.querySelector('#case-documentation-table');
+					expect(table.innerHTML).toMatchSnapshot();
+
+					const rows = table.querySelectorAll('.govuk-table__body .govuk-table__row');
+					expect(rows[6].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+						'Appellant statement'
+					);
+					expect(rows[6].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+						'Ready to review'
+					);
+					expect(rows[6].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
+						'1 January 2025'
+					);
+					expect(
+						rows[6].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
+					).toBe('Review<span class="govuk-visually-hidden"> Appellant statement</span>');
+					expect(
+						rows[6]
+							.querySelector('.govuk-table__cell:nth-child(4) a.govuk-link')
+							.getAttribute('href')
+					).toBe(
+						'/appeals-service/appeal-details/2/appellant-statement?backUrl=%2Fappeals-service%2Fappeal-details%2F2'
 					);
 				});
 			});

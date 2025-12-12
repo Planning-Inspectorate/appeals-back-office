@@ -539,6 +539,15 @@ function mapRequiredActionToPersonalListActionHtml(
 				`/appeals-service/appeal-details/${appealId}/proof-of-evidence/appellant`
 			)}">Review appellant proof of evidence and witnesses</a>`;
 		}
+		case 'awaitingAppellantStatement': {
+			return 'Awaiting appellant statement';
+		}
+		case 'reviewAppellantStatement': {
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/appellant-statement`
+			)}">Review appellant statement</a>`;
+		}
 		case 'awaitingEvent': {
 			return `Awaiting ${
 				[APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY].includes(

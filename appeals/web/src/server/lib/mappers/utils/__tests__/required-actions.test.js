@@ -983,6 +983,49 @@ describe('required actions', () => {
 						)
 					).toContain('updateLpaStatement');
 				});
+
+				it('should return "reviewAppellantStatement", "reviewIpComments" and "reviewLpaStatement" if all three are awaiting review', () => {
+					expect(
+						getRequiredActionsForAppeal(
+							{
+								...appealDataWithStatementsStatus,
+								appealTimetable: {
+									...appealDataWithStatementsStatus.appealTimetable,
+									ipCommentsDueDate: futureDate,
+									lpaStatementDueDate: futureDate,
+									appellantStatementDueDate: futureDate
+								},
+								documentationSummary: {
+									...appealDataWithStatementsStatus.documentationSummary,
+									appellantStatement: {
+										status: 'received',
+										representationStatus: 'awaiting_review'
+									},
+									ipComments: {
+										status: 'received',
+										counts: {
+											awaiting_review: 1,
+											valid: 0,
+											published: 0
+										}
+									},
+									lpaStatement: {
+										status: 'received',
+										receivedAt: pastDate,
+										representationStatus: 'awaiting_review'
+									}
+								}
+							},
+							'detail'
+						)
+					).toEqual(
+						expect.arrayContaining([
+							'reviewAppellantStatement',
+							'reviewIpComments',
+							'reviewLpaStatement'
+						])
+					);
+				});
 			});
 		});
 

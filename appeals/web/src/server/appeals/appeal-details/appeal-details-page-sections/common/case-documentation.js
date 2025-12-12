@@ -1,3 +1,4 @@
+import config from '#environment/config.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
@@ -34,7 +35,10 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 								: []),
 							mappedData.appeal.appellantProofOfEvidence.display.tableItem,
 							mappedData.appeal.lpaProofOfEvidence.display.tableItem,
-							...(mappedData.appeal.rule6PartyProofs?.display?.tableItems || [])
+							...(mappedData.appeal.rule6PartyProofs?.display?.tableItems || []),
+							...(config.featureFlags.featureFlagAppellantStatement
+								? [mappedData.appeal.appellantStatement.display.tableItem]
+								: [])
 					  ]
 					: []),
 				mappedData.appeal.environmentalAssessment.display.tableItem
