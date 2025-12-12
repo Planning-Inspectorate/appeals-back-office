@@ -96,6 +96,13 @@ describe('mapStatusDependentNotifications', () => {
 			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
+			bannerKey: 'appellantStatementAwaitingReview',
+			requiredAction: 'reviewAppellantStatement',
+			expectedContainedHtml:
+				'<p class="govuk-notification-banner__heading">Appellant statement awaiting review</p>',
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
 			bannerKey: 'shareFinalComments',
 			requiredAction: 'shareFinalComments',
 			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Share final comments</a>`,
