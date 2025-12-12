@@ -2,7 +2,8 @@ import {
 	allocationDetailsData,
 	appealDataFullPlanning,
 	getAppealRepsResponse,
-	lpaStatementAwaitingReview
+	lpaStatementAwaitingReview,
+	lpaStatementPublished
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
@@ -387,7 +388,7 @@ describe('redact', () => {
 	});
 
 	describe('GET /confirm', () => {
-		it('should render the CYA redaction page with expected content', async () => {
+		it('should render the CYA redaction page with expected content if LPA statement is awaiting review', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
@@ -410,6 +411,57 @@ describe('redact', () => {
 			expect(innerHTML).toContain('Redacted statement</dt>');
 			expect(innerHTML).toContain('Supporting documents</dt>');
 			expect(innerHTML).toContain('Review decision</dt>');
+			expect(innerHTML).toContain('Redact and accept statement');
+		});
+
+		it('should render the CYA redaction page with expected content if LPA statement is published', async () => {
+			nock.cleanAll();
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId,
+					appealStatus: 'final_comments'
+				});
+			nock('http://test/')
+				.get(`/appeals/${appealId}/reps?type=lpa_statement`)
+				.reply(200, {
+					...getAppealRepsResponse,
+					itemCount: 1,
+					items: [
+						{
+							...lpaStatementPublished
+						}
+					]
+				})
+				.persist();
+			nock('http://test/')
+				.get('/appeals/appeal-allocation-levels')
+				.reply(200, allocationDetailsData.levels)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/appeal-allocation-specialisms')
+				.reply(200, allocationDetailsData.specialisms)
+				.persist();
+
+			const response = await request.get(`${baseUrl}/${appealId}/lpa-statement/redact/confirm`);
+
+			expect(response.statusCode).toBe(200);
+
+			const { innerHTML } = parseHtml(response.text);
+			expect(innerHTML).toMatchSnapshot();
+
+			expect(innerHTML).toContain(
+				'<h1 class="govuk-heading-l">Check details and accept statement</h1>'
+			);
+			expect(innerHTML).toContain('Original statement</dt>');
+			expect(innerHTML).toContain('Redacted statement</dt>');
+			expect(innerHTML).not.toContain('Supporting documents</dt>');
+			expect(innerHTML).not.toContain('Review decision</dt>');
+			expect(innerHTML).not.toContain(
+				'Do you need to update the allocation level and specialisms?</dt>'
+			);
 			expect(innerHTML).toContain('Redact and accept statement');
 		});
 	});

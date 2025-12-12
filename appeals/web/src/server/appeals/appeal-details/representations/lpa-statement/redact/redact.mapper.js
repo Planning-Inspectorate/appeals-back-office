@@ -4,7 +4,10 @@ import { buttonComponent, simpleHtmlComponent, wrapComponents } from '#lib/mappe
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { newLine2LineBreak } from '#lib/string-utilities.js';
 import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
-import { REVERT_BUTTON_TEXT } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_REPRESENTATION_STATUS,
+	REVERT_BUTTON_TEXT
+} from '@pins/appeals/constants/common.js';
 import { redactInput } from '../../../representations/common/components/redact-input.js';
 import { getAttachmentList } from '../../common/document-attachment-list.js';
 
@@ -112,6 +115,8 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 		lpaStatement.originalRepresentation,
 		session?.redactLPAStatement?.redactedRepresentation
 	);
+	const isPublished = lpaStatement.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED;
+
 	/** @type {PageComponent[]} */
 	const pageComponents = [
 		{
@@ -173,97 +178,104 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 								}
 						  ]
 						: []),
-					{
-						key: { text: 'Supporting documents' },
-						value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
-						actions: {
-							items: [
-								...(lpaStatement.attachments?.length > 0
-									? [
-											{
-												text: 'Manage',
-												href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/manage-documents/${folderId}?backUrl=/lpa-statement/redact/confirm`,
-												visuallyHiddenText: 'supporting documents'
-											}
-									  ]
-									: []),
-								{
-									text: 'Add',
-									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/add-document?backUrl=/lpa-statement/redact/confirm`,
-									visuallyHiddenText: 'supporting documents'
-								}
-							]
-						}
-					},
-					{
-						key: { text: 'Review decision' },
-						value: {
-							text: shouldShowRedactedRow ? 'Redact and accept statement' : 'Accept statement'
-						},
-						actions: {
-							items: [
-								{
-									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement`,
-									text: 'Change',
-									visuallyHiddenText: 'review decision'
-								}
-							]
-						}
-					},
-					...(sessionData?.forcedAllocation
+
+					...(isPublished
 						? []
 						: [
 								{
-									key: { text: 'Do you need to update the allocation level and specialisms?' },
-									value: { text: updatingAllocation ? 'Yes' : 'No' },
+									key: { text: 'Supporting documents' },
+									value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
 									actions: {
 										items: [
+											...(lpaStatement.attachments?.length > 0
+												? [
+														{
+															text: 'Manage',
+															href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/manage-documents/${folderId}?backUrl=/lpa-statement/redact/confirm`,
+															visuallyHiddenText: 'supporting documents'
+														}
+												  ]
+												: []),
 											{
-												text: 'Change',
-												href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-check`,
-												visuallyHiddenText: 'allocation level and specialisms'
-											}
-										]
-									}
-								}
-						  ]),
-					...(sessionData?.allocationLevel && specialisms.length
-						? [
-								{
-									key: { text: 'Allocation level' },
-									value: { text: sessionData.allocationLevel },
-									actions: {
-										items: [
-											{
-												text: 'Change',
-												href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-level`,
-												visuallyHiddenText: 'allocation level'
+												text: 'Add',
+												href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/add-document?backUrl=/lpa-statement/redact/confirm`,
+												visuallyHiddenText: 'supporting documents'
 											}
 										]
 									}
 								},
 								{
-									key: { text: 'Allocation specialisms' },
+									key: { text: 'Review decision' },
 									value: {
-										html:
-											specialisms.length === 1
-												? specialisms[0]
-												: `<ul class="govuk-list govuk-list--bullet">
-												${specialisms.map((s) => `<li>${s}</li>`).join('')}
-											</ul>`
+										text: shouldShowRedactedRow ? 'Redact and accept statement' : 'Accept statement'
 									},
 									actions: {
 										items: [
 											{
+												href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement`,
 												text: 'Change',
-												href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-specialisms`,
-												visuallyHiddenText: 'allocation specialisms'
+												visuallyHiddenText: 'review decision'
 											}
 										]
 									}
-								}
-						  ]
-						: [])
+								},
+								...(sessionData?.forcedAllocation
+									? []
+									: [
+											{
+												key: {
+													text: 'Do you need to update the allocation level and specialisms?'
+												},
+												value: { text: updatingAllocation ? 'Yes' : 'No' },
+												actions: {
+													items: [
+														{
+															text: 'Change',
+															href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-check`,
+															visuallyHiddenText: 'allocation level and specialisms'
+														}
+													]
+												}
+											}
+									  ]),
+								...(sessionData?.allocationLevel && specialisms.length
+									? [
+											{
+												key: { text: 'Allocation level' },
+												value: { text: sessionData.allocationLevel },
+												actions: {
+													items: [
+														{
+															text: 'Change',
+															href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-level`,
+															visuallyHiddenText: 'allocation level'
+														}
+													]
+												}
+											},
+											{
+												key: { text: 'Allocation specialisms' },
+												value: {
+													html:
+														specialisms.length === 1
+															? specialisms[0]
+															: `<ul class="govuk-list govuk-list--bullet">
+												${specialisms.map((s) => `<li>${s}</li>`).join('')}
+											</ul>`
+												},
+												actions: {
+													items: [
+														{
+															text: 'Change',
+															href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-specialisms`,
+															visuallyHiddenText: 'allocation specialisms'
+														}
+													]
+												}
+											}
+									  ]
+									: [])
+						  ])
 				]
 			}
 		}
