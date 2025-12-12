@@ -1,4 +1,5 @@
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
+import allegedBreachDescriptionRouter from '#appeals/appeal-details/appellant-case/alleged-breach-description/alleged-breach-description.router.js';
 import contactPlanningInspectorateDateRouter from '#appeals/appeal-details/appellant-case/contact-planning-inspectorate-date/contact-planning-inspectorate-date.router.js';
 import enforcementEffectiveDateRouter from '#appeals/appeal-details/appellant-case/enforcement-effective-date/enforcement-effective-date.router.js';
 import enforcementIssueDateRouter from '#appeals/appeal-details/appellant-case/enforcement-issue-date/enforcement-issue-date.router.js';
@@ -227,7 +228,7 @@ router.use(
 
 router.use(
 	'/enforcement-notice',
-	validateAppeal,
+	validateAppealWithInclude(['appellantCase']),
 	assertUserHasPermission(permissionNames.updateCase),
 	enforcementNoticeRouter
 );
@@ -252,16 +253,23 @@ router.use(
 
 router.use(
 	'/enforcement-notice-listed-building',
-	validateAppeal,
+	validateAppealWithInclude(['appellantCase']),
 	assertUserHasPermission(permissionNames.updateCase),
 	enforcementNoticeListedBuildingRouter
 );
 
 router.use(
 	'/enforcement-reference',
-	validateAppeal,
+	validateAppealWithInclude(['appellantCase']),
 	assertUserHasPermission(permissionNames.updateCase),
 	enforcementReferenceRouter
+);
+
+router.use(
+	'/alleged-breach-description',
+	validateAppealWithInclude(['appellantCase']),
+	assertUserHasPermission(permissionNames.updateCase),
+	allegedBreachDescriptionRouter
 );
 
 router.use(

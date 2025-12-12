@@ -6,12 +6,17 @@ export const mapDescriptionOfAllegedBreach = ({
 	currentRoute,
 	userHasUpdateCase
 }) => {
+	const id = 'alleged-breach-description';
 	const hasData = appellantCaseData.enforcementNotice?.descriptionOfAllegedBreach !== null;
 	return textSummaryListItem({
-		id: 'description-of-alleged-breach',
+		id,
 		text: 'Description of the alleged breach',
 		value: appellantCaseData.enforcementNotice?.descriptionOfAllegedBreach || 'No data',
-		link: `${currentRoute}/description-of-alleged-breach/change`,
-		editable: hasData && userHasUpdateCase
+		link: `${currentRoute}/${id}/change`,
+		editable: hasData && userHasUpdateCase,
+		withShowMore: true,
+		toggleTextCollapsed: 'Show more',
+		toggleTextExpanded: 'Show less',
+		cypressDataName: id
 	});
 };
