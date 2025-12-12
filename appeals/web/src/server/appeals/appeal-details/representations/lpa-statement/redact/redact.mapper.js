@@ -4,7 +4,10 @@ import { buttonComponent, simpleHtmlComponent, wrapComponents } from '#lib/mappe
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { newLine2LineBreak } from '#lib/string-utilities.js';
 import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
-import { REVERT_BUTTON_TEXT } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_REPRESENTATION_STATUS,
+	REVERT_BUTTON_TEXT
+} from '@pins/appeals/constants/common.js';
 import { redactInput } from '../../../representations/common/components/redact-input.js';
 import { getAttachmentList } from '../../common/document-attachment-list.js';
 
@@ -112,7 +115,7 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 		lpaStatement.originalRepresentation,
 		session?.redactLPAStatement?.redactedRepresentation
 	);
-	const isPublished = lpaStatement.status.includes('published');
+	const isPublished = lpaStatement.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED;
 
 	/** @type {PageComponent[]} */
 	const pageComponents = [
