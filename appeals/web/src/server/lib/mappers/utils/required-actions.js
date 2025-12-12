@@ -15,7 +15,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
-/** @typedef {'addHorizonReference'|'awaitingEvent'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'|'progressToProofOfEvidenceAndWitnesses'|'awaitingProofOfEvidenceAndWitnesses'|'progressToInquiry'|'setupInquiry'|'addInquiryAddress'|'awaitingLpaProofOfEvidenceAndWitnesses'|'awaitingAppellantProofOfEvidenceAndWitnesses'} AppealRequiredAction */
+/** @typedef {'addHorizonReference'|'awaitingEvent'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'|'progressToProofOfEvidenceAndWitnesses'|'awaitingProofOfEvidenceAndWitnesses'|'progressToInquiry'|'setupInquiry'|'addInquiryAddress'|'awaitingLpaProofOfEvidenceAndWitnesses'|'awaitingAppellantProofOfEvidenceAndWitnesses'|'awaitingAppellantStatement'|'reviewAppellantStatement'} AppealRequiredAction */
 
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
@@ -190,32 +190,29 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				!ipCommentsDueDate ||
 				dateIsInThePast(dateISOStringToDayMonthYearHourMinute(ipCommentsDueDate));
 
-			const lpaStatementStatus = appealDetails.documentationSummary.lpaStatement?.status;
-			const lpaStatementRepresentationStatus =
-				appealDetails.documentationSummary.lpaStatement?.representationStatus;
-			const lpaStatementNotReceived =
-				!lpaStatementStatus || lpaStatementStatus === DOCUMENT_STATUS_NOT_RECEIVED;
-			const lpaStatementAwaitingReview =
-				lpaStatementRepresentationStatus &&
-				lpaStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW;
-			const lpaStatementIncomplete =
-				lpaStatementRepresentationStatus &&
-				lpaStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE;
-			const lpaStatementDueDate = appealDetails?.appealTimetable?.lpaStatementDueDate;
-			const lpaStatementDueDatePassed =
-				!lpaStatementDueDate ||
-				dateIsInThePast(dateISOStringToDayMonthYearHourMinute(lpaStatementDueDate));
+			const lpaStatement = getStatementRepresentationDetails(
+				appealDetails,
+				'lpaStatement',
+				'lpaStatementDueDate'
+			);
+			const appellantStatement = getStatementRepresentationDetails(
+				appealDetails,
+				'appellantStatement',
+				'appellantStatementDueDate'
+			);
 
 			const hasItemsToShare =
-				lpaStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.VALID ||
-				lpaStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE ||
+				lpaStatement.representationStatus === APPEAL_REPRESENTATION_STATUS.VALID ||
+				lpaStatement.representationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE ||
 				(ipCommentsCounts?.valid && ipCommentsCounts?.valid > 0);
 
 			if (
 				ipCommentsDueDatePassed &&
-				lpaStatementDueDatePassed &&
+				lpaStatement.dueDatePassed &&
+				appellantStatement.dueDatePassed &&
 				!ipCommentsAwaitingReview &&
-				!lpaStatementAwaitingReview
+				!lpaStatement.awaitingReview &&
+				!appellantStatement.awaitingReview
 			) {
 				if (hasItemsToShare) {
 					actions.push('shareIpCommentsAndLpaStatement');
@@ -236,7 +233,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 					actions.push('progressFromStatements');
 				}
 
-				if (lpaStatementIncomplete) {
+				if (lpaStatement.incomplete) {
 					actions.push('updateLpaStatement');
 				}
 			} else {
@@ -246,12 +243,19 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 					actions.push('awaitingIpComments');
 				}
 
-				if (lpaStatementNotReceived) {
+				if (lpaStatement.notReceived) {
 					actions.push('awaitingLpaStatement');
-				} else if (lpaStatementAwaitingReview) {
+				} else if (lpaStatement.awaitingReview) {
 					actions.push('reviewLpaStatement');
-				} else if (lpaStatementIncomplete) {
+				} else if (lpaStatement.incomplete) {
 					actions.push('updateLpaStatement');
+				}
+
+				// Appellant statement actions
+				if (appellantStatement.notReceived && appellantStatement.dueDate) {
+					actions.push('awaitingAppellantStatement');
+				} else if (appellantStatement.awaitingReview) {
+					actions.push('reviewAppellantStatement');
 				}
 			}
 
@@ -378,3 +382,33 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 
 	return actions;
 }
+
+/**
+ *
+ * @param {WebAppeal|PersonalListAppeal} appealDetails
+ * @param {string} statementKey
+ * @param {import('#appeals/appeal-details/timetable/timetable.mapper.js').AppealTimetableType} dueDateKey
+ * @returns
+ */
+const getStatementRepresentationDetails = (appealDetails, statementKey, dueDateKey) => {
+	const statementSummary = appealDetails.documentationSummary[statementKey];
+	const status = statementSummary?.status;
+	const representationStatus = statementSummary?.representationStatus;
+	const notReceived = !status || status === DOCUMENT_STATUS_NOT_RECEIVED;
+	const awaitingReview =
+		representationStatus && representationStatus === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW;
+	const incomplete =
+		representationStatus && representationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE;
+	const dueDate = appealDetails?.appealTimetable?.[dueDateKey];
+	const dueDatePassed = !dueDate || dateIsInThePast(dateISOStringToDayMonthYearHourMinute(dueDate));
+
+	return {
+		status,
+		representationStatus,
+		notReceived,
+		awaitingReview,
+		incomplete,
+		dueDate,
+		dueDatePassed
+	};
+};

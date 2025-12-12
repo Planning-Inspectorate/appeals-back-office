@@ -14,7 +14,7 @@ export function isRepresentationReviewRequired(representationStatus) {
 }
 
 /**
- * @typedef {'appellant-final-comments'|'lpa-final-comments'|'lpa-statement' |'appellant-proofs-evidence' |'lpa-proofs-evidence'} RepresentationType
+ * @typedef {'appellant-final-comments'|'lpa-final-comments'|'lpa-statement' |'appellant-proofs-evidence' |'lpa-proofs-evidence' | 'appellant-statement'} RepresentationType
  *
  * @param {string} currentRoute
  * @param {string|undefined} documentationStatus
@@ -56,7 +56,8 @@ export function mapRepresentationDocumentSummaryActionLink(
 		'appellant-final-comments': 'Appellant final comments',
 		'lpa-final-comments': 'LPA final comments',
 		'appellant-proofs-evidence': 'Appellant proof of evidence',
-		'lpa-proofs-evidence': 'LPA proof of evidence'
+		'lpa-proofs-evidence': 'LPA proof of evidence',
+		'appellant-statement': 'Appellant statement'
 	};
 
 	/** @type {Record<RepresentationType, string>} */
@@ -69,7 +70,8 @@ export function mapRepresentationDocumentSummaryActionLink(
 			: `${currentRoute}/proof-of-evidence/appellant/manage-documents`,
 		'lpa-proofs-evidence': reviewRequired
 			? `${currentRoute}/proof-of-evidence/lpa`
-			: `${currentRoute}/proof-of-evidence/lpa/manage-documents`
+			: `${currentRoute}/proof-of-evidence/lpa/manage-documents`,
+		'appellant-statement': `${currentRoute}/statement/appellant`
 	};
 
 	if (documentationStatus !== 'received') {
@@ -93,13 +95,15 @@ export function mapAddRepresentationSummaryActionLink(currentRoute, representati
 	/** @type {Record<string, string>} */
 	const visuallyHiddenTexts = {
 		'appellant-proofs-evidence': 'Appellant proof of evidence',
-		'lpa-proofs-evidence': 'LPA proof of evidence'
+		'lpa-proofs-evidence': 'LPA proof of evidence',
+		'appellant-statement': 'Appellant statement'
 	};
 
 	/** @type {Record<string, string>} */
 	const hrefs = {
 		'appellant-proofs-evidence': `${currentRoute}/proof-of-evidence/appellant/add-representation`,
-		'lpa-proofs-evidence': `${currentRoute}/proof-of-evidence/lpa/add-representation`
+		'lpa-proofs-evidence': `${currentRoute}/proof-of-evidence/lpa/add-representation`,
+		'appellant-statement': `${currentRoute}/statement/appellant/add-representation`
 	};
 
 	return `<a href="${addBackLinkQueryToUrl(

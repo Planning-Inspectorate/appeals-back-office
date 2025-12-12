@@ -2960,6 +2960,85 @@ export const assignedAppealsPage3 = {
 	pageSize: 5
 };
 
+export const assignedAppealsPage4 = {
+	itemCount: 1,
+	items: [
+		{
+			appealId: 28540,
+			appealReference: '6028540',
+			appealSite: {
+				addressLine1: '15 Test Road',
+				town: 'Testville',
+				postCode: 'TE1 1ST'
+			},
+			appealStatus: 'statements',
+			appealType: 'Planning appeal',
+			createdAt: '2025-03-04T14:30:30.831Z',
+			localPlanningDepartment: 'Wiltshire Council',
+			lpaQuestionnaireId: 25080,
+			documentationSummary: {
+				appellantCase: {
+					status: 'Valid',
+					dueDate: null,
+					receivedAt: '2025-03-04T14:30:30.831Z'
+				},
+				lpaQuestionnaire: {
+					status: 'received',
+					dueDate: '2024-08-09T22:59:00.000Z',
+					receivedAt: '2023-05-08T23:00:00.000Z'
+				},
+				ipComments: {
+					status: 'received',
+					counts: {
+						awaiting_review: 3,
+						valid: 2,
+						published: 0
+					}
+				},
+				lpaStatement: {
+					status: 'received',
+					receivedAt: '2025-03-04T14:30:35.101Z',
+					representationStatus: 'valid'
+				},
+				appellantStatement: {
+					status: 'received',
+					receivedAt: '2025-03-04T14:30:36.101Z',
+					representationStatus: 'awaiting_review'
+				},
+				lpaFinalComments: {
+					status: 'not_received',
+					receivedAt: null,
+					representationStatus: null
+				},
+				appellantFinalComments: {
+					status: 'not_received',
+					receivedAt: null,
+					representationStatus: null
+				}
+			},
+			dueDate: '2025-04-23T22:59:00.000Z',
+			appealTimetable: {
+				appealTimetableId: 26870,
+				lpaQuestionnaireDueDate: '2024-08-09T22:59:00.000Z',
+				caseResubmissionDueDate: null,
+				ipCommentsDueDate: '2024-09-09T22:59:00.000Z',
+				appellantStatementDueDate: '2025-04-09T22:59:00.000Z',
+				lpaStatementDueDate: '2024-09-09T22:59:00.000Z',
+				finalCommentsDueDate: '2025-04-23T22:59:00.000Z',
+				s106ObligationDueDate: '2025-04-23T22:59:00.000Z',
+				issueDeterminationDate: null
+			},
+			isParentAppeal: false,
+			isChildAppeal: false,
+			numberOfResidencesNetChange: 5
+		}
+	],
+	statuses: ['statements'],
+	page: 1,
+	pageCount: 1,
+	pageSize: 5
+};
+
 export const assignedAppealsInFinalCommentsStatus = {
 	itemCount: 1,
 	items: [
@@ -4555,6 +4634,60 @@ export const appealDataToGetRequiredActions = {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 		procedureType: APPEAL_CASE_PROCEDURE.INQUIRY
+	},
+	awaitingAppellantStatement: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealTimetable: {
+			ipCommentsDueDate: pastDate,
+			lpaStatementDueDate: pastDate,
+			appellantStatementDueDate: futureDate
+		},
+		documentationSummary: {
+			ipComments: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				counts: {
+					awaiting_review: 0,
+					valid: 0,
+					published: 0
+				}
+			},
+			lpaStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
+			},
+			appellantStatement: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				representationStatus: null
+			}
+		}
+	},
+	reviewAppellantStatement: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealTimetable: {
+			ipCommentsDueDate: pastDate,
+			lpaStatementDueDate: pastDate,
+			appellantStatementDueDate: futureDate
+		},
+		documentationSummary: {
+			ipComments: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				counts: {
+					awaiting_review: 0,
+					valid: 0,
+					published: 0
+				}
+			},
+			lpaStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
+			},
+			appellantStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			}
+		}
 	}
 };
 

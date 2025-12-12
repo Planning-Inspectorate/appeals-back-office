@@ -100,6 +100,12 @@ const validatorsMap = {
 		label: 'Proof of evidence and witnesses due date',
 		idToCompare: 'ip-comments-due-date',
 		labelToCompare: 'Interested party comments due date'
+	},
+	appellantStatementDueDate: {
+		id: 'appellant-statement-due-date',
+		label: 'Appellant statement due date',
+		idToCompare: 'lpa-questionnaire-due-date',
+		labelToCompare: 'LPA questionnaire due date'
 	}
 };
 
@@ -135,7 +141,8 @@ const getAllDateErrorExtractors = () => [
 	extractAndProcessDateErrors({ fieldNamePrefix: 'final-comments-due-date' }),
 	extractAndProcessDateErrors({ fieldNamePrefix: 'statement-of-common-ground-due-date' }),
 	extractAndProcessDateErrors({ fieldNamePrefix: 'planning-obligation-due-date' }),
-	extractAndProcessDateErrors({ fieldNamePrefix: 'proof-of-evidence-and-witnesses-due-date' })
+	extractAndProcessDateErrors({ fieldNamePrefix: 'proof-of-evidence-and-witnesses-due-date' }),
+	extractAndProcessDateErrors({ fieldNamePrefix: 'appellant-statement-due-date' })
 ];
 
 /**

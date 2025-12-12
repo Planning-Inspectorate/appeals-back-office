@@ -2,6 +2,7 @@ import { mapAppellantProofOfEvidence } from '#lib/mappers/data/appeal/submappers
 import { mapLPAProofOfEvidence } from '#lib/mappers/data/appeal/submappers/lpa-proof-of-evidence-and-witness.mapper.js';
 import { submaps as hasSubmaps } from './has.js';
 import { mapAppellantFinalComments } from './submappers/appellant-final-comments.mapper.js';
+import { mapAppellantStatement } from './submappers/appellant-statement.mapper.js';
 import { mapCostsRule6Parties } from './submappers/costs-rule-6-parties.mapper.js';
 import { mapEnvironmentalAssessment } from './submappers/environmental-assessment.mapper.js';
 import { mapFinalCommentDueDate } from './submappers/final-comment-due-date.mapper.js';
@@ -59,6 +60,7 @@ export const submaps = {
 	netResidenceChange: mapNetResidenceChange,
 	netResidenceGainOrLoss: mapNetResidenceGainOrLoss,
 	appellantProofOfEvidence: mapAppellantProofOfEvidence,
+	appellantStatement: mapAppellantStatement,
 	lpaProofOfEvidence: mapLPAProofOfEvidence,
 	horizonReference: mapHorizonReference,
 	cancelInquiry: mapCancelInquiry,

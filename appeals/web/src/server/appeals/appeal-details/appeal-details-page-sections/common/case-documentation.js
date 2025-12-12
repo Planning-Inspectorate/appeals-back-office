@@ -34,7 +34,8 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 								: []),
 							mappedData.appeal.appellantProofOfEvidence.display.tableItem,
 							mappedData.appeal.lpaProofOfEvidence.display.tableItem,
-							...(mappedData.appeal.rule6PartyProofs?.display?.tableItems || [])
+							...(mappedData.appeal.rule6PartyProofs?.display?.tableItems || []),
+							mappedData.appeal.appellantStatement.display.tableItem
 					  ]
 					: []),
 				mappedData.appeal.environmentalAssessment.display.tableItem

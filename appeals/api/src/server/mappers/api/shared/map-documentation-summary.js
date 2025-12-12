@@ -55,6 +55,10 @@ export const mapDocumentationSummary = (data) => {
 		appeal.representations?.find(
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
 		) ?? null;
+	const appellantStatement =
+		appeal.representations?.find(
+			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT
+		) ?? null;
 
 	const rule6PartyProofs =
 		appeal.representations?.filter(
@@ -154,7 +158,14 @@ export const mapDocumentationSummary = (data) => {
 					return acc;
 				},
 				/** @type {Record<string, any>} */ ({})
-			)
+			),
+			appellantStatement: {
+				status: appellantStatement ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+				receivedAt: appellantStatement?.dateCreated
+					? appellantStatement.dateCreated.toISOString()
+					: null,
+				representationStatus: appellantStatement?.status ?? null
+			}
 		})
 	};
 };
