@@ -572,6 +572,20 @@ describe('personal-list', () => {
 				expectedHtml: {
 					caseOfficer: 'Awaiting inquiry'
 				}
+			},
+			{
+				name: 'Awaiting appellant statement',
+				requiredAction: 'awaitingAppellantStatement',
+				expectedHtml: {
+					caseOfficer: 'Awaiting appellant statement'
+				}
+			},
+			{
+				name: 'Review appellant statement',
+				requiredAction: 'reviewAppellantStatement',
+				expectedHtml: {
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-statement?backUrl=%2Fappeals-service%2Fpersonal-list">Review appellant statement</a>`
+				}
 			}
 		];
 

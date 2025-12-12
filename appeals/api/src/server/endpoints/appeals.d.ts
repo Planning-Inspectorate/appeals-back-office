@@ -637,6 +637,7 @@ interface DocumentationSummary {
 	lpaProofOfEvidence?: DocumentationSummaryEntry;
 	appellantProofOfEvidence?: DocumentationSummaryEntry;
 	rule6PartyProofs?: { [serviceUserId: string]: DocumentationSummaryEntry };
+	appellantStatement?: DocumentationSummaryEntry;
 }
 
 interface DocumentationSummaryEntry {

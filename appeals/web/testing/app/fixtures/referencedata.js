@@ -4560,6 +4560,60 @@ export const appealDataToGetRequiredActions = {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 		procedureType: APPEAL_CASE_PROCEDURE.INQUIRY
+	},
+	awaitingAppellantStatement: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealTimetable: {
+			ipCommentsDueDate: pastDate,
+			lpaStatementDueDate: pastDate,
+			appellantStatementDueDate: futureDate
+		},
+		documentationSummary: {
+			ipComments: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				counts: {
+					awaiting_review: 0,
+					valid: 0,
+					published: 0
+				}
+			},
+			lpaStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
+			},
+			appellantStatement: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				representationStatus: null
+			}
+		}
+	},
+	reviewAppellantStatement: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealTimetable: {
+			ipCommentsDueDate: pastDate,
+			lpaStatementDueDate: pastDate,
+			appellantStatementDueDate: futureDate
+		},
+		documentationSummary: {
+			ipComments: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				counts: {
+					awaiting_review: 0,
+					valid: 0,
+					published: 0
+				}
+			},
+			lpaStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
+			},
+			appellantStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			}
+		}
 	}
 };
 
