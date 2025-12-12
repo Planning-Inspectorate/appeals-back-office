@@ -7,6 +7,7 @@ import { DocumentationSectionPage } from '../../page_objects/caseDetails/documen
 import { InquirySectionPage } from '../../page_objects/caseDetails/inquirySectionPage';
 import { OverviewSectionPage } from '../../page_objects/caseDetails/overviewSectionPage.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
 import { ContactDetailsPage } from '../../page_objects/contactDetailsPage.js';
 import { CYASection } from '../../page_objects/cyaSection.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
@@ -24,6 +25,7 @@ const cyaSection = new CYASection();
 const documentationSectionPage = new DocumentationSectionPage();
 const contactsSectionPage = new ContactsSectionPage();
 const contactDetailsPage = new ContactDetailsPage();
+const caseHistoryPage = new CaseHistoryPage();
 const currentDate = new Date();
 
 const previousInquiryAddress = {
@@ -211,7 +213,7 @@ it('Can update inquiry date', () => {
 
 			inquirySectionPage.updateInquiry();
 
-			const { date } = formatDateAndTime(newInquiryDate);
+			const { date, shortDate } = formatDateAndTime(newInquiryDate);
 			cy.log(`** new date - `, date);
 
 			// check success banner
@@ -221,6 +223,10 @@ it('Can update inquiry date', () => {
 			inquirySectionPage.verifyFieldsUpdated([
 				{ field: inquirySectionPage.inquirySectionFields.date, value: date }
 			]);
+
+			// check case history
+			caseDetailsPage.clickViewCaseHistory();
+			caseHistoryPage.verifyCaseHistoryValue(`Inquiry date updated to ${shortDate}`);
 		});
 	});
 });
@@ -254,6 +260,10 @@ it('Can update inquiry time', () => {
 		inquirySectionPage.verifyFieldsUpdated([
 			{ field: inquirySectionPage.inquirySectionFields.time, value: time }
 		]);
+
+		// check case history
+		caseDetailsPage.clickViewCaseHistory();
+		caseHistoryPage.verifyCaseHistoryValue(`Inquiry time updated to ${time}`);
 	});
 });
 
@@ -756,7 +766,7 @@ it('should show business day validation errors for all timetable fields', () => 
 	});
 });
 
-it.only('should progress to evidence stage with no statements or IP comments', () => {
+it('should progress to evidence stage with no statements or IP comments', () => {
 	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseObj);

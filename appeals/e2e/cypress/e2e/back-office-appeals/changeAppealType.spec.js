@@ -6,6 +6,7 @@ import { AllCases } from '../../page_objects/allCases.js';
 import { Page } from '../../page_objects/basePage.js';
 import { AppellantCasePage } from '../../page_objects/caseDetails/appellantCasePage.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
+import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 
@@ -13,6 +14,7 @@ const dateTimeSection = new DateTimeSection();
 const basePage = new Page();
 const caseDetailsPage = new CaseDetailsPage();
 const appellantCasePage = new AppellantCasePage();
+const caseHistoryPage = new CaseHistoryPage();
 const allCases = new AllCases();
 
 let appeal;
@@ -163,7 +165,7 @@ describe('Case history', () => {
 
 			//case history
 			caseDetailsPage.clickViewCaseHistory();
-			caseDetailsPage.verifyTableCellTextCaseHistory('Appeal type updated to Householder');
+			caseHistoryPage.verifyCaseHistoryValue('Appeal type updated to Householder');
 		});
 	});
 
@@ -178,9 +180,7 @@ describe('Case history', () => {
 
 			//case history
 			caseDetailsPage.clickViewCaseHistory();
-			caseDetailsPage.verifyTableCellTextCaseHistory(
-				'Appeal reviewed as invalid: wrong appeal type'
-			);
+			caseHistoryPage.verifyCaseHistoryValue('Appeal reviewed as invalid: wrong appeal type');
 		});
 	});
 });

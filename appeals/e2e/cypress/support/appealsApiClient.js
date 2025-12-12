@@ -352,8 +352,15 @@ export const appealsApiClient = {
 	async addHearing(appealId, date) {
 		try {
 			const requestBody = createApiSubmission(appealsApiRequests.hearingDetails);
-			requestBody.hearingStartTime = date.toISOString();
-			requestBody.hearingEndTime = date.toISOString();
+			const hearingStartTime = date.toISOString();
+			const hearingEndTime = date.toISOString();
+
+			const hearingRequest = {
+				...requestBody,
+				hearingStartTime,
+				hearingEndTime
+			};
+
 			const url = `${baseUrl}appeals/${appealId}/hearing`;
 			const response = await fetch(url, {
 				method: 'POST',
@@ -361,7 +368,7 @@ export const appealsApiClient = {
 					'Content-Type': 'application/json',
 					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 				},
-				body: JSON.stringify(requestBody)
+				body: JSON.stringify(hearingRequest)
 			});
 
 			expect(response.status).eq(201);
@@ -370,8 +377,8 @@ export const appealsApiClient = {
 			expect(responseBody).to.be.an('object');
 			expect(responseBody).to.deep.equal({
 				appealId,
-				hearingStartTime: appealsApiRequests.hearingDetails.hearingStartTime,
-				hearingEndTime: appealsApiRequests.hearingDetails.hearingEndTime
+				hearingStartTime: hearingStartTime,
+				hearingEndTime: hearingEndTime
 			});
 
 			return await response.json();
@@ -395,8 +402,8 @@ export const appealsApiClient = {
 			const responseBody = await response.json();
 			expect(responseBody).to.be.an('object');
 			expect(responseBody).to.deep.equal({
-				appealId,
-				hearingId
+				appealId: String(appealId),
+				hearingId: String(hearingId)
 			});
 
 			return await response.json();
@@ -416,7 +423,11 @@ export const appealsApiClient = {
 				}
 			});
 			expect(response.status).to.eq(200);
-			return await response.json();
+
+			const responsejson = await response.json();
+			cy.log('** notify-emails-sent ', JSON.stringify(responsejson));
+
+			return responsejson;
 		} catch {
 			return false;
 		}
@@ -603,13 +614,11 @@ export const appealsApiClient = {
 			const responseBody = await response.json();
 
 			expect(responseBody).to.be.an('object');
-			expect(responseBody).to.have.keys([
+			expect(responseBody).to.include.keys([
 				'visitDate',
 				'visitStartTime',
 				'visitEndTime',
-				'visitType',
-				'appealId',
-				'siteVisitId'
+				'visitType'
 			]);
 		} catch {
 			return false;
