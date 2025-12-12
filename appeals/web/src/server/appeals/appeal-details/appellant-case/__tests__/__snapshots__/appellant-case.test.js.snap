@@ -2515,8 +2515,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <dl class="govuk-summary-list" id="grounds-and-facts">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Description of the alleged breach</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/description-of-alleged-breach/change"
-                                    data-cy="change-description-of-alleged-breach">Change<span class="govuk-visually-hidden"> Description of the alleged breach (3. Grounds and facts)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/alleged-breach-description/change"
+                                    data-cy="alleged-breach-description">Change<span class="govuk-visually-hidden"> Description of the alleged breach (3. Grounds and facts)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row grounds-for-appeal"><dt class="govuk-summary-list__key"> Grounds of appeal</dt>
@@ -2865,8 +2865,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <dl class="govuk-summary-list" id="grounds-and-facts">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Description of the alleged breach</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/description-of-alleged-breach/change"
-                                    data-cy="change-description-of-alleged-breach">Change<span class="govuk-visually-hidden"> Description of the alleged breach (3. Grounds and facts)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/alleged-breach-description/change"
+                                    data-cy="alleged-breach-description">Change<span class="govuk-visually-hidden"> Description of the alleged breach (3. Grounds and facts)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row grounds-for-appeal"><dt class="govuk-summary-list__key"> Grounds of appeal</dt>
