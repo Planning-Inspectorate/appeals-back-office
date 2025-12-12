@@ -218,8 +218,8 @@ describe('Start case', () => {
 
 				// Set exact time and date format for assertions
 				const expectedDateTime = formatDateAndTime(date);
-				cyaSection.verifyPreviewEmail('appellant', true, expectedDateTime);
-				cyaSection.verifyPreviewEmail('lpa', true, expectedDateTime);
+				cyaSection.verifyPreviewEmail('appellant', true, { date: expectedDateTime.date });
+				cyaSection.verifyPreviewEmail('lpa', true, { date: expectedDateTime.date });
 				caseDetailsPage.clickButtonByText('Start case');
 
 				caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
