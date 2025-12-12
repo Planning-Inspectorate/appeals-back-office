@@ -1,62 +1,18 @@
-import {
-	dateISOStringToDayMonthYearHourMinute,
-	dateISOStringToDisplayDate,
-	dateIsInThePast
-} from '#lib/dates.js';
 import { documentationFolderTableItem } from '#lib/mappers/index.js';
 import { mapRepresentationDocumentSummaryActionLink } from '#lib/representation-utilities.js';
+import { statementReceivedText, statementStatusText } from '../common.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapLpaStatement = ({ appealDetails, currentRoute, request }) => {
 	const { status, representationStatus, isRedacted } =
 		appealDetails.documentationSummary?.lpaStatement ?? {};
 
-	const statusText = (() => {
-		if (!appealDetails.startedAt) {
-			return 'Awaiting start date';
-		}
+	const statusText = statementStatusText(appealDetails, status, representationStatus, isRedacted);
 
-		if (status === 'not_received') {
-			return appealDetails.appealTimetable?.lpaStatementDueDate &&
-				dateIsInThePast(
-					dateISOStringToDayMonthYearHourMinute(appealDetails.appealTimetable.lpaStatementDueDate)
-				)
-				? 'Overdue'
-				: 'Awaiting statement';
-		}
-
-		switch (representationStatus?.toLowerCase()) {
-			case 'awaiting_review':
-				return 'Ready to review';
-			case 'valid':
-				return isRedacted ? 'Redacted and accepted' : 'Accepted';
-			case 'incomplete':
-				return 'Incomplete';
-			case 'published':
-				return 'Shared';
-			default:
-				return '';
-		}
-	})();
-
-	const receivedText = (() => {
-		if (!appealDetails.startedAt) {
-			return 'Not applicable';
-		}
-
-		if (appealDetails.documentationSummary?.lpaStatement?.status === 'not_received') {
-			return `Due by ${dateISOStringToDisplayDate(
-				appealDetails.appealTimetable?.lpaStatementDueDate
-			)}`;
-		}
-
-		const receivedAt =
-			appealDetails.documentationSummary?.lpaStatement?.receivedAt instanceof Date
-				? appealDetails.documentationSummary.lpaStatement.receivedAt.toDateString()
-				: appealDetails.documentationSummary.lpaStatement?.receivedAt;
-
-		return dateISOStringToDisplayDate(receivedAt);
-	})();
+	const receivedText = statementReceivedText(
+		appealDetails,
+		appealDetails?.documentationSummary?.lpaStatement
+	);
 
 	return documentationFolderTableItem({
 		id: 'lpa-statement',
