@@ -1,11 +1,12 @@
 import config from '#environment/config.js';
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { documentationFolderTableItem } from '#lib/mappers/index.js';
+import { mapRepresentationDocumentSummaryActionLink } from '#lib/representation-utilities.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import { statementReceivedText, statementStatusText } from '../common.js';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapRule6PartyStatements = ({ appealDetails }) => {
+export const mapRule6PartyStatements = ({ appealDetails, currentRoute, request }) => {
 	const shouldBeDisplayed =
 		config.featureFlags.featureFlagRule6Parties &&
 		appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase();
@@ -15,24 +16,41 @@ export const mapRule6PartyStatements = ({ appealDetails }) => {
 		return { id: 'rule-6-party-statements', display: {} };
 	}
 
-	const receivedText = appealDetails.appealTimetable?.lpaStatementDueDate
-		? `Due by ${dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaStatementDueDate)}`
-		: 'Not applicable';
-
 	return {
 		id: 'rule-6-party-statements',
 		display: {
 			tableItems: rule6Parties
-				.map((/** @type {Record<string, any>} */ rule6Party, i) => {
+				.map((/** @type {Record<string, any>} */ rule6Party) => {
 					const id = `rule-6-party-statement-${rule6Party.id}`;
 					const text = `${rule6Party.serviceUser.organisationName} statement`;
+					const statement =
+						appealDetails.documentationSummary?.rule6PartyStatements?.[rule6Party.serviceUserId];
+
+					const { status, representationStatus, isRedacted } = statement ?? {};
+
+					const statusText = statementStatusText(
+						appealDetails,
+						status,
+						representationStatus,
+						isRedacted
+					);
+					const receivedText = statementReceivedText(appealDetails, statement);
 
 					return documentationFolderTableItem({
 						id,
 						text,
-						statusText: 'Not received',
+						statusText,
 						receivedText,
-						actionHtml: `<a href="#" class="govuk-link" data-cy="add-rule-6-party-statement-${i}">Add</a>`
+						actionHtml: mapRepresentationDocumentSummaryActionLink(
+							currentRoute,
+							appealDetails?.documentationSummary?.rule6PartyStatements?.[rule6Party.serviceUserId]
+								?.status,
+							appealDetails?.documentationSummary?.rule6PartyStatements?.[rule6Party.serviceUserId]
+								?.representationStatus,
+							'rule-6-party-statement',
+							request,
+							{ id: rule6Party.id, serviceUser: rule6Party.serviceUser }
+						)
 					}).display.tableItem;
 				})
 				.filter(isDefined)
