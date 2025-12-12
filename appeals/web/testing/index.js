@@ -26,7 +26,7 @@ let sessionId = 1;
  */
 export const createTestEnvironment = ({
 	authenticated = true,
-	groups = ['appeals_case_officer', 'appeals_inspector']
+	groups = ['appeals_case_officer', 'appeals_inspector', 'dev']
 } = {}) => {
 	const testApp = express();
 	const getSessionID = () => sessionId;

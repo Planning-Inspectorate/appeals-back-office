@@ -1,5 +1,8 @@
+import { SYSTEM_TEST_LPAS } from '#lib/constants.js';
 import { areIdParamsValid } from '#lib/validators/id-param.validator.js';
 import { getAppealDetailsFromId } from './appeal-details.service.js';
+
+/** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 
 /**
  * @deprecated too inefficient, use validateAppealWithInclude
@@ -18,6 +21,10 @@ export const validateAppeal = async (req, res, next) => {
 		const appeal = await getAppealDetailsFromId(req.apiClient, appealId || caseId, undefined);
 		if (!appeal) {
 			return res.status(404).render('app/404.njk');
+		}
+		const checkTestAppealAccessResult = checkTestAppealAccess(appeal.lpaCode || '', req.session);
+		if (!checkTestAppealAccessResult) {
+			return res.status(403).render('app/403.njk');
 		}
 		req.currentAppeal = appeal;
 		next();
@@ -52,6 +59,10 @@ export const validateAppealWithInclude =
 			if (!appeal) {
 				return res.status(404).render('app/404.njk');
 			}
+			const checkTestAppealAccessResult = checkTestAppealAccess(appeal.lpaCode || '', req.session);
+			if (!checkTestAppealAccessResult) {
+				return res.status(403).render('app/403.njk');
+			}
 			req.currentAppeal = appeal;
 			next();
 		} catch (/** @type {any} */ error) {
@@ -63,3 +74,15 @@ export const validateAppealWithInclude =
 			}
 		}
 	};
+
+/**
+ * @param {string} lpaCode
+ * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ */
+const checkTestAppealAccess = (lpaCode, session) => {
+	if (!SYSTEM_TEST_LPAS.includes(lpaCode)) {
+		return true;
+	}
+
+	return session.permissions?.viewTestAppeals;
+};

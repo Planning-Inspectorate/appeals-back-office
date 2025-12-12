@@ -1,6 +1,7 @@
 import { getTeamList } from '#appeals/appeal-details/update-case-team/update-case-team.service.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import config from '#environment/config.js';
+import { SYSTEM_TEST_LPAS } from '#lib/constants.js';
 import logger from '#lib/logger.js';
 import { mapPagination } from '#lib/mappers/index.js';
 import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
@@ -51,6 +52,23 @@ export const viewNationalList = async (request, response) => {
 		procedurePreferenceRequest
 	);
 
+	let effectiveLocalPlanningAuthorityFilter = localPlanningAuthorityFilter;
+	let excludedLpaCodes;
+
+	if (!session.permissions?.viewTestAppeals) {
+		excludedLpaCodes = SYSTEM_TEST_LPAS.join(',');
+
+		if (localPlanningAuthorityFilter) {
+			const filteredLpas = localPlanningAuthorityFilter
+				.split(',')
+				.map((lpa) => lpa.trim())
+				.filter((lpa) => lpa && !SYSTEM_TEST_LPAS.includes(lpa));
+
+			effectiveLocalPlanningAuthorityFilter =
+				filteredLpas.length > 0 ? filteredLpas.join(',') : undefined;
+		}
+	}
+
 	if (searchTerm && searchTerm.length && (searchTerm.length === 1 || searchTerm.length > 50)) {
 		searchTerm = '';
 		searchTermError =
@@ -67,7 +85,7 @@ export const viewNationalList = async (request, response) => {
 		searchTerm,
 		appealStatusFilter,
 		inspectorStatusFilter,
-		localPlanningAuthorityFilter,
+		effectiveLocalPlanningAuthorityFilter,
 		caseOfficerFilter,
 		inspectorFilter,
 		greenBeltFilter,
@@ -76,7 +94,8 @@ export const viewNationalList = async (request, response) => {
 		appealProcedureFilter,
 		appellantProcedurePreferenceFilter,
 		paginationParameters.pageNumber,
-		paginationParameters.pageSize
+		paginationParameters.pageSize,
+		excludedLpaCodes
 	).catch((error) => logger.error(error));
 
 	if (!appeals) {

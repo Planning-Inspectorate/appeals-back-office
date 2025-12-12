@@ -15,7 +15,8 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
  * @param {string} searchTerm
  * @param {string} status
  * @param {string} hasInspector
- * @param {string} lpaCode
+ * @param {string[]|null} lpaCodes
+ * @param {string[]|null} excludedLpaCodes
  * @param {number} inspectorId
  * @param {number} caseOfficerId
  * @param {string} padsInspectorId
@@ -31,7 +32,8 @@ const getAllAppeals = async (
 	searchTerm,
 	status,
 	hasInspector,
-	lpaCode,
+	lpaCodes,
+	excludedLpaCodes,
 	inspectorId,
 	caseOfficerId,
 	padsInspectorId,
@@ -56,7 +58,8 @@ const getAllAppeals = async (
 		searchTerm,
 		status,
 		hasInspector,
-		lpaCode,
+		lpaCodes,
+		excludedLpaCodes,
 		inspectorId,
 		caseOfficerId,
 		padsInspectorId,
@@ -109,7 +112,8 @@ const getAllAppeals = async (
  * @param {string} searchTerm
  * @param {string} status
  * @param {string} hasInspector
- * @param {string} lpaCode
+ * @param {string[]|null} lpaCodes
+ * @param {string[]|null} excludedLpaCodes
  * @param {number} inspectorId
  * @param {number} caseOfficerId
  * @param {string} padsInspectorId
@@ -123,7 +127,8 @@ const getAllAppealsCount = async (
 	searchTerm,
 	status,
 	hasInspector,
-	lpaCode,
+	lpaCodes,
+	excludedLpaCodes,
 	inspectorId,
 	caseOfficerId,
 	padsInspectorId,
@@ -137,7 +142,8 @@ const getAllAppealsCount = async (
 		searchTerm,
 		status,
 		hasInspector,
-		lpaCode,
+		lpaCodes,
+		excludedLpaCodes,
 		inspectorId,
 		caseOfficerId,
 		padsInspectorId,
@@ -157,7 +163,8 @@ const getAllAppealsCount = async (
  * @param {string} searchTerm
  * @param {string} status
  * @param {string} hasInspector
- * @param {string} lpaCode
+ * @param {string[]|null} lpaCodes
+ * @param {string[]|null} excludedLpaCodes
  * @param {number} inspectorId
  * @param {number} caseOfficerId
  * @param {string} padsInspectorId
@@ -171,7 +178,8 @@ const getAppealsWithoutIncludes = async (
 	searchTerm,
 	status,
 	hasInspector,
-	lpaCode,
+	lpaCodes,
+	excludedLpaCodes,
 	inspectorId,
 	caseOfficerId,
 	padsInspectorId,
@@ -185,7 +193,8 @@ const getAppealsWithoutIncludes = async (
 		searchTerm,
 		status,
 		hasInspector,
-		lpaCode,
+		lpaCodes,
+		excludedLpaCodes,
 		inspectorId,
 		caseOfficerId,
 		padsInspectorId,
@@ -203,7 +212,8 @@ const getAppealsWithoutIncludes = async (
  * @param {string} searchTerm
  * @param {string} status
  * @param {string} hasInspector
- * @param {string} lpaCode
+ * @param {string[]|null} lpaCodes
+ * @param {string[]|null} excludedLpaCodes
  * @param {number} inspectorId
  * @param {number} caseOfficerId
  * @param {string} padsInspectorId
@@ -217,7 +227,8 @@ const buildAllAppealsWhereClause = (
 	searchTerm,
 	status,
 	hasInspector,
-	lpaCode,
+	lpaCodes,
+	excludedLpaCodes,
 	inspectorId,
 	caseOfficerId,
 	padsInspectorId,
@@ -288,11 +299,18 @@ const buildAllAppealsWhereClause = (
 				isGreenBelt: true
 			}
 		}),
-		...(!!lpaCode && {
-			lpa: {
-				lpaCode
-			}
-		}),
+		...(lpaCodes &&
+			lpaCodes.length > 0 && {
+				lpa: {
+					lpaCode: lpaCodes.length === 1 ? lpaCodes[0] : { in: lpaCodes }
+				}
+			}),
+		...(excludedLpaCodes &&
+			excludedLpaCodes.length > 0 && {
+				lpa: {
+					lpaCode: { notIn: excludedLpaCodes }
+				}
+			}),
 		...(!!inspectorId && {
 			inspectorUserId: inspectorId
 		}),

@@ -59,7 +59,8 @@ const groupIds = [
 	allowedGroups.customerServiceGroupId,
 	allowedGroups.legalGroupId,
 	allowedGroups.padsGroupId,
-	allowedGroups.readerGroupId
+	allowedGroups.readerGroupId,
+	allowedGroups.devTeamGroupId
 ];
 
 router.use(assertGroupAccess(...groupIds));

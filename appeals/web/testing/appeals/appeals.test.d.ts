@@ -4,4 +4,5 @@ export type AppealGroupId =
 	| 'pads'
 	| 'legal'
 	| 'custservice'
-	| 'readonly';
+	| 'readonly'
+	| 'dev';

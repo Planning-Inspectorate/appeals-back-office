@@ -34,3 +34,5 @@ export const MONTH_SET = MONTH_LIST.reduce(
 	},
 	{}
 );
+
+export const SYSTEM_TEST_LPAS = ['Q9999', 'Q1111'];
