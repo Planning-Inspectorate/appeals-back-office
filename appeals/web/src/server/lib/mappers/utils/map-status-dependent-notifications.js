@@ -191,6 +191,14 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 					`/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement`
 				)}" data-cy="banner-review-lpa-statement">Review <span class="govuk-visually-hidden">LPA statement</span></a></p>`
 			});
+		case 'appellantStatementAwaitingReview':
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<p class="govuk-notification-banner__heading">Appellant statement awaiting review</p><p><a class="govuk-notification-banner__link" href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/appellant-statement`
+				)}" data-cy="banner-review-appellant-statement">Review <span class="govuk-visually-hidden">Appellant statement</span></a></p>`
+			});
 		case 'shareFinalComments':
 			return createNotificationBanner({
 				bannerDefinitionKey,

@@ -1180,6 +1180,12 @@ describe('appeal-details', () => {
 							}
 						});
 					nock('http://test/').get(`/appeals/2/case-notes`).reply(200, caseNotes);
+					nock('http://test/').get(`/appeals/2/reps/count?status=awaiting_review`).reply(200, {
+						statement: 0,
+						comment: 1,
+						lpa_final_comment: 0,
+						appellant_final_comment: 0
+					});
 
 					const caseDetailsResponse = await request.get(`${baseUrl}/2`);
 
@@ -1201,6 +1207,135 @@ describe('appeal-details', () => {
 					expect(unprettifiedElementHtml).toContain(
 						'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/interested-party-comments?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="banner-review-ip-comments">Review <span class="govuk-visually-hidden">interested party comments</span></a></p>'
 					);
+				});
+
+				it('should render an important notification banner when the appeal has unreviewed appellant statement', async () => {
+					nock('http://test/')
+						.get('/appeals/2/reps?type=appellant_final_comment,lpa_final_comment')
+						.reply(200, {
+							itemCount: 2,
+							items: [
+								...appellantFinalCommentsAwaitingReview.items,
+								...lpaFinalCommentsAwaitingReview.items
+							]
+						});
+					nock('http://test/')
+						.get('/appeals/2?include=all')
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId: 2,
+							appealStatus: 'statements',
+							appealTimetable: {
+								...appealDataFullPlanning.appealTimetable,
+								ipCommentsDueDate: pastDate,
+								lpaStatementDueDate: pastDate,
+								appellantStatementDueDate: futureDate
+							},
+							documentationSummary: {
+								...appealDataFullPlanning.documentationSummary,
+								lpaStatement: {
+									status: 'received',
+									representationStatus: 'valid'
+								},
+								appellantStatement: {
+									status: 'received',
+									representationStatus: 'awaiting_review'
+								}
+							}
+						});
+					nock('http://test/').get(`/appeals/2/case-notes`).reply(200, caseNotes);
+					nock('http://test/').get(`/appeals/2/reps/count?status=awaiting_review`).reply(200, {
+						statement: 0,
+						comment: 0,
+						lpa_final_comment: 0,
+						appellant_final_comment: 0
+					});
+
+					const caseDetailsResponse = await request.get(`${baseUrl}/2`);
+
+					const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+						rootElement: notificationBannerElement
+					}).innerHTML;
+
+					expect(notificationBannerElementHTML).toMatchSnapshot();
+
+					const unprettifiedElementHtml = parseHtml(caseDetailsResponse.text, {
+						rootElement: notificationBannerElement,
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(unprettifiedElementHtml).toContain('Important</h3>');
+					expect(unprettifiedElementHtml).toContain(
+						'<p class="govuk-notification-banner__heading">Appellant statement awaiting review</p>'
+					);
+					expect(unprettifiedElementHtml).toContain(
+						'<p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/appellant-statement?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="banner-review-appellant-statement">Review <span class="govuk-visually-hidden">Appellant statement</span></a></p>'
+					);
+				});
+
+				it('should render multiple stacked notification banners when LPA statement, appellant statement, and IP comments are all awaiting review', async () => {
+					nock('http://test/')
+						.get('/appeals/2/reps?type=appellant_final_comment,lpa_final_comment')
+						.reply(200, {
+							itemCount: 2,
+							items: [
+								...appellantFinalCommentsAwaitingReview.items,
+								...lpaFinalCommentsAwaitingReview.items
+							]
+						});
+					nock('http://test/')
+						.get('/appeals/2?include=all')
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId: 2,
+							appealStatus: 'statements',
+							appealTimetable: {
+								...appealDataFullPlanning.appealTimetable,
+								ipCommentsDueDate: futureDate,
+								lpaStatementDueDate: futureDate,
+								appellantStatementDueDate: futureDate
+							},
+							documentationSummary: {
+								...appealDataFullPlanning.documentationSummary,
+								ipComments: {
+									status: 'received',
+									counts: {
+										awaiting_review: 1,
+										valid: 0,
+										published: 0
+									}
+								},
+								lpaStatement: {
+									status: 'received',
+									representationStatus: 'awaiting_review'
+								},
+								appellantStatement: {
+									status: 'received',
+									representationStatus: 'awaiting_review'
+								}
+							}
+						});
+					nock('http://test/').get(`/appeals/2/case-notes`).reply(200, caseNotes);
+					nock('http://test/').get(`/appeals/2/reps/count?status=awaiting_review`).reply(200, {
+						statement: 2,
+						comment: 1,
+						lpa_final_comment: 0,
+						appellant_final_comment: 0
+					});
+
+					const caseDetailsResponse = await request.get(`${baseUrl}/2`);
+
+					const unprettifiedElementHtml = parseHtml(caseDetailsResponse.text, {
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(unprettifiedElementHtml).toContain('LPA statement awaiting review');
+					expect(unprettifiedElementHtml).toContain('Appellant statement awaiting review');
+					expect(unprettifiedElementHtml).toContain('Interested party comments awaiting review');
+
+					expect(unprettifiedElementHtml).toContain('data-cy="banner-review-lpa-statement"');
+					expect(unprettifiedElementHtml).toContain('data-cy="banner-review-appellant-statement"');
+					expect(unprettifiedElementHtml).toContain('data-cy="banner-review-ip-comments"');
 				});
 
 				it('should render a "Appeal ready for validation" important notification banner with a link to validate the appeal when the appeal status is "validation"', async () => {

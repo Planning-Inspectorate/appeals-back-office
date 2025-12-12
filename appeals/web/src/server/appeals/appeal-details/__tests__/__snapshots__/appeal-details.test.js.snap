@@ -5412,6 +5412,22 @@ data-index="0">
 </div>"
 `;
 
+exports[`appeal-details GET /:appealId Notification banners Important banners should render an important notification banner when the appeal has unreviewed appellant statement 1`] = `
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="0">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Appellant statement awaiting review</p>
+        <p><a class="govuk-notification-banner__link" href="/appeals-service/appeal-details/2/appellant-statement?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+            data-cy="banner-review-appellant-statement">Review <span class="govuk-visually-hidden">Appellant statement</span></a>
+        </p>
+    </div>
+</div>"
+`;
+
 exports[`appeal-details GET /:appealId Notification banners Success banners should render a "Address added" success notification banner when an inspector/3rd party neighbouring site was added 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
