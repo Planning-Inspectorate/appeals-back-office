@@ -209,7 +209,7 @@ describe('change rule 6 party', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a name');
+			expect(errorSummaryHtml).toContain('Enter a Rule 6 party name');
 		});
 
 		it('should return 400 on name over 300 characters with appropriate error message', async () => {
@@ -227,7 +227,24 @@ describe('change rule 6 party', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Name must be 300 characters or less');
+			expect(errorSummaryHtml).toContain('The name must be between 3 and 300 characters');
+		});
+		it('should return 400 on name under 3 characters with appropriate error message', async () => {
+			const response = await request
+				.post(`${baseUrl}/${appealId}/rule-6-parties/change/1/name`)
+				.send({
+					organisationName: 'T'.repeat(2)
+				});
+
+			expect(response.statusCode).toBe(400);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('The name must be between 3 and 300 characters');
 		});
 	});
 
@@ -378,7 +395,25 @@ describe('change rule 6 party', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter an email address');
+			expect(errorSummaryHtml).toContain('Enter a Rule 6 party email address<');
+		});
+
+		it('should return 400 on too long email with appropriate error message', async () => {
+			const response = await request
+				.post(`${baseUrl}/${appealId}/rule-6-parties/change/1/email`)
+				.send({
+					email: `${'a'.repeat(300)}@example.com`
+				});
+
+			expect(response.statusCode).toBe(400);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Email must be 254 characters or less');
 		});
 
 		it('should return 400 on invalid email address with appropriate error message', async () => {
