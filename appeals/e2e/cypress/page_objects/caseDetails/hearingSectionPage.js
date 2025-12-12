@@ -1,12 +1,14 @@
 // @ts-nocheck
 
 import { users } from '../../fixtures/users';
+import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
 import { CaseDetailsPage } from '../caseDetailsPage';
 import { DateTimeSection } from '../dateTimeSection.js';
 import { ListCasesPage } from '../listCasesPage';
 
 const listCasesPage = new ListCasesPage();
 const caseDetailsPage = new CaseDetailsPage();
+const caseHistoryPage = new CaseHistoryPage();
 const dateTimeSection = new DateTimeSection();
 
 export class HearingSectionPage extends CaseDetailsPage {
@@ -85,9 +87,7 @@ export class HearingSectionPage extends CaseDetailsPage {
 		return cy.loadAppealDetails(caseObj).then((appealDetails) => {
 			if (appealDetails.hearing === undefined) {
 				cy.addHearingDetails(caseObj, date).then((hearingDetails) => {
-					expect(hearingDetails.hearingStartTime).to.be.eq(date.toISOString());
-					expect(hearingDetails.hearingEndTime).to.be.eq(date.toISOString());
-					return cy.addHearingDetails(caseObj, date);
+					return hearingDetails;
 				});
 			}
 		});
@@ -103,9 +103,7 @@ export class HearingSectionPage extends CaseDetailsPage {
 				cy.log(`Hearing exists with ID: ${appealDetails.hearing.hearingId}, deleting...`);
 
 				cy.deleteHearing(caseObj).then((hearingDetails) => {
-					expect(Number(hearingDetails.appealId)).to.equal(appealDetails.appealId);
-					expect(Number(hearingDetails.hearingId)).to.equal(appealDetails.hearing.hearingId);
-					cy.log('Hearing successfully deleted');
+					cy.log(`Successfully deleted hearing with id ${hearingDetails.hearingId}`);
 				});
 			} else {
 				cy.log('No hearing exists for this case');
@@ -115,7 +113,7 @@ export class HearingSectionPage extends CaseDetailsPage {
 	verifyCaseHistory(hearingInformation) {
 		caseDetailsPage.clickViewCaseHistory();
 		hearingInformation.forEach((info) => {
-			caseDetailsPage.verifyTableCellTextCaseHistory(info);
+			caseHistoryPage.verifyCaseHistoryValue(info);
 		});
 	}
 

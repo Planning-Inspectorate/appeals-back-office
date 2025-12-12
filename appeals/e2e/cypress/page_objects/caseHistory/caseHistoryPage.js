@@ -48,4 +48,21 @@ export class CaseHistoryPage extends Page {
 		});
 		caseDetailsPage.clickBackLink();
 	}
+
+	verifyCaseHistoryValue(value, checkIncluded = true) {
+		const expectedText = value.toLocaleLowerCase();
+
+		this.basePageElements.tableCell(value).then(($elem) => {
+			cy.wrap($elem)
+				.invoke('text')
+				.then((t) => {
+					const text = t.trim().toLocaleLowerCase();
+					const assertionBase = checkIncluded ? expect(text).to : expect(text).to.not;
+					const errorMessage = checkIncluded
+						? `${value} is not included`
+						: `${value} should not be included`;
+					assertionBase.include(expectedText, errorMessage);
+				});
+		});
+	}
 }
