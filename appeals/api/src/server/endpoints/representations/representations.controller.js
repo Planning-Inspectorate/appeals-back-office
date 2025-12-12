@@ -394,9 +394,16 @@ const shouldAutoPublishRep = (appeal, representationType) => {
 		case APPEAL_REPRESENTATION_TYPE.COMMENT:
 			return isStatePassed(appeal, APPEAL_CASE_STATUS.STATEMENTS);
 		case APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT:
+			return (
+				isStatePassed(appeal, APPEAL_CASE_STATUS.STATEMENTS) ||
+				appeal.appealStatus.some((status) => status.status === APPEAL_CASE_STATUS.STATEMENTS)
+			);
 		case APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT:
 		case APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT:
-			return true;
+			return (
+				isStatePassed(appeal, APPEAL_CASE_STATUS.FINAL_COMMENTS) ||
+				appeal.appealStatus.some((status) => status.status === APPEAL_CASE_STATUS.FINAL_COMMENTS)
+			);
 		default:
 			return false;
 	}

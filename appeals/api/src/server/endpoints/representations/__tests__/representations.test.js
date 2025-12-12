@@ -833,33 +833,10 @@ describe('/appeals/:id/reps', () => {
 		});
 	});
 
-	describe('POST representation/comment', () => {
-		test('400 when missing first name', async () => {
-			const response = await request
-				.post('/appeals/1/reps/comment')
-				.send({ ipDetails: { lastName: 'test' }, redactionStatus: 'test' })
-				.set('azureAdUserId', '732652365');
-
-			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({
-				errors: {
-					'ipDetails.firstName': 'must be a string'
-				}
-			});
-		});
-
-		test('400 when missing last name', async () => {
-			const response = await request
-				.post('/appeals/1/reps/comment')
-				.send({ ipDetails: { firstName: 'test' }, redactionStatus: 'test' })
-				.set('azureAdUserId', '732652365');
-
-			expect(response.status).toEqual(400);
-			expect(response.body).toEqual({
-				errors: {
-					'ipDetails.lastName': 'must be a string'
-				}
-			});
+	describe('POST representation/:representationType', () => {
+		beforeEach(() => {
+			jest.clearAllMocks();
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 		});
 
 		test('400 when missing redaction status', async () => {
@@ -876,7 +853,52 @@ describe('/appeals/:id/reps', () => {
 			});
 		});
 
-		test('400 when email is invalid', async () => {
+		test('400 representationType is invalid', async () => {
+			const response = await request
+				.post('/appeals/1/reps/notValidRepType')
+				.send({
+					redactionStatus: 'test'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					representationType:
+						'must be one of lpa_statement, appellant_statement, comment, lpa_final_comment, appellant_final_comment, lpa_proofs_evidence, appellant_proofs_evidence'
+				}
+			});
+		});
+
+		test('400 when IP first name is invalid', async () => {
+			const response = await request
+				.post('/appeals/1/reps/comment')
+				.send({ ipDetails: { firstName: 212433 }, redactionStatus: 'test' })
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					'ipDetails.firstName': 'must be a string'
+				}
+			});
+		});
+
+		test('400 when IP last name is invalid', async () => {
+			const response = await request
+				.post('/appeals/1/reps/comment')
+				.send({ ipDetails: { lastName: true }, redactionStatus: 'test' })
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					'ipDetails.lastName': 'must be a string'
+				}
+			});
+		});
+
+		test('400 when IP email is invalid', async () => {
 			const response = await request
 				.post('/appeals/1/reps/comment')
 				.send({
@@ -929,7 +951,7 @@ describe('/appeals/:id/reps', () => {
 			});
 		});
 
-		test('200 when representation is successfully created', async () => {
+		test('200 when representation ip comment is successfully created', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 			const response = await request
@@ -945,7 +967,7 @@ describe('/appeals/:id/reps', () => {
 			expect(response.status).toEqual(201);
 		});
 
-		test('200 when representation with address and attachment is successfully created', async () => {
+		test('200 when IP comment with address and attachment is successfully created', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 			const mockDocument = {
 				guid: '39ad6cd8-60ab-43f0-a995-4854db8f12c6',
@@ -971,10 +993,93 @@ describe('/appeals/:id/reps', () => {
 				'Create'
 			);
 		});
+
+		test('200 when lpa statement representation with attachment is successfully created', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			const mockDocument = {
+				guid: '39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				name: 'test.pdf'
+			};
+
+			databaseConnector.document.findUnique.mockResolvedValue(mockDocument);
+
+			const response = await request
+				.post('/appeals/1/reps/lpa_statement')
+				.send({
+					redactionStatus: 'unredacted',
+					attachments: ['0'],
+					lpaCode: 'LPA',
+					source: 'lpa',
+					representationText: 'added as document'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledWith(
+				'39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				1,
+				'Create'
+			);
+		});
+
+		test('200 when lpa final comment representation with attachment is successfully created', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			const mockDocument = {
+				guid: '39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				name: 'test.pdf'
+			};
+
+			databaseConnector.document.findUnique.mockResolvedValue(mockDocument);
+
+			const response = await request
+				.post('/appeals/1/reps/lpa_final_comment')
+				.send({
+					redactionStatus: 'unredacted',
+					attachments: ['0'],
+					lpaCode: 'LPA',
+					source: 'lpa',
+					representationText: 'added as document'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledWith(
+				'39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				1,
+				'Create'
+			);
+		});
+
+		test('200 when appellant final comments representation with attachment is successfully created', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			const mockDocument = {
+				guid: '39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				name: 'test.pdf'
+			};
+
+			databaseConnector.document.findUnique.mockResolvedValue(mockDocument);
+
+			const response = await request
+				.post('/appeals/1/reps/appellant_final_comment')
+				.send({
+					redactionStatus: 'unredacted',
+					attachments: ['0'],
+					source: 'citizen',
+					representationText: 'added as document'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledWith(
+				'39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				1,
+				'Create'
+			);
+		});
 	});
 
 	describe('POST representation/comments auto-publish', () => {
-		test('200 and auto-publishes when appeal has PASSED statements state', async () => {
+		test('200 and auto-publishes for comment rep_type when appeal has PASSED statements state', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
 				appealStatus: [{ valid: false, status: 'statements' }]
@@ -1008,7 +1113,7 @@ describe('/appeals/:id/reps', () => {
 			);
 		});
 
-		test('200 and does not auto-publish when appeal is NOT in statements state', async () => {
+		test('200 and does not auto-publish for comment rep_type when appeal is NOT in statements state', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
 				appealStatus: [{ valid: true, status: 'lpa_questionnaire' }]
@@ -1042,7 +1147,7 @@ describe('/appeals/:id/reps', () => {
 			);
 		});
 
-		test('200 and does not auto-publish when appeal is CURRENTLY in statements state', async () => {
+		test('200 and does not auto-publish for comment rep_type when appeal is CURRENTLY in statements state', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
 				appealStatus: [{ valid: true, status: 'statements' }]
@@ -1076,7 +1181,7 @@ describe('/appeals/:id/reps', () => {
 			);
 		});
 
-		test('200 and auto-publishes when appeal is in final_comments state', async () => {
+		test('200 and auto-publishes for comment rep_type when appeal is in final_comments state', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
 				appealStatus: [
@@ -1091,6 +1196,288 @@ describe('/appeals/:id/reps', () => {
 
 			const response = await request
 				.post('/appeals/1/reps/comment')
+				.send({
+					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
+					ipAddress: { postCode: '', addressLine1: '' },
+					redactionStatus: 'unredacted',
+					attachments: []
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						status: 'published'
+					})
+				})
+			);
+			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
+				expect.anything(),
+				'Create'
+			);
+		});
+
+		test('200 and auto-publishes for lpa_statement rep_type when appeal has PASSED statements state', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealStatus: [{ valid: false, status: 'statements' }]
+			});
+			databaseConnector.representation.create.mockResolvedValue({
+				id: 1,
+				status: 'published'
+			});
+
+			const response = await request
+				.post('/appeals/1/reps/lpa_statement')
+				.send({
+					redactionStatus: 'unredacted',
+					attachments: [],
+					lpaCode: 'LPA',
+					source: 'lpa',
+					representationText: 'added as document'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						status: 'published'
+					})
+				})
+			);
+			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
+				expect.anything(),
+				'Create'
+			);
+		});
+
+		test('200 and does not auto-publish for lpa_statement rep_type when appeal is NOT yet passed statements state', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealStatus: [{ valid: true, status: 'lpa_questionnaire' }]
+			});
+			databaseConnector.representation.create.mockResolvedValue({
+				id: 1,
+				status: 'awaiting_review'
+			});
+
+			const response = await request
+				.post('/appeals/1/reps/lpa_statement')
+				.send({
+					redactionStatus: 'unredacted',
+					attachments: [],
+					lpaCode: 'LPA',
+					source: 'lpa',
+					representationText: 'added as document'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.not.objectContaining({
+						status: 'published'
+					})
+				})
+			);
+			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
+				expect.anything(),
+				'Update'
+			);
+		});
+
+		test('200 and does auto-publish for lpa_statement rep_type when appeal is CURRENTLY in statements state', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealStatus: [{ valid: true, status: 'statements' }]
+			});
+			databaseConnector.representation.create.mockResolvedValue({
+				id: 1,
+				status: 'awaiting_review'
+			});
+
+			const response = await request
+				.post('/appeals/1/reps/lpa_statement')
+				.send({
+					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
+					ipAddress: { postCode: '', addressLine1: '' },
+					redactionStatus: 'unredacted',
+					attachments: []
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						status: 'published'
+					})
+				})
+			);
+			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
+				expect.anything(),
+				'Create'
+			);
+		});
+
+		test('200 and auto-publishes for lpa_statement rep_type when appeal is in final_comments state', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealStatus: [
+					{ valid: true, status: 'final_comments' },
+					{ valid: false, status: 'statements' }
+				]
+			});
+			databaseConnector.representation.create.mockResolvedValue({
+				id: 1,
+				status: 'published'
+			});
+
+			const response = await request
+				.post('/appeals/1/reps/lpa_statement')
+				.send({
+					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
+					ipAddress: { postCode: '', addressLine1: '' },
+					redactionStatus: 'unredacted',
+					attachments: []
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						status: 'published'
+					})
+				})
+			);
+			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
+				expect.anything(),
+				'Create'
+			);
+		});
+
+		test('200 and auto-publishes for lpa_final_comment rep_type when appeal has PASSED final_comments state', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealStatus: [{ valid: false, status: 'final_comments' }]
+			});
+			databaseConnector.representation.create.mockResolvedValue({
+				id: 1,
+				status: 'published'
+			});
+
+			const response = await request
+				.post('/appeals/1/reps/lpa_final_comment')
+				.send({
+					redactionStatus: 'unredacted',
+					attachments: [],
+					lpaCode: 'LPA',
+					source: 'lpa',
+					representationText: 'added as document'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						status: 'published'
+					})
+				})
+			);
+			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
+				expect.anything(),
+				'Create'
+			);
+		});
+
+		test('200 and does not auto-publish for lpa_final_comment rep_type when appeal is NOT yet passed final_comments state', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealStatus: [{ valid: true, status: 'statements' }]
+			});
+			databaseConnector.representation.create.mockResolvedValue({
+				id: 1,
+				status: 'awaiting_review'
+			});
+
+			const response = await request
+				.post('/appeals/1/reps/lpa_final_comment')
+				.send({
+					redactionStatus: 'unredacted',
+					attachments: [],
+					lpaCode: 'LPA',
+					source: 'lpa',
+					representationText: 'added as document'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.not.objectContaining({
+						status: 'published'
+					})
+				})
+			);
+			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
+				expect.anything(),
+				'Update'
+			);
+		});
+
+		test('200 and does auto-publish for lpa_final_comment rep_type when appeal is CURRENTLY in final_comments state', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealStatus: [{ valid: true, status: 'final_comments' }]
+			});
+			databaseConnector.representation.create.mockResolvedValue({
+				id: 1,
+				status: 'awaiting_review'
+			});
+
+			const response = await request
+				.post('/appeals/1/reps/lpa_final_comment')
+				.send({
+					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
+					ipAddress: { postCode: '', addressLine1: '' },
+					redactionStatus: 'unredacted',
+					attachments: []
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						status: 'published'
+					})
+				})
+			);
+			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
+				expect.anything(),
+				'Create'
+			);
+		});
+
+		test('200 and auto-publishes for lpa_final_comment rep_type when appeal is in final_comments state', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealStatus: [
+					{ valid: true, status: 'final_comments' },
+					{ valid: false, status: 'statements' }
+				]
+			});
+			databaseConnector.representation.create.mockResolvedValue({
+				id: 1,
+				status: 'published'
+			});
+
+			const response = await request
+				.post('/appeals/1/reps/lpa_statement')
 				.send({
 					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
 					ipAddress: { postCode: '', addressLine1: '' },

@@ -11,7 +11,6 @@ import {
 	getRepresentationUpdateValidator,
 	validateRejectionReasonsPayload
 } from './representations.validators.js';
-import { VALID_REPS } from './representations.constants.js';
 
 const router = createRouter();
 
