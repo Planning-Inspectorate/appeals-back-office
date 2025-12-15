@@ -194,6 +194,7 @@ export const appealsNationalList = {
 	lpas: [{ lpaCode: '1', name: 'Test LPA' }],
 	inspectors: [{ azureAdUserId: activeDirectoryUsersData[0].id, id: 0 }],
 	caseOfficers: [{ azureAdUserId: activeDirectoryUsersData[1].id, id: 1 }],
+	padsInspectors: [],
 	assignedTeamId: 1,
 	assignedTeam: {
 		id: 1,
@@ -339,6 +340,7 @@ export const appealData = {
 		}
 	},
 	inspector: null,
+	padsInspector: null,
 	inspectorAccess: {
 		appellantCase: {
 			details: null,
@@ -3780,6 +3782,11 @@ export const lpaStatementAwaitingReview = {
 	representationType: 'lpa_statement',
 	siteVisitRequested: false,
 	rejectionReasons: []
+};
+
+export const lpaStatementPublished = {
+	...lpaStatementAwaitingReview,
+	status: 'published'
 };
 
 export const proofOfEvidenceForReview = {

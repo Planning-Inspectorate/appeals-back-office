@@ -37,6 +37,7 @@ import {
 } from '@planning-inspectorate/data-model';
 import { addDays } from 'date-fns';
 
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import nock from 'nock';
 import supertest from 'supertest';
 import { textInputCharacterLimits } from '../../../appeal.constants.js';
@@ -2831,7 +2832,7 @@ describe('LPA Questionnaire review', () => {
 				.reply(200, lpaQuestionnaireDataNotValidated);
 			nock('http://test/')
 				.get('/appeals/1/document-folders/1')
-				.reply(200, documentFolderInfo)
+				.reply(200, { ...documentFolderInfo, path: 'lpa-questionnaire/appealNotification' })
 				.persist();
 
 			const addDocumentsResponse = await request
@@ -2849,7 +2850,7 @@ describe('LPA Questionnaire review', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Changed description documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Appeal notification documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
@@ -3009,7 +3010,7 @@ describe('LPA Questionnaire review', () => {
 				.reply(200, lpaQuestionnaireDataNotValidated);
 			nock('http://test/')
 				.get('/appeals/1/document-folders/1')
-				.reply(200, documentFolderInfo)
+				.reply(200, { ...documentFolderInfo, path: 'lpa-questionnaire/appealNotification' })
 				.persist();
 
 			const addDocumentsResponse = await request
@@ -3027,7 +3028,7 @@ describe('LPA Questionnaire review', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Updated changed description document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Updated appeal notification document</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
@@ -3911,6 +3912,10 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
+			nock('http://test/')
+				.get('/appeals/1?include=appealType')
+				.reply(200, { appealType: APPEAL_TYPE.HOUSEHOLDER })
+				.persist();
 		});
 		afterEach(() => {
 			nock.cleanAll();
@@ -3932,7 +3937,9 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should render the manage documents listing page with one document item for each document present in the folder, if the folderId is valid', async () => {
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+			nock('http://test/')
+				.get('/appeals/1/document-folders/1')
+				.reply(200, { ...documentFolderInfo, path: 'lpa-questionnaire/appealNotification' });
 
 			const response = await request.get(`${baseUrl}/manage-documents/1/`);
 			const element = parseHtml(response.text);
@@ -3942,7 +3949,7 @@ describe('LPA Questionnaire review', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Changed description documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Appeal notification documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('Name</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
@@ -3971,6 +3978,60 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
 		});
+
+		it.each([
+			[
+				'householder',
+				APPEAL_TYPE.HOUSEHOLDER,
+				'Agreement to change the description of development</h1>'
+			],
+			['full planning', APPEAL_TYPE.S78, 'Agreement to change the description of development</h1>'],
+			[
+				'listed building',
+				APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+				'Agreement to change the description of development</h1>'
+			],
+			[
+				'cas planning',
+				APPEAL_TYPE.CAS_PLANNING,
+				'Agreement to change the description of development</h1>'
+			],
+			[
+				'cas advertisement',
+				APPEAL_TYPE.CAS_ADVERTISEMENT,
+				'Agreement to change the description of the advertisement</h1>'
+			],
+			[
+				'advertisement',
+				APPEAL_TYPE.ADVERTISEMENT,
+				'Agreement to change the description of the advertisement</h1>'
+			]
+		])(
+			'should render the manage documents listing page with the expected heading, if the folderId is valid, and the folder is changed description for appeal type %s',
+			async (_, appealType, expectedText) => {
+				nock.cleanAll(); // need to remove the nocks so we can change the appeal type
+				// @ts-ignore
+				usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses);
+				nock('http://test/')
+					.get('/appeals/1?include=appealType')
+					.reply(200, { appealType: appealType })
+					.persist();
+				nock('http://test/').get('/appeals/1/document-folders/3').reply(200, documentFolderInfo);
+
+				const response = await request.get(`${baseUrl}/manage-documents/3/`);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(expectedText);
+			}
+		);
 	});
 
 	describe('GET /lpa-questionnaire/1/manage-documents/:folderId/:documentId', () => {
@@ -3985,6 +4046,10 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
+			nock('http://test/')
+				.get('/appeals/1?include=appealType')
+				.reply(200, { appealType: APPEAL_TYPE.HOUSEHOLDER })
+				.persist();
 			nock('http://test/')
 				.get('/appeals/1/document-folders/1')
 				.reply(200, documentFolderInfo)
@@ -4176,6 +4241,10 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
+			nock('http://test/')
+				.get('/appeals/1?include=appealType')
+				.reply(200, { appealType: APPEAL_TYPE.HOUSEHOLDER })
+				.persist();
 			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});

@@ -31,10 +31,15 @@ export const confirmPage = (appealDetails, lpaStatement, specialismData, session
 		return items.map((item) => specialismData.find((s) => s.id === parseInt(item))?.name);
 	})();
 
+	const filteredAttachments = lpaStatement.attachments?.filter((attachment) => {
+		const { isDeleted, latestVersionId } = attachment?.documentVersion?.document ?? {};
+		return latestVersionId === attachment.version && !isDeleted;
+	});
+
 	const attachmentsList =
-		lpaStatement.attachments.length > 0
+		filteredAttachments.length > 0
 			? buildHtmlList({
-					items: lpaStatement.attachments.map(
+					items: filteredAttachments.map(
 						(a) =>
 							`<a class="govuk-link" href="${mapDocumentDownloadUrl(
 								a.documentVersion.document.caseId,
@@ -43,11 +48,11 @@ export const confirmPage = (appealDetails, lpaStatement, specialismData, session
 							)}" target="_blank">${a.documentVersion.document.name}</a>`
 					),
 					isOrderedList: true,
-					isNumberedList: lpaStatement.attachments.length > 1
+					isNumberedList: filteredAttachments.length > 1
 			  })
 			: null;
 
-	const folderId = lpaStatement.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
+	const folderId = filteredAttachments?.[0]?.documentVersion?.document?.folderId ?? null;
 
 	/** @type {PageComponent[]} */
 	const pageComponents = [

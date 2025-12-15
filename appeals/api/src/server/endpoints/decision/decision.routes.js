@@ -1,4 +1,4 @@
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import { postInspectorDecision } from './decision.controller.js';
@@ -37,7 +37,16 @@ router.post(
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
 	 */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'appealStatus',
+		'address',
+		'appellant',
+		'agent',
+		'lpa',
+		'folders',
+		'appealType',
+		'childAppeals'
+	]),
 	getDecisionsValidator,
 	getDecisionTypeValidator,
 	getOutcomeValidator,

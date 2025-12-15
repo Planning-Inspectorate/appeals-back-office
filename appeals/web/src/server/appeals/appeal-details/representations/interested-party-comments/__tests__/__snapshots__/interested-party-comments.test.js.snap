@@ -370,7 +370,7 @@ exports[`interested-party-comments GET /interested-party-comments/add/ip-details
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - add interested party comment</span>
-            <h1             class="govuk-heading-l">Interested party&#39;s details</h1>
+            <h1             class="govuk-heading-l">Interested party details</h1>
         </div>
     </div>
     <div class="govuk-grid-row">

@@ -1,6 +1,8 @@
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { findPreviousVersion } from '#utils/find-previous-version.js';
 import logger from '#utils/logger.js';
+import { EventType } from '@pins/event-client';
 import { APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
 import { randomUUID } from 'node:crypto';
 
@@ -149,11 +151,19 @@ export const addDocumentVersion = async (params) => {
 };
 
 /**
+ * @typedef {Object} BroadcastEvent
+ * @property {EventType} eventType
+ * @property {number} version
+ */
+
+/**
  * @param {string} documentGuid
  * @param {number} version
  */
 export const deleteDocumentVersion = async (documentGuid, version) => {
-	const transaction = await databaseConnector.$transaction(async (tx) => {
+	/** @type {BroadcastEvent | null} */
+	let broadcastEvent = null;
+	const result = await databaseConnector.$transaction(async (tx) => {
 		const document = await tx.document.findFirst({
 			include: {
 				versions: true,
@@ -162,36 +172,55 @@ export const deleteDocumentVersion = async (documentGuid, version) => {
 			where: { guid: documentGuid }
 		});
 
-		if (document && document.latestDocumentVersion && document.versions) {
-			const versionToDelete = document.versions.find((v) => v.version === version);
-			const versionCount = document.versions.filter((v) => !v.isDeleted).length;
+		if (!document || !document.latestDocumentVersion || !document.versions) {
+			return null;
+		}
 
-			if (versionToDelete) {
-				if (versionToDelete.version !== document.latestDocumentVersion.version) {
-					await deleteVersion(tx, document.guid, versionToDelete.version);
-				} else {
-					if (versionCount === 1) {
-						await deleteVersion(tx, document.guid, versionToDelete.version);
-						await deleteDocument(tx, document.guid, document.name);
-					} else {
-						// @ts-ignore
-						await setPreviousVersion(tx, document, versionToDelete.version);
-						await deleteVersion(tx, document.guid, versionToDelete.version);
-					}
+		const versionToDelete = document.versions.find((v) => v.version === version);
+		const versionCount = document.versions.filter((v) => !v.isDeleted).length;
+
+		if (!versionToDelete) {
+			return null;
+		}
+
+		if (versionToDelete.version !== document.latestDocumentVersion.version) {
+			await deleteVersion(tx, document.guid, versionToDelete.version);
+		} else {
+			if (versionCount === 1) {
+				await deleteVersion(tx, document.guid, versionToDelete.version);
+				await deleteDocument(tx, document.guid, document.name);
+				broadcastEvent = { eventType: EventType.Delete, version };
+			} else {
+				// @ts-ignore
+				await setPreviousVersion(tx, document, versionToDelete.version);
+				await deleteVersion(tx, document.guid, versionToDelete.version);
+
+				const newLatestVersion = findPreviousVersion(
+					document.versions.filter((v) => !v.isDeleted).map((v) => v.version),
+					versionToDelete.version
+				);
+
+				if (newLatestVersion) {
+					broadcastEvent = { eventType: EventType.Update, version: newLatestVersion };
 				}
-
-				return {
-					...document,
-					isDeleted: versionCount === 1,
-					latestDocumentVersion: null,
-					latestVersionId: null,
-					documentVersion: []
-				};
 			}
 		}
+
+		return {
+			...document,
+			isDeleted: versionCount === 1,
+			latestDocumentVersion: null,
+			latestVersionId: null,
+			documentVersion: []
+		};
 	});
 
-	return transaction;
+	if (result && broadcastEvent) {
+		const { version, eventType } = broadcastEvent;
+		await broadcasters.broadcastDocument(documentGuid, version, eventType);
+	}
+
+	return result;
 };
 
 /**

@@ -93,6 +93,7 @@ export const viewNationalList = async (request, response) => {
 			};
 		})
 	);
+	const padsUsers = [...appeals.padsInspectors];
 	const caseTeams = await getTeamList(request.apiClient);
 	const mappedPageContent = nationalListPage(
 		users,
@@ -111,7 +112,8 @@ export const viewNationalList = async (request, response) => {
 		appealTypeFilter,
 		caseTeamFilter,
 		appealProcedureFilter,
-		greenBeltFilter
+		greenBeltFilter,
+		padsUsers
 	);
 
 	const pagination = mapPagination(

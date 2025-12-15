@@ -94,11 +94,12 @@ export function generateEnforcementNoticeComponents(
 			},
 			rows: [
 				mappedAppellantCaseData.descriptionOfAllegedBreach.display.summaryListItem,
-				mappedAppellantCaseData.grounds.display.summaryListItem,
+				mappedAppellantCaseData.groundsForAppeal.display.summaryListItem,
 				// @ts-ignore
 				...getSummaryListItems(mappedAppellantCaseData.factsForGrounds),
 				// @ts-ignore
-				...getSummaryListItems(mappedAppellantCaseData.supportingDocumentsForGrounds)
+				...getSummaryListItems(mappedAppellantCaseData.supportingDocumentsForGrounds),
+				mappedAppellantCaseData.applicationReceipt.display.summaryListItem
 			]
 		}
 	};

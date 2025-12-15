@@ -856,6 +856,12 @@ export const spec = {
 				id: 1
 			}
 		],
+		AllGroundsResponse: [
+			{
+				name: 'Access required',
+				id: 1
+			}
+		],
 		AllAppellantCaseValidationOutcomesResponse: [
 			{
 				name: 'Valid',

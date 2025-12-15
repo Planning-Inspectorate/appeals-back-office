@@ -1,5 +1,6 @@
 import { Address, ContactAddress } from '@pins/appeals';
 import { Schema } from 'index';
+import { AppealGround, Ground } from '../../database/schema';
 
 declare global {
 	namespace Express {
@@ -10,6 +11,7 @@ declare global {
 			document: Schema.Document;
 			notifyClient: NotifyClient;
 			visitType: SiteVisitType;
+			ground: Ground;
 			validationOutcome: ValidationOutcome;
 			documentRedactionStatusIds: number[];
 			address: Schema.Address;
@@ -253,6 +255,7 @@ interface SingleAppellantCaseResponse {
 	landownerPermission?: boolean | null;
 	siteGridReferenceEasting?: string | null;
 	siteGridReferenceNorthing?: string | null;
+	appealGrounds?: AppealGround[] | null;
 }
 
 interface UpdateAppellantCaseRequest {
@@ -622,15 +625,18 @@ interface AppealListResponse {
 	isInquirySetup: boolean | null;
 	hasInquiryAddress: boolean | null;
 }
+
 interface DocumentationSummary {
 	appellantCase?: DocumentationSummaryEntry;
 	lpaQuestionnaire?: DocumentationSummaryEntry;
 	ipComments?: DocumentationSummaryEntry;
 	lpaStatement?: DocumentationSummaryEntry;
+	rule6PartyStatements?: { [serviceUserId: string]: DocumentationSummaryEntry };
 	lpaFinalComments?: DocumentationSummaryEntry;
 	appellantFinalComments?: DocumentationSummaryEntry;
 	lpaProofOfEvidence?: DocumentationSummaryEntry;
 	appellantProofOfEvidence?: DocumentationSummaryEntry;
+	rule6PartyProofs?: { [serviceUserId: string]: DocumentationSummaryEntry };
 }
 
 interface DocumentationSummaryEntry {

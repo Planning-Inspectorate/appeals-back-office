@@ -14,13 +14,14 @@ export function isRepresentationReviewRequired(representationStatus) {
 }
 
 /**
- * @typedef {'appellant-final-comments'|'lpa-final-comments'|'lpa-statement' |'appellant-proofs-evidence' |'lpa-proofs-evidence'} RepresentationType
+ * @typedef {'appellant-final-comments' | 'lpa-final-comments' | 'lpa-statement' | 'rule-6-party-statement' | 'appellant-proofs-evidence' | 'lpa-proofs-evidence' | 'rule-6-party-proofs-evidence'} RepresentationType
  *
  * @param {string} currentRoute
  * @param {string|undefined} documentationStatus
  * @param {string|null|undefined} representationStatus
  * @param {RepresentationType} representationType
  * @param {import('@pins/express/types/express.js').Request} request
+ * @param {{ id: number, serviceUser: { organisationName: string } }} [rule6Party]
  * @returns {string} action link html
  */
 export function mapRepresentationDocumentSummaryActionLink(
@@ -28,7 +29,8 @@ export function mapRepresentationDocumentSummaryActionLink(
 	documentationStatus,
 	representationStatus,
 	representationType,
-	request
+	request,
+	rule6Party
 ) {
 	if (
 		documentationStatus !== 'received' &&
@@ -41,7 +43,11 @@ export function mapRepresentationDocumentSummaryActionLink(
 		if (typeof representationStatus === 'string') {
 			return [
 				APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
-				!['appellant-proofs-evidence', 'lpa-proofs-evidence'].includes(representationType)
+				![
+					'appellant-proofs-evidence',
+					'lpa-proofs-evidence',
+					'rule-6-party-proofs-evidence'
+				].includes(representationType)
 					? APPEAL_REPRESENTATION_STATUS.INCOMPLETE
 					: ''
 			].includes(representationStatus);
@@ -53,15 +59,18 @@ export function mapRepresentationDocumentSummaryActionLink(
 	/** @type {Record<RepresentationType, string>} */
 	const visuallyHiddenTexts = {
 		'lpa-statement': 'LPA statement',
+		'rule-6-party-statement': `${rule6Party?.serviceUser?.organisationName} statement`,
 		'appellant-final-comments': 'Appellant final comments',
 		'lpa-final-comments': 'LPA final comments',
 		'appellant-proofs-evidence': 'Appellant proof of evidence',
-		'lpa-proofs-evidence': 'LPA proof of evidence'
+		'lpa-proofs-evidence': 'LPA proof of evidence',
+		'rule-6-party-proofs-evidence': `${rule6Party?.serviceUser?.organisationName} proof of evidence`
 	};
 
 	/** @type {Record<RepresentationType, string>} */
 	const hrefs = {
 		'lpa-statement': `${currentRoute}/lpa-statement`,
+		'rule-6-party-statement': `${currentRoute}/rule-6-party-statement/${rule6Party?.id}`,
 		'lpa-final-comments': `${currentRoute}/final-comments/lpa`,
 		'appellant-final-comments': `${currentRoute}/final-comments/appellant`,
 		'appellant-proofs-evidence': reviewRequired
@@ -69,7 +78,10 @@ export function mapRepresentationDocumentSummaryActionLink(
 			: `${currentRoute}/proof-of-evidence/appellant/manage-documents`,
 		'lpa-proofs-evidence': reviewRequired
 			? `${currentRoute}/proof-of-evidence/lpa`
-			: `${currentRoute}/proof-of-evidence/lpa/manage-documents`
+			: `${currentRoute}/proof-of-evidence/lpa/manage-documents`,
+		'rule-6-party-proofs-evidence': reviewRequired
+			? `${currentRoute}/proof-of-evidence/rule-6-party/${rule6Party?.id}`
+			: `${currentRoute}/proof-of-evidence/rule-6-party/${rule6Party?.id}/manage-documents`
 	};
 
 	if (documentationStatus !== 'received') {
@@ -87,19 +99,27 @@ export function mapRepresentationDocumentSummaryActionLink(
  * @param {string} currentRoute
  * @param {RepresentationType} representationType
  * @param {import('@pins/express/types/express.js').Request} request
+ * @param {{ id: number, serviceUser: { organisationName: string } }} [rule6Party]
  * @returns {string} action link html
  */
-export function mapAddRepresentationSummaryActionLink(currentRoute, representationType, request) {
+export function mapAddRepresentationSummaryActionLink(
+	currentRoute,
+	representationType,
+	request,
+	rule6Party
+) {
 	/** @type {Record<string, string>} */
 	const visuallyHiddenTexts = {
 		'appellant-proofs-evidence': 'Appellant proof of evidence',
-		'lpa-proofs-evidence': 'LPA proof of evidence'
+		'lpa-proofs-evidence': 'LPA proof of evidence',
+		'rule-6-party-proofs-evidence': `${rule6Party?.serviceUser?.organisationName} proof of evidence`
 	};
 
 	/** @type {Record<string, string>} */
 	const hrefs = {
 		'appellant-proofs-evidence': `${currentRoute}/proof-of-evidence/appellant/add-representation`,
-		'lpa-proofs-evidence': `${currentRoute}/proof-of-evidence/lpa/add-representation`
+		'lpa-proofs-evidence': `${currentRoute}/proof-of-evidence/lpa/add-representation`,
+		'rule-6-party-proofs-evidence': `${currentRoute}/proof-of-evidence/rule-6-party/add-representation`
 	};
 
 	return `<a href="${addBackLinkQueryToUrl(

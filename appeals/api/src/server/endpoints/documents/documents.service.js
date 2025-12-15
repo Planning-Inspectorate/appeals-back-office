@@ -10,7 +10,10 @@ import documentRedactionStatusRepository from '#repositories/document-redaction-
 import { getByCaseId, getByCaseIdAndPaths, getById } from '#repositories/folder.repository.js';
 import { validateBlobContents } from '#utils/blob-validation.js';
 import logger from '#utils/logger.js';
-import { GROUND_SUPPORTING_DOCTYPE } from '@pins/appeals/constants/documents.js';
+import {
+	GROUND_SUPPORTING_DOCTYPE,
+	GROUNDS_APPLICATION_RECEIPT_DOCTYPE
+} from '@pins/appeals/constants/documents.js';
 import {
 	ERROR_NOT_FOUND,
 	VALIDATION_OUTCOME_COMPLETE,
@@ -165,7 +168,8 @@ export const getFoldersForStage = (path) => {
 				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${GROUND_SUPPORTING_DOCTYPE.D}`,
 				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${GROUND_SUPPORTING_DOCTYPE.E}`,
 				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${GROUND_SUPPORTING_DOCTYPE.F}`,
-				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${GROUND_SUPPORTING_DOCTYPE.G}`
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${GROUND_SUPPORTING_DOCTYPE.G}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${GROUNDS_APPLICATION_RECEIPT_DOCTYPE}`
 			];
 			break;
 		case APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE:
@@ -416,7 +420,6 @@ export const getAvScanStatus = (documentVersion) => {
  */
 export const deleteDocument = async (document, version) => {
 	const result = await deleteDocumentVersion(document.guid, version);
-	await broadcasters.broadcastDocument(document.guid, version, EventType.Delete);
 	return result !== null;
 };
 

@@ -70,6 +70,7 @@ describe('appeals list routes', () => {
 			);
 			databaseConnector.lPA.findMany.mockResolvedValue(lpas);
 			databaseConnector.user.findMany.mockResolvedValue(inspectors.concat(caseOfficers));
+			databaseConnector.pADSUser.findMany.mockResolvedValue([]);
 		});
 		describe('GET', () => {
 			test('gets appeals when not given pagination params or a search term', async () => {
@@ -226,6 +227,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -261,6 +263,7 @@ describe('appeals list routes', () => {
 						appellantCase: { include: { appellantCaseValidationOutcome: true } },
 						inspector: true,
 						caseOfficer: true,
+						padsInspector: true,
 						appealTimetable: true,
 						representations: true,
 						lpaQuestionnaire: { include: { lpaQuestionnaireValidationOutcome: true } },
@@ -370,6 +373,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 2,
 					pageCount: 2,
 					pageSize: 1,
@@ -498,6 +502,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -626,6 +631,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -754,6 +760,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -864,6 +871,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -893,9 +901,18 @@ describe('appeals list routes', () => {
 									valid: true
 								}
 							},
-							inspectorUserId: {
-								not: null
-							}
+							OR: [
+								{
+									inspectorUserId: {
+										not: null
+									}
+								},
+								{
+									padsInspectorUserId: {
+										not: null
+									}
+								}
+							]
 						}
 					})
 				);
@@ -976,6 +993,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -1005,7 +1023,14 @@ describe('appeals list routes', () => {
 									valid: true
 								}
 							},
-							inspectorUserId: null
+							AND: [
+								{
+									inspectorUserId: null
+								},
+								{
+									padsInspectorUserId: null
+								}
+							]
 						}
 					})
 				);
@@ -1086,6 +1111,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -1202,6 +1228,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -1319,6 +1346,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -1420,6 +1448,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,

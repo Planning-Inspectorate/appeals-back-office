@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`grounds GET /grounds-for-appeal/change should render the change grounds page with grounds "a" and "c" checked 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" aria-describedby="grounds-for-appeal-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Choose your grounds of appeal</h1>
+                                </legend>
+                                <div id="grounds-for-appeal-hint" class="govuk-hint">Select all that apply</div>
+                                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="grounds-for-appeal" name="groundsForAppeal"
+                                        type="checkbox" value="a" checked aria-describedby="grounds-for-appeal-item-hint">
+                                        <label class="govuk-label govuk-checkboxes__label" for="grounds-for-appeal">Ground (a)</label>
+                                        <div id="grounds-for-appeal-item-hint" class="govuk-hint govuk-checkboxes__hint">Ground A</div>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="grounds-for-appeal-2" name="groundsForAppeal"
+                                        type="checkbox" value="b" aria-describedby="grounds-for-appeal-2-item-hint">
+                                        <label class="govuk-label govuk-checkboxes__label" for="grounds-for-appeal-2">Ground (b)</label>
+                                        <div id="grounds-for-appeal-2-item-hint" class="govuk-hint govuk-checkboxes__hint">Ground B</div>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="grounds-for-appeal-3" name="groundsForAppeal"
+                                        type="checkbox" value="c" checked aria-describedby="grounds-for-appeal-3-item-hint">
+                                        <label class="govuk-label govuk-checkboxes__label" for="grounds-for-appeal-3">Ground (c)</label>
+                                        <div id="grounds-for-appeal-3-item-hint" class="govuk-hint govuk-checkboxes__hint">Ground C</div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`grounds POST /grounds-for-appeal/change should render the change grounds page in error with no grounds checked when none are selected 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#grounds-for-appeal">Select your grounds of appeal</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" aria-describedby="grounds-for-appeal-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Choose your grounds of appeal</h1>
+                                </legend>
+                                <div id="grounds-for-appeal-hint" class="govuk-hint">Select all that apply</div>
+                                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="grounds-for-appeal" name="groundsForAppeal"
+                                        type="checkbox" value="a" aria-describedby="grounds-for-appeal-item-hint">
+                                        <label class="govuk-label govuk-checkboxes__label" for="grounds-for-appeal">Ground (a)</label>
+                                        <div id="grounds-for-appeal-item-hint" class="govuk-hint govuk-checkboxes__hint">Ground A</div>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="grounds-for-appeal-2" name="groundsForAppeal"
+                                        type="checkbox" value="b" aria-describedby="grounds-for-appeal-2-item-hint">
+                                        <label class="govuk-label govuk-checkboxes__label" for="grounds-for-appeal-2">Ground (b)</label>
+                                        <div id="grounds-for-appeal-2-item-hint" class="govuk-hint govuk-checkboxes__hint">Ground B</div>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="grounds-for-appeal-3" name="groundsForAppeal"
+                                        type="checkbox" value="c" aria-describedby="grounds-for-appeal-3-item-hint">
+                                        <label class="govuk-label govuk-checkboxes__label" for="grounds-for-appeal-3">Ground (c)</label>
+                                        <div id="grounds-for-appeal-3-item-hint" class="govuk-hint govuk-checkboxes__hint">Ground C</div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;

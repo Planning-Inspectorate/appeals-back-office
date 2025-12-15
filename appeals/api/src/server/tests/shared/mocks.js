@@ -168,3 +168,18 @@ export const incompleteLPAQuestionnaireOutcome = {
 		name: 'Incomplete'
 	}
 };
+
+export const grounds = [
+	{
+		groundRef: 'a',
+		groundDescription: 'Ground A'
+	},
+	{
+		groundRef: 'b',
+		groundDescription: 'Ground B'
+	},
+	{
+		groundRef: 'c',
+		groundDescription: 'Ground C'
+	}
+];

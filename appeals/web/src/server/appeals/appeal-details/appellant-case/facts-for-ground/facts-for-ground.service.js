@@ -7,19 +7,16 @@
  * @param {string} factsForGround
  * @returns {Promise<{}>}
  */
-export function ChangeFactsForGround(
+export function changeFactsForGround(
 	apiClient,
 	appealId,
 	appellantCaseId,
 	groundRef,
 	factsForGround
 ) {
-	return apiClient.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
+	return apiClient.patch(`appeals/${appealId}/grounds-for-appeal/${groundRef}`, {
 		json: {
-			appealGround: {
-				groundRef,
-				factsForGround
-			}
+			factsForGround
 		}
 	});
 }

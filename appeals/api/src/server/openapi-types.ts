@@ -2190,6 +2190,13 @@ export type AllSiteVisitTypesResponse = {
 	id?: number;
 }[];
 
+export type AllGroundsResponse = {
+	/** @example "Access required" */
+	name?: string;
+	/** @example 1 */
+	id?: number;
+}[];
+
 export type AllAppellantCaseValidationOutcomesResponse = {
 	/** @example "Valid" */
 	name?: string;
@@ -3269,6 +3276,19 @@ export interface DocumentationSummary {
 		counts?: object | null;
 		isRedacted?: boolean | null;
 	};
+	rule6PartyStatements?: Record<
+		string,
+		{
+			status?: string;
+			/** @format date-time */
+			dueDate?: string | null;
+			/** @format date-time */
+			receivedAt?: string | null;
+			representationStatus?: string | null;
+			counts?: object | null;
+			isRedacted?: boolean | null;
+		}
+	>;
 }
 
 export type StateList = {

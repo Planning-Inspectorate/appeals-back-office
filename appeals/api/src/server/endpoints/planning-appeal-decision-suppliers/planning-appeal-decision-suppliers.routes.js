@@ -1,6 +1,6 @@
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
-import { getLookupData } from '../../common/controllers/lookup-data.controller.js';
+import { getLookupDataByTableName } from '../../common/controllers/lookup-data.controller.js';
 import { getPADSUserFromSapId } from './planning-appeal-decision-suppliers.controller.js';
 
 const router = createRouter();
@@ -22,7 +22,7 @@ router.get(
         }
         #swagger.responses[400] = {}
      */
-	asyncHandler(getLookupData('pADSUser'))
+	asyncHandler(getLookupDataByTableName('pADSUser'))
 );
 
 router.get(

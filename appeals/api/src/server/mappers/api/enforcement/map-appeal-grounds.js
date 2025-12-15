@@ -8,7 +8,7 @@
  */
 export const mapEnforcementAppealGrounds = (data) => {
 	const {
-		appeal: { appellantCase, appealGrounds }
+		appeal: { appellantCase, appealGrounds = [] }
 	} = data;
 
 	// @ts-ignore
@@ -16,7 +16,11 @@ export const mapEnforcementAppealGrounds = (data) => {
 	return {
 		appealGrounds: hasEnforcementData
 			? // @ts-ignore
-			  appealGrounds || []
+			  appealGrounds.sort(
+					// Make sure appeal grounds are sorted in ground ref order
+					(a, b) =>
+						(a?.ground?.groundRef?.charCodeAt(0) || 0) - (b?.ground?.groundRef?.charCodeAt(0) || 0)
+			  ) || []
 			: null
 	};
 };
