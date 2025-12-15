@@ -1,4 +1,4 @@
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import checkLookupValueIsValidAndAddToRequest from '#middleware/check-lookup-value-is-valid-and-add-to-request.js';
 import { ERROR_INVALID_SITE_VISIT_TYPE } from '@pins/appeals/constants/support.js';
 import { asyncHandler } from '@pins/express';
@@ -46,7 +46,14 @@ router.post(
 		#swagger.responses[500] = {}
 	 */
 	postSiteVisitValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'address',
+		'appellant',
+		'agent',
+		'lpa',
+		'appealStatus',
+		'childAppeals'
+	]),
 	checkLookupValueIsValidAndAddToRequest(
 		'visitType',
 		'siteVisitType',
@@ -74,7 +81,7 @@ router.get(
 		#swagger.responses[500] = {}
 	 */
 	getSiteVisitValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest(['siteVisit']),
 	checkSiteVisitExists,
 	asyncHandler(getSiteVisitById)
 );
@@ -104,7 +111,14 @@ router.patch(
 		#swagger.responses[500] = {}
 	 */
 	patchSiteVisitValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'siteVisit',
+		'address',
+		'appellant',
+		'agent',
+		'lpa',
+		'appealStatus'
+	]),
 	checkSiteVisitExists,
 	checkLookupValueIsValidAndAddToRequest(
 		'visitType',
@@ -138,7 +152,14 @@ router.delete(
 		#swagger.responses[500] = {}
 	 */
 	deleteSiteVisitValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'siteVisit',
+		'address',
+		'appellant',
+		'agent',
+		'lpa',
+		'appealStatus'
+	]),
 	checkSiteVisitExists,
 	checkLookupValueIsValidAndAddToRequest(
 		'visitType',
@@ -173,7 +194,13 @@ router.post(
 		#swagger.responses[500] = {}
 	 */
 	postRecordSiteVisitMissedValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'siteVisit',
+		'address',
+		'appellant',
+		'lpa',
+		'appealStatus'
+	]),
 	asyncHandler(postSiteVisitMissed)
 );
 
