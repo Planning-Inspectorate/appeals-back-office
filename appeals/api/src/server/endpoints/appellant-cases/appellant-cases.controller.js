@@ -81,7 +81,8 @@ const updateAppellantCaseById = async (req, res) => {
 			enforcementReference,
 			enforcementNoticeListedBuilding,
 			descriptionOfAllegedBreach,
-			interestInLand
+			interestInLand,
+			writtenOrVerbalPermission
 		},
 		params,
 		validationOutcome
@@ -166,7 +167,8 @@ const updateAppellantCaseById = async (req, res) => {
 					enforcementReference,
 					enforcementNoticeListedBuilding,
 					descriptionOfAllegedBreach,
-					interestInLand
+					interestInLand,
+					writtenOrVerbalPermission
 			  });
 
 		await updatePersonalList(appeal.id);

@@ -1437,7 +1437,7 @@ export async function seedTestData(databaseConnector) {
 				contactPlanningInspectorateDate: getPastDate({ days: 10 }),
 				enforcementReference: 'Reference',
 				interestInLand: 'Land owner',
-				writtenOrVerbalPermission: 'Written',
+				writtenOrVerbalPermission: 'Yes',
 				descriptionOfAllegedBreach: 'Description'
 			}
 		});

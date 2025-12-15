@@ -51,6 +51,7 @@ import planningObligationRouter from './planning-obligation/planning-obligation.
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
 import siteAreaRouter from './site-area/site-area.router.js';
 import siteOwnershipRouter from './site-ownership/site-ownership.router.js';
+import writtenOrVerbalPermissionRouter from './written-or-verbal-permission/written-or-verbal-permission.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -292,6 +293,13 @@ router.use(
 	validateAppealWithInclude(['appellantCase']),
 	assertUserHasPermission(permissionNames.updateCase),
 	interestInLandRouter
+);
+
+router.use(
+	'/written-or-verbal-permission',
+	validateAppealWithInclude(['appellantCase']),
+	assertUserHasPermission(permissionNames.updateCase),
+	writtenOrVerbalPermissionRouter
 );
 
 router

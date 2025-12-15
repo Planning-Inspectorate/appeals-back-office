@@ -5,10 +5,15 @@
  * @param {string} updatedValue
  * @returns {Promise<{}>}
  */
-export function changeInterestInLand(apiClient, appealId, appellantCaseId, updatedValue) {
+export function changeWrittenOrVerbalPermission(
+	apiClient,
+	appealId,
+	appellantCaseId,
+	updatedValue
+) {
 	return apiClient.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
 		json: {
-			interestInLand: updatedValue
+			writtenOrVerbalPermission: updatedValue
 		}
 	});
 }

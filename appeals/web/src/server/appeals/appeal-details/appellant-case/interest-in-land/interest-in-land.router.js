@@ -5,11 +5,6 @@ import {
 	validateIncompleteReason,
 	validateOtherInterestInLand
 } from './interest-in-land.validator.js';
-// import {
-//     validateInquiryNumberOfWitnesses,
-//     validateProcedurePreferenceDetails,
-//     validateProcedurePreferenceDuration
-// } from './procedure-preference.validators.js';
 
 const router = createRouter({ mergeParams: true });
 
