@@ -158,7 +158,7 @@ describe('errorMessage', () => {
 
 		const message = errorMessage(type, null, metadata);
 
-		expect(message).toBe('The decision letter must be smaller than 25MB');
+		expect(message).toBe('The decision letter must be smaller than 100MB');
 	});
 
 	it('should show "The selected file" when no fileTitle is provided', () => {
@@ -167,6 +167,6 @@ describe('errorMessage', () => {
 		const metadata = {};
 
 		const message = errorMessage(type, null, metadata);
-		expect(message).toBe('The selected file must be smaller than 25MB');
+		expect(message).toBe('The selected file must be smaller than 100MB');
 	});
 });
