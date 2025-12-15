@@ -3996,7 +3996,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
-            <h1 class="govuk-heading-l">Changed description documents</h1>
+            <h1 class="govuk-heading-l">Appeal notification documents</h1>
         </div>
     </div><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2864"
     role="button" draggable="false" class="govuk-button govuk-button--secondary"
@@ -4201,6 +4201,726 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                         </td>
                         <td class="govuk-table__cell">Unredacted</td>
                         <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2865/97260151-4334-407f-a76a-0b5666cbcfa7"
+                            class="govuk-link">View and edit <span class="govuk-visually-hidden">ph1-documentFolderInfo.jpeg</span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:folderId/ should render the manage documents listing page with the expected heading, if the folderId is valid, and the folder is changed description for appeal type advertisement 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#documents-table">One or more files in this folder contains a virus. Upload a different version of each document that contains a virus.</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">Agreement to change the description of the advertisement</h1>
+        </div>
+    </div><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2864"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add document</a>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <table class="govuk-table" id="documents-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Name</th>
+                        <th scope="col" class="govuk-table__header">Date received</th>
+                        <th scope="col" class="govuk-table__header">Redaction status</th>
+                        <th scope="col" class="govuk-table__header">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">test-pdf-documentFolderInfo.pdf</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>PDF, 129 KB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">1 February 2023</td>
+                        <td class="govuk-table__cell">Redacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
+                            class="govuk-link">Edit <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">sample-20s-documentFolderInfo.mp4</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>MP4, 11.8 MB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">2 March 2024</td>
+                        <td class="govuk-table__cell">Unredacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/47d8f073-c837-4f07-9161-c1a5626eba56"
+                            class="govuk-link">Edit <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">ph0-documentFolderInfo.jpeg</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>JPEG, 59 KB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">3 April 2025</td>
+                        <td class="govuk-table__cell">No redaction required</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/97260151-4334-407f-a76a-0b5666cbcfa6"
+                            class="govuk-link">Edit or remove <span class="govuk-visually-hidden">ph0-documentFolderInfo.jpeg</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/103/download/97260151-4334-407f-a76a-0b5666cbcfa7/ph1-documentFolderInfo.jpeg"
+                                target="_blank">ph1-documentFolderInfo.jpeg</a>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>JPEG, 59 KB</dd>
+                            </dl>
+                        </td>
+                        <td class="govuk-table__cell">3 April 2025</td>
+                        <td class="govuk-table__cell">Unredacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/97260151-4334-407f-a76a-0b5666cbcfa7"
+                            class="govuk-link">View and edit <span class="govuk-visually-hidden">ph1-documentFolderInfo.jpeg</span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:folderId/ should render the manage documents listing page with the expected heading, if the folderId is valid, and the folder is changed description for appeal type cas advertisement 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#documents-table">One or more files in this folder contains a virus. Upload a different version of each document that contains a virus.</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">Agreement to change the description of the advertisement</h1>
+        </div>
+    </div><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2864"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add document</a>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <table class="govuk-table" id="documents-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Name</th>
+                        <th scope="col" class="govuk-table__header">Date received</th>
+                        <th scope="col" class="govuk-table__header">Redaction status</th>
+                        <th scope="col" class="govuk-table__header">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">test-pdf-documentFolderInfo.pdf</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>PDF, 129 KB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">1 February 2023</td>
+                        <td class="govuk-table__cell">Redacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
+                            class="govuk-link">Edit <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">sample-20s-documentFolderInfo.mp4</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>MP4, 11.8 MB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">2 March 2024</td>
+                        <td class="govuk-table__cell">Unredacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/47d8f073-c837-4f07-9161-c1a5626eba56"
+                            class="govuk-link">Edit <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">ph0-documentFolderInfo.jpeg</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>JPEG, 59 KB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">3 April 2025</td>
+                        <td class="govuk-table__cell">No redaction required</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/97260151-4334-407f-a76a-0b5666cbcfa6"
+                            class="govuk-link">Edit or remove <span class="govuk-visually-hidden">ph0-documentFolderInfo.jpeg</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/103/download/97260151-4334-407f-a76a-0b5666cbcfa7/ph1-documentFolderInfo.jpeg"
+                                target="_blank">ph1-documentFolderInfo.jpeg</a>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>JPEG, 59 KB</dd>
+                            </dl>
+                        </td>
+                        <td class="govuk-table__cell">3 April 2025</td>
+                        <td class="govuk-table__cell">Unredacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/97260151-4334-407f-a76a-0b5666cbcfa7"
+                            class="govuk-link">View and edit <span class="govuk-visually-hidden">ph1-documentFolderInfo.jpeg</span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:folderId/ should render the manage documents listing page with the expected heading, if the folderId is valid, and the folder is changed description for appeal type cas planning 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#documents-table">One or more files in this folder contains a virus. Upload a different version of each document that contains a virus.</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">Agreement to change the description of development</h1>
+        </div>
+    </div><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2864"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add document</a>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <table class="govuk-table" id="documents-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Name</th>
+                        <th scope="col" class="govuk-table__header">Date received</th>
+                        <th scope="col" class="govuk-table__header">Redaction status</th>
+                        <th scope="col" class="govuk-table__header">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">test-pdf-documentFolderInfo.pdf</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>PDF, 129 KB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">1 February 2023</td>
+                        <td class="govuk-table__cell">Redacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
+                            class="govuk-link">Edit <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">sample-20s-documentFolderInfo.mp4</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>MP4, 11.8 MB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">2 March 2024</td>
+                        <td class="govuk-table__cell">Unredacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/47d8f073-c837-4f07-9161-c1a5626eba56"
+                            class="govuk-link">Edit <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">ph0-documentFolderInfo.jpeg</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>JPEG, 59 KB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">3 April 2025</td>
+                        <td class="govuk-table__cell">No redaction required</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/97260151-4334-407f-a76a-0b5666cbcfa6"
+                            class="govuk-link">Edit or remove <span class="govuk-visually-hidden">ph0-documentFolderInfo.jpeg</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/103/download/97260151-4334-407f-a76a-0b5666cbcfa7/ph1-documentFolderInfo.jpeg"
+                                target="_blank">ph1-documentFolderInfo.jpeg</a>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>JPEG, 59 KB</dd>
+                            </dl>
+                        </td>
+                        <td class="govuk-table__cell">3 April 2025</td>
+                        <td class="govuk-table__cell">Unredacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/97260151-4334-407f-a76a-0b5666cbcfa7"
+                            class="govuk-link">View and edit <span class="govuk-visually-hidden">ph1-documentFolderInfo.jpeg</span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:folderId/ should render the manage documents listing page with the expected heading, if the folderId is valid, and the folder is changed description for appeal type full planning 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#documents-table">One or more files in this folder contains a virus. Upload a different version of each document that contains a virus.</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">Agreement to change the description of development</h1>
+        </div>
+    </div><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2864"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add document</a>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <table class="govuk-table" id="documents-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Name</th>
+                        <th scope="col" class="govuk-table__header">Date received</th>
+                        <th scope="col" class="govuk-table__header">Redaction status</th>
+                        <th scope="col" class="govuk-table__header">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">test-pdf-documentFolderInfo.pdf</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>PDF, 129 KB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">1 February 2023</td>
+                        <td class="govuk-table__cell">Redacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
+                            class="govuk-link">Edit <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">sample-20s-documentFolderInfo.mp4</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>MP4, 11.8 MB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">2 March 2024</td>
+                        <td class="govuk-table__cell">Unredacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/47d8f073-c837-4f07-9161-c1a5626eba56"
+                            class="govuk-link">Edit <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">ph0-documentFolderInfo.jpeg</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>JPEG, 59 KB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">3 April 2025</td>
+                        <td class="govuk-table__cell">No redaction required</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/97260151-4334-407f-a76a-0b5666cbcfa6"
+                            class="govuk-link">Edit or remove <span class="govuk-visually-hidden">ph0-documentFolderInfo.jpeg</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/103/download/97260151-4334-407f-a76a-0b5666cbcfa7/ph1-documentFolderInfo.jpeg"
+                                target="_blank">ph1-documentFolderInfo.jpeg</a>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>JPEG, 59 KB</dd>
+                            </dl>
+                        </td>
+                        <td class="govuk-table__cell">3 April 2025</td>
+                        <td class="govuk-table__cell">Unredacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/97260151-4334-407f-a76a-0b5666cbcfa7"
+                            class="govuk-link">View and edit <span class="govuk-visually-hidden">ph1-documentFolderInfo.jpeg</span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:folderId/ should render the manage documents listing page with the expected heading, if the folderId is valid, and the folder is changed description for appeal type householder 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#documents-table">One or more files in this folder contains a virus. Upload a different version of each document that contains a virus.</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">Agreement to change the description of development</h1>
+        </div>
+    </div><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2864"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add document</a>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <table class="govuk-table" id="documents-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Name</th>
+                        <th scope="col" class="govuk-table__header">Date received</th>
+                        <th scope="col" class="govuk-table__header">Redaction status</th>
+                        <th scope="col" class="govuk-table__header">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">test-pdf-documentFolderInfo.pdf</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>PDF, 129 KB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">1 February 2023</td>
+                        <td class="govuk-table__cell">Redacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
+                            class="govuk-link">Edit <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">sample-20s-documentFolderInfo.mp4</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>MP4, 11.8 MB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">2 March 2024</td>
+                        <td class="govuk-table__cell">Unredacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/47d8f073-c837-4f07-9161-c1a5626eba56"
+                            class="govuk-link">Edit <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">ph0-documentFolderInfo.jpeg</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>JPEG, 59 KB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">3 April 2025</td>
+                        <td class="govuk-table__cell">No redaction required</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/97260151-4334-407f-a76a-0b5666cbcfa6"
+                            class="govuk-link">Edit or remove <span class="govuk-visually-hidden">ph0-documentFolderInfo.jpeg</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/103/download/97260151-4334-407f-a76a-0b5666cbcfa7/ph1-documentFolderInfo.jpeg"
+                                target="_blank">ph1-documentFolderInfo.jpeg</a>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>JPEG, 59 KB</dd>
+                            </dl>
+                        </td>
+                        <td class="govuk-table__cell">3 April 2025</td>
+                        <td class="govuk-table__cell">Unredacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/97260151-4334-407f-a76a-0b5666cbcfa7"
+                            class="govuk-link">View and edit <span class="govuk-visually-hidden">ph1-documentFolderInfo.jpeg</span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:folderId/ should render the manage documents listing page with the expected heading, if the folderId is valid, and the folder is changed description for appeal type listed building 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#documents-table">One or more files in this folder contains a virus. Upload a different version of each document that contains a virus.</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">Agreement to change the description of development</h1>
+        </div>
+    </div><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2864"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add document</a>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <table class="govuk-table" id="documents-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Name</th>
+                        <th scope="col" class="govuk-table__header">Date received</th>
+                        <th scope="col" class="govuk-table__header">Redaction status</th>
+                        <th scope="col" class="govuk-table__header">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">test-pdf-documentFolderInfo.pdf</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>PDF, 129 KB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">1 February 2023</td>
+                        <td class="govuk-table__cell">Redacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
+                            class="govuk-link">Edit <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">sample-20s-documentFolderInfo.mp4</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>MP4, 11.8 MB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">2 March 2024</td>
+                        <td class="govuk-table__cell">Unredacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/47d8f073-c837-4f07-9161-c1a5626eba56"
+                            class="govuk-link">Edit <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><span class="govuk-body">ph0-documentFolderInfo.jpeg</span>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>JPEG, 59 KB</dd>
+                            </dl>
+                            <div class="govuk-!-margin-bottom-4"><strong class="govuk-tag govuk-tag--red">Virus detected</strong>
+                            </div>
+                        </td>
+                        <td class="govuk-table__cell">3 April 2025</td>
+                        <td class="govuk-table__cell">No redaction required</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/97260151-4334-407f-a76a-0b5666cbcfa6"
+                            class="govuk-link">Edit or remove <span class="govuk-visually-hidden">ph0-documentFolderInfo.jpeg</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/103/download/97260151-4334-407f-a76a-0b5666cbcfa7/ph1-documentFolderInfo.jpeg"
+                                target="_blank">ph1-documentFolderInfo.jpeg</a>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>JPEG, 59 KB</dd>
+                            </dl>
+                        </td>
+                        <td class="govuk-table__cell">3 April 2025</td>
+                        <td class="govuk-table__cell">Unredacted</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2864/97260151-4334-407f-a76a-0b5666cbcfa7"
                             class="govuk-link">View and edit <span class="govuk-visually-hidden">ph1-documentFolderInfo.jpeg</span></a>
                         </td>
                     </tr>

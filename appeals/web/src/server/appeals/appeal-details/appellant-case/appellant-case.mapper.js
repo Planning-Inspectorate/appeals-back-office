@@ -821,9 +821,10 @@ export function getPageHeadingTextOverrideForFolder(folder) {
 
 /**
  * @param {import('@pins/appeals.api').Appeals.FolderInfo} folder
+ * @param {string} appealType
  * @returns {string | undefined}
  */
-export function getPageHeadingTextOverrideForAddDocuments(folder) {
+export function getPageHeadingTextOverrideForAddDocuments(folder, appealType) {
 	switch (folder.path.split('/')[1]) {
 		case APPEAL_DOCUMENT_TYPE.APPLICATION_DECISION_LETTER:
 			return 'Upload the decision letter from the local planning authority';
@@ -832,7 +833,10 @@ export function getPageHeadingTextOverrideForAddDocuments(folder) {
 		case APPEAL_DOCUMENT_TYPE.ORIGINAL_APPLICATION_FORM:
 			return 'Upload your application form';
 		case APPEAL_DOCUMENT_TYPE.CHANGED_DESCRIPTION:
-			return 'Upload evidence of your agreement to change the description of development';
+			return appealType === APPEAL_TYPE.CAS_ADVERTISEMENT ||
+				appealType === APPEAL_TYPE.ADVERTISEMENT
+				? 'Upload evidence of your agreement to change the description of the advertisement'
+				: 'Upload evidence of your agreement to change the description of development';
 		case APPEAL_DOCUMENT_TYPE.APPELLANT_STATEMENT:
 			return 'Upload your appeal statement';
 		case APPEAL_DOCUMENT_TYPE.PLANNING_OBLIGATION:

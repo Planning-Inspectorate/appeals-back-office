@@ -17,7 +17,9 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import { redactionStatusIdToName } from '#lib/redaction-statuses.js';
 import config from '@pins/appeals.web/environment/config.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import {
+	APPEAL_DOCUMENT_TYPE,
 	APPEAL_REDACTED_STATUS,
 	APPEAL_VIRUS_CHECK_STATUS
 } from '@planning-inspectorate/data-model';
@@ -291,13 +293,21 @@ function mapAddDocumentsPageHeading(folderPath, documentId) {
 /**
  * @param {string} folderPath
  * @param {string} [documentId]
+ * @param {string} [appealType]
  * @returns {string}
  */
-function mapAddDocumentDetailsPageHeading(folderPath, documentId) {
+function mapAddDocumentDetailsPageHeading(folderPath, documentId, appealType = '') {
 	const isExistingDocument = !!documentId;
+	const isChangedDescription = folderPath.endsWith(APPEAL_DOCUMENT_TYPE.CHANGED_DESCRIPTION);
+	const isAdverts =
+		appealType === APPEAL_TYPE.ADVERTISEMENT || appealType === APPEAL_TYPE.CAS_ADVERTISEMENT;
 
 	if (folderIsAdditionalDocuments(folderPath)) {
 		return isExistingDocument ? 'Updated additional document' : 'Additional documents';
+	} else if (isChangedDescription) {
+		return isAdverts
+			? 'Agreement to change the description of the advertisement'
+			: 'Agreement to change the description of development';
 	} else if (isExistingDocument) {
 		return `Updated ${folderPathToFolderNameText(folderPath, false)} document`;
 	}
@@ -307,11 +317,20 @@ function mapAddDocumentDetailsPageHeading(folderPath, documentId) {
 
 /**
  * @param {string} folderPath
+ * @param {string} [appealType]
  * @returns {string}
  */
-function mapManageFolderPageHeading(folderPath) {
+function mapManageFolderPageHeading(folderPath, appealType = '') {
+	const isChangedDescription = folderPath.endsWith(APPEAL_DOCUMENT_TYPE.CHANGED_DESCRIPTION);
+	const isAdverts =
+		appealType === APPEAL_TYPE.ADVERTISEMENT || appealType === APPEAL_TYPE.CAS_ADVERTISEMENT;
+
 	if (folderIsAdditionalDocuments(folderPath)) {
 		return 'Additional documents';
+	} else if (isChangedDescription) {
+		return isAdverts
+			? 'Agreement to change the description of the advertisement'
+			: 'Agreement to change the description of development';
 	}
 
 	return `${folderPathToFolderNameText(folderPath)} documents`;
@@ -336,6 +355,7 @@ function stripFileExtension(fileName) {
  * @param {string} [params.dateLabelTextOverride]
  * @param {string} [params.documentId]
  * @param {import("@pins/express").ValidationErrors | undefined} [params.errors]
+ * @param {string | undefined} [params.appealType]
  * @returns {PageContent}
  */
 export function addDocumentDetailsPage({
@@ -347,7 +367,8 @@ export function addDocumentDetailsPage({
 	pageHeadingTextOverride,
 	dateLabelTextOverride,
 	documentId,
-	errors
+	errors,
+	appealType
 }) {
 	/** @type {PageContent} */
 	const pageContent = {
@@ -355,7 +376,9 @@ export function addDocumentDetailsPage({
 		backLinkText: 'Back',
 		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.folderId.toString()),
 		preHeading: 'Add document details',
-		heading: pageHeadingTextOverride || mapAddDocumentDetailsPageHeading(folder.path, documentId),
+		heading:
+			pageHeadingTextOverride ||
+			mapAddDocumentDetailsPageHeading(folder.path, documentId, appealType),
 		pageComponents: uncommittedFiles.flatMap((uncommittedFile, index) => {
 			return mapFileUploadInfoItemToDocumentDetailsPageComponents({
 				uncommittedFiles,
@@ -877,6 +900,7 @@ export function manageFolderPage({
 	dateColumnLabelTextOverride,
 	preHeadingTextOverride
 }) {
+	const appealType = request.currentAppeal?.appealType;
 	const notificationBanners = mapNotificationBannersFromSession(
 		request.session,
 		'manageFolder',
@@ -927,7 +951,7 @@ export function manageFolderPage({
 		backLinkText: 'Back',
 		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.folderId.toString()),
 		preHeading: preHeadingTextOverride || 'Manage folder',
-		heading: pageHeadingTextOverride || mapManageFolderPageHeading(folder.path),
+		heading: pageHeadingTextOverride || mapManageFolderPageHeading(folder.path, appealType),
 		pageComponents: [
 			...notificationBanners,
 			...errorSummaryPageComponents,
