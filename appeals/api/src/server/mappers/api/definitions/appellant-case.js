@@ -85,6 +85,10 @@ const updateableFields = {
 		type: 'string',
 		nullable: true
 	},
+	applicationDevelopmentAllOrPart: {
+		type: 'string',
+		nullable: true
+	},
 	contactAddress: {
 		...Address
 	},
@@ -338,6 +342,10 @@ const appellantCase = {
 					nullable: true
 				},
 				descriptionOfAllegedBreach: {
+					type: 'string',
+					nullable: true
+				},
+				applicationDevelopmentAllOrPart: {
 					type: 'string',
 					nullable: true
 				},

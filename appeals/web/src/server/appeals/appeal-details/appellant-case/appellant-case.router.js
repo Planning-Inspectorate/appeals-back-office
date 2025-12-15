@@ -1,5 +1,6 @@
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import allegedBreachDescriptionRouter from '#appeals/appeal-details/appellant-case/alleged-breach-description/alleged-breach-description.router.js';
+import applicationDevelopmentPartOrFullRouter from '#appeals/appeal-details/appellant-case/application-development-all-or-part/application-development-all-or-part.router.js';
 import contactPlanningInspectorateDateRouter from '#appeals/appeal-details/appellant-case/contact-planning-inspectorate-date/contact-planning-inspectorate-date.router.js';
 import enforcementEffectiveDateRouter from '#appeals/appeal-details/appellant-case/enforcement-effective-date/enforcement-effective-date.router.js';
 import enforcementIssueDateRouter from '#appeals/appeal-details/appellant-case/enforcement-issue-date/enforcement-issue-date.router.js';
@@ -300,6 +301,12 @@ router.use(
 	validateAppealWithInclude(['appellantCase']),
 	assertUserHasPermission(permissionNames.updateCase),
 	writtenOrVerbalPermissionRouter
+);
+
+router.use(
+	'/application-development-all-or-part',
+	validateAppealWithInclude(['appellantCase']),
+	applicationDevelopmentPartOrFullRouter
 );
 
 router

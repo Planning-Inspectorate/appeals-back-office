@@ -2527,6 +2527,12 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-application-receipt">Add<span class="govuk-visually-hidden"> Application receipt (3. Grounds and facts)</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was the application for all or part of the development?</dt>
+                            <dd                             class="govuk-summary-list__value">Not answered</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-development-all-or-part/change"
+                                    data-cy="add-application-development-all-or-part">Add<span class="govuk-visually-hidden"> Was the application for all or part of the development? (3. Grounds and facts)</span></a>
+                                </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -2884,6 +2890,12 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-application-receipt">Add<span class="govuk-visually-hidden"> Application receipt (3. Grounds and facts)</span></a>
                             </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was the application for all or part of the development?</dt>
+                            <dd                             class="govuk-summary-list__value">Not answered</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-development-all-or-part/change"
+                                    data-cy="add-application-development-all-or-part">Add<span class="govuk-visually-hidden"> Was the application for all or part of the development? (3. Grounds and facts)</span></a>
+                                </dd>
                         </div>
                     </dl>
                 </div>
