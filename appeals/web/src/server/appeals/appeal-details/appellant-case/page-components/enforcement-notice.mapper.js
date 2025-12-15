@@ -98,7 +98,8 @@ export function generateEnforcementNoticeComponents(
 				// @ts-ignore
 				...getSummaryListItems(mappedAppellantCaseData.factsForGrounds),
 				// @ts-ignore
-				...getSummaryListItems(mappedAppellantCaseData.supportingDocumentsForGrounds)
+				...getSummaryListItems(mappedAppellantCaseData.supportingDocumentsForGrounds),
+				mappedAppellantCaseData.applicationReceipt.display.summaryListItem
 			]
 		}
 	};

@@ -332,7 +332,7 @@ export function renderAuditTrailDetail(data) {
 			data.contactPlanningInspectorateDate
 				? formatDate(new Date(/** @type {string} */ (data.contactPlanningInspectorateDate)), false)
 				: undefined,
-		AUDIT_TRAIL_ENFORCEMENT_REFERENCE_UPDATED: () => data.enforcementRefrence,
+		AUDIT_TRAIL_ENFORCEMENT_REFERENCE_UPDATED: () => data.enforcementReference,
 		AUDIT_TRAIL_DESCRIPTION_OF_ALLEGED_BREACH_UPDATED: () => data.descriptionOfAllegedBreach,
 		AUDIT_TRAIL_STATUS_PLANNING_OBLIGATION_UPDATED: () =>
 			PLANNING_OBLIGATION_STATUSES.find(

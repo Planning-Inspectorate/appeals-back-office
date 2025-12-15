@@ -5,7 +5,9 @@ import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
+import { GROUNDS_APPLICATION_RECEIPT_DOCTYPE } from '@pins/appeals/constants/documents.js';
 import { CHANGE_APPEAL_TYPE_INVALID_REASON } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
 import { capitalize } from 'lodash-es';
 import {
 	postChangeDocumentDetails,
@@ -34,6 +36,20 @@ import {
 	mapWebReviewOutcomeToApiReviewOutcome
 } from './appellant-case.mapper.js';
 import * as appellantCaseService from './appellant-case.service.js';
+
+/**
+ *
+ * @param {string} folderPath
+ * @returns {undefined|string[]}
+ */
+const allowedFileTypes = (folderPath) => {
+	switch (folderPath) {
+		case `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${GROUNDS_APPLICATION_RECEIPT_DOCTYPE}`:
+			return ['doc', 'docx', 'pdf', 'tif', 'jpg', 'png'];
+		default:
+			return undefined;
+	}
+};
 
 /**
  *
@@ -260,7 +276,8 @@ export const getAddDocuments = async (request, response) => {
 		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-document-details/{{folderId}}`,
 		isLateEntry: getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid',
 		pageHeadingTextOverride,
-		documentTitle: getDocumentNameFromFolder(currentFolder.path) || ''
+		documentTitle: getDocumentNameFromFolder(currentFolder.path) || '',
+		allowedTypes: allowedFileTypes(currentFolder.path)
 	});
 };
 

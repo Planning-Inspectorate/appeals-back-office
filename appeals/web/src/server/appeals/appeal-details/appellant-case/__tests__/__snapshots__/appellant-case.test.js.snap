@@ -2522,6 +2522,11 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row grounds-for-appeal"><dt class="govuk-summary-list__key"> Grounds of appeal</dt>
                             <dd class="govuk-summary-list__value">No data</dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application receipt</dt>
+                            <dd class="govuk-summary-list__value">No documents</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-application-receipt">Add<span class="govuk-visually-hidden"> Application receipt (3. Grounds and facts)</span></a>
+                            </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -2874,6 +2879,11 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         </div>
                         <div class="govuk-summary-list__row grounds-for-appeal"><dt class="govuk-summary-list__key"> Grounds of appeal</dt>
                             <dd class="govuk-summary-list__value">No data</dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application receipt</dt>
+                            <dd class="govuk-summary-list__value">No documents</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-application-receipt">Add<span class="govuk-visually-hidden"> Application receipt (3. Grounds and facts)</span></a>
+                            </dd>
                         </div>
                     </dl>
                 </div>
