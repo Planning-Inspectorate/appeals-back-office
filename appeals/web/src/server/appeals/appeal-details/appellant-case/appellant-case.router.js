@@ -16,7 +16,7 @@ import {
 	validateCaseFolderId
 } from '../../appeal-documents/appeal-documents.middleware.js';
 import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
-import { validateAppeal } from '../appeal-details.middleware.js';
+import { validateAppeal, validateAppealWithInclude } from '../appeal-details.middleware.js';
 import changeLpaRouter from '../change-appeal-details/local-planning-authority/local-planning-authority.router.js';
 import greenBeltRouter from '../green-belt/green-belt.router.js';
 import inspectorAccessRouter from '../inspector-access/inspector-access.router.js';
@@ -376,6 +376,7 @@ router
 router
 	.route('/manage-documents/:folderId/')
 	.get(
+		validateAppealWithInclude(['appealType']),
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		asyncHandler(controller.getManageFolder)
