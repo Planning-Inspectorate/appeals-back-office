@@ -248,7 +248,10 @@ export const getAddDocuments = async (request, response) => {
 	if (!appellantCaseDetails) {
 		return response.status(404).render('app/404.njk');
 	}
-	const pageHeadingTextOverride = getPageHeadingTextOverrideForAddDocuments(currentFolder);
+	const pageHeadingTextOverride = getPageHeadingTextOverrideForAddDocuments(
+		currentFolder,
+		currentAppeal.appealType
+	);
 	await renderDocumentUpload({
 		request,
 		response,

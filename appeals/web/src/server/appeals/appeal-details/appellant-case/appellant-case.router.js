@@ -409,6 +409,7 @@ router
 router
 	.route('/manage-documents/:folderId/')
 	.get(
+		validateAppealWithInclude(['appealType']),
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		asyncHandler(controller.getManageFolder)

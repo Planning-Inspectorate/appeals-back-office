@@ -272,7 +272,8 @@ export const renderDocumentDetails = async ({
 		pageHeadingTextOverride,
 		dateLabelTextOverride,
 		documentId,
-		errors
+		errors,
+		appealType: request.currentAppeal?.appealType
 	});
 
 	const isAdditionalDocument = folderIsAdditionalDocuments(currentFolder.path);
