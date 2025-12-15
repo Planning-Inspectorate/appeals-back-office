@@ -1,3 +1,5 @@
+import { BYTES_IN_KB, BYTES_IN_MB } from '@pins/appeals/constants/distance.js';
+
 /** @typedef {File & {guid?: string}} FileWithRowId */
 
 const CLASSES = {
@@ -64,10 +66,10 @@ export const errorMessage = (type, replaceValue, additionalValues = {}) => {
  * @returns {string}
  */
 const renderSizeInMainUnit = (sizesInBytes) => {
-	const unit = sizesInBytes > 99_999 ? 'MB' : 'KB';
-	const power = sizesInBytes > 99_999 ? 1e-5 : 1e-2;
+	const unit = sizesInBytes > BYTES_IN_MB ? 'MB' : 'KB';
+	const power = sizesInBytes > BYTES_IN_MB ? BYTES_IN_MB : BYTES_IN_KB;
 
-	return `${Math.round(sizesInBytes * power) / 10} ${unit}`;
+	return `${Math.round(sizesInBytes / power)} ${unit}`;
 };
 
 /**
