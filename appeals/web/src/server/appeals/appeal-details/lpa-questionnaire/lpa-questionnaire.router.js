@@ -3,7 +3,7 @@ import { permissionNames } from '#environment/permissions.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
-import { validateAppeal } from '../appeal-details.middleware.js';
+import { validateAppeal, validateAppealWithInclude } from '../appeal-details.middleware.js';
 import * as controller from './lpa-questionnaire.controller.js';
 import * as validators from './lpa-questionnaire.validators.js';
 import outcomeIncompleteRouter from './outcome-incomplete/outcome-incomplete.router.js';
@@ -390,6 +390,7 @@ router
 router
 	.route('/:lpaQuestionnaireId/manage-documents/:folderId/')
 	.get(
+		validateAppealWithInclude(['appealType']),
 		assertUserHasPermission(permissionNames.viewCaseDetails),
 		validateCaseFolderId,
 		asyncHandler(controller.getManageFolder)
