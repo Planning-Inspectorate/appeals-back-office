@@ -133,6 +133,15 @@ Cypress.Commands.add('elementExists', (selector) => {
 	});
 });
 
+Cypress.Commands.add('writeLog', (message, logToConsole = true, logToBrowser = true) => {
+	if (logToConsole) {
+		cy.task('log', message);
+	}
+	if (logToBrowser) {
+		cy.log(message);
+	}
+});
+
 Cypress.Commands.add('createCase', (customValues) => {
 	return cy.wrap(null).then(() => {
 		return appealsApiClient.caseSubmission(customValues).then((data) => {
@@ -278,7 +287,7 @@ Cypress.Commands.add('checkNotifySent', (caseObj, expectedNotifies) => {
 	// ensure input is always an array
 	const expected = [].concat(expectedNotifies);
 
-	cy.log('** expected notifies ', JSON.stringify(expectedNotifies));
+	cy.writeLog(`** expected notifies ${JSON.stringify(expectedNotifies)}`);
 
 	expected.forEach(({ template, recipient }) => {
 		expect(
@@ -295,13 +304,11 @@ Cypress.Commands.add('checkNotifySent', (caseObj, expectedNotifies) => {
 	return cy
 		.wrap(null)
 		.then(() => {
-			cy.log('** here about to get sent notifies ');
-
 			// return the promise so Cypress waits for it
 			return appealsApiClient.getNotifyEmails(caseObj.reference);
 		})
 		.then((sentNotifies) => {
-			cy.log(`** sent notifies ${JSON.stringify(sentNotifies)}`);
+			cy.writeLog(`** sent notifies ${JSON.stringify(sentNotifies)}`);
 
 			// filter for expected notifies that were NOT found
 			const missingNotifies = expected.filter(

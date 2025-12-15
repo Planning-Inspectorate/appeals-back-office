@@ -425,7 +425,13 @@ export const appealsApiClient = {
 			expect(response.status).to.eq(200);
 
 			const responsejson = await response.json();
-			cy.log('** notify-emails-sent ', JSON.stringify(responsejson));
+
+			const sentNotifies = responsejson.map((notify) => ({
+				template: notify.template,
+				recipient: notify.recipient
+			}));
+
+			cy.writeLog(`** response from notify-emails-sent  ${JSON.stringify(sentNotifies)}`);
 
 			return responsejson;
 		} catch {
