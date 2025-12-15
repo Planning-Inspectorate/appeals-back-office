@@ -1,3 +1,4 @@
+import { mapApplicationReceipt } from '#lib/mappers/data/appellant-case/submappers/application-receipt.js';
 import { mapDescriptionOfAllegedBreach } from '#lib/mappers/data/appellant-case/submappers/description-of-alleged-breach.js';
 import { submaps as s78Submaps } from './s78.js';
 import { mapContactAddress } from './submappers/contact-address.js';
@@ -30,5 +31,6 @@ export const submaps = {
 	otherAppellants: mapOtherAppellants,
 	groundsForAppeal: mapGroundsForAppeal,
 	factsForGrounds: mapFactsForGrounds,
-	supportingDocumentsForGrounds: mapSupportingDocumentsForGrounds
+	supportingDocumentsForGrounds: mapSupportingDocumentsForGrounds,
+	applicationReceipt: mapApplicationReceipt
 };
