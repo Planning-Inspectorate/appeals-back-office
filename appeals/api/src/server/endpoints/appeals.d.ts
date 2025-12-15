@@ -191,6 +191,7 @@ interface SingleAppellantCaseResponse {
 		interestInLand: string | null;
 		writtenOrVerbalPermission: string | null;
 		descriptionOfAllegedBreach: string | null;
+		applicationDevelopmentAllOrPart: string | null;
 	};
 	siteAccessRequired?: {
 		details: string | null;
