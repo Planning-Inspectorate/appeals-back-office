@@ -1,4 +1,5 @@
 import { textSummaryListItem } from '#lib/mappers/index.js';
+import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapWrittenOrVerbalPermission = ({
@@ -8,19 +9,21 @@ export const mapWrittenOrVerbalPermission = ({
 }) => {
 	const id = 'written-or-verbal-permission';
 
+	const interestInLand = appellantCaseData.enforcementNotice?.interestInLand;
 	const isOtherInterest =
-		appellantCaseData.enforcementNotice?.interestInLand?.toLowerCase() === 'other';
+		!!interestInLand && !['Owner', 'Mortgage Lender', 'Tenant'].includes(interestInLand);
 
 	if (!isOtherInterest) {
 		return { id, display: {} };
 	}
 
-	const hasData = appellantCaseData.enforcementNotice?.writtenOrVerbalPermission !== null;
 	return textSummaryListItem({
 		id,
 		text: 'Do you have written or verbal permission to use the land?',
-		value: appellantCaseData.enforcementNotice?.writtenOrVerbalPermission || 'No data',
+		value: appellantCaseData.enforcementNotice?.writtenOrVerbalPermission
+			? capitalizeFirstLetter(appellantCaseData.enforcementNotice?.writtenOrVerbalPermission)
+			: 'Not answered',
 		link: `${currentRoute}/written-or-verbal-permission/change`,
-		editable: hasData && userHasUpdateCase
+		editable: userHasUpdateCase
 	});
 };
