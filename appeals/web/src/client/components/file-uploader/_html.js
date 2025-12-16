@@ -1,3 +1,4 @@
+import { BYTES_IN_KB, BYTES_IN_MB } from '@pins/appeals/constants/distance.js';
 /** @typedef {File & {guid?: string}} FileWithRowId */
 
 const CLASSES = {
@@ -32,7 +33,7 @@ export const errorMessage = (type, replaceValue, additionalValues = {}) => {
 			'Please confirm that the document does not belong anywhere else',
 		TIMEOUT: 'There was a timeout and your files could not be uploaded',
 		NO_FILE: 'Select the {fileTitle}',
-		SIZE_SINGLE_FILE: `The {fileTitle} must be smaller than 25MB`,
+		SIZE_SINGLE_FILE: `The {fileTitle} must be smaller than 100MB`,
 		GENERIC_SINGLE_FILE: `{REPLACE_VALUE} could not be added`,
 		NAME_SINGLE_FILE: `{REPLACE_VALUE} could not be added because the file name is too long or contains special characters. Rename the file and try again.`,
 		DUPLICATE_NAME_SINGLE_FILE: `"{REPLACE_VALUE}" could not be added because a file with this name already exists. Files cannot have duplicate names.`,
@@ -64,10 +65,10 @@ export const errorMessage = (type, replaceValue, additionalValues = {}) => {
  * @returns {string}
  */
 const renderSizeInMainUnit = (sizesInBytes) => {
-	const unit = sizesInBytes > 99_999 ? 'MB' : 'KB';
-	const power = sizesInBytes > 99_999 ? 1e-5 : 1e-2;
+	const unit = sizesInBytes > BYTES_IN_MB ? 'MB' : 'KB';
+	const power = sizesInBytes > BYTES_IN_MB ? BYTES_IN_MB : BYTES_IN_KB;
 
-	return `${Math.round(sizesInBytes * power) / 10} ${unit}`;
+	return `${Math.round(sizesInBytes / power)} ${unit}`;
 };
 
 /**
