@@ -340,7 +340,9 @@ export function renderAuditTrailDetail(data) {
 			PLANNING_OBLIGATION_STATUSES.find(
 				(/** @type {{value: string, label: string}} */ item) =>
 					item.value === data.statusPlanningObligation
-			)?.label || 'Not applicable'
+			)?.label || 'Not applicable',
+		AUDIT_TRAIL_WRITTEN_OR_VERBAL_PERMISSION_UPDATED: () => data.writtenOrVerbalPermission,
+		AUDIT_TRAIL_INTEREST_IN_LAND_UPDATED: () => data.interestInLand
 	};
 
 	if (!auditTrailParameters[constantKey]) {
