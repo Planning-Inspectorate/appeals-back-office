@@ -303,11 +303,13 @@ export function finalCommentsSharePage(appeal, request, backUrl) {
  * @returns {PageContent}
  * */
 export function proofOfEvidenceSharePage(appeal, request, backUrl) {
-	const hasValidAppellantProofOfEvidence =
-		appeal.documentationSummary.appellantProofOfEvidence?.representationStatus ===
-		COMMENT_STATUS.VALID;
-	const hasValidLpaProofOfEvidence =
-		appeal.documentationSummary.lpaProofOfEvidence?.representationStatus === COMMENT_STATUS.VALID;
+	const shareableStatuses = [COMMENT_STATUS.VALID, COMMENT_STATUS.INCOMPLETE];
+	const hasValidAppellantProofOfEvidence = shareableStatuses.includes(
+		appeal.documentationSummary.appellantProofOfEvidence?.representationStatus
+	);
+	const hasValidLpaProofOfEvidence = shareableStatuses.includes(
+		appeal.documentationSummary.lpaProofOfEvidence?.representationStatus
+	);
 
 	const infoText = (() => {
 		const appellantProofOfEvidenceLink = `<a class="govuk-link" href="${addBackLinkQueryToUrl(
