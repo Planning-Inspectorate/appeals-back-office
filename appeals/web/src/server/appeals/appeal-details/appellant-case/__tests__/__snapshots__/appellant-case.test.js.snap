@@ -2560,6 +2560,12 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                     data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Grounds and facts)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> When was the appeal decision?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/appeal-decision-date/change"
+                                    data-cy="change-appeal-decision-date">Change<span class="govuk-visually-hidden"> When was the appeal decision? (3. Grounds and facts)</span></a>
+                                </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -2931,6 +2937,12 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
                                     data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Grounds and facts)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> When was the appeal decision?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/appeal-decision-date/change"
+                                    data-cy="change-appeal-decision-date">Change<span class="govuk-visually-hidden"> When was the appeal decision? (3. Grounds and facts)</span></a>
                                 </dd>
                         </div>
                     </dl>

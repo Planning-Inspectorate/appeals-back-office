@@ -4151,6 +4151,8 @@ export type AppellantCase = {
 		effectiveDate?: string | null;
 		/** @format date-time */
 		contactPlanningInspectorateDate?: string | null;
+		/** @format date-time */
+		appealDecisionDate?: string | null;
 		reference?: string | null;
 		interestInLand?: string | null;
 		writtenOrVerbalPermission?: string | null;
@@ -4173,6 +4175,8 @@ export type AppellantCase = {
 	enforcementEffectiveDate?: string | null;
 	/** @format date-time */
 	contactPlanningInspectorateDate?: string | null;
+	/** @format date-time */
+	appealDecisionDate?: string | null;
 	interestInLand?: string | null;
 	writtenOrVerbalPermission?: string | null;
 	descriptionOfAllegedBreach?: string | null;
@@ -12495,6 +12499,8 @@ export interface AppellantCaseUpdateRequest {
 	enforcementEffectiveDate?: string | null;
 	/** @format date-time */
 	contactPlanningInspectorateDate?: string | null;
+	/** @format date-time */
+	appealDecisionDate?: string | null;
 	interestInLand?: string | null;
 	writtenOrVerbalPermission?: string | null;
 	descriptionOfAllegedBreach?: string | null;

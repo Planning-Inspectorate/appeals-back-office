@@ -73,6 +73,11 @@ const updateableFields = {
 		format: 'date-time',
 		nullable: true
 	},
+	appealDecisionDate: {
+		type: 'string',
+		format: 'date-time',
+		nullable: true
+	},
 	interestInLand: {
 		type: 'string',
 		nullable: true
@@ -325,6 +330,11 @@ const appellantCase = {
 					nullable: true
 				},
 				contactPlanningInspectorateDate: {
+					type: 'string',
+					format: 'date-time',
+					nullable: true
+				},
+				appealDecisionDate: {
 					type: 'string',
 					format: 'date-time',
 					nullable: true

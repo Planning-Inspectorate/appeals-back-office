@@ -44,6 +44,9 @@ export const mapEnforcementAppellantCase = (data) => {
 						addressId,
 						postCode: postcode ?? ''
 				  }
+				: null,
+			appealDecisionDate: hasEnforcementData
+				? appellantCase?.appealDecisionDate?.toISOString()
 				: null
 		}
 	};

@@ -1,3 +1,4 @@
+import { mapAppealDecisionDate } from '#lib/mappers/data/appellant-case/submappers/appeal-decision-date.js';
 import { mapApplicationDevelopmentAllOrPart } from '#lib/mappers/data/appellant-case/submappers/application-development-all-or-part.js';
 import { mapApplicationReceipt } from '#lib/mappers/data/appellant-case/submappers/application-receipt.js';
 import { mapDescriptionOfAllegedBreach } from '#lib/mappers/data/appellant-case/submappers/description-of-alleged-breach.js';
@@ -34,5 +35,6 @@ export const submaps = {
 	factsForGrounds: mapFactsForGrounds,
 	supportingDocumentsForGrounds: mapSupportingDocumentsForGrounds,
 	applicationReceipt: mapApplicationReceipt,
-	applicationDevelopmentAllOrPart: mapApplicationDevelopmentAllOrPart
+	applicationDevelopmentAllOrPart: mapApplicationDevelopmentAllOrPart,
+	appealDecisionDate: mapAppealDecisionDate
 };

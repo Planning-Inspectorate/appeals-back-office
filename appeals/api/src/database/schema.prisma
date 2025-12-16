@@ -337,6 +337,7 @@ model AppellantCase {
   applicationDevelopmentAllOrPart String?
   contactAddress                  Address?  @relation(fields: [contactAddressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   contactAddressId                Int?
+  appealDecisionDate              DateTime?
 
   //Cas adverts fields
   landownerPermission Boolean?
