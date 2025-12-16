@@ -99,6 +99,55 @@ describe('representations', () => {
 			expect(textResponse.innerHTML).toContain(`Progress to inquiry</button>`);
 		});
 
+		it('should contain correct content if inquiry and PoE and status is set to "EVIDENCE" and incomplete PoEs to share', async () => {
+			const appealWithInvalidPoEs = {
+				...appealData,
+				procedureType: 'inquiry',
+				appealStatus: 'evidence',
+				documentationSummary: {
+					appellantProofOfEvidence: {
+						representationStatus: 'incomplete'
+					},
+					lpaProofOfEvidence: {
+						representationStatus: 'incomplete'
+					}
+				},
+				appealTimetable: {
+					proofOfEvidenceAndWitnessesDueDate: '2024-12-04'
+				}
+			};
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealWithInvalidPoEs);
+			const response = await request.get(`${baseUrl}/1/share`);
+			const snapshotResponse = parseHtml(response.text);
+			const textResponse = parseHtml(response.text, {
+				skipPrettyPrint: true
+			});
+
+			expect(snapshotResponse.innerHTML).toMatchSnapshot();
+			expect(textResponse.querySelector('h1')?.innerHTML?.trim()).toBe(
+				'Confirm that you want to share proof of evidence'
+			);
+			expect(textResponse.querySelector('p.govuk-body')?.textContent).toContain(
+				`We’ll share appellant proof of evidence and LPA proof of evidence with the relevant parties.`
+			);
+			expect(
+				textResponse.querySelectorAll('p.govuk-body a.govuk-link')[0]?.getAttribute('href')
+			).toBe(
+				`/appeals-service/appeal-details/1/proof-of-evidence/appellant?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare`
+			);
+			expect(
+				textResponse.querySelectorAll('p.govuk-body a.govuk-link')[1]?.getAttribute('href')
+			).toBe(
+				`/appeals-service/appeal-details/1/proof-of-evidence/lpa?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare`
+			);
+			expect(textResponse.innerHTML.toString()).toContain(
+				`Warning</span> Do not share until you have reviewed all of the supporting documents and redacted any sensitive information.</strong>`
+			);
+			expect(textResponse.querySelector('form button.govuk-button')?.textContent?.trim()).toBe(
+				'Share proof of evidence and witnesses'
+			);
+		});
+
 		it('should show singular "party" text when there is 1 interested party comment to share', async () => {
 			const numIpComments = 1;
 			const appealWithStatements = {
