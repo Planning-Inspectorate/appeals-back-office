@@ -2533,6 +2533,33 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                     data-cy="add-application-development-all-or-part">Add<span class="govuk-visually-hidden"> Was the application for all or part of the development? (3. Grounds and facts)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-date/change"
+                                    data-cy="change-application-date">Change<span class="govuk-visually-hidden"> What date did you submit your application? (3. Grounds and facts)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-development-description"><dt class="govuk-summary-list__key"> Enter the description of development that you submitted in your application</dt>
+                            <dd                             class="govuk-summary-list__value">Test development description details</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/development-description/change"
+                                    data-cy="change-development-description">Change<span class="govuk-visually-hidden"> Enter the description of development that you submitted in your application (3. Grounds and facts)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-outcome/change"
+                                    data-cy="change-application-decision">Change<span class="govuk-visually-hidden"> Was your application granted or refused? (3. Grounds and facts)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
+                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Grounds and facts)</span></a>
+                                </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -2546,30 +2573,12 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
-                            <dd                             class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-date/change"
-                                    data-cy="change-application-date">Change<span class="govuk-visually-hidden"> What date did you submit your application? (4. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-development-description"><dt class="govuk-summary-list__key"> Enter the description of development that you submitted in your application</dt>
-                            <dd                             class="govuk-summary-list__value">Test development description details</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/development-description/change"
-                                    data-cy="change-development-description">Change<span class="govuk-visually-hidden"> Enter the description of development that you submitted in your application (4. Application details)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row appeal-related-appeals"><dt class="govuk-summary-list__key"> Are there other appeals linked to your development?</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/other-appeals/add"
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Are there other appeals linked to your development? (4. Application details)</span></a>
                                 </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Development type</dt>
-                            <dd class="govuk-summary-list__value">Not answered</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-development-type/change"
-                                data-cy="change-development-type">Change<span class="govuk-visually-hidden"> Development type (4. Application details)</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -2897,6 +2906,33 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                     data-cy="add-application-development-all-or-part">Add<span class="govuk-visually-hidden"> Was the application for all or part of the development? (3. Grounds and facts)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-date/change"
+                                    data-cy="change-application-date">Change<span class="govuk-visually-hidden"> What date did you submit your application? (3. Grounds and facts)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-development-description"><dt class="govuk-summary-list__key"> Enter the description of development that you submitted in your application</dt>
+                            <dd                             class="govuk-summary-list__value">Test development description details</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/development-description/change"
+                                    data-cy="change-development-description">Change<span class="govuk-visually-hidden"> Enter the description of development that you submitted in your application (3. Grounds and facts)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-outcome/change"
+                                    data-cy="change-application-decision">Change<span class="govuk-visually-hidden"> Was your application granted or refused? (3. Grounds and facts)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
+                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Grounds and facts)</span></a>
+                                </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -2910,30 +2946,12 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
-                            <dd                             class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-date/change"
-                                    data-cy="change-application-date">Change<span class="govuk-visually-hidden"> What date did you submit your application? (4. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row appeal-development-description"><dt class="govuk-summary-list__key"> Enter the description of development that you submitted in your application</dt>
-                            <dd                             class="govuk-summary-list__value">Test development description details</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/development-description/change"
-                                    data-cy="change-development-description">Change<span class="govuk-visually-hidden"> Enter the description of development that you submitted in your application (4. Application details)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row appeal-related-appeals"><dt class="govuk-summary-list__key"> Are there other appeals linked to your development?</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/other-appeals/add"
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Are there other appeals linked to your development? (4. Application details)</span></a>
                                 </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Development type</dt>
-                            <dd class="govuk-summary-list__value">Not answered</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-development-type/change"
-                                data-cy="change-development-type">Change<span class="govuk-visually-hidden"> Development type (4. Application details)</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>

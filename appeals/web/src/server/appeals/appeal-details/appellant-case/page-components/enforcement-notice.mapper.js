@@ -65,6 +65,16 @@ export function generateEnforcementNoticeComponents(
 		].filter((row) => row);
 	}
 
+	const applicationDetailsComponents = getComponentParameters(
+		'application-summary',
+		pageComponents
+	);
+	if (applicationDetailsComponents) {
+		applicationDetailsComponents.parameters.rows = [
+			mappedAppellantCaseData.relatedAppeals.display.summaryListItem
+		].filter((row) => row);
+	}
+
 	/**
 	 *
 	 * @param {Instructions[]} subMapperList
@@ -100,8 +110,13 @@ export function generateEnforcementNoticeComponents(
 				// @ts-ignore
 				...getSummaryListItems(mappedAppellantCaseData.supportingDocumentsForGrounds),
 				mappedAppellantCaseData.applicationReceipt.display.summaryListItem,
-				mappedAppellantCaseData.applicationDevelopmentAllOrPart.display.summaryListItem
-			]
+				mappedAppellantCaseData.applicationDevelopmentAllOrPart.display.summaryListItem,
+				mappedAppellantCaseData.applicationReference.display.summaryListItem,
+				mappedAppellantCaseData.applicationDate.display.summaryListItem,
+				mappedAppellantCaseData.developmentDescription.display.summaryListItem,
+				mappedAppellantCaseData.applicationDecision.display.summaryListItem,
+				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem
+			].filter((row) => row)
 		}
 	};
 
