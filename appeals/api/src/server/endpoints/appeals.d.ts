@@ -192,6 +192,7 @@ interface SingleAppellantCaseResponse {
 		writtenOrVerbalPermission: string | null;
 		descriptionOfAllegedBreach: string | null;
 		applicationDevelopmentAllOrPart: string | null;
+		appealDecisionDate: string | null;
 	};
 	siteAccessRequired?: {
 		details: string | null;
@@ -888,6 +889,7 @@ interface EnforcementNoticeAppellantCase {
 	isRecieved?: boolean | null;
 	reference?: string | null;
 	writtenOrVerbalPermission?: string | null;
+	appellantDecisionDate?: string | null;
 }
 
 export interface CreateCaseNote {

@@ -271,6 +271,8 @@ export const AUDIT_TRAIL_WRITTEN_OR_VERBAL_PERMISSION_UPDATED =
 	'Do you have written or verbal permission to use the land? updated to {replacement0}';
 export const AUDIT_TRAIL_INTEREST_IN_LAND_UPDATED =
 	'What is your interest in the land? updated to {replacement0}';
+export const AUDIT_TRAIL_APPEAL_DECISION_DATE_UPDATED =
+	'Appeal decision date updated to {replacement0}';
 
 export const DATABASE_ORDER_BY_ASC = 'asc';
 export const DATABASE_ORDER_BY_DESC = 'desc';

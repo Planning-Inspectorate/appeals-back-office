@@ -16381,6 +16381,11 @@
 								"format": "date-time",
 								"nullable": true
 							},
+							"appealDecisionDate": {
+								"type": "string",
+								"format": "date-time",
+								"nullable": true
+							},
 							"reference": {
 								"type": "string",
 								"nullable": true
@@ -16449,6 +16454,11 @@
 						"nullable": true
 					},
 					"contactPlanningInspectorateDate": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"appealDecisionDate": {
 						"type": "string",
 						"format": "date-time",
 						"nullable": true
@@ -35747,6 +35757,11 @@
 						"nullable": true
 					},
 					"contactPlanningInspectorateDate": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"appealDecisionDate": {
 						"type": "string",
 						"format": "date-time",
 						"nullable": true

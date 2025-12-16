@@ -70,7 +70,9 @@ const renderAppellantCase = async (request, response) => {
 				currentAppeal.appealId,
 				currentAppeal.appellantCaseId
 			)
-			.catch((error) => logger.error(error));
+			.catch((error) => {
+				return logger.error(error);
+			});
 
 		const mappedPageContent = await appellantCasePage(
 			appellantCaseResponse,

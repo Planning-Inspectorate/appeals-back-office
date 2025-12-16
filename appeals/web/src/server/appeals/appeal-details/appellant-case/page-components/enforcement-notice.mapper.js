@@ -115,7 +115,8 @@ export function generateEnforcementNoticeComponents(
 				mappedAppellantCaseData.applicationDate.display.summaryListItem,
 				mappedAppellantCaseData.developmentDescription.display.summaryListItem,
 				mappedAppellantCaseData.applicationDecision.display.summaryListItem,
-				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem
+				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
+				mappedAppellantCaseData.appealDecisionDate.display.summaryListItem
 			].filter((row) => row)
 		}
 	};
