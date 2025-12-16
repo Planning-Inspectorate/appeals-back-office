@@ -1,3 +1,8 @@
+import {
+	BYTES_IN_GB,
+	MAX_FILE_SIZE,
+	TOTAL_MAX_FILE_SIZE
+} from '@pins/appeals/constants/distance.js';
 import { hideErrors, showErrors } from './_errors.js';
 import {
 	buildErrorListItem,
@@ -22,11 +27,6 @@ const SELECTORS = {
 	submitButton: '.pins-file-upload__submit',
 	removeButton: '.pins-file-upload__remove'
 };
-const BYTES_IN_KB = 1024;
-const BYTES_IN_MB = BYTES_IN_KB * 1024;
-const BYTES_IN_GB = BYTES_IN_MB * 1024;
-const MAX_FILE_SIZE = 25 * BYTES_IN_MB; // 25MB
-const TOTAL_MAX_FILE_SIZE = 1 * BYTES_IN_GB; // 1GB
 
 /**
  * Actions on the client for the file upload process
