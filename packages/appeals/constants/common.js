@@ -117,6 +117,7 @@ export const TEAM_NAME_MAP = Object.freeze({
 
 export const REVERT_BUTTON_TEXT = Object.freeze({
 	LPA_STATEMENT: 'Revert to original LPA statement',
+	APPELLANT_STATEMENT: 'Revert to original appellant statement',
 	LPA_FINAL_COMMENT: 'Revert to original LPA final comments',
 	APPELLANT_FINAL_COMMENT: 'Revert to original appellant final comments',
 	DEFAULT_TEXT: 'Revert to original comment'

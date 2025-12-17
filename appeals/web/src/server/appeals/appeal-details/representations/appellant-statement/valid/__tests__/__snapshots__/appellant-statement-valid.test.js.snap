@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`appellant statement valid GET /allocation-check should render the allocation check page with expected content 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Allocation level</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Do you need to update the allocation level and specialisms?</legend>
+                                <div                                 class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="allocationLevelAndSpecialisms"
+                                        name="allocationLevelAndSpecialisms" type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="allocationLevelAndSpecialisms">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="allocationLevelAndSpecialisms-2"
+                                        name="allocationLevelAndSpecialisms" type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="allocationLevelAndSpecialisms-2">No</label>
+                                    </div>
+                        </div>
+                        </fieldset>
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant statement valid GET /allocation-level should render the allocation level page with expected content 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Allocation level</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="allocationLevel" name="allocationLevel"
+                                    type="radio" value="A">
+                                    <label class="govuk-label govuk-radios__label" for="allocationLevel">A</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="allocationLevel-2" name="allocationLevel"
+                                    type="radio" value="B">
+                                    <label class="govuk-label govuk-radios__label" for="allocationLevel-2">B</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant statement valid GET /allocation-specialisms should render the allocation specialisms page with expected content 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Allocation specialisms</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="allocationSpecialisms" name="allocationSpecialisms"
+                                    type="checkbox" value="1">
+                                    <label class="govuk-label govuk-checkboxes__label" for="allocationSpecialisms">Specialism 1</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="allocationSpecialisms-2" name="allocationSpecialisms"
+                                    type="checkbox" value="2">
+                                    <label class="govuk-label govuk-checkboxes__label" for="allocationSpecialisms-2">Specialism 2</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="allocationSpecialisms-3" name="allocationSpecialisms"
+                                    type="checkbox" value="3">
+                                    <label class="govuk-label govuk-checkboxes__label" for="allocationSpecialisms-3">Specialism 3</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
