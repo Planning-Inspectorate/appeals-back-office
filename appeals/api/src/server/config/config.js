@@ -119,4 +119,5 @@ if (error) {
 	throw new Error(`loadConfig validation error: ${error.message}`);
 }
 
+console.log(value);
 export default value;
