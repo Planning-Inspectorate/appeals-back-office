@@ -3,14 +3,12 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import appealListRepository from '#repositories/appeal-lists.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import lpaRepository from '#repositories/lpa.repository.js';
+import padsUserRepository from '#repositories/pads-user.repository.js';
 import userRepository from '#repositories/user.repository.js';
 import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
-import {
-	CASE_RELATIONSHIP_LINKED,
-	VALIDATION_OUTCOME_COMPLETE
-} from '@pins/appeals/constants/support.js';
+import { VALIDATION_OUTCOME_COMPLETE } from '@pins/appeals/constants/support.js';
 import {
 	fetchBankHolidaysForDivision,
 	getNumberOfBankHolidaysBetweenDates
@@ -23,6 +21,7 @@ import { compact, uniq, uniqBy } from 'lodash-es';
 /** @typedef {import('@pins/appeals.api').Appeals.UsersToAssign} UsersToAssign */
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.User} User */
+/** @typedef {import('@pins/appeals.api').Schema.PADSUser} PADSUser */
 /** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
 
 const allStatusesOrdered = [
@@ -89,35 +88,21 @@ const mapAppealLPAs = async (appeals) => {
 };
 
 /**
- * @param {{ inspectorUserId: number | null, caseOfficerUserId: number | null }[]} appeals
- * @returns {Promise<{ inspectors: User[], caseOfficers: User[] }>}
+ * @param {{ inspectorUserId: number | null, caseOfficerUserId: number | null, padsInspectorUserId: string | null }[]} appeals
+ * @returns {Promise<{ inspectors: User[], caseOfficers: User[], padsInspectors: PADSUser[] }>}
  * */
 const mapUsers = async (appeals) => {
 	const inspectorIds = compact(appeals.map(({ inspectorUserId }) => inspectorUserId));
 	const caseOfficerIds = compact(appeals.map(({ caseOfficerUserId }) => caseOfficerUserId));
+	const padsInspectorIds = compact(appeals.map(({ padsInspectorUserId }) => padsInspectorUserId));
 	const users = await userRepository.getUsersByIds(uniq([...inspectorIds, ...caseOfficerIds]));
+	const padsUsers = await padsUserRepository.getPadsUsersByIds(uniq(padsInspectorIds));
 	return {
 		inspectors: users.filter((user) => inspectorIds.includes(user.id)),
-		caseOfficers: users.filter((user) => caseOfficerIds.includes(user.id))
+		caseOfficers: users.filter((user) => caseOfficerIds.includes(user.id)),
+		padsInspectors: padsUsers.filter((user) => padsInspectorIds.includes(user.sapId))
 	};
 };
-
-/**
- *
- * @param {DBAppeals} appeals
- * @returns {Promise<Awaited<unknown>[]>}
- */
-const mapAppeals = (appeals) =>
-	Promise.all(
-		appeals.map(async (appeal) => {
-			const linkedAppeals = await appealRepository.getLinkedAppeals(
-				appeal.reference,
-				CASE_RELATIONSHIP_LINKED
-			);
-
-			return formatAppeal(appeal, linkedAppeals);
-		})
-	);
 
 /**
  *
@@ -129,12 +114,22 @@ const mapAppeals = (appeals) =>
  * @param {string} lpaCode
  * @param {number} inspectorId
  * @param {number} caseOfficerId
+ * @param {string} padsInspectorId
  * @param {boolean} isGreenBelt
  * @param {number} appealTypeId
  * @param {number} assignedTeamId
  * @param {number} procedureTypeId
  * @param {string} appellantProcedurePreference
- * @returns {Promise<{mappedStatuses: string[], statusesInNationalList: string[], mappedLPAs: any[], mappedInspectors: any[], mappedCaseOfficers: any[], mappedAppeals: any[], itemCount: number}>}
+ * @returns {Promise<{
+ * 	mappedStatuses: string[],
+ * 	statusesInNationalList: string[],
+ * 	mappedLPAs: { name:string, lpaCode:string }[],
+ * 	mappedInspectors: User[],
+ * 	mappedCaseOfficers: User[],
+ * 	mappedPadsInspectors: PADSUser[],
+ * 	mappedAppeals: any[],
+ * 	itemCount: number
+ * }>}
  */
 const retrieveAppealListData = async (
 	pageNumber,
@@ -145,13 +140,14 @@ const retrieveAppealListData = async (
 	lpaCode,
 	inspectorId,
 	caseOfficerId,
+	padsInspectorId,
 	isGreenBelt,
 	appealTypeId,
 	assignedTeamId,
 	procedureTypeId,
 	appellantProcedurePreference
 ) => {
-	/** @type {[string, string, string, string, number, number, boolean, number,number, number, string]} */
+	/** @type {[string, string, string, string, number, number, string, boolean, number,number, number, string]} */
 	const appealFilters = [
 		searchTerm,
 		status,
@@ -159,22 +155,26 @@ const retrieveAppealListData = async (
 		lpaCode,
 		inspectorId ? Number(inspectorId) : 0,
 		caseOfficerId ? Number(caseOfficerId) : 0,
+		padsInspectorId ? String(padsInspectorId) : '',
 		isGreenBelt,
 		appealTypeId || 0,
 		assignedTeamId || 0,
 		procedureTypeId || 0,
 		appellantProcedurePreference
 	];
-	const appeals = await appealListRepository.getAllAppeals(...appealFilters, pageNumber, pageSize);
-	const allAppeals = await appealListRepository.getAppealsWithoutIncludes(...appealFilters);
-	const mappedAppeals = await mapAppeals(appeals);
+
+	const [appeals, allAppeals, statusesInNationalList, itemCount] = await Promise.all([
+		appealListRepository.getAllAppeals(...appealFilters, pageNumber, pageSize),
+		appealListRepository.getAppealsWithoutIncludes(...appealFilters),
+		appealListRepository.getAppealsStatusesInNationalList(),
+		appealListRepository.getAllAppealsCount(...appealFilters)
+	]);
+	const [mappedLPAs, users] = await Promise.all([mapAppealLPAs(allAppeals), mapUsers(allAppeals)]);
+	const mappedAppeals = appeals.map((appeal) => formatAppeal(appeal, []));
 	const mappedStatuses = mapAppealStatuses(appeals);
-	const mappedLPAs = await mapAppealLPAs(allAppeals);
-	const users = await mapUsers(allAppeals);
 	const mappedInspectors = users.inspectors;
 	const mappedCaseOfficers = users.caseOfficers;
-	const statusesInNationalList = await appealListRepository.getAppealsStatusesInNationalList();
-	const itemCount = await appealListRepository.getAllAppealsCount(...appealFilters);
+	const mappedPadsInspectors = users.padsInspectors;
 
 	return {
 		mappedStatuses,
@@ -182,6 +182,7 @@ const retrieveAppealListData = async (
 		mappedLPAs,
 		mappedInspectors,
 		mappedCaseOfficers,
+		mappedPadsInspectors,
 		mappedAppeals,
 		itemCount
 	};

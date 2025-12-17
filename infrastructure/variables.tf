@@ -63,6 +63,7 @@ variable "apps_config" {
       featureFlagRule6Parties           = bool
       featureFlagExpeditedAppeals       = bool
       featureFlagManuallyAddReps        = bool
+      featureFlagAppellantStatement     = bool
     })
 
     logging = object({
@@ -233,12 +234,13 @@ variable "sql_config" {
     sku_name    = string
     max_size_gb = number
     retention = object({
-      audit_days             = number
-      short_term_days        = number
-      long_term_weekly       = string
-      long_term_monthly      = string
-      long_term_yearly       = string
-      long_term_week_of_year = number
+      audit_days               = number
+      backup_interval_in_hours = number
+      short_term_days          = number
+      long_term_weekly         = string
+      long_term_monthly        = string
+      long_term_yearly         = string
+      long_term_week_of_year   = number
     })
     public_network_access_enabled = bool
   })

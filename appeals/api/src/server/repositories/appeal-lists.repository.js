@@ -18,6 +18,7 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
  * @param {string} lpaCode
  * @param {number} inspectorId
  * @param {number} caseOfficerId
+ * @param {string} padsInspectorId
  * @param {boolean} isGreenBelt
  * @param {number} appealTypeId
  * @param {number} assignedTeamId
@@ -33,6 +34,7 @@ const getAllAppeals = async (
 	lpaCode,
 	inspectorId,
 	caseOfficerId,
+	padsInspectorId,
 	isGreenBelt,
 	appealTypeId,
 	assignedTeamId,
@@ -57,6 +59,7 @@ const getAllAppeals = async (
 		lpaCode,
 		inspectorId,
 		caseOfficerId,
+		padsInspectorId,
 		isGreenBelt,
 		appealTypeId,
 		assignedTeamId,
@@ -83,6 +86,7 @@ const getAllAppeals = async (
 			},
 			inspector: true,
 			caseOfficer: true,
+			padsInspector: true,
 			appealTimetable: true,
 			representations: true,
 			lpaQuestionnaire: {
@@ -108,6 +112,7 @@ const getAllAppeals = async (
  * @param {string} lpaCode
  * @param {number} inspectorId
  * @param {number} caseOfficerId
+ * @param {string} padsInspectorId
  * @param {boolean} isGreenBelt
  * @param {number} appealTypeId
  * @param {number} assignedTeamId
@@ -121,6 +126,7 @@ const getAllAppealsCount = async (
 	lpaCode,
 	inspectorId,
 	caseOfficerId,
+	padsInspectorId,
 	isGreenBelt,
 	appealTypeId,
 	assignedTeamId,
@@ -134,6 +140,7 @@ const getAllAppealsCount = async (
 		lpaCode,
 		inspectorId,
 		caseOfficerId,
+		padsInspectorId,
 		isGreenBelt,
 		appealTypeId,
 		assignedTeamId,
@@ -153,6 +160,7 @@ const getAllAppealsCount = async (
  * @param {string} lpaCode
  * @param {number} inspectorId
  * @param {number} caseOfficerId
+ * @param {string} padsInspectorId
  * @param {boolean} isGreenBelt
  * @param {number} appealTypeId
  * @param {number} assignedTeamId
@@ -166,6 +174,7 @@ const getAppealsWithoutIncludes = async (
 	lpaCode,
 	inspectorId,
 	caseOfficerId,
+	padsInspectorId,
 	isGreenBelt,
 	appealTypeId,
 	assignedTeamId,
@@ -179,6 +188,7 @@ const getAppealsWithoutIncludes = async (
 		lpaCode,
 		inspectorId,
 		caseOfficerId,
+		padsInspectorId,
 		isGreenBelt,
 		appealTypeId,
 		assignedTeamId,
@@ -196,6 +206,7 @@ const getAppealsWithoutIncludes = async (
  * @param {string} lpaCode
  * @param {number} inspectorId
  * @param {number} caseOfficerId
+ * @param {string} padsInspectorId
  * @param {boolean} isGreenBelt
  * @param {number} appealTypeId
  * @param {number} assignedTeamId
@@ -209,6 +220,7 @@ const buildAllAppealsWhereClause = (
 	lpaCode,
 	inspectorId,
 	caseOfficerId,
+	padsInspectorId,
 	isGreenBelt,
 	appealTypeId,
 	assignedTeamId,
@@ -247,13 +259,30 @@ const buildAllAppealsWhereClause = (
 			]
 		}),
 		...(hasInspector === 'true' && {
-			inspectorUserId: {
-				not: null
-			}
+			OR: [
+				{
+					inspectorUserId: {
+						not: null
+					}
+				},
+				{
+					padsInspectorUserId: {
+						not: null
+					}
+				}
+			]
 		}),
 		...(hasInspector === 'false' && {
-			inspectorUserId: null
+			AND: [
+				{
+					inspectorUserId: null
+				},
+				{
+					padsInspectorUserId: null
+				}
+			]
 		}),
+
 		...(isGreenBelt && {
 			appellantCase: {
 				isGreenBelt: true
@@ -266,6 +295,9 @@ const buildAllAppealsWhereClause = (
 		}),
 		...(!!inspectorId && {
 			inspectorUserId: inspectorId
+		}),
+		...(!!padsInspectorId && {
+			padsInspectorUserId: padsInspectorId
 		}),
 		...(!!caseOfficerId && {
 			caseOfficerUserId: caseOfficerId

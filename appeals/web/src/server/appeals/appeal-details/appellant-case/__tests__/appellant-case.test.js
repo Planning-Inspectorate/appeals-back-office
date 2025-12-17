@@ -45,6 +45,7 @@ import {
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
 
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import nock from 'nock';
 import supertest from 'supertest';
 
@@ -1614,6 +1615,40 @@ describe('appellant-case', () => {
 
 					expect(unprettifiedElement.innerHTML).toContain(
 						`<div class="pins-show-more" data-label="Reason for preference details" data-mode="text">${text301Characters}</div>`
+					);
+				});
+			});
+
+			describe('facts for ground', () => {
+				const testGroundRef = 'a';
+				it('should render a "show more" component with the expected HTML on the "facts for ground" row', async () => {
+					nock('http://test/')
+						.get('/appeals/2?include=all')
+						.reply(200, {
+							...appealDataEnforcementNotice,
+							appealId: 2
+						});
+					nock('http://test/')
+						.get('/appeals/2/appellant-cases/0')
+						.reply(200, {
+							...appellantCaseDataNotValidated,
+							enforcementNotice: {
+								isReceived: true
+							},
+							appealGrounds: [
+								{ ground: { groundRef: testGroundRef }, factsForGround: text301Characters }
+							],
+							typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+						});
+					const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+
+					const unprettifiedElement = parseHtml(response.text, {
+						rootElement: '#grounds-and-facts',
+						skipPrettyPrint: true
+					});
+
+					expect(unprettifiedElement.innerHTML).toContain(
+						`<div class="pins-show-more" data-label="Facts for ground (a)" data-mode="text"data-toggle-text-collapsed="Show more"data-toggle-text-expanded="Show less">${text301Characters}</div>`
 					);
 				});
 			});
@@ -3438,38 +3473,77 @@ describe('appellant-case', () => {
 			nock.cleanAll();
 		});
 
-		it('should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text, if the folder is not additional documents', async () => {
-			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
-				.reply(200, appellantCaseDataNotValidated);
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
-
-			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`);
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain(
+		it.each([
+			[
+				'householder',
+				APPEAL_TYPE.HOUSEHOLDER,
 				'Upload evidence of your agreement to change the description of development</h1>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<div class="govuk-grid-row pins-file-upload"'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
+			],
+			[
+				'full planning',
+				APPEAL_TYPE.S78,
+				'Upload evidence of your agreement to change the description of development</h1>'
+			],
+			[
+				'listed building',
+				APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+				'Upload evidence of your agreement to change the description of development</h1>'
+			],
+			[
+				'cas planning',
+				APPEAL_TYPE.CAS_PLANNING,
+				'Upload evidence of your agreement to change the description of development</h1>'
+			],
+			[
+				'cas advertisement',
+				APPEAL_TYPE.CAS_ADVERTISEMENT,
+				'Upload evidence of your agreement to change the description of the advertisement</h1>'
+			],
+			[
+				'advertisement',
+				APPEAL_TYPE.ADVERTISEMENT,
+				'Upload evidence of your agreement to change the description of the advertisement</h1>'
+			]
+		])(
+			'should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text, if the folder is changedDescription with correct text for %s',
+			async (_, appealType, expectedText) => {
+				nock.cleanAll(); // need to remove the nocks so we can change the appeal type
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, { ...appealData, appealType: appealType });
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses);
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, appellantCaseDataNotValidated);
+				nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+				nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 
-			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
-			);
-			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
-			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
-			expect(unprettifiedElement.innerHTML).not.toContain(
-				'Only upload files to additional documents when no other folder is applicable.'
-			);
-		});
+				const response = await request.get(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`);
+
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain(expectedText);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<div class="govuk-grid-row pins-file-upload"'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
+
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
+				expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'Only upload files to additional documents when no other folder is applicable.'
+				);
+			}
+		);
 
 		it('should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the appellant case has no validation outcome', async () => {
 			nock('http://test/')
@@ -3928,13 +4002,13 @@ describe('appellant-case', () => {
 			);
 		});
 
-		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is not additional documents', async () => {
+		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is not additional documents or changedDescription', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
 			nock('http://test/')
 				.get('/appeals/1/document-folders/1')
-				.reply(200, documentFolderInfo)
+				.reply(200, { ...documentFolderInfo, path: 'appellant-case/appellantStatement' })
 				.persist();
 
 			const addDocumentsResponse = await request
@@ -3954,7 +4028,7 @@ describe('appellant-case', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Changed description documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Appellant statement documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
@@ -3964,6 +4038,82 @@ describe('appellant-case', () => {
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
+
+		it.each([
+			[
+				'householder',
+				APPEAL_TYPE.HOUSEHOLDER,
+				'Agreement to change the description of development</h1>'
+			],
+			['full planning', APPEAL_TYPE.S78, 'Agreement to change the description of development</h1>'],
+			[
+				'listed building',
+				APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+				'Agreement to change the description of development</h1>'
+			],
+			[
+				'cas planning',
+				APPEAL_TYPE.CAS_PLANNING,
+				'Agreement to change the description of development</h1>'
+			],
+			[
+				'cas advertisement',
+				APPEAL_TYPE.CAS_ADVERTISEMENT,
+				'Agreement to change the description of the advertisement</h1>'
+			],
+			[
+				'advertisement',
+				APPEAL_TYPE.ADVERTISEMENT,
+				'Agreement to change the description of the advertisement</h1>'
+			]
+		])(
+			'should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is changedDescription and appeal type is %s',
+			async (_, appealType, expectedText) => {
+				nock.cleanAll(); // need to remove the nocks so we can change the appeal type
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, { ...appealData, appealType: appealType })
+					.persist();
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, appellantCaseDataNotValidated);
+				nock('http://test/')
+					.get('/appeals/1/document-folders/1')
+					.reply(200, { ...documentFolderInfo, path: 'appellant-case/changedDescription' })
+					.persist();
+
+				const addDocumentsResponse = await request
+					.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
+					.send({
+						'upload-info': fileUploadInfo
+					});
+
+				expect(addDocumentsResponse.statusCode).toBe(302);
+
+				const response = await request.get(
+					`${baseUrl}/1${appellantCasePagePath}/add-document-details/1`
+				);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(expectedText);
+				expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
+				expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
+				expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
+
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
+			}
+		);
 
 		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has no validation outcome', async () => {
 			nock('http://test/')
@@ -4546,7 +4696,7 @@ describe('appellant-case', () => {
 				.persist();
 			nock('http://test/')
 				.get('/appeals/1/document-folders/1')
-				.reply(200, documentFolderInfo)
+				.reply(200, { ...documentFolderInfo, path: 'appellant-case/appellantStatement' })
 				.persist();
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
@@ -4575,7 +4725,7 @@ describe('appellant-case', () => {
 			);
 		});
 
-		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is not additional documents', async () => {
+		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is not additional documents or changed description', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
@@ -4597,7 +4747,7 @@ describe('appellant-case', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Updated changed description document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Updated appellant statement document</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
@@ -5491,6 +5641,10 @@ describe('appellant-case', () => {
 			// @ts-ignore
 			usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
 			nock('http://test/')
+				.get('/appeals/1?include=appealType')
+				.reply(200, { appealType: APPEAL_TYPE.HOUSEHOLDER })
+				.persist();
+			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
 		});
@@ -5516,7 +5670,9 @@ describe('appellant-case', () => {
 		});
 
 		it('should render the manage documents listing page with one document item for each document present in the folder, if the folderId is valid', async () => {
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+			nock('http://test/')
+				.get('/appeals/1/document-folders/1')
+				.reply(200, { ...documentFolderInfo, path: 'appellant-case/appellantStatement' });
 
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}/manage-documents/1/`
@@ -5528,7 +5684,7 @@ describe('appellant-case', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Changed description documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Appellant statement documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('Name</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
@@ -5559,6 +5715,62 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
 		});
+
+		it.each([
+			[
+				'householder',
+				APPEAL_TYPE.HOUSEHOLDER,
+				'Agreement to change the description of development</h1>'
+			],
+			['full planning', APPEAL_TYPE.S78, 'Agreement to change the description of development</h1>'],
+			[
+				'listed building',
+				APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+				'Agreement to change the description of development</h1>'
+			],
+			[
+				'cas planning',
+				APPEAL_TYPE.CAS_PLANNING,
+				'Agreement to change the description of development</h1>'
+			],
+			[
+				'cas advertisement',
+				APPEAL_TYPE.CAS_ADVERTISEMENT,
+				'Agreement to change the description of the advertisement</h1>'
+			],
+			[
+				'advertisement',
+				APPEAL_TYPE.ADVERTISEMENT,
+				'Agreement to change the description of the advertisement</h1>'
+			]
+		])(
+			'should render the manage documents listing page with the expected heading, if the folderId is valid, and the folder is changed description for appeal type %s',
+			async (_, appealType, expectedText) => {
+				nock.cleanAll(); // need to remove the nocks so we can change the appeal type
+				// @ts-ignore
+				usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses);
+				nock('http://test/')
+					.get('/appeals/1?include=appealType')
+					.reply(200, { appealType: appealType })
+					.persist();
+				nock('http://test/').get('/appeals/1/document-folders/3').reply(200, documentFolderInfo);
+
+				const response = await request.get(
+					`${baseUrl}/1${appellantCasePagePath}/manage-documents/3/`
+				);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(expectedText);
+			}
+		);
 	});
 
 	describe('GET /appellant-case/manage-documents/:folderId/:documentId', () => {

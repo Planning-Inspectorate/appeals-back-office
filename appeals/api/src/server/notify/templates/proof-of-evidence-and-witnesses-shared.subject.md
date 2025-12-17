@@ -1,0 +1,1 @@
+We have received all proof of evidence and witnesses: {{appeal_reference_number}}

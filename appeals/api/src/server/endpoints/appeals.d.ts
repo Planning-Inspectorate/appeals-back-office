@@ -1,5 +1,6 @@
-import { Address } from '@pins/appeals';
+import { Address, ContactAddress } from '@pins/appeals';
 import { Schema } from 'index';
+import { AppealGround, Ground } from '../../database/schema';
 
 declare global {
 	namespace Express {
@@ -10,6 +11,7 @@ declare global {
 			document: Schema.Document;
 			notifyClient: NotifyClient;
 			visitType: SiteVisitType;
+			ground: Ground;
 			validationOutcome: ValidationOutcome;
 			documentRedactionStatusIds: number[];
 			address: Schema.Address;
@@ -138,6 +140,9 @@ interface SingleAppealDetailsResponse {
 	inquiry?: Inquiry | null;
 	inquiryEstimate?: InquiryEstimate | null;
 	numberOfResidencesNetChange?: number | null;
+	enforcementNotice?: {
+		appellantCase: EnforcementNoticeAppellantCase;
+	};
 }
 
 interface UpdateAppealRequest {
@@ -185,6 +190,8 @@ interface SingleAppellantCaseResponse {
 		contactAddress: Address | null;
 		interestInLand: string | null;
 		writtenOrVerbalPermission: string | null;
+		descriptionOfAllegedBreach: string | null;
+		applicationDevelopmentAllOrPart: string | null;
 	};
 	siteAccessRequired?: {
 		details: string | null;
@@ -249,6 +256,7 @@ interface SingleAppellantCaseResponse {
 	landownerPermission?: boolean | null;
 	siteGridReferenceEasting?: string | null;
 	siteGridReferenceNorthing?: string | null;
+	appealGrounds?: AppealGround[] | null;
 }
 
 interface UpdateAppellantCaseRequest {
@@ -618,15 +626,19 @@ interface AppealListResponse {
 	isInquirySetup: boolean | null;
 	hasInquiryAddress: boolean | null;
 }
+
 interface DocumentationSummary {
 	appellantCase?: DocumentationSummaryEntry;
 	lpaQuestionnaire?: DocumentationSummaryEntry;
 	ipComments?: DocumentationSummaryEntry;
 	lpaStatement?: DocumentationSummaryEntry;
+	rule6PartyStatements?: { [serviceUserId: string]: DocumentationSummaryEntry };
 	lpaFinalComments?: DocumentationSummaryEntry;
 	appellantFinalComments?: DocumentationSummaryEntry;
 	lpaProofOfEvidence?: DocumentationSummaryEntry;
 	appellantProofOfEvidence?: DocumentationSummaryEntry;
+	rule6PartyProofs?: { [serviceUserId: string]: DocumentationSummaryEntry };
+	appellantStatement?: DocumentationSummaryEntry;
 }
 
 interface DocumentationSummaryEntry {
@@ -867,6 +879,15 @@ interface CreateAuditTrailRequest {
 	details: string;
 	loggedAt: Date;
 	userId: number;
+}
+
+interface EnforcementNoticeAppellantCase {
+	contactAddress?: ContactAddress | null;
+	interestInLand?: string | null;
+	isListedBuilding?: boolean | null;
+	isRecieved?: boolean | null;
+	reference?: string | null;
+	writtenOrVerbalPermission?: string | null;
 }
 
 export interface CreateCaseNote {

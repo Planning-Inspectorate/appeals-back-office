@@ -18,7 +18,6 @@ import {
 import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { omit } from 'lodash-es';
 import { request } from '../../../app-test.js';
-import { getIdsOfReferencedAppeals } from '../appeals.formatter.js';
 import { mapAppealStatuses } from '../appeals.service.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -71,6 +70,7 @@ describe('appeals list routes', () => {
 			);
 			databaseConnector.lPA.findMany.mockResolvedValue(lpas);
 			databaseConnector.user.findMany.mockResolvedValue(inspectors.concat(caseOfficers));
+			databaseConnector.pADSUser.findMany.mockResolvedValue([]);
 		});
 		describe('GET', () => {
 			test('gets appeals when not given pagination params or a search term', async () => {
@@ -139,6 +139,11 @@ describe('appeals list routes', () => {
 									isRedacted: false
 								},
 								appellantProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								appellantStatement: {
 									status: 'not_received',
 									representationStatus: null,
 									isRedacted: false
@@ -211,6 +216,11 @@ describe('appeals list routes', () => {
 									status: 'not_received',
 									representationStatus: null,
 									isRedacted: false
+								},
+								appellantStatement: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -227,6 +237,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -262,6 +273,7 @@ describe('appeals list routes', () => {
 						appellantCase: { include: { appellantCaseValidationOutcome: true } },
 						inspector: true,
 						caseOfficer: true,
+						padsInspector: true,
 						appealTimetable: true,
 						representations: true,
 						lpaQuestionnaire: { include: { lpaQuestionnaireValidationOutcome: true } },
@@ -355,6 +367,11 @@ describe('appeals list routes', () => {
 									status: 'not_received',
 									representationStatus: null,
 									isRedacted: false
+								},
+								appellantStatement: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -371,6 +388,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 2,
 					pageCount: 2,
 					pageSize: 1,
@@ -483,6 +501,11 @@ describe('appeals list routes', () => {
 									status: 'not_received',
 									representationStatus: null,
 									isRedacted: false
+								},
+								appellantStatement: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -499,6 +522,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -611,6 +635,11 @@ describe('appeals list routes', () => {
 									status: 'not_received',
 									representationStatus: null,
 									isRedacted: false
+								},
+								appellantStatement: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -627,6 +656,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -739,6 +769,11 @@ describe('appeals list routes', () => {
 									status: 'not_received',
 									representationStatus: null,
 									isRedacted: false
+								},
+								appellantStatement: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -755,6 +790,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -849,6 +885,11 @@ describe('appeals list routes', () => {
 									status: 'not_received',
 									representationStatus: null,
 									isRedacted: false
+								},
+								appellantStatement: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -865,6 +906,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -894,9 +936,18 @@ describe('appeals list routes', () => {
 									valid: true
 								}
 							},
-							inspectorUserId: {
-								not: null
-							}
+							OR: [
+								{
+									inspectorUserId: {
+										not: null
+									}
+								},
+								{
+									padsInspectorUserId: {
+										not: null
+									}
+								}
+							]
 						}
 					})
 				);
@@ -961,6 +1012,11 @@ describe('appeals list routes', () => {
 									status: 'not_received',
 									representationStatus: null,
 									isRedacted: false
+								},
+								appellantStatement: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -977,6 +1033,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -1006,7 +1063,14 @@ describe('appeals list routes', () => {
 									valid: true
 								}
 							},
-							inspectorUserId: null
+							AND: [
+								{
+									inspectorUserId: null
+								},
+								{
+									padsInspectorUserId: null
+								}
+							]
 						}
 					})
 				);
@@ -1070,6 +1134,11 @@ describe('appeals list routes', () => {
 									status: 'not_received',
 									representationStatus: null,
 									isRedacted: false
+								},
+								appellantStatement: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
 								}
 							},
 							dueDate: null,
@@ -1087,6 +1156,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -1187,6 +1257,11 @@ describe('appeals list routes', () => {
 									status: 'not_received',
 									representationStatus: null,
 									isRedacted: false
+								},
+								appellantStatement: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -1203,6 +1278,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -1304,6 +1380,11 @@ describe('appeals list routes', () => {
 									status: 'not_received',
 									representationStatus: null,
 									isRedacted: false
+								},
+								appellantStatement: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -1320,6 +1401,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -1405,6 +1487,11 @@ describe('appeals list routes', () => {
 									status: 'not_received',
 									representationStatus: null,
 									isRedacted: false
+								},
+								appellantStatement: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -1421,6 +1508,7 @@ describe('appeals list routes', () => {
 					lpas,
 					caseOfficers,
 					inspectors,
+					padsInspectors: [],
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
@@ -1729,6 +1817,11 @@ describe('appeals list routes', () => {
 									status: 'not_received',
 									representationStatus: null,
 									isRedacted: false
+								},
+								appellantStatement: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
@@ -1798,6 +1891,11 @@ describe('appeals list routes', () => {
 									isRedacted: false
 								},
 								appellantProofOfEvidence: {
+									status: 'not_received',
+									representationStatus: null,
+									isRedacted: false
+								},
+								appellantStatement: {
 									status: 'not_received',
 									representationStatus: null,
 									isRedacted: false
@@ -1876,112 +1974,6 @@ describe('mapAppealStatuses Tests', () => {
 
 		const orderedStatuses = mapAppealStatuses(preSortedStatuses);
 		expect(orderedStatuses).toEqual(expectedOrder);
-	});
-});
-
-describe('getRelevantLinkedAppealIds Tests', () => {
-	const moreLinkedAppeals = [
-		{
-			id: 101,
-			parentRef: 'TEST-396994',
-			childRef: 'TEST-100071',
-			parentId: 1027,
-			childId: 1028,
-			linkingDate: new Date('2024-01-30T13:44:39.655Z'),
-			type: 'linked',
-			externalSource: false
-		},
-		{
-			id: 102,
-			parentRef: 'TEST-396994',
-			childRef: 'TEST-123813',
-			parentId: 1027,
-			childId: 1029,
-			linkingDate: new Date('2024-01-30T13:44:39.655Z'),
-			type: 'linked',
-			externalSource: false
-		},
-		{
-			id: 103,
-			parentRef: 'TEST-396994',
-			childRef: 'TEST-864955',
-			parentId: 1027,
-			childId: 1043,
-			linkingDate: new Date('2024-01-30T13:44:39.655Z'),
-			type: 'linked',
-			externalSource: false
-		},
-		{
-			id: 104,
-			parentRef: 'TEST-396994',
-			childRef: '76215416',
-			parentId: 1027,
-			childId: null,
-			linkingDate: new Date('2024-01-30T13:44:39.655Z'),
-			type: 'linked',
-			externalSource: true
-		}
-	];
-
-	test('should return correct child IDs when current appeal is a parent', () => {
-		const currentAppealRef = 'TEST-396994';
-		// @ts-ignore
-		const result = getIdsOfReferencedAppeals(moreLinkedAppeals, currentAppealRef);
-		expect(result).toEqual([1028, 1029, 1043]);
-	});
-
-	test('should return correct parent ID when current appeal is a child', () => {
-		const currentAppealRef = 'TEST-100071';
-		// @ts-ignore
-		const result = getIdsOfReferencedAppeals(moreLinkedAppeals, currentAppealRef);
-		expect(result).toEqual([1027]);
-	});
-
-	test('should return an empty array when there are no linked appeals', () => {
-		const currentAppealRef = 'TEST/999999';
-		// @ts-ignore
-		const result = getIdsOfReferencedAppeals(moreLinkedAppeals, currentAppealRef);
-		expect(result).toEqual([]);
-	});
-
-	test('should exclude linked appeals with null child IDs', () => {
-		const linkedAppealsWithNullChildId = [
-			...moreLinkedAppeals,
-			{
-				id: 105,
-				parentRef: 'TEST-396994',
-				childRef: 'TEST-100071',
-				parentId: 1027,
-				childId: null,
-				linkingDate: new Date('2024-01-30T13:44:39.655Z'),
-				type: 'linked',
-				externalSource: true
-			}
-		];
-		const currentAppealRef = 'TEST-396994';
-		// @ts-ignore
-		const result = getIdsOfReferencedAppeals(linkedAppealsWithNullChildId, currentAppealRef);
-		expect(result).toEqual([1028, 1029, 1043]);
-	});
-
-	test('should exclude duplicate row ids in the output', () => {
-		const linkedAppealsWithDuplucate = [
-			...moreLinkedAppeals,
-			{
-				id: 105,
-				parentRef: 'TEST-396994',
-				childRef: 'TEST-100071',
-				parentId: 1027,
-				childId: 1028,
-				linkingDate: new Date('2024-01-30T13:44:39.655Z'),
-				type: 'linked',
-				externalSource: false
-			}
-		];
-		const currentAppealRef = 'TEST-396994';
-		// @ts-ignore
-		const result = getIdsOfReferencedAppeals(linkedAppealsWithDuplucate, currentAppealRef);
-		expect(result).toEqual([1028, 1029, 1043]);
 	});
 });
 

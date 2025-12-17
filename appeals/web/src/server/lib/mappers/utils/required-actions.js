@@ -15,7 +15,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
-/** @typedef {'addHorizonReference'|'awaitingEvent'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'|'progressToProofOfEvidenceAndWitnesses'|'awaitingProofOfEvidenceAndWitnesses'|'progressToInquiry'|'setupInquiry'|'addInquiryAddress'|'awaitingLpaProofOfEvidenceAndWitnesses'|'awaitingAppellantProofOfEvidenceAndWitnesses'} AppealRequiredAction */
+/** @typedef {'addHorizonReference'|'awaitingEvent'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'|'progressToProofOfEvidenceAndWitnesses'|'awaitingProofOfEvidenceAndWitnesses'|'progressToInquiry'|'setupInquiry'|'addInquiryAddress'|'awaitingLpaProofOfEvidenceAndWitnesses'|'awaitingAppellantProofOfEvidenceAndWitnesses'|'awaitingAppellantStatement'|'reviewAppellantStatement'} AppealRequiredAction */
 
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
@@ -49,7 +49,10 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			actions.push('awaitingEvent');
 			break;
 		case APPEAL_CASE_STATUS.EVENT:
+			// appeal types that can't have hearings/inquiries have no procedure type set
+			// i.e. HAS is null, S20 before feature flag is turned on is null etc.
 			if (
+				!appealDetails.procedureType ||
 				appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN.toLowerCase()
 			) {
 				actions.push('arrangeSiteVisit');
@@ -203,16 +206,40 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				!lpaStatementDueDate ||
 				dateIsInThePast(dateISOStringToDayMonthYearHourMinute(lpaStatementDueDate));
 
+			const appellantStatementStatus =
+				appealDetails.documentationSummary.appellantStatement?.status;
+			const appellantStatementRepresentationStatus =
+				appealDetails.documentationSummary.appellantStatement?.representationStatus;
+			const appellantStatementNotReceived =
+				!appellantStatementStatus || appellantStatementStatus === DOCUMENT_STATUS_NOT_RECEIVED;
+			const appellantStatementAwaitingReview =
+				appellantStatementRepresentationStatus &&
+				appellantStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW;
+			const appellantStatementDueDate = appealDetails?.appealTimetable?.appellantStatementDueDate;
+			const appellantStatementDueDatePassed =
+				!appellantStatementDueDate ||
+				dateIsInThePast(dateISOStringToDayMonthYearHourMinute(appellantStatementDueDate));
+
+			const appellantStatementEnabled = config.featureFlags.featureFlagAppellantStatement;
+
 			const hasItemsToShare =
 				lpaStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.VALID ||
 				lpaStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE ||
-				(ipCommentsCounts?.valid && ipCommentsCounts?.valid > 0);
+				(ipCommentsCounts?.valid && ipCommentsCounts?.valid > 0) ||
+				(appellantStatementEnabled &&
+					(appellantStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.VALID ||
+						appellantStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE));
+
+			const allReviewsCompleted =
+				!ipCommentsAwaitingReview &&
+				!lpaStatementAwaitingReview &&
+				(!appellantStatementEnabled || !appellantStatementAwaitingReview);
 
 			if (
 				ipCommentsDueDatePassed &&
 				lpaStatementDueDatePassed &&
-				!ipCommentsAwaitingReview &&
-				!lpaStatementAwaitingReview
+				(!appellantStatementEnabled || appellantStatementDueDatePassed) &&
+				allReviewsCompleted
 			) {
 				if (hasItemsToShare) {
 					actions.push('shareIpCommentsAndLpaStatement');
@@ -249,6 +276,14 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 					actions.push('reviewLpaStatement');
 				} else if (lpaStatementIncomplete) {
 					actions.push('updateLpaStatement');
+				}
+
+				if (appellantStatementEnabled) {
+					if (appellantStatementNotReceived && appellantStatementDueDate) {
+						actions.push('awaitingAppellantStatement');
+					} else if (appellantStatementAwaitingReview) {
+						actions.push('reviewAppellantStatement');
+					}
 				}
 			}
 
@@ -342,16 +377,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				actions.push('reviewLpaProofOfEvidence');
 			}
 
-			const lpaProofOfEvidenceAwaitingReview =
-				lpaProofOfEvidenceReceived && !lpaProofOfEvidenceDone;
-			const appellantProofOfEvidenceAwaitingReview =
-				appellantProofOfEvidenceReceived && !appellantProofOfEvidenceDone;
-			if (
-				(proofOfEvidenceDueDatePassed &&
-					!lpaProofOfEvidenceAwaitingReview &&
-					!appellantProofOfEvidenceAwaitingReview) ||
-				(appellantProofOfEvidenceDone && lpaProofOfEvidenceDone)
-			) {
+			if (proofOfEvidenceDueDatePassed) {
 				actions.push('progressToInquiry');
 			} else if (!lpaProofOfEvidenceReceived && !appellantProofOfEvidenceReceived) {
 				actions.push('awaitingProofOfEvidenceAndWitnesses');

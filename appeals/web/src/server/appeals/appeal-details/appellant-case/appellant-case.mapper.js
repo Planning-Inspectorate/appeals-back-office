@@ -26,6 +26,10 @@ import { mapReasonOptionsToCheckboxItemParameters } from '#lib/validation-outcom
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
+	GROUND_SUPPORTING_DOCTYPE,
+	GROUNDS_APPLICATION_RECEIPT_DOCTYPE
+} from '@pins/appeals/constants/documents.js';
+import {
 	APPEAL_CASE_STATUS,
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_VIRUS_CHECK_STATUS
@@ -799,6 +803,22 @@ export function getPageHeadingTextOverrideForFolder(folder) {
 			return 'Decision letter from the local planning authority';
 		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
 			return 'Other new supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.A:
+			return 'Ground (a) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.B:
+			return 'Ground (b) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.C:
+			return 'Ground (c) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.D:
+			return 'Ground (d) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.E:
+			return 'Ground (e) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.F:
+			return 'Ground (f) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.G:
+			return 'Ground (g) supporting documents';
+		case GROUNDS_APPLICATION_RECEIPT_DOCTYPE:
+			return 'Application receipt';
 		default:
 			return;
 	}
@@ -806,9 +826,10 @@ export function getPageHeadingTextOverrideForFolder(folder) {
 
 /**
  * @param {import('@pins/appeals.api').Appeals.FolderInfo} folder
+ * @param {string} appealType
  * @returns {string | undefined}
  */
-export function getPageHeadingTextOverrideForAddDocuments(folder) {
+export function getPageHeadingTextOverrideForAddDocuments(folder, appealType) {
 	switch (folder.path.split('/')[1]) {
 		case APPEAL_DOCUMENT_TYPE.APPLICATION_DECISION_LETTER:
 			return 'Upload the decision letter from the local planning authority';
@@ -817,7 +838,10 @@ export function getPageHeadingTextOverrideForAddDocuments(folder) {
 		case APPEAL_DOCUMENT_TYPE.ORIGINAL_APPLICATION_FORM:
 			return 'Upload your application form';
 		case APPEAL_DOCUMENT_TYPE.CHANGED_DESCRIPTION:
-			return 'Upload evidence of your agreement to change the description of development';
+			return appealType === APPEAL_TYPE.CAS_ADVERTISEMENT ||
+				appealType === APPEAL_TYPE.ADVERTISEMENT
+				? 'Upload evidence of your agreement to change the description of the advertisement'
+				: 'Upload evidence of your agreement to change the description of development';
 		case APPEAL_DOCUMENT_TYPE.APPELLANT_STATEMENT:
 			return 'Upload your appeal statement';
 		case APPEAL_DOCUMENT_TYPE.PLANNING_OBLIGATION:
@@ -832,6 +856,22 @@ export function getPageHeadingTextOverrideForAddDocuments(folder) {
 			return 'Upload your new plans or drawings';
 		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
 			return 'Upload your other new supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.A:
+			return 'Upload your ground (a) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.B:
+			return 'Upload your ground (b) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.C:
+			return 'Upload your ground (c) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.D:
+			return 'Upload your ground (d) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.E:
+			return 'Upload your ground (e) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.F:
+			return 'Upload your ground (f) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.G:
+			return 'Upload your ground (g) supporting documents';
+		case GROUNDS_APPLICATION_RECEIPT_DOCTYPE:
+			return 'Upload your application receipt';
 		default:
 			break;
 	}
@@ -865,5 +905,21 @@ export function getDocumentNameFromFolder(folderPath) {
 			return 'new plans or drawings';
 		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
 			return 'other new supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.A:
+			return 'ground (a) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.B:
+			return 'ground (b) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.C:
+			return 'ground (b) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.D:
+			return 'ground (d) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.E:
+			return 'ground (e) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.F:
+			return 'ground (f) supporting documents';
+		case GROUND_SUPPORTING_DOCTYPE.G:
+			return 'ground (g) supporting documents';
+		case GROUNDS_APPLICATION_RECEIPT_DOCTYPE:
+			return 'application receipt';
 	}
 }

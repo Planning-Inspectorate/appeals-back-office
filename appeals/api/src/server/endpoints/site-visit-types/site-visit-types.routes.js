@@ -1,6 +1,6 @@
+import { getLookupData } from '#common/controllers/lookup-data.controller.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
-import { getLookupData } from '../../common/controllers/lookup-data.controller.js';
 
 const router = createRouter();
 

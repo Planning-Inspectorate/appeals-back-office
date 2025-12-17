@@ -1,5 +1,8 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import { Readable } from 'node:stream';
-import { databaseConnector } from '../../server/utils/database-connector.js';
+import { createPrismaClient } from '../create-client.js';
 
 // json streaming
 import { chain } from 'stream-chain';
@@ -13,6 +16,7 @@ import StreamArray from 'stream-json/streamers/StreamArray.js';
  * @param {string} url
  */
 export const importListedBuildingsDataset = async (url) => {
+	const databaseConnector = createPrismaClient();
 	const existingListdBuildingsCount = await databaseConnector.listedBuilding.count();
 
 	if (existingListdBuildingsCount > 0) {
@@ -21,7 +25,10 @@ export const importListedBuildingsDataset = async (url) => {
 		console.log('Starting download of listed buildings dataset...\n\n');
 		const response = await fetch(url);
 		if (response.body) {
-			const totalRecords = await importListedBuildings(Readable.from(response.body));
+			const totalRecords = await importListedBuildings(
+				Readable.from(response.body),
+				databaseConnector
+			);
 			console.log(`\n\nComplete! ${totalRecords} records imported.`);
 		}
 	}
@@ -29,10 +36,12 @@ export const importListedBuildingsDataset = async (url) => {
 
 /**
  *
+ *
  * @param {Readable} fileStream
+ * @param {import('#db-client').PrismaClient} databaseConnector
  * @returns
  */
-const importListedBuildings = async (fileStream) => {
+const importListedBuildings = async (fileStream, databaseConnector) => {
 	const pipeline = chain([
 		fileStream,
 		Parser(),

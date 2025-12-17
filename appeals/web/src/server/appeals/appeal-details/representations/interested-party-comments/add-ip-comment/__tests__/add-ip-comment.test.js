@@ -49,7 +49,7 @@ describe('add-ip-comment', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Interested party&#39;s details');
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Interested party details');
 		});
 
 		it('should render a First name field', () => {
@@ -68,6 +68,13 @@ describe('add-ip-comment', () => {
 			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
 				'/test/back/url'
 			);
+		});
+
+		it('should render a checkbox with label text "Do not share this interested party name"', () => {
+			const checkbox = pageHtml.querySelector('input[type="checkbox"]');
+			const label = pageHtml.querySelector('label[for="do-not-share-ip-name"]');
+			expect(checkbox).not.toBeNull();
+			expect(label.textContent.trim()).toBe('Do not share this interested party name');
 		});
 
 		it('should render the correct back link when editing', async () => {

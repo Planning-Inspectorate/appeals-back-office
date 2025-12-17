@@ -1,5 +1,7 @@
+import { getExampleDateHint } from '#lib/dates.js';
 import { appealData, appellantCaseDataNotValidated } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -12,6 +14,7 @@ const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-
 const legendText = 'What is the effective date on your enforcement notice?';
 
 describe('enforcement-effective-date', () => {
+	beforeAll(jest.clearAllMocks);
 	beforeEach(installMockApi);
 	afterEach(teardown);
 
@@ -24,8 +27,8 @@ describe('enforcement-effective-date', () => {
 
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
-			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain(`${legendText}</h1>`);
+			expect(elementInnerHtml).toContain(`For example, ${getExampleDateHint(27)}</div>`);
 		});
 	});
 
@@ -76,8 +79,8 @@ describe('enforcement-effective-date', () => {
 
 				const elementInnerHtml = parseHtml(response.text).innerHTML;
 
-				expect(elementInnerHtml).toMatchSnapshot();
 				expect(elementInnerHtml).toContain(`${legendText}</h1>`);
+				expect(elementInnerHtml).toContain(`For example, ${getExampleDateHint(27)}</div>`);
 
 				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
@@ -117,8 +120,8 @@ describe('enforcement-effective-date', () => {
 
 				const elementInnerHtml = parseHtml(response.text).innerHTML;
 
-				expect(elementInnerHtml).toMatchSnapshot();
 				expect(elementInnerHtml).toContain(`${legendText}</h1>`);
+				expect(elementInnerHtml).toContain(`For example, ${getExampleDateHint(27)}</div>`);
 
 				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
@@ -155,8 +158,8 @@ describe('enforcement-effective-date', () => {
 
 				const elementInnerHtml = parseHtml(response.text).innerHTML;
 
-				expect(elementInnerHtml).toMatchSnapshot();
 				expect(elementInnerHtml).toContain(`${legendText}</h1>`);
+				expect(elementInnerHtml).toContain(`For example, ${getExampleDateHint(27)}</div>`);
 
 				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',

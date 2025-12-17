@@ -72,6 +72,7 @@ export async function deleteAllRecords(databaseConnector) {
 	const deleteInquiryEstimates = databaseConnector.inquiryEstimate.deleteMany();
 	const deleteTeams = databaseConnector.team.deleteMany();
 	const deletePersonalList = databaseConnector.personalList.deleteMany();
+	const deleteGround = databaseConnector.ground.deleteMany();
 	await databaseConnector.$queryRawUnsafe(`
 		UPDATE Document SET latestVersionId = NULL;
 		UPDATE Appeal SET inspectorUserId = NULL, caseOfficerUserId = NULL;
@@ -163,6 +164,7 @@ export async function deleteAllRecords(databaseConnector) {
 		deleteLPAQuestionnaireValidationOutcome,
 		deleteSpecialisms,
 		deleteLPAQUestionnaireIncompleteReason,
-		deleteRepsInvalidReasons
+		deleteRepsInvalidReasons,
+		deleteGround
 	]);
 }

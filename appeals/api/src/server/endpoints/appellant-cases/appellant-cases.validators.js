@@ -9,13 +9,16 @@ import {
 	validateNullableTextAreaParameter,
 	validateOptionalTextAreaParameter,
 	validateStringParameter,
+	validateStringParameterAllowingEmpty,
 	validateTextAreaParameter
 } from '#common/validators/string-parameter.js';
 import { validationErrorHandler } from '#middleware/error-handler.js';
 import { isOutcomeIncomplete, isOutcomeInvalid } from '#utils/check-validation-outcome.js';
 import {
 	ERROR_ONLY_FOR_INCOMPLETE_VALIDATION_OUTCOME,
-	ERROR_VALID_VALIDATION_OUTCOME_REASONS_REQUIRED
+	ERROR_VALID_VALIDATION_OUTCOME_REASONS_REQUIRED,
+	LENGTH_250,
+	LENGTH_8
 } from '@pins/appeals/constants/support.js';
 import { composeMiddleware } from '@pins/express';
 import {
@@ -84,7 +87,39 @@ const patchAppellantCaseValidator = composeMiddleware(
 	validateNumberRangeParameter('appellantProcedurePreferenceDuration', 0, 99).optional(),
 	validateNumberParameter('appellantProcedurePreferenceWitnessCount').optional(),
 	validateNumberRangeParameter('appellantProcedurePreferenceWitnessCount', 0, 99).optional(),
+	validateStringParameter('interestInLand'),
+	validateStringParameter('writtenOrVerbalPermission'),
 	validationErrorHandler
 );
 
-export { getAppellantCaseValidator, patchAppellantCaseValidator };
+const createContactAddressValidator = composeMiddleware(
+	validateIdParameter('appealId'),
+	validateIdParameter('appellantCaseId'),
+	validateStringParameter('addressLine1', LENGTH_250),
+	validateStringParameterAllowingEmpty('addressLine2', LENGTH_250),
+	validateStringParameter('addressTown', LENGTH_250),
+	validateStringParameter('addressCountry', LENGTH_250),
+	validateStringParameterAllowingEmpty('addressCounty', LENGTH_250),
+	validateStringParameter('postcode', LENGTH_8),
+	validationErrorHandler
+);
+
+const updateContactAddressValidator = composeMiddleware(
+	validateIdParameter('appealId'),
+	validateIdParameter('appellantCaseId'),
+	validateIdParameter('contactAddressId'),
+	validateStringParameterAllowingEmpty('addressLine1', LENGTH_250),
+	validateStringParameterAllowingEmpty('addressLine2', LENGTH_250),
+	validateStringParameterAllowingEmpty('addressTown', LENGTH_250),
+	validateStringParameterAllowingEmpty('addressCountry', LENGTH_250),
+	validateStringParameterAllowingEmpty('addressCounty', LENGTH_250),
+	validateStringParameterAllowingEmpty('postcode', LENGTH_8),
+	validationErrorHandler
+);
+
+export {
+	createContactAddressValidator,
+	getAppellantCaseValidator,
+	patchAppellantCaseValidator,
+	updateContactAddressValidator
+};

@@ -25,6 +25,7 @@ import { importListedBuildingsDataset } from './seed-listed-buildings.js';
  * @typedef {import('@pins/appeals.api').Schema.Specialism} Specialism
  * @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} DocumentRedactionStatus
  * @typedef {import('@pins/appeals.api').Schema.RepresentationRejectionReason} RepresentationRejectionReason
+ * @typedef {import('@pins/appeals.api').Schema.Ground} Ground
  */
 
 /**
@@ -414,6 +415,45 @@ export const specialisms = [
 ];
 
 /**
+ * An array of grounds for appeal.
+ *
+ * @type {Pick<Ground, 'groundRef' | 'groundDescription'>[]}
+ */
+export const groundsForAppeal = [
+	{
+		groundRef: 'a',
+		groundDescription:
+			'The local planning authority (LPA) should grant planning permission for all (or part) of the development described in the alleged breach.'
+	},
+	{
+		groundRef: 'b',
+		groundDescription: 'The alleged breach did not happen.'
+	},
+	{
+		groundRef: 'c',
+		groundDescription:
+			'You do not need planning permission (for example, it is a permitted development or you already have planning permission).'
+	},
+	{
+		groundRef: 'd',
+		groundDescription: 'It is too late for the LPA to take enforcement action.'
+	},
+	{
+		groundRef: 'e',
+		groundDescription:
+			'The LPA did not serve the notice properly to everyone with an interest in the land.'
+	},
+	{
+		groundRef: 'f',
+		groundDescription: 'A simpler step (or steps) would achieve the same result.'
+	},
+	{
+		groundRef: 'g',
+		groundDescription: 'The time to comply with the notice is too short.'
+	}
+];
+
+/**
  * An array of representation rejection reasons.
  *
  * @type {Pick<RepresentationRejectionReason, 'name' | 'hasText' | 'representationType'>[]}
@@ -683,6 +723,14 @@ export async function seedStaticData(databaseConnector) {
 				}
 			},
 			update: {}
+		});
+	}
+
+	for (const ground of groundsForAppeal) {
+		await databaseConnector.ground.upsert({
+			create: ground,
+			where: { groundRef: ground.groundRef },
+			update: ground
 		});
 	}
 

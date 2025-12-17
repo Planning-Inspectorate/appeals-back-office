@@ -1,11 +1,16 @@
 import config from '#environment/config.js';
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { documentationFolderTableItem } from '#lib/mappers/index.js';
+import {
+	mapAddRepresentationSummaryActionLink,
+	mapRepresentationDocumentSummaryActionLink
+} from '#lib/representation-utilities.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import { capitalize } from 'lodash-es';
+import { proofsReceivedText, proofsStatusText } from '../common.js';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapRule6PartyProofs = ({ appealDetails }) => {
+export const mapRule6PartyProofs = ({ appealDetails, currentRoute, request }) => {
 	const shouldBeDisplayed =
 		config.featureFlags.featureFlagRule6Parties &&
 		appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase();
@@ -16,26 +21,41 @@ export const mapRule6PartyProofs = ({ appealDetails }) => {
 		return { id: 'rule-6-party-proofs', display: {} };
 	}
 
-	const receivedText = appealDetails.appealTimetable?.proofOfEvidenceAndWitnessesDueDate
-		? `Due by ${dateISOStringToDisplayDate(
-				appealDetails.appealTimetable?.proofOfEvidenceAndWitnessesDueDate
-		  )}`
-		: 'Not applicable';
-
 	return {
 		id: 'rule-6-party-proofs',
 		display: {
 			tableItems: rule6Parties
-				.map((/** @type {Record<string, any>} */ rule6Party, i) => {
+				.map((/** @type {Record<string, any>} */ rule6Party) => {
 					const id = `rule-6-party-proof-${rule6Party.id}`;
 					const text = `${rule6Party.serviceUser.organisationName} proof of evidence and witness`;
+
+					const { status, receivedAt, representationStatus } =
+						appealDetails.documentationSummary?.rule6PartyProofs?.[rule6Party.serviceUserId] ?? {};
+
+					const statusText = proofsStatusText(status, representationStatus);
+					const receivedText = proofsReceivedText(statusText, receivedAt);
 
 					return documentationFolderTableItem({
 						id,
 						text,
-						statusText: 'Not received',
+						statusText: capitalize(statusText),
 						receivedText,
-						actionHtml: `<a href="#" class="govuk-link" data-cy="add-rule-6-party-proof-${i}">Add</a>`
+						actionHtml:
+							statusText !== 'Awaiting proof of evidence and witness'
+								? mapRepresentationDocumentSummaryActionLink(
+										currentRoute,
+										status || undefined,
+										representationStatus,
+										'rule-6-party-proofs-evidence',
+										request,
+										{ id: rule6Party.id, serviceUser: rule6Party.serviceUser }
+								  )
+								: mapAddRepresentationSummaryActionLink(
+										currentRoute,
+										'rule-6-party-proofs-evidence',
+										request,
+										{ id: rule6Party.id, serviceUser: rule6Party.serviceUser }
+								  )
 					}).display.tableItem;
 				})
 				.filter(isDefined)

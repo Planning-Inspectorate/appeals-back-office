@@ -1,6 +1,6 @@
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
-import { getLookupData } from '../../common/controllers/lookup-data.controller.js';
+import { getLookupDataByTableName } from '../../common/controllers/lookup-data.controller.js';
 import { getPADSUserFromSapId } from './planning-appeal-decision-suppliers.controller.js';
 
 const router = createRouter();
@@ -8,7 +8,7 @@ const router = createRouter();
 router.get(
 	'/planning-appeal-decision-suppliers',
 	/*
-        #swagger.tags = ['PADs List']
+        #swagger.tags = ['PADS Inspectors']
         #swagger.path = '/appeals/planning-appeal-decision-suppliers'
         #swagger.description = 'Gets list of PADSUsers'
         #swagger.parameters['azureAdUserId'] = {
@@ -22,15 +22,15 @@ router.get(
         }
         #swagger.responses[400] = {}
      */
-	asyncHandler(getLookupData('pADSUser'))
+	asyncHandler(getLookupDataByTableName('pADSUser'))
 );
 
 router.get(
 	'/planning-appeal-decision-suppliers/:sapId',
 	/*
-        #swagger.tags = ['PADs List']
-        #swagger.path = '/appeals/planning-appeal-decision-suppliers'
-        #swagger.description = 'Get PADUser by sapId'
+        #swagger.tags = ['PADS Inspectors']
+        #swagger.path = '/appeals/planning-appeal-decision-suppliers/{sapId}'
+        #swagger.description = 'Get PADSUser by sapId'
         #swagger.parameters['azureAdUserId'] = {
             in: 'header',
             required: true,

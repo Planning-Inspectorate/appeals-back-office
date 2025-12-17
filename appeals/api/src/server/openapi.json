@@ -301,6 +301,144 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/grounds-for-appeal": {
+			"patch": {
+				"tags": ["Grounds for appeal"],
+				"description": "Updates grounds for appeal for a single appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": false,
+						"nullable": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Updates a single appeal by id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateCaseGroundsForAppealResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateCaseGroundsForAppealResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Grounds for appeal to update",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateCaseGroundsForAppealRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateCaseGroundsForAppealRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/grounds-for-appeal/{groundRef}": {
+			"patch": {
+				"tags": ["Grounds for appeal"],
+				"description": "Updates factsForGround for one ground for a single appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "groundRef",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": false,
+						"nullable": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Updates a single appeal ground by appeal id and ground reference",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateCaseGroundsForAppealResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateCaseGroundsForAppealResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Facts for ground to update",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateCaseGroundsForAppealRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateCaseGroundsForAppealRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/rule-6-parties": {
 			"get": {
 				"tags": ["Appeal Rule 6 Parties"],
@@ -408,6 +546,133 @@
 								"$ref": "#/components/schemas/CreateRule6PartyRequest"
 							}
 						}
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/rule-6-parties/{rule6PartyId}": {
+			"patch": {
+				"tags": ["Appeal Rule 6 Parties"],
+				"description": "Updates a rule 6 party for an appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "rule6PartyId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Updates a rule 6 party for an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Rule6PartyResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Rule6PartyResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Rule 6 party details to update",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateRule6PartyRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateRule6PartyRequest"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Appeal Rule 6 Parties"],
+				"description": "Deletes a rule 6 party for an appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "rule6PartyId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Deletes a rule 6 party for an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Rule6PartyResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Rule6PartyResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
 					}
 				}
 			}
@@ -1925,6 +2190,43 @@
 				}
 			}
 		},
+		"/appeals/grounds": {
+			"get": {
+				"tags": ["Grounds"],
+				"description": "Gets grounds",
+				"parameters": [
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Grounds",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AllGroundsResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/AllGroundsResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
 		"/appeals/representation-rejection-reasons": {
 			"get": {
 				"tags": ["Representation Rejection Reasons"],
@@ -2060,9 +2362,54 @@
 		},
 		"/appeals/planning-appeal-decision-suppliers": {
 			"get": {
-				"tags": ["PADs List"],
-				"description": "Get PADUser by sapId",
+				"tags": ["PADS Inspectors"],
+				"description": "Gets list of PADSUsers",
 				"parameters": [
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Planning Appeal Decision Suppliers",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PADSUsers"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/PADSUsers"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
+		"/appeals/planning-appeal-decision-suppliers/{sapId}": {
+			"get": {
+				"tags": ["PADS Inspectors"],
+				"description": "Get PADSUser by sapId",
+				"parameters": [
+					{
+						"name": "sapId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
 					{
 						"name": "azureAdUserId",
 						"in": "header",
@@ -2508,6 +2855,62 @@
 						}
 					}
 				}
+			}
+		},
+		"/{appealId}/appellant-cases/{appellantCaseId}/contact-address": {
+			"post": {
+				"description": "",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "appellantCaseId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {}
+			}
+		},
+		"/{appealId}/appellant-cases/{appellantCaseId}/contact-address/{contactAddressId}": {
+			"patch": {
+				"description": "",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "appellantCaseId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "contactAddressId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {}
 			}
 		},
 		"/appeals/{appealId}/audit-trails": {
@@ -12235,6 +12638,25 @@
 					"name": "AllSiteVisitTypesResponse"
 				}
 			},
+			"AllGroundsResponse": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"name": {
+							"type": "string",
+							"example": "Access required"
+						},
+						"id": {
+							"type": "number",
+							"example": 1
+						}
+					}
+				},
+				"xml": {
+					"name": "AllGroundsResponse"
+				}
+			},
 			"AllAppellantCaseValidationOutcomesResponse": {
 				"type": "array",
 				"items": {
@@ -12862,6 +13284,41 @@
 				},
 				"xml": {
 					"name": "LPAs"
+				}
+			},
+			"PADSUsers": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"sapId": {
+							"type": "string",
+							"example": "12345678"
+						},
+						"name": {
+							"type": "string",
+							"example": "John Smith"
+						}
+					}
+				},
+				"xml": {
+					"name": "PADSUsers"
+				}
+			},
+			"PADSUser": {
+				"type": "object",
+				"properties": {
+					"sapId": {
+						"type": "string",
+						"example": "12345678"
+					},
+					"name": {
+						"type": "string",
+						"example": "John Smith"
+					}
+				},
+				"xml": {
+					"name": "PADSUser"
 				}
 			},
 			"LPAChangeRequest": {
@@ -14303,6 +14760,39 @@
 							"isRedacted": {
 								"type": "boolean",
 								"nullable": true
+							}
+						}
+					},
+					"rule6PartyStatements": {
+						"type": "object",
+						"additionalProperties": {
+							"type": "object",
+							"properties": {
+								"status": {
+									"type": "string"
+								},
+								"dueDate": {
+									"type": "string",
+									"format": "date-time",
+									"nullable": true
+								},
+								"receivedAt": {
+									"type": "string",
+									"format": "date-time",
+									"nullable": true
+								},
+								"representationStatus": {
+									"type": "string",
+									"nullable": true
+								},
+								"counts": {
+									"type": "object",
+									"nullable": true
+								},
+								"isRedacted": {
+									"type": "boolean",
+									"nullable": true
+								}
 							}
 						}
 					}
@@ -15903,6 +16393,14 @@
 								"type": "string",
 								"nullable": true
 							},
+							"descriptionOfAllegedBreach": {
+								"type": "string",
+								"nullable": true
+							},
+							"applicationDevelopmentAllOrPart": {
+								"type": "string",
+								"nullable": true
+							},
 							"contactAddress": {
 								"type": "object",
 								"required": ["addressLine1", "postCode"],
@@ -15960,6 +16458,14 @@
 						"nullable": true
 					},
 					"writtenOrVerbalPermission": {
+						"type": "string",
+						"nullable": true
+					},
+					"descriptionOfAllegedBreach": {
+						"type": "string",
+						"nullable": true
+					},
+					"applicationDevelopmentAllOrPart": {
 						"type": "string",
 						"nullable": true
 					},
@@ -35250,6 +35756,14 @@
 						"nullable": true
 					},
 					"writtenOrVerbalPermission": {
+						"type": "string",
+						"nullable": true
+					},
+					"descriptionOfAllegedBreach": {
+						"type": "string",
+						"nullable": true
+					},
+					"applicationDevelopmentAllOrPart": {
 						"type": "string",
 						"nullable": true
 					},

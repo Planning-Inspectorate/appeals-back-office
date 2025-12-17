@@ -8,6 +8,7 @@ generator client {
 
 datasource db {
   provider = "sqlserver"
+  url      = env("DATABASE_URL")
 }
 
 /// Appeal model
@@ -71,8 +72,8 @@ model Appeal {
   assignedTeam          Team?                @relation(fields: [assignedTeamId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   assignedTeamId        Int?
   PersonalList          PersonalList?        @relation("appeal")
-  otherAppellants       OtherAppellant[]     @relation("otherAppellants")
   appealRule6Parties    AppealRule6Party[]   @relation("appealRule6Parties")
+  appealGrounds         AppealGround[]       @relation("appealGrounds")
 
   @@index([addressId])
   @@index([appealTypeId])
@@ -228,20 +229,7 @@ model ServiceUser {
   appealsOnBehalf         Appeal[]           @relation("agent")
   representations         Representation[]   @relation("represented")
   representationsOnBehalf Representation[]   @relation("representative")
-  otherAppellant          OtherAppellant[]   @relation("otherAppellant")
   appealRule6Parties      AppealRule6Party[] @relation("appealRule6PartyServiceUser")
-}
-
-/// OtherAppellant model
-/// Contains information on Back-Office other appellants (Other appellants in enforcements).
-model OtherAppellant {
-  id          Int          @id @default(autoincrement())
-  appeal      Appeal?      @relation("otherAppellants", fields: [appealId], references: [id], onUpdate: NoAction, onDelete: NoAction)
-  appealId    Int?
-  appellant   ServiceUser? @relation("otherAppellant", fields: [appellantId], references: [id])
-  appellantId Int?
-
-  @@unique([appealId, appellantId])
 }
 
 /// User model
@@ -348,6 +336,8 @@ model AppellantCase {
   enforcementReference            String?
   interestInLand                  String?
   writtenOrVerbalPermission       String?
+  descriptionOfAllegedBreach      String?
+  applicationDevelopmentAllOrPart String?
   contactAddress                  Address?  @relation(fields: [contactAddressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   contactAddressId                Int?
 
@@ -355,6 +345,20 @@ model AppellantCase {
   landownerPermission Boolean?
 
   appellantCaseAdvertDetails AppellantCaseAdvertDetails[]
+}
+
+/// AppealGround model
+/// Contains information on a ground for the Appeal
+model AppealGround {
+  id             Int     @id @default(autoincrement())
+  ground         Ground? @relation(fields: [groundId], references: [id])
+  groundId       Int?
+  appeal         Appeal? @relation("appealGrounds", fields: [appealId], references: [id])
+  appealId       Int?
+  factsForGround String  @default("")
+  isDeleted      Boolean @default(false)
+
+  @@unique([groundId, appealId])
 }
 
 /// AppellantCaseValidationOutcome model
@@ -871,8 +875,8 @@ model CaseNote {
   @@index([caseId])
 }
 
-//Hearing model
-//Store hearing related information
+// Hearing model
+// Store hearing related information
 model Hearing {
   id               Int       @id @default(autoincrement())
   appealId         Int       @unique
@@ -883,8 +887,8 @@ model Hearing {
   appeal           Appeal    @relation(fields: [appealId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-//Inquiry model
-//Store Inquiry related information
+// Inquiry model
+// Store Inquiry related information
 model Inquiry {
   id               Int       @id @default(autoincrement())
   appealId         Int       @unique
@@ -1013,4 +1017,12 @@ model AppealRule6Party {
 
   @@index([appealId])
   @@index([serviceUserId])
+}
+
+/// Ground model
+model Ground {
+  id                Int            @id @default(autoincrement())
+  groundRef         String         @unique
+  groundDescription String
+  appealGround      AppealGround[]
 }

@@ -21,7 +21,7 @@ export const mapContactPlanningInspectorateDate = ({
 			: dateISOStringToDisplayDate(
 					appellantCaseData.enforcementNotice?.contactPlanningInspectorateDate
 			  ),
-		link: `${currentRoute}/contact-planning-inspectorate-date/${actionText.toLowerCase()}`,
+		link: `${currentRoute}/contact-planning-inspectorate-date/change`,
 		actionText,
 		editable: hasData && userHasUpdateCase
 	});

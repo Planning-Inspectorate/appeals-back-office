@@ -2,10 +2,12 @@
 /// <reference types="cypress"/>
 
 import { users } from '../../fixtures/users';
+import { ContactsSectionPage } from '../../page_objects/caseDetails/contactsSectionPage.js';
 import { DocumentationSectionPage } from '../../page_objects/caseDetails/documentationSectionPage';
 import { InquirySectionPage } from '../../page_objects/caseDetails/inquirySectionPage';
 import { OverviewSectionPage } from '../../page_objects/caseDetails/overviewSectionPage.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+import { ContactDetailsPage } from '../../page_objects/contactDetailsPage.js';
 import { CYASection } from '../../page_objects/cyaSection.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
@@ -20,6 +22,8 @@ const inquirySectionPage = new InquirySectionPage();
 const overviewSectionPage = new OverviewSectionPage();
 const cyaSection = new CYASection();
 const documentationSectionPage = new DocumentationSectionPage();
+const contactsSectionPage = new ContactsSectionPage();
+const contactDetailsPage = new ContactDetailsPage();
 const currentDate = new Date();
 
 const previousInquiryAddress = {
@@ -38,13 +42,21 @@ const inquiryAddress = {
 	postcode: 'BS20 1BS'
 };
 
+const rule6Details = {
+	partyName: 'TestRule6Party',
+	partyEmailAddress: 'testrule6party@test.com',
+	partyNameUpdated: 'TestRule6PartyUpdated',
+	partyEmailAddressUpdated: 'testrule6partyupdated@test.com'
+};
+
 const initialEstimates = { preparationTime: 0.5, sittingTime: 1.0, reportingTime: 89.5 };
 const updatedEstimates = { preparationTime: 5.5, sittingTime: 1.5, reportingTime: 99 };
 
 const headers = {
-	inquiryEstimate: {
+	inquiry: {
 		checkDetails: 'Check details and add inquiry estimates',
-		estimateForm: 'Inquiry estimates'
+		estimateForm: 'Inquiry estimates',
+		shareSubmittedEvidence: 'Confirm that you want to share proof of evidence'
 	}
 };
 
@@ -145,65 +157,6 @@ let appeal;
 
 afterEach(() => {
 	cy.deleteAppeals(appeal);
-});
-
-it('Can start case as inquiry with address and estimated days', () => {
-	cy.addLpaqSubmissionToCase(caseObj);
-	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-		dateTimeSection.enterInquiryDate(inquiryDate);
-		dateTimeSection.enterInquiryTime('12', '00');
-	});
-	caseDetailsPage.clickButtonByText('Continue');
-	caseDetailsPage.selectRadioButtonByValue('Yes');
-	caseDetailsPage.inputEstimatedInquiryDays(estimatedInquiryDays);
-
-	caseDetailsPage.clickButtonByText('Continue');
-	caseDetailsPage.selectRadioButtonByValue('Yes');
-	caseDetailsPage.clickButtonByText('Continue');
-	caseDetailsPage.addInquiryAddress(inquiryAddress);
-	caseDetailsPage.clickButtonByText('Continue');
-
-	// enter timetable dates
-	cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
-		inquirySectionPage.enterTimetableDueDates(timetableItems, startDate, 7);
-	});
-
-	caseDetailsPage.clickButtonByText('Continue');
-	caseDetailsPage.clickButtonByText('Start case');
-	caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
-	caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
-
-	// Verify timetable rows
-	caseDetailsPage.verifyTimeTableRows(timeTableRows);
-	// Verify order of sections
-	caseDetailsPage.verifyCaseDetailsSection(expectedCaseDetailsSections);
-	//review and accept lpaq
-	happyPathHelper.reviewS78Lpaq(caseObj);
-
-	// verify case overview details
-	overviewSectionPage.verifyCaseOverviewDetails(overviewDetails);
-});
-
-it('Can start case as inquiry without address or estimated days', () => {
-	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-		dateTimeSection.enterInquiryDate(inquiryDate);
-		dateTimeSection.enterInquiryTime('12', '00');
-	});
-	caseDetailsPage.clickButtonByText('Continue');
-	caseDetailsPage.selectRadioButtonByValue('No');
-	caseDetailsPage.clickButtonByText('Continue');
-	caseDetailsPage.selectRadioButtonByValue('No');
-	caseDetailsPage.clickButtonByText('Continue');
-
-	// enter timetable dates
-	cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
-		inquirySectionPage.enterTimetableDueDates(timetableItems, startDate, 7);
-	});
-
-	caseDetailsPage.clickButtonByText('Continue');
-	caseDetailsPage.clickButtonByText('Start case');
-	caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
-	caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
 });
 
 it('Displays error if inquiry estimated days not entered', () => {
@@ -460,6 +413,105 @@ it('Can update answer from CYA page - change address', () => {
 	});
 });
 
+it('Can add rule 6 party', () => {
+	// Setup: Add inquiry via API
+	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+		cy.addInquiryViaApi(caseObj, inquiryDate);
+
+		// find case and open inquiry section
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseObj);
+
+		// select to add rule 6 contact
+		contactsSectionPage.selectAddContact('rule-6-party-contact-details');
+
+		// check page caption and input party name
+		contactDetailsPage.verifyPageCaption(`Appeal ${caseObj.reference} - Add rule 6 party`);
+		contactDetailsPage.inputOrganisationName(rule6Details.partyName);
+		contactDetailsPage.clickButtonByText('Continue');
+
+		// check page caption and enter party email address
+		contactDetailsPage.verifyPageCaption(`Appeal ${caseObj.reference} - Add rule 6 party`);
+		contactDetailsPage.inputOrganisationEmail(rule6Details.partyEmailAddress);
+		contactDetailsPage.clickButtonByText('Continue');
+
+		// verify details on cya page
+		cyaSection.verifyAnswerUpdated({
+			field: cyaSection.cyaSectionFields.rule6PartyName,
+			value: rule6Details.partyName
+		});
+		cyaSection.verifyAnswerUpdated({
+			field: cyaSection.cyaSectionFields.rule6PartyEmailAddress,
+			value: rule6Details.partyEmailAddress
+		});
+
+		// update party name
+		cyaSection.changeAnswer(cyaSection.cyaSectionFields.rule6PartyName);
+		contactDetailsPage.verifyValuePrepopulated(
+			contactDetailsPage.contactSelectors.organisationName,
+			rule6Details.partyName
+		);
+		contactDetailsPage.inputOrganisationName(rule6Details.partyNameUpdated);
+		contactDetailsPage.clickButtonByText('Continue');
+		contactDetailsPage.clickButtonByText('Continue');
+
+		// verify party name updated on cya page
+		cyaSection.verifyAnswerUpdated({
+			field: cyaSection.cyaSectionFields.rule6PartyName,
+			value: rule6Details.partyNameUpdated
+		});
+
+		// update party email
+		cyaSection.changeAnswer(cyaSection.cyaSectionFields.rule6PartyEmailAddress);
+		contactDetailsPage.verifyValuePrepopulated(
+			contactDetailsPage.contactSelectors.organisationEmail,
+			rule6Details.partyEmailAddress
+		);
+		contactDetailsPage.inputOrganisationEmail(rule6Details.partyEmailAddressUpdated);
+		contactDetailsPage.clickButtonByText('Continue');
+
+		// verify party email address updated on cya page
+		cyaSection.verifyAnswerUpdated({
+			field: cyaSection.cyaSectionFields.rule6PartyEmailAddress,
+			value: rule6Details.partyEmailAddressUpdated
+		});
+	});
+});
+
+it('Validates rule 6 party name and email address', () => {
+	// Setup: Add inquiry via API
+	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+		cy.addInquiryViaApi(caseObj, inquiryDate);
+
+		// find case and open inquiry section
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseObj);
+
+		// select to add rule 6 contact
+		contactsSectionPage.selectAddContact('rule-6-party-contact-details');
+
+		// proceeed without entering name
+		contactDetailsPage.clickButtonByText('Continue');
+
+		// check error messge displayed
+		contactDetailsPage.verifyErrorMessages({
+			messages: ['Enter a name'],
+			fields: ['organisation-name']
+		});
+
+		// proceed without entering party email address
+		contactDetailsPage.inputOrganisationName(rule6Details.partyName);
+		contactDetailsPage.clickButtonByText('Continue');
+		contactDetailsPage.clickButtonByText('Continue');
+
+		// check error messge displayed
+		contactDetailsPage.verifyErrorMessages({
+			messages: ['Enter an email address'],
+			fields: ['email']
+		});
+	});
+});
+
 it('should not accept invalid input - inquiry Estimate', () => {
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		cy.addInquiryViaApi(caseObj, inquiryDate);
@@ -510,7 +562,7 @@ it('should add inquiry Estimates', () => {
 		initialEstimates.sittingTime,
 		initialEstimates.reportingTime
 	);
-	inquirySectionPage.verifyInquiryHeader(headers.inquiryEstimate.checkDetails);
+	inquirySectionPage.verifyInquiryHeader(headers.inquiry.checkDetails);
 
 	// Verify initial estimates on check details page
 	['preparation', 'sitting', 'reporting'].forEach((type) => {
@@ -704,44 +756,132 @@ it('should show business day validation errors for all timetable fields', () => 
 	});
 });
 
-it('should accept LPA POE for inquiry', () => {
+it.only('should progress to evidence stage with no statements or IP comments', () => {
 	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
-		// Set up inquiry case with LPA questionnaire
-		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
-		cy.addLpaqSubmissionToCase(caseObj);
-
-		// Navigate to case details and verify initial state
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseObj);
-		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
-		cy.reload();
-
-		// Process LPAQ review and move to statements phase
-		happyPathHelper.reviewS78Lpaq(caseObj);
+		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+		cy.addLpaqSubmissionToCase(caseObj);
+		cy.reviewLpaqSubmission(caseObj);
 		caseDetailsPage.checkStatusOfCase('Statements', 0);
 
-		// Submit third-party representations
-		happyPathHelper.addThirdPartyComment(caseObj, true);
-		caseDetailsPage.clickBackLink();
-		happyPathHelper.addThirdPartyComment(caseObj, false);
-		caseDetailsPage.clickBackLink();
-
-		// Complete LPA statement and advance past deadline
-		happyPathHelper.addLpaStatement(caseObj);
 		cy.simulateStatementsDeadlineElapsed(caseObj);
-		cy.reload();
 
-		// Finalise statements and transition to evidence stage
+		// Verify successful acceptance
+		caseDetailsPage.validateBannerMessage(
+			'Important',
+			'Progress to proof of evidence and witnesses'
+		);
+
+		// Progress to evidence stage with no statements or IP comments
+		caseDetailsPage.basePageElements.bannerLink().click();
+		caseDetailsPage.verifyWarningText(
+			'Do not progress to proof of evidence and witnesses if you are awaiting any late statements or interested party comments.'
+		);
+		caseDetailsPage.clickButtonByText('Progress to proof of evidence and witnesses');
+
+		// Verify notification
+		const expectedNotifies = [
+			{
+				template: 'not-received-statement-and-ip-comments',
+				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+			},
+			{
+				template: 'not-received-statement-and-ip-comments',
+				recipient: 'agent@test.com'
+			}
+		];
+
+		cy.checkNotifySent(caseObj, expectedNotifies);
+
+		// Verify Evidence tag - all cases page
+		cy.visit(urlPaths.appealsList);
+		inquirySectionPage.verifyTagOnAllCasesPage(caseObj.reference, 'Evidence');
+
+		// Verify Evidence tag - personal list page
+		cy.visit(urlPaths.personalListFilteredEvidence);
+		inquirySectionPage.verifyTagOnPersonalListPage(caseObj.reference, 'Evidence');
+	});
+});
+
+it('should progress to evidence stage after sharing statements and IP comments', () => {
+	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseObj);
+		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+		cy.addLpaqSubmissionToCase(caseObj);
+		cy.reviewLpaqSubmission(caseObj);
+		caseDetailsPage.checkStatusOfCase('Statements', 0);
+
+		// Add & Review statement & IP comment Via Api
+		cy.addRepresentation(caseObj, 'lpaStatement', null);
+		cy.reviewStatementViaApi(caseObj);
+
+		cy.addRepresentation(caseObj, 'interestedPartyComment', null);
+		cy.reviewIpCommentsViaApi(caseObj);
+
+		cy.simulateStatementsDeadlineElapsed(caseObj);
+
+		// Share statements and transition to evidence stage
+		caseDetailsPage.validateBannerMessage('Important', 'Share IP comments and LPA statement');
 		caseDetailsPage.basePageElements.bannerLink().click();
 		caseDetailsPage.clickButtonByText('Confirm');
+
+		caseDetailsPage.validateBannerMessage('Success', 'Statements and IP comments shared');
 		caseDetailsPage.checkStatusOfCase('Evidence', 0);
+
+		// Verify notification
+		const expectedNotifies = [
+			{
+				template: 'received-statement-and-ip-comments-lpa',
+				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+			},
+			{
+				template: 'received-statement-and-ip-comments-appellant',
+				recipient: 'agent@test.com'
+			}
+		];
+
+		cy.checkNotifySent(caseObj, expectedNotifies);
+	});
+});
+
+it('should complete LPA/Appellant POE and progress to awaiting inquiry', () => {
+	const status = ['Awaiting proof of evidence and witness', 'Received', 'Completed'];
+	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseObj);
+		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+		cy.addLpaqSubmissionToCase(caseObj);
+		cy.reviewLpaqSubmission(caseObj);
+
+		// Add & Review statement & IP comment Via Api
+		cy.addRepresentation(caseObj, 'lpaStatement', null);
+		cy.reviewStatementViaApi(caseObj);
+
+		cy.addRepresentation(caseObj, 'interestedPartyComment', null);
+		cy.reviewIpCommentsViaApi(caseObj);
+
+		cy.simulateStatementsDeadlineElapsed(caseObj);
+
+		cy.shareCommentsAndStatementsViaApi(caseObj);
+
+		caseDetailsPage.checkStatusOfCase('Evidence', 0);
+
+		// Verify POE status (Awaiting proof of evidence and witness) - Documentation section
+		const appellantPOE = { rowIndex: 4, cellIndex: 0, textToMatch: status[0], strict: true };
+		const lpaPOE = { rowIndex: 5, cellIndex: 0, textToMatch: status[0], strict: true };
+		caseDetailsPage.verifyTableCellText(appellantPOE);
+		caseDetailsPage.verifyTableCellText(lpaPOE);
 
 		// Process LPA proof of evidence submission (FO) via Api
 		inquirySectionPage.addProofOfEvidenceViaApi(caseObj, 'lpaProofOfEvidence');
 
-		// TODO: verify review banner is displayed Bug: A2-4859
+		// Verify LPA POE status (Received) - Documentation section
+		const lpaPOEReceived = { rowIndex: 5, cellIndex: 0, textToMatch: status[1], strict: true };
+		caseDetailsPage.verifyTableCellText(lpaPOEReceived);
 
-		// Complete the evidence review workflow
+		// Complete the evidence review workflow for LPA POE
 		documentationSectionPage.navigateToAddProofOfEvidenceReview('lpa-proofs-evidence');
 		caseDetailsPage.selectRadioButtonByValue('Complete');
 		caseDetailsPage.clickButtonByText('Continue');
@@ -752,46 +892,168 @@ it('should accept LPA POE for inquiry', () => {
 			'Success',
 			'LPA proof of evidence and witnesses accepted'
 		);
+
+		// Verify LPA POE status (Completed) - Documentation section
+		const lpaPOECompleted = { rowIndex: 5, cellIndex: 0, textToMatch: status[2], strict: true };
+		caseDetailsPage.verifyTableCellText(lpaPOECompleted);
+
+		// Process Appellant proof of evidence submission (FO) via Api
+		inquirySectionPage.addProofOfEvidenceViaApi(caseObj, 'appellantProofOfEvidence');
+
+		// Verify Appellant POE status (Received) - Documentation section
+		const appellantPOEReceived = {
+			rowIndex: 4,
+			cellIndex: 0,
+			textToMatch: status[1],
+			strict: true
+		};
+		caseDetailsPage.verifyTableCellText(appellantPOEReceived);
+
+		// Complete the evidence review workflow for Appellant POE
+		documentationSectionPage.navigateToAddProofOfEvidenceReview('appellant-proofs-evidence');
+		caseDetailsPage.selectRadioButtonByValue('Complete');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Accept Appellant proof of evidence and witnesses');
+
+		// Verify successful acceptance
+		caseDetailsPage.validateBannerMessage(
+			'Success',
+			'Appellant proof of evidence and witnesses accepted'
+		);
+
+		// Check Appellant POE status (Completed) - Documentation section
+		const appellantPOECompleted = {
+			rowIndex: 5,
+			cellIndex: 0,
+			textToMatch: status[2],
+			strict: true
+		};
+		caseDetailsPage.verifyTableCellText(appellantPOECompleted);
+
+		// Elapse POE
+		cy.simulateProofOfEvidenceElapsed(caseObj);
+
+		caseDetailsPage.validateBannerMessage('Important', 'Progress to inquiry');
+
+		// Progress to inquiry
+		caseDetailsPage.basePageElements.bannerLink().click();
+
+		inquirySectionPage.verifyInquiryHeader(headers.inquiry.shareSubmittedEvidence);
+		caseDetailsPage.verifyWarningText(
+			'Do not share until you have reviewed all of the supporting documents and redacted any sensitive information.'
+		);
+		caseDetailsPage.clickButtonByText('Share proof of evidence and witnesses');
+
+		// Verify successful evidence shared
+		caseDetailsPage.validateBannerMessage('Success', 'Progressed to inquiry');
+
+		caseDetailsPage.checkStatusOfCase('Awaiting inquiry', 0);
+
+		const expectedNotifies = [
+			{
+				template: 'proof-of-evidence-and-witnesses-shared',
+				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+			},
+			{
+				template: 'proof-of-evidence-and-witnesses-shared',
+				recipient: 'agent@test.com'
+			}
+		];
+
+		cy.checkNotifySent(caseObj, expectedNotifies);
+	});
+});
+
+it('should complete inquiry appeal to decision`', () => {
+	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseObj);
+		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+		cy.addLpaqSubmissionToCase(caseObj);
+		cy.reviewLpaqSubmission(caseObj);
+
+		// Add & Review statement & IP comment Via Api
+		cy.addRepresentation(caseObj, 'lpaStatement', null);
+		cy.reviewStatementViaApi(caseObj);
+
+		cy.addRepresentation(caseObj, 'interestedPartyComment', null);
+		cy.reviewIpCommentsViaApi(caseObj);
+
+		cy.simulateStatementsDeadlineElapsed(caseObj);
+
+		cy.shareCommentsAndStatementsViaApi(caseObj);
+
+		caseDetailsPage.checkStatusOfCase('Evidence', 0);
+
+		// Process LPA proof of evidence submission (FO) via Api
+		inquirySectionPage.addProofOfEvidenceViaApi(caseObj, 'lpaProofOfEvidence');
+
+		// Complete the evidence review workflow for LPA POE
+		documentationSectionPage.navigateToAddProofOfEvidenceReview('lpa-proofs-evidence');
+		caseDetailsPage.selectRadioButtonByValue('Complete');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Accept LPA proof of evidence and witnesses');
+
+		// Process Appellant proof of evidence submission (FO) via Api
+		inquirySectionPage.addProofOfEvidenceViaApi(caseObj, 'appellantProofOfEvidence');
+
+		// Complete the evidence review workflow for Appellant POE
+		documentationSectionPage.navigateToAddProofOfEvidenceReview('appellant-proofs-evidence');
+		caseDetailsPage.selectRadioButtonByValue('Complete');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Accept Appellant proof of evidence and witnesses');
+
+		// Elapse POE
+		cy.simulateProofOfEvidenceElapsed(caseObj);
+
+		caseDetailsPage.validateBannerMessage('Important', 'Progress to inquiry');
+
+		// Progress to inquiry
+		caseDetailsPage.basePageElements.bannerLink().click();
+		caseDetailsPage.clickButtonByText('Share proof of evidence and witnesses');
+
+		// Verify successful evidence shared
+		caseDetailsPage.validateBannerMessage('Success', 'Progressed to inquiry');
+
+		caseDetailsPage.checkStatusOfCase('Awaiting inquiry', 0);
+
+		cy.simulateInquiryElapsed(caseObj);
+
+		happyPathHelper.issueDecision('Allowed', 'both costs');
+
+		const expectedNotifies = [
+			{
+				template: 'decision-is-allowed-split-dismissed-lpa',
+				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+			},
+			{
+				template: 'decision-is-allowed-split-dismissed-appellant',
+				recipient: 'agent@test.com'
+			}
+		];
+
+		cy.checkNotifySent(caseObj, expectedNotifies);
 	});
 });
 
 it('should display the correct status tags when removing inquiry address', () => {
-	cy.createCase({ caseType: 'W', planningObligation: true }).then((ref) => {
-		// Set up a new case
-		caseObj = ref;
-		appeal = caseObj;
+	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseObj);
+		cy.addInquiryViaApi(caseObj, currentDate, timeTable);
 		cy.addLpaqSubmissionToCase(caseObj);
-		happyPathHelper.assignCaseOfficer(caseObj);
-		caseDetailsPage.checkStatusOfCase('Validation', 0);
-		happyPathHelper.reviewAppellantCase(caseObj);
-		caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-		happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');
+		cy.reviewLpaqSubmission(caseObj);
 
-		cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-			dateTimeSection.enterInquiryDate(inquiryDate);
-			dateTimeSection.enterInquiryTime('12', '00');
-		});
-		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.selectRadioButtonByValue('Yes');
-		caseDetailsPage.inputEstimatedInquiryDays(estimatedInquiryDays);
+		// Add & Review statement & IP comment Via Api
+		cy.addRepresentation(caseObj, 'lpaStatement', null);
+		cy.reviewStatementViaApi(caseObj);
 
-		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.selectRadioButtonByValue('Yes');
-		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.addInquiryAddress(inquiryAddress);
-		caseDetailsPage.clickButtonByText('Continue');
+		cy.addRepresentation(caseObj, 'interestedPartyComment', null);
+		cy.reviewIpCommentsViaApi(caseObj);
 
-		// enter timetable dates
-		cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
-			inquirySectionPage.enterTimetableDueDates(timetableItems, startDate, 7);
-		});
+		cy.simulateStatementsDeadlineElapsed(caseObj);
 
-		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.clickButtonByText('Start case');
-		caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
-		caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
-
-		happyPathHelper.reviewLPaStatement(caseObj);
+		cy.shareCommentsAndStatementsViaApi(caseObj);
 
 		// Verify evidence tag
 		caseDetailsPage.checkStatusOfCase('Evidence', 0);
@@ -826,7 +1088,12 @@ it('should display the correct status tags when removing inquiry address', () =>
 			'Appellant proof of evidence and witnesses accepted'
 		);
 
-		cy.get('a:contains("Progress to inquiry")').click();
+		// Elapse POE
+		cy.simulateProofOfEvidenceElapsed(caseObj);
+
+		// Progress to inquiry
+		caseDetailsPage.basePageElements.bannerLink().click();
+
 		caseDetailsPage.clickButtonByText('Share proof of evidence and witnesses');
 		caseDetailsPage.validateBannerMessage('Success', 'Progressed to inquiry');
 
@@ -925,7 +1192,12 @@ it('should display the correct status tags when cancelling inquiry', () => {
 			'Appellant proof of evidence and witnesses accepted'
 		);
 
-		cy.get('a:contains("Progress to inquiry")').click();
+		// Elapse POE
+		cy.simulateProofOfEvidenceElapsed(caseObj);
+
+		// Progress to inquiry
+		caseDetailsPage.basePageElements.bannerLink().click();
+
 		caseDetailsPage.clickButtonByText('Share proof of evidence and witnesses');
 		caseDetailsPage.validateBannerMessage('Success', 'Progressed to inquiry');
 

@@ -155,7 +155,7 @@ describe('appeals api mappers', () => {
 			context: contextEnum.appellantCase
 		});
 
-		expect(enforcementAppCaseOutput).toHaveProperty('otherAppellants');
+		expect(enforcementAppCaseOutput).toHaveProperty('appealGrounds');
 		expect(enforcementAppCaseOutput).toHaveProperty('enforcementNotice');
 	});
 
@@ -205,7 +205,7 @@ describe('appeals api mappers', () => {
 
 		expect(hasAppCaseOutput).not.toHaveProperty('appellantProcedurePreference');
 		expect(hasAppCaseOutput).not.toHaveProperty('agriculturalHolding');
-		expect(hasAppCaseOutput).not.toHaveProperty('otherAppellants');
+		expect(hasAppCaseOutput).not.toHaveProperty('appealGrounds');
 		expect(hasAppCaseOutput).not.toHaveProperty('enforcementNotice');
 
 		expect(s78AppCaseOutput).toHaveProperty('appellantProcedurePreference');

@@ -11,6 +11,10 @@ import { getByCaseId, getByCaseIdAndPaths, getById } from '#repositories/folder.
 import { validateBlobContents } from '#utils/blob-validation.js';
 import logger from '#utils/logger.js';
 import {
+	GROUND_SUPPORTING_DOCTYPE,
+	GROUNDS_APPLICATION_RECEIPT_DOCTYPE
+} from '@pins/appeals/constants/documents.js';
+import {
 	ERROR_NOT_FOUND,
 	VALIDATION_OUTCOME_COMPLETE,
 	VALIDATION_OUTCOME_INVALID,
@@ -157,7 +161,15 @@ export const getFoldersForStage = (path) => {
 				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.PLANNING_OBLIGATION}`,
 				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.OWNERSHIP_CERTIFICATE}`,
 				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS}`,
-				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.STATEMENT_COMMON_GROUND}`
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.STATEMENT_COMMON_GROUND}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${GROUND_SUPPORTING_DOCTYPE.A}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${GROUND_SUPPORTING_DOCTYPE.B}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${GROUND_SUPPORTING_DOCTYPE.C}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${GROUND_SUPPORTING_DOCTYPE.D}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${GROUND_SUPPORTING_DOCTYPE.E}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${GROUND_SUPPORTING_DOCTYPE.F}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${GROUND_SUPPORTING_DOCTYPE.G}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${GROUNDS_APPLICATION_RECEIPT_DOCTYPE}`
 			];
 			break;
 		case APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE:
@@ -408,7 +420,6 @@ export const getAvScanStatus = (documentVersion) => {
  */
 export const deleteDocument = async (document, version) => {
 	const result = await deleteDocumentVersion(document.guid, version);
-	await broadcasters.broadcastDocument(document.guid, version, EventType.Delete);
 	return result !== null;
 };
 

@@ -7,6 +7,16 @@ export interface Address {
 	postCode: string;
 }
 
+export interface ContactAddress {
+	addressId?: number;
+	addressLine1?: string;
+	addressLine2?: string;
+	addressTown?: string;
+	addressCounty?: string;
+	addressCountry?: string;
+	postCode: string;
+}
+
 export interface AppealSummary {
 	appealId: number;
 	appealReference: string;
@@ -42,6 +52,7 @@ export interface AppealList {
 	lpas: { name: string; lpaCode: string }[];
 	inspectors: { azureAdUserId: string; id: number }[];
 	caseOfficers: { azureAdUserId: string; id: number }[];
+	padsInspectors: { sapId: string; id: number; name: string }[];
 	page: number;
 	pageCount: number;
 	pageSize: number;

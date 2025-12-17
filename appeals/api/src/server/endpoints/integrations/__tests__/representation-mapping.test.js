@@ -77,10 +77,10 @@ describe('representation mapper', () => {
 				expect(validationResult).toBe(true);
 			});
 		}
-		for (const representatonType of Object.values(APPEAL_REPRESENTATION_TYPE)) {
-			test(`Mapping correct type: ${representatonType}`, async () => {
+		for (const representationType of Object.values(APPEAL_REPRESENTATION_TYPE)) {
+			test(`Mapping correct type: ${representationType}`, async () => {
 				// @ts-ignore
-				const mapped = mapRepresentationEntity({ ...mockRepresentation, representatonType });
+				const mapped = mapRepresentationEntity({ ...mockRepresentation, representationType });
 				const validationResult = await validateFromSchema(
 					schemas.events.appealRepresentation,
 					// @ts-ignore
@@ -107,15 +107,15 @@ describe('representation mapper', () => {
 		for (const source of [
 			{
 				lpa: null,
-				representatonType: APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT
+				representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT
 			},
 			{
 				lpa: null,
-				representatonType: APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
+				representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
 			},
 			{
 				lpa: null,
-				representatonType: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
+				representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
 			}
 		]) {
 			test(`Mapping citizen source: ${source}`, async () => {
@@ -136,15 +136,15 @@ describe('representation mapper', () => {
 		for (const source of [
 			{
 				lpa: { lpaCode: 'XXXX' },
-				representatonType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
+				representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
 			},
 			{
 				lpa: { lpaCode: 'XXXX' },
-				representatonType: APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
+				representationType: APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
 			},
 			{
 				lpa: { lpaCode: 'XXXX' },
-				representatonType: APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE
+				representationType: APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE
 			}
 		]) {
 			test(`Mapping lpa source: ${source}`, async () => {

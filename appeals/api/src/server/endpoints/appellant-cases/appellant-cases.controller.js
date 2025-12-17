@@ -7,7 +7,9 @@ import appellantCaseRepository from '#repositories/appellant-case.repository.js'
 import logger from '#utils/logger.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
+import { ERROR_FAILED_TO_SAVE_DATA, ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import {
+	putContactAddress,
 	renderAuditTrailDetail,
 	updateAppellantCaseValidationOutcome
 } from './appellant-cases.service.js';
@@ -77,7 +79,11 @@ const updateAppellantCaseById = async (req, res) => {
 			enforcementEffectiveDate,
 			contactPlanningInspectorateDate,
 			enforcementReference,
-			enforcementNoticeListedBuilding
+			enforcementNoticeListedBuilding,
+			descriptionOfAllegedBreach,
+			interestInLand,
+			writtenOrVerbalPermission,
+			applicationDevelopmentAllOrPart
 		},
 		params,
 		validationOutcome
@@ -160,7 +166,11 @@ const updateAppellantCaseById = async (req, res) => {
 					enforcementEffectiveDate,
 					contactPlanningInspectorateDate,
 					enforcementReference,
-					enforcementNoticeListedBuilding
+					enforcementNoticeListedBuilding,
+					descriptionOfAllegedBreach,
+					interestInLand,
+					writtenOrVerbalPermission,
+					applicationDevelopmentAllOrPart
 			  });
 
 		await updatePersonalList(appeal.id);
@@ -209,4 +219,58 @@ const updateAppellantCaseById = async (req, res) => {
 	return res.send(response);
 };
 
-export { getAppellantCaseById, updateAppellantCaseById };
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+const createAppellantCaseContactAddress = async (req, res) => {
+	const { params, body } = req;
+	const appellantCaseId = Number(params.appellantCaseId);
+	const appealId = Number(params.appealId);
+	const azureAdUserId = String(req.get('azureAdUserId'));
+
+	const response = await putContactAddress({
+		appellantCaseId,
+		appealId,
+		azureAdUserId,
+		body
+	});
+	return res.send(response);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response | undefined>}
+ */
+const updateAppellantCaseContactAddress = async (req, res) => {
+	const { params, body } = req;
+	const appellantCaseId = Number(params.appellantCaseId);
+	const appealId = Number(params.appealId);
+	const contactAddressId = Number(params.contactAddressId);
+	const azureAdUserId = String(req.get('azureAdUserId'));
+
+	try {
+		const response = await putContactAddress({
+			appellantCaseId,
+			appealId,
+			addressId: contactAddressId,
+			azureAdUserId,
+			body
+		});
+		return res.send(response);
+	} catch (error) {
+		if (error instanceof Error && error.message === ERROR_NOT_FOUND) {
+			res.status(404).send({ errors: { body: ERROR_NOT_FOUND } });
+		}
+		res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
+	}
+};
+
+export {
+	createAppellantCaseContactAddress,
+	getAppellantCaseById,
+	updateAppellantCaseById,
+	updateAppellantCaseContactAddress
+};

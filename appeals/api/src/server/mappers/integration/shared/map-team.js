@@ -3,7 +3,7 @@
 
 /**
  * @param {MappingRequest} data
- * @returns {{ caseOfficerId: string|null, inspectorId: string|null, sapId: string|null }}
+ * @returns {{ caseOfficerId: string|null, inspectorId: string|null, padsSapId: string|null }}
  */
 export const mapCaseTeam = (data) => {
 	const { appeal } = data;
@@ -11,6 +11,6 @@ export const mapCaseTeam = (data) => {
 	return {
 		caseOfficerId: appeal.caseOfficer?.azureAdUserId || null,
 		inspectorId: appeal.inspector?.azureAdUserId || null,
-		sapId: appeal.padsInspectorUserId || null
+		padsSapId: appeal.padsInspectorUserId || null
 	};
 };

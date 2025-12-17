@@ -97,6 +97,7 @@ export class Page {
 		input: () => cy.get(this.selectors.input),
 		linkByText: (text) => cy.contains(this.selectors.link, text, { matchCase: true }),
 		loggedInUser: () => cy.get(`${this.selectors.rightCol} > span`),
+		getPageCaption: () => cy.get('.govuk-caption-l'),
 		panelBody: () => cy.get(`${this.selectors.panelBody}`),
 		panelTitle: () => cy.get(`${this.selectors.panelTitle}`),
 		radioButton: () => cy.get(this.selectors.radio),
@@ -219,7 +220,7 @@ export class Page {
 	}
 
 	fillTextArea(text, index = 0) {
-		this.basePageElements.textArea().eq(index).clear().type(text);
+		this.basePageElements.textArea().eq(index).clear().type(text, { delay: 0 });
 	}
 
 	fillUsersInput(text, index = 0) {
@@ -384,6 +385,10 @@ export class Page {
 			const headerTitles = Cypress.$.makeArray($headers).map((el) => el.innerText.trim());
 			cy.wrap(headerTitles).should(assertionType, sectionHeader);
 		});
+	}
+
+	verifyPageCaption(text) {
+		this.basePageElements.getPageCaption().should('contain.text', text);
 	}
 
 	checkErrorMessageDisplays(errorMessage) {

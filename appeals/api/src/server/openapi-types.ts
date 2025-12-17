@@ -2190,6 +2190,13 @@ export type AllSiteVisitTypesResponse = {
 	id?: number;
 }[];
 
+export type AllGroundsResponse = {
+	/** @example "Access required" */
+	name?: string;
+	/** @example 1 */
+	id?: number;
+}[];
+
 export type AllAppellantCaseValidationOutcomesResponse = {
 	/** @example "Valid" */
 	name?: string;
@@ -2461,6 +2468,20 @@ export type LPAs = {
 	/** @example "bris@lpa-email.gov.uk" */
 	email?: string;
 }[];
+
+export type PADSUsers = {
+	/** @example "12345678" */
+	sapId?: string;
+	/** @example "John Smith" */
+	name?: string;
+}[];
+
+export interface PADSUser {
+	/** @example "12345678" */
+	sapId?: string;
+	/** @example "John Smith" */
+	name?: string;
+}
 
 export interface LPAChangeRequest {
 	/** @example 2 */
@@ -3255,6 +3276,19 @@ export interface DocumentationSummary {
 		counts?: object | null;
 		isRedacted?: boolean | null;
 	};
+	rule6PartyStatements?: Record<
+		string,
+		{
+			status?: string;
+			/** @format date-time */
+			dueDate?: string | null;
+			/** @format date-time */
+			receivedAt?: string | null;
+			representationStatus?: string | null;
+			counts?: object | null;
+			isRedacted?: boolean | null;
+		}
+	>;
 }
 
 export type StateList = {
@@ -4120,6 +4154,8 @@ export type AppellantCase = {
 		reference?: string | null;
 		interestInLand?: string | null;
 		writtenOrVerbalPermission?: string | null;
+		descriptionOfAllegedBreach?: string | null;
+		applicationDevelopmentAllOrPart?: string | null;
 		contactAddress?: {
 			addressId?: number;
 			addressLine1: string;
@@ -4139,6 +4175,8 @@ export type AppellantCase = {
 	contactPlanningInspectorateDate?: string | null;
 	interestInLand?: string | null;
 	writtenOrVerbalPermission?: string | null;
+	descriptionOfAllegedBreach?: string | null;
+	applicationDevelopmentAllOrPart?: string | null;
 	contactAddress?: {
 		addressId?: number;
 		addressLine1: string;
@@ -12459,6 +12497,8 @@ export interface AppellantCaseUpdateRequest {
 	contactPlanningInspectorateDate?: string | null;
 	interestInLand?: string | null;
 	writtenOrVerbalPermission?: string | null;
+	descriptionOfAllegedBreach?: string | null;
+	applicationDevelopmentAllOrPart?: string | null;
 	contactAddress?: {
 		addressId?: number;
 		addressLine1: string;

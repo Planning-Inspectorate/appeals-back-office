@@ -8,7 +8,7 @@ import {
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
 import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
-import { countBy, maxBy } from 'lodash-es';
+import { countBy, maxBy, reduce } from 'lodash-es';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Api.DocumentationSummary} DocumentationSummary */
@@ -32,6 +32,11 @@ export const mapDocumentationSummary = (data) => {
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
 		) ?? null;
 
+	const rule6PartyStatements =
+		appeal.representations?.filter(
+			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT
+		) ?? [];
+
 	const appellantFinalComments =
 		appeal.representations?.find(
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
@@ -50,6 +55,15 @@ export const mapDocumentationSummary = (data) => {
 		appeal.representations?.find(
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
 		) ?? null;
+	const appellantStatement =
+		appeal.representations?.find(
+			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT
+		) ?? null;
+
+	const rule6PartyProofs =
+		appeal.representations?.filter(
+			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
+		) ?? [];
 
 	const mostRecentIpComment = maxBy(ipComments, (comment) => new Date(comment.dateCreated));
 
@@ -85,6 +99,22 @@ export const mapDocumentationSummary = (data) => {
 				representationStatus: lpaStatement?.status ?? null,
 				isRedacted: Boolean(lpaStatement?.redactedRepresentation && redactLPAStatementMatching)
 			},
+			rule6PartyStatements: reduce(
+				appeal.appealRule6Parties,
+				(acc, rule6Party) => {
+					const statement = rule6PartyStatements?.find(
+						(statement) => statement.representedId === rule6Party.serviceUserId
+					);
+					acc[String(rule6Party.serviceUserId)] = {
+						status: statement ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+						receivedAt: statement?.dateCreated.toISOString() ?? null,
+						representationStatus: statement?.status ?? null,
+						isRedacted: Boolean(statement?.redactedRepresentation && redactLPAStatementMatching)
+					};
+					return acc;
+				},
+				/** @type {Record<string, any>} */ ({})
+			),
 			lpaFinalComments: {
 				status: lpaFinalComments ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 				receivedAt: lpaFinalComments?.dateCreated
@@ -112,6 +142,29 @@ export const mapDocumentationSummary = (data) => {
 					? lpaProofOfEvidence.dateCreated.toISOString()
 					: null,
 				representationStatus: lpaProofOfEvidence?.status ?? null
+			},
+			rule6PartyProofs: reduce(
+				appeal.appealRule6Parties,
+				(acc, rule6Party) => {
+					const proof = rule6PartyProofs?.find(
+						(proof) => proof.representedId === rule6Party.serviceUserId
+					);
+					acc[String(rule6Party.serviceUserId)] = {
+						status: proof ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+						receivedAt: proof?.dateCreated.toISOString() ?? null,
+						representationStatus: proof?.status ?? null,
+						isRedacted: Boolean(proof?.redactedRepresentation && redactLPAStatementMatching)
+					};
+					return acc;
+				},
+				/** @type {Record<string, any>} */ ({})
+			),
+			appellantStatement: {
+				status: appellantStatement ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+				receivedAt: appellantStatement?.dateCreated
+					? appellantStatement.dateCreated.toISOString()
+					: null,
+				representationStatus: appellantStatement?.status ?? null
 			}
 		})
 	};

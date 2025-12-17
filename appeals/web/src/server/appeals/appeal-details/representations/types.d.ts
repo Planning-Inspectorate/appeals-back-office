@@ -1,6 +1,6 @@
 import { Address } from '@pins/appeals';
 
-export type RepresentationStatus = 'awaiting_review' | 'valid' | 'invalid';
+export type RepresentationStatus = 'awaiting_review' | 'published' | 'valid' | 'invalid';
 export type RedactionStatus = 'redacted' | 'unredacted' | 'not-required';
 
 export interface Represented {

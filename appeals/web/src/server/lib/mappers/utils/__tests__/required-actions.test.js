@@ -58,6 +58,20 @@ describe('required actions', () => {
 			).toEqual(['arrangeSiteVisit']);
 		});
 
+		it('should return "arrangeSiteVisit" if appeal procedure is null, appeal status is "EVENT" and no siteVisit exists', () => {
+			expect(
+				getRequiredActionsForAppeal(
+					{
+						...appealData,
+						procedureType: null,
+						siteVisit: undefined,
+						appealStatus: APPEAL_CASE_STATUS.EVENT
+					},
+					'detail'
+				)
+			).toEqual(['arrangeSiteVisit']);
+		});
+
 		it('should return "issueDecision" if appeal status is "ISSUE_DETERMINATION"', () => {
 			expect(
 				getRequiredActionsForAppeal(
@@ -969,6 +983,49 @@ describe('required actions', () => {
 						)
 					).toContain('updateLpaStatement');
 				});
+
+				it('should return "reviewAppellantStatement", "reviewIpComments" and "reviewLpaStatement" if all three are awaiting review', () => {
+					expect(
+						getRequiredActionsForAppeal(
+							{
+								...appealDataWithStatementsStatus,
+								appealTimetable: {
+									...appealDataWithStatementsStatus.appealTimetable,
+									ipCommentsDueDate: futureDate,
+									lpaStatementDueDate: futureDate,
+									appellantStatementDueDate: futureDate
+								},
+								documentationSummary: {
+									...appealDataWithStatementsStatus.documentationSummary,
+									appellantStatement: {
+										status: 'received',
+										representationStatus: 'awaiting_review'
+									},
+									ipComments: {
+										status: 'received',
+										counts: {
+											awaiting_review: 1,
+											valid: 0,
+											published: 0
+										}
+									},
+									lpaStatement: {
+										status: 'received',
+										receivedAt: pastDate,
+										representationStatus: 'awaiting_review'
+									}
+								}
+							},
+							'detail'
+						)
+					).toEqual(
+						expect.arrayContaining([
+							'reviewAppellantStatement',
+							'reviewIpComments',
+							'reviewLpaStatement'
+						])
+					);
+				});
 			});
 		});
 
@@ -1546,7 +1603,7 @@ describe('required actions', () => {
 				expect(result).toContain('reviewAppellantProofOfEvidence');
 			});
 
-			it('should return "progressToInquiry" if LPA proof of evidence is not received and proof of evidence dure date has passed', () => {
+			it('should return "progressToInquiry" if LPA proof of evidence is not received and proof of evidence and due date has passed', () => {
 				expect(
 					getRequiredActionsForAppeal(
 						{
@@ -1577,7 +1634,7 @@ describe('required actions', () => {
 						},
 						'detail'
 					)
-				).toEqual(['reviewAppellantProofOfEvidence', 'awaitingLpaProofOfEvidenceAndWitnesses']);
+				).toEqual(['reviewAppellantProofOfEvidence', 'progressToInquiry']);
 			});
 
 			it('should return "progressToInquiry" if appellant proof of evidence is not received and proof of evidence dure date has passed', () => {
@@ -1611,7 +1668,7 @@ describe('required actions', () => {
 						},
 						'detail'
 					)
-				).toEqual(['reviewLpaProofOfEvidence', 'awaitingAppellantProofOfEvidenceAndWitnesses']);
+				).toEqual(['reviewLpaProofOfEvidence', 'progressToInquiry']);
 			});
 
 			it('should return "progressToInquiry" if both appellant and LPA proof of evidence is not received and proof of evidence dure date has passed', () => {

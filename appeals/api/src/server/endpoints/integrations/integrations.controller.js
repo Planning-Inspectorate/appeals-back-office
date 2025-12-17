@@ -1,6 +1,7 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { addDocumentAudit } from '#endpoints/documents/documents.service.js';
 import { commandMappers } from '#mappers/integration/commands/index.js';
+import { serviceUserIdStartRange } from '#mappers/integration/map-service-user-entity.js';
 import { getAssignedTeam } from '#repositories/team.repository.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
@@ -169,7 +170,12 @@ export const importLpaqSubmission = async (req, res) => {
  * @returns {Promise<Response>}
  */
 export const importRepresentation = async (req, res) => {
-	const { representation, attachments } = commandMappers.mapRepresentation(req.body);
+	const serviceUserId = Number(req.body.serviceUserId) - serviceUserIdStartRange;
+	const isRule6Party = !!req.appeal.appealRule6Parties?.some(
+		(party) => party.serviceUserId === serviceUserId
+	);
+
+	const { representation, attachments } = commandMappers.mapRepresentation(req.body, isRule6Party);
 
 	const hasNewUser = representation.represented?.create != null;
 	const isIpComment = representation.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT;

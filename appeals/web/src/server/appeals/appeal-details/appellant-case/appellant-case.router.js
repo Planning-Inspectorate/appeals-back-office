@@ -1,10 +1,13 @@
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
+import allegedBreachDescriptionRouter from '#appeals/appeal-details/appellant-case/alleged-breach-description/alleged-breach-description.router.js';
+import applicationDevelopmentPartOrFullRouter from '#appeals/appeal-details/appellant-case/application-development-all-or-part/application-development-all-or-part.router.js';
 import contactPlanningInspectorateDateRouter from '#appeals/appeal-details/appellant-case/contact-planning-inspectorate-date/contact-planning-inspectorate-date.router.js';
 import enforcementEffectiveDateRouter from '#appeals/appeal-details/appellant-case/enforcement-effective-date/enforcement-effective-date.router.js';
 import enforcementIssueDateRouter from '#appeals/appeal-details/appellant-case/enforcement-issue-date/enforcement-issue-date.router.js';
 import enforcementNoticeListedBuildingRouter from '#appeals/appeal-details/appellant-case/enforcement-notice-listed-building/enforcement-notice-listed-building.router.js';
 import enforcementNoticeRouter from '#appeals/appeal-details/appellant-case/enforcement-notice/enforcement-notice.router.js';
 import enforcementReferenceRouter from '#appeals/appeal-details/appellant-case/enforcement-reference/enforcement-reference.router.js';
+import groundsForAppealRouter from '#appeals/appeal-details/appellant-case/grounds-for-appeal/grounds-for-appeal.router.js';
 import changeProcedureTypeRouter from '#appeals/appeal-details/change-procedure-type/change-procedure-type.router.js';
 import { permissionNames } from '#environment/permissions.js';
 import { extractAndProcessDocumentDateErrors } from '#lib/validators/date-input.validator.js';
@@ -16,7 +19,7 @@ import {
 	validateCaseFolderId
 } from '../../appeal-documents/appeal-documents.middleware.js';
 import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
-import { validateAppeal } from '../appeal-details.middleware.js';
+import { validateAppeal, validateAppealWithInclude } from '../appeal-details.middleware.js';
 import changeLpaRouter from '../change-appeal-details/local-planning-authority/local-planning-authority.router.js';
 import greenBeltRouter from '../green-belt/green-belt.router.js';
 import inspectorAccessRouter from '../inspector-access/inspector-access.router.js';
@@ -35,9 +38,12 @@ import applicationDecisionDateRouter from './application-decision-date/applicati
 import applicationDevelopmentTypeRouter from './application-development-type/application-development-type.router.js';
 import applicationOutcomeRouter from './application-outcome/application-outcome.router.js';
 import applicationSubmissionDateRouter from './application-submission-date/application-submission-date.router.js';
+import contactAddressRouter from './contact-address/contact-address.router.js';
 import developmentDescriptionRouter from './development-description/development-description.router.js';
+import factsForGroundRouter from './facts-for-ground/facts-for-ground.router.js';
 import gridReferenceRouter from './grid-reference/grid-reference.router.js';
 import highwayLandRouter from './highway-land/highway-land.router.js';
+import interestInLandRouter from './interest-in-land/interest-in-land.router.js';
 import landownerPermissionRouter from './landowner-permission/landowner-permission.router.js';
 import outcomeIncompleteRouter from './outcome-incomplete/outcome-incomplete.router.js';
 import outcomeValidRouter from './outcome-valid/outcome-valid.router.js';
@@ -46,6 +52,7 @@ import planningObligationRouter from './planning-obligation/planning-obligation.
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
 import siteAreaRouter from './site-area/site-area.router.js';
 import siteOwnershipRouter from './site-ownership/site-ownership.router.js';
+import writtenOrVerbalPermissionRouter from './written-or-verbal-permission/written-or-verbal-permission.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -224,41 +231,82 @@ router.use(
 
 router.use(
 	'/enforcement-notice',
-	validateAppeal,
+	validateAppealWithInclude(['appellantCase']),
 	assertUserHasPermission(permissionNames.updateCase),
 	enforcementNoticeRouter
 );
 router.use(
 	'/enforcement-issue-date',
-	validateAppeal,
+	validateAppealWithInclude(['appellantCase']),
 	assertUserHasPermission(permissionNames.updateCase),
 	enforcementIssueDateRouter
 );
 router.use(
 	'/enforcement-effective-date',
-	validateAppeal,
+	validateAppealWithInclude(['appellantCase']),
 	assertUserHasPermission(permissionNames.updateCase),
 	enforcementEffectiveDateRouter
 );
 router.use(
 	'/contact-planning-inspectorate-date',
-	validateAppeal,
+	validateAppealWithInclude(['appellantCase']),
 	assertUserHasPermission(permissionNames.updateCase),
 	contactPlanningInspectorateDateRouter
 );
 
 router.use(
 	'/enforcement-notice-listed-building',
-	validateAppeal,
+	validateAppealWithInclude(['appellantCase']),
 	assertUserHasPermission(permissionNames.updateCase),
 	enforcementNoticeListedBuildingRouter
 );
 
 router.use(
 	'/enforcement-reference',
-	validateAppeal,
+	validateAppealWithInclude(['appellantCase']),
 	assertUserHasPermission(permissionNames.updateCase),
 	enforcementReferenceRouter
+);
+
+router.use(
+	'/alleged-breach-description',
+	validateAppealWithInclude(['appellantCase']),
+	assertUserHasPermission(permissionNames.updateCase),
+	allegedBreachDescriptionRouter
+);
+
+router.use(
+	'/grounds-for-appeal',
+	validateAppealWithInclude(['appellantCase', 'appealGrounds']),
+	assertUserHasPermission(permissionNames.updateCase),
+	groundsForAppealRouter
+);
+
+router.use(
+	'/facts-for-ground',
+	validateAppealWithInclude(['appellantCase', 'appealGrounds']),
+	assertUserHasPermission(permissionNames.updateCase),
+	factsForGroundRouter
+);
+
+router.use(
+	'/interest-in-land',
+	validateAppealWithInclude(['appellantCase']),
+	assertUserHasPermission(permissionNames.updateCase),
+	interestInLandRouter
+);
+
+router.use(
+	'/written-or-verbal-permission',
+	validateAppealWithInclude(['appellantCase']),
+	assertUserHasPermission(permissionNames.updateCase),
+	writtenOrVerbalPermissionRouter
+);
+
+router.use(
+	'/application-development-all-or-part',
+	validateAppealWithInclude(['appellantCase']),
+	applicationDevelopmentPartOrFullRouter
 );
 
 router
@@ -376,6 +424,7 @@ router
 router
 	.route('/manage-documents/:folderId/')
 	.get(
+		validateAppealWithInclude(['appealType']),
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		asyncHandler(controller.getManageFolder)
@@ -446,5 +495,11 @@ router
 		documentsValidators.validateDocumentDeleteAnswer,
 		asyncHandler(controller.postDeleteDocumentPage)
 	);
+
+router.use(
+	'/contact-address',
+	assertUserHasPermission(permissionNames.updateCase),
+	contactAddressRouter
+);
 
 export default router;

@@ -12,11 +12,11 @@ describe('appeal rule 6 parties routes', () => {
 	let fullPlanningAppeal;
 
 	const rule6Party = {
-		id: '123',
+		id: 385,
 		appealId: fullPlanningAppealData.id,
-		serviceUserId: '123',
+		serviceUserId: 473,
 		serviceUser: {
-			id: '123',
+			id: 473,
 			organisationName: 'Test Organisation',
 			email: 'test@example.com'
 		}
@@ -64,6 +64,11 @@ describe('appeal rule 6 parties routes', () => {
 			test('creates a single rule 6 party', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				databaseConnector.appealRule6Party.create.mockResolvedValue({
+					appealId: fullPlanningAppeal.id,
+					id: 10,
+					serviceUserId: 20
+				});
 
 				const response = await request
 					.post(`/appeals/${appealId}/rule-6-parties`)
@@ -90,6 +95,13 @@ describe('appeal rule 6 parties routes', () => {
 						}
 					}
 				});
+
+				expect(mockBroadcasters.broadcastServiceUser).toHaveBeenCalledWith(
+					20,
+					'Create',
+					'Rule6Party',
+					fullPlanningAppeal.reference
+				);
 
 				expect(response.status).toEqual(201);
 			});
@@ -178,6 +190,235 @@ describe('appeal rule 6 parties routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: { 'serviceUser.email': 'must be a valid email' }
+				});
+			});
+		});
+	});
+
+	describe('/:appealId/rule-6-parties/:rule6PartyId', () => {
+		describe('PATCH', () => {
+			test('updates a rule 6 party', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					appealRule6Parties: [rule6Party]
+				});
+				// @ts-ignore
+				databaseConnector.appealRule6Party.update.mockResolvedValue({
+					...rule6Party,
+					serviceUser: { organisationName: 'Test Organisation', email: 'test@example.com' }
+				});
+
+				const response = await request
+					.patch(`/appeals/${appealId}/rule-6-parties/${rule6Party.id}`)
+					.send({
+						serviceUser: { organisationName: 'Test Organisation', email: 'test@example.com' }
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appealRule6Party.update).toHaveBeenCalledWith({
+					where: {
+						id: Number(rule6Party.id)
+					},
+					data: {
+						serviceUser: {
+							update: {
+								organisationName: 'Test Organisation',
+								email: 'test@example.com'
+							}
+						}
+					},
+					select: {
+						id: true,
+						appealId: true,
+						serviceUserId: true,
+						serviceUser: {
+							select: {
+								id: true,
+								organisationName: true,
+								email: true
+							}
+						}
+					}
+				});
+
+				expect(mockBroadcasters.broadcastServiceUser).toHaveBeenCalledWith(
+					rule6Party.serviceUserId,
+					'Update',
+					'Rule6Party',
+					fullPlanningAppeal.reference
+				);
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					...rule6Party,
+					serviceUser: { organisationName: 'Test Organisation', email: 'test@example.com' }
+				});
+			});
+
+			test('returns an error if appealId is not a number', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.patch(`/appeals/appealId/rule-6-parties/1`)
+					.send({
+						serviceUser: {
+							organisationName: 'Test Organisation',
+							email: 'test@example.com'
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: { appealId: 'must be a number' }
+				});
+			});
+
+			test('returns an error if rule6PartyId is not a number', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.patch(`/appeals/${appealId}/rule-6-parties/rule6PartyId`)
+					.send({
+						serviceUser: {
+							organisationName: 'Test Organisation',
+							email: 'test@example.com'
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: { rule6PartyId: 'must be a number' }
+				});
+			});
+
+			test('returns an error if organisationName is not provided', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.patch(`/appeals/${appealId}/rule-6-parties/${rule6Party.id}`)
+					.send({ serviceUser: { email: 'test@example.com' } })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: { 'serviceUser.organisationName': 'must be a string' }
+				});
+			});
+
+			test('returns an error if organisationName is greater than 300 characters', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.patch(`/appeals/${appealId}/rule-6-parties/${rule6Party.id}`)
+					.send({
+						serviceUser: {
+							organisationName: 'a'.repeat(301),
+							email: 'test@example.com'
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						'serviceUser.organisationName': 'must be 300 characters or less'
+					}
+				});
+			});
+
+			test('returns an error if email is not provided', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.patch(`/appeals/${appealId}/rule-6-parties/${rule6Party.id}`)
+					.send({ serviceUser: { organisationName: 'Test Organisation' } })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: { 'serviceUser.email': 'must be a valid email' }
+				});
+			});
+
+			test('returns an error if email is invalid', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.patch(`/appeals/${appealId}/rule-6-parties/${rule6Party.id}`)
+					.send({ serviceUser: { organisationName: 'Test Organisation', email: 'test@blah@com' } })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: { 'serviceUser.email': 'must be a valid email' }
+				});
+			});
+		});
+
+		describe('DELETE', () => {
+			test('deletes a rule 6 party', async () => {
+				// @ts-ignore
+				databaseConnector.appealRule6Party.delete.mockResolvedValue({
+					appealId,
+					serviceUserId: Number(rule6Party.serviceUserId)
+				});
+
+				const response = await request
+					.delete(`/appeals/${appealId}/rule-6-parties/${rule6Party.id}`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appealRule6Party.delete).toHaveBeenCalledWith({
+					where: { id: Number(rule6Party.id) }
+				});
+
+				expect(mockBroadcasters.broadcastServiceUser).toHaveBeenCalledWith(
+					rule6Party.serviceUserId,
+					'Delete',
+					'Rule6Party',
+					fullPlanningAppeal.reference
+				);
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					appealId: appealId,
+					serviceUserId: rule6Party.serviceUserId
+				});
+			});
+
+			test('returns an error if appealId is not a number', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.delete(`/appeals/appealId/rule-6-parties/1`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: { appealId: 'must be a number' }
+				});
+			});
+
+			test('returns an error if rule6PartyId is not a number', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				const response = await request
+					.delete(`/appeals/${appealId}/rule-6-parties/rule6PartyId`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: { rule6PartyId: 'must be a number' }
 				});
 			});
 		});

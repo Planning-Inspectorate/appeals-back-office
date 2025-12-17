@@ -2,3 +2,4 @@ variables:
   azurecrName: pinscrsharedtoolinguks
   resourceGroup: pins-rg-appeals-bo-$(ENVIRONMENT)
   tagPrefix: back-office
+  npm_config_cache: $(Pipeline.Workspace)/.npm

@@ -79,7 +79,7 @@ exports[`personal-list GET / should render a child status tag in the lead or chi
                             </td>
                             <td class="govuk-table__cell"></td>
                             <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28526/interested-party-comments?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30">Review IP comments<span class="govuk-visually-hidden"> for appeal 28526</span></a>
-                            </td>
+                                <br>Awaiting appellant statement</td>
                             <td class="govuk-table__cell">7 February 2025</td>
                             <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Statements</strong>
                             </td>
@@ -210,7 +210,7 @@ exports[`personal-list GET / should render a lead status tag in the lead or chil
                             </td>
                             <td class="govuk-table__cell"></td>
                             <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28526/interested-party-comments?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30">Review IP comments<span class="govuk-visually-hidden"> for appeal 28526</span></a>
-                            </td>
+                                <br>Awaiting appellant statement</td>
                             <td class="govuk-table__cell">7 February 2025</td>
                             <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Statements</strong>
                             </td>
@@ -358,7 +358,7 @@ exports[`personal-list GET / should render an empty cell in the lead or child co
                             </td>
                             <td class="govuk-table__cell"></td>
                             <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28526/interested-party-comments?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30">Review IP comments<span class="govuk-visually-hidden"> for appeal 28526</span></a>
-                            </td>
+                                <br>Awaiting appellant statement</td>
                             <td class="govuk-table__cell">7 February 2025</td>
                             <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Statements</strong>
                             </td>
@@ -722,7 +722,7 @@ exports[`personal-list GET / should render the first page of the personal list w
                             </td>
                             <td class="govuk-table__cell"></td>
                             <td class="govuk-table__cell action-required"><a class="govuk-link" href="/appeals-service/appeal-details/28526/interested-party-comments?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D5">Review IP comments<span class="govuk-visually-hidden"> for appeal 28526</span></a>
-                            </td>
+                                <br>Awaiting appellant statement</td>
                             <td class="govuk-table__cell">7 February 2025</td>
                             <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Statements</strong>
                             </td>

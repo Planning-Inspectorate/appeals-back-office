@@ -85,7 +85,8 @@ export const appealDetailsInclude = /** @type {const} */ {
 			appellantCaseValidationOutcome: true,
 			knowsOtherOwners: true,
 			knowsAllOwners: true,
-			appellantCaseAdvertDetails: true
+			appellantCaseAdvertDetails: true,
+			contactAddress: true
 		}
 	},
 	appellant: true,
@@ -161,9 +162,12 @@ export const appealDetailsInclude = /** @type {const} */ {
 	representations: true,
 	hearingEstimate: true,
 	inquiryEstimate: true,
-	otherAppellants: {
+	appealGrounds: {
+		where: {
+			isDeleted: false
+		},
 		include: {
-			appellant: true
+			ground: true
 		}
 	},
 	appealRule6Parties: {
@@ -217,7 +221,8 @@ export const appealDetailsIncludeMap = /** @type {const} */ {
 			appellantCaseValidationOutcome: true,
 			knowsOtherOwners: true,
 			knowsAllOwners: true,
-			appellantCaseAdvertDetails: true
+			appellantCaseAdvertDetails: true,
+			contactAddress: true
 		}
 	},
 	appellant: true,
@@ -294,9 +299,12 @@ export const appealDetailsIncludeMap = /** @type {const} */ {
 	representations: true,
 	hearingEstimate: true,
 	inquiryEstimate: true,
-	otherAppellants: {
+	appealGrounds: {
+		where: {
+			isDeleted: false
+		},
 		include: {
-			appellant: true
+			ground: true
 		}
 	},
 	appealRule6Parties: {
@@ -757,6 +765,23 @@ const getAppealsWithCompletedEvents = () =>
 							{
 								hearingEndTime: null,
 								hearingStartTime: {
+									lte: new Date()
+								}
+							}
+						]
+					}
+				},
+				{
+					inquiry: {
+						OR: [
+							{
+								inquiryStartTime: {
+									lte: new Date()
+								}
+							},
+							{
+								inquiryEndTime: null,
+								inquiryStartTime: {
 									lte: new Date()
 								}
 							}

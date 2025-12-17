@@ -16,6 +16,7 @@ import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.j
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
+import addressRepository from '#repositories/address.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
@@ -25,15 +26,24 @@ import { getFormattedReasons } from '#utils/email-formatter.js';
 import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
 import { allAppellantCaseOutcomesAreValid } from '#utils/is-awaiting-linked-appeal.js';
 import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
+import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { camelToScreamingSnake, capitalizeFirstLetter } from '#utils/string-utils.js';
+import {
+	addressToString,
+	camelToScreamingSnake,
+	capitalizeFirstLetter
+} from '#utils/string-utils.js';
 import {
 	APPEAL_DEVELOPMENT_TYPES,
 	PLANNING_OBLIGATION_STATUSES
 } from '@pins/appeals/constants/appellant-cases.constants.js';
-import { AUDIT_TRAIL_SUBMISSION_INVALID } from '@pins/appeals/constants/support.js';
+import {
+	AUDIT_TRAIL_ENFORCEMENT_NOTICE_CONTACT_ADDRESS,
+	AUDIT_TRAIL_SUBMISSION_INVALID
+} from '@pins/appeals/constants/support.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library.js';
 import transitionState from '../../state/transition-state.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
@@ -307,16 +317,93 @@ export function renderAuditTrailDetail(data) {
 			data.appellantProcedurePreferenceDuration,
 		AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_WITNESS_COUNT_UPDATED: () =>
 			data.appellantProcedurePreferenceWitnessCount,
+		AUDIT_TRAIL_ENFORCEMENT_NOTICE_UPDATED: () => (data.enforcementNotice ? 'Yes' : 'No'),
+		AUDIT_TRAIL_ENFORCEMENT_NOTICE_LISTED_BUILDING_UPDATED: () =>
+			data.enforcementNoticeListedBuilding ? 'Yes' : 'No',
+		AUDIT_TRAIL_ENFORCEMENT_ISSUE_DATE_UPDATED: () =>
+			data.enforcementIssueDate
+				? formatDate(new Date(/** @type {string} */ (data.enforcementIssueDate)), false)
+				: undefined,
+		AUDIT_TRAIL_ENFORCEMENT_EFFECTIVE_DATE_UPDATED: () =>
+			data.enforcementEffectiveDate
+				? formatDate(new Date(/** @type {string} */ (data.enforcementEffectiveDate)), false)
+				: undefined,
+		AUDIT_TRAIL_CONTACT_PLANNING_INSPECTORATE_DATE_UPDATED: () =>
+			data.contactPlanningInspectorateDate
+				? formatDate(new Date(/** @type {string} */ (data.contactPlanningInspectorateDate)), false)
+				: undefined,
+		AUDIT_TRAIL_ENFORCEMENT_REFERENCE_UPDATED: () => data.enforcementReference,
+		AUDIT_TRAIL_DESCRIPTION_OF_ALLEGED_BREACH_UPDATED: () => data.descriptionOfAllegedBreach,
+		AUDIT_TRAIL_APPLICATION_DEVELOPMENT_ALL_OR_PART_UPDATED: () =>
+			data.applicationDevelopmentAllOrPart,
 		AUDIT_TRAIL_STATUS_PLANNING_OBLIGATION_UPDATED: () =>
 			PLANNING_OBLIGATION_STATUSES.find(
 				(/** @type {{value: string, label: string}} */ item) =>
 					item.value === data.statusPlanningObligation
-			)?.label || 'Not applicable'
+			)?.label || 'Not applicable',
+		AUDIT_TRAIL_WRITTEN_OR_VERBAL_PERMISSION_UPDATED: () => data.writtenOrVerbalPermission,
+		AUDIT_TRAIL_INTEREST_IN_LAND_UPDATED: () => data.interestInLand
 	};
 
 	if (!auditTrailParameters[constantKey]) {
 		return constantKey in auditTrailParameters ? CONSTANTS[constantKey] : genericResult;
 	}
 
-	return stringTokenReplacement(CONSTANTS[constantKey], [auditTrailParameters[constantKey]()]);
+	return stringTokenReplacement(
+		CONSTANTS[constantKey],
+		[auditTrailParameters[constantKey]()].flat()
+	);
 }
+
+/**
+ * @typedef {object} body
+ * @property {string} [addressLine1]
+ * @property {string} [addressLine2]
+ * @property {string} [addressCounty]
+ * @property {string} [postcode]
+ * @property {string} [addressTown]
+ *
+ * @param {object} params
+ * @param {number} params.appellantCaseId
+ * @param {number} params.appealId
+ * @param {string} params.azureAdUserId
+ * @param {number | undefined} [params.addressId]
+ * @param {body} params.body
+ */
+export const putContactAddress = async (params) => {
+	try {
+		const { appealId, appellantCaseId, addressId, azureAdUserId, body } = params;
+		const contactAddress = addressId
+			? await addressRepository.updateAppellantCaseContactAddressById({
+					id: addressId,
+					appealId,
+					appellantCaseId,
+					data: body
+			  })
+			: await addressRepository.createAppellantCaseContactAddress({
+					appealId,
+					appellantCaseId,
+					data: body
+			  });
+
+		const addressDetails = addressToString(contactAddress);
+		const details = stringTokenReplacement(AUDIT_TRAIL_ENFORCEMENT_NOTICE_CONTACT_ADDRESS, [
+			addressDetails
+		]);
+		await createAuditTrail({
+			appealId,
+			azureAdUserId,
+			details
+		});
+
+		return contactAddress;
+	} catch (error) {
+		logger.error(error);
+		if (error instanceof PrismaClientKnownRequestError) {
+			if (error.code === 'P2025') {
+				throw new Error(ERROR_NOT_FOUND);
+			}
+		}
+		throw error;
+	}
+};

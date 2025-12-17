@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { formatCamelCaseToWords } from '../support/utils/format.js';
 import { CaseDetailsPage } from './caseDetailsPage.js';
 
 export class CYASection extends CaseDetailsPage {
@@ -11,13 +12,13 @@ export class CYASection extends CaseDetailsPage {
 
 	// E L E M E N T S
 
-	elements = {};
-
 	cyaSectionFields = {
 		address: 'Address of where the inquiry will take place',
 		reasonForRejectAppellantPOE:
 			'Reason for rejecting the appellant proof of evidence and witnesses',
-		reasonForRejectLPAPOE: 'Reason for rejecting the LPA proof of evidence and witnesses'
+		reasonForRejectLPAPOE: 'Reason for rejecting the LPA proof of evidence and witnesses',
+		rule6PartyName: 'Rule 6 party name',
+		rule6PartyEmailAddress: 'Rule 6 party email address'
 	};
 
 	previewEmailSummary = {
@@ -41,11 +42,15 @@ export class CYASection extends CaseDetailsPage {
 		cy.getByData('change-' + answer).click();
 	}
 
+	changeAnswer(answer) {
+		this.clickChangeLinkByLabel(answer);
+	}
+
 	verifyAnswerUpdated(fieldValue) {
 		this.verifyCheckYourAnswers(fieldValue.field, fieldValue.value);
 	}
 
-	verifyPreviewEmail(emailType, isDateAndTime = false, dateTimeValues = null) {
+	verifyPreviewEmail(emailType, isDateAndTime = false, appealDetails = null) {
 		if (!this.previewEmails[emailType]) {
 			throw new Error(`Invalid email type: ${emailType}. Use 'appellant' or 'lpa'.`);
 		}
@@ -64,9 +69,13 @@ export class CYASection extends CaseDetailsPage {
 			cy.wrap($el).should('have.attr', 'open');
 			cy.wrap($el).find('.govuk-details__text').should('be.visible');
 			cy.wrap($el).find('.govuk-details__summary-text').should('contain', expectedText);
-			if (isDateAndTime) {
-				cy.wrap($el).find('.govuk-details__text').should('contain', dateTimeValues.date);
-				cy.wrap($el).find('.govuk-details__text').should('contain', dateTimeValues.time);
+
+			// are there appeal details to check (e.g. for inquiry or hearing)
+			if (appealDetails) {
+				Object.keys(appealDetails).forEach((key) => {
+					const appealValue = `${formatCamelCaseToWords(key)}: ${appealDetails[key]}`;
+					cy.wrap($el).find('.govuk-details__text').should('contain', appealValue);
+				});
 			}
 
 			// Collapse and verify

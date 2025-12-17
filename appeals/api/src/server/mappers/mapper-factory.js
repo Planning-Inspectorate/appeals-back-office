@@ -158,6 +158,7 @@ function createDataLayout(caseMap, mappingRequest) {
 		folders,
 		appealTransferStatus,
 		otherAppellants,
+		appealGrounds,
 		...appealDetails
 	} = Object.fromEntries(caseMap);
 
@@ -166,6 +167,7 @@ function createDataLayout(caseMap, mappingRequest) {
 			return {
 				appellantCaseId: appeal.appellantCase?.id,
 				...otherAppellants,
+				...appealGrounds,
 				...appealSummary,
 				...appellantCase,
 				transferStatus: appealTransferStatus,
@@ -206,6 +208,9 @@ function createDataLayout(caseMap, mappingRequest) {
 				eiaScreeningRequired: appeal.eiaScreeningRequired,
 				lpaEmailAddress: appeal.lpa?.email,
 				transferStatus: appealTransferStatus,
+				enforcementNotice: {
+					appellantCase: { ...appellantCase?.enforcementNotice }
+				},
 				...createFoldersLayout(folders, contextEnum.appealDetails)
 			};
 		}

@@ -387,8 +387,9 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
                             <div class="govuk-grid-column-two-thirds">
                                 <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
                                 data-maxlength="500">
-                                    <textarea class="govuk-textarea govuk-js-character-count" id="comment"
-                                    name="comment" rows="5" aria-describedby="comment-info"></textarea>
+                                    <label class="govuk-label govuk-visually-hidden" for="comment">Add a case note</label>
+                                    <textarea class="govuk-textarea govuk-js-character-count"
+                                    id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea>
                                     <div id="comment-info" class="govuk-hint govuk-character-count__message">You can enter up to 500 characters</div>
                                 </div>
                             </div>
@@ -516,6 +517,14 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
                 <td class="govuk-table__cell">Not applicable</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/1/final-comments/lpa/add-document"
                     data-cy="add-lpa-final-comments" class="govuk-link">Add<span class="govuk-visually-hidden"> LPA final comments</span></a>
+                </td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Appellant statement</th>
+                <td class="govuk-table__cell">Awaiting start date</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/1/appellant-statement/add-document"
+                    data-cy="add-appellant-statement" class="govuk-link">Add<span class="govuk-visually-hidden"> Appellant statement</span></a>
                 </td>
             </tr>
         </tbody>

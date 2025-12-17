@@ -1,7 +1,4 @@
-import {
-	checkAppealExistsByIdAndAddPartialToRequest,
-	checkAppealExistsByIdAndAddToRequest
-} from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import {
@@ -70,7 +67,7 @@ router.patch(
 	#swagger.responses[400] = {}
 	#swagger.responses[404] = {}
  */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	patchAddressValidator,
 	asyncHandler(updateServiceUserAddress)
 );
@@ -99,7 +96,7 @@ router.delete(
 	#swagger.responses[400] = {}
 	#swagger.responses[404] = {}
  */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest(['agent']),
 	removeServiceUserValidator,
 	asyncHandler(removeServiceUserById)
 );

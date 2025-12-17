@@ -1,4 +1,5 @@
 import config from '#config/config.js';
+import { appealGroundsRoutes } from '#endpoints/appeal-grounds/appeal-grounds.routes.js';
 import checkAzureAdUserIdHeaderExists from '#middleware/check-azure-ad-user-id-header-exists.js';
 import { Router as createRouter } from 'express';
 import initNotifyClientAndAddToRequest from '../middleware/init-notify-client-and-add-to-request.js';
@@ -25,6 +26,7 @@ import { decisionRoutes } from './decision/decision.routes.js';
 import { documentRedactionStatusesRoutes } from './document-redaction-statuses/document-redaction-statuses.routes.js';
 import { documentsRoutes } from './documents/documents.routes.js';
 import { environmentalImpactAssessmentRoutes } from './environmental-impact-assessment/environmental-impact-assessment.routes.js';
+import { groundsRoutes } from './grounds/grounds.routes.js';
 import { hearingEstimatesRoutes } from './hearing-estimates/hearing-estimates.routes.js';
 import { hearingRoutes } from './hearings/hearing.routes.js';
 import { historicEnglandRoutes } from './historic-england/historic-england.routes.js';
@@ -81,12 +83,14 @@ router.use(lpaQuestionnaireValidationOutcomesRoutes);
 router.use(appealTypeRoutes);
 router.use(procedureTypesRoutes);
 router.use(siteVisitTypesRoutes);
+router.use(groundsRoutes);
 router.use(representationRejectionReasonsRoutes);
 router.use(localPlanningAuthoritiesRoutes);
 router.use(planningAppealDecisionSuppliersRoutes);
 
 router.use(appealsRoutes);
 router.use(appealDetailsRoutes);
+router.use(appealGroundsRoutes);
 router.use(decisionRoutes);
 router.use(addressesRoutes);
 router.use(appealTimetablesRoutes);

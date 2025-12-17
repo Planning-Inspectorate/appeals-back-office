@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`written-or-verbal-permission GET /change should render the written or verbal permission page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" aria-describedby="written-or-verbal-permission-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Do you have written or verbal permission to use the land?</h1>
+                                </legend>
+                                <div id="written-or-verbal-permission-hint" class="govuk-hint">Only select yes if you have permission to use the land today and on the
+                                    enforcement notice issue date.</div>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="written-or-verbal-permission" name="writtenOrVerbalPermission"
+                                        type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="written-or-verbal-permission">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="written-or-verbal-permission-2"
+                                        name="writtenOrVerbalPermission" type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="written-or-verbal-permission-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`written-or-verbal-permission POST /change should re-render the page with an error if no radio button is selected 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#written-or-verbal-permission">Select yes if you have written or verbal permission to use the land</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" aria-describedby="written-or-verbal-permission-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Do you have written or verbal permission to use the land?</h1>
+                                </legend>
+                                <div id="written-or-verbal-permission-hint" class="govuk-hint">Only select yes if you have permission to use the land today and on the
+                                    enforcement notice issue date.</div>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="written-or-verbal-permission" name="writtenOrVerbalPermission"
+                                        type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="written-or-verbal-permission">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="written-or-verbal-permission-2"
+                                        name="writtenOrVerbalPermission" type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="written-or-verbal-permission-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;

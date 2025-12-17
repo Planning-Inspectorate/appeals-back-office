@@ -51,7 +51,7 @@ export const mapServiceUserEntity = (data, serviceUserType, caseReference) => {
 /**
  *
  * @param {string} type
- * @returns {'Applicant' | 'Appellant' | 'Agent' | 'RepresentationContact' | 'Subscriber'}
+ * @returns {'Applicant' | 'Appellant' | 'Agent' | 'RepresentationContact' | 'Subscriber' | 'InterestedParty' | 'Rule6Party'}
  */
 const mapServiceUserType = (type) => {
 	if (type.toLowerCase() === SERVICE_USER_TYPE.APPELLANT.toLowerCase()) {
@@ -61,6 +61,10 @@ const mapServiceUserType = (type) => {
 	if (type.toLowerCase() === SERVICE_USER_TYPE.AGENT.toLowerCase()) {
 		// @ts-ignore
 		return SERVICE_USER_TYPE.AGENT;
+	}
+	if (type.toLowerCase() === SERVICE_USER_TYPE.RULE_6_PARTY.toLowerCase()) {
+		// @ts-ignore
+		return SERVICE_USER_TYPE.RULE_6_PARTY;
 	}
 
 	// @ts-ignore

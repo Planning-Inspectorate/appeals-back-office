@@ -1,4 +1,7 @@
-import { databaseConnector } from '../../server/utils/database-connector.js';
+import dotenv from 'dotenv';
+dotenv.config();
+
+import { createPrismaClient } from '../create-client.js';
 import { addAssignedTeamIdToAppeal } from './add-assigned-team-id.js';
 import { seedStaticData } from './data-static.js';
 import { seedTestData } from './data-test.js';
@@ -17,6 +20,7 @@ import { teamsToCreate } from './teams/dev.js';
  * @returns {Promise<void>}
  */
 const seedDevelopment = async () => {
+	const databaseConnector = createPrismaClient();
 	try {
 		await deleteExistingData(databaseConnector);
 		console.info('Cleared existing records from development database\n');

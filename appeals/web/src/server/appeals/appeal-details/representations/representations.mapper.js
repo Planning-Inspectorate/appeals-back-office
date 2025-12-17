@@ -126,14 +126,16 @@ export function mapRejectionReasonPayload(rejectionReasons) {
 export function statementAndCommentsSharePage(appeal, request, backUrl) {
 	const shortAppealReference = appealShortReference(appeal.appealReference);
 
-	const ipCommentsText = (() => {
-		const numIpComments = appeal.documentationSummary?.ipComments?.counts?.valid ?? 0;
+	const numIpComments = appeal.documentationSummary?.ipComments?.counts?.valid ?? 0;
 
+	const ipCommentsText = (() => {
 		return numIpComments > 0
 			? `<a href="${addBackLinkQueryToUrl(
 					request,
 					`/appeals-service/appeal-details/${appeal.appealId}/interested-party-comments#valid`
-			  )}" class="govuk-link">${numIpComments} interested party comments</a>`
+			  )}" class="govuk-link">${numIpComments} interested party comment${
+					numIpComments === 1 ? '' : 's'
+			  }</a>`
 			: null;
 	})();
 
@@ -150,15 +152,20 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 
 	const valueTexts = [ipCommentsText, lpaStatementText].filter(Boolean);
 
+	const totalLpaStatements = lpaStatementText ? 1 : 0;
+	const totalShareCount = numIpComments + totalLpaStatements;
+
 	/** @type {PageComponent} */
 	const textComponent =
 		valueTexts.length > 0
 			? {
-					type: 'inset-text',
+					type: 'html',
 					parameters: {
-						html: `We’ll share ${valueTexts.length === 1 ? 'the ' : ''}${valueTexts.join(
-							' and '
-						)} with the relevant parties.`
+						html: `<p class="govuk-body">We’ll share ${
+							totalShareCount === 1 ? 'the ' : ''
+						}${valueTexts.join(' and ')} with the relevant ${
+							totalShareCount === 1 ? 'party' : 'parties'
+						}.</p>`
 					}
 			  }
 			: {
@@ -296,11 +303,13 @@ export function finalCommentsSharePage(appeal, request, backUrl) {
  * @returns {PageContent}
  * */
 export function proofOfEvidenceSharePage(appeal, request, backUrl) {
-	const hasValidAppellantProofOfEvidence =
-		appeal.documentationSummary.appellantProofOfEvidence?.representationStatus ===
-		COMMENT_STATUS.VALID;
-	const hasValidLpaProofOfEvidence =
-		appeal.documentationSummary.lpaProofOfEvidence?.representationStatus === COMMENT_STATUS.VALID;
+	const shareableStatuses = [COMMENT_STATUS.VALID, COMMENT_STATUS.INCOMPLETE];
+	const hasValidAppellantProofOfEvidence = shareableStatuses.includes(
+		appeal.documentationSummary.appellantProofOfEvidence?.representationStatus
+	);
+	const hasValidLpaProofOfEvidence = shareableStatuses.includes(
+		appeal.documentationSummary.lpaProofOfEvidence?.representationStatus
+	);
 
 	const infoText = (() => {
 		const appellantProofOfEvidenceLink = `<a class="govuk-link" href="${addBackLinkQueryToUrl(

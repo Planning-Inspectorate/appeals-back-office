@@ -45,16 +45,22 @@ export const appealsApiClient = {
 				throw new Error(`HTTP error calling: ${url} with status: ${response.status}`, errorBody);
 			}
 
-			const data = await response.json();
+			const responseBody = await response.json();
+
+			expect(responseBody.id).to.be.a('number').and.to.be.greaterThan(0);
+			expect(responseBody.reference).to.be.a('string').and.to.not.be.empty;
+			expect(responseBody).to.have.property('assignedTeamId');
+
 			return {
-				reference: data.reference,
-				id: data.id
+				reference: responseBody.reference,
+				id: responseBody.id
 			};
 		} catch (error) {
 			console.error('Error making API call:', error);
 			throw error;
 		}
 	},
+
 	async lpqaSubmission(reference) {
 		try {
 			const requestBody = createApiSubmission(appealsApiRequests.lpaqSubmission, 'lpaq');
@@ -74,8 +80,12 @@ export const appealsApiClient = {
 				throw new Error(`HTTP error calling: ${url} with status: ${response.status}`, errorBody);
 			}
 
-			const data = await response.json();
-			return data.reference;
+			const responseBody = await response.json();
+
+			expect(responseBody.id).to.be.a('number').and.to.be.greaterThan(0);
+			expect(responseBody.reference).to.equal(reference);
+
+			return responseBody.reference;
 		} catch (error) {
 			console.error('Error making API call:', error);
 			throw error;
@@ -100,8 +110,11 @@ export const appealsApiClient = {
 				},
 				body: JSON.stringify(submission)
 			});
+			const responseBody = await response.json();
 
-			return await response.json();
+			expect(responseBody.representationType).to.contain(submission.representationType);
+
+			return responseBody;
 		} catch {
 			return false;
 		}
@@ -118,7 +131,11 @@ export const appealsApiClient = {
 			});
 
 			expect(response.status).eq(200);
-			return await response.json();
+
+			const responseBody = await response.json();
+			expect(responseBody).to.be.true;
+
+			return responseBody;
 		} catch {
 			return false;
 		}
@@ -136,7 +153,54 @@ export const appealsApiClient = {
 			});
 
 			expect(response.status).eq(200);
-			return await response.json();
+
+			const responseBody = await response.json();
+			expect(responseBody).to.be.true;
+
+			return responseBody;
+		} catch {
+			return false;
+		}
+	},
+	async simulateProofOfEvidenceElapsed(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/proof-of-evidence-elapsed`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+
+			expect(response.status).eq(200);
+
+			const responseBody = await response.json();
+			expect(responseBody).to.be.true;
+
+			return responseBody;
+		} catch {
+			return false;
+		}
+	},
+
+	async simulateInquiryElapsed(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/inquiry-elapsed`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+
+			expect(response.status).eq(200);
+
+			const responseBody = await response.json();
+			expect(responseBody).to.be.true;
+
+			return responseBody;
 		} catch {
 			return false;
 		}
@@ -153,8 +217,10 @@ export const appealsApiClient = {
 				}
 			});
 
-			const result = await response.json();
-			return result;
+			const responseBody = await response.json();
+			expect(responseBody).to.be.true;
+
+			return responseBody;
 		} catch {
 			return false;
 		}
@@ -170,8 +236,10 @@ export const appealsApiClient = {
 				}
 			});
 
-			const result = await response.json();
-			return result;
+			const responseBody = await response.json();
+			expect(responseBody).to.be.true;
+
+			return responseBody;
 		} catch {
 			return false;
 		}
@@ -187,9 +255,17 @@ export const appealsApiClient = {
 				}
 			});
 
-			const result = await response.json();
-			return result;
-		} catch {
+			expect(response.status).to.equal(200);
+
+			const responseBody = await response.json();
+
+			expect(responseBody).to.not.be.null;
+			expect(responseBody).to.not.be.undefined;
+			expect(responseBody.appealReference).to.equal(reference);
+
+			return responseBody;
+		} catch (error) {
+			console.error(`Failed to load case details for ${reference}:`, error);
 			return false;
 		}
 	},
@@ -207,7 +283,14 @@ export const appealsApiClient = {
 				})
 			});
 			expect(response.status).eq(200);
-			return await response.json();
+
+			const responseBody = await response.json();
+
+			expect(responseBody).to.be.a('string');
+			const dateObj = new Date(responseBody);
+			expect(dateObj.toISOString()).to.equal(responseBody);
+
+			return responseBody;
 		} catch {
 			return false;
 		}
@@ -223,7 +306,12 @@ export const appealsApiClient = {
 				}
 			});
 			expect(response.status).eq(200);
-			return await response.json();
+
+			const responseBody = await response.json();
+
+			expect(responseBody).to.be.an('array').with.length.greaterThan(0);
+
+			return responseBody;
 		} catch {
 			return false;
 		}
@@ -248,7 +336,14 @@ export const appealsApiClient = {
 				})
 			});
 			expect(response.status).eq(200);
-			return await response.json();
+
+			const responseBody = await response.json();
+
+			expect(responseBody)
+				.to.be.an('object')
+				.that.includes.all.keys('selectedLevel', 'specialisms');
+
+			return responseBody;
 		} catch {
 			return false;
 		}
@@ -270,6 +365,15 @@ export const appealsApiClient = {
 			});
 
 			expect(response.status).eq(201);
+
+			const responseBody = await response.json();
+			expect(responseBody).to.be.an('object');
+			expect(responseBody).to.deep.equal({
+				appealId,
+				hearingStartTime: appealsApiRequests.hearingDetails.hearingStartTime,
+				hearingEndTime: appealsApiRequests.hearingDetails.hearingEndTime
+			});
+
 			return await response.json();
 		} catch {
 			return false;
@@ -287,6 +391,14 @@ export const appealsApiClient = {
 				}
 			});
 			expect(response.status).eq(200);
+
+			const responseBody = await response.json();
+			expect(responseBody).to.be.an('object');
+			expect(responseBody).to.deep.equal({
+				appealId,
+				hearingId
+			});
+
 			return await response.json();
 		} catch {
 			return false;
@@ -396,6 +508,12 @@ export const appealsApiClient = {
 				}
 			});
 			expect(response.status).eq(200);
+
+			const responseBody = await response.json();
+
+			expect(responseBody.origin).to.equal('lpa');
+			expect(responseBody.status).to.equal('valid');
+			expect(responseBody.representationType).to.equal('lpa_statement');
 		} catch {
 			return false;
 		}
@@ -412,6 +530,12 @@ export const appealsApiClient = {
 				}
 			});
 			expect(response.status).eq(200);
+
+			const responseBody = await response.json();
+
+			expect(responseBody.origin).to.equal('citizen');
+			expect(responseBody.status).to.equal('valid');
+			expect(responseBody.representationType).to.equal('comment');
 		} catch {
 			return false;
 		}
@@ -475,6 +599,18 @@ export const appealsApiClient = {
 				}
 			});
 			expect(response.status).eq(201);
+
+			const responseBody = await response.json();
+
+			expect(responseBody).to.be.an('object');
+			expect(responseBody).to.have.keys([
+				'visitDate',
+				'visitStartTime',
+				'visitEndTime',
+				'visitType',
+				'appealId',
+				'siteVisitId'
+			]);
 		} catch {
 			return false;
 		}
@@ -507,6 +643,11 @@ export const appealsApiClient = {
 				}
 			});
 			expect(response.status).eq(201);
+
+			const responseBody = await response.json();
+
+			expect(responseBody).to.be.an('object');
+			expect(responseBody).to.have.keys(['appealId', 'hearingStartTime', 'hearingEndTime']);
 		} catch {
 			return false;
 		}
@@ -530,6 +671,12 @@ export const appealsApiClient = {
 			});
 
 			expect(response.status).eq(201);
+
+			const responseBody = await response.json();
+
+			expect(responseBody).to.be.an('object');
+			expect(responseBody).to.have.keys(['preparationTime', 'sittingTime', 'reportingTime']);
+
 			return await response.json();
 		} catch {
 			return false;
@@ -556,6 +703,7 @@ export const appealsApiClient = {
 	async assignCaseOfficer(appealId) {
 		try {
 			const url = `${baseUrl}appeals/${appealId}`;
+			const caseOfficer = '544f5029-e660-4bc3-81b1-adc19d47e970';
 			const response = await fetch(url, {
 				method: 'PATCH',
 				headers: {
@@ -563,10 +711,17 @@ export const appealsApiClient = {
 					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 				},
 				body: JSON.stringify({
-					caseOfficerId: '544f5029-e660-4bc3-81b1-adc19d47e970'
+					caseOfficerId: caseOfficer
 				})
 			});
 			expect(response.status).eq(200);
+
+			const responseBody = await response.json();
+
+			expect(responseBody).to.deep.equal({
+				caseOfficerId: caseOfficer
+			});
+
 			return await response.json();
 		} catch {
 			return false;

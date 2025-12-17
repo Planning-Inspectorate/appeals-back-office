@@ -52,7 +52,7 @@ export const renderName = async (request, response) => {
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/rule-6-parties/add/check-details`
 	);
 
-	const mappedPageContent = namePage(currentAppeal, backUrl, sessionValues, errors);
+	const mappedPageContent = namePage(currentAppeal, 'Add', backUrl, sessionValues, errors);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -107,7 +107,7 @@ export const renderEmail = async (request, response) => {
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/rule-6-parties/add/check-details`
 	);
 
-	const mappedPageContent = emailPage(currentAppeal, backUrl, sessionValues, errors);
+	const mappedPageContent = emailPage(currentAppeal, 'Add', backUrl, sessionValues, errors);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -202,7 +202,7 @@ export const postCheckDetails = async (request, response) => {
 			appealId
 		});
 
-		delete request.session.setUpHearing;
+		delete request.session.addRule6Party;
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {

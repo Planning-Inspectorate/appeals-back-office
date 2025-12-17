@@ -8,15 +8,13 @@
  */
 export const mapEnforcementAppealOtherAppellants = (data) => {
 	const {
-		appeal: { appellantCase, otherAppellants }
+		appeal: { appellantCase }
 	} = data;
 
 	// @ts-ignore
 	const hasEnforcementData = [true, false].includes(appellantCase?.enforcementNotice);
 	return {
-		otherAppellants: hasEnforcementData
-			? // @ts-ignore
-			  otherAppellants?.map((otherAppellant) => otherAppellant.appellant) || []
-			: null
+		// ToDo: Add other appellants from linked enforcement appeals
+		otherAppellants: hasEnforcementData ? [] : null
 	};
 };

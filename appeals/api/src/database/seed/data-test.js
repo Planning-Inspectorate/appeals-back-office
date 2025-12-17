@@ -1095,8 +1095,16 @@ export const enforcementAppeals = [
 		typeShorthand: APPEAL_CASE_TYPE.C,
 		assignCaseOfficer: false,
 		status: {
-			status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+			status: APPEAL_CASE_STATUS.VALIDATION,
 			createdAt: getPastDate({ days: 5 })
+		}
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_CASE_TYPE.C,
+		assignCaseOfficer: false,
+		status: {
+			status: APPEAL_CASE_STATUS.VALIDATION,
+			createdAt: getPastDate({ weeks: 1 })
 		}
 	})
 ];
@@ -1401,6 +1409,39 @@ export async function seedTestData(databaseConnector) {
 			});
 		}
 	}
+
+	// enforcement appeals
+	const enforcementAppealTypeId = appealTypes.find(
+		(appealType) => appealType.key === APPEAL_CASE_TYPE.C
+	)?.id;
+	const enforcementAppellantCaseId = appeals.find(
+		(appeal) => appeal.appealTypeId === enforcementAppealTypeId
+	)?.id;
+	const contactAddress = addressesList[pickRandom(addressesList)];
+	const formattedContactAddress = {
+		addressLine1: contactAddress.addressLine1,
+		addressLine2: contactAddress.addressLine2 || null,
+		addressCounty: contactAddress.county || null,
+		addressTown: contactAddress.town || undefined,
+		postcode: contactAddress.postCode
+	};
+	await databaseConnector.$transaction(async (tx) => {
+		const address = await tx.address.create({ data: formattedContactAddress });
+		await tx.appellantCase.update({
+			where: { appealId: enforcementAppellantCaseId },
+			data: {
+				contactAddressId: address.id,
+				enforcementNoticeListedBuilding: false,
+				enforcementIssueDate: getPastDate({ days: 10 }),
+				enforcementEffectiveDate: new Date(),
+				contactPlanningInspectorateDate: getPastDate({ days: 10 }),
+				enforcementReference: 'Reference',
+				interestInLand: 'Land owner',
+				writtenOrVerbalPermission: 'Yes',
+				descriptionOfAllegedBreach: 'Description'
+			}
+		});
+	});
 }
 
 /**

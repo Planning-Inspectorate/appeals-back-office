@@ -42,6 +42,7 @@ export const createPrismaClient = (databaseUrl, logger) => {
 
 		if (logger) {
 			/** @param {import('#db-client/client.ts').Prisma.QueryEvent} e */
+
 			const logQuery = (e) => {
 				logger.debug(
 					{ query: e.query, params: e.params, duration: e.duration },
@@ -56,6 +57,7 @@ export const createPrismaClient = (databaseUrl, logger) => {
 			const logInfo = (e) => logger.debug({ e });
 
 			/** @param {import('#db-client/client.ts').Prisma.LogEvent} e */
+
 			const logWarn = (e) => logger.warn({ e });
 
 			// @ts-ignore

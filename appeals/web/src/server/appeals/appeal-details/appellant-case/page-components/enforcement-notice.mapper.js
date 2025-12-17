@@ -65,5 +65,68 @@ export function generateEnforcementNoticeComponents(
 		].filter((row) => row);
 	}
 
-	return pageComponents;
+	const applicationDetailsComponents = getComponentParameters(
+		'application-summary',
+		pageComponents
+	);
+	if (applicationDetailsComponents) {
+		applicationDetailsComponents.parameters.rows = [
+			mappedAppellantCaseData.relatedAppeals.display.summaryListItem
+		].filter((row) => row);
+	}
+
+	/**
+	 *
+	 * @param {Instructions[]} subMapperList
+	 * @returns {SummaryListRowProperties[]}
+	 */
+	const getSummaryListItems = (subMapperList) =>
+		// @ts-ignore
+		subMapperList?.map((subMapper) => subMapper.display.summaryListItem);
+
+	/**
+	 * @type {PageComponent}
+	 */
+	const groundsAndFactsSummary = {
+		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
+		parameters: {
+			attributes: {
+				id: 'grounds-and-facts'
+			},
+			card: {
+				title: {
+					text: 'Grounds and facts'
+				}
+			},
+			rows: [
+				mappedAppellantCaseData.descriptionOfAllegedBreach.display.summaryListItem,
+				mappedAppellantCaseData.groundsForAppeal.display.summaryListItem,
+				// @ts-ignore
+				...getSummaryListItems(mappedAppellantCaseData.factsForGrounds),
+				// @ts-ignore
+				...getSummaryListItems(mappedAppellantCaseData.supportingDocumentsForGrounds),
+				mappedAppellantCaseData.applicationReceipt.display.summaryListItem,
+				mappedAppellantCaseData.applicationDevelopmentAllOrPart.display.summaryListItem,
+				mappedAppellantCaseData.applicationReference.display.summaryListItem,
+				mappedAppellantCaseData.applicationDate.display.summaryListItem,
+				mappedAppellantCaseData.developmentDescription.display.summaryListItem,
+				mappedAppellantCaseData.applicationDecision.display.summaryListItem,
+				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem
+			].filter((row) => row)
+		}
+	};
+
+	const insertIndex =
+		pageComponents.findIndex(
+			(component) => component.parameters.attributes?.id === 'site-details'
+		) + 1;
+
+	return pageComponents
+		.slice(0, insertIndex)
+		.concat(groundsAndFactsSummary)
+		.concat(pageComponents.slice(insertIndex));
 }

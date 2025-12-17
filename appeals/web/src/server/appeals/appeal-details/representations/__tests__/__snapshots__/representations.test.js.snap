@@ -1,5 +1,33 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
+exports[`representations GET /share should contain correct content if inquiry and PoE and status is set to "EVIDENCE" and incomplete PoEs to share 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Confirm that you want to share proof of evidence</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">We’ll share <a class="govuk-link" href="/appeals-service/appeal-details/1/proof-of-evidence/appellant?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare">appellant proof of evidence</a> and
+                <a                 class="govuk-link" href="/appeals-service/appeal-details/1/proof-of-evidence/lpa?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare">LPA proof of evidence</a>with the relevant parties.</p>
+            <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Do not share until you
+                    have reviewed all of the supporting documents and redacted any sensitive
+                    information.</strong>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Share proof of evidence and witnesses</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`representations GET /share should contain correct content if inquiry and proof of evidence and no ip comment or statement to share 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -61,8 +89,8 @@ exports[`representations GET /share should contain link to interested-party-comm
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-inset-text">We’ll share the <a href="/appeals-service/appeal-details/1/interested-party-comments?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare#valid"
-                class="govuk-link">1 interested party comments</a> with the relevant parties.</div>
+            <p class="govuk-body">We’ll share the <a href="/appeals-service/appeal-details/1/interested-party-comments?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare#valid"
+                class="govuk-link">1 interested party comment</a> with the relevant party.</p>
             <div             class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
                 <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Do not confirm until
                     you have reviewed all of the supporting documents and redacted any sensitive

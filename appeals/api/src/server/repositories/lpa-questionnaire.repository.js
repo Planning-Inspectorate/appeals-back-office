@@ -50,6 +50,10 @@ const updateLPAQuestionnaireById = (id, data) => {
 				lpaProcedurePreferenceDuration: data.lpaProcedurePreferenceDuration,
 				eiaSensitiveAreaDetails: data.eiaSensitiveAreaDetails,
 				consultedBodiesDetails: data.consultedBodiesDetails,
+				hasStatutoryConsultees:
+					data.consultedBodiesDetails === undefined
+						? undefined
+						: data.consultedBodiesDetails !== null,
 				reasonForNeighbourVisits: data.reasonForNeighbourVisits,
 				preserveGrantLoan: data.preserveGrantLoan,
 				isSiteInAreaOfSpecialControlAdverts: data.isSiteInAreaOfSpecialControlAdverts,

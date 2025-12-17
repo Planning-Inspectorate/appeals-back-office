@@ -183,6 +183,7 @@ export const appealsNationalList = {
 		'assign_case_officer',
 		'lpa_questionnaire',
 		'statements',
+		'evidence',
 		'ready_to_start',
 		'validation',
 		'final_comments',
@@ -193,6 +194,7 @@ export const appealsNationalList = {
 	lpas: [{ lpaCode: '1', name: 'Test LPA' }],
 	inspectors: [{ azureAdUserId: activeDirectoryUsersData[0].id, id: 0 }],
 	caseOfficers: [{ azureAdUserId: activeDirectoryUsersData[1].id, id: 1 }],
+	padsInspectors: [],
 	assignedTeamId: 1,
 	assignedTeam: {
 		id: 1,
@@ -338,6 +340,7 @@ export const appealData = {
 		}
 	},
 	inspector: null,
+	padsInspector: null,
 	inspectorAccess: {
 		appellantCase: {
 			details: null,
@@ -459,7 +462,18 @@ export const appealData = {
 		documents: []
 	},
 	assignedTeamId: 1,
-	assignedTeam: { name: 'Test Team', email: 'test@emai.com' }
+	assignedTeam: { name: 'Test Team', email: 'test@emai.com' },
+	enforcementNotice: {
+		appellantCase: {
+			contactAddress: {
+				addressId: 1,
+				addressLine1: '96 The Avenue',
+				addressLine2: 'Maidstone',
+				addressCounty: 'Kent',
+				postCode: 'MD21 5XY'
+			}
+		}
+	}
 };
 
 export const appealDataIssuedDecision = {
@@ -3770,6 +3784,11 @@ export const lpaStatementAwaitingReview = {
 	rejectionReasons: []
 };
 
+export const lpaStatementPublished = {
+	...lpaStatementAwaitingReview,
+	status: 'published'
+};
+
 export const proofOfEvidenceForReview = {
 	itemCount: 1,
 	items: [
@@ -4541,6 +4560,60 @@ export const appealDataToGetRequiredActions = {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 		procedureType: APPEAL_CASE_PROCEDURE.INQUIRY
+	},
+	awaitingAppellantStatement: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealTimetable: {
+			ipCommentsDueDate: pastDate,
+			lpaStatementDueDate: pastDate,
+			appellantStatementDueDate: futureDate
+		},
+		documentationSummary: {
+			ipComments: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				counts: {
+					awaiting_review: 0,
+					valid: 0,
+					published: 0
+				}
+			},
+			lpaStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
+			},
+			appellantStatement: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				representationStatus: null
+			}
+		}
+	},
+	reviewAppellantStatement: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealTimetable: {
+			ipCommentsDueDate: pastDate,
+			lpaStatementDueDate: pastDate,
+			appellantStatementDueDate: futureDate
+		},
+		documentationSummary: {
+			ipComments: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				counts: {
+					awaiting_review: 0,
+					valid: 0,
+					published: 0
+				}
+			},
+			lpaStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
+			},
+			appellantStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			}
+		}
 	}
 };
 

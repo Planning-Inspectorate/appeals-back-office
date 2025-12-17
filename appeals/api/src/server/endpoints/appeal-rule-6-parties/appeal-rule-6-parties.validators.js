@@ -15,3 +15,17 @@ export const addRule6PartyValidator = composeMiddleware(
 	validateEmailParameter('serviceUser.email', false),
 	validationErrorHandler
 );
+
+export const updateRule6PartyValidator = composeMiddleware(
+	validateIdParameter('appealId'),
+	validateIdParameter('rule6PartyId'),
+	validateRequiredStringParameter('serviceUser.organisationName'),
+	validateEmailParameter('serviceUser.email', false),
+	validationErrorHandler
+);
+
+export const deleteRule6PartyValidator = composeMiddleware(
+	validateIdParameter('appealId'),
+	validateIdParameter('rule6PartyId'),
+	validationErrorHandler
+);

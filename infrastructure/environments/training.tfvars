@@ -35,8 +35,8 @@ apps_config = {
     featureFlagS78Written             = true
     featureFlagS78Inquiry             = true
     featureFlagLinkedAppeals          = false
-    featureFlagCAS                    = false
-    featureFlagCasAdvert              = false
+    featureFlagCAS                    = true
+    featureFlagCasAdvert              = true
     featureFlagNotifyCaseHistory      = true
     featureFlagSimplifyTeamAssignment = true
     featureFlagPdfDownload            = true
@@ -44,7 +44,7 @@ apps_config = {
     featureFlagNetResidenceS20        = true
     featureFlagCancelCase             = true
     featureFlagChangeProcedureType    = true
-    featureFlagAdvertisement          = false
+    featureFlagAdvertisement          = true
     featureFlagHearingPostMvp         = true
     featureFlagAutoAssignTeam         = true
     featureFlagCancelSiteVisit        = true
@@ -54,6 +54,7 @@ apps_config = {
     featureFlagRule6Parties           = false
     featureFlagExpeditedAppeals       = false
     featureFlagManuallyAddReps        = false
+    featureFlagAppellantStatement     = true
   }
 
   use_system_test_bc_for_change_lpa = false
@@ -134,12 +135,13 @@ sql_config = {
   sku_name    = "S0"
   max_size_gb = 250
   retention = {
-    audit_days             = 30
-    short_term_days        = 7
-    long_term_weekly       = "P1W"
-    long_term_monthly      = "P1M"
-    long_term_yearly       = "P1Y"
-    long_term_week_of_year = 1
+    audit_days               = 30
+    backup_interval_in_hours = 12
+    short_term_days          = 7
+    long_term_weekly         = "P1W"
+    long_term_monthly        = "P1M"
+    long_term_yearly         = "P1Y"
+    long_term_week_of_year   = 1
   }
   public_network_access_enabled = false
 }

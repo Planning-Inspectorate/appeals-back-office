@@ -106,7 +106,7 @@ export const postChangeEnforcementIssueDate = async (request, response) => {
 			session: request.session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			text: 'Date application submitted updated'
+			text: 'Appeal updated'
 		});
 
 		return response.redirect(

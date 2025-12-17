@@ -43,10 +43,19 @@ extends:
     validationJobs:
       - name: Run Linting & Tests
         steps:
+          - task: Cache@2
+            inputs:
+              key: 'npm | "$(Agent.OS)" | package-lock.json'
+              restoreKeys: |
+                npm | "$(Agent.OS)" | package-lock.json
+              path: $(npm_config_cache)
+            displayName: Cache NPM
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
               script: npm ci
+              environmentVariables:
+                npm_config_cache: $(npm_config_cache)
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
@@ -148,10 +157,19 @@ extends:
           - Run Linting & Tests
         steps:
           # install only function deps
+          - task: Cache@2
+            inputs:
+              key: 'npm | "$(Agent.OS)" | package-lock.json'
+              restoreKeys: |
+                npm | "$(Agent.OS)" | package-lock.json
+              path: $(npm_config_cache)
+            displayName: Cache NPM
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
               script: npm ci --only=prod --workspace=@pins/functions-bo-appeals-casedata-import --workspace=@pins/functions-bo-appeals-refdata-import --workspace=@pins/functions-bo-appeals-document-processing --workspace=@pins/functions-bo-appeals-scheduled-jobs
+              environmentVariables:
+                npm_config_cache: $(npm_config_cache)
 
           # merge node modules
           - template: azure-pipelines-package-function-merge.yml@self

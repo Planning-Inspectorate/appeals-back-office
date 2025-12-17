@@ -62,6 +62,7 @@ export const AUDIT_TRAIL_ASSIGNED_INSPECTOR =
 export const AUDIT_TRAIL_UNASSIGNED_INSPECTOR =
 	'The inspector {replacement0} was unassigned from the case';
 export const AUDIT_TRAIL_MODIFIED_APPEAL = 'The {replacement0} property was updated';
+export const AUDIT_TRAIL_ENVIRONMENTAL_SERVICES_TEAM_REVIEW = 'Environmental services team review';
 export const AUDIT_TRAIL_CASE_STARTED = 'Appeal started\nAppeal procedure: {replacement0}';
 export const AUDIT_TRAIL_CASE_TIMELINE_CREATED = 'The case timeline was created';
 export const AUDIT_TRAIL_CASE_TIMELINE_UPDATED = 'The case timeline was updated';
@@ -242,6 +243,34 @@ export const AUDIT_TRAIL_HORIZON_REFERENCE_UPDATED = 'Horizon reference updated'
 
 export const AUDIT_TRAIL_ASSIGNED_TEAM_UPDATED = 'Case team {replacement0} assigned';
 export const BANK_HOLIDAY_FEED_DIVISION_ENGLAND = 'england-and-wales';
+
+// Enforcement notice - appellant case
+export const AUDIT_TRAIL_ENFORCEMENT_NOTICE_UPDATED =
+	"'Have you received an enforcement notice?' updated to {replacement0}";
+export const AUDIT_TRAIL_ENFORCEMENT_NOTICE_LISTED_BUILDING_UPDATED =
+	"'Is your enforcement notice about a listed building?' updated to {replacement0}";
+export const AUDIT_TRAIL_ENFORCEMENT_REFERENCE_UPDATED =
+	'Enforcement notice reference updated to {replacement0}';
+export const AUDIT_TRAIL_DESCRIPTION_OF_ALLEGED_BREACH_UPDATED =
+	'Description of the alleged breach updated to {replacement0}';
+export const AUDIT_TRAIL_APPLICATION_DEVELOPMENT_ALL_OR_PART_UPDATED =
+	'‘Was the application for all or part of the development?’ updated to {replacement0}';
+export const AUDIT_TRAIL_ENFORCEMENT_ISSUE_DATE_UPDATED =
+	'Enforcement notice issue date updated to {replacement0}';
+export const AUDIT_TRAIL_ENFORCEMENT_EFFECTIVE_DATE_UPDATED =
+	'Enforcement notice effective date updated to {replacement0}';
+export const AUDIT_TRAIL_CONTACT_PLANNING_INSPECTORATE_DATE_UPDATED =
+	'Contact planning inspectorate date updated to {replacement0}';
+export const AUDIT_TRAIL_ENFORCEMENT_NOTICE_CONTACT_ADDRESS =
+	'Contact address updated to {replacement0}';
+export const AUDIT_TRAIL_ENFORCEMENT_GROUND_ADDED = 'Ground ({replacement0}) added';
+export const AUDIT_TRAIL_ENFORCEMENT_GROUND_UPDATED =
+	'Facts for ground ({replacement0}) updated to {replacement1}';
+export const AUDIT_TRAIL_ENFORCEMENT_GROUND_REMOVED = 'Ground ({replacement0}) removed';
+export const AUDIT_TRAIL_WRITTEN_OR_VERBAL_PERMISSION_UPDATED =
+	'Do you have written or verbal permission to use the land? updated to {replacement0}';
+export const AUDIT_TRAIL_INTEREST_IN_LAND_UPDATED =
+	'What is your interest in the land? updated to {replacement0}';
 
 export const DATABASE_ORDER_BY_ASC = 'asc';
 export const DATABASE_ORDER_BY_DESC = 'desc';

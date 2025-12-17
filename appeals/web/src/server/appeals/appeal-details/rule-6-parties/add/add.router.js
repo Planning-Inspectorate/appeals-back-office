@@ -2,8 +2,8 @@ import { saveBackUrl } from '#lib/middleware/save-back-url.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
+import * as validators from '../rule-6-parties.validators.js';
 import * as controller from './add.controller.js';
-import * as validators from './add.validators.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -30,6 +30,6 @@ router
 router
 	.route('/check-details')
 	.get(asyncHandler(controller.getCheckDetails))
-	.post(saveBodyToSession('addRule6Party'), asyncHandler(controller.postCheckDetails));
+	.post(asyncHandler(controller.postCheckDetails));
 
 export default router;

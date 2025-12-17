@@ -2,16 +2,18 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} Appeal
+ * @typedef {import('#appeals/appeal-details/appeal-details.types.js').AppealRule6Party} AppealRule6Party
  */
 
 /**
  * @param {Appeal} appealData
+ * @param {'Add' | 'Update'} action
  * @param {string} backLinkUrl
  * @param {Record<string, string>} values
  * @param {import("@pins/express").ValidationErrors} [errors]
  * @returns {PageContent}
  */
-export function namePage(appealData, backLinkUrl, values = {}, errors) {
+export function namePage(appealData, action, backLinkUrl, values = {}, errors) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageComponent} */
@@ -34,21 +36,22 @@ export function namePage(appealData, backLinkUrl, values = {}, errors) {
 
 	/** @type {PageContent} */
 	return {
-		title: `Appeal ${shortAppealReference} - Add rule 6 party`,
+		title: `Appeal ${shortAppealReference} - ${action} rule 6 party`,
 		backLinkUrl,
-		preHeading: `Appeal ${shortAppealReference} - Add rule 6 party`,
+		preHeading: `Appeal ${shortAppealReference} - ${action} rule 6 party`,
 		pageComponents: [nameInput]
 	};
 }
 
 /**
  * @param {Appeal} appealData
+ * @param {'Add' | 'Update'} action
  * @param {string} backLinkUrl
  * @param {Record<string, string>} values
  * @param {import("@pins/express").ValidationErrors} [errors]
  * @returns {PageContent}
  */
-export function emailPage(appealData, backLinkUrl, values = {}, errors) {
+export function emailPage(appealData, action, backLinkUrl, values = {}, errors) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageComponent} */
@@ -71,9 +74,35 @@ export function emailPage(appealData, backLinkUrl, values = {}, errors) {
 
 	/** @type {PageContent} */
 	return {
-		title: `Appeal ${shortAppealReference} - Add rule 6 party`,
+		title: `Appeal ${shortAppealReference} - ${action} rule 6 party`,
 		backLinkUrl,
-		preHeading: `Appeal ${shortAppealReference} - Add rule 6 party`,
+		preHeading: `Appeal ${shortAppealReference} - ${action} rule 6 party`,
 		pageComponents: [emailInput]
 	};
+}
+
+/**
+ * @param {Appeal} appealData
+ * @param {AppealRule6Party} rule6Party
+ * @param {string} backLinkUrl
+ * @returns {PageContent}
+ */
+export function confirmRemoveRule6PartyPage(appealData, rule6Party, backLinkUrl) {
+	const shortAppealReference = appealShortReference(appealData.appealReference);
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: `Confirm you want to remove ${rule6Party.serviceUser.organisationName} - ${shortAppealReference}`,
+		backLinkUrl,
+		preHeading: `Appeal ${shortAppealReference} - remove rule 6 party`,
+		heading: `Confirm you want to remove ${rule6Party.serviceUser.organisationName}`,
+		submitButtonProperties: {
+			id: 'confirmRemoveRule6Party',
+			text: 'Confirm and remove rule 6 party',
+			type: 'submit',
+			preventDoubleClick: true
+		}
+	};
+
+	return pageContent;
 }
