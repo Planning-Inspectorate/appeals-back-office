@@ -43,7 +43,8 @@ router.get(
 			'lpaQuestionnaire',
 			'appealType',
 			'appellantCase',
-			'lpa'
+			'lpa',
+			'folders'
 		])
 	),
 	checkLPAQuestionnaireExists,
