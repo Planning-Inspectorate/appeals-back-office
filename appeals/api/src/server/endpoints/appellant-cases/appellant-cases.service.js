@@ -22,6 +22,7 @@ import appellantCaseRepository from '#repositories/appellant-case.repository.js'
 import * as documentRepository from '#repositories/document.repository.js';
 import auditApplicationDecisionMapper from '#utils/audit-application-decision-mapper.js';
 import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
+import { Prisma } from '#utils/db-client/client.js';
 import { getFormattedReasons } from '#utils/email-formatter.js';
 import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
 import { allAppellantCaseOutcomesAreValid } from '#utils/is-awaiting-linked-appeal.js';
@@ -43,7 +44,6 @@ import {
 } from '@pins/appeals/constants/support.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library.js';
 import transitionState from '../../state/transition-state.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
@@ -399,7 +399,7 @@ export const putContactAddress = async (params) => {
 		return contactAddress;
 	} catch (error) {
 		logger.error(error);
-		if (error instanceof PrismaClientKnownRequestError) {
+		if (error instanceof Prisma.PrismaClientKnownRequestError) {
 			if (error.code === 'P2025') {
 				throw new Error(ERROR_NOT_FOUND);
 			}

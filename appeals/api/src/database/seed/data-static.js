@@ -604,7 +604,7 @@ export const representationRejectionReasons = [
 /**
  * Seed static data into the database. Does not disconnect from the database or handle errors.
  *
- * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
+ * @param {import('../../server/utils/db-client/client.ts').PrismaClient} databaseConnector
  */
 export async function seedStaticData(databaseConnector) {
 	await importListedBuildingsDataset(
@@ -739,7 +739,7 @@ export async function seedStaticData(databaseConnector) {
 
 /**
  *
- * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
+ * @param {import('../../server/utils/db-client/client.ts').PrismaClient} databaseConnector
  */
 const updateFolderDefinitionsForExistingAppeals = async (databaseConnector) => {
 	//Find cases that have less folders than expected

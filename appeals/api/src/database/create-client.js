@@ -1,37 +1,50 @@
-import { PrismaClient } from '#db-client';
+import { PrismaClient } from '#db-client/client.js';
+import { PrismaMssql } from '@prisma/adapter-mssql';
 
 /** @type {PrismaClient} */
 let prismaClient;
 
 /**
+ * @param {string | undefined} databaseUrl
  * @param {import('pino').Logger} [logger]
  * @returns {PrismaClient}
  */
-export const createPrismaClient = (logger) => {
+export const createPrismaClient = (databaseUrl = process.env.DATABASE_URL, logger) => {
 	if (!prismaClient) {
-		prismaClient = new PrismaClient({
-			log: [
-				{
-					emit: 'event',
-					level: 'query'
-				},
-				{
-					emit: 'event',
-					level: 'error'
-				}
-				// {
-				// 	emit: 'event',
-				// 	level: 'info'
-				// },
-				// {
-				// 	emit: 'event',
-				// 	level: 'warn'
-				// }
-			]
-		});
+		/** @type {prismaConfig} */
+		const prismaConfig = {};
+
+		console.log(process.env);
+		console.log(databaseUrl);
+		console.log(databaseUrl);
+		if (!databaseUrl) {
+			throw new Error('connectionString not provided to create Prisma Client');
+		}
+		prismaConfig.adapter = new PrismaMssql(databaseUrl);
+
+		prismaConfig.log = [
+			{
+				emit: 'event',
+				level: 'query'
+			},
+			{
+				emit: 'event',
+				level: 'error'
+			}
+			// {
+			// 	emit: 'event',
+			// 	level: 'info'
+			// },
+			// {
+			// 	emit: 'event',
+			// 	level: 'warn'
+			// }
+		];
+
+		prismaClient = new PrismaClient(prismaConfig);
 
 		if (logger) {
-			/** @param {import('#db-client').Prisma.QueryEvent} e */
+			/** @param {import('#db-client/client.js').Prisma.QueryEvent} e */
 			const logQuery = (e) => {
 				logger.debug(
 					{ query: e.query, params: e.params, duration: e.duration },
@@ -39,13 +52,13 @@ export const createPrismaClient = (logger) => {
 				);
 			};
 
-			/** @param {import('#db-client').Prisma.LogEvent} e */
+			/** @param {import('#db-client/client.js').Prisma.LogEvent} e */
 			const logError = (e) => logger.error({ e }, 'Prisma error');
 
-			/** @param {import('#db-client').Prisma.LogEvent} e */
+			/** @param {import('#db-client/client.js').Prisma.LogEvent} e */
 			const logInfo = (e) => logger.debug({ e });
 
-			/** @param {import('#db-client').Prisma.LogEvent} e */
+			/** @param {import('#db-client/client.js').Prisma.LogEvent} e */
 			const logWarn = (e) => logger.warn({ e });
 
 			// @ts-ignore
