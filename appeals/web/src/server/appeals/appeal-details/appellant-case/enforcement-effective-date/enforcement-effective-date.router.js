@@ -13,7 +13,6 @@ router
 	.post(
 		validators.validateDueDateFields,
 		validators.validateDueDateValid,
-		validators.validateDueDateInPastOrToday,
 		extractAndProcessDateErrors({
 			fieldNamePrefix: enforcementEffectiveDateField
 		}),

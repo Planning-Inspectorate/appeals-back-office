@@ -137,8 +137,7 @@ describe('enforcement-effective-date', () => {
 			const testCases = [
 				{ value: '', expectedError: 'The effective date must include a year' },
 				{ value: 'a', expectedError: 'The effective date year must be a number' },
-				{ value: '202', expectedError: 'The effective date year must be 4 digits' },
-				{ value: '3000', expectedError: 'The effective date must be today or in the past' }
+				{ value: '202', expectedError: 'The effective date year must be 4 digits' }
 			];
 
 			for (const testCase of testCases) {
