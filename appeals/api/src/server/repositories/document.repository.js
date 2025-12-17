@@ -189,19 +189,20 @@ export const updateDocumentById = (documentId, document) => {
 export const setRedactionStatusOnValidation = async (appealId) => {
 	const documentsToUpdate = await databaseConnector.documentVersion.findMany({
 		where: {
-			AND: [
-				{
-					redactionStatusId: null
-				},
-				{
-					document: {
-						caseId: appealId
-					}
-				}
-			]
+			redactionStatusId: null,
+			document: {
+				caseId: appealId,
+				isDeleted: false
+			}
 		},
-		include: {
-			document: true
+		select: {
+			documentGuid: true,
+			version: true,
+			document: {
+				select: {
+					latestVersionId: true
+				}
+			}
 		}
 	});
 
@@ -229,10 +230,14 @@ export const setRedactionStatusOnValidation = async (appealId) => {
 		});
 	}
 
-	return documentsToUpdate.map((document) => ({
-		documentGuid: document.documentGuid,
-		version: document.version
-	}));
+	const broadcastDocuments = documentsToUpdate
+		.filter((document) => document.document?.latestVersionId === document.version)
+		.map((document) => ({
+			documentGuid: document.documentGuid,
+			version: document.version
+		}));
+
+	return broadcastDocuments;
 };
 
 /**

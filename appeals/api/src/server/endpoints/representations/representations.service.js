@@ -306,8 +306,10 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 		throw new BackOfficeAppError('appeal in incorrect state to publish LPA statement', 409);
 	}
 
-	const documentsUpdated = await documentRepository.setRedactionStatusOnValidation(appeal.id);
-	for (const documentUpdated of documentsUpdated) {
+	const latestDocumentVersionsUpdated = await documentRepository.setRedactionStatusOnValidation(
+		appeal.id
+	);
+	for (const documentUpdated of latestDocumentVersionsUpdated) {
 		await broadcasters.broadcastDocument(
 			documentUpdated.documentGuid,
 			documentUpdated.version,
@@ -436,8 +438,10 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
 		throw new BackOfficeAppError('appeal in incorrect state to publish final comments', 409);
 	}
 
-	const documentsUpdated = await documentRepository.setRedactionStatusOnValidation(appeal.id);
-	for (const documentUpdated of documentsUpdated) {
+	const latestDocumentVersionsUpdated = await documentRepository.setRedactionStatusOnValidation(
+		appeal.id
+	);
+	for (const documentUpdated of latestDocumentVersionsUpdated) {
 		await broadcasters.broadcastDocument(
 			documentUpdated.documentGuid,
 			documentUpdated.version,
@@ -493,8 +497,10 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 		throw new BackOfficeAppError('appeal in incorrect state to publish proof of evidence', 409);
 	}
 
-	const documentsUpdated = await documentRepository.setRedactionStatusOnValidation(appeal.id);
-	for (const documentUpdated of documentsUpdated) {
+	const latestDocumentVersionsUpdated = await documentRepository.setRedactionStatusOnValidation(
+		appeal.id
+	);
+	for (const documentUpdated of latestDocumentVersionsUpdated) {
 		await broadcasters.broadcastDocument(
 			documentUpdated.documentGuid,
 			documentUpdated.version,
