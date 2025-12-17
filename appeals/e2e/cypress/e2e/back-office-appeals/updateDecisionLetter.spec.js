@@ -4,10 +4,12 @@
 import { appealsApiRequests } from '../../fixtures/appealsApiRequests';
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
+import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 import { formatDateAndTime } from '../../support/utils/format';
 
 const caseDetailsPage = new CaseDetailsPage();
+const caseHistoryPage = new CaseHistoryPage();
 
 const now = new Date();
 const formattedDate = formatDateAndTime(now);
@@ -69,10 +71,8 @@ describe('Update Decision Letter', () => {
 			);
 			//verify Case History
 			caseDetailsPage.clickViewCaseHistory();
-			caseDetailsPage.verifyTableCellTextCaseHistory(
-				'Correction notice added: Test Correction Notice'
-			);
-			caseDetailsPage.verifyTableCellTextCaseHistory('Decision letter test.pdf updated');
+			caseHistoryPage.verifyCaseHistoryValue('Correction notice added: Test Correction Notice');
+			caseHistoryPage.verifyCaseHistoryValue('Decision letter test.pdf updated');
 		});
 	});
 });
