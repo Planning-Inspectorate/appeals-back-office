@@ -44,13 +44,13 @@ describe('Create planning application', () => {
 
 			// Assign Case Officer Via API
 			if (testCaseConfig.assignCaseOfficer) {
-				cy.assignCaseOfficerViaApi(caseObj);
+				cy.assignCaseOfficer(caseObj);
 			}
 
 			// Validate Appeal Via API
 			if (testCaseConfig.validateAppeal) {
 				cy.getBusinessActualDate(new Date(), 0).then((date) => {
-					cy.updateAppealDetailsViaApi(caseObj, { validationOutcome: 'valid', validAt: date });
+					cy.updateAppealDetails(caseObj, { validationOutcome: 'valid', validAt: date });
 				});
 			}
 
@@ -58,7 +58,7 @@ describe('Create planning application', () => {
 			if (testCaseConfig.addInquiry) {
 				inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
 					// Set up inquiry case with LPA questionnaire
-					cy.addInquiryViaApi(caseObj, currentDate, timeTable);
+					cy.addInquiry(caseObj, currentDate, timeTable);
 				});
 			}
 
@@ -68,7 +68,7 @@ describe('Create planning application', () => {
 					// Set up hearing case
 					cy.addHearingDetails(caseObj, date);
 				});
-				cy.setupHearingViaApi(caseObj);
+				cy.setupHearing(caseObj);
 			}
 
 			// add lpaq

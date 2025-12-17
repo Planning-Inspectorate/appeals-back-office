@@ -34,7 +34,7 @@ describe('Manage docs on lpa case', () => {
 
 	const setupInquiry = (caseObj, inquiryDate) => {
 		// require case to be started as inquiry to access appellant POE evidence e.g.
-		cy.addInquiryViaApi(caseObj, inquiryDate);
+		cy.addInquiry(caseObj, inquiryDate);
 		happyPathHelper.assignCaseOfficer(caseObj);
 		happyPathHelper.reviewAppellantCase(caseObj);
 		happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');

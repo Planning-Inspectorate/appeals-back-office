@@ -18,7 +18,9 @@
 
 // Import commands.js using ES2015 syntax:
 import registerCypressGrep from '@cypress/grep';
-import './commands';
+import './commands/api';
+import './commands/authentication';
+import './commands/utils';
 registerCypressGrep();
 
 after(() => {
