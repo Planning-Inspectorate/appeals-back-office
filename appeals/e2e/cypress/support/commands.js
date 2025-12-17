@@ -133,6 +133,15 @@ Cypress.Commands.add('elementExists', (selector) => {
 	});
 });
 
+Cypress.Commands.add('writeLog', (message, logToConsole = true, logToBrowser = true) => {
+	if (logToConsole) {
+		cy.task('log', message);
+	}
+	if (logToBrowser) {
+		cy.log(message);
+	}
+});
+
 Cypress.Commands.add('createCase', (customValues) => {
 	return cy.wrap(null).then(() => {
 		return appealsApiClient.caseSubmission(customValues).then((data) => {
@@ -278,6 +287,8 @@ Cypress.Commands.add('checkNotifySent', (caseObj, expectedNotifies) => {
 	// ensure input is always an array
 	const expected = [].concat(expectedNotifies);
 
+	cy.writeLog(`** expected notifies ${JSON.stringify(expectedNotifies)}`);
+
 	expected.forEach(({ template, recipient }) => {
 		expect(
 			typeof template === 'string' && template.trim() !== '',
@@ -290,27 +301,33 @@ Cypress.Commands.add('checkNotifySent', (caseObj, expectedNotifies) => {
 		).to.be.true;
 	});
 
-	return cy.wrap(null).then(async () => {
-		// returns an array of email objects sent for the given appeal
-		const sentNotifies = await appealsApiClient.getNotifyEmails(caseObj.reference);
+	return cy
+		.wrap(null)
+		.then(() => {
+			// return the promise so Cypress waits for it
+			return appealsApiClient.getNotifyEmails(caseObj.reference);
+		})
+		.then((sentNotifies) => {
+			cy.writeLog(`** sent notifies ${JSON.stringify(sentNotifies)}`);
 
-		// filter for expected notifies that were NOT found in the sent notfies array
-		const missingNotifies = expected.filter(
-			(expectedNotify) =>
-				!sentNotifies.some(
-					(sentNotifies) =>
-						sentNotifies.template === expectedNotify.template &&
-						sentNotifies.recipient === expectedNotify.recipient
-				)
-		);
+			// filter for expected notifies that were NOT found
+			const missingNotifies = expected.filter(
+				(expectedNotify) =>
+					!sentNotifies.some(
+						(notify) =>
+							notify.template === expectedNotify.template &&
+							notify.recipient === expectedNotify.recipient
+					)
+			);
 
-		// error message detail
-		const missingDetails = missingNotifies
-			.map((notify) => `(Template: ${notify.template}, Recipient: ${notify.recipient})`)
-			.join('; ');
+			// error message detail
+			const missingDetails = missingNotifies
+				.map((notify) => `(Template: ${notify.template}, Recipient: ${notify.recipient})`)
+				.join('; ');
 
-		expect(missingNotifies, `Missing notifies: ${missingDetails}`).to.be.empty;
-	});
+			// assert on missing notifies
+			expect(missingNotifies, `Missing notifies: ${missingDetails}`).to.be.empty;
+		});
 });
 
 Cypress.Commands.add('updateAppealDetailsViaApi', (caseObj, caseDetails) => {

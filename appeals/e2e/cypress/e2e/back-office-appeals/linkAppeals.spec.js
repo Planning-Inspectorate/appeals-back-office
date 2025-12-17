@@ -5,6 +5,7 @@ import { users } from '../../fixtures/users';
 import { Page } from '../../page_objects/basePage.js';
 import { CostsSectionPage } from '../../page_objects/caseDetails/costsSectionPage.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
+import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection.js';
 import { ListCasesPage } from '../../page_objects/listCasesPage.js';
 import { FileUploader, ManageDocument } from '../../page_objects/shared.js';
@@ -18,6 +19,7 @@ const listCasesPage = new ListCasesPage();
 const caseDetailsPage = new CaseDetailsPage();
 const costsSectionPage = new CostsSectionPage();
 const dateTimeSection = new DateTimeSection();
+const caseHistoryPage = new CaseHistoryPage();
 const fileUploader = new FileUploader();
 const manageDocument = new ManageDocument();
 
@@ -333,12 +335,12 @@ describe('Net residences', () => {
 				happyPathHelper.addNetResidences('Net gain', '4');
 				caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added'),
 					caseDetailsPage.clickViewCaseHistory();
-				caseDetailsPage.verifyTableCellTextCaseHistory('Case updated');
+				caseHistoryPage.verifyCaseHistoryValue('Case updated');
 
 				//child appeal
 				happyPathHelper.viewCaseDetails(childCaseObj);
 				caseDetailsPage.clickViewCaseHistory();
-				caseDetailsPage.verifyTableCellTextCaseHistory('Case updated', false);
+				caseHistoryPage.verifyCaseHistoryValue('Case updated', false);
 			});
 		});
 	});
@@ -417,14 +419,14 @@ describe('Timetable', () => {
 
 					//case history
 					caseDetailsPage.clickViewCaseHistory();
-					caseDetailsPage.verifyTableCellTextCaseHistory(
+					caseHistoryPage.verifyCaseHistoryValue(
 						`Statements due date changed to ${formattedDate.date}`
 					);
 
 					//child apppeal
 					happyPathHelper.viewCaseDetails(childCaseObj);
 					caseDetailsPage.clickViewCaseHistory();
-					caseDetailsPage.verifyTableCellTextCaseHistory(
+					caseHistoryPage.verifyCaseHistoryValue(
 						`Statements due date changed to ${formattedDate.date}`,
 						false
 					);

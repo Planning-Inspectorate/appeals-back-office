@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Removes leading zeros from string number - e.g. '00' becomes '0' and '05' becopmes '5'
  * @param {*} value The value to format
@@ -48,8 +49,13 @@ export function formatDateAndTime(date, isOrdinal = false) {
 	// Set format options based on ordinal flag
 	const dateOptions = {
 		day: 'numeric',
-		month: isOrdinal ? 'short' : 'long',
+		month: 'long',
 		year: 'numeric'
+	};
+
+	const dateOptionsShort = {
+		...dateOptions,
+		month: 'short'
 	};
 
 	const timeOptions = {
@@ -58,8 +64,11 @@ export function formatDateAndTime(date, isOrdinal = false) {
 		hour12: !isOrdinal
 	};
 
-	// Format date (e.g., "22 May 2025" or "22 Oct 2025")
+	// Format date (e.g., ""22 October 2025")
 	const formattedDate = new Intl.DateTimeFormat('en-GB', dateOptions).format(date);
+
+	// Format date short (e.g., "22 Oct 2025")
+	const formattedDateShort = new Intl.DateTimeFormat('en-GB', dateOptionsShort).format(date);
 
 	// Format time (e.g., "2:31am" or "14:31")
 	const formattedTime = new Intl.DateTimeFormat('en-GB', timeOptions)
@@ -67,7 +76,7 @@ export function formatDateAndTime(date, isOrdinal = false) {
 		.toLowerCase()
 		.replace(' ', '');
 
-	return { date: formattedDate, time: formattedTime };
+	return { date: formattedDate, shortDate: formattedDateShort, time: formattedTime };
 }
 
 /**

@@ -30,6 +30,12 @@ module.exports = defineConfig({
 			on('task', { GetConfigByFile: getConfigByFile });
 			on('task', { GetCookiesFileContents: getCookiesFileContents });
 			on('task', { ValidateDownloadedFile: validateDownloadedFile });
+			on('task', {
+				log(message) {
+					console.log(message);
+					return null;
+				}
+			});
 			return config;
 		},
 		baseUrl: process.env.BASE_URL,
