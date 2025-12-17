@@ -132,7 +132,13 @@ router.patch(
 	#swagger.responses[404] = {}
  */
 	getRepresentationUpdateValidator,
-	checkAppealExistsByIdAndAddPartialToRequest([]),
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'address',
+		'appealTimetable',
+		'appellant',
+		'agent',
+		'lpa'
+	]),
 	checkRepresentationExistsById,
 	asyncHandler(controller.updateRepresentation)
 );
