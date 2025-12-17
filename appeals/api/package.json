@@ -32,7 +32,7 @@
 		"db:seed:prod": "npm run prisma-generate && node src/database/seed/seed-production.js",
 		"db:seed:clear-test-data": "npm run prisma-generate && node src/database/seed/seed-clear-test-data.js",
 		"prisma:format": "npx prisma format",
-		"prisma-generate": "npx prisma generate",
+		"prisma-generate": "npx prisma generate && tsc --project src/database/tsconfig.json",
 		"tscheck": "npx tsc -p jsconfig.json --maxNodeModuleJsDepth 0"
 	},
 	"dependencies": {
@@ -42,6 +42,7 @@
 		"@pins/express": "^0.0.0",
 		"@pins/platform": "^0.0.0",
 		"@planning-inspectorate/data-model": "^2.5.0",
+		"@prisma/adapter-mssql": "^7.1.0",
 		"@prisma/client": "7.1.0",
 		"@supercharge/promise-pool": "^2.4.0",
 		"ajv": "^8.17.1",
@@ -98,7 +99,7 @@
 		"swagger-typescript-api": "^13.2.16"
 	},
 	"imports": {
-		"#db-client": "./src/server/utils/db-client/index.js",
+		"#db-client/*": "./src/server/utils/db-client/*",
 		"#utils/*": "./src/server/utils/*",
 		"#repositories/*": "./src/server/repositories/*",
 		"#infrastructure/*": "./src/server/infrastructure/*",

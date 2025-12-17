@@ -4,10 +4,10 @@ import appealRepository from './appeal.repository.js';
 import commonRepository from './common.repository.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcome} UpdateAppellantCaseValidationOutcome */
-/** @typedef {import('#db-client').Prisma.AppellantCaseUpdateInput} AppellantCaseUpdateInput */
+/** @typedef {import('#db-client/client.ts').Prisma.AppellantCaseUpdateInput} AppellantCaseUpdateInput */
 /** @typedef {import('@pins/appeals.api').Api.AppellantCaseUpdateRequest} AppellantCaseUpdateRequest */
 /**
- * @typedef {import('#db-client').Prisma.PrismaPromise<T>} PrismaPromise
+ * @typedef {import('#db-client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
  * @template T
  */
 

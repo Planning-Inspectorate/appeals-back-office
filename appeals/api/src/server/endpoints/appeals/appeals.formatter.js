@@ -24,7 +24,7 @@ import { countBy } from 'lodash-es';
 /** @typedef {import('@pins/appeals.api').Appeals.SingleAppealDetailsResponse} SingleAppealDetailsResponse */
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
 /** @typedef {import('#endpoints/appeals').DocumentationSummary} DocumentationSummary */
-/** @typedef {import('#db-client').AppealStatus} AppealStatus */
+/** @typedef {import('#db-client/client.ts').AppealStatus} AppealStatus */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
 /** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
 /** @typedef {DBAppeals[0]} DBAppeal */

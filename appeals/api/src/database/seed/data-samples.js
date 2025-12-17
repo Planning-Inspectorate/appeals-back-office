@@ -192,7 +192,7 @@ export const addressListForTrainers = addressesList.map((address) => ({
 /**
  * An array of objects representing LPA questionnaire lists.
  * @param {string} appealTypeShorthand
- * @returns {import('#db-client').Prisma.LPAQuestionnaireCreateWithoutAppealInput | undefined}
+ * @returns {import('#db-client/models.js').LPAQuestionnaireCreateWithoutAppealInput | undefined}
  */
 /* eslint-disable no-fallthrough */
 export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
@@ -377,7 +377,7 @@ export const incompleteReviewQuestionnaireSample = {
 
 /**
  * An array of objects representing appeal case details provided by the appellant.
- * @type {Object<string, import('#db-client').Prisma.AppellantCaseCreateWithoutAppealInput>}
+ * @type {Object<string, import('#db-client/models.js').AppellantCaseCreateWithoutAppealInput>}
  */
 export const appellantCaseList = {
 	[APPEAL_CASE_TYPE.D]: {
@@ -533,7 +533,7 @@ export const appellantCaseList = {
 
 /**
  * @param {string} appealTypeShorthand
- * @returns {import('#db-client').Prisma.AppellantCaseCreateWithoutAppealInput}
+ * @returns {import('#db-client/models.js').AppellantCaseCreateWithoutAppealInput}
  */
 export const getRandomisedAppellantCaseCreateInput = (appealTypeShorthand) => {
 	const appellantCaseCreateInput = {
