@@ -14,9 +14,6 @@ export const createPrismaClient = (databaseUrl = process.env.DATABASE_URL, logge
 		/** @type {prismaConfig} */
 		const prismaConfig = {};
 
-		console.log(process.env);
-		console.log(databaseUrl);
-		console.log(databaseUrl);
 		if (!databaseUrl) {
 			throw new Error('connectionString not provided to create Prisma Client');
 		}
