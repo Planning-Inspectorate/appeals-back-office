@@ -88,7 +88,10 @@ const getRepresentations = async (appealId, options, pageNumber, pageSize) => {
 					}
 				},
 				representationType: true,
-				status: true
+				status: true,
+				dateCreated: true,
+				originalRepresentation: true,
+				source: true
 			},
 			orderBy: { dateCreated: 'desc' },
 			...(pageNumber && pageSize ? { skip: pageNumber * pageSize } : {}),
