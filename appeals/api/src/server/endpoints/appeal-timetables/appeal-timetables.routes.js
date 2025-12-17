@@ -44,7 +44,10 @@ router.post(
 		'parentAppeals',
 		'childAppeals',
 		'procedureType',
-		'address'
+		'address',
+		'appellant',
+		'agent',
+		'lpa'
 	]),
 	createAppealTimetableValidator,
 	asyncHandler(startAppeal)
