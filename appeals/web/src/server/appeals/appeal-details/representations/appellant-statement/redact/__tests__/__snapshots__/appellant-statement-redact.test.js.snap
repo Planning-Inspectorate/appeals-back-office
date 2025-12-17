@@ -1,0 +1,303 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`redact GET / should render the redact appellant statement page with expected content 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Redact Appellant statement</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <form method="POST" class="govuk-grid-column-two-thirds">
+            <p class="govuk-body govuk-!-margin-bottom-0">Original statement:</p>
+            <div id="original-comment" class="govuk-inset-text govuk-!-margin-top-2">Every single thing in the world has its own personality - and it is up
+                to you to make friends with the little rascals. Steve wants reflections,
+                so let&#39;s give him eflections It&#39;s amazing what you can do with
+                a little love in your heart. Clouds are free they come and go as they please.
+                <br>
+                <br>The secret to doing anything is believing that you can do it. Anything
+                hatyou believe you can do strong enough, you can do. Anything. As long
+                as you believe. It looks so good, I might as well not stop. This present
+                moment is perfect simply due to the fact you&#39;re xperiencingit. Making
+                all those little fluffies that live in the clouds.
+                <br>
+                <br>You don&#39;t want to kill all your dark areas they are very important.
+                I will take some magic white, and a little bit of andykebrown and a little
+                touch of yellow. Anyone can paint. Each highlight must have it&#39;s own
+                private shadow. Don&#39;t fiddle with it all day.</div>
+            <div class="govuk-button-group">
+                <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
+                id="revert-button">Revert to original appellant statement</button>
+            </div>
+            <div class="govuk-form-group">
+                <label class="govuk-label govuk-label--s" for="redact-textarea">Redacted statement</label>
+                <textarea class="govuk-textarea" id="redact-textarea"
+                name="redactedRepresentation" rows="5" readonly="true">Every single thing in the world has its own personality - and it is up
+                    to you to make friends with the little rascals. Steve wants reflections,
+                    so let&#39;s give him eflections It&#39;s amazing what you can do with
+                    a little love in your heart. Clouds are free they come and go as they please.
+                    The secret to doing anything is believing that you can do it. Anything
+                    hatyou believe you can do strong enough, you can do. Anything. As long
+                    as you believe. It looks so good, I might as well not stop. This present
+                    moment is perfect simply due to the fact you&#39;re xperiencingit. Making
+                    all those little fluffies that live in the clouds. You don&#39;t want to
+                    kill all your dark areas they are very important. I will take some magic
+                    white, and a little bit of andykebrown and a little touch of yellow. Anyone
+                    can paint. Each highlight must have it&#39;s own private shadow. Don&#39;t
+                    fiddle with it all day.</textarea>
+            </div>
+            <div class="govuk-button-group">
+                <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
+                id="redact-button">Redact selected text</button>
+                <button type="submit" class="govuk-button govuk-button--secondary"
+                data-module="govuk-button" id="undo-button">Undo changes</button>
+            </div>
+            <p class="govuk-visually-hidden" id="saved-textarea">Every single thing in the world has its own personality - and it is up
+                to you to make friends with the little rascals. Steve wants reflections,
+                so let's give him eflections It's amazing what you can do with a little
+                love in your heart. Clouds are free they come and go as they please. The
+                secret to doing anything is believing that you can do it. Anything hatyou
+                believe you can do strong enough, you can do. Anything. As long as you
+                believe. It looks so good, I might as well not stop. This present moment
+                is perfect simply due to the fact you're xperiencingit. Making all those
+                little fluffies that live in the clouds. You don't want to kill all your
+                dark areas they are very important. I will take some magic white, and a
+                little bit of andykebrown and a little touch of yellow. Anyone can paint.
+                Each highlight must have it's own private shadow. Don't fiddle with it
+                all day.</p>
+            <div class="govuk-button-group">
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </div>
+        </form>
+    </div>
+</main>"
+`;
+
+exports[`redact GET /allocation-check should render the allocation check page with expected content 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Allocation level</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Do you need to update the allocation level and specialisms?</legend>
+                                <div                                 class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="allocationLevelAndSpecialisms"
+                                        name="allocationLevelAndSpecialisms" type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="allocationLevelAndSpecialisms">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="allocationLevelAndSpecialisms-2"
+                                        name="allocationLevelAndSpecialisms" type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="allocationLevelAndSpecialisms-2">No</label>
+                                    </div>
+                        </div>
+                        </fieldset>
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;
+
+exports[`redact GET /allocation-level should render the allocation level page with expected content 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Allocation level</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="allocationLevel" name="allocationLevel"
+                                    type="radio" value="A">
+                                    <label class="govuk-label govuk-radios__label" for="allocationLevel">A</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="allocationLevel-2" name="allocationLevel"
+                                    type="radio" value="B">
+                                    <label class="govuk-label govuk-radios__label" for="allocationLevel-2">B</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`redact GET /allocation-specialisms should render the allocation specialisms page with expected content 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Allocation specialisms</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="allocationSpecialisms" name="allocationSpecialisms"
+                                    type="checkbox" value="1">
+                                    <label class="govuk-label govuk-checkboxes__label" for="allocationSpecialisms">Specialism 1</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="allocationSpecialisms-2" name="allocationSpecialisms"
+                                    type="checkbox" value="2">
+                                    <label class="govuk-label govuk-checkboxes__label" for="allocationSpecialisms-2">Specialism 2</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="allocationSpecialisms-3" name="allocationSpecialisms"
+                                    type="checkbox" value="3">
+                                    <label class="govuk-label govuk-checkboxes__label" for="allocationSpecialisms-3">Specialism 3</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`redact GET /confirm should render the CYA redaction page with expected content if Appellant statement is awaiting review 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and accept statement</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Original statement</dt>
+                    <dd class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="" data-mode="html">Every single thing in the world has its own personality - and it is up
+                            to you to make friends with the little rascals. Steve wants reflections,
+                            so let&#39;s give him eflections It&#39;s amazing what you can do with
+                            a little love in your heart. Clouds are free they come and go as they please.
+                            <br>
+                            <br>The secret to doing anything is believing that you can do it. Anything
+                            hatyou believe you can do strong enough, you can do. Anything. As long
+                            as you believe. It looks so good, I might as well not stop. This present
+                            moment is perfect simply due to the fact you&#39;re xperiencingit. Making
+                            all those little fluffies that live in the clouds.
+                            <br>
+                            <br>You don&#39;t want to kill all your dark areas they are very important.
+                            I will take some magic white, and a little bit of andykebrown and a little
+                            touch of yellow. Anyone can paint. Each highlight must have it&#39;s own
+                            private shadow. Don&#39;t fiddle with it all day.</div>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redacted statement</dt>
+                    <dd class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="" data-mode="text">Test redacted final comment text</div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-statement/redact">Change<span class="govuk-visually-hidden"> redacted statement</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+                    <dd class="govuk-summary-list__value">Not provided</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-statement/add-document?backUrl=/appellant-statement/redact/confirm">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>
+                    <dd class="govuk-summary-list__value">Redact and accept statement</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-statement">Change<span class="govuk-visually-hidden"> review decision</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you need to update the allocation level and specialisms?</dt>
+                    <dd                     class="govuk-summary-list__value">No</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-statement/valid/allocation-check">Change<span class="govuk-visually-hidden"> allocation level and specialisms</span></a>
+                        </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form action="" method="POST" novalidate>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Redact and accept statement</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`redact GET /confirm should render the CYA redaction page with expected content if Appellant statement is published 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and accept statement</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Original statement</dt>
+                    <dd class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="" data-mode="html">Every single thing in the world has its own personality - and it is up
+                            to you to make friends with the little rascals. Steve wants reflections,
+                            so let&#39;s give him eflections It&#39;s amazing what you can do with
+                            a little love in your heart. Clouds are free they come and go as they please.
+                            <br>
+                            <br>The secret to doing anything is believing that you can do it. Anything
+                            hatyou believe you can do strong enough, you can do. Anything. As long
+                            as you believe. It looks so good, I might as well not stop. This present
+                            moment is perfect simply due to the fact you&#39;re xperiencingit. Making
+                            all those little fluffies that live in the clouds.
+                            <br>
+                            <br>You don&#39;t want to kill all your dark areas they are very important.
+                            I will take some magic white, and a little bit of andykebrown and a little
+                            touch of yellow. Anyone can paint. Each highlight must have it&#39;s own
+                            private shadow. Don&#39;t fiddle with it all day.</div>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redacted statement</dt>
+                    <dd class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="" data-mode="text">Test redacted final comment text</div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-statement/redact">Change<span class="govuk-visually-hidden"> redacted statement</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form action="" method="POST" novalidate>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Redact and accept statement</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;

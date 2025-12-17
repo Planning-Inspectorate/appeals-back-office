@@ -1,0 +1,540 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`appellant-statements GET / should render the review Appellant statement page with no valid_requires_redaction option if no text in appellant statement 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Review appellant statement</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Statement</dt>
+                    <dd class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="Statement" data-mode="text"></div>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+                    <dd class="govuk-summary-list__value">No documents</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-statement/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Review decision</legend>
+                        <div class="govuk-radios" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="status" name="status" type="radio"
+                                value="valid">
+                                <label class="govuk-label govuk-radios__label" for="status">Accept statement</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="status-3" name="status" type="radio"
+                                value="incomplete">
+                                <label class="govuk-label govuk-radios__label" for="status-3">Statement incomplete</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-statements GET / should render the review Appellant statement page with the expected content if the statement is awaiting review 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Review appellant statement</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Statement</dt>
+                    <dd class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="Statement" data-mode="html">Every single thing in the world has its own personality - and it is up
+                            to you to make friends with the little rascals. Steve wants reflections,
+                            so let&#39;s give him eflections It&#39;s amazing what you can do with
+                            a little love in your heart. Clouds are free they come and go as they please.
+                            <br>
+                            <br>The secret to doing anything is believing that you can do it. Anything
+                            hatyou believe you can do strong enough, you can do. Anything. As long
+                            as you believe. It looks so good, I might as well not stop. This present
+                            moment is perfect simply due to the fact you&#39;re xperiencingit. Making
+                            all those little fluffies that live in the clouds.
+                            <br>
+                            <br>You don&#39;t want to kill all your dark areas they are very important.
+                            I will take some magic white, and a little bit of andykebrown and a little
+                            touch of yellow. Anyone can paint. Each highlight must have it&#39;s own
+                            private shadow. Don&#39;t fiddle with it all day.</div>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+                    <dd class="govuk-summary-list__value">No documents</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-statement/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Review decision</legend>
+                        <div class="govuk-radios" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="status" name="status" type="radio"
+                                value="valid">
+                                <label class="govuk-label govuk-radios__label" for="status">Accept statement</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="status-2" name="status" type="radio"
+                                value="valid_requires_redaction">
+                                <label class="govuk-label govuk-radios__label" for="status-2">Redact and accept statement</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="status-3" name="status" type="radio"
+                                value="incomplete">
+                                <label class="govuk-label govuk-radios__label" for="status-3">Statement incomplete</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-statements GET / should render the review Appellant statement page with the expected content if the statement is incomplete 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Review appellant statement</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Statement</dt>
+                    <dd class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="Statement" data-mode="html">Every single thing in the world has its own personality - and it is up
+                            to you to make friends with the little rascals. Steve wants reflections,
+                            so let&#39;s give him eflections It&#39;s amazing what you can do with
+                            a little love in your heart. Clouds are free they come and go as they please.
+                            <br>
+                            <br>The secret to doing anything is believing that you can do it. Anything
+                            hatyou believe you can do strong enough, you can do. Anything. As long
+                            as you believe. It looks so good, I might as well not stop. This present
+                            moment is perfect simply due to the fact you&#39;re xperiencingit. Making
+                            all those little fluffies that live in the clouds.
+                            <br>
+                            <br>You don&#39;t want to kill all your dark areas they are very important.
+                            I will take some magic white, and a little bit of andykebrown and a little
+                            touch of yellow. Anyone can paint. Each highlight must have it&#39;s own
+                            private shadow. Don&#39;t fiddle with it all day.</div>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+                    <dd class="govuk-summary-list__value">No documents</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-statement/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form method="POST" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Review decision</legend>
+                        <div class="govuk-radios" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="status" name="status" type="radio"
+                                value="valid">
+                                <label class="govuk-label govuk-radios__label" for="status">Accept statement</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="status-2" name="status" type="radio"
+                                value="valid_requires_redaction">
+                                <label class="govuk-label govuk-radios__label" for="status-2">Redact and accept statement</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="status-3" name="status" type="radio"
+                                value="incomplete">
+                                <label class="govuk-label govuk-radios__label" for="status-3">Statement incomplete</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-statements GET / should render the view Appellant statement page with the expected content if the statement is neither awaiting review nor incomplete 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Appellant statement</h1>
+        </div>
+    </div>
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statement</dt>
+            <dd class="govuk-summary-list__value">
+                <div class="pins-show-more" data-label="Statement" data-mode="html">Every single thing in the world has its own personality - and it is up
+                    to you to make friends with the little rascals. Steve wants reflections,
+                    so let&#39;s give him eflections It&#39;s amazing what you can do with
+                    a little love in your heart. Clouds are free they come and go as they please.
+                    <br>
+                    <br>The secret to doing anything is believing that you can do it. Anything
+                    hatyou believe you can do strong enough, you can do. Anything. As long
+                    as you believe. It looks so good, I might as well not stop. This present
+                    moment is perfect simply due to the fact you&#39;re xperiencingit. Making
+                    all those little fluffies that live in the clouds.
+                    <br>
+                    <br>You don&#39;t want to kill all your dark areas they are very important.
+                    I will take some magic white, and a little bit of andykebrown and a little
+                    touch of yellow. Anyone can paint. Each highlight must have it&#39;s own
+                    private shadow. Don&#39;t fiddle with it all day.</div>
+            </dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-statement/redact">Redact<span class="govuk-visually-hidden"> statement</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+            <dd class="govuk-summary-list__value">No documents</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-statement/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+            </dd>
+        </div>
+    </dl>
+</main>"
+`;
+
+exports[`appellant-statements GET /manage-documents/:folderId/ should render a 404 error page if the folderId is invalid 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">If you typed the web address, check it is correct.</p>
+            <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
+            <p             class="govuk-body">If the web address is correct or you selected a link or button, <a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">report an IT problem.</a>
+                </p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-statements GET /manage-documents/:folderId/ should render manage folder page with the provided comment details 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">Supporting documents</h1>
+        </div>
+    </div><a href="/appeals-service/appeal-details/2/appellant-statement/add-document"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add document</a>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <table class="govuk-table" id="documents-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Name</th>
+                        <th scope="col" class="govuk-table__header">Date submitted</th>
+                        <th scope="col" class="govuk-table__header">Redaction status</th>
+                        <th scope="col" class="govuk-table__header">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFolderInfo.pdf"
+                                target="_blank">test-pdf-documentFolderInfo.pdf</a>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>PDF, 129 KB</dd>
+                            </dl>
+                        </td>
+                        <td class="govuk-table__cell">1 February 2023</td>
+                        <td class="govuk-table__cell">No redaction required</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/2/appellant-statement/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
+                            class="govuk-link">View and edit <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                            <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/sample-20s-documentFolderInfo.mp4"
+                                target="_blank">sample-20s-documentFolderInfo.mp4</a>
+                            </div>
+                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
+                                <dd>MP4, 11.8 MB</dd>
+                            </dl>
+                        </td>
+                        <td class="govuk-table__cell">2 March 2024</td>
+                        <td class="govuk-table__cell">No redaction required</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/2/appellant-statement/manage-documents/1/47d8f073-c837-4f07-9161-c1a5626eba56"
+                            class="govuk-link">View and edit <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-statements GET /manage-documents/:folderId/:documentId should render a 404 error page if the folderId is invalid 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Page not found</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">If you typed the web address, check it is correct.</p>
+            <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
+            <p             class="govuk-body">If the web address is correct or you selected a link or button, <a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">report an IT problem.</a>
+                </p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-statements GET /manage-documents/:folderId/:documentId should render manage document page with the provided comment details 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+            <div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+            aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
+                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage versions</span>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Name</dt>
+                    <dd class="govuk-summary-list__value">
+                        <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
+                        </div>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
+                        </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-statement/manage-documents/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Version</dt>
+                    <dd class="govuk-summary-list__value">1</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date submitted</dt>
+                    <dd class="govuk-summary-list__value">1 February 2023</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-statement/manage-documents/change-document-details/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf date received</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
+                    <dd class="govuk-summary-list__value">Redacted</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-statement/manage-documents/change-document-details/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf redaction status</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <h2>Document versions</h2>
+            <p class="govuk-body">View and remove versions of this document</p>
+            <details class="govuk-details">
+                <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
+                </summary>
+                <div class="govuk-details__text">
+                    <table class="govuk-table">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header">Version</th>
+                                <th scope="col" class="govuk-table__header">Name</th>
+                                <th scope="col" class="govuk-table__header">Activity</th>
+                                <th scope="col" class="govuk-table__header">Redaction status</th>
+                                <th scope="col" class="govuk-table__header">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell">1</td>
+                                <td class="govuk-table__cell">
+                                    <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
+                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
+                </div>
+                </td>
+                <td class="govuk-table__cell">
+                    <p class="govuk-body"><strong>Create</strong>: 13:14, 31 October 2023,
+                        <br>by John Smith</p>
+                </td>
+                <td class="govuk-table__cell">Redacted</td>
+                <td class="govuk-table__cell"></td>
+                </tr>
+                </tbody>
+                </table>
+        </div>
+        </details>
+    </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-statements GET change-document-details/:folderId/:documentId should render change document details page with the provided comment details 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
+            <h1 class="govuk-heading-l">Appellant costs application documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="items[0][documentId]" name="items[0][documentId]"
+                        type="hidden" value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset" role="group">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Date received</legend>
+                            <div class="govuk-date-input" id="items[0]receivedDate">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items-0-received-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="items-0-received-date-day" name="items[0][receivedDate]-[day]" type="text"
+                                        value="11" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items-0-received-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="items-0-received-date-month" name="items[0][receivedDate]-[month]"
+                                        type="text" value="10" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="items-0-received-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                        id="items-0-received-date-year" name="items[0][receivedDate]-[year]" type="text"
+                                        value="2023" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend">Redaction status</legend>
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]" name="items[0][redactionStatus]"
+                                    type="radio" value="redacted">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]">Redacted</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-2" name="items[0][redactionStatus]"
+                                    type="radio" value="unredacted">
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-2">Unredacted</label>
+                                </div>
+                                <div class="govuk-radios__divider">Or</div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="items[0][redactionStatus]-4" name="items[0][redactionStatus]"
+                                    type="radio" value="no redaction required" checked>
+                                    <label class="govuk-label govuk-radios__label" for="items[0][redactionStatus]-4">No redaction required</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-statements GET change-document-name/:folderId/:documentId should render change document page with the provided comment details 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Change document details</span>
+            <h1 class="govuk-heading-l">Appellant costs application documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo</h2>
+                    <div class="govuk-form-group">
+                        <input class="govuk-input" id="documentId" name="documentId" type="hidden"
+                        value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="file-name">File name</label>
+                        <input class="govuk-input" id="file-name" name="fileName"
+                        type="text" value="ph0-documentFileInfo">
+                    </div>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-statements POST / should re-render the review page with the expected error message if a review status was not selected 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#status">Select your review decision</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;

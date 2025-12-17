@@ -3789,6 +3789,26 @@ export const lpaStatementPublished = {
 	status: 'published'
 };
 
+export const appellantStatementAwaitingReview = {
+	id: 66816,
+	source: 'citizen',
+	author: 'Wiltshire Council',
+	status: 'awaiting_review',
+	originalRepresentation: `Every single thing in the world has its own personality - and it is up to you to make friends with the little rascals. Steve wants reflections, so let's give him eflections It's amazing what you can do with a little love in your heart. Clouds are free they come and go as they please.\n\nThe secret to doing anything is believing that you can do it. Anything hatyou believe you can do strong enough, you can do. Anything. As long as you believe. It looks so good, I might as well not stop. This present moment is perfect simply due to the fact you're xperiencingit. Making all those little fluffies that live in the clouds.\n\nYou don't want to kill all your dark areas they are very important. I will take some magic white, and a little bit of andykebrown and a little touch of yellow. Anyone can paint. Each highlight must have it's own private shadow. Don't fiddle with it all day.`,
+	redactedRepresentation: '',
+	created: '2025-03-20T12:00:20.709Z',
+	notes: '',
+	attachments: [],
+	representationType: 'appellant_statement',
+	siteVisitRequested: false,
+	rejectionReasons: []
+};
+
+export const appellantStatementPublished = {
+	...appellantStatementAwaitingReview,
+	status: 'published'
+};
+
 export const proofOfEvidenceForReview = {
 	itemCount: 1,
 	items: [
