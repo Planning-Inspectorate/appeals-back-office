@@ -113,8 +113,10 @@ const updateLPAQuestionnaireValidationOutcome = async (
 	}
 
 	if (isOutcomeComplete(validationOutcome.name)) {
-		const documentsUpdated = await documentRepository.setRedactionStatusOnValidation(appeal.id);
-		for (const documentUpdated of documentsUpdated) {
+		const latestDocumentVersionsUpdated = await documentRepository.setRedactionStatusOnValidation(
+			appeal.id
+		);
+		for (const documentUpdated of latestDocumentVersionsUpdated) {
 			await broadcasters.broadcastDocument(
 				documentUpdated.documentGuid,
 				documentUpdated.version,
