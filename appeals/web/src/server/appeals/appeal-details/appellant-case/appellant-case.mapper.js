@@ -26,8 +26,8 @@ import { mapReasonOptionsToCheckboxItemParameters } from '#lib/validation-outcom
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
-	GROUND_SUPPORTING_DOCTYPE,
-	GROUNDS_APPLICATION_RECEIPT_DOCTYPE
+	APPLICATION_FEE_RECEIPT_DOCTYPE,
+	GROUND_SUPPORTING_DOCTYPE
 } from '@pins/appeals/constants/documents.js';
 import {
 	APPEAL_CASE_STATUS,
@@ -817,7 +817,7 @@ export function getPageHeadingTextOverrideForFolder(folder) {
 			return 'Ground (f) supporting documents';
 		case GROUND_SUPPORTING_DOCTYPE.G:
 			return 'Ground (g) supporting documents';
-		case GROUNDS_APPLICATION_RECEIPT_DOCTYPE:
+		case APPLICATION_FEE_RECEIPT_DOCTYPE:
 			return 'Application receipt';
 		default:
 			return;
@@ -870,7 +870,7 @@ export function getPageHeadingTextOverrideForAddDocuments(folder, appealType) {
 			return 'Upload your ground (f) supporting documents';
 		case GROUND_SUPPORTING_DOCTYPE.G:
 			return 'Upload your ground (g) supporting documents';
-		case GROUNDS_APPLICATION_RECEIPT_DOCTYPE:
+		case APPLICATION_FEE_RECEIPT_DOCTYPE:
 			return 'Upload your application receipt';
 		default:
 			break;
@@ -919,7 +919,7 @@ export function getDocumentNameFromFolder(folderPath) {
 			return 'ground (f) supporting documents';
 		case GROUND_SUPPORTING_DOCTYPE.G:
 			return 'ground (g) supporting documents';
-		case GROUNDS_APPLICATION_RECEIPT_DOCTYPE:
+		case APPLICATION_FEE_RECEIPT_DOCTYPE:
 			return 'application receipt';
 	}
 }

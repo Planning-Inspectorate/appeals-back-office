@@ -11,8 +11,8 @@ import { getByCaseId, getByCaseIdAndPaths, getById } from '#repositories/folder.
 import { validateBlobContents } from '#utils/blob-validation.js';
 import logger from '#utils/logger.js';
 import {
-	GROUND_SUPPORTING_DOCTYPE,
-	GROUNDS_APPLICATION_RECEIPT_DOCTYPE
+	APPLICATION_FEE_RECEIPT_DOCTYPE,
+	GROUND_SUPPORTING_DOCTYPE
 } from '@pins/appeals/constants/documents.js';
 import {
 	ERROR_NOT_FOUND,
@@ -169,7 +169,7 @@ export const getFoldersForStage = (path) => {
 				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${GROUND_SUPPORTING_DOCTYPE.E}`,
 				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${GROUND_SUPPORTING_DOCTYPE.F}`,
 				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${GROUND_SUPPORTING_DOCTYPE.G}`,
-				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${GROUNDS_APPLICATION_RECEIPT_DOCTYPE}`
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPLICATION_FEE_RECEIPT_DOCTYPE}`
 			];
 			break;
 		case APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE:
