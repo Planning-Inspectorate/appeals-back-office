@@ -525,7 +525,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'K2610',
 		name: 'Broadland District Council',
-		email: 'planning.administration@broadland.gov.uk',
+		email: 'appealbdc@southnorfolkandbroadland.gov.uk',
 		teamId: 14 // East4
 	},
 	{
@@ -1089,7 +1089,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'L2630',
 		name: 'South Norfolk District Council',
-		email: 'planning@southnorfolkandbroadland.gov.uk',
+		email: 'appealsnc@southnorfolkandbroadland.gov.uk',
 		teamId: 14 // East4
 	},
 	{
