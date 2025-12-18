@@ -38,6 +38,11 @@ export const createPrismaClient = (databaseUrl = process.env.DATABASE_URL, logge
 			// }
 		];
 
+		prismaConfig.transactionOptions = {
+			maxWait: 5000,
+			timeout: 20000
+		};
+
 		prismaClient = new PrismaClient(prismaConfig);
 
 		if (logger) {
