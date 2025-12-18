@@ -369,19 +369,17 @@ export const getExampleDateHint = (daysFromToday = 45, inFuture = true) => {
 /**
  *
  * @param {import('got').Got} apiClient
- * @param {string} appealId
  * @param {string} documentId
  * @param {import('#appeals/appeal-details/appeal-details.types.d.ts').WebAppeal} currentAppeal
  * @returns
  */
 export const getOriginalAndLatestLetterDatesObject = async (
 	apiClient,
-	appealId,
 	documentId,
 	currentAppeal
 ) => {
 	const { latestDocumentVersion: latestFileVersion, allVersions = [] } =
-		(await getFileVersionsInfo(apiClient, appealId, documentId || '')) || {};
+		(await getFileVersionsInfo(apiClient, documentId || '')) || {};
 	const originalLetterDate =
 		allVersions.length > 0
 			? dateISOStringToDisplayDate(allVersions[0]?.dateReceived)

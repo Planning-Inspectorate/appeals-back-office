@@ -113,7 +113,7 @@ export const getDocumentVersionUpload = async (request, response) => {
 		return [capitalizeFirstLetter(headingText), `Upload ${headingText}`];
 	})();
 
-	const allowedType = await getDocumentFileType(apiClient, currentAppeal.appealId, documentId);
+	const allowedType = await getDocumentFileType(apiClient, documentId);
 
 	await renderDocumentUpload({
 		request,
@@ -551,7 +551,7 @@ export const renderDecisionCheckAndConfirm = async (request, response) => {
 	let documentFileName;
 
 	if (documentId) {
-		const fileInfo = await getFileInfo(request.apiClient, currentAppeal.appealId, documentId);
+		const fileInfo = await getFileInfo(request.apiClient, documentId);
 
 		if (!fileInfo) {
 			return response.status(404).render('app/404');

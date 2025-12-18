@@ -42,9 +42,9 @@ const createBlobStorageClient = async (session) => {
  * @returns {Promise<Response>}
  */
 export const getDocumentDownload = async ({ apiClient, params, session }, response) => {
-	const { guid: fileGuid, filename: requestedFilename, caseId } = params;
+	const { guid: fileGuid, filename: requestedFilename } = params;
 
-	const fileInfo = await getFileInfo(apiClient, caseId.toString(), fileGuid);
+	const fileInfo = await getFileInfo(apiClient, fileGuid);
 
 	if (!fileInfo?.latestDocumentVersion) {
 		return response.status(404);
@@ -140,9 +140,9 @@ export const getUncommittedDocumentDownload = async (
  * @returns {Promise<Response>}
  */
 export const getDocumentDownloadByVersion = async ({ apiClient, params, session }, response) => {
-	const { guid: fileGuid, filename: requestedFilename, caseId, version } = params;
+	const { guid: fileGuid, filename: requestedFilename, version } = params;
 
-	const filesInfo = await getFileVersionsInfo(apiClient, caseId.toString(), fileGuid);
+	const filesInfo = await getFileVersionsInfo(apiClient, fileGuid);
 
 	if (!filesInfo?.allVersions) {
 		return response.status(404);

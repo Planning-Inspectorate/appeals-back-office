@@ -576,11 +576,7 @@ export const getAddDocumentVersion = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	const allowedType = await getDocumentFileType(
-		apiClient,
-		currentAppeal.appealId,
-		request.params.documentId
-	);
+	const allowedType = await getDocumentFileType(apiClient, request.params.documentId);
 
 	const pageHeading = DOCUMENT_FOLDER_DISPLAY_LABELS[currentFolder.path.split('/')[1]];
 
