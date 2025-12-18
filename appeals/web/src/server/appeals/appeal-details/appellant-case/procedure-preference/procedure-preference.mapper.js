@@ -143,7 +143,7 @@ export const changeProcedurePreferenceDurationPage = (
 						isPageHeading: true
 					},
 					classes: 'govuk-input--width-2',
-					value: procedurePreferenceDuration ?? 'Not answered'
+					value: procedurePreferenceDuration ?? ''
 				}
 			}
 		]
@@ -189,7 +189,7 @@ export const changeInquiryNumberOfWitnessesPage = (
 						isPageHeading: true
 					},
 					classes: 'govuk-input--width-2',
-					value: inquiryNumberOfWitnesses || 'Not answered'
+					value: inquiryNumberOfWitnesses ?? ''
 				}
 			}
 		]
