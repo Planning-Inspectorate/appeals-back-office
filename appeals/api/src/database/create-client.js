@@ -17,7 +17,7 @@ export const createPrismaClient = (databaseUrl = process.env.DATABASE_URL, logge
 		if (!databaseUrl) {
 			throw new Error('connectionString not provided to create Prisma Client');
 		}
-		prismaConfig.adapter = new PrismaMssql(databaseUrl);
+		prismaConfig.adapter = new PrismaMssql(`${databaseUrl};connection_limit=30;`);
 
 		prismaConfig.log = [
 			{
@@ -40,7 +40,10 @@ export const createPrismaClient = (databaseUrl = process.env.DATABASE_URL, logge
 
 		prismaConfig.transactionOptions = {
 			maxWait: 5000,
-			timeout: 20000
+			timeout: 20000,
+			pool: {
+				max: 40
+			}
 		};
 
 		prismaClient = new PrismaClient(prismaConfig);
