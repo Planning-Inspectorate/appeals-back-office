@@ -81,7 +81,7 @@ export const getDocumentVersionUpload = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	const allowedType = await getDocumentFileType(apiClient, currentAppeal.appealId, documentId);
+	const allowedType = await getDocumentFileType(apiClient, documentId);
 
 	const documentName = documentNameFromCategory(correspondenceCategory);
 

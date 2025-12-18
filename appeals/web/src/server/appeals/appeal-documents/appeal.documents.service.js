@@ -57,14 +57,12 @@ export const getAttachmentsFolder = async (apiClient, appealId, folderPath) => {
 
 /**
  * @param {import('got').Got} apiClient
- * @param {string} appealId
  * @param {string} fileGuid
  * @returns {Promise<DocumentInfo|undefined>}
  */
-export const getFileInfo = async (apiClient, appealId, fileGuid) => {
+export const getFileInfo = async (apiClient, fileGuid) => {
 	try {
-		const fileInfo = await apiClient.get(`appeals/${appealId}/documents/${fileGuid}`).json();
-		return fileInfo;
+		return await apiClient.get(`appeals/documents/${fileGuid}`).json();
 	} catch {
 		return undefined;
 	}
@@ -72,16 +70,12 @@ export const getFileInfo = async (apiClient, appealId, fileGuid) => {
 
 /**
  * @param {import('got').Got} apiClient
- * @param {string} appealId
  * @param {string} fileGuid
  * @returns {Promise<DocumentInfo|undefined>}
  */
-export const getFileVersionsInfo = async (apiClient, appealId, fileGuid) => {
+export const getFileVersionsInfo = async (apiClient, fileGuid) => {
 	try {
-		const fileInfo = await apiClient
-			.get(`appeals/${appealId}/documents/${fileGuid}/versions`)
-			.json();
-		return fileInfo;
+		return await apiClient.get(`appeals/documents/${fileGuid}/versions`).json();
 	} catch {
 		return undefined;
 	}
@@ -89,12 +83,11 @@ export const getFileVersionsInfo = async (apiClient, appealId, fileGuid) => {
 
 /**
  * @param {import('got').Got} apiClient
- * @param {string} appealId
  * @param {string} fileGuid
  * @returns {Promise<string|null>}
  */
-export const getDocumentFileType = async (apiClient, appealId, fileGuid) => {
-	const versionsInfo = await getFileVersionsInfo(apiClient, appealId, fileGuid);
+export const getDocumentFileType = async (apiClient, fileGuid) => {
+	const versionsInfo = await getFileVersionsInfo(apiClient, fileGuid);
 	if (!versionsInfo) {
 		return null;
 	}
@@ -203,16 +196,13 @@ export const updateDocuments = async (apiClient, appealId, documentDetails) => {
 
 /**
  * @param {import('got').Got} apiClient
- * @param {string} appealId
  * @param {string} documentId
  * @param {string} versionId
  * @returns {Promise<Document|undefined>}
  */
-export const deleteDocument = async (apiClient, appealId, documentId, versionId) => {
+export const deleteDocument = async (apiClient, documentId, versionId) => {
 	try {
-		return await apiClient
-			.delete(`appeals/${appealId}/documents/${documentId}/${versionId}`)
-			.json();
+		return await apiClient.delete(`appeals/documents/${documentId}/${versionId}`).json();
 	} catch (error) {
 		logger.error(
 			error,

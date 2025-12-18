@@ -141,7 +141,7 @@ export const renderDocumentUpload = async ({
 	let latestVersion;
 
 	if (documentId) {
-		const fileVersionsInfo = await getFileVersionsInfo(request.apiClient, appealId, documentId);
+		const fileVersionsInfo = await getFileVersionsInfo(request.apiClient, documentId);
 
 		documentName = fileVersionsInfo?.latestDocumentVersion?.fileName;
 		_documentType = fileVersionsInfo?.latestDocumentVersion?.documentType;
@@ -366,7 +366,7 @@ export const renderManageDocument = async ({
 	}
 
 	const [document, redactionStatuses] = await Promise.all([
-		getFileVersionsInfo(request.apiClient, appealId, documentId),
+		getFileVersionsInfo(request.apiClient, documentId),
 		getDocumentRedactionStatuses(request.apiClient)
 	]);
 
@@ -511,7 +511,7 @@ export const renderUploadDocumentsCheckAndConfirm = async ({
 	let documentFileName;
 
 	if (documentId) {
-		const fileInfo = await getFileInfo(request.apiClient, currentAppeal.appealId, documentId);
+		const fileInfo = await getFileInfo(request.apiClient, documentId);
 
 		if (!fileInfo) {
 			return response.status(404).render('app/404');
@@ -751,14 +751,14 @@ export const renderChangeDocumentFileName = async ({ request, response, backButt
 	const {
 		currentFolder,
 		errors,
-		params: { appealId, documentId }
+		params: { documentId }
 	} = request;
 
 	if (!currentFolder) {
 		return response.status(500).render('app/500.njk');
 	}
 
-	const currentFile = await getFileInfo(request.apiClient, appealId, documentId);
+	const currentFile = await getFileInfo(request.apiClient, documentId);
 
 	if (!currentFile) {
 		return response.status(500).render('app/500.njk');
@@ -805,7 +805,7 @@ export const postChangeDocumentFileName = async ({
 			return await renderChangeDocumentFileName({ request, response, backButtonUrl });
 		}
 
-		const currentFile = await getFileInfo(request.apiClient, appealId, body.documentId);
+		const currentFile = await getFileInfo(request.apiClient, body.documentId);
 
 		if (!currentFile) {
 			return response.status(500).render('app/500.njk');
@@ -849,7 +849,7 @@ export const renderChangeDocumentDetails = async ({ request, response, backButto
 	const {
 		currentFolder,
 		errors,
-		params: { appealId, documentId }
+		params: { documentId }
 	} = request;
 
 	if (!currentFolder) {
@@ -862,7 +862,7 @@ export const renderChangeDocumentDetails = async ({ request, response, backButto
 		return response.status(500).render('app/500.njk');
 	}
 
-	const currentFile = await getFileInfo(request.apiClient, appealId, documentId);
+	const currentFile = await getFileInfo(request.apiClient, documentId);
 
 	if (!currentFile) {
 		return response.status(500).render('app/500.njk');
@@ -943,7 +943,7 @@ export const renderDeleteDocument = async ({ request, response, backButtonUrl })
 	const {
 		currentFolder,
 		errors,
-		params: { appealId, documentId, versionId }
+		params: { documentId, versionId }
 	} = request;
 
 	if (!currentFolder) {
@@ -951,7 +951,7 @@ export const renderDeleteDocument = async ({ request, response, backButtonUrl })
 	}
 
 	const [document, redactionStatuses] = await Promise.all([
-		getFileVersionsInfo(request.apiClient, appealId, documentId),
+		getFileVersionsInfo(request.apiClient, documentId),
 		getDocumentRedactionStatuses(request.apiClient)
 	]);
 
@@ -1034,7 +1034,7 @@ export const postDeleteDocument = async ({
 	if (body['delete-file-answer'] === 'no') {
 		return safeRedirect(request, response, cancelUrlProcessed);
 	} else if (body['delete-file-answer'] === 'yes') {
-		await deleteDocument(apiClient, appealId, documentId, versionId);
+		await deleteDocument(apiClient, documentId, versionId);
 		addNotificationBannerToSession({
 			session: request.session,
 			bannerDefinitionKey: 'documentDeleted',
