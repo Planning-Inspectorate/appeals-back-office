@@ -1,4 +1,4 @@
-/** @typedef {import('#db-client/models.js').LPACreateInput} LPA */
+/** @typedef {import('#db-client/models.ts').LPACreateInput} LPA */
 
 /**
  * @returns {LPA[]}
