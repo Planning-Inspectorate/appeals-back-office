@@ -46,7 +46,7 @@ export const createPrismaClient = (databaseUrl = process.env.DATABASE_URL, logge
 		prismaClient = new PrismaClient(prismaConfig);
 
 		if (logger) {
-			/** @param {import('#db-client/client.js').Prisma.QueryEvent} e */
+			/** @param {import('#db-client/client.ts').Prisma.QueryEvent} e */
 			const logQuery = (e) => {
 				logger.debug(
 					{ query: e.query, params: e.params, duration: e.duration },
@@ -54,13 +54,13 @@ export const createPrismaClient = (databaseUrl = process.env.DATABASE_URL, logge
 				);
 			};
 
-			/** @param {import('#db-client/client.js').Prisma.LogEvent} e */
+			/** @param {import('#db-client/client.ts').Prisma.LogEvent} e */
 			const logError = (e) => logger.error({ e }, 'Prisma error');
 
-			/** @param {import('#db-client/client.js').Prisma.LogEvent} e */
+			/** @param {import('#db-client/client.ts').Prisma.LogEvent} e */
 			const logInfo = (e) => logger.debug({ e });
 
-			/** @param {import('#db-client/client.js').Prisma.LogEvent} e */
+			/** @param {import('#db-client/client.ts').Prisma.LogEvent} e */
 			const logWarn = (e) => logger.warn({ e });
 
 			// @ts-ignore

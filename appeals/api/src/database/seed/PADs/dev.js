@@ -1,4 +1,4 @@
-/** @typedef {import('#db-client/models.js').PADSUserCreateInput} PADSUser */
+/** @typedef {import('#db-client/models.ts').PADSUserCreateInput} PADSUser */
 
 /**
  * @returns {PADSUser[]}
