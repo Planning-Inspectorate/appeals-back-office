@@ -171,7 +171,7 @@ describe('issue-decision', () => {
 	describe('POST /decision', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/1?include=all').reply(200, inspectorDecisionData);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(teardown);
 
@@ -262,7 +262,7 @@ describe('issue-decision', () => {
 	describe('POST /decision-letter', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/1?include=all').reply(200, inspectorDecisionData);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(teardown);
 
@@ -420,7 +420,7 @@ describe('issue-decision', () => {
 	describe('POST /invalid-reason', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/1?include=all').reply(200, inspectorDecisionData);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(teardown);
 
@@ -502,7 +502,7 @@ describe('issue-decision', () => {
 	describe('POST /appellant-costs-decision', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/1?include=all').reply(200, inspectorDecisionData);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(teardown);
 
@@ -666,7 +666,7 @@ describe('issue-decision', () => {
 	describe('POST /lpa-costs-decision', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/1?include=all').reply(200, inspectorDecisionData);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(teardown);
 
@@ -808,7 +808,7 @@ describe('issue-decision', () => {
 					.get('/appeals/1?include=all')
 					.reply(200, issueDecisionAppealData)
 					.persist();
-				nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+				nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 				nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 				nock('http://test/')
 					.get('/appeals/document-redaction-statuses')
@@ -903,7 +903,7 @@ describe('issue-decision', () => {
 					.get('/appeals/1?include=all')
 					.reply(200, issueDecisionAppealData)
 					.persist();
-				nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+				nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 				nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 				nock('http://test/')
 					.get('/appeals/document-redaction-statuses')
@@ -1184,7 +1184,7 @@ describe('issue-decision', () => {
 				.get('/appeals/1?include=all')
 				.reply(200, issueDecisionAppealData)
 				.persist();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
@@ -1393,7 +1393,7 @@ describe('issue-decision', () => {
 				.get('/appeals/1?include=all')
 				.reply(200, issueDecisionAppealData)
 				.persist();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
@@ -1524,7 +1524,7 @@ describe('issue-decision', () => {
 				}
 			];
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
@@ -1566,7 +1566,7 @@ describe('issue-decision', () => {
 				.reply(200, issueDecisionAppealData)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
+				.get('/appeals/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
 				.reply(200, documentFileVersionInfo);
 			const response = await request.get(`${baseUrl}/1${issueDecisionPath}${viewDecisionPath}`);
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });

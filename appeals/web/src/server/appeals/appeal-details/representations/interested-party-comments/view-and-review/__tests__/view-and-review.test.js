@@ -363,7 +363,7 @@ describe('interested-party-comments', () => {
 				.get('/appeals/2/reps?type=comment')
 				.reply(200, interestedPartyCommentsForReview);
 
-			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 
 		it('should render a 404 error page if the folderId is invalid', async () => {
@@ -418,7 +418,7 @@ describe('interested-party-comments', () => {
 			usersService.getUserById = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
 
 			nock('http://test/')
-				.get('/appeals/2/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
@@ -441,7 +441,7 @@ describe('interested-party-comments', () => {
 				.get('/appeals/2/reps?type=comment')
 				.reply(200, interestedPartyCommentsForReview);
 
-			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 
 		it('should render a 404 error page if the folderId is invalid', async () => {
@@ -506,7 +506,7 @@ describe('interested-party-comments', () => {
 				.get('/appeals/2/reps?type=comment')
 				.reply(200, interestedPartyCommentsForReview);
 
-			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 
 		it('should render change document page with the provided comment details', async () => {
@@ -538,7 +538,7 @@ describe('interested-party-comments', () => {
 				});
 
 			nock('http://test/')
-				.get('/appeals/2/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
@@ -561,7 +561,7 @@ describe('interested-party-comments', () => {
 				.get('/appeals/2/reps?type=comment')
 				.reply(200, interestedPartyCommentsForReview);
 
-			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 
 		it('should render change document details page with the provided comment details', async () => {
