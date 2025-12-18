@@ -27,6 +27,7 @@ import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
 	APPLICATION_FEE_RECEIPT_DOCTYPE,
+	ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE,
 	GROUND_SUPPORTING_DOCTYPE
 } from '@pins/appeals/constants/documents.js';
 import {
@@ -856,6 +857,12 @@ export function getPageHeadingTextOverrideForAddDocuments(folder, appealType) {
 			return 'Upload your new plans or drawings';
 		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
 			return 'Upload your other new supporting documents';
+		case ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE.PRIOR_CORRESPONDENCE_WITH_PINS:
+			return 'Upload your communication with the Planning Inspectorate';
+		case ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE:
+			return 'Upload your enforcement notice';
+		case ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE_PLAN:
+			return 'Upload your enforcement notice plan';
 		case GROUND_SUPPORTING_DOCTYPE.A:
 			return 'Upload your ground (a) supporting documents';
 		case GROUND_SUPPORTING_DOCTYPE.B:
