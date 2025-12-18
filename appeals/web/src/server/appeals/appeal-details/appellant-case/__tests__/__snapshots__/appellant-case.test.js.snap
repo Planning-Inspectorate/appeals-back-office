@@ -2451,9 +2451,6 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                     </li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/other-appellants/change"
-                                data-cy="other-appellants">Change<span class="govuk-visually-hidden"> Other appellants (1. Appellant details)</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
