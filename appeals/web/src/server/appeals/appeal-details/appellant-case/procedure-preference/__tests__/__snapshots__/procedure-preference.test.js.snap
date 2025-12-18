@@ -246,7 +246,7 @@ exports[`procedure-preference GET /duration/change should render the change expe
                         <div class="govuk-form-group">
                             <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> How many days would you expect the inquiry to last?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
-                            name="procedurePreferenceDurationInput" type="text" value="Not answered">
+                            name="procedurePreferenceDurationInput" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -272,7 +272,7 @@ exports[`procedure-preference GET /inquiry/witnesses/change should render the ch
                         <div class="govuk-form-group">
                             <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="inquiry-number-of-witnesses"> How many witnesses would you expect to give evidence at the inquiry?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses"
-                            name="inquiryNumberOfWitnessesInput" type="text" value="Not answered">
+                            name="inquiryNumberOfWitnessesInput" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -313,7 +313,7 @@ exports[`procedure-preference POST /details/change should re-render the change r
                         <div class="govuk-form-group">
                             <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> How many days would you expect the inquiry to last?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
-                            name="procedurePreferenceDurationInput" type="text" value="Not answered">
+                            name="procedurePreferenceDurationInput" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -354,7 +354,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                         <div class="govuk-form-group">
                             <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> How many days would you expect the inquiry to last?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
-                            name="procedurePreferenceDurationInput" type="text" value="Not answered">
+                            name="procedurePreferenceDurationInput" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -395,7 +395,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                         <div class="govuk-form-group">
                             <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> How many days would you expect the inquiry to last?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
-                            name="procedurePreferenceDurationInput" type="text" value="Not answered">
+                            name="procedurePreferenceDurationInput" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -436,7 +436,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                         <div class="govuk-form-group">
                             <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> How many days would you expect the inquiry to last?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
-                            name="procedurePreferenceDurationInput" type="text" value="Not answered">
+                            name="procedurePreferenceDurationInput" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -477,7 +477,7 @@ exports[`procedure-preference POST /duration/change should re-render the change 
                         <div class="govuk-form-group">
                             <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="procedure-preference-duration"> How many days would you expect the inquiry to last?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="procedure-preference-duration"
-                            name="procedurePreferenceDurationInput" type="text" value="Not answered">
+                            name="procedurePreferenceDurationInput" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -518,7 +518,7 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
                         <div class="govuk-form-group">
                             <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="inquiry-number-of-witnesses"> How many witnesses would you expect to give evidence at the inquiry?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses"
-                            name="inquiryNumberOfWitnessesInput" type="text" value="Not answered">
+                            name="inquiryNumberOfWitnessesInput" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -559,7 +559,7 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
                         <div class="govuk-form-group">
                             <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="inquiry-number-of-witnesses"> How many witnesses would you expect to give evidence at the inquiry?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses"
-                            name="inquiryNumberOfWitnessesInput" type="text" value="Not answered">
+                            name="inquiryNumberOfWitnessesInput" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -600,7 +600,7 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
                         <div class="govuk-form-group">
                             <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="inquiry-number-of-witnesses"> How many witnesses would you expect to give evidence at the inquiry?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses"
-                            name="inquiryNumberOfWitnessesInput" type="text" value="Not answered">
+                            name="inquiryNumberOfWitnessesInput" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -641,7 +641,7 @@ exports[`procedure-preference POST /inquiry/witnesses/change should re-render th
                         <div class="govuk-form-group">
                             <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="inquiry-number-of-witnesses"> How many witnesses would you expect to give evidence at the inquiry?</label></h1>
                             <input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses"
-                            name="inquiryNumberOfWitnessesInput" type="text" value="Not answered">
+                            name="inquiryNumberOfWitnessesInput" type="text" value="">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>

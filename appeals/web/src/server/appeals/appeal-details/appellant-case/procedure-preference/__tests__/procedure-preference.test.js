@@ -318,7 +318,7 @@ describe('procedure-preference', () => {
 				'How many days would you expect the inquiry to last?</label></h1>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-input govuk-input--width-2" id="procedure-preference-duration" name="procedurePreferenceDurationInput" type="text" value="Not answered">'
+				'<input class="govuk-input govuk-input--width-2" id="procedure-preference-duration" name="procedurePreferenceDurationInput" type="text" value="">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
@@ -433,7 +433,7 @@ describe('procedure-preference', () => {
 				'How many witnesses would you expect to give evidence at the inquiry?</label></h1>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses" name="inquiryNumberOfWitnessesInput" type="text" value="Not answered">'
+				'<input class="govuk-input govuk-input--width-2" id="inquiry-number-of-witnesses" name="inquiryNumberOfWitnessesInput" type="text" value="">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
