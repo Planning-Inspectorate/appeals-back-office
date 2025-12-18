@@ -233,4 +233,8 @@ export class InquirySectionPage extends CaseDetailsPage {
 		cy.addRepresentation(caseObj, representationType, serviceUserId);
 		cy.reload();
 	}
+
+	verifyConfirmationMessage(text) {
+		this.basePageElements.genericText().should('contain.text', text);
+	}
 }
