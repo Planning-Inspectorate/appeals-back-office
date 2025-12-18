@@ -3081,19 +3081,11 @@
 				}
 			}
 		},
-		"/appeals/{appealId}/documents/{documentId}": {
+		"/appeals/documents/{documentId}": {
 			"get": {
 				"tags": ["Documents"],
 				"description": "Returns a single document by id",
 				"parameters": [
-					{
-						"name": "appealId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
 					{
 						"name": "documentId",
 						"in": "path",
@@ -3135,163 +3127,13 @@
 						"description": "Not Found"
 					}
 				}
-			},
-			"post": {
-				"tags": ["Documents"],
-				"description": "Add a new version of a document",
-				"parameters": [
-					{
-						"name": "appealId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "documentId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"201": {
-						"description": "Document metadata successfully added",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/AddDocumentsResponse"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/AddDocumentsResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					},
-					"404": {
-						"description": "Not Found"
-					}
-				},
-				"requestBody": {
-					"in": "body",
-					"description": "Appeal documents to post",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/AddDocumentVersionRequest"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/AddDocumentVersionRequest"
-							}
-						}
-					}
-				}
-			},
-			"patch": {
-				"tags": ["Documents"],
-				"description": "Updates document file name",
-				"parameters": [
-					{
-						"name": "appealId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "documentId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Document to update filename",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/UpdateDocumentFileNameResponse"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/UpdateDocumentFileNameResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Bad Request"
-					},
-					"404": {
-						"description": "Not Found"
-					}
-				},
-				"requestBody": {
-					"in": "body",
-					"description": "Document to update file name",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/UpdateDocumentFileNameRequest"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/UpdateDocumentFileNameRequest"
-							}
-						}
-					}
-				}
 			}
 		},
-		"/appeals/{appealId}/documents/{documentId}/versions": {
+		"/appeals/documents/{documentId}/versions": {
 			"get": {
 				"tags": ["Documents"],
 				"description": "Returns a single document by id",
 				"parameters": [
-					{
-						"name": "appealId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
 					{
 						"name": "documentId",
 						"in": "path",
@@ -3463,6 +3305,150 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/documents/{documentId}": {
+			"post": {
+				"tags": ["Documents"],
+				"description": "Add a new version of a document",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "documentId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Document metadata successfully added",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AddDocumentsResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/AddDocumentsResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Appeal documents to post",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AddDocumentVersionRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/AddDocumentVersionRequest"
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"tags": ["Documents"],
+				"description": "Updates document file name",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "documentId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Document to update filename",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateDocumentFileNameResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateDocumentFileNameResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Document to update file name",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateDocumentFileNameRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateDocumentFileNameRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/documents/avcheck": {
 			"patch": {
 				"tags": ["Documents"],
@@ -3520,19 +3506,11 @@
 				}
 			}
 		},
-		"/appeals/{appealId}/documents/{documentId}/{version}": {
+		"/appeals/documents/{documentId}/{version}": {
 			"delete": {
 				"tags": ["Documents"],
 				"description": "Delete a document version and sets the previous as current version",
 				"parameters": [
-					{
-						"name": "appealId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
 					{
 						"name": "documentId",
 						"in": "path",
