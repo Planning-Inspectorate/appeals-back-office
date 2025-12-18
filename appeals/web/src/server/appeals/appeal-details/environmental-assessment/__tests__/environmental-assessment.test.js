@@ -33,7 +33,7 @@ describe('environmental-assessment', () => {
 		nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appealData).persist();
 		nock('http://test/').post(`/appeals/${appealId}/documents`).reply(200);
 		nock('http://test/')
-			.get(`/appeals/${appealId}/documents/${documentId}`)
+			.get(`/appeals/documents/${documentId}`)
 			.reply(200, documentFileInfo)
 			.persist();
 		nock('http://test/').post(`/appeals/${appealId}/documents/${documentId}`).reply(200);
@@ -42,7 +42,7 @@ describe('environmental-assessment', () => {
 			.reply(200, documentFolderInfo)
 			.persist();
 		nock('http://test/')
-			.get(`/appeals/${appealId}/documents/${documentId}/versions`)
+			.get(`/appeals/documents/${documentId}/versions`)
 			.reply(200, documentFileVersionsInfo)
 			.persist();
 		nock('http://test/')
@@ -235,9 +235,7 @@ describe('environmental-assessment', () => {
 
 	describe('POST /environmental-assessment/manage-documents/:folderId/:documentId/:versionId/delete', () => {
 		it('should render the delete document version page', async () => {
-			nock('http://test/')
-				.delete(`/appeals/${appealId}/documents/${documentId}/${version}`)
-				.reply(200);
+			nock('http://test/').delete(`/appeals/documents/${documentId}/${version}`).reply(200);
 
 			const response = await request
 				.post(

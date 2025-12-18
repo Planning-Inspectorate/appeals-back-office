@@ -2702,7 +2702,7 @@ describe('appeal-details', () => {
 				});
 			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 			nock('http://test/')
-				.get('/appeals/1/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
+				.get('/appeals/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
 				.reply(200, documentFileVersionInfo);
 			const response = await request.get(`${baseUrl}/${appealId}`);
 			const element = parseHtml(response.text);
@@ -2734,7 +2734,7 @@ describe('appeal-details', () => {
 				});
 			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 			nock('http://test/')
-				.get('/appeals/1/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
+				.get('/appeals/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
 				.reply(200, documentFileVersionInfo);
 			const response = await request.get(`${baseUrl}/${appealId}/issue-decision/view-decision`);
 			const element = parseHtml(response.text);
@@ -2761,7 +2761,7 @@ describe('appeal-details', () => {
 				});
 			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 			nock('http://test/')
-				.get('/appeals/1/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
+				.get('/appeals/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
 				.reply(200, documentFileInfo);
 			const response = await request.get(`${baseUrl}/${appealId}`);
 			const element = parseHtml(response.text);
@@ -2794,7 +2794,7 @@ describe('appeal-details', () => {
 				});
 			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 			nock('http://test/')
-				.get('/appeals/1/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
+				.get('/appeals/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
 				.reply(200, documentFileInfo);
 			const response = await request.get(`${baseUrl}/${appealId}`);
 			const element = parseHtml(response.text);

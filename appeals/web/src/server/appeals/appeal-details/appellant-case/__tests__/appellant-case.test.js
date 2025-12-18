@@ -3518,7 +3518,7 @@ describe('appellant-case', () => {
 					.get('/appeals/1/appellant-cases/0')
 					.reply(200, appellantCaseDataNotValidated);
 				nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
-				nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+				nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 				const response = await request.get(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`);
 
@@ -3674,12 +3674,12 @@ describe('appellant-case', () => {
 		beforeEach(() => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 		});
 		afterEach(() => {
@@ -3911,7 +3911,7 @@ describe('appellant-case', () => {
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
 			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(() => {
 			nock.cleanAll();
@@ -4698,7 +4698,7 @@ describe('appellant-case', () => {
 				.get('/appeals/1/document-folders/1')
 				.reply(200, { ...documentFolderInfo, path: 'appellant-case/appellantStatement' })
 				.persist();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(() => {
 			nock.cleanAll();
@@ -4922,7 +4922,7 @@ describe('appellant-case', () => {
 				.get('/appeals/1/document-folders/1')
 				.reply(200, documentFolderInfo)
 				.persist();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 			nock('http://test/')
 				.patch('/appeals/1/documents')
 				.reply(200, {
@@ -5498,7 +5498,7 @@ describe('appellant-case', () => {
 				.get('/appeals/1/document-folders/1')
 				.reply(200, documentFolderInfo)
 				.persist();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -5577,7 +5577,7 @@ describe('appellant-case', () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(() => {
 			nock.cleanAll();
@@ -5654,7 +5654,7 @@ describe('appellant-case', () => {
 
 		it('should render a 404 error page if the folderId is not valid', async () => {
 			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}/manage-documents/99/`
@@ -5789,12 +5789,12 @@ describe('appellant-case', () => {
 				.get('/appeals/1/document-folders/1')
 				.reply(200, documentFolderInfo)
 				.persist();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo).persist();
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo).persist();
 		});
 
 		it('should render a 404 error page if the folderId is not valid', async () => {
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 
 			const response = await request.get(
@@ -5812,7 +5812,7 @@ describe('appellant-case', () => {
 
 		it('should render a 404 error page if the documentId is not valid', async () => {
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 
 			const response = await request.get(
@@ -5830,7 +5830,7 @@ describe('appellant-case', () => {
 
 		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null', async () => {
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 
 			const response = await request.get(
@@ -5865,7 +5865,7 @@ describe('appellant-case', () => {
 
 		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_scanned"', async () => {
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfoNotChecked);
 
 			const response = await request.get(
@@ -5890,7 +5890,7 @@ describe('appellant-case', () => {
 
 		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "affected"', async () => {
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfoVirusFound);
 
 			const response = await request.get(
@@ -5925,7 +5925,7 @@ describe('appellant-case', () => {
 
 		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned"', async () => {
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfoChecked);
 
 			const response = await request.get(
@@ -5952,7 +5952,7 @@ describe('appellant-case', () => {
 
 		it('should render the manage individual document page without late entry tag in the date received row if the latest version of the document is not marked as late entry', async () => {
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 
 			const response = await request.get(
@@ -5970,7 +5970,7 @@ describe('appellant-case', () => {
 
 		it('should render the manage individual document page with late entry tag in the date received row if the latest version of the document is marked as late entry, and a document history item for each version, with late entry tag in the history item document name column for versions marked as late entry', async () => {
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileMultipleVersionsInfoWithLatestAsLateEntry);
 
 			const response = await request.get(
@@ -5993,12 +5993,12 @@ describe('appellant-case', () => {
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
 			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 
 		it('should render the delete document page with the expected content when there is a single document version', async () => {
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfoChecked);
 
 			const response = await request.get(
@@ -6030,7 +6030,7 @@ describe('appellant-case', () => {
 			multipleVersionsDocument.allVersions.push(multipleVersionsDocument.allVersions[0]);
 
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, multipleVersionsDocument);
 
 			const response = await request.get(
