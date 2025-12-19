@@ -61,6 +61,8 @@ export interface CreateRepRequest {
 	attachments?: string[];
 	/** @example "unredacted" */
 	redactionStatus?: string;
+	/** @example 1 */
+	representedId?: number;
 }
 
 export interface RepResponse {

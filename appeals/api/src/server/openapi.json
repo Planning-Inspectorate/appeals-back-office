@@ -7963,6 +7963,10 @@
 					"redactionStatus": {
 						"type": "string",
 						"example": "unredacted"
+					},
+					"representedId": {
+						"type": "number",
+						"example": 1
 					}
 				},
 				"xml": {

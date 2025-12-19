@@ -7,7 +7,7 @@ import logger from '#lib/logger.js';
  * Fetch unique representations (eg final comments) based on appeal id and representation type
  *
  * @param {import('got').Got} apiClient
- * @param {string|number} appealId
+ * @param {number} appealId
  * @param {string} type
  * @returns {Promise<Representation>}
  */
@@ -30,7 +30,7 @@ export const getSingularRepresentationByType = async (apiClient, appealId, type)
 /**
  *
  * @param {import('got').Got} apiClient
- * @param {string} appealId
+ * @param {number} appealId
  * @param {string} types
  */
 export const getRepresentationsByTypes = async (apiClient, appealId, types) => {
@@ -64,6 +64,17 @@ export const getRepresentationsByTypes = async (apiClient, appealId, types) => {
 	);
 
 	return selected;
+};
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {number} appealId
+ * @param {string} type
+ * @returns {Promise<Representation[]>}
+ */
+export const getAllRepresentationsByType = async (apiClient, appealId, type) => {
+	const apiResponse = await apiClient.get(`appeals/${appealId}/reps?type=${type}`).json();
+	return apiResponse.items;
 };
 
 /**
