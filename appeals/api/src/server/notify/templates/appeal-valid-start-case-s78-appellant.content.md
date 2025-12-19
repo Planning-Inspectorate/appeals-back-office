@@ -53,13 +53,12 @@ Due by {{final_comments_deadline}}.
 
 # What happens next
 
-{% if we_will_email_when is string -%}
-We will send you an email {{ we_will_email_when }}
-{%- else -%}
+{% if procedure_type == 'a hearing' -%}
 We will send you another email:
-{% for line in we_will_email_when %}
-- {{ line }}
-{%- endfor %}
+- to let you know when you can view information from other parties in the appeals service
+- when we set up your hearing
+{%- else -%}
+We will send you an email when you can view information from other parties in the appeals service.
 {%- endif %}
 
 # Appeal costs

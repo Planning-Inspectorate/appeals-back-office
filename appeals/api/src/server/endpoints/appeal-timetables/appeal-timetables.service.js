@@ -135,14 +135,6 @@ const getStartCaseNotifyParams = async (
 	const appellantEmail = appeal.appellant?.email || appeal.agent?.email;
 	const lpaEmail = appeal.lpa?.email || '';
 
-	const weWillEmailWhen =
-		procedureType === APPEAL_CASE_PROCEDURE.HEARING
-			? [
-					'to let you know when you can view information from other parties in the appeals service',
-					'when we set up your hearing'
-			  ]
-			: 'when you can view information from other parties in the appeals service.';
-
 	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
 
 	// Note that those properties not used within the specified template will be ignored
@@ -207,7 +199,6 @@ const getStartCaseNotifyParams = async (
 				personalisation: {
 					...commonEmailVariables,
 					...(inquiry && { is_lpa: false }),
-					we_will_email_when: weWillEmailWhen,
 					site_visit:
 						procedureType === APPEAL_CASE_PROCEDURE.WRITTEN || procedureType === undefined, //undefined procedure types are treated as written
 					costs_info: procedureType === APPEAL_CASE_PROCEDURE.WRITTEN || procedureType === undefined
