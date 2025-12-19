@@ -27,7 +27,7 @@ export const withSingularRepresentation = async (req, res, next) => {
 		}
 		const representation = await getSingularRepresentationByType(
 			req.apiClient,
-			appealId,
+			Number(appealId),
 			proofOfEvidenceTypeToAppealRepresentationTypeMap[proofOfEvidenceType]
 		);
 

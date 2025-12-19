@@ -182,9 +182,9 @@ describe('proof-of-evidence', () => {
 						`${baseUrl}/2/proof-of-evidence/${proofOfEvidenceType.type}/add-document/date-submitted`
 					)
 					.send({
-						day: '20',
-						month: '09',
-						year: '2025'
+						'date-day': '20',
+						'date-month': '09',
+						'date-year': '2025'
 					});
 
 				expect(response.statusCode).toBe(302);
@@ -218,9 +218,9 @@ describe('proof-of-evidence', () => {
 						`${baseUrl}/2/proof-of-evidence/${proofOfEvidenceType.type}/add-document/date-submitted`
 					)
 					.send({
-						day: '20',
-						month: '09',
-						year: '2025'
+						'date-day': '20',
+						'date-month': '09',
+						'date-year': '2025'
 					});
 				expect(response3.statusCode).toBe(302);
 
@@ -273,9 +273,9 @@ describe('proof-of-evidence', () => {
 						`${baseUrl}/2/proof-of-evidence/${proofOfEvidenceType.type}/add-document/date-submitted`
 					)
 					.send({
-						day: '20',
-						month: '09',
-						year: '2025'
+						'date-day': '20',
+						'date-month': '09',
+						'date-year': '2025'
 					});
 
 				const response = await request

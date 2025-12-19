@@ -1,5 +1,5 @@
 /**
- * @typedef {'appealDetails'|'appellantCase'|'lpaQuestionnaire'|'manageDocuments'|'manageFolder'|'manageRelatedAppeals'|'manageNeighbouringSites'|'ipComments'|'viewIpComment'|'reviewIpComment'|'lpaStatement'|'viewFinalComments'|'appealDecision'|'viewProofOfEvidence'|'sharedIpComments'| 'appellantStatement'} ServicePageName
+ * @typedef {'appealDetails'|'appellantCase'|'lpaQuestionnaire'|'manageDocuments'|'manageFolder'|'manageRelatedAppeals'|'manageNeighbouringSites'|'ipComments'|'viewIpComment'|'reviewIpComment'|'lpaStatement'|'viewFinalComments'|'appealDecision'|'viewProofOfEvidence'|'sharedIpComments'| 'appellantStatement'|'rule6PartyStatement'} ServicePageName
  */
 
 export const paginationDefaultSettings = {

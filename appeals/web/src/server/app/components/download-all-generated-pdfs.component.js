@@ -109,7 +109,11 @@ export async function generateAllPdfs(currentAppealData, apiClient) {
 			templateName: 'lpa-statement-pdf',
 			async fetchData() {
 				logger.debug('[DownloadAll] Fetching data for: LPA Statement');
-				const rawData = await getSingularRepresentationByType(apiClient, appealId, 'lpa_statement');
+				const rawData = await getSingularRepresentationByType(
+					apiClient,
+					Number(appealId),
+					'lpa_statement'
+				);
 				return rawData ? { lpaStatementData: { ...currentAppealData, ...rawData } } : null;
 			}
 		},
@@ -120,7 +124,7 @@ export async function generateAllPdfs(currentAppealData, apiClient) {
 				logger.debug('[DownloadAll] Fetching data for: Appellant Final Comments');
 				const rawData = await getSingularRepresentationByType(
 					apiClient,
-					appealId,
+					Number(appealId),
 					'appellant_final_comment'
 				);
 				return rawData
@@ -135,7 +139,7 @@ export async function generateAllPdfs(currentAppealData, apiClient) {
 				logger.debug('[DownloadAll] Fetching data for: LPA Final Comments');
 				const rawData = await getSingularRepresentationByType(
 					apiClient,
-					appealId,
+					Number(appealId),
 					'lpa_final_comment'
 				);
 				return rawData ? { lpaFinalCommentsData: { ...currentAppealData, ...rawData } } : null;
