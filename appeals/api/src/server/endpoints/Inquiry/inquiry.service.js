@@ -131,7 +131,7 @@ const checkInquiryExists = async (req, res, next) => {
 	const hasInquiry = appeal.inquiry?.id === Number(inquiryId);
 
 	if (!hasInquiry) {
-		return res.status(404).send({ errors: { hearingId: ERROR_NOT_FOUND } });
+		return res.status(404).send({ errors: { inquiryId: ERROR_NOT_FOUND } });
 	}
 
 	next();
