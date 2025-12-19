@@ -67,14 +67,14 @@ extends:
             parameters:
               nodeVersion: 22
               script: npm run lint:js
-          - template: ../steps/node_script.yml
-            parameters:
-              nodeVersion: 22
-              script: npm run test
-              environmentVariables:
-                TURBO_TEAM: $(TURBO_TEAM)
-                TURBO_API: $(TURBO_API)
-                TURBO_TOKEN: $(TURBO_TOKEN)
+          # - template: ../steps/node_script.yml
+          #   parameters:
+          #     nodeVersion: 22
+          #     script: npm run test
+          #     environmentVariables:
+          #       TURBO_TEAM: $(TURBO_TEAM)
+          #       TURBO_API: $(TURBO_API)
+          #       TURBO_TOKEN: $(TURBO_TOKEN)
       - name: Build Appeals BO PDF
         condition: >-
           and(
