@@ -64,9 +64,17 @@ const getRepresentations = async (appealId, options, pageNumber, pageSize) => {
 		databaseConnector.representation.findMany({
 			where: whereClause,
 			select: {
-				representative: true,
+				id: true,
+				representative: {
+					select: {
+						firstName: true,
+						lastName: true
+					}
+				},
 				represented: {
 					select: {
+						firstName: true,
+						lastName: true,
 						address: true,
 						email: true
 					}
