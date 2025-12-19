@@ -248,7 +248,7 @@ const validLpaQuestionnaireCommon = {
 	casedata: {
 		caseReference: '6000000',
 		nearbyCaseReferences: ['1000000'],
-		lpaQuestionnaireSubmittedDate: new Date(2024, 5, 1).toISOString(),
+		lpaQuestionnaireSubmittedDate: '2024-05-31T23:00:00.000Z',
 		siteAccessDetails: ['Here it is'],
 		siteSafetyDetails: ['Fine'],
 		neighbouringSiteAddresses: [
@@ -1079,7 +1079,7 @@ const validLpaQuestionnaireIngestionCommon = {
 		lpaQuestionnaire: {
 			connectOrCreate: {
 				create: {
-					lpaQuestionnaireSubmittedDate: '2024-06-01T00:00:00.000Z',
+					lpaQuestionnaireSubmittedDate: '2024-05-31T23:00:00.000Z',
 					reasonForNeighbourVisits: undefined,
 					siteAccessDetails: 'Here it is',
 					siteSafetyDetails: 'Fine'
