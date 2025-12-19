@@ -1,4 +1,4 @@
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import { cancelInquiry, patchInquiry, postInquiry } from './inquiry.controller.js';
@@ -37,7 +37,14 @@ router.post(
         #swagger.responses[404] = {}
 	 */
 	postInquiryValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'appealStatus',
+		'appealType',
+		'appellant',
+		'agent',
+		'lpa',
+		'address'
+	]),
 	asyncHandler(postInquiry)
 );
 
@@ -66,7 +73,15 @@ router.patch(
         #swagger.responses[500] = {}
      */
 	patchInquiryValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'inquiry',
+		'appealStatus',
+		'appealType',
+		'appellant',
+		'agent',
+		'lpa',
+		'address'
+	]),
 	checkInquiryExists,
 	asyncHandler(patchInquiry)
 );
@@ -90,7 +105,7 @@ router.delete(
         #swagger.responses[500] = {}
      */
 	deleteInquiryParamsValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest(['inquiry', 'appellant', 'agent', 'lpa', 'address']),
 	checkInquiryExists,
 	deleteInquiryDateValidator,
 	asyncHandler(cancelInquiry)
