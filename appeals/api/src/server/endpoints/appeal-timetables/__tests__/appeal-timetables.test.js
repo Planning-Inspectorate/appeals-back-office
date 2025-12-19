@@ -693,8 +693,6 @@ describe('appeal timetables routes', () => {
 								),
 								site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 								start_date: '5 June 2024',
-								we_will_email_when:
-									'when you can view information from other parties in the appeals service.',
 								site_visit: true,
 								costs_info: true,
 								statement_of_common_ground_deadline: '',
@@ -792,8 +790,6 @@ describe('appeal timetables routes', () => {
 								),
 								site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 								start_date: '5 June 2024',
-								we_will_email_when:
-									'when you can view information from other parties in the appeals service.',
 								site_visit: true,
 								costs_info: true,
 								statement_of_common_ground_deadline: '',
@@ -953,8 +949,6 @@ describe('appeal timetables routes', () => {
 							),
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '3 June 2024', // the following working day
-							we_will_email_when:
-								'when you can view information from other parties in the appeals service.',
 							site_visit: true,
 							costs_info: true,
 							statement_of_common_ground_deadline: '',
@@ -1044,8 +1038,6 @@ describe('appeal timetables routes', () => {
 						questionnaire_due_date: '12 June 2024',
 						site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 						start_date: '5 June 2024',
-						we_will_email_when:
-							'when you can view information from other parties in the appeals service.',
 						site_visit: true,
 						costs_info: true,
 						statement_of_common_ground_deadline: '',
@@ -1198,10 +1190,6 @@ describe('appeal timetables routes', () => {
 							),
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
-							we_will_email_when: [
-								'to let you know when you can view information from other parties in the appeals service',
-								'when we set up your hearing'
-							],
 							site_visit: false,
 							costs_info: false,
 							statement_of_common_ground_deadline: dateISOStringToDisplayDate(
@@ -1349,10 +1337,6 @@ describe('appeal timetables routes', () => {
 							),
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
-							we_will_email_when: [
-								'to let you know when you can view information from other parties in the appeals service',
-								'when we set up your hearing'
-							],
 							site_visit: false,
 							costs_info: false,
 							statement_of_common_ground_deadline: dateISOStringToDisplayDate(
@@ -1480,10 +1464,6 @@ describe('appeal timetables routes', () => {
 							),
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
-							we_will_email_when: [
-								'to let you know when you can view information from other parties in the appeals service',
-								'when we set up your hearing'
-							],
 							site_visit: false,
 							costs_info: false,
 							statement_of_common_ground_deadline: dateISOStringToDisplayDate(
@@ -1611,10 +1591,6 @@ describe('appeal timetables routes', () => {
 							),
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
-							we_will_email_when: [
-								'to let you know when you can view information from other parties in the appeals service',
-								'when we set up your hearing'
-							],
 							site_visit: false,
 							costs_info: false,
 							statement_of_common_ground_deadline: dateISOStringToDisplayDate(
