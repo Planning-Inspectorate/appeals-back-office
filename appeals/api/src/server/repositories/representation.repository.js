@@ -73,10 +73,12 @@ const getRepresentations = async (appealId, options, pageNumber, pageSize) => {
 				},
 				represented: {
 					select: {
+						id: true,
+						address: true,
+						email: true,
 						firstName: true,
 						lastName: true,
-						address: true,
-						email: true
+						organisationName: true
 					}
 				},
 				lpa: true,

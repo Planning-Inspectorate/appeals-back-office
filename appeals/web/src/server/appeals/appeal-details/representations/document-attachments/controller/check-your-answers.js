@@ -10,8 +10,8 @@ import { dayMonthYearHourMinuteToDisplayDate } from '#lib/dates.js';
 import { clearEdits, editLink } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
+import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-upload-info-to-documents.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import config from '@pins/appeals.web/environment/config.js';
 import {
 	APPEAL_REPRESENTATION_TYPE,
 	REPRESENTATION_ADDED_AS_DOCUMENT
@@ -20,6 +20,7 @@ import { patchRepresentationAttachments } from '../../document-attachments/attac
 import { postRepresentation } from '../../representations.service.js';
 
 /** @typedef {import('#appeals/appeal-details/representations/types.js').RepresentationRequest} RepresentationRequest */
+/** @typedef {import('#appeals/appeal-details/appeal-details.types.js').AppealRule6Party} AppealRule6Party */
 
 /**
  * @param {import('@pins/express').Request} request
@@ -33,10 +34,15 @@ export const renderCheckYourAnswers = (request, response) => {
 			fileUploadInfo: {
 				files: [{ name, blobStoreUrl }]
 			},
-			addDocument: { [redactionStatusFieldName]: redactionStatus, day, month, year }
+			addDocument
 		},
 		locals: { pageContent }
 	} = request;
+
+	const redactionStatus = addDocument[redactionStatusFieldName];
+	const day = addDocument['date-day'];
+	const month = addDocument['date-month'];
+	const year = addDocument['date-year'];
 	const baseUrl = request.baseUrl;
 
 	if (!isValidRedactionStatus(redactionStatus)) {
@@ -96,9 +102,11 @@ export const postCheckYourAnswers = async (request, response) => {
 	const {
 		apiClient,
 		session,
-		currentAppeal: { appealId },
-		currentRepresentation
+		currentAppeal,
+		currentRepresentation,
+		params: { rule6PartyId }
 	} = request;
+	const { appealId } = currentAppeal;
 
 	const representationType =
 		currentRepresentation?.representationType ?? getRepresentationType(request.baseUrl);
@@ -109,8 +117,13 @@ export const postCheckYourAnswers = async (request, response) => {
 			files: [document],
 			folderId
 		},
-		addDocument: { [redactionStatusFieldName]: redactionStatus, day, month, year }
+		addDocument
 	} = session;
+
+	const redactionStatus = addDocument[redactionStatusFieldName];
+	const day = addDocument['date-day'];
+	const month = addDocument['date-month'];
+	const year = addDocument['date-year'];
 
 	try {
 		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
@@ -128,28 +141,32 @@ export const postCheckYourAnswers = async (request, response) => {
 		const createdDate = new Date(`${year}-${month}-${day}`).toISOString();
 
 		try {
-			await createNewDocument(apiClient, appealId, {
-				blobStorageHost:
-					config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
-				blobStorageContainer: config.blobStorageDefaultContainer,
-				documents: [
-					{
-						caseId: appealId,
-						documentName: document.name,
-						documentType: document.documentType,
-						mimeType: document.mimeType,
-						documentSize: document.size,
-						stage: document.stage,
-						folderId: folderId,
-						GUID: document.GUID,
-						receivedDate: createdDate,
-						redactionStatusId,
-						blobStoragePath: document.blobStoreUrl
-					}
-				]
+			const addDocumentsRequestPayload = mapFileUploadInfoToMappedDocuments({
+				caseId: appealId,
+				folderId,
+				redactionStatus: redactionStatusId,
+				fileUploadInfo: session.fileUploadInfo
 			});
 
-			const payload = buildPayload(representationType, document.GUID, redactionStatus, createdDate);
+			addDocumentsRequestPayload.documents = addDocumentsRequestPayload.documents.map((doc) => ({
+				...doc,
+				receivedDate: createdDate
+			}));
+
+			await createNewDocument(apiClient, appealId, addDocumentsRequestPayload);
+
+			const rule6Party = currentAppeal.appealRule6Parties?.find(
+				(/** @type {AppealRule6Party} */ { id }) => id === Number(rule6PartyId)
+			);
+			const representedId = rule6Party?.serviceUserId;
+
+			const payload = buildPayload(
+				representationType,
+				document.GUID,
+				redactionStatus,
+				createdDate,
+				representedId
+			);
 			session.createNewRepresentation
 				? await postRepresentation(request.apiClient, appealId, payload, representationType)
 				: await patchRepresentationAttachments(apiClient, appealId, id, [document.GUID]);
@@ -205,6 +222,11 @@ export const postCheckYourAnswers = async (request, response) => {
 				? 'appellantFinalCommentsAddedSuccess'
 				: 'finalCommentsDocumentAddedSuccess';
 			break;
+		case 'rule_6_party_statement':
+			bannerDefinitionKey = session.createRepresentation
+				? 'rule6PartyStatementAddedSuccess'
+				: 'rule6PartyStatementDocumentAddedSuccess';
+			break;
 		default:
 			bannerDefinitionKey = 'finalCommentsDocumentAddedSuccess';
 			break;
@@ -223,16 +245,30 @@ export const postCheckYourAnswers = async (request, response) => {
  * @param {string} documentGuid
  * @param {string} redactionStatus
  * @param {string} createdDate
+ * @param {number} [representedId]
  * @return {RepresentationRequest}
  */
-const buildPayload = (representationType, documentGuid, redactionStatus, createdDate) => {
+const buildPayload = (
+	representationType,
+	documentGuid,
+	redactionStatus,
+	createdDate,
+	representedId
+) => {
+	const source = [
+		APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT,
+		APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT
+	].includes(representationType)
+		? 'citizen'
+		: 'lpa';
+
 	return {
 		attachments: [documentGuid],
 		redactionStatus,
-		source:
-			representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT ? 'citizen' : 'lpa',
+		source,
 		dateCreated: createdDate,
-		representationText: REPRESENTATION_ADDED_AS_DOCUMENT
+		representationText: REPRESENTATION_ADDED_AS_DOCUMENT,
+		...(representedId ? { representedId } : {})
 	};
 };
 
@@ -248,6 +284,9 @@ const getRepresentationType = (url) => {
 
 	if (grandParent === 'final-comments') {
 		return `${immediateParent}_final_comment`;
+	}
+	if (grandParent === 'rule-6-party-statement') {
+		return 'rule_6_party_statement';
 	}
 
 	return immediateParent.replace(/-/g, '_');
