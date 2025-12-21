@@ -5,6 +5,7 @@ import {
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
+	DOCUMENT_STATUS_NOT_SENT,
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
 import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
@@ -116,14 +117,24 @@ export const mapDocumentationSummary = (data) => {
 				/** @type {Record<string, any>} */ ({})
 			),
 			lpaFinalComments: {
-				status: lpaFinalComments ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+				status:
+					lpaFinalComments && lpaFinalComments.originalRepresentation
+						? DOCUMENT_STATUS_RECEIVED
+						: lpaFinalComments && !lpaFinalComments.originalRepresentation
+						? DOCUMENT_STATUS_NOT_SENT
+						: DOCUMENT_STATUS_NOT_RECEIVED,
 				receivedAt: lpaFinalComments?.dateCreated
 					? lpaFinalComments.dateCreated.toISOString()
 					: null,
 				representationStatus: lpaFinalComments?.status ?? null
 			},
 			appellantFinalComments: {
-				status: appellantFinalComments ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+				status:
+					appellantFinalComments && appellantFinalComments.originalRepresentation
+						? DOCUMENT_STATUS_RECEIVED
+						: appellantFinalComments && !appellantFinalComments.originalRepresentation
+						? DOCUMENT_STATUS_NOT_SENT
+						: DOCUMENT_STATUS_NOT_RECEIVED,
 				receivedAt: appellantFinalComments?.dateCreated
 					? appellantFinalComments.dateCreated.toISOString()
 					: null,

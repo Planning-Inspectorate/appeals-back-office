@@ -287,6 +287,7 @@ export const DEFAULT_TIMESTAMP_TIME = '01:00:00.000';
 
 export const DOCUMENT_STATUS_NOT_RECEIVED = 'not_received';
 export const DOCUMENT_STATUS_RECEIVED = 'received';
+export const DOCUMENT_STATUS_NOT_SENT = 'not_sent';
 
 export const ERROR_APPEAL_ALLOCATION_LEVELS = 'invalid allocation level';
 export const ERROR_APPEAL_ALLOCATION_SPECIALISMS = 'invalid allocation specialism';
