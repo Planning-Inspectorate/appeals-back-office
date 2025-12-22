@@ -92,7 +92,7 @@ export const requestResubmitAndMarkInvalid = async (req, res) => {
 export const requestTransferOfAppeal = async (req, res) => {
 	const azureAdUserId = String(req.get('azureAdUserId'));
 
-	await markAwaitingTransfer(req.appeal, req.body.newAppealTypeId, azureAdUserId);
+	await markAwaitingTransfer(req.appeal.id, req.body.newAppealTypeId, azureAdUserId);
 
 	return res.send(true);
 };
