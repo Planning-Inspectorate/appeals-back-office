@@ -45,9 +45,9 @@ const inquiryAddress = {
 };
 
 const rule6Details = {
-	partyName: 'TestRule6Party',
+	partyName: 'TestRuleSixParty',
 	partyEmailAddress: 'testrule6party@test.com',
-	partyNameUpdated: 'TestRule6PartyUpdated',
+	partyNameUpdated: 'TestRuleSixPartyUpdated',
 	partyEmailAddressUpdated: 'testrule6partyupdated@test.com'
 };
 
@@ -508,7 +508,7 @@ it('Validates rule 6 party name and email address', () => {
 
 		// check error messge displayed
 		contactDetailsPage.verifyErrorMessages({
-			messages: ['Enter a name'],
+			messages: ['Enter a Rule 6 party name'],
 			fields: ['organisation-name']
 		});
 
@@ -519,7 +519,7 @@ it('Validates rule 6 party name and email address', () => {
 
 		// check error messge displayed
 		contactDetailsPage.verifyErrorMessages({
-			messages: ['Enter an email address'],
+			messages: ['Enter a Rule 6 party email address'],
 			fields: ['email']
 		});
 	});
