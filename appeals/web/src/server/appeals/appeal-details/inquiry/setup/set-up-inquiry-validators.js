@@ -2,6 +2,7 @@ import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import { createPostcodeValidator } from '#lib/validators/address.validator.js';
 import {
 	createDateInputDateBusinessDayValidator,
+	createDateInputDateInFutureOfDateValidator,
 	createDateInputDateInFutureValidator,
 	createDateInputDateValidityValidator,
 	createDateInputFieldsValidator,
@@ -96,13 +97,16 @@ export const runDueDateDaysValidator = async (req, res, next) => {
 /**
  * @param {string} fieldName
  * @param {string} label
+ * @param {string} fieldNameToCompare
+ * @param {string} labelToCompare
  * @returns
  */
-export const createDueDateValidators = (fieldName, label) => [
+export const createDueDateValidators = (fieldName, label, fieldNameToCompare, labelToCompare) => [
 	createDateInputFieldsValidator(fieldName, label),
 	createDateInputDateValidityValidator(fieldName, label),
 	createDateInputDateInFutureValidator(fieldName, label),
-	createDateInputDateBusinessDayValidator(fieldName, label)
+	createDateInputDateBusinessDayValidator(fieldName, label),
+	createDateInputDateInFutureOfDateValidator(fieldName, label, fieldNameToCompare, labelToCompare)
 ];
 
 /**
@@ -116,34 +120,53 @@ export const dueDateDaysInputValidator = (hasPlanningObligation) => {
 	const validatorsMap = {
 		lpaQuestionnaireDueDate: {
 			id: 'lpa-questionnaire-due-date',
-			label: 'LPA questionnaire due date'
+			label: 'LPA questionnaire due date',
+			idToCompare: '',
+			labelToCompare: ''
 		},
 		statementDueDate: {
 			id: 'statement-due-date',
-			label: 'Statement due date'
+			label: 'Statement due date',
+			idToCompare: 'lpa-questionnaire-due-date',
+			labelToCompare: 'LPA questionnaire due date'
 		},
 		ipCommentsDueDate: {
 			id: 'ip-comments-due-date',
-			label: 'Interested party comments due date'
+			label: 'Interested party comments due date',
+			idToCompare: 'lpa-questionnaire-due-date',
+			labelToCompare: 'LPA questionnaire due date'
 		},
 		proofsOfEvidenceDueDate: {
 			id: 'proof-of-evidence-and-witnesses-due-date',
-			label: 'Proof of evidence and witnesses due date'
+			label: 'Proof of evidence and witnesses due date',
+			idToCompare: 'statement-due-date',
+			labelToCompare: 'Statement due date'
 		},
 		statementOfCommonGroundDueDate: {
 			id: 'statement-of-common-ground-due-date',
-			label: 'Statement of common ground due date'
+			label: 'Statement of common ground due date',
+			idToCompare: '',
+			labelToCompare: ''
 		},
 		...(hasPlanningObligation && {
 			planningObligationDueDate: {
 				id: 'planning-obligation-due-date',
-				label: 'Planning obligation due date'
+				label: 'Planning obligation due date',
+				idToCompare: '',
+				labelToCompare: ''
 			}
 		})
 	};
 
 	Object.values(validatorsMap).forEach((validatorType) => {
-		validatorsList.push(...createDueDateValidators(validatorType.id, validatorType.label));
+		validatorsList.push(
+			...createDueDateValidators(
+				validatorType.id,
+				validatorType.label,
+				validatorType.idToCompare,
+				validatorType.labelToCompare
+			)
+		);
 	});
 
 	validatorsList.push(
