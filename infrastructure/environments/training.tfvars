@@ -6,6 +6,7 @@ apps_config = {
   private_endpoint_enabled   = true
   session_max_age            = 10800000
   front_office_url           = "https://appeals-service-training.planninginspectorate.gov.uk"
+  db_connection_limit        = 15
 
   auth = {
     client_id = "68721db0-46ce-4ac5-b404-a4eebdb5c8e1" # Appeals Back Office Training

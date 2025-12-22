@@ -48,7 +48,7 @@ module "app_api" {
     # database connection
     DATABASE_NAME    = azurerm_mssql_database.primary.name
     DATABASE_URL     = local.key_vault_refs["sql-app-connection-string"]
-    DB_CONNECTION_LIMIT = 15
+    DB_CONNECTION_LIMIT = var.apps_config.db_connection_limit
     QUERY_BATCH_SIZE = 2000
 
     # integrations
