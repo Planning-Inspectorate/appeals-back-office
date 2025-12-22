@@ -150,7 +150,7 @@ export const postCheckYourAnswers = async (request, response) => {
 			});
 
 			const payload = buildPayload(representationType, document.GUID, redactionStatus, createdDate);
-			session.createRepresentation
+			session.createNewRepresentation
 				? await postRepresentation(request.apiClient, appealId, payload, representationType)
 				: await patchRepresentationAttachments(apiClient, appealId, id, [document.GUID]);
 		} catch (error) {
@@ -183,7 +183,7 @@ export const postCheckYourAnswers = async (request, response) => {
 			bannerDefinitionKey = 'interestedPartyCommentsDocumentAddedSuccess';
 			break;
 		case 'lpa_statement':
-			bannerDefinitionKey = session.createRepresentation
+			bannerDefinitionKey = session.createNewRepresentation
 				? 'lpaStatementAddedSuccess'
 				: 'lpaStatementDocumentAddedSuccess';
 			break;
@@ -196,12 +196,12 @@ export const postCheckYourAnswers = async (request, response) => {
 			bannerDefinitionKey = 'appellantProofOfEvidenceDocumentAddedSuccess';
 			break;
 		case 'lpa_final_comment':
-			bannerDefinitionKey = session.createRepresentation
+			bannerDefinitionKey = session.createNewRepresentation
 				? 'lpaFinalCommentsAddedSuccess'
 				: 'finalCommentsDocumentAddedSuccess';
 			break;
 		case 'appellant_final_comment':
-			bannerDefinitionKey = session.createRepresentation
+			bannerDefinitionKey = session.createNewRepresentation
 				? 'appellantFinalCommentsAddedSuccess'
 				: 'finalCommentsDocumentAddedSuccess';
 			break;

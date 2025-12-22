@@ -4,6 +4,7 @@ import { editLink } from '#lib/edit-utilities.js';
 import { simpleHtmlComponent } from '#lib/mappers/components/page-components/html.js';
 import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { REPRESENTATION_ADDED_AS_DOCUMENT } from '@pins/appeals/constants/common.js';
 import { getDetailsForCommentResubmission } from '@pins/appeals/utils/notify.js';
 import { getAttachmentList } from '../../../common/document-attachment-list.js';
 
@@ -97,7 +98,7 @@ export function rejectCheckYourAnswersPage(
 		}
 
 		if (comment.attachments.length > 0) {
-			return 'Added as a document';
+			return REPRESENTATION_ADDED_AS_DOCUMENT;
 		}
 
 		return '';

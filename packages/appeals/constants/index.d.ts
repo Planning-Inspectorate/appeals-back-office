@@ -11,3 +11,4 @@ declare module '@pins/appeals/utils/is-expedited-appeal-type.js';
 declare module '@pins/appeals/utils/string-token-replacement.js';
 declare module '@pins/appeals/utils/event-type.js';
 declare module '@pins/appeals/utils/change-appeal-type.js';
+declare module '@pins/appeals/utils/representations.js';

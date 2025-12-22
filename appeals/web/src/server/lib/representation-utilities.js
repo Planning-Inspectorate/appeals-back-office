@@ -56,47 +56,22 @@ export function mapRepresentationDocumentSummaryActionLink(
 		return false;
 	})();
 
-	/** @type {Record<RepresentationType, string>} */
-	const visuallyHiddenTexts = {
-		'lpa-statement': 'LPA statement',
-		'rule-6-party-statement': `${rule6Party?.serviceUser?.organisationName} statement`,
-		'appellant-final-comments': 'Appellant final comments',
-		'lpa-final-comments': 'LPA final comments',
-		'appellant-proofs-evidence': 'Appellant proof of evidence',
-		'lpa-proofs-evidence': 'LPA proof of evidence',
-		'rule-6-party-proofs-evidence': `${rule6Party?.serviceUser?.organisationName} proof of evidence`,
-		'appellant-statement': 'Appellant statement'
-	};
-
-	/** @type {Record<RepresentationType, string>} */
-	const hrefs = {
-		'lpa-statement': `${currentRoute}/lpa-statement`,
-		'rule-6-party-statement': `${currentRoute}/rule-6-party-statement/${rule6Party?.id}`,
-		'lpa-final-comments': `${currentRoute}/final-comments/lpa`,
-		'appellant-final-comments': `${currentRoute}/final-comments/appellant`,
-		'appellant-proofs-evidence': reviewRequired
-			? `${currentRoute}/proof-of-evidence/appellant`
-			: `${currentRoute}/proof-of-evidence/appellant/manage-documents`,
-		'lpa-proofs-evidence': reviewRequired
-			? `${currentRoute}/proof-of-evidence/lpa`
-			: `${currentRoute}/proof-of-evidence/lpa/manage-documents`,
-		'rule-6-party-proofs-evidence': reviewRequired
-			? `${currentRoute}/proof-of-evidence/rule-6-party/${rule6Party?.id}`
-			: `${currentRoute}/proof-of-evidence/rule-6-party/${rule6Party?.id}/manage-documents`,
-		'appellant-statement': `${currentRoute}/appellant-statement`
-	};
+	const visuallyHiddenText = getRepresentationVisuallyHiddenText(representationType, rule6Party);
+	const href = getRepresentationHref(representationType, currentRoute, reviewRequired, rule6Party);
+	const addLink = `<a href="${href}/add-document" data-cy="add-${representationType}" class="govuk-link">Add<span class="govuk-visually-hidden"> ${visuallyHiddenText}</span></a>`;
+	const reviewViewLink = `<a href="${addBackLinkQueryToUrl(request, href)}" data-cy="${
+		reviewRequired ? 'review' : 'view'
+	}-${representationType}" class="govuk-link">${
+		reviewRequired ? 'Review' : 'View'
+	}<span class="govuk-visually-hidden"> ${visuallyHiddenText}</span></a>`;
 
 	if (
-		[
-			'appellant-proofs-evidence',
-			'lpa-proofs-evidence',
-			'rule-6-party-proofs-evidence',
-			'rule-6-party-statement',
-			'appellant-statement'
-		].includes(representationType) &&
+		!['appellant-final-comments', 'lpa-final-comments', 'lpa-statement'].includes(
+			representationType
+		) &&
 		documentationStatus !== 'received'
 	) {
-		return `<a href="${hrefs[representationType]}/add-document" data-cy="add-${representationType}" class="govuk-link">Add<span class="govuk-visually-hidden"> ${visuallyHiddenTexts[representationType]}</span></a>`;
+		return addLink;
 	}
 
 	if (documentationStatus !== 'received') {
@@ -104,16 +79,81 @@ export function mapRepresentationDocumentSummaryActionLink(
 			representationDueDate != undefined &&
 			dateIsInThePastIsoString(representationDueDate) &&
 			isInCorrectCaseStatusOrLater(request.currentAppeal, representationType)
-			? `<a href="${hrefs[representationType]}/add-document" data-cy="add-${representationType}" class="govuk-link">Add<span class="govuk-visually-hidden"> ${visuallyHiddenTexts[representationType]}</span></a>`
+			? addLink
 			: '';
+	} else if (
+		representationStatus === APPEAL_REPRESENTATION_STATUS.INVALID &&
+		isFeatureActive(FEATURE_FLAG_NAMES.MANUALLY_ADD_REPS)
+	) {
+		return `${addLink} | ${reviewViewLink}`;
 	}
 
-	return `<a href="${addBackLinkQueryToUrl(request, hrefs[representationType])}" data-cy="${
-		reviewRequired ? 'review' : 'view'
-	}-${representationType}" class="govuk-link">${
-		reviewRequired ? 'Review' : 'View'
-	}<span class="govuk-visually-hidden"> ${visuallyHiddenTexts[representationType]}</span></a>`;
+	return reviewViewLink;
 }
+
+/**
+ * @param {RepresentationType} representationType
+ * @param {{ id: number, serviceUser: { organisationName: string } }} [rule6Party]
+ * @returns {string}
+ */
+const getRepresentationVisuallyHiddenText = (representationType, rule6Party) => {
+	switch (representationType) {
+		case 'lpa-statement':
+			return 'LPA statement';
+		case 'rule-6-party-statement':
+			return `${rule6Party?.serviceUser?.organisationName} statement`;
+		case 'appellant-final-comments':
+			return 'Appellant final comments';
+		case 'lpa-final-comments':
+			return 'LPA final comments';
+		case 'appellant-proofs-evidence':
+			return 'Appellant proof of evidence';
+		case 'lpa-proofs-evidence':
+			return 'LPA proof of evidence';
+		case 'rule-6-party-proofs-evidence':
+			return `${rule6Party?.serviceUser?.organisationName} proof of evidence`;
+		case 'appellant-statement':
+			return 'Appellant statement';
+		default:
+			return '';
+	}
+};
+
+/**
+ * @param {RepresentationType} representationType
+ * @param {string} currentRoute
+ * @param {boolean} reviewRequired
+ * @param {{ id: number, serviceUser: { organisationName: string } }} [rule6Party]
+ * @returns {string}
+ */
+const getRepresentationHref = (representationType, currentRoute, reviewRequired, rule6Party) => {
+	switch (representationType) {
+		case 'lpa-statement':
+			return `${currentRoute}/lpa-statement`;
+		case 'rule-6-party-statement':
+			return `${currentRoute}/rule-6-party-statement/${rule6Party?.id}`;
+		case 'lpa-final-comments':
+			return `${currentRoute}/final-comments/lpa`;
+		case 'appellant-final-comments':
+			return `${currentRoute}/final-comments/appellant`;
+		case 'appellant-proofs-evidence':
+			return reviewRequired
+				? `${currentRoute}/proof-of-evidence/appellant`
+				: `${currentRoute}/proof-of-evidence/appellant/manage-documents`;
+		case 'lpa-proofs-evidence':
+			return reviewRequired
+				? `${currentRoute}/proof-of-evidence/lpa`
+				: `${currentRoute}/proof-of-evidence/lpa/manage-documents`;
+		case 'rule-6-party-proofs-evidence':
+			return reviewRequired
+				? `${currentRoute}/proof-of-evidence/rule-6-party/${rule6Party?.id}`
+				: `${currentRoute}/proof-of-evidence/rule-6-party/${rule6Party?.id}/manage-documents`;
+		case 'appellant-statement':
+			return `${currentRoute}/appellant-statement`;
+		default:
+			return '';
+	}
+};
 
 /**
  * @param {string} currentRoute

@@ -15,10 +15,15 @@ export const getSingularRepresentationByType = async (apiClient, appealId, type)
 	const url = `appeals/${appealId}/reps?type=${type}`;
 	const apiResponse = await apiClient.get(url).json();
 
-	if (apiResponse.items.length > 1) {
-		logger.warn(`Multiple representations of type ${type} found on appeal ${appealId}`);
+	if (apiResponse.itemCount > 1) {
+		const validReps = apiResponse.items.filter(
+			(/** @type {{ status: string; }} */ rep) => rep.status !== 'invalid'
+		);
+		if (validReps.length !== 1) {
+			logger.warn(`Multiple valid representations of type ${type} found on appeal ${appealId}`);
+		}
+		return validReps[0];
 	}
-
 	return apiResponse.items[0];
 };
 

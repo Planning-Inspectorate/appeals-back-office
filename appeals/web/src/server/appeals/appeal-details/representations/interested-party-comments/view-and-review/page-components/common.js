@@ -3,7 +3,10 @@ import { addressToMultilineStringHtml, representationHasAddress } from '#lib/add
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
-import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
+import {
+	COMMENT_STATUS,
+	REPRESENTATION_ADDED_AS_DOCUMENT
+} from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
@@ -122,7 +125,7 @@ export function generateCommentSummaryList(
 				text: comment.redactedRepresentation && redactMatching ? 'Original comment' : 'Comment'
 			},
 			value: {
-				text: commentIsDocument ? 'Added as a document' : comment.originalRepresentation
+				text: commentIsDocument ? REPRESENTATION_ADDED_AS_DOCUMENT : comment.originalRepresentation
 			},
 			actions: {
 				items:

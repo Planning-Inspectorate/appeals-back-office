@@ -30,7 +30,7 @@ export const renderDocumentUpload = async (request, response) => {
 		? constructUrl(String(query.backUrl), currentAppeal.appealId)
 		: representationBaseUrl;
 
-	if (session.createRepresentation) {
+	if (session.createNewRepresentation) {
 		const appealDetailsUrlPattern = /^(\/appeals-service\/appeal-details\/[^/]+).*$/;
 		backButtonUrl = request.baseUrl.replace(appealDetailsUrlPattern, '$1');
 	}

@@ -31,9 +31,9 @@ export const mapRepresentationEntity = (data) => {
 	if (data && data.appeal) {
 		return {
 			representationId: data.id.toString(),
-			representationType: mapRepresentationType(data.representationType),
+			representationType: mapRepresentationType(data?.representationType || ''),
 			...mapAppealInfo(data.appeal),
-			representationStatus: mapRepresentationStatus(data.status),
+			representationStatus: mapRepresentationStatus(data?.status || ''),
 			redacted: data.redactedRepresentation !== null,
 			redactedRepresentation: data.redactedRepresentation,
 			originalRepresentation: data.originalRepresentation,
