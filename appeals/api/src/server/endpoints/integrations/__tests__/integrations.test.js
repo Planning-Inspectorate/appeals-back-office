@@ -5,6 +5,7 @@ import {
 	appealIngestionInputAdverts,
 	appealIngestionInputCasAdverts,
 	appealIngestionInputCasPlanning,
+	appealIngestionInputEnforcementNotice,
 	appealIngestionInputS20,
 	appealIngestionInputS20Written,
 	appealIngestionInputS78,
@@ -14,6 +15,7 @@ import {
 	validAppellantCaseAdverts,
 	validAppellantCaseCasAdverts,
 	validAppellantCaseCasPlanning,
+	validAppellantCaseEnforcementNotice,
 	validAppellantCaseS20,
 	validAppellantCaseS78,
 	validLpaQuestionnaireAdverts,
@@ -33,6 +35,7 @@ import {
 	validRepresentationRule6PartyProofsEvidence,
 	validRepresentationRule6PartyStatement
 } from '#tests/integrations/mocks.js';
+import { grounds } from '#tests/shared/mocks.js';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 import { jest } from '@jest/globals';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
@@ -54,6 +57,8 @@ describe('/appeals/case-submission', () => {
 	beforeEach(() => {
 		// @ts-ignore
 		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+		// @ts-ignore
+		databaseConnector.ground.findMany.mockResolvedValue(grounds);
 	});
 	afterEach(() => {
 		jest.clearAllMocks();
@@ -129,7 +134,13 @@ describe('/appeals/case-submission', () => {
 				validAppellantCaseCasAdverts,
 				{ id: 1 }
 			],
-			['ADVERTISEMENT', appealIngestionInputAdverts, validAppellantCaseAdverts, { id: 1 }]
+			['ADVERTISEMENT', appealIngestionInputAdverts, validAppellantCaseAdverts, { id: 1 }],
+			[
+				'ENFORCEMENT_NOTICE',
+				appealIngestionInputEnforcementNotice,
+				validAppellantCaseEnforcementNotice,
+				{ id: 1 }
+			]
 		])(
 			'POST valid %s appellant case payload and create appeal',
 			async (_, appealIngestionInput, validAppellantCase, expectedTeamQueryParam) => {
@@ -990,7 +1001,11 @@ describe('/appeals/representation-submission', () => {
 });
 
 const createIntegrationMocks = (/** @type {*} */ appealIngestionInput) => {
-	const appealCreatedResult = { id: 100, reference: '6000100', assignedTeamId: 1 };
+	const appealCreatedResult = {
+		id: 100,
+		reference: '6000100',
+		assignedTeamId: 1
+	};
 
 	// @ts-ignore
 	databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
@@ -1005,7 +1020,11 @@ const createIntegrationMocks = (/** @type {*} */ appealIngestionInput) => {
 	// @ts-ignore
 	databaseConnector.appeal.update.mockResolvedValue(appealCreatedResult);
 	// @ts-ignore
-	databaseConnector.appeal.findUnique.mockResolvedValue(appealCreatedResult);
+	databaseConnector.appeal.findUnique.mockResolvedValue({
+		...appealCreatedResult,
+		appealType: appealIngestionInput.appealType?.connect,
+		appealStatus: [{ status: 'ready_to_start', valid: true }]
+	});
 	// @ts-ignore
 	databaseConnector.document.createMany.mockResolvedValue([
 		docIngestionInput,

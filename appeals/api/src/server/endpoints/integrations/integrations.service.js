@@ -16,6 +16,7 @@ import { EventType } from '@pins/event-client';
  * @param {import('#db-client/models.ts').AppealCreateInput} data
  * @param {import('#db-client/models.ts').DocumentVersionCreateInput[]} documents
  * @param {string[] | null} relatedReferences
+ * @param {{groundRef:string, factsForGround:string}[]} appealGrounds
  * @param {string} appellantProcedurePreference
  * @returns
  */
@@ -23,12 +24,14 @@ const importAppellantCase = async (
 	data,
 	documents,
 	relatedReferences,
+	appealGrounds,
 	appellantProcedurePreference
 ) => {
 	const result = await createAppeal(
 		data,
 		documents,
 		relatedReferences || [],
+		appealGrounds || [],
 		appellantProcedurePreference
 	);
 

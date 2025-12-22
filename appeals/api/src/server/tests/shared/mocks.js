@@ -171,14 +171,17 @@ export const incompleteLPAQuestionnaireOutcome = {
 
 export const grounds = [
 	{
+		id: 1,
 		groundRef: 'a',
 		groundDescription: 'Ground A'
 	},
 	{
+		id: 2,
 		groundRef: 'b',
 		groundDescription: 'Ground B'
 	},
 	{
+		id: 3,
 		groundRef: 'c',
 		groundDescription: 'Ground C'
 	}

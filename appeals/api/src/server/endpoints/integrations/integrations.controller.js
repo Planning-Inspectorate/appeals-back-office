@@ -3,7 +3,10 @@ import { addDocumentAudit } from '#endpoints/documents/documents.service.js';
 import { commandMappers } from '#mappers/integration/commands/index.js';
 import { serviceUserIdStartRange } from '#mappers/integration/map-service-user-entity.js';
 import { getAssignedTeam } from '#repositories/team.repository.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
+import { markAwaitingTransfer } from '#utils/mark-for-transfer.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_APPELLANT_IMPORT_MSG,
 	AUDIT_TRAIL_DOCUMENT_IMPORTED,
@@ -36,34 +39,35 @@ import { integrationService } from './integrations.service.js';
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealRepresentationSubmission} AppealRepresentationSubmission */
 
 /**
- * @param {{body: AppellantSubmissionCommand}} req
- * @param {Response} res
- * @returns {Promise<Response>}
+ *
+ * @param {AppellantSubmissionCommand} data
+ * @returns {Promise<{id: *, reference: *, assignedTeamId: *, appealTypeId: *}>}
  */
-export const importAppeal = async (req, res) => {
-	const { appeal, documents, relatedReferences } = commandMappers.mapAppealSubmission(req.body);
+const importIndividualAppeal = async (data) => {
+	const { appeal, documents, relatedReferences, appealGrounds } =
+		commandMappers.mapAppealSubmission(data);
 
 	let appellantProcedurePreference = APPEAL_APPELLANT_PROCEDURE_PREFERENCE.WRITTEN;
 
 	if (
-		req.body.casedata.caseType === APPEAL_CASE_TYPE.W ||
-		req.body.casedata.caseType === APPEAL_CASE_TYPE.Y ||
-		req.body.casedata.caseType === APPEAL_CASE_TYPE.H
+		data.casedata.caseType === APPEAL_CASE_TYPE.W ||
+		data.casedata.caseType === APPEAL_CASE_TYPE.Y ||
+		data.casedata.caseType === APPEAL_CASE_TYPE.H
 	) {
 		// @ts-ignore
 		appellantProcedurePreference =
-			req.body.casedata.appellantProcedurePreference ||
-			APPEAL_APPELLANT_PROCEDURE_PREFERENCE.WRITTEN;
+			data.casedata.appellantProcedurePreference || APPEAL_APPELLANT_PROCEDURE_PREFERENCE.WRITTEN;
 	}
 	const casedata = await integrationService.importAppellantCase(
 		appeal,
 		documents,
 		relatedReferences,
+		appealGrounds,
 		appellantProcedurePreference
 	);
 
 	const { documentVersions } = casedata;
-	const { id, reference, appellantId, agentId, assignedTeamId } = casedata.appeal;
+	const { id, reference, appellantId, agentId, assignedTeamId, appealTypeId } = casedata.appeal;
 
 	await createAuditTrail({
 		appealId: id,
@@ -114,6 +118,74 @@ export const importAppeal = async (req, res) => {
 			]);
 		})
 	);
+
+	return { id, reference, assignedTeamId, appealTypeId };
+};
+
+/**
+ * Clones an individual appeal from the main appeal for the submission individual
+ * @param {{mainAppealReference: string, casedata: any, documents: Array<any>, users: Array<any>}} data
+ */
+const importNamedIndividuals = async ({ mainAppealReference, casedata, documents, users }) => {
+	const namedIndividuals =
+		// @ts-ignore
+		casedata?.namedIndividuals?.map((individual) => {
+			const { firstName, lastName, interestInLand, writtenOrVerbalPermission } = individual;
+			// Main appeals appellant is this appeals agent.
+			const agent = users?.find((user) => user.serviceUserType === SERVICE_USER_TYPE.APPELLANT);
+
+			const data = {
+				users: [{ firstName, lastName, serviceUserType: SERVICE_USER_TYPE.APPELLANT }, ...[agent]],
+				casedata: { ...structuredClone(casedata), interestInLand, writtenOrVerbalPermission },
+				documents: structuredClone(documents)
+			};
+
+			if (agent) {
+				data.users.push(agent);
+			}
+
+			// For now, relate this individual appeal to the main appeal (later we will link them properly)
+			data.casedata.nearbyCaseReferences = [mainAppealReference];
+
+			return data;
+		}) || [];
+
+	const childResults = await Promise.all(namedIndividuals.map(importIndividualAppeal));
+
+	// For now, we will mark all related enforcement appeals as marked for transfer to horizon
+	await Promise.all(
+		// @ts-ignore
+		childResults.map(({ id, appealTypeId }) =>
+			markAwaitingTransfer(id, appealTypeId, AUDIT_TRIAL_APPELLANT_UUID)
+		)
+	);
+};
+
+/**
+ * @param {{body: AppellantSubmissionCommand}} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const importAppeal = async (req, res) => {
+	const { casedata, documents, users } = req.body || {};
+	const data = { casedata, documents, users };
+
+	const { id, reference, assignedTeamId, appealTypeId } = await importIndividualAppeal(data);
+
+	if (
+		isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE) &&
+		casedata.caseType === APPEAL_CASE_TYPE.C &&
+		// @ts-ignore
+		req.body?.casedata?.namedIndividuals?.length
+	) {
+		await markAwaitingTransfer(id, appealTypeId, AUDIT_TRIAL_APPELLANT_UUID);
+		await importNamedIndividuals({
+			mainAppealReference: reference,
+			casedata,
+			documents,
+			users
+		});
+	}
 
 	return res.status(201).send({ id, reference, assignedTeamId });
 };
