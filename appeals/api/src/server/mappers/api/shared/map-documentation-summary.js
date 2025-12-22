@@ -8,11 +8,13 @@ import {
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
 import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
+import { getSingularRepresentation } from '@pins/appeals/utils/representations.js';
 import { countBy, maxBy, reduce } from 'lodash-es';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Api.DocumentationSummary} DocumentationSummary */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
+/** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
 
 /**
  *
@@ -21,30 +23,30 @@ import { countBy, maxBy, reduce } from 'lodash-es';
  */
 export const mapDocumentationSummary = (data) => {
 	const { appeal } = data;
-
+	const representations = appeal.representations;
 	const ipComments =
-		appeal.representations?.filter(
+		representations?.filter(
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
 		) ?? [];
 
-	const lpaStatement =
-		appeal.representations?.find(
-			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
-		) ?? null;
+	const lpaStatement = getSingularRepresentation(
+		representations,
+		APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
+	);
 
 	const rule6PartyStatements =
 		appeal.representations?.filter(
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT
 		) ?? [];
 
-	const appellantFinalComments =
-		appeal.representations?.find(
-			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
-		) ?? null;
-	const lpaFinalComments =
-		appeal.representations?.find(
-			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
-		) ?? null;
+	const lpaFinalComment = getSingularRepresentation(
+		representations,
+		APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
+	);
+	const appellantFinalComment = getSingularRepresentation(
+		representations,
+		APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
+	);
 
 	const lpaProofOfEvidence =
 		appeal.representations?.find(
@@ -116,18 +118,16 @@ export const mapDocumentationSummary = (data) => {
 				/** @type {Record<string, any>} */ ({})
 			),
 			lpaFinalComments: {
-				status: lpaFinalComments ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
-				receivedAt: lpaFinalComments?.dateCreated
-					? lpaFinalComments.dateCreated.toISOString()
-					: null,
-				representationStatus: lpaFinalComments?.status ?? null
+				status: lpaFinalComment ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+				receivedAt: lpaFinalComment?.dateCreated ? lpaFinalComment.dateCreated.toISOString() : null,
+				representationStatus: lpaFinalComment?.status ?? null
 			},
 			appellantFinalComments: {
-				status: appellantFinalComments ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
-				receivedAt: appellantFinalComments?.dateCreated
-					? appellantFinalComments.dateCreated.toISOString()
+				status: appellantFinalComment ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+				receivedAt: appellantFinalComment?.dateCreated
+					? appellantFinalComment.dateCreated.toISOString()
 					: null,
-				representationStatus: appellantFinalComments?.status ?? null
+				representationStatus: appellantFinalComment?.status ?? null
 			},
 			appellantProofOfEvidence: {
 				status: appellantProofOfEvidence ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,

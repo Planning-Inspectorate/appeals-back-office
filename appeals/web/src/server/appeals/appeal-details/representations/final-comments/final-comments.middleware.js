@@ -1,5 +1,8 @@
 import { getSingularRepresentationByType } from '#appeals/appeal-details/representations/representations.service.js';
-import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_REPRESENTATION_TYPE
+} from '@pins/appeals/constants/common.js';
 
 const finalCommentsTypeToAppealRepresentationTypeMap = {
 	appellant: APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT,
@@ -29,11 +32,10 @@ export const withSingularRepresentation = async (req, res, next) => {
 			finalCommentsTypeToAppealRepresentationTypeMap[finalCommentsType]
 		);
 
-		if (!representation) {
-			req.session.createRepresentation = true;
-		} else {
-			req.currentRepresentation = representation;
+		if (!representation || representation.status === APPEAL_REPRESENTATION_STATUS.INVALID) {
+			req.session.createNewRepresentation = true;
 		}
+		req.currentRepresentation = representation;
 	} catch (/** @type {any} */ error) {
 		return res.status(500).render('app/500.njk');
 	}

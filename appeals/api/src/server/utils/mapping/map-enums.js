@@ -71,7 +71,7 @@ export const isValidRepStatus = (repStatus) =>
 
 /**
  *
- * @param {string} repType
+ * @param {string|undefined} repType
  * @returns {repType is AppealRepresentation['representationType']}
  */
 export const isValidRepType = (repType) =>

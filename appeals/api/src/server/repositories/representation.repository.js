@@ -84,9 +84,15 @@ const getRepresentations = async (appealId, options, pageNumber, pageSize) => {
 					select: {
 						documentVersion: {
 							select: {
-								document: true
+								document: true,
+								version: true,
+								virusCheckStatus: true,
+								fileName: true,
+								originalFilename: true
 							}
-						}
+						},
+						version: true,
+						documentGuid: true
 					}
 				},
 				representationRejectionReasonsSelected: {

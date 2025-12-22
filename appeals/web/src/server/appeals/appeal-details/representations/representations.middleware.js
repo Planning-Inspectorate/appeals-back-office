@@ -11,10 +11,9 @@ export const withSingularRepresentation = (type) => async (req, res, next) => {
 		const representation = await getSingularRepresentationByType(req.apiClient, appealId, type);
 
 		if (!representation) {
-			req.session.createRepresentation = true;
-		} else {
-			req.currentRepresentation = representation;
+			req.session.createNewRepresentation = true;
 		}
+		req.currentRepresentation = representation;
 	} catch (/** @type {any} */ error) {
 		return res.status(500).render('app/500.njk');
 	}

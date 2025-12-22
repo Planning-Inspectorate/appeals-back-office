@@ -174,6 +174,8 @@ export interface Representation extends schema.Representation {
 	representative?: ServiceUser | null;
 	lpa?: LPA | null;
 	representationRejectionReasonsSelected?: RepresentationRejectionReasonsSelected[];
+	representationType?: string | null;
+	status?: string | null;
 }
 
 export interface RepresentationAttachment extends schema.RepresentationAttachment {

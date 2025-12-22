@@ -13,7 +13,7 @@ import { generateCommentsSummaryList } from './page-components/common.js';
  * @param {string} finalCommentsType
  * @param {Representation} comment
  * @param {import('@pins/express').Session} session
- * @param {string | undefined} backUrl
+ * @param {string} backUrl
  * @returns {PageContent}
  */
 export function reviewFinalCommentsPage(
