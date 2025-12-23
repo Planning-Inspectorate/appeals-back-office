@@ -46,10 +46,10 @@ module "app_api" {
     BO_BLOB_STORAGE_ACCOUNT = azurerm_storage_account.documents.primary_blob_endpoint # TODO: replace with custom domain 
 
     # database connection
-    DATABASE_NAME    = azurerm_mssql_database.primary.name
-    DATABASE_URL     = local.key_vault_refs["sql-app-connection-string"]
+    DATABASE_NAME       = azurerm_mssql_database.primary.name
+    DATABASE_URL        = local.key_vault_refs["sql-app-connection-string"]
     DB_CONNECTION_LIMIT = var.apps_config.db_connection_limit
-    QUERY_BATCH_SIZE = 2000
+    QUERY_BATCH_SIZE    = 2000
 
     # integrations
     GOV_NOTIFY_API_KEY    = local.key_vault_refs["appeals-bo-gov-notify-api-key"]
