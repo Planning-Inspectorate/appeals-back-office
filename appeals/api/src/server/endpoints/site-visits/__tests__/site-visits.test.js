@@ -3204,7 +3204,88 @@ describe('site visit routes', () => {
 					expect(response.status).toEqual(200);
 					expect(response.body).toEqual({ siteVisitId: 1 });
 				});
+
+				test('record missed site visit for LPA sends LPA email even when appellant has no email', async () => {
+					householdAppeal.appellant.email = null;
+					householdAppeal.agent = null;
+
+					const response = await request
+						.post(
+							`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}/missed`
+						)
+						.send({ whoMissedSiteVisit: 'lpa' })
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
+						where: { id: householdAppeal.siteVisit.id },
+						data: { whoMissedSiteVisit: 'lpa' }
+					});
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId,
+						notifyClient: expect.anything(),
+						templateName: 'record-missed-site-visit-lpa',
+						recipientEmail: householdAppeal.lpa.email,
+						personalisation: expect.objectContaining({
+							appeal_reference_number: householdAppeal.reference
+						})
+					});
+
+					expect(response.status).toEqual(200);
+				});
+
+				test('record missed site visit for LPA sends LPA email even when agent has no email', async () => {
+					householdAppeal.agent.email = null;
+					householdAppeal.appellant = null;
+
+					const response = await request
+						.post(
+							`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}/missed`
+						)
+						.send({ whoMissedSiteVisit: 'lpa' })
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
+						where: { id: householdAppeal.siteVisit.id },
+						data: { whoMissedSiteVisit: 'lpa' }
+					});
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId,
+						notifyClient: expect.anything(),
+						templateName: 'record-missed-site-visit-lpa',
+						recipientEmail: householdAppeal.lpa.email,
+						personalisation: expect.objectContaining({
+							appeal_reference_number: householdAppeal.reference
+						})
+					});
+
+					expect(response.status).toEqual(200);
+				});
+
+				test('record missed site visit for inspector sends no notification emails', async () => {
+					const response = await request
+						.post(
+							`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}/missed`
+						)
+						.send({ whoMissedSiteVisit: 'inspector' })
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
+						where: { id: householdAppeal.siteVisit.id },
+						data: { whoMissedSiteVisit: 'inspector' }
+					});
+
+					expect(mockNotifySend).not.toHaveBeenCalled();
+
+					expect(response.status).toBe(200);
+				});
 			});
+
 			describe('current status is before the event set up', () => {
 				beforeEach(() => {
 					householdAppeal.appealStatus = [
@@ -3257,6 +3338,7 @@ describe('site visit routes', () => {
 					databaseConnector.appealStatus.update.mockReset();
 					jest.useRealTimers();
 				});
+
 				test('record a missed site visit for an appellant and the status remains the same', async () => {
 					const response = await request
 						.post(
@@ -3358,6 +3440,7 @@ describe('site visit routes', () => {
 					expect(response.body).toEqual({ siteVisitId: 1 });
 				});
 			});
+
 			describe('current status is after the event', () => {
 				beforeEach(() => {
 					householdAppeal.appealStatus = [
@@ -3431,6 +3514,7 @@ describe('site visit routes', () => {
 					databaseConnector.appealStatus.update.mockReset();
 					jest.useRealTimers();
 				});
+
 				test('record a missed site visit for an appellant and moves the status back from issue_determination to event', async () => {
 					const response = await request
 						.post(
