@@ -3516,7 +3516,15 @@ export interface AppealDecision {
 	letterDate?: string | null;
 	invalidReason?: string | null;
 	virusCheckStatus?: 'affected' | 'not_scanned' | 'scanned';
-	outcome?: 'allowed' | 'dismissed' | 'invalid' | 'split_decision';
+	outcome?:
+		| 'allowed'
+		| 'dismissed'
+		| 'invalid'
+		| 'notice_upheld'
+		| 'notice_varied_and_upheld'
+		| 'planning_permission_granted'
+		| 'quashed_on_legal_grounds'
+		| 'split_decision';
 }
 
 export interface AppealWithdrawal {
@@ -12257,7 +12265,15 @@ export interface Appeal {
 		letterDate?: string | null;
 		invalidReason?: string | null;
 		virusCheckStatus?: 'affected' | 'not_scanned' | 'scanned';
-		outcome?: 'allowed' | 'dismissed' | 'invalid' | 'split_decision';
+		outcome?:
+			| 'allowed'
+			| 'dismissed'
+			| 'invalid'
+			| 'notice_upheld'
+			| 'notice_varied_and_upheld'
+			| 'planning_permission_granted'
+			| 'quashed_on_legal_grounds'
+			| 'split_decision';
 	};
 	costs?: any;
 	internalCorrespondence?: any;

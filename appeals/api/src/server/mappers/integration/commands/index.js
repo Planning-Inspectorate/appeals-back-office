@@ -39,6 +39,7 @@ const mapAppealSubmission = (data) => {
 	const caseType = mapAppealTypeIn(casedata.caseType || '');
 
 	const neighbouringSitesInput = {
+		//@ts-ignore
 		create: casedata.neighbouringSiteAddresses?.map((site) => {
 			return {
 				source: 'back-office',

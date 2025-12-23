@@ -23,6 +23,7 @@ export const mapCaseOutcome = (data) => {
 		[CASE_OUTCOME_SPLIT_DECISION]: APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION,
 		[APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION]: APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION
 	};
+	//@ts-ignore
 	const broadcastedOutcome = outcome === null ? null : mappedOutcome[outcome];
 
 	return {
