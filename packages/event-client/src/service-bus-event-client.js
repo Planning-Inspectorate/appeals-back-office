@@ -72,7 +72,8 @@ export class ServiceBusEventClient {
 		const traceId = this.#createTraceId();
 
 		this.logger.info(
-			`Publishing ${events.length} events to topic ${topic} with type ${eventType} and trace id ${traceId}`
+			`Publishing ${events} to topic ${topic} with type ${eventType} and trace id ${traceId}
+			)}`
 		);
 
 		await sender.sendMessages(
