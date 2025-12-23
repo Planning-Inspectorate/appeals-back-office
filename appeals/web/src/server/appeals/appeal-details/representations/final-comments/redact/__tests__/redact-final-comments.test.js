@@ -2,6 +2,7 @@
 import { findButtonText } from '#lib/revert-text.js';
 import {
 	appealDataFullPlanning,
+	finalCommentPublished,
 	finalCommentsForReview
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
@@ -123,7 +124,7 @@ describe('final-comments', () => {
 				expect(unprettifiedHTML).toContain('Sorry, there is a problem with the service</h1>');
 			});
 
-			it(`should render the check your answers page with the expected content if redactedRepresentation is present in the session (${finalCommentsType.type} final comments)`, async () => {
+			it(`should render the CYA page with the expected content if redactedRepresentation is present in the session (${finalCommentsType.type} final comments)`, async () => {
 				nock('http://test/')
 					.get(`/appeals/2/reps?type=${finalCommentsType.type}_final_comment`)
 					.reply(200, finalCommentsForReview)
@@ -167,6 +168,51 @@ describe('final-comments', () => {
 				expect(unprettifiedHTML).toContain(
 					`href="/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}?backUrl=/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}/redact/confirm">Change<span class="govuk-visually-hidden"> review decision</span></a></dd>`
 				);
+				expect(unprettifiedHTML).toContain(
+					`Accept ${finalCommentsType.label} final comments</button></form>`
+				);
+			});
+
+			it(`should render the CYA page with expected content after the final comments have been published (${finalCommentsType.type} final comments)`, async () => {
+				nock.cleanAll();
+				installMockApi();
+				nock('http://test/')
+					.get('/appeals/2?include=all')
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId: 2,
+						appealStatus: 'final_comments'
+					})
+					.persist();
+				nock('http://test/')
+					.get(`/appeals/2/reps?type=${finalCommentsType.type}_final_comment`)
+					.reply(200, finalCommentPublished)
+					.persist();
+
+				await request.post(`${baseUrl}/2/final-comments/${finalCommentsType.type}/redact`).send({
+					redactedRepresentation: 'Test redacted final comment text'
+				});
+
+				const response = await request.get(
+					`${baseUrl}/2/final-comments/${finalCommentsType.type}/redact/confirm`
+				);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain(
+					`Check details and accept ${finalCommentsType.label} final comments</h1>`
+				);
+				expect(unprettifiedHTML).toContain('Original final comments</dt>');
+				expect(unprettifiedHTML).toContain(
+					'class="pins-show-more" data-label="Read more" data-mode="html">Final comments published</div>'
+				);
+				expect(unprettifiedHTML).toContain('Redacted final comments</dt>');
+				expect(unprettifiedHTML).not.toContain('Supporting documents</dt>');
+				expect(unprettifiedHTML).not.toContain(`No documents</dd>`);
+				expect(unprettifiedHTML).not.toContain('Review decision</dt>');
+				expect(unprettifiedHTML).not.toContain('Redact and accept final comments</dd>');
 				expect(unprettifiedHTML).toContain(
 					`Accept ${finalCommentsType.label} final comments</button></form>`
 				);
