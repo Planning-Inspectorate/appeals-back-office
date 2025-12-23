@@ -1092,24 +1092,18 @@ const appealsReadyToIssueDecision = [
 	})
 ];
 
-export const enforcementAppeals = [
-	appealFactory({
+export const enforcementAppeals = Array.from({ length: 10 }, () => {
+	const randomDays = Math.floor(Math.random() * 30) + 1;
+
+	return appealFactory({
 		typeShorthand: APPEAL_CASE_TYPE.C,
 		assignCaseOfficer: false,
 		status: {
 			status: APPEAL_CASE_STATUS.VALIDATION,
-			createdAt: getPastDate({ days: 5 })
+			createdAt: getPastDate({ days: randomDays })
 		}
-	}),
-	appealFactory({
-		typeShorthand: APPEAL_CASE_TYPE.C,
-		assignCaseOfficer: false,
-		status: {
-			status: APPEAL_CASE_STATUS.VALIDATION,
-			createdAt: getPastDate({ weeks: 1 })
-		}
-	})
-];
+	});
+});
 
 const appealsData = [
 	...appealsReadyToStart,
@@ -1417,9 +1411,10 @@ export async function seedTestData(databaseConnector) {
 	const enforcementAppealTypeId = appealTypes.find(
 		(appealType) => appealType.key === APPEAL_CASE_TYPE.C
 	)?.id;
-	const enforcementAppellantCaseId = appeals.find(
-		(appeal) => appeal.appealTypeId === enforcementAppealTypeId
-	)?.id;
+	const enforcementAppellantCaseIds = appeals
+		.filter((appeal) => appeal.appealTypeId === enforcementAppealTypeId)
+		.map((appeal) => appeal.id)
+		.slice(1); // leave one with blank data
 	const contactAddress = addressesList[pickRandom(addressesList)];
 	const formattedContactAddress = {
 		addressLine1: contactAddress.addressLine1,
@@ -1430,8 +1425,8 @@ export async function seedTestData(databaseConnector) {
 	};
 	await databaseConnector.$transaction(async (tx) => {
 		const address = await tx.address.create({ data: formattedContactAddress });
-		await tx.appellantCase.update({
-			where: { appealId: enforcementAppellantCaseId },
+		await tx.appellantCase.updateMany({
+			where: { appealId: { in: enforcementAppellantCaseIds } },
 			data: {
 				contactAddressId: address.id,
 				enforcementNoticeListedBuilding: false,
