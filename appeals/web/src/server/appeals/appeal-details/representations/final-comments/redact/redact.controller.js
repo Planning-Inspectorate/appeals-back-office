@@ -2,6 +2,7 @@ import { redactAndAccept } from '#appeals/appeal-details/representations/represe
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { formatFinalCommentsTypeText } from '../view-and-review/view-and-review.mapper.js';
 import { confirmRedactFinalCommentPage, redactFinalCommentPage } from './redact.mapper.js';
 
@@ -104,13 +105,16 @@ export const postConfirmRedactFinalComment = async (request, response) => {
 				currentRepresentation.representationType === 'appellant_final_comment'
 					? 'appellantFinalCommentsAcceptSuccess'
 					: 'lpaFinalCommentsAcceptSuccess';
-
 			addNotificationBannerToSession({
-				session: session,
+				session,
 				bannerDefinitionKey: acceptFinalCommentsBannerType,
 				appealId
 			});
 		} else {
+			const bannerSuffix =
+				currentRepresentation?.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED
+					? 'redacted'
+					: 'redacted and accepted';
 			addNotificationBannerToSession({
 				session,
 				bannerDefinitionKey: 'finalCommentsRedactionSuccess',
@@ -118,7 +122,7 @@ export const postConfirmRedactFinalComment = async (request, response) => {
 				text: `${formatFinalCommentsTypeText(
 					finalCommentsType,
 					true
-				)} final comments redacted and accepted`
+				)} final comments ${bannerSuffix}`
 			});
 		}
 
