@@ -286,12 +286,12 @@ const updateAppealType = async (
 };
 
 /**
- * @param {Appeal} appeal
+ * @param {number} appealId
  * @param {number} newAppealTypeId
  * @param {string} azureAdUserId
  * @returns {Promise<void>}
  */
-const markAwaitingTransfer = async (appeal, newAppealTypeId, azureAdUserId) => {
+const markAwaitingTransfer = async (appealId, newAppealTypeId, azureAdUserId) => {
 	const currentDate = new Date();
 	const caseExtensionDate = await addDays(currentDate, 5);
 
@@ -304,19 +304,19 @@ const markAwaitingTransfer = async (appeal, newAppealTypeId, azureAdUserId) => {
 
 	Promise.all([
 		await databaseConnector.appeal.update({
-			where: { id: appeal.id },
+			where: { id: appealId },
 			data
 		}),
-		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.AWAITING_TRANSFER)
+		await transitionState(appealId, azureAdUserId, APPEAL_CASE_STATUS.AWAITING_TRANSFER)
 	]);
 
 	await createAuditTrail({
-		appealId: appeal.id,
+		appealId,
 		azureAdUserId,
 		details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_TYPE_TRANSFERRED, ['awaiting transfer'])
 	});
 
-	await broadcasters.broadcastAppeal(appeal.id);
+	await broadcasters.broadcastAppeal(appealId);
 };
 
 /**
