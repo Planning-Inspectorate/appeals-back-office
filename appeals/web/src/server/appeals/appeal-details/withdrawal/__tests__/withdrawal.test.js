@@ -219,7 +219,7 @@ describe('withdrawal', () => {
 			};
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataWithWithdrawalData);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 			const response = await request.get(
 				`${baseUrl}/${mockAppealId}${withdrawalPath}${withdrawalRequestViewPath}`

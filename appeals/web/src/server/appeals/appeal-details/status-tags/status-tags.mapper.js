@@ -67,7 +67,6 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 	) {
 		let letterDateObject = await getOriginalAndLatestLetterDatesObject(
 			request.apiClient,
-			appealDetails.appealId.toString(),
 			appealDetails.decision.documentId || '',
 			appealDetails
 		);

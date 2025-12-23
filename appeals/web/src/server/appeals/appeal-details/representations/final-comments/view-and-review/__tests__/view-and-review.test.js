@@ -180,7 +180,7 @@ describe('final-comments', () => {
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
-			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 			nock('http://test/')
 				.get('/appeals/2/reps?type=lpa_final_comment')
@@ -235,7 +235,7 @@ describe('final-comments', () => {
 			usersService.getUserById = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
 
 			nock('http://test/')
-				.get('/appeals/2/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
@@ -254,7 +254,7 @@ describe('final-comments', () => {
 				.reply(200, documentFolderInfo)
 				.persist();
 
-			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 
 		it('should render a 404 error page if the folderId is invalid', async () => {
@@ -311,7 +311,7 @@ describe('final-comments', () => {
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
-			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 
 		it('should render change document page with the provided comment details', async () => {
@@ -343,7 +343,7 @@ describe('final-comments', () => {
 				});
 
 			nock('http://test/')
-				.get('/appeals/2/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
@@ -362,7 +362,7 @@ describe('final-comments', () => {
 				.reply(200, documentFolderInfo)
 				.persist();
 
-			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 
 		it('should render change document details page with the provided comment details', async () => {
@@ -448,10 +448,10 @@ describe('final-comments', () => {
 				});
 
 			nock('http://test/')
-				.get('/appeals/2/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfoChecked);
 
-			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 			nock('http://test/')
 				.get('/appeals/2/document-folders/1?repId=3670')
@@ -501,10 +501,10 @@ describe('final-comments', () => {
 				});
 
 			nock('http://test/')
-				.get('/appeals/2/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfoChecked);
 
-			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 			nock('http://test/')
 				.get('/appeals/2/document-folders/1?repId=3670')
@@ -558,14 +558,14 @@ describe('final-comments', () => {
 				});
 
 			nock('http://test/')
-				.get('/appeals/2/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfoChecked);
 
 			nock('http://test/')
 				.get('/appeals/2/reps?type=appellant_final_comment')
 				.reply(200, finalCommentsForReview);
 
-			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 			nock('http://test/')
 				.get('/appeals/2/document-folders/1?repId=3670')

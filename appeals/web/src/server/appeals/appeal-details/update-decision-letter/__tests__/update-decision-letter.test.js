@@ -202,7 +202,7 @@ describe('update-decision-letter', () => {
 				.get('/appeals/1?include=all')
 				.reply(200, issueDecisionAppealData)
 				.persist();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			nock('http://test/')
 				.post(`/appeals/notify-preview/correction-notice-decision.content.md`)
@@ -212,7 +212,7 @@ describe('update-decision-letter', () => {
 				.reply(200, documentRedactionStatuses)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b')
+				.get('/appeals/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b')
 				.reply(200, {
 					id: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b',
 					name: 'test-document2.pdf',

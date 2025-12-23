@@ -479,7 +479,7 @@ describe('lpa-statements', () => {
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
-			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 			nock('http://test/')
 				.get('/appeals/2/reps?type=lpa_final_comment')
@@ -534,7 +534,7 @@ describe('lpa-statements', () => {
 			usersService.getUserById = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
 
 			nock('http://test/')
-				.get('/appeals/2/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview); // TODO: this should be LPA statement data, not final comment data
@@ -553,7 +553,7 @@ describe('lpa-statements', () => {
 				.reply(200, documentFolderInfo)
 				.persist();
 
-			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 
 		it('should render a 404 error page if the folderId is invalid', async () => {
@@ -610,7 +610,7 @@ describe('lpa-statements', () => {
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
-			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 
 		it('should render change document page with the provided comment details', async () => {
@@ -642,7 +642,7 @@ describe('lpa-statements', () => {
 				});
 
 			nock('http://test/')
-				.get('/appeals/2/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview); // TODO: this should be using LPA statement data, not ip comment data
@@ -661,7 +661,7 @@ describe('lpa-statements', () => {
 				.reply(200, documentFolderInfo)
 				.persist();
 
-			nock('http://test/').get('/appeals/2/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 
 		it('should render change document details page with the provided comment details', async () => {

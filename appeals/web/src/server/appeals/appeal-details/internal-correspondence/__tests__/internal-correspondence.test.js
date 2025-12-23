@@ -225,9 +225,9 @@ describe('internal correspondence', () => {
 				.get('/appeals/1/document-folders/22')
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 		});
 
@@ -267,7 +267,7 @@ describe('internal correspondence', () => {
 				.get('/appeals/1/document-folders/22')
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(() => {
 			nock.cleanAll();
@@ -1408,7 +1408,7 @@ describe('internal correspondence', () => {
 				.get('/appeals/1/document-folders/22')
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(() => {
 			nock.cleanAll();
@@ -1508,7 +1508,7 @@ describe('internal correspondence', () => {
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
 				.persist();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(() => {
 			nock.cleanAll();
@@ -1648,7 +1648,7 @@ describe('internal correspondence', () => {
 				.get('/appeals/1/document-folders/22')
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
@@ -1656,7 +1656,7 @@ describe('internal correspondence', () => {
 
 			it(`should render a 404 error page if the folderId is not valid (${correspondenceCategory})`, async () => {
 				nock('http://test/')
-					.get('/appeals/1/documents/1/versions')
+					.get('/appeals/documents/1/versions')
 					.reply(200, documentFileVersionsInfo);
 
 				const response = await request.get(
@@ -1673,7 +1673,7 @@ describe('internal correspondence', () => {
 
 			it(`should render a 404 error page if the documentId is not valid (${correspondenceCategory})`, async () => {
 				nock('http://test/')
-					.get('/appeals/1/documents/1/versions')
+					.get('/appeals/documents/1/versions')
 					.reply(200, documentFileVersionsInfo);
 
 				const response = await request.get(
@@ -1691,7 +1691,7 @@ describe('internal correspondence', () => {
 
 			it(`should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null (${correspondenceCategory})`, async () => {
 				nock('http://test/')
-					.get('/appeals/1/documents/1/versions')
+					.get('/appeals/documents/1/versions')
 					.reply(200, documentFileVersionsInfo);
 
 				const response = await request.get(
@@ -1716,7 +1716,7 @@ describe('internal correspondence', () => {
 
 			it(`should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_scanned" (${correspondenceCategory})`, async () => {
 				nock('http://test/')
-					.get('/appeals/1/documents/1/versions')
+					.get('/appeals/documents/1/versions')
 					.reply(200, documentFileVersionsInfoNotChecked);
 
 				const response = await request.get(
@@ -1741,7 +1741,7 @@ describe('internal correspondence', () => {
 
 			it(`should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "affected" (${correspondenceCategory})`, async () => {
 				nock('http://test/')
-					.get('/appeals/1/documents/1/versions')
+					.get('/appeals/documents/1/versions')
 					.reply(200, documentFileVersionsInfoVirusFound);
 
 				const response = await request.get(
@@ -1775,7 +1775,7 @@ describe('internal correspondence', () => {
 
 			it(`should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" (${correspondenceCategory})`, async () => {
 				nock('http://test/')
-					.get('/appeals/1/documents/1/versions')
+					.get('/appeals/documents/1/versions')
 					.reply(200, documentFileVersionsInfoChecked);
 
 				const response = await request.get(
@@ -1821,7 +1821,7 @@ describe('internal correspondence', () => {
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
 				.persist();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
@@ -1915,7 +1915,7 @@ describe('internal correspondence', () => {
 						}
 					]
 				});
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo).persist();
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo).persist();
 		});
 
 		afterEach(() => {
@@ -2200,7 +2200,7 @@ describe('internal correspondence', () => {
 			nock('http://test/').get('/appeals/1/document-folders/10').reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/1/document-folders/11').reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/1/document-folders/22').reply(200, documentFolderInfo);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		for (const correspondenceCategory of correspondenceCategories) {
 			const folder = getFolder(correspondenceCategory);
@@ -2231,7 +2231,7 @@ describe('internal correspondence', () => {
 			nock('http://test/').get('/appeals/1/document-folders/10').reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/1/document-folders/11').reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/1/document-folders/22').reply(200, documentFolderInfo);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		for (const correspondenceCategory of correspondenceCategories) {
 			const folder = getFolder(correspondenceCategory);
@@ -2271,7 +2271,7 @@ describe('internal correspondence', () => {
 				.get('/appeals/1/document-folders/22')
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 
 		for (const correspondenceCategory of correspondenceCategories) {
@@ -2279,7 +2279,7 @@ describe('internal correspondence', () => {
 
 			it(`should render the delete document page with the expected content when there is a single document version (${correspondenceCategory})`, async () => {
 				nock('http://test/')
-					.get('/appeals/1/documents/1/versions')
+					.get('/appeals/documents/1/versions')
 					.reply(200, documentFileVersionsInfoChecked);
 
 				const response = await request.get(
@@ -2324,7 +2324,7 @@ describe('internal correspondence', () => {
 				multipleVersionsDocument.allVersions.push(multipleVersionsDocument.allVersions[0]);
 
 				nock('http://test/')
-					.get('/appeals/1/documents/1/versions')
+					.get('/appeals/documents/1/versions')
 					.reply(200, multipleVersionsDocument);
 
 				const response = await request.get(
@@ -2374,8 +2374,8 @@ describe('internal correspondence', () => {
 				.get('/appeals/1/document-folders/22')
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
-			nock('http://test/').delete('/appeals/1/documents/1/1').reply(200, {
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').delete('/appeals/documents/1/1').reply(200, {
 				guid: '15d19184-155b-4b6c-bba6-2bd2a61ca9a3',
 				name: 'test-pdf-documentFileVersionsInfo.pdf',
 				folderId: 1,
@@ -2392,7 +2392,7 @@ describe('internal correspondence', () => {
 
 			it(`should re-render the delete document page with the expected error message if answer was not provided (${correspondenceCategory})`, async () => {
 				nock('http://test/')
-					.get('/appeals/1/documents/1/versions')
+					.get('/appeals/documents/1/versions')
 					.reply(200, documentFileVersionsInfo);
 
 				const response = await request
@@ -2423,7 +2423,7 @@ describe('internal correspondence', () => {
 
 			it(`should not send an API request to delete the document, and should redirect to the manage document page, if answer "no" was provided`, async () => {
 				nock('http://test/')
-					.get('/appeals/1/documents/1/versions')
+					.get('/appeals/documents/1/versions')
 					.reply(200, documentFileVersionsInfo);
 
 				const response = await request
@@ -2445,7 +2445,7 @@ describe('internal correspondence', () => {
 
 			it(`should send an API request to delete the document, and redirect to the case details page, if answer "yes" was provided`, async () => {
 				nock('http://test/')
-					.get('/appeals/1/documents/1/versions')
+					.get('/appeals/documents/1/versions')
 					.reply(200, documentFileVersionsInfo);
 
 				const response = await request

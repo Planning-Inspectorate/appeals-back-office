@@ -824,7 +824,6 @@ export const renderViewDecision = async (request, response) => {
 
 	let letterDateObject = await getOriginalAndLatestLetterDatesObject(
 		apiClient,
-		currentAppeal.appealId.toString(),
 		currentAppeal.decision.documentId || '',
 		currentAppeal
 	);
