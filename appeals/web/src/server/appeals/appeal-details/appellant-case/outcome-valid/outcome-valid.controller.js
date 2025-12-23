@@ -5,7 +5,12 @@ import {
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { isBefore } from 'date-fns';
-import { updateValidDatePage } from './outcome-valid.mapper.js';
+import {
+	updateEnforcementGroundAPage,
+	updateEnforcementOtherInformationPage,
+	updateEnforcementValidDatePage,
+	updateValidDatePage
+} from './outcome-valid.mapper.js';
 import * as outcomeValidService from './outcome-valid.service.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
@@ -125,6 +130,227 @@ const renderValidDatePage = async (request, response, apiErrors) => {
 	let errors = request.errors || apiErrors;
 
 	const mappedPageContent = updateValidDatePage(
+		appealId,
+		appealReference,
+		dateValidDay,
+		dateValidMonth,
+		dateValidYear,
+		errors
+	);
+
+	return response.status(200).render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getEnforcementGroundA = async (request, response) => {
+	renderEnforcementGroundA(request, response);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postEnforcementGroundA = async (request, response) => {
+	const {
+		errors,
+		body,
+		currentAppeal: { appealId },
+		session
+	} = request;
+
+	if (errors) {
+		return renderEnforcementGroundA(request, response);
+	}
+
+	try {
+		const radioValue = body['enforcementGroundARadio'];
+
+		session.enforcementDecision = { appealGroundABarred: radioValue };
+
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/appellant-case/valid/enforcement/other-information`
+		);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when completing appellant case ground (a) review'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {import('@pins/express').ValidationErrors} [apiErrors]
+ */
+const renderEnforcementGroundA = async (request, response, apiErrors) => {
+	const { currentAppeal } = request;
+	const errors = request.errors || apiErrors;
+	const backLinkUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/`;
+
+	const mappedPageContent = updateEnforcementGroundAPage(
+		currentAppeal,
+		backLinkUrl,
+		request.session.enforcementDecision?.appealGroundABarred
+	);
+
+	return response.status(200).render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getEnforcementOtherInformation = async (request, response) => {
+	renderEnforcementOtherInformation(request, response);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postEnforcementOtherInformation = async (request, response) => {
+	const {
+		errors,
+		body,
+		currentAppeal: { appealId },
+		session
+	} = request;
+
+	if (errors) {
+		return renderEnforcementOtherInformation(request, response);
+	}
+
+	try {
+		const otherInformationValidRadio = body['otherInformationValidRadio'];
+		const otherInformationDetails = body['otherInformationDetails'];
+
+		session.enforcementDecision = {
+			...session.enforcementDecision,
+			otherInformationValidRadio,
+			otherInformationDetails
+		};
+
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/appellant-case/valid/enforcement/date`
+		);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when completing appellant case ground (a) review'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {import('@pins/express').ValidationErrors} [apiErrors]
+ */
+const renderEnforcementOtherInformation = async (request, response, apiErrors) => {
+	const {
+		currentAppeal,
+		session: { enforcementDecision }
+	} = request;
+	const errors = request.errors || apiErrors;
+
+	const mappedPageContent = updateEnforcementOtherInformationPage(
+		currentAppeal,
+		enforcementDecision?.otherInformationValidRadio,
+		enforcementDecision?.otherInformationDetails,
+		errors
+	);
+
+	return response.status(200).render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getEnforcementValidDate = async (request, response) => {
+	renderEnforcementValidDate(request, response);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postEnforcementValidDate = async (request, response) => {
+	const { errors, body, currentAppeal, session } = request;
+
+	if (errors) {
+		return renderEnforcementValidDate(request, response);
+	}
+
+	try {
+		const updatedValidDateDay = parseInt(body['valid-date-day'], 10);
+		const updatedValidDateMonth = parseInt(body['valid-date-month'], 10);
+		const updatedValidDateYear = parseInt(body['valid-date-year'], 10);
+
+		if (
+			Number.isNaN(updatedValidDateDay) ||
+			Number.isNaN(updatedValidDateMonth) ||
+			Number.isNaN(updatedValidDateYear)
+		) {
+			const /** @type {import('@pins/express').ValidationErrors} */ errorMessage = {
+					'valid-date-day': {
+						location: 'body',
+						path: 'all-fields',
+						value: '',
+						type: 'field',
+						msg: 'The valid date must be a real date.'
+					}
+				};
+
+			return renderEnforcementValidDate(request, response, errorMessage);
+		}
+
+		session.enforcementDecision = {
+			...session.enforcementDecision,
+			updatedValidDateDay,
+			updatedValidDateMonth,
+			updatedValidDateYear
+		};
+
+		const { appealId } = currentAppeal;
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/appellant-case/valid/enforcement/check-details`
+		);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when completing appellant case review'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {import('@pins/express').ValidationErrors} [apiErrors]
+ */
+const renderEnforcementValidDate = async (request, response, apiErrors) => {
+	const {
+		currentAppeal: { appealId, appealReference }
+	} = request;
+
+	const dateValidDay = request.body['valid-date-day'];
+	const dateValidMonth = request.body['valid-date-month'];
+	const dateValidYear = request.body['valid-date-year'];
+
+	let errors = request.errors || apiErrors;
+
+	const mappedPageContent = updateEnforcementValidDatePage(
 		appealId,
 		appealReference,
 		dateValidDay,
