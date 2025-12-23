@@ -15,7 +15,7 @@ import { kebabCase } from 'lodash-es';
  * @param {string} [params.id]
  * @param {string} [params.namePrefix]
  * @param {DayMonthYearHourMinute|null} [params.value]
- * @param {string} params.legendText
+ * @param {string} [params.legendText]
  * @param {boolean} [params.legendIsPageHeading=false]
  * @param {string} [params.legendClasses]
  * @param {string} [params.descriptionHtml]
