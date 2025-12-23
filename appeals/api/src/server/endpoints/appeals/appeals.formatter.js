@@ -9,6 +9,7 @@ import {
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
+	DOCUMENT_STATUS_NOT_SENT,
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
 import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
@@ -179,7 +180,12 @@ const formatDocumentationSummary = (appeal) => {
 			isRedacted: Boolean(lpaStatement?.redactedRepresentation)
 		},
 		lpaFinalComments: {
-			status: lpaFinalComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+			status:
+				lpaFinalComments.length > 0 && lpaFinalComments[0].originalRepresentation
+					? DOCUMENT_STATUS_RECEIVED
+					: lpaFinalComments.length > 0 && !lpaFinalComments[0].originalRepresentation
+					? DOCUMENT_STATUS_NOT_SENT
+					: DOCUMENT_STATUS_NOT_RECEIVED,
 			receivedAt: lpaFinalComments[0]?.dateCreated
 				? lpaFinalComments[0].dateCreated.toISOString()
 				: null,
@@ -188,7 +194,11 @@ const formatDocumentationSummary = (appeal) => {
 		},
 		appellantFinalComments: {
 			status:
-				appellantFinalComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+				appellantFinalComments.length > 0 && appellantFinalComments[0].originalRepresentation
+					? DOCUMENT_STATUS_RECEIVED
+					: appellantFinalComments.length > 0 && !appellantFinalComments[0].originalRepresentation
+					? DOCUMENT_STATUS_NOT_SENT
+					: DOCUMENT_STATUS_NOT_RECEIVED,
 			receivedAt: appellantFinalComments[0]?.dateCreated
 				? appellantFinalComments[0].dateCreated.toISOString()
 				: null,

@@ -20,13 +20,18 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute, request
 			return 'Awaiting start date';
 		}
 
-		if (status === 'not_received') {
-			return appealDetails.appealTimetable?.finalCommentsDueDate &&
-				dateIsInThePast(
-					dateISOStringToDayMonthYearHourMinute(appealDetails.appealTimetable.finalCommentsDueDate)
-				)
-				? 'No final comments'
-				: 'Awaiting final comments';
+		if (status === 'not_sent') {
+			return 'No final comments';
+		}
+
+		if (
+			status === 'not_received' &&
+			appealDetails.appealTimetable?.finalCommentsDueDate &&
+			!dateIsInThePast(
+				dateISOStringToDayMonthYearHourMinute(appealDetails.appealTimetable.finalCommentsDueDate)
+			)
+		) {
+			return 'Awaiting final comments';
 		}
 
 		return mapFinalCommentRepresentationStatusToLabelText(
@@ -39,7 +44,7 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute, request
 		const { status, representationStatus, receivedAt } =
 			appealDetails.documentationSummary?.appellantFinalComments ?? {};
 
-		if (!appealDetails.startedAt) {
+		if (!appealDetails.startedAt || status === 'not_sent') {
 			return 'Not applicable';
 		}
 
@@ -64,15 +69,18 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute, request
 			text: 'Appellant final comments',
 			statusText,
 			receivedText,
-			actionHtml: mapRepresentationDocumentSummaryActionLink(
-				currentRoute,
-				appealDetails?.documentationSummary?.appellantFinalComments?.status,
-				appealDetails?.documentationSummary?.appellantFinalComments?.representationStatus,
-				'appellant-final-comments',
-				request,
-				undefined,
-				appealDetails.appealTimetable?.finalCommentsDueDate || ''
-			)
+			actionHtml:
+				status !== 'not_sent'
+					? mapRepresentationDocumentSummaryActionLink(
+							currentRoute,
+							appealDetails?.documentationSummary?.appellantFinalComments?.status,
+							appealDetails?.documentationSummary?.appellantFinalComments?.representationStatus,
+							'appellant-final-comments',
+							request,
+							undefined,
+							appealDetails.appealTimetable?.finalCommentsDueDate || ''
+					  )
+					: ''
 		});
 	}
 };

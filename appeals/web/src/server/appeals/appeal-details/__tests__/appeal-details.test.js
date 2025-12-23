@@ -3806,7 +3806,7 @@ describe('appeal-details', () => {
 						expect(unprettifiedHTML).not.toContain(`${testCase.rowLabel}</th>`);
 					});
 
-					it(`should render an "${testCase.rowLabel}" row with a status of "Not received" and nothing in the "Received" column, and no action link, if the appeal type is "planning appeal", and the appeal does not have ${testCase.name} final comments awaiting review`, async () => {
+					it(`should render an "${testCase.rowLabel}" row with a status of "Not Sent" and nothing in the "Received" column, and no action link, if the appeal type is "planning appeal", and the appeal does not have ${testCase.name} final comments awaiting review`, async () => {
 						nock('http://test/')
 							.get(`/appeals/${appealId}?include=all`)
 							.reply(200, {
@@ -3815,7 +3815,7 @@ describe('appeal-details', () => {
 								documentationSummary: {
 									...appealDataFullPlanning.documentationSummary,
 									[testCase.documentationSummaryKey]: {
-										status: 'not_received',
+										status: 'not_sent',
 										receivedAt: null,
 										representationStatus: null
 									}
@@ -3830,7 +3830,7 @@ describe('appeal-details', () => {
 
 						expect(unprettifiedHTML).toContain('Documentation</th>');
 						expect(unprettifiedHTML).toContain(
-							`${testCase.rowLabel}</th><td class="govuk-table__cell">No final comments</td><td class="govuk-table__cell">Due by 12 October 2023</td>`
+							`${testCase.rowLabel}</th><td class="govuk-table__cell">No final comments</td><td class="govuk-table__cell">Not applicable</td>`
 						);
 					});
 
