@@ -99,6 +99,7 @@ export const validateRepresentationsToPublish = async (req, res, next) => {
 	const { STATEMENTS, FINAL_COMMENTS, EVIDENCE } = APPEAL_CASE_STATUS;
 
 	if (
+		//@ts-ignore
 		![STATEMENTS, FINAL_COMMENTS, EVIDENCE].includes(status) ||
 		(status === STATEMENTS && canPublishIpCommentsAndStatements(req.appeal)) ||
 		(status === FINAL_COMMENTS && canPublishFinalComments(req.appeal)) ||

@@ -104,6 +104,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 			[APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE]: {
 				on: {
 					[VALIDATION_OUTCOME_COMPLETE]: {
+						//@ts-ignore
 						target: targetStateOnLpaqComplete[appealType]
 					},
 					[VALIDATION_OUTCOME_INCOMPLETE]: undefined,
@@ -127,7 +128,9 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 			},
 			[APPEAL_CASE_STATUS.STATEMENTS]: {
 				on: {
+					//@ts-ignore
 					[VALIDATION_OUTCOME_COMPLETE]: {
+						//@ts-ignore
 						target: targetStateOnStatementsComplete[procedureType],
 						cond: isAppealTypeAndProcedureTypeValid
 					},
@@ -240,8 +243,10 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 			},
 			[APPEAL_CASE_STATUS.AWAITING_EVENT]: {
 				on: {
+					//@ts-ignore
 					[VALIDATION_OUTCOME_COMPLETE]: { target: APPEAL_CASE_STATUS.ISSUE_DETERMINATION },
 					[VALIDATION_OUTCOME_INCOMPLETE]: { target: APPEAL_CASE_STATUS.EVENT },
+					//@ts-ignore
 					[VALIDATION_OUTCOME_CANCEL]: { target: targetStateOnEventCancelled[procedureType] },
 					[APPEAL_CASE_STATUS.CLOSED]: { target: APPEAL_CASE_STATUS.CLOSED },
 					[APPEAL_CASE_STATUS.AWAITING_TRANSFER]: {
@@ -269,9 +274,13 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 					[APPEAL_CASE_STATUS.AWAITING_TRANSFER]: {
 						target: APPEAL_CASE_STATUS.AWAITING_TRANSFER
 					},
+					//@ts-ignore
 					[APPEAL_CASE_STATUS.INVALID]: { target: APPEAL_CASE_STATUS.INVALID },
+					//@ts-ignore
 					[VALIDATION_OUTCOME_INVALID]: { target: APPEAL_CASE_STATUS.INVALID },
+					//@ts-ignore
 					[APPEAL_CASE_STATUS.INVALID]: { target: APPEAL_CASE_STATUS.INVALID },
+					//@ts-ignore
 					[APPEAL_CASE_STATUS.WITHDRAWN]: {
 						target: APPEAL_CASE_STATUS.WITHDRAWN
 					}
