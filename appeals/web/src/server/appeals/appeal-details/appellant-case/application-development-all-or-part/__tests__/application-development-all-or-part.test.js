@@ -40,9 +40,9 @@ describe('application-development-all-or-part', () => {
 	});
 
 	describe('POST /change', () => {
-		it('should re-direct to appellant-case if site is fully owned', async () => {
+		it('should re-direct to appellant-case if all', async () => {
 			const validData = {
-				applicationDevelopmentAllOrPartRadio: 'fully'
+				applicationDevelopmentAllOrPartRadio: 'all'
 			};
 
 			nock('http://test/')
@@ -59,9 +59,9 @@ describe('application-development-all-or-part', () => {
 			);
 		});
 
-		it('should re-direct to appellant-case if site is partially owned', async () => {
+		it('should re-direct to appellant-case if part', async () => {
 			const validData = {
-				applicationDevelopmentAllOrPartRadio: 'partially'
+				applicationDevelopmentAllOrPartRadio: 'part'
 			};
 
 			nock('http://test/')
@@ -78,22 +78,29 @@ describe('application-development-all-or-part', () => {
 			);
 		});
 
-		it('should re-direct to appellant-case if site is not owned', async () => {
-			const validData = {
-				applicationDevelopmentAllOrPartRadio: 'none'
-			};
+		it('should re-render the development all or part change page with an error if not selected', async () => {
+			const invalidData = {};
+
+			const apiCall = nock('http://test/')
+				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+				.reply(200, {});
 
 			nock('http://test/')
-				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
-				.reply(200, validData);
+				.get(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+				.reply(200, invalidData);
 
 			const response = await request
 				.post(`${baseUrl}/application-development-all-or-part/change`)
-				.send(validData);
+				.send(invalidData);
 
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case'
+			const elementInnerHtml = parseHtml(response.text).innerHTML;
+			expect(response.statusCode).toEqual(400);
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(apiCall.isDone()).toBe(false);
+
+			expect(elementInnerHtml).toContain('There is a problem');
+			expect(elementInnerHtml).toContain(
+				'Select if the application was for all or part of the development</a>'
 			);
 		});
 	});

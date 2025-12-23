@@ -112,6 +112,7 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 
 	if (
 		newState === APPEAL_CASE_STATUS.EVIDENCE &&
+		//@ts-ignore
 		[APPEAL_CASE_TYPE.W].includes(appealTypeKey) &&
 		procedureKey === APPEAL_CASE_PROCEDURE.INQUIRY
 	) {

@@ -66,8 +66,10 @@ function generateLpaReference() {
  * @param {string} level
  */
 function allocationBandLookup(level) {
+	//@ts-ignore
 	if ([APPEAL_ALLOCATION_LEVEL.A, APPEAL_ALLOCATION_LEVEL.B].includes(level.toLocaleUpperCase()))
 		return 3;
+	//@ts-ignore
 	if ([APPEAL_ALLOCATION_LEVEL.C, APPEAL_ALLOCATION_LEVEL.D].includes(level.toLocaleUpperCase()))
 		return 2;
 	return 1;
@@ -1307,6 +1309,7 @@ export async function seedTestData(databaseConnector) {
 			({ appealId, status, valid }) =>
 				appealId === id &&
 				valid &&
+				//@ts-ignore
 				[APPEAL_CASE_STATUS.ISSUE_DETERMINATION, APPEAL_CASE_STATUS.COMPLETE].includes(status)
 		);
 

@@ -33,6 +33,7 @@ export const getLinkableAppealSummaryByCaseReference = async (appealReference, l
 	} else if (
 		isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) &&
 		linkableType === CASE_RELATIONSHIP_LINKED &&
+		//@ts-ignore
 		!linkableCaseStatuses.includes(currentStatus(appeal))
 	) {
 		throw 432;

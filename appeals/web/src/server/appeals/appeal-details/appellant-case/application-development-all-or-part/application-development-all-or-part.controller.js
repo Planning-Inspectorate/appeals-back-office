@@ -32,7 +32,7 @@ const renderChangeApplicationDevelopmentAllOrPart = async (request, response) =>
 			appellantCaseData
 		);
 
-		return response.status(200).render('patterns/change-page.pattern.njk', {
+		return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 			pageContent: mappedPageContents,
 			errors
 		});

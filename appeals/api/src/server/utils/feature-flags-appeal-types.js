@@ -39,21 +39,27 @@ export const getEnabledAppealTypes = () => {
 	const enabledAppeals = [APPEAL_CASE_TYPE.D];
 
 	if (isAppealTypeEnabled(APPEAL_CASE_TYPE.W)) {
+		//@ts-ignore
 		enabledAppeals.push(APPEAL_CASE_TYPE.W);
 	}
 	if (isAppealTypeEnabled(APPEAL_CASE_TYPE.Y)) {
+		//@ts-ignore
 		enabledAppeals.push(APPEAL_CASE_TYPE.Y);
 	}
 	if (isAppealTypeEnabled(APPEAL_CASE_TYPE.ZP)) {
+		//@ts-ignore
 		enabledAppeals.push(APPEAL_CASE_TYPE.ZP);
 	}
 	if (isAppealTypeEnabled(APPEAL_CASE_TYPE.ZA)) {
+		//@ts-ignore
 		enabledAppeals.push(APPEAL_CASE_TYPE.ZA);
 	}
 	if (isAppealTypeEnabled(APPEAL_CASE_TYPE.H)) {
+		//@ts-ignore
 		enabledAppeals.push(APPEAL_CASE_TYPE.H);
 	}
 	if (isAppealTypeEnabled(APPEAL_CASE_TYPE.C)) {
+		//@ts-ignore
 		enabledAppeals.push(APPEAL_CASE_TYPE.C);
 	}
 
@@ -67,6 +73,7 @@ export const filterEnabledAppealTypes = (appealTypes) => {
 	const enabledAppealTypes = getEnabledAppealTypes();
 
 	return appealTypes.filter((appealType) => {
+		//@ts-ignore
 		return enabledAppealTypes.includes(appealType.key);
 	}, []);
 };
