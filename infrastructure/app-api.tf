@@ -43,7 +43,7 @@ module "app_api" {
 
     # documents
     BO_BLOB_CONTAINER       = azurerm_storage_container.appeal_documents.name
-    BO_BLOB_STORAGE_ACCOUNT = azurerm_storage_account.documents.primary_blob_endpoint # TODO: replace with custom domain
+    BO_BLOB_STORAGE_ACCOUNT = azurerm_storage_account.documents.primary_blob_endpoint # TODO: replace with custom domain 
 
     # database connection
     DATABASE_NAME    = azurerm_mssql_database.primary.name
