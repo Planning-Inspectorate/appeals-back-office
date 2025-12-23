@@ -503,13 +503,6 @@ export const happyPathHelper = {
 		basePage.validateBannerMessage('Success', 'Number of residential units added');
 	},
 
-<<<<<<< HEAD
-	updateCase(caseObj, currentStatus, targetStatus, appealType, procedureType = 'written') {
-		const baseActions = {
-			[STATUSES.ASSIGN_CASE_OFFICER]: (c) => cy.assignCaseOfficerViaApi(c),
-			[STATUSES.VALIDATION]: (c) => cy.updateAppealDetailsViaApi(c, { validationOutcome: 'valid' }),
-			[STATUSES.READY_TO_START]: (c, appealType, procedureType) => cy.startAppeal(c),
-=======
 	updateCase(caseObj, currentStatus, targetStatus, appealType, procedureType = 'WRITTEN') {
 		const baseActions = {
 			[STATUSES.ASSIGN_CASE_OFFICER]: (c) => cy.assignCaseOfficerViaApi(c),
@@ -525,7 +518,6 @@ export const happyPathHelper = {
 					cy.startAppeal(c);
 				}
 			},
->>>>>>> f40c8bf52 (feat(appeals): initial concept WIP)
 			[STATUSES.LPA_QUESTIONNAIRE]: (c) => {
 				cy.addLpaqSubmissionToCase(c);
 				cy.reviewLpaqSubmission(c);
@@ -537,22 +529,15 @@ export const happyPathHelper = {
 				cy.shareCommentsAndStatementsViaApi(c);
 			},
 			[STATUSES.FINAL_COMMENTS]: (c) => {
-<<<<<<< HEAD
-=======
 				if (procedureType === 'HEARING' || procedureType === 'INQUIRY') {
 					cy.log(`"${procedureType}" procedure — skipping final comments`);
 					return;
 				}
->>>>>>> f40c8bf52 (feat(appeals): initial concept WIP)
 				cy.addRepresentation(c, 'lpaFinalComment', null);
 				cy.reviewLpaFinalCommentsViaApi(c);
 				cy.simulateFinalCommentsDeadlineElapsed(c);
 				cy.shareCommentsAndStatementsViaApi(c);
 			},
-<<<<<<< HEAD
-			[STATUSES.EVENT_READY_TO_SETUP]: (c) => cy.setupSiteVisitViaAPI(c),
-			[STATUSES.AWAITING_EVENT]: (c) => cy.simulateSiteVisit(c),
-=======
 			[STATUSES.EVIDENCE]: (c, appealType, procedureType) => {
 				if (procedureType !== 'INQUIRY') {
 					cy.log('Skipping EVIDENCE stage because procedure type is not inquiry');
@@ -578,7 +563,6 @@ export const happyPathHelper = {
 					cy.simulateSiteVisit(c);
 				}
 			},
->>>>>>> f40c8bf52 (feat(appeals): initial concept WIP)
 			[STATUSES.ISSUE_DECISION]: (c) => cy.issueDecisionViaApi(c)
 		};
 
