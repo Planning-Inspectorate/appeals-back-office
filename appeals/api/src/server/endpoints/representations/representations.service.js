@@ -148,7 +148,10 @@ export const createRepresentation = async (appealId, input) => {
 		representedId = represented.id;
 	} else if (input.representationType == APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT) {
 		representedId = Number(input.appellantId);
-	} else if (input.representationType == APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT) {
+	} else if (
+		input.representationType == APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT ||
+		input.representationType == APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
+	) {
 		representedId = Number(input.representedId);
 	}
 

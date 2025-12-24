@@ -8,11 +8,22 @@ import addRepresentationRouter from './add-representation/add-representation.rou
 import incompleteProofOfEvidenceRouter from './incomplete/incomplete.router.js';
 import {
 	addPageContentToLocals,
+	validateRule6Party,
 	withSingularRepresentation
 } from './proof-of-evidence.middleware.js';
 import viewAndReviewProofOfEvidenceRouter from './view-and-review/view-and-review.router.js';
 
 const router = createRouter({ mergeParams: true });
+
+router.use(
+	'/rule-6-party/:rule6PartyId/add-representation',
+	validateAppeal,
+	validateRule6Party,
+	addPageContentToLocals,
+	getRepresentationAttachmentsFolder,
+	withSingularRepresentation,
+	addDocumentRouter
+);
 
 router.use(
 	'/:proofOfEvidenceType/add-representation',

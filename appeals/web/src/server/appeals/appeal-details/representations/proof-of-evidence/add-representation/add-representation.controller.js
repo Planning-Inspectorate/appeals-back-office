@@ -47,6 +47,8 @@ export const renderDocumentUpload = async (request, response) => {
 		documentType:
 			proofOfEvidenceType === 'lpa'
 				? APPEAL_DOCUMENT_TYPE.LPA_PROOF_OF_EVIDENCE
+				: proofOfEvidenceType === 'rule-6-party'
+				? APPEAL_DOCUMENT_TYPE.RULE_6_PROOF_OF_EVIDENCE
 				: APPEAL_DOCUMENT_TYPE.APPELLANT_PROOF_OF_EVIDENCE
 	});
 };
@@ -72,6 +74,7 @@ export const renderCheckYourAnswers = (request, response) => {
 	const {
 		errors,
 		currentAppeal: { appealReference },
+		currentRule6Party,
 		session: {
 			fileUploadInfo: {
 				files: [{ name, blobStoreUrl }]
@@ -83,18 +86,27 @@ export const renderCheckYourAnswers = (request, response) => {
 
 	clearEdits(request, 'addDocument');
 
+	// Get the display name for the POE type
+	const orgName = currentRule6Party?.serviceUser?.organisationName || undefined;
+
 	return renderCheckYourAnswersComponent(
 		{
 			title: `Check details and add ${formatProofOfEvidenceTypeText(
-				proofOfEvidenceType
+				proofOfEvidenceType,
+				false,
+				orgName
 			)} proof of evidence and witnesses`,
 			heading: `Check details and add ${formatProofOfEvidenceTypeText(
-				proofOfEvidenceType
+				proofOfEvidenceType,
+				false,
+				orgName
 			)} proof of evidence and witnesses`,
 			preHeading: `Appeal ${appealShortReference(appealReference)}`,
 			backLinkUrl: baseUrl,
 			submitButtonText: `Add ${formatProofOfEvidenceTypeText(
-				proofOfEvidenceType
+				proofOfEvidenceType,
+				false,
+				orgName
 			)} proof of evidence and witnesses`,
 			responses: {
 				'Proof of evidence and witnesses': {
@@ -121,7 +133,7 @@ export const postCheckYourAnswers = async (request, response) => {
 		apiClient,
 		session,
 		currentAppeal: { appealId },
-		params: { proofOfEvidenceType }
+		params: { proofOfEvidenceType, rule6PartyId }
 	} = request;
 
 	const {
@@ -148,14 +160,15 @@ export const postCheckYourAnswers = async (request, response) => {
 		}
 
 		try {
-			await createNewDocument(apiClient, appealId, {
+			/** @type {(name: string) => import('@pins/appeals/index.js').AddDocumentsRequest} */
+			const createDocumentPayload = (name) => ({
 				blobStorageHost:
 					config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
 				blobStorageContainer: config.blobStorageDefaultContainer,
 				documents: [
 					{
 						caseId: appealId,
-						documentName: document.name,
+						documentName: name,
 						documentType: document.documentType,
 						mimeType: document.mimeType,
 						documentSize: document.size,
@@ -168,11 +181,27 @@ export const postCheckYourAnswers = async (request, response) => {
 					}
 				]
 			});
+
+			try {
+				await createNewDocument(apiClient, appealId, createDocumentPayload(document.name));
+			} catch (/** @type {any} */ error) {
+				if (error.response?.statusCode === 409) {
+					const newName = `${document.name
+						.split('.')
+						.slice(0, -1)
+						.join('.')}_${Date.now()}.${document.name.split('.').pop()}`;
+					await createNewDocument(apiClient, appealId, createDocumentPayload(newName));
+				} else {
+					throw error;
+				}
+			}
+
 			await postRepresentationProofOfEvidence(
 				apiClient,
 				appealId,
 				[document.GUID],
-				proofOfEvidenceType
+				proofOfEvidenceType,
+				rule6PartyId
 			);
 		} catch (error) {
 			logger.error(
@@ -200,6 +229,8 @@ export const postCheckYourAnswers = async (request, response) => {
 		bannerDefinitionKey:
 			proofOfEvidenceType === 'lpa'
 				? 'lpaProofOfEvidenceDocumentAddedSuccess'
+				: proofOfEvidenceType === 'rule-6-party'
+				? 'rule6PartyProofOfEvidenceAddedSuccess'
 				: 'appellantProofOfEvidenceDocumentAddedSuccess',
 		appealId
 	});
