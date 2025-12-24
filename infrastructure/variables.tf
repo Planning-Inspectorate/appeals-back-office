@@ -17,6 +17,7 @@ variable "apps_config" {
     session_max_age                   = string
     use_system_test_bc_for_change_lpa = bool # Whether to allow STBC/STBC2 on change LPA list
     front_office_url                  = string
+    db_connection_limit               = string
 
     auth = object({
       client_id = string
