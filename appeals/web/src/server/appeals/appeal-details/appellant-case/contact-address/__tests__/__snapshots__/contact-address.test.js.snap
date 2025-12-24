@@ -134,28 +134,28 @@ exports[`contact-address POST /add should re-render the page with an error if on
                             <p id="address-line-1-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Address line 1 must be
                                 250 characters or less</p>
                             <input class="govuk-input govuk-input--error"
-                            id="address-line-1" name="addressLine1" type="text" value="96 The Avenue"
+                            id="address-line-1" name="addressLine1" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
                             aria-describedby="address-line-1-error">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
                             <input class="govuk-input" id="address-line-2"
-                            name="addressLine2" type="text" value="Maidstone">
+                            name="addressLine2" type="text" value="">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="town">Town or city</label>
                             <input class="govuk-input govuk-input govuk-input--width-20"
-                            id="town" name="town" type="text" value="">
+                            id="town" name="town" type="text" value="town">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="county">County (optional)</label>
                             <input class="govuk-input govuk-input govuk-input--width-20"
-                            id="county" name="county" type="text" value="Kent">
+                            id="county" name="county" type="text" value="country">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="post-code">Postcode</label>
                             <input class="govuk-input govuk-input govuk-input--width-10"
-                            id="post-code" name="postCode" type="text" value="MD21 5XY">
+                            id="post-code" name="postCode" type="text" value="NG7 8LU">
                         </div>
                         <div class="govuk-form-group">
                             <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
@@ -206,12 +206,12 @@ exports[`contact-address POST /add should re-render the page with an error if on
                             <label class="govuk-label" for="address-line-1">Address line 1</label>
                             <p id="address-line-1-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter address line 1</p>
                             <input                             class="govuk-input govuk-input--error" id="address-line-1" name="addressLine1"
-                            type="text" value="96 The Avenue" aria-describedby="address-line-1-error">
+                            type="text" value="" aria-describedby="address-line-1-error">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
                             <input class="govuk-input" id="address-line-2"
-                            name="addressLine2" type="text" value="Maidstone">
+                            name="addressLine2" type="text" value="">
                         </div>
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="town">Town or city</label>
@@ -222,13 +222,13 @@ exports[`contact-address POST /add should re-render the page with an error if on
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="county">County (optional)</label>
                             <input class="govuk-input govuk-input govuk-input--width-20"
-                            id="county" name="county" type="text" value="Kent">
+                            id="county" name="county" type="text" value="">
                         </div>
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="post-code">Postcode</label>
                             <p id="post-code-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter postcode</p>
                             <input                             class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
-                            id="post-code" name="postCode" type="text" value="MD21 5XY" aria-describedby="post-code-error">
+                            id="post-code" name="postCode" type="text" value="" aria-describedby="post-code-error">
                         </div>
                         <div class="govuk-form-group">
                             <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
@@ -276,28 +276,28 @@ exports[`contact-address POST /change/:addressId should re-render the page with 
                             <p id="address-line-1-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Address line 1 must be
                                 250 characters or less</p>
                             <input class="govuk-input govuk-input--error"
-                            id="address-line-1" name="addressLine1" type="text" value="96 The Avenue"
+                            id="address-line-1" name="addressLine1" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
                             aria-describedby="address-line-1-error">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
                             <input class="govuk-input" id="address-line-2"
-                            name="addressLine2" type="text" value="Maidstone">
+                            name="addressLine2" type="text" value="">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="town">Town or city</label>
                             <input class="govuk-input govuk-input govuk-input--width-20"
-                            id="town" name="town" type="text" value="">
+                            id="town" name="town" type="text" value="town">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="county">County (optional)</label>
                             <input class="govuk-input govuk-input govuk-input--width-20"
-                            id="county" name="county" type="text" value="Kent">
+                            id="county" name="county" type="text" value="country">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="post-code">Postcode</label>
                             <input class="govuk-input govuk-input govuk-input--width-10"
-                            id="post-code" name="postCode" type="text" value="MD21 5XY">
+                            id="post-code" name="postCode" type="text" value="NG7 8LU">
                         </div>
                         <div class="govuk-form-group">
                             <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
@@ -348,12 +348,12 @@ exports[`contact-address POST /change/:addressId should re-render the page with 
                             <label class="govuk-label" for="address-line-1">Address line 1</label>
                             <p id="address-line-1-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter address line 1</p>
                             <input                             class="govuk-input govuk-input--error" id="address-line-1" name="addressLine1"
-                            type="text" value="96 The Avenue" aria-describedby="address-line-1-error">
+                            type="text" value="" aria-describedby="address-line-1-error">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
                             <input class="govuk-input" id="address-line-2"
-                            name="addressLine2" type="text" value="Maidstone">
+                            name="addressLine2" type="text" value="">
                         </div>
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="town">Town or city</label>
@@ -364,13 +364,13 @@ exports[`contact-address POST /change/:addressId should re-render the page with 
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="county">County (optional)</label>
                             <input class="govuk-input govuk-input govuk-input--width-20"
-                            id="county" name="county" type="text" value="Kent">
+                            id="county" name="county" type="text" value="">
                         </div>
                         <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="post-code">Postcode</label>
                             <p id="post-code-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter postcode</p>
                             <input                             class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
-                            id="post-code" name="postCode" type="text" value="MD21 5XY" aria-describedby="post-code-error">
+                            id="post-code" name="postCode" type="text" value="" aria-describedby="post-code-error">
                         </div>
                         <div class="govuk-form-group">
                             <input class="govuk-input" id="operation-type" name="operationType" type="hidden"

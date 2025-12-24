@@ -17,7 +17,14 @@ export const getChangeInterestInLand = async (request, response) => {
  */
 const renderManagerInterestInLand = async (request, response) => {
 	const { currentAppeal, errors } = request;
-	const mappedPageContents = manageInterestInLandPage(currentAppeal, errors);
+
+	const interestInLand = request.body['interestInLandRadio'];
+	const interestInLandOtherText = request.body['interestInLandOther'];
+
+	const mappedPageContents = manageInterestInLandPage(currentAppeal, errors, {
+		interestInLand,
+		interestInLandOtherText
+	});
 	return response
 		.status(errors ? 400 : 200)
 		.render('patterns/change-page.pattern.njk', { pageContent: mappedPageContents, errors });

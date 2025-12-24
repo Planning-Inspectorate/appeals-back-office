@@ -8,7 +8,7 @@ export const validateIncompleteReason = createValidator(
 		.notEmpty()
 		.withMessage('What is your interest in the land?')
 		.bail()
-		.isIn(['Owner', 'Mortgage Lender', 'Tenant', 'Other'])
+		.isIn(['Owner', 'Mortgage lender', 'Tenant', 'Other'])
 		.withMessage('Something went wrong')
 );
 
