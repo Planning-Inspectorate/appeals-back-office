@@ -5,15 +5,27 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 
 /**
+ * /**
+ * @typedef {Object} SessionData
+ * @property {string} [interestInLand]
+ * @property {string} [interestInLandOtherText]
+ *
  * @param {Appeal} appealData
  * @param {import("@pins/express").ValidationErrors | undefined} errors
+ * @param {SessionData} session
  * @returns {PageContent}
  */
-export const manageInterestInLandPage = (appealData, errors) => {
+export const manageInterestInLandPage = (appealData, errors, session) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
-	const interestInLand = appealData.enforcementNotice?.appellantCase?.interestInLand;
+	const interestInLand =
+		session.interestInLand || appealData.enforcementNotice?.appellantCase?.interestInLand;
 	const interestInLandOtherChecked =
-		!!interestInLand && !['Owner', 'Mortgage Lender', 'Tenant'].includes(interestInLand);
+		!!interestInLand && !['Owner', 'Mortgage lender', 'Tenant'].includes(interestInLand);
+	const interestInLandOtherText = session.interestInLand
+		? session.interestInLandOtherText
+		: interestInLandOtherChecked
+		? appealData.enforcementNotice?.appellantCase?.interestInLand
+		: '';
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -40,9 +52,9 @@ export const manageInterestInLandPage = (appealData, errors) => {
 							checked: interestInLand === 'Owner'
 						},
 						{
-							value: 'Mortgage Lender',
+							value: 'Mortgage lender',
 							text: 'Mortgage lender',
-							checked: interestInLand === 'Mortgage Lender'
+							checked: interestInLand === 'Mortgage lender'
 						},
 						{
 							value: 'Tenant',
@@ -60,7 +72,7 @@ export const manageInterestInLandPage = (appealData, errors) => {
 										parameters: {
 											id: 'interest-in-land-other',
 											name: 'interestInLandOther',
-											value: interestInLandOtherChecked ? interestInLand : '',
+											value: interestInLandOtherText,
 											...(errors && { errorMessage: { text: errors.interestInLandOther?.msg } }),
 											label: {
 												text: 'Enter interest in the land',

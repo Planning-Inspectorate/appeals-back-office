@@ -27,8 +27,22 @@ const mapAddressToInputs = (address) => {
  */
 export function manageContactAddressPage(appealData, backLinkUrl, request, errors) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
+
+	const newAddress = {
+		addressLine1: request.body['addressLine1'],
+		addressLine2: request.body['addressLine2'],
+		town: request.body['town'],
+		county: request.body['county'],
+		postCode: request.body['postCode']
+	};
+	const isPostRequest = request.method === 'POST';
+
 	const address = appealData.enforcementNotice?.appellantCase?.contactAddress;
-	const mappedAddress = address ? mapAddressToInputs(address) : undefined;
+	const mappedAddress = isPostRequest
+		? newAddress
+		: address
+		? mapAddressToInputs(address)
+		: undefined;
 
 	return {
 		title: `What is your contact address?`,

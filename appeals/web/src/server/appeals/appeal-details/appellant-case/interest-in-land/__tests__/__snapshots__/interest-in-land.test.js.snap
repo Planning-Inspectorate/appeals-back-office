@@ -24,7 +24,7 @@ exports[`interest-in-land GET /change should render the interest in land page 1`
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-2" name="interestInLandRadio"
-                                        type="radio" value="Mortgage Lender">
+                                        type="radio" value="Mortgage lender">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-2">Mortgage lender</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -82,7 +82,7 @@ exports[`interest-in-land GET /change should render the interest in land page wi
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-2" name="interestInLandRadio"
-                                        type="radio" value="Mortgage Lender">
+                                        type="radio" value="Mortgage lender">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-2">Mortgage lender</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -140,7 +140,7 @@ exports[`interest-in-land GET /change should render the interest in land page wi
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-2" name="interestInLandRadio"
-                                        type="radio" value="Mortgage Lender">
+                                        type="radio" value="Mortgage lender">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-2">Mortgage lender</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -212,7 +212,7 @@ exports[`interest-in-land POST /change should re-render the page with an error i
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-2" name="interestInLandRadio"
-                                        type="radio" value="Mortgage Lender">
+                                        type="radio" value="Mortgage lender">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-2">Mortgage lender</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -288,7 +288,7 @@ exports[`interest-in-land POST /change should re-render the page with an error i
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-2" name="interestInLandRadio"
-                                        type="radio" value="Mortgage Lender">
+                                        type="radio" value="Mortgage lender">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-2">Mortgage lender</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -364,7 +364,7 @@ exports[`interest-in-land POST /change should re-render the page with an error i
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-2" name="interestInLandRadio"
-                                        type="radio" value="Mortgage Lender">
+                                        type="radio" value="Mortgage lender">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-2">Mortgage lender</label>
                                     </div>
                                     <div class="govuk-radios__item">
