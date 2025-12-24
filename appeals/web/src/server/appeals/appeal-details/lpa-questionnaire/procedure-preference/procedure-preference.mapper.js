@@ -111,7 +111,7 @@ export const changeProcedurePreferenceDurationPage = (
 
 	let procedurePreferenceDuration = lpaQuestionnaireData.lpaProcedurePreferenceDuration?.toString();
 
-	if (storedSessionData?.input) {
+	if (storedSessionData?.input && storedSessionData.input !== 'Not answered') {
 		procedurePreferenceDuration = storedSessionData.input;
 	}
 

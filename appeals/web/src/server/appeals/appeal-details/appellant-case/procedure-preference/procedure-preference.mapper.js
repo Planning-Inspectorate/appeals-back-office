@@ -122,7 +122,7 @@ export const changeProcedurePreferenceDurationPage = (
 	let procedurePreferenceDuration =
 		appellantCaseData.appellantProcedurePreferenceDuration?.toString();
 
-	if (storedSessionData?.input) {
+	if (storedSessionData?.input !== undefined && storedSessionData.input !== 'Not answered') {
 		procedurePreferenceDuration = storedSessionData.input;
 	}
 
@@ -168,7 +168,7 @@ export const changeInquiryNumberOfWitnessesPage = (
 	let inquiryNumberOfWitnesses =
 		appellantCaseData.appellantProcedurePreferenceWitnessCount?.toString();
 
-	if (storedSessionData?.input) {
+	if (storedSessionData?.input !== undefined && storedSessionData.input !== 'Not answered') {
 		inquiryNumberOfWitnesses = storedSessionData.input;
 	}
 
