@@ -7,11 +7,17 @@ import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page
 import { toSentenceCase } from '#lib/string-utilities.js';
 
 /**
+ * /**
+ * @typedef {Object} SessionData
+ * @property {string} [interestInLand]
+ * @property {string} [interestInLandOtherText]
+ *
  * @param {Appeal} appealData
  * @param {import("@pins/express").ValidationErrors | undefined} errors
+ * @param {SessionData} session
  * @returns {PageContent}
  */
-export const manageInterestInLandPage = (appealData, errors) => {
+export const manageInterestInLandPage = (appealData, errors, session) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const interestInLand = errors?.interestInLandOther
 		? errors?.interestInLandOther.value
@@ -44,7 +50,26 @@ export const manageInterestInLandPage = (appealData, errors) => {
 							checked: interestInLandOption === interestInLand
 						})),
 						{
+<<<<<<< HEAD
 							value: 'other',
+=======
+							value: 'Owner',
+							text: 'Owner',
+							checked: interestInLand === 'Owner'
+						},
+						{
+							value: 'Mortgage lender',
+							text: 'Mortgage lender',
+							checked: interestInLand === 'Mortgage lender'
+						},
+						{
+							value: 'Tenant',
+							text: 'Tenant',
+							checked: interestInLand === 'Tenant'
+						},
+						{
+							value: 'Other',
+>>>>>>> ac8415228 (fix(appeals): appellant case land section fixes)
 							text: 'Other',
 							checked: interestInLandOtherChecked,
 							conditional: {
@@ -54,7 +79,7 @@ export const manageInterestInLandPage = (appealData, errors) => {
 										parameters: {
 											id: 'interest-in-land-other',
 											name: 'interestInLandOther',
-											value: interestInLandOtherChecked ? interestInLand : '',
+											value: interestInLandOtherText,
 											...(errors && { errorMessage: { text: errors.interestInLandOther?.msg } }),
 											label: {
 												text: 'Enter interest in the land',
