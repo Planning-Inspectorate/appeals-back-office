@@ -1,7 +1,7 @@
-/** @typedef {import('#utils/db-client/index.js').Prisma.LPACreateInput} LPA */
+/** @typedef {import('#utils/db-client/models.ts').LPACreateInput} LPA */
 
 /**
- * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
+ * @param {import('../../server/utils/db-client/client.ts').PrismaClient} databaseConnector
  * @param {LPA[]} seed
  */
 export const seedLPAs = async (databaseConnector, seed) => {

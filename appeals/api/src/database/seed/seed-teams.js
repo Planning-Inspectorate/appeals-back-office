@@ -1,7 +1,7 @@
-/** @typedef {import('#utils/db-client/index.js').Prisma.TeamCreateInput} Team */
+/** @typedef {import('#utils/db-client/models.ts').TeamCreateInput} Team */
 
 /**
- * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
+ * @param {import('../../server/utils/db-client/client.ts').PrismaClient} databaseConnector
  * @param {Team[]} teams
  * @returns {Promise<Map<string, number>>} A map of team names to their IDs
  */

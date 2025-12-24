@@ -1,4 +1,4 @@
-/** @typedef {import('#utils/db-client/index.js').Prisma.LPACreateInput} LPA */
+/** @typedef {import('#utils/db-client/models.ts').LPACreateInput} LPA */
 
 /**
  *
