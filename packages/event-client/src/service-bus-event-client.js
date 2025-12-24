@@ -72,7 +72,9 @@ export class ServiceBusEventClient {
 		const traceId = this.#createTraceId();
 
 		this.logger.info(
-			`Publishing ${events} to topic ${topic} with type ${eventType} and trace id ${traceId}
+			`Publishing ${JSON.stringify(
+				events
+			)} to topic ${topic} with type ${eventType} and trace id ${traceId}
 			)}`
 		);
 
