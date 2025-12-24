@@ -7,6 +7,7 @@ import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
+import { changeProcedurePreferenceDurationPage } from '../procedure-preference.mapper.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -365,6 +366,29 @@ describe('procedure-preference', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<input class="govuk-input govuk-input--width-2" id="procedure-preference-duration" name="procedurePreferenceDurationInput" type="text" value="5">'
+			);
+		});
+
+		it('should not render not answered in the input even if it is in session storage', async () => {
+			/**
+			 * @type {import("express-session").Session & Partial<import("express-session").SessionData>}
+			 */
+			let session;
+
+			session = {
+				storedSessionData: {
+					input: 'Not answered'
+				}
+			};
+
+			const sessionDataProcedurePreferenceDurationPage = changeProcedurePreferenceDurationPage(
+				appealDataFullPlanning,
+				lpaQuestionnaireDataNotValidated,
+				session
+			);
+
+			expect(sessionDataProcedurePreferenceDurationPage.pageComponents[0].parameters.value).toBe(
+				''
 			);
 		});
 	});
