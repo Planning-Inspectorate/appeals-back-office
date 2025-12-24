@@ -386,6 +386,7 @@ export interface WebDocumentationSummary extends DocumentationSummary {
 
 export interface AppealRule6Party {
 	id: number;
+	serviceUserId: number;
 	serviceUser: WebServiceUser;
 }
 

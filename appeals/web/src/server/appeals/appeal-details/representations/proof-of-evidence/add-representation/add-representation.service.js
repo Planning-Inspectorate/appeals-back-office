@@ -3,23 +3,28 @@
  * @param {number} appealId
  * @param {string[]} documentGUIDs
  * @param {string} proofOfEvidenceType
+ * @param {string|number} [representedId]
  * @returns {Promise<any>}
  */
 export async function postRepresentationProofOfEvidence(
 	apiClient,
 	appealId,
 	documentGUIDs,
-	proofOfEvidenceType
+	proofOfEvidenceType,
+	representedId
 ) {
 	try {
-		const response = await apiClient.post(
-			`appeals/${appealId}/reps/${proofOfEvidenceType}/proof-of-evidence`,
-			{
-				json: {
-					attachments: documentGUIDs
-				}
-			}
-		);
+		/** @type {any} */
+		const payload = { attachments: documentGUIDs };
+		if (representedId) {
+			payload.representedId = Number(representedId);
+		}
+		const repType =
+			proofOfEvidenceType === 'rule-6-party' ? 'rule_6_party_proofs_evidence' : proofOfEvidenceType;
+
+		const response = await apiClient.post(`appeals/${appealId}/reps/${repType}/proof-of-evidence`, {
+			json: payload
+		});
 		return response.body;
 	} catch (error) {
 		console.error('Error posting proof of evidence:', error);
