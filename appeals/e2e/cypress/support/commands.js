@@ -560,3 +560,11 @@ Cypress.Commands.add('reviewLpaqSubmission', (caseObj) => {
 		cy.reload();
 	});
 });
+
+Cypress.Commands.add('addRule6Party', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.addRule6Party(caseObj.id);
+		cy.log('Add rule 6 party for case ref ' + caseObj.reference);
+		cy.reload();
+	});
+});

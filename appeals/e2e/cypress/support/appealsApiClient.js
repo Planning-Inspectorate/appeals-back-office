@@ -814,5 +814,31 @@ export const appealsApiClient = {
 		} catch {
 			return false;
 		}
+	},
+
+	async addRule6Party(appealId) {
+		try {
+			const url = `${baseUrl}appeals/${appealId}/rule-6-parties`;
+			const requestBody = createApiSubmission(appealsApiRequests.rule6Party);
+			console.log(requestBody);
+
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				},
+				body: JSON.stringify(requestBody)
+			});
+			expect(response.status).eq(201);
+
+			const responseBody = await response.json();
+			expect(responseBody.serviceUser).to.deep.equal(requestBody.serviceUser);
+			expect(responseBody.appealId).to.deep.equal(appealId);
+
+			return await response.json();
+		} catch {
+			return false;
+		}
 	}
 };
