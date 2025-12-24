@@ -457,7 +457,7 @@ exports[`appeal-details GET /:appealId Documentation Rule 6 party statements and
                 <th scope="row" class="govuk-table__header">Test Rule 6 Party proof of evidence and witness</th>
                 <td class="govuk-table__cell">Awaiting proof of evidence and witness</td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/proof-of-evidence/rule-6-party/add-representation?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/proof-of-evidence/rule-6-party/1/add-representation?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                     data-cy="add-rule-6-party-proofs-evidence" class="govuk-link">Add<span class="govuk-visually-hidden"> Test Rule 6 Party proof of evidence</span></a>
                 </td>
             </tr>

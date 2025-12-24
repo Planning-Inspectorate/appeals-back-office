@@ -402,7 +402,24 @@ export const fullPlanningAppeal = {
 		appellantProcedurePreferenceDuration: 5,
 		appellantProcedurePreferenceWitnessCount: 1
 	},
-	representations: []
+	appealRule6Parties: [
+		{
+			id: 1,
+			appealId: 2,
+			serviceUserId: 1,
+			proofEvidenceReceived: true
+		}
+	],
+	representations: [
+		{
+			id: 1,
+			representationType: 'rule_6_party_proofs_evidence',
+			status: 'valid',
+			redactedRepresentation: null,
+			dateCreated: new Date('2024-03-25T23:59:59.999Z'),
+			representedId: 1
+		}
+	]
 };
 
 export const listedBuildingAppeal = {
