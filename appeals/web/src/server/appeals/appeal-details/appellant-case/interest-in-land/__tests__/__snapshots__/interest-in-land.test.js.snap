@@ -301,15 +301,14 @@ exports[`interest-in-land POST /change should re-render the page with an error i
                                         type="radio" value="other" data-aria-controls="conditional-interest-in-land-radio-4">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-4">Other</label>
                                     </div>
-                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
-                                    id="conditional-interest-in-land-radio-4">
+                                    <div class="govuk-radios__conditional" id="conditional-interest-in-land-radio-4">
                                         <div class="govuk-form-group govuk-form-group--error">
                                             <label class="govuk-label govuk-label--s" for="interest-in-land-other">Enter interest in the land</label>
                                             <p id="interest-in-land-other-error"
                                             class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> What is your interest
                                                 in the land?</p>
                                             <input class="govuk-input govuk-input--error" id="interest-in-land-other"
-                                            name="interestInLandOther" type="text" value="" aria-describedby="interest-in-land-other-error">
+                                            name="interestInLandOther" type="text" aria-describedby="interest-in-land-other-error">
                                         </div>
                                     </div>
                                 </div>

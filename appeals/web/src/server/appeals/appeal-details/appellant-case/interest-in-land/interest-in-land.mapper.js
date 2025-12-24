@@ -50,26 +50,7 @@ export const manageInterestInLandPage = (appealData, errors, session) => {
 							checked: interestInLandOption === interestInLand
 						})),
 						{
-<<<<<<< HEAD
 							value: 'other',
-=======
-							value: 'Owner',
-							text: 'Owner',
-							checked: interestInLand === 'Owner'
-						},
-						{
-							value: 'Mortgage lender',
-							text: 'Mortgage lender',
-							checked: interestInLand === 'Mortgage lender'
-						},
-						{
-							value: 'Tenant',
-							text: 'Tenant',
-							checked: interestInLand === 'Tenant'
-						},
-						{
-							value: 'Other',
->>>>>>> ac8415228 (fix(appeals): appellant case land section fixes)
 							text: 'Other',
 							checked: interestInLandOtherChecked,
 							conditional: {
