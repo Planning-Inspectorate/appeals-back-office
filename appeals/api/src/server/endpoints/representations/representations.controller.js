@@ -5,7 +5,7 @@ import { isStatePassed } from '#state/transition-state.js';
 import BackOfficeAppError from '#utils/app-error.js';
 import { currentStatus } from '#utils/current-status.js';
 import { getPageCount } from '#utils/database-pagination.js';
-import { Prisma } from '#utils/db-client/index.js';
+import { Prisma } from '#utils/db-client/client.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,

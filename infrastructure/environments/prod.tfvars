@@ -6,6 +6,7 @@ apps_config = {
   private_endpoint_enabled   = true
   session_max_age            = 10800000
   front_office_url           = "https://appeal-planning-decision.service.gov.uk"
+  db_connection_limit        = 15
 
   auth = {
     client_id = "ba49fd0e-11ad-48e2-8bfb-a203defb625f" # Appeals Back Office PROD

@@ -20,7 +20,7 @@
  */
 
 /**
- * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
+ * @param {import('../../server/utils/db-client/client.ts').PrismaClient} databaseConnector
  * @returns {Promise<Array<ForeignKeys>>}
  * @throws {Error}
  */
@@ -126,7 +126,7 @@ async function getAllForeignKeys(databaseConnector) {
  */
 
 /**
- * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
+ * @param {import('../../server/utils/db-client/client.ts').PrismaClient} databaseConnector
  * @param {string} schemaName
  * @param {string} tableName
  * @returns {Promise<IndexInfo>}
@@ -153,7 +153,7 @@ async function getTableIndexes(databaseConnector, schemaName, tableName) {
 }
 
 /**
- * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
+ * @param {import('../../server/utils/db-client/client.ts').PrismaClient} databaseConnector
  * @param {string} schemaName
  * @param {string} tableName
  * @param {number} currentIndex
@@ -170,7 +170,7 @@ async function resetTableIndex(databaseConnector, schemaName, tableName, current
 }
 
 /**
- * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
+ * @param {import('../../server/utils/db-client/client.ts').PrismaClient} databaseConnector
  */
 async function dropAllForeignKeys(databaseConnector) {
 	console.info('Fetching all foreign keys...');
@@ -190,7 +190,7 @@ async function dropAllForeignKeys(databaseConnector) {
 
 /**
  * @param {Array<ForeignKeys>} foreignKeys
- * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
+ * @param {import('../../server/utils/db-client/client.ts').PrismaClient} databaseConnector
  */
 async function recreateForeignKeys(foreignKeys, databaseConnector) {
 	console.info(`Recreating ${foreignKeys.length} foreign key constraints...`);
@@ -263,7 +263,7 @@ async function recreateForeignKeys(foreignKeys, databaseConnector) {
 	}
 }
 /**
- * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
+ * @param {import('../../server/utils/db-client/client.ts').PrismaClient} databaseConnector
  */
 async function truncateAllTables(databaseConnector) {
 	console.info('Fetching all tables...');
@@ -311,7 +311,7 @@ async function truncateAllTables(databaseConnector) {
 }
 
 /**
- * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
+ * @param {import('../../server/utils/db-client/client.ts').PrismaClient} databaseConnector
  */
 export async function deleteExistingData(databaseConnector) {
 	try {

@@ -5,9 +5,9 @@ import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
 import { EventType } from '@pins/event-client';
 import { SERVICE_USER_TYPE } from '@planning-inspectorate/data-model';
 
-/** @typedef {import('#db-client').Appeal} Appeal */
-/** @typedef {import('#db-client').ServiceUser} ServiceUser */
-/** @typedef {import('#db-client').AppealRule6Party} AppealRule6Party */
+/** @typedef {import('#db-client/client.ts').Appeal} Appeal */
+/** @typedef {import('#db-client/client.ts').ServiceUser} ServiceUser */
+/** @typedef {import('#db-client/client.ts').AppealRule6Party} AppealRule6Party */
 /**
  * @param {number} appealId
  * @param {string} appealReference
