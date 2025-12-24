@@ -3150,7 +3150,7 @@ describe('appellant-case', () => {
 		beforeEach(async () => {
 			nock.cleanAll();
 			nock('http://test/')
-				.get(`/appeals/${appealData.appealId}?include=all`)
+				.get(`/appeals/${appealData.appealId}?include=appellantCase`)
 				.reply(200, appealData)
 				.persist();
 			nock('http://test/').patch(`/appeals/${appealData.appealId}`).reply(200);

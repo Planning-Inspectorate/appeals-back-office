@@ -11,6 +11,7 @@ import enforcementReferenceRouter from '#appeals/appeal-details/appellant-case/e
 import groundsForAppealRouter from '#appeals/appeal-details/appellant-case/grounds-for-appeal/grounds-for-appeal.router.js';
 import changeProcedureTypeRouter from '#appeals/appeal-details/change-procedure-type/change-procedure-type.router.js';
 import { permissionNames } from '#environment/permissions.js';
+import { clearSessionData } from '#lib/middleware/clear-session-data.js';
 import { extractAndProcessDocumentDateErrors } from '#lib/validators/date-input.validator.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
@@ -59,7 +60,7 @@ const router = createRouter({ mergeParams: true });
 
 router.use(
 	'/valid',
-	validateAppeal,
+	validateAppealWithInclude(['appellantCase']),
 	assertUserHasPermission(permissionNames.updateCase),
 	outcomeValidRouter
 );
@@ -318,7 +319,12 @@ router.use(
 
 router
 	.route('/')
-	.get(validateAppeal, clearUncommittedFilesFromSession, asyncHandler(controller.getAppellantCase))
+	.get(
+		validateAppeal,
+		clearSessionData,
+		clearUncommittedFilesFromSession,
+		asyncHandler(controller.getAppellantCase)
+	)
 	.post(
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
