@@ -295,7 +295,7 @@ const markAwaitingTransfer = async (appeal, newAppealTypeId, azureAdUserId) => {
 	const currentDate = new Date();
 	const caseExtensionDate = await addDays(currentDate, 5);
 
-	/** @type {Partial<import('#db-client').Prisma.AppealUpdateInput>} data */
+	/** @type {Partial<import('#db-client/models.ts').AppealUpdateInput>} data */
 	const data = {
 		caseResubmittedTypeId: newAppealTypeId,
 		caseUpdatedDate: new Date(),
