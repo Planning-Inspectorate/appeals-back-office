@@ -19,11 +19,12 @@ import { toSentenceCase } from '#lib/string-utilities.js';
  */
 export const manageInterestInLandPage = (appealData, errors, session) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
-	const interestInLand = errors?.interestInLandOther
+		const interestInLand = errors?.interestInLandOther
 		? errors?.interestInLandOther.value
 		: appealData.enforcementNotice?.appellantCase?.interestInLand;
 	const interestInLandOtherChecked =
 		typeof interestInLand === 'string' && !INTEREST_IN_LAND.includes(interestInLand);
+
 
 	/** @type {PageContent} */
 	const pageContent = {
