@@ -1,3 +1,4 @@
+import { Prisma } from '#db-client/client.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import representationRepository from '#repositories/representation.repository.js';
@@ -5,7 +6,6 @@ import { isStatePassed } from '#state/transition-state.js';
 import BackOfficeAppError from '#utils/app-error.js';
 import { currentStatus } from '#utils/current-status.js';
 import { getPageCount } from '#utils/database-pagination.js';
-import { Prisma } from '#utils/db-client/index.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,

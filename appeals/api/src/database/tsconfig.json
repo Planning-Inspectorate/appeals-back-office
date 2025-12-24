@@ -1,0 +1,12 @@
+{
+	"include": ["../server/utils/db-client/client.ts"],
+	"compilerOptions": {
+		"baseUrl": "../server/utils/db-client",
+		"esModuleInterop": true,
+		"moduleResolution": "nodenext",
+		"checkJs": false,
+		"target": "esnext",
+		"module": "NodeNext",
+		"skipLibCheck": true
+	}
+}

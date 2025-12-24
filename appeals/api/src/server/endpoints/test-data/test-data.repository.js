@@ -7,13 +7,13 @@ export const findFolderByPath = async (path) =>
 	databaseConnector.folder.findFirstOrThrow({ where: { path } });
 
 /**
- * @param {import('#db-client').Prisma.AppealCreateInput} data
+ * @param {import('#db-client/models.ts').AppealCreateInput} data
  */
 export const createAppeal = async (data) => databaseConnector.appeal.create({ data });
 
 /**
  * @param {number} appealId
- * @param {Omit<import('#db-client').Prisma.RepresentationCreateInput, 'appeal'>} data
+ * @param {Omit<import('#db-client/models.ts').RepresentationCreateInput, 'appeal'>} data
  */
 export const createRepresentation = async (appealId, data) =>
 	databaseConnector.representation.create({
@@ -21,19 +21,19 @@ export const createRepresentation = async (appealId, data) =>
 	});
 
 /**
- * @param {import('#db-client').Prisma.DocumentCreateManyInput[]} documentData
+ * @param {import('#db-client/models.ts').DocumentCreateManyInput[]} documentData
  */
 export const createDocuments = async (documentData) =>
 	databaseConnector.document.createMany({ data: documentData });
 
 /**
- * @param {import('#db-client').Prisma.DocumentVersionCreateManyInput[]} versionData
+ * @param {import('#db-client/models.ts').DocumentVersionCreateManyInput[]} versionData
  */
 export const createDocumentVersions = async (versionData) =>
 	databaseConnector.documentVersion.createMany({ data: versionData });
 
 /**
- * @param {import('#db-client').Prisma.RepresentationAttachmentCreateManyInput[]} attachmentData
+ * @param {import('#db-client/models.ts').RepresentationAttachmentCreateManyInput[]} attachmentData
  */
 export const createRepresentationAttachments = async (attachmentData) =>
 	databaseConnector.representationAttachment.createMany({ data: attachmentData });

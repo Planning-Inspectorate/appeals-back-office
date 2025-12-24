@@ -6,6 +6,7 @@ apps_config = {
   private_endpoint_enabled   = false
   session_max_age            = 10800000
   front_office_url           = "https://appeals-service-dev.planninginspectorate.gov.uk"
+  db_connection_limit        = 15
 
   auth = {
     client_id = "64c20f53-becf-4b7e-ba62-c1dc9b03ccf9" # Appeals Back Office DEV

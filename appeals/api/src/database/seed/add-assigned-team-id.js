@@ -1,5 +1,5 @@
 /**
- * @param {import('#db-client').PrismaClient} databaseConnector
+ * @param {import('#db-client/client.ts').PrismaClient} databaseConnector
  */
 export const addAssignedTeamIdToAppeal = async (databaseConnector) => {
 	return databaseConnector.$executeRawUnsafe(

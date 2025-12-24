@@ -7,7 +7,7 @@ import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
  *
  * @param {Pick<LPAQuestionnaireCommand, 'casedata'>} command
  * @param {DesignatedSite[]} designatedSites
- * @returns {Omit<import('#db-client').Prisma.LPAQuestionnaireCreateInput, 'appeal'>}
+ * @returns {Omit<import('#db-client/models.ts').LPAQuestionnaireCreateInput, 'appeal'>}
  */
 export const mapQuestionnaireIn = (command, designatedSites) => {
 	const casedata = command.casedata;

@@ -1,4 +1,4 @@
-/** @typedef {import('#utils/db-client/index.js').Prisma.PADSUserCreateInput} PADSUser */
+/** @typedef {import('#utils/db-client/models.ts').PADSUserCreateInput} PADSUser */
 
 /**
  * @returns {PADSUser[]}
