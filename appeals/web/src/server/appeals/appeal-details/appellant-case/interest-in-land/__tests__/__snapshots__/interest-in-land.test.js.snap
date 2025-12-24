@@ -298,7 +298,7 @@ exports[`interest-in-land POST /change should re-render the page with an error i
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-4" name="interestInLandRadio"
-                                        type="radio" value="other" data-aria-controls="conditional-interest-in-land-radio-4">
+                                        type="radio" value="other" checked data-aria-controls="conditional-interest-in-land-radio-4">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-4">Other</label>
                                     </div>
                                     <div class="govuk-radios__conditional" id="conditional-interest-in-land-radio-4">
