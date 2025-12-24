@@ -11,7 +11,7 @@ export const mapWrittenOrVerbalPermission = ({
 
 	const interestInLand = appellantCaseData.enforcementNotice?.interestInLand;
 	const isOtherInterest =
-		!!interestInLand && !['Owner', 'Mortgage Lender', 'Tenant'].includes(interestInLand);
+		!!interestInLand && !['Owner', 'Mortgage lender', 'Tenant'].includes(interestInLand);
 
 	if (!isOtherInterest) {
 		return { id, display: {} };

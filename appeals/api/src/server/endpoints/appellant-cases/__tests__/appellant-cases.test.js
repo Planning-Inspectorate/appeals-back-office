@@ -1399,7 +1399,7 @@ describe('appellant cases routes', () => {
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 				data: {
 					appealId: enforcementNoticeAppeal.id,
-					details: 'Contact address updated to Address, Town, Country, Postcode',
+					details: 'Contact address updated to Address, Town, Postcode',
 					loggedAt: expect.any(Date),
 					userId: 1
 				}
@@ -1452,8 +1452,7 @@ describe('appellant cases routes', () => {
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 				data: {
 					appealId: enforcementNoticeAppeal.id,
-					details:
-						'Contact address updated to 96 The Avenue, Leftfield, United Kingdom, Kent, 1, MD21 5XY, Maidstone',
+					details: 'Contact address updated to 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY',
 					loggedAt: expect.any(Date),
 					userId: 1
 				}
