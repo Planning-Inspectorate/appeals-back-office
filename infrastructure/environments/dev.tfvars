@@ -16,6 +16,7 @@ apps_config = {
       legal        = "369caed5-fe22-445e-8cdc-8b2f6746afc7"
       pads         = "5afda392-73c5-4c18-a76f-7e3b1933813c"
       read_only    = "60acabaa-6ac9-4462-828a-b79adc3d802c"
+      dev_team     = "1b016cfc-3f09-4796-a1fb-74d4b43dee66"
     }
   }
 
