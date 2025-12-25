@@ -5,4 +5,4 @@
 import { createPrismaClient } from '../../database/create-client.js';
 
 // export const databaseConnector = createPrismaClient(logger); // use for logging
-export const databaseConnector = createPrismaClient();
+export const databaseConnector = createPrismaClient(process.env.DATABASE_URL);

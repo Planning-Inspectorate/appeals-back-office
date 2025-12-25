@@ -56,7 +56,7 @@ const generateAppeals = async (appealType, count, userEmails) => {
 };
 
 /**
- * @param {import('#db-client').Prisma.TransactionClient} tx
+ * @param {import('#db-client/client.ts').Prisma.TransactionClient} tx
  * @param {number} appealId
  * @param {number} folderId
  * @param {{ count?: number, type?: string, text?: string, status?: string, source?: string, notes?: string, stage?: string, documentType?: string, fileName?: string }} options
@@ -129,7 +129,7 @@ export const createRepresentationWithAttachments = async (tx, appealId, folderId
 /**
  * @param {'has' | 's78'} type
  * @param {string[]} userEmails
- * @returns {import('#db-client').Prisma.AppealCreateInput}
+ * @returns {import('#db-client/models.ts').AppealCreateInput}
  */
 export function createMockAppeal(type = 'has', userEmails = []) {
 	const typeKey = type === 'has' ? APPEAL_CASE_TYPE.D : APPEAL_CASE_TYPE.W;
@@ -249,7 +249,7 @@ function generateLpaReference() {
 
 /**
  * @param {string} appealTypeShorthand
- * @returns {import('#db-client').Prisma.AppellantCaseCreateWithoutAppealInput}
+ * @returns {import('#db-client/models.ts').AppellantCaseCreateWithoutAppealInput}
  */
 export const getRandomisedAppellantCaseCreateInput = (appealTypeShorthand) => {
 	const monthAgo = sub(new Date(), { months: 1 });
@@ -292,7 +292,7 @@ export const getRandomisedAppellantCaseCreateInput = (appealTypeShorthand) => {
 
 /**
  * @param {string} appealTypeShorthand
- * @returns {import('#db-client').Prisma.LPAQuestionnaireCreateWithoutAppealInput | undefined}
+ * @returns {import('#db-client/models.ts').LPAQuestionnaireCreateWithoutAppealInput | undefined}
  */
 export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
 	if (appealTypeShorthand !== APPEAL_CASE_TYPE.D) {
