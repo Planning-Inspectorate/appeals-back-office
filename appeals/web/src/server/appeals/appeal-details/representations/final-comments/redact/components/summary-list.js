@@ -3,6 +3,7 @@
 
 import { newLine2LineBreak } from '#lib/string-utilities.js';
 import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 
 /**
  * @param {Appeal} appealDetails
@@ -23,6 +24,7 @@ export const summaryList = (
 		comment.originalRepresentation,
 		session?.redactedRepresentation
 	);
+	const isPublished = comment.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED;
 	return {
 		type: 'summary-list',
 		wrapperHtml: {
@@ -85,41 +87,45 @@ export const summaryList = (
 							}
 					  ]
 					: []),
-				{
-					key: { text: 'Supporting documents' },
-					value: attachmentsList ? { html: attachmentsList } : { text: 'No documents' },
-					actions: {
-						items: [
-							...(comment.attachments?.length > 0
-								? [
+				...(isPublished
+					? []
+					: [
+							{
+								key: { text: 'Supporting documents' },
+								value: attachmentsList ? { html: attachmentsList } : { text: 'No documents' },
+								actions: {
+									items: [
+										...(comment.attachments?.length > 0
+											? [
+													{
+														text: 'Manage',
+														href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/manage-documents/${comment.attachments?.[0]?.documentVersion?.document?.folderId}/?backUrl=/final-comments/${finalCommentsType}/redact/confirm`,
+														visuallyHiddenText: 'supporting documents'
+													}
+											  ]
+											: []),
 										{
-											text: 'Manage',
-											href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/manage-documents/${comment.attachments?.[0]?.documentVersion?.document?.folderId}/?backUrl=/final-comments/${finalCommentsType}/redact/confirm`,
+											text: 'Add',
+											href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/add-document/?backUrl=/final-comments/${finalCommentsType}/redact/confirm`,
 											visuallyHiddenText: 'supporting documents'
 										}
-								  ]
-								: []),
+									]
+								}
+							},
 							{
-								text: 'Add',
-								href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/add-document/?backUrl=/final-comments/${finalCommentsType}/redact/confirm`,
-								visuallyHiddenText: 'supporting documents'
+								key: { text: 'Review decision' },
+								value: { text: 'Redact and accept final comments' },
+								actions: {
+									items: [
+										{
+											href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}?backUrl=/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/redact/confirm`,
+											text: 'Change',
+											visuallyHiddenText: 'review decision'
+										}
+									]
+								}
 							}
-						]
-					}
-				},
-				{
-					key: { text: 'Review decision' },
-					value: { text: 'Redact and accept final comments' },
-					actions: {
-						items: [
-							{
-								href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}?backUrl=/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/redact/confirm`,
-								text: 'Change',
-								visuallyHiddenText: 'review decision'
-							}
-						]
-					}
-				}
+					  ])
 			]
 		}
 	};
