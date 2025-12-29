@@ -34,3 +34,8 @@ export const MONTH_SET = MONTH_LIST.reduce(
 	},
 	{}
 );
+
+/**
+ * @type {string[]}
+ */
+export const INTEREST_IN_LAND = ['owner', 'mortgage lender', 'tenant'];

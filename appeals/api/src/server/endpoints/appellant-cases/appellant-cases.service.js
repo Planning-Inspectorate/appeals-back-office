@@ -350,7 +350,8 @@ export function renderAuditTrailDetail(data) {
 					item.value === data.statusPlanningObligation
 			)?.label || 'Not applicable',
 		AUDIT_TRAIL_WRITTEN_OR_VERBAL_PERMISSION_UPDATED: () => data.writtenOrVerbalPermission,
-		AUDIT_TRAIL_INTEREST_IN_LAND_UPDATED: () => data.interestInLand
+		AUDIT_TRAIL_INTEREST_IN_LAND_UPDATED: () =>
+			toSentenceCase(/** @type {string} */ (data.interestInLand))
 	};
 
 	if (!auditTrailParameters[constantKey]) {

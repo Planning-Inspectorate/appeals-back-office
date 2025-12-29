@@ -27,7 +27,7 @@ export const mapEnforcementAppellantCase = (data) => {
 				? appellantCase?.contactPlanningInspectorateDate?.toISOString()
 				: null,
 			reference: hasEnforcementData ? appellantCase?.enforcementReference : null,
-			interestInLand: hasEnforcementData ? appellantCase?.interestInLand : null,
+			interestInLand: appellantCase?.interestInLand ?? null,
 			writtenOrVerbalPermission: hasEnforcementData
 				? appellantCase?.writtenOrVerbalPermission
 				: null,

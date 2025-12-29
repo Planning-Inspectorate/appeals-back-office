@@ -38,7 +38,7 @@ describe('interest-in-land', () => {
 				.reply(200, {
 					enforcementNotice: {
 						appellantCase: {
-							interestInLand: 'Owner'
+							interestInLand: 'owner'
 						}
 					}
 				});
@@ -49,7 +49,7 @@ describe('interest-in-land', () => {
 
 			expect(mainInnerHtml).toMatchSnapshot();
 			expect(mainInnerHtml).toContain('What is your interest in the land?</h1>');
-			expect(mainInnerHtml).toContain('type="radio" value="Owner" checked>');
+			expect(mainInnerHtml).toContain('type="radio" value="owner" checked>');
 		});
 
 		it('should render the interest in land page with a text field for other if exists on the Appellant Case', async () => {
@@ -59,7 +59,7 @@ describe('interest-in-land', () => {
 				.reply(200, {
 					enforcementNotice: {
 						appellantCase: {
-							interestInLand: 'Other'
+							interestInLand: 'other'
 						}
 					}
 				});
@@ -70,7 +70,7 @@ describe('interest-in-land', () => {
 
 			expect(mainInnerHtml).toMatchSnapshot();
 			expect(mainInnerHtml).toContain('What is your interest in the land?</h1>');
-			expect(mainInnerHtml).toContain('type="radio" value="Other" checked');
+			expect(mainInnerHtml).toContain('type="radio" value="other" checked');
 			expect(mainInnerHtml).toContain(
 				'<div class="govuk-radios__conditional" id="conditional-interest-in-land-radio-4">'
 			);
@@ -94,7 +94,7 @@ describe('interest-in-land', () => {
 
 		it('should re-render the page with an error if the "Other" radio button is selected and no answer is given for interest in land', async () => {
 			const invalidData = {
-				interestInLandRadio: 'Other'
+				interestInLandRadio: 'other'
 			};
 
 			const response = await request
@@ -111,7 +111,7 @@ describe('interest-in-land', () => {
 
 		it('should re-render the page with an error if the "Other" radio button is selected and the answer is given for interest in land is too long', async () => {
 			const invalidData = {
-				interestInLandRadio: 'Other',
+				interestInLandRadio: 'other',
 				interestInLandOther: '1'.repeat(1001)
 			};
 
@@ -134,7 +134,7 @@ describe('interest-in-land', () => {
 				.patch(`/appeals/1/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`)
 				.reply(200, {});
 
-			const validData = { interestInLandRadio: 'Tenant' };
+			const validData = { interestInLandRadio: 'tenant' };
 
 			const response = await request
 				.post(`${appellantCaseUrl}/interest-in-land/change`)
@@ -151,7 +151,7 @@ describe('interest-in-land', () => {
 				.patch(`/appeals/1/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`)
 				.reply(200, {});
 
-			const validData = { interestInLandRadio: 'Other', interestInLandOther: 'My interest' };
+			const validData = { interestInLandRadio: 'other', interestInLandOther: 'My interest' };
 			const response = await request
 				.post(`${appellantCaseUrl}/interest-in-land/change`)
 				.send(validData);
