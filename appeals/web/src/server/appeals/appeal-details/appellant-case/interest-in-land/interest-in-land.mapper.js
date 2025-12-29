@@ -2,7 +2,9 @@
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { INTEREST_IN_LAND } from '#lib/constants.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { toSentenceCase } from '#lib/string-utilities.js';
 
 /**
  * @param {Appeal} appealData
@@ -11,9 +13,11 @@ import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page
  */
 export const manageInterestInLandPage = (appealData, errors) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
-	const interestInLand = appealData.enforcementNotice?.appellantCase?.interestInLand;
+	const interestInLand = errors?.interestInLandOther
+		? errors?.interestInLandOther.value
+		: appealData.enforcementNotice?.appellantCase?.interestInLand;
 	const interestInLandOtherChecked =
-		!!interestInLand && !['Owner', 'Mortgage Lender', 'Tenant'].includes(interestInLand);
+		typeof interestInLand === 'string' && !INTEREST_IN_LAND.includes(interestInLand);
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -34,23 +38,13 @@ export const manageInterestInLandPage = (appealData, errors) => {
 						}
 					},
 					items: [
+						...INTEREST_IN_LAND.map((interestInLandOption) => ({
+							value: interestInLandOption,
+							text: toSentenceCase(interestInLandOption),
+							checked: interestInLandOption === interestInLand
+						})),
 						{
-							value: 'Owner',
-							text: 'Owner',
-							checked: interestInLand === 'Owner'
-						},
-						{
-							value: 'Mortgage Lender',
-							text: 'Mortgage lender',
-							checked: interestInLand === 'Mortgage Lender'
-						},
-						{
-							value: 'Tenant',
-							text: 'Tenant',
-							checked: interestInLand === 'Tenant'
-						},
-						{
-							value: 'Other',
+							value: 'other',
 							text: 'Other',
 							checked: interestInLandOtherChecked,
 							conditional: {

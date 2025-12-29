@@ -35,7 +35,7 @@ export const postChangeInterestInLand = async (request, response) => {
 	}
 
 	const otherSelected =
-		request.body['interestInLandRadio'] === 'Other' && request.body['interestInLandOther'];
+		request.body['interestInLandRadio'] === 'other' && request.body['interestInLandOther'];
 	const radioSelection = otherSelected
 		? request.body['interestInLandOther']
 		: request.body['interestInLandRadio'];

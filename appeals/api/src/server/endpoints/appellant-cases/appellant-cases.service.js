@@ -34,6 +34,7 @@ import {
 	camelToScreamingSnake,
 	capitalizeFirstLetter
 } from '#utils/string-utils.js';
+import { toSentenceCase } from '@pins/appeals.web/src/server/lib/string-utilities.js';
 import {
 	APPEAL_DEVELOPMENT_TYPES,
 	PLANNING_OBLIGATION_STATUSES
@@ -349,7 +350,8 @@ export function renderAuditTrailDetail(data) {
 					item.value === data.statusPlanningObligation
 			)?.label || 'Not applicable',
 		AUDIT_TRAIL_WRITTEN_OR_VERBAL_PERMISSION_UPDATED: () => data.writtenOrVerbalPermission,
-		AUDIT_TRAIL_INTEREST_IN_LAND_UPDATED: () => data.interestInLand
+		AUDIT_TRAIL_INTEREST_IN_LAND_UPDATED: () =>
+			toSentenceCase(/** @type {string} */ (data.interestInLand))
 	};
 
 	if (!auditTrailParameters[constantKey]) {
