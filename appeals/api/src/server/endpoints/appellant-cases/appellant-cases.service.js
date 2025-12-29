@@ -34,6 +34,7 @@ import {
 	camelToScreamingSnake,
 	capitalizeFirstLetter
 } from '#utils/string-utils.js';
+import { toSentenceCase } from '@pins/appeals.web/src/server/lib/string-utilities.js';
 import {
 	APPEAL_DEVELOPMENT_TYPES,
 	PLANNING_OBLIGATION_STATUSES
@@ -342,7 +343,7 @@ export function renderAuditTrailDetail(data) {
 		AUDIT_TRAIL_ENFORCEMENT_REFERENCE_UPDATED: () => data.enforcementReference,
 		AUDIT_TRAIL_DESCRIPTION_OF_ALLEGED_BREACH_UPDATED: () => data.descriptionOfAllegedBreach,
 		AUDIT_TRAIL_APPLICATION_DEVELOPMENT_ALL_OR_PART_UPDATED: () =>
-			data.applicationDevelopmentAllOrPart,
+			toSentenceCase(/** @type {string} */ (data.applicationDevelopmentAllOrPart)),
 		AUDIT_TRAIL_STATUS_PLANNING_OBLIGATION_UPDATED: () =>
 			PLANNING_OBLIGATION_STATUSES.find(
 				(/** @type {{value: string, label: string}} */ item) =>

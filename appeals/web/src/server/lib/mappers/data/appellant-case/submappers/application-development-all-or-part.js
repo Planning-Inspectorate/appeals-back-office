@@ -1,4 +1,5 @@
 import { textSummaryListItem } from '#lib/mappers/index.js';
+import { toSentenceCase } from '#lib/string-utilities.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapApplicationDevelopmentAllOrPart = ({
@@ -11,7 +12,9 @@ export const mapApplicationDevelopmentAllOrPart = ({
 	return textSummaryListItem({
 		id,
 		text: 'Was the application for all or part of the development?',
-		value: applicationDevelopmentAllOrPart || 'Not answered',
+		value: applicationDevelopmentAllOrPart
+			? toSentenceCase(applicationDevelopmentAllOrPart)
+			: 'Not answered',
 		link: `${currentRoute}/${id}/change`,
 		editable: userHasUpdateCase,
 		actionText: applicationDevelopmentAllOrPart ? 'Change' : 'Add'
