@@ -19,12 +19,12 @@ exports[`application-development-all-or-part GET /change should render the appli
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="application-development-all-or-part-radio"
-                                        name="applicationDevelopmentAllOrPartRadio" type="radio" value="All">
+                                        name="applicationDevelopmentAllOrPartRadio" type="radio" value="all-of-the-development">
                                         <label class="govuk-label govuk-radios__label" for="application-development-all-or-part-radio">All of the development</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="application-development-all-or-part-radio-2"
-                                        name="applicationDevelopmentAllOrPartRadio" type="radio" value="Part">
+                                        name="applicationDevelopmentAllOrPartRadio" type="radio" value="part-of-the-development">
                                         <label class="govuk-label govuk-radios__label" for="application-development-all-or-part-radio-2">Part of the development</label>
                                     </div>
                                 </div>
@@ -74,12 +74,12 @@ exports[`application-development-all-or-part POST /change should re-render the d
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="application-development-all-or-part-radio"
-                                        name="applicationDevelopmentAllOrPartRadio" type="radio" value="All">
+                                        name="applicationDevelopmentAllOrPartRadio" type="radio" value="all-of-the-development">
                                         <label class="govuk-label govuk-radios__label" for="application-development-all-or-part-radio">All of the development</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="application-development-all-or-part-radio-2"
-                                        name="applicationDevelopmentAllOrPartRadio" type="radio" value="Part">
+                                        name="applicationDevelopmentAllOrPartRadio" type="radio" value="part-of-the-development">
                                         <label class="govuk-label govuk-radios__label" for="application-development-all-or-part-radio-2">Part of the development</label>
                                     </div>
                                 </div>

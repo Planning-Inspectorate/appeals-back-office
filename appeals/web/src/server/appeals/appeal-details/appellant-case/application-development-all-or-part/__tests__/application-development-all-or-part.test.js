@@ -30,19 +30,19 @@ describe('application-development-all-or-part', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="applicationDevelopmentAllOrPartRadio" type="radio" value="All"'
+				'name="applicationDevelopmentAllOrPartRadio" type="radio" value="all-of-the-development"'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="applicationDevelopmentAllOrPartRadio" type="radio" value="Part"'
+				'name="applicationDevelopmentAllOrPartRadio" type="radio" value="part-of-the-development"'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 	});
 
 	describe('POST /change', () => {
-		it('should re-direct to appellant-case if all', async () => {
+		it('should re-direct to appellant-case if all of the development', async () => {
 			const validData = {
-				applicationDevelopmentAllOrPartRadio: 'all'
+				applicationDevelopmentAllOrPartRadio: 'all-of-the-development'
 			};
 
 			nock('http://test/')
@@ -59,9 +59,9 @@ describe('application-development-all-or-part', () => {
 			);
 		});
 
-		it('should re-direct to appellant-case if part', async () => {
+		it('should re-direct to appellant-case if part of the development', async () => {
 			const validData = {
-				applicationDevelopmentAllOrPartRadio: 'part'
+				applicationDevelopmentAllOrPartRadio: 'part-of-the-development'
 			};
 
 			nock('http://test/')
