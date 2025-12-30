@@ -948,8 +948,56 @@ export class CaseDetailsPage extends Page {
 		this.elements.pageHeading().should('have.text', expectedText);
 	};
 
-	verifyChangeLinkVisibility = (row, shouldBeVisibile = true) => {
-		const visibilityAssertion = shouldBeVisibile ? 'be.visible' : 'not.exist';
+	verifyChangeLinkVisibility = (row, shouldBeVisible = true) => {
+		const visibilityAssertion = shouldBeVisible ? 'be.visible' : 'not.exist';
 		this.elements.rowChangeLink(row).should(visibilityAssertion);
 	};
+
+	// Verify document status in either the documentation table or costs table
+	verifyDocumentStatus(documentName, expectedStatus, tableType) {
+		const tableConfig = {
+			documentation: {
+				selector: '#case-documentation-table',
+				statusCell: 'td:nth-child(2)' // First td contains status
+			},
+			costs: {
+				selector: '#case-costs-table',
+				statusCell: '[class*="-status"]' // Cell with class containing "-status"
+			}
+		};
+
+		const config = tableConfig[tableType];
+
+		if (!config) {
+			throw new Error(`Invalid table type: ${tableType}. Use 'documentation' or 'costs'`);
+		}
+
+		cy.get(config.selector).within(() => {
+			cy.contains('tr', documentName).within(() => {
+				cy.get(config.statusCell).should('have.text', expectedStatus);
+			});
+		});
+	}
+
+	// Verify document does not exist in either the documentation table or costs table
+	verifyDocumentDoesNotExist(documentName, tableType) {
+		const tableConfig = {
+			documentation: {
+				selector: '#case-documentation-table'
+			},
+			costs: {
+				selector: '#case-costs-table'
+			}
+		};
+
+		const config = tableConfig[tableType];
+
+		if (!config) {
+			throw new Error(`Invalid table type: ${tableType}. Use 'documentation' or 'costs'`);
+		}
+
+		cy.get(config.selector).within(() => {
+			cy.contains('tr', documentName).should('not.exist');
+		});
+	}
 }

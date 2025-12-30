@@ -179,17 +179,119 @@ it('should add multiple rule 6 party contact', () => {
 	// check success banner
 	caseDetailsPage.validateBannerMessage('Success', 'Rule 6 party added');
 
-	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', rule6Details.partyEmailAddress);
-	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', rule6Details.partyName);
+	const organisationName1 = rule6Details.partyName;
+	const organisationName2 = rule6Details.partyName;
 
+	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', organisationName1);
 	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', rule6PartyContact.email);
-	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', rule6PartyContact.organisationName);
+	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', organisationName2);
+	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', rule6Details.partyEmailAddress);
+
+	// Verify rule 6 party on details page - Documentation section
+	caseDetailsPage.verifyDocumentStatus(
+		`${organisationName1} proof of evidence and witness`,
+		'Awaiting proof of evidence and witness',
+		'documentation'
+	);
+	caseDetailsPage.verifyDocumentStatus(
+		`${organisationName2} proof of evidence and witness`,
+		'Awaiting proof of evidence and witness',
+		'documentation'
+	);
+
+	// Verify rule 6 party on details page - Cost section
+	caseDetailsPage.verifyDocumentStatus(
+		`${organisationName1} application`,
+		'No documents available',
+		'costs'
+	);
+	caseDetailsPage.verifyDocumentStatus(
+		`${organisationName1} withdrawal`,
+		'No documents available',
+		'costs'
+	);
+	caseDetailsPage.verifyDocumentStatus(
+		`${organisationName1} correspondence`,
+		'No documents available',
+		'costs'
+	);
+	caseDetailsPage.verifyDocumentStatus(
+		`${organisationName2} application`,
+		'No documents available',
+		'costs'
+	);
+	caseDetailsPage.verifyDocumentStatus(
+		`${organisationName2} withdrawal`,
+		'No documents available',
+		'costs'
+	);
+	caseDetailsPage.verifyDocumentStatus(
+		`${organisationName2} correspondence`,
+		'No documents available',
+		'costs'
+	);
 
 	// Manage contact details
-	contactsSectionPage.manageContactDetails();
-	contactDetailsPage.verifyCheckYourAnswers(rule6Details.partyName, rule6Details.partyEmailAddress);
-	contactDetailsPage.verifyCheckYourAnswers(
-		rule6PartyContact.organisationName,
-		rule6PartyContact.email
+	contactsSectionPage.manageRule6PartyContactDetails();
+	contactDetailsPage.verifyCheckYourAnswers(organisationName1, rule6PartyContact.email);
+	contactDetailsPage.verifyCheckYourAnswers(organisationName2, rule6Details.partyEmailAddress);
+});
+
+it('should remove a rule 6 party contact and related documents', () => {
+	// Verify no rule 6 party is added
+	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', 'No rule 6 party');
+
+	// Add rule 6 contact via API
+	cy.addRule6Party(caseObj);
+
+	// Verify rule 6 party on details page - Contact section
+	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', rule6PartyContact.email);
+	const organisationName = rule6PartyContact.organisationName;
+	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', organisationName);
+
+	// Verify rule 6 party on details page - Documentation section
+	caseDetailsPage.verifyDocumentStatus(
+		`${organisationName} proof of evidence and witness`,
+		'Awaiting proof of evidence and witness',
+		'documentation'
 	);
+
+	// Verify rule 6 party on details page - Cost section
+	caseDetailsPage.verifyDocumentStatus(
+		`${organisationName} application`,
+		'No documents available',
+		'costs'
+	);
+	caseDetailsPage.verifyDocumentStatus(
+		`${organisationName} withdrawal`,
+		'No documents available',
+		'costs'
+	);
+	caseDetailsPage.verifyDocumentStatus(
+		`${organisationName} correspondence`,
+		'No documents available',
+		'costs'
+	);
+
+	// Remove rule 6 party
+	contactsSectionPage.manageRule6PartyContactDetails();
+	contactsSectionPage.removeRule6PartyContactDetails();
+	contactDetailsPage.verifyPageCaption(`Appeal ${caseObj.reference} - remove rule 6 party`);
+	contactDetailsPage.checkHeading(`Confirm you want to remove ${organisationName}`);
+	contactDetailsPage.clickButtonByText('Confirm and remove rule 6 party');
+
+	// Check success banner
+	caseDetailsPage.validateBannerMessage('Success', 'Rule 6 party removed');
+
+	// Verify rule 6 party contact is removed
+	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', 'No rule 6 party');
+
+	// Verify documents do not exist
+	caseDetailsPage.verifyDocumentDoesNotExist(
+		`${organisationName} proof of evidence and witness`,
+		'documentation'
+	);
+	caseDetailsPage.verifyDocumentDoesNotExist(`${organisationName} application`, 'costs');
+	caseDetailsPage.verifyDocumentDoesNotExist(`${organisationName} withdrawal`, 'costs');
+	caseDetailsPage.verifyDocumentDoesNotExist(`${organisationName} correspondence`, 'costs');
 });
