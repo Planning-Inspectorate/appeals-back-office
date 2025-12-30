@@ -179,7 +179,7 @@ it('should add multiple rule 6 party contact', () => {
 	// check success banner
 	caseDetailsPage.validateBannerMessage('Success', 'Rule 6 party added');
 
-	const organisationName1 = rule6Details.partyName;
+	const organisationName1 = rule6PartyContact.organisationName;
 	const organisationName2 = rule6Details.partyName;
 
 	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', organisationName1);
