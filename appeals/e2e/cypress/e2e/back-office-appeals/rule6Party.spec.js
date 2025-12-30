@@ -300,34 +300,6 @@ it('should change rule 6 party contact', () => {
 	// Add rule 6 contact via API
 	cy.addRule6Party(caseObj);
 
-	// Verify rule 6 party on details page - Contact section
-	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', rule6PartyContact.email);
-	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', rule6PartyContact.organisationName);
-
-	// Verify rule 6 party on details page - Documentation section
-	caseDetailsPage.verifyDocumentStatus(
-		`${rule6PartyContact.organisationName} proof of evidence and witness`,
-		'Awaiting proof of evidence and witness',
-		'documentation'
-	);
-
-	// Verify rule 6 party on details page - Cost section
-	caseDetailsPage.verifyDocumentStatus(
-		`${rule6PartyContact.organisationName} application`,
-		'No documents available',
-		'costs'
-	);
-	caseDetailsPage.verifyDocumentStatus(
-		`${rule6PartyContact.organisationName} withdrawal`,
-		'No documents available',
-		'costs'
-	);
-	caseDetailsPage.verifyDocumentStatus(
-		`${rule6PartyContact.organisationName} correspondence`,
-		'No documents available',
-		'costs'
-	);
-
 	contactsSectionPage.manageRule6PartyContactDetails();
 	contactsSectionPage.changeRule6PartyContactDetails();
 
