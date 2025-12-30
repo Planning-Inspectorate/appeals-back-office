@@ -15,4 +15,9 @@ export class ContactsSectionPage extends CaseDetailsPage {
 		// Uses wildcard selector because the ending number varies
 		cy.get('[data-cy^="remove-rule-6-party-"]').click();
 	}
+
+	changeRule6PartyContactDetails() {
+		// Uses wildcard selector because the ending number varies
+		cy.get('[data-cy^="change-rule-6-party-"]').click();
+	}
 }
