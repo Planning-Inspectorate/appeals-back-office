@@ -34,7 +34,6 @@ import {
 	camelToScreamingSnake,
 	capitalizeFirstLetter
 } from '#utils/string-utils.js';
-import { toSentenceCase } from '@pins/appeals.web/src/server/lib/string-utilities.js';
 import {
 	APPEAL_DEVELOPMENT_TYPES,
 	PLANNING_OBLIGATION_STATUSES
@@ -343,7 +342,9 @@ export function renderAuditTrailDetail(data) {
 		AUDIT_TRAIL_ENFORCEMENT_REFERENCE_UPDATED: () => data.enforcementReference,
 		AUDIT_TRAIL_DESCRIPTION_OF_ALLEGED_BREACH_UPDATED: () => data.descriptionOfAllegedBreach,
 		AUDIT_TRAIL_APPLICATION_DEVELOPMENT_ALL_OR_PART_UPDATED: () =>
-			toSentenceCase(/** @type {string} */ (data.applicationDevelopmentAllOrPart)),
+			capitalizeFirstLetter(
+				/** @type {string} */ (data.applicationDevelopmentAllOrPart || '').replaceAll('-', ' ')
+			),
 		AUDIT_TRAIL_STATUS_PLANNING_OBLIGATION_UPDATED: () =>
 			PLANNING_OBLIGATION_STATUSES.find(
 				(/** @type {{value: string, label: string}} */ item) =>
@@ -351,7 +352,7 @@ export function renderAuditTrailDetail(data) {
 			)?.label || 'Not applicable',
 		AUDIT_TRAIL_WRITTEN_OR_VERBAL_PERMISSION_UPDATED: () => data.writtenOrVerbalPermission,
 		AUDIT_TRAIL_INTEREST_IN_LAND_UPDATED: () =>
-			toSentenceCase(/** @type {string} */ (data.interestInLand))
+			capitalizeFirstLetter(/** @type {string} */ (data.interestInLand))
 	};
 
 	if (!auditTrailParameters[constantKey]) {
