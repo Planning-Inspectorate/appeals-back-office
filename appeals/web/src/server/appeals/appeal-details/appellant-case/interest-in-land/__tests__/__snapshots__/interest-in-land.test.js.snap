@@ -308,7 +308,7 @@ exports[`interest-in-land POST /change should re-render the page with an error i
                                             class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> What is your interest
                                                 in the land?</p>
                                             <input class="govuk-input govuk-input--error" id="interest-in-land-other"
-                                            name="interestInLandOther" type="text" aria-describedby="interest-in-land-other-error">
+                                            name="interestInLandOther" type="text" value="" aria-describedby="interest-in-land-other-error">
                                         </div>
                                     </div>
                                 </div>
