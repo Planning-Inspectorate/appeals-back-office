@@ -295,3 +295,123 @@ it('should remove a rule 6 party contact and related documents', () => {
 	caseDetailsPage.verifyDocumentDoesNotExist(`${organisationName} withdrawal`, 'costs');
 	caseDetailsPage.verifyDocumentDoesNotExist(`${organisationName} correspondence`, 'costs');
 });
+
+it('should change rule 6 party contact', () => {
+	// Add rule 6 contact via API
+	cy.addRule6Party(caseObj);
+
+	// Verify rule 6 party on details page - Contact section
+	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', rule6PartyContact.email);
+	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', rule6PartyContact.organisationName);
+
+	// Verify rule 6 party on details page - Documentation section
+	caseDetailsPage.verifyDocumentStatus(
+		`${rule6PartyContact.organisationName} proof of evidence and witness`,
+		'Awaiting proof of evidence and witness',
+		'documentation'
+	);
+
+	// Verify rule 6 party on details page - Cost section
+	caseDetailsPage.verifyDocumentStatus(
+		`${rule6PartyContact.organisationName} application`,
+		'No documents available',
+		'costs'
+	);
+	caseDetailsPage.verifyDocumentStatus(
+		`${rule6PartyContact.organisationName} withdrawal`,
+		'No documents available',
+		'costs'
+	);
+	caseDetailsPage.verifyDocumentStatus(
+		`${rule6PartyContact.organisationName} correspondence`,
+		'No documents available',
+		'costs'
+	);
+
+	contactsSectionPage.manageRule6PartyContactDetails();
+	contactsSectionPage.changeRule6PartyContactDetails();
+
+	// check page caption and input party name
+	contactDetailsPage.verifyPageCaption(`Appeal ${caseObj.reference} - Update rule 6 party`);
+	contactDetailsPage.inputOrganisationName(rule6Details.partyName);
+	contactDetailsPage.clickButtonByText('Continue');
+
+	// check page caption and enter party email address
+	contactDetailsPage.verifyPageCaption(`Appeal ${caseObj.reference} - Update rule 6 party`);
+	contactDetailsPage.inputOrganisationEmail(rule6Details.partyEmailAddress);
+	contactDetailsPage.clickButtonByText('Continue');
+
+	// verify details on cya page
+	cyaSection.verifyAnswerUpdated({
+		field: cyaSection.cyaSectionFields.rule6PartyName,
+		value: rule6Details.partyName
+	});
+	cyaSection.verifyAnswerUpdated({
+		field: cyaSection.cyaSectionFields.rule6PartyEmailAddress,
+		value: rule6Details.partyEmailAddress
+	});
+
+	// update party name
+	cyaSection.changeAnswer(cyaSection.cyaSectionFields.rule6PartyName);
+	contactDetailsPage.verifyValuePrepopulated(
+		contactDetailsPage.contactSelectors.organisationName,
+		rule6Details.partyName
+	);
+
+	contactDetailsPage.inputOrganisationName(rule6Details.partyNameUpdated);
+	contactDetailsPage.clickButtonByText('Continue');
+	contactDetailsPage.clickButtonByText('Continue');
+
+	// verify party name updated on cya page
+	cyaSection.verifyAnswerUpdated({
+		field: cyaSection.cyaSectionFields.rule6PartyName,
+		value: rule6Details.partyNameUpdated
+	});
+
+	// update party email
+	cyaSection.changeAnswer(cyaSection.cyaSectionFields.rule6PartyEmailAddress);
+	contactDetailsPage.verifyValuePrepopulated(
+		contactDetailsPage.contactSelectors.organisationEmail,
+		rule6Details.partyEmailAddress
+	);
+	contactDetailsPage.inputOrganisationEmail(rule6Details.partyEmailAddressUpdated);
+	contactDetailsPage.clickButtonByText('Continue');
+
+	// verify party email address updated on cya page
+	cyaSection.verifyAnswerUpdated({
+		field: cyaSection.cyaSectionFields.rule6PartyEmailAddress,
+		value: rule6Details.partyEmailAddressUpdated
+	});
+
+	contactDetailsPage.clickButtonByText('Change rule 6 party');
+
+	// check success banner
+	caseDetailsPage.validateBannerMessage('Success', 'Rule 6 party updated');
+
+	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', rule6Details.partyEmailAddressUpdated);
+	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', rule6Details.partyEmailAddressUpdated);
+
+	// Verify rule 6 party on details page - Documentation section
+	caseDetailsPage.verifyDocumentStatus(
+		`${rule6Details.partyNameUpdated} proof of evidence and witness`,
+		'Awaiting proof of evidence and witness',
+		'documentation'
+	);
+
+	// Verify rule 6 party on details page - Cost section
+	caseDetailsPage.verifyDocumentStatus(
+		`${rule6Details.partyNameUpdated} application`,
+		'No documents available',
+		'costs'
+	);
+	caseDetailsPage.verifyDocumentStatus(
+		`${rule6Details.partyNameUpdated} withdrawal`,
+		'No documents available',
+		'costs'
+	);
+	caseDetailsPage.verifyDocumentStatus(
+		`${rule6Details.partyNameUpdated} correspondence`,
+		'No documents available',
+		'costs'
+	);
+});
