@@ -46,4 +46,6 @@ router
 		asyncHandler(controller.postEnforcementValidDate)
 	);
 
+router.route('/enforcement/check-details').get(controller.getEnforcementCheckDetails);
+
 export default router;
