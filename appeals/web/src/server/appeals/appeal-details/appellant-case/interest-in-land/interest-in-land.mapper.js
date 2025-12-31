@@ -7,10 +7,6 @@ import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page
 import { toSentenceCase } from '#lib/string-utilities.js';
 
 /**
- * /**
- * @typedef {Object} SessionData
- * @property {string} [interestInLand]
- * @property {string} [interestInLandOtherText]
  *
  * @param {Appeal} appealData
  * @param {import("@pins/express").ValidationErrors | undefined} errors

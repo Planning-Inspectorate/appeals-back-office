@@ -20,7 +20,7 @@ export const getManageContactAddress = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postAddContactAddress = async (request, response) => {
-	const contactAddress = {
+	request.session.contactAddress = {
 		addressLine1: request.body['addressLine1'],
 		addressLine2: request.body['addressLine2'] === '' ? null : request.body['addressLine2'],
 		town: request.body['town'],
@@ -39,7 +39,7 @@ export const postAddContactAddress = async (request, response) => {
 			request.apiClient,
 			currentAppeal.appealId,
 			currentAppeal.appellantCaseId,
-			contactAddress
+			request.session.contactAddress
 		);
 
 		addNotificationBannerToSession({
@@ -66,7 +66,7 @@ export const postAddContactAddress = async (request, response) => {
 export const postChangeContactAddress = async (request, response) => {
 	const contactAddressId =
 		request.currentAppeal?.enforcementNotice?.appellantCase?.contactAddress?.addressId;
-	const contactAddress = {
+	request.session.contactAddress = {
 		addressLine1: request.body['addressLine1'],
 		addressLine2: request.body['addressLine2'] === '' ? null : request.body['addressLine2'],
 		town: request.body['town'],
@@ -86,7 +86,7 @@ export const postChangeContactAddress = async (request, response) => {
 			currentAppeal.appealId,
 			currentAppeal.appellantCaseId,
 			contactAddressId,
-			contactAddress
+			request.session.contactAddress
 		);
 
 		addNotificationBannerToSession({

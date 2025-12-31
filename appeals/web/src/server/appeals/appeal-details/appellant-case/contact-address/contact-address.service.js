@@ -10,6 +10,7 @@ export const renderManageContactAddress = async (request, response) => {
 	const mappedPageContents = manageContactAddressPage(
 		currentAppeal,
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case`,
+		request.session.contactAddress,
 		request,
 		errors
 	);
