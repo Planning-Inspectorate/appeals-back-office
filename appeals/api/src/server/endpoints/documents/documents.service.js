@@ -261,6 +261,8 @@ export const addDocumentsToAppeal = async (upload, appeal, skipBlobValidation = 
 
 	const documentsCreated = await addDocumentAndVersion(appeal, documentsToSendToDatabase);
 
+	console.log('documentsCreated', documentsCreated);
+
 	for (const document of documentsCreated) {
 		if (document?.documentGuid) {
 			await broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create);

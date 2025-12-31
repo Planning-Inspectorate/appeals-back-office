@@ -592,6 +592,7 @@ export const postUploadDocumentsCheckAndConfirm = async ({
 			blobStorageHost:
 				config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
 			blobStorageContainer: config.blobStorageDefaultContainer,
+			appellantCaseId: Number(currentAppeal.appellantCaseId),
 			documents: fileUploadInfo.files.map(
 				(/** @type {import('#lib/ts-utilities.js').FileUploadInfoItem} */ document) => {
 					/** @type {import('@pins/appeals/index.js').MappedDocument} */
