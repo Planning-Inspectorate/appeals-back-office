@@ -420,11 +420,11 @@ export const getAvScanStatus = (documentVersion) => {
 /**
  * @param { Document } document
  * @param { number } version
- * @returns {Promise<boolean>}
+ * @returns {Promise< (Document & import('#repositories/document-metadata.repository.js').BroadcastEvent) | null>}
  */
 export const deleteDocument = async (document, version) => {
 	const result = await deleteDocumentVersion(document.guid, version);
-	return result !== null;
+	return result;
 };
 
 /**

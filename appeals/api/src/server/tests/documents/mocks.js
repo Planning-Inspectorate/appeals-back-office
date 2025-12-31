@@ -49,6 +49,7 @@ export const documentDetails = {
 export const addDocumentsRequest = {
 	blobStorageHost: 'host',
 	blobStorageContainer: 'document-service-uploads',
+	appellantCaseId: 2,
 	documents: [
 		{
 			caseId: householdAppeal.id,

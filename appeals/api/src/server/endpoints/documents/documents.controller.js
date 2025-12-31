@@ -17,6 +17,7 @@ import {
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { sendNewDecisionLetter } from '#endpoints/decision/decision.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
@@ -36,7 +37,7 @@ import * as service from './documents.service.js';
  * @param {Response} res
  * @returns {Promise<Response>}
  */
-const getFolder = async (req, res) => {
+export const getFolder = async (req, res) => {
 	const { appeal } = req;
 	const { folderId } = req.params;
 	const repId = Number(req.query.repId) || null;
@@ -50,7 +51,7 @@ const getFolder = async (req, res) => {
  * @param {Response} res
  * @returns {Promise<Response>}
  * */
-const getFolders = async (req, res) => {
+export const getFolders = async (req, res) => {
 	const { appeal } = req;
 	const { path } = req.query;
 
@@ -68,7 +69,7 @@ const getFolders = async (req, res) => {
  * @param {Response} res
  * @returns {Promise<Response>}
  */
-const getDocument = async (req, res) => {
+export const getDocument = async (req, res) => {
 	const { document } = req;
 
 	return res.send(formatDocument(document));
@@ -79,7 +80,7 @@ const getDocument = async (req, res) => {
  * @param {Response} res
  * @returns {Promise<Response>}
  */
-const getDocumentAndVersions = async (req, res) => {
+export const getDocumentAndVersions = async (req, res) => {
 	const { documentId } = req.params;
 
 	const document = await documentRepository.getDocumentWithAllVersionsById(documentId);
@@ -95,11 +96,20 @@ const getDocumentAndVersions = async (req, res) => {
  * @param {Response} res
  * @returns {Promise<Response>}
  */
-const addDocuments = async (req, res) => {
+export const addDocuments = async (req, res) => {
 	const { appeal } = req;
 
 	try {
 		const documentInfo = await service.addDocumentsToAppeal(req.body, appeal);
+
+		const documentTypes = documentInfo.documents.map((doc) => doc?.documentType);
+
+		await updateDocumentVisibilityBooleans(
+			documentTypes,
+			appeal.id,
+			Number(req.body.appellantCaseId),
+			true
+		);
 
 		await updatePersonalList(appeal.id);
 
@@ -171,7 +181,7 @@ const addDocuments = async (req, res) => {
  * @param {Response} res
  * @returns {Promise<Response>}
  */
-const addDocumentVersion = async (req, res) => {
+export const addDocumentVersion = async (req, res) => {
 	const { appeal, body, document } = req;
 	const documentInfo = await service.addVersionToDocument(body, appeal, document);
 	const updatedDocument = documentInfo.documents[0];
@@ -230,13 +240,33 @@ const addDocumentVersion = async (req, res) => {
  * @param {Response} res
  * @returns {Promise<Response>}
  */
-const deleteDocumentVersion = async (req, res) => {
+export const deleteDocumentVersion = async (req, res) => {
 	const { document } = req;
-	const { version } = req.params;
+	const { version, appealId } = req.params;
+	const { appellantCaseId } = req.body;
 
 	const documentInfo = await service.deleteDocument(document, Number(version));
+
 	if (!documentInfo) {
 		return res.sendStatus(404);
+	}
+
+	if (documentInfo.eventType) {
+		const { guid, version, eventType } = documentInfo;
+		await broadcasters.broadcastDocument(guid, version, eventType);
+	}
+
+	if (documentInfo.eventType === EventType.Delete && documentInfo.versions) {
+		const documentTypes = documentInfo.versions
+			.map((doc) => doc.documentType)
+			.filter((docType) => docType !== null);
+
+		await updateDocumentVisibilityBooleans(
+			documentTypes,
+			Number(appealId),
+			Number(appellantCaseId),
+			false
+		);
 	}
 
 	(async () => {
@@ -258,7 +288,7 @@ const deleteDocumentVersion = async (req, res) => {
  * @param {Request} req
  * @param {Response} res
  */
-const updateDocuments = async (req, res) => {
+export const updateDocuments = async (req, res) => {
 	const { body, appeal } = req;
 	const responseDocuments = [];
 
@@ -328,7 +358,7 @@ const updateDocuments = async (req, res) => {
  * @param {Request} req
  * @param {Response} res
  */
-const updateDocumentFileName = async (req, res) => {
+export const updateDocumentFileName = async (req, res) => {
 	const { body, appeal, params } = req;
 	const { document } = body;
 	const { documentId } = params;
@@ -440,7 +470,7 @@ async function logAuditTrail(
  * @param {Request} req
  * @param {Response} res
  */
-const updateDocumentsAvCheckStatus = async (req, res) => {
+export const updateDocumentsAvCheckStatus = async (req, res) => {
 	const { body } = req;
 	const responseDocuments = [];
 
@@ -473,19 +503,6 @@ const updateDocumentsAvCheckStatus = async (req, res) => {
 	}
 
 	res.send({ documents: responseDocuments });
-};
-
-export {
-	addDocuments,
-	addDocumentVersion,
-	deleteDocumentVersion,
-	getDocument,
-	getDocumentAndVersions,
-	getFolder,
-	getFolders,
-	updateDocumentFileName,
-	updateDocuments,
-	updateDocumentsAvCheckStatus
 };
 
 /**
@@ -522,3 +539,60 @@ export const mapDocumentDownloadUrl = (appealId, documentId, filename, documentV
 	}
 	return `/documents/${appealId}/download/${documentId}/${filename}`;
 };
+/**
+ * @param {string[]} documentTypes
+ * @param {number} appealId
+ * @param {number} appellantCaseId
+ * @param {boolean} visible
+ */
+export const updateDocumentVisibilityBooleans = async (
+	documentTypes,
+	appealId,
+	appellantCaseId,
+	visible
+) => {
+	const changedDevelopmentDescriptionDocument = documentTypes.includes(
+		APPEAL_DOCUMENT_TYPE.CHANGED_DESCRIPTION
+	);
+	const appellantCostApplicationDocument = documentTypes.includes(
+		APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION
+	);
+
+	if (!(changedDevelopmentDescriptionDocument || appellantCostApplicationDocument)) return;
+
+	if (changedDevelopmentDescriptionDocument) {
+		await setDocumentVisibilityBoolean(
+			appealId,
+			appellantCaseId,
+			'changedDevelopmentDescription',
+			visible
+		);
+	}
+
+	if (appellantCostApplicationDocument) {
+		await setDocumentVisibilityBoolean(
+			appealId,
+			appellantCaseId,
+			'appellantCostsAppliedFor',
+			visible
+		);
+	}
+};
+
+/**
+ * @param {number} appealId
+ * @param {number} appellantCaseId
+ * @param {string} documentBooleanName
+ * @param {boolean} visible
+ */
+async function setDocumentVisibilityBoolean(
+	appealId,
+	appellantCaseId,
+	documentBooleanName,
+	visible
+) {
+	await appellantCaseRepository.updateAppellantCaseById(appellantCaseId, {
+		[documentBooleanName]: visible
+	});
+	await broadcasters.broadcastAppeal(appealId);
+}

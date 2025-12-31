@@ -198,11 +198,16 @@ export const updateDocuments = async (apiClient, appealId, documentDetails) => {
  * @param {import('got').Got} apiClient
  * @param {string} documentId
  * @param {string} versionId
+ * @param {string} [appellantCaseId]
  * @returns {Promise<Document|undefined>}
  */
-export const deleteDocument = async (apiClient, documentId, versionId) => {
+export const deleteDocument = async (apiClient, documentId, versionId, appellantCaseId) => {
 	try {
-		return await apiClient.delete(`appeals/documents/${documentId}/${versionId}`).json();
+		return await apiClient
+			.delete(`appeals/documents/${documentId}/${versionId}`, {
+				json: { appellantCaseId }
+			})
+			.json();
 	} catch (error) {
 		logger.error(
 			error,

@@ -1,4 +1,3 @@
-import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { findPreviousVersion } from '#utils/find-previous-version.js';
 import logger from '#utils/logger.js';
@@ -152,17 +151,18 @@ export const addDocumentVersion = async (params) => {
 
 /**
  * @typedef {Object} BroadcastEvent
- * @property {EventType} eventType
+ * @property {EventType | null} eventType
  * @property {number} version
  */
 
 /**
  * @param {string} documentGuid
  * @param {number} version
+ * @returns {Promise< (Document & BroadcastEvent) | null>}
  */
 export const deleteDocumentVersion = async (documentGuid, version) => {
-	/** @type {BroadcastEvent | null} */
-	let broadcastEvent = null;
+	/** @type {BroadcastEvent} */
+	let broadcastEvent = { eventType: null, version };
 	const result = await databaseConnector.$transaction(async (tx) => {
 		const document = await tx.document.findFirst({
 			include: {
@@ -211,14 +211,10 @@ export const deleteDocumentVersion = async (documentGuid, version) => {
 			isDeleted: versionCount === 1,
 			latestDocumentVersion: null,
 			latestVersionId: null,
-			documentVersion: []
+			documentVersion: [],
+			...broadcastEvent
 		};
 	});
-
-	if (result && broadcastEvent) {
-		const { version, eventType } = broadcastEvent;
-		await broadcasters.broadcastDocument(documentGuid, version, eventType);
-	}
 
 	return result;
 };

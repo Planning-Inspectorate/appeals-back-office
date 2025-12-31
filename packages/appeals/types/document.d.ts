@@ -1,6 +1,7 @@
 export interface AddDocumentsRequest {
 	blobStorageHost: string;
 	blobStorageContainer: string;
+	appellantCaseId?: number | null;
 	documents: MappedDocument[];
 }
 

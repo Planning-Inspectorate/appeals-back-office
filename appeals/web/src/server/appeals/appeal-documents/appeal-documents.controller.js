@@ -592,6 +592,7 @@ export const postUploadDocumentsCheckAndConfirm = async ({
 			blobStorageHost:
 				config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
 			blobStorageContainer: config.blobStorageDefaultContainer,
+			appellantCaseId: Number(currentAppeal.appellantCaseId),
 			documents: fileUploadInfo.files.map(
 				(/** @type {import('#lib/ts-utilities.js').FileUploadInfoItem} */ document) => {
 					/** @type {import('@pins/appeals/index.js').MappedDocument} */
@@ -996,6 +997,7 @@ export const postDeleteDocument = async ({
 	const {
 		apiClient,
 		currentFolder,
+		currentAppeal,
 		body,
 		errors,
 		params: { appealId, documentId, versionId }
@@ -1034,7 +1036,7 @@ export const postDeleteDocument = async ({
 	if (body['delete-file-answer'] === 'no') {
 		return safeRedirect(request, response, cancelUrlProcessed);
 	} else if (body['delete-file-answer'] === 'yes') {
-		await deleteDocument(apiClient, documentId, versionId);
+		await deleteDocument(apiClient, documentId, versionId, currentAppeal?.appellantCaseId);
 		addNotificationBannerToSession({
 			session: request.session,
 			bannerDefinitionKey: 'documentDeleted',
