@@ -17,7 +17,6 @@ export const getChangeInterestInLand = async (request, response) => {
  */
 const renderManagerInterestInLand = async (request, response) => {
 	const { currentAppeal, errors } = request;
-
 	const mappedPageContents = manageInterestInLandPage(currentAppeal, errors);
 	return response
 		.status(errors ? 400 : 200)
