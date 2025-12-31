@@ -171,7 +171,7 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 			: {
 					type: 'html',
 					parameters: {
-						html: 'There are no interested party comments or statements to share.'
+						html: 'There are no statements or interested party comments to share.'
 					}
 			  };
 
