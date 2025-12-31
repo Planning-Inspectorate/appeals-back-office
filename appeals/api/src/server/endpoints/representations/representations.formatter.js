@@ -75,6 +75,14 @@ const formatRepresentationSource = (rep) => {
 		return `${rep.representative?.firstName} ${rep.representative?.lastName}`;
 	}
 
+	if (
+		!rep.represented?.firstName &&
+		!rep.represented?.lastName &&
+		rep.represented?.organisationName
+	) {
+		return rep.represented?.organisationName;
+	}
+
 	return `${rep.represented?.firstName} ${rep.represented?.lastName}`;
 };
 

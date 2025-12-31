@@ -254,7 +254,7 @@ export const AUDIT_TRAIL_ENFORCEMENT_REFERENCE_UPDATED =
 export const AUDIT_TRAIL_DESCRIPTION_OF_ALLEGED_BREACH_UPDATED =
 	'Description of the alleged breach updated to {replacement0}';
 export const AUDIT_TRAIL_APPLICATION_DEVELOPMENT_ALL_OR_PART_UPDATED =
-	'‘Was the application for all or part of the development?’ updated to {replacement0}';
+	"'Was the application for all or part of the development?' updated to {replacement0}";
 export const AUDIT_TRAIL_ENFORCEMENT_ISSUE_DATE_UPDATED =
 	'Enforcement notice issue date updated to {replacement0}';
 export const AUDIT_TRAIL_ENFORCEMENT_EFFECTIVE_DATE_UPDATED =

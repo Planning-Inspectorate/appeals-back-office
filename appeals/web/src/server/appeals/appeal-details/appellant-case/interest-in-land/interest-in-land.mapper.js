@@ -2,7 +2,9 @@
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { INTEREST_IN_LAND } from '#lib/constants.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { toSentenceCase } from '#lib/string-utilities.js';
 
 /**
  * /**
@@ -12,20 +14,15 @@ import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page
  *
  * @param {Appeal} appealData
  * @param {import("@pins/express").ValidationErrors | undefined} errors
- * @param {SessionData} session
  * @returns {PageContent}
  */
-export const manageInterestInLandPage = (appealData, errors, session) => {
+export const manageInterestInLandPage = (appealData, errors) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
-	const interestInLand =
-		session.interestInLand || appealData.enforcementNotice?.appellantCase?.interestInLand;
+	const interestInLand = errors?.interestInLandOther
+		? errors?.interestInLandOther.value || ''
+		: appealData.enforcementNotice?.appellantCase?.interestInLand;
 	const interestInLandOtherChecked =
-		!!interestInLand && !['Owner', 'Mortgage lender', 'Tenant'].includes(interestInLand);
-	const interestInLandOtherText = session.interestInLand
-		? session.interestInLandOtherText
-		: interestInLandOtherChecked
-		? appealData.enforcementNotice?.appellantCase?.interestInLand
-		: '';
+		typeof interestInLand === 'string' && !INTEREST_IN_LAND.includes(interestInLand);
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -46,23 +43,13 @@ export const manageInterestInLandPage = (appealData, errors, session) => {
 						}
 					},
 					items: [
+						...INTEREST_IN_LAND.map((interestInLandOption) => ({
+							value: interestInLandOption,
+							text: toSentenceCase(interestInLandOption),
+							checked: interestInLandOption === interestInLand
+						})),
 						{
-							value: 'Owner',
-							text: 'Owner',
-							checked: interestInLand === 'Owner'
-						},
-						{
-							value: 'Mortgage lender',
-							text: 'Mortgage lender',
-							checked: interestInLand === 'Mortgage lender'
-						},
-						{
-							value: 'Tenant',
-							text: 'Tenant',
-							checked: interestInLand === 'Tenant'
-						},
-						{
-							value: 'Other',
+							value: 'other',
 							text: 'Other',
 							checked: interestInLandOtherChecked,
 							conditional: {
@@ -72,7 +59,7 @@ export const manageInterestInLandPage = (appealData, errors, session) => {
 										parameters: {
 											id: 'interest-in-land-other',
 											name: 'interestInLandOther',
-											value: interestInLandOtherText,
+											value: interestInLandOtherChecked ? interestInLand : '',
 											...(errors && { errorMessage: { text: errors.interestInLandOther?.msg } }),
 											label: {
 												text: 'Enter interest in the land',

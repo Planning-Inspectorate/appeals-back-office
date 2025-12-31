@@ -27,16 +27,14 @@ export const mapEnforcementAppellantCase = (data) => {
 				? appellantCase?.contactPlanningInspectorateDate?.toISOString()
 				: null,
 			reference: hasEnforcementData ? appellantCase?.enforcementReference : null,
-			interestInLand: hasEnforcementData ? appellantCase?.interestInLand : null,
+			interestInLand: appellantCase?.interestInLand ?? null,
 			writtenOrVerbalPermission: hasEnforcementData
 				? appellantCase?.writtenOrVerbalPermission
 				: null,
 			descriptionOfAllegedBreach: hasEnforcementData
 				? appellantCase?.descriptionOfAllegedBreach
 				: null,
-			applicationDevelopmentAllOrPart: hasEnforcementData
-				? appellantCase?.applicationDevelopmentAllOrPart
-				: null,
+			applicationDevelopmentAllOrPart: appellantCase?.applicationDevelopmentAllOrPart ?? null,
 			// @ts-ignore
 			contactAddress: hasEnforcementData
 				? {

@@ -29,6 +29,7 @@ export const dateSubmitted = (
 		dateInput({
 			id: 'date',
 			name: 'date',
+			namePrefix: 'date',
 			value:
 				date.day && date.month && date.year
 					? date
@@ -36,7 +37,7 @@ export const dateSubmitted = (
 			legendText: pageHeadingTextOverride || 'When was the supporting document submitted?',
 			legendIsPageHeading: true,
 			hint: 'For example, 27 3 2024',
-			errors: errors
+			errors
 		})
 	]
 });

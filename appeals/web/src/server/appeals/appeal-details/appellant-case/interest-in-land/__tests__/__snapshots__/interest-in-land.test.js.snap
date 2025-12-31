@@ -19,22 +19,22 @@ exports[`interest-in-land GET /change should render the interest in land page 1`
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio" name="interestInLandRadio"
-                                        type="radio" value="Owner">
+                                        type="radio" value="owner">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio">Owner</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-2" name="interestInLandRadio"
-                                        type="radio" value="Mortgage lender">
+                                        type="radio" value="mortgage lender">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-2">Mortgage lender</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-3" name="interestInLandRadio"
-                                        type="radio" value="Tenant">
+                                        type="radio" value="tenant">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-3">Tenant</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-4" name="interestInLandRadio"
-                                        type="radio" value="Other" data-aria-controls="conditional-interest-in-land-radio-4">
+                                        type="radio" value="other" data-aria-controls="conditional-interest-in-land-radio-4">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-4">Other</label>
                                     </div>
                                     <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
@@ -77,22 +77,22 @@ exports[`interest-in-land GET /change should render the interest in land page wi
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio" name="interestInLandRadio"
-                                        type="radio" value="Owner" checked>
+                                        type="radio" value="owner" checked>
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio">Owner</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-2" name="interestInLandRadio"
-                                        type="radio" value="Mortgage lender">
+                                        type="radio" value="mortgage lender">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-2">Mortgage lender</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-3" name="interestInLandRadio"
-                                        type="radio" value="Tenant">
+                                        type="radio" value="tenant">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-3">Tenant</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-4" name="interestInLandRadio"
-                                        type="radio" value="Other" data-aria-controls="conditional-interest-in-land-radio-4">
+                                        type="radio" value="other" data-aria-controls="conditional-interest-in-land-radio-4">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-4">Other</label>
                                     </div>
                                     <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
@@ -135,29 +135,29 @@ exports[`interest-in-land GET /change should render the interest in land page wi
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio" name="interestInLandRadio"
-                                        type="radio" value="Owner">
+                                        type="radio" value="owner">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio">Owner</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-2" name="interestInLandRadio"
-                                        type="radio" value="Mortgage lender">
+                                        type="radio" value="mortgage lender">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-2">Mortgage lender</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-3" name="interestInLandRadio"
-                                        type="radio" value="Tenant">
+                                        type="radio" value="tenant">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-3">Tenant</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-4" name="interestInLandRadio"
-                                        type="radio" value="Other" checked data-aria-controls="conditional-interest-in-land-radio-4">
+                                        type="radio" value="other" checked data-aria-controls="conditional-interest-in-land-radio-4">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-4">Other</label>
                                     </div>
                                     <div class="govuk-radios__conditional" id="conditional-interest-in-land-radio-4">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-label--s" for="interest-in-land-other">Enter interest in the land</label>
                                             <input class="govuk-input" id="interest-in-land-other"
-                                            name="interestInLandOther" type="text" value="Other">
+                                            name="interestInLandOther" type="text" value="other">
                                         </div>
                                     </div>
                                 </div>
@@ -207,22 +207,22 @@ exports[`interest-in-land POST /change should re-render the page with an error i
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio" name="interestInLandRadio"
-                                        type="radio" value="Owner">
+                                        type="radio" value="owner">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio">Owner</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-2" name="interestInLandRadio"
-                                        type="radio" value="Mortgage lender">
+                                        type="radio" value="mortgage lender">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-2">Mortgage lender</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-3" name="interestInLandRadio"
-                                        type="radio" value="Tenant">
+                                        type="radio" value="tenant">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-3">Tenant</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-4" name="interestInLandRadio"
-                                        type="radio" value="Other" data-aria-controls="conditional-interest-in-land-radio-4">
+                                        type="radio" value="other" data-aria-controls="conditional-interest-in-land-radio-4">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-4">Other</label>
                                     </div>
                                     <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
@@ -283,22 +283,22 @@ exports[`interest-in-land POST /change should re-render the page with an error i
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio" name="interestInLandRadio"
-                                        type="radio" value="Owner">
+                                        type="radio" value="owner">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio">Owner</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-2" name="interestInLandRadio"
-                                        type="radio" value="Mortgage lender">
+                                        type="radio" value="mortgage lender">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-2">Mortgage lender</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-3" name="interestInLandRadio"
-                                        type="radio" value="Tenant">
+                                        type="radio" value="tenant">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-3">Tenant</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-4" name="interestInLandRadio"
-                                        type="radio" value="Other" checked data-aria-controls="conditional-interest-in-land-radio-4">
+                                        type="radio" value="other" checked data-aria-controls="conditional-interest-in-land-radio-4">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-4">Other</label>
                                     </div>
                                     <div class="govuk-radios__conditional" id="conditional-interest-in-land-radio-4">
@@ -358,22 +358,22 @@ exports[`interest-in-land POST /change should re-render the page with an error i
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio" name="interestInLandRadio"
-                                        type="radio" value="Owner">
+                                        type="radio" value="owner">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio">Owner</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-2" name="interestInLandRadio"
-                                        type="radio" value="Mortgage lender">
+                                        type="radio" value="mortgage lender">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-2">Mortgage lender</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-3" name="interestInLandRadio"
-                                        type="radio" value="Tenant">
+                                        type="radio" value="tenant">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-3">Tenant</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="interest-in-land-radio-4" name="interestInLandRadio"
-                                        type="radio" value="Other" checked data-aria-controls="conditional-interest-in-land-radio-4">
+                                        type="radio" value="other" checked data-aria-controls="conditional-interest-in-land-radio-4">
                                         <label class="govuk-label govuk-radios__label" for="interest-in-land-radio-4">Other</label>
                                     </div>
                                     <div class="govuk-radios__conditional" id="conditional-interest-in-land-radio-4">

@@ -387,6 +387,12 @@ const appealsApiRequests = {
 		representationSubmittedDate: new Date(new Date().setDate(new Date().getDate() - 1)),
 		lpaCode: 'Q9999'
 	},
+	rule6Party: {
+		serviceUser: {
+			organisationName: "Concerned Locals Consortium",
+			email: "concernedlocals@gmail.com"
+		}
+	}
 };
 
 const documentsApiRequest = {

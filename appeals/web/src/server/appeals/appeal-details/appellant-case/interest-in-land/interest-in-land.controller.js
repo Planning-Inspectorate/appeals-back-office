@@ -18,13 +18,7 @@ export const getChangeInterestInLand = async (request, response) => {
 const renderManagerInterestInLand = async (request, response) => {
 	const { currentAppeal, errors } = request;
 
-	const interestInLand = request.body['interestInLandRadio'];
-	const interestInLandOtherText = request.body['interestInLandOther'];
-
-	const mappedPageContents = manageInterestInLandPage(currentAppeal, errors, {
-		interestInLand,
-		interestInLandOtherText
-	});
+	const mappedPageContents = manageInterestInLandPage(currentAppeal, errors);
 	return response
 		.status(errors ? 400 : 200)
 		.render('patterns/change-page.pattern.njk', { pageContent: mappedPageContents, errors });
@@ -42,7 +36,7 @@ export const postChangeInterestInLand = async (request, response) => {
 	}
 
 	const otherSelected =
-		request.body['interestInLandRadio'] === 'Other' && request.body['interestInLandOther'];
+		request.body['interestInLandRadio'] === 'other' && request.body['interestInLandOther'];
 	const radioSelection = otherSelected
 		? request.body['interestInLandOther']
 		: request.body['interestInLandRadio'];

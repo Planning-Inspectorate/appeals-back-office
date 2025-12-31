@@ -87,4 +87,5 @@ export interface RepresentationRequest {
 	dateCreated: string;
 	source: 'citizen' | 'lpa' | ODW_SYSTEM_ID;
 	representationText?: string;
+	representedId?: number;
 }

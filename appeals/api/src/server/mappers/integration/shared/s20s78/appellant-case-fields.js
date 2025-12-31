@@ -3,7 +3,7 @@
 /**
  *
  * @param {Pick<LPAQuestionnaireCommand, 'casedata'>} command
- * @returns {Omit<import('#db-client').Prisma.LPAQuestionnaireCreateInput, 'appeal'>}
+ * @returns {Omit<import('#db-client/models.ts').LPAQuestionnaireCreateInput, 'appeal'>}
  */
 
 export const createSharedS20S78Fields = (command) => ({

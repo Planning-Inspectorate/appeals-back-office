@@ -1,9 +1,9 @@
 import { databaseConnector } from '#utils/database-connector.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 
-/** @typedef {import('#db-client').Prisma.RepresentationUpdateInput} RepresentationUpdateInput */
-/** @typedef {import('#db-client').Prisma.RepresentationUncheckedCreateInput} RepresentationCreateInput */
-/** @typedef {import('#db-client').Prisma.RepresentationWhereInput} RepresentationWhereInput */
+/** @typedef {import('#db-client/models.ts').RepresentationUpdateInput} RepresentationUpdateInput */
+/** @typedef {import('#db-client/models.ts').RepresentationUncheckedCreateInput} RepresentationCreateInput */
+/** @typedef {import('#db-client/models.ts').RepresentationWhereInput} RepresentationWhereInput */
 
 /**
  * @param {number} id
@@ -73,10 +73,12 @@ const getRepresentations = async (appealId, options, pageNumber, pageSize) => {
 				},
 				represented: {
 					select: {
+						id: true,
+						address: true,
+						email: true,
 						firstName: true,
 						lastName: true,
-						address: true,
-						email: true
+						organisationName: true
 					}
 				},
 				lpa: true,

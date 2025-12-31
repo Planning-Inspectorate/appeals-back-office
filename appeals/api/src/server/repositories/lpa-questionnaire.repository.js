@@ -4,7 +4,7 @@ import commonRepository from './common.repository.js';
 
 /** @typedef {import('@pins/appeals.api').Api.LpaQuestionnaireUpdateRequest} LpaQuestionnaireUpdateRequest */
 /**
- * @typedef {import('#db-client').Prisma.PrismaPromise<T>} PrismaPromise
+ * @typedef {import('#db-client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
  * @template T
  */
 
