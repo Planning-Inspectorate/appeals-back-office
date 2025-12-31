@@ -61,7 +61,7 @@ describe('representations', () => {
 			expect(snapshotResponse.innerHTML).toMatchSnapshot();
 			expect(textResponse.innerHTML).toContain('Progress to proof of evidence and witnesses</h1>');
 			expect(textResponse.innerHTML).toContain(
-				`<div class="govuk-grid-column-two-thirds">There are no interested party comments or statements to share.`
+				`<div class="govuk-grid-column-two-thirds">There are no statements or interested party comments to share.`
 			);
 			expect(textResponse.innerHTML.toString()).toContain(
 				`Warning</span> Do not progress to proof of evidence and witnesses if you are awaiting any late statements or interested party comments.</strong>`
