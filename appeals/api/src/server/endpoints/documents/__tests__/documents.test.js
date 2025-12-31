@@ -14,6 +14,7 @@ import {
 } from '#tests/documents/mocks.js';
 import { azureAdUserId, documentRedactionStatuses } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
+import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { request } from '../../../app-test.js';
 import * as controller from '../documents.controller.js';
 import * as mappers from '../documents.mapper.js';
@@ -616,5 +617,44 @@ describe('appeals documents', () => {
 			});
 			expect(response.status).toEqual(200);
 		});
+	});
+
+	describe('sets document visibility variables', () => {
+		beforeEach(() => {
+			jest.clearAllMocks();
+			jest.resetAllMocks();
+			databaseConnector.appellantCase.update = jest.fn().mockResolvedValue({});
+		});
+
+		test.each([
+			[true, APPEAL_DOCUMENT_TYPE.CHANGED_DESCRIPTION, 'changedDevelopmentDescription'],
+			[false, APPEAL_DOCUMENT_TYPE.CHANGED_DESCRIPTION, 'changedDevelopmentDescription'],
+			[true, APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION, 'appellantCostsAppliedFor'],
+			[false, APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION, 'appellantCostsAppliedFor']
+		])(
+			'sets document visibility booleans to %s correctly for %s',
+			async (visible, documentType, booleanName) => {
+				const documentTypes = [documentType];
+				const appealId = 1;
+				const appellantCaseId = 1;
+
+				await controller.updateDocumentVisibilityBooleans(
+					documentTypes,
+					appealId,
+					appellantCaseId,
+					visible
+				);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					data: {
+						[booleanName]: visible,
+						knowsOtherOwners: undefined
+					},
+					where: { id: appellantCaseId }
+				});
+
+				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(appealId);
+			}
+		);
 	});
 });

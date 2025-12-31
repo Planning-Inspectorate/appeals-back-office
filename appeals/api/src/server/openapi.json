@@ -8672,6 +8672,10 @@
 						"type": "string",
 						"example": "document-service-uploads"
 					},
+					"appellantCaseId": {
+						"type": "number",
+						"example": 2
+					},
 					"documents": {
 						"type": "array",
 						"items": {
