@@ -1,6 +1,9 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { dateInput, yesNoInput } from '#lib/mappers/index.js';
+import { dateISOStringToDisplayDate, dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
+import { dateInput, simpleHtmlComponent, yesNoInput } from '#lib/mappers/index.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { LENGTH_300 } from '@pins/appeals/constants/support.js';
 
 /**
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
@@ -215,4 +218,145 @@ export function updateEnforcementValidDatePage(
 	};
 
 	return pageContent;
+}
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @returns {PageContent}
+ * @description
+ */
+export function checkAndConfirmEnforcementPage(request) {
+	const {
+		currentAppeal,
+		session: {
+			enforcementDecision: {
+				outcome,
+				appealGroundABarred,
+				otherInformationDetails,
+				updatedValidDateDay,
+				updatedValidDateMonth,
+				updatedValidDateYear
+			}
+		}
+	} = request;
+	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case`;
+
+	/** @type {PageComponent} */
+	const summaryListComponent = {
+		type: 'summary-list',
+		parameters: {
+			rows: [
+				{
+					key: {
+						text: 'Review decision'
+					},
+					value: {
+						text: capitalizeFirstLetter(outcome)
+					},
+					actions: {
+						items: [
+							{
+								href: baseUrl,
+								text: 'Change',
+								visuallyHiddenText: 'review decision'
+							}
+						]
+					}
+				},
+				{
+					key: {
+						text: 'Is the appeal ground (a) barred?'
+					},
+					value: {
+						text: capitalizeFirstLetter(appealGroundABarred)
+					},
+					actions: {
+						items: [
+							{
+								href: `${baseUrl}/valid/enforcement/ground-a`,
+								text: 'Change',
+								visuallyHiddenText: 'Appeal ground (a) barred'
+							}
+						]
+					}
+				},
+				{
+					key: {
+						text: 'Do you want to add any other information?'
+					},
+					value: {
+						...(otherInformationDetails
+							? {
+									html: renderPageComponentsToHtml([
+										{
+											type: 'show-more',
+											parameters: {
+												text: `Yes: ${otherInformationDetails}`,
+												maximumBeforeHiding: LENGTH_300,
+												toggleTextCollapsed: 'Show more',
+												toggleTextExpanded: 'Show less'
+											}
+										}
+									])
+							  }
+							: { text: 'No' })
+					},
+					actions: {
+						items: [
+							{
+								href: `${baseUrl}/valid/enforcement/other-information`,
+								text: 'Change',
+								visuallyHiddenText: 'Other information'
+							}
+						]
+					}
+				},
+				{
+					key: {
+						text: 'Valid date for case'
+					},
+					value: {
+						text: dateISOStringToDisplayDate(
+							dayMonthYearHourMinuteToISOString({
+								day: updatedValidDateDay,
+								month: updatedValidDateMonth,
+								year: updatedValidDateYear
+							})
+						)
+					},
+					actions: {
+						items: [
+							{
+								href: `${baseUrl}/valid/enforcement/date`,
+								text: 'Change',
+								visuallyHiddenText: 'Valid date'
+							}
+						]
+					}
+				}
+			]
+		}
+	};
+
+	/**@type {PageComponent[]} */
+	const pageComponents = [summaryListComponent];
+
+	pageComponents.push(
+		simpleHtmlComponent(
+			'p',
+			{
+				class: 'govuk-body'
+			},
+			'We will mark the appeal as valid and send an email to the relevant parties.'
+		)
+	);
+
+	return {
+		title: 'Check details and mark appeal as valid',
+		backLinkUrl: `${baseUrl}/valid/enforcement/date`,
+		preHeading: `Appeal ${appealShortReference(currentAppeal.appealReference)}`,
+		heading: 'Check details and mark appeal as valid',
+		submitButtonText: 'Mark appeal as valid',
+		pageComponents
+	};
 }

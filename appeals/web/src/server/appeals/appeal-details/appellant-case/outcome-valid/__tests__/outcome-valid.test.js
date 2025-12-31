@@ -227,5 +227,56 @@ describe('Appellant Case Valid Flow', () => {
 				);
 			});
 		});
+
+		describe('GET /enforcement/check-details', () => {
+			it(`should render the 'Check details' screen`, async () => {
+				// set session data
+				const groundAResponse = await request
+					.post(`${baseUrl}/${appealId}/appellant-case/valid/enforcement/ground-a`)
+					.send({ enforcementGroundARadio: 'yes' });
+				expect(groundAResponse.statusCode).toBe(302);
+
+				const otherInformationRepsonse = await request
+					.post(`${baseUrl}/${appealId}/appellant-case/valid/enforcement/other-information`)
+					.send({
+						otherInformationValidRadio: 'Yes',
+						otherInformationDetails: 'Other information'
+					});
+				expect(otherInformationRepsonse.statusCode).toBe(302);
+
+				const dateResponse = await request
+					.post(`${baseUrl}/${appealId}/appellant-case/valid/enforcement/date`)
+					.send({
+						'valid-date-day': '1',
+						'valid-date-month': 'Jan',
+						'valid-date-year': '2025'
+					});
+				expect(dateResponse.statusCode).toBe(302);
+
+				// get details
+				const response = await request.get(
+					`${baseUrl}/${appealId}/appellant-case/valid/enforcement/check-details`
+				);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Check details and mark appeal as valid</h1>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Review decision</dt>');
+				expect(unprettifiedElement.innerHTML).toContain('Is the appeal ground (a) barred?</dt>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Do you want to add any other information?</dt>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Valid date for case</dt>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'We will mark the appeal as valid and send an email to the relevant parties.</p>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Mark appeal as valid</button>');
+			});
+		});
 	});
 });

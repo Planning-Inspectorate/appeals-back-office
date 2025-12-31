@@ -6,6 +6,7 @@ import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { isBefore } from 'date-fns';
 import {
+	checkAndConfirmEnforcementPage,
 	updateEnforcementGroundAPage,
 	updateEnforcementOtherInformationPage,
 	updateEnforcementValidDatePage,
@@ -165,7 +166,11 @@ export const postEnforcementGroundA = async (request, response) => {
 	try {
 		const radioValue = body['enforcementGroundARadio'];
 
-		session.enforcementDecision = { appealGroundABarred: radioValue };
+		session.enforcementDecision = {
+			...session.enforcementDecision,
+			outcome: 'valid',
+			appealGroundABarred: radioValue
+		};
 
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/appellant-case/valid/enforcement/other-information`
@@ -225,7 +230,8 @@ export const postEnforcementOtherInformation = async (request, response) => {
 
 	try {
 		const otherInformationValidRadio = body['otherInformationValidRadio'];
-		const otherInformationDetails = body['otherInformationDetails'];
+		const otherInformationDetails =
+			otherInformationValidRadio === 'Yes' ? body['otherInformationDetails'] : undefined;
 
 		session.enforcementDecision = {
 			...session.enforcementDecision,
@@ -341,12 +347,15 @@ export const postEnforcementValidDate = async (request, response) => {
  */
 const renderEnforcementValidDate = async (request, response, apiErrors) => {
 	const {
-		currentAppeal: { appealId, appealReference }
+		currentAppeal: { appealId, appealReference },
+		session: { enforcementDecision }
 	} = request;
 
-	const dateValidDay = request.body['valid-date-day'];
-	const dateValidMonth = request.body['valid-date-month'];
-	const dateValidYear = request.body['valid-date-year'];
+	const dateValidDay = request.body['valid-date-day'] || enforcementDecision?.updatedValidDateDay;
+	const dateValidMonth =
+		request.body['valid-date-month'] || enforcementDecision?.updatedValidDateMonth;
+	const dateValidYear =
+		request.body['valid-date-year'] || enforcementDecision?.updatedValidDateYear;
 
 	let errors = request.errors || apiErrors;
 
@@ -362,5 +371,24 @@ const renderEnforcementValidDate = async (request, response, apiErrors) => {
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
 		errors
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getEnforcementCheckDetails = async (request, response) => {
+	return renderEnforcementCheckDetails(request, response, undefined);
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {import('@pins/express').ValidationErrors} [apiErrors]
+ */
+const renderEnforcementCheckDetails = async (request, response, apiErrors) => {
+	const mappedPageContent = checkAndConfirmEnforcementPage(request);
+	return response.status(200).render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors: request.errors || apiErrors
 	});
 };
