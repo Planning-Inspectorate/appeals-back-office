@@ -10919,6 +10919,10 @@
 										"type": "string",
 										"example": "2024-05-13T00:00:00.000Z"
 									},
+									"caseManagementConferenceDueDate": {
+										"type": "string",
+										"example": "2024-05-15T00:00:00.000Z"
+									},
 									"planningObligationDueDate": {
 										"type": "string",
 										"example": "2024-05-14T00:00:00.000Z"
@@ -12976,6 +12980,10 @@
 					"proofOfEvidenceAndWitnessesDueDate": {
 						"type": "string",
 						"example": "2024-08-14"
+					},
+					"caseManagementConferenceDueDate": {
+						"type": "string",
+						"example": "2024-05-15"
 					}
 				},
 				"xml": {
@@ -13012,6 +13020,10 @@
 					"proofOfEvidenceAndWitnessesDueDate": {
 						"type": "string",
 						"example": "2024-08-14T01:00:00.000Z"
+					},
+					"caseManagementConferenceDueDate": {
+						"type": "string",
+						"example": "2024-05-15T00:00:00.000Z"
 					}
 				},
 				"xml": {
@@ -13048,6 +13060,10 @@
 					"proofOfEvidenceAndWitnessesDueDate": {
 						"type": "string",
 						"example": "2024-08-14T01:00:00.000Z"
+					},
+					"caseManagementConferenceDueDate": {
+						"type": "string",
+						"example": "2024-05-15T00:00:00.000Z"
 					},
 					"startDate": {
 						"type": "string",
@@ -13936,6 +13952,11 @@
 						"description": "Date string of the proofOfEvidenceAndWitnessesDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM",
 						"example": "2026-11-10T00:00:00.000Z"
 					},
+					"caseManagementConferenceDueDate": {
+						"type": "string",
+						"description": "Date string of the caseManagementConferenceDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
 					"planningObligationDueDate": {
 						"type": "string",
 						"description": "Date string of the planningObligationDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM",
@@ -14018,6 +14039,11 @@
 					"proofOfEvidenceAndWitnessesDueDate": {
 						"type": "string",
 						"description": "Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"caseManagementConferenceDueDate": {
+						"type": "string",
+						"description": "Date string of the caseManagementConferenceDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM",
 						"example": "2026-11-10T00:00:00.000Z"
 					},
 					"planningObligationDueDate": {

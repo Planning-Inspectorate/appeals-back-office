@@ -60,7 +60,8 @@ describe('inquiry routes', () => {
 				planningObligationDueDate: '2025-01-23',
 				statementOfCommonGroundDueDate: '2025-01-24',
 				ipCommentsDueDate: '2025-01-25',
-				proofOfEvidenceAndWitnessesDueDate: '2025-01-26'
+				proofOfEvidenceAndWitnessesDueDate: '2025-01-26',
+				caseManagementConferenceDueDate: '2025-01-27'
 			}
 		});
 	});
@@ -87,6 +88,7 @@ describe('inquiry routes', () => {
 				lpaQuestionnaireDueDate: new Date('2999-01-01T15:00:00.000Z'),
 				planningObligationDueDate: new Date('2999-01-01T16:00:00.000Z'),
 				proofOfEvidenceAndWitnessesDueDate: new Date('2999-01-01T17:00:00.000Z'),
+				caseManagementConferenceDueDate: new Date('2999-01-01T21:00:00.000Z'),
 				startDate: new Date('2999-01-01T18:00:00.000Z'),
 				statementDueDate: new Date('2999-01-01T19:00:00.000Z'),
 				statementOfCommonGroundDueDate: new Date('2999-01-01T20:00:00.000Z'),
@@ -131,6 +133,7 @@ describe('inquiry routes', () => {
 					lpa_statement_deadline: '21 January 2025',
 					planning_obligation_deadline: '23 January 2025',
 					proof_of_evidence_and_witnesses_deadline: '26 January 2025',
+					case_management_conference_deadline: '27 January 2025',
 					questionnaire_due_date: '20 January 2025',
 					ip_comments_deadline: '25 January 2025',
 					is_lpa: false,
@@ -816,6 +819,7 @@ describe('inquiry routes', () => {
 				lpaQuestionnaireDueDate: new Date('2999-01-01T15:00:00.000Z'),
 				planningObligationDueDate: new Date('2999-01-01T16:00:00.000Z'),
 				proofOfEvidenceAndWitnessesDueDate: new Date('2999-01-01T17:00:00.000Z'),
+				caseManagementConferenceDueDate: new Date('2999-01-01T21:00:00.000Z'),
 				startDate: new Date('2999-01-01T18:00:00.000Z'),
 				statementDueDate: new Date('2999-01-01T19:00:00.000Z'),
 				statementOfCommonGroundDueDate: new Date('2999-01-01T20:00:00.000Z'),
@@ -860,6 +864,7 @@ describe('inquiry routes', () => {
 					lpa_statement_deadline: '21 January 2025',
 					planning_obligation_deadline: '23 January 2025',
 					proof_of_evidence_and_witnesses_deadline: '26 January 2025',
+					case_management_conference_deadline: '27 January 2025',
 					questionnaire_due_date: '20 January 2025',
 					ip_comments_deadline: '25 January 2025',
 					is_lpa: false,
@@ -1645,6 +1650,7 @@ describe('inquiry routes', () => {
 					lpa_statement_deadline: '',
 					planning_obligation_deadline: '',
 					proof_of_evidence_and_witnesses_deadline: '',
+					case_management_conference_deadline: '',
 					questionnaire_due_date: ''
 				};
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
@@ -2101,6 +2107,7 @@ describe('inquiry routes', () => {
 					lpa_statement_deadline: '',
 					planning_obligation_deadline: '',
 					proof_of_evidence_and_witnesses_deadline: '',
+					case_management_conference_deadline: '',
 					questionnaire_due_date: ''
 				};
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {

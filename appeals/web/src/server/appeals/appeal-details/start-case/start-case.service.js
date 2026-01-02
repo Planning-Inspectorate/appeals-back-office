@@ -11,6 +11,7 @@
  * @property {string?} [statementOfCommonGroundDueDate]
  * @property {string?} [planningObligationDueDate]
  * @property {string?} [proofOfEvidenceAndWitnessesDueDate]
+ * @property {string?} [caseManagementConferenceDueDate]
  * @property {string?} [startDate]
  */
 

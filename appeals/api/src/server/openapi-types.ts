@@ -1453,6 +1453,8 @@ export interface StartCaseRequest {
 			statementOfCommonGroundDueDate?: string;
 			/** @example "2024-05-13T00:00:00.000Z" */
 			proofOfEvidenceAndWitnessesDueDate?: string;
+			/** @example "2024-05-15T00:00:00.000Z" */
+			caseManagementConferenceDueDate?: string;
 			/** @example "2024-05-14T00:00:00.000Z" */
 			planningObligationDueDate?: string;
 		};
@@ -2339,6 +2341,8 @@ export interface UpdateAppealTimetableRequest {
 	planningObligationDueDate?: string;
 	/** @example "2024-08-14" */
 	proofOfEvidenceAndWitnessesDueDate?: string;
+	/** @example "2024-08-15" */
+	caseManagementConferenceDueDate?: string;
 }
 
 export interface UpdateAppealTimetableResponse {
@@ -2356,6 +2360,8 @@ export interface UpdateAppealTimetableResponse {
 	planningObligationDueDate?: string;
 	/** @example "2024-08-14T01:00:00.000Z" */
 	proofOfEvidenceAndWitnessesDueDate?: string;
+	/** @example "2024-08-15T00:00:00.000Z" */
+	caseManagementConferenceDueDate?: string;
 }
 
 export interface CalculateAppealTimetableResponse {
@@ -2373,6 +2379,8 @@ export interface CalculateAppealTimetableResponse {
 	planningObligationDueDate?: string;
 	/** @example "2024-08-14T01:00:00.000Z" */
 	proofOfEvidenceAndWitnessesDueDate?: string;
+	/** @example "2024-08-15T00:00:00.000Z" */
+	caseManagementConferenceDueDate?: string;
 	/** @example "2024-08-09T01:00:00.000Z" */
 	startDate?: string;
 }
@@ -2882,6 +2890,11 @@ export interface ChangeProcedureTypeRequest {
 	 */
 	proofOfEvidenceAndWitnessesDueDate?: string;
 	/**
+	 * Date string of the caseManagementConferenceDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	caseManagementConferenceDueDate?: string;
+	/**
 	 * Date string of the planningObligationDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM
 	 * @example "2026-11-10T00:00:00.000Z"
 	 */
@@ -2948,6 +2961,11 @@ export interface CreateInquiryRequest {
 	 * @example "2026-11-10T00:00:00.000Z"
 	 */
 	proofOfEvidenceAndWitnessesDueDate?: string;
+	/**
+	 * Date string of the caseManagementConferenceDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	caseManagementConferenceDueDate?: string;
 	/**
 	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
 	 * @example "2026-11-10T00:00:00.000Z"

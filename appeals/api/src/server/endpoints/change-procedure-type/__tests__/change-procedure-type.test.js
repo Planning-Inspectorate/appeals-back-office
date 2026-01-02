@@ -151,6 +151,7 @@ describe('Change appeal procedure type route', () => {
 					change_message:
 						'We have changed your appeal procedure to written representations and cancelled your hearing.',
 					lpa_statement_exists: true,
+					case_management_conference_due_date: '',
 					existing_appeal_procedure: 'hearing',
 					inquiry_address: '',
 					hearing_date: '',
@@ -243,6 +244,7 @@ describe('Change appeal procedure type route', () => {
 					lpa_statement_exists: true,
 					existing_appeal_procedure: 'inquiry',
 					week_before_conference_date: '25 December 2998',
+					case_management_conference_due_date: '',
 					inquiry_address: '',
 					hearing_date: '',
 					hearing_time: ''
@@ -435,6 +437,7 @@ describe('Change appeal procedure type route', () => {
 					lpa_statement_exists: true,
 					existing_appeal_procedure: 'inquiry',
 					proof_of_evidence_due_date: '',
+					case_management_conference_due_date: '',
 					hearing_date: '1 January 2000',
 					hearing_time: '12:00pm',
 					inquiry_address: ''
@@ -526,6 +529,7 @@ describe('Change appeal procedure type route', () => {
 					lpa_statement_exists: true,
 					existing_appeal_procedure: 'written',
 					proof_of_evidence_due_date: '',
+					case_management_conference_due_date: '',
 					hearing_date: '1 January 2000',
 					hearing_time: '12:00pm',
 					inquiry_address: ''
@@ -578,6 +582,7 @@ describe('Change appeal procedure type route', () => {
 				expect(response.text).toContain('lpaStatementDueDate');
 				expect(response.text).toContain('statementOfCommonGroundDueDate');
 				expect(response.text).toContain('proofOfEvidenceAndWitnessesDueDate');
+				expect(response.text).toContain('caseManagementConferenceDueDate');
 				expect(response.text).toContain('eventDate');
 				expect(response.text).toContain('must be a valid date');
 			});
@@ -596,6 +601,7 @@ describe('Change appeal procedure type route', () => {
 						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
 						statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z',
 						proofOfEvidenceAndWitnessesDueDate: '2025-12-15T00:00:00.000Z',
+						caseManagementConferenceDueDate: '2025-12-15T00:00:00.000Z',
 						planningObligationDueDate: '2025-12-17T00:00:00.000Z',
 						estimationDays: '7',
 						address: {
@@ -644,6 +650,7 @@ describe('Change appeal procedure type route', () => {
 						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
 						planningObligationDueDate: '2025-12-17T00:00:00.000Z',
 						proofOfEvidenceAndWitnessesDueDate: '2025-12-15T00:00:00.000Z',
+						caseManagementConferenceDueDate: '2025-12-15T00:00:00.000Z',
 						statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z'
 					}
 				});
@@ -665,6 +672,7 @@ describe('Change appeal procedure type route', () => {
 					lpa_statement_exists: true,
 					existing_appeal_procedure: 'hearing',
 					proof_of_evidence_due_date: '15 December 2025',
+					case_management_conference_due_date: '15 December 2025',
 					hearing_date: '20 December 2025',
 					hearing_time: '12:00am'
 				};
@@ -711,6 +719,7 @@ describe('Change appeal procedure type route', () => {
 						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
 						statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z',
 						proofOfEvidenceAndWitnessesDueDate: '2025-12-15T00:00:00.000Z',
+						caseManagementConferenceDueDate: '2025-12-15T00:00:00.000Z',
 						planningObligationDueDate: '2025-12-16T00:00:00.000Z'
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -733,6 +742,7 @@ describe('Change appeal procedure type route', () => {
 						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
 						planningObligationDueDate: '2025-12-16T00:00:00.000Z',
 						proofOfEvidenceAndWitnessesDueDate: '2025-12-15T00:00:00.000Z',
+						caseManagementConferenceDueDate: '2025-12-15T00:00:00.000Z',
 						statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z'
 					}
 				});
@@ -757,6 +767,7 @@ describe('Change appeal procedure type route', () => {
 						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
 						statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z',
 						proofOfEvidenceAndWitnessesDueDate: '2025-12-15T00:00:00.000Z',
+						caseManagementConferenceDueDate: '2025-12-15T00:00:00.000Z',
 						planningObligationDueDate: '2025-12-17T00:00:00.000Z',
 						address: {
 							addressLine1: '96 The Avenue',
@@ -788,6 +799,7 @@ describe('Change appeal procedure type route', () => {
 						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
 						planningObligationDueDate: '2025-12-17T00:00:00.000Z',
 						proofOfEvidenceAndWitnessesDueDate: '2025-12-15T00:00:00.000Z',
+						caseManagementConferenceDueDate: '2025-12-15T00:00:00.000Z',
 						statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z'
 					}
 				});
@@ -811,6 +823,7 @@ describe('Change appeal procedure type route', () => {
 					lpa_statement_exists: true,
 					existing_appeal_procedure: 'written',
 					proof_of_evidence_due_date: '15 December 2025',
+					case_management_conference_due_date: '15 December 2025',
 					hearing_date: '20 December 2025',
 					hearing_time: '12:00am'
 				};

@@ -135,6 +135,7 @@ model AppealTimetable {
   statementOfCommonGroundDueDate     DateTime?
   planningObligationDueDate          DateTime?
   proofOfEvidenceAndWitnessesDueDate DateTime?
+  caseManagementConferenceDueDate    DateTime?
 }
 
 /// AppealStatus model

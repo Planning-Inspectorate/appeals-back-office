@@ -55,6 +55,7 @@ export const requestChangeOfProcedureType = async (req, res) => {
 				data.appealProcedure,
 				data.existingAppealProcedure,
 				data.proofOfEvidenceAndWitnessesDueDate,
+				data.caseManagementConferenceDueDate,
 				// @ts-ignore
 				data.address,
 				data.eventDate

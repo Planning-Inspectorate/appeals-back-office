@@ -1713,6 +1713,7 @@ describe('appeals list routes', () => {
 			lpaQuestionnaireDueDate: new Date('2025-11-06T00:00:00.000Z'),
 			lpaStatementDueDate: new Date('2025-11-07T00:00:00.000Z'),
 			proofOfEvidenceAndWitnessesDueDate: new Date('2025-11-08T00:00:00.000Z'),
+			caseManagementConferenceDueDate: new Date('2025-11-10T00:00:00.000Z'),
 			s106ObligationDueDate: new Date('2025-11-09T00:00:00.000Z')
 		};
 		const appeal = { id: 1, appealTimetable, appealType: { key: APPEAL_CASE_TYPE.W } };
@@ -1816,6 +1817,7 @@ describe('appeals list routes', () => {
 								lpaQuestionnaireDueDate: '2025-11-06T00:00:00.000Z',
 								lpaStatementDueDate: '2025-11-07T00:00:00.000Z',
 								proofOfEvidenceAndWitnessesDueDate: '2025-11-08T00:00:00.000Z',
+								caseManagementConferenceDueDate: '2025-11-10T00:00:00.000Z',
 								s106ObligationDueDate: '2025-11-09T00:00:00.000Z'
 							}
 						},
@@ -1891,6 +1893,7 @@ describe('appeals list routes', () => {
 								lpaQuestionnaireDueDate: '2025-11-06T00:00:00.000Z',
 								lpaStatementDueDate: '2025-11-07T00:00:00.000Z',
 								proofOfEvidenceAndWitnessesDueDate: '2025-11-08T00:00:00.000Z',
+								caseManagementConferenceDueDate: '2025-11-10T00:00:00.000Z',
 								s106ObligationDueDate: '2025-11-09T00:00:00.000Z'
 							}
 						}
