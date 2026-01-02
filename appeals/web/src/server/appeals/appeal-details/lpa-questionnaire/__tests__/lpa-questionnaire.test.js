@@ -1680,7 +1680,7 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 
 			expect(notificationBannerElementHTML).toContain('Important</h3>');
-			expect(notificationBannerElementHTML).toContain('Virus scan in progress</p>');
+			expect(notificationBannerElementHTML).toContain('Virus scan in progress</h1>');
 		});
 
 		it('should render an error when a file has a virus', async () => {

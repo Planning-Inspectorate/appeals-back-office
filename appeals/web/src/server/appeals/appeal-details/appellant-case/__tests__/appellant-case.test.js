@@ -1727,7 +1727,7 @@ describe('appellant-case', () => {
 				rootElement: '.govuk-notification-banner'
 			}).innerHTML;
 			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Virus scan in progress</p>');
+			expect(notificationBannerElementHTML).toContain('Virus scan in progress</h1>');
 			expect(notificationBannerElementHTML).toContain(
 				'Refresh page to see if scan has finished</a>'
 			);

@@ -1666,7 +1666,7 @@ describe('internal correspondence', () => {
 
 				expect(element.innerHTML).toMatchSnapshot();
 
-				const h1Element = parseHtml(response.text, { rootElement: 'h1' });
+				const h1Element = parseHtml(response.text, { rootElement: 'main h1' });
 
 				expect(h1Element.innerHTML).toContain('Page not found');
 			});
@@ -1684,7 +1684,7 @@ describe('internal correspondence', () => {
 
 				expect(element.innerHTML).toMatchSnapshot();
 
-				const h1Element = parseHtml(response.text, { rootElement: 'h1' });
+				const h1Element = parseHtml(response.text, { rootElement: 'main h1' });
 
 				expect(h1Element.innerHTML).toContain('Page not found');
 			});

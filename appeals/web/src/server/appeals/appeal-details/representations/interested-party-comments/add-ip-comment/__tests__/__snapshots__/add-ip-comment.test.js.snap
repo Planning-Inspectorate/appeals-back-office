@@ -14,9 +14,8 @@ exports[`add-ip-comment GET /add/check-address should match the snapshot 1`] = `
                     </div><span>Planning Inspectorate</span>
                 </div>
                 <div class="pins-column--central">
-                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
-                    <nav class="govuk-header__navigation pins-header-navigation"
-                    aria-label="Menu">
+                    <h1 class="pins-header-domainname govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0"> Manage appeals</h1>
+                    <nav class="govuk-header__navigation pins-header-navigation" aria-label="Menu">
                         <ul class="govuk-header__navigation-list">
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>
@@ -99,9 +98,8 @@ exports[`add-ip-comment GET /add/ip-address should match the snapshot 1`] = `
                     </div><span>Planning Inspectorate</span>
                 </div>
                 <div class="pins-column--central">
-                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
-                    <nav class="govuk-header__navigation pins-header-navigation"
-                    aria-label="Menu">
+                    <h1 class="pins-header-domainname govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0"> Manage appeals</h1>
+                    <nav class="govuk-header__navigation pins-header-navigation" aria-label="Menu">
                         <ul class="govuk-header__navigation-list">
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>
@@ -196,9 +194,8 @@ exports[`add-ip-comment GET /add/ip-details should match the snapshot 1`] = `
                     </div><span>Planning Inspectorate</span>
                 </div>
                 <div class="pins-column--central">
-                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
-                    <nav class="govuk-header__navigation pins-header-navigation"
-                    aria-label="Menu">
+                    <h1 class="pins-header-domainname govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0"> Manage appeals</h1>
+                    <nav class="govuk-header__navigation pins-header-navigation" aria-label="Menu">
                         <ul class="govuk-header__navigation-list">
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>
@@ -290,9 +287,8 @@ exports[`add-ip-comment GET /check-your-answers should match the snapshot 1`] = 
                     </div><span>Planning Inspectorate</span>
                 </div>
                 <div class="pins-column--central">
-                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
-                    <nav class="govuk-header__navigation pins-header-navigation"
-                    aria-label="Menu">
+                    <h1 class="pins-header-domainname govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0"> Manage appeals</h1>
+                    <nav class="govuk-header__navigation pins-header-navigation" aria-label="Menu">
                         <ul class="govuk-header__navigation-list">
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>
@@ -391,9 +387,8 @@ exports[`add-ip-comment GET /date-submitted should match the snapshot 1`] = `
                     </div><span>Planning Inspectorate</span>
                 </div>
                 <div class="pins-column--central">
-                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
-                    <nav class="govuk-header__navigation pins-header-navigation"
-                    aria-label="Menu">
+                    <h1 class="pins-header-domainname govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0"> Manage appeals</h1>
+                    <nav class="govuk-header__navigation pins-header-navigation" aria-label="Menu">
                         <ul class="govuk-header__navigation-list">
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>
@@ -491,9 +486,8 @@ exports[`add-ip-comment GET /redaction-status should match the snapshot 1`] = `
                     </div><span>Planning Inspectorate</span>
                 </div>
                 <div class="pins-column--central">
-                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
-                    <nav class="govuk-header__navigation pins-header-navigation"
-                    aria-label="Menu">
+                    <h1 class="pins-header-domainname govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0"> Manage appeals</h1>
+                    <nav class="govuk-header__navigation pins-header-navigation" aria-label="Menu">
                         <ul class="govuk-header__navigation-list">
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>

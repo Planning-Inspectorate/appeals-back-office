@@ -49,7 +49,7 @@ describe('add-ip-comment', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Interested party details');
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe('Interested party details');
 		});
 
 		it('should render a First name field', () => {
@@ -177,7 +177,7 @@ describe('add-ip-comment', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe(
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe(
 				'Did the interested party provide an address?'
 			);
 		});
@@ -307,7 +307,9 @@ describe('add-ip-comment', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Interested party&#39;s address');
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe(
+				'Interested party&#39;s address'
+			);
 		});
 
 		it('should render an Address line 1 field', () => {
@@ -603,7 +605,7 @@ describe('add-ip-comment', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Redaction status');
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe('Redaction status');
 		});
 
 		it('should render the correct back link', async () => {
@@ -643,7 +645,7 @@ describe('add-ip-comment', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe(
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe(
 				'When did the interested party submit the comment?'
 			);
 		});
@@ -889,7 +891,7 @@ describe('add-ip-comment', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe(
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe(
 				'Check details and add interested party comment'
 			);
 		});
