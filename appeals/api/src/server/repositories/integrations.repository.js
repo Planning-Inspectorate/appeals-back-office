@@ -17,6 +17,7 @@ import { getTeamIdFromLpaCode, getTeamIdFromName } from './team.repository.js';
  * @param {import('#db-client/models.ts').AppealCreateInput} data
  * @param {import('#db-client/models.ts').DocumentVersionCreateInput[]} documents
  * @param {string[]} relatedReferences
+ * @param {{groundRef:string, factsForGround:string}[]} appealGrounds
  * @param {string} appellantProcedurePreference
  * @returns {Promise<{appeal: Appeal, documentVersions: DocumentVersion[]}>}
  */
@@ -24,6 +25,7 @@ export const createAppeal = async (
 	data,
 	documents,
 	relatedReferences,
+	appealGrounds,
 	appellantProcedurePreference
 ) => {
 	const transaction = await databaseConnector.$transaction(
@@ -36,7 +38,7 @@ export const createAppeal = async (
 				PROCEDURE_TYPE_ID_MAP[appellantProcedurePreference || 'written'];
 
 			const teamId =
-				appellantSelectedProcedureType == inquiryProcedureTypeId
+				appellantSelectedProcedureType === inquiryProcedureTypeId
 					? await getTeamIdFromName(TEAM_NAME_MAP.MAJOR_CASEWORK)
 					: await getTeamIdFromLpaCode(data.lpa.connect?.lpaCode || '');
 
@@ -61,6 +63,8 @@ export const createAppeal = async (
 				documents
 			);
 			await setAppealRelationships(tx, appeal.id, appeal.reference, relatedReferences);
+
+			await setAppealGrounds(tx, appeal.id, appealGrounds);
 
 			const appealDetails = await tx.appeal.findUnique({
 				where: { id: appeal.id }
@@ -330,6 +334,30 @@ const attachToRepresentation = async (tx, repId, documents) => {
 					documentGuid: document.documentGuid,
 					version: document.version,
 					representationId: repId
+				};
+			})
+		});
+	}
+};
+
+/**
+ *
+ * @param {import('#db-client/client.ts').Prisma.TransactionClient} tx
+ * @param {number} appealId
+ * @param {{groundRef:string, factsForGround:string}[]} appealGrounds
+ * @returns {Promise<void>}
+ */
+// @ts-ignore
+const setAppealGrounds = async (tx, appealId, appealGrounds) => {
+	if (appealGrounds?.length) {
+		const grounds = await tx.ground.findMany();
+		await tx.appealGround.createMany({
+			data: appealGrounds.map((appealGround) => {
+				const groundId = grounds.find((g) => g.groundRef === appealGround.groundRef)?.id;
+				return {
+					appealId,
+					groundId,
+					factsForGround: appealGround.factsForGround
 				};
 			})
 		});

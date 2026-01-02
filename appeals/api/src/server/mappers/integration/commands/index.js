@@ -29,7 +29,7 @@ import { renameDuplicateDocuments } from '#endpoints/integrations/integrations.u
 
 /**
  * @param {AppellantSubmissionCommand} data
- * @returns {{ appeal: import('#db-client/models.ts').AppealCreateInput, documents: import('#db-client/models.ts').DocumentVersionCreateInput[], relatedReferences: string[] }}
+ * @returns {{ appeal: import('#db-client/models.ts').AppealCreateInput, documents: import('#db-client/models.ts').DocumentVersionCreateInput[], relatedReferences: string[], appealGrounds: {groundRef:string,factsForGround:string}[] }}
  */
 const mapAppealSubmission = (data) => {
 	const { casedata, documents, users } = data;
@@ -82,7 +82,9 @@ const mapAppealSubmission = (data) => {
 	return {
 		appeal: appealInput,
 		documents: documentsInput,
-		relatedReferences: casedata.nearbyCaseReferences ?? []
+		relatedReferences: casedata.nearbyCaseReferences ?? [],
+		// @ts-ignore
+		appealGrounds: casedata.appealGrounds ?? []
 	};
 };
 

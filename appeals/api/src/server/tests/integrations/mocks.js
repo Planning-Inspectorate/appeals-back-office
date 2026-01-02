@@ -225,6 +225,55 @@ export const validAppellantCaseS78 = {
 	}
 };
 
+export const validAppellantCaseEnforcementNotice = {
+	...validAppellantCase,
+	casedata: {
+		...validAppellantCase.casedata,
+		caseType: APPEAL_CASE_TYPE.C,
+		enforcementNotice: true,
+		enforcementReference: 'ENF-12345',
+		enforcementIssueDate: '2024-05-31T23:00:00.000Z',
+		enforcementEffectiveDate: '2024-05-31T23:00:00.000Z',
+		appealDecisionDate: '2024-05-31T23:00:00.000Z',
+		applicationDevelopmentAllOrPart: 'all-of-the-development',
+		contactPlanningInspectorateDate: '2024-05-31T23:00:00.000Z',
+		descriptionOfAllegedBreach: 'Christmas tree stolen',
+		enforcementNoticeListedBuilding: false,
+		interestInLand: 'owner',
+		writtenOrVerbalPermission: 'yes',
+		appellantProcedurePreference: 'written',
+		appellantProcedurePreferenceDetails: 'Reason for preference',
+		appellantProcedurePreferenceDuration: 3,
+		appellantProcedurePreferenceWitnessCount: 2,
+		agriculturalHolding: false,
+		tenantAgriculturalHolding: null,
+		otherTenantsAgriculturalHolding: null,
+		informedTenantsAgriculturalHolding: null,
+		planningObligation: false,
+		statusPlanningObligation: null,
+		developmentType: 'minor-dwellings',
+		contactAddressLine1: 'Flat 2',
+		contactAddressLine2: '123 Fake Street',
+		contactAddressTown: 'London',
+		contactAddressCounty: null,
+		contactAddressPostcode: 'N1 1AA',
+		namedIndividuals: [
+			{
+				firstName: 'Bob',
+				lastName: 'Bobberson',
+				interestInLand: 'owner',
+				writtenOrVerbalPermission: 'yes'
+			}
+		],
+		appealGrounds: [
+			{
+				groundRef: 'a',
+				factsForGround: 'I like Christmas'
+			}
+		]
+	}
+};
+
 export const validAppellantCaseS20 = {
 	...validAppellantCase,
 	casedata: {
@@ -984,6 +1033,44 @@ export const appealIngestionInputS78Written = {
 			numberOfResidencesNetChange: undefined,
 			otherTenantsAgriculturalHolding: null,
 			tenantAgriculturalHolding: null,
+			typeOfPlanningApplication: undefined
+		}
+	}
+};
+
+export const appealIngestionInputEnforcementNotice = {
+	...appealIngestionInput,
+	appealType: {
+		connect: {
+			key: APPEAL_CASE_TYPE.C
+		}
+	},
+	appellantCase: {
+		create: {
+			...appealIngestionInput.appellantCase.create,
+			appealDecisionDate: '2024-05-31T23:00:00.000Z',
+			applicationDevelopmentAllOrPart: 'all-of-the-development',
+			contactAddress: {
+				create: {
+					addressCounty: null,
+					addressLine1: 'Flat 2',
+					addressLine2: '123 Fake Street',
+					addressTown: 'London',
+					postcode: 'N1 1AA'
+				}
+			},
+			contactPlanningInspectorateDate: '2024-05-31T23:00:00.000Z',
+			descriptionOfAllegedBreach: 'Christmas tree stolen',
+			enforcementEffectiveDate: '2024-05-31T23:00:00.000Z',
+			enforcementIssueDate: '2024-05-31T23:00:00.000Z',
+			enforcementNotice: true,
+			enforcementNoticeListedBuilding: false,
+			enforcementReference: 'ENF-12345',
+			interestInLand: 'owner',
+			writtenOrVerbalPermission: 'yes',
+			siteGridReferenceEasting: undefined,
+			siteGridReferenceNorthing: undefined,
+			numberOfResidencesNetChange: undefined,
 			typeOfPlanningApplication: undefined
 		}
 	}
