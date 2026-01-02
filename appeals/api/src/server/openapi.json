@@ -13002,7 +13002,7 @@
 					},
 					"caseManagementConferenceDueDate": {
 						"type": "string",
-						"example": "2024-05-15"
+						"example": "2024-08-15"
 					}
 				},
 				"xml": {
@@ -13042,7 +13042,7 @@
 					},
 					"caseManagementConferenceDueDate": {
 						"type": "string",
-						"example": "2024-05-15T00:00:00.000Z"
+						"example": "2024-08-15T00:00:00.000Z"
 					}
 				},
 				"xml": {
@@ -13082,7 +13082,7 @@
 					},
 					"caseManagementConferenceDueDate": {
 						"type": "string",
-						"example": "2024-05-15T00:00:00.000Z"
+						"example": "2024-08-15T00:00:00.000Z"
 					},
 					"startDate": {
 						"type": "string",
