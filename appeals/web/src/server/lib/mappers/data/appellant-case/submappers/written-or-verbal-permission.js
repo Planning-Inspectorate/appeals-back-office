@@ -1,3 +1,4 @@
+import { INTEREST_IN_LAND } from '#lib/constants.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 
@@ -10,8 +11,7 @@ export const mapWrittenOrVerbalPermission = ({
 	const id = 'written-or-verbal-permission';
 
 	const interestInLand = appellantCaseData.enforcementNotice?.interestInLand;
-	const isOtherInterest =
-		!!interestInLand && !['Owner', 'Mortgage Lender', 'Tenant'].includes(interestInLand);
+	const isOtherInterest = !!interestInLand && !INTEREST_IN_LAND.includes(interestInLand);
 
 	if (!isOtherInterest) {
 		return { id, display: {} };

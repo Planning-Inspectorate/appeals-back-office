@@ -17,6 +17,7 @@ import { isOutcomeIncomplete, isOutcomeInvalid } from '#utils/check-validation-o
 import {
 	ERROR_ONLY_FOR_INCOMPLETE_VALIDATION_OUTCOME,
 	ERROR_VALID_VALIDATION_OUTCOME_REASONS_REQUIRED,
+	LENGTH_1000,
 	LENGTH_250,
 	LENGTH_8
 } from '@pins/appeals/constants/support.js';
@@ -87,7 +88,7 @@ const patchAppellantCaseValidator = composeMiddleware(
 	validateNumberRangeParameter('appellantProcedurePreferenceDuration', 0, 99).optional(),
 	validateNumberParameter('appellantProcedurePreferenceWitnessCount').optional(),
 	validateNumberRangeParameter('appellantProcedurePreferenceWitnessCount', 0, 99).optional(),
-	validateStringParameter('interestInLand'),
+	validateStringParameter('interestInLand', LENGTH_1000),
 	validateStringParameter('writtenOrVerbalPermission'),
 	validationErrorHandler
 );
