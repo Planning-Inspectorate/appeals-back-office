@@ -8,9 +8,13 @@ import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 
 /**
  *
- * @param {import('@pins/appeals').ContactAddress} address
+ * @param {import('@pins/appeals').ContactAddress | null} [address]
  */
 const mapAddressToInputs = (address) => {
+	if (!address) {
+		return undefined;
+	}
+
 	return {
 		...address,
 		town: address.addressTown,
@@ -21,14 +25,15 @@ const mapAddressToInputs = (address) => {
 /**
  * @param {Appeal} appealData
  * @param {string} backLinkUrl
+ * @param {import('@pins/appeals').Address} sessionData
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
-export function manageContactAddressPage(appealData, backLinkUrl, request, errors) {
+export function manageContactAddressPage(appealData, backLinkUrl, sessionData, request, errors) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const address = appealData.enforcementNotice?.appellantCase?.contactAddress;
-	const mappedAddress = address ? mapAddressToInputs(address) : undefined;
+	const mappedAddress = sessionData ?? mapAddressToInputs(address);
 
 	return {
 		title: `What is your contact address?`,
