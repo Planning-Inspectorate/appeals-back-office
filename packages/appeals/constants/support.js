@@ -260,7 +260,7 @@ export const AUDIT_TRAIL_ENFORCEMENT_ISSUE_DATE_UPDATED =
 export const AUDIT_TRAIL_ENFORCEMENT_EFFECTIVE_DATE_UPDATED =
 	'Enforcement notice effective date updated to {replacement0}';
 export const AUDIT_TRAIL_CONTACT_PLANNING_INSPECTORATE_DATE_UPDATED =
-	'Contact planning inspectorate date updated to {replacement0}';
+	'Date contacted the Planning Inspectorate updated to {replacement0}';
 export const AUDIT_TRAIL_ENFORCEMENT_NOTICE_CONTACT_ADDRESS =
 	'Contact address updated to {replacement0}';
 export const AUDIT_TRAIL_ENFORCEMENT_GROUND_ADDED = 'Ground ({replacement0}) added';

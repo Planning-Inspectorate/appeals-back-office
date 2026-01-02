@@ -1301,6 +1301,45 @@ describe('appellant cases routes', () => {
 			expect(response.status).toEqual(200);
 		});
 
+		test('updates appellant case date contacted the Planning Inspectorate', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(enforcementNoticeAppeal);
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
+
+			const patchBody = {
+				contactPlanningInspectorateDate: '2024-05-13T00:00:00.000Z'
+			};
+			const expectedDate = '13 May 2024';
+
+			const { appellantCase, id } = enforcementNoticeAppeal;
+			const response = await request
+				.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+				.send(patchBody)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+				where: { id: appellantCase.id },
+				data: {
+					contactPlanningInspectorateDate: patchBody.contactPlanningInspectorateDate
+				}
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: enforcementNoticeAppeal.id,
+					details: `Date contacted the Planning Inspectorate updated to ${expectedDate}`,
+					loggedAt: expect.any(Date),
+					userId: enforcementNoticeAppeal.caseOfficer.id
+				}
+			});
+
+			expect(response.status).toEqual(200);
+		});
+
 		test('handles unmapped development type gracefully', async () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
