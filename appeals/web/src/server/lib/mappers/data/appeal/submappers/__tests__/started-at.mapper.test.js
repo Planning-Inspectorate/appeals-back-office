@@ -23,6 +23,28 @@ describe('started-at.mapper', () => {
 		});
 	});
 
+	it('should contain Not started and no action link', () => {
+		data.appealDetails.awaitingLinkedAppeal = true;
+		const mappedData = mapStartedAt(data);
+		expect(mappedData).toEqual({
+			display: {
+				summaryListItem: {
+					actions: {
+						items: []
+					},
+					classes: 'appeal-start-date',
+					key: {
+						text: 'Start date'
+					},
+					value: {
+						text: 'Not started'
+					}
+				}
+			},
+			id: 'start-case-date'
+		});
+	});
+
 	it('should contain Not started and a Start action link', () => {
 		const mappedData = mapStartedAt(data);
 		expect(mappedData).toEqual({
@@ -84,7 +106,7 @@ describe('started-at.mapper', () => {
 		});
 	});
 
-	it('should contain a start date and no action link text', () => {
+	it('should contain a start date and no action link', () => {
 		data.appealDetails.startedAt = '2025-01-01';
 		data.appealDetails.documentationSummary.lpaQuestionnaire.status = 'complete';
 		const mappedData = mapStartedAt(data);
@@ -92,16 +114,7 @@ describe('started-at.mapper', () => {
 			display: {
 				summaryListItem: {
 					actions: {
-						items: [
-							{
-								attributes: {
-									'data-cy': '-start-case-date'
-								},
-								href: '/test/start-case/change',
-								text: '',
-								visuallyHiddenText: 'Start date'
-							}
-						]
+						items: []
 					},
 					classes: 'appeal-start-date',
 					key: {

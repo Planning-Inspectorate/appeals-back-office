@@ -1,3 +1,4 @@
+import config from '#environment/config.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
@@ -11,6 +12,9 @@ export const mapStartedAt = ({ appealDetails, currentRoute, userHasUpdateCasePer
 
 	const lpaQuestionnaireStatus = appealDetails.documentationSummary.lpaQuestionnaire?.status || '';
 
+	const awaitingLinkedAppeal =
+		appealDetails.awaitingLinkedAppeal && config.featureFlags.featureFlagLinkedAppeals;
+
 	return textSummaryListItem({
 		id,
 		text: 'Start date',
@@ -18,12 +22,12 @@ export const mapStartedAt = ({ appealDetails, currentRoute, userHasUpdateCasePer
 		link: appealDetails.startedAt
 			? `${currentRoute}/start-case/change`
 			: `${currentRoute}/start-case/add?backUrl=${currentRoute}`,
-		editable: !isChildAppeal(appealDetails) && Boolean(userHasUpdateCasePermission),
+		editable:
+			!isChildAppeal(appealDetails) &&
+			Boolean(userHasUpdateCasePermission) &&
+			['not_received', 'received'].includes(lpaQuestionnaireStatus) &&
+			!awaitingLinkedAppeal,
 		classes: 'appeal-start-date',
-		actionText: !['not_received', 'received'].includes(lpaQuestionnaireStatus)
-			? ''
-			: appealDetails.startedAt
-			? 'Change'
-			: 'Start'
+		actionText: appealDetails.startedAt ? 'Change' : 'Start'
 	});
 };
