@@ -3894,7 +3894,307 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
 </main>"
 `;
 
-exports[`LPA Questionnaire review GET /lpa-questionnaire/1/environment-service-team-review-case should render the environment service team review required page 1`] = `
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/environment-service-team-review-case should render the environment service team review required page for S20 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Environmental services team review</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <p class="govuk-body">Select yes if there is an environmental statement or if the case needs
+                            an environmental screening.</p>
+                        <p class="govuk-body">You also need to email <a class="govuk-link" href="mailTo:environmentalservices@planninginspectorate.gov.uk">environmentalservices@planninginspectorate.gov.uk</a> to
+                            request a review. Include whether the team needs to review the environmental
+                            statement or issue an environmental screening in your email.</p>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Does the environmental services team need to review the case?</legend>
+                                <div                                 class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eia-screening-required" name="eiaScreeningRequired"
+                                        type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="eia-screening-required">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eia-screening-required-2" name="eiaScreeningRequired"
+                                        type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="eia-screening-required-2">No</label>
+                                    </div>
+                        </div>
+                        </fieldset>
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+                </form>
+            </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Return to your appeal</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;
+
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/environment-service-team-review-case should render the environment service team review required page for S78 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Environmental services team review</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <p class="govuk-body">Select yes if there is an environmental statement or if the case needs
+                            an environmental screening.</p>
+                        <p class="govuk-body">You also need to email <a class="govuk-link" href="mailTo:environmentalservices@planninginspectorate.gov.uk">environmentalservices@planninginspectorate.gov.uk</a> to
+                            request a review. Include whether the team needs to review the environmental
+                            statement or issue an environmental screening in your email.</p>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Does the environmental services team need to review the case?</legend>
+                                <div                                 class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eia-screening-required" name="eiaScreeningRequired"
+                                        type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="eia-screening-required">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eia-screening-required-2" name="eiaScreeningRequired"
+                                        type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="eia-screening-required-2">No</label>
+                                    </div>
+                        </div>
+                        </fieldset>
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+                </form>
+            </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Return to your appeal</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;
+
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/environment-service-team-review-case should render the environment service team review required page for advertisement 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Environmental services team review</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <p class="govuk-body">Select yes if there is an environmental statement or if the case needs
+                            an environmental screening.</p>
+                        <p class="govuk-body">You also need to email <a class="govuk-link" href="mailTo:environmentalservices@planninginspectorate.gov.uk">environmentalservices@planninginspectorate.gov.uk</a> to
+                            request a review. Include whether the team needs to review the environmental
+                            statement or issue an environmental screening in your email.</p>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Does the environmental services team need to review the case?</legend>
+                                <div                                 class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eia-screening-required" name="eiaScreeningRequired"
+                                        type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="eia-screening-required">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eia-screening-required-2" name="eiaScreeningRequired"
+                                        type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="eia-screening-required-2">No</label>
+                                    </div>
+                        </div>
+                        </fieldset>
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+                </form>
+            </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Return to your appeal</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;
+
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/environment-service-team-review-case should render the environment service team review required page for cas advertisement 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Environmental services team review</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <p class="govuk-body">Select yes if there is an environmental statement or if the case needs
+                            an environmental screening.</p>
+                        <p class="govuk-body">You also need to email <a class="govuk-link" href="mailTo:environmentalservices@planninginspectorate.gov.uk">environmentalservices@planninginspectorate.gov.uk</a> to
+                            request a review. Include whether the team needs to review the environmental
+                            statement or issue an environmental screening in your email.</p>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Does the environmental services team need to review the case?</legend>
+                                <div                                 class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eia-screening-required" name="eiaScreeningRequired"
+                                        type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="eia-screening-required">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eia-screening-required-2" name="eiaScreeningRequired"
+                                        type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="eia-screening-required-2">No</label>
+                                    </div>
+                        </div>
+                        </fieldset>
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+                </form>
+            </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Return to your appeal</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;
+
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/environment-service-team-review-case should render the environment service team review required page for cas planning 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Environmental services team review</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <p class="govuk-body">Select yes if there is an environmental statement or if the case needs
+                            an environmental screening.</p>
+                        <p class="govuk-body">You also need to email <a class="govuk-link" href="mailTo:environmentalservices@planninginspectorate.gov.uk">environmentalservices@planninginspectorate.gov.uk</a> to
+                            request a review. Include whether the team needs to review the environmental
+                            statement or issue an environmental screening in your email.</p>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Does the environmental services team need to review the case?</legend>
+                                <div                                 class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eia-screening-required" name="eiaScreeningRequired"
+                                        type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="eia-screening-required">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eia-screening-required-2" name="eiaScreeningRequired"
+                                        type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="eia-screening-required-2">No</label>
+                                    </div>
+                        </div>
+                        </fieldset>
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+                </form>
+            </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Return to your appeal</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;
+
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/environment-service-team-review-case should render the environment service team review required page for enforcement 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Environmental services team review</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <p class="govuk-body">Select yes if there is an environmental statement or if the case needs
+                            an environmental screening.</p>
+                        <p class="govuk-body">You also need to email <a class="govuk-link" href="mailTo:environmentalservices@planninginspectorate.gov.uk">environmentalservices@planninginspectorate.gov.uk</a> to
+                            request a review. Include whether the team needs to review the environmental
+                            statement or issue an environmental screening in your email.</p>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Does the environmental services team need to review the case?</legend>
+                                <div                                 class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eia-screening-required" name="eiaScreeningRequired"
+                                        type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="eia-screening-required">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eia-screening-required-2" name="eiaScreeningRequired"
+                                        type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="eia-screening-required-2">No</label>
+                                    </div>
+                        </div>
+                        </fieldset>
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+                </form>
+            </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1">Return to your appeal</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;
+
+exports[`LPA Questionnaire review GET /lpa-questionnaire/1/environment-service-team-review-case should render the environment service team review required page for householder 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
