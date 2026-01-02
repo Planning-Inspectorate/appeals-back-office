@@ -4379,7 +4379,7 @@ describe('appeal-details', () => {
 
 					expect(startDateRow).toContain('<dd class="govuk-summary-list__value"> 23 May 2023</dd>');
 
-					expect(startDateRow).toContain('data-cy="-start-case-date"><span');
+					expect(startDateRow).not.toContain('-case-date">');
 
 					expect(response.text).toContain(`appeal-lpa-questionnaire-due-date`);
 
