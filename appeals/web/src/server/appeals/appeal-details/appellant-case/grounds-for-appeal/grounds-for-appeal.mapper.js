@@ -7,9 +7,15 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
  * @param {Appeal} appealData
  * @param {string[]} selectedGrounds
  * @param {Record<string, string>} groundsForAppeal
+ * @param {string | undefined} errorMessage
  * @returns {PageContent}
  */
-export const changeGroundsForAppealPage = (appealData, selectedGrounds, groundsForAppeal) => {
+export const changeGroundsForAppealPage = (
+	appealData,
+	selectedGrounds,
+	groundsForAppeal,
+	errorMessage
+) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
@@ -37,7 +43,8 @@ export const changeGroundsForAppealPage = (appealData, selectedGrounds, groundsF
 						text: `Ground (${ground.groundRef})`,
 						hint: { text: ground.groundDescription },
 						checked: selectedGrounds.some((selectedGround) => selectedGround === ground.groundRef)
-					}))
+					})),
+					errorMessage: errorMessage && { text: errorMessage }
 				}
 			}
 		]

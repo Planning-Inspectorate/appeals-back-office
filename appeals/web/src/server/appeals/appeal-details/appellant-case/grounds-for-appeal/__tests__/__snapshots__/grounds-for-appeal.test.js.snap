@@ -75,12 +75,14 @@ exports[`grounds POST /grounds-for-appeal/change should render the change ground
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" aria-describedby="grounds-for-appeal-hint">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" aria-describedby="grounds-for-appeal-hint grounds-for-appeal-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                                     <h1 class="govuk-fieldset__heading"> Choose your grounds of appeal</h1>
                                 </legend>
                                 <div id="grounds-for-appeal-hint" class="govuk-hint">Select all that apply</div>
+                                <p id="grounds-for-appeal-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select your grounds of
+                                    appeal</p>
                                 <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                                     <div class="govuk-checkboxes__item">
                                         <input class="govuk-checkboxes__input" id="grounds-for-appeal" name="groundsForAppeal"
