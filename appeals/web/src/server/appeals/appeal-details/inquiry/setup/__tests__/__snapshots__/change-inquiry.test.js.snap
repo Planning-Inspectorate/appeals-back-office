@@ -14,9 +14,8 @@ exports[`change inquiry GET /inquiry/change/address should match the snapshot 1`
                     </div><span>Planning Inspectorate</span>
                 </div>
                 <div class="pins-column--central">
-                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
-                    <nav class="govuk-header__navigation pins-header-navigation"
-                    aria-label="Menu">
+                    <h1 class="pins-header-domainname govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0"> Manage appeals</h1>
+                    <nav class="govuk-header__navigation pins-header-navigation" aria-label="Menu">
                         <ul class="govuk-header__navigation-list">
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>
@@ -100,9 +99,8 @@ exports[`change inquiry GET /inquiry/change/address-details should match the sna
                     </div><span>Planning Inspectorate</span>
                 </div>
                 <div class="pins-column--central">
-                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
-                    <nav class="govuk-header__navigation pins-header-navigation"
-                    aria-label="Menu">
+                    <h1 class="pins-header-domainname govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0"> Manage appeals</h1>
+                    <nav class="govuk-header__navigation pins-header-navigation" aria-label="Menu">
                         <ul class="govuk-header__navigation-list">
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>
@@ -196,9 +194,8 @@ exports[`change inquiry GET /inquiry/change/check-details when all pages have be
                     </div><span>Planning Inspectorate</span>
                 </div>
                 <div class="pins-column--central">
-                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
-                    <nav class="govuk-header__navigation pins-header-navigation"
-                    aria-label="Menu">
+                    <h1 class="pins-header-domainname govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0"> Manage appeals</h1>
+                    <nav class="govuk-header__navigation pins-header-navigation" aria-label="Menu">
                         <ul class="govuk-header__navigation-list">
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>
@@ -530,9 +527,8 @@ exports[`change inquiry GET /inquiry/change/date should match the snapshot 1`] =
                     </div><span>Planning Inspectorate</span>
                 </div>
                 <div class="pins-column--central">
-                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
-                    <nav class="govuk-header__navigation pins-header-navigation"
-                    aria-label="Menu">
+                    <h1 class="pins-header-domainname govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0"> Manage appeals</h1>
+                    <nav class="govuk-header__navigation pins-header-navigation" aria-label="Menu">
                         <ul class="govuk-header__navigation-list">
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>

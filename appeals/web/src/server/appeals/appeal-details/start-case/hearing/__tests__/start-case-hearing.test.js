@@ -56,7 +56,7 @@ describe('start case hearing flow', () => {
 			expect(pageHtml.querySelector('.govuk-caption-l')?.innerHTML.trim()).toBe(
 				'Appeal 351062 - start case'
 			);
-			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe(
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe(
 				'Do you know the date and time of the hearing?'
 			);
 			expect(pageHtml.querySelector('input#date-known')).not.toBeNull();
@@ -214,7 +214,7 @@ describe('start case hearing flow', () => {
 			expect(pageHtml.querySelector('.govuk-caption-l')?.innerHTML.trim()).toBe(
 				'Appeal 351062 - start case'
 			);
-			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Hearing date and time');
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe('Hearing date and time');
 			expect(pageHtml.querySelector('input#hearing-date-day')).not.toBeNull();
 			expect(pageHtml.querySelector('input#hearing-date-month')).not.toBeNull();
 			expect(pageHtml.querySelector('input#hearing-date-year')).not.toBeNull();
@@ -457,7 +457,9 @@ describe('start case hearing flow', () => {
 
 			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
 			expect(pageHtml.querySelector('.govuk-caption-l')?.innerHTML.trim()).toBe('Appeal 351062');
-			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Check details and start case');
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe(
+				'Check details and start case'
+			);
 			expect(
 				pageHtml.querySelector('a[data-cy="change-appeal-procedure"]')?.getAttribute('href')
 			).toBe(
@@ -527,7 +529,9 @@ describe('start case hearing flow', () => {
 
 			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
 			expect(pageHtml.querySelector('.govuk-caption-l')?.innerHTML.trim()).toBe('Appeal 351062');
-			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Check details and start case');
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe(
+				'Check details and start case'
+			);
 			expect(
 				pageHtml.querySelector('a[data-cy="change-appeal-procedure"]')?.getAttribute('href')
 			).toBe(

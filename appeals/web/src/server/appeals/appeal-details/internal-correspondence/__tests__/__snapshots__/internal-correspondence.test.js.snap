@@ -1195,8 +1195,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
-                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                    <h1 class="govuk-notification-banner__heading govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0">Virus scan in progress</h1><a class="govuk-notification-banner__link" href="" data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -1288,8 +1287,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
-                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                    <h1 class="govuk-notification-banner__heading govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0">Virus scan in progress</h1><a class="govuk-notification-banner__link" href="" data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -1381,8 +1379,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
-                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                    <h1 class="govuk-notification-banner__heading govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0">Virus scan in progress</h1><a class="govuk-notification-banner__link" href="" data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -1738,8 +1735,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
-                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                    <h1 class="govuk-notification-banner__heading govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0">Virus scan in progress</h1><a class="govuk-notification-banner__link" href="" data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -1831,8 +1827,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
-                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                    <h1 class="govuk-notification-banner__heading govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0">Virus scan in progress</h1><a class="govuk-notification-banner__link" href="" data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -1924,8 +1919,7 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
-                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                    <h1 class="govuk-notification-banner__heading govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0">Virus scan in progress</h1><a class="govuk-notification-banner__link" href="" data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>

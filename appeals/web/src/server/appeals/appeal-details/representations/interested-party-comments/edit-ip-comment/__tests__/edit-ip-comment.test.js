@@ -51,7 +51,7 @@ describe('edit-ip-comment', () => {
 			});
 
 			it('should render the correct heading', () => {
-				const heading = pageHtml.querySelector('h1')?.innerHTML;
+				const heading = pageHtml.querySelector('main h1')?.innerHTML;
 				expect(heading).toBe('Interested party&#39;s address');
 			});
 
@@ -131,7 +131,7 @@ describe('edit-ip-comment', () => {
 		});
 
 		it('should render the correct heading', () => {
-			const heading = pageHtml.querySelector('h1')?.innerHTML;
+			const heading = pageHtml.querySelector('main h1')?.innerHTML;
 			expect(heading).toBe('Check your answers');
 		});
 

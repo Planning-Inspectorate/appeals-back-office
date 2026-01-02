@@ -89,7 +89,7 @@ describe('incomplete proof of evidence', () => {
 				rootElement: 'body'
 			});
 
-			expect(pageHtml.querySelector('h1')?.innerHTML?.trim()).toBe(
+			expect(pageHtml.querySelector('main h1')?.innerHTML?.trim()).toBe(
 				'Why are the proof of evidence and witnesses incomplete?'
 			);
 			expect(pageHtml.querySelector('a.govuk-back-link')?.getAttribute('href')).toContain(
