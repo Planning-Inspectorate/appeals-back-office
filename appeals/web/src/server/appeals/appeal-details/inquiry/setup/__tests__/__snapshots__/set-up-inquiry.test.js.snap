@@ -312,6 +312,14 @@ exports[`set up inquiry GET /inquiry/setup/check-details should match the snapsh
                                 </dd>
                             </div>
                         </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case management conference due</dt>
+                                <dd                                 class="govuk-summary-list__value"></dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/timetable-due-dates"
+                                        data-cy="change-Case management conference due">Change<span class="govuk-visually-hidden"> Case management conference due</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
                         <p class="govuk-body">We'll start the timetable now and send emails to the relevant parties.</p>
                         <div                         class="govuk-grid-row">
                             <div class="govuk-grid-column-full">
@@ -710,6 +718,41 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                                             <label class="govuk-label govuk-date-input__label" for="planning-obligation-due-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="planning-obligation-due-date-year" name="planning-obligation-due-date-year"
+                                            type="text" value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="case-management-conference-due-date-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Case management conference due date</legend>
+                                <div id="case-management-conference-due-date-hint"
+                                class="govuk-hint">
+                                    <div class="govuk-hint">For example, 31 3 2025</div>
+                                </div>
+                                <div class="govuk-date-input" id="case-management-conference-due-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="case-management-conference-due-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="case-management-conference-due-date-day" name="case-management-conference-due-date-day"
+                                            type="text" value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="case-management-conference-due-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="case-management-conference-due-date-month" name="case-management-conference-due-date-month"
+                                            type="text" value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="case-management-conference-due-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                            id="case-management-conference-due-date-year" name="case-management-conference-due-date-year"
                                             type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>

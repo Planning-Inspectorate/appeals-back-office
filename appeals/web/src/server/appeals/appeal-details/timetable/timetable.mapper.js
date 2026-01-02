@@ -13,7 +13,7 @@ import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorat
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} AppellantCase
  */
 /**
- * @typedef {'lpaQuestionnaireDueDate' | 'ipCommentsDueDate' | 'lpaStatementDueDate' | 'finalCommentsDueDate' | 'statementOfCommonGroundDueDate' | 'planningObligationDueDate' | 'proofOfEvidenceAndWitnessesDueDate'} AppealTimetableType
+ * @typedef {'lpaQuestionnaireDueDate' | 'ipCommentsDueDate' | 'lpaStatementDueDate' | 'finalCommentsDueDate' | 'statementOfCommonGroundDueDate' | 'planningObligationDueDate' | 'proofOfEvidenceAndWitnessesDueDate' | 'caseManagementConferenceDueDate'} AppealTimetableType
  */
 
 /**
@@ -99,6 +99,8 @@ export const getTimetableTypeText = (timetableType) => {
 			return 'Planning obligation';
 		case 'proofOfEvidenceAndWitnessesDueDate':
 			return 'Proof of evidence and witnesses';
+		case 'caseManagementConferenceDueDate':
+			return 'Case management conference';
 		default:
 			return '';
 	}
@@ -124,6 +126,8 @@ export const getIdText = (timetableType) => {
 			return 'planning-obligation';
 		case 'proofOfEvidenceAndWitnessesDueDate':
 			return 'proof-of-evidence-and-witnesses';
+		case 'caseManagementConferenceDueDate':
+			return 'case-management-conference';
 		default:
 			return '';
 	}
@@ -174,6 +178,7 @@ export const getAppealTimetableTypes = (appeal, appellantCase) => {
 		if (appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
 			addHearingOrInquiryTimetableTypes(validAppealTimetableType, appellantCase);
 			validAppealTimetableType.push('proofOfEvidenceAndWitnessesDueDate');
+			validAppealTimetableType.push('caseManagementConferenceDueDate');
 		}
 	}
 	return validAppealTimetableType;
