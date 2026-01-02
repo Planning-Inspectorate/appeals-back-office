@@ -7,13 +7,11 @@ import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page
 import { toSentenceCase } from '#lib/string-utilities.js';
 
 /**
- *
  * @param {Appeal} appealData
  * @param {import("@pins/express").ValidationErrors | undefined} errors
- * @param {SessionData} session
  * @returns {PageContent}
  */
-export const manageInterestInLandPage = (appealData, errors, session) => {
+export const manageInterestInLandPage = (appealData, errors) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const interestInLand = errors?.interestInLandOther
 		? errors?.interestInLandOther.value || ''
@@ -56,7 +54,7 @@ export const manageInterestInLandPage = (appealData, errors, session) => {
 										parameters: {
 											id: 'interest-in-land-other',
 											name: 'interestInLandOther',
-											value: interestInLandOtherText,
+											value: interestInLandOtherChecked ? interestInLand : '',
 											...(errors && { errorMessage: { text: errors.interestInLandOther?.msg } }),
 											label: {
 												text: 'Enter interest in the land',
