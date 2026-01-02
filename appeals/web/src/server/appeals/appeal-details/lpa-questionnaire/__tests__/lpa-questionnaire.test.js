@@ -1215,7 +1215,6 @@ describe('LPA Questionnaire review', () => {
 
 			const response = await request.get('/appeals-service/appeal-details/5/lpa-questionnaire/1');
 
-			// console.log(response);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
@@ -1735,20 +1734,67 @@ describe('LPA Questionnaire review', () => {
 			expect(errorSummaryHtml).toContain('Review outcome must be provided</a>');
 		});
 
-		it('should redirect to the case details page if no errors are present and posted outcome is "complete"', async () => {
-			nock('http://test/')
-				.get('/appeals/1/lpa-questionnaires/2')
-				.reply(200, lpaQuestionnaireDataIncompleteOutcome)
-				.patch('/appeals/1/lpa-questionnaires/2')
-				.reply(200, { validationOutcome: 'complete' });
+		it.each([
+			['householder', APPEAL_TYPE.HOUSEHOLDER],
+			['cas planning', APPEAL_TYPE.CAS_PLANNING],
+			['cas advertisement', APPEAL_TYPE.CAS_ADVERTISEMENT],
+			['advertisement', APPEAL_TYPE.ADVERTISEMENT]
+			// ['ldc', APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE],
+			// ['discontinuance', APPEAL_TYPE.DISCONTINUANCE_NOTICE]
+		])(
+			'should redirect to the case details page if no errors are present and posted outcome is "complete" for appeal type: %s (i.e. no environmental services question)',
+			async (_, appealType) => {
+				nock('http://test/')
+					.get(`/appeals/2?include=all`)
+					.reply(200, { ...lpaqAppealData, appealType: appealType, appealId: 2 })
+					.persist();
+				nock('http://test/')
+					.get('/appeals/2/lpa-questionnaires/2')
+					.reply(200, lpaQuestionnaireDataIncompleteOutcome)
+					.patch('/appeals/2/lpa-questionnaires/2')
+					.reply(200, { validationOutcome: 'complete' });
 
-			const response = await request.post(baseUrl).send({
-				'review-outcome': 'complete'
-			});
+				const response = await request
+					.post('/appeals-service/appeal-details/2/lpa-questionnaire/2')
+					.send({
+						'review-outcome': 'complete'
+					});
 
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
-		});
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/2');
+			}
+		);
+
+		it.each([
+			['S78', APPEAL_TYPE.S78],
+			['S20', APPEAL_TYPE.PLANNED_LISTED_BUILDING],
+			['enforcement', APPEAL_TYPE.ENFORCEMENT_NOTICE]
+			//['enforcement listed building', APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING_NOTICE]
+		])(
+			'should redirect to the environmental services page if no errors are present and posted outcome is "complete" for appeal type: %s',
+			async (_, appealType) => {
+				nock('http://test/')
+					.get(`/appeals/2?include=all`)
+					.reply(200, { ...lpaqAppealData, appealType: appealType, appealId: 2 })
+					.persist();
+				nock('http://test/')
+					.get('/appeals/2/lpa-questionnaires/2')
+					.reply(200, lpaQuestionnaireDataIncompleteOutcome)
+					.patch('/appeals/2/lpa-questionnaires/2')
+					.reply(200, { validationOutcome: 'complete' });
+
+				const response = await request
+					.post('/appeals-service/appeal-details/2/lpa-questionnaire/2')
+					.send({
+						'review-outcome': 'complete'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/2/lpa-questionnaire/2/environment-service-team-review-case'
+				);
+			}
+		);
 	});
 
 	describe('GET /appeals-service/appeal-details/1/lpa-questionnaire/1/incomplete', () => {

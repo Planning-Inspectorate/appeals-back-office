@@ -7,8 +7,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { uncapitalizeFirstLetter } from '#lib/string-utilities.js';
 import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
 import { DOCUMENT_FOLDER_DISPLAY_LABELS } from '@pins/appeals/constants/documents.js';
-import { appealTypeToAppealCaseTypeMapper } from '@pins/appeals/utils/appeal-type-case.mapper.js';
-import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
+import askEnvironmentServiceTeamReviewQuestion from '@pins/appeals/utils/ask-environment-service-team-review-question.js';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import {
 	postChangeDocumentDetails,
@@ -99,7 +98,7 @@ export const postLpaQuestionnaire = async (request, response) => {
 		request.session.reviewOutcome = reviewOutcome;
 
 		if (reviewOutcome === 'complete') {
-			if (!isExpeditedAppealType(appealTypeToAppealCaseTypeMapper(currentAppeal.appealType))) {
+			if (askEnvironmentServiceTeamReviewQuestion(currentAppeal.appealType)) {
 				return response.redirect(
 					`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/environment-service-team-review-case`
 				);
