@@ -20,7 +20,7 @@ import { randomUUID } from 'node:crypto';
 export const mapDocumentIn = (doc, stage = null) => {
 	const { filename, documentId, ...metadata } = doc;
 	metadata.fileName = metadata.originalFilename;
-	if (stage === 'representation') {
+	if (stage === 'representation' && !metadata.documentType) {
 		metadata.fileName = `${randomUUID()}_${metadata.originalFilename}`;
 		// @ts-ignore
 		metadata.documentType = REP_ATTACHMENT_DOCTYPE;

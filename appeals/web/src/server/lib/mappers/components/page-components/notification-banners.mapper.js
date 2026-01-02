@@ -2,7 +2,7 @@
  * @typedef {import('#appeals/appeal.constants.js').ServicePageName} ServicePageName
  */
 
-/** @typedef {'awaitingLinkedAppeal'|'allocationDetailsUpdated'|'allocationDetailsAdded'|'appealAwaitingTransfer'|'appealLinked'|'appealTypeChanged'|'appealTypeUpdated'|'appealUnlinked'|'appealValidAndReadyToStart'|'appealWithdrawn'|'appellantCaseInvalidOrIncomplete'|'appellantCaseNotValid'|'appellantFinalCommentsAcceptSuccess'|'appellantFinalCommentsAwaitingReview'|'assignCaseOfficer'|'caseOfficerAdded'|'caseOfficerRemoved'|'caseProgressed'|'caseStarted'|'changePage'|'commentsAndLpaStatementShared'|'costsDocumentAdded'|'documentAdded'|'documentDeleted'|'documentDetailsUpdated'|'documentFilenameUpdated'|'documentVersionAdded'|'finalCommentsAppellantRejectionSuccess'|'finalCommentsDocumentAddedSuccess'|'finalCommentsLPARejectionSuccess'|'finalCommentsRedactionSuccess'|'finalCommentsShared'|'appealMarkedAsAwaitingTransfer'|'appealMarkedAsTransferred'|'appealTypeUpdated'|'horizonReferenceAdded'|'horizonReferenceUpdated'|'inspectorAdded'|'inspectorRemoved'|'interestedPartyCommentAdded'|'interestedPartyCommentsAddressAddedSuccess'|'interestedPartyCommentsAddressUpdatedSuccess'|'interestedPartyCommentsAwaitingReview'|'interestedPartyCommentsDocumentAddedSuccess'|'interestedPartyCommentsRedactionSuccess'|'interestedPartyCommentsRejectedSuccess'|'interestedPartyCommentsValidSuccess'|'internalCorrespondenceDocumentAdded'|'issuedDecisionInvalid'|'issuedDecisionValid'|'lpaCostsDecisionIssued'|'appellantCostsDecisionIssued'|'lpaFinalCommentsAcceptSuccess'|'lpaFinalCommentsAwaitingReview'|'lpaqReviewComplete'|'lpaqReviewIncomplete'|'lpaQuestionnaireNotValid'|'lpaStatementAccepted'|'lpaStatementAwaitingReview'|'lpaStatementDocumentAddedSuccess'|'lpaStatementIncomplete'|'lpaStatementRedactedAndAccepted'|'neighbouringSiteAdded'|'neighbouringSiteAffected'|'neighbouringSiteRemoved'|'neighbouringSiteUpdated'|'notCheckedDocument'|'progressedToFinalComments'|'progressFromFinalComments'|  'progressHearingCaseWithNoRepsFromStatements'| 'progressedToHearingReadyToSetUp' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' | 'progressedToAwaitingHearing' |'progressFromStatements'|'readyForDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'readyForLpaQuestionnaireReview'|'readyForSetUpSiteVisit'|'readyForValidation'|'relatedAppeal'|'shareCommentsAndLpaStatement'|'shareFinalComments'|'siteAddressUpdated'|'siteVisitChangedDefault'|'siteVisitNoChanges'|'siteVisitRescheduled'|'siteVisitScheduled'|'siteVisitTypeChanged'|'startDateChanged'|'timetableDueDateUpdated'|'updateLpaStatement'|'lpaChanged'|'hearingEstimatesAdded'|'hearingEstimatesChanged'|'hearingSetUp'|'hearingUpdated'|'hearingCancelled'|'timetableStarted'|'addHearingAddress'|'setupHearing'|'linkedAppealAdded'|'decisionLetterUpdated'|'caseOfficerAssigned'|'inspectorAssigned'|'appealValidated'|'inquiryEstimatesAdded'|'inquiryEstimatesChanged'|'netResidenceAdded'|'inquiryUpdated'|'addResidencesNetChange'|'appellantProofOfEvidenceAcceptSuccess'|'lpaProofOfEvidenceAcceptSuccess'|'caseTeamUpdated'|'appellantProofOfEvidenceDocumentAddedSuccess'|'lpaProofOfEvidenceDocumentAddedSuccess'|'lpaProofOfEvidenceIncomplete'|'appellantProofOfEvidenceIncomplete'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'|'siteVisitCancelled'|'missedSiteVisitRecorded'|'progressToProofOfEvidenceAndWitnesses'|'progressedToProofOfEvidenceAndWitnesses'|'awaitingProofOfEvidenceAndWitnesses'|'progressToInquiry'|'progressedToInquiry'|'setupInquiry'|'addInquiryAddress'|'procedureTypeChanged'|'inquiryCancelled'|'inquirySetUp'|'inquiryReadyToSetup'|'awaitingEvent'|'awaitingLpaProofOfEvidenceAndWitnesses'|'awaitingAppellantProofOfEvidenceAndWitnesses'|'interestedPartyCommentAddedAndShared'|'rule6PartyAdded'|'rule6PartyUpdated'|'rule6PartyRemoved'|'rule6PartyStatementAddedSuccess'|'rule6PartyStatementDocumentAddedSuccess'|'lpaStatementAddedSuccess'|'lpaFinalCommentsAddedSuccess'|'appellantFinalCommentsAddedSuccess'|'appellantStatementAccepted'|'appellantStatementRedactedAndAccepted'|'appellantStatementDocumentAddedSuccess'|'appellantStatementIncomplete'|'appellantStatementAwaitingReview'|'rule6PartyProofOfEvidenceAddedSuccess'|'rule6PartyProofOfEvidenceDocumentAddedSuccess'} NotificationBannerDefinitionKey */
+/** @typedef {'awaitingLinkedAppeal'|'allocationDetailsUpdated'|'allocationDetailsAdded'|'appealAwaitingTransfer'|'appealLinked'|'appealTypeChanged'|'appealTypeUpdated'|'appealUnlinked'|'appealValidAndReadyToStart'|'appealWithdrawn'|'appellantCaseInvalidOrIncomplete'|'appellantCaseNotValid'|'appellantFinalCommentsAcceptSuccess'|'appellantFinalCommentsAwaitingReview'|'assignCaseOfficer'|'caseOfficerAdded'|'caseOfficerRemoved'|'caseProgressed'|'caseStarted'|'changePage'|'commentsAndLpaStatementShared'|'costsDocumentAdded'|'documentAdded'|'documentDeleted'|'documentDetailsUpdated'|'documentFilenameUpdated'|'documentVersionAdded'|'finalCommentsAppellantRejectionSuccess'|'finalCommentsDocumentAddedSuccess'|'finalCommentsLPARejectionSuccess'|'finalCommentsRedactionSuccess'|'finalCommentsShared'|'appealMarkedAsAwaitingTransfer'|'appealMarkedAsTransferred'|'appealTypeUpdated'|'horizonReferenceAdded'|'horizonReferenceUpdated'|'inspectorAdded'|'inspectorRemoved'|'interestedPartyCommentAdded'|'interestedPartyCommentsAddressAddedSuccess'|'interestedPartyCommentsAddressUpdatedSuccess'|'interestedPartyCommentsAwaitingReview'|'interestedPartyCommentsDocumentAddedSuccess'|'interestedPartyCommentsRedactionSuccess'|'interestedPartyCommentsRejectedSuccess'|'interestedPartyCommentsValidSuccess'|'internalCorrespondenceDocumentAdded'|'issuedDecisionInvalid'|'issuedDecisionValid'|'lpaCostsDecisionIssued'|'appellantCostsDecisionIssued'|'lpaFinalCommentsAcceptSuccess'|'lpaFinalCommentsAwaitingReview'|'lpaqReviewComplete'|'lpaqReviewIncomplete'|'lpaQuestionnaireNotValid'|'lpaStatementAccepted'|'lpaStatementAwaitingReview'|'lpaStatementDocumentAddedSuccess'|'lpaStatementIncomplete'|'lpaStatementRedactedAndAccepted'|'neighbouringSiteAdded'|'neighbouringSiteAffected'|'neighbouringSiteRemoved'|'neighbouringSiteUpdated'|'notCheckedDocument'|'progressedToFinalComments'|'progressFromFinalComments'|  'progressHearingCaseWithNoRepsFromStatements'| 'progressedToHearingReadyToSetUp' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' | 'progressedToAwaitingHearing' |'progressFromStatements'|'readyForDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'readyForLpaQuestionnaireReview'|'readyForSetUpSiteVisit'|'readyForValidation'|'relatedAppeal'|'shareCommentsAndLpaStatement'|'shareFinalComments'|'siteAddressUpdated'|'siteVisitChangedDefault'|'siteVisitNoChanges'|'siteVisitRescheduled'|'siteVisitScheduled'|'siteVisitTypeChanged'|'startDateChanged'|'timetableDueDateUpdated'|'updateLpaStatement'|'lpaChanged'|'hearingEstimatesAdded'|'hearingEstimatesChanged'|'hearingSetUp'|'hearingUpdated'|'hearingCancelled'|'timetableStarted'|'addHearingAddress'|'setupHearing'|'linkedAppealAdded'|'decisionLetterUpdated'|'caseOfficerAssigned'|'inspectorAssigned'|'appealValidated'|'inquiryEstimatesAdded'|'inquiryEstimatesChanged'|'netResidenceAdded'|'inquiryUpdated'|'addResidencesNetChange'|'appellantProofOfEvidenceAcceptSuccess'|'lpaProofOfEvidenceAcceptSuccess'|'caseTeamUpdated'|'appellantProofOfEvidenceDocumentAddedSuccess'|'lpaProofOfEvidenceDocumentAddedSuccess'|'lpaProofOfEvidenceIncomplete'|'appellantProofOfEvidenceIncomplete'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'|'siteVisitCancelled'|'missedSiteVisitRecorded'|'progressToProofOfEvidenceAndWitnesses'|'progressedToProofOfEvidenceAndWitnesses'|'awaitingProofOfEvidenceAndWitnesses'|'progressToInquiry'|'progressedToInquiry'|'setupInquiry'|'addInquiryAddress'|'procedureTypeChanged'|'inquiryCancelled'|'inquirySetUp'|'inquiryReadyToSetup'|'awaitingEvent'|'awaitingLpaProofOfEvidenceAndWitnesses'|'awaitingAppellantProofOfEvidenceAndWitnesses'|'interestedPartyCommentAddedAndShared'|'rule6PartyAdded'|'rule6PartyUpdated'|'rule6PartyRemoved'|'rule6PartyStatementAddedSuccess'|'rule6PartyStatementDocumentAddedSuccess'|'lpaStatementAddedSuccess'|'lpaFinalCommentsAddedSuccess'|'appellantFinalCommentsAddedSuccess'|'appellantStatementAccepted'|'appellantStatementRedactedAndAccepted'|'appellantStatementDocumentAddedSuccess'|'appellantStatementIncomplete'|'appellantStatementAwaitingReview'|'rule6PartyProofOfEvidenceAddedSuccess'|'rule6PartyProofOfEvidenceDocumentAddedSuccess'|'rule6PartyStatementAccepted'|'rule6PartyStatementIncomplete'|'rule6PartyStatementRedactedAndAccepted'} NotificationBannerDefinitionKey */
 
 /**
  * @typedef {Object} NotificationBannerDefinition
@@ -732,10 +732,25 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		pages: ['viewProofOfEvidence', 'manageFolder'],
 		text: 'Rule 6 party proof of evidence and witnesses added'
+	},
+	rule6PartyStatementAccepted: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Rule 6 statement accepted'
+	},
+	rule6PartyStatementRedactedAndAccepted: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Rule 6 statement redacted and accepted'
+	},
+	rule6PartyStatementIncomplete: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Rule 6 statement incomplete'
 	}
 };
 
-/** @type {Object<import('#lib/mappers/utils/required-actions.js').AppealRequiredAction, NotificationBannerDefinitionKey>} */
+/** @type {Object<import('#lib/mappers/utils/required-actions.js').AppealRequiredAction, import('#lib/mappers/utils/map-status-dependent-notifications.js').NotificationBannerDefinitionKey>} */
 const appealActionRequiredToNotificationBannerMapping = {
 	addHorizonReference: 'appealAwaitingTransfer',
 	arrangeSiteVisit: 'readyForSetUpSiteVisit',
@@ -790,7 +805,7 @@ export function mapNotificationBannersFromSession(session, servicePage, appealId
 		return [];
 	}
 
-	/** @type {NotificationBannerDefinitionKey[]} */
+	/** @type {import('#lib/mappers/utils/map-status-dependent-notifications.js').NotificationBannerDefinitionKey[]} */
 	const displayedBannerKeys = [];
 
 	/**
@@ -841,7 +856,7 @@ export function mapNotificationBannersFromSession(session, servicePage, appealId
 
 /**
  * @param {Object} options
- * @param {NotificationBannerDefinitionKey} options.bannerDefinitionKey
+ * @param {import('#lib/mappers/utils/map-status-dependent-notifications.js').NotificationBannerDefinitionKey} options.bannerDefinitionKey
  * @param {string} [options.titleText]
  * @param {string} [options.text]
  * @param {string} [options.html]
@@ -881,7 +896,7 @@ export function createNotificationBanner({
 
 /**
  * @param {import('#lib/mappers/utils/required-actions.js').AppealRequiredAction} requiredAction
- * @returns {NotificationBannerDefinitionKey|undefined}
+ * @returns {import('#lib/mappers/utils/map-status-dependent-notifications.js').NotificationBannerDefinitionKey|undefined}
  */
 export function mapRequiredActionToNotificationBannerKey(requiredAction) {
 	if (!(requiredAction in appealActionRequiredToNotificationBannerMapping)) {

@@ -16,7 +16,8 @@ import {
 	AUDIT_TRAIL_REP_IMPORT_MSG,
 	AUDIT_TRAIL_SYSTEM_UUID,
 	AUDIT_TRAIL_TEAM_ASSIGNED,
-	AUDIT_TRIAL_APPELLANT_UUID
+	AUDIT_TRIAL_APPELLANT_UUID,
+	AUDIT_TRIAL_RULE_6_PARTY_ID
 } from '@pins/appeals/constants/support.js';
 import { EventType } from '@pins/event-client';
 import {
@@ -282,6 +283,10 @@ export const importRepresentation = async (req, res) => {
 		case 'lpa_final_comment':
 		case 'lpa_statement':
 			azureAdUserId = AUDIT_TRAIL_LPA_UUID;
+			break;
+		case 'rule_6_party_statement':
+		case 'rule_6_party_proofs_evidence':
+			azureAdUserId = AUDIT_TRIAL_RULE_6_PARTY_ID;
 			break;
 		default:
 			azureAdUserId = AUDIT_TRAIL_SYSTEM_UUID;
