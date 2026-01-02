@@ -112,6 +112,7 @@ export const AUDIT_TRIAL_APPELLANT_UUID = '00000000-0000-0000-0000-000000000001'
 export const AUDIT_TRAIL_LPA_UUID = '00000000-0000-0000-0000-000000000002';
 export const AUDIT_TRAIL_IP_UUID = '00000000-0000-0000-0000-000000000003';
 export const AUDIT_TRIAL_AUTOMATIC_EVENT_UUID = '00000000-0000-0000-0000-000000000004';
+export const AUDIT_TRIAL_RULE_6_PARTY_ID = '00000000-0000-0000-0000-000000000005';
 export const AUDIT_TRAIL_SERVICE_USER_UPDATED =
 	'{replacement0} contact details updated to\n{replacement1}';
 export const AUDIT_TRAIL_SERVICE_USER_ADDRESS_UPDATED =
@@ -381,7 +382,8 @@ export const ERROR_INVALID_LISTED_BUILDING_DATA =
 export const ERROR_INVALID_APPEAL_STATE = 'The action is invalid on the current appeal state.';
 export const ERROR_CASE_OUTCOME_MUST_BE_ONE_OF = `The case outcome must be one of ${CASE_OUTCOME_ALLOWED}, ${CASE_OUTCOME_DISMISSED}, ${CASE_OUTCOME_SPLIT_DECISION}, ${CASE_OUTCOME_INVALID}`;
 export const ERROR_REP_OUTCOME_MUST_BE_ONE_OF = `The representation status must be one of ${APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW}, ${APPEAL_REPRESENTATION_STATUS.INVALID}, ${APPEAL_REPRESENTATION_STATUS.VALID}`;
-export const ERROR_REP_ONLY_STATEMENT_INCOMPLETE = 'Only LPA statements can be set to incomplete';
+export const ERROR_REP_ONLY_STATEMENT_INCOMPLETE =
+	'Only LPA statements, appellant statements and rule 6 party statements can be set to incomplete';
 export const ERROR_REP_PUBLISH_USING_ENDPOINT =
 	'LPA statements and final comments can only be published using the dedicated endpoint';
 export const ERROR_REP_PUBLISH_BLOCKED =

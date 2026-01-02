@@ -8,6 +8,8 @@
 import { serviceUserIdStartRange } from '#mappers/integration/map-service-user-entity.js';
 import { APPEAL_REPRESENTATION_TYPE as INTERNAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import {
+	APPEAL_CASE_STAGE,
+	APPEAL_DOCUMENT_TYPE,
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE
 } from '@planning-inspectorate/data-model';
@@ -28,17 +30,29 @@ export const mapRepresentationIn = (submission, isRule6Party) => {
 		serviceUser = mapServiceUserIn(newUser, true);
 	}
 
-	const attachments = documents.map((doc) => mapDocumentIn(doc, 'representation'));
+	const representationType = mapRepresentationType({
+		lpaCode: data.lpaCode ?? null,
+		representationType: data.representationType,
+		isRule6Party
+	});
+
+	const attachments = documents.map((doc) => {
+		if (representationType === INTERNAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT) {
+			doc.documentType = APPEAL_DOCUMENT_TYPE.RULE_6_STATEMENT;
+			doc.stage = APPEAL_CASE_STAGE.STATEMENTS;
+		} else if (representationType === INTERNAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE) {
+			doc.documentType = APPEAL_DOCUMENT_TYPE.RULE_6_PROOF_OF_EVIDENCE;
+			doc.stage = APPEAL_CASE_STAGE.STATEMENTS;
+		}
+		return mapDocumentIn(doc, 'representation');
+	});
+
 	const serviceUserId = data.serviceUserId
 		? Number(data.serviceUserId) - serviceUserIdStartRange
 		: undefined;
 
 	const representation = {
-		representationType: mapRepresentationType({
-			lpaCode: data.lpaCode ?? null,
-			representationType: data.representationType,
-			isRule6Party
-		}),
+		representationType,
 		originalRepresentation: data.representation,
 		status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
 		...(serviceUserId && {

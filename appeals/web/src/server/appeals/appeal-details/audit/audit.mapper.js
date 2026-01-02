@@ -6,7 +6,8 @@ import {
 	AUDIT_TRAIL_LPA_UUID,
 	AUDIT_TRAIL_SYSTEM_UUID,
 	AUDIT_TRIAL_APPELLANT_UUID,
-	AUDIT_TRIAL_AUTOMATIC_EVENT_UUID
+	AUDIT_TRIAL_AUTOMATIC_EVENT_UUID,
+	AUDIT_TRIAL_RULE_6_PARTY_ID
 } from '@pins/appeals/constants/support.js';
 import {
 	APPEAL_CASE_STAGE,
@@ -61,6 +62,7 @@ export const tryMapUsers = async (log, session, apiClient) => {
 		.replace(AUDIT_TRIAL_APPELLANT_UUID, 'Appellant')
 		.replace(AUDIT_TRAIL_IP_UUID, 'Interested party')
 		.replace(AUDIT_TRAIL_LPA_UUID, 'Local planning authority')
+		.replace(AUDIT_TRIAL_RULE_6_PARTY_ID, 'Rule 6 party')
 		.replace(AUDIT_TRIAL_AUTOMATIC_EVENT_UUID, 'Automatic event');
 	const uuid = uuidRegex.exec(result);
 	if (!uuid) {
