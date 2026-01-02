@@ -25,6 +25,7 @@ export const checkAppealExistsByIdAndAddToRequest = async (req, res, next) => {
 	}
 
 	req.appeal = appeal;
+	console.log('checkAppealExistsByIdAndAddToRequest ran');
 	next();
 };
 

@@ -384,6 +384,8 @@ export interface AddDocumentsRequest {
 	blobStorageHost?: string;
 	/** @example "document-service-uploads" */
 	blobStorageContainer?: string;
+	/** @example 2 */
+	appellantCaseId?: number;
 	documents?: {
 		/** @example 1 */
 		caseId?: number;

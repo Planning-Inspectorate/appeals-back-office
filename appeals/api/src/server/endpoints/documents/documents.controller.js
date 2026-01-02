@@ -17,6 +17,7 @@ import {
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { sendNewDecisionLetter } from '#endpoints/decision/decision.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
@@ -98,8 +99,25 @@ const getDocumentAndVersions = async (req, res) => {
 const addDocuments = async (req, res) => {
 	const { appeal } = req;
 
+	console.log('addDocuments here');
+
 	try {
 		const documentInfo = await service.addDocumentsToAppeal(req.body, appeal);
+
+		const changedDevelopmentDescription = documentInfo.documents.filter(
+			(document) => document.documentType === APPEAL_DOCUMENT_TYPE.CHANGED_DESCRIPTION
+		);
+
+		console.log('changedDevelopmentDescription', changedDevelopmentDescription);
+
+		if (changedDevelopmentDescription.length > 0) {
+			const appellantCaseId = Number(req.body.appellantCaseId);
+			await appellantCaseRepository.updateAppellantCaseById(appellantCaseId, {
+				developmentDescription: {
+					isChanged: true
+				}
+			});
+		}
 
 		await updatePersonalList(appeal.id);
 
