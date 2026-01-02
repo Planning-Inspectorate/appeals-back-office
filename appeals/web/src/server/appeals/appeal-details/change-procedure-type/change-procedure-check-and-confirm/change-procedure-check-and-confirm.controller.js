@@ -398,6 +398,9 @@ const mapSessionValuesForRequest = (values) => {
 			: {}),
 		proofOfEvidenceAndWitnessesDueDate: dateStringToISOString(
 			values.appealTimetable.proofOfEvidenceAndWitnessesDueDate
+		),
+		caseManagementConferenceDueDate: dateStringToISOString(
+			values.appealTimetable.caseManagementConferenceDueDate
 		)
 	};
 };

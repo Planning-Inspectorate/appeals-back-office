@@ -1943,7 +1943,8 @@ describe('appeal timetables routes', () => {
 							ipCommentsDueDate: '2024-05-11T00:00:00.000Z',
 							statementOfCommonGroundDueDate: '2024-05-12T00:00:00.000Z',
 							proofOfEvidenceAndWitnessesDueDate: '2024-05-13T00:00:00.000Z',
-							planningObligationDueDate: '2024-05-14T00:00:00.000Z'
+							planningObligationDueDate: '2024-05-14T00:00:00.000Z',
+							caseManagementConferenceDueDate: '2024-05-15T00:00:00.000Z'
 						}
 					}
 				});

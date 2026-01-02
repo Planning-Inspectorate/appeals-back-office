@@ -264,7 +264,9 @@ function formatAppealTimetable(appeal) {
 			s106ObligationDueDate: appeal.appealTimetable.s106ObligationDueDate?.toISOString() || null,
 			issueDeterminationDate: appeal.appealTimetable.issueDeterminationDate?.toISOString() || null,
 			proofOfEvidenceAndWitnessesDueDate:
-				appeal.appealTimetable.proofOfEvidenceAndWitnessesDueDate?.toISOString() || null
+				appeal.appealTimetable.proofOfEvidenceAndWitnessesDueDate?.toISOString() || null,
+			caseManagementConferenceDueDate:
+				appeal.appealTimetable.caseManagementConferenceDueDate?.toISOString() || null
 		})
 	};
 }

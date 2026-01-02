@@ -206,7 +206,8 @@ export default {
 		statementOfCommonGroundDueDate: new Date('2024-12-04T23:59:00.000Z'),
 		planningObligationDueDate: new Date('2024-12-04T23:59:00.000Z'),
 		issueDeterminationDate: null,
-		proofOfEvidenceAndWitnessesDueDate: new Date('2024-12-04T23:59:00.000Z')
+		proofOfEvidenceAndWitnessesDueDate: new Date('2024-12-04T23:59:00.000Z'),
+		caseManagementConferenceDueDate: new Date('2024-12-04T23:59:00.000Z')
 	},
 	appealType: {
 		id: 2,
