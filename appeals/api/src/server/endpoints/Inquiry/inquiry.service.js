@@ -32,7 +32,7 @@ import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/dat
 /** @typedef {import('express').NextFunction} NextFunction */
 
 /**
- * @typedef {{appealId: number,lpaQuestionnaireDueDate: string | Date,lpaStatementDueDate: string | Date,planningObligationDueDate: string | Date | undefined,statementOfCommonGroundDueDate: string | Date,ipCommentsDueDate: string | Date,proofOfEvidenceAndWitnessesDueDate: string | Date}} TimetableData
+ * @typedef {{appealId: number,lpaQuestionnaireDueDate: string | Date,lpaStatementDueDate: string | Date,planningObligationDueDate: string | Date | undefined,statementOfCommonGroundDueDate: string | Date,ipCommentsDueDate: string | Date,proofOfEvidenceAndWitnessesDueDate: string | Date, caseManagementConferenceDueDate: string | Date}} TimetableData
  */
 
 /**
@@ -102,6 +102,13 @@ const sendInquiryDetailsNotifications = async (
 				? typeof timetableData?.proofOfEvidenceAndWitnessesDueDate === 'string'
 					? timetableData?.proofOfEvidenceAndWitnessesDueDate
 					: timetableData?.proofOfEvidenceAndWitnessesDueDate.toISOString()
+				: ''
+		),
+		case_management_conference_deadline: dateISOStringToDisplayDate(
+			timetableData?.caseManagementConferenceDueDate
+				? typeof timetableData?.caseManagementConferenceDueDate === 'string'
+					? timetableData?.caseManagementConferenceDueDate
+					: timetableData?.caseManagementConferenceDueDate.toISOString()
 				: ''
 		),
 		planning_obligation_deadline: dateISOStringToDisplayDate(
@@ -248,7 +255,8 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 					planningObligationDueDate: createInquiryData.planningObligationDueDate,
 					statementOfCommonGroundDueDate: createInquiryData.statementOfCommonGroundDueDate,
 					ipCommentsDueDate: createInquiryData.ipCommentsDueDate,
-					proofOfEvidenceAndWitnessesDueDate: createInquiryData.proofOfEvidenceAndWitnessesDueDate
+					proofOfEvidenceAndWitnessesDueDate: createInquiryData.proofOfEvidenceAndWitnessesDueDate,
+					caseManagementConferenceDueDate: createInquiryData.caseManagementConferenceDueDate
 				};
 
 				if (existingTimetable) {

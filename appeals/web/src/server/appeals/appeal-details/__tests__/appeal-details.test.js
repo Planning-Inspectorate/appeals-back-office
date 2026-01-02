@@ -5011,7 +5011,8 @@ describe('appeal-details', () => {
 								ipCommentsDueDate: '2025-01-04T00:00:00.000Z',
 								finalCommentsDueDate: '2025-01-05T00:00:00.000Z',
 								statementOfCommonGroundDueDate: '2025-01-06T00:00:00.000Z',
-								proofOfEvidenceAndWitnessesDueDate: '2025-01-07T00:00:00.000Z'
+								proofOfEvidenceAndWitnessesDueDate: '2025-01-07T00:00:00.000Z',
+								caseManagementConferenceDueDate: '2025-01-08T00:00:00.000Z'
 							},
 							hearing: null
 						});
@@ -5027,7 +5028,7 @@ describe('appeal-details', () => {
 						skipPrettyPrint: true
 					}).querySelectorAll('.govuk-summary-list__row');
 
-					expect(timetableRows.length).toBe(8);
+					expect(timetableRows.length).toBe(9);
 					expect(
 						timetableRows[0].querySelector('dt.govuk-summary-list__key').textContent.trim()
 					).toBe('Valid date');
@@ -5091,9 +5092,15 @@ describe('appeal-details', () => {
 					).toBe('7 January 2025');
 					expect(
 						timetableRows[7].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Inquiry');
+					).toBe('Case management conference due');
 					expect(
 						timetableRows[7].querySelector('dd.govuk-summary-list__value').textContent.trim()
+					).toBe('8 January 2025');
+					expect(
+						timetableRows[8].querySelector('dt.govuk-summary-list__key').textContent.trim()
+					).toBe('Inquiry');
+					expect(
+						timetableRows[8].querySelector('dd.govuk-summary-list__value').textContent.trim()
 					).toBe('10:00am on 1 February 2025');
 				});
 
@@ -5118,6 +5125,7 @@ describe('appeal-details', () => {
 								finalCommentsDueDate: '2025-01-05T00:00:00.000Z',
 								statementOfCommonGroundDueDate: '2025-01-06T00:00:00.000Z',
 								proofOfEvidenceAndWitnessesDueDate: '2025-01-07T00:00:00.000Z',
+								caseManagementConferenceDueDate: '2025-01-08T00:00:00.000Z',
 								planningObligationDueDate: '2025-01-09T00:00:00.000Z'
 							}
 						});
@@ -5133,7 +5141,7 @@ describe('appeal-details', () => {
 						skipPrettyPrint: true
 					}).querySelectorAll('.govuk-summary-list__row');
 
-					expect(timetableRows.length).toBe(9);
+					expect(timetableRows.length).toBe(10);
 					expect(
 						timetableRows[0].querySelector('dt.govuk-summary-list__key').textContent.trim()
 					).toBe('Valid date');
@@ -5203,9 +5211,15 @@ describe('appeal-details', () => {
 					).toBe('7 January 2025');
 					expect(
 						timetableRows[8].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Inquiry');
+					).toBe('Case management conference due');
 					expect(
 						timetableRows[8].querySelector('dd.govuk-summary-list__value').textContent.trim()
+					).toBe('8 January 2025');
+					expect(
+						timetableRows[9].querySelector('dt.govuk-summary-list__key').textContent.trim()
+					).toBe('Inquiry');
+					expect(
+						timetableRows[9].querySelector('dd.govuk-summary-list__value').textContent.trim()
 					).toBe('10:00am on 1 February 2025');
 				});
 			});
@@ -5237,7 +5251,8 @@ describe('appeal-details', () => {
 								ipCommentsDueDate: '2025-01-04T00:00:00.000Z',
 								finalCommentsDueDate: '2025-01-05T00:00:00.000Z',
 								statementOfCommonGroundDueDate: '2025-01-06T00:00:00.000Z',
-								proofOfEvidenceAndWitnessesDueDate: '2025-01-07T00:00:00.000Z'
+								proofOfEvidenceAndWitnessesDueDate: '2025-01-07T00:00:00.000Z',
+								caseManagementConferenceDueDate: '2025-01-08T00:00:00.000Z'
 							},
 							hearing: null
 						});

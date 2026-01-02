@@ -710,6 +710,11 @@ export const getInquiryCheckDetails = async (request, response) => {
 								'proof-of-evidence-and-witnesses-due-date-year'
 							]
 						}),
+						caseManagementConferenceDueDate: dayMonthYearHourMinuteToISOString({
+							day: session.setUpInquiry?.[appealId]['case-management-conference-due-date-day'],
+							month: session.setUpInquiry?.[appealId]['case-management-conference-due-date-month'],
+							year: session.setUpInquiry?.[appealId]['case-management-conference-due-date-year']
+						}),
 						planningObligationDueDate: dayMonthYearHourMinuteToISOString({
 							day: session.setUpInquiry?.[appealId]['planning-obligation-due-date-day'],
 							month: session.setUpInquiry?.[appealId]['planning-obligation-due-date-month'],
@@ -891,7 +896,7 @@ export const postChangeInquiryCheckDetails = async (request, response) => {
 /**
  * @param {any} inquiry
  * @param {boolean} hasObligation
- * @returns {{estimatedDays?: string, inquiryStartTime: string, lpaQuestionnaireDueDate: string, statementDueDate: string, ipCommentsDueDate: string, statementOfCommonGroundDueDate: string, proofOfEvidenceAndWitnessesDueDate: string,  address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}}}
+ * @returns {{estimatedDays?: string, inquiryStartTime: string, lpaQuestionnaireDueDate: string, statementDueDate: string, ipCommentsDueDate: string, statementOfCommonGroundDueDate: string, proofOfEvidenceAndWitnessesDueDate: string,  caseManagementConferenceDueDate: string, address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}}}
  */
 const buildInquiryRequest = (inquiry, hasObligation) => {
 	const submittedAddress = {
@@ -902,7 +907,7 @@ const buildInquiryRequest = (inquiry, hasObligation) => {
 	};
 
 	/**
-	 * @type {{inquiryStartTime: string, lpaQuestionnaireDueDate: string, statementDueDate: string, ipCommentsDueDate: string, statementOfCommonGroundDueDate: string, proofOfEvidenceAndWitnessesDueDate: string, planningObligationDueDate?: string, estimatedDays?: string, address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}}}
+	 * @type {{inquiryStartTime: string, lpaQuestionnaireDueDate: string, statementDueDate: string, ipCommentsDueDate: string, statementOfCommonGroundDueDate: string, proofOfEvidenceAndWitnessesDueDate: string, caseManagementConferenceDueDate: string, planningObligationDueDate?: string, estimatedDays?: string, address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}}}
 	 */
 	const confirmDetails = {
 		inquiryStartTime: dayMonthYearHourMinuteToISOString({
@@ -940,6 +945,11 @@ const buildInquiryRequest = (inquiry, hasObligation) => {
 			day: inquiry['proof-of-evidence-and-witnesses-due-date-day'],
 			month: inquiry['proof-of-evidence-and-witnesses-due-date-month'],
 			year: inquiry['proof-of-evidence-and-witnesses-due-date-year']
+		}),
+		caseManagementConferenceDueDate: dayMonthYearHourMinuteToISOString({
+			day: inquiry['case-management-conference-due-date-day'],
+			month: inquiry['case-management-conference-due-date-month'],
+			year: inquiry['case-management-conference-due-date-year']
 		})
 	};
 

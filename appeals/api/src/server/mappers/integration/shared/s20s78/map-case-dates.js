@@ -62,6 +62,9 @@ export const mapCaseDates = (data) => {
 		statementOfCommonGroundDueDate: mapDate(appeal.appealTimetable?.statementOfCommonGroundDueDate),
 		planningObligationDueDate: mapDate(appeal.appealTimetable?.planningObligationDueDate),
 		proofsOfEvidenceDueDate: mapDate(appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate),
+		caseManagementConferenceDueDate: mapDate(
+			appeal.appealTimetable?.caseManagementConferenceDueDate
+		),
 		//TODO:
 		siteNoticesSentDate: null
 	};
