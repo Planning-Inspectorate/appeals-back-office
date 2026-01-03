@@ -57,6 +57,7 @@ declare global {
 			currentFolder: Schema.Folder;
 			currentAppeal: Appeal;
 			currentRepresentation: Representation;
+			currentRule6Party: import('./appeal-details/appeal-details.types').AppealRule6Party;
 			apiClient: import('got').Got;
 			permissions: CurrentPermissionSet;
 		}

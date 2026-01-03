@@ -96,7 +96,8 @@ const getAllAppeals = async (
 			},
 			siteVisit: true,
 			hearing: true,
-			inquiry: true
+			inquiry: true,
+			appealRule6Parties: true
 		},
 		orderBy: { caseUpdatedDate: 'desc' },
 		...pagination
@@ -431,7 +432,8 @@ const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 					include: { siteVisitType: true }
 				},
 				hearing: true,
-				inquiry: true
+				inquiry: true,
+				appealRule6Parties: true
 			},
 			skip: getSkipValue(pageNumber, pageSize),
 			take: pageSize

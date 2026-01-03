@@ -3525,7 +3525,7 @@ describe('appeal-details', () => {
 							.querySelector('.govuk-table__cell:nth-child(4) a.govuk-link')
 							.getAttribute('href')
 					).toBe(
-						'/appeals-service/appeal-details/2/proof-of-evidence/rule-6-party/add-representation?backUrl=%2Fappeals-service%2Fappeal-details%2F2'
+						'/appeals-service/appeal-details/2/proof-of-evidence/rule-6-party/1/add-representation?backUrl=%2Fappeals-service%2Fappeal-details%2F2'
 					);
 				});
 

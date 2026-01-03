@@ -223,9 +223,15 @@ export const postCheckYourAnswers = async (request, response) => {
 				: 'finalCommentsDocumentAddedSuccess';
 			break;
 		case 'rule_6_party_statement':
-			bannerDefinitionKey = session.createRepresentation
+			bannerDefinitionKey = session.createNewRepresentation
 				? 'rule6PartyStatementAddedSuccess'
 				: 'rule6PartyStatementDocumentAddedSuccess';
+			break;
+		case 'rule_6_party_proofs_evidence':
+			nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+			bannerDefinitionKey = session.createNewRepresentation
+				? 'rule6PartyProofOfEvidenceAddedSuccess'
+				: 'rule6PartyProofOfEvidenceDocumentAddedSuccess';
 			break;
 		default:
 			bannerDefinitionKey = 'finalCommentsDocumentAddedSuccess';
@@ -257,7 +263,8 @@ const buildPayload = (
 ) => {
 	const source = [
 		APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT,
-		APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT
+		APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT,
+		APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
 	].includes(representationType)
 		? 'citizen'
 		: 'lpa';
@@ -281,12 +288,16 @@ const getRepresentationType = (url) => {
 
 	const immediateParent = parts[parts.length - 2];
 	const grandParent = parts[parts.length - 3];
+	const greatGrandParent = parts[parts.length - 4];
 
 	if (grandParent === 'final-comments') {
 		return `${immediateParent}_final_comment`;
 	}
 	if (grandParent === 'rule-6-party-statement') {
 		return 'rule_6_party_statement';
+	}
+	if (greatGrandParent === 'proof-of-evidence' && grandParent === 'rule-6-party') {
+		return 'rule_6_party_proofs_evidence';
 	}
 
 	return immediateParent.replace(/-/g, '_');

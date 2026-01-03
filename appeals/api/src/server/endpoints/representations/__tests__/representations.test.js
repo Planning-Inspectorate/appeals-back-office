@@ -1103,6 +1103,33 @@ describe('/appeals/:id/reps', () => {
 				'Create'
 			);
 		});
+
+		test('201 when rule_6_party_proofs_evidence representation with attachment is successfully created', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+			const mockDocument = {
+				guid: '39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				name: 'test.pdf'
+			};
+
+			databaseConnector.document.findUnique.mockResolvedValue(mockDocument);
+
+			const response = await request
+				.post('/appeals/1/reps/rule_6_party_proofs_evidence')
+				.send({
+					redactionStatus: 'unredacted',
+					attachments: ['0'],
+					source: 'citizen',
+					representedId: 1
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledWith(
+				'39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				1,
+				'Create'
+			);
+		});
 	});
 
 	describe('POST representation/comments auto-publish', () => {

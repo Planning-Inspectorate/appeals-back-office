@@ -85,10 +85,19 @@ export function reviewProofOfEvidencePage(
 /**
  * @param {string} proofOfEvidenceType
  * @param {boolean} [capitaliseFirstLetter]
+ * @param {string} [orgName]
  * @returns {string}
  */
-export function formatProofOfEvidenceTypeText(proofOfEvidenceType, capitaliseFirstLetter = false) {
-	return proofOfEvidenceType.toLowerCase() === 'lpa'
-		? 'LPA'
-		: `${capitaliseFirstLetter ? 'A' : 'a'}ppellant`;
+export function formatProofOfEvidenceTypeText(
+	proofOfEvidenceType,
+	capitaliseFirstLetter = false,
+	orgName
+) {
+	if (proofOfEvidenceType.toLowerCase() === 'lpa') {
+		return 'LPA';
+	}
+	if (proofOfEvidenceType === 'rule-6-party') {
+		return orgName || 'Rule 6 party';
+	}
+	return `${capitaliseFirstLetter ? 'A' : 'a'}ppellant`;
 }

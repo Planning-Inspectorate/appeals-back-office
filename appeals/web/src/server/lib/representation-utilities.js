@@ -180,7 +180,7 @@ export function mapAddRepresentationSummaryActionLink(
 	const hrefs = {
 		'appellant-proofs-evidence': `${currentRoute}/proof-of-evidence/appellant/add-representation`,
 		'lpa-proofs-evidence': `${currentRoute}/proof-of-evidence/lpa/add-representation`,
-		'rule-6-party-proofs-evidence': `${currentRoute}/proof-of-evidence/rule-6-party/add-representation`,
+		'rule-6-party-proofs-evidence': `${currentRoute}/proof-of-evidence/rule-6-party/${rule6Party?.id}/add-representation`,
 		'appellant-statement': `${currentRoute}/appellant-statement`
 	};
 
