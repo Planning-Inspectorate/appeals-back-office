@@ -411,7 +411,8 @@ export const specialisms = [
 	{ name: 'Transport' },
 	{ name: 'Tree preservation order' },
 	{ name: 'Waste' },
-	{ name: 'Water' }
+	{ name: 'Water' },
+	{ name: 'Minerals' }
 ];
 
 /**
