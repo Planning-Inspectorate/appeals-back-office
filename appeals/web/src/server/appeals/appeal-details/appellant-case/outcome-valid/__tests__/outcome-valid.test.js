@@ -278,5 +278,49 @@ describe('Appellant Case Valid Flow', () => {
 				expect(unprettifiedElement.innerHTML).toContain('Mark appeal as valid</button>');
 			});
 		});
+
+		describe('POST /enforcement/check-details', () => {
+			it(`should redirect to the Check Details' screen on success`, async () => {
+				// mock API call
+				nock('http://test/')
+					.patch(
+						`/appeals/${appealId}/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`
+					)
+					.reply(200);
+
+				// set session data
+				const groundAResponse = await request
+					.post(`${baseUrl}/${appealId}/appellant-case/valid/enforcement/ground-a`)
+					.send({ enforcementGroundARadio: 'yes' });
+				expect(groundAResponse.statusCode).toBe(302);
+
+				const otherInformationRepsonse = await request
+					.post(`${baseUrl}/${appealId}/appellant-case/valid/enforcement/other-information`)
+					.send({
+						otherInformationValidRadio: 'Yes',
+						otherInformationDetails: 'Other information'
+					});
+				expect(otherInformationRepsonse.statusCode).toBe(302);
+
+				const dateResponse = await request
+					.post(`${baseUrl}/${appealId}/appellant-case/valid/enforcement/date`)
+					.send({
+						'valid-date-day': '1',
+						'valid-date-month': 'Jan',
+						'valid-date-year': '2025'
+					});
+				expect(dateResponse.statusCode).toBe(302);
+
+				// check details response
+				const response = await request.post(
+					`${baseUrl}/${appealId}/appellant-case/valid/enforcement/check-details`
+				);
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to /appeals-service/appeal-details/${appealId}`
+				);
+			});
+		});
 	});
 });

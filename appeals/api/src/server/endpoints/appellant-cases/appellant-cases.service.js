@@ -76,7 +76,17 @@ export const checkAppellantCaseExists = (req, res, next) => {
  * @param { import('#endpoints/appeals.js').NotifyClient } notifyClient
  */
 export const updateAppellantCaseValidationOutcome = async (
-	{ appeal, appellantCaseId, azureAdUserId, data, validationOutcome, validAt, siteAddress },
+	{
+		appeal,
+		appellantCaseId,
+		azureAdUserId,
+		data,
+		validationOutcome,
+		validAt,
+		siteAddress,
+		groundABarred,
+		otherInformation
+	},
 	notifyClient
 ) => {
 	const { id: appealId } = appeal;
@@ -89,7 +99,12 @@ export const updateAppellantCaseValidationOutcome = async (
 		validationOutcomeId: validationOutcome.id,
 		...(isOutcomeIncomplete(validationOutcome.name) && { incompleteReasons, appealDueDate }),
 		...(isOutcomeInvalid(validationOutcome.name) && { invalidReasons }),
-		...(isOutcomeValid(validationOutcome.name) && { appealId, validAt })
+		...(isOutcomeValid(validationOutcome.name) && {
+			appealId,
+			validAt,
+			...(groundABarred && { groundABarred }),
+			...(otherInformation && { otherInformation })
+		})
 	});
 
 	if (!isOutcomeIncomplete(validationOutcome.name)) {
@@ -123,24 +138,27 @@ export const updateAppellantCaseValidationOutcome = async (
 			);
 		}
 
-		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-		if (!recipientEmail) {
-			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+		// Don't send for enforcement notice
+		if (groundABarred === undefined) {
+			const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+			if (!recipientEmail) {
+				throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+			}
+			const personalisation = {
+				appeal_reference_number: appeal.reference,
+				lpa_reference: appeal.applicationReference || '',
+				site_address: siteAddress,
+				feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key),
+				team_email_address: teamEmail
+			};
+			await notifySend({
+				azureAdUserId,
+				templateName: 'appeal-confirmed',
+				notifyClient,
+				recipientEmail,
+				personalisation
+			});
 		}
-		const personalisation = {
-			appeal_reference_number: appeal.reference,
-			lpa_reference: appeal.applicationReference || '',
-			site_address: siteAddress,
-			feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key),
-			team_email_address: teamEmail
-		};
-		await notifySend({
-			azureAdUserId,
-			templateName: 'appeal-confirmed',
-			notifyClient,
-			recipientEmail,
-			personalisation
-		});
 	}
 
 	const updatedAppeal = await appealRepository.getAppealById(Number(appealId));
@@ -267,6 +285,17 @@ export function renderAuditTrailDetail(data) {
 		})();
 
 		return stringTokenReplacement(CONSTANTS.AUDIT_TRAIL_SITE_OWNERSHIP_UPDATED, [parameter]);
+	}
+
+	if (
+		['validationOutcome', 'validAt', 'groundABarred', 'otherInformation'].every((key) =>
+			dataKeys.includes(key)
+		)
+	) {
+		return stringTokenReplacement(CONSTANTS.AUDIT_TRAIL_ENFORCEMENT_SUBMISSION_VALID, [
+			formatDate(new Date(/** @type {string} */ (data.validAt)), false),
+			data.otherInformation === 'No' ? '' : data.otherInformation
+		]);
 	}
 
 	if (dataKeys.length !== 1) {

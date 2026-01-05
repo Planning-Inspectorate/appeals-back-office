@@ -116,7 +116,9 @@ const updateAppellantCaseValidationOutcome = ({
 	invalidReasons,
 	appealId,
 	validAt,
-	appealDueDate
+	appealDueDate,
+	groundABarred,
+	otherInformation
 }) => {
 	const transaction = [
 		updateAppellantCaseTable(appellantCaseId, {
@@ -162,7 +164,9 @@ const updateAppellantCaseValidationOutcome = ({
 		transaction.push(
 			// @ts-ignore
 			appealRepository.updateAppealById(appealId, {
-				caseValidDate: new Date(validAt).toISOString()
+				caseValidDate: new Date(validAt).toISOString(),
+				groundABarred,
+				otherInformation
 			})
 		);
 	}

@@ -90,6 +90,8 @@ const patchAppellantCaseValidator = composeMiddleware(
 	validateNumberRangeParameter('appellantProcedurePreferenceWitnessCount', 0, 99).optional(),
 	validateStringParameter('interestInLand', LENGTH_1000),
 	validateStringParameter('writtenOrVerbalPermission'),
+	validateBooleanParameter('groundABarred'),
+	validateStringParameter('otherInformation', LENGTH_1000),
 	validationErrorHandler
 );
 

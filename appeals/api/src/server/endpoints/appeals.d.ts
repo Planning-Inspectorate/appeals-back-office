@@ -156,6 +156,8 @@ interface UpdateAppealRequest {
 	agent?: number | null;
 	procedureTypeId?: number | null;
 	hearingStartTime?: string;
+	groundABarred?: boolean;
+	otherInformation?: string;
 }
 
 interface SingleAppellantCaseResponse {
@@ -310,6 +312,8 @@ interface UpdateAppellantCaseValidationOutcome {
 	appealId?: number;
 	validAt?: Date;
 	appealDueDate?: Date;
+	groundABarred?: boolean;
+	otherInformation?: string;
 }
 
 interface UpdateAppellantCaseValidationOutcomeParams {
@@ -334,6 +338,8 @@ interface UpdateAppellantCaseValidationOutcomeParams {
 	validationOutcome: ValidationOutcome;
 	validAt: Date;
 	siteAddress: string;
+	groundABarred?: boolean;
+	otherInformation?: string;
 }
 
 interface SingleLPAQuestionnaireResponse {
