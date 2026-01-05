@@ -60,7 +60,13 @@ export default {
 		originalDevelopmentDescription: 'lorem ipsum',
 		changedDevelopmentDescription: false,
 		ownersInformed: null,
-		enforcementNotice: null,
+		enforcementNotice: true,
+		enforcementNoticeListedBuilding: true,
+		interestInLand: 'owner',
+		writtenOrVerbalPermission: 'yes',
+		enforcementEffectiveDate: new Date('2024-10-17T14:08:50.409Z'),
+		enforcementIssueDate: new Date('2024-10-16T14:08:50.409Z'),
+		applicationDevelopmentAllOrPart: 'all-of-the-development',
 		isGreenBelt: true,
 		agriculturalHolding: null,
 		tenantAgriculturalHolding: null,
@@ -319,5 +325,14 @@ export default {
 	caseNotes: [],
 	representations: [],
 	otherAppellants: [],
-	appealGrounds: []
+	appealGrounds: [
+		{
+			groundId: 1,
+			appealId: 1,
+			factsForGround: 'The site is in a conservation area',
+			ground: {
+				groundRef: 'a'
+			}
+		}
+	]
 };

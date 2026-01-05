@@ -114,6 +114,16 @@ function createIntegrationMap(mappingRequest) {
 			const advert = createMap(integrationMappers.integrationAdvertMappers, mappingRequest);
 			return mergeMaps(caseData, advert);
 		}
+		case APPEAL_CASE_TYPE.C: {
+			if (!isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
+				return caseData;
+			}
+			const enforcement = createMap(
+				integrationMappers.integrationEnforcementMappers,
+				mappingRequest
+			);
+			return mergeMaps(caseData, enforcement);
+		}
 		default:
 			return caseData;
 	}

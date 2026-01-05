@@ -94,7 +94,12 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
 					}
 				}
 			},
-			representations: true
+			representations: true,
+			appealGrounds: {
+				include: {
+					ground: true
+				}
+			}
 		}
 	});
 

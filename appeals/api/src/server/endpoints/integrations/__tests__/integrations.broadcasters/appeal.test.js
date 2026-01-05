@@ -36,6 +36,11 @@ describe('broadcastAppeal', () => {
 			type: APPEAL_CASE_TYPE.Y,
 			expectedTopic: producers.boCaseDataS78,
 			mockAppeal: fullPlanningAppeal
+		},
+		{
+			type: APPEAL_CASE_TYPE.C,
+			expectedTopic: producers.boCaseDataS78,
+			mockAppeal: fullPlanningAppeal
 		}
 	];
 
