@@ -81,6 +81,9 @@ describe('enforcement-effective-date', () => {
 
 				expect(elementInnerHtml).toContain(`${legendText}</h1>`);
 				expect(elementInnerHtml).toContain(`For example, ${getExampleDateHint(27)}</div>`);
+				expect(elementInnerHtml).toContain(`value="${testCase.value}" inputmode="numeric">`);
+				expect(elementInnerHtml).toContain('value="06" inputmode="numeric">');
+				expect(elementInnerHtml).toContain('value="2021" inputmode="numeric">');
 
 				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
@@ -122,6 +125,9 @@ describe('enforcement-effective-date', () => {
 
 				expect(elementInnerHtml).toContain(`${legendText}</h1>`);
 				expect(elementInnerHtml).toContain(`For example, ${getExampleDateHint(27)}</div>`);
+				expect(elementInnerHtml).toContain('value="1" inputmode="numeric">');
+				expect(elementInnerHtml).toContain(`value="${testCase.value}" inputmode="numeric">`);
+				expect(elementInnerHtml).toContain('value="2021" inputmode="numeric">');
 
 				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
@@ -159,6 +165,9 @@ describe('enforcement-effective-date', () => {
 
 				expect(elementInnerHtml).toContain(`${legendText}</h1>`);
 				expect(elementInnerHtml).toContain(`For example, ${getExampleDateHint(27)}</div>`);
+				expect(elementInnerHtml).toContain('value="1" inputmode="numeric">');
+				expect(elementInnerHtml).toContain('value="Jul" inputmode="numeric">');
+				expect(elementInnerHtml).toContain(`value="${testCase.value}" inputmode="numeric">`);
 
 				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
