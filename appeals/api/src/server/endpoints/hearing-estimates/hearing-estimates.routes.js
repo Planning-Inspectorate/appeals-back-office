@@ -1,4 +1,4 @@
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import {
@@ -37,7 +37,7 @@ router.post(
 		#swagger.responses[400] = {}
 		#swagger.responses[500] = {}
 	 */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	createHearingEstimateValidator,
 	asyncHandler(addHearingEstimate)
 );
@@ -67,7 +67,7 @@ router.patch(
 		#swagger.responses[404] = {}
 		#swagger.responses[500] = {}
 	 */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	updateHearingEstimateValidator,
 	asyncHandler(updateHearingEstimate)
 );
@@ -90,7 +90,7 @@ router.delete(
 		#swagger.responses[404] = {}
 		#swagger.responses[500] = {}
 	 */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	asyncHandler(removeHearingEstimate)
 );
 
