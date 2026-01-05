@@ -273,6 +273,8 @@ export const AUDIT_TRAIL_INTEREST_IN_LAND_UPDATED =
 	"'What is your interest in the land?' updated to {replacement0}";
 export const AUDIT_TRAIL_APPEAL_DECISION_DATE_UPDATED =
 	'Appeal decision date updated to {replacement0}';
+export const AUDIT_TRAIL_ENFORCEMENT_SUBMISSION_VALID =
+	'Appeal reviewed as valid on {replacement0}\n{replacement1}';
 
 export const DATABASE_ORDER_BY_ASC = 'asc';
 export const DATABASE_ORDER_BY_DESC = 'desc';

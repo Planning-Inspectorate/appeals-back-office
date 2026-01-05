@@ -3,6 +3,7 @@ import { getAppealCaseNotes } from '#appeals/appeal-details/case-notes/case-note
 import config from '#environment/config.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate, dateISOStringToDisplayTime12hr } from '#lib/dates.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { utcToZonedTime } from 'date-fns-tz';
 import * as interestedPartyCommentsService from '../representations/interested-party-comments/interested-party-comments.service.js';
 import { mapMessageContent, tryMapUsers } from './audit.mapper.js';
@@ -54,7 +55,28 @@ export const renderAudit = async (request, response) => {
 				request.apiClient
 			);
 			let detailsHtml = details || '';
-			if (detailsHtml.length > 300) {
+
+			if (
+				appeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
+				detailsHtml.startsWith('Appeal reviewed as valid on')
+			) {
+				const [text, listText] = detailsHtml.split('<br>');
+				if (listText) {
+					const listHtml = nunjucksEnvironments.render('appeals/components/page-component.njk', {
+						component: {
+							type: 'show-more',
+							parameters: {
+								html: listText,
+								toggleTextCollapsed: 'Show more',
+								toggleTextExpanded: 'Show less'
+							}
+						}
+					});
+					detailsHtml = `<p>${text}</p><ul class="govuk-list govuk-list--bullet"><li>${listHtml}</li></ul>`;
+				} else {
+					detailsHtml = text;
+				}
+			} else if (detailsHtml.length > 300) {
 				detailsHtml = nunjucksEnvironments.render('appeals/components/page-component.njk', {
 					component: {
 						type: 'show-more',

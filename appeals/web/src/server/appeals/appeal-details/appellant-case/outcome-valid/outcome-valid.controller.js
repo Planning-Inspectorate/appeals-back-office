@@ -379,6 +379,62 @@ export const getEnforcementCheckDetails = async (request, response) => {
 	return renderEnforcementCheckDetails(request, response, undefined);
 };
 
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postEnforcementCheckDetails = async (request, response) => {
+	const { errors, currentAppeal, session } = request;
+
+	if (errors) {
+		return renderEnforcementCheckDetails(request, response);
+	}
+
+	try {
+		const { appealId, appellantCaseId } = currentAppeal;
+		const {
+			enforcementDecision: {
+				outcome,
+				appealGroundABarred: appealGroundABarredString,
+				otherInformationValidRadio,
+				otherInformationDetails,
+				updatedValidDateDay,
+				updatedValidDateMonth,
+				updatedValidDateYear
+			}
+		} = session;
+		const appealGroundABarred = appealGroundABarredString === 'yes';
+
+		await outcomeValidService.setReviewOutcomeValidForAppellantCase(
+			request.apiClient,
+			appealId,
+			appellantCaseId,
+			dayMonthYearHourMinuteToISOString({
+				day: updatedValidDateDay,
+				month: updatedValidDateMonth,
+				year: updatedValidDateYear
+			}),
+			outcome,
+			appealGroundABarred,
+			otherInformationDetails ?? otherInformationValidRadio
+		);
+
+		addNotificationBannerToSession({
+			session,
+			bannerDefinitionKey: 'appealValidated',
+			appealId
+		});
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when completing appellant case review'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
+
 /**
  *
  * @param {import('@pins/express/types/express.js').Request} request

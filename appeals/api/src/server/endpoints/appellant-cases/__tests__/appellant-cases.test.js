@@ -1258,6 +1258,106 @@ describe('appellant cases routes', () => {
 					})
 				});
 			});
+
+			test('returns an error if groundABarred is not a boolean', async () => {
+				const { id, appellantCase } = enforcementNoticeAppeal;
+				const patchBody = {
+					groundABarred: 'not a boolean'
+				};
+
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body.errors).toHaveProperty('groundABarred', 'must be a boolean');
+			});
+
+			test('returns an error if otherInformation is too long', async () => {
+				const { id, appellantCase } = enforcementNoticeAppeal;
+				const patchBody = {
+					otherInformation: 'x'.repeat(1001)
+				};
+
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body.errors).toHaveProperty(
+					'otherInformation',
+					'must be 1000 characters or less'
+				);
+			});
+
+			test('updates the appeal case with groundABarred and otherInformation', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...enforcementNoticeAppeal,
+					appealStatus: [{ status: 'validation', valid: true }]
+				});
+				// @ts-ignore
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[2]
+				);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+				// @ts-ignore
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+				// @ts-ignore
+				databaseConnector.documentVersion.update.mockResolvedValue([]);
+				// @ts-ignore
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ id: 1, key: 'no_redaction_required' }
+				]);
+				// @ts-ignore
+				databaseConnector.document.findUnique.mockResolvedValue(null);
+
+				const body = {
+					validationOutcome: 'valid',
+					validAt: new Date().toISOString(),
+					groundABarred: true,
+					otherInformation: 'Other information'
+				};
+				const { appellantCase, id } = enforcementNoticeAppeal;
+
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: { appellantCaseValidationOutcomeId: 3 }
+				});
+
+				expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith({
+					data: {
+						appealId: enforcementNoticeAppeal.id,
+						createdAt: expect.any(Date),
+						status: APPEAL_CASE_STATUS.READY_TO_START,
+						valid: true
+					}
+				});
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+					where: { id },
+					data: {
+						caseUpdatedDate: expect.any(Date),
+						caseValidDate: expect.any(String),
+						groundABarred: true,
+						otherInformation: 'Other information'
+					},
+					include: {
+						appealStatus: true,
+						appealType: true
+					}
+				});
+
+				expect(mockNotifySend).not.toHaveBeenCalled();
+				expect(response.status).toEqual(200);
+			});
 		});
 	});
 

@@ -6,18 +6,29 @@
  * @param {string} appealId
  * @param {number} appellantCaseId
  * @param {string|null} validAt
+ * @param {string} [outcome]
+ * @param {boolean} [groundABarred]
+ * @param {string} [otherInformation]
  * @returns {Promise<Appeal>}
  */
 export async function setReviewOutcomeValidForAppellantCase(
 	apiClient,
 	appealId,
 	appellantCaseId,
-	validAt
+	validAt,
+	outcome,
+	groundABarred,
+	otherInformation
 ) {
 	return await apiClient
-
 		.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
-			json: { validationOutcome: 'valid', validAt: validAt }
+			json: {
+				validationOutcome: 'valid',
+				validAt: validAt,
+				outcome,
+				groundABarred,
+				otherInformation
+			}
 		})
 		.json();
 }

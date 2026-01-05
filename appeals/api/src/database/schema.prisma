@@ -39,6 +39,8 @@ model Appeal {
   caseResubmittedTypeId Int?
   caseTransferredId     String?
   eiaScreeningRequired  Boolean?
+  groundABarred         Boolean?
+  otherInformation      String?
   specialisms           AppealSpecialism[]
   allocation            AppealAllocation?
   allocationId          Int?
