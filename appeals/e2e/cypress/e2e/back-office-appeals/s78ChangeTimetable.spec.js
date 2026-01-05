@@ -1,6 +1,7 @@
 // @ts-nocheck
 /// <reference types="cypress"/>
 
+import { appealsApiRequests } from '../../fixtures/appealsApiRequests';
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
