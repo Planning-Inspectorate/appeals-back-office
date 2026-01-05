@@ -21,7 +21,7 @@ const formatOtherAppellantsAsHtmlList = (otherAppellants) => {
 };
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapOtherAppellants = ({ appellantCaseData, currentRoute, userHasUpdateCase }) => {
+export const mapOtherAppellants = ({ appellantCaseData, currentRoute }) => {
 	// @ts-ignore
 	const { otherAppellants } = appellantCaseData;
 	const hasData = !!otherAppellants;
@@ -39,7 +39,7 @@ export const mapOtherAppellants = ({ appellantCaseData, currentRoute, userHasUpd
 				: ''
 		},
 		link: `${currentRoute}/other-appellants/${actionText.toLowerCase()}`,
-		editable: hasData && userHasUpdateCase,
+		editable: false,
 		classes: 'appeal-other-appellants',
 		actionText,
 		cypressDataName: 'other-appellants'

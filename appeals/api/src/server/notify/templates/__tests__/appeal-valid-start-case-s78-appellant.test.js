@@ -22,8 +22,6 @@ describe('appeal-valid-start-case-s78-appellant.md', () => {
 				lpa_statement_deadline: '10 January 2025',
 				ip_comments_deadline: '20 January 2025',
 				final_comments_deadline: '30 January 2025',
-				we_will_email_when:
-					'when you can view information from other parties in the appeals service.',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
@@ -161,7 +159,7 @@ describe('appeal-valid-start-case-s78-appellant.md', () => {
 			'',
 			'# What happens next',
 			'',
-			'We will send you an email as this is a test',
+			'We will send you an email when you can view information from other parties in the appeals service.',
 			'',
 			'# Appeal costs',
 			'',
@@ -211,7 +209,6 @@ describe('appeal-valid-start-case-s78-appellant.md', () => {
 				ip_comments_deadline: '20 January 2025',
 				final_comments_deadline: '30 January 2025',
 				child_appeals: ['111111', '222222', '333333', '444444', '555555'],
-				we_will_email_when: 'as this is a test',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
@@ -261,7 +258,7 @@ describe('appeal-valid-start-case-s78-appellant.md', () => {
 			'',
 			'# What happens next',
 			'',
-			'We will send you an email as this is a test',
+			'We will send you an email when you can view information from other parties in the appeals service.',
 			'',
 			'# Appeal costs',
 			'',
@@ -312,10 +309,6 @@ describe('appeal-valid-start-case-s78-appellant.md', () => {
 				final_comments_deadline: '30 January 2025',
 				statement_of_common_ground_deadline: '15 January 2025',
 				planning_obligation_deadline: '20 January 2025',
-				we_will_email_when: [
-					'to let you know when you can view information from other parties in the appeals service',
-					'when we set up your hearing'
-				],
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
@@ -363,7 +356,6 @@ describe('appeal-valid-start-case-s78-appellant.md', () => {
 			'# What happens next',
 			'',
 			'We will send you another email:',
-			'',
 			'- to let you know when you can view information from other parties in the appeals service',
 			'- when we set up your hearing',
 			'',

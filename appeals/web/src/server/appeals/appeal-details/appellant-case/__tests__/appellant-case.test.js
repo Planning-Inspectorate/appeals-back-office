@@ -568,13 +568,6 @@ describe('appellant-case', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Appellant case</h1>');
-			expect(unprettifiedElement.innerHTML).toContain('Design and access statement</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('New plans or drawings</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('Plans, drawings and list of plans</dt>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'What is the status of your planning obligation?</dt>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Planning obligation</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'What is the address of the appeal site?</dt>'
 			);
@@ -602,6 +595,27 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Are there other appeals linked to your development?</dt>'
 			);
+			// upload document section
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Communication with the Planning Inspectorate</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Enforcement notice</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Enforcement notice plan</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Application form</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change the description of development</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Decision letter from the local planning authority</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the status of your planning obligation?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Planning obligation</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Application for an award of appeal costs</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Other new supporting documents</dt>');
 		});
 
 		it('should render the appellant case page with the expected content (Enforcement notice) when no enforcement data', async () => {
@@ -634,13 +648,6 @@ describe('appellant-case', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Appellant case</h1>');
-			expect(unprettifiedElement.innerHTML).toContain('Design and access statement</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('New plans or drawings</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('Plans, drawings and list of plans</dt>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'What is the status of your planning obligation?</dt>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Planning obligation</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'What is the address of the appeal site?</dt>'
 			);
@@ -652,7 +659,6 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Are there any health and safety issues on the appeal site?</dt>'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Other new supporting documents</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'How would you prefer us to decide your appeal?</dt>'
 			);
@@ -668,6 +674,27 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Are there other appeals linked to your development?</dt>'
 			);
+			// upload document section
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Communication with the Planning Inspectorate</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Enforcement notice</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Enforcement notice plan</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Application form</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change the description of development</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Decision letter from the local planning authority</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the status of your planning obligation?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Planning obligation</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Application for an award of appeal costs</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Other new supporting documents</dt>');
 		});
 
 		it('should render the appellant case page with the expected content (owns part land and knows some owners', async () => {
@@ -1700,7 +1727,7 @@ describe('appellant-case', () => {
 				rootElement: '.govuk-notification-banner'
 			}).innerHTML;
 			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Virus scan in progress</p>');
+			expect(notificationBannerElementHTML).toContain('Virus scan in progress</h1>');
 			expect(notificationBannerElementHTML).toContain(
 				'Refresh page to see if scan has finished</a>'
 			);
@@ -3123,7 +3150,7 @@ describe('appellant-case', () => {
 		beforeEach(async () => {
 			nock.cleanAll();
 			nock('http://test/')
-				.get(`/appeals/${appealData.appealId}?include=all`)
+				.get(`/appeals/${appealData.appealId}?include=appellantCase`)
 				.reply(200, appealData)
 				.persist();
 			nock('http://test/').patch(`/appeals/${appealData.appealId}`).reply(200);

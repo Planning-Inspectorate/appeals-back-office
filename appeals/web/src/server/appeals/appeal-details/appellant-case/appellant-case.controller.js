@@ -5,6 +5,7 @@ import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPLICATION_FEE_RECEIPT_DOCTYPE } from '@pins/appeals/constants/documents.js';
 import { CHANGE_APPEAL_TYPE_INVALID_REASON } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
@@ -172,6 +173,12 @@ export const postAppellantCase = async (request, response) => {
 			currentAppeal.appellantCaseId !== undefined
 		) {
 			if (reviewOutcome === 'valid') {
+				if (currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+					return response.redirect(
+						`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/valid/enforcement/ground-a`
+					);
+				}
+
 				return response.redirect(
 					`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${reviewOutcome}/date`
 				);

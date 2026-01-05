@@ -525,6 +525,7 @@ const deleteSiteVisit = async (siteVisitId, appeal, notifyClient, azureAdUserId)
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
 };
+
 /**
  *
  * @param {number} siteVisitId
@@ -569,28 +570,31 @@ const recordMissedSiteVisit = async (
 		])
 	});
 
-	const recipientEmail = appeal.appellant?.email;
-	if (appeal.appellant?.email && whoMissedSiteVisit === 'appellant') {
+	const appellantEmail = appeal.appellant?.email ?? appeal.agent?.email;
+	const lpaEmail = appeal.lpa?.email;
+
+	if (appellantEmail && whoMissedSiteVisit === 'appellant') {
 		await notifySend({
 			azureAdUserId: azureAdUserId,
 			templateName: 'record-missed-site-visit-appellant',
 			notifyClient,
-			recipientEmail,
+			recipientEmail: appellantEmail,
 			personalisation
 		});
 	}
 
-	if (appeal.lpa?.email && whoMissedSiteVisit === 'lpa') {
+	if (lpaEmail && whoMissedSiteVisit === 'lpa') {
 		await notifySend({
 			azureAdUserId: azureAdUserId,
 			templateName: 'record-missed-site-visit-lpa',
 			notifyClient,
-			recipientEmail: appeal.lpa?.email,
+			recipientEmail: lpaEmail,
 			personalisation
 		});
 	}
 	return result;
 };
+
 /**
  *
  * @param {number} appealId

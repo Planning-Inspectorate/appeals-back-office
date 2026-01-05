@@ -69,7 +69,7 @@ describe('change inquiry', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Inquiry date and time');
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe('Inquiry date and time');
 		});
 
 		it('should render a Date field', () => {
@@ -298,7 +298,7 @@ describe('change inquiry', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe(
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe(
 				'Do you know the address of where the inquiry will take place?'
 			);
 		});
@@ -478,7 +478,7 @@ describe('change inquiry', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Inquiry address');
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe('Inquiry address');
 		});
 
 		it('should render a text input for address line 1', () => {
@@ -681,7 +681,7 @@ describe('change inquiry', () => {
 			});
 
 			it('should render the correct heading', () => {
-				expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe(
+				expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe(
 					'Check details and update inquiry'
 				);
 			});

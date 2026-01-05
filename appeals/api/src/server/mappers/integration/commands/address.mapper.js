@@ -30,3 +30,18 @@ export const mapNeighbouringAddressIn = (casedata) => {
 		addressTown: casedata.neighbouringSiteAddressTown
 	};
 };
+
+/**
+ *
+ * @param {*} casedata
+ * @returns
+ */
+export const mapContactAddressIn = (casedata) => {
+	return {
+		addressLine1: casedata.contactAddressLine1,
+		addressLine2: casedata.contactAddressLine2,
+		addressCounty: casedata.contactAddressCounty,
+		postcode: casedata.contactAddressPostcode,
+		addressTown: casedata.contactAddressTown
+	};
+};

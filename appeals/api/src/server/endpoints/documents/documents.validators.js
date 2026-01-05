@@ -49,6 +49,7 @@ const validateDocumentRedactionStatusIds = async (documents) => {
 const validateAvCheckResult = async (documents) => {
 	const validAvResults = [APPEAL_VIRUS_CHECK_STATUS.SCANNED, APPEAL_VIRUS_CHECK_STATUS.AFFECTED];
 	const hasValidStatusIds = documents?.every(
+		//@ts-ignore
 		({ virusCheckStatus }) => virusCheckStatus && validAvResults.includes(virusCheckStatus)
 	);
 

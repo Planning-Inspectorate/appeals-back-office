@@ -34,7 +34,7 @@ import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorat
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAddressRequest} UpdateAddressRequest */
-/** @typedef {import('#db-client').Prisma.RepresentationUpdateInput} RepresentationUpdateInput */
+/** @typedef {import('#db-client/models.ts').RepresentationUpdateInput} RepresentationUpdateInput */
 
 /**
  * @param {number} appealId
@@ -117,7 +117,8 @@ export const getRepStatusAuditLogDetails = (status, repType, redactedRep) => {
  * @property {string} [lpaCode]
  * @property {string} [appellantId]
  * @property {string} [representationText]
-
+ * @property {number} [representedId]
+ *
  * @param {number} appealId
  * @param {CreateRepresentationInput} input
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
@@ -146,6 +147,8 @@ export const createRepresentation = async (appealId, input) => {
 		representedId = represented.id;
 	} else if (input.representationType == APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT) {
 		representedId = Number(input.appellantId);
+	} else if (input.representationType == APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT) {
+		representedId = Number(input.representedId);
 	}
 
 	const representation = await representationRepository.createRepresentation({

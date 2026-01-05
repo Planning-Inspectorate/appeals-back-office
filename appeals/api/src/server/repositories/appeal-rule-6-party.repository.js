@@ -1,9 +1,9 @@
 import { databaseConnector } from '#utils/database-connector.js';
 
-/** @typedef {import('#db-client').AppealRule6Party} AppealRule6Party */
-/** @typedef {import('#db-client').ServiceUser} ServiceUser */
+/** @typedef {import('#db-client/client.ts').AppealRule6Party} AppealRule6Party */
+/** @typedef {import('#db-client/client.ts').ServiceUser} ServiceUser */
 /**
- * @typedef {import('#db-client').Prisma.PrismaPromise<T>} PrismaPromise
+ * @typedef {import('#db-client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
  * @template T
  */
 

@@ -22,6 +22,7 @@ import appellantCaseRepository from '#repositories/appellant-case.repository.js'
 import * as documentRepository from '#repositories/document.repository.js';
 import auditApplicationDecisionMapper from '#utils/audit-application-decision-mapper.js';
 import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
+import { Prisma } from '#utils/db-client/client.js';
 import { getFormattedReasons } from '#utils/email-formatter.js';
 import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
 import { allAppellantCaseOutcomesAreValid } from '#utils/is-awaiting-linked-appeal.js';
@@ -43,7 +44,6 @@ import {
 } from '@pins/appeals/constants/support.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library.js';
 import transitionState from '../../state/transition-state.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
@@ -342,14 +342,17 @@ export function renderAuditTrailDetail(data) {
 		AUDIT_TRAIL_ENFORCEMENT_REFERENCE_UPDATED: () => data.enforcementReference,
 		AUDIT_TRAIL_DESCRIPTION_OF_ALLEGED_BREACH_UPDATED: () => data.descriptionOfAllegedBreach,
 		AUDIT_TRAIL_APPLICATION_DEVELOPMENT_ALL_OR_PART_UPDATED: () =>
-			data.applicationDevelopmentAllOrPart,
+			capitalizeFirstLetter(
+				/** @type {string} */ (data.applicationDevelopmentAllOrPart || '').replaceAll('-', ' ')
+			),
 		AUDIT_TRAIL_STATUS_PLANNING_OBLIGATION_UPDATED: () =>
 			PLANNING_OBLIGATION_STATUSES.find(
 				(/** @type {{value: string, label: string}} */ item) =>
 					item.value === data.statusPlanningObligation
 			)?.label || 'Not applicable',
 		AUDIT_TRAIL_WRITTEN_OR_VERBAL_PERMISSION_UPDATED: () => data.writtenOrVerbalPermission,
-		AUDIT_TRAIL_INTEREST_IN_LAND_UPDATED: () => data.interestInLand
+		AUDIT_TRAIL_INTEREST_IN_LAND_UPDATED: () =>
+			capitalizeFirstLetter(/** @type {string} */ (data.interestInLand))
 	};
 
 	if (!auditTrailParameters[constantKey]) {
@@ -406,7 +409,7 @@ export const putContactAddress = async (params) => {
 		return contactAddress;
 	} catch (error) {
 		logger.error(error);
-		if (error instanceof PrismaClientKnownRequestError) {
+		if (error instanceof Prisma.PrismaClientKnownRequestError) {
 			if (error.code === 'P2025') {
 				throw new Error(ERROR_NOT_FOUND);
 			}

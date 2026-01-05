@@ -233,6 +233,9 @@ interface SingleAppellantCaseResponse {
 		ownershipCertificate?: FolderInfo | null;
 		otherNewDocuments?: FolderInfo | null;
 		statementCommonGround?: FolderInfo | null;
+		priorCorrespondenceWithPINS?: FolderInfo | null;
+		enforcementNotice?: FolderInfo | null;
+		enforcementNoticePlan?: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	isGreenBelt?: boolean | null;

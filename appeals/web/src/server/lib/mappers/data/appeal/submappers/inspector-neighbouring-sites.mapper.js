@@ -13,9 +13,7 @@ export const mapInspectorNeighbouringSites = ({ appealDetails, currentRoute, ses
 			value: {
 				html:
 					appealDetails.neighbouringSites && appealDetails.neighbouringSites.length > 0
-						? displayPageFormatter.formatListOfAddresses(
-								appealDetails.neighbouringSites.filter((site) => site.source === 'back-office')
-						  )
+						? displayPageFormatter.formatListOfAddresses(appealDetails.neighbouringSites)
 						: 'No addresses'
 			},
 			actions: {

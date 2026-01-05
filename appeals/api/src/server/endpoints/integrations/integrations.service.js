@@ -13,9 +13,10 @@ import { EventType } from '@pins/event-client';
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 
 /**
- * @param {import('#db-client').Prisma.AppealCreateInput} data
- * @param {import('#db-client').Prisma.DocumentVersionCreateInput[]} documents
+ * @param {import('#db-client/models.ts').AppealCreateInput} data
+ * @param {import('#db-client/models.ts').DocumentVersionCreateInput[]} documents
  * @param {string[] | null} relatedReferences
+ * @param {{groundRef:string, factsForGround:string}[]} appealGrounds
  * @param {string} appellantProcedurePreference
  * @returns
  */
@@ -23,12 +24,14 @@ const importAppellantCase = async (
 	data,
 	documents,
 	relatedReferences,
+	appealGrounds,
 	appellantProcedurePreference
 ) => {
 	const result = await createAppeal(
 		data,
 		documents,
 		relatedReferences || [],
+		appealGrounds || [],
 		appellantProcedurePreference
 	);
 
@@ -45,8 +48,8 @@ const importAppellantCase = async (
 /**
  *
  * @param {string} caseReference
- * @param {Omit<import('#db-client').Prisma.LPAQuestionnaireCreateInput, 'appeal'>} data
- * @param {import('#db-client').Prisma.DocumentVersionCreateInput[]} documents
+ * @param {Omit<import('#db-client/models.ts').LPAQuestionnaireCreateInput, 'appeal'>} data
+ * @param {import('#db-client/models.ts').DocumentVersionCreateInput[]} documents
  * @param {string[] | null} relatedReferences
  * @returns
  */
@@ -71,8 +74,8 @@ const importLPAQuestionnaire = async (caseReference, data, documents, relatedRef
 /**
  *
  * @param {Appeal} appeal
- * @param {Omit<import('#db-client').Prisma.RepresentationCreateInput, 'appeal'>} data
- * @param {import('#db-client').Prisma.DocumentVersionCreateInput[]} attachments
+ * @param {Omit<import('#db-client/models.ts').RepresentationCreateInput, 'appeal'>} data
+ * @param {import('#db-client/models.ts').DocumentVersionCreateInput[]} attachments
  * @returns {Promise<{rep: Representation, documentVersions: DocumentVersion[]}>}
  */
 const importRepresentation = async (appeal, data, attachments) => {
@@ -90,7 +93,7 @@ const importRepresentation = async (appeal, data, attachments) => {
 
 /**
  *
- * @param {import('#db-client').Prisma.DocumentVersionCreateInput[]} documents
+ * @param {import('#db-client/models.ts').DocumentVersionCreateInput[]} documents
  * @param {import('@pins/appeals.api').Schema.DocumentVersion[]} documentVersions
  * @returns {Promise<boolean>}
  */

@@ -31,7 +31,10 @@ function mapRepresentationTypeToPath(representationType) {
  * @returns {PageComponent} The generated comment summary list component.
  */
 export function generateCommentsSummaryList(appealId, comment, isReview = false) {
-	const commentIsDocument = !comment.originalRepresentation && comment.attachments?.length > 0;
+	const commentIsDocument =
+		(!comment.originalRepresentation ||
+			comment.originalRepresentation === REPRESENTATION_ADDED_AS_DOCUMENT) &&
+		comment.attachments?.length > 0;
 	const folderId = comment.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
 
 	const filteredAttachments = comment.attachments?.filter((attachment) => {

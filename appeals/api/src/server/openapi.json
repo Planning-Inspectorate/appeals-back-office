@@ -7941,6 +7941,10 @@
 					"redactionStatus": {
 						"type": "string",
 						"example": "unredacted"
+					},
+					"representedId": {
+						"type": "number",
+						"example": 1
 					}
 				},
 				"xml": {
@@ -15186,7 +15190,16 @@
 					},
 					"outcome": {
 						"type": "string",
-						"enum": ["allowed", "dismissed", "invalid", "split_decision"]
+						"enum": [
+							"allowed",
+							"dismissed",
+							"invalid",
+							"notice_upheld",
+							"notice_varied_and_upheld",
+							"planning_permission_granted",
+							"quashed_on_legal_grounds",
+							"split_decision"
+						]
 					}
 				}
 			},
@@ -30907,7 +30920,16 @@
 							},
 							"outcome": {
 								"type": "string",
-								"enum": ["allowed", "dismissed", "invalid", "split_decision"]
+								"enum": [
+									"allowed",
+									"dismissed",
+									"invalid",
+									"notice_upheld",
+									"notice_varied_and_upheld",
+									"planning_permission_granted",
+									"quashed_on_legal_grounds",
+									"split_decision"
+								]
 							}
 						}
 					},

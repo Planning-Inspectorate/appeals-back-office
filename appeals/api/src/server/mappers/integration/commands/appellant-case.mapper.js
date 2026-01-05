@@ -1,13 +1,16 @@
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
 /** @typedef {import('@pins/appeals.api').Schema.AppellantCase} AppellantCase */
 
+import { mapContactAddressIn } from '#mappers/integration/commands/address.mapper.js';
 import { createSharedS20S78Fields } from '#mappers/integration/shared/s20s78/appellant-case-fields.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 /**
  *
  * @param {Pick<AppellantSubmissionCommand, 'casedata'>} command
- * @returns {Omit<import('#db-client').Prisma.AppellantCaseCreateInput, 'appeal'>}
+ * @returns {Omit<import('#db-client/models.ts').AppellantCaseCreateInput, 'appeal'>}
  */
 export const mapAppellantCaseIn = (command) => {
 	const casedata = command.casedata;
@@ -16,6 +19,9 @@ export const mapAppellantCaseIn = (command) => {
 	const isAdverts =
 		casedata.caseType === APPEAL_CASE_TYPE.ZA || casedata.caseType === APPEAL_CASE_TYPE.H;
 	const isFullAdverts = casedata.caseType === APPEAL_CASE_TYPE.H;
+	const isEnforcementNotice =
+		isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE) &&
+		casedata.caseType === APPEAL_CASE_TYPE.C;
 
 	// @ts-ignore
 	const sharedFields = createSharedS20S78Fields(command);
@@ -55,6 +61,8 @@ export const mapAppellantCaseIn = (command) => {
 					}))
 					.filter(Boolean)
 			: null;
+
+	const contactAddress = isEnforcementNotice ? mapContactAddressIn(casedata) : null;
 
 	const data = {
 		applicationDate: casedata.applicationDate,
@@ -101,6 +109,20 @@ export const mapAppellantCaseIn = (command) => {
 			appellantProcedurePreferenceDetails: casedata.appellantProcedurePreferenceDetails,
 			appellantProcedurePreferenceDuration: casedata.appellantProcedurePreferenceDuration,
 			appellantProcedurePreferenceWitnessCount: casedata.appellantProcedurePreferenceWitnessCount
+		}),
+		...(isEnforcementNotice && {
+			enforcementNotice: casedata.enforcementNotice,
+			enforcementNoticeListedBuilding: casedata.enforcementNoticeListedBuilding,
+			enforcementIssueDate: casedata.enforcementIssueDate,
+			enforcementEffectiveDate: casedata.enforcementEffectiveDate,
+			contactPlanningInspectorateDate: casedata.contactPlanningInspectorateDate,
+			enforcementReference: casedata.enforcementReference,
+			interestInLand: casedata.interestInLand,
+			writtenOrVerbalPermission: casedata.writtenOrVerbalPermission,
+			descriptionOfAllegedBreach: casedata.descriptionOfAllegedBreach,
+			applicationDevelopmentAllOrPart: casedata.applicationDevelopmentAllOrPart,
+			contactAddress: { create: contactAddress },
+			appealDecisionDate: casedata.appealDecisionDate
 		})
 	};
 

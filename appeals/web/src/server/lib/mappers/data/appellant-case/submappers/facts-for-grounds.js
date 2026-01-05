@@ -19,7 +19,7 @@ export const mapFactsForGrounds = ({ appellantCaseData, currentRoute, userHasUpd
 		return textSummaryListItem({
 			id,
 			text: `Facts for ground (${groundRef})`,
-			value: !hasData ? 'No data' : appealGround.factsForGround || 'Not answered.',
+			value: !hasData ? 'No data' : appealGround.factsForGround || 'Not answered',
 			link: `${currentRoute}/facts-for-ground/${groundRef}/change`,
 			editable: hasData && userHasUpdateCase,
 			withShowMore: true,

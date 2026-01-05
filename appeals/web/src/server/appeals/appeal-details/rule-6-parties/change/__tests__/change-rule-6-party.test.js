@@ -466,7 +466,7 @@ describe('change rule 6 party', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe(
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe(
 				'Check details and update rule 6 party'
 			);
 		});

@@ -7,7 +7,7 @@ import logger from '#lib/logger.js';
  * Fetch unique representations (eg final comments) based on appeal id and representation type
  *
  * @param {import('got').Got} apiClient
- * @param {string|number} appealId
+ * @param {number} appealId
  * @param {string} type
  * @returns {Promise<Representation>}
  */
@@ -15,17 +15,22 @@ export const getSingularRepresentationByType = async (apiClient, appealId, type)
 	const url = `appeals/${appealId}/reps?type=${type}`;
 	const apiResponse = await apiClient.get(url).json();
 
-	if (apiResponse.items.length > 1) {
-		logger.warn(`Multiple representations of type ${type} found on appeal ${appealId}`);
+	if (apiResponse.itemCount > 1) {
+		const validReps = apiResponse.items.filter(
+			(/** @type {{ status: string; }} */ rep) => rep.status !== 'invalid'
+		);
+		if (validReps.length !== 1) {
+			logger.warn(`Multiple valid representations of type ${type} found on appeal ${appealId}`);
+		}
+		return validReps[0];
 	}
-
 	return apiResponse.items[0];
 };
 
 /**
  *
  * @param {import('got').Got} apiClient
- * @param {string} appealId
+ * @param {number} appealId
  * @param {string} types
  */
 export const getRepresentationsByTypes = async (apiClient, appealId, types) => {
@@ -59,6 +64,17 @@ export const getRepresentationsByTypes = async (apiClient, appealId, types) => {
 	);
 
 	return selected;
+};
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {number} appealId
+ * @param {string} type
+ * @returns {Promise<Representation[]>}
+ */
+export const getAllRepresentationsByType = async (apiClient, appealId, type) => {
+	const apiResponse = await apiClient.get(`appeals/${appealId}/reps?type=${type}`).json();
+	return apiResponse.items;
 };
 
 /**

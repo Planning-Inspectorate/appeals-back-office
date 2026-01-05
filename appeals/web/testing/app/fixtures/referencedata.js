@@ -3658,6 +3658,37 @@ export const finalCommentsForReview = {
 	pageSize: 30
 };
 
+export const finalCommentPublished = {
+	itemCount: 1,
+	items: [
+		{
+			id: 3670,
+			source: 'citizen',
+			author: 'Lee Thornton',
+			status: 'published',
+			originalRepresentation: 'Final comments published',
+			redactedRepresentation: '',
+			created: '2024-10-09T17:23:24.406Z',
+			notes: '',
+			attachments: [],
+			representationType: 'lpa_final_comment',
+			siteVisitRequested: false,
+			represented: {
+				id: 3838,
+				name: 'Lee Thornton',
+				email: 'test1@example.com',
+				address: {
+					addressLine1: '',
+					postCode: ''
+				}
+			}
+		}
+	],
+	page: 1,
+	pageCount: 1,
+	pageSize: 30
+};
+
 export const finalCommentsForReviewWithAttachments = {
 	itemCount: 1,
 	items: [

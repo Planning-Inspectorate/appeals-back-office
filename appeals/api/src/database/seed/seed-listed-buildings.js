@@ -38,7 +38,7 @@ export const importListedBuildingsDataset = async (url) => {
  *
  *
  * @param {Readable} fileStream
- * @param {import('#db-client').PrismaClient} databaseConnector
+ * @param {import('#db-client/client.ts').PrismaClient} databaseConnector
  * @returns
  */
 const importListedBuildings = async (fileStream, databaseConnector) => {

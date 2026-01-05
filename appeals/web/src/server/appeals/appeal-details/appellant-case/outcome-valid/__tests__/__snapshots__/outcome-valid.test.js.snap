@@ -1,0 +1,510 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Appellant Case Valid Flow Enforcement Appeals GET /enforcement/check-details should render the 'Check details' screen 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and mark appeal as valid</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>
+                                <dd class="govuk-summary-list__value">Valid</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case">Change<span class="govuk-visually-hidden"> review decision</span></a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the appeal ground (a) barred?</dt>
+                                <dd                                 class="govuk-summary-list__value">Yes</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/enforcement/ground-a">Change<span class="govuk-visually-hidden"> Appeal ground (a) barred</span></a>
+                                    </dd>
+                            </div>
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you want to add any other information?</dt>
+                                <dd                                 class="govuk-summary-list__value">
+                                    <div class="pins-show-more" data-label="" data-mode="text" data-max-before-hiding="300"
+                                    data-toggle-text-collapsed="Show more" data-toggle-text-expanded="Show less">Yes: Other information</div>
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/enforcement/other-information">Change<span class="govuk-visually-hidden"> Other information</span></a>
+                                    </dd>
+                            </div>
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Valid date for case</dt>
+                                <dd class="govuk-summary-list__value">1 January 2025</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/enforcement/date">Change<span class="govuk-visually-hidden"> Valid date</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <p class="govuk-body">We will mark the appeal as valid and send an email to the relevant parties.</p>
+                        <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Mark appeal as valid</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`Appellant Case Valid Flow Enforcement Appeals GET /enforcement/date should render the 'Valid date' screen 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Valid date</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                            valid.</p>
+                        <label class="govuk-label govuk-label--m">Enter valid date for case</label>
+                        <div class="govuk-form-group">
+                            <div id="valid-date-hint" class="govuk-hint">
+                                <div class="govuk-hint">For example, 31 3 2025</div>
+                            </div>
+                            <div class="govuk-date-input" id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="valid-date-day" name="valid-date-day" type="text" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="valid-date-month" name="valid-date-month" type="text" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                        id="valid-date-year" name="valid-date-year" type="text" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`Appellant Case Valid Flow Enforcement Appeals GET /enforcement/ground-a should render the 'Is the appeal ground (a) barred?' screen 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Is the appeal ground (a) barred?</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="enforcement-ground-a-radio" name="enforcementGroundARadio"
+                                    type="radio" value="yes">
+                                    <label class="govuk-label govuk-radios__label" for="enforcement-ground-a-radio">Yes</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="enforcement-ground-a-radio-2" name="enforcementGroundARadio"
+                                    type="radio" value="no">
+                                    <label class="govuk-label govuk-radios__label" for="enforcement-ground-a-radio-2">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`Appellant Case Valid Flow Enforcement Appeals GET /enforcement/other-information should render the 'Other Information' screen 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Do you want to add any other information?</h1>
+            <div class="govuk-hint">We will share the other information with the relevant parties.</div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="other-information-valid-radio"
+                                        name="otherInformationValidRadio" type="radio" value="Yes" data-aria-controls="conditional-other-information-valid-radio">
+                                        <label class="govuk-label govuk-radios__label" for="other-information-valid-radio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-other-information-valid-radio">
+                                        <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count">
+                                            <label class="govuk-label govuk-label--s" for="other-information-details">Enter other information</label>
+                                            <textarea class="govuk-textarea govuk-js-character-count"
+                                            id="other-information-details" name="otherInformationDetails" rows="5"
+                                            aria-describedby="other-information-details-info"></textarea>
+                                            <div id="other-information-details-info" class="govuk-hint govuk-character-count__message"></div>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="other-information-valid-radio-2"
+                                        name="otherInformationValidRadio" type="radio" value="No">
+                                        <label class="govuk-label govuk-radios__label" for="other-information-valid-radio-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`Appellant Case Valid Flow Enforcement Appeals POST /enforcement/date should re-render the 'Valid date' screen if the date is in the future 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#valid-date-day">The decision date must be today or in the past</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Valid date</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                            valid.</p>
+                        <label class="govuk-label govuk-label--m">Enter valid date for case</label>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <div id="valid-date-hint" class="govuk-hint">
+                                <div class="govuk-hint">For example, 31 3 2025</div>
+                            </div>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The decision date must
+                                be today or in the past</p>
+                            <div class="govuk-date-input" id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-month" name="valid-date-month" type="text" value="Jan" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-year" name="valid-date-year" type="text" value="3000" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`Appellant Case Valid Flow Enforcement Appeals POST /enforcement/date should re-render the 'Valid date' screen if the date is incorrect 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#valid-date-day">Enter the decision date</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Valid date</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                            valid.</p>
+                        <label class="govuk-label govuk-label--m">Enter valid date for case</label>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <div id="valid-date-hint" class="govuk-hint">
+                                <div class="govuk-hint">For example, 31 3 2025</div>
+                            </div>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the decision date</p>
+                            <div                             class="govuk-date-input" id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-day" name="valid-date-day" type="text" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-month" name="valid-date-month" type="text" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-year" name="valid-date-year" type="text" inputmode="numeric">
+                                    </div>
+                                </div>
+                        </div>
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Confirm</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;
+
+exports[`Appellant Case Valid Flow Enforcement Appeals POST /enforcement/ground-a should re-render the 'Is the appeal ground (a) barred?' screen if selection is empty 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#enforcement-ground-a-radio">Select yes if the appeal is ground (a) barred</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Is the appeal ground (a) barred?</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="enforcement-ground-a-radio" name="enforcementGroundARadio"
+                                    type="radio" value="yes">
+                                    <label class="govuk-label govuk-radios__label" for="enforcement-ground-a-radio">Yes</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="enforcement-ground-a-radio-2" name="enforcementGroundARadio"
+                                    type="radio" value="no">
+                                    <label class="govuk-label govuk-radios__label" for="enforcement-ground-a-radio-2">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`Appellant Case Valid Flow Enforcement Appeals POST /enforcement/other-information should re-render the 'Other Information' screen if selection is empty 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#other-information-valid-radio">Select yes if you want to add any other information</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Do you want to add any other information?</h1>
+            <div class="govuk-hint">We will share the other information with the relevant parties.</div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="other-information-valid-radio"
+                                        name="otherInformationValidRadio" type="radio" value="Yes" data-aria-controls="conditional-other-information-valid-radio">
+                                        <label class="govuk-label govuk-radios__label" for="other-information-valid-radio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-other-information-valid-radio">
+                                        <div class="govuk-form-group govuk-form-group--error govuk-character-count"
+                                        data-module="govuk-character-count">
+                                            <label class="govuk-label govuk-label--s" for="other-information-details">Enter other information</label>
+                                            <p id="other-information-details-error"
+                                            class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span>
+                                            </p>
+                                            <textarea class="govuk-textarea govuk-textarea--error govuk-js-character-count"
+                                            id="other-information-details" name="otherInformationDetails" rows="5"
+                                            aria-describedby="other-information-details-info other-information-details-error"></textarea>
+                                            <div id="other-information-details-info" class="govuk-hint govuk-character-count__message"></div>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="other-information-valid-radio-2"
+                                        name="otherInformationValidRadio" type="radio" value="No">
+                                        <label class="govuk-label govuk-radios__label" for="other-information-valid-radio-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`Appellant Case Valid Flow Enforcement Appeals POST /enforcement/other-information should re-render the 'Other Information' screen if selection is yes and other information is empty 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#other-information-details">Enter other information</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Do you want to add any other information?</h1>
+            <div class="govuk-hint">We will share the other information with the relevant parties.</div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="other-information-valid-radio"
+                                        name="otherInformationValidRadio" type="radio" value="Yes" data-aria-controls="conditional-other-information-valid-radio">
+                                        <label class="govuk-label govuk-radios__label" for="other-information-valid-radio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-other-information-valid-radio">
+                                        <div class="govuk-form-group govuk-form-group--error govuk-character-count"
+                                        data-module="govuk-character-count">
+                                            <label class="govuk-label govuk-label--s" for="other-information-details">Enter other information</label>
+                                            <p id="other-information-details-error"
+                                            class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter other information</p>
+                                            <textarea                                             class="govuk-textarea govuk-textarea--error govuk-js-character-count" id="other-information-details"
+                                            name="otherInformationDetails" rows="5" aria-describedby="other-information-details-info other-information-details-error"></textarea>
+                                                <div id="other-information-details-info" class="govuk-hint govuk-character-count__message"></div>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="other-information-valid-radio-2"
+                                        name="otherInformationValidRadio" type="radio" value="No">
+                                        <label class="govuk-label govuk-radios__label" for="other-information-valid-radio-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;

@@ -13,7 +13,7 @@ import { reviewFinalCommentsPage } from './view-and-review.mapper.js';
  */
 export const render = (contentMapper, templatePath) => (request, response) => {
 	const { errors, currentRepresentation, currentAppeal, session, query } = request;
-	const backUrl = query.backUrl ? String(query.backUrl) : '/';
+	const backUrl = query.backUrl ? String(query.backUrl) : '';
 
 	let { finalCommentsType } = request.params;
 

@@ -34,17 +34,18 @@ export const formatLpaQuestionnaireDocumentationStatus = (appeal) => {
 };
 
 /**
- * @param {Representation | null} lpaStatement
+ *
+ * @param {Representation} representation
  * @returns {string}
  * */
-export function formatLpaStatementStatus(lpaStatement) {
-	if (!lpaStatement) {
+export function formatRepresentationStatus(representation) {
+	if (!representation) {
 		return DOCUMENT_STATUS_NOT_RECEIVED;
 	}
 
-	if (lpaStatement.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW) {
+	if (representation.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW) {
 		return DOCUMENT_STATUS_RECEIVED;
 	}
 
-	return lpaStatement.status;
+	return representation.status || DOCUMENT_STATUS_NOT_RECEIVED;
 }

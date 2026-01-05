@@ -29,6 +29,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 			editable: true
 		}
 	];
+
 	const futureDate = { years: 1, days: 10 };
 	let caseObj;
 
@@ -196,6 +197,19 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 			cy.visit(urlPaths.appealsList);
 			listCasesPage.clickAppealByRef(caseObj);
 			verifyDateChanges(7);
+		});
+	});
+
+	it('check timetable for full adverts submission', () => {
+		cy.createCase({ ...appealsApiRequests.advertsSubmission.casedata }).then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj, 'written');
+			cy.clearCookies();
+			cy.visit(urlPaths.appealsList);
+			listCasesPage.clickAppealByRef(caseObj);
+			verifyDateChanges(0);
 		});
 	});
 

@@ -1220,7 +1220,12 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
         <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-                <dd                 class="govuk-summary-list__value">2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                    </ul>
+                    </dd>
                     <dd class="govuk-summary-list__actions">
                         <ul class="govuk-summary-list__actions-list">
                             <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
@@ -1847,7 +1852,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
         <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-                <dd                 class="govuk-summary-list__value">2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                    </ul>
+                    </dd>
                     <dd class="govuk-summary-list__actions">
                         <ul class="govuk-summary-list__actions-list">
                             <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
@@ -2246,7 +2256,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
         <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-                <dd                 class="govuk-summary-list__value">2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                    </ul>
+                    </dd>
                     <dd class="govuk-summary-list__actions">
                         <ul class="govuk-summary-list__actions-list">
                             <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
@@ -2651,7 +2666,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
         <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-                <dd                 class="govuk-summary-list__value">2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                    </ul>
+                    </dd>
                     <dd class="govuk-summary-list__actions">
                         <ul class="govuk-summary-list__actions-list">
                             <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
@@ -3057,7 +3077,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
         <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-                <dd                 class="govuk-summary-list__value">2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                    </ul>
+                    </dd>
                     <dd class="govuk-summary-list__actions">
                         <ul class="govuk-summary-list__actions-list">
                             <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
@@ -3460,7 +3485,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
         <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-                <dd                 class="govuk-summary-list__value">2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                    </ul>
+                    </dd>
                     <dd class="govuk-summary-list__actions">
                         <ul class="govuk-summary-list__actions-list">
                             <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
@@ -3877,7 +3907,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
         <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-                <dd                 class="govuk-summary-list__value">2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                    </ul>
+                    </dd>
                     <dd class="govuk-summary-list__actions">
                         <ul class="govuk-summary-list__actions-list">
                             <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/manage"
@@ -4629,7 +4664,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
         <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-                <dd                 class="govuk-summary-list__value">2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                    </ul>
+                    </dd>
                     <dd class="govuk-summary-list__actions">
                         <ul class="govuk-summary-list__actions-list">
                             <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
@@ -5145,7 +5185,12 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
         <h2 class="govuk-heading-m">Site visit requests</h2>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-                <dd                 class="govuk-summary-list__value">2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                    </ul>
+                    </dd>
                     <dd class="govuk-summary-list__actions">
                         <ul class="govuk-summary-list__actions-list">
                             <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
@@ -5907,9 +5952,6 @@ exports[`appeal-details GET /:appealId Timetable Valid date should render a "Tim
     </div>
     <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
         <dd class="govuk-summary-list__value">23 May 2023</dd>
-        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/start-case/change"
-            data-cy="-start-case-date"><span class="govuk-visually-hidden"> Start date</span></a>
-        </dd>
     </div>
     <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
         <dd class="govuk-summary-list__value">11 October 2023</dd>
@@ -7206,9 +7248,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         </div>
         <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
             <dd class="govuk-summary-list__value">23 May 2023</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/start-case/change"
-                data-cy="-start-case-date"><span class="govuk-visually-hidden"> Start date</span></a>
-            </dd>
         </div>
         <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
             <dd class="govuk-summary-list__value">11 October 2023</dd>
@@ -7558,9 +7597,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         </div>
         <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
             <dd class="govuk-summary-list__value">23 May 2023</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/start-case/change"
-                data-cy="-start-case-date"><span class="govuk-visually-hidden"> Start date</span></a>
-            </dd>
         </div>
         <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
             <dd class="govuk-summary-list__value">11 October 2023</dd>
@@ -7787,9 +7823,8 @@ role="banner" data-module="govuk-header">
                 </div><span>Planning Inspectorate</span>
             </div>
             <div class="pins-column--central">
-                <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
-                <nav class="govuk-header__navigation pins-header-navigation"
-                aria-label="Menu">
+                <h1 class="pins-header-domainname govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0"> Manage appeals</h1>
+                <nav class="govuk-header__navigation pins-header-navigation" aria-label="Menu">
                     <ul class="govuk-header__navigation-list">
                         <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                         </li>
@@ -8185,9 +8220,8 @@ exports[`appeal-details should not render a back button 1`] = `
                     </div><span>Planning Inspectorate</span>
                 </div>
                 <div class="pins-column--central">
-                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
-                    <nav class="govuk-header__navigation pins-header-navigation"
-                    aria-label="Menu">
+                    <h1 class="pins-header-domainname govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0"> Manage appeals</h1>
+                    <nav class="govuk-header__navigation pins-header-navigation" aria-label="Menu">
                         <ul class="govuk-header__navigation-list">
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>

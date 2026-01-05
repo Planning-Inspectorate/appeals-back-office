@@ -604,7 +604,7 @@ export const representationRejectionReasons = [
 /**
  * Seed static data into the database. Does not disconnect from the database or handle errors.
  *
- * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
+ * @param {import('../../server/utils/db-client/client.ts').PrismaClient} databaseConnector
  */
 export async function seedStaticData(databaseConnector) {
 	await importListedBuildingsDataset(
@@ -739,7 +739,7 @@ export async function seedStaticData(databaseConnector) {
 
 /**
  *
- * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
+ * @param {import('../../server/utils/db-client/client.ts').PrismaClient} databaseConnector
  */
 const updateFolderDefinitionsForExistingAppeals = async (databaseConnector) => {
 	//Find cases that have less folders than expected
@@ -750,28 +750,40 @@ const updateFolderDefinitionsForExistingAppeals = async (databaseConnector) => {
 	 */
 	const existingAppealIDsWithMissingFolders = await databaseConnector.$queryRawUnsafe(queryRaw);
 
-	for (const result of existingAppealIDsWithMissingFolders) {
+	/**
+	 * @param {number} caseId
+	 * @param {{id: number; caseId: number; path: string;}[]} existingFolders
+	 * @returns {{ caseId: number, path: string }[]}
+	 */
+	const getFoldersToAdd = (caseId, existingFolders) => {
 		/**
 		 * @type {{ caseId: number, path: string }[]}
 		 */
 		const defaultFolders = FOLDERS.map((/** @type {string} */ path) => {
 			return {
-				caseId: result.caseId,
+				caseId: caseId,
 				path
 			};
 		});
+		const existingFolderPaths = existingFolders.map((folder) => folder.path);
+		const foldersToCreate = defaultFolders.filter(
+			(folder) => !existingFolderPaths.includes(folder.path)
+		);
 
-		for (const folder of defaultFolders) {
-			await databaseConnector.folder.upsert({
-				create: folder,
-				update: folder,
-				where: {
-					caseId_path: {
-						caseId: folder.caseId,
-						path: folder.path
-					}
-				}
-			});
-		}
+		return foldersToCreate;
+	};
+
+	for (const result of existingAppealIDsWithMissingFolders) {
+		const existingFolders = await databaseConnector.folder.findMany({
+			where: {
+				caseId: result.caseId
+			}
+		});
+
+		const missingFolders = getFoldersToAdd(result.caseId, existingFolders);
+
+		await databaseConnector.folder.createMany({
+			data: missingFolders
+		});
 	}
 };

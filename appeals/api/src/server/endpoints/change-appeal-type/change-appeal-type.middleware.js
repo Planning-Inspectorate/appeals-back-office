@@ -59,6 +59,7 @@ export const validateAppealStatus = async (req, res, next) => {
 		APPEAL_CASE_STATUS.AWAITING_TRANSFER,
 		APPEAL_CASE_STATUS.TRANSFERRED,
 		APPEAL_CASE_STATUS.WITHDRAWN
+		//@ts-ignore
 	].includes(currentStatus(req.appeal));
 
 	if (isInvalidStatus) {
@@ -75,6 +76,7 @@ export const validateAppealStatusForTransfer = async (req, res, next) => {
 	const isValidStatus = [
 		APPEAL_CASE_STATUS.AWAITING_TRANSFER,
 		APPEAL_CASE_STATUS.TRANSFERRED
+		//@ts-ignore
 	].includes(currentStatus(req.appeal));
 
 	if (!isValidStatus) {
@@ -93,8 +95,10 @@ export const validateAppealStatusForUpdate = async (req, res, next) => {
 		APPEAL_CASE_STATUS.VALIDATION
 	];
 
+	//@ts-ignore
 	const status = currentStatus(req.appeal);
 
+	//@ts-ignore
 	if (!validAppealChangeTypeStatuses.includes(status)) {
 		return res.status(400).send({ errors: { appealStatus: ERROR_INVALID_APPEAL_STATE } });
 	}

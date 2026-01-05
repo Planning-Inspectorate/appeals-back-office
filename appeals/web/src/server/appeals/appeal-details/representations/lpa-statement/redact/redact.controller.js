@@ -235,10 +235,15 @@ export async function postConfirm(request, response) {
 			appealId
 		});
 	} else {
+		const bannerText =
+			currentRepresentation.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED
+				? 'redacted'
+				: 'redacted and accepted';
 		addNotificationBannerToSession({
 			session,
 			bannerDefinitionKey: 'lpaStatementRedactedAndAccepted',
-			appealId
+			appealId,
+			text: `LPA statement ${bannerText}`
 		});
 	}
 

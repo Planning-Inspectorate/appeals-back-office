@@ -2,9 +2,10 @@
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { toSentenceCase } from '#lib/string-utilities.js';
 
-const APPLICATION_DEVELOPMENT_ALL = 'All';
-const APPLICATION_DEVELOPMENT_PART = 'Part';
+const ALL_OF_THE_DEVELOPMENT = 'all-of-the-development';
+const PART_OF_THE_DEVELOPMENT = 'part-of-the-development';
 
 /**
  * @param {Appeal} appealData
@@ -14,9 +15,6 @@ const APPLICATION_DEVELOPMENT_PART = 'Part';
 export const changeApplicationDevelopmentAllOrPartPage = (appealData, appellantCaseData) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const { applicationDevelopmentAllOrPart } = appellantCaseData?.enforcementNotice ?? {};
-
-	const isAllOfTheDevelopment = applicationDevelopmentAllOrPart === APPLICATION_DEVELOPMENT_ALL;
-	const isPartOfTheDevelopment = applicationDevelopmentAllOrPart === APPLICATION_DEVELOPMENT_PART;
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -38,14 +36,14 @@ export const changeApplicationDevelopmentAllOrPartPage = (appealData, appellantC
 					},
 					items: [
 						{
-							value: APPLICATION_DEVELOPMENT_ALL,
-							text: 'All of the development',
-							checked: isAllOfTheDevelopment
+							value: ALL_OF_THE_DEVELOPMENT,
+							text: toSentenceCase(ALL_OF_THE_DEVELOPMENT),
+							checked: applicationDevelopmentAllOrPart === ALL_OF_THE_DEVELOPMENT
 						},
 						{
-							value: APPLICATION_DEVELOPMENT_PART,
-							text: 'Part of the development',
-							checked: isPartOfTheDevelopment
+							value: PART_OF_THE_DEVELOPMENT,
+							text: toSentenceCase(PART_OF_THE_DEVELOPMENT),
+							checked: applicationDevelopmentAllOrPart === PART_OF_THE_DEVELOPMENT
 						}
 					]
 				}

@@ -4,7 +4,7 @@ import { formatCostsDecision } from '#utils/format-costs-decision.js';
 import {
 	formatAppellantCaseDocumentationStatus,
 	formatLpaQuestionnaireDocumentationStatus,
-	formatLpaStatementStatus
+	formatRepresentationStatus
 } from '#utils/format-documentation-status.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import {
@@ -12,6 +12,7 @@ import {
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
 import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
+import { getSingularRepresentation } from '@pins/appeals/utils/representations.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { countBy } from 'lodash-es';
 
@@ -24,7 +25,7 @@ import { countBy } from 'lodash-es';
 /** @typedef {import('@pins/appeals.api').Appeals.SingleAppealDetailsResponse} SingleAppealDetailsResponse */
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
 /** @typedef {import('#endpoints/appeals').DocumentationSummary} DocumentationSummary */
-/** @typedef {import('#db-client').AppealStatus} AppealStatus */
+/** @typedef {import('#db-client/client.ts').AppealStatus} AppealStatus */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
 /** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
 /** @typedef {DBAppeals[0]} DBAppeal */
@@ -123,32 +124,34 @@ const formatPersonalListItem = async ({
  * @returns {DocumentationSummary}
  * */
 const formatDocumentationSummary = (appeal) => {
+	const representations = appeal.representations;
+
 	const ipComments =
-		appeal.representations?.filter(
+		representations?.filter(
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
 		) ?? [];
-
-	const lpaStatement = appeal.representations?.find(
-		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
+	const lpaStatement = getSingularRepresentation(
+		representations,
+		APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
 	);
-	const lpaFinalComments =
-		appeal.representations?.filter(
-			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
-		) ?? [];
-	const appellantFinalComments =
-		appeal.representations?.filter(
-			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
-		) ?? [];
+	const lpaFinalComment = getSingularRepresentation(
+		representations,
+		APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
+	);
+	const appellantFinalComment = getSingularRepresentation(
+		representations,
+		APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
+	);
 	const lpaProofOfEvidence =
-		appeal.representations?.filter(
+		representations?.filter(
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE
 		) ?? [];
 	const appellantProofOfEvidence =
-		appeal.representations?.filter(
+		representations?.filter(
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
 		) ?? [];
 	const appellantStatement =
-		appeal.representations?.filter(
+		representations?.filter(
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT
 		) ?? [];
 
@@ -173,27 +176,22 @@ const formatDocumentationSummary = (appeal) => {
 			isRedacted: ipComments.some((comment) => Boolean(comment.redactedRepresentation))
 		},
 		lpaStatement: {
-			status: formatLpaStatementStatus(lpaStatement ?? null),
+			status: formatRepresentationStatus(lpaStatement ?? null),
 			representationStatus: lpaStatement?.status ?? null,
 			receivedAt: lpaStatement?.dateCreated,
 			isRedacted: Boolean(lpaStatement?.redactedRepresentation)
 		},
 		lpaFinalComments: {
-			status: lpaFinalComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
-			receivedAt: lpaFinalComments[0]?.dateCreated
-				? lpaFinalComments[0].dateCreated.toISOString()
-				: null,
-			representationStatus: lpaFinalComments[0]?.status ?? null,
-			isRedacted: lpaFinalComments.some((comment) => Boolean(comment.redactedRepresentation))
+			status: formatRepresentationStatus(lpaFinalComment ?? null),
+			representationStatus: lpaFinalComment?.status ?? null,
+			receivedAt: lpaFinalComment?.dateCreated,
+			isRedacted: Boolean(lpaFinalComment?.redactedRepresentation)
 		},
 		appellantFinalComments: {
-			status:
-				appellantFinalComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
-			receivedAt: appellantFinalComments[0]?.dateCreated
-				? appellantFinalComments[0].dateCreated.toISOString()
-				: null,
-			representationStatus: appellantFinalComments[0]?.status ?? null,
-			isRedacted: appellantFinalComments.some((comment) => Boolean(comment.redactedRepresentation))
+			status: formatRepresentationStatus(appellantFinalComment ?? null),
+			representationStatus: appellantFinalComment?.status ?? null,
+			receivedAt: appellantFinalComment?.dateCreated,
+			isRedacted: Boolean(appellantFinalComment?.redactedRepresentation)
 		},
 		lpaProofOfEvidence: {
 			status:

@@ -10,7 +10,8 @@ export const createRepRequest = {
 		postCode: 'AB1 2CD'
 	},
 	attachments: ['1a14cb3a-35ef-4f93-a597-61010e6b0ad8'],
-	redactionStatus: 'unredacted'
+	redactionStatus: 'unredacted',
+	representedId: 1
 };
 
 export const repUpdateRequest = {

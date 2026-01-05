@@ -1,8 +1,7 @@
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { markAwaitingTransfer, markTransferred } from '#utils/mark-for-transfer.js';
 import {
 	changeAppealType,
-	markAwaitingTransfer,
-	markTransferred,
 	resubmitAndMarkInvalid,
 	updateAppealType
 } from './change-appeal-type.service.js';
@@ -92,7 +91,7 @@ export const requestResubmitAndMarkInvalid = async (req, res) => {
 export const requestTransferOfAppeal = async (req, res) => {
 	const azureAdUserId = String(req.get('azureAdUserId'));
 
-	await markAwaitingTransfer(req.appeal, req.body.newAppealTypeId, azureAdUserId);
+	await markAwaitingTransfer(req.appeal.id, req.body.newAppealTypeId, azureAdUserId);
 
 	return res.send(true);
 };

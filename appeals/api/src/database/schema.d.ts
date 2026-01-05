@@ -1,4 +1,4 @@
-import * as schema from '#utils/db-client';
+import * as schema from '#utils/db-client/client.ts';
 import { AssignedTeam } from '@pins/appeals.api';
 
 export interface Appeal extends schema.Appeal {
@@ -174,6 +174,8 @@ export interface Representation extends schema.Representation {
 	representative?: ServiceUser | null;
 	lpa?: LPA | null;
 	representationRejectionReasonsSelected?: RepresentationRejectionReasonsSelected[];
+	representationType?: string | null;
+	status?: string | null;
 }
 
 export interface RepresentationAttachment extends schema.RepresentationAttachment {

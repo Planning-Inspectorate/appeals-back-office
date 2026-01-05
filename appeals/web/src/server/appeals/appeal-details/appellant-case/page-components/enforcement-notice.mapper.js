@@ -75,6 +75,23 @@ export function generateEnforcementNoticeComponents(
 		].filter((row) => row);
 	}
 
+	const uploadDocumentsComponents = getComponentParameters('uploaded-documents', pageComponents);
+	if (uploadDocumentsComponents) {
+		uploadDocumentsComponents.parameters.rows = [
+			mappedAppellantCaseData.priorCorrespondenceWithPINS.display.summaryListItem,
+			mappedAppellantCaseData.enforcementNoticeDocuments.display.summaryListItem,
+			mappedAppellantCaseData.enforcementNoticePlanDocuments.display.summaryListItem,
+			mappedAppellantCaseData.applicationForm.display.summaryListItem,
+			mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
+			mappedAppellantCaseData.decisionLetter.display.summaryListItem,
+			mappedAppellantCaseData.statusPlanningObligation.display.summaryListItem,
+			mappedAppellantCaseData.planningObligation.display.summaryListItem,
+			mappedAppellantCaseData.applicationForm.display.summaryListItem,
+			mappedAppellantCaseData.costsDocument.display.summaryListItem,
+			mappedAppellantCaseData.otherNewDocuments.display.summaryListItem
+		].filter((row) => row);
+	}
+
 	/**
 	 *
 	 * @param {Instructions[]} subMapperList

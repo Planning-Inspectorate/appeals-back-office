@@ -19,12 +19,67 @@ exports[`application-development-all-or-part GET /change should render the appli
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="application-development-all-or-part-radio"
-                                        name="applicationDevelopmentAllOrPartRadio" type="radio" value="All">
+                                        name="applicationDevelopmentAllOrPartRadio" type="radio" value="all-of-the-development">
                                         <label class="govuk-label govuk-radios__label" for="application-development-all-or-part-radio">All of the development</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="application-development-all-or-part-radio-2"
-                                        name="applicationDevelopmentAllOrPartRadio" type="radio" value="Part">
+                                        name="applicationDevelopmentAllOrPartRadio" type="radio" value="part-of-the-development">
+                                        <label class="govuk-label govuk-radios__label" for="application-development-all-or-part-radio-2">Part of the development</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`application-development-all-or-part POST /change should re-render the development all or part change page with an error if not selected 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#application-development-all-or-part-radio">Select if the application was for all or part of the development</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Was the application for all or part of the development?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="application-development-all-or-part-radio"
+                                        name="applicationDevelopmentAllOrPartRadio" type="radio" value="all-of-the-development">
+                                        <label class="govuk-label govuk-radios__label" for="application-development-all-or-part-radio">All of the development</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="application-development-all-or-part-radio-2"
+                                        name="applicationDevelopmentAllOrPartRadio" type="radio" value="part-of-the-development">
                                         <label class="govuk-label govuk-radios__label" for="application-development-all-or-part-radio-2">Part of the development</label>
                                     </div>
                                 </div>

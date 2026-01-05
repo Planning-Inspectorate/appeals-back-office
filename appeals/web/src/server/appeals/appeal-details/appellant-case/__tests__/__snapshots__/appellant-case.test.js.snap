@@ -2451,9 +2451,6 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                     </li>
                                 </ul>
                             </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/other-appellants/change"
-                                data-cy="other-appellants">Change<span class="govuk-visually-hidden"> Other appellants (1. Appellant details)</span></a>
-                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -2636,6 +2633,21 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="uploaded-documents">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Communication with the Planning Inspectorate</dt>
+                            <dd                             class="govuk-summary-list__value">No documents</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-communication-with-pins-documents">Add<span class="govuk-visually-hidden"> Communication with the Planning Inspectorate (6. Upload documents)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Enforcement notice</dt>
+                            <dd class="govuk-summary-list__value">No documents</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-enforcment-notice-documents">Add<span class="govuk-visually-hidden"> Enforcement notice (6. Upload documents)</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Enforcement notice plan</dt>
+                            <dd class="govuk-summary-list__value">No documents</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-enforcment-notice-plan-documents">Add<span class="govuk-visually-hidden"> Enforcement notice plan (6. Upload documents)</span></a>
+                            </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
@@ -2654,12 +2666,6 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                     data-cy="add-decision-letter">Add<span class="govuk-visually-hidden"> Decision letter from the local planning authority (6. Upload documents)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
-                            <dd class="govuk-summary-list__value">No documents</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
-                                data-cy="add-appeal-statement">Add<span class="govuk-visually-hidden"> Appeal statement (6. Upload documents)</span></a>
-                            </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the status of your planning obligation?</dt>
                             <dd                             class="govuk-summary-list__value">Finalised</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/status/change"
@@ -2671,37 +2677,17 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-planning-obligation">Add<span class="govuk-visually-hidden"> Planning obligation (6. Upload documents)</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Draft statement of common ground</dt>
-                            <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
-                                    data-cy="add-draft-statement-of-common-ground">Add<span class="govuk-visually-hidden"> Draft statement of common ground (6. Upload documents)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Separate ownership certificate and agricultural land declaration</dt>
-                            <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-ownership-certificate">Add<span class="govuk-visually-hidden"> Separate ownership certificate and agricultural land declaration (6. Upload documents)</span></a>
-                                </dd>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
+                            <dd class="govuk-summary-list__value">No documents</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
+                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (6. Upload documents)</span></a>
+                            </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application for an award of appeal costs</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                                     data-cy="add-costs-document">Add<span class="govuk-visually-hidden"> Application for an award of appeal costs (6. Upload documents)</span></a>
                                 </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Design and access statement</dt>
-                            <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-design-access-statement">Add<span class="govuk-visually-hidden"> Design and access statement (6. Upload documents)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Plans, drawings and list of plans</dt>
-                            <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-supporting-documents">Add<span class="govuk-visually-hidden"> Plans, drawings and list of plans (6. Upload documents)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> New plans or drawings</dt>
-                            <dd class="govuk-summary-list__value">No documents</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-new-plans-drawings">Add<span class="govuk-visually-hidden"> New plans or drawings (6. Upload documents)</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Other new supporting documents</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
@@ -3015,6 +3001,21 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="uploaded-documents">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Communication with the Planning Inspectorate</dt>
+                            <dd                             class="govuk-summary-list__value">No documents</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-communication-with-pins-documents">Add<span class="govuk-visually-hidden"> Communication with the Planning Inspectorate (6. Upload documents)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Enforcement notice</dt>
+                            <dd class="govuk-summary-list__value">No documents</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-enforcment-notice-documents">Add<span class="govuk-visually-hidden"> Enforcement notice (6. Upload documents)</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Enforcement notice plan</dt>
+                            <dd class="govuk-summary-list__value">No documents</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-enforcment-notice-plan-documents">Add<span class="govuk-visually-hidden"> Enforcement notice plan (6. Upload documents)</span></a>
+                            </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
@@ -3033,12 +3034,6 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                     data-cy="add-decision-letter">Add<span class="govuk-visually-hidden"> Decision letter from the local planning authority (6. Upload documents)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
-                            <dd class="govuk-summary-list__value">No documents</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
-                                data-cy="add-appeal-statement">Add<span class="govuk-visually-hidden"> Appeal statement (6. Upload documents)</span></a>
-                            </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the status of your planning obligation?</dt>
                             <dd                             class="govuk-summary-list__value">Finalised</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/status/change"
@@ -3050,37 +3045,17 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-planning-obligation">Add<span class="govuk-visually-hidden"> Planning obligation (6. Upload documents)</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Draft statement of common ground</dt>
-                            <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
-                                    data-cy="add-draft-statement-of-common-ground">Add<span class="govuk-visually-hidden"> Draft statement of common ground (6. Upload documents)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Separate ownership certificate and agricultural land declaration</dt>
-                            <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-ownership-certificate">Add<span class="govuk-visually-hidden"> Separate ownership certificate and agricultural land declaration (6. Upload documents)</span></a>
-                                </dd>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
+                            <dd class="govuk-summary-list__value">No documents</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
+                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (6. Upload documents)</span></a>
+                            </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application for an award of appeal costs</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
                                     data-cy="add-costs-document">Add<span class="govuk-visually-hidden"> Application for an award of appeal costs (6. Upload documents)</span></a>
                                 </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Design and access statement</dt>
-                            <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-design-access-statement">Add<span class="govuk-visually-hidden"> Design and access statement (6. Upload documents)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Plans, drawings and list of plans</dt>
-                            <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-supporting-documents">Add<span class="govuk-visually-hidden"> Plans, drawings and list of plans (6. Upload documents)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> New plans or drawings</dt>
-                            <dd class="govuk-summary-list__value">No documents</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-new-plans-drawings">Add<span class="govuk-visually-hidden"> New plans or drawings (6. Upload documents)</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Other new supporting documents</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
@@ -4609,8 +4584,7 @@ data-index="0">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
     </div>
     <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
-        data-cy="refresh-page">Refresh page to see if scan has finished</a>
+        <h1 class="govuk-notification-banner__heading govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0">Virus scan in progress</h1><a class="govuk-notification-banner__link" href="" data-cy="refresh-page">Refresh page to see if scan has finished</a>
     </div>
 </div>"
 `;
@@ -6124,8 +6098,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
-                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                    <h1 class="govuk-notification-banner__heading govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0">Virus scan in progress</h1><a class="govuk-notification-banner__link" href="" data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -6244,8 +6217,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
-                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                    <h1 class="govuk-notification-banner__heading govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0">Virus scan in progress</h1><a class="govuk-notification-banner__link" href="" data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -6372,8 +6344,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
-                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                    <h1 class="govuk-notification-banner__heading govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0">Virus scan in progress</h1><a class="govuk-notification-banner__link" href="" data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -6492,8 +6463,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
-                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                    <h1 class="govuk-notification-banner__heading govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0">Virus scan in progress</h1><a class="govuk-notification-banner__link" href="" data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -6612,8 +6582,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
-                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                    <h1 class="govuk-notification-banner__heading govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0">Virus scan in progress</h1><a class="govuk-notification-banner__link" href="" data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -6732,8 +6701,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
-                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                    <h1 class="govuk-notification-banner__heading govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0">Virus scan in progress</h1><a class="govuk-notification-banner__link" href="" data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -6852,8 +6820,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
-                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                    <h1 class="govuk-notification-banner__heading govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0">Virus scan in progress</h1><a class="govuk-notification-banner__link" href="" data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -6972,8 +6939,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
-                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                    <h1 class="govuk-notification-banner__heading govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0">Virus scan in progress</h1><a class="govuk-notification-banner__link" href="" data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -7115,8 +7081,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
-                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                    <h1 class="govuk-notification-banner__heading govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0">Virus scan in progress</h1><a class="govuk-notification-banner__link" href="" data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -7327,8 +7292,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
-                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                    <h1 class="govuk-notification-banner__heading govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0">Virus scan in progress</h1><a class="govuk-notification-banner__link" href="" data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -7508,8 +7472,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
-                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                    <h1 class="govuk-notification-banner__heading govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0">Virus scan in progress</h1><a class="govuk-notification-banner__link" href="" data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>
@@ -7601,8 +7564,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/:document
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Virus scan in progress</p><a class="govuk-notification-banner__link" href=""
-                    data-cy="refresh-page">Refresh page to see if scan has finished</a>
+                    <h1 class="govuk-notification-banner__heading govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0">Virus scan in progress</h1><a class="govuk-notification-banner__link" href="" data-cy="refresh-page">Refresh page to see if scan has finished</a>
                 </div>
             </div>
         </div>

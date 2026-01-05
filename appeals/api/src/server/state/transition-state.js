@@ -27,8 +27,8 @@ import {
 import { interpret } from 'xstate';
 import createStateMachine from './create-state-machine.js';
 
-/** @typedef {import('#db-client').AppealType} AppealType */
-/** @typedef {import('#db-client').AppealStatus} AppealStatus */
+/** @typedef {import('#db-client/client.ts').AppealType} AppealType */
+/** @typedef {import('#db-client/client.ts').AppealStatus} AppealStatus */
 /** @typedef {import('xstate').StateValue} StateValue */
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /**
@@ -112,6 +112,7 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 
 	if (
 		newState === APPEAL_CASE_STATUS.EVIDENCE &&
+		//@ts-ignore
 		[APPEAL_CASE_TYPE.W].includes(appealTypeKey) &&
 		procedureKey === APPEAL_CASE_PROCEDURE.INQUIRY
 	) {

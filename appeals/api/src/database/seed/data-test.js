@@ -66,8 +66,10 @@ function generateLpaReference() {
  * @param {string} level
  */
 function allocationBandLookup(level) {
+	//@ts-ignore
 	if ([APPEAL_ALLOCATION_LEVEL.A, APPEAL_ALLOCATION_LEVEL.B].includes(level.toLocaleUpperCase()))
 		return 3;
+	//@ts-ignore
 	if ([APPEAL_ALLOCATION_LEVEL.C, APPEAL_ALLOCATION_LEVEL.D].includes(level.toLocaleUpperCase()))
 		return 2;
 	return 1;
@@ -77,14 +79,14 @@ function allocationBandLookup(level) {
  *
  * @param {{
  * 	typeShorthand: string,
- * 	status?: import('#db-client').Prisma.AppealStatusCreateWithoutAppealInput,
+ * 	status?: import('#db-client/models.ts').AppealStatusCreateWithoutAppealInput,
  *  lpaQuestionnaire?: boolean,
  *  startedAt?: Date | null,
  *  validAt?: Date | null,
  *  siteAddressList?: AppealSite[],
  *  assignCaseOfficer: boolean,
  *  agent?: boolean }} param0
- * @returns {import('#db-client').Prisma.AppealCreateInput}
+ * @returns {import('#db-client/models.ts').AppealCreateInput}
  */
 const appealFactory = ({
 	typeShorthand,
@@ -1090,24 +1092,18 @@ const appealsReadyToIssueDecision = [
 	})
 ];
 
-export const enforcementAppeals = [
-	appealFactory({
+export const enforcementAppeals = Array.from({ length: 10 }, () => {
+	const randomDays = Math.floor(Math.random() * 30) + 1;
+
+	return appealFactory({
 		typeShorthand: APPEAL_CASE_TYPE.C,
 		assignCaseOfficer: false,
 		status: {
 			status: APPEAL_CASE_STATUS.VALIDATION,
-			createdAt: getPastDate({ days: 5 })
+			createdAt: getPastDate({ days: randomDays })
 		}
-	}),
-	appealFactory({
-		typeShorthand: APPEAL_CASE_TYPE.C,
-		assignCaseOfficer: false,
-		status: {
-			status: APPEAL_CASE_STATUS.VALIDATION,
-			createdAt: getPastDate({ weeks: 1 })
-		}
-	})
-];
+	});
+});
 
 const appealsData = [
 	...appealsReadyToStart,
@@ -1123,7 +1119,7 @@ const appealsData = [
 ];
 
 /**
- * @param {import('#db-client').PrismaClient} databaseConnector
+ * @param {import('#db-client/client.ts').PrismaClient} databaseConnector
  */
 export async function seedTestData(databaseConnector) {
 	const appeals = [];
@@ -1307,6 +1303,7 @@ export async function seedTestData(databaseConnector) {
 			({ appealId, status, valid }) =>
 				appealId === id &&
 				valid &&
+				//@ts-ignore
 				[APPEAL_CASE_STATUS.ISSUE_DETERMINATION, APPEAL_CASE_STATUS.COMPLETE].includes(status)
 		);
 
@@ -1414,9 +1411,10 @@ export async function seedTestData(databaseConnector) {
 	const enforcementAppealTypeId = appealTypes.find(
 		(appealType) => appealType.key === APPEAL_CASE_TYPE.C
 	)?.id;
-	const enforcementAppellantCaseId = appeals.find(
-		(appeal) => appeal.appealTypeId === enforcementAppealTypeId
-	)?.id;
+	const enforcementAppellantCaseIds = appeals
+		.filter((appeal) => appeal.appealTypeId === enforcementAppealTypeId)
+		.map((appeal) => appeal.id)
+		.slice(1); // leave one with blank data
 	const contactAddress = addressesList[pickRandom(addressesList)];
 	const formattedContactAddress = {
 		addressLine1: contactAddress.addressLine1,
@@ -1427,8 +1425,8 @@ export async function seedTestData(databaseConnector) {
 	};
 	await databaseConnector.$transaction(async (tx) => {
 		const address = await tx.address.create({ data: formattedContactAddress });
-		await tx.appellantCase.update({
-			where: { appealId: enforcementAppellantCaseId },
+		await tx.appellantCase.updateMany({
+			where: { appealId: { in: enforcementAppellantCaseIds } },
 			data: {
 				contactAddressId: address.id,
 				enforcementNoticeListedBuilding: false,
@@ -1445,7 +1443,7 @@ export async function seedTestData(databaseConnector) {
 }
 
 /**
- * @param {import('#db-client').PrismaClient} databaseConnector
+ * @param {import('#db-client/client.ts').PrismaClient} databaseConnector
  * @param {number} id
  * @param {number} lpaId
  * @param {Object<string, number>} counters
@@ -1474,7 +1472,7 @@ async function addStatements(databaseConnector, id, lpaId, counters) {
 }
 
 /**
- * @param {import('#db-client').PrismaClient} databaseConnector
+ * @param {import('#db-client/client.ts').PrismaClient} databaseConnector
  * @param {number} id
  */
 async function addIPComments(databaseConnector, id) {
@@ -1532,7 +1530,7 @@ async function addIPComments(databaseConnector, id) {
 }
 
 /**
- * @param {import('#db-client').PrismaClient} databaseConnector
+ * @param {import('#db-client/client.ts').PrismaClient} databaseConnector
  * @param {number} id
  * @param {number} lpaId
  */
@@ -1564,7 +1562,7 @@ You don't want to kill all your dark areas they are very important. I will take 
 }
 
 /**
- * @param {import('#db-client').PrismaClient} databaseConnector
+ * @param {import('#db-client/client.ts').PrismaClient} databaseConnector
  * @param {number} id
  * @param {number} appellantId
  * @param {number} lpaId
@@ -1594,7 +1592,7 @@ async function addFinalComments(databaseConnector, id, appellantId, lpaId, count
 }
 
 /**
- * @param {import('#db-client').PrismaClient} databaseConnector
+ * @param {import('#db-client/client.ts').PrismaClient} databaseConnector
  * @param {number} id
  * @param {'appellant'|'LPA'} source
  * @param {number} sourceId
@@ -1637,7 +1635,7 @@ async function addFinalComment(databaseConnector, id, source, sourceId) {
 }
 
 /**
- * @param {import('#db-client').PrismaClient} databaseConnector
+ * @param {import('#db-client/client.ts').PrismaClient} databaseConnector
  * @param {number} id
  * @param {number} appellantId
  * @param {number} lpaId
@@ -1667,7 +1665,7 @@ async function addProofOfEvidence(databaseConnector, id, appellantId, lpaId, cou
 }
 
 /**
- * @param {import('#db-client').PrismaClient} databaseConnector
+ * @param {import('#db-client/client.ts').PrismaClient} databaseConnector
  * @param {number} id
  * @param {'appellant'|'LPA'} source
  * @param {number} sourceId

@@ -3734,6 +3734,7 @@ describe('appeal-details', () => {
 						reviewPageRoute: 'final-comments/appellant',
 						cyAttribute: 'review-appellant-final-comments',
 						viewCyAttribute: 'view-appellant-final-comments',
+						addCyAttribute: 'add-appellant-final-comments',
 						actionLinkHiddenText: 'Appellant final comments'
 					},
 					{
@@ -3743,6 +3744,7 @@ describe('appeal-details', () => {
 						reviewPageRoute: 'final-comments/lpa',
 						cyAttribute: 'review-lpa-final-comments',
 						viewCyAttribute: 'view-lpa-final-comments',
+						addCyAttribute: 'add-lpa-final-comments',
 						actionLinkHiddenText: 'LPA final comments'
 					}
 				];
@@ -3890,7 +3892,7 @@ describe('appeal-details', () => {
 						);
 					});
 
-					it(`should render an "${testCase.rowLabel}" row with a status of "Rejected", and the expected date in the "Received" column, and a "View" action link with the expected URL, if the appeal type is "planning appeal", and the appeal has invalid ${testCase.name} final comments`, async () => {
+					it(`should render an "${testCase.rowLabel}" row with a status of "Rejected", and the expected date in the "Received" column, and a "Add | View" action link with the expected URL, if the appeal type is "planning appeal", and the appeal has invalid ${testCase.name} final comments`, async () => {
 						nock('http://test/')
 							.get(`/appeals/${appealId}?include=all`)
 							.reply(200, {
@@ -3914,7 +3916,18 @@ describe('appeal-details', () => {
 
 						expect(unprettifiedHTML).toContain('Documentation</th>');
 						expect(unprettifiedHTML).toContain(
-							`${testCase.rowLabel}</th><td class="govuk-table__cell">Rejected</td><td class="govuk-table__cell">17 December 2024</td><td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}" data-cy="${testCase.viewCyAttribute}" class="govuk-link">View<span class="govuk-visually-hidden"> ${testCase.actionLinkHiddenText}</span></a></td>`
+							`${testCase.rowLabel}</th><td class="govuk-table__cell">Rejected</td>`
+						);
+						expect(unprettifiedHTML).toContain(
+							`<td class="govuk-table__cell">17 December 2024</td>`
+						);
+						expect(unprettifiedHTML).toContain(
+							`<td class="govuk-table__cell govuk-!-text-align-right">` +
+								`<a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}/add-document" data-cy="${testCase.addCyAttribute}" class="govuk-link">` +
+								`Add<span class="govuk-visually-hidden"> ${testCase.actionLinkHiddenText}</span></a>` +
+								` | ` +
+								`<a href="/appeals-service/appeal-details/${appealId}/${testCase.reviewPageRoute}?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}" data-cy="${testCase.viewCyAttribute}" class="govuk-link">` +
+								`View<span class="govuk-visually-hidden"> ${testCase.actionLinkHiddenText}</span></a></td>`
 						);
 					});
 				}
@@ -4366,7 +4379,7 @@ describe('appeal-details', () => {
 
 					expect(startDateRow).toContain('<dd class="govuk-summary-list__value"> 23 May 2023</dd>');
 
-					expect(startDateRow).toContain('data-cy="-start-case-date"><span');
+					expect(startDateRow).not.toContain('-case-date">');
 
 					expect(response.text).toContain(`appeal-lpa-questionnaire-due-date`);
 

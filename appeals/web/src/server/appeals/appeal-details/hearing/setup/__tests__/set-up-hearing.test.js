@@ -50,7 +50,7 @@ describe('set up hearing', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Date and time');
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe('Date and time');
 		});
 
 		it('should render a Date field', () => {
@@ -308,7 +308,7 @@ describe('set up hearing', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe(
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe(
 				'Do you know the address of where the hearing will take place?'
 			);
 		});
@@ -498,7 +498,7 @@ describe('set up hearing', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Address');
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe('Address');
 		});
 
 		it('should render a text input for address line 1', () => {
@@ -693,7 +693,7 @@ describe('set up hearing', () => {
 		});
 
 		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe(
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe(
 				'Check details and set up hearing'
 			);
 		});
