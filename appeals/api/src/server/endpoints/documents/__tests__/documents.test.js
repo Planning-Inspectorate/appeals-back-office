@@ -88,7 +88,6 @@ describe('/appeals/documents/:documentId', () => {
 				.get(`/appeals/documents/${savedFolder.documents[0].guid}`)
 				.set('azureAdUserId', azureAdUserId);
 
-			console.log(response.body);
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual({
 				id: savedDocument.guid,
