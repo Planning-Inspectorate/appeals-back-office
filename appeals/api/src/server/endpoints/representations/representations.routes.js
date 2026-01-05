@@ -252,7 +252,15 @@ router.post(
 	checkAppealExistsByIdAndAddPartialToRequest([
 		'appealStatus',
 		'representations',
-		'appealTimetable'
+		'appealTimetable',
+		'childAppeals',
+		'procedureType',
+		'hearing',
+		'appellant',
+		'agent',
+		'lpa',
+		'address',
+		'inquiry'
 	]),
 	validateRepresentationsToPublish,
 	asyncHandler(controller.publish)
