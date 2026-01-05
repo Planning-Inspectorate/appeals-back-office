@@ -437,6 +437,52 @@ describe('mapAppellantCaseIn', () => {
 			})
 		},
 		{
+			desc: 'Enforcement case (C)',
+			input: {
+				casedata: {
+					caseType: APPEAL_CASE_TYPE.C,
+					enforcementNotice: true,
+					enforcementNoticeListedBuilding: true,
+					enforcementReference: 'abcd1234',
+					enforcementIssueDate: '2025-03-16T09:12:33.334Z',
+					enforcementEffectiveDate: '2025-03-15T09:12:33.334Z',
+					contactPlanningInspectorateDate: '2025-03-18T09:12:33.334Z',
+					contactAddressLine1: 'contactAddressLine1',
+					contactAddressLine2: 'contactAddressLine2',
+					contactAddressCounty: 'contactAddressCounty',
+					contactAddressPostcode: 'contactAddressPostcode',
+					contactAddressTown: 'contactAddressTown',
+					interestInLand: 'owner',
+					writtenOrVerbalPermission: true,
+					descriptionOfAllegedBreach: 'decription of alleged breach',
+					applicationDevelopmentAllOrPart: 'all-of-the-development',
+					appealDecisionDate: '2025-03-17T09:12:33.334Z'
+				}
+			},
+			expected: expect.objectContaining({
+				enforcementNotice: true,
+				enforcementReference: 'abcd1234',
+				enforcementNoticeListedBuilding: true,
+				enforcementIssueDate: '2025-03-16T09:12:33.334Z',
+				enforcementEffectiveDate: '2025-03-15T09:12:33.334Z',
+				contactPlanningInspectorateDate: '2025-03-18T09:12:33.334Z',
+				contactAddress: {
+					create: {
+						addressLine1: 'contactAddressLine1',
+						addressLine2: 'contactAddressLine2',
+						addressCounty: 'contactAddressCounty',
+						postcode: 'contactAddressPostcode',
+						addressTown: 'contactAddressTown'
+					}
+				},
+				interestInLand: 'owner',
+				writtenOrVerbalPermission: true,
+				descriptionOfAllegedBreach: 'decription of alleged breach',
+				applicationDevelopmentAllOrPart: 'all-of-the-development',
+				appealDecisionDate: '2025-03-17T09:12:33.334Z'
+			})
+		},
+		{
 			desc: 'CAS adverts case (ZA)',
 			input: {
 				casedata: {

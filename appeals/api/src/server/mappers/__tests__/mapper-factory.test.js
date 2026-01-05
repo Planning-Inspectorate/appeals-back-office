@@ -214,3 +214,37 @@ describe('appeals api mappers', () => {
 		expect(s78AppCaseOutput).toHaveProperty('planningObligation');
 	});
 });
+
+describe('appeals integration mappers', () => {
+	test('should map the correct data for the selected context', async () => {
+		const appealEnforcement = {
+			...mocks.enforcementAppeal,
+			folders: []
+		};
+
+		const enforcementAppCaseOutput = mapCase({
+			// @ts-ignore
+			appeal: appealEnforcement,
+			context: contextEnum.broadcast
+		});
+
+		expect(enforcementAppCaseOutput).toHaveProperty('enforcementNotice', true);
+		expect(enforcementAppCaseOutput).toHaveProperty('ownerOccupancyStatus', 'Owner');
+		expect(enforcementAppCaseOutput).toHaveProperty('enforcementAppealGroundsDetails', [
+			{ appealGroundLetter: 'a', groundFacts: 'The site is in a conservation area' }
+		]);
+		expect(enforcementAppCaseOutput).toHaveProperty(
+			'applicationPartOrWholeDevelopment',
+			'all-of-the-development'
+		);
+		expect(enforcementAppCaseOutput).toHaveProperty('occupancyConditionsMet', true);
+		expect(enforcementAppCaseOutput).toHaveProperty(
+			'effectiveDateOfEnforcementNotice',
+			'2024-10-17T14:08:50.409Z'
+		);
+		expect(enforcementAppCaseOutput).toHaveProperty(
+			'issueDateOfEnforcementNotice',
+			'2024-10-16T14:08:50.409Z'
+		);
+	});
+});

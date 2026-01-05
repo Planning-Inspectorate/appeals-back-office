@@ -75,9 +75,10 @@ const updateFactsForGroundByAppealIdAndGroundRef = async (req, res) => {
 	let response;
 
 	try {
-		const groundId =
+		const { groundId } =
 			// @ts-ignore
-			groundRef && appeal.appealGrounds?.find(({ ground }) => ground.groundRef === groundRef)?.id;
+			(groundRef && appeal.appealGrounds?.find(({ ground }) => ground.groundRef === groundRef)) ||
+			{};
 
 		const appealId = appeal.id;
 
