@@ -814,6 +814,27 @@ jest.unstable_mockModule('./src/server/config/config.js', () => ({
 	}
 }));
 
+jest.unstable_mockModule('node-fetch', () => ({
+	default: jest.fn().mockResolvedValue({
+		// mock packages/appeals/utils/business-days.js
+		json: jest.fn().mockResolvedValue({
+			'england-and-wales': {
+				events: [
+					{
+						date: '2024-12-25'
+					},
+					{
+						date: '2025-05-26'
+					},
+					{
+						date: '2025-12-25'
+					}
+				]
+			}
+		})
+	})
+}));
+
 const broadcastersMock = {
 	broadcastServiceUser: jest.fn(),
 	broadcastDocument: jest.fn(),
