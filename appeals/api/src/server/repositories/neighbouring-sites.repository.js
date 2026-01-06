@@ -1,5 +1,3 @@
-import { databaseConnector } from '#utils/database-connector.js';
-
 /** @typedef {import('@pins/appeals.api').Schema.Address} Address */
 /** @typedef {import('@pins/appeals.api').Schema.NeighbouringSite} NeighbouringSite */
 /**
@@ -9,12 +7,13 @@ import { databaseConnector } from '#utils/database-connector.js';
 
 /**
  * Adds a neighbouring site with an address to an existing appeal
+ * @param {import('#db-client/client.ts').PrismaClient} databaseConnector
  * @param {number} appealId
  * @param {{addressLine1: string, addressLine2?: string | null, postcode: string, addressCounty?: string | null, addressTown?: string | undefined}} address
  * @param {string} source
  * @returns {Promise<NeighbouringSite>}
  */
-const addSite = async (appealId, source, address) => {
+const addSite = async (databaseConnector, appealId, source, address) => {
 	return databaseConnector.neighbouringSite.create({
 		data: {
 			appeal: {
@@ -34,11 +33,12 @@ const addSite = async (appealId, source, address) => {
 };
 
 /**
+ * @param {import('#db-client/client.ts').PrismaClient} databaseConnector
  * @param {number} appealId
  * @param {number} addressId
  * @returns {Promise<NeighbouringSite>}
  */
-const connectSite = (appealId, addressId) =>
+const connectSite = (databaseConnector, appealId, addressId) =>
 	databaseConnector.neighbouringSite.upsert({
 		where: {
 			appealId_addressId: {
@@ -78,10 +78,11 @@ const connectSite = (appealId, addressId) =>
 	});
 
 /**
+ * @param {import('#db-client/client.ts').PrismaClient} databaseConnector
  * @param {number} appealId
  * @param {number} addressId
  */
-const disconnectSite = (appealId, addressId) =>
+const disconnectSite = (databaseConnector, appealId, addressId) =>
 	databaseConnector.$transaction(async (tx) => {
 		const neighbouringSite = await tx.neighbouringSite.findUnique({
 			where: {
@@ -108,11 +109,12 @@ const disconnectSite = (appealId, addressId) =>
 
 /**
  * Updates the address of a neighbouring site
+ * @param {import('#db-client/client.ts').PrismaClient} databaseConnector
  * @param {number} siteId
  * @param {{addressLine1: string, addressLine2?: string | null, postcode: string, addressCounty?: string | null, addressTown: string}} address
  * @returns {Promise<boolean>}
  */
-const updateSite = async (siteId, address) => {
+const updateSite = async (databaseConnector, siteId, address) => {
 	const transaction = databaseConnector.$transaction(async (tx) => {
 		const siteInfo = await tx.neighbouringSite.findUnique({ where: { id: siteId } });
 		if (!siteInfo) {
@@ -135,10 +137,11 @@ const updateSite = async (siteId, address) => {
 
 /**
  * Deletes a neighbouring site, and its address
+ * @param {import('#db-client/client.ts').PrismaClient} databaseConnector
  * @param {number} siteId
  * @returns {Promise<boolean>}
  */
-const removeSite = async (siteId) => {
+const removeSite = async (databaseConnector, siteId) => {
 	const transaction = databaseConnector.$transaction(async (tx) => {
 		const siteInfo = await tx.neighbouringSite.findUnique({ where: { id: siteId } });
 		if (!siteInfo) {

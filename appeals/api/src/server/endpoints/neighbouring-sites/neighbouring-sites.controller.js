@@ -1,6 +1,7 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import neighbouringSitesRepository from '#repositories/neighbouring-sites.repository.js';
+import { databaseConnector } from '#utils/database-connector.js';
 import formatAddress from '#utils/format-address.js';
 import {
 	AUDIT_TRAIL_NEIGHBOURING_ADDRESS_ADDED,
@@ -21,7 +22,7 @@ export const addNeighbouringSite = async (req, res) => {
 	const { appeal } = req;
 	const { source, addressLine1, addressLine2, town, county, postcode } = req.body;
 
-	const result = await neighbouringSitesRepository.addSite(appeal.id, source, {
+	const result = await neighbouringSitesRepository.addSite(databaseConnector, appeal.id, source, {
 		addressLine1,
 		addressLine2,
 		addressTown: town,
@@ -56,7 +57,7 @@ export const updateNeighbouringSite = async (req, res) => {
 
 	const { addressLine1, addressLine2, town, county, postcode } = address;
 
-	const result = await neighbouringSitesRepository.updateSite(siteId, {
+	const result = await neighbouringSitesRepository.updateSite(databaseConnector, siteId, {
 		addressLine1,
 		addressLine2,
 		addressTown: town,
@@ -89,7 +90,7 @@ export const removeNeighbouringSite = async (req, res) => {
 	const { appeal } = req;
 	const { siteId } = req.body;
 
-	const result = await neighbouringSitesRepository.removeSite(siteId);
+	const result = await neighbouringSitesRepository.removeSite(databaseConnector, siteId);
 
 	if (!result) {
 		return res.status(404).send({ errors: { siteId: ERROR_NOT_FOUND } });

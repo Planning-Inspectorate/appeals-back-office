@@ -1185,11 +1185,17 @@ export async function seedTestData(databaseConnector) {
 	};
 
 	await neighbouringSitesRepository.addSite(
+		databaseConnector,
 		appealWithNeighbouringSitesId,
 		'back-office',
 		formattedAddress
 	);
-	await neighbouringSitesRepository.addSite(appealWithNeighbouringSitesId, 'lpa', formattedAddress);
+	await neighbouringSitesRepository.addSite(
+		databaseConnector,
+		appealWithNeighbouringSitesId,
+		'lpa',
+		formattedAddress
+	);
 	const linkedAppeals = [
 		{
 			parentRef: appeals[0].reference,
