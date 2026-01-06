@@ -4,25 +4,18 @@ import { addressInputs } from '#lib/mappers/index.js';
 /**
  * @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal
  * @param {Appeal} appealData
- * @param {import('@pins/appeals').Address} currentAddress
- * @param {'setup' | 'change'} action
+ * @param {Record<string, string>} currentAddress
  * @param {import("@pins/express").ValidationErrors | undefined} errors
- * @param {string} newProcedureType
+ * @param {string} backLinkUrl
  * @returns {PageContent}
  */
-export function changeAddressDetailsPage(
-	appealData,
-	action,
-	currentAddress,
-	errors,
-	newProcedureType
-) {
+export function changeAddressDetailsPage(appealData, currentAddress, errors, backLinkUrl) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
 	return {
 		title: `Address - update appeal procedure - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/change-appeal-procedure-type/${newProcedureType}/address-known`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Inquiry address',
 		pageComponents: addressInputs({ address: currentAddress, errors })

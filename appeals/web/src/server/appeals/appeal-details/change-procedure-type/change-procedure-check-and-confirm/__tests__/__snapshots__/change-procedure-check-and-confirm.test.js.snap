@@ -12,7 +12,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
                     <dd class="govuk-summary-list__value">Hearing</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fchange-selected-procedure-type"
                         data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>
                     </dd>
                 </div>
@@ -21,7 +21,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the date and time of the hearing?</dt>
                     <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-event-date-known"
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-event-date-known?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-event-date-known"
                             data-cy="change-hearing-date-known">Change<span class="govuk-visually-hidden"> Do you know the date and time of the hearing?</span></a>
                         </dd>
                 </div>
@@ -30,27 +30,32 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
                     <dd class="govuk-summary-list__value">11 October 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">LPA questionnaire due date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable"
+                        data-cy="change-lpa-questionnaire-due-date">Change <span class="govuk-visually-hidden">LPA questionnaire due date</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statements due</dt>
                     <dd class="govuk-summary-list__value">14 October 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Statements due date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable"
+                        data-cy="change-lpa-statement-due-date">Change <span class="govuk-visually-hidden">Statements due date</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party comments due</dt>
                     <dd                     class="govuk-summary-list__value">13 October 2023</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Interested party comments due date</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable"
+                            data-cy="change-ip-comments-due-date">Change <span class="govuk-visually-hidden">Interested party comments due date</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statement of common ground due</dt>
                     <dd                     class="govuk-summary-list__value">15 October 2023</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Statement of common ground due date</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable"
+                            data-cy="change-statement-of-common-ground-due-date">Change <span class="govuk-visually-hidden">Statement of common ground due date</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation due</dt>
                     <dd class="govuk-summary-list__value">16 October 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Planning obligation due date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable"
+                        data-cy="change-planning-obligation-due-date">Change <span class="govuk-visually-hidden">Planning obligation due date</span></a>
                     </dd>
                 </div>
             </dl>
@@ -78,7 +83,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
                     <dd class="govuk-summary-list__value">Hearing</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fchange-selected-procedure-type"
                         data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>
                     </dd>
                 </div>
@@ -87,7 +92,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the date and time of the hearing?</dt>
                     <dd                     class="govuk-summary-list__value">Yes</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-event-date-known"
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-event-date-known?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-event-date-known"
                             data-cy="change-hearing-date-known">Change<span class="govuk-visually-hidden"> Do you know the date and time of the hearing?</span></a>
                         </dd>
                 </div>
@@ -103,7 +108,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Hearing time</dt>
                     <dd class="govuk-summary-list__value">9:38am</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/date"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fdate"
                         data-cy="change-hearing-time">Change<span class="govuk-visually-hidden"> Hearing time</span></a>
                     </dd>
                 </div>
@@ -112,27 +117,32 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
                     <dd class="govuk-summary-list__value">11 October 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">LPA questionnaire due date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable"
+                        data-cy="change-lpa-questionnaire-due-date">Change <span class="govuk-visually-hidden">LPA questionnaire due date</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statements due</dt>
                     <dd class="govuk-summary-list__value">14 October 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Statements due date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable"
+                        data-cy="change-lpa-statement-due-date">Change <span class="govuk-visually-hidden">Statements due date</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party comments due</dt>
                     <dd                     class="govuk-summary-list__value">13 October 2023</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Interested party comments due date</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable"
+                            data-cy="change-ip-comments-due-date">Change <span class="govuk-visually-hidden">Interested party comments due date</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statement of common ground due</dt>
                     <dd                     class="govuk-summary-list__value">15 October 2023</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Statement of common ground due date</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable"
+                            data-cy="change-statement-of-common-ground-due-date">Change <span class="govuk-visually-hidden">Statement of common ground due date</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation due</dt>
                     <dd class="govuk-summary-list__value">16 October 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Planning obligation due date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable"
+                        data-cy="change-planning-obligation-due-date">Change <span class="govuk-visually-hidden">Planning obligation due date</span></a>
                     </dd>
                 </div>
             </dl>
@@ -160,7 +170,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
                     <dd class="govuk-summary-list__value">Hearing</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fchange-selected-procedure-type"
                         data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>
                     </dd>
                 </div>
@@ -169,7 +179,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the date and time of the hearing?</dt>
                     <dd                     class="govuk-summary-list__value">Yes</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-event-date-known"
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-event-date-known?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-event-date-known"
                             data-cy="change-hearing-date-known">Change<span class="govuk-visually-hidden"> Do you know the date and time of the hearing?</span></a>
                         </dd>
                 </div>
@@ -185,7 +195,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Hearing time</dt>
                     <dd class="govuk-summary-list__value">9:38am</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/date"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fdate"
                         data-cy="change-hearing-time">Change<span class="govuk-visually-hidden"> Hearing time</span></a>
                     </dd>
                 </div>
@@ -194,22 +204,26 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
                     <dd class="govuk-summary-list__value">11 October 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">LPA questionnaire due date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable"
+                        data-cy="change-lpa-questionnaire-due-date">Change <span class="govuk-visually-hidden">LPA questionnaire due date</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statements due</dt>
                     <dd class="govuk-summary-list__value">14 October 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Statements due date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable"
+                        data-cy="change-lpa-statement-due-date">Change <span class="govuk-visually-hidden">Statements due date</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party comments due</dt>
                     <dd                     class="govuk-summary-list__value">13 October 2023</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Interested party comments due date</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable"
+                            data-cy="change-ip-comments-due-date">Change <span class="govuk-visually-hidden">Interested party comments due date</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statement of common ground due</dt>
                     <dd                     class="govuk-summary-list__value">15 October 2023</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Statement of common ground due date</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable"
+                            data-cy="change-statement-of-common-ground-due-date">Change <span class="govuk-visually-hidden">Statement of common ground due date</span></a>
                         </dd>
                 </div>
             </dl>
@@ -237,7 +251,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
                     <dd class="govuk-summary-list__value">Inquiry</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fchange-selected-procedure-type"
                         data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>
                     </dd>
                 </div>
@@ -254,7 +268,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry time</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/date"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Finquiry%2Fdate"
                         data-cy="change-inquiry-time">Change<span class="govuk-visually-hidden"> Inquiry time</span></a>
                     </dd>
                 </div>
@@ -262,7 +276,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the expected number of days to carry out the inquiry?</dt>
                     <dd                     class="govuk-summary-list__value">Yes</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/estimation"
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Finquiry%2Festimation"
                             data-cy="change-inquiry-estimation">Change<span class="govuk-visually-hidden"> Do you know the expected number of days to carry out the inquiry?</span></a>
                         </dd>
                 </div>
@@ -270,7 +284,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected number of days to carry out the inquiry</dt>
                     <dd                     class="govuk-summary-list__value">8 days</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/estimation"
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Finquiry%2Festimation"
                             data-cy="change-inquiry-estimation">Change<span class="govuk-visually-hidden"> Expected number of days to carry out the inquiry</span></a>
                         </dd>
                 </div>
@@ -278,7 +292,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
                     <dd                     class="govuk-summary-list__value">Yes</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/address-known"
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/address-known?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Finquiry%2Faddress-known"
                             data-cy="change-inquiry-address-known">Change<span class="govuk-visually-hidden"> Do you know the address of where the inquiry will take place?</span></a>
                         </dd>
                 </div>
@@ -287,7 +301,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address of where the inquiry will take place</dt>
                     <dd                     class="govuk-summary-list__value">21 The Pavement
                         <br>Wandsworth</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/address-details"
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/address-details?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Finquiry%2Faddress-details"
                             data-cy="change-inquiry-address">Change<span class="govuk-visually-hidden"> Address of where the inquiry will take place</span></a>
                         </dd>
                 </div>
@@ -296,27 +310,32 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
                     <dd class="govuk-summary-list__value">11 October 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">LPA questionnaire due date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Finquiry%2Fchange-timetable"
+                        data-cy="change-lpa-questionnaire-due-date">Change <span class="govuk-visually-hidden">LPA questionnaire due date</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statements due</dt>
                     <dd class="govuk-summary-list__value">14 October 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Statements due date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Finquiry%2Fchange-timetable"
+                        data-cy="change-lpa-statement-due-date">Change <span class="govuk-visually-hidden">Statements due date</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party comments due</dt>
                     <dd                     class="govuk-summary-list__value">13 October 2023</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Interested party comments due date</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Finquiry%2Fchange-timetable"
+                            data-cy="change-ip-comments-due-date">Change <span class="govuk-visually-hidden">Interested party comments due date</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statement of common ground due</dt>
                     <dd                     class="govuk-summary-list__value">15 October 2023</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Statement of common ground due date</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Finquiry%2Fchange-timetable"
+                            data-cy="change-statement-of-common-ground-due-date">Change <span class="govuk-visually-hidden">Statement of common ground due date</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Proof of evidence and witnesses due</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Proof of evidence and witnesses due date</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Finquiry%2Fchange-timetable"
+                            data-cy="change-proof-of-evidence-and-witnesses-due-date">Change <span class="govuk-visually-hidden">Proof of evidence and witnesses due date</span></a>
                         </dd>
                 </div>
             </dl>
@@ -344,7 +363,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
                     <dd class="govuk-summary-list__value">Written representations</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type"
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fchange-selected-procedure-type"
                         data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>
                     </dd>
                 </div>
@@ -353,22 +372,26 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
                     <dd class="govuk-summary-list__value">11 October 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">LPA questionnaire due date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/written/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fwritten%2Fchange-timetable"
+                        data-cy="change-lpa-questionnaire-due-date">Change <span class="govuk-visually-hidden">LPA questionnaire due date</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statements due</dt>
                     <dd class="govuk-summary-list__value">14 October 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Statements due date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/written/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fwritten%2Fchange-timetable"
+                        data-cy="change-lpa-statement-due-date">Change <span class="govuk-visually-hidden">Statements due date</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party comments due</dt>
                     <dd                     class="govuk-summary-list__value">13 October 2023</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Interested party comments due date</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/written/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fwritten%2Fchange-timetable"
+                            data-cy="change-ip-comments-due-date">Change <span class="govuk-visually-hidden">Interested party comments due date</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Final comments due</dt>
                     <dd class="govuk-summary-list__value">12 October 2023</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Final comments due date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/written/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fwritten%2Fchange-timetable"
+                        data-cy="change-final-comments-due-date">Change <span class="govuk-visually-hidden">Final comments due date</span></a>
                     </dd>
                 </div>
             </dl>

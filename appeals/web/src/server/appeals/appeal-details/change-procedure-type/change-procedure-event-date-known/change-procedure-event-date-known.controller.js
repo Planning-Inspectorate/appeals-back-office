@@ -1,3 +1,4 @@
+import { getSessionValuesForAppeal } from '#lib/edit-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import { getBackLinkUrl } from '../change-procedure-type.controller.js';
 import { dateKnownPage } from './change-procedure-event-date-known.mapper.js';
@@ -20,8 +21,11 @@ export const renderEventDateKnown = async (request, response) => {
 	const { errors } = request;
 	const appealDetails = request.currentAppeal;
 	const backLinkUrl = getBackLinkUrl(request, 'change-selected-procedure-type');
-	const sessionValues =
-		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
+	const sessionValues = getSessionValuesForAppeal(
+		request,
+		'changeProcedureType',
+		appealDetails.appealId
+	);
 	const newProcedureType = sessionValues.appealProcedure;
 	const mappedPageContent = dateKnownPage(
 		appealDetails,
@@ -50,8 +54,9 @@ export const postEventDateKnown = async (request, response) => {
 	if (errors) {
 		return renderEventDateKnown(request, response);
 	}
-	const sessionValues =
-		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
+	const sessionValues = /** @type {Record<string, any>} */ (
+		getSessionValuesForAppeal(request, 'changeProcedureType', appealId)
+	);
 	const newProcedureType = sessionValues.appealProcedure;
 	const baseUrl = `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}`;
 
@@ -68,5 +73,5 @@ export const postEventDateKnown = async (request, response) => {
 	delete sessionValues['event-time-minute'];
 	sessionValues['isEventDate'] = false;
 
-	return response.redirect(`${baseUrl}/change-timetable`);
+	return response.redirect(preserveQueryString(request, `${baseUrl}/change-timetable`));
 };

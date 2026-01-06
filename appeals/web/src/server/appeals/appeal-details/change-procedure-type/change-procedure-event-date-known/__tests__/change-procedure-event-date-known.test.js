@@ -182,6 +182,35 @@ describe('GET /change-appeal-procedure-type/hearing/change-event-date-known', ()
 			'type="radio" value="yes"><label class="govuk-label govuk-radios__label" for="date-known"> Yes</label>'
 		);
 	});
+
+	it('should have a back link to the select procedure type page', async () => {
+		nock('http://test/')
+			.get('/appeals/1?include=all')
+			.reply(200, { ...appealDataWithoutStartDate, appealId: 1 });
+
+		const response = await request.get(
+			`/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-event-date-known`
+		);
+		const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+		expect(bodyHtml.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+			`/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type`
+		);
+	});
+
+	it('should have a back link to the CYA page if editing', async () => {
+		nock('http://test/')
+			.get('/appeals/1?include=all')
+			.reply(200, { ...appealDataWithoutStartDate, appealId: 1, procedureType: 'hearing' });
+
+		const response = await request.get(
+			`/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-event-date-known?editEntrypoint=` +
+				'%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-event-date-known'
+		);
+		const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+		expect(bodyHtml.querySelector('.govuk-back-link')?.getAttribute('href')).toContain(
+			'/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/check-and-confirm'
+		);
+	});
 });
 
 describe('POST /change-appeal-procedure-type/hearing/change-event-date-known', () => {

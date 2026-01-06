@@ -36,9 +36,12 @@ export const getSessionValuesForAppeal = (request, sessionKey, appealId) => {
 	if (editEntrypoint) {
 		const editKey = `${sessionKey}/edit`;
 		if (!session[editKey]) {
-			session[editKey] = session[sessionKey] || {};
+			session[editKey] = {};
 		}
-		return session[editKey]?.[appealId] || {};
+		if (!session[editKey][appealId]) {
+			session[editKey][appealId] = session[sessionKey]?.[appealId] || {};
+		}
+		return session[editKey][appealId];
 	}
 	return session[sessionKey]?.[appealId] || {};
 };
@@ -116,7 +119,7 @@ export const clearEdits = (request, sessionKey) => {
  */
 export const clearEditsForAppeal = (request, sessionKey, appealId) => {
 	const editKey = `${sessionKey}/edit`;
-	delete request.session[editKey][appealId];
+	delete request.session[editKey]?.[appealId];
 };
 
 /**

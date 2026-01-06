@@ -58,25 +58,48 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 			expect(unprettifiedHtml).toContain('Appeal procedure</dt>');
 			expect(unprettifiedHtml).toContain('Written representations</dd>');
 			expect(unprettifiedHtml).toContain(
-				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type' +
+					'/change-selected-procedure-type?editEntrypoint=%2Fappeals-service%2Fappeal-details' +
+					'%2F1%2Fchange-appeal-procedure-type%2Fchange-selected-procedure-type" data-cy="change-' +
+					'appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
 			);
 			expect(unprettifiedHtml).toContain('<h3 class="govuk-heading-m">Timetable due dates</h3>');
 
 			expect(unprettifiedHtml).toContain('Interested party comments due</dt>');
 			expect(unprettifiedHtml).toContain('13 October 2023</dd>');
-			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type' +
+					'/written/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details' +
+					'%2F1%2Fchange-appeal-procedure-type%2Fwritten%2Fchange-timetable" data-cy="change-' +
+					'ip-comments-due-date">Change '
+			);
 
 			expect(unprettifiedHtml).toContain('Statements due</dt>');
 			expect(unprettifiedHtml).toContain('14 October 2023</dd>');
-			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type' +
+					'/written/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details' +
+					'%2F1%2Fchange-appeal-procedure-type%2Fwritten%2Fchange-timetable" data-cy="change-' +
+					'lpa-statement-due-date">Change '
+			);
 
 			expect(unprettifiedHtml).toContain('LPA questionnaire due</dt>');
 			expect(unprettifiedHtml).toContain('11 October 2023</dd>');
-			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type' +
+					'/written/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details' +
+					'%2F1%2Fchange-appeal-procedure-type%2Fwritten%2Fchange-timetable" data-cy="change-' +
+					'lpa-questionnaire-due-date">Change '
+			);
 
 			expect(unprettifiedHtml).toContain('Final comments due</dt>');
 			expect(unprettifiedHtml).toContain('12 October 2023</dd>');
-			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type' +
+					'/written/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details' +
+					'%2F1%2Fchange-appeal-procedure-type%2Fwritten%2Fchange-timetable" data-cy="change-' +
+					'final-comments-due-date">Change '
+			);
 
 			expect(unprettifiedHtml).toContain('Update appeal procedure</button>');
 		});
@@ -121,29 +144,57 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 			expect(unprettifiedHtml).toContain('Appeal procedure</dt>');
 			expect(unprettifiedHtml).toContain('Hearing</dd>');
 			expect(unprettifiedHtml).toContain(
-				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type' +
+					'/change-selected-procedure-type?editEntrypoint=%2Fappeals-service%2Fappeal-details' +
+					'%2F1%2Fchange-appeal-procedure-type%2Fchange-selected-procedure-type" data-cy="change-' +
+					'appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
 			);
 			expect(unprettifiedHtml).toContain('<h3 class="govuk-heading-m">Timetable due dates</h3>');
 
 			expect(unprettifiedHtml).toContain('Interested party comments due</dt>');
 			expect(unprettifiedHtml).toContain('13 October 2023</dd>');
-			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type' +
+					'/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details' +
+					'%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable" data-cy="change-' +
+					'ip-comments-due-date">Change '
+			);
 
 			expect(unprettifiedHtml).toContain('Statements due</dt>');
 			expect(unprettifiedHtml).toContain('14 October 2023</dd>');
-			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type' +
+					'/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details' +
+					'%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable" data-cy="change-' +
+					'lpa-statement-due-date">Change '
+			);
 
 			expect(unprettifiedHtml).toContain('LPA questionnaire due</dt>');
 			expect(unprettifiedHtml).toContain('11 October 2023</dd>');
-			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type' +
+					'/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details' +
+					'%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable" data-cy="change-' +
+					'lpa-questionnaire-due-date">Change '
+			);
 
 			expect(unprettifiedHtml).toContain('Planning obligation due</dt>');
 			expect(unprettifiedHtml).toContain('16 October 2023</dd>');
-			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type' +
+					'/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details' +
+					'%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable" data-cy="change-' +
+					'planning-obligation-due-date">Change '
+			);
 
 			expect(unprettifiedHtml).toContain('Statement of common ground due</dt>');
 			expect(unprettifiedHtml).toContain('15 October 2023</dd>');
-			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type' +
+					'/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details' +
+					'%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable" data-cy="change-' +
+					'statement-of-common-ground-due-date">Change '
+			);
 
 			expect(unprettifiedHtml).toContain('Update appeal procedure</button>');
 		});
@@ -225,7 +276,10 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 			expect(unprettifiedHtml).toContain('Appeal procedure</dt>');
 			expect(unprettifiedHtml).toContain('Hearing</dd>');
 			expect(unprettifiedHtml).toContain(
-				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type' +
+					'/change-selected-procedure-type?editEntrypoint=%2Fappeals-service%2Fappeal-details' +
+					'%2F1%2Fchange-appeal-procedure-type%2Fchange-selected-procedure-type" data-cy="change-' +
+					'appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
 			);
 
 			expect(unprettifiedHtml).toContain('Hearing details</h3>');
@@ -234,22 +288,42 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 
 			expect(unprettifiedHtml).toContain('Interested party comments due</dt>');
 			expect(unprettifiedHtml).toContain('13 October 2023</dd>');
-			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type' +
+					'/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details' +
+					'%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable" data-cy="change-' +
+					'ip-comments-due-date">Change '
+			);
 
 			expect(unprettifiedHtml).toContain('Statements due</dt>');
 			expect(unprettifiedHtml).toContain('14 October 2023</dd>');
-			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type' +
+					'/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details' +
+					'%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable" data-cy="change-' +
+					'lpa-statement-due-date">Change '
+			);
 
 			expect(unprettifiedHtml).toContain('LPA questionnaire due</dt>');
 			expect(unprettifiedHtml).toContain('11 October 2023</dd>');
-			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type' +
+					'/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details' +
+					'%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable" data-cy="change-' +
+					'lpa-questionnaire-due-date">Change '
+			);
 
 			expect(unprettifiedHtml).not.toContain('Planning Obligation due</dt>');
 			expect(unprettifiedHtml).not.toContain('16 October 2023</dd>');
 
 			expect(unprettifiedHtml).toContain('Statement of common ground due</dt>');
 			expect(unprettifiedHtml).toContain('15 October 2023</dd>');
-			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type' +
+					'/hearing/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details' +
+					'%2F1%2Fchange-appeal-procedure-type%2Fhearing%2Fchange-timetable" data-cy="change-' +
+					'statement-of-common-ground-due-date">Change '
+			);
 
 			expect(unprettifiedHtml).toContain('Update appeal procedure</button>');
 		});
@@ -299,7 +373,10 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 			expect(unprettifiedHtml).toContain('Appeal procedure</dt>');
 			expect(unprettifiedHtml).toContain('Inquiry</dd>');
 			expect(unprettifiedHtml).toContain(
-				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/' +
+					'change-selected-procedure-type?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2F' +
+					'change-appeal-procedure-type%2Fchange-selected-procedure-type" data-cy="change-appeal-procedure">' +
+					'Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
 			);
 
 			expect(unprettifiedHtml).toContain('Inquiry details</h3>');
@@ -308,13 +385,17 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 				'href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/date" data-cy="change-inquiry-date">Change'
 			);
 			expect(unprettifiedHtml).toContain(
-				'href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/date" data-cy="change-inquiry-time">Change<span class="govuk-visually-hidden"> Inquiry time</span></a>'
+				'href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/date' +
+					'?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Finquiry%2Fdate" ' +
+					'data-cy="change-inquiry-time">Change<span class="govuk-visually-hidden"> Inquiry time</span></a>'
 			);
 			expect(unprettifiedHtml).toContain(
 				'Do you know the expected number of days to carry out the inquiry?</dt>'
 			);
 			expect(unprettifiedHtml).toContain(
-				'href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/estimation" data-cy="change-inquiry-estimation">Change'
+				'href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/estimation' +
+					'?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Finquiry%2Festimation" ' +
+					'data-cy="change-inquiry-estimation">Change'
 			);
 			expect(unprettifiedHtml).toContain(
 				'Do you know the address of where the inquiry will take place?</dt>'
@@ -324,22 +405,38 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 
 			expect(unprettifiedHtml).toContain('Interested party comments due</dt>');
 			expect(unprettifiedHtml).toContain('13 October 2023</dd>');
-			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/change-timetable' +
+					'?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Finquiry%2Fchange-timetable" ' +
+					'data-cy="change-ip-comments-due-date">Change '
+			);
 
 			expect(unprettifiedHtml).toContain('Statements due</dt>');
 			expect(unprettifiedHtml).toContain('14 October 2023</dd>');
-			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/change-timetable' +
+					'?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Finquiry%2Fchange-timetable" ' +
+					'data-cy="change-lpa-statement-due-date">Change '
+			);
 
 			expect(unprettifiedHtml).toContain('LPA questionnaire due</dt>');
 			expect(unprettifiedHtml).toContain('11 October 2023</dd>');
-			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/change-timetable' +
+					'?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Finquiry%2Fchange-timetable" ' +
+					'data-cy="change-lpa-questionnaire-due-date">Change '
+			);
 
 			expect(unprettifiedHtml).not.toContain('Planning Obligation due</dt>');
 			expect(unprettifiedHtml).not.toContain('16 October 2023</dd>');
 
 			expect(unprettifiedHtml).toContain('Statement of common ground due</dt>');
 			expect(unprettifiedHtml).toContain('15 October 2023</dd>');
-			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/change-timetable' +
+					'?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Finquiry%2Fchange-timetable" ' +
+					'data-cy="change-statement-of-common-ground-due-date">Change '
+			);
 
 			expect(unprettifiedHtml).toContain('Update appeal procedure</button>');
 		});

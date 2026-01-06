@@ -7,6 +7,7 @@ import {
 	dateStringToISOString,
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
+import { clearEditsForAppeal, editLink, getSessionValuesForAppeal } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
@@ -14,7 +15,7 @@ import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
-import { capitalize, pick } from 'lodash-es';
+import { capitalize, kebabCase, pick } from 'lodash-es';
 import { appealProcedureToLabelText } from './change-procedure-check-and-confirm.mapper.js';
 import { postProcedureChangeRequest } from './change-procedure-check-and-confirm.service.js';
 
@@ -39,15 +40,16 @@ export const getCheckAndConfirm = async (request, response) => {
 		params: { appealId }
 	} = request;
 
-	const sessionValues =
-		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
+	const sessionValues = getSessionValuesForAppeal(request, 'changeProcedureType', appealId);
 	const newProcedureType = sessionValues.appealProcedure;
 
 	if (!objectContainsAllKeys(sessionValues, 'appealTimetable')) {
 		return response.status(500).render('app/500.njk');
 	}
 
-	const appealTimetables = sessionValues.appealTimetable;
+	clearEditsForAppeal(request, 'changeProcedureType', appealId);
+
+	const appealTimetables = /** @type {AppealTimetable} */ (sessionValues.appealTimetable);
 
 	const { appellantCase } = request.locals;
 
@@ -57,8 +59,10 @@ export const getCheckAndConfirm = async (request, response) => {
 		newProcedureType
 	);
 
-	/** @type {{ [key: string]: {value?: string, actions?: { [text: string]: { href: string, visuallyHiddenText: string } }} }} */
+	/** @type {{ [key: string]: {value?: string, actions?: { [text: string]: { href: string, visuallyHiddenText: string, attributes?: { 'data-cy': string } } }} }} */
 	let timetableResponses = {};
+
+	const baseUrl = `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type`;
 
 	/** @type {PageComponent[]} */
 	const responses = [
@@ -70,7 +74,7 @@ export const getCheckAndConfirm = async (request, response) => {
 						id: 'appeal-procedure',
 						text: 'Appeal procedure',
 						value: appealProcedureToLabelText(newProcedureType),
-						link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/change-selected-procedure-type`,
+						link: editLink(baseUrl, 'change-selected-procedure-type'),
 						editable: true,
 						cypressDataName: 'change-appeal-procedure'
 					})?.display.summaryListItem
@@ -120,7 +124,7 @@ export const getCheckAndConfirm = async (request, response) => {
 									? 'Yes'
 									: 'No'
 								: 'No',
-							link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-event-date-known`,
+							link: editLink(baseUrl, `${newProcedureType}/change-event-date-known`),
 							editable: true,
 							cypressDataName: `change-${newProcedureType}-date-known`
 						})?.display.summaryListItem
@@ -156,7 +160,7 @@ export const getCheckAndConfirm = async (request, response) => {
 							id: `${newProcedureType}-time`,
 							text: `${capitalizeFirstLetter(newProcedureType)} time`,
 							value: time,
-							link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/date`,
+							link: editLink(baseUrl, `${newProcedureType}/date`),
 							editable: true,
 							cypressDataName: `change-${newProcedureType}-time`
 						})?.display.summaryListItem
@@ -174,7 +178,7 @@ export const getCheckAndConfirm = async (request, response) => {
 							id: 'expected-number-of-days',
 							text: `Do you know the expected number of days to carry out the ${newProcedureType}?`,
 							value: capitalize(sessionValues.estimationYesNo),
-							link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/estimation`,
+							link: editLink(baseUrl, `${newProcedureType}/estimation`),
 							editable: true,
 							cypressDataName: `change-${newProcedureType}-estimation`
 						})?.display.summaryListItem
@@ -190,7 +194,7 @@ export const getCheckAndConfirm = async (request, response) => {
 								id: 'expected-number-of-days',
 								text: `Expected number of days to carry out the ${newProcedureType}`,
 								value: `${sessionValues.estimationDays} days`,
-								link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/estimation`,
+								link: editLink(baseUrl, `${newProcedureType}/estimation`),
 								editable: true,
 								cypressDataName: `change-${newProcedureType}-estimation`
 							})?.display.summaryListItem
@@ -206,7 +210,7 @@ export const getCheckAndConfirm = async (request, response) => {
 							id: 'address-known',
 							text: `Do you know the address of where the ${newProcedureType} will take place?`,
 							value: capitalize(sessionValues.addressKnown),
-							link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/address-known`,
+							link: editLink(baseUrl, `${newProcedureType}/address-known`),
 							editable: true,
 							cypressDataName: `change-${newProcedureType}-address-known`
 						})?.display.summaryListItem
@@ -222,7 +226,7 @@ export const getCheckAndConfirm = async (request, response) => {
 								id: `${newProcedureType}-address`,
 								text: `Address of where the ${newProcedureType} will take place`,
 								value: { html: addressToString(address, '<br>') },
-								link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/address-details`,
+								link: editLink(baseUrl, `${newProcedureType}/address-details`),
 								editable: true,
 								cypressDataName: `change-${newProcedureType}-address`
 							})?.display.summaryListItem
@@ -248,12 +252,16 @@ export const getCheckAndConfirm = async (request, response) => {
 			const currentDueDateIso = appealTimetables && appealTimetables[timetableType];
 			const currentDueDate = currentDueDateIso && dateISOStringToDisplayDate(currentDueDateIso);
 			const idText = getTimetableTypeText(timetableType) + ' due';
+			const href = editLink(baseUrl, `${newProcedureType}/change-timetable`);
 			timetableResponses[idText] = {
 				value: currentDueDate,
 				actions: {
 					Change: {
-						href: `change-timetable`,
-						visuallyHiddenText: idText + ' date'
+						href,
+						visuallyHiddenText: idText + ' date',
+						attributes: {
+							'data-cy': `change-${kebabCase(timetableType)}`
+						}
 					}
 				}
 			};
@@ -272,8 +280,11 @@ export const getCheckAndConfirm = async (request, response) => {
 				{ class: 'govuk-body' },
 				`We’ll send an email to the appellant and LPA to tell them that:`
 			),
-			simpleHtmlComponent('li', { class: 'govuk-body' }, `we've changed the procedure`),
-			simpleHtmlComponent('li', { class: 'govuk-body' }, `we've cancelled the hearing`)
+			simpleHtmlComponent(
+				'ul',
+				{ class: 'govuk-list govuk-list--bullet govuk-!-margin-bottom-6' },
+				`<li>we've changed the procedure</li><li>we've cancelled the hearing</li>`
+			)
 		);
 	} else if (sessionValues.existingAppealProcedure !== newProcedureType) {
 		afterParams.push(
@@ -308,8 +319,9 @@ export const postCheckAndConfirm = async (request, response) => {
 			params: { appealId }
 		} = request;
 
-		const sessionValues =
-			request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
+		const sessionValues = /** @type {ChangeProcedureTypeSession} */ (
+			/** @type {unknown} */ (getSessionValuesForAppeal(request, 'changeProcedureType', appealId))
+		);
 		const newProcedureType = sessionValues.appealProcedure;
 
 		if (!newProcedureType) {
