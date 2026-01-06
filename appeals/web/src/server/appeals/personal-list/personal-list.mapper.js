@@ -186,7 +186,7 @@ export function personalListPage(
 				);
 				return [
 					{
-						html: `<strong><a class="govuk-link" href=${urlToAppealsDetail} aria-label="Appeal ${numberToAccessibleDigitLabel(
+						html: `<strong><a class="govuk-link" href=${urlToAppealsDetail} aria-label="${numberToAccessibleDigitLabel(
 							shortReference || ''
 						)}">${shortReference}</a></strong>`
 					},
