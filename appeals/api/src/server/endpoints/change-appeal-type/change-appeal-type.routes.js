@@ -1,7 +1,4 @@
-import {
-	checkAppealExistsByIdAndAddPartialToRequest,
-	checkAppealExistsByIdAndAddToRequest
-} from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import {
@@ -70,7 +67,13 @@ router.post(
 		#swagger.responses[400] = {}
 	 */
 	loadAllAppealTypesAndAddToRequest,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'appealStatus',
+		'appealType',
+		'address',
+		'appellant',
+		'agent'
+	]),
 	validateAppealStatus,
 	validateAppealType,
 	postAppealTypeChangeValidator,
@@ -97,7 +100,13 @@ router.post(
 		#swagger.responses[400] = {}
 	 */
 	loadAllAppealTypesAndAddToRequest,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'appealStatus',
+		'appealType',
+		'address',
+		'appellant',
+		'agent'
+	]),
 	validateAppealStatus,
 	validateAppealType,
 	postAppealTypeChangeValidator,
@@ -124,7 +133,7 @@ router.post(
 		#swagger.responses[400] = {}
 	 */
 	loadAllAppealTypesAndAddToRequest,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest(['appealStatus']),
 	validateAppealStatus,
 	validateAppealType,
 	postAppealTypeTransferValidator,
@@ -150,7 +159,7 @@ router.post(
 		}
 		#swagger.responses[400] = {}
 	 */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest(['appealStatus']),
 	validateAppealStatusForTransfer,
 	postAppealTypeTransferConfirmationValidator,
 	asyncHandler(requestConfirmationTransferOfAppeal)
@@ -175,7 +184,14 @@ router.post(
 		}
 		#swagger.responses[400] = {}
 	 */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'appealStatus',
+		'appealType',
+		'address',
+		'appellant',
+		'agent',
+		'lpa'
+	]),
 	loadEnabledAppealTypesAndAddToRequest,
 	validateAppealType,
 	validateAppealStatusForUpdate,
