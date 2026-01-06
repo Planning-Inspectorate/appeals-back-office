@@ -11,6 +11,7 @@ import serviceUserRepository from '#repositories/service-user.repository.js';
 import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
 import BackOfficeAppError from '#utils/app-error.js';
 import { isCurrentStatus } from '#utils/current-status.js';
+import { databaseConnector } from '#utils/database-connector.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import logger from '#utils/logger.js';
 import { camelToScreamingSnake } from '#utils/string-utils.js';
@@ -278,6 +279,7 @@ export async function updateRepresentation(repId, payload) {
 
 	if (!updatedRep.siteVisitRequested) {
 		await neighbouringSitesRepository.disconnectSite(
+			databaseConnector,
 			updatedRep.appealId,
 			updatedRep.represented.addressId
 		);
@@ -287,6 +289,7 @@ export async function updateRepresentation(repId, payload) {
 		)
 	) {
 		await neighbouringSitesRepository.connectSite(
+			databaseConnector,
 			updatedRep.appealId,
 			updatedRep.represented.addressId
 		);
