@@ -152,7 +152,7 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                 </thead>
                 <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 9 4 3 2 4 5"
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
@@ -167,7 +167,7 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                         </td>
                     </tr>
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Appeal 1 2 9 2 8 5"
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="1 2 9 2 8 5"
                             data-cy="129285">129285</a>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
@@ -381,7 +381,7 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                 </thead>
                 <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 9 4 3 2 4 5"
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
@@ -396,7 +396,7 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                         </td>
                     </tr>
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Appeal 1 2 9 2 8 5"
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="1 2 9 2 8 5"
                             data-cy="129285">129285</a>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
@@ -590,7 +590,7 @@ exports[`national-list GET / should render national list - appeal procedure type
                 </thead>
                 <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 9 4 3 2 4 5"
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
@@ -763,7 +763,7 @@ exports[`national-list GET / should render national list - appeal type filter ap
                 </thead>
                 <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 9 4 3 2 4 5"
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
@@ -936,7 +936,7 @@ exports[`national-list GET / should render national list - case team filter appl
                 </thead>
                 <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 9 4 3 2 4 5"
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
@@ -1109,7 +1109,7 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                 </thead>
                 <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 9 4 3 2 4 5"
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
@@ -1124,7 +1124,7 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                         </td>
                     </tr>
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Appeal 1 2 9 2 8 5"
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="1 2 9 2 8 5"
                             data-cy="129285">129285</a>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
@@ -1307,7 +1307,7 @@ exports[`national-list GET / should render national list - no search term - filt
                 </thead>
                 <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 9 4 3 2 4 5"
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
@@ -1492,7 +1492,7 @@ exports[`national-list GET / should render national list - search term - filter 
                 </thead>
                 <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 9 4 3 2 4 5"
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
@@ -1812,7 +1812,7 @@ exports[`national-list GET / should render national list - search term 1`] = `
                 </thead>
                 <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 9 4 3 2 4 5"
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
@@ -1827,7 +1827,7 @@ exports[`national-list GET / should render national list - search term 1`] = `
                         </td>
                     </tr>
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Appeal 1 2 9 2 8 5"
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="1 2 9 2 8 5"
                             data-cy="129285">129285</a>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
@@ -2000,7 +2000,7 @@ exports[`national-list GET / should render the header with navigation containing
                 </thead>
                 <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 9 4 3 2 4 5"
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
@@ -2015,7 +2015,7 @@ exports[`national-list GET / should render the header with navigation containing
                         </td>
                     </tr>
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Appeal 1 2 9 2 8 5"
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="1 2 9 2 8 5"
                             data-cy="129285">129285</a>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>

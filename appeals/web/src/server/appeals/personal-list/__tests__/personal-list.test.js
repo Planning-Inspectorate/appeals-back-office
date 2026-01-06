@@ -191,7 +191,7 @@ describe('personal-list', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain(
 				'href=/appeals-service/appeal-details/28535?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30 ' +
-					'aria-label="Appeal 6 0 2 8 5 3 5">6028535</a>' +
+					'aria-label="6 0 2 8 5 3 5">6028535</a>' +
 					'</strong></td>' +
 					'<td class="govuk-table__cell">' +
 					'<strong class="govuk-tag govuk-tag--grey">Lead</strong>'
@@ -214,7 +214,7 @@ describe('personal-list', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain(
 				'href=/appeals-service/appeal-details/28524?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30 ' +
-					'aria-label="Appeal 6 0 2 8 5 2 4">6028524</a>' +
+					'aria-label="6 0 2 8 5 2 4">6028524</a>' +
 					'</strong></td>' +
 					'<td class="govuk-table__cell">' +
 					'<strong class="govuk-tag govuk-tag--grey">Child</strong>'
@@ -237,7 +237,7 @@ describe('personal-list', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain(
 				'/appeals-service/appeal-details/28526?backUrl=%2Fappeals-service%2Fpersonal-list%3FpageNumber%3D1%26pageSize%3D30 ' +
-					'aria-label="Appeal 6 0 2 8 5 2 6">6028526</a>' +
+					'aria-label="6 0 2 8 5 2 6">6028526</a>' +
 					'</strong></td>' +
 					'<td class="govuk-table__cell"></td>'
 			);

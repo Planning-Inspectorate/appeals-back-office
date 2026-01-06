@@ -512,7 +512,7 @@ export function nationalListPage(
 								{
 									html: `<a class="govuk-link" href="/appeals-service/appeal-details/${
 										appeal.appealId
-									}" aria-label="Appeal ${numberToAccessibleDigitLabel(
+									}" aria-label="${numberToAccessibleDigitLabel(
 										shortReference || ''
 									)}" data-cy="${shortReference}" >${shortReference}</a>`
 								},
