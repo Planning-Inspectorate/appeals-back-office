@@ -1,5 +1,5 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
+import { dateISOStringToDayMonthYearHourMinute, getExampleDateHint } from '#lib/dates.js';
 import { dateInput } from '#lib/mappers/index.js';
 import { contactPlanningInspectorateDateField } from './contact-planning-inspectorate-date.constants.js';
 
@@ -62,7 +62,7 @@ export const changeContactPlanningInspectorateDatePage = (
 				},
 				legendText: `When did you contact the Planning Inspectorate?`,
 				legendIsPageHeading: true,
-				hint: 'For example, 31 3 2024',
+				hint: `For example, ${getExampleDateHint(-27)}`,
 				errors: errors
 			})
 		]

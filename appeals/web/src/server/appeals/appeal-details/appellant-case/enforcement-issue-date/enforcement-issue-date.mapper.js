@@ -1,5 +1,5 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
+import { dateISOStringToDayMonthYearHourMinute, getExampleDateHint } from '#lib/dates.js';
 import { dateInput } from '#lib/mappers/index.js';
 import { enforcementIssueDateField } from './enforcement-issue-date.constants.js';
 
@@ -66,7 +66,7 @@ export const changeEnforcementIssueDatePage = (
 				},
 				legendText: `What is the issue date on your enforcement notice?`,
 				legendIsPageHeading: true,
-				hint: 'For example, 31 3 2024',
+				hint: `For example, ${getExampleDateHint(-27)}`,
 				errors: errors
 			})
 		]

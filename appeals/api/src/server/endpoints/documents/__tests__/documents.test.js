@@ -79,14 +79,13 @@ describe('/appeals/:appealId/document-folders/:folderId', () => {
 	});
 });
 
-describe('/appeals/:appealId/documents/:documentId', () => {
+describe('/appeals/documents/:documentId', () => {
 	describe('GET', () => {
 		test('gets a single document', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 			databaseConnector.document.findUnique.mockResolvedValue(savedFolder.documents[0]);
 
 			const response = await request
-				.get(`/appeals/${householdAppeal.id}/documents/${savedFolder.documents[0].guid}`)
+				.get(`/appeals/documents/${savedFolder.documents[0].guid}`)
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(response.status).toEqual(200);
@@ -116,7 +115,9 @@ describe('/appeals/:appealId/documents/:documentId', () => {
 			});
 		});
 	});
+});
 
+describe('/appeals/:appealId/documents/:documentId', () => {
 	describe('PATCH', () => {
 		databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 		databaseConnector.user.upsert.mockResolvedValue({

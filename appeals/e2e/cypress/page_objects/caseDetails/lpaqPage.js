@@ -61,4 +61,32 @@ export class LpaqPage extends Page {
 	assertFieldNotPresent(labelText) {
 		cy.contains('.govuk-summary-list__key', labelText).should('not.exist');
 	}
+
+	assertNeighbourSiteAddress({ line1, line2, town, county, postcode }) {
+		const expectedLines = [line1, line2, town, county, postcode];
+
+		cy.contains('Address of the neighbour’s land or property')
+			.siblings('.govuk-summary-list__value')
+			.invoke('text')
+			.then((text) => {
+				const normalized = text.replace(/\s+/g, ' ').trim();
+
+				expectedLines.forEach((line) => {
+					expect(normalized).to.include(line);
+				});
+			});
+	}
+
+	assertDesignatedSites(values) {
+		cy.contains('Is the development in, near or likely to affect any designated sites?')
+			.siblings('.govuk-summary-list__value')
+			.invoke('text')
+			.then((text) => {
+				const normalized = text.replace(/\s+/g, ' ').trim();
+
+				values.forEach((line) => {
+					expect(normalized).to.include(line);
+				});
+			});
+	}
 }

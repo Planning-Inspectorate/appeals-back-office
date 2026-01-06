@@ -2506,7 +2506,7 @@ describe('LPA Questionnaire review', () => {
 		beforeEach(() => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, lpaqAppealData);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(() => {
 			nock.cleanAll();
@@ -2647,9 +2647,9 @@ describe('LPA Questionnaire review', () => {
 		beforeEach(() => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, lpaqAppealData);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 		});
 		afterEach(() => {
@@ -3577,7 +3577,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []);
 			nock('http://test/').patch(`/appeals/1/documents`).reply(200, []);
 			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 
 		it(`should render the change document name page for the document being changed`, async () => {
@@ -3600,7 +3600,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []);
 			nock('http://test/').patch('/appeals/1/documents/1').reply(200, {});
 			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 
 		it(`should send a patch request to the appeal documents endpoint and redirect to the manage individual document page, if a new valid document name is provided`, async () => {
@@ -3775,7 +3775,7 @@ describe('LPA Questionnaire review', () => {
 				.get('/appeals/1/document-folders/1')
 				.reply(200, documentFolderInfo)
 				.persist();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(() => {
 			nock.cleanAll();
@@ -3844,7 +3844,7 @@ describe('LPA Questionnaire review', () => {
 				.get('/appeals/1/document-folders/1')
 				.reply(200, documentFolderInfo)
 				.persist();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(() => {
 			nock.cleanAll();
@@ -3923,7 +3923,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render a 404 error page if the folderId is not valid', async () => {
 			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 			const response = await request.get(`${baseUrl}/manage-documents/99/`);
 
@@ -4054,12 +4054,12 @@ describe('LPA Questionnaire review', () => {
 				.get('/appeals/1/document-folders/1')
 				.reply(200, documentFolderInfo)
 				.persist();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo).persist();
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo).persist();
 		});
 
 		it('should render a 404 error page if the folderId is not valid', async () => {
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 
 			const response = await request.get(`${baseUrl}/manage-documents/99/1`);
@@ -4075,7 +4075,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render a 404 error page if the documentId is not valid', async () => {
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 
 			const response = await request.get(`${baseUrl}/manage-documents/1/99`);
@@ -4091,7 +4091,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null', async () => {
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 
 			const response = await request.get(`${baseUrl}/manage-documents/1/1`);
@@ -4124,7 +4124,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_scanned"', async () => {
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfoNotChecked);
 
 			const response = await request.get(`${baseUrl}/manage-documents/1/1`);
@@ -4147,7 +4147,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "affected"', async () => {
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfoVirusFound);
 
 			const response = await request.get(`${baseUrl}/manage-documents/1/1`);
@@ -4180,7 +4180,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned"', async () => {
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfoChecked);
 
 			const response = await request.get(`${baseUrl}/manage-documents/1/1`);
@@ -4205,7 +4205,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render the manage individual document page without late entry tag in the date received row if the latest version of the document is not marked as late entry', async () => {
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfo);
 
 			const response = await request.get(`${baseUrl}/manage-documents/1/1`);
@@ -4221,7 +4221,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render the manage individual document page with late entry tag in the date received row if the latest version of the document is marked as late entry, and a document history item for each version, with late entry tag in the history item document name column for versions marked as late entry', async () => {
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileMultipleVersionsInfoWithLatestAsLateEntry);
 
 			const response = await request.get(`${baseUrl}/manage-documents/1/1`);
@@ -4246,12 +4246,12 @@ describe('LPA Questionnaire review', () => {
 				.reply(200, { appealType: APPEAL_TYPE.HOUSEHOLDER })
 				.persist();
 			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 
 		it('should render the delete document page with the expected content when there is a single document version', async () => {
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, documentFileVersionsInfoChecked);
 
 			const response = await request.get(`${baseUrl}/manage-documents/1/1/1/delete`);
@@ -4281,7 +4281,7 @@ describe('LPA Questionnaire review', () => {
 			multipleVersionsDocument.allVersions.push(multipleVersionsDocument.allVersions[0]);
 
 			nock('http://test/')
-				.get('/appeals/1/documents/1/versions')
+				.get('/appeals/documents/1/versions')
 				.reply(200, multipleVersionsDocument);
 
 			const response = await request.get(`${baseUrl}/manage-documents/1/1/1/delete`);

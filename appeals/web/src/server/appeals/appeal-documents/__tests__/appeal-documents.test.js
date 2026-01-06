@@ -79,7 +79,7 @@ describe('appeal-documents', () => {
 			nock('http://test/')
 				.get(`/appeals/${validAppealId}/document-folders/1`)
 				.reply(200, validFolders[0]);
-			nock('http://test/').get(`/appeals/${invalidAppealId}/documents/${documentId}`).reply(404);
+			nock('http://test/').get(`/appeals/documents/${documentId}`).reply(404);
 
 			const response = await request.get(
 				getControllerEndpoint(validAppealId, validFolderId, documentId)
@@ -117,7 +117,7 @@ describe('appeal-documents', () => {
 				.get(`/appeals/${validAppealId}/document-folders/1`)
 				.reply(200, validFolders[0]);
 			nock('http://test/')
-				.get(`/appeals/${validAppealId}/documents/${documentId}`)
+				.get(`/appeals/documents/${documentId}`)
 				.reply(200, {
 					caseId: validAppealId,
 					id: documentId,
@@ -129,7 +129,7 @@ describe('appeal-documents', () => {
 					}
 				});
 			nock('http://test/')
-				.get(`/appeals/${validAppealId}/documents/${documentId}/versions`)
+				.get(`/appeals/documents/${documentId}/versions`)
 				.reply(200, documentFileVersionsInfo);
 
 			const response = await request.get(
@@ -176,10 +176,10 @@ describe('appeal-documents', () => {
 				.get(`/appeals/${validAppealId}/document-folders/1`)
 				.reply(200, validFolders[0]);
 			nock('http://test/')
-				.get(`/appeals/${validAppealId}/documents/${documentId}`)
+				.get(`/appeals/documents/${documentId}`)
 				.reply(200, { latestDocumentVersion: {} });
 			nock('http://test/')
-				.get(`/appeals/${validAppealId}/documents/${documentId}/versions`)
+				.get(`/appeals/documents/${documentId}/versions`)
 				.reply(200, documentFileVersionsInfo);
 
 			const response = await request.get(
@@ -244,9 +244,7 @@ describe('appeal-documents', () => {
 				.get(`/appeals/${validAppealId}?include=all`)
 				.reply(200, { id: validAppealId });
 			nock('http://test/').get(`/appeals/${validAppealId}/document-folders/1`).reply(200, folder);
-			nock('http://test/')
-				.get(`/appeals/${validAppealId}/documents/${documentId}`)
-				.reply(200, fileInfo);
+			nock('http://test/').get(`/appeals/documents/${documentId}`).reply(200, fileInfo);
 			nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []);
 			nock('http://test/')
 				.patch(`/appeals/${validAppealId}/documents/${documentId}`)

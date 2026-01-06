@@ -22,9 +22,9 @@ export const validateCaseFolderId = async (req, res, next) => {
  * @returns {Promise<void>}
  */
 export const validateCaseDocumentId = async (req, res, next) => {
-	const { appealId, documentId } = req.params;
+	const { documentId } = req.params;
 	if (documentId) {
-		const document = await getFileInfo(req.apiClient, appealId, documentId);
+		const document = await getFileInfo(req.apiClient, documentId);
 		if (!document || !document.latestDocumentVersion) {
 			return res.status(404).render('app/404.njk');
 		}

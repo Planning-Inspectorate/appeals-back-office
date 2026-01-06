@@ -64,7 +64,7 @@ export const renderUpdateDocumentCheckDetails = async (request, response) => {
 	const baseUrl = request.baseUrl;
 	const file = inspectorDecision?.files?.[0];
 
-	const fileInfo = await getFileInfo(request.apiClient, appealId, decision.documentId);
+	const fileInfo = await getFileInfo(request.apiClient, decision.documentId);
 
 	if (!fileInfo) {
 		return response.status(404).render('app/404');

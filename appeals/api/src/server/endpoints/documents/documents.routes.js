@@ -1,5 +1,5 @@
 import { getAppealValidator } from '#endpoints/appeal-details/appeal-details.validators.js';
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controller from './documents.controller.js';
@@ -35,7 +35,7 @@ router.get(
 		#swagger.responses[404] = {}
 	 */
 	getAppealValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	controller.getFolders
 );
 
@@ -63,16 +63,16 @@ router.get(
 		#swagger.responses[404] = {}
 	 */
 	getAppealValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	getFolderIdValidator,
 	asyncHandler(controller.getFolder)
 );
 
 router.get(
-	'/:appealId/documents/:documentId',
+	'/documents/:documentId',
 	/*
 		#swagger.tags = ['Documents']
-		#swagger.path = '/appeals/{appealId}/documents/{documentId}'
+		#swagger.path = '/appeals/documents/{documentId}'
 		#swagger.description = Returns a single document by id
 		#swagger.parameters['azureAdUserId'] = {
 			in: 'header',
@@ -86,18 +86,16 @@ router.get(
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
 	 */
-	getAppealValidator,
-	checkAppealExistsByIdAndAddToRequest,
 	getDocumentIdValidator,
 	validateDocumentAndAddToRequest,
 	asyncHandler(controller.getDocument)
 );
 
 router.get(
-	'/:appealId/documents/:documentId/versions',
+	'/documents/:documentId/versions',
 	/*
 		#swagger.tags = ['Documents']
-		#swagger.path = '/appeals/{appealId}/documents/{documentId}/versions'
+		#swagger.path = '/appeals/documents/{documentId}/versions'
 		#swagger.description = Returns a single document by id
 		#swagger.parameters['azureAdUserId'] = {
 			in: 'header',
@@ -111,10 +109,8 @@ router.get(
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
 	 */
-	getAppealValidator,
-	checkAppealExistsByIdAndAddToRequest,
 	getDocumentIdValidator,
-	asyncHandler(controller.getDocumentAndVersions)
+	asyncHandler(controller.getDocumentAndVersions) // /appeals/{appealId}/documents/{documentId}/versions
 );
 
 router.post(
@@ -142,7 +138,7 @@ router.post(
 		#swagger.responses[404] = {}
 	 */
 	getAppealValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest(['appellantCase', 'lpaQuestionnaire']),
 	getDocumentsValidator,
 	asyncHandler(controller.addDocuments)
 );
@@ -172,7 +168,7 @@ router.post(
 		#swagger.responses[404] = {}
 	 */
 	getAppealValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest(['appellant', 'agent', 'lpa', 'address']),
 	getDocumentIdValidator,
 	validateDocumentAndAddToRequest,
 	getDocumentValidator,
@@ -204,7 +200,7 @@ router.patch(
 		#swagger.responses[404] = {}
 	 */
 	patchDocumentsValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	asyncHandler(controller.updateDocuments)
 );
 
@@ -233,7 +229,7 @@ router.patch(
 		#swagger.responses[404] = {}
 	 */
 	patchDocumentFileNameValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	asyncHandler(controller.updateDocumentFileName)
 );
 
@@ -266,10 +262,10 @@ router.patch(
 );
 
 router.delete(
-	'/:appealId/documents/:documentId/:version',
+	'/documents/:documentId/:version',
 	/*
 		#swagger.tags = ['Documents']
-		#swagger.path = '/appeals/{appealId}/documents/{documentId}/{version}'
+		#swagger.path = '/appeals/documents/{documentId}/{version}'
 		#swagger.description = Delete a document version and sets the previous as current version
 		#swagger.parameters['azureAdUserId'] = {
 			in: 'header',
@@ -283,8 +279,6 @@ router.delete(
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
 	 */
-	getAppealValidator,
-	checkAppealExistsByIdAndAddToRequest,
 	getDocumentIdValidator,
 	validateDocumentAndAddToRequest,
 	asyncHandler(controller.deleteDocumentVersion)

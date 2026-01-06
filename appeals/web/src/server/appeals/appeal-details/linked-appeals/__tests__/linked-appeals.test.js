@@ -926,7 +926,7 @@ describe('linked-appeals', () => {
 				.get('/appeals/1?include=all')
 				.reply(200, inspectorDecisionData)
 				.persist();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(teardown);
 
