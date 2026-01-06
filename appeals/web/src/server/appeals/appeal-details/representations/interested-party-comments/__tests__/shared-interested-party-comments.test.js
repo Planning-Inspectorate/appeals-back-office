@@ -1,4 +1,3 @@
-import { paginationDefaultSettings } from '#appeals/appeal.constants';
 import {
 	interestedPartyCommentsPublished,
 	publishedAppealData
@@ -12,6 +11,16 @@ import supertest from 'supertest';
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
+
+/**
+ * Pagination parameters for fetching interested party comments - note no pagination UI is implemented yet,
+ * so we fetch a large number of comments to display all at once in 1 page
+ * @type {{pageNumber: number, pageSize: number}}
+ */
+const paginationParameters = {
+	pageNumber: 1,
+	pageSize: 1000
+};
 
 describe('Interested Party Comments (Shared/Published View)', () => {
 	beforeEach(() => {
@@ -28,8 +37,8 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 				.query({
 					type: 'comment',
 					status: 'published',
-					pageNumber: paginationDefaultSettings.firstPageNumber,
-					pageSize: paginationDefaultSettings.pageSize
+					pageNumber: paginationParameters.pageNumber,
+					pageSize: paginationParameters.pageSize
 				})
 				.reply(200, interestedPartyCommentsPublished);
 		});
@@ -85,15 +94,15 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 				.query({
 					type: 'comment',
 					status: 'published',
-					pageNumber: paginationDefaultSettings.firstPageNumber,
-					pageSize: paginationDefaultSettings.pageSize
+					pageNumber: paginationParameters.pageNumber,
+					pageSize: paginationParameters.pageSize
 				})
 				.reply(200, {
 					itemCount: 0,
 					items: [],
 					page: 1,
 					pageCount: 0,
-					pageSize: paginationDefaultSettings.pageSize
+					pageSize: paginationParameters.pageSize
 				});
 			nock('http://test/').get('/appeals/2?include=all').reply(200, publishedAppealData);
 		});
@@ -144,8 +153,8 @@ describe.each([
 				.query({
 					type: 'comment',
 					status: 'published',
-					pageNumber: paginationDefaultSettings.firstPageNumber,
-					pageSize: paginationDefaultSettings.pageSize
+					pageNumber: paginationParameters.pageNumber,
+					pageSize: paginationParameters.pageSize
 				})
 				.reply(200, interestedPartyCommentsPublished);
 		});
