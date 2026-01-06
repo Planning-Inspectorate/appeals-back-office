@@ -1,6 +1,11 @@
+import { getSessionValuesForAppeal } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
+import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
+import { preserveQueryString } from '#lib/url-utilities.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { selectProcedurePage } from './change-procedure-selection.mapper.js';
+
+const getBackLinkUrl = backLinkGenerator('changeProcedureType');
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getSelectProcedure = async (request, response) => {
@@ -19,14 +24,14 @@ const renderSelectProcedure = async (request, response) => {
 		errors
 	} = request;
 
-	const sessionValues =
-		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
+	const sessionValues = getSessionValuesForAppeal(request, 'changeProcedureType', appealId);
+
+	const cyaUrl = `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${sessionValues.appealProcedure}/check-and-confirm`;
+	const backUrl = getBackLinkUrl(request, null, cyaUrl);
 
 	const mappedPageContent = selectProcedurePage(
 		appealReference,
-		request.query?.backUrl
-			? String(request.query?.backUrl)
-			: `/appeals-service/appeal-details/${appealId}`,
+		backUrl,
 		sessionValues.appealProcedure,
 		errors ? errors['appealProcedure']?.msg : undefined
 	);
@@ -53,8 +58,7 @@ export const postChangeSelectProcedure = async (request, response) => {
 			return renderSelectProcedure(request, response);
 		}
 
-		const sessionValues =
-			request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
+		const sessionValues = getSessionValuesForAppeal(request, 'changeProcedureType', appealId);
 		const newProcedureType = sessionValues.appealProcedure;
 
 		if (newProcedureType !== sessionValues.selectedProcedureType) {
@@ -80,17 +84,26 @@ export const postChangeSelectProcedure = async (request, response) => {
 		switch (newProcedureType) {
 			case APPEAL_CASE_PROCEDURE.WRITTEN: {
 				return response.redirect(
-					`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-timetable`
+					preserveQueryString(
+						request,
+						`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-timetable`
+					)
 				);
 			}
 			case APPEAL_CASE_PROCEDURE.HEARING: {
 				return response.redirect(
-					`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-event-date-known`
+					preserveQueryString(
+						request,
+						`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-event-date-known`
+					)
 				);
 			}
 			case APPEAL_CASE_PROCEDURE.INQUIRY: {
 				return response.redirect(
-					`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/date`
+					preserveQueryString(
+						request,
+						`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/date`
+					)
 				);
 			}
 		}

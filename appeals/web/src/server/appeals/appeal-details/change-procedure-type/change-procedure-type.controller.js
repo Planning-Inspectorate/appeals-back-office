@@ -1,7 +1,8 @@
 /** @typedef {import('express').NextFunction} NextFunction */
 
 import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
-import { isAtEditEntrypoint } from '#lib/edit-utilities.js';
+import { getSessionValuesForAppeal, isAtEditEntrypoint } from '#lib/edit-utilities.js';
+import { preserveQueryString } from '#lib/url-utilities.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { isEmpty, pick } from 'lodash-es';
 
@@ -61,9 +62,12 @@ import { isEmpty, pick } from 'lodash-es';
  * @param {NextFunction} next
  */
 export const updateChangeProcedureTypeSession = (request, response, next) => {
-	/** @type {ChangeProcedureType} */
-	let sessionValues =
-		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
+	const {
+		currentAppeal: { appealId }
+	} = request;
+	let sessionValues = /** @type {ChangeProcedureType} */ (
+		/** @type {unknown} */ (getSessionValuesForAppeal(request, 'changeProcedureType', appealId))
+	);
 	const appealDetails = request.currentAppeal;
 
 	sessionValues.existingAppealProcedure = appealDetails.procedureType.toLowerCase();
@@ -208,10 +212,12 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
 		sessionValues.appealTimetable.proofOfEvidenceAndWitnessesDueDate ??
 		appealDetails.appealTimetable.proofOfEvidenceAndWitnessesDueDate;
 
-	if (!request.session.changeProcedureType) {
-		request.session.changeProcedureType = {};
+	const editing = request.query.editEntrypoint;
+	const sessionKey = editing ? 'changeProcedureType/edit' : 'changeProcedureType';
+	if (!request.session[sessionKey]) {
+		request.session[sessionKey] = {};
 	}
-	request.session.changeProcedureType[request.currentAppeal.appealId] = sessionValues;
+	request.session[sessionKey][request.currentAppeal.appealId] = sessionValues;
 	next();
 };
 
@@ -222,7 +228,13 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
  */
 export const getBackLinkUrl = (request, url) => {
 	const baseUrl = `/appeals-service/appeal-details/${request.currentAppeal.appealId}/change-appeal-procedure-type`;
-	return isAtEditEntrypoint(request)
-		? `${baseUrl}/${request.params.appealProcedure}/check-and-confirm`
-		: `${baseUrl}/${url}`;
+	const { appealId } = request.currentAppeal;
+	const sessionValues = getSessionValuesForAppeal(request, 'changeProcedureType', appealId);
+	const newProcedureType = sessionValues.appealProcedure;
+	return preserveQueryString(
+		request,
+		isAtEditEntrypoint(request)
+			? `${baseUrl}/${newProcedureType}/check-and-confirm`
+			: `${baseUrl}/${url}`
+	);
 };

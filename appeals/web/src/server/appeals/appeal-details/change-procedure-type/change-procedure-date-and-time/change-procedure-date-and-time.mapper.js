@@ -2,16 +2,16 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateInput } from '#lib/mappers/components/page-components/date.js';
 import { timeInput } from '#lib/mappers/components/page-components/time.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
-import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /**
  * @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal
  * @param {Appeal} appealData
  * @param {{ day?: string | number, month?: string | number, year?: string | number, hour?: string | number, minute?: string | number }} values
  * @param {string} newProcedureType
+ * @param {string} backLinkUrl
  * @returns {PageContent}
  */
-export function eventChangeProcedureDatePage(appealData, values, newProcedureType) {
+export function eventChangeProcedureDatePage(appealData, values, newProcedureType, backLinkUrl) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const date = { day: values.day || '', month: values.month || '', year: values.year || '' };
 	const time =
@@ -41,10 +41,7 @@ export function eventChangeProcedureDatePage(appealData, values, newProcedureTyp
 	/** @type {PageContent} */
 	return {
 		title: `Date and time - set up ${newProcedureType} - ${shortAppealReference}`,
-		backLinkUrl:
-			newProcedureType === APPEAL_CASE_PROCEDURE.HEARING
-				? `/appeals-service/appeal-details/${appealData.appealId}/change-appeal-procedure-type/${newProcedureType}/change-event-date-known`
-				: `/appeals-service/appeal-details/${appealData.appealId}/change-appeal-procedure-type/change-selected-procedure-type`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference} - update appeal procedure`,
 		heading: `${capitalizeFirstLetter(newProcedureType)} date and time`,
 		pageComponents: [dateComponent, timeComponent]

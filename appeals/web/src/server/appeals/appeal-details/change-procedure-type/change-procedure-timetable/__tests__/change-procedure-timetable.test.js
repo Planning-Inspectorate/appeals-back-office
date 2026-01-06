@@ -163,6 +163,59 @@ describe('Change procedure timetable', () => {
 				});
 				expect(element.innerHTML).toContain('Continue</button>');
 			});
+
+			it('should have a back link to the previous page', async () => {
+				const appealData = {
+					...baseAppealData,
+					procedureType: appealProcedure,
+					appealTimetable: {
+						appealTimetableId: 1
+					}
+				};
+				appealData.appealType = APPEAL_TYPE.S78;
+				appealData.appealStatus = 'lpa_questionnaire';
+
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, { planningObligation: { hasObligation: true } })
+					.persist();
+
+				const response = await request.get(`${baseUrl}/${appealProcedure}/change-timetable`);
+				const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+				expect(bodyHtml.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+					appealProcedure === APPEAL_CASE_PROCEDURE.WRITTEN
+						? `${baseUrl}/change-selected-procedure-type`
+						: `${baseUrl}/${appealProcedure}/address-details`
+				);
+			});
+
+			it('should have a back link to the CYA page if editing', async () => {
+				const appealData = {
+					...baseAppealData,
+					procedureType: appealProcedure,
+					appealTimetable: {
+						appealTimetableId: 1
+					}
+				};
+				appealData.appealType = APPEAL_TYPE.S78;
+				appealData.appealStatus = 'lpa_questionnaire';
+
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, { planningObligation: { hasObligation: true } })
+					.persist();
+
+				const response = await request.get(
+					`${baseUrl}/${appealProcedure}/change-timetable?editEntrypoint=` +
+						`%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2F${appealProcedure}%2Fchange-timetable`
+				);
+				const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+				expect(bodyHtml.querySelector('.govuk-back-link')?.getAttribute('href')).toContain(
+					`${baseUrl}/${appealProcedure}/check-and-confirm`
+				);
+			});
 		});
 	});
 

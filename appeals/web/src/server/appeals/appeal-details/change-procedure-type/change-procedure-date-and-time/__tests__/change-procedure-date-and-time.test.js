@@ -33,6 +33,7 @@ describe('change to inquiry date and time', () => {
 		};
 
 		let pageHtml;
+		let bodyHtml;
 		beforeAll(async () => {
 			// Mock API call for the appeal
 			nock('http://test/')
@@ -52,6 +53,7 @@ describe('change to inquiry date and time', () => {
 				`${baseUrl}/${appealId}/change-appeal-procedure-type/inquiry/date`
 			);
 			pageHtml = parseHtml(response.text);
+			bodyHtml = parseHtml(response.text, { rootElement: 'body' });
 		});
 
 		it('renders the saved inquiry date scoped by appealId', async () => {
@@ -79,6 +81,27 @@ describe('change to inquiry date and time', () => {
 		it('should render a Time field', () => {
 			expect(pageHtml.querySelector('input#event-time-hour')).not.toBeNull();
 			expect(pageHtml.querySelector('input#event-time-minute')).not.toBeNull();
+		});
+
+		it('should have a back link to the select procedure type page', () => {
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/change-appeal-procedure-type/change-selected-procedure-type`
+			);
+		});
+
+		it('should have a back link to the CYA page if editing', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/change-appeal-procedure-type/inquiry/date?editEntrypoint=` +
+					'%2Fappeals-service%2Fappeal-details%2F7%2Fchange-appeal-procedure-type%2Finquiry%2Fdate'
+			);
+			const html = parseHtml(response.text, { rootElement: 'body' });
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toContain(
+				`${baseUrl}/${appealId}/change-appeal-procedure-type/inquiry/check-and-confirm`
+			);
 		});
 	});
 

@@ -28,6 +28,7 @@ describe('Change to inquiry address details', () => {
 	describe('GET /change-appeal-procedure-type/inquiry/address-details', () => {
 		const appealId = 2;
 
+		let bodyHtml;
 		let pageHtml;
 
 		beforeAll(async () => {
@@ -35,8 +36,11 @@ describe('Change to inquiry address details', () => {
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
 
-			const response = await request.get(`${baseUrl}/${appealId}/Inquiry/setup/address-details`);
+			const response = await request.get(
+				`${baseUrl}/${appealId}/change-appeal-procedure-type/inquiry/address-details`
+			);
 			pageHtml = parseHtml(response.text);
+			bodyHtml = parseHtml(response.text, { rootElement: 'body' });
 		});
 
 		it('should match the snapshot', () => {
@@ -65,6 +69,27 @@ describe('Change to inquiry address details', () => {
 
 		it('should render a text input for postcode', () => {
 			expect(pageHtml.querySelector('input[name="postCode"]')).not.toBeNull();
+		});
+
+		it('should have a back link to the address known page', () => {
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/change-appeal-procedure-type/inquiry/address-known`
+			);
+		});
+
+		it('should have a back link to the CYA page if editing', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/change-appeal-procedure-type/inquiry/address-details?editEntrypoint=` +
+					'%2Fappeals-service%2Fappeal-details%2F2%2Fchange-appeal-procedure-type%2Finquiry%2Faddress-details'
+			);
+			const html = parseHtml(response.text, { rootElement: 'body' });
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toContain(
+				`${baseUrl}/${appealId}/change-appeal-procedure-type/inquiry/check-and-confirm`
+			);
 		});
 	});
 

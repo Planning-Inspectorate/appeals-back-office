@@ -28,6 +28,7 @@ describe('change procedure estimation', () => {
 		const appealId = 2;
 
 		let pageHtml;
+		let bodyHtml;
 
 		beforeAll(async () => {
 			nock('http://test/')
@@ -53,6 +54,7 @@ describe('change procedure estimation', () => {
 				`${baseUrl}/${appealId}/change-appeal-procedure-type/Inquiry/estimation`
 			);
 			pageHtml = parseHtml(response.text, { skipPrettyPrint: true });
+			bodyHtml = parseHtml(response.text, { rootElement: 'body' });
 		});
 
 		it('should match the snapshot', () => {
@@ -79,6 +81,27 @@ describe('change procedure estimation', () => {
 			);
 			expect(pageHtml.innerHTML).toContain(
 				`id="estimation-days" name="estimationDays" type="text" value="8"`
+			);
+		});
+
+		it('should have a back link to the date page', () => {
+			expect(bodyHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/change-appeal-procedure-type/inquiry/date`
+			);
+		});
+
+		it('should have a back link to the CYA page if editing', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/change-appeal-procedure-type/inquiry/estimation?editEntrypoint=` +
+					'%2Fappeals-service%2Fappeal-details%2F2%2Fchange-appeal-procedure-type%2Finquiry%2Festimation'
+			);
+			const html = parseHtml(response.text, { rootElement: 'body' });
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toContain(
+				`${baseUrl}/${appealId}/change-appeal-procedure-type/inquiry/check-and-confirm`
 			);
 		});
 	});

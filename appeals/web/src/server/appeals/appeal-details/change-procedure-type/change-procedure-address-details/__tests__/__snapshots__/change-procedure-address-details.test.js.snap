@@ -15,12 +15,12 @@ exports[`Change to inquiry address details GET /change-appeal-procedure-type/inq
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="address-line-1">Address line 1</label>
                             <input class="govuk-input" id="address-line-1" name="addressLine1"
-                            type="text" value="">
+                            type="text" value="96 The Avenue">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
                             <input class="govuk-input" id="address-line-2"
-                            name="addressLine2" type="text" value="">
+                            name="addressLine2" type="text" value="Maidstone">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="town">Town or city</label>
@@ -30,7 +30,7 @@ exports[`Change to inquiry address details GET /change-appeal-procedure-type/inq
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="county">County (optional)</label>
                             <input class="govuk-input govuk-input govuk-input--width-20"
-                            id="county" name="county" type="text" value="">
+                            id="county" name="county" type="text" value="Kent">
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="post-code">Postcode</label>

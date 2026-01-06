@@ -1,3 +1,6 @@
+import { getSessionValuesForAppeal } from '#lib/edit-utilities.js';
+import { preserveQueryString } from '#lib/url-utilities.js';
+import { getBackLinkUrl } from '../change-procedure-type.controller.js';
 import { changeAddressKnownPage } from './change-procedure-address-known.mapper.js';
 
 /**
@@ -8,24 +11,26 @@ export const getChangeInquiryAddressKnown = async (request, response) => {
 	return renderChangeInquiryAddressKnown(
 		request,
 		response,
-		'change',
-		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {}
+		getSessionValuesForAppeal(request, 'changeProcedureType', request.currentAppeal.appealId)
 	);
 };
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {{addressKnown: string}} [values]
- * @param {'change' | 'setup'} action
+ * @param {Record<string, string>} [values]
  */
-export const renderChangeInquiryAddressKnown = async (request, response, action, values) => {
+export const renderChangeInquiryAddressKnown = async (request, response, values) => {
 	const { errors } = request;
 	const appealDetails = request.currentAppeal;
-	const sessionValues =
-		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
+	const sessionValues = getSessionValuesForAppeal(
+		request,
+		'changeProcedureType',
+		request.currentAppeal.appealId
+	);
 	const newProcedureType = sessionValues.appealProcedure;
-	const mappedPageContent = changeAddressKnownPage(appealDetails, action, newProcedureType, values);
+	const backLinkUrl = getBackLinkUrl(request, `${newProcedureType}/estimation`);
+	const mappedPageContent = changeAddressKnownPage(appealDetails, backLinkUrl, values);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -39,17 +44,19 @@ export const renderChangeInquiryAddressKnown = async (request, response, action,
  */
 export const postChangeInquiryAddressKnown = async (request, response) => {
 	if (request.errors) {
-		return renderChangeInquiryAddressKnown(request, response, 'change');
+		return renderChangeInquiryAddressKnown(request, response);
 	}
 
 	const { appealId } = request.params;
-	const sessionValues =
-		request.session['changeProcedureType']?.[request.currentAppeal.appealId] || {};
+	const sessionValues = getSessionValuesForAppeal(request, 'changeProcedureType', appealId);
 	const newProcedureType = sessionValues.appealProcedure;
 
 	if (request.body.addressKnown === 'yes') {
 		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/address-details`
+			preserveQueryString(
+				request,
+				`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/address-details`
+			)
 		);
 	}
 

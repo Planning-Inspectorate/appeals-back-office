@@ -5,12 +5,12 @@ import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page
  * @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal
  * @param {Appeal} appealData
  * @param {string} action
- * @param {{estimationYesNo: string, estimationDays: number}} [values]
+ * @param {Record<string, string>} [values]
  * @param {import("@pins/express").ValidationErrors | undefined} errors
- * @param {string} newProcedureType
+ * @param {string} backLinkUrl
  * @returns {{backLinkUrl: string, title: string, pageComponents: {type: string, parameters: {name: string, fieldset: {legend: {classes: string, text: string, isPageHeading: boolean}}, idPrefix: string, items: [{conditional: {html: string}, text: string, value: string},{text: string, value: string}]}}[], preHeading: string}}
  */
-export function estimationPage(appealData, action, newProcedureType, errors, values) {
+export function estimationPage(appealData, action, backLinkUrl, errors, values) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const estimationComponent = {
 		type: 'radios',
@@ -63,7 +63,7 @@ export function estimationPage(appealData, action, newProcedureType, errors, val
 	/** @type {PageContent} */
 	return {
 		title: `Appeal - ${shortAppealReference} ${action === 'setup' ? 'start' : 'update'} case`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/change-appeal-procedure-type/${newProcedureType}/date`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference} - ${
 			action === 'setup' ? 'set up' : 'change'
 		} inquiry`,

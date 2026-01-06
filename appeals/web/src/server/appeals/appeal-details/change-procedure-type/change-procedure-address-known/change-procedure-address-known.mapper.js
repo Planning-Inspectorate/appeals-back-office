@@ -4,12 +4,11 @@ import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
 /**
  * @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal
  * @param {Appeal} appealData
- * @param {string} action
- * @param {{ addressKnown: string }} [values]
- * @param {string} newProcedureType
+ * @param {string} backLinkUrl
+ * @param {Record<string, string>} [values]
  * @returns {PageContent}
  */
-export function changeAddressKnownPage(appealData, action, newProcedureType, values) {
+export function changeAddressKnownPage(appealData, backLinkUrl, values) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	const addressKnownComponent = yesNoInput({
@@ -23,7 +22,7 @@ export function changeAddressKnownPage(appealData, action, newProcedureType, val
 	/** @type {PageContent} */
 	return {
 		title: `Address - start case - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/change-appeal-procedure-type/${newProcedureType}/estimation`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference} - update appeal procedure`,
 		pageComponents: [addressKnownComponent]
 	};
