@@ -1,4 +1,4 @@
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controller from './appeal-status.controller.js';
@@ -28,7 +28,7 @@ router.post(
         }
         #swagger.responses[400] = {}
 	*/
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	validateAppealStatusRollBackRequest,
 	asyncHandler(controller.rollBackAppealStatus)
 );
@@ -51,7 +51,7 @@ router.get(
 		#swagger.responses[400] = {}
         #swagger.responses[404] = {}
 	*/
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	getAppealStatusDateValidator,
 	asyncHandler(controller.getAppealStatusCreatedDate)
 );
