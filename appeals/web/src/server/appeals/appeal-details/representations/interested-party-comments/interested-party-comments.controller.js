@@ -9,6 +9,16 @@ import {
 import * as interestedPartyCommentsService from './interested-party-comments.service.js';
 
 /**
+ * Pagination parameters for fetching interested party comments - note no pagination UI is implemented yet,
+ * so we fetch a large number of comments to display all at once in 1 page
+ * @type {{pageNumber: number, pageSize: number}}
+ */
+const paginationParameters = {
+	pageNumber: 1,
+	pageSize: 1000
+};
+
+/**
  *
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
@@ -26,10 +36,6 @@ export const handleInterestedPartyComments = (request, response) =>
  */
 export async function renderInterestedPartyComments(request, response) {
 	const { errors, currentAppeal, session } = request;
-	const paginationParameters = {
-		pageNumber: 1,
-		pageSize: 1000
-	};
 
 	if (currentAppeal?.appellantCaseId == null) {
 		return response.status(404).render('app/404.njk');
@@ -86,7 +92,9 @@ export async function renderSharedInterestedPartyComments(request, response) {
 	const comments = await interestedPartyCommentsService.getInterestedPartyComments(
 		request.apiClient,
 		currentAppeal.appealId,
-		'published'
+		'published',
+		paginationParameters.pageNumber,
+		paginationParameters.pageSize
 	);
 
 	const addInterestedPartCommentsLink = addBackLinkQueryToUrl(

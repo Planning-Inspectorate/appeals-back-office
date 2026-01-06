@@ -154,7 +154,7 @@ export async function generateAllPdfs(currentAppealData, apiClient) {
 				const promises = statuses.map((s) =>
 					apiClient
 						.get(`appeals/${appealId}/reps`, {
-							searchParams: { type: 'comment', status: s, pageNumber: 1, pageSize: 100 }
+							searchParams: { type: 'comment', status: s, pageNumber: 1, pageSize: 1000 }
 						})
 						.json()
 						.catch(() => ({ items: [] }))
