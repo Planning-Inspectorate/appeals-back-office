@@ -1,4 +1,4 @@
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import {
@@ -39,7 +39,7 @@ router.post(
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
 	 */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	createNeighbouringSiteValidator,
 	asyncHandler(addNeighbouringSite)
 );
@@ -69,7 +69,7 @@ router.patch(
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
 	 */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	updateNeighbouringSiteValidator,
 	asyncHandler(updateNeighbouringSite)
 );
@@ -99,7 +99,7 @@ router.delete(
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
 	 */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	deleteNeighbouringSiteValidator,
 	asyncHandler(removeNeighbouringSite)
 );
