@@ -63,89 +63,84 @@ afterEach(() => {
 	cy.deleteAppeals(appeal);
 });
 it('Can add rule 6 party', () => {
-	// Setup: Add inquiry via API
-	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-		cy.addInquiryViaApi(caseObj, inquiryDate);
+	// find case and open inquiry section
+	cy.visit(urlPaths.appealsList);
+	listCasesPage.clickAppealByRef(caseObj);
 
-		// find case and open inquiry section
-		cy.visit(urlPaths.appealsList);
-		listCasesPage.clickAppealByRef(caseObj);
+	// select to add rule 6 contact
+	contactsSectionPage.selectAddContact('rule-6-party-contact-details');
 
-		// select to add rule 6 contact
-		contactsSectionPage.selectAddContact('rule-6-party-contact-details');
+	// check page caption and input party name
+	contactDetailsPage.verifyPageCaption(`Appeal ${caseObj.reference} - Add rule 6 party`);
+	contactDetailsPage.inputOrganisationName(rule6Details.partyName);
+	contactDetailsPage.clickButtonByText('Continue');
 
-		// check page caption and input party name
-		contactDetailsPage.verifyPageCaption(`Appeal ${caseObj.reference} - Add rule 6 party`);
-		contactDetailsPage.inputOrganisationName(rule6Details.partyName);
-		contactDetailsPage.clickButtonByText('Continue');
+	// check page caption and enter party email address
+	contactDetailsPage.verifyPageCaption(`Appeal ${caseObj.reference} - Add rule 6 party`);
+	contactDetailsPage.inputOrganisationEmail(rule6Details.partyEmailAddress);
+	contactDetailsPage.clickButtonByText('Continue');
 
-		// check page caption and enter party email address
-		contactDetailsPage.verifyPageCaption(`Appeal ${caseObj.reference} - Add rule 6 party`);
-		contactDetailsPage.inputOrganisationEmail(rule6Details.partyEmailAddress);
-		contactDetailsPage.clickButtonByText('Continue');
-
-		// verify details on cya page
-		cyaSection.verifyAnswerUpdated({
-			field: cyaSection.cyaSectionFields.rule6PartyName,
-			value: rule6Details.partyName
-		});
-		cyaSection.verifyAnswerUpdated({
-			field: cyaSection.cyaSectionFields.rule6PartyEmailAddress,
-			value: rule6Details.partyEmailAddress
-		});
-
-		// update party name
-		cyaSection.changeAnswer(cyaSection.cyaSectionFields.rule6PartyName);
-		contactDetailsPage.verifyValuePrepopulated(
-			contactDetailsPage.contactSelectors.organisationName,
-			rule6Details.partyName
-		);
-		contactDetailsPage.inputOrganisationName(rule6Details.partyNameUpdated);
-		contactDetailsPage.clickButtonByText('Continue');
-		contactDetailsPage.clickButtonByText('Continue');
-
-		// verify party name updated on cya page
-		cyaSection.verifyAnswerUpdated({
-			field: cyaSection.cyaSectionFields.rule6PartyName,
-			value: rule6Details.partyNameUpdated
-		});
-
-		// update party email
-		cyaSection.changeAnswer(cyaSection.cyaSectionFields.rule6PartyEmailAddress);
-		contactDetailsPage.verifyValuePrepopulated(
-			contactDetailsPage.contactSelectors.organisationEmail,
-			rule6Details.partyEmailAddress
-		);
-		contactDetailsPage.inputOrganisationEmail(rule6Details.partyEmailAddressUpdated);
-		contactDetailsPage.clickButtonByText('Continue');
-
-		// verify party email address updated on cya page
-		cyaSection.verifyAnswerUpdated({
-			field: cyaSection.cyaSectionFields.rule6PartyEmailAddress,
-			value: rule6Details.partyEmailAddressUpdated
-		});
-
-		// click add Rule 6 party and check sucess banner is visible
-		cyaSection.clickButtonByText('Add rule 6 party');
-		caseDetailsPage.validateBannerMessage('Success', 'Rule 6 party added');
-
-		// verify contact section
-		contactsSectionPage.verifyContactsSectionHeadingIsDisplayed();
-		contactsSectionPage.verifyContactsSectionRule6PartiesIsDisplayed(
-			rule6Details.partyNameUpdated,
-			rule6Details.partyEmailAddressUpdated
-		);
-
-		// verify documentation section
-		documentationSectionPage.verifyDocumentationSectionHeadingIsDisplayed();
-		documentationSectionPage.verifyDocumentationSectionRule6PartiesIsDisplayed(
-			rule6Details.partyNameUpdated
-		);
-
-		//verify costs section
-		costsSectionPage.verifyCostsSectionHeadingIsDisplayed();
-		costsSectionPage.verifyCostsSectionRule6PartiesIsDisplayed(rule6Details.partyNameUpdated);
+	// verify details on cya page
+	cyaSection.verifyAnswerUpdated({
+		field: cyaSection.cyaSectionFields.rule6PartyName,
+		value: rule6Details.partyName
 	});
+	cyaSection.verifyAnswerUpdated({
+		field: cyaSection.cyaSectionFields.rule6PartyEmailAddress,
+		value: rule6Details.partyEmailAddress
+	});
+
+	// update party name
+	cyaSection.changeAnswer(cyaSection.cyaSectionFields.rule6PartyName);
+	contactDetailsPage.verifyValuePrepopulated(
+		contactDetailsPage.contactSelectors.organisationName,
+		rule6Details.partyName
+	);
+	contactDetailsPage.inputOrganisationName(rule6Details.partyNameUpdated);
+	contactDetailsPage.clickButtonByText('Continue');
+	contactDetailsPage.clickButtonByText('Continue');
+
+	// verify party name updated on cya page
+	cyaSection.verifyAnswerUpdated({
+		field: cyaSection.cyaSectionFields.rule6PartyName,
+		value: rule6Details.partyNameUpdated
+	});
+
+	// update party email
+	cyaSection.changeAnswer(cyaSection.cyaSectionFields.rule6PartyEmailAddress);
+	contactDetailsPage.verifyValuePrepopulated(
+		contactDetailsPage.contactSelectors.organisationEmail,
+		rule6Details.partyEmailAddress
+	);
+	contactDetailsPage.inputOrganisationEmail(rule6Details.partyEmailAddressUpdated);
+	contactDetailsPage.clickButtonByText('Continue');
+
+	// verify party email address updated on cya page
+	cyaSection.verifyAnswerUpdated({
+		field: cyaSection.cyaSectionFields.rule6PartyEmailAddress,
+		value: rule6Details.partyEmailAddressUpdated
+	});
+
+	// click add Rule 6 party and check sucess banner is visible
+	cyaSection.clickButtonByText('Add rule 6 party');
+	caseDetailsPage.validateBannerMessage('Success', 'Rule 6 party added');
+
+	// verify contact section
+	contactsSectionPage.verifyContactsSectionHeadingIsDisplayed();
+	contactsSectionPage.verifyContactsSectionRule6PartiesIsDisplayed(
+		rule6Details.partyNameUpdated,
+		rule6Details.partyEmailAddressUpdated
+	);
+
+	// verify documentation section
+	documentationSectionPage.verifyDocumentationSectionHeadingIsDisplayed();
+	documentationSectionPage.verifyDocumentationSectionRule6PartiesIsDisplayed(
+		rule6Details.partyNameUpdated
+	);
+
+	//verify costs section
+	costsSectionPage.verifyCostsSectionHeadingIsDisplayed();
+	costsSectionPage.verifyCostsSectionRule6PartiesIsDisplayed(rule6Details.partyNameUpdated);
 });
 
 it('Validates rule 6 party name and email address', () => {
