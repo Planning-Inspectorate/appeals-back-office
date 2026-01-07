@@ -23,6 +23,7 @@ import {
 import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import {
 	decisionInvalidConfirmationPage,
+	enforcementNoticeInvalidPage,
 	mapInvalidReasonPage,
 	viewInvalidAppealPage
 } from './invalid-appeal.mapper.js';
@@ -366,4 +367,61 @@ const generateInvalidAppealNotifyPreviews = async (apiClient, personalisation, a
 		})
 	]);
 	return { appellantTemplate, lpaTemplate };
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getEnforcementNoticeInvalid = async (request, response) => {
+	renderEnforcementNoticeInvalidPage(request, response);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postEnforcementNoticeInvalid = async (request, response) => {
+	const { errors, body, currentAppeal, session } = request;
+
+	if (errors) {
+		return renderEnforcementNoticeInvalidPage(request, response);
+	}
+
+	try {
+		session.enforcementDecision = {
+			...session.enforcementDecision,
+			outcome: 'invalid',
+			enforcementNoticeInvalid: body.enforcementNoticeInvalid
+		};
+
+		if (session.enforcementDecision.enforcementNoticeInvalid === 'no') {
+			return response.redirect(
+				`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/invalid`
+			);
+		}
+		return response.redirect(
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/invalid/enforcement-notice-reason`
+		);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when completing appellant case review'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {import('@pins/express').ValidationErrors} [apiErrors]
+ */
+const renderEnforcementNoticeInvalidPage = async (request, response, apiErrors) => {
+	let errors = request.errors || apiErrors;
+
+	const mappedPageContent = enforcementNoticeInvalidPage(request.currentAppeal);
+
+	return response.status(200).render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
 };

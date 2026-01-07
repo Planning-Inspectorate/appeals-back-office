@@ -1,6 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { enhanceCheckboxOptionWithAddAnotherReasonConditionalHtml } from '#lib/enhance-html.js';
+import { yesNoInput } from '#lib/mappers/index.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -174,3 +175,20 @@ export const getFormattedReasons = (reasonsArray) => {
 
 	return `<ul>${listItems}</ul>`;
 };
+
+/**
+ * @param {Appeal} appealDetails
+ * @returns {PageContent}
+ * */
+export const enforcementNoticeInvalidPage = (appealDetails) => ({
+	title: 'Is the enforcement notice invalid',
+	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case`,
+	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
+	heading: 'Is the enforcement notice invalid?',
+	pageComponents: [
+		yesNoInput({
+			name: 'enforcementNoticeInvalid',
+			id: 'enforcementNoticeInvalid'
+		})
+	]
+});

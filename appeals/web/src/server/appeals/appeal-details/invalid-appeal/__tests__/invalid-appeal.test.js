@@ -400,4 +400,101 @@ describe('invalid-appeal', () => {
 			expect(element.innerHTML).toContain('Invalid date');
 		});
 	});
+
+	describe('GET /enforcement-notice', () => {
+		beforeEach(async () => {
+			installMockApi();
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
+				.get('/appeals/appellant-case-invalid-reasons')
+				.reply(200, appellantCaseInvalidReasons);
+		});
+
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should render the enforcement notice page', async () => {
+			const response = await request.get(`${baseUrl}/appellant-case/invalid/enforcement-notice`);
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Is the enforcement notice invalid?</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<input class="govuk-radios__input" id="enforcementNoticeInvalid" name="enforcementNoticeInvalid" type="radio" value="yes">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<input class="govuk-radios__input" id="enforcementNoticeInvalid-2" name="enforcementNoticeInvalid" type="radio" value="no">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+		});
+	});
+
+	describe('POST /enforcement-notice', () => {
+		beforeEach(async () => {
+			installMockApi();
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
+				.get('/appeals/appellant-case-invalid-reasons')
+				.reply(200, appellantCaseInvalidReasons);
+		});
+
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should re-render the enforcement notice page with the expected error message if no reason was selected', async () => {
+			const response = await request
+				.post(`${baseUrl}/appellant-case/invalid/enforcement-notice`)
+				.send({});
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'Select yes if the enforcement notice is invalid</a>'
+			);
+		});
+
+		it('should redirect to /invalid/enforcement-notice-reason where enforcementNoticeInvalid is "yes"', async () => {
+			const response = await request
+				.post(`${baseUrl}/appellant-case/invalid/enforcement-notice`)
+				.send({
+					enforcementNoticeInvalid: 'yes'
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/invalid/enforcement-notice-reason'
+			);
+		});
+
+		it('should redirect to /invalid where enforcementNoticeInvalid is "no"', async () => {
+			const response = await request
+				.post(`${baseUrl}/appellant-case/invalid/enforcement-notice`)
+				.send({
+					enforcementNoticeInvalid: 'no'
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/invalid'
+			);
+		});
+	});
 });
