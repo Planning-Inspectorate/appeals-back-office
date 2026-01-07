@@ -1421,31 +1421,38 @@ export async function seedTestData(databaseConnector) {
 		.filter((appeal) => appeal.appealTypeId === enforcementAppealTypeId)
 		.map((appeal) => appeal.id)
 		.slice(1); // leave one with blank data
-	const contactAddress = addressesList[pickRandom(addressesList)];
-	const formattedContactAddress = {
-		addressLine1: contactAddress.addressLine1,
-		addressLine2: contactAddress.addressLine2 || null,
-		addressCounty: contactAddress.county || null,
-		addressTown: contactAddress.town || undefined,
-		postcode: contactAddress.postCode
-	};
-	await databaseConnector.$transaction(async (tx) => {
-		const address = await tx.address.create({ data: formattedContactAddress });
-		await tx.appellantCase.updateMany({
-			where: { appealId: { in: enforcementAppellantCaseIds } },
-			data: {
-				contactAddressId: address.id,
-				enforcementNoticeListedBuilding: false,
-				enforcementIssueDate: getPastDate({ days: 10 }),
-				enforcementEffectiveDate: new Date(),
-				contactPlanningInspectorateDate: getPastDate({ days: 10 }),
-				enforcementReference: 'Reference',
-				interestInLand: 'Land owner',
-				writtenOrVerbalPermission: 'Yes',
-				descriptionOfAllegedBreach: 'Description'
-			}
+	for (const appealId of enforcementAppellantCaseIds) {
+		const contactAddress = addressesList[pickRandom(addressesList)];
+
+		const formattedContactAddress = {
+			addressLine1: contactAddress.addressLine1,
+			addressLine2: contactAddress.addressLine2 || null,
+			addressCounty: contactAddress.county || null,
+			addressTown: contactAddress.town || null,
+			postcode: contactAddress.postCode
+		};
+
+		await databaseConnector.$transaction(async (tx) => {
+			const address = await tx.address.create({
+				data: formattedContactAddress
+			});
+
+			return await tx.appellantCase.update({
+				where: { appealId: appealId },
+				data: {
+					contactAddressId: address.id,
+					enforcementNoticeListedBuilding: false,
+					enforcementIssueDate: getPastDate({ days: 10 }),
+					enforcementEffectiveDate: new Date(),
+					contactPlanningInspectorateDate: getPastDate({ days: 10 }),
+					enforcementReference: 'Reference',
+					interestInLand: 'Land owner',
+					writtenOrVerbalPermission: 'Yes',
+					descriptionOfAllegedBreach: 'Description'
+				}
+			});
 		});
-	});
+	}
 }
 
 /**

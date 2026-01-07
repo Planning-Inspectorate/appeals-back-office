@@ -524,6 +524,16 @@ describe('Libraries', () => {
 						checked: false,
 						addAnother: { textItems: [''] },
 						error: [undefined]
+					},
+					{
+						value: '25',
+						text: 'Appellant does not have a legal interest in the land',
+						checked: false
+					},
+					{
+						value: '26',
+						text: 'Ground (a) barred',
+						checked: false
 					}
 				];
 
@@ -565,6 +575,16 @@ describe('Libraries', () => {
 						checked: false,
 						addAnother: { textItems: [''] },
 						error: [undefined]
+					},
+					{
+						value: '25',
+						text: 'Appellant does not have a legal interest in the land',
+						checked: false
+					},
+					{
+						value: '26',
+						text: 'Ground (a) barred',
+						checked: false
 					}
 				];
 
@@ -590,6 +610,16 @@ describe('Libraries', () => {
 					{
 						value: '23',
 						text: 'The appellant does not have the right to appeal',
+						checked: false
+					},
+					{
+						value: '25',
+						text: 'Appellant does not have a legal interest in the land',
+						checked: false
+					},
+					{
+						value: '26',
+						text: 'Ground (a) barred',
 						checked: false
 					}
 				];
@@ -617,6 +647,16 @@ describe('Libraries', () => {
 						value: '23',
 						text: 'The appellant does not have the right to appeal',
 						checked: true
+					},
+					{
+						value: '25',
+						text: 'Appellant does not have a legal interest in the land',
+						checked: false
+					},
+					{
+						value: '26',
+						text: 'Ground (a) barred',
+						checked: false
 					}
 				];
 
@@ -681,6 +721,16 @@ describe('Libraries', () => {
 						checked: false,
 						addAnother: { textItems: [''] },
 						error: [undefined]
+					},
+					{
+						value: '25',
+						text: 'Appellant does not have a legal interest in the land',
+						checked: false
+					},
+					{
+						value: '26',
+						text: 'Ground (a) barred',
+						checked: false
 					}
 				];
 
@@ -736,6 +786,16 @@ describe('Libraries', () => {
 						checked: false,
 						addAnother: { textItems: [''] },
 						error: [undefined]
+					},
+					{
+						value: '25',
+						text: 'Appellant does not have a legal interest in the land',
+						checked: false
+					},
+					{
+						value: '26',
+						text: 'Ground (a) barred',
+						checked: false
 					}
 				];
 
@@ -787,6 +847,16 @@ describe('Libraries', () => {
 						checked: false,
 						addAnother: { textItems: [''] },
 						error: [undefined]
+					},
+					{
+						value: '25',
+						text: 'Appellant does not have a legal interest in the land',
+						checked: false
+					},
+					{
+						value: '26',
+						text: 'Ground (a) barred',
+						checked: false
 					}
 				];
 
@@ -855,6 +925,16 @@ describe('Libraries', () => {
 						checked: false,
 						addAnother: { textItems: [''] },
 						error: [undefined]
+					},
+					{
+						value: '25',
+						text: 'Appellant does not have a legal interest in the land',
+						checked: false
+					},
+					{
+						value: '26',
+						text: 'Ground (a) barred',
+						checked: false
 					}
 				];
 
@@ -927,6 +1007,16 @@ describe('Libraries', () => {
 						checked: false,
 						addAnother: { textItems: [''] },
 						error: [undefined]
+					},
+					{
+						value: '25',
+						text: 'Appellant does not have a legal interest in the land',
+						checked: false
+					},
+					{
+						value: '26',
+						text: 'Ground (a) barred',
+						checked: false
 					}
 				];
 

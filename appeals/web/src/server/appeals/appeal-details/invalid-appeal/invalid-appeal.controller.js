@@ -7,8 +7,13 @@ import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-co
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
-import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
-import { CHANGE_APPEAL_TYPE_INVALID_REASON } from '@pins/appeals/constants/support.js';
+import { APPEAL_TYPE, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
+import {
+	CHANGE_APPEAL_TYPE_INVALID_REASON,
+	ENFORCEMENT_APPEAL_INVALID_GROUND_A_BARRED,
+	ENFORCEMENT_APPEAL_INVALID_LEGAL_INTEREST,
+	INVALID_APPEAL_OTHER_REASON
+} from '@pins/appeals/constants/support.js';
 import { mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters } from '../appellant-case/appellant-case.mapper.js';
 import * as appellantCaseService from '../appellant-case/appellant-case.service.js';
 import {
@@ -65,9 +70,29 @@ const renderInvalidReason = async (request, response) => {
 		delete request.session.webAppellantCaseReviewOutcome;
 	}
 
-	const filteredReasonOptions = invalidReasonOptions.filter(
-		(reason) => reason.name !== CHANGE_APPEAL_TYPE_INVALID_REASON
-	);
+	// @ts-ignore
+	const filteredReasonOptions = invalidReasonOptions.reduce((acc, reason) => {
+		if (reason.name === CHANGE_APPEAL_TYPE_INVALID_REASON) {
+			return acc;
+		}
+
+		if (currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+			if (reason.name !== INVALID_APPEAL_OTHER_REASON) {
+				// @ts-ignore
+				acc.push(reason);
+			}
+		} else {
+			if (
+				reason.name !== ENFORCEMENT_APPEAL_INVALID_LEGAL_INTEREST &&
+				reason.name !== ENFORCEMENT_APPEAL_INVALID_GROUND_A_BARRED
+			) {
+				// @ts-ignore
+				acc.push(reason);
+			}
+		}
+
+		return acc;
+	}, []);
 
 	if (filteredReasonOptions) {
 		const mappedInvalidReasonOptions = mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters(
@@ -130,7 +155,7 @@ export const postInvalidReason = async (request, response) => {
 
 	try {
 		const {
-			currentAppeal: { appealId }
+			currentAppeal: { appealId, appealType }
 		} = request;
 
 		/** @type {import('../appellant-case/appellant-case.types.js').AppellantCaseSessionValidationOutcome} */
@@ -142,6 +167,12 @@ export const postInvalidReason = async (request, response) => {
 		};
 
 		if (request.baseUrl.includes('appellant-case')) {
+			if (appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+				return response.redirect(
+					`/appeals-service/appeal-details/${appealId}/appellant-case/invalid/other-live-appeals`
+				);
+			}
+
 			return response.redirect(
 				`/appeals-service/appeal-details/${appealId}/appellant-case/check-your-answers`
 			);

@@ -5,6 +5,7 @@ import {
 	appealDataAdvert,
 	appealDataCasAdvert,
 	appealDataCasPlanning,
+	appealDataEnforcementNotice,
 	appealDataFullPlanning,
 	appealDataListedBuilding,
 	appellantCaseDataInvalidOutcome,
@@ -68,6 +69,44 @@ describe('invalid-appeal', () => {
 				'for="invalid-reason-3">The appellant does not have the right to appeal'
 			);
 			expect(element.innerHTML).toContain('for="invalid-reason-4">Other reason');
+			expect(element.innerHTML).toContain('Continue</button>');
+		});
+
+		it('should render the invalid reason page for an enforcement notice', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, {
+					...appealDataEnforcementNotice
+				});
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
+				.get('/appeals/appellant-case-invalid-reasons')
+				.reply(200, appellantCaseInvalidReasons);
+
+			const response = await request.get(
+				`/appeals-service/appeal-details/${appealDataEnforcementNotice.appealId}/invalid/new`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Why is the appeal invalid?</h1>');
+			expect(element.innerHTML).toContain('data-module="govuk-checkboxes">');
+			expect(element.innerHTML).toContain(
+				'for="invalid-reason">Appeal has not been submitted on time'
+			);
+			expect(element.innerHTML).toContain(
+				'for="invalid-reason-2">Documents have not been submitted on time'
+			);
+			expect(element.innerHTML).toContain(
+				'for="invalid-reason-3">The appellant does not have the right to appeal'
+			);
+			expect(element.innerHTML).toContain(
+				'for="invalid-reason-4">Appellant does not have a legal interest in the land'
+			);
+			expect(element.innerHTML).toContain('for="invalid-reason-5">Ground (a) barred');
 			expect(element.innerHTML).toContain('Continue</button>');
 		});
 	});
