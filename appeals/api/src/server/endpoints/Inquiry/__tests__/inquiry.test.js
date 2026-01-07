@@ -2,7 +2,10 @@
 import { jest } from '@jest/globals';
 import { request } from '../../../app-test.js';
 
-import { fullPlanningAppeal as fullPlanningAppealData } from '#tests/appeals/mocks.js';
+import {
+	casAdvertAppeal,
+	fullPlanningAppeal as fullPlanningAppealData
+} from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
@@ -95,13 +98,15 @@ describe('inquiry routes', () => {
 		});
 
 		describe('POST', () => {
-			test('creates a single inquiry with address', async () => {
-				fullPlanningAppeal.appealType.type = 'Planning appeal';
+			test.each([
+				['fullPlanningAppeal', fullPlanningAppealData, 'appeal-valid-start-case-s78-inquiry'],
+				['casAdvertAppeal', casAdvertAppeal, 'appeal-valid-start-case-cas-advertisement-inquiry']
+			])('creates a %s single inquiry with address', async (_, appeal, expectedTemplateName) => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
 
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 				// @ts-ignore
 				const response = await request
-					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.post(`/appeals/${appeal.id}/inquiry`)
 					.send(requestData)
 					.set('azureAdUserId', azureAdUserId);
 
@@ -109,7 +114,7 @@ describe('inquiry routes', () => {
 					(details) => {
 						expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 							data: {
-								appealId: fullPlanningAppeal.id,
+								appealId: appeal.id,
 								details,
 								loggedAt: expect.any(Date),
 								userId: 1
@@ -119,7 +124,7 @@ describe('inquiry routes', () => {
 				);
 				const personalisation = {
 					appeal_reference_number: '1345264',
-					appeal_type: 'Planning',
+					appeal_type: appeal.appealType.type,
 					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 					lpa_reference: '48269/APP/2021/1482',
 					inquiry_date: '1 January 2999',
@@ -143,18 +148,18 @@ describe('inquiry routes', () => {
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
 					personalisation,
-					recipientEmail: fullPlanningAppeal.appellant.email,
-					templateName: 'appeal-valid-start-case-s78-inquiry'
+					recipientEmail: appeal.appellant.email,
+					templateName: expectedTemplateName
 				});
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					notifyClient: expect.anything(),
 					personalisation: { ...personalisation, is_lpa: true },
-					recipientEmail: fullPlanningAppeal.lpa.email,
-					templateName: 'appeal-valid-start-case-s78-inquiry'
+					recipientEmail: appeal.lpa.email,
+					templateName: expectedTemplateName
 				});
 
-				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(fullPlanningAppeal.id);
+				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(appeal.id);
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'inquiry', 'Create');
 
 				expect(response.status).toEqual(201);
@@ -2347,6 +2352,7 @@ describe('inquiry routes', () => {
 					errors: 'Method is not allowed'
 				});
 			});
+
 			test('returns an error if inquiryId is not a number', async () => {
 				const { inquiry } = fullPlanningAppeal;
 

@@ -1,4 +1,5 @@
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { appealTypeMap } from '#endpoints/appeal-timetables/appeal-timetables.utils.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
@@ -70,24 +71,6 @@ const checkAppealTimetableExists = async (req, res, next) => {
 	}
 
 	next();
-};
-
-/**
- * Map appeal type to template value
- * @param {string | undefined | null} appealType
- * @returns {string}
- */
-const appealTypeMap = (appealType) => {
-	switch (appealType) {
-		case APPEAL_CASE_TYPE.W:
-			return '-s78-';
-		case APPEAL_CASE_TYPE.Y:
-			return '-s78-';
-		case APPEAL_CASE_TYPE.H:
-			return '-s78-';
-		default:
-			return '-';
-	}
 };
 
 /**

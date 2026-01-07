@@ -20,7 +20,7 @@ import {
 } from '@pins/appeals/utils/business-days.js';
 import { dateISOStringToDisplayDate, formatTime12h } from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Inquiry} Inquiry */
@@ -271,6 +271,9 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 		});
 		const timetableData = result.timetableData;
 
+		const { key: appealTypeKey = APPEAL_CASE_TYPE.D } = appeal.appealType || {};
+		const appellantTemplate = `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}inquiry`;
+
 		if (isStartCase) {
 			await transitionState(
 				appeal.id,
@@ -280,7 +283,7 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 
 			await sendInquiryDetailsNotifications(
 				notifyClient,
-				'appeal-valid-start-case-s78-inquiry',
+				appellantTemplate,
 				appeal,
 				inquiryStartTime,
 				estimatedDays,
@@ -386,6 +389,20 @@ const deleteInquiry = async (deleteInquiryData, notifyClient, appeal) => {
 	} catch (error) {
 		logger.error(error, 'Failed to delete inquiry');
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+	}
+};
+
+/**
+ * Map appeal type to template value
+ * @param {string | undefined | null} appealType
+ * @returns {string}
+ */
+const appealTypeMap = (appealType) => {
+	switch (appealType) {
+		case APPEAL_CASE_TYPE.ZA:
+			return '-cas-advertisement-';
+		default:
+			return '-s78-';
 	}
 };
 
