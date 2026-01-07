@@ -86,7 +86,6 @@ export function generateEnforcementNoticeComponents(
 			mappedAppellantCaseData.decisionLetter.display.summaryListItem,
 			mappedAppellantCaseData.statusPlanningObligation.display.summaryListItem,
 			mappedAppellantCaseData.planningObligation.display.summaryListItem,
-			mappedAppellantCaseData.applicationForm.display.summaryListItem,
 			mappedAppellantCaseData.costsDocument.display.summaryListItem,
 			mappedAppellantCaseData.otherNewDocuments.display.summaryListItem
 		].filter((row) => row);

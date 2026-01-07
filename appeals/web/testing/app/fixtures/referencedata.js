@@ -1678,6 +1678,16 @@ export const appellantCaseInvalidReasons = [
 		id: 24,
 		name: 'Other reason',
 		hasText: true
+	},
+	{
+		id: 25,
+		name: 'Appellant does not have a legal interest in the land',
+		hasText: false
+	},
+	{
+		id: 26,
+		name: 'Ground (a) barred',
+		hasText: false
 	}
 ];
 

@@ -15,6 +15,8 @@ export const mapContactAddress = ({ appellantCaseData, currentRoute, userHasUpda
 					addressLine2: appellantCaseData.enforcementNotice?.contactAddress?.addressLine2,
 					postCode: appellantCaseData.enforcementNotice?.contactAddress?.postCode ?? '',
 					// @ts-ignore
+					town: appellantCaseData.enforcementNotice?.contactAddress?.addressTown,
+					// @ts-ignore
 					county: appellantCaseData.enforcementNotice.contactAddress?.addressCounty
 			  })
 			: 'Not answered',

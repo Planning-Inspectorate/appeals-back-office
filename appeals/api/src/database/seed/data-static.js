@@ -345,6 +345,16 @@ export const appellantCaseInvalidReasons = [
 		id: 5,
 		name: 'Wrong appeal type',
 		hasText: false
+	},
+	{
+		id: 6,
+		name: 'Appellant does not have a legal interest in the land',
+		hasText: false
+	},
+	{
+		id: 7,
+		name: 'Ground (a) barred',
+		hasText: false
 	}
 ];
 
