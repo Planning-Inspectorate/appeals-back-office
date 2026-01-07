@@ -1,3 +1,4 @@
+import { saveBackUrl } from '#lib/middleware/save-back-url.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
@@ -9,7 +10,7 @@ const router = createRouter({ mergeParams: true });
 
 router
 	.route('/add')
-	.get(asyncHandler(controller.getStartDate))
+	.get(saveBackUrl('startCase'), asyncHandler(controller.getStartDate))
 	.post(asyncHandler(controller.postStartDate));
 
 router

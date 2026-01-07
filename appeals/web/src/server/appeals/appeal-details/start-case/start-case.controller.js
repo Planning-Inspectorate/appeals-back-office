@@ -1,7 +1,12 @@
 import featureFlags from '#common/feature-flags.js';
 import { dateISOStringToDisplayDate, getTodaysISOString } from '#lib/dates.js';
-import { getSessionValuesForAppeal } from '#lib/edit-utilities.js';
+import {
+	applyEditsForAppeal,
+	clearEditsForAppeal,
+	getSessionValuesForAppeal
+} from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
+import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import {
 	addBackLinkQueryToUrl,
@@ -19,6 +24,8 @@ import {
 } from './start-case.mapper.js';
 import * as startCaseService from './start-case.service.js';
 
+const getBackLinkUrl = backLinkGenerator('startCase');
+
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getStartDate = async (request, response) => {
 	const {
@@ -30,7 +37,7 @@ export const getStartDate = async (request, response) => {
 		delete session.startCaseAppealProcedure?.[appealId];
 	}
 
-	if (appealType === APPEAL_TYPE.S78) {
+	if ([APPEAL_TYPE.S78, APPEAL_TYPE.ENFORCEMENT_NOTICE].includes(appealType)) {
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/start-case/select-procedure${
 				request.query?.backUrl ? `?backUrl=${request.query?.backUrl}` : ''
@@ -169,9 +176,15 @@ const renderSelectProcedure = async (request, response) => {
 
 	const sessionValues = getSessionValuesForAppeal(request, 'startCaseAppealProcedure', appealId);
 
+	const backUrl = getBackLinkUrl(
+		request,
+		null,
+		`/appeals-service/appeal-details/${appealId}/start-case/select-procedure/check-and-confirm`
+	);
+
 	const mappedPageContent = selectProcedurePage(
 		appealReference,
-		request.query?.backUrl ? String(request.query?.backUrl) : '/',
+		backUrl,
 		{ appealProcedure: sessionValues?.appealProcedure },
 		errors ? errors['appealProcedure']?.msg : undefined
 	);
@@ -252,6 +265,8 @@ const redirectionTarget = (request) => {
 		return `/appeals-service/appeal-details/${appealId}/start-case/hearing`;
 	}
 
+	applyEditsForAppeal(request, 'startCaseAppealProcedure', appealId);
+
 	return `/appeals-service/appeal-details/${appealId}/start-case/select-procedure/check-and-confirm`;
 };
 
@@ -276,6 +291,8 @@ const renderConfirmProcedure = async (request, response) => {
 	if (!sessionValues?.appealProcedure) {
 		return response.status(500).render('app/500.njk');
 	}
+
+	clearEditsForAppeal(request, 'startCaseAppealProcedure', appealId);
 
 	const mappedPageContent = confirmProcedurePage(
 		appealId,
