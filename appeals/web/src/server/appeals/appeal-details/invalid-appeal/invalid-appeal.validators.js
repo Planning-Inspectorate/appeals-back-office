@@ -16,3 +16,10 @@ export const validateInvalidReason = createValidator(
 );
 
 export const validateInvalidReasonTextItems = createCheckboxTextItemsValidator('invalidReason');
+
+export const validateEnforcementNoticeInvalid = createValidator(
+	body('enforcementNoticeInvalid')
+		.trim()
+		.notEmpty()
+		.withMessage('Select yes if the enforcement notice is invalid')
+);

@@ -26,4 +26,9 @@ router
 
 router.route('/view').get(controller.getInvalidPage);
 
+router
+	.route('/enforcement-notice')
+	.get(controller.getEnforcementNoticeInvalid)
+	.post(validators.validateEnforcementNoticeInvalid, controller.postEnforcementNoticeInvalid);
+
 export default router;

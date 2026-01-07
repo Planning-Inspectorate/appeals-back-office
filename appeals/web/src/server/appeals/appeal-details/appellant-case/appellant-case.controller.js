@@ -183,6 +183,15 @@ export const postAppellantCase = async (request, response) => {
 					`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${reviewOutcome}/date`
 				);
 			} else {
+				if (
+					currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
+					reviewOutcome === 'invalid'
+				) {
+					return response.redirect(
+						`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/invalid/enforcement-notice`
+					);
+				}
+
 				return response.redirect(
 					`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${reviewOutcome}`
 				);
