@@ -1947,7 +1947,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'R3650',
 		name: 'Waverley Borough Council',
-		email: 'planconsult@waverley.gov.uk',
+		email: 'consultation.planning@waverley.gov.uk',
 		teamId: 13 // East3
 	},
 	{
