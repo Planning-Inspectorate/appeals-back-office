@@ -20,4 +20,14 @@ export class ContactsSectionPage extends CaseDetailsPage {
 		// Uses wildcard selector because the ending number varies
 		cy.get('[data-cy^="change-rule-6-party-"]').click();
 	}
+
+	verifyContactsSectionHeadingIsDisplayed() {
+		this.elements.caseDetailsSections().should('contain.text', 'Contacts');
+	}
+
+	verifyContactsSectionRule6PartiesIsDisplayed(partyName, partEmailAddress) {
+		this.elements.contactSection().should('contain.text', 'Rule 6 parties');
+		this.verifyExpectedField(partyName);
+		this.verifyExpectedField(partEmailAddress);
+	}
 }

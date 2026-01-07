@@ -37,17 +37,6 @@ export class CYASection extends CaseDetailsPage {
 	};
 
 	// A C T I O N S
-
-	clickButtonByText(text) {
-		return cy
-			.contains('button, [role="button"], a.govuk-button, input[type="submit"]', text, {
-				matchCase: false
-			})
-			.filter(':visible')
-			.first()
-			.click();
-	}
-
 	selectChangeAnswer(answer) {
 		cy.getByData('change-' + answer).click();
 	}
