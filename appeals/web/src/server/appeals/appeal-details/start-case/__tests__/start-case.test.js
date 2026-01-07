@@ -514,6 +514,54 @@ describe('start-case', () => {
 			);
 			expect(unprettifiedHtml).toContain('Start case</button>');
 		});
+
+		it('should render email previews if it is an enforcement appeal', async () => {
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.twice()
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Enforcement notice appeal'
+				});
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
+			nock('http://test/').post('/appeals/1/appeal-timetables/notify-preview').reply(200, {
+				appellant: 'Rendered HTML for appellant preview',
+				lpa: 'Rendered HTML for LPA preview'
+			});
+
+			// set appeal procedure in session
+			await request.post('/appeals-service/appeal-details/1/start-case/select-procedure').send({
+				appealProcedure: 'written'
+			});
+
+			const response = await request.get(
+				'/appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const pageHtml = parseHtml(response.text);
+
+			expect(pageHtml.innerHTML).toMatchSnapshot();
+
+			expect(
+				pageHtml.querySelector('details[data-cy="preview-email-to-appellant"]')
+			).not.toBeNull();
+			expect(pageHtml.querySelector('details[data-cy="preview-email-to-lpa"]')).not.toBeNull();
+
+			const appellantPreview = pageHtml.querySelector(
+				'details[data-cy="preview-email-to-appellant"] .govuk-details__text'
+			)?.innerHTML;
+			const lpaPreview = pageHtml.querySelector(
+				'details[data-cy="preview-email-to-lpa"] .govuk-details__text'
+			)?.innerHTML;
+			expect(appellantPreview).toContain('Rendered HTML for appellant preview');
+			expect(lpaPreview).toContain('Rendered HTML for LPA preview');
+		});
 	});
 
 	describe('POST /start-case/select-procedure/check-and-confirm', () => {

@@ -23,6 +23,7 @@ import {
 	startCasePage
 } from './start-case.mapper.js';
 import * as startCaseService from './start-case.service.js';
+import { getStartCaseNotifyPreviews } from './start-case.service.js';
 
 const getBackLinkUrl = backLinkGenerator('startCase');
 
@@ -282,7 +283,7 @@ export const getConfirmProcedure = async (request, response) => {
  */
 const renderConfirmProcedure = async (request, response) => {
 	const {
-		currentAppeal: { appealId, appealReference },
+		currentAppeal: { appealId, appealReference, appealType },
 		errors
 	} = request;
 
@@ -294,10 +295,33 @@ const renderConfirmProcedure = async (request, response) => {
 
 	clearEditsForAppeal(request, 'startCaseAppealProcedure', appealId);
 
+	const showEmailPreviews = appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE;
+	/** @type {{appellant: string, lpa: string} | undefined} */
+	let emailPreviews;
+
+	if (showEmailPreviews) {
+		const errorMessage = 'Failed to generate email preview';
+		try {
+			const result = await getStartCaseNotifyPreviews(
+				request.apiClient,
+				appealId,
+				undefined,
+				sessionValues?.appealProcedure
+			);
+			emailPreviews = {
+				appellant: result.appellant || errorMessage,
+				lpa: result.lpa || errorMessage
+			};
+		} catch (error) {
+			logger.error(error);
+		}
+	}
+
 	const mappedPageContent = confirmProcedurePage(
 		appealId,
 		appealReference,
-		sessionValues?.appealProcedure
+		sessionValues?.appealProcedure,
+		emailPreviews
 	);
 
 	return response.render('patterns/change-page.pattern.njk', {
