@@ -1,6 +1,7 @@
 import featureFlags from '#common/feature-flags.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { editLink } from '#lib/edit-utilities.js';
+import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
 import { radiosInput } from '#lib/mappers/components/page-components/radio.js';
 import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
@@ -157,9 +158,23 @@ export function selectProcedurePage(
  * @param {string|number} appealId
  * @param {string} appealReference
  * @param {string} procedureType
+ * @param {{appellant: string, lpa: string}} [emailPreviews]
  * @returns {PageContent}
  */
-export function confirmProcedurePage(appealId, appealReference, procedureType) {
+export function confirmProcedurePage(appealId, appealReference, procedureType, emailPreviews) {
+	const emailPreviewComponents = emailPreviews
+		? [
+				detailsComponent({
+					summaryText: `Preview email to appellant`,
+					html: emailPreviews.appellant
+				}),
+				detailsComponent({
+					summaryText: `Preview email to LPA`,
+					html: emailPreviews.lpa
+				})
+		  ]
+		: [];
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Check details and start case',
@@ -189,7 +204,8 @@ export function confirmProcedurePage(appealId, appealReference, procedureType) {
 					class: 'govuk-body'
 				},
 				`We’ll start the timetable now and send emails to the relevant parties.`
-			)
+			),
+			...emailPreviewComponents
 		],
 		submitButtonText: 'Start case'
 	};
