@@ -1,7 +1,7 @@
 import { getAppealValidator } from '#endpoints/appeal-details/appeal-details.validators.js';
 import { patchEiaScreeningRequired } from '#endpoints/environmental-impact-assessment/environmental-impact-assessment.controller.js';
 import { getEiaScreeningRequirementValidator } from '#endpoints/environmental-impact-assessment/environmental-impact-assessment.validator.js';
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 
@@ -31,7 +31,7 @@ router.patch(
 	 */,
 	getAppealValidator,
 	getEiaScreeningRequirementValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	asyncHandler(patchEiaScreeningRequired)
 );
 
