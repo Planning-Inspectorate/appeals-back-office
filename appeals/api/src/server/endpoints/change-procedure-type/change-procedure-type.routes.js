@@ -1,4 +1,4 @@
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import { requestChangeOfProcedureType } from './change-procedure-type.controller.js';
@@ -26,7 +26,15 @@ router.post(
 		#swagger.responses[400] = {}
 	 */
 	postChangeProcedureTypeValidator,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'hearing',
+		'inquiry',
+		'siteVisit',
+		'appellant',
+		'agent',
+		'lpa',
+		'address'
+	]),
 	asyncHandler(requestChangeOfProcedureType)
 );
 
