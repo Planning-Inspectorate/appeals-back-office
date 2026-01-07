@@ -70,6 +70,7 @@ export default joi
 		}),
 		frontOffice: {
 			url: joi.string().optional()
-		}
+		},
+		requestSizeLimit: joi.string().optional()
 	})
 	.options({ presence: 'required' }); // required by default;
