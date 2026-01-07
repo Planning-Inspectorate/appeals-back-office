@@ -112,7 +112,8 @@ const { value, error } = schema.validate({
 	},
 	frontOffice: {
 		url: environment.FRONT_OFFICE_URL || '/mock-front-office-url'
-	}
+	},
+	requestSizeLimit: environment.REQUEST_SIZE_LIMIT || '500kb'
 });
 
 if (error) {

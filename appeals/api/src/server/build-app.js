@@ -22,7 +22,7 @@ const buildApp = (
 		addSwaggerUi(app);
 	}
 
-	app.use(bodyParser.json({ limit: '200kb' }));
+	app.use(bodyParser.json({ limit: config.requestSizeLimit }));
 
 	app.use(compression());
 	app.use(morgan('combined'));
