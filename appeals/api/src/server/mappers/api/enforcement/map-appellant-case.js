@@ -1,6 +1,8 @@
 /** @typedef {import('@pins/appeals.api').Api.AppellantCase} AppellantCase */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
 
+import { mapS78AppellantCase } from '../s78/map-appellant-case.js';
+
 /**
  *
  * @param {MappingRequest} data
@@ -11,11 +13,14 @@ export const mapEnforcementAppellantCase = (data) => {
 		appeal: { appellantCase }
 	} = data;
 
+	const sharedS78Mappers = mapS78AppellantCase(data);
+
 	// @ts-ignore
 	const hasEnforcementData = [true, false].includes(appellantCase?.enforcementNotice);
 	const { id: addressId, postcode, ...restOfAddress } = appellantCase?.contactAddress || {};
 
 	return {
+		...sharedS78Mappers,
 		enforcementNotice: {
 			isReceived: hasEnforcementData ? appellantCase?.enforcementNotice : null,
 			isListedBuilding: hasEnforcementData ? appellantCase?.enforcementNoticeListedBuilding : null,
