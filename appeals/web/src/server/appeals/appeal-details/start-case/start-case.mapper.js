@@ -1,5 +1,6 @@
 import featureFlags from '#common/feature-flags.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { editLink } from '#lib/edit-utilities.js';
 import { radiosInput } from '#lib/mappers/components/page-components/radio.js';
 import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
@@ -174,7 +175,9 @@ export function confirmProcedurePage(appealId, appealReference, procedureType) {
 							id: 'appeal-procedure',
 							text: 'Appeal procedure',
 							value: appealProcedureToLabelText(procedureType),
-							link: `/appeals-service/appeal-details/${appealId}/start-case/select-procedure`,
+							link: editLink(
+								`/appeals-service/appeal-details/${appealId}/start-case/select-procedure`
+							),
 							editable: true
 						})?.display.summaryListItem
 					]

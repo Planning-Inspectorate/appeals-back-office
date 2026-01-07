@@ -65,7 +65,7 @@ exports[`start-case GET /start-case/select-procedure/check-and-confirm should re
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
                                 <dd class="govuk-summary-list__value">Hearing</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/select-procedure"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/select-procedure?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fselect-procedure"
                                     data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>
                                 </dd>
                             </div>

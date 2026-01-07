@@ -191,7 +191,9 @@ describe('start-case', () => {
 				skipPrettyPrint: true
 			});
 
-			expect(unprettifiedElement.innerHTML).toContain('href="/" class="govuk-back-link">Back</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'href="/appeals-service/appeal-details/1" class="govuk-back-link">Back</a>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<span class="govuk-caption-l">Appeal 351062 - start case</span>'
 			);
@@ -211,14 +213,16 @@ describe('start-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 
-		it('should render the select procedure page with the expected back link URL, if the backLink query parameter was passed', async () => {
+		it('should render the select procedure page with the expected back link URL, if the backLink query parameter was saved', async () => {
 			nock('http://test/')
 				.get('/appeals/1?include=all')
+				.twice()
 				.reply(200, {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
 				});
 
+			await request.get('/appeals-service/appeal-details/1/start-case/add?backUrl=/test/back/url');
 			const response = await request.get(
 				'/appeals-service/appeal-details/1/start-case/select-procedure?backUrl=/test/back/url'
 			);
@@ -361,6 +365,24 @@ describe('start-case', () => {
 			expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="inquiry">');
 			expect(unprettifiedHtml).not.toContain('checked');
 		});
+
+		it('should render the correct back link if editing', async () => {
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const response = await request.get(
+				'/appeals-service/appeal-details/1/start-case/select-procedure?editEntrypoint=' +
+					'%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fselect-procedure'
+			);
+			const html = parseHtml(response.text, { rootElement: 'body' });
+			expect(html.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+				'/appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
+			);
+		});
 	});
 
 	describe('POST /start-case/select-procedure', () => {
@@ -483,7 +505,9 @@ describe('start-case', () => {
 			expect(unprettifiedHtml).toContain('Appeal procedure</dt>');
 			expect(unprettifiedHtml).toContain('Hearing</dd>');
 			expect(unprettifiedHtml).toContain(
-				'href="/appeals-service/appeal-details/1/start-case/select-procedure" data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+				'href="/appeals-service/appeal-details/1/start-case/select-procedure?editEntrypoint=' +
+					'%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fselect-procedure" data-cy="' +
+					'change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
 			);
 			expect(unprettifiedHtml).toContain(
 				'We’ll start the timetable now and send emails to the relevant parties.</p>'
