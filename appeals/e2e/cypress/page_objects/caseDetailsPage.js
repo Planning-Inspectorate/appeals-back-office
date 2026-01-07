@@ -904,43 +904,6 @@ export class CaseDetailsPage extends Page {
 		this.elements.caseDetailsHearingSectionButton().should('be.visible');
 	}
 
-	verifyContactsSectionHeadingIsDisplayed() {
-		this.elements.caseDetailsSections().should('contain.text', 'Contacts');
-	}
-
-	verifyDocumentationSectionHeadingIsDisplayed() {
-		this.elements.caseDetailsSections().should('contain.text', 'Documentation');
-	}
-
-	verifyCostsSectionHeadingIsDisplayed() {
-		this.elements.caseDetailsSections().should('contain.text', 'Costs');
-	}
-
-	verifyDocumentationSectionRule6PartiesIsDisplayed(rule6PartyName) {
-		this.verifyExpectedFieldDocumentSection(`${rule6PartyName} statement`);
-		this.verifyExpectedFieldDocumentSection(`${rule6PartyName} proof of evidence and witness`);
-	}
-
-	verifyCostsSectionRule6PartiesIsDisplayed(rule6PartyName) {
-		this.verifyExpectedFieldCostsSection(`${rule6PartyName} application`);
-		this.verifyExpectedFieldCostsSection(`${rule6PartyName} withdrawal`);
-		this.verifyExpectedFieldCostsSection(`${rule6PartyName} correspondence`);
-	}
-
-	verifyContactsSectionRule6PartiesIsDisplayed(partyName, partEmailAddress) {
-		this.elements.contactSection().should('contain.text', 'Rule 6 parties');
-		this.verifyExpectedField(partyName);
-		this.verifyExpectedField(partEmailAddress);
-	}
-
-	verifyExpectedFieldDocumentSection(expectedText) {
-		cy.get('#case-documentation-table').find('th, td').contains(expectedText).should('be.visible');
-	}
-
-	verifyExpectedFieldCostsSection(expectedText) {
-		cy.get('#case-costs-table').find('th, td').contains(expectedText).should('be.visible');
-	}
-
 	verifyExpectedField(fieldValue) {
 		cy.get(
 			'#main-content .govuk-summary-list__row.appeal-rule-6-party-contact-details dd.govuk-summary-list__value'
