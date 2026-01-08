@@ -131,7 +131,9 @@ const renderCheckAndConfirm = async (request, response) => {
 			request.session,
 			webAppellantCaseReviewOutcome.reasons,
 			webAppellantCaseReviewOutcome.reasonsText,
-			webAppellantCaseReviewOutcome.updatedDueDate
+			webAppellantCaseReviewOutcome.updatedDueDate,
+			webAppellantCaseReviewOutcome.enforcementNoticeInvalid,
+			webAppellantCaseReviewOutcome.otherLiveAppeals
 		);
 
 		return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {

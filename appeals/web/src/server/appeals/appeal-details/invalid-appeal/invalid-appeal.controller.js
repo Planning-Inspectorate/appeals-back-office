@@ -67,7 +67,8 @@ const renderInvalidReason = async (request, response) => {
 	if (
 		request.session.webAppellantCaseReviewOutcome &&
 		(request.session.webAppellantCaseReviewOutcome.appealId !== currentAppeal.appealId ||
-			request.session.webAppellantCaseReviewOutcome.validationOutcome !== 'invalid')
+			request.session.webAppellantCaseReviewOutcome.validationOutcome !== 'invalid') &&
+		!request.session.webAppellantCaseReviewOutcome?.enforcementNoticeInvalid
 	) {
 		delete request.session.webAppellantCaseReviewOutcome;
 	}
@@ -163,6 +164,7 @@ export const postInvalidReason = async (request, response) => {
 
 		/** @type {import('../appellant-case/appellant-case.types.js').AppellantCaseSessionValidationOutcome} */
 		request.session.webAppellantCaseReviewOutcome = {
+			...request.session.webAppellantCaseReviewOutcome,
 			appealId,
 			validationOutcome: 'invalid',
 			reasons: request.body.invalidReason,
@@ -385,13 +387,12 @@ export const postEnforcementNoticeInvalid = async (request, response) => {
 	}
 
 	try {
-		session.enforcementDecision = {
-			...session.enforcementDecision,
-			outcome: 'invalid',
+		session.webAppellantCaseReviewOutcome = {
+			...session.webAppellantCaseReviewOutcome,
 			enforcementNoticeInvalid: body.enforcementNoticeInvalid
 		};
 
-		if (session.enforcementDecision.enforcementNoticeInvalid === 'no') {
+		if (session.webAppellantCaseReviewOutcome.enforcementNoticeInvalid === 'no') {
 			return response.redirect(
 				`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/invalid`
 			);
@@ -420,7 +421,10 @@ export const postEnforcementNoticeInvalid = async (request, response) => {
 const renderEnforcementNoticeInvalidPage = async (request, response, apiErrors) => {
 	let errors = request.errors || apiErrors;
 
-	const mappedPageContent = enforcementNoticeInvalidPage(request.currentAppeal);
+	const mappedPageContent = enforcementNoticeInvalidPage(
+		request.currentAppeal,
+		request.session.webAppellantCaseReviewOutcome?.enforcementNoticeInvalid
+	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -442,8 +446,8 @@ export const postOtherLiveAppeals = async (request, response) => {
 	}
 
 	try {
-		session.enforcementDecision = {
-			...session.enforcementDecision,
+		session.webAppellantCaseReviewOutcome = {
+			...session.webAppellantCaseReviewOutcome,
 			otherLiveAppeals: body.otherLiveAppeals
 		};
 
@@ -471,7 +475,10 @@ export const postOtherLiveAppeals = async (request, response) => {
 const renderOtherLiveAppealsPage = async (request, response, apiErrors) => {
 	let errors = request.errors || apiErrors;
 
-	const mappedPageContent = otherLiveAppealsPage(request.currentAppeal);
+	const mappedPageContent = otherLiveAppealsPage(
+		request.currentAppeal,
+		request.session.webAppellantCaseReviewOutcome?.otherLiveAppeals
+	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,

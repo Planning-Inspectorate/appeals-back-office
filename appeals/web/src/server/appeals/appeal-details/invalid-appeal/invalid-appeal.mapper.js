@@ -185,9 +185,10 @@ export const getFormattedReasons = (reasonsArray) => {
 
 /**
  * @param {Appeal} appealDetails
+ * @param {string} [enforcementNoticeInvalid]
  * @returns {PageContent}
  * */
-export const enforcementNoticeInvalidPage = (appealDetails) => ({
+export const enforcementNoticeInvalidPage = (appealDetails, enforcementNoticeInvalid) => ({
 	title: 'Is the enforcement notice invalid',
 	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case`,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
@@ -195,16 +196,18 @@ export const enforcementNoticeInvalidPage = (appealDetails) => ({
 	pageComponents: [
 		yesNoInput({
 			name: 'enforcementNoticeInvalid',
-			id: 'enforcementNoticeInvalid'
+			id: 'enforcementNoticeInvalid',
+			value: enforcementNoticeInvalid
 		})
 	]
 });
 
 /**
  * @param {Appeal} appealDetails
+ * @param {string} [otherLiveAppeals]
  * @returns {PageContent}
  * */
-export const otherLiveAppealsPage = (appealDetails) => ({
+export const otherLiveAppealsPage = (appealDetails, otherLiveAppeals) => ({
 	title: 'Are there any other live appeals against the enforcement notice',
 	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/invalid`,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
@@ -212,7 +215,8 @@ export const otherLiveAppealsPage = (appealDetails) => ({
 	pageComponents: [
 		yesNoInput({
 			name: 'otherLiveAppeals',
-			id: 'otherLiveAppeals'
+			id: 'otherLiveAppeals',
+			value: otherLiveAppeals
 		})
 	]
 });

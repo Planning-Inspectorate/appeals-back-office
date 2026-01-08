@@ -328,6 +328,8 @@ export function updateDueDatePage(
  * @param {string|string[]} [invalidOrIncompleteReasons]
  * @param {Object<string, string[]>} [invalidOrIncompleteReasonsText]
  * @param {DayMonthYearHourMinute} [updatedDueDate]
+ * @param {string} [enforcementNoticeInvalid]
+ * @param {string} [otherLiveAppeals]
  * @returns {PageContent}
  */
 export function checkAndConfirmPage(
@@ -338,7 +340,9 @@ export function checkAndConfirmPage(
 	session,
 	invalidOrIncompleteReasons,
 	invalidOrIncompleteReasonsText,
-	updatedDueDate
+	updatedDueDate,
+	enforcementNoticeInvalid,
+	otherLiveAppeals
 ) {
 	if (
 		(validationOutcome === 'invalid' || validationOutcome === 'incomplete') &&
@@ -347,6 +351,7 @@ export function checkAndConfirmPage(
 		throw new Error(`validationOutcome "${validationOutcome}" requires invalidOrIncompleteReasons`);
 	}
 
+	const isEnforcementAppeal = enforcementNoticeInvalid && otherLiveAppeals;
 	const validationOutcomeAsString = String(validationOutcome);
 
 	/** @type {PageComponent} */
@@ -355,12 +360,8 @@ export function checkAndConfirmPage(
 		parameters: {
 			rows: [
 				{
-					key: {
-						text: 'Review outcome'
-					},
-					value: {
-						text: capitalize(validationOutcomeAsString)
-					},
+					key: { text: 'Review outcome' },
+					value: { text: capitalize(validationOutcomeAsString) },
 					actions: {
 						items: [
 							{
@@ -371,10 +372,21 @@ export function checkAndConfirmPage(
 						]
 					}
 				},
+				isEnforcementAppeal && {
+					key: { text: 'Is the enforcement notice invalid?' },
+					value: { text: capitalize(enforcementNoticeInvalid) },
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: `/appeals-service/appeal-details/${appealId}/appellant-case/invalid`,
+								visuallyHiddenText: 'Is the enforcement notice invalid?'
+							}
+						]
+					}
+				},
 				{
-					key: {
-						text: `${capitalize(validationOutcomeAsString)} reasons`
-					},
+					key: { text: `${capitalize(validationOutcomeAsString)} reasons` },
 					value: {
 						html: '',
 						pageComponents: [
@@ -400,8 +412,22 @@ export function checkAndConfirmPage(
 							}
 						]
 					}
+				},
+				isEnforcementAppeal && {
+					key: { text: 'Are there any other live appeals against the enforcement notice?' },
+					value: { text: capitalize(otherLiveAppeals) },
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: `/appeals-service/appeal-details/${appealId}/appellant-case/invalid/other-live-appeals`,
+								visuallyHiddenText:
+									'Are there any other live appeals against the enforcement notice?'
+							}
+						]
+					}
 				}
-			]
+			].filter(Boolean)
 		}
 	};
 
