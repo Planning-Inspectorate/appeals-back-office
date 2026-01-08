@@ -239,6 +239,7 @@ export const createRepresentation = () => async (req, res) => {
 		rep.id,
 		shouldAutoPublish ? EventType.Create : EventType.Update
 	);
+	await broadcasters.broadcastAppeal(Number(appealId));
 	return res.status(201).send(rep);
 };
 
