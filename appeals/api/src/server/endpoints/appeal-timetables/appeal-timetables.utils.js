@@ -15,6 +15,8 @@ export const appealTypeMap = (appealType) => {
 			return '-s78-';
 		case APPEAL_CASE_TYPE.ZA:
 			return '-cas-advertisement-';
+		case APPEAL_CASE_TYPE.C:
+			return '-s78-';
 		default:
 			return '-';
 	}
