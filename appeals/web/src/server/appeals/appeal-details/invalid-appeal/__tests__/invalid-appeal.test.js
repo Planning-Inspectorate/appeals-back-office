@@ -709,4 +709,116 @@ describe('invalid-appeal', () => {
 			);
 		});
 	});
+
+	describe('GET /enforcement-other-information', () => {
+		beforeEach(async () => {
+			installMockApi();
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
+		});
+
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should render the enforcement other information page', async () => {
+			const response = await request.get(
+				`${baseUrl}/appellant-case/invalid/enforcement-other-information`
+			);
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span>');
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Do you want to add any other information?</h1>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="otherInformationValidRadio" type="radio" value="Yes" data-aria-controls="conditional-other-information-valid-radio">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="otherInformationValidRadio" type="radio" value="No">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+		});
+
+		it('should render the enforcement other information page with the correct back link', async () => {
+			const response = await request.get(
+				`${baseUrl}/appellant-case/invalid/enforcement-other-information`
+			);
+
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: '.govuk-back-link',
+				skipPrettyPrint: true
+			});
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<a href="/appeals-service/appeal-details/1/appellant-case/invalid/enforcement-notice-reason" class="govuk-back-link">Back</a>'
+			);
+		});
+	});
+
+	describe('POST /enforcement-other-information', () => {
+		beforeEach(async () => {
+			installMockApi();
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
+				.get('/appeals/appellant-case-enforcement-invalid-reasons')
+				.reply(200, appealCaseEnforcementInvalidReasons);
+		});
+
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should re-render the enforcement other information page with the expected error message if neither yes or no is selected', async () => {
+			const response = await request
+				.post(`${baseUrl}/appellant-case/invalid/enforcement-other-information`)
+				.send({});
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'Select yes if you want to add any other information</a>'
+			);
+		});
+
+		it(`should re-render the 'Other Information' screen if selection is yes and other information is empty`, async () => {
+			const response = await request
+				.post(`${baseUrl}/appellant-case/invalid/enforcement-other-information`)
+				.send({ otherInformationValidRadio: 'Yes', otherInformationDetails: '' });
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('There is a problem</h2>');
+			expect(element.innerHTML).toContain('Enter other information</a>');
+		});
+
+		it('should redirect to check details screen on success', async () => {
+			const response = await request
+				.post(`${baseUrl}/appellant-case/invalid/enforcement-other-information`)
+				.send({
+					otherInformationValidRadio: 'Yes',
+					otherInformationDetails: 'Enforcement other information'
+				});
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				`Found. Redirecting to /appeals-service/appeal-details/${appealId}/appellant-case/invalid/check-details-and-mark-enforcement-as-invalid`
+			);
+		});
+	});
 });

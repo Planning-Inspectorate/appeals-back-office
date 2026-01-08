@@ -816,6 +816,55 @@ exports[`invalid-appeal GET /enforcement-notice-reason should render the enforce
 </main>"
 `;
 
+exports[`invalid-appeal GET /enforcement-other-information should render the enforcement other information page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Do you want to add any other information?</h1>
+            <div class="govuk-hint">We will share the other information with the relevant parties.</div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="other-information-valid-radio"
+                                        name="otherInformationValidRadio" type="radio" value="Yes" data-aria-controls="conditional-other-information-valid-radio">
+                                        <label class="govuk-label govuk-radios__label" for="other-information-valid-radio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-other-information-valid-radio">
+                                        <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count">
+                                            <label class="govuk-label govuk-label--s" for="other-information-details">Enter other information</label>
+                                            <textarea class="govuk-textarea govuk-js-character-count"
+                                            id="other-information-details" name="otherInformationDetails" rows="5"
+                                            aria-describedby="other-information-details-info"></textarea>
+                                            <div id="other-information-details-info" class="govuk-hint govuk-character-count__message"></div>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="other-information-valid-radio-2"
+                                        name="otherInformationValidRadio" type="radio" value="No">
+                                        <label class="govuk-label govuk-radios__label" for="other-information-valid-radio-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`invalid-appeal GET /other-live-appeals should render the enforcement notice page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -1826,6 +1875,140 @@ exports[`invalid-appeal POST /enforcement-notice-reason should re-render the enf
                 </div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`invalid-appeal POST /enforcement-other-information should re-render the 'Other Information' screen if selection is yes and other information is empty 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#other-information-details">Enter other information</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Do you want to add any other information?</h1>
+            <div class="govuk-hint">We will share the other information with the relevant parties.</div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="other-information-valid-radio"
+                                        name="otherInformationValidRadio" type="radio" value="Yes" data-aria-controls="conditional-other-information-valid-radio">
+                                        <label class="govuk-label govuk-radios__label" for="other-information-valid-radio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-other-information-valid-radio">
+                                        <div class="govuk-form-group govuk-form-group--error govuk-character-count"
+                                        data-module="govuk-character-count">
+                                            <label class="govuk-label govuk-label--s" for="other-information-details">Enter other information</label>
+                                            <p id="other-information-details-error"
+                                            class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter other information</p>
+                                            <textarea                                             class="govuk-textarea govuk-textarea--error govuk-js-character-count" id="other-information-details"
+                                            name="otherInformationDetails" rows="5" aria-describedby="other-information-details-info other-information-details-error"></textarea>
+                                                <div id="other-information-details-info" class="govuk-hint govuk-character-count__message"></div>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="other-information-valid-radio-2"
+                                        name="otherInformationValidRadio" type="radio" value="No">
+                                        <label class="govuk-label govuk-radios__label" for="other-information-valid-radio-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`invalid-appeal POST /enforcement-other-information should re-render the enforcement other information page with the expected error message if neither yes or no is selected 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#other-information-valid-radio">Select yes if you want to add any other information</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Do you want to add any other information?</h1>
+            <div class="govuk-hint">We will share the other information with the relevant parties.</div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="other-information-valid-radio"
+                                        name="otherInformationValidRadio" type="radio" value="Yes" data-aria-controls="conditional-other-information-valid-radio">
+                                        <label class="govuk-label govuk-radios__label" for="other-information-valid-radio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-other-information-valid-radio">
+                                        <div class="govuk-form-group govuk-form-group--error govuk-character-count"
+                                        data-module="govuk-character-count">
+                                            <label class="govuk-label govuk-label--s" for="other-information-details">Enter other information</label>
+                                            <p id="other-information-details-error"
+                                            class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span>
+                                            </p>
+                                            <textarea class="govuk-textarea govuk-textarea--error govuk-js-character-count"
+                                            id="other-information-details" name="otherInformationDetails" rows="5"
+                                            aria-describedby="other-information-details-info other-information-details-error"></textarea>
+                                            <div id="other-information-details-info" class="govuk-hint govuk-character-count__message"></div>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="other-information-valid-radio-2"
+                                        name="otherInformationValidRadio" type="radio" value="No">
+                                        <label class="govuk-label govuk-radios__label" for="other-information-valid-radio-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </main>"

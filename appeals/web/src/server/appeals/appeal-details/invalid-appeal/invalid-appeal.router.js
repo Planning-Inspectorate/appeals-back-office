@@ -3,6 +3,14 @@ import { permissionNames } from '#environment/permissions.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import { postCheckAndConfirm } from '../appellant-case/appellant-case.controller.js';
+import {
+	getEnforcementOtherInformation,
+	postEnforcementOtherInformation
+} from '../appellant-case/outcome-valid/outcome-valid.controller.js';
+import {
+	validateOtherInformation,
+	validateOtherInterestInLand
+} from '../appellant-case/outcome-valid/outcome-valid.validators.js';
 import * as controller from './invalid-appeal.controller.js';
 import * as validators from './invalid-appeal.validators.js';
 
@@ -38,6 +46,15 @@ router
 		validators.validateEnforcementNoticeReason,
 		validators.validateEnforcementNoticeReasonTextItems,
 		controller.postEnforcementNoticeReason
+	);
+
+router
+	.route('/enforcement-other-information')
+	.get(getEnforcementOtherInformation)
+	.post(
+		validateOtherInformation,
+		validateOtherInterestInLand,
+		asyncHandler(postEnforcementOtherInformation)
 	);
 
 router

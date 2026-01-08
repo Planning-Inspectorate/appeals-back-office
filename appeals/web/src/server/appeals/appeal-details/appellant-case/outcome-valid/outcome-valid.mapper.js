@@ -94,6 +94,7 @@ export const updateEnforcementGroundAPage = (appealData, origin, currentRadioVal
 
 /**
  * @param {Appeal} appealData
+ * @param {string} [routePath]
  * @param {string} [otherInformationDetailsRadio]
  * @param {string} [otherInformationDetails]
  * @param {import("@pins/express").ValidationErrors | undefined} [errors]
@@ -101,6 +102,7 @@ export const updateEnforcementGroundAPage = (appealData, origin, currentRadioVal
  */
 export const updateEnforcementOtherInformationPage = (
 	appealData,
+	routePath,
 	otherInformationDetailsRadio,
 	otherInformationDetails,
 	errors
@@ -111,7 +113,10 @@ export const updateEnforcementOtherInformationPage = (
 	const pageContent = {
 		heading: 'Do you want to add any other information?',
 		hint: 'We will share the other information with the relevant parties.',
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case/valid/enforcement/ground-a`,
+		backLinkUrl:
+			routePath === '/enforcement-other-information'
+				? `/appeals-service/appeal-details/${appealData.appealId}/appellant-case/invalid/enforcement-notice-reason`
+				: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case/valid/enforcement/ground-a`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			{
