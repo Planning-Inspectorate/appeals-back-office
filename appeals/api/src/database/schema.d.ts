@@ -77,6 +77,7 @@ export interface AppellantCase extends schema.AppellantCase {
 	appellantCaseValidationOutcome?: AppellantCaseValidationOutcome | null;
 	appellantCaseIncompleteReasonsSelected: AppellantCaseIncompleteReasonsSelected[];
 	appellantCaseInvalidReasonsSelected: AppellantCaseInvalidReasons[];
+	appellantCaseEnforcementInvalidReasonsSelected: AppellantCaseEnforcementInvalidReasons[];
 	knowsAllOwners?: KnowledgeOfOtherLandowners | null;
 	knowsOtherOwners?: KnowledgeOfOtherLandowners | null;
 	appellantCaseAdvertDetails?: AppellantCaseAdvertDetails[];
@@ -85,6 +86,8 @@ export interface AppellantCase extends schema.AppellantCase {
 export interface AppellantCaseValidationOutcome extends schema.AppellantCaseValidationOutcome {}
 export interface AppellantCaseIncompleteReason extends schema.AppellantCaseIncompleteReason {}
 export interface AppellantCaseInvalidReason extends schema.AppellantCaseInvalidReason {}
+export interface AppellantCaseEnforcementInvalidReason
+	extends schema.AppellantCaseEnforcementInvalidReason {}
 export interface AppellantCaseIncompleteReasonsSelected
 	extends schema.AppellantCaseIncompleteReasonsSelected {
 	appellantCaseIncompleteReason: AppellantCaseIncompleteReasons;
@@ -95,9 +98,16 @@ export interface AppellantCaseInvalidReasonsSelected
 	appellantCaseInvalidReason: AppellantCaseInvalidReasons;
 	appellantCaseInvalidReasonText: AppellantCaseInvalidReasonText[];
 }
+export interface AppellantCaseEnforcementInvalidReasonsSelected
+	extends schema.AppellantCaseEnforcementInvalidReasonsSelected {
+	appellantCaseEnforcementInvalidReason: AppellantCaseEnforcementInvalidReasons;
+	appellantCaseEnforcementInvalidReasonText: AppellantCaseEnforcementInvalidReasonText[];
+}
 export interface AppellantCaseIncompleteReasonText
 	extends schema.AppellantCaseIncompleteReasonText {}
 export interface AppellantCaseInvalidReasonText extends schema.AppellantCaseInvalidReasonText {}
+export interface AppellantCaseEnforcementInvalidReasonText
+	extends schema.AppellantCaseEnforcementInvalidReasonText {}
 export interface KnowledgeOfOtherLandowners extends schema.KnowledgeOfOtherLandowners {}
 export interface DesignatedSiteSelected extends schema.DesignatedSiteSelected {
 	designatedSite: DesignatedSite;

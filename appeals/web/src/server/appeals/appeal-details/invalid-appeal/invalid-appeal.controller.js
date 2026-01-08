@@ -24,6 +24,7 @@ import { getTeamFromAppealId } from '../update-case-team/update-case-team.servic
 import {
 	decisionInvalidConfirmationPage,
 	enforcementNoticeInvalidPage,
+	enforcementNoticeReasonPage,
 	mapInvalidReasonPage,
 	otherLiveAppealsPage,
 	viewInvalidAppealPage
@@ -198,7 +199,7 @@ export const postInvalidReason = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getConfirmation = async (request, response) => {
-	renderDecisionInvalidConfirmationPage(request, response);
+	return renderDecisionInvalidConfirmationPage(request, response);
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
@@ -375,7 +376,7 @@ const generateInvalidAppealNotifyPreviews = async (apiClient, personalisation, a
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getEnforcementNoticeInvalid = async (request, response) => {
-	renderEnforcementNoticeInvalidPage(request, response);
+	return renderEnforcementNoticeInvalidPage(request, response);
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -393,6 +394,7 @@ export const postEnforcementNoticeInvalid = async (request, response) => {
 		};
 
 		if (session.webAppellantCaseReviewOutcome.enforcementNoticeInvalid === 'no') {
+			delete session.webAppellantCaseReviewOutcome.enforcementNoticeReason;
 			return response.redirect(
 				`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/invalid`
 			);
@@ -430,6 +432,106 @@ const renderEnforcementNoticeInvalidPage = async (request, response, apiErrors) 
 		pageContent: mappedPageContent,
 		errors
 	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getEnforcementNoticeReason = async (request, response) => {
+	return renderEnforcementNoticeReasonPage(request, response);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postEnforcementNoticeReason = async (request, response) => {
+	const { errors, body, currentAppeal, session } = request;
+
+	if (errors) {
+		return renderEnforcementNoticeReasonPage(request, response);
+	}
+
+	try {
+		session.webAppellantCaseReviewOutcome = {
+			...session.webAppellantCaseReviewOutcome,
+			enforcementNoticeReason: body.invalidReason
+				? [body.invalidReason].flat().map((reason) => ({
+						reasonSelected: Number(reason),
+						reasonText: body[`invalidReason-${reason}`]
+				  }))
+				: null
+		};
+
+		return response.redirect(
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/invalid/enforcement-other-information`
+		);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when completing appellant case review'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {import('@pins/express').ValidationErrors} [apiErrors]
+ */
+const renderEnforcementNoticeReasonPage = async (request, response, apiErrors) => {
+	const { errors = apiErrors, body, currentAppeal, session } = request;
+
+	if (typeof currentAppeal?.appellantCaseId !== 'number') {
+		return response.status(404).render('app/404.njk');
+	}
+
+	const [appellantCaseResponse, invalidReasonOptions] = await Promise.all([
+		appellantCaseService
+			.getAppellantCaseFromAppealId(
+				request.apiClient,
+				currentAppeal.appealId,
+				currentAppeal.appellantCaseId
+			)
+			.catch((error) => {
+				logger.error(error);
+			}),
+		appellantCaseService.getAppellantCaseEnforcementInvalidReasonOptions(request.apiClient)
+	]);
+
+	if (!appellantCaseResponse) {
+		return response.status(404).render('app/404.njk');
+	}
+
+	if (invalidReasonOptions) {
+		const pageContent = enforcementNoticeReasonPage(
+			currentAppeal,
+			invalidReasonOptions.map((option) => {
+				if (errors) {
+					const selected = body.invalidReason?.includes(option.id.toString()) ?? false;
+					return {
+						...option,
+						selected,
+						text: (selected && body[`invalidReason-${option.id}`]) ?? ''
+					};
+				}
+				const reason = session?.webAppellantCaseReviewOutcome?.enforcementNoticeReason?.find(
+					(/** @type {{reasonSelected:number, reasonText:string}} */ reason) =>
+						reason.reasonSelected === option.id
+				);
+				const selected = reason?.reasonSelected ?? false;
+				return { ...option, selected, text: (selected && reason?.reasonText) ?? '' };
+			}),
+			errors
+		);
+
+		return response.status(200).render('patterns/display-page.pattern.njk', {
+			pageContent,
+			errors
+		});
+	}
+
+	return response.status(500).render('app/500.njk');
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
