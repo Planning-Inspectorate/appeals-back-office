@@ -239,6 +239,12 @@ export const postEnforcementOtherInformation = async (request, response) => {
 			otherInformationDetails
 		};
 
+		if (request.route.path === '/enforcement-other-information') {
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/appellant-case/invalid/check-details-and-mark-enforcement-as-invalid`
+			);
+		}
+
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/appellant-case/valid/enforcement/date`
 		);
@@ -263,12 +269,14 @@ export const postEnforcementOtherInformation = async (request, response) => {
 const renderEnforcementOtherInformation = async (request, response, apiErrors) => {
 	const {
 		currentAppeal,
-		session: { enforcementDecision }
+		session: { enforcementDecision },
+		route: { path: routePath }
 	} = request;
 	const errors = request.errors || apiErrors;
 
 	const mappedPageContent = updateEnforcementOtherInformationPage(
 		currentAppeal,
+		routePath,
 		enforcementDecision?.otherInformationValidRadio,
 		enforcementDecision?.otherInformationDetails,
 		errors
