@@ -1,5 +1,6 @@
 import config from '#config/config.js';
 import { appealGroundsRoutes } from '#endpoints/appeal-grounds/appeal-grounds.routes.js';
+import { appellantCaseEnforcementInvalidReasonsRoutes } from '#endpoints/appellant-case-enforcement-invalid-reasons/appellant-case-enforcement-invalid-reasons.routes.js';
 import checkAzureAdUserIdHeaderExists from '#middleware/check-azure-ad-user-id-header-exists.js';
 import { Router as createRouter } from 'express';
 import initNotifyClientAndAddToRequest from '../middleware/init-notify-client-and-add-to-request.js';
@@ -73,6 +74,7 @@ router.use('/', initNotifyClientAndAddToRequest);
 router.use(appellantCaseIncompleteReasonsRoutes);
 router.use(appealAllocationRouter);
 router.use(appellantCaseInvalidReasonsRoutes);
+router.use(appellantCaseEnforcementInvalidReasonsRoutes);
 router.use(appellantCaseValidationOutcomesRoutes);
 router.use(documentRedactionStatusesRoutes);
 router.use(knowledgeOfOtherLandownersRoutes);

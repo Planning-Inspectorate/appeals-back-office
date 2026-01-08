@@ -2,10 +2,13 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { enhanceCheckboxOptionWithAddAnotherReasonConditionalHtml } from '#lib/enhance-html.js';
 import { yesNoInput } from '#lib/mappers/index.js';
+import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
+ * @typedef {import("@pins/express").ValidationErrors | undefined} ValidationErrors
+ * @typedef {import('@pins/appeals.api').Appeals.ReasonOption & { selected: boolean, text: string }} ReasonOption
  */
 
 /**
@@ -201,6 +204,71 @@ export const enforcementNoticeInvalidPage = (appealDetails, enforcementNoticeInv
 		})
 	]
 });
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {ReasonOption[]} reasonOptions
+ * @param {ValidationErrors} [errors]
+ * @returns {PageContent}
+ */
+export const enforcementNoticeReasonPage = (appealDetails, reasonOptions, errors) => {
+	const mappedInvalidReasonOptions = reasonOptions.map((reason) => {
+		const reasonId = `invalid-reason-${reason.id}-1`;
+		const reasonName = `invalidReason-${reason.id}`;
+		const reasonError = errors?.[`${reasonName}-1`];
+		return {
+			value: reason.id,
+			text: reason.name,
+			checked: reason.selected || !!reason.text,
+			conditional: reason.hasText
+				? {
+						html: renderPageComponentsToHtml([
+							{
+								type: 'input',
+								parameters: {
+									id: reasonId,
+									name: reasonName,
+									value: reason.text ?? '',
+									...(reasonError && { errorMessage: { text: reasonError.msg } }),
+									label: {
+										text: 'Enter a reason',
+										classes: 'govuk-label--s'
+									}
+								}
+							}
+						])
+				  }
+				: undefined
+		};
+	});
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: 'Why is the enforcement notice invalid',
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/invalid/enforcement-notice`,
+		preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
+		pageComponents: [
+			{
+				type: 'checkboxes',
+				parameters: {
+					name: 'invalidReason',
+					idPrefix: 'invalid-reason',
+					fieldset: {
+						legend: {
+							text: 'Why is the enforcement notice invalid?',
+							isPageHeading: true,
+							classes: 'govuk-fieldset__legend--l'
+						}
+					},
+					items: mappedInvalidReasonOptions,
+					...(errors?.invalidReason && { errorMessage: { text: errors.invalidReason.msg } })
+				}
+			}
+		]
+	};
+
+	return pageContent;
+};
 
 /**
  * @param {Appeal} appealDetails

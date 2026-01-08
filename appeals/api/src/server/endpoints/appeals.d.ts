@@ -1075,7 +1075,11 @@ type ListedBuildingDetailsResponse = {
 	affectsListedBuilding: boolean;
 };
 
-type LookupTables = AppellantCaseIncompleteReason | AppellantCaseInvalidReason | ValidationOutcome;
+type LookupTables =
+	| AppellantCaseIncompleteReason
+	| AppellantCaseInvalidReason
+	| AppellantCaseEnforcementInvalidReason
+	| ValidationOutcome;
 
 type IncompleteInvalidReasons = {
 	id: number;
