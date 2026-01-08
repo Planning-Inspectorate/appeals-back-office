@@ -31,4 +31,9 @@ router
 	.get(controller.getEnforcementNoticeInvalid)
 	.post(validators.validateEnforcementNoticeInvalid, controller.postEnforcementNoticeInvalid);
 
+router
+	.route('/other-live-appeals')
+	.get(controller.getOtherLiveAppeals)
+	.post(validators.validateOtherLiveAppeals, controller.postOtherLiveAppeals);
+
 export default router;

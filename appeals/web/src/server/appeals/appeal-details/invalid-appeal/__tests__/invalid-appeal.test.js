@@ -497,4 +497,90 @@ describe('invalid-appeal', () => {
 			);
 		});
 	});
+
+	describe('GET /other-live-appeals', () => {
+		beforeEach(async () => {
+			installMockApi();
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
+				.get('/appeals/appellant-case-invalid-reasons')
+				.reply(200, appellantCaseInvalidReasons);
+		});
+
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should render the enforcement notice page', async () => {
+			const response = await request.get(`${baseUrl}/appellant-case/invalid/other-live-appeals`);
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span>');
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are there any other live appeals against the enforcement notice?</h1>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<input class="govuk-radios__input" id="otherLiveAppeals" name="otherLiveAppeals" type="radio" value="yes">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<input class="govuk-radios__input" id="otherLiveAppeals-2" name="otherLiveAppeals" type="radio" value="no">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+		});
+	});
+
+	describe('POST /other-live-appeals', () => {
+		beforeEach(async () => {
+			installMockApi();
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
+				.get('/appeals/appellant-case-invalid-reasons')
+				.reply(200, appellantCaseInvalidReasons);
+		});
+
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should re-render the other live appeals page with the expected error message if no reason was selected', async () => {
+			const response = await request
+				.post(`${baseUrl}/appellant-case/invalid/other-live-appeals`)
+				.send({});
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'Select yes if there are any other live appeals against the enforcement notice</a>'
+			);
+		});
+
+		it('should redirect to check details screen on success', async () => {
+			const response = await request
+				.post(`${baseUrl}/appellant-case/invalid/other-live-appeals`)
+				.send({
+					otherLiveAppeals: 'no'
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				`Found. Redirecting to /appeals-service/appeal-details/${appealId}/appellant-case/check-your-answers`
+			);
+		});
+	});
 });

@@ -25,6 +25,7 @@ import {
 	decisionInvalidConfirmationPage,
 	enforcementNoticeInvalidPage,
 	mapInvalidReasonPage,
+	otherLiveAppealsPage,
 	viewInvalidAppealPage
 } from './invalid-appeal.mapper.js';
 import { getInvalidStatusCreatedDate } from './invalid-appeal.service.js';
@@ -111,6 +112,7 @@ const renderInvalidReason = async (request, response) => {
 			currentAppeal.appealId,
 			currentAppeal.appealReference,
 			mappedInvalidReasonOptions,
+			currentAppeal.appealType,
 			errors ? errors['invalidReason']?.msg : undefined,
 			sourceIsAppellantCase
 		);
@@ -419,6 +421,57 @@ const renderEnforcementNoticeInvalidPage = async (request, response, apiErrors) 
 	let errors = request.errors || apiErrors;
 
 	const mappedPageContent = enforcementNoticeInvalidPage(request.currentAppeal);
+
+	return response.status(200).render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getOtherLiveAppeals = async (request, response) => {
+	renderOtherLiveAppealsPage(request, response);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postOtherLiveAppeals = async (request, response) => {
+	const { errors, body, currentAppeal, session } = request;
+
+	if (errors) {
+		return renderOtherLiveAppealsPage(request, response);
+	}
+
+	try {
+		session.enforcementDecision = {
+			...session.enforcementDecision,
+			otherLiveAppeals: body.otherLiveAppeals
+		};
+
+		return response.redirect(
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/check-your-answers`
+		);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when completing appellant case review'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {import('@pins/express').ValidationErrors} [apiErrors]
+ */
+const renderOtherLiveAppealsPage = async (request, response, apiErrors) => {
+	let errors = request.errors || apiErrors;
+
+	const mappedPageContent = otherLiveAppealsPage(request.currentAppeal);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,

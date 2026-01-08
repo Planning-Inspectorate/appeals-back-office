@@ -752,6 +752,42 @@ exports[`invalid-appeal GET /enforcement-notice should render the enforcement no
 </main>"
 `;
 
+exports[`invalid-appeal GET /other-live-appeals should render the enforcement notice page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Are there any other live appeals against the enforcement notice?</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="otherLiveAppeals" name="otherLiveAppeals"
+                                    type="radio" value="yes">
+                                    <label class="govuk-label govuk-radios__label" for="otherLiveAppeals">Yes</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="otherLiveAppeals-2" name="otherLiveAppeals"
+                                    type="radio" value="no">
+                                    <label class="govuk-label govuk-radios__label" for="otherLiveAppeals-2">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`invalid-appeal GET /view should render the invalid appeal view page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -1559,6 +1595,57 @@ exports[`invalid-appeal POST /enforcement-notice should re-render the enforcemen
                                     <input class="govuk-radios__input" id="enforcementNoticeInvalid-2" name="enforcementNoticeInvalid"
                                     type="radio" value="no">
                                     <label class="govuk-label govuk-radios__label" for="enforcementNoticeInvalid-2">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`invalid-appeal POST /other-live-appeals should re-render the other live appeals page with the expected error message if no reason was selected 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#other-live-appeals">Select yes if there are any other live appeals against the enforcement notice</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Are there any other live appeals against the enforcement notice?</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="otherLiveAppeals" name="otherLiveAppeals"
+                                    type="radio" value="yes">
+                                    <label class="govuk-label govuk-radios__label" for="otherLiveAppeals">Yes</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="otherLiveAppeals-2" name="otherLiveAppeals"
+                                    type="radio" value="no">
+                                    <label class="govuk-label govuk-radios__label" for="otherLiveAppeals-2">No</label>
                                 </div>
                             </div>
                         </div>
