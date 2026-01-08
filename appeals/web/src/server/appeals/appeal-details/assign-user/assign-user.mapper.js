@@ -1,7 +1,4 @@
-import { getTeamFromAppealId } from '#appeals/appeal-details/update-case-team/update-case-team.service.js';
 import config from '#environment/config.js';
-import { appealSiteToAddressString } from '#lib/address-formatter.js';
-import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { capitalize } from 'lodash-es';
 import usersService from '../../appeal-users/users-service.js';
@@ -139,11 +136,10 @@ export async function assignUserPage(
  * @description
  */
 export async function checkAndConfirmPage(request) {
-	const { baseUrl, session, currentAppeal, apiClient } = request;
+	const { baseUrl, session, currentAppeal } = request;
 
 	const isInspector = baseUrl.includes('inspector');
 	const userTypeText = isInspector ? 'inspector' : 'case officer';
-	const prevUser = session.prevUser ? session.prevUser : '';
 	const user = session.user;
 	const isUnassign =
 		(user.id === '0' && (user.name === 'Unassign' || user.name === 'Remove')) || false;
@@ -165,28 +161,7 @@ export async function checkAndConfirmPage(request) {
 		}
 	};
 	const userTypeLink = isInspector ? 'inspector' : 'case-officer';
-
-	/** @type {EmailPersonalisation} */
-	const personalisation = {
-		appeal_reference_number: currentAppeal.appealReference,
-		site_address: appealSiteToAddressString(currentAppeal.appealSite),
-		lpa_reference: currentAppeal.planningApplicationReference || '',
-		team_email_address: '',
-		inspector_name: isUnassign ? prevUser.name : user.name
-	};
-
-	const generatedTemplate = isInspector
-		? (
-				await generateInspectorNotifyPreviews(
-					apiClient,
-					personalisation,
-					isUnassign
-						? 'appeal-unassign-inspector.content.md'
-						: 'appeal-assign-inspector.content.md',
-					currentAppeal
-				)
-		  ).appellantTemplate
-		: null;
+	const generatedTemplate = null;
 
 	/** @type {[PageComponent]} */
 	const pageComponentList = [summaryListComponent];
@@ -202,7 +177,7 @@ export async function checkAndConfirmPage(request) {
 					},
 					parameters: {
 						summaryText: `Preview email to appellant`,
-						html: generatedTemplate.renderedHtml
+						html: generatedTemplate
 					}
 				}
 		  )
@@ -233,28 +208,4 @@ export const mapUserText = (user, userTypeText) => {
 		: user.email
 		? `${user.name}<br>${user.email}`
 		: `${user.name}`;
-};
-/**
- * Generate Notify preview templates for appellant
- * @param {import('got').Got} apiClient
- * @param {EmailPersonalisation} personalisation
- * @param {string} templateName
- * @param {import('../appeal-details.types.js').WebAppeal} currentAppeal
- * @returns {Promise<{ appellantTemplate: { renderedHtml: string } }>}
- */
-const generateInspectorNotifyPreviews = async (
-	apiClient,
-	personalisation,
-	templateName,
-	currentAppeal
-) => {
-	const { email: assignedTeamEmail } = await getTeamFromAppealId(
-		apiClient,
-		String(currentAppeal.appealId)
-	);
-	personalisation.team_email_address = assignedTeamEmail;
-	const [appellantTemplate] = await Promise.all([
-		generateNotifyPreview(apiClient, templateName, personalisation)
-	]);
-	return { appellantTemplate };
 };

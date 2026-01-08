@@ -1,5 +1,4 @@
 // @ts-nocheck
-import { notifySend } from '#notify/notify-send.js';
 import { request } from '#server/app-test.js';
 import { mocks } from '#tests/appeals/index.js';
 import { savedFolder } from '#tests/documents/mocks.js';
@@ -671,58 +670,7 @@ describe('Appeal detail routes', () => {
 					}
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
-
-				const site_address =
-					householdAppeal.address.addressLine1 +
-					', ' +
-					(householdAppeal.address.addressLine2
-						? householdAppeal.address.addressLine2 + ', '
-						: '') +
-					householdAppeal.address.addressTown +
-					', ' +
-					householdAppeal.address.postcode;
-
-				expect(notifySend).toHaveBeenCalledWith({
-					azureAdUserId: azureAdUserId,
-					templateName: 'appeal-assign-inspector',
-					notifyClient: expect.any(Object),
-					recipientEmail: householdAppeal.appellant.email,
-					personalisation: {
-						appeal_reference_number: householdAppeal.reference,
-						site_address: site_address,
-						lpa_reference: householdAppeal.applicationReference,
-						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-						inspector_name: 'Tom Harry'
-					}
-				});
-				expect(notifySend).toHaveBeenCalledWith({
-					azureAdUserId: azureAdUserId,
-					templateName: 'appeal-assign-inspector',
-					notifyClient: expect.any(Object),
-					recipientEmail: householdAppeal.lpa.email,
-					personalisation: {
-						appeal_reference_number: householdAppeal.reference,
-						site_address: site_address,
-						lpa_reference: householdAppeal.applicationReference,
-						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-						inspector_name: 'Tom Harry'
-					}
-				});
-
-				expect(notifySend).toHaveBeenCalledWith({
-					azureAdUserId: azureAdUserId,
-					templateName: 'appeal-assign-inspector',
-					notifyClient: expect.any(Object),
-					recipientEmail: householdAppeal.agent.email,
-					personalisation: {
-						appeal_reference_number: householdAppeal.reference,
-						site_address: site_address,
-						lpa_reference: householdAppeal.applicationReference,
-						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-						inspector_name: 'Tom Harry'
-					}
-				});
-				expect(notifySend).toHaveBeenCalledTimes(3);
+				expect(mockNotifySend).not.toHaveBeenCalled();
 
 				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
@@ -776,59 +724,7 @@ describe('Appeal detail routes', () => {
 					}
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
-
-				const site_address =
-					householdAppeal.address.addressLine1 +
-					', ' +
-					(householdAppeal.address.addressLine2
-						? householdAppeal.address.addressLine2 + ', '
-						: '') +
-					householdAppeal.address.addressTown +
-					', ' +
-					householdAppeal.address.postcode;
-
-				expect(notifySend).toHaveBeenCalledWith({
-					azureAdUserId: azureAdUserId,
-					templateName: 'appeal-unassign-inspector',
-					notifyClient: expect.any(Object),
-					recipientEmail: householdAppeal.appellant.email,
-					personalisation: {
-						appeal_reference_number: householdAppeal.reference,
-						site_address: site_address,
-						lpa_reference: householdAppeal.applicationReference,
-						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-						inspector_name: 'Tom Harry'
-					}
-				});
-				expect(notifySend).toHaveBeenCalledWith({
-					azureAdUserId: azureAdUserId,
-					templateName: 'appeal-unassign-inspector',
-					notifyClient: expect.any(Object),
-					recipientEmail: householdAppeal.lpa.email,
-					personalisation: {
-						appeal_reference_number: householdAppeal.reference,
-						site_address: site_address,
-						lpa_reference: householdAppeal.applicationReference,
-						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-						inspector_name: 'Tom Harry'
-					}
-				});
-
-				expect(notifySend).toHaveBeenCalledWith({
-					azureAdUserId: azureAdUserId,
-					templateName: 'appeal-unassign-inspector',
-					notifyClient: expect.any(Object),
-					recipientEmail: householdAppeal.agent.email,
-					personalisation: {
-						appeal_reference_number: householdAppeal.reference,
-						site_address: site_address,
-						lpa_reference: householdAppeal.applicationReference,
-						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-						inspector_name: 'Tom Harry'
-					}
-				});
-				expect(notifySend).toHaveBeenCalledTimes(3);
-				expect(notifySend).toHaveBeenCalledTimes(3);
+				expect(mockNotifySend).not.toHaveBeenCalled();
 
 				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
@@ -877,58 +773,7 @@ describe('Appeal detail routes', () => {
 					}
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
-
-				const site_address =
-					householdAppeal.address.addressLine1 +
-					', ' +
-					(householdAppeal.address.addressLine2
-						? householdAppeal.address.addressLine2 + ', '
-						: '') +
-					householdAppeal.address.addressTown +
-					', ' +
-					householdAppeal.address.postcode;
-
-				expect(notifySend).toHaveBeenCalledWith({
-					azureAdUserId: azureAdUserId,
-					templateName: 'appeal-assign-inspector',
-					notifyClient: expect.any(Object),
-					recipientEmail: householdAppeal.appellant.email,
-					personalisation: {
-						appeal_reference_number: householdAppeal.reference,
-						site_address: site_address,
-						lpa_reference: householdAppeal.applicationReference,
-						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-						inspector_name: 'Tom Harry'
-					}
-				});
-				expect(notifySend).toHaveBeenCalledWith({
-					azureAdUserId: azureAdUserId,
-					templateName: 'appeal-assign-inspector',
-					notifyClient: expect.any(Object),
-					recipientEmail: householdAppeal.lpa.email,
-					personalisation: {
-						appeal_reference_number: householdAppeal.reference,
-						site_address: site_address,
-						lpa_reference: householdAppeal.applicationReference,
-						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-						inspector_name: 'Tom Harry'
-					}
-				});
-
-				expect(notifySend).toHaveBeenCalledWith({
-					azureAdUserId: azureAdUserId,
-					templateName: 'appeal-assign-inspector',
-					notifyClient: expect.any(Object),
-					recipientEmail: householdAppeal.agent.email,
-					personalisation: {
-						appeal_reference_number: householdAppeal.reference,
-						site_address: site_address,
-						lpa_reference: householdAppeal.applicationReference,
-						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-						inspector_name: 'Tom Harry'
-					}
-				});
-				expect(notifySend).toHaveBeenCalledTimes(3);
+				expect(mockNotifySend).not.toHaveBeenCalled();
 
 				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
@@ -981,58 +826,7 @@ describe('Appeal detail routes', () => {
 					}
 				});
 
-				const site_address =
-					householdAppeal.address.addressLine1 +
-					', ' +
-					(householdAppeal.address.addressLine2
-						? householdAppeal.address.addressLine2 + ', '
-						: '') +
-					householdAppeal.address.addressTown +
-					', ' +
-					householdAppeal.address.postcode;
-
-				expect(notifySend).toHaveBeenCalledWith({
-					azureAdUserId: azureAdUserId,
-					templateName: 'appeal-unassign-inspector',
-					notifyClient: expect.any(Object),
-					recipientEmail: householdAppeal.appellant.email,
-					personalisation: {
-						appeal_reference_number: householdAppeal.reference,
-						site_address: site_address,
-						lpa_reference: householdAppeal.applicationReference,
-						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-						inspector_name: 'Tom Harry'
-					}
-				});
-				expect(notifySend).toHaveBeenCalledWith({
-					azureAdUserId: azureAdUserId,
-					templateName: 'appeal-unassign-inspector',
-					notifyClient: expect.any(Object),
-					recipientEmail: householdAppeal.lpa.email,
-					personalisation: {
-						appeal_reference_number: householdAppeal.reference,
-						site_address: site_address,
-						lpa_reference: householdAppeal.applicationReference,
-						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-						inspector_name: 'Tom Harry'
-					}
-				});
-
-				expect(notifySend).toHaveBeenCalledWith({
-					azureAdUserId: azureAdUserId,
-					templateName: 'appeal-unassign-inspector',
-					notifyClient: expect.any(Object),
-					recipientEmail: householdAppeal.agent.email,
-					personalisation: {
-						appeal_reference_number: householdAppeal.reference,
-						site_address: site_address,
-						lpa_reference: householdAppeal.applicationReference,
-						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-						inspector_name: 'Tom Harry'
-					}
-				});
-				expect(notifySend).toHaveBeenCalledTimes(3);
-				expect(notifySend).toHaveBeenCalledTimes(3);
+				expect(mockNotifySend).not.toHaveBeenCalled();
 
 				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
 				expect(response.status).toEqual(200);

@@ -72,27 +72,6 @@ exports[`assign-user GET /assign-inspector/check-details should render the assig
             </dl>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
-                    <details class="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <div class="pins-notify-preview-border">
-                                <p>We have added the inspector John Smith to the appeal.</p>
-                                <h3> Appeal details</h3>
-                                <div class="govuk-inset-text">Appeal reference number: 134526
-                                    <br>Address: 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom
-                                    <br>Planning application reference: 48269/APP/2021/1482
-                                    <br>
-                                </div>
-                                <p>The Planning Inspectorate</p>
-                                <p>opstest@planninginspectorate.co.uk</p>
-                            </div>
-                        </div>
-                    </details>
-                </div>
-            </div>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">
                         <button type="submit" class="govuk-button" data-module="govuk-button">Assign inspector</button>
                     </form>
@@ -118,27 +97,6 @@ exports[`assign-user GET /assign-inspector/check-details should render the unass
                         <br>This will remove the current case inspector from the appeal</dd>
                 </div>
             </dl>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <details class="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <div class="pins-notify-preview-border">
-                                <p>We have removed the inspector John Smith from the appeal.</p>
-                                <h3> Appeal details</h3>
-                                <div class="govuk-inset-text">Appeal reference number: 134526
-                                    <br>Address: 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom
-                                    <br>Planning application reference: 48269/APP/2021/1482
-                                    <br>
-                                </div>
-                                <p>The Planning Inspectorate</p>
-                                <p>opstest@planninginspectorate.co.uk</p>
-                            </div>
-                        </div>
-                    </details>
-                </div>
-            </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">
@@ -267,27 +225,6 @@ exports[`assign-user POST /assign-inspector/check-details should contain the cor
                         <br>John.Smith@planninginspectorate.gov.uk</dd>
                 </div>
             </dl>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <details class="govuk-details">
-                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
-                        </summary>
-                        <div class="govuk-details__text">
-                            <div class="pins-notify-preview-border">
-                                <p>We have added the inspector John Smith to the appeal.</p>
-                                <h3> Appeal details</h3>
-                                <div class="govuk-inset-text">Appeal reference number: 134526
-                                    <br>Address: 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom
-                                    <br>Planning application reference: 48269/APP/2021/1482
-                                    <br>
-                                </div>
-                                <p>The Planning Inspectorate</p>
-                                <p>opstest@planninginspectorate.co.uk</p>
-                            </div>
-                        </div>
-                    </details>
-                </div>
-            </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">
