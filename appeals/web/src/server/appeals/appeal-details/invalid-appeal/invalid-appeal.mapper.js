@@ -2,6 +2,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { enhanceCheckboxOptionWithAddAnotherReasonConditionalHtml } from '#lib/enhance-html.js';
 import { yesNoInput } from '#lib/mappers/index.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -48,6 +49,7 @@ export function decisionInvalidConfirmationPage(appealId, appealReference) {
  * @param {string} appealId
  * @param {string} appealReference
  * @param {import('#appeals/appeals.types.js').CheckboxItemParameter[]} mappedInvalidReasonOptions
+ * @param {string} appealType
  * @param {string | undefined} errorMessage
  * @param {boolean} sourceIsAppellantCase
  * @returns {PageContent}
@@ -56,17 +58,22 @@ export const mapInvalidReasonPage = (
 	appealId,
 	appealReference,
 	mappedInvalidReasonOptions,
+	appealType,
 	errorMessage = undefined,
 	sourceIsAppellantCase
 ) => {
 	const shortAppealReference = appealShortReference(appealReference);
+	const backLinkUrl =
+		appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
+			? `/appeals-service/appeal-details/${appealId}/appellant-case/invalid/enforcement-notice`
+			: `/appeals-service/appeal-details/${appealId}/${
+					sourceIsAppellantCase ? 'appellant-case' : 'cancel'
+			  }`;
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Why is the appeal invalid?`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealId}/${
-			sourceIsAppellantCase ? 'appellant-case' : 'cancel'
-		}`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference} - mark as invalid`,
 		pageComponents: [
 			{
@@ -189,6 +196,23 @@ export const enforcementNoticeInvalidPage = (appealDetails) => ({
 		yesNoInput({
 			name: 'enforcementNoticeInvalid',
 			id: 'enforcementNoticeInvalid'
+		})
+	]
+});
+
+/**
+ * @param {Appeal} appealDetails
+ * @returns {PageContent}
+ * */
+export const otherLiveAppealsPage = (appealDetails) => ({
+	title: 'Are there any other live appeals against the enforcement notice',
+	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/invalid`,
+	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
+	heading: 'Are there any other live appeals against the enforcement notice?',
+	pageComponents: [
+		yesNoInput({
+			name: 'otherLiveAppeals',
+			id: 'otherLiveAppeals'
 		})
 	]
 });

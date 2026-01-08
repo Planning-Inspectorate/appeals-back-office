@@ -23,3 +23,10 @@ export const validateEnforcementNoticeInvalid = createValidator(
 		.notEmpty()
 		.withMessage('Select yes if the enforcement notice is invalid')
 );
+
+export const validateOtherLiveAppeals = createValidator(
+	body('otherLiveAppeals')
+		.trim()
+		.notEmpty()
+		.withMessage('Select yes if there are any other live appeals against the enforcement notice')
+);
