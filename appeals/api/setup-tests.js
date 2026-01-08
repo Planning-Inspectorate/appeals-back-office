@@ -79,6 +79,14 @@ const mockAppellantCaseInvalidReasonFindMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseInvalidReasonFindUnique = jest.fn().mockResolvedValue({});
 const mockAppellantCaseInvalidReasonsSelectedDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseInvalidReasonsSelectedCreateMany = jest.fn().mockResolvedValue({});
+const mockAppellantCaseEnforcementInvalidReasonFindMany = jest.fn().mockResolvedValue({});
+const mockAppellantCaseEnforcementInvalidReasonFindUnique = jest.fn().mockResolvedValue({});
+const mockAppellantCaseEnforcementInvalidReasonsSelectedDeleteMany = jest
+	.fn()
+	.mockResolvedValue({});
+const mockAppellantCaseEnforcementInvalidReasonsSelectedCreateMany = jest
+	.fn()
+	.mockResolvedValue({});
 const mockAppellantCaseValidationOutcomeFindMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseValidationOutcomeFindUnique = jest.fn().mockResolvedValue({});
 const mockAppellantCaseUpdate = jest.fn().mockResolvedValue({});
@@ -140,6 +148,8 @@ const mockAppellantCaseIncompleteReasonTextCreateMany = jest.fn().mockResolvedVa
 const mockAppellantCaseInvalidReasonTextDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseInvalidReasonTextCreateMany = jest.fn().mockResolvedValue({});
 const mockLPAQuestionnaireIncompleteReasonTextCreateMany = jest.fn().mockResolvedValue({});
+const mockAppellantCaseEnforcementInvalidReasonTextDeleteMany = jest.fn().mockResolvedValue({});
+const mockAppellantCaseEnforcementInvalidReasonTextCreateMany = jest.fn().mockResolvedValue({});
 const mockDocumentRedactionStatusFindMany = jest.fn().mockResolvedValue({});
 const mockAuditTrailFindMany = jest.fn().mockResolvedValue({});
 const mockAuditTrailCreate = jest.fn().mockResolvedValue({});
@@ -386,6 +396,13 @@ class MockPrismaClient {
 		};
 	}
 
+	get appellantCaseEnforcementInvalidReason() {
+		return {
+			findMany: mockAppellantCaseEnforcementInvalidReasonFindMany,
+			findUnique: mockAppellantCaseEnforcementInvalidReasonFindUnique
+		};
+	}
+
 	get appellantCaseValidationOutcome() {
 		return {
 			findMany: mockAppellantCaseValidationOutcomeFindMany,
@@ -412,6 +429,13 @@ class MockPrismaClient {
 		return {
 			deleteMany: mockAppellantCaseInvalidReasonsSelectedDeleteMany,
 			createMany: mockAppellantCaseInvalidReasonsSelectedCreateMany
+		};
+	}
+
+	get appellantCaseEnforcementInvalidReasonsSelected() {
+		return {
+			deleteMany: mockAppellantCaseEnforcementInvalidReasonsSelectedDeleteMany,
+			createMany: mockAppellantCaseEnforcementInvalidReasonsSelectedCreateMany
 		};
 	}
 
@@ -576,6 +600,13 @@ class MockPrismaClient {
 		return {
 			deleteMany: mockAppellantCaseInvalidReasonTextDeleteMany,
 			createMany: mockAppellantCaseInvalidReasonTextCreateMany
+		};
+	}
+
+	get appellantCaseEnforcementInvalidReasonText() {
+		return {
+			deleteMany: mockAppellantCaseEnforcementInvalidReasonTextDeleteMany,
+			createMany: mockAppellantCaseEnforcementInvalidReasonTextCreateMany
 		};
 	}
 

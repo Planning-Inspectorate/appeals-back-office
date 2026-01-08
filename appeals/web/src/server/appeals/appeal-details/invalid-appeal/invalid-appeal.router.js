@@ -32,6 +32,15 @@ router
 	.post(validators.validateEnforcementNoticeInvalid, controller.postEnforcementNoticeInvalid);
 
 router
+	.route('/enforcement-notice-reason')
+	.get(controller.getEnforcementNoticeReason)
+	.post(
+		validators.validateEnforcementNoticeReason,
+		validators.validateEnforcementNoticeReasonTextItems,
+		controller.postEnforcementNoticeReason
+	);
+
+router
 	.route('/other-live-appeals')
 	.get(controller.getOtherLiveAppeals)
 	.post(validators.validateOtherLiveAppeals, controller.postOtherLiveAppeals);

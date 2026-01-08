@@ -82,6 +82,12 @@ export const appealDetailsInclude = /** @type {const} */ {
 					appellantCaseInvalidReasonText: true
 				}
 			},
+			appellantCaseEnforcementInvalidReasonsSelected: {
+				include: {
+					appellantCaseEnforcementInvalidReason: true,
+					appellantCaseEnforcementInvalidReasonText: true
+				}
+			},
 			appellantCaseValidationOutcome: true,
 			knowsOtherOwners: true,
 			knowsAllOwners: true,
@@ -216,6 +222,12 @@ export const appealDetailsIncludeMap = /** @type {const} */ {
 				include: {
 					appellantCaseInvalidReason: true,
 					appellantCaseInvalidReasonText: true
+				}
+			},
+			appellantCaseEnforcementInvalidReasonsSelected: {
+				include: {
+					appellantCaseEnforcementInvalidReason: true,
+					appellantCaseEnforcementInvalidReasonText: true
 				}
 			},
 			appellantCaseValidationOutcome: true,
