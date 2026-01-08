@@ -67,7 +67,7 @@ const displayProcedureChangeLink = (appealDetails) => {
 		: false;
 
 	if (
-		appealDetails.appealType !== APPEAL_TYPE.S78 ||
+		![APPEAL_TYPE.S78, APPEAL_TYPE.ENFORCEMENT_NOTICE].includes(appealDetails.appealType) ||
 		lpaStatementrepresentationStatus === APPEAL_REPRESENTATION_STATUS.PUBLISHED ||
 		ipCommentsrepresentationStatus === APPEAL_REPRESENTATION_STATUS.PUBLISHED ||
 		lpaStatementDueDateElapsed ||

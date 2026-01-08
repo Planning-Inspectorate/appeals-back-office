@@ -3,6 +3,7 @@ import {
 	advertisementAppeal,
 	casAdvertAppeal,
 	casPlanningAppeal,
+	enforcementNoticeAppeal,
 	fullPlanningAppeal,
 	householdAppeal,
 	listedBuildingAppealAppellantCaseValid
@@ -1158,6 +1159,24 @@ describe('appeal timetables routes', () => {
 					'appeal-valid-start-case-cas-advertisement-lpa',
 					'appeal-valid-start-case-cas-advertisement-appellant-hearing',
 					'appeal-valid-start-case-cas-advertisement-lpa-hearing'
+				],
+				[
+					'enforcementNoticeAppeal',
+					{ ...enforcementNoticeAppeal, procedureType: { key: 'hearing' } },
+					{
+						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
+						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-24T22:59:00.000Z',
+						statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
+					},
+					{},
+					'appeal-valid-start-case-s78-appellant',
+					'appeal-valid-start-case-s78-lpa',
+					'appeal-valid-start-case-s78-appellant-hearing',
+					'appeal-valid-start-case-s78-lpa-hearing'
 				]
 			])(
 				'for a %s appeal',
