@@ -41,7 +41,7 @@
 		"@pins/event-client": "^0.0.0",
 		"@pins/express": "^0.0.0",
 		"@pins/platform": "^0.0.0",
-		"@planning-inspectorate/data-model": "^2.5.0",
+		"@planning-inspectorate/data-model": "^2.7.0",
 		"@prisma/adapter-mssql": "^7.1.0",
 		"@prisma/client": "^7.1.0",
 		"@supercharge/promise-pool": "^2.4.0",
