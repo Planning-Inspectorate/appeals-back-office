@@ -141,18 +141,8 @@ const assignUser = async (
 			details = stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_CASE_OFFICER, [assignedUserId]);
 		} else if (typeOfAssignedUser == USER_TYPE_INSPECTOR && assignedUserId) {
 			details = stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [assignedUserId]);
-			if (inspectorName) {
-				personalisation.inspector_name = inspectorName || '';
-				templateName = 'appeal-assign-inspector';
-				notifyAppellant = true;
-			}
 		} else if (padsInspector) {
 			details = stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [padsInspector]);
-			if (inspectorName) {
-				personalisation.inspector_name = inspectorName || '';
-				templateName = 'appeal-assign-inspector';
-				notifyAppellant = true;
-			}
 		} else if (inspector == null && prevUserName) {
 			if (caseData.inspector?.azureAdUserId) {
 				azureAdUserId = caseData.inspector.azureAdUserId;
@@ -160,11 +150,6 @@ const assignUser = async (
 			} else if (caseData.padsInspectorUserId) {
 				azureAdUserId = caseData.padsInspectorUserId;
 				details = stringTokenReplacement(AUDIT_TRAIL_UNASSIGNED_INSPECTOR, [azureAdUserId]);
-			}
-			if (prevUserName) {
-				personalisation.inspector_name = prevUserName || '';
-				templateName = 'appeal-unassign-inspector';
-				notifyAppellant = true;
 			}
 		}
 

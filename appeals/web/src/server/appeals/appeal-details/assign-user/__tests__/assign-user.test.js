@@ -1,7 +1,3 @@
-import {
-	assignEmailTemplate,
-	unassignEmailTemplate
-} from '#appeals/appeal-details/assign-user/assign-user.data.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { activeDirectoryUsersData } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
@@ -182,9 +178,6 @@ describe('assign-user', () => {
 				email: 'caseofficers@planninginspectorate.gov.uk',
 				name: 'standard email'
 			});
-			nock('http://test/')
-				.post(`/appeals/notify-preview/appeal-assign-inspector.content.md`)
-				.reply(200, assignEmailTemplate);
 
 			await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
 				user: '{"id": "923ac03b-9031-4cf4-8b17-348c274321f9", "name": "Smith, John", "email": "John.Smith@planninginspectorate.gov.uk"}'
@@ -213,9 +206,6 @@ describe('assign-user', () => {
 				email: 'caseofficers@planninginspectorate.gov.uk',
 				name: 'standard email'
 			});
-			nock('http://test/')
-				.post(`/appeals/notify-preview/appeal-unassign-inspector.content.md`)
-				.reply(200, unassignEmailTemplate);
 			await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
 				user: '{"id": "0", "name": "Unassign", "email": "Unassign"}'
 			});
@@ -271,9 +261,6 @@ describe('assign-user', () => {
 				email: 'caseofficers@planninginspectorate.gov.uk',
 				name: 'standard email'
 			});
-			nock('http://test/')
-				.post(`/appeals/notify-preview/appeal-assign-inspector.content.md`)
-				.reply(200, assignEmailTemplate);
 
 			await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
 				user: '{"id": "923ac03b-9031-4cf4-8b17-348c274321f9", "name": "Smith, John", "email": "John.Smith@planninginspectorate.gov.uk"}'
