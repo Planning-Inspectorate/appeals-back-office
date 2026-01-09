@@ -3277,6 +3277,35 @@ describe('appeal-details', () => {
 				);
 			});
 
+			it('Should display procedure type change link if type is enforcement notice', async () => {
+				const appealId = 2;
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
+						procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+						documentationSummary: {
+							lpaStatement: {
+								status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+							}
+						}
+					});
+				nock('http://test/')
+					.get(/appeals\/\d+\/appellant-cases\/\d+/)
+					.reply(200, {
+						planningObligation: { hasObligation: false },
+						numberOfResidencesNetChange: null
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.text).toContain(
+					'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+				);
+			});
+
 			it('Should not display procedure type change link because type is S78 and lpastatement status is received', async () => {
 				const appealId = 2;
 				nock('http://test/')
