@@ -1228,8 +1228,7 @@ describe('appeal-details', () => {
 							appealTimetable: {
 								...appealDataFullPlanning.appealTimetable,
 								ipCommentsDueDate: pastDate,
-								lpaStatementDueDate: pastDate,
-								appellantStatementDueDate: futureDate
+								lpaStatementDueDate: futureDate
 							},
 							documentationSummary: {
 								...appealDataFullPlanning.documentationSummary,
@@ -1292,8 +1291,7 @@ describe('appeal-details', () => {
 							appealTimetable: {
 								...appealDataFullPlanning.appealTimetable,
 								ipCommentsDueDate: futureDate,
-								lpaStatementDueDate: futureDate,
-								appellantStatementDueDate: futureDate
+								lpaStatementDueDate: futureDate
 							},
 							documentationSummary: {
 								...appealDataFullPlanning.documentationSummary,

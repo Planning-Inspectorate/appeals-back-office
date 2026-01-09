@@ -32,7 +32,6 @@ import { isEmpty, pick } from 'lodash-es';
  * @typedef {Object} AppealTimetable
  * @property {string|undefined} [lpaQuestionnaireDueDate]
  * @property {string|undefined} [ipCommentsDueDate]
- * @property {string|undefined} [appellantStatementDueDate]
  * @property {string|undefined} [lpaStatementDueDate]
  * @property {string|undefined} [finalCommentsDueDate]
  * @property {string|undefined} [statementOfCommonGroundDueDate]
@@ -197,8 +196,7 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
 		appealDetails.appealTimetable.ipCommentsDueDate;
 	sessionValues.appealTimetable.lpaStatementDueDate =
 		sessionValues.appealTimetable.lpaStatementDueDate ??
-		(appealDetails.appealTimetable.lpaStatementDueDate ||
-			appealDetails.appealTimetable.appellantStatementDueDate);
+		appealDetails.appealTimetable.lpaStatementDueDate;
 	sessionValues.appealTimetable.finalCommentsDueDate =
 		sessionValues.appealTimetable.finalCommentsDueDate ??
 		appealDetails.appealTimetable.finalCommentsDueDate;

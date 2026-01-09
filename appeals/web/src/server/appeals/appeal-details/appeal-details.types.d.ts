@@ -345,7 +345,6 @@ export type BodyValidationOutcome = Object<string, string | string[]>;
 export interface WebAppealTimetable extends AppealTimetable {
 	lpaQuestionnaireDueDate?: string | null;
 	ipCommentsDueDate?: string | null;
-	appellantStatementDueDate?: string | null;
 	lpaStatementDueDate?: string | null;
 	finalCommentsDueDate?: string | null;
 	s106ObligationDueDate?: string | null;
