@@ -3055,6 +3055,89 @@ describe('appellant-case', () => {
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
+
+		it('should render the check your answers page with the expected content if the outcome is "invalid" and the appeal type is enforcement notice', async () => {
+			// mocking for enforcement notice
+			nock.cleanAll();
+			nock('http://test/')
+				.get(`/appeals/${appealData.appealId}?include=all`)
+				.reply(200, appealDataEnforcementNotice)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses);
+			nock('http://test/')
+				.get('/appeals/appellant-case-invalid-reasons')
+				.reply(200, appellantCaseInvalidReasons);
+			nock('http://test/')
+				.get('/appeals/appellant-case-incomplete-reasons')
+				.reply(200, appellantCaseIncompleteReasons);
+
+			// post to incomplete reason page controller is necessary to set required data in the session
+			const enforcementNoticeInvalidResponse = await request
+				.post(`${baseUrl}/1/appellant-case/invalid/enforcement-notice`)
+				.send({ enforcementNoticeInvalid: 'no' });
+			expect(enforcementNoticeInvalidResponse.statusCode).toBe(302);
+
+			const invalidReasonPostResponse = await request
+				.post(`${baseUrl}/1${appellantCasePagePath}${invalidOutcomePagePath}`)
+				.send({
+					invalidReason: [invalidReasonsWithTextIds[0], invalidReasonsWithTextIds[1]],
+					[`invalidReason-${invalidReasonsWithTextIds[0]}`]: 'test reason text 1',
+					[`invalidReason-${invalidReasonsWithTextIds[1]}`]: [
+						'test reason text 1',
+						'test reason text 2'
+					]
+				});
+			expect(invalidReasonPostResponse.statusCode).toBe(302);
+
+			const otherLiveAppealsResponse = await request
+				.post(`${baseUrl}/1/appellant-case/invalid/other-live-appeals`)
+				.send({ otherLiveAppeals: 'no' });
+			expect(otherLiveAppealsResponse.statusCode).toBe(302);
+
+			// post to update date page controller is necessary to set updated due date
+			const updateDateResponse = await request
+				.post(
+					`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}${updateDueDatePagePath}`
+				)
+				.send({
+					'due-date-day': '1',
+					'due-date-month': '12',
+					'due-date-year': '3000'
+				});
+
+			expect(updateDateResponse.statusCode).toBe(302);
+
+			const response = await request.get(
+				`${baseUrl}/1${appellantCasePagePath}${checkYourAnswersPagePath}`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Check your answers before confirming your review</h1>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Review outcome</dt><dd class="govuk-summary-list__value"> Invalid</dd>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Is the enforcement notice invalid?</dt><dd class="govuk-summary-list__value"> No</dd>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are there any other live appeals against the enforcement notice?</dt><dd class="govuk-summary-list__value"> No</dd>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Confirming this review will inform the relevant parties of the outcome.</div>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
+		});
 	});
 
 	describe('POST /appellant-case/check-your-answers', () => {
