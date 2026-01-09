@@ -1,4 +1,4 @@
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import {
@@ -34,7 +34,18 @@ router.post(
 		}
 		#swagger.responses[400] = {}
 	 */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'childAppeals',
+		'parentAppeals',
+		'caseOfficer',
+		'inspector',
+		'appellantCase',
+		'address',
+		'appellant',
+		'agent',
+		'lpa',
+		'appealStatus'
+	]),
 	postLinkAppealValidator,
 	asyncHandler(linkAppeal)
 );
@@ -58,7 +69,7 @@ router.post(
 		}
 		#swagger.responses[400] = {}
 	 */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest(['childAppeals', 'parentAppeals']),
 	postLinkLegacyAppealValidator,
 	asyncHandler(linkExternalAppeal)
 );
@@ -82,7 +93,7 @@ router.post(
 		}
 		#swagger.responses[400] = {}
 	 */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	postLinkAppealValidator,
 	asyncHandler(associateAppeal)
 );
@@ -106,7 +117,7 @@ router.post(
 		}
 		#swagger.responses[400] = {}
 	 */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	postLinkLegacyAppealValidator,
 	asyncHandler(associateExternalAppeal)
 );
@@ -130,7 +141,7 @@ router.delete(
 		}
 		#swagger.responses[400] = {}
 	 */
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsByIdAndAddPartialToRequest([]),
 	asyncHandler(unlinkAppeal)
 );
 
