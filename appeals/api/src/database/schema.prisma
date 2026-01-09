@@ -286,8 +286,8 @@ model AppellantCase {
   appellantCaseInvalidReasonsSelected    AppellantCaseInvalidReasonsSelected[]
   appellantCaseValidationOutcome         AppellantCaseValidationOutcome?          @relation(fields: [appellantCaseValidationOutcomeId], references: [id])
   appellantCaseValidationOutcomeId       Int?
-  applicationDate                        DateTime                                 @default(now())
-  applicationDecision                    String                                   @default("refused")
+  applicationDate                        DateTime?                                @default(now())
+  applicationDecision                    String?                                  @default("refused")
   applicationDecisionDate                DateTime?
   caseSubmittedDate                      DateTime                                 @default(now())
   caseSubmissionDueDate                  DateTime?
