@@ -233,7 +233,7 @@ export function personalListPage(
 	const searchOtherCOLink = {
 		type: 'html',
 		parameters: {
-			html: `${`<a class="govuk-link" href=${urlToSearchCaseOfficer} data-cy="change-case-officer">View another case officer’s appeals</a>`}
+			html: `${`<p class="govuk-body"> <a class="govuk-link" href=${urlToSearchCaseOfficer} data-cy="change-case-officer">View another case officer’s appeals</a></p> `}
                 <div class=" govuk-!-margin-top-2 govuk-!-margin-bottom-6"></div>`
 		}
 	};
