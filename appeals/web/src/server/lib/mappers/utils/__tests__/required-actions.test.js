@@ -992,8 +992,7 @@ describe('required actions', () => {
 								appealTimetable: {
 									...appealDataWithStatementsStatus.appealTimetable,
 									ipCommentsDueDate: futureDate,
-									lpaStatementDueDate: futureDate,
-									appellantStatementDueDate: futureDate
+									lpaStatementDueDate: futureDate
 								},
 								documentationSummary: {
 									...appealDataWithStatementsStatus.documentationSummary,

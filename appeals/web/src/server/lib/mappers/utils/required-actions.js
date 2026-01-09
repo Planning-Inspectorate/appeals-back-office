@@ -201,10 +201,10 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			const lpaStatementIncomplete =
 				lpaStatementRepresentationStatus &&
 				lpaStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE;
-			const lpaStatementDueDate = appealDetails?.appealTimetable?.lpaStatementDueDate;
-			const lpaStatementDueDatePassed =
-				!lpaStatementDueDate ||
-				dateIsInThePast(dateISOStringToDayMonthYearHourMinute(lpaStatementDueDate));
+			const statementsDueDate = appealDetails?.appealTimetable?.lpaStatementDueDate;
+			const statementsDueDatePassed =
+				!statementsDueDate ||
+				dateIsInThePast(dateISOStringToDayMonthYearHourMinute(statementsDueDate));
 
 			const appellantStatementStatus =
 				appealDetails.documentationSummary.appellantStatement?.status;
@@ -215,10 +215,6 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			const appellantStatementAwaitingReview =
 				appellantStatementRepresentationStatus &&
 				appellantStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW;
-			const appellantStatementDueDate = appealDetails?.appealTimetable?.appellantStatementDueDate;
-			const appellantStatementDueDatePassed =
-				!appellantStatementDueDate ||
-				dateIsInThePast(dateISOStringToDayMonthYearHourMinute(appellantStatementDueDate));
 
 			const appellantStatementEnabled = config.featureFlags.featureFlagAppellantStatement;
 
@@ -235,12 +231,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				!lpaStatementAwaitingReview &&
 				(!appellantStatementEnabled || !appellantStatementAwaitingReview);
 
-			if (
-				ipCommentsDueDatePassed &&
-				lpaStatementDueDatePassed &&
-				(!appellantStatementEnabled || appellantStatementDueDatePassed) &&
-				allReviewsCompleted
-			) {
+			if (ipCommentsDueDatePassed && statementsDueDatePassed && allReviewsCompleted) {
 				if (hasItemsToShare) {
 					actions.push('shareIpCommentsAndLpaStatement');
 				} else if (
@@ -279,7 +270,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				}
 
 				if (appellantStatementEnabled) {
-					if (appellantStatementNotReceived && appellantStatementDueDate) {
+					if (appellantStatementNotReceived && statementsDueDate) {
 						actions.push('awaitingAppellantStatement');
 					} else if (appellantStatementAwaitingReview) {
 						actions.push('reviewAppellantStatement');

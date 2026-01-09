@@ -2247,7 +2247,6 @@ export const assignedAppealsPage1 = {
 				lpaQuestionnaireDueDate: '2024-08-09T22:59:00.000Z',
 				caseResubmissionDueDate: null,
 				ipCommentsDueDate: '2024-09-09T22:59:00.000Z',
-				appellantStatementDueDate: '2024-09-09T22:59:00.000Z',
 				lpaStatementDueDate: '2024-09-09T22:59:00.000Z',
 				finalCommentsDueDate: '2024-09-23T22:59:00.000Z',
 				s106ObligationDueDate: '2024-09-23T22:59:00.000Z',
@@ -2320,7 +2319,6 @@ export const assignedAppealsPage1 = {
 				lpaQuestionnaireDueDate: '2025-01-10T23:59:00.000Z',
 				caseResubmissionDueDate: null,
 				ipCommentsDueDate: '2025-02-07T23:59:00.000Z',
-				appellantStatementDueDate: '2025-02-07T23:59:00.000Z',
 				lpaStatementDueDate: '2025-02-07T23:59:00.000Z',
 				finalCommentsDueDate: '2025-02-21T23:59:00.000Z',
 				s106ObligationDueDate: '2025-02-21T23:59:00.000Z',
@@ -2393,7 +2391,6 @@ export const assignedAppealsPage1 = {
 				lpaQuestionnaireDueDate: '2025-01-10T23:59:00.000Z',
 				caseResubmissionDueDate: null,
 				ipCommentsDueDate: '2025-04-07T22:59:00.000Z',
-				appellantStatementDueDate: '2025-02-07T23:59:00.000Z',
 				lpaStatementDueDate: '2025-02-07T23:59:00.000Z',
 				finalCommentsDueDate: '2025-02-21T23:59:00.000Z',
 				s106ObligationDueDate: '2025-02-21T23:59:00.000Z',
@@ -2724,7 +2721,6 @@ export const assignedAppealsPage2 = {
 				lpaQuestionnaireDueDate: '2025-04-09T23:00:00.000Z',
 				caseResubmissionDueDate: null,
 				ipCommentsDueDate: '2025-02-07T23:59:00.000Z',
-				appellantStatementDueDate: '2025-02-07T23:59:00.000Z',
 				lpaStatementDueDate: '2025-02-07T23:59:00.000Z',
 				finalCommentsDueDate: '2025-02-21T23:59:00.000Z',
 				s106ObligationDueDate: '2025-02-21T23:59:00.000Z',
@@ -2798,7 +2794,6 @@ export const assignedAppealsPage2 = {
 				lpaQuestionnaireDueDate: '2024-11-11T23:59:00.000Z',
 				caseResubmissionDueDate: null,
 				ipCommentsDueDate: '2024-12-09T23:59:00.000Z',
-				appellantStatementDueDate: '2024-12-09T23:59:00.000Z',
 				lpaStatementDueDate: '2024-12-09T23:59:00.000Z',
 				finalCommentsDueDate: '2025-12-23T23:59:00.000Z',
 				s106ObligationDueDate: '2024-12-23T23:59:00.000Z',
@@ -2871,7 +2866,6 @@ export const assignedAppealsPage2 = {
 				lpaQuestionnaireDueDate: '2025-02-11T23:59:00.000Z',
 				caseResubmissionDueDate: null,
 				ipCommentsDueDate: '2025-03-11T23:59:00.000Z',
-				appellantStatementDueDate: '2025-03-11T23:59:00.000Z',
 				lpaStatementDueDate: '2025-03-11T23:59:00.000Z',
 				finalCommentsDueDate: '2025-03-25T23:59:00.000Z',
 				s106ObligationDueDate: '2025-03-25T23:59:00.000Z',
@@ -2954,7 +2948,6 @@ export const assignedAppealsPage3 = {
 				lpaQuestionnaireDueDate: '2025-03-11T23:59:00.000Z',
 				caseResubmissionDueDate: null,
 				ipCommentsDueDate: '2025-04-08T22:59:00.000Z',
-				appellantStatementDueDate: '2025-04-08T22:59:00.000Z',
 				lpaStatementDueDate: '2025-04-08T22:59:00.000Z',
 				finalCommentsDueDate: '2025-04-24T22:59:00.000Z',
 				s106ObligationDueDate: '2025-04-24T22:59:00.000Z',
@@ -3019,7 +3012,6 @@ export const assignedAppealsInFinalCommentsStatus = {
 			appealTimetable: {
 				appealTimetableId: 22293,
 				appellantFinalCommentsDueDate: '2024-08-16T22:59:00.000Z',
-				appellantStatementDueDate: '2024-08-02T22:59:00.000Z',
 				caseResubmissionDueDate: null,
 				ipCommentsDueDate: '2024-08-02T22:59:00.000Z',
 				issueDeterminationDate: null,
@@ -4163,6 +4155,10 @@ export const appealDataToGetRequiredActions = {
 			lpaStatement: {
 				status: DOCUMENT_STATUS_RECEIVED,
 				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
+			},
+			appellantStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
 			}
 		}
 	},
@@ -4195,6 +4191,10 @@ export const appealDataToGetRequiredActions = {
 			lpaStatement: {
 				status: DOCUMENT_STATUS_NOT_RECEIVED,
 				representationStatus: null
+			},
+			appellantStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
 			}
 		}
 	},
@@ -4403,6 +4403,10 @@ export const appealDataToGetRequiredActions = {
 			lpaStatement: {
 				status: DOCUMENT_STATUS_RECEIVED,
 				representationStatus: APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+			},
+			appellantStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
 			}
 		}
 	},
@@ -4627,8 +4631,7 @@ export const appealDataToGetRequiredActions = {
 		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
 		appealTimetable: {
 			ipCommentsDueDate: pastDate,
-			lpaStatementDueDate: pastDate,
-			appellantStatementDueDate: futureDate
+			lpaStatementDueDate: futureDate
 		},
 		documentationSummary: {
 			ipComments: {
@@ -4654,8 +4657,7 @@ export const appealDataToGetRequiredActions = {
 		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
 		appealTimetable: {
 			ipCommentsDueDate: pastDate,
-			lpaStatementDueDate: pastDate,
-			appellantStatementDueDate: futureDate
+			lpaStatementDueDate: pastDate
 		},
 		documentationSummary: {
 			ipComments: {
