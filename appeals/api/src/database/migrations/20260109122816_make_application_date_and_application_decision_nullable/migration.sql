@@ -1,0 +1,20 @@
+BEGIN TRY
+
+BEGIN TRAN;
+
+-- AlterTable
+ALTER TABLE [dbo].[AppellantCase] ALTER COLUMN [applicationDate] DATETIME2 NULL;
+ALTER TABLE [dbo].[AppellantCase] ALTER COLUMN [applicationDecision] NVARCHAR(1000) NULL;
+
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH
