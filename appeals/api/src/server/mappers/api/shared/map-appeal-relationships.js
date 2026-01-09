@@ -112,8 +112,6 @@ const mapLinkedAppeal = (relationship, isParentAppeal) => {
 	const completedStateList =
 		appealStatus?.filter(({ valid }) => !valid).map(({ status }) => status) || [];
 
-	console.log('relationshipId: relationship.id,', typeof relationship.id);
-
 	return {
 		appealId,
 		appealReference,
