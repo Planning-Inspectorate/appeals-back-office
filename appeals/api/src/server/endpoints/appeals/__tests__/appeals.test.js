@@ -1732,7 +1732,6 @@ describe('appeals list routes', () => {
 
 	describe('/appeals/personal-list', () => {
 		const appealTimetable = {
-			appellantStatementDueDate: new Date('2025-11-01T00:00:00.000Z'),
 			caseResubmissionDueDate: new Date('2025-11-02T00:00:00.000Z'),
 			finalCommentsDueDate: new Date('2025-11-03T00:00:00.000Z'),
 			ipCommentsDueDate: new Date('2025-11-04T00:00:00.000Z'),
@@ -1836,7 +1835,6 @@ describe('appeals list routes', () => {
 							isInquirySetup: false,
 							hasInquiryAddress: false,
 							appealTimetable: {
-								appellantStatementDueDate: '2025-11-01T00:00:00.000Z',
 								caseResubmissionDueDate: '2025-11-02T00:00:00.000Z',
 								finalCommentsDueDate: '2025-11-03T00:00:00.000Z',
 								ipCommentsDueDate: '2025-11-04T00:00:00.000Z',
@@ -1912,7 +1910,6 @@ describe('appeals list routes', () => {
 							isInquirySetup: false,
 							hasInquiryAddress: false,
 							appealTimetable: {
-								appellantStatementDueDate: '2025-11-01T00:00:00.000Z',
 								caseResubmissionDueDate: '2025-11-02T00:00:00.000Z',
 								finalCommentsDueDate: '2025-11-03T00:00:00.000Z',
 								ipCommentsDueDate: '2025-11-04T00:00:00.000Z',

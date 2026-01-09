@@ -77,14 +77,12 @@ export const simulateStatementsElapsed = async (req, res) => {
 		const { id } = timetable;
 		const ipCommentsDueDate = sub(new Date(), { days: 3 });
 		const lpaStatementDueDate = sub(new Date(), { days: 3 });
-		const appellantStatementDueDate = sub(new Date(), { days: 3 });
 
 		await databaseConnector.appealTimetable.update({
 			where: { id },
 			data: {
 				ipCommentsDueDate,
-				lpaStatementDueDate,
-				appellantStatementDueDate
+				lpaStatementDueDate
 			}
 		});
 

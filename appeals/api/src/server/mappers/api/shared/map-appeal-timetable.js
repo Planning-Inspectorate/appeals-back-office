@@ -27,10 +27,6 @@ export const mapAppealTimetable = (data) => {
 					(appeal.appealTimetable.ipCommentsDueDate &&
 						appeal.appealTimetable.ipCommentsDueDate.toISOString()) ||
 					null,
-				appellantStatementDueDate:
-					(appeal.appealTimetable.appellantStatementDueDate &&
-						appeal.appealTimetable.appellantStatementDueDate.toISOString()) ||
-					null,
 				lpaStatementDueDate:
 					(appeal.appealTimetable.lpaStatementDueDate &&
 						appeal.appealTimetable.lpaStatementDueDate.toISOString()) ||

@@ -436,9 +436,6 @@ const s78timetable = {
 	ipCommentsDueDate: {
 		daysFromStartDate: 25
 	},
-	appellantStatementDueDate: {
-		daysFromStartDate: 25
-	},
 	lpaStatementDueDate: {
 		daysFromStartDate: 25
 	},
@@ -455,9 +452,6 @@ const advertTimetable = {
 		daysFromStartDate: 10
 	},
 	ipCommentsDueDate: {
-		daysFromStartDate: 30
-	},
-	appellantStatementDueDate: {
 		daysFromStartDate: 30
 	},
 	lpaStatementDueDate: {

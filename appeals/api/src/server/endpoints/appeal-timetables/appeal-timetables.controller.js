@@ -158,7 +158,6 @@ const updateAppealTimetableById = async (req, res) => {
 		const updatedTimetable = {
 			lpaQuestionnaireDueDate: body.lpaQuestionnaireDueDate,
 			ipCommentsDueDate: body.ipCommentsDueDate,
-			appellantStatementDueDate: body.appellantStatementDueDate,
 			lpaStatementDueDate: body.lpaStatementDueDate,
 			finalCommentsDueDate: body.finalCommentsDueDate,
 			s106ObligationDueDate: body.s106ObligationDueDate,

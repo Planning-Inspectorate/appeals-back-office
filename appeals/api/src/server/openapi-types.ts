@@ -3167,8 +3167,6 @@ export interface Timetable {
 	/** @format date-time */
 	ipCommentsDueDate?: string | null;
 	/** @format date-time */
-	appellantStatementDueDate?: string | null;
-	/** @format date-time */
 	lpaStatementDueDate?: string | null;
 	/** @format date-time */
 	finalCommentsDueDate?: string | null;
@@ -11990,8 +11988,6 @@ export interface Appeal {
 		caseResubmissionDueDate?: string | null;
 		/** @format date-time */
 		ipCommentsDueDate?: string | null;
-		/** @format date-time */
-		appellantStatementDueDate?: string | null;
 		/** @format date-time */
 		lpaStatementDueDate?: string | null;
 		/** @format date-time */

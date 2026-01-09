@@ -201,7 +201,6 @@ export default {
 		caseResubmissionDueDate: null,
 		lpaQuestionnaireDueDate: new Date('2024-12-04T23:59:00.000Z'),
 		ipCommentsDueDate: null,
-		appellantStatementDueDate: null,
 		lpaStatementDueDate: null,
 		finalCommentsDueDate: null,
 		s106ObligationDueDate: null,

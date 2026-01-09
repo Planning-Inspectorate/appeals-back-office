@@ -43,7 +43,6 @@ export const changeProcedureToWritten = async (data, appealId) => {
 				data: {
 					lpaQuestionnaireDueDate: data.lpaQuestionnaireDueDate,
 					lpaStatementDueDate: data.lpaStatementDueDate,
-					appellantStatementDueDate: data.lpaStatementDueDate,
 					ipCommentsDueDate: data.ipCommentsDueDate,
 					finalCommentsDueDate: data.finalCommentsDueDate
 				}

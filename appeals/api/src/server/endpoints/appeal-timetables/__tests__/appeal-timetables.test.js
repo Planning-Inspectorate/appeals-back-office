@@ -604,7 +604,6 @@ describe('appeal timetables routes', () => {
 					'advertisementAppeal',
 					advertisementAppealWithTimetable,
 					{
-						appellantStatementDueDate: '2024-07-17T22:59:00.000Z',
 						finalCommentsDueDate: '2024-08-07T22:59:00.000Z',
 						ipCommentsDueDate: '2024-07-17T22:59:00.000Z',
 						lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
@@ -618,7 +617,6 @@ describe('appeal timetables routes', () => {
 					fullPlanningAppealWithTimetable,
 					{
 						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
-						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
 						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
 						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
 						lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
@@ -634,7 +632,6 @@ describe('appeal timetables routes', () => {
 					listedBuildingAppealWithTimetable,
 					{
 						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
-						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
 						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
 						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
 						lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
@@ -863,7 +860,6 @@ describe('appeal timetables routes', () => {
 					'advertisementAppeal',
 					advertisementAppealWithTimetable,
 					{
-						appellantStatementDueDate: '2024-07-15T22:59:00.000Z',
 						finalCommentsDueDate: '2024-08-05T22:59:00.000Z',
 						ipCommentsDueDate: '2024-07-15T22:59:00.000Z',
 						lpaQuestionnaireDueDate: '2024-06-17T22:59:00.000Z',
@@ -877,7 +873,6 @@ describe('appeal timetables routes', () => {
 					fullPlanningAppealWithTimetable,
 					{
 						lpaQuestionnaireDueDate: '2024-06-10T22:59:00.000Z',
-						appellantStatementDueDate: '2024-07-08T22:59:00.000Z',
 						finalCommentsDueDate: '2024-07-22T22:59:00.000Z',
 						ipCommentsDueDate: '2024-07-08T22:59:00.000Z',
 						lpaStatementDueDate: '2024-07-08T22:59:00.000Z',
@@ -893,7 +888,6 @@ describe('appeal timetables routes', () => {
 					listedBuildingAppealWithTimetable,
 					{
 						lpaQuestionnaireDueDate: '2024-06-10T22:59:00.000Z',
-						appellantStatementDueDate: '2024-07-08T22:59:00.000Z',
 						finalCommentsDueDate: '2024-07-22T22:59:00.000Z',
 						ipCommentsDueDate: '2024-07-08T22:59:00.000Z',
 						lpaStatementDueDate: '2024-07-08T22:59:00.000Z',
@@ -1098,7 +1092,6 @@ describe('appeal timetables routes', () => {
 					'fullPlanning',
 					{ ...fullPlanningAppeal, procedureType: { key: 'hearing' } },
 					{
-						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
 						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
 						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
 						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
@@ -1116,7 +1109,6 @@ describe('appeal timetables routes', () => {
 					'listedBuilding',
 					{ ...listedBuildingAppealAppellantCaseValid, procedureType: { key: 'hearing' } },
 					{
-						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
 						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
 						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
 						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
@@ -1134,7 +1126,6 @@ describe('appeal timetables routes', () => {
 					'advertisementAppeal',
 					{ ...advertisementAppeal, procedureType: { key: 'hearing' } },
 					{
-						appellantStatementDueDate: '2024-07-17T22:59:00.000Z',
 						finalCommentsDueDate: '2024-08-07T22:59:00.000Z',
 						ipCommentsDueDate: '2024-07-17T22:59:00.000Z',
 						lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
@@ -1164,7 +1155,6 @@ describe('appeal timetables routes', () => {
 					'enforcementNoticeAppeal',
 					{ ...enforcementNoticeAppeal, procedureType: { key: 'hearing' } },
 					{
-						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
 						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
 						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
 						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
@@ -1791,7 +1781,6 @@ describe('appeal timetables routes', () => {
 
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual({
-				appellantStatementDueDate: '2024-07-17T22:59:00.000Z',
 				finalCommentsDueDate: '2024-07-31T22:59:00.000Z',
 				ipCommentsDueDate: '2024-07-17T22:59:00.000Z',
 				lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
@@ -1812,7 +1801,6 @@ describe('appeal timetables routes', () => {
 
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual({
-				appellantStatementDueDate: '2024-07-22T22:59:00.000Z',
 				finalCommentsDueDate: '2024-08-05T22:59:00.000Z',
 				ipCommentsDueDate: '2024-07-22T22:59:00.000Z',
 				lpaQuestionnaireDueDate: '2024-06-24T22:59:00.000Z',
@@ -1831,7 +1819,6 @@ describe('appeal timetables routes', () => {
 
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual({
-				appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
 				finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
 				ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
 				lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
