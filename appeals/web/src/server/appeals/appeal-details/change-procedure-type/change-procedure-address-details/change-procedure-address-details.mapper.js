@@ -54,6 +54,11 @@ export const getDueDateFieldNameAndID = (dateField) => {
 				id: 'proof-of-evidence-and-witnesses-due-date',
 				name: 'Proof of evidence and witnesses due date'
 			};
+		case 'caseManagementConferenceDueDate':
+			return {
+				id: 'case-management-conference-due-date',
+				name: 'Case management conference due date'
+			};
 		case 'planningObligationDueDate':
 			return {
 				id: 'planning-obligation-due-date',

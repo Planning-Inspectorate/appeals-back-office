@@ -9,6 +9,7 @@
  * @property {string?} [statementOfCommonGroundDueDate]
  * @property {string?} [planningObligationDueDate]
  * @property {string?} [proofOfEvidenceAndWitnessesDueDate]
+ * @property {string?} [caseManagementConferenceDueDate]
  * @property {object | string | undefined} [errors]
  */
 

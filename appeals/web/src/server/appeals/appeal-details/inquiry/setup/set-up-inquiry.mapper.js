@@ -239,6 +239,9 @@ export const inquiryDueDatesPage = async (
 		dueDateFields.push('planningObligationDueDate');
 	}
 
+	// This needs to be below planningObligationDueDate if any
+	dueDateFields.push('caseManagementConferenceDueDate');
+
 	pageContent.pageComponents = dueDateFields.map((dateField) => {
 		const fieldType = getDueDateFieldNameAndID(dateField);
 		if (fieldType === undefined) {
@@ -302,6 +305,11 @@ export const getDueDateFieldNameAndID = (dateField) => {
 			return {
 				id: 'planning-obligation-due-date',
 				name: 'Planning obligation due date'
+			};
+		case 'caseManagementConferenceDueDate':
+			return {
+				id: 'case-management-conference-due-date',
+				name: 'Case management conference due date'
 			};
 		default:
 			return undefined;
@@ -708,6 +716,27 @@ export function mapInquiryTimetableDue(appealId, action, hasObligation, values) 
 			}
 		});
 	}
+
+	pageComponents.push({
+		type: 'summary-list',
+		parameters: {
+			rows: [
+				textSummaryListItem({
+					id: 'Case management conference due',
+					text: 'Case management conference due',
+					value: dateISOStringToDisplayDate(
+						dayMonthYearHourMinuteToISOString({
+							day: values['case-management-conference-due-date-day'],
+							month: values['case-management-conference-due-date-month'],
+							year: values['case-management-conference-due-date-year']
+						})
+					),
+					link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
+					editable: true
+				})?.display.summaryListItem
+			]
+		}
+	});
 
 	return pageComponents;
 }

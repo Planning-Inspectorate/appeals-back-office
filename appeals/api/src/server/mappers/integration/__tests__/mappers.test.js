@@ -186,6 +186,7 @@ describe('mapCaseDates', () => {
 					lpaQuestionnairePublishedDate: new Date('2025-03-07T09:12:33.334Z'),
 					lpaQuestionnaireValidationOutcomeDate: new Date('2025-03-08T09:12:33.334Z'),
 					proofOfEvidenceAndWitnessesDueDate: new Date('2025-03-10T09:12:33.334Z'),
+					caseManagementConferenceDueDate: new Date('2025-03-17T09:12:33.334Z'),
 					siteNoticesSentDate: new Date('2025-03-11T09:12:33.334Z'),
 					lpaStatementDueDate: new Date('2025-03-12T09:12:33.334Z'),
 					statementOfCommonGroundDueDate: new Date('2025-03-13T09:12:33.334Z'),
@@ -241,6 +242,7 @@ describe('mapCaseDates', () => {
 			statementOfCommonGroundDueDate: '2025-03-13T09:12:33.334Z',
 			planningObligationDueDate: '2025-03-14T09:12:33.334Z',
 			proofsOfEvidenceDueDate: '2025-03-10T09:12:33.334Z',
+			caseManagementConferenceDueDate: '2025-03-17T09:12:33.334Z',
 			lpaProofsSubmittedDate: '2025-03-19T09:12:33.334Z',
 			appellantProofsSubmittedDate: '2025-03-20T09:12:33.334Z',
 			siteNoticesSentDate: null

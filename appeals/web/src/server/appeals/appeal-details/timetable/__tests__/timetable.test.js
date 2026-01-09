@@ -1127,6 +1127,10 @@ describe('Timetable', () => {
 					{
 						id: 'proof-of-evidence-and-witnesses',
 						label: 'Proof of evidence and witnesses'
+					},
+					{
+						id: 'case-management-conference',
+						label: 'Case management conference'
 					}
 				];
 
@@ -1244,7 +1248,10 @@ describe('Timetable', () => {
 						'planning-obligation-due-date-year': '2050',
 						'proof-of-evidence-and-witnesses-due-date-day': '10',
 						'proof-of-evidence-and-witnesses-due-date-month': '10',
-						'proof-of-evidence-and-witnesses-due-date-year': '2050'
+						'proof-of-evidence-and-witnesses-due-date-year': '2050',
+						'case-management-conference-due-date-day': '10',
+						'case-management-conference-due-date-month': '10',
+						'case-management-conference-due-date-year': '2050'
 					});
 
 					expect(response.statusCode).toBe(302);
@@ -1686,6 +1693,7 @@ describe('Timetable', () => {
 			it('should update the timetable due dates via the API', async () => {
 				const apiCall = nock('http://test/')
 					.patch('/appeals/1/appeal-timetables/1', {
+						caseManagementConferenceDueDate: '2030-10-19T23:00:00.000Z',
 						lpaStatementDueDate: '2030-10-13T23:00:00.000Z',
 						ipCommentsDueDate: '2030-10-14T23:00:00.000Z',
 						statementOfCommonGroundDueDate: '2030-10-16T23:00:00.000Z',
@@ -1709,7 +1717,10 @@ describe('Timetable', () => {
 					'planning-obligation-due-date-year': '2030',
 					'proof-of-evidence-and-witnesses-due-date-day': '19',
 					'proof-of-evidence-and-witnesses-due-date-month': '10',
-					'proof-of-evidence-and-witnesses-due-date-year': '2030'
+					'proof-of-evidence-and-witnesses-due-date-year': '2030',
+					'case-management-conference-due-date-day': '20',
+					'case-management-conference-due-date-month': '10',
+					'case-management-conference-due-date-year': '2030'
 				});
 				const response = await request.post(`${baseUrl}/edit/check`);
 

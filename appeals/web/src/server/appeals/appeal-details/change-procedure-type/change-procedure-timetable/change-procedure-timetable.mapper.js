@@ -18,7 +18,7 @@ import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
  */
 
 /**
- * @typedef {'lpaQuestionnaireDueDate' | 'ipCommentsDueDate' | 'lpaStatementDueDate' | 'finalCommentsDueDate' | 'statementOfCommonGroundDueDate' | 'planningObligationDueDate' | 'proofOfEvidenceAndWitnessesDueDate' } AppealTimetableType
+ * @typedef {'lpaQuestionnaireDueDate' | 'ipCommentsDueDate' | 'lpaStatementDueDate' | 'finalCommentsDueDate' | 'statementOfCommonGroundDueDate' | 'planningObligationDueDate' | 'proofOfEvidenceAndWitnessesDueDate' | 'caseManagementConferenceDueDate'} AppealTimetableType
  */
 
 /**
@@ -133,6 +133,7 @@ export const getTimetableTypes = (appealType, hasObligation, newProcedureType) =
 				}
 				if (newProcedureType.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
 					validAppealTimetableType.push('proofOfEvidenceAndWitnessesDueDate');
+					validAppealTimetableType.push('caseManagementConferenceDueDate');
 				}
 			}
 			break;

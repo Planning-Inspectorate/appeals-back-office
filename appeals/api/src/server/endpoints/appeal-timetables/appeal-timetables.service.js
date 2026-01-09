@@ -150,6 +150,12 @@ const getStartCaseNotifyParams = async (
 			)
 		}),
 		...(inquiry && {
+			case_management_conference_deadline: formatDate(
+				new Date(timetable.caseManagementConferenceDueDate || ''),
+				false
+			)
+		}),
+		...(inquiry && {
 			planning_obligation_deadline: formatDate(
 				new Date(timetable.planningObligationDueDate || ''),
 				false
@@ -564,7 +570,9 @@ const dueDateToAppealTimetableTextMapper = {
 	lpaStatementDueDate: 'Statements',
 	finalCommentsDueDate: 'Final comments',
 	statementOfCommonGroundDueDate: 'Statement of common ground',
-	planningObligationDueDate: 'Planning obligation'
+	planningObligationDueDate: 'Planning obligation',
+	proofOfEvidenceAndWitnessesDueDate: 'Proof of evidence and witnesses',
+	caseManagementConferenceDueDate: 'Case management conference'
 };
 
 /**
