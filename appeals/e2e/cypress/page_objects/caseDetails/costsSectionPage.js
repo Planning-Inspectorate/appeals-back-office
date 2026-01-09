@@ -68,4 +68,18 @@ export class CostsSectionPage extends CaseDetailsPage {
 				expect(text).to.equal(this.expectedValues.lpaCorrespondence);
 			});
 	};
+
+	verifyCostsSectionHeadingIsDisplayed() {
+		this.elements.caseDetailsSections().should('contain.text', 'Costs');
+	}
+
+	verifyExpectedFieldCostsSection(expectedText) {
+		cy.get('#case-costs-table').find('th, td').contains(expectedText).should('be.visible');
+	}
+
+	verifyCostsSectionRule6PartiesIsDisplayed(rule6PartyName) {
+		this.verifyExpectedFieldCostsSection(`${rule6PartyName} application`);
+		this.verifyExpectedFieldCostsSection(`${rule6PartyName} withdrawal`);
+		this.verifyExpectedFieldCostsSection(`${rule6PartyName} correspondence`);
+	}
 }

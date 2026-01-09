@@ -4,6 +4,8 @@
 import { appealsApiRequests } from '../../fixtures/appealsApiRequests';
 import { users } from '../../fixtures/users';
 import { ContactsSectionPage } from '../../page_objects/caseDetails/contactsSectionPage.js';
+import { CostsSectionPage } from '../../page_objects/caseDetails/costsSectionPage';
+import { DocumentationSectionPage } from '../../page_objects/caseDetails/documentationSectionPage';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { ContactDetailsPage } from '../../page_objects/contactDetailsPage.js';
 import { CYASection } from '../../page_objects/cyaSection.js';
@@ -17,6 +19,8 @@ const cyaSection = new CYASection();
 const contactsSectionPage = new ContactsSectionPage();
 const contactDetailsPage = new ContactDetailsPage();
 const rule6PartyContact = appealsApiRequests.rule6Party.serviceUser;
+const documentationSectionPage = new DocumentationSectionPage();
+const costsSectionPage = new CostsSectionPage();
 
 const rule6Details = {
 	partyName: 'TestRuleSixParty',
@@ -116,6 +120,27 @@ it('Can add rule 6 party', () => {
 		field: cyaSection.cyaSectionFields.rule6PartyEmailAddress,
 		value: rule6Details.partyEmailAddressUpdated
 	});
+
+	// click add Rule 6 party and check sucess banner is visible
+	cyaSection.clickButtonByText('Add rule 6 party');
+	caseDetailsPage.validateBannerMessage('Success', 'Rule 6 party added');
+
+	// verify contact section
+	contactsSectionPage.verifyContactsSectionHeadingIsDisplayed();
+	contactsSectionPage.verifyContactsSectionRule6PartiesIsDisplayed(
+		rule6Details.partyNameUpdated,
+		rule6Details.partyEmailAddressUpdated
+	);
+
+	// verify documentation section
+	documentationSectionPage.verifyDocumentationSectionHeadingIsDisplayed();
+	documentationSectionPage.verifyDocumentationSectionRule6PartiesIsDisplayed(
+		rule6Details.partyNameUpdated
+	);
+
+	//verify costs section
+	costsSectionPage.verifyCostsSectionHeadingIsDisplayed();
+	costsSectionPage.verifyCostsSectionRule6PartiesIsDisplayed(rule6Details.partyNameUpdated);
 });
 
 it('Validates rule 6 party name and email address', () => {

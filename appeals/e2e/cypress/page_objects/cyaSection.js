@@ -37,7 +37,6 @@ export class CYASection extends CaseDetailsPage {
 	};
 
 	// A C T I O N S
-
 	selectChangeAnswer(answer) {
 		cy.getByData('change-' + answer).click();
 	}

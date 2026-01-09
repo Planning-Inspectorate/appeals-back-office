@@ -243,7 +243,9 @@ export class CaseDetailsPage extends Page {
 		caseOfficerValue: () => cy.get('.appeal-case-officer .govuk-summary-list__value'),
 		addAppellantWithdrawal: () => cy.getByData(this._cyDataSelectors.addAppellantWithdrawal),
 		addLpaWithdrawal: () => cy.getByData(this._cyDataSelectors.addLpaWithdrawal),
-		addNetResidence: () => cy.getByData(this._cyDataSelectors.addNetResidence)
+		addNetResidence: () => cy.getByData(this._cyDataSelectors.addNetResidence),
+		contactSection: () => cy.get('.govuk-summary-list__key'),
+		rule6PartyName: 'Rule 6 party name'
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -426,10 +428,6 @@ export class CaseDetailsPage extends Page {
 
 	clickChangeAppealType() {
 		this.elements.changeAppealType().click();
-	}
-
-	clickIssueAppellantCostsDecision() {
-		this.elements.issueAppellantCostsDecision().click();
 	}
 
 	clickAddAppellantApplication() {
@@ -871,13 +869,13 @@ export class CaseDetailsPage extends Page {
 		dateTimeSection.enterInquiryDueDates(timetableItems, date, intervalDays);
 	}
 
-	clickUpdateTimetableDueDates(date) {
+	clickUpdateTimetableDueDates() {
 		this.clickButtonByText('Update timetable due dates');
 	}
 
 	acceptLpaStatement(caseObj, updateAllocation, representation) {
 		cy.log('problem is here');
-		cy.addRepresentation(caseObj, 'lpaStatement', null, representation).then((caseObj) => {
+		cy.addRepresentation(caseObj, 'lpaStatement', null, representation).then(() => {
 			cy.reload();
 		});
 		this.elements.lpaStatementReviewLink().click();
@@ -904,6 +902,15 @@ export class CaseDetailsPage extends Page {
 
 	verifyHearingSectionIsDisplayed() {
 		this.elements.caseDetailsHearingSectionButton().should('be.visible');
+	}
+
+	verifyExpectedField(fieldValue) {
+		cy.get(
+			'#main-content .govuk-summary-list__row.appeal-rule-6-party-contact-details dd.govuk-summary-list__value'
+		)
+			.invoke('text')
+			.then((t) => t.trim())
+			.should('contain', fieldValue);
 	}
 
 	clickChangeApplicationReferenceLink() {

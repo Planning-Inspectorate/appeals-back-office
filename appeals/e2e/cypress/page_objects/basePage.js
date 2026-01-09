@@ -18,7 +18,7 @@ export class Page {
 		bannerHeader: '.govuk-notification-banner__heading',
 		bannerLink: '.govuk-notification-banner__link',
 		publish_bannerHeader: '#main-content > div > div > div > h1', // TODO Use specific data-cy selector
-		button: '.govuk-button',
+		button: 'button, [role="button"], a.govuk-button, input[type="submit"]',
 		body: '.govuk-body',
 		caption: '.govuk-caption-m',
 		centralCol: '.pins-column--central',
@@ -86,7 +86,12 @@ export class Page {
 		publishBannerHeader: () => cy.get(this.selectors.publish_bannerHeader),
 		button: () => cy.get(this.selectors.button),
 		buttonByLabelText: (buttonText) =>
-			cy.contains(this.selectors.button, buttonText, { matchCase: false }),
+			cy
+				.contains(this.selectors.button, this.exactMatch(buttonText), {
+					matchCase: false,
+					timeout: 20000
+				})
+				.filter(':visible'),
 		checkbox: () => cy.get(this.selectors.checkbox).find('input'),
 		changeLink: (question) =>
 			cy.contains(this.selectors.tableCell, question, { matchCase: false }).nextUntil('a'),
@@ -184,7 +189,11 @@ export class Page {
 	}
 
 	clickButtonByText(buttonText) {
-		this.basePageElements.buttonByLabelText(buttonText).click();
+		this.basePageElements
+			.buttonByLabelText(buttonText)
+			.scrollIntoView()
+			.should('not.be.disabled')
+			.click({ force: true });
 	}
 
 	clickContinue() {
