@@ -39,7 +39,24 @@ import {
 export const linkAppeal = async (req, res) => {
 	const { appeal: currentAppeal, notifyClient } = req;
 	const { linkedAppealId, isCurrentAppealParent } = req.body;
-	const linkedAppeal = await appealRepository.getAppealById(Number(linkedAppealId));
+	const linkedAppeal = await appealRepository.getAppealById(
+		Number(linkedAppealId),
+		true,
+		[
+			'childAppeals',
+			'parentAppeals',
+			'caseOfficer',
+			'inspector',
+			'appellantCase',
+			'appealStatus',
+			'address',
+			'inspector',
+			'appellant',
+			'agent',
+			'lpa'
+		],
+		true
+	);
 
 	if (!linkedAppeal) {
 		return res.status(404).end();
@@ -231,7 +248,12 @@ export const linkExternalAppeal = async (req, res) => {
 export const associateAppeal = async (req, res) => {
 	const { linkedAppealId } = req.body;
 	const currentAppeal = req.appeal;
-	const appealToRelate = await appealRepository.getAppealById(Number(linkedAppealId));
+	const appealToRelate = await appealRepository.getAppealById(
+		Number(linkedAppealId),
+		true,
+		[],
+		true
+	);
 
 	if (appealToRelate) {
 		const relationship = {
