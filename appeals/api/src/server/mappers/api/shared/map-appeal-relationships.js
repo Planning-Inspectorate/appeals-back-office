@@ -84,13 +84,20 @@ export const mapAppealRelationships = (data) => {
 
 /**
  *
- * @param {{parent?: Appeal | null | undefined, child?: Appeal | null | undefined, linkingDate: Date, externalSource: boolean | null, externalAppealType: string | null, externalId: string | null}} relationship
+ * @param {{id: number | undefined, parent?: Appeal | null | undefined, child?: Appeal | null | undefined, linkingDate: Date, externalSource: boolean | null, externalAppealType: string | null, externalId: string | null}} relationship
  * @param {Boolean} isParentAppeal
  * @returns {Partial<AppealRelationship & {currentStatus: string, completedStateList: string[], inspectorDecision: string}>}
  */
 const mapLinkedAppeal = (relationship, isParentAppeal) => {
-	const { linkingDate, externalSource, externalAppealType, externalId, parent, child } =
-		relationship;
+	const {
+		id: relationshipId,
+		linkingDate,
+		externalSource,
+		externalAppealType,
+		externalId,
+		parent,
+		child
+	} = relationship;
 	const {
 		id: appealId,
 		appealStatus,
@@ -105,9 +112,12 @@ const mapLinkedAppeal = (relationship, isParentAppeal) => {
 	const completedStateList =
 		appealStatus?.filter(({ valid }) => !valid).map(({ status }) => status) || [];
 
+	console.log('relationshipId: relationship.id,', typeof relationship.id);
+
 	return {
 		appealId,
 		appealReference,
+		relationshipId,
 		externalSource: externalSource === true,
 		linkingDate: linkingDate.toISOString(),
 		appealType: appealType?.type,
