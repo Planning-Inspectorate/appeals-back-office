@@ -34,6 +34,8 @@ export async function deleteAllRecords(databaseConnector) {
 		databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany();
 	const deleteAppellantCaseInvalidReasonOnAppellantCase =
 		databaseConnector.appellantCaseInvalidReasonsSelected.deleteMany();
+	const deleteAppellantCaseEnforcementInvalidReasonOnAppellantCase =
+		databaseConnector.appellantCaseEnforcementInvalidReasonsSelected.deleteMany();
 	const deleteLPAQuestionnaireIncompleteReasonOnLPAQuestionnaire =
 		databaseConnector.lPAQuestionnaireIncompleteReasonsSelected.deleteMany();
 	const deleteNeighbouringSites = databaseConnector.neighbouringSite.deleteMany();
@@ -41,6 +43,8 @@ export async function deleteAllRecords(databaseConnector) {
 		databaseConnector.appellantCaseIncompleteReasonText.deleteMany();
 	const deleteAppellantCaseInvalidReasonText =
 		databaseConnector.appellantCaseInvalidReasonText.deleteMany();
+	const deleteAppellantCaseEnforcementInvalidReasonText =
+		databaseConnector.appellantCaseEnforcementInvalidReasonText.deleteMany();
 	const deleteLPAQuestionnaireIncompleteReasonText =
 		databaseConnector.lPAQuestionnaireIncompleteReasonText.deleteMany();
 	const deleteListedBuildingDetails = databaseConnector.listedBuildingSelected.deleteMany();
@@ -53,6 +57,8 @@ export async function deleteAllRecords(databaseConnector) {
 		databaseConnector.appellantCaseIncompleteReason.deleteMany();
 	const deleteAppellantCaseInvalidReason =
 		databaseConnector.appellantCaseInvalidReason.deleteMany();
+	const deleteAppellantCaseEnforcementInvalidReason =
+		databaseConnector.appellantCaseEnforcementInvalidReason.deleteMany();
 	const deleteAppellantCaseValidationOutcome =
 		databaseConnector.appellantCaseValidationOutcome.deleteMany();
 	const deleteLPAQuestionnaireValidationOutcome =
@@ -116,6 +122,8 @@ export async function deleteAllRecords(databaseConnector) {
 		deleteAppellantCaseIncompleteReasonOnAppellantCase,
 		deleteAppellantCaseInvalidReasonText,
 		deleteAppellantCaseInvalidReasonOnAppellantCase,
+		deleteAppellantCaseEnforcementInvalidReasonText,
+		deleteAppellantCaseEnforcementInvalidReasonOnAppellantCase,
 		deleteAppellantCase,
 		deleteAppealStatus,
 		deleteLPANotificationSelected,
@@ -160,6 +168,7 @@ export async function deleteAllRecords(databaseConnector) {
 		knowledgeOfOtherLandowners,
 		deleteAppellantCaseIncompleteReason,
 		deleteAppellantCaseInvalidReason,
+		deleteAppellantCaseEnforcementInvalidReason,
 		deleteAppellantCaseValidationOutcome,
 		deleteLPAQuestionnaireValidationOutcome,
 		deleteSpecialisms,

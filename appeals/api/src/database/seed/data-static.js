@@ -18,6 +18,7 @@ import { importListedBuildingsDataset } from './seed-listed-buildings.js';
  * @typedef {import('@pins/appeals.api').Schema.AppellantCaseValidationOutcome} AppellantCaseValidationOutcome
  * @typedef {import('@pins/appeals.api').Schema.AppellantCaseIncompleteReason} AppellantCaseIncompleteReason
  * @typedef {import('@pins/appeals.api').Schema.AppellantCaseInvalidReason} AppellantCaseInvalidReason
+ * @typedef {import('@pins/appeals.api').Schema.AppellantCaseEnforcementInvalidReason} AppellantCaseEnforcementInvalidReason
  * @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaireValidationOutcome} LPAQuestionnaireValidationOutcome
  * @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaireIncompleteReason} LPAQuestionnaireIncompleteReason
  * @typedef {import('@pins/appeals.api').Schema.LPANotificationMethods} LPANotificationMethods
@@ -355,6 +356,49 @@ export const appellantCaseInvalidReasons = [
 		id: 7,
 		name: 'Ground (a) barred',
 		hasText: false
+	}
+];
+
+/**
+ * An array of appellant case invalid reasons.
+ *
+ * @type {Pick<AppellantCaseEnforcementInvalidReason, 'id' |'name' | 'hasText'>[]}
+ */
+export const appellantCaseEnforcementInvalidReasons = [
+	{
+		id: 1,
+		name: 'It does not specify the boundaries of the land',
+		hasText: true
+	},
+	{
+		id: 2,
+		name: 'It states that the recipient needs to immediately stop enforcement activity',
+		hasText: true
+	},
+	{
+		id: 3,
+		name: 'There is a mistake in the wording',
+		hasText: true
+	},
+	{
+		id: 4,
+		name: 'No time between the effective date and the end of the compliance period',
+		hasText: true
+	},
+	{
+		id: 5,
+		name: 'It does not specify a period for compliance (only a description)',
+		hasText: true
+	},
+	{
+		id: 6,
+		name: 'It does not specify a period for compliance (completely missing)',
+		hasText: true
+	},
+	{
+		id: 7,
+		name: 'The period for compliance is not clear',
+		hasText: true
 	}
 ];
 
@@ -709,6 +753,15 @@ export async function seedStaticData(databaseConnector) {
 			create: appellantCaseInvalidReason,
 			where: { id: appellantCaseInvalidReason.id },
 			update: { name: appellantCaseInvalidReason.name, hasText: appellantCaseInvalidReason.hasText }
+		});
+	}
+	for (const appellantCaseEnforcementInvalidReason of appellantCaseEnforcementInvalidReasons) {
+		await databaseConnector.appellantCaseEnforcementInvalidReason.upsert({
+			create: appellantCaseEnforcementInvalidReason,
+			where: { id: appellantCaseEnforcementInvalidReason.id },
+			update: {
+				name: appellantCaseEnforcementInvalidReason.name
+			}
 		});
 	}
 	for (const lpaQuestionnaireValidationOutcome of lpaQuestionnaireValidationOutcomes) {
