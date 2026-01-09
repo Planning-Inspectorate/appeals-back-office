@@ -32,7 +32,7 @@ import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/dat
 /** @typedef {import('express').NextFunction} NextFunction */
 
 /**
- * @typedef {{appealId: number,lpaQuestionnaireDueDate: string | Date,lpaStatementDueDate: string | Date,appellantStatementDueDate: string | Date,planningObligationDueDate: string | Date | undefined,statementOfCommonGroundDueDate: string | Date,ipCommentsDueDate: string | Date,proofOfEvidenceAndWitnessesDueDate: string | Date}} TimetableData
+ * @typedef {{appealId: number,lpaQuestionnaireDueDate: string | Date,lpaStatementDueDate: string | Date,planningObligationDueDate: string | Date | undefined,statementOfCommonGroundDueDate: string | Date,ipCommentsDueDate: string | Date,proofOfEvidenceAndWitnessesDueDate: string | Date}} TimetableData
  */
 
 /**
@@ -245,7 +245,6 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 					appealId,
 					lpaQuestionnaireDueDate: createInquiryData.lpaQuestionnaireDueDate,
 					lpaStatementDueDate: createInquiryData.statementDueDate,
-					appellantStatementDueDate: createInquiryData.statementDueDate,
 					planningObligationDueDate: createInquiryData.planningObligationDueDate,
 					statementOfCommonGroundDueDate: createInquiryData.statementOfCommonGroundDueDate,
 					ipCommentsDueDate: createInquiryData.ipCommentsDueDate,

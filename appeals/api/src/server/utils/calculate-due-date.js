@@ -114,9 +114,6 @@ export const calculateDueDate = async (appeal, costsDecision) => {
 			if (appeal.appealTimetable?.ipCommentsDueDate) {
 				return new Date(appeal.appealTimetable?.ipCommentsDueDate);
 			}
-			if (appeal.appealTimetable?.appellantStatementDueDate) {
-				return new Date(appeal.appealTimetable?.appellantStatementDueDate);
-			}
 			return add(new Date(appeal.caseCreatedDate), {
 				days: approxStageCompletion.STATE_TARGET_STATEMENT_REVIEW
 			});

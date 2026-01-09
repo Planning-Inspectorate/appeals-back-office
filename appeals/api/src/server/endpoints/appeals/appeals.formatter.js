@@ -259,8 +259,6 @@ function formatAppealTimetable(appeal) {
 		caseResubmissionDueDate: appeal.appealTimetable.caseResubmissionDueDate?.toISOString() || null,
 		...(!isExpeditedAppealType(appeal.appealType?.key || '') && {
 			ipCommentsDueDate: appeal.appealTimetable.ipCommentsDueDate?.toISOString() || null,
-			appellantStatementDueDate:
-				appeal.appealTimetable.appellantStatementDueDate?.toISOString() || null,
 			lpaStatementDueDate: appeal.appealTimetable.lpaStatementDueDate?.toISOString() || null,
 			finalCommentsDueDate: appeal.appealTimetable.finalCommentsDueDate?.toISOString() || null,
 			s106ObligationDueDate: appeal.appealTimetable.s106ObligationDueDate?.toISOString() || null,

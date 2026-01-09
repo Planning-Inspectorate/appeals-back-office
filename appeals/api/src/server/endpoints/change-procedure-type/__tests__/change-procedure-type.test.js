@@ -129,7 +129,6 @@ describe('Change appeal procedure type route', () => {
 				expect(mockTx.appealTimetable.update).toHaveBeenCalledWith({
 					where: { appealId: fullPlanningAppeal.id },
 					data: {
-						appellantStatementDueDate: '2025-12-01T00:00:00.000Z',
 						finalCommentsDueDate: '2025-12-15T00:00:00.000Z',
 						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
 						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
@@ -219,7 +218,6 @@ describe('Change appeal procedure type route', () => {
 				expect(mockTx.appealTimetable.update).toHaveBeenCalledWith({
 					where: { appealId: fullPlanningAppeal.id },
 					data: {
-						appellantStatementDueDate: '2025-12-01T00:00:00.000Z',
 						finalCommentsDueDate: '2025-12-15T00:00:00.000Z',
 						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
 						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
@@ -300,7 +298,6 @@ describe('Change appeal procedure type route', () => {
 				expect(mockTx.appealTimetable.update).toHaveBeenCalledWith({
 					where: { appealId: fullPlanningAppeal.id },
 					data: {
-						appellantStatementDueDate: '2025-12-01T00:00:00.000Z',
 						finalCommentsDueDate: '2025-12-15T00:00:00.000Z',
 						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
 						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',

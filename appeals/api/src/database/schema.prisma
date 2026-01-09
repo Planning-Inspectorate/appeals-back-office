@@ -129,7 +129,7 @@ model AppealTimetable {
   caseResubmissionDueDate            DateTime?
   lpaQuestionnaireDueDate            DateTime?
   ipCommentsDueDate                  DateTime?
-  appellantStatementDueDate          DateTime?
+  appellantStatementDueDate          DateTime? // TODO: remove in a future release
   lpaStatementDueDate                DateTime?
   finalCommentsDueDate               DateTime?
   s106ObligationDueDate              DateTime?

@@ -21,11 +21,6 @@ const timetable = {
 			format: 'date-time',
 			nullable: true
 		},
-		appellantStatementDueDate: {
-			type: 'string',
-			format: 'date-time',
-			nullable: true
-		},
 		lpaStatementDueDate: {
 			type: 'string',
 			format: 'date-time',

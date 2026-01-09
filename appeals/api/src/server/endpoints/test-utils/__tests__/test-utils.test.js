@@ -321,7 +321,6 @@ describe('test utils routes', () => {
 
 			expect(response.status).toEqual(201);
 			expect(response.body).toEqual({
-				appellantStatementDueDate: '2025-11-27T23:59:00.000Z',
 				finalCommentsDueDate: '2025-12-11T23:59:00.000Z',
 				ipCommentsDueDate: '2025-11-27T23:59:00.000Z',
 				lpaQuestionnaireDueDate: '2025-10-30T23:59:00.000Z',

@@ -59,7 +59,6 @@ describe('inquiry routes', () => {
 			timetableData: {
 				lpaQuestionnaireDueDate: '2025-01-20',
 				lpaStatementDueDate: '2025-01-21',
-				appellantStatementDueDate: '2025-01-22',
 				planningObligationDueDate: '2025-01-23',
 				statementOfCommonGroundDueDate: '2025-01-24',
 				ipCommentsDueDate: '2025-01-25',

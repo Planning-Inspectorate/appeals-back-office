@@ -575,7 +575,6 @@ interface AppealTimetable {
 	caseResubmissionDueDate?: string | null;
 	lpaQuestionnaireDueDate?: string | null;
 	ipCommentsDueDate?: string | null;
-	appellantStatementDueDate?: string | null;
 	lpaStatementDueDate?: string | null;
 	finalCommentsDueDate?: string | null;
 	s106ObligationDueDate?: string | null;
