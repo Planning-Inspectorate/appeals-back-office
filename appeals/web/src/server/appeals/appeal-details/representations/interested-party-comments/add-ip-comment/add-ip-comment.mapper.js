@@ -72,19 +72,6 @@ export const ipDetailsPage = (appealDetails, values, backLinkUrl, errors) => ({
 			}
 		},
 		{
-			type: 'checkboxes',
-			parameters: {
-				id: 'do-not-share-ip-name',
-				name: 'do-not-share-ip-name',
-				items: [
-					{
-						text: 'Do not share this interested party name',
-						value: null
-					}
-				]
-			}
-		},
-		{
 			type: 'input',
 			parameters: {
 				id: 'email-address',

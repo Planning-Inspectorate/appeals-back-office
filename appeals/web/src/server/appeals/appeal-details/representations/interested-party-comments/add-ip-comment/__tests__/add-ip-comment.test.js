@@ -70,13 +70,6 @@ describe('add-ip-comment', () => {
 			);
 		});
 
-		it('should render a checkbox with label text "Do not share this interested party name"', () => {
-			const checkbox = pageHtml.querySelector('input[type="checkbox"]');
-			const label = pageHtml.querySelector('label[for="do-not-share-ip-name"]');
-			expect(checkbox).not.toBeNull();
-			expect(label.textContent.trim()).toBe('Do not share this interested party name');
-		});
-
 		it('should render the correct back link when editing', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
