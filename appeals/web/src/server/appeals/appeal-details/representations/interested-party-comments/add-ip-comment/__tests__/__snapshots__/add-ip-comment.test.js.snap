@@ -241,15 +241,6 @@ exports[`add-ip-comment GET /add/ip-details should match the snapshot 1`] = `
                                         type="text" aria-describedby="last-name-hint">
                                     </div>
                                     <div class="govuk-form-group">
-                                        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                                            <div class="govuk-checkboxes__item">
-                                                <input class="govuk-checkboxes__input" id="do-not-share-ip-name" name="do-not-share-ip-name"
-                                                type="checkbox" value="">
-                                                <label class="govuk-label govuk-checkboxes__label" for="do-not-share-ip-name">Do not share this interested party name</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="govuk-form-group">
                                         <label class="govuk-label govuk-!-font-weight-bold" for="email-address">Email address (optional)</label>
                                         <input class="govuk-input" id="email-address"
                                         name="emailAddress" type="text">
