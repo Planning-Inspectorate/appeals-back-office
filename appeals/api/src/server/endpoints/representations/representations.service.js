@@ -147,7 +147,7 @@ export const createRepresentation = async (appealId, input) => {
 		});
 		representedId = represented.id;
 	} else if (input.representationType == APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT) {
-		representedId = Number(input.appellantId);
+		representedId = input.representedId;
 	} else if (
 		input.representationType == APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT ||
 		input.representationType == APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE

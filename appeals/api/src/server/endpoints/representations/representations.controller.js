@@ -228,6 +228,8 @@ export const createRepresentation = () => async (req, res) => {
 		].includes(representationType)
 	) {
 		updatePayload.lpaCode = req.appeal.lpa?.lpaCode;
+	} else if ([APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT].includes(representationType)) {
+		updatePayload.representedId = req.appeal.agentId || req.appeal.appellantId;
 	}
 
 	const rep = await representationService.createRepresentation(parseInt(appealId), {
