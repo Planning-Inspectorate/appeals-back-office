@@ -137,7 +137,9 @@ router.patch(
 		'appealTimetable',
 		'appellant',
 		'agent',
-		'lpa'
+		'lpa',
+		'appealRule6Parties',
+		'inquiry'
 	]),
 	checkRepresentationExistsById,
 	asyncHandler(controller.updateRepresentation)

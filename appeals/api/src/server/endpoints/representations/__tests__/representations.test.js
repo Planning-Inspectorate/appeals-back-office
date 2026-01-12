@@ -831,6 +831,99 @@ describe('/appeals/:id/reps', () => {
 				templateName: 'proof-of-evidence-incomplete'
 			});
 		});
+
+		test('200 when rule 6 party statement incomplete is successfully updated with incomplete', async () => {
+			const appealWithRule6 = {
+				...fullPlanningAppeal,
+				appealTimetable: {
+					lpaQuestionnaireDueDate: new Date('2024-12-20')
+				},
+				appealRule6Parties: [
+					{
+						id: 1,
+						appealId: 2,
+						serviceUserId: 729,
+						serviceUser: {
+							id: 729,
+							organisationName: 'Rule 6 Party',
+							email: 'rule6party@example.com'
+						}
+					}
+				]
+			};
+
+			jest
+				.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+				.setSystemTime(new Date('2024-12-11'));
+
+			const mockRepresentation = {
+				id: 1,
+				lpa: false,
+				status: null,
+				representedId: 729,
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: 'Redacted text of the representation',
+				dateCreated: new Date('2024-12-11T12:00:00Z'),
+				notes: 'Some notes',
+				attachments: ['attachment1.pdf', 'attachment2.pdf'],
+				representationType: 'rule_6_party_statement',
+				siteVisitRequested: true,
+				source: 'citizen',
+				representationRejectionReasonsSelected: [
+					{
+						representationRejectionReason: {
+							id: 8,
+							name: 'Supporting documents missing',
+							hasText: false
+						},
+						representationRejectionReasonText: []
+					},
+					{
+						representationRejectionReason: {
+							id: 10,
+							name: 'Other',
+							hasText: true
+						},
+						representationRejectionReasonText: [{ text: 'Provided documents were incomplete' }]
+					}
+				]
+			};
+
+			databaseConnector.appeal.findUnique.mockResolvedValue(appealWithRule6);
+			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.update.mockResolvedValue({
+				...mockRepresentation,
+				status: 'incomplete'
+			});
+
+			const response = await request
+				.patch('/appeals/1/reps/1')
+				.send({
+					status: 'incomplete',
+					notes: 'Some notes',
+					allowResubmit: false
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(200);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				azureAdUserId: expect.any(String),
+				notifyClient: expect.anything(),
+				personalisation: {
+					appeal_reference_number: appealWithRule6.reference,
+					site_address: expect.any(String),
+					lpa_reference: appealWithRule6.applicationReference,
+					statement_deadline: '20 Dec 2024',
+					reasons: ['Supporting documents missing', 'Other: Provided documents were incomplete'],
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+				},
+				recipientEmail: 'rule6party@example.com',
+				templateName: 'rule-6-statement-incomplete'
+			});
+		});
 	});
 
 	describe('POST representation/:representationType', () => {

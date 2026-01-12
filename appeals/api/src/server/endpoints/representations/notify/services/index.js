@@ -8,9 +8,9 @@
 
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { notifySend } from '#notify/notify-send.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { getDetailsForCommentResubmission } from '@pins/appeals/utils/notify.js';
 import { formatExtendedDeadline, formatReasons, formatSiteAddress } from './utils.js';
-
 /**
  * @typedef {object} ServiceArgs
  * @property {import('#endpoints/appeals.js').NotifyClient} notifyClient
@@ -239,6 +239,43 @@ const proofOfEvidenceNotifySend = async (
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
 			deadline_date: extendedDeadline,
+			reasons,
+			team_email_address: await getTeamEmailFromAppealId(appeal.id)
+		}
+	});
+};
+
+/** @type {Service} */
+export const rule6PartyStatementIncomplete = async ({
+	notifyClient,
+	appeal,
+	representation,
+	azureAdUserId
+}) => {
+	const siteAddress = formatSiteAddress(appeal);
+	const reasons = formatReasons(representation);
+	const { lpaQuestionnaireDueDate = null } = appeal.appealTimetable || {};
+
+	const rule6Party = appeal.appealRule6Parties?.find(
+		(party) => party.serviceUserId === representation.representedId
+	);
+
+	if (!rule6Party?.serviceUser?.email) {
+		throw new Error(`No email found for Rule 6 party on Appeal: ${appeal.reference}`);
+	}
+
+	await notifySend({
+		azureAdUserId,
+		templateName: 'rule-6-statement-incomplete',
+		notifyClient,
+		recipientEmail: rule6Party.serviceUser.email,
+		personalisation: {
+			appeal_reference_number: appeal.reference,
+			site_address: siteAddress,
+			lpa_reference: appeal.applicationReference || '',
+			statement_deadline: lpaQuestionnaireDueDate
+				? formatDate(new Date(lpaQuestionnaireDueDate))
+				: '',
 			reasons,
 			team_email_address: await getTeamEmailFromAppealId(appeal.id)
 		}
