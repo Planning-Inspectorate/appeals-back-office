@@ -1032,7 +1032,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'P4415',
 		name: 'Rotherham Metropolitan Borough Council',
 		email: 'development.control@example.gov.uk',
-		teamId: 15 // North1
+		teamId: 16 // North2
 	},
 	{
 		lpaCode: 'K5600',

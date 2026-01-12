@@ -274,7 +274,6 @@ export const lpaTeamAssignments = {
 	N4205: 15, // Bolton Metropolitan Borough Council
 	P2365: 15, // West Lancashire District Council
 	P4225: 15, // Rochdale Metropolitan Borough Council
-	P4415: 15, // Rotherham Metropolitan Borough Council
 	Q2371: 15, // Lancashire County Council
 	Q4245: 15, // Trafford Metropolitan Borough Council
 	Q5300: 15, // London Borough of Enfield
@@ -310,6 +309,7 @@ export const lpaTeamAssignments = {
 	N1350: 16, // Darlington Borough Council
 	P2745: 16, // North Yorkshire Council
 	P2935: 16, // Northumberland County Council
+	P4415: 16, // Rotherham Metropolitan Borough Council
 	Q2500: 16, // Lincolnshire County Council
 	R4408: 16, // Barnsley Borough Council
 	T9501: 16, // Northumberland National Park Authority
