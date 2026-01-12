@@ -1,11 +1,11 @@
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
-describe('appeal-valid-start-case-appellant-hearing.md', () => {
+describe('appeal-valid-start-case-advertisement-lpa-hearing.md', () => {
 	test('should call notify sendEmail with the correct data', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'appeal-valid-start-case-cas-advertisement-appellant-hearing',
+			templateName: 'appeal-valid-start-case-advertisement-lpa-hearing',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -16,12 +16,13 @@ describe('appeal-valid-start-case-appellant-hearing.md', () => {
 				site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 				start_date: '01 January 2025',
 				local_planning_authority: 'Bristol City Council',
-				questionnaire_due_date: '01 February 2025',
-				lpa_statement_deadline: '01 March 2025',
-				ip_comments_deadline: '01 April 2025',
-				statement_of_common_ground_deadline: '01 May 2025',
-				planning_obligation_deadline: '01 June 2025',
-				hearing_date: '01 May 2025',
+				appeal_type: 'Householder',
+				questionnaire_due_date: '01 January 2025',
+				lpa_statement_deadline: '01 February 2025',
+				ip_comments_deadline: '01 March 2025',
+				statement_of_common_ground_deadline: '01 April 2025',
+				planning_obligation_deadline: '01 May 2025',
+				hearing_date: '01 April 2025',
 				hearing_time: '1pm',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
@@ -33,58 +34,47 @@ describe('appeal-valid-start-case-appellant-hearing.md', () => {
 		};
 
 		const expectedContent = [
-			'We have reviewed your appeal and supporting documents.',
+			'You have a new householder appeal against the application 48269/APP/2021/1482.',
 			'',
-			'Your appeal started on 01 January 2025. The timetable for the appeal begins from this date.',
-			'',
-			'Your appeal procedure is a hearing.',
+			'We will decide the appeal by a hearing. You can tell us if you think a different procedure is more appropriate in the questionnaire.',
 			'',
 			'# Appeal details',
 			'',
 			'^Appeal reference number: 134526',
 			'Address: 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 			'Planning application reference: 48269/APP/2021/1482',
+			'Start date: 01 January 2025',
 			'',
 			'# Timetable',
 			'',
 			'## Local planning authority questionnaire',
-			'Due by 01 February 2025.',
+			'Due by 01 January 2025.',
 			'',
 			'## Statements',
-			'Due by 01 March 2025.',
+			'Due by 01 February 2025.',
 			'',
 			'## Interested party comments',
-			'Due by 01 April 2025.',
+			'Due by 01 March 2025.',
 			'',
 			'## Statement of common ground',
-			'Due by 01 May 2025.',
+			'Due by 01 April 2025.',
 			'',
 			'## Planning obligation',
-			'Due by 01 June 2025.',
+			'Due by 01 May 2025.',
 			'',
 			'# Hearing details',
 			'',
-			'^Date: 01 May 2025',
+			'^Date: 01 April 2025',
 			'Time: 1pm',
 			'',
 			'We will contact you if we make any changes to the hearing.',
 			'',
 			'# What happens next',
 			'',
-			'We will contact you when you can view information from other parties in the appeals service.',
+			'1. Email a copy of your appeal statement to caseofficers@planninginspectorate.gov.uk by 01 January 2025. You will be able to view this in your appeal details. We will email you when you can view information from other parties in the appeals service.',
+			'2. Email caseofficers@planninginspectorate.gov.uk to confirm the venue address for the hearing.',
 			'',
-			'# Appeal costs',
-			'',
-			'You may have to pay costs if you:',
-			'',
-			'- behave unreasonably during your own appeal',
-			'- withdraw your appeal without good reason',
-			'- submit late evidence',
-			'',
-			'[Find out more about appeal costs](https://www.gov.uk/claim-planning-appeal-costs).',
-			'',
-			'The Planning Inspectorate',
-			'caseofficers@planninginspectorate.gov.uk'
+			'The Planning Inspectorate'
 		].join('\n');
 
 		await notifySend(notifySendData);
@@ -96,7 +86,7 @@ describe('appeal-valid-start-case-appellant-hearing.md', () => {
 			'test@136s7.com',
 			{
 				content: expectedContent,
-				subject: 'We have started your appeal: 134526'
+				subject: 'New Householder appeal: 134526'
 			}
 		);
 	});

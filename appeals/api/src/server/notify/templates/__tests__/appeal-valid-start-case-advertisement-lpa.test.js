@@ -1,11 +1,11 @@
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
-describe('appeal-valid-start-case-cas-advertisement-lpa.md', () => {
+describe('appeal-valid-start-case-advertisement-lpa.md', () => {
 	test('should call notify sendEmail with the correct data', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'appeal-valid-start-case-cas-advertisement-lpa',
+			templateName: 'appeal-valid-start-case-advertisement-lpa',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -19,6 +19,8 @@ describe('appeal-valid-start-case-cas-advertisement-lpa.md', () => {
 				appeal_type: 'Householder',
 				procedure_type: 'a written procedure',
 				questionnaire_due_date: '31 January 2025',
+				lpa_statement_deadline: '01 March 2025',
+				ip_comments_deadline: '01 April 2025',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
@@ -30,7 +32,9 @@ describe('appeal-valid-start-case-cas-advertisement-lpa.md', () => {
 		};
 
 		const expectedContent = [
-			'You have a new Householder appeal against the application 48269/APP/2021/1482.',
+			'You have a new householder appeal against the application 48269/APP/2021/1482.',
+			'',
+			'We will decide the appeal by a written procedure. You can tell us if you think a different procedure is more appropriate in the questionnaire.',
 			'',
 			'# Appeal details',
 			'',
@@ -39,9 +43,23 @@ describe('appeal-valid-start-case-cas-advertisement-lpa.md', () => {
 			'Planning application reference: 48269/APP/2021/1482',
 			'Start date: 01 January 2025',
 			'',
-			'# Next steps',
+			'# Timetable',
 			'',
-			'Email a copy of your appeal statement to caseofficers@planninginspectorate.gov.uk by 31 January 2025. You will be able to view this in your appeal details.',
+			'## Local planning authority questionnaire',
+			'',
+			'Due by 31 January 2025.',
+			'',
+			'## Statements',
+			'',
+			'Due by 01 March 2025.',
+			'',
+			'## Interested party comments',
+			'',
+			'Due by 01 April 2025.',
+			'',
+			'# What happens next',
+			'',
+			'[Submit your questionnaire and other documents](/mock-front-office-url/manage-appeals/134526), including your appeal notification letter and a list of those notified by 31 January 2025.',
 			'',
 			'We will email you when you can view information from other parties in the appeals service.',
 			'',

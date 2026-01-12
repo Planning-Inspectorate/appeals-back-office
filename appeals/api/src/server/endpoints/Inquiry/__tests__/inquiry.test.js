@@ -3,7 +3,7 @@ import { jest } from '@jest/globals';
 import { request } from '../../../app-test.js';
 
 import {
-	casAdvertAppeal,
+	advertisementAppeal,
 	fullPlanningAppeal as fullPlanningAppealData
 } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
@@ -99,7 +99,11 @@ describe('inquiry routes', () => {
 		describe('POST', () => {
 			test.each([
 				['fullPlanningAppeal', fullPlanningAppealData, 'appeal-valid-start-case-s78-inquiry'],
-				['casAdvertAppeal', casAdvertAppeal, 'appeal-valid-start-case-cas-advertisement-inquiry']
+				[
+					'advertisementAppeal',
+					advertisementAppeal,
+					'appeal-valid-start-case-advertisement-inquiry'
+				]
 			])('creates a %s single inquiry with address', async (_, appeal, expectedTemplateName) => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
 
