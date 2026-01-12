@@ -174,7 +174,7 @@ describe('Start case', () => {
 		});
 	});
 
-	it('Start householder case with multiple site addresses', { tags: tag.smoke }, () => {
+	it('Start householder case with multiple site addresses', () => {
 		cy.createCase({ neighbouringSiteAddresses: neighbouringSiteAddresses }).then((caseObj) => {
 			appeal = caseObj;
 
@@ -273,7 +273,7 @@ describe('Start case', () => {
 		});
 	});
 
-	it('Start S78 case with multiple site addresses', { tags: tag.smoke }, () => {
+	it('Start S78 case with multiple site addresses', () => {
 		cy.createCase({ caseType: 'W', neighbouringSiteAddresses: neighbouringSiteAddresses }).then(
 			(caseObj) => {
 				appeal = caseObj;
