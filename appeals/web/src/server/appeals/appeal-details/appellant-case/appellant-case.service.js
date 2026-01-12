@@ -67,3 +67,11 @@ export async function getAppellantCaseNotValidReasonOptionsForOutcome(
 			return [];
 	}
 }
+
+/**e
+ * @param {import('got').Got} apiClient
+ * @returns {Promise<ReasonOption[]>}
+ */
+export async function getAppellantCaseEnforcementInvalidReasonOptions(apiClient) {
+	return apiClient.get(`appeals/appellant-case-enforcement-invalid-reasons`).json();
+}

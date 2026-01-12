@@ -329,21 +329,22 @@ model AppellantCase {
   siteGridReferenceNorthing                String?
   typeOfPlanningApplication                String?
 
-  //Enforcement fields
-  enforcementNoticeListedBuilding Boolean?
-  enforcementIssueDate            DateTime?
-  enforcementEffectiveDate        DateTime?
-  contactPlanningInspectorateDate DateTime?
-  enforcementReference            String?
-  interestInLand                  String?
-  writtenOrVerbalPermission       String?
-  descriptionOfAllegedBreach      String?
-  applicationDevelopmentAllOrPart String?
-  contactAddress                  Address?  @relation(fields: [contactAddressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  contactAddressId                Int?
-  appealDecisionDate              DateTime?
+  // Enforcement fields
+  enforcementNoticeListedBuilding                Boolean?
+  enforcementIssueDate                           DateTime?
+  enforcementEffectiveDate                       DateTime?
+  contactPlanningInspectorateDate                DateTime?
+  enforcementReference                           String?
+  interestInLand                                 String?
+  writtenOrVerbalPermission                      String?
+  descriptionOfAllegedBreach                     String?
+  applicationDevelopmentAllOrPart                String?
+  contactAddress                                 Address?                                         @relation(fields: [contactAddressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  contactAddressId                               Int?
+  appealDecisionDate                             DateTime?
+  appellantCaseEnforcementInvalidReasonsSelected AppellantCaseEnforcementInvalidReasonsSelected[]
 
-  //Cas adverts fields
+  // Cas adverts fields
   landownerPermission Boolean?
 
   appellantCaseAdvertDetails AppellantCaseAdvertDetails[]
@@ -439,6 +440,40 @@ model AppellantCaseInvalidReasonText {
   @@index([appellantCaseInvalidReasonId])
 }
 
+/// AppellantCaseEnforcementInvalidReason model
+/// Contains information on all possible resons to consider an appellant case invalid.
+model AppellantCaseEnforcementInvalidReason {
+  id                                             Int                                              @id
+  name                                           String                                           @unique
+  hasText                                        Boolean                                          @default(false)
+  appellantCaseEnforcementInvalidReasonsSelected AppellantCaseEnforcementInvalidReasonsSelected[]
+}
+
+/// AppellantCaseEnforcementInvalidReasonsSelected model
+/// Contains information on the selected reasons to consider an appellant case invalid.
+model AppellantCaseEnforcementInvalidReasonsSelected {
+  appellantCaseEnforcementInvalidReason     AppellantCaseEnforcementInvalidReason       @relation(fields: [appellantCaseEnforcementInvalidReasonId], references: [id])
+  appellantCaseEnforcementInvalidReasonId   Int
+  appellantCase                             AppellantCase                               @relation(fields: [appellantCaseId], references: [id])
+  appellantCaseId                           Int
+  appellantCaseEnforcementInvalidReasonText AppellantCaseEnforcementInvalidReasonText[]
+
+  @@id([appellantCaseEnforcementInvalidReasonId, appellantCaseId])
+}
+
+/// AppellantCaseEnforcementInvalidReasonText model
+/// Contains information on custom reasons to consider an appellant case invalid.
+model AppellantCaseEnforcementInvalidReasonText {
+  id                                             Int                                            @id @default(autoincrement())
+  text                                           String
+  appellantCaseEnforcementInvalidReasonsSelected AppellantCaseEnforcementInvalidReasonsSelected @relation(fields: [appellantCaseEnforcementInvalidReasonId, appellantCaseId], references: [appellantCaseEnforcementInvalidReasonId, appellantCaseId])
+  appellantCaseEnforcementInvalidReasonId        Int
+  appellantCaseId                                Int
+
+  @@index([appellantCaseId])
+  @@index([appellantCaseEnforcementInvalidReasonId])
+}
+
 /// KnowledgeOfOtherLandowners model
 /// Contains possible answers to 'knows all owners' question.
 model KnowledgeOfOtherLandowners {
@@ -514,11 +549,11 @@ model LPAQuestionnaire {
   designatedSiteNameCustom            String?
   designatedSiteNames                 DesignatedSiteSelected[]
 
-  //S20 fields
+  // S20 fields
   historicEnglandConsultation Boolean?
   preserveGrantLoan           Boolean?
 
-  //Cas adverts fields
+  // Cas adverts fields
   isSiteInAreaOfSpecialControlAdverts        Boolean?
   wasApplicationRefusedDueToHighwayOrTraffic Boolean?
   didAppellantSubmitCompletePhotosAndPlans   Boolean?
