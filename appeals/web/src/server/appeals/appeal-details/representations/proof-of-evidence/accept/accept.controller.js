@@ -9,13 +9,15 @@ export const getAcceptProofOfEvidence = async (request, response) => {
 		errors,
 		currentRepresentation,
 		currentAppeal,
-		params: { proofOfEvidenceType }
+		params: { proofOfEvidenceType },
+		currentRule6Party
 	} = request;
 
 	const pageContent = confirmAcceptProofOfEvidencePage(
 		currentAppeal,
 		currentRepresentation,
-		proofOfEvidenceType
+		proofOfEvidenceType,
+		currentRule6Party
 	);
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {
@@ -47,6 +49,8 @@ export const postConfirmAcceptProofOfEvidence = async (request, response) => {
 		const acceptProofOfEvidenceBannerType =
 			currentRepresentation.representationType === 'appellant_proofs_evidence'
 				? 'appellantProofOfEvidenceAcceptSuccess'
+				: currentRepresentation.representationType === 'rule_6_party_proofs_evidence'
+				? 'rule6PartyProofOfEvidenceAcceptSuccess'
 				: 'lpaProofOfEvidenceAcceptSuccess';
 
 		addNotificationBannerToSession({

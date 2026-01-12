@@ -61,7 +61,7 @@ export const createRepresentationValidator = composeMiddleware(
 export const createRepresentationProofOfEvidenceValidator = composeMiddleware(
 	param('proofOfEvidenceType').isString().withMessage(ERROR_MUST_BE_STRING),
 	param('proofOfEvidenceType')
-		.isIn(['appellant', 'lpa'])
+		.isIn(['appellant', 'lpa', 'rule-6-party'])
 		.withMessage(ERROR_INVALID_PROOF_OF_EVIDENCE_TYPE),
 
 	body('attachments')

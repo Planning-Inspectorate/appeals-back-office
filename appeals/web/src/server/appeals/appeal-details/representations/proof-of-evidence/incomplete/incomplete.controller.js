@@ -41,7 +41,8 @@ export async function renderReasons(request, response) {
 		currentRepresentation,
 		apiClient,
 		session,
-		errors
+		errors,
+		currentRule6Party
 	} = request;
 
 	const incompleteReasons = await getRepresentationRejectionReasonOptions(
@@ -57,7 +58,11 @@ export async function renderReasons(request, response) {
 		errors
 	);
 
-	const pageContent = incompleteProofOfEvidencePage(currentAppeal, proofOfEvidenceType);
+	const pageContent = incompleteProofOfEvidencePage(
+		currentAppeal,
+		proofOfEvidenceType,
+		currentRule6Party
+	);
 
 	return response.status(200).render('appeals/appeal/reject-representation.njk', {
 		errors,
@@ -73,7 +78,8 @@ export async function renderReasons(request, response) {
 export const postReasons = async (request, response) => {
 	const {
 		params: { appealId, proofOfEvidenceType },
-		errors
+		errors,
+		currentRule6Party
 	} = request;
 	if (errors) {
 		return renderReasons(request, response);
@@ -82,7 +88,9 @@ export const postReasons = async (request, response) => {
 	return response
 		.status(200)
 		.redirect(
-			`/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceType}/incomplete/confirm`
+			`/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceType}${
+				proofOfEvidenceType === 'rule-6-party' ? `/${currentRule6Party.id}` : ''
+			}/incomplete/confirm`
 		);
 };
 
@@ -96,7 +104,8 @@ export const renderConfirm = async (
 		currentRepresentation,
 		session,
 		apiClient,
-		params: { proofOfEvidenceType }
+		params: { proofOfEvidenceType },
+		currentRule6Party
 	},
 	response
 ) => {
@@ -139,13 +148,19 @@ export const renderConfirm = async (
 	return renderCheckYourAnswersComponent(
 		{
 			title: `Check details and reject ${formatProofOfEvidenceTypeText(
-				proofOfEvidenceType
+				proofOfEvidenceType,
+				false,
+				currentRule6Party?.serviceUser?.organisationName ?? ''
 			)} proof of evidence and witnesses`,
 			heading: `Check details and reject ${formatProofOfEvidenceTypeText(
-				proofOfEvidenceType
+				proofOfEvidenceType,
+				false,
+				currentRule6Party?.serviceUser?.organisationName ?? ''
 			)} proof of evidence and witnesses`,
 			preHeading: `Appeal ${appealShortReference(appealReference)}`,
-			backLinkUrl: `/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceType}/incomplete/reasons`,
+			backLinkUrl: `/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceType}${
+				proofOfEvidenceType === 'rule-6-party' ? `/${currentRule6Party.id}` : ''
+			}/incomplete/reasons`,
 			submitButtonText: 'Confirm statement is incomplete',
 			responses: {
 				'Proof of evidence and witnesses': {
@@ -153,7 +168,11 @@ export const renderConfirm = async (
 					html: attachmentsList?.length ? attachmentsList : undefined,
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceType}/manage-documents/${folderId}/?backUrl=/proof-of-evidence/${proofOfEvidenceType}/incomplete/confirm`,
+							href: `/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceType}${
+								proofOfEvidenceType === 'rule-6-party' ? `/${currentRule6Party.id}` : ''
+							}/manage-documents/${folderId}/?backUrl=/proof-of-evidence/${proofOfEvidenceType}${
+								proofOfEvidenceType === 'rule-6-party' ? `/${currentRule6Party.id}` : ''
+							}/incomplete/confirm`,
 							visuallyHiddenText: 'supporting documents'
 						}
 					}
@@ -162,13 +181,17 @@ export const renderConfirm = async (
 					value: 'Reject proof of evidence and witnesses',
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceType}`,
+							href: `/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceType}${
+								proofOfEvidenceType === 'rule-6-party' ? `/${currentRule6Party.id}` : ''
+							}`,
 							visuallyHiddenText: 'Review decision'
 						}
 					}
 				},
 				[`Reason for rejecting the ${formatProofOfEvidenceTypeText(
-					proofOfEvidenceType
+					proofOfEvidenceType,
+					false,
+					currentRule6Party?.serviceUser?.organisationName ?? ''
 				)} proof of evidence and witnesses`]: {
 					html: '',
 					pageComponents: [
@@ -182,7 +205,9 @@ export const renderConfirm = async (
 					],
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceType}/incomplete/reasons`,
+							href: `/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceType}${
+								proofOfEvidenceType === 'rule-6-party' ? `/${currentRule6Party.id}` : ''
+							}/incomplete/reasons`,
 							visuallyHiddenText: 'Incomplete reasons'
 						}
 					}
@@ -231,7 +256,9 @@ export const postConfirm = async (request, response) => {
 		bannerDefinitionKey:
 			proofOfEvidenceType === 'lpa'
 				? 'lpaProofOfEvidenceIncomplete'
-				: 'appellantProofOfEvidenceIncomplete',
+				: proofOfEvidenceType === 'appellant'
+				? 'appellantProofOfEvidenceIncomplete'
+				: 'rule6PartyProofOfEvidenceIncomplete',
 		appealId
 	});
 

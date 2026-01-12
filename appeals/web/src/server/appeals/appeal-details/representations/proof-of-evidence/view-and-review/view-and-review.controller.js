@@ -4,15 +4,17 @@ import { reviewProofOfEvidencePage } from './view-and-review.mapper.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
+/** @typedef {import('../proof-of-evidence.middleware.js').AppealRule6Party} AppealRule6Party */
 
 /**
  *
- * @param {(appealDetails: Appeal, proofOfEvidenceType: string, proofOfEvidence: Representation, session: import('express-session').Session & Record<string, string>, backUrl: string) => PageContent} contentMapper
+ * @param {(appealDetails: Appeal, proofOfEvidenceType: string, proofOfEvidence: Representation, session: import('express-session').Session & Record<string, string>, backUrl: string, rule6Party: AppealRule6Party) => PageContent} contentMapper
  * @param {string} templatePath
  * @returns {import('@pins/express').RenderHandler<any, any, any>}
  */
 export const render = (contentMapper, templatePath) => (request, response) => {
-	const { errors, currentRepresentation, currentAppeal, session, query } = request;
+	const { errors, currentRepresentation, currentAppeal, session, query, currentRule6Party } =
+		request;
 	const backUrl = query.backUrl ? String(query.backUrl) : '/';
 
 	let { proofOfEvidenceType } = request.params;
@@ -26,7 +28,8 @@ export const render = (contentMapper, templatePath) => (request, response) => {
 		proofOfEvidenceType.toUpperCase(),
 		currentRepresentation,
 		session,
-		backUrl
+		backUrl,
+		currentRule6Party
 	);
 
 	return response.status(200).render(templatePath, {
@@ -49,7 +52,8 @@ export const postReviewProofOfEvidence = async (request, response, next) => {
 			errors,
 			currentAppeal,
 			body: { status },
-			params: { appealId, proofOfEvidenceType }
+			params: { appealId, proofOfEvidenceType },
+			currentRule6Party
 		} = request;
 
 		if (!currentAppeal) {
@@ -64,14 +68,18 @@ export const postReviewProofOfEvidence = async (request, response, next) => {
 		if (status === APPEAL_PROOF_OF_EVIDENCE_STATUS.INVALID) {
 			request.session.reviewProofOfEvidence.status = APPEAL_PROOF_OF_EVIDENCE_STATUS.INVALID;
 			return response.redirect(
-				`/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceType}/incomplete`
+				`/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceType}${
+					proofOfEvidenceType.toLowerCase() === 'rule-6-party' ? `/${currentRule6Party?.id}` : ''
+				}/incomplete`
 			);
 		}
 
 		if (status === APPEAL_PROOF_OF_EVIDENCE_STATUS.VALID) {
 			request.session.reviewProofOfEvidence.status = APPEAL_PROOF_OF_EVIDENCE_STATUS.VALID;
 			return response.redirect(
-				`/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceType}/accept`
+				`/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceType}${
+					proofOfEvidenceType.toLowerCase() === 'rule-6-party' ? `/${currentRule6Party.id}` : ''
+				}/accept`
 			);
 		}
 

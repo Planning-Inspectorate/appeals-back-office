@@ -21,7 +21,18 @@ describe('proof-of-evidence', () => {
 			.reply(200, {
 				...appealDataFullPlanning,
 				appealId: 2,
-				appealStatus: 'statements'
+				appealStatus: 'statements',
+				appealRule6Parties: [
+					{
+						id: 3670,
+						serviceUserId: 3838,
+						partyName: 'Test Rule 6 Party',
+						serviceUser: {
+							organisationName: 'Test Rule 6 Party'
+						}
+					}
+				],
+				rule6PartyId: 3670
 			});
 
 		nock('http://test/')
@@ -80,6 +91,34 @@ describe('proof-of-evidence', () => {
 			const proofOfEvidenceValue = proofOfEvidenceRow?.querySelector('.govuk-summary-list__value');
 			expect(partyKey?.textContent?.trim()).toBe('Proof of evidence and witnesses');
 			expect(proofOfEvidenceValue?.textContent?.trim()).toBe('No documents');
+		});
+
+		it('should render review rule 6 party proof of evidence page with the provided details', async () => {
+			nock('http://test/')
+				.get('/appeals/2/reps?type=rule_6_party_proofs_evidence')
+				.reply(200, proofOfEvidenceForReviewWithAttachments)
+				.persist();
+
+			const response = await request.get(`${baseUrl}/2/proof-of-evidence/rule-6-party/3670`);
+
+			expect(response.statusCode).toBe(200);
+
+			const dom = parseHtml(response.text);
+			const elementInnerHtml = dom.innerHTML;
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain(
+				'Review Test Rule 6 Party proof of evidence and witnesses</h1>'
+			);
+
+			const proofOfEvidenceRow = parseHtml(response.text, {
+				rootElement: '.govuk-summary-list__row:first-of-type'
+			});
+
+			expect(proofOfEvidenceRow).not.toBeNull();
+			const partyKey = proofOfEvidenceRow?.querySelector('.govuk-summary-list__key');
+			const proofOfEvidenceValue = proofOfEvidenceRow?.querySelector('.govuk-summary-list__value');
+			expect(partyKey?.textContent?.trim()).toBe('Proof of evidence and witnesses');
+			expect(proofOfEvidenceValue?.textContent?.trim()).toBe('blank copy 5.pdf');
 		});
 	});
 

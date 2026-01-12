@@ -12,6 +12,7 @@ import { generateProofOfEvidenceSummaryList } from './page-components/common.js'
  * @param {Representation} proofOfEvidence
  * @param {import('@pins/express').Session} session
  * @param {string | undefined} backUrl
+ * @param {import('../proof-of-evidence.middleware.js').AppealRule6Party} rule6Party
  * @returns {PageContent}
  */
 export function reviewProofOfEvidencePage(
@@ -19,7 +20,8 @@ export function reviewProofOfEvidencePage(
 	proofOfEvidenceType,
 	proofOfEvidence,
 	session,
-	backUrl
+	backUrl,
+	rule6Party
 ) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
@@ -31,11 +33,14 @@ export function reviewProofOfEvidencePage(
 
 	const proofOfEvidenceSummaryList = generateProofOfEvidenceSummaryList(
 		appealDetails.appealId,
-		proofOfEvidence
+		proofOfEvidence,
+		rule6Party
 	);
 
 	const title = `Review ${formatProofOfEvidenceTypeText(
-		proofOfEvidenceType
+		proofOfEvidenceType,
+		false,
+		rule6Party?.serviceUser?.organisationName ?? ''
 	)} proof of evidence and witnesses`;
 
 	const pageContent = {
@@ -96,7 +101,7 @@ export function formatProofOfEvidenceTypeText(
 	if (proofOfEvidenceType.toLowerCase() === 'lpa') {
 		return 'LPA';
 	}
-	if (proofOfEvidenceType === 'rule-6-party') {
+	if (proofOfEvidenceType.toLowerCase() === 'rule-6-party') {
 		return orgName || 'Rule 6 party';
 	}
 	return `${capitaliseFirstLetter ? 'A' : 'a'}ppellant`;
