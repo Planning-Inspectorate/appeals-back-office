@@ -821,4 +821,118 @@ describe('invalid-appeal', () => {
 			);
 		});
 	});
+
+	describe('GET /check-details-and-mark-enforcement-as-invalid', () => {
+		beforeEach(async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, appealDataEnforcementNotice)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/appellant-case-enforcement-invalid-reasons')
+				.reply(200, appealCaseEnforcementInvalidReasons)
+				.persist();
+
+			// Populate session data
+			await request.post(`${baseUrl}/appellant-case`).send({ reviewOutcome: 'invalid' });
+			await request
+				.post(`${baseUrl}/appellant-case/invalid/enforcement-notice`)
+				.send({ enforcementNoticeInvalid: 'yes' });
+			await request.post(`${baseUrl}/appellant-case/invalid/enforcement-notice-reason`).send({
+				invalidReason: ['1', '2'],
+				'invalidReason-1': 'has some text',
+				'invalidReason-2': 'has some other text'
+			});
+			await request.post(`${baseUrl}/appellant-case/invalid/enforcement-other-information`).send({
+				otherInformationValidRadio: 'Yes',
+				otherInformationDetails: 'Enforcement other information'
+			});
+		});
+
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should render the enforcement notice reasons page with no reasons selected', async () => {
+			const response = await request.get(
+				`${baseUrl}/appellant-case/invalid/check-details-and-mark-enforcement-as-invalid`
+			);
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span>');
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Check details and mark enforcement notice as invalid</h1>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<dt class="govuk-summary-list__key"> What is the outcome of your review?</dt><dd class="govuk-summary-list__value"> Invalid</dd>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<dt class="govuk-summary-list__key"> Do you want to add any other information?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'>Yes: Enforcement other information</div></dd>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Mark enforcement notice as invalid</button>'
+			);
+		});
+	});
+
+	describe('POST /check-details-and-mark-enforcement-as-invalid', () => {
+		beforeEach(async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, appealDataEnforcementNotice)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/appellant-case-enforcement-invalid-reasons')
+				.reply(200, appealCaseEnforcementInvalidReasons)
+				.persist();
+
+			// Populate session data
+			await request.post(`${baseUrl}/appellant-case`).send({ reviewOutcome: 'invalid' });
+			await request
+				.post(`${baseUrl}/appellant-case/invalid/enforcement-notice`)
+				.send({ enforcementNoticeInvalid: 'yes' });
+			await request.post(`${baseUrl}/appellant-case/invalid/enforcement-notice-reason`).send({
+				invalidReason: ['1', '2'],
+				'invalidReason-1': 'has some text',
+				'invalidReason-2': 'has some other text'
+			});
+			await request.post(`${baseUrl}/appellant-case/invalid/enforcement-other-information`).send({
+				otherInformationValidRadio: 'Yes',
+				otherInformationDetails: 'Enforcement other information'
+			});
+		});
+
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should redirect to check details screen on success', async () => {
+			const response = await request.post(
+				`${baseUrl}/appellant-case/invalid/check-details-and-mark-enforcement-as-invalid`
+			);
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				`Found. Redirecting to /appeals-service/appeal-details/${appealId}`
+			);
+		});
+	});
 });
