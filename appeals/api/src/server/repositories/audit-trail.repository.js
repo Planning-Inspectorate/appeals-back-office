@@ -49,4 +49,12 @@ const getAuditTrail = (appealId) =>
 		}
 	});
 
-export default { createAuditTrail, getAuditTrail };
+/**
+ * @param {any} options
+ * @returns {Promise<any>}
+ */
+const findFirst = (options) => {
+	return databaseConnector.auditTrail.findFirst(options);
+};
+
+export default { createAuditTrail, getAuditTrail, findFirst };
