@@ -5583,8 +5583,7 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
             <div             class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Confirm</button>
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
                     </form>
                 </div>
         </div>
@@ -5626,8 +5625,7 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
             <div             class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Confirm</button>
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
                     </form>
                 </div>
         </div>
@@ -5680,12 +5678,11 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
                     </dd>
                 </div>
             </dl>
-            <div class="govuk-inset-text">Confirming this review will inform the relevant parties of the outcome.</div>
+            <div class="govuk-inset-text">We will mark the appeal as invalid and send an email to the relevant parties.</div>
             <div             class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Confirm</button>
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Mark appeal as invalid</button>
                     </form>
                 </div>
         </div>

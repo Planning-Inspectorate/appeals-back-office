@@ -85,7 +85,9 @@ export const updateAppellantCaseValidationOutcome = async (
 		validAt,
 		siteAddress,
 		groundABarred,
-		otherInformation
+		otherInformation,
+		enforcementNoticeInvalid,
+		otherLiveAppeals
 	},
 	notifyClient
 ) => {
@@ -98,7 +100,12 @@ export const updateAppellantCaseValidationOutcome = async (
 		appellantCaseId,
 		validationOutcomeId: validationOutcome.id,
 		...(isOutcomeIncomplete(validationOutcome.name) && { incompleteReasons, appealDueDate }),
-		...(isOutcomeInvalid(validationOutcome.name) && { invalidReasons }),
+		...(isOutcomeInvalid(validationOutcome.name) && {
+			invalidReasons,
+			...(otherInformation && { otherInformation }),
+			...(enforcementNoticeInvalid && { enforcementNoticeInvalid }),
+			...(otherLiveAppeals && { otherLiveAppeals })
+		}),
 		...(isOutcomeValid(validationOutcome.name) && {
 			appealId,
 			validAt,
@@ -207,43 +214,45 @@ export const updateAppellantCaseValidationOutcome = async (
 		}
 
 		if (isOutcomeInvalid(validationOutcome.name)) {
-			const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-			if (!recipientEmail) {
-				throw new Error(ERROR_NO_RECIPIENT_EMAIL);
-			}
-
 			const invalidReasonsList = getFormattedReasons(
 				updatedAppellantCase?.appellantCaseInvalidReasonsSelected ?? []
 			);
-			const personalisation = {
-				appeal_reference_number: appeal.reference,
-				lpa_reference: appeal.applicationReference,
-				site_address: siteAddress,
-				reasons: invalidReasonsList,
-				team_email_address: teamEmail
-			};
-			await notifySend({
-				azureAdUserId,
-				templateName: 'appeal-invalid',
-				notifyClient,
-				recipientEmail,
-				personalisation: {
-					...personalisation,
-					feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key)
+			if (!enforcementNoticeInvalid) {
+				const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+				if (!recipientEmail) {
+					throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 				}
-			});
 
-			if (updatedAppeal.lpa?.email) {
+				const personalisation = {
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: siteAddress,
+					reasons: invalidReasonsList,
+					team_email_address: teamEmail
+				};
 				await notifySend({
 					azureAdUserId,
-					templateName: 'appeal-invalid-lpa',
+					templateName: 'appeal-invalid',
 					notifyClient,
-					recipientEmail: updatedAppeal.lpa.email,
+					recipientEmail,
 					personalisation: {
 						...personalisation,
-						feedback_link: FEEDBACK_FORM_LINKS.LPA
+						feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key)
 					}
 				});
+
+				if (updatedAppeal.lpa?.email) {
+					await notifySend({
+						azureAdUserId,
+						templateName: 'appeal-invalid-lpa',
+						notifyClient,
+						recipientEmail: updatedAppeal.lpa.email,
+						personalisation: {
+							...personalisation,
+							feedback_link: FEEDBACK_FORM_LINKS.LPA
+						}
+					});
+				}
 			}
 
 			const details = `${AUDIT_TRAIL_SUBMISSION_INVALID}\n${formatReasonsToHtmlList(

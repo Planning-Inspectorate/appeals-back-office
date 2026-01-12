@@ -3134,9 +3134,9 @@ describe('appellant-case', () => {
 				'Are there any other live appeals against the enforcement notice?</dt><dd class="govuk-summary-list__value"> No</dd>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Confirming this review will inform the relevant parties of the outcome.</div>'
+				'We will mark the appeal as invalid and send an email to the relevant parties.</div>'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Mark appeal as invalid</button>');
 		});
 	});
 
