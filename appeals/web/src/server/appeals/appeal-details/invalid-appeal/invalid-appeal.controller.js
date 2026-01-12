@@ -22,6 +22,7 @@ import {
 } from '../representations/common/components/reject-reasons.js';
 import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import {
+	checkDetailsAndMarkEnforcementAsInvalid,
 	decisionInvalidConfirmationPage,
 	enforcementNoticeInvalidPage,
 	enforcementNoticeReasonPage,
@@ -536,7 +537,7 @@ const renderEnforcementNoticeReasonPage = async (request, response, apiErrors) =
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getOtherLiveAppeals = async (request, response) => {
-	renderOtherLiveAppealsPage(request, response);
+	return renderOtherLiveAppealsPage(request, response);
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -586,4 +587,59 @@ const renderOtherLiveAppealsPage = async (request, response, apiErrors) => {
 		pageContent: mappedPageContent,
 		errors
 	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getCheckDetailsAndMarkEnforcementAsInvalid = async (request, response) => {
+	return renderCheckDetailsAndMarkEnforcementAsInvalid(request, response);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const postCheckDetailsAndMarkEnforcementAsInvalid = async (request, response) => {
+	const { currentAppeal } = request;
+
+	if (!objectContainsAllKeys(request.session, 'webAppellantCaseReviewOutcome')) {
+		return response.status(500).render('app/500.njk');
+	}
+
+	return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+const renderCheckDetailsAndMarkEnforcementAsInvalid = async (request, response) => {
+	try {
+		if (!objectContainsAllKeys(request.session, 'webAppellantCaseReviewOutcome')) {
+			return response.status(500).render('app/500.njk');
+		}
+
+		const reasonOptions =
+			await appellantCaseService.getAppellantCaseEnforcementInvalidReasonOptions(request.apiClient);
+
+		if (!reasonOptions) {
+			throw new Error('error retrieving invalid enforcement reason options');
+		}
+
+		const mappedPageContent = checkDetailsAndMarkEnforcementAsInvalid(
+			request.currentAppeal,
+			reasonOptions,
+			request.session
+		);
+
+		return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
+			pageContent: mappedPageContent
+		});
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when completing enforcement invalid review'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
 };

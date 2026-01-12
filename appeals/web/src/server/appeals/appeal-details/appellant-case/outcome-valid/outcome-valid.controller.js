@@ -16,7 +16,7 @@ import * as outcomeValidService from './outcome-valid.service.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getValidDate = async (request, response) => {
-	renderValidDatePage(request, response);
+	return renderValidDatePage(request, response);
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -147,7 +147,7 @@ const renderValidDatePage = async (request, response, apiErrors) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getEnforcementGroundA = async (request, response) => {
-	renderEnforcementGroundA(request, response);
+	return renderEnforcementGroundA(request, response);
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -212,7 +212,7 @@ const renderEnforcementGroundA = async (request, response, apiErrors) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getEnforcementOtherInformation = async (request, response) => {
-	renderEnforcementOtherInformation(request, response);
+	return renderEnforcementOtherInformation(request, response);
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -290,7 +290,7 @@ const renderEnforcementOtherInformation = async (request, response, apiErrors) =
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getEnforcementValidDate = async (request, response) => {
-	renderEnforcementValidDate(request, response);
+	return renderEnforcementValidDate(request, response);
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */

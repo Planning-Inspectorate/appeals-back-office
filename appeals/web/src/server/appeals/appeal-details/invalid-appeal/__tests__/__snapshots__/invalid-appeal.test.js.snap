@@ -716,6 +716,66 @@ exports[`invalid-appeal GET /check should render the invalid appeal check page f
 </main>"
 `;
 
+exports[`invalid-appeal GET /check-details-and-mark-enforcement-as-invalid should render the enforcement notice reasons page with no reasons selected 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and mark enforcement notice as invalid</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the outcome of your review?</dt>
+                    <dd                     class="govuk-summary-list__value">Invalid</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case">Change<span class="govuk-visually-hidden"> review outcome</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the enforcement notice invalid?</dt>
+                    <dd                     class="govuk-summary-list__value">Yes</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/invalid/enforcement-notice">Change<span class="govuk-visually-hidden"> is the enforcement notice invalid?</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Why is the enforcement notice invalid?</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <ul class="govuk-list govuk-list--bullet">
+                            <div class="pins-show-more" data-label="" data-mode="html" data-max-before-hiding="300"
+                            data-toggle-text-collapsed="Show more" data-toggle-text-expanded="Show less">
+                                <li>Enforcement invalid reason one: has some text</li>
+                            </div>
+                            <div class="pins-show-more" data-label="" data-mode="html" data-max-before-hiding="300"
+                            data-toggle-text-collapsed="Show more" data-toggle-text-expanded="Show less">
+                                <li>Enforcement invalid reason two: has some other text</li>
+                            </div>
+                        </ul>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/invalid/enforcement-notice-reason">Change<span class="govuk-visually-hidden"> why is the enforcement notice invalid?</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you want to add any other information?</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="" data-mode="html" data-max-before-hiding="300"
+                        data-toggle-text-collapsed="Show more" data-toggle-text-expanded="Show less">Yes: Enforcement other information</div>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/invalid/enforcement-other-information">Change<span class="govuk-visually-hidden"> do you want to add any other information?</span></a>
+                        </dd>
+                </div>
+            </dl>
+            <p class="govuk-body">We will mark the enforcement notice as invalid and send an email to the
+                relevant parties.</p>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button"
+                        id="continue">Mark enforcement notice as invalid</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`invalid-appeal GET /enforcement-notice should render the enforcement notice page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
