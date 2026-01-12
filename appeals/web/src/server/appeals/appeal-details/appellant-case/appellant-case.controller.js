@@ -239,7 +239,9 @@ export const postCheckAndConfirm = async (request, response) => {
 				webAppellantCaseReviewOutcome.validationOutcome,
 				webAppellantCaseReviewOutcome.reasons,
 				webAppellantCaseReviewOutcome.reasonsText,
-				webAppellantCaseReviewOutcome.updatedDueDate
+				webAppellantCaseReviewOutcome.updatedDueDate,
+				webAppellantCaseReviewOutcome.enforcementNoticeInvalid,
+				webAppellantCaseReviewOutcome.otherLiveAppeals
 			)
 		);
 

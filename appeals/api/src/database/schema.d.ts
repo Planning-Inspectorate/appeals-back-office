@@ -38,6 +38,7 @@ export interface Appeal extends schema.Appeal {
 	otherAppellants?: ServiceUser[] | null;
 	appealRule6Parties?: AppealRule6Party[] | null;
 	appealGrounds?: AppealGround[] | null;
+	enforcementNoticeAppealOutcome?: EnforcementNoticeAppealOutcome | null;
 }
 export interface CaseNote extends schema.CaseNote {
 	user: User;
@@ -227,3 +228,5 @@ export interface AppealGround extends AppealGround {
 	appealId: number | null;
 	groundId: number | null;
 }
+
+export interface EnforcementNoticeAppealOutcome extends schema.EnforcementNoticeAppealOutcome {}

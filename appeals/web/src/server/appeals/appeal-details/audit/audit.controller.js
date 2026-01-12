@@ -72,7 +72,7 @@ export const renderAudit = async (request, response) => {
 							}
 						}
 					});
-					detailsHtml = `<p>${text}</p><ul class="govuk-list govuk-list--bullet"><li>${listHtml}</li></ul>`;
+					detailsHtml = `<span>${text}</span><br><br><ul class="govuk-list govuk-list--bullet"><li>${listHtml}</li></ul>`;
 				} else {
 					detailsHtml = text;
 				}

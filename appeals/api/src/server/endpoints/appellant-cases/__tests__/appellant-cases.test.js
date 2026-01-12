@@ -12,6 +12,7 @@ import {
 	casPlanningAppealAppellantCaseInvalid,
 	casPlanningAppealAppellantCaseValid,
 	enforcementNoticeAppeal,
+	enforcementNoticeAppealAppellantCaseInvalid,
 	fullPlanningAppeal,
 	fullPlanningAppealAppellantCaseIncomplete,
 	fullPlanningAppealAppellantCaseInvalid,
@@ -1345,13 +1346,108 @@ describe('appellant cases routes', () => {
 					where: { id },
 					data: {
 						caseUpdatedDate: expect.any(Date),
-						caseValidDate: expect.any(String),
-						groundABarred: true,
-						otherInformation: 'Other information'
+						caseValidDate: expect.any(String)
 					},
 					include: {
 						appealStatus: true,
 						appealType: true
+					}
+				});
+				expect(databaseConnector.enforcementNoticeAppealOutcome.create).toHaveBeenCalledWith({
+					data: {
+						appeal: expect.any(Object),
+						groundABarred: true,
+						otherInformation: 'Other information',
+						otherLiveAppeals: undefined,
+						enforcementNoticeInvalid: undefined
+					}
+				});
+
+				expect(mockNotifySend).not.toHaveBeenCalled();
+				expect(response.status).toEqual(200);
+			});
+
+			test('updates the appellant case for invalid enforcement notice appeal', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(
+					enforcementNoticeAppealAppellantCaseInvalid
+				);
+				// @ts-ignore
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[1]
+				);
+				// @ts-ignore
+				databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue(
+					appellantCaseInvalidReasons
+				);
+				// @ts-ignore
+				databaseConnector.appellantCaseInvalidReasonsSelected.deleteMany.mockResolvedValue(true);
+				// @ts-ignore
+				databaseConnector.appellantCaseInvalidReasonsSelected.createMany.mockResolvedValue(true);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const body = {
+					invalidReasons: [
+						{
+							id: 1,
+							text: ['Reason Text 1', 'Reason Text 2']
+						},
+						{
+							id: 2,
+							text: ['Reason Text 3', 'Reason Text 4']
+						}
+					],
+					validationOutcome: 'Invalid',
+					otherLiveAppeals: 'no',
+					enforcementNoticeInvalid: 'no'
+				};
+				const { appellantCase, id } = enforcementNoticeAppealAppellantCaseInvalid;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: {
+						appellantCaseValidationOutcomeId: 2
+					}
+				});
+				expect(databaseConnector.appellantCaseInvalidReasonText.deleteMany).toHaveBeenCalled();
+				expect(databaseConnector.appellantCaseInvalidReasonText.createMany).toHaveBeenCalledWith({
+					data: [
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseInvalidReasonId: 1,
+							text: 'Reason Text 1'
+						},
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseInvalidReasonId: 1,
+							text: 'Reason Text 2'
+						},
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseInvalidReasonId: 2,
+							text: 'Reason Text 3'
+						},
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseInvalidReasonId: 2,
+							text: 'Reason Text 4'
+						}
+					]
+				});
+				expect(databaseConnector.enforcementNoticeAppealOutcome.create).toHaveBeenCalledWith({
+					data: {
+						appeal: expect.any(Object),
+						otherInformation: undefined,
+						otherLiveAppeals: 'no',
+						enforcementNoticeInvalid: 'no'
 					}
 				});
 
