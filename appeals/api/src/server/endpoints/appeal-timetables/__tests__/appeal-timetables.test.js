@@ -1,7 +1,6 @@
 // @ts-nocheck
 import {
 	advertisementAppeal,
-	casAdvertAppeal,
 	casPlanningAppeal,
 	enforcementNoticeAppeal,
 	fullPlanningAppeal,
@@ -995,23 +994,38 @@ describe('appeal timetables routes', () => {
 					'householdAppeal',
 					householdAppeal,
 					'appeal-valid-start-case-appellant',
-					'appeal-valid-start-case-lpa'
+					'appeal-valid-start-case-lpa',
+					{ lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z' }
 				],
 				[
 					'casPlanningAppeal',
 					casPlanningAppeal,
 					'appeal-valid-start-case-appellant',
-					'appeal-valid-start-case-lpa'
+					'appeal-valid-start-case-lpa',
+					{ lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z' }
 				],
 				[
-					'casAdvertAppeal',
-					casAdvertAppeal,
-					'appeal-valid-start-case-cas-advertisement-appellant',
-					'appeal-valid-start-case-cas-advertisement-lpa'
+					'advertisementAppeal',
+					advertisementAppeal,
+					'appeal-valid-start-case-advertisement-appellant',
+					'appeal-valid-start-case-advertisement-lpa',
+					{
+						lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-17T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-17T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-17T22:59:00.000Z',
+						finalCommentsDueDate: '2024-08-07T22:59:00.000Z'
+					}
 				]
 			])(
 				'start a %s timetable',
-				async (_, appeal, expectedAppellantTemplateName, expectedLpaTemplateName) => {
+				async (
+					_,
+					appeal,
+					expectedAppellantTemplateName,
+					expectedLpaTemplateName,
+					expectedResponseBody
+				) => {
 					// @ts-ignore
 					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
 					// @ts-ignore
@@ -1027,7 +1041,7 @@ describe('appeal timetables routes', () => {
 						.set('azureAdUserId', azureAdUserId);
 
 					expect(response.status).toEqual(201);
-					expect(response.body).toEqual({ lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z' });
+					expect(response.body).toEqual(expectedResponseBody);
 
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
@@ -1040,14 +1054,22 @@ describe('appeal timetables routes', () => {
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
 							comment_deadline: '',
-							due_date: '12 June 2024',
-							final_comments_deadline: '',
-							ip_comments_deadline: '',
+							due_date: dateISOStringToDisplayDate(expectedResponseBody.lpaQuestionnaireDueDate),
+							final_comments_deadline: dateISOStringToDisplayDate(
+								expectedResponseBody.finalCommentsDueDate
+							),
+							ip_comments_deadline: dateISOStringToDisplayDate(
+								expectedResponseBody.ipCommentsDueDate
+							),
 							local_planning_authority: appeal.lpa.name,
 							lpa_reference: appeal.applicationReference,
-							lpa_statement_deadline: '',
+							lpa_statement_deadline: dateISOStringToDisplayDate(
+								expectedResponseBody.lpaStatementDueDate
+							),
 							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
-							questionnaire_due_date: '12 June 2024',
+							questionnaire_due_date: dateISOStringToDisplayDate(
+								expectedResponseBody.lpaQuestionnaireDueDate
+							),
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
 							site_visit: true,
@@ -1068,14 +1090,22 @@ describe('appeal timetables routes', () => {
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
 							comment_deadline: '',
-							due_date: '12 June 2024',
-							final_comments_deadline: '',
-							ip_comments_deadline: '',
+							due_date: dateISOStringToDisplayDate(expectedResponseBody.lpaQuestionnaireDueDate),
+							final_comments_deadline: dateISOStringToDisplayDate(
+								expectedResponseBody.finalCommentsDueDate
+							),
+							ip_comments_deadline: dateISOStringToDisplayDate(
+								expectedResponseBody.ipCommentsDueDate
+							),
 							local_planning_authority: appeal.lpa.name,
 							lpa_reference: appeal.applicationReference,
-							lpa_statement_deadline: '',
+							lpa_statement_deadline: dateISOStringToDisplayDate(
+								expectedResponseBody.lpaStatementDueDate
+							),
 							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
-							questionnaire_due_date: '12 June 2024',
+							questionnaire_due_date: dateISOStringToDisplayDate(
+								expectedResponseBody.lpaQuestionnaireDueDate
+							),
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
 							statement_of_common_ground_deadline: '',
@@ -1134,22 +1164,10 @@ describe('appeal timetables routes', () => {
 						statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
 					},
 					{},
-					'appeal-valid-start-case-s78-appellant',
-					'appeal-valid-start-case-s78-lpa',
-					'appeal-valid-start-case-s78-appellant-hearing',
-					'appeal-valid-start-case-s78-lpa-hearing'
-				],
-				[
-					'casAdvertAppeal',
-					{ ...casAdvertAppeal, procedureType: { key: 'hearing' } },
-					{
-						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z'
-					},
-					{},
-					'appeal-valid-start-case-cas-advertisement-appellant',
-					'appeal-valid-start-case-cas-advertisement-lpa',
-					'appeal-valid-start-case-cas-advertisement-appellant-hearing',
-					'appeal-valid-start-case-cas-advertisement-lpa-hearing'
+					'appeal-valid-start-case-advertisement-appellant',
+					'appeal-valid-start-case-advertisement-lpa',
+					'appeal-valid-start-case-advertisement-appellant-hearing',
+					'appeal-valid-start-case-advertisement-lpa-hearing'
 				],
 				[
 					'enforcementNoticeAppeal',

@@ -1,11 +1,11 @@
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
-describe('appeal-valid-start-case-cas-advertisement-appellant.md', () => {
+describe('appeal-valid-start-case-advertisement-appellant.md', () => {
 	test('should call notify sendEmail with the correct data', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'appeal-valid-start-case-cas-advertisement-appellant',
+			templateName: 'appeal-valid-start-case-advertisement-appellant',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -16,6 +16,11 @@ describe('appeal-valid-start-case-cas-advertisement-appellant.md', () => {
 				site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 				start_date: '01 January 2025',
 				local_planning_authority: 'Bristol City Council',
+				appeal_type: 'Householder',
+				procedure_type: 'a written procedure',
+				questionnaire_due_date: '31 January 2025',
+				lpa_statement_deadline: '01 March 2025',
+				ip_comments_deadline: '01 April 2025',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
@@ -26,9 +31,11 @@ describe('appeal-valid-start-case-cas-advertisement-appellant.md', () => {
 		};
 
 		const expectedContent = [
-			'We have reviewed your appeal and it is valid.',
+			'We have reviewed your appeal and supporting documents.',
 			'',
-			'We started your appeal on 01 January 2025.',
+			'Your appeal started on 01 January 2025. The timetable for the appeal begins from this date.',
+			'',
+			'Your appeal procedure is a written procedure.',
 			'',
 			'# Appeal details',
 			'',
@@ -36,11 +43,25 @@ describe('appeal-valid-start-case-cas-advertisement-appellant.md', () => {
 			'Address: 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 			'Planning application reference: 48269/APP/2021/1482',
 			'',
-			'# Next steps',
+			'# Timetable',
 			'',
-			"We've asked Bristol City Council to complete a questionnaire about your appeal. They will send you a copy of their completed questionnaire.",
+			'## Local planning authority questionnaire',
 			'',
-			'We will arrange for an inspector to visit the address. You may need to attend the visit.',
+			'Due by 31 January 2025.',
+			'',
+			'## Statements',
+			'',
+			'Due by 01 March 2025.',
+			'',
+			'## Interested party comments',
+			'',
+			'Due by 01 April 2025.',
+			'',
+			'# What happens next',
+			'',
+			'Email a copy of your appeal statement to caseofficers@planninginspectorate.gov.uk by 31 January 2025. You will be able to view this in your appeal details.',
+			'',
+			'We will email you when you can view information from other parties in the appeals service.',
 			'',
 			'# Appeal costs',
 			'',

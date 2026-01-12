@@ -398,8 +398,8 @@ const deleteInquiry = async (deleteInquiryData, notifyClient, appeal) => {
  */
 const appealTypeMap = (appealType) => {
 	switch (appealType) {
-		case APPEAL_CASE_TYPE.ZA:
-			return '-cas-advertisement-';
+		case APPEAL_CASE_TYPE.H:
+			return '-advertisement-';
 		default:
 			return '-s78-';
 	}

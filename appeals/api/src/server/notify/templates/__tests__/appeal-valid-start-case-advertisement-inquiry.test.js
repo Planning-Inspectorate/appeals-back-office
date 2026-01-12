@@ -1,11 +1,11 @@
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
-describe('appeal-valid-start-case-cas-advertisement-inquiry.content.md', () => {
+describe('appeal-valid-start-case-advertisement-inquiry.content.md', () => {
 	test('should call notify sendEmail with the correct data when is LPA', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'appeal-valid-start-case-cas-advertisement-inquiry',
+			templateName: 'appeal-valid-start-case-advertisement-inquiry',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -115,7 +115,7 @@ describe('appeal-valid-start-case-cas-advertisement-inquiry.content.md', () => {
 	test('should call notify sendEmail with the correct data when is LPA and no inquiry address', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'appeal-valid-start-case-cas-advertisement-inquiry',
+			templateName: 'appeal-valid-start-case-advertisement-inquiry',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
