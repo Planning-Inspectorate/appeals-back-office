@@ -25,6 +25,19 @@ export function formatObjectAsString(object, seperator = '') {
 }
 
 /**
+ * Takes an object and returns object filtered by properties to keep
+ * @param {Object} object object to filter properties on
+ * @param {string[]} propertiesToFilter properties to keep on object
+ */
+export function filterObject(object, propertiesToFilter) {
+	const filtered = Object.fromEntries(
+		Object.entries(object).filter(([key]) => !propertiesToFilter.includes(key))
+	);
+
+	return filtered;
+}
+
+/**
  *
  * @param {string} value string to format
  * @returns value formatted with spaces - e.g. thisIsAProperty is formatted as 'This is a property'
