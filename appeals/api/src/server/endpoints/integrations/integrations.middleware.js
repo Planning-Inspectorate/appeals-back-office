@@ -186,7 +186,17 @@ const loadReferenceData = async (reference, useLeadAppealIfLinked = false) => {
 			include: {
 				appealStatus: true,
 				appealType: true,
-				appealRule6Parties: true
+				appellant: true,
+				agent: true,
+				lpa: true,
+				appealRule6Parties: {
+					include: {
+						serviceUser: true
+					}
+				},
+				inquiry: true,
+				appealTimetable: true,
+				address: true
 			}
 		});
 

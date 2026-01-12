@@ -1,5 +1,6 @@
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
+import initNotifyClientAndAddToRequest from '../../middleware/init-notify-client-and-add-to-request.js';
 import * as controller from './integrations.controller.js';
 import {
 	validateAppellantCase,
@@ -9,6 +10,8 @@ import {
 } from './integrations.middleware.js';
 
 const router = createRouter();
+
+router.use(initNotifyClientAndAddToRequest);
 
 router.post(
 	'/case-submission',
