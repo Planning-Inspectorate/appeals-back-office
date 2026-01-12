@@ -123,15 +123,13 @@ export const getDocumentsByAppealId = (caseId) => {
 };
 
 /**
- * @param {{folderId: number, skipValue: number, pageSize: number, documentVersion?: number}} param0
+ * @param {{folderId: number, documentVersion?: number}} param0
  * @returns {PrismaPromise<Document[]>}
  */
-export const getDocumentsInFolder = ({ folderId, skipValue, pageSize }) => {
+export const getDocumentsInFolder = ({ folderId }) => {
 	return databaseConnector.document.findMany({
 		where: { folderId, isDeleted: false },
 		orderBy: [{ createdAt: 'desc' }],
-		skip: skipValue,
-		take: pageSize,
 		include: {
 			latestDocumentVersion: {
 				include: {

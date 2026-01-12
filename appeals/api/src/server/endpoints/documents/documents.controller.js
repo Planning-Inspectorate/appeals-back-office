@@ -98,18 +98,24 @@ export const getDocumentAndVersions = async (req, res) => {
  */
 export const addDocuments = async (req, res) => {
 	const { appeal } = req;
+	const { documents } = req.body;
 
 	try {
+		const folderId = Number(documents[0].folderId);
+		const initialDocumentsInFolder = await documentRepository.getDocumentsInFolder({ folderId });
+
 		const documentInfo = await service.addDocumentsToAppeal(req.body, appeal);
 
 		const documentTypes = documentInfo.documents.map((doc) => doc?.documentType);
 
-		await updateDocumentVisibilityBooleans(
-			documentTypes,
-			appeal.id,
-			Number(req.body.appellantCaseId),
-			true
-		);
+		if (initialDocumentsInFolder.length === 0) {
+			await updateDocumentVisibilityBooleans(
+				documentTypes,
+				appeal.id,
+				Number(req.body.appellantCaseId),
+				true
+			);
+		}
 
 		await updatePersonalList(appeal.id);
 
@@ -244,7 +250,6 @@ export const deleteDocumentVersion = async (req, res) => {
 	const { document } = req;
 	const { version, appealId } = req.params;
 	const { appellantCaseId } = req.body;
-
 	const documentInfo = await service.deleteDocument(document, Number(version));
 
 	if (!documentInfo) {
@@ -256,7 +261,10 @@ export const deleteDocumentVersion = async (req, res) => {
 		await broadcasters.broadcastDocument(guid, version, eventType);
 	}
 
-	if (documentInfo.eventType === EventType.Delete && documentInfo.versions) {
+	const folderId = Number(document.folderId);
+	const documentsInFolder = await documentRepository.getDocumentsInFolder({ folderId });
+
+	if (documentsInFolder.length === 0 && documentInfo.versions) {
 		const documentTypes = documentInfo.versions
 			.map((doc) => doc.documentType)
 			.filter((docType) => docType !== null);
