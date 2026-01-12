@@ -21,7 +21,7 @@ exports[`appeal-documents upload should render upload form if appeal ID and fold
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 100MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 250MB.</span>
                             <br><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
@@ -75,7 +75,7 @@ exports[`appeal-documents upload should render upload form if appeal ID, folder 
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 100MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 250MB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Upload an updated document</h2>
