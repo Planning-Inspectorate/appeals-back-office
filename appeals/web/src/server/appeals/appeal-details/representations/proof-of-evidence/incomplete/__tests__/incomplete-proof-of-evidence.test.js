@@ -21,6 +21,10 @@ const proofOfEvidenceTypes = [
 	{
 		type: 'lpa',
 		label: 'LPA'
+	},
+	{
+		type: 'rule-6-party',
+		label: 'rule 6 party'
 	}
 ];
 
@@ -33,7 +37,18 @@ describe('incomplete proof of evidence', () => {
 			.reply(200, {
 				...appealDataFullPlanning,
 				appealId: 2,
-				appealStatus: 'appellant_proofs_evidence'
+				appealStatus: 'appellant_proofs_evidence',
+				appealRule6Parties: [
+					{
+						id: 3670,
+						serviceUserId: 3838,
+						partyName: 'Test Rule 6 Party',
+						serviceUser: {
+							organisationName: 'Test Rule 6 Party'
+						}
+					}
+				],
+				rule6PartyId: 3670
 			})
 			.persist();
 
@@ -51,6 +66,10 @@ describe('incomplete proof of evidence', () => {
 			.persist();
 		nock('http://test/')
 			.get(`/appeals/2/reps?type=lpa_proofs_evidence`)
+			.reply(200, proofOfEvidenceForReviewWithAttachments)
+			.persist();
+		nock('http://test/')
+			.get(`/appeals/2/reps?type=rule_6_party_proofs_evidence`)
 			.reply(200, proofOfEvidenceForReviewWithAttachments)
 			.persist();
 	});
@@ -183,7 +202,11 @@ describe('incomplete proof of evidence', () => {
 		for (const proofOfEvidenceType of proofOfEvidenceTypes) {
 			it(`should render the incomplete ${proofOfEvidenceType.type} proof of evidence CYA page with the expected content`, async () => {
 				const reasonResponse = await request
-					.post(`${baseUrl}/2/proof-of-evidence/${proofOfEvidenceType.type}/incomplete/reasons`)
+					.post(
+						`${baseUrl}/2/proof-of-evidence/${proofOfEvidenceType.type}${
+							proofOfEvidenceType.type === 'rule-6-party' ? '/3670' : ''
+						}/incomplete/reasons`
+					)
 					.send({
 						rejectionReason: '1',
 						'rejectionReason-1': 'Rejcection reason 1'
@@ -192,7 +215,9 @@ describe('incomplete proof of evidence', () => {
 				expect(reasonResponse.status).toBe(302);
 
 				const response = await request.get(
-					`${baseUrl}/2/proof-of-evidence/${proofOfEvidenceType.type}/incomplete/confirm`
+					`${baseUrl}/2/proof-of-evidence/${proofOfEvidenceType.type}${
+						proofOfEvidenceType.type === 'rule-6-party' ? '/3670' : ''
+					}/incomplete/confirm`
 				);
 
 				const element = parseHtml(response.text);
@@ -205,35 +230,53 @@ describe('incomplete proof of evidence', () => {
 				}).innerHTML;
 
 				expect(pageHtml).toContain(
-					`href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}/incomplete/reasons" class="govuk-back-link">Back</a>`
+					`href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}${
+						proofOfEvidenceType.type === 'rule-6-party' ? '/3670' : ''
+					}/incomplete/reasons" class="govuk-back-link">Back</a>`
 				);
 
 				expect(pageHtml).toContain(
 					`Check details and reject ${
-						proofOfEvidenceType.type === 'lpa' ? 'LPA' : 'appellant'
+						proofOfEvidenceType.type === 'lpa'
+							? 'LPA'
+							: proofOfEvidenceType.type === 'rule-6-party'
+							? 'Test Rule 6 Party'
+							: 'appellant'
 					} proof of evidence and witnesses</h1>`
 				);
 
 				expect(pageHtml).toContain(
-					`href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}/incomplete/reasons">Change`
+					`href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}${
+						proofOfEvidenceType.type === 'rule-6-party' ? '/3670' : ''
+					}/incomplete/reasons">Change`
 				);
 				expect(pageHtml).toContain(`Proof of evidence and witnesses</dt>`);
 				expect(pageHtml).toContain(
 					`href="/documents/4881/download/ed52cdc1-3cc2-462a-8623-c1ae256969d6/blank copy 5.pdf" target="_blank">blank copy 5.pdf</a>`
 				);
 				expect(pageHtml).toContain(
-					`href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}/manage-documents/135568/?backUrl=/proof-of-evidence/${proofOfEvidenceType.type}/incomplete/confirm">Change <span class="govuk-visually-hidden">supporting documents</span></a>`
+					`href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}${
+						proofOfEvidenceType.type === 'rule-6-party' ? '/3670' : ''
+					}/manage-documents/135568/?backUrl=/proof-of-evidence/${proofOfEvidenceType.type}${
+						proofOfEvidenceType.type === 'rule-6-party' ? '/3670' : ''
+					}/incomplete/confirm">Change <span class="govuk-visually-hidden">supporting documents</span></a>`
 				);
 
 				expect(pageHtml).toContain(`Review decision</dt>`);
 				expect(pageHtml).toContain(` Reject proof of evidence and witnesses</dd>`);
 
 				expect(pageHtml).toContain(
-					`href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}">Change <span class="govuk-visually-hidden">Review decision</span></a>`
+					`href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}${
+						proofOfEvidenceType.type === 'rule-6-party' ? '/3670' : ''
+					}">Change <span class="govuk-visually-hidden">Review decision</span></a>`
 				);
 				expect(pageHtml).toContain(
 					`Reason for rejecting the ${
-						proofOfEvidenceType.type === 'lpa' ? 'LPA' : 'appellant'
+						proofOfEvidenceType.type === 'lpa'
+							? 'LPA'
+							: proofOfEvidenceType.type === 'rule-6-party'
+							? 'Test Rule 6 Party'
+							: 'appellant'
 					} proof of evidence and witnesses</dt>`
 				);
 
@@ -257,7 +300,11 @@ describe('incomplete proof of evidence', () => {
 					});
 
 				const reasonResponse = await request
-					.post(`${baseUrl}/2/proof-of-evidence/${proofOfEvidenceType.type}/incomplete/reasons`)
+					.post(
+						`${baseUrl}/2/proof-of-evidence/${proofOfEvidenceType.type}${
+							proofOfEvidenceType.type === 'rule-6-party' ? '/3670' : ''
+						}/incomplete/reasons`
+					)
 					.send({
 						rejectionReason: '1',
 						'rejectionReason-1': 'Rejcection reason 1'
@@ -266,7 +313,11 @@ describe('incomplete proof of evidence', () => {
 				expect(reasonResponse.status).toBe(302);
 
 				await request
-					.post(`${baseUrl}/2/proof-of-evidence/${proofOfEvidenceType.type}/incomplete/confirm`)
+					.post(
+						`${baseUrl}/2/proof-of-evidence/${proofOfEvidenceType.type}${
+							proofOfEvidenceType.type === 'rule-6-party' ? '/3670' : ''
+						}/incomplete/confirm`
+					)
 					.send({});
 
 				expect(mockResult.isDone()).toBe(true);

@@ -238,7 +238,11 @@ describe('proof-of-evidence', () => {
 				expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span');
 				expect(unprettifiedElement.innerHTML).toContain(
 					`Check details and add ${
-						proofOfEvidenceType.type === 'lpa' ? 'LPA' : 'appellant'
+						proofOfEvidenceType.type === 'lpa'
+							? 'LPA'
+							: proofOfEvidenceType.type === 'appellant'
+							? 'appellant'
+							: 'rule 6 party'
 					} proof of evidence and witnesses</h1>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain(`Redaction status</dt>`);
@@ -246,7 +250,11 @@ describe('proof-of-evidence', () => {
 				expect(unprettifiedElement.innerHTML).toContain(`Date received</dt>`);
 				expect(unprettifiedElement.innerHTML).toContain(
 					`Add ${
-						proofOfEvidenceType.type === 'lpa' ? 'LPA' : 'appellant'
+						proofOfEvidenceType.type === 'lpa'
+							? 'LPA'
+							: proofOfEvidenceType.type === 'appellant'
+							? 'appellant'
+							: 'rule 6 party'
 					} proof of evidence and witnesses</button>`
 				);
 			});

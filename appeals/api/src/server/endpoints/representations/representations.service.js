@@ -206,6 +206,8 @@ export const createRepresentationProofOfEvidence = async (
 		representationType:
 			proofOfEvidenceType === 'lpa'
 				? APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE
+				: proofOfEvidenceType === 'rule-6-party'
+				? APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
 				: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
 		source: proofOfEvidenceType === 'lpa' ? 'lpa' : 'citizen',
 		dateCreated: new Date(),

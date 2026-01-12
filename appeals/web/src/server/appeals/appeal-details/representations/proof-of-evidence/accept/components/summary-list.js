@@ -6,13 +6,15 @@
  * @param {Representation} proofOfEvidence
  * @param {string} proofOfEvidenceType
  * @param {string|null} attachmentsList
+ * @param {import("../../proof-of-evidence.middleware.js").AppealRule6Party} rule6Party
  * @returns {PageComponent}
  */
 export const summaryList = (
 	appealDetails,
 	proofOfEvidence,
 	proofOfEvidenceType,
-	attachmentsList
+	attachmentsList,
+	rule6Party
 ) => ({
 	type: 'summary-list',
 	wrapperHtml: {
@@ -28,7 +30,15 @@ export const summaryList = (
 					items: [
 						{
 							text: 'Change',
-							href: `/appeals-service/appeal-details/${appealDetails.appealId}/proof-of-evidence/${proofOfEvidenceType}/manage-documents/${proofOfEvidence.attachments?.[0]?.documentVersion?.document?.folderId}/?backUrl=/proof-of-evidence/${proofOfEvidenceType}/accept`,
+							href: `/appeals-service/appeal-details/${
+								appealDetails.appealId
+							}/proof-of-evidence/${proofOfEvidenceType}${
+								proofOfEvidenceType === 'rule-6-party' ? `/${rule6Party.id}` : ''
+							}/manage-documents/${
+								proofOfEvidence.attachments?.[0]?.documentVersion?.document?.folderId
+							}/?backUrl=/proof-of-evidence/${proofOfEvidenceType}${
+								proofOfEvidenceType === 'rule-6-party' ? `/${rule6Party.id}` : ''
+							}/accept`,
 							visuallyHiddenText: 'proof of evidence and witnesses'
 						}
 					]
@@ -41,7 +51,15 @@ export const summaryList = (
 					items: [
 						{
 							text: 'Change',
-							href: `/appeals-service/appeal-details/${appealDetails.appealId}/proof-of-evidence/${proofOfEvidenceType}?backUrl=/appeals-service/appeal-details/${appealDetails.appealId}/proof-of-evidence/${proofOfEvidenceType}/accept`
+							href: `/appeals-service/appeal-details/${
+								appealDetails.appealId
+							}/proof-of-evidence/${proofOfEvidenceType}${
+								proofOfEvidenceType === 'rule-6-party' ? `/${rule6Party.id}` : ''
+							}?backUrl=/appeals-service/appeal-details/${
+								appealDetails.appealId
+							}/proof-of-evidence/${proofOfEvidenceType}${
+								proofOfEvidenceType === 'rule-6-party' ? `/${rule6Party.id}` : ''
+							}/accept`
 						}
 					]
 				}

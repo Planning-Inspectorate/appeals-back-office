@@ -26,17 +26,24 @@ router.use(
 );
 
 router.use(
+	'/:proofOfEvidenceType/accept',
+	validateAppeal,
+	withSingularRepresentation,
+	acceptProofOfEvidenceRouter
+);
+
+router.use(
+	'/:proofOfEvidenceType/incomplete',
+	validateAppeal,
+	withSingularRepresentation,
+	incompleteProofOfEvidenceRouter
+);
+
+router.use(
 	'/:proofOfEvidenceType/add-representation',
 	validateAppeal,
 	getRepresentationAttachmentsFolder,
 	addRepresentationRouter
-);
-
-router.use(
-	'/:proofOfEvidenceType',
-	validateAppeal,
-	withSingularRepresentation,
-	viewAndReviewProofOfEvidenceRouter
 );
 
 router.use(
@@ -58,17 +65,44 @@ router.use(
 );
 
 router.use(
-	'/:proofOfEvidenceType/accept',
+	'/:proofOfEvidenceType/:rule6PartyId',
 	validateAppeal,
+	validateRule6Party,
+	withSingularRepresentation,
+	viewAndReviewProofOfEvidenceRouter
+);
+
+router.use(
+	'/:proofOfEvidenceType/:rule6PartyId/accept',
+	validateAppeal,
+	validateRule6Party,
 	withSingularRepresentation,
 	acceptProofOfEvidenceRouter
 );
 
 router.use(
-	'/:proofOfEvidenceType/incomplete',
+	'/:proofOfEvidenceType/:rule6PartyId/incomplete',
 	validateAppeal,
+	validateRule6Party,
 	withSingularRepresentation,
 	incompleteProofOfEvidenceRouter
+);
+
+router.use(
+	'/:proofOfEvidenceType/:rule6PartyId/manage-documents',
+	validateAppeal,
+	validateRule6Party,
+	addPageContentToLocals,
+	withSingularRepresentation,
+	getRepresentationAttachmentsFolder,
+	manageDocumentsRouter
+);
+
+router.use(
+	'/:proofOfEvidenceType',
+	validateAppeal,
+	withSingularRepresentation,
+	viewAndReviewProofOfEvidenceRouter
 );
 
 export default router;

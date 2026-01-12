@@ -88,6 +88,50 @@ exports[`incomplete proof of evidence GET /confirm should render the incomplete 
 </main>"
 `;
 
+exports[`incomplete proof of evidence GET /confirm should render the incomplete rule-6-party proof of evidence CYA page with the expected content 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and reject Test Rule 6 Party proof of evidence and witnesses</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Proof of evidence and witnesses</dt>
+                    <dd                     class="govuk-summary-list__value"><a class="govuk-link" href="/documents/4881/download/ed52cdc1-3cc2-462a-8623-c1ae256969d6/blank copy 5.pdf"
+                        target="_blank">blank copy 5.pdf</a>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/rule-6-party/3670/manage-documents/135568/?backUrl=/proof-of-evidence/rule-6-party/3670/incomplete/confirm">Change <span class="govuk-visually-hidden">supporting documents</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>
+                    <dd class="govuk-summary-list__value">Reject proof of evidence and witnesses</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/rule-6-party/3670">Change <span class="govuk-visually-hidden">Review decision</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for rejecting the Test Rule 6 Party proof of evidence and witnesses</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">Received after deadline</div>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/rule-6-party/3670/incomplete/reasons">Change <span class="govuk-visually-hidden">Incomplete reasons</span></a>
+                        </dd>
+                </div>
+            </dl>
+            <p class="govuk-body">We’ll send an email to the appellant to explain why you rejected their
+                proof of evidence and witnesses</p>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Confirm statement is incomplete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`incomplete proof of evidence GET /reasons should render the incomplete appellant proof of evidence page with the expected content 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">

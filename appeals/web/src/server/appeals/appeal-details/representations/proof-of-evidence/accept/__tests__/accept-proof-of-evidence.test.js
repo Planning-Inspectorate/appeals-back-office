@@ -21,7 +21,18 @@ describe('proof-of-evidence', () => {
 			.reply(200, {
 				...appealDataFullPlanning,
 				appealId: 2,
-				appealStatus: 'appellant_proofs_evidence'
+				appealStatus: 'appellant_proofs_evidence',
+				appealRule6Parties: [
+					{
+						id: 3670,
+						serviceUserId: 3838,
+						partyName: 'Test Rule 6 Party',
+						serviceUser: {
+							organisationName: 'Test Rule 6 Party'
+						}
+					}
+				],
+				rule6PartyId: 3670
 			})
 			.persist();
 	});
@@ -36,19 +47,26 @@ describe('proof-of-evidence', () => {
 		{
 			type: 'lpa',
 			label: 'LPA'
+		},
+		{
+			type: 'rule-6-party',
+			label: 'Test Rule 6 Party'
 		}
 	];
 
 	describe('GET /', () => {
 		for (const proofOfEvidenceType of proofOfEvidenceTypes) {
 			it(`should render the accept ${proofOfEvidenceType.type} proof of evidence page with the expected content`, async () => {
+				const proofType = proofOfEvidenceType.type.replaceAll('-', '_');
 				nock('http://test/')
-					.get(`/appeals/2/reps?type=${proofOfEvidenceType.type}_proofs_evidence`)
+					.get(`/appeals/2/reps?type=${proofType}_proofs_evidence`)
 					.reply(200, proofOfEvidenceForReviewWithAttachments)
 					.persist();
 
 				const response = await request.get(
-					`${baseUrl}/2/proof-of-evidence/${proofOfEvidenceType.type}/accept`
+					`${baseUrl}/2/proof-of-evidence/${proofOfEvidenceType.type}${
+						proofOfEvidenceType.type === 'rule-6-party' ? '/3670' : ''
+					}/accept`
 				);
 
 				const element = parseHtml(response.text);
@@ -61,7 +79,11 @@ describe('proof-of-evidence', () => {
 				}).innerHTML;
 
 				expect(unprettifiedHTML).toContain(
-					`<a href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}" class="govuk-back-link">Back</a>`
+					`<a href="/appeals-service/appeal-details/2/proof-of-evidence/${
+						proofOfEvidenceType.type
+					}${
+						proofOfEvidenceType.type === 'rule-6-party' ? '/3670' : ''
+					}" class="govuk-back-link">Back</a>`
 				);
 				expect(unprettifiedHTML).toContain('Appeal 351062</span>');
 				expect(unprettifiedHTML).toContain(
@@ -74,16 +96,30 @@ describe('proof-of-evidence', () => {
 				expect(unprettifiedHTML).toContain('Review decisions</dt>');
 				expect(unprettifiedHTML).toContain('Accept proof of evidence and witnesses</dd>');
 				expect(unprettifiedHTML).toContain(
-					`href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}`
+					`href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}${
+						proofOfEvidenceType.type === 'rule-6-party' ? '/3670' : ''
+					}`
 				);
 				expect(unprettifiedHTML).toContain(
 					`Accept ${proofOfEvidenceType.label} proof of evidence and witnesses</button>`
 				);
 				expect(unprettifiedHTML).toContain(
-					`<a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}/manage-documents/135568/?backUrl=/proof-of-evidence/${proofOfEvidenceType.type}/accept">Change<span class="govuk-visually-hidden"> proof of evidence and witnesses</span></a>`
+					`<a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/${
+						proofOfEvidenceType.type
+					}${
+						proofOfEvidenceType.type === 'rule-6-party' ? '/3670' : ''
+					}/manage-documents/135568/?backUrl=/proof-of-evidence/${proofOfEvidenceType.type}${
+						proofOfEvidenceType.type === 'rule-6-party' ? '/3670' : ''
+					}/accept">Change<span class="govuk-visually-hidden"> proof of evidence and witnesses</span></a>`
 				);
 				expect(unprettifiedHTML).toContain(
-					`<a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}?backUrl=/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}/accept">Change</a>`
+					`<a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/${
+						proofOfEvidenceType.type
+					}${
+						proofOfEvidenceType.type === 'rule-6-party' ? '/3670' : ''
+					}?backUrl=/appeals-service/appeal-details/2/proof-of-evidence/${
+						proofOfEvidenceType.type
+					}${proofOfEvidenceType.type === 'rule-6-party' ? '/3670' : ''}/accept">Change</a>`
 				);
 			});
 		}

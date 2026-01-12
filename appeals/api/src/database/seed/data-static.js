@@ -668,6 +668,16 @@ export const representationRejectionReasons = [
 		name: 'Other',
 		representationType: 'rule_6_party_statement',
 		hasText: true
+	},
+	{
+		name: 'Supporting documents missing',
+		representationType: 'rule_6_party_proofs_evidence',
+		hasText: false
+	},
+	{
+		name: 'Other',
+		representationType: 'rule_6_party_proofs_evidence',
+		hasText: true
 	}
 ];
 

@@ -8,14 +8,17 @@ import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 /**
  * Maps representation types to their respective URL path fragments.
  * @param {string} representationType
+ * @param {import('../../proof-of-evidence.middleware.js').AppealRule6Party} rule6Party
  * @returns {string}
  */
-function mapRepresentationTypeToPath(representationType) {
+function mapRepresentationTypeToPath(representationType, rule6Party) {
 	switch (representationType) {
 		case APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE:
 			return 'appellant';
 		case APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE:
 			return 'lpa';
+		case APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE:
+			return `rule-6-party/${rule6Party.id}`;
 		default:
 			throw new Error(`Unsupported representation type: ${representationType}`);
 	}
@@ -25,9 +28,10 @@ function mapRepresentationTypeToPath(representationType) {
  * Generates the proof of evidence summary list used in both view and review pages.
  * @param {number} appealId
  * @param {Representation} proofOfEvidence - The representation object.
+ * @param {import('../../proof-of-evidence.middleware.js').AppealRule6Party} rule6Party
  * @returns {PageComponent} The generated proof of evidence summary list component.
  */
-export function generateProofOfEvidenceSummaryList(appealId, proofOfEvidence) {
+export function generateProofOfEvidenceSummaryList(appealId, proofOfEvidence, rule6Party) {
 	const filteredAttachments = proofOfEvidence.attachments?.filter((attachment) => {
 		const { isDeleted, latestVersionId } = attachment?.documentVersion?.document ?? {};
 		return latestVersionId === attachment.version && !isDeleted;
@@ -48,7 +52,10 @@ export function generateProofOfEvidenceSummaryList(appealId, proofOfEvidence) {
 		  })
 		: null;
 
-	const proofOfEvidenceTypePath = mapRepresentationTypeToPath(proofOfEvidence.representationType);
+	const proofOfEvidenceTypePath = mapRepresentationTypeToPath(
+		proofOfEvidence.representationType,
+		rule6Party
+	);
 	const rows = [
 		{
 			key: { text: 'Proof of evidence and witnesses' },
