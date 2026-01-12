@@ -270,7 +270,8 @@ class MockPrismaClient {
 		return {
 			findUnique: mockAppealFindUnique,
 			createMany: mockAppealCreate,
-			deleteMany: mockAppealNotificationDeleteMany
+			deleteMany: mockAppealNotificationDeleteMany,
+			findFirst: jest.fn().mockResolvedValue(null)
 		};
 	}
 
@@ -628,7 +629,8 @@ class MockPrismaClient {
 		return {
 			findMany: mockAuditTrailFindMany,
 			create: mockAuditTrailCreate,
-			deleteMany: mockAuditTrailDeleteMany
+			deleteMany: mockAuditTrailDeleteMany,
+			findFirst: jest.fn().mockResolvedValue(null)
 		};
 	}
 

@@ -818,6 +818,8 @@ export function mapNotificationBannersFromSession(session, servicePage, appealId
 	/** @type {import('#lib/mappers/utils/map-status-dependent-notifications.js').NotificationBannerDefinitionKey[]} */
 	const displayedBannerKeys = [];
 
+	const seenKeys = new Set();
+
 	/**
 	 * @type {PageComponent[]}
 	 */
@@ -835,10 +837,16 @@ export function mapNotificationBannersFromSession(session, servicePage, appealId
 				return [];
 			}
 
+			if (seenKeys.has(bannerData.key)) {
+				displayedBannerKeys.push(bannerData.key);
+				return [];
+			}
+
 			const bannerText = bannerData?.text || bannerDefinition.text;
 			const bannerHtml = bannerData?.html || bannerDefinition.html;
 
 			displayedBannerKeys.push(bannerData.key);
+			seenKeys.add(bannerData.key);
 
 			return [
 				createNotificationBanner({
