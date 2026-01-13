@@ -5,6 +5,7 @@ import { dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 import {
 	activeDirectoryUsersData,
 	appealData,
+	appealDataEnforcementNotice,
 	appealDataFullPlanning,
 	appellantFinalCommentsAwaitingReview,
 	caseNotes,
@@ -4125,6 +4126,37 @@ describe('appeal-details', () => {
 		});
 
 		describe('Timetable', () => {
+			/**
+			 * @param {import('supertest').Response} response
+			 * @param {{key: string, value: string, actionLink?: string}[]} rows
+			 */
+			const itShouldHaveTheseTimetableRows = (response, rows) => {
+				const timetableRows = parseHtml(response.text, {
+					rootElement: 'dl.govuk-summary-list.appeal-case-timetable',
+					skipPrettyPrint: true
+				}).querySelectorAll('.govuk-summary-list__row');
+
+				expect(timetableRows.length).toBe(rows.length);
+				rows.forEach((row, index) => {
+					expect(
+						timetableRows[index].querySelector('dt.govuk-summary-list__key').textContent.trim()
+					).toBe(row.key);
+
+					expect(
+						timetableRows[index].querySelector('dd.govuk-summary-list__value').textContent.trim()
+					).toBe(row.value);
+
+					if (row.actionLink) {
+						expect(
+							timetableRows[index]
+								.querySelector('dd.govuk-summary-list__actions')
+								.querySelector('a.govuk-link')
+								.getAttribute('href')
+						).toBe(row.actionLink);
+					}
+				});
+			};
+
 			const appealId = 3;
 			beforeEach(() => {
 				nock.cleanAll();
@@ -4561,79 +4593,31 @@ describe('appeal-details', () => {
 					const response = await request.get(`${baseUrl}/${appealId}`);
 					expect(response.statusCode).toBe(200);
 
-					const timetableRows = parseHtml(response.text, {
-						rootElement: 'dl.govuk-summary-list.appeal-case-timetable',
-						skipPrettyPrint: true
-					}).querySelectorAll('.govuk-summary-list__row');
-
-					expect(timetableRows.length).toBe(7);
-					expect(
-						timetableRows[0].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Valid date');
-					expect(
-						timetableRows[0].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('1 January 2025');
-					expect(
-						timetableRows[1].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Start date');
-					expect(
-						timetableRows[1].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('1 January 2025');
-					expect(
-						timetableRows[2].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('LPA questionnaire due');
-					expect(
-						timetableRows[2].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('2 January 2025');
-					expect(timetableRows[2].querySelector('dd.govuk-summary-list__actions')).toBeFalsy();
-					expect(
-						timetableRows[3].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('LPA statement due');
-					expect(
-						timetableRows[3].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('3 January 2025');
-					expect(
-						timetableRows[3]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[4].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Interested party comments due');
-					expect(
-						timetableRows[4].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('4 January 2025');
-					expect(
-						timetableRows[4]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[5].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Statement of common ground due');
-					expect(
-						timetableRows[5].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('6 January 2025');
-					expect(
-						timetableRows[5]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[6].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Hearing date');
-					expect(
-						timetableRows[6].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('Not set up');
-					expect(
-						timetableRows[6]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/hearing/setup`);
+					itShouldHaveTheseTimetableRows(response, [
+						{ key: 'Valid date', value: '1 January 2025' },
+						{ key: 'Start date', value: '1 January 2025' },
+						{ key: 'LPA questionnaire due', value: '2 January 2025' },
+						{
+							key: 'LPA statement due',
+							value: '3 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Interested party comments due',
+							value: '4 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Statement of common ground due',
+							value: '6 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Hearing date',
+							value: 'Not set up',
+							actionLink: `${baseUrl}/${appealId}/hearing/setup`
+						}
+					]);
 				});
 
 				it('should render the correct rows when case has started and has planning obligation', async () => {
@@ -4663,91 +4647,36 @@ describe('appeal-details', () => {
 					const response = await request.get(`${baseUrl}/${appealId}`);
 					expect(response.statusCode).toBe(200);
 
-					const timetableRows = parseHtml(response.text, {
-						rootElement: 'dl.govuk-summary-list.appeal-case-timetable',
-						skipPrettyPrint: true
-					}).querySelectorAll('.govuk-summary-list__row');
-
-					expect(timetableRows.length).toBe(8);
-					expect(
-						timetableRows[0].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Valid date');
-					expect(
-						timetableRows[0].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('1 January 2025');
-					expect(
-						timetableRows[1].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Start date');
-					expect(
-						timetableRows[1].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('1 January 2025');
-					expect(
-						timetableRows[2].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('LPA questionnaire due');
-					expect(
-						timetableRows[2].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('2 January 2025');
-					expect(timetableRows[2].querySelector('dd.govuk-summary-list__actions')).toBeFalsy();
-					expect(
-						timetableRows[3].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('LPA statement due');
-					expect(
-						timetableRows[3].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('3 January 2025');
-					expect(
-						timetableRows[3]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[4].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Interested party comments due');
-					expect(
-						timetableRows[4].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('4 January 2025');
-					expect(
-						timetableRows[4]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[5].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Statement of common ground due');
-					expect(
-						timetableRows[5].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('6 January 2025');
-					expect(
-						timetableRows[5]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[6].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Planning obligation due');
-					expect(
-						timetableRows[6].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('Not provided');
-					expect(
-						timetableRows[6]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[7].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Hearing date');
-					expect(
-						timetableRows[7].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('Not set up');
-					expect(
-						timetableRows[7]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/hearing/setup`);
+					itShouldHaveTheseTimetableRows(response, [
+						{ key: 'Valid date', value: '1 January 2025' },
+						{ key: 'Start date', value: '1 January 2025' },
+						{ key: 'LPA questionnaire due', value: '2 January 2025' },
+						{
+							key: 'LPA statement due',
+							value: '3 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Interested party comments due',
+							value: '4 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Statement of common ground due',
+							value: '6 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Planning obligation due',
+							value: 'Not provided',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Hearing date',
+							value: 'Not set up',
+							actionLink: `${baseUrl}/${appealId}/hearing/setup`
+						}
+					]);
 				});
 
 				it('should render the correct rows when case has started and planning obligation date has been set', async () => {
@@ -4778,91 +4707,36 @@ describe('appeal-details', () => {
 					const response = await request.get(`${baseUrl}/${appealId}`);
 					expect(response.statusCode).toBe(200);
 
-					const timetableRows = parseHtml(response.text, {
-						rootElement: 'dl.govuk-summary-list.appeal-case-timetable',
-						skipPrettyPrint: true
-					}).querySelectorAll('.govuk-summary-list__row');
-
-					expect(timetableRows.length).toBe(8);
-					expect(
-						timetableRows[0].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Valid date');
-					expect(
-						timetableRows[0].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('1 January 2025');
-					expect(
-						timetableRows[1].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Start date');
-					expect(
-						timetableRows[1].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('1 January 2025');
-					expect(
-						timetableRows[2].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('LPA questionnaire due');
-					expect(
-						timetableRows[2].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('2 January 2025');
-					expect(timetableRows[2].querySelector('dd.govuk-summary-list__actions')).toBeFalsy();
-					expect(
-						timetableRows[3].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('LPA statement due');
-					expect(
-						timetableRows[3].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('3 January 2025');
-					expect(
-						timetableRows[3]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[4].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Interested party comments due');
-					expect(
-						timetableRows[4].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('4 January 2025');
-					expect(
-						timetableRows[4]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[5].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Statement of common ground due');
-					expect(
-						timetableRows[5].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('6 January 2025');
-					expect(
-						timetableRows[5]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[6].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Planning obligation due');
-					expect(
-						timetableRows[6].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('7 January 2025');
-					expect(
-						timetableRows[6]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[7].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Hearing date');
-					expect(
-						timetableRows[7].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('Not set up');
-					expect(
-						timetableRows[7]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/hearing/setup`);
+					itShouldHaveTheseTimetableRows(response, [
+						{ key: 'Valid date', value: '1 January 2025' },
+						{ key: 'Start date', value: '1 January 2025' },
+						{ key: 'LPA questionnaire due', value: '2 January 2025' },
+						{
+							key: 'LPA statement due',
+							value: '3 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Interested party comments due',
+							value: '4 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Statement of common ground due',
+							value: '6 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Planning obligation due',
+							value: '7 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Hearing date',
+							value: 'Not set up',
+							actionLink: `${baseUrl}/${appealId}/hearing/setup`
+						}
+					]);
 				});
 
 				it('should render the correct rows when case has started and hearing has been set up', async () => {
@@ -4894,91 +4768,36 @@ describe('appeal-details', () => {
 					const response = await request.get(`${baseUrl}/${appealId}`);
 					expect(response.statusCode).toBe(200);
 
-					const timetableRows = parseHtml(response.text, {
-						rootElement: 'dl.govuk-summary-list.appeal-case-timetable',
-						skipPrettyPrint: true
-					}).querySelectorAll('.govuk-summary-list__row');
-
-					expect(timetableRows.length).toBe(8);
-					expect(
-						timetableRows[0].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Valid date');
-					expect(
-						timetableRows[0].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('1 January 2025');
-					expect(
-						timetableRows[1].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Start date');
-					expect(
-						timetableRows[1].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('1 January 2025');
-					expect(
-						timetableRows[2].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('LPA questionnaire due');
-					expect(
-						timetableRows[2].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('2 January 2025');
-					expect(timetableRows[2].querySelector('dd.govuk-summary-list__actions')).toBeFalsy();
-					expect(
-						timetableRows[3].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('LPA statement due');
-					expect(
-						timetableRows[3].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('3 January 2025');
-					expect(
-						timetableRows[3]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[4].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Interested party comments due');
-					expect(
-						timetableRows[4].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('4 January 2025');
-					expect(
-						timetableRows[4]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[5].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Statement of common ground due');
-					expect(
-						timetableRows[5].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('6 January 2025');
-					expect(
-						timetableRows[5]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[6].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Planning obligation due');
-					expect(
-						timetableRows[6].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('Not provided');
-					expect(
-						timetableRows[6]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[7].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Hearing date');
-					expect(
-						timetableRows[7].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('10:00am on 8 January 2025');
-					expect(
-						timetableRows[7]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/hearing/change/date`);
+					itShouldHaveTheseTimetableRows(response, [
+						{ key: 'Valid date', value: '1 January 2025' },
+						{ key: 'Start date', value: '1 January 2025' },
+						{ key: 'LPA questionnaire due', value: '2 January 2025' },
+						{
+							key: 'LPA statement due',
+							value: '3 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Interested party comments due',
+							value: '4 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Statement of common ground due',
+							value: '6 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Planning obligation due',
+							value: 'Not provided',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Hearing date',
+							value: '10:00am on 8 January 2025',
+							actionLink: `${baseUrl}/${appealId}/hearing/change/date`
+						}
+					]);
 				});
 			});
 
@@ -4991,7 +4810,7 @@ describe('appeal-details', () => {
 						.reply(200, { itemCount: 0 });
 				});
 
-				it('should render the correct rows when case procedure is Inquiry and case started and has no planning obligation', async () => {
+				it('should render the correct rows when case started and has no planning obligation', async () => {
 					nock('http://test/')
 						.get(`/appeals/${appealId}?include=all`)
 						.reply(200, {
@@ -5023,88 +4842,32 @@ describe('appeal-details', () => {
 					const response = await request.get(`${baseUrl}/${appealId}`);
 					expect(response.statusCode).toBe(200);
 
-					const timetableRows = parseHtml(response.text, {
-						rootElement: 'dl.govuk-summary-list.appeal-case-timetable',
-						skipPrettyPrint: true
-					}).querySelectorAll('.govuk-summary-list__row');
-
-					expect(timetableRows.length).toBe(9);
-					expect(
-						timetableRows[0].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Valid date');
-					expect(
-						timetableRows[0].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('1 January 2025');
-					expect(
-						timetableRows[1].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Start date');
-					expect(
-						timetableRows[1].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('1 January 2025');
-					expect(
-						timetableRows[2].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('LPA questionnaire due');
-					expect(
-						timetableRows[2].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('2 January 2025');
-					expect(timetableRows[2].querySelector('dd.govuk-summary-list__actions')).toBeFalsy();
-					expect(
-						timetableRows[3].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('LPA statement due');
-					expect(
-						timetableRows[3].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('3 January 2025');
-					expect(
-						timetableRows[3]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[4].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Interested party comments due');
-					expect(
-						timetableRows[4].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('4 January 2025');
-					expect(
-						timetableRows[4]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[5].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Statement of common ground due');
-					expect(
-						timetableRows[5].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('6 January 2025');
-					expect(
-						timetableRows[5]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[6].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Proof of evidence and witness due');
-					expect(
-						timetableRows[6].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('7 January 2025');
-					expect(
-						timetableRows[7].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Case management conference due');
-					expect(
-						timetableRows[7].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('8 January 2025');
-					expect(
-						timetableRows[8].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Inquiry');
-					expect(
-						timetableRows[8].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('10:00am on 1 February 2025');
+					itShouldHaveTheseTimetableRows(response, [
+						{ key: 'Valid date', value: '1 January 2025' },
+						{ key: 'Start date', value: '1 January 2025' },
+						{ key: 'LPA questionnaire due', value: '2 January 2025' },
+						{
+							key: 'LPA statement due',
+							value: '3 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Interested party comments due',
+							value: '4 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Statement of common ground due',
+							value: '6 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{ key: 'Proof of evidence and witness due', value: '7 January 2025' },
+						{ key: 'Case management conference due', value: '8 January 2025' },
+						{ key: 'Inquiry', value: '10:00am on 1 February 2025' }
+					]);
 				});
 
-				it('should render the correct rows when case is Inquiry and case has started and has planning obligation', async () => {
+				it('should render the correct rows when case has started and has planning obligation', async () => {
 					nock('http://test/')
 						.get(`/appeals/${appealId}?include=all`)
 						.reply(200, {
@@ -5136,91 +4899,205 @@ describe('appeal-details', () => {
 					const response = await request.get(`${baseUrl}/${appealId}`);
 					expect(response.statusCode).toBe(200);
 
-					const timetableRows = parseHtml(response.text, {
-						rootElement: 'dl.govuk-summary-list.appeal-case-timetable',
-						skipPrettyPrint: true
-					}).querySelectorAll('.govuk-summary-list__row');
+					itShouldHaveTheseTimetableRows(response, [
+						{ key: 'Valid date', value: '1 January 2025' },
+						{ key: 'Start date', value: '1 January 2025' },
+						{ key: 'LPA questionnaire due', value: '2 January 2025' },
+						{
+							key: 'LPA statement due',
+							value: '3 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Interested party comments due',
+							value: '4 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Statement of common ground due',
+							value: '6 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Planning obligation due',
+							value: '9 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{ key: 'Proof of evidence and witness due', value: '7 January 2025' },
+						{ key: 'Case management conference due', value: '8 January 2025' },
+						{ key: 'Inquiry', value: '10:00am on 1 February 2025' }
+					]);
+				});
+			});
 
-					expect(timetableRows.length).toBe(10);
-					expect(
-						timetableRows[0].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Valid date');
-					expect(
-						timetableRows[0].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('1 January 2025');
-					expect(
-						timetableRows[1].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Start date');
-					expect(
-						timetableRows[1].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('1 January 2025');
-					expect(
-						timetableRows[2].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('LPA questionnaire due');
-					expect(
-						timetableRows[2].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('2 January 2025');
-					expect(timetableRows[2].querySelector('dd.govuk-summary-list__actions')).toBeFalsy();
-					expect(
-						timetableRows[3].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('LPA statement due');
-					expect(
-						timetableRows[3].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('3 January 2025');
-					expect(
-						timetableRows[3]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[4].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Interested party comments due');
-					expect(
-						timetableRows[4].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('4 January 2025');
-					expect(
-						timetableRows[4]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[5].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Statement of common ground due');
-					expect(
-						timetableRows[5].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('6 January 2025');
-					expect(
-						timetableRows[5]
-							.querySelector('dd.govuk-summary-list__actions')
-							.querySelector('a.govuk-link')
-							.getAttribute('href')
-					).toBe(`${baseUrl}/${appealId}/timetable/edit`);
-					expect(
-						timetableRows[6].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Planning obligation due');
-					expect(
-						timetableRows[6].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('9 January 2025');
-					expect(
-						timetableRows[7].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Proof of evidence and witness due');
-					expect(
-						timetableRows[7].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('7 January 2025');
-					expect(
-						timetableRows[8].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Case management conference due');
-					expect(
-						timetableRows[8].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('8 January 2025');
-					expect(
-						timetableRows[9].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Inquiry');
-					expect(
-						timetableRows[9].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('10:00am on 1 February 2025');
+			describe('for an enforcement notice case', () => {
+				beforeEach(() => {
+					nock('http://test/')
+						.get(
+							`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+						)
+						.reply(200, { itemCount: 0 });
+				});
+
+				it('should render the correct rows when case has started and has no planning obligation', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, {
+							...appealDataEnforcementNotice,
+							appealId,
+							validAt: '2025-01-01T00:00:00.000Z',
+							startedAt: '2025-01-01T00:00:00.000Z',
+							procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+							appealTimetable: {
+								validAt: '2025-01-01T00:00:00.000Z',
+								startedAt: '2025-01-01T00:00:00.000Z',
+								lpaQuestionnaireDueDate: '2025-01-02T00:00:00.000Z',
+								lpaStatementDueDate: '2025-01-03T00:00:00.000Z',
+								ipCommentsDueDate: '2025-01-04T00:00:00.000Z',
+								finalCommentsDueDate: '2025-01-05T00:00:00.000Z'
+							},
+							hearing: null
+						});
+					nock('http://test/')
+						.get(
+							`/appeals/${appealId}/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`
+						)
+						.reply(200, { planningObligation: { hasObligation: false } });
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+					expect(response.statusCode).toBe(200);
+
+					itShouldHaveTheseTimetableRows(response, [
+						{ key: 'Valid date', value: '1 January 2025' },
+						{ key: 'Start date', value: '1 January 2025' },
+						{ key: 'LPA questionnaire due', value: '2 January 2025' },
+						{
+							key: 'Statements due',
+							value: '3 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Interested party comments due',
+							value: '4 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Final comments due',
+							value: '5 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						}
+					]);
+				});
+
+				it('should render the correct rows when case has started and has planning obligation', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, {
+							...appealDataEnforcementNotice,
+							appealId,
+							validAt: '2025-01-01T00:00:00.000Z',
+							startedAt: '2025-01-01T00:00:00.000Z',
+							procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+							hearing: null,
+							appealTimetable: {
+								validAt: '2025-01-01T00:00:00.000Z',
+								startedAt: '2025-01-01T00:00:00.000Z',
+								lpaQuestionnaireDueDate: '2025-01-02T00:00:00.000Z',
+								lpaStatementDueDate: '2025-01-03T00:00:00.000Z',
+								ipCommentsDueDate: '2025-01-04T00:00:00.000Z',
+								finalCommentsDueDate: '2025-01-05T00:00:00.000Z'
+							}
+						});
+					nock('http://test/')
+						.get(
+							`/appeals/${appealId}/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`
+						)
+						.reply(200, { planningObligation: { hasObligation: true } });
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+					expect(response.statusCode).toBe(200);
+
+					itShouldHaveTheseTimetableRows(response, [
+						{ key: 'Valid date', value: '1 January 2025' },
+						{ key: 'Start date', value: '1 January 2025' },
+						{ key: 'LPA questionnaire due', value: '2 January 2025' },
+						{
+							key: 'Statements due',
+							value: '3 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Interested party comments due',
+							value: '4 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Planning obligation due',
+							value: 'Not provided',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Final comments due',
+							value: '5 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						}
+					]);
+				});
+
+				it('should render the correct rows when case has started and planning obligation date has been set', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, {
+							...appealDataEnforcementNotice,
+							appealId,
+							validAt: '2025-01-01T00:00:00.000Z',
+							startedAt: '2025-01-01T00:00:00.000Z',
+							procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+							hearing: null,
+							appealTimetable: {
+								validAt: '2025-01-01T00:00:00.000Z',
+								startedAt: '2025-01-01T00:00:00.000Z',
+								lpaQuestionnaireDueDate: '2025-01-02T00:00:00.000Z',
+								lpaStatementDueDate: '2025-01-03T00:00:00.000Z',
+								ipCommentsDueDate: '2025-01-04T00:00:00.000Z',
+								finalCommentsDueDate: '2025-01-05T00:00:00.000Z',
+								planningObligationDueDate: '2025-01-07T00:00:00.000Z'
+							}
+						});
+					nock('http://test/')
+						.get(
+							`/appeals/${appealId}/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`
+						)
+						.reply(200, { planningObligation: { hasObligation: true } });
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+					expect(response.statusCode).toBe(200);
+
+					itShouldHaveTheseTimetableRows(response, [
+						{ key: 'Valid date', value: '1 January 2025' },
+						{ key: 'Start date', value: '1 January 2025' },
+						{ key: 'LPA questionnaire due', value: '2 January 2025' },
+						{
+							key: 'Statements due',
+							value: '3 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Interested party comments due',
+							value: '4 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Planning obligation due',
+							value: '7 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Final comments due',
+							value: '5 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						}
+					]);
 				});
 			});
 

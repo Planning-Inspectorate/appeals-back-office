@@ -1175,12 +1175,13 @@ describe('appeal timetables routes', () => {
 					'enforcementNoticeAppeal',
 					{ ...enforcementNoticeAppeal, procedureType: { key: 'hearing' } },
 					{
-						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
-						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
-						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
-						lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
-						s106ObligationDueDate: '2024-07-24T22:59:00.000Z',
-						statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
+						finalCommentsDueDate: '2024-08-07T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-17T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-17T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-17T22:59:00.000Z',
+						statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z',
+						planningObligationDueDate: '2024-07-17T22:59:00.000Z'
 					},
 					{},
 					'appeal-valid-start-case-s78-appellant',
