@@ -135,7 +135,7 @@ exports[`interested-party-comments GET /add-document GET /add-document/redaction
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="redactionStatus-3" name="redactionStatus"
-                                        type="radio" value="no_redaction_required" checked>
+                                        type="radio" value="no_redaction_required">
                                         <label class="govuk-label govuk-radios__label" for="redactionStatus-3">No redaction required</label>
                                     </div>
                                 </div>
