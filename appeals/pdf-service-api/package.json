@@ -12,7 +12,7 @@
 		"lint": "eslint ./",
 		"start": "node ./src/main.js",
 		"start:dev": "nodemon -e .js,.json,.yml,.yaml ./ | pino-pretty -tlc",
-		"test": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --logHeapUsage --ci",
+		"test": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --logHeapUsage --ci --maxWorkers=50%",
     "test:update": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest -u --logHeapUsage --ci",
 		"test:watch": "jest --watchAll --runInBand"
 	},
