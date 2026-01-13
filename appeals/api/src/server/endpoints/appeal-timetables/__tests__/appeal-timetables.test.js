@@ -180,17 +180,19 @@ describe('appeal timetables routes', () => {
 					'full planning',
 					fullPlanningAppealWithTimetable,
 					fullPlanningAppealRequestBody,
-					fullPlanningAppealResponseBody
+					fullPlanningAppealResponseBody,
+					'appeal-timetable-updated'
 				],
 				[
 					'advert',
 					advertisementAppealWithTimetable,
 					householdAppealRequestBody,
-					householdAppealResponseBody
+					householdAppealResponseBody,
+					'advertisement-appeal-timetable-updated'
 				]
 			])(
 				'updates a %s appeal timetable and sends notify',
-				async (_, appealWithTimetable, requestBody, responseBody) => {
+				async (_, appealWithTimetable, requestBody, responseBody, expectedTemplateName) => {
 					// @ts-ignore
 					databaseConnector.appeal.findUnique.mockResolvedValue(appealWithTimetable);
 					// @ts-ignore
@@ -230,7 +232,7 @@ describe('appeal timetables routes', () => {
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appealWithTimetable.agent.email,
-						templateName: 'appeal-timetable-updated'
+						templateName: expectedTemplateName
 					});
 
 					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
@@ -251,7 +253,7 @@ describe('appeal timetables routes', () => {
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appealWithTimetable.lpa.email,
-						templateName: 'appeal-timetable-updated'
+						templateName: expectedTemplateName
 					});
 
 					expect(response.status).toEqual(200);

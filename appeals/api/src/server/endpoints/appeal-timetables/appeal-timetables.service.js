@@ -628,12 +628,7 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, az
 
 	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 	const lpaEmail = appeal.lpa?.email || '';
-	const templateName =
-		appeal.appealType?.key === APPEAL_CASE_TYPE.D ||
-		appeal.appealType?.key === APPEAL_CASE_TYPE.ZP ||
-		appeal.appealType?.key === APPEAL_CASE_TYPE.ZA
-			? 'has-appeal-timetable-updated'
-			: 'appeal-timetable-updated';
+	const templateName = getTimetableUpdatedTemplateName(appeal.appealType?.key);
 
 	if (recipientEmail) {
 		await notifySend({
@@ -673,6 +668,25 @@ const shouldSendNotify = (appealTypeShorthand, procedureType) => {
 			procedureType === APPEAL_CASE_PROCEDURE.WRITTEN) ||
 		procedureType === undefined
 	);
+};
+
+/**
+ * @param {import('@planning-inspectorate/data-model').APPEAL_CASE_TYPE | string | undefined} appealTypeKey
+ * @returns {string}
+ */
+const getTimetableUpdatedTemplateName = (appealTypeKey) => {
+	switch (appealTypeKey) {
+		case APPEAL_CASE_TYPE.H:
+			return 'advertisement-appeal-timetable-updated';
+
+		case APPEAL_CASE_TYPE.D:
+		case APPEAL_CASE_TYPE.ZP:
+		case APPEAL_CASE_TYPE.ZA:
+			return 'has-appeal-timetable-updated';
+
+		default:
+			return 'appeal-timetable-updated';
+	}
 };
 
 export {

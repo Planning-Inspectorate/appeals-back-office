@@ -53,7 +53,7 @@ Due by {{planning_obligation_deadline}}.
 
 [Submit your questionnaire and other documents]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}), including your appeal notification letter and a list of those notified by {{questionnaire_due_date}}.
 
-We will email you when you can view information from other parties in the appeals service.
+The appellant will send us their appeal statement by {{lpa_statement_deadline}}.
 
 [Find out your responsibilities in the appeal process](http://www.gov.uk/government/publications/planning-appeals-procedural-guide/procedural-guide-planning-appeals-england).
 

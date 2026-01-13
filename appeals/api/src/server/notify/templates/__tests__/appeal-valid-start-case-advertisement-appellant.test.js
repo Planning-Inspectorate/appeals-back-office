@@ -59,7 +59,7 @@ describe('appeal-valid-start-case-advertisement-appellant.md', () => {
 			'',
 			'# What happens next',
 			'',
-			'Email a copy of your appeal statement to caseofficers@planninginspectorate.gov.uk by 31 January 2025. You will be able to view this in your appeal details.',
+			'Email a copy of your appeal statement to caseofficers@planninginspectorate.gov.uk by 01 March 2025. You will be able to view this in your appeal details.',
 			'',
 			'We will email you when you can view information from other parties in the appeals service.',
 			'',
