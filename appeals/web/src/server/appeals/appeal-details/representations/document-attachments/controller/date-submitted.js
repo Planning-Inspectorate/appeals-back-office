@@ -1,6 +1,6 @@
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
-/** @typedef {{ 'day': string, 'month': string, 'year': string }} RequestDate */
+/** @typedef {{ 'day': string, 'month': string, 'year': string, 'date-day': string, 'date-month': string, 'date-year': string }} RequestDate */
 /** @typedef {RequestDate} ReqBody */
 
 import { applyEdits } from '#lib/edit-utilities.js';
@@ -28,11 +28,21 @@ export const renderDateSubmittedFactory =
 			// @ts-ignore
 			request.locals?.pageContent?.dateSubmitted?.pageHeadingTextOverride;
 
-		const value = getValue(request);
-
-		const pageContent = dateSubmitted(request.currentAppeal, request.errors, value, backLinkUrl, {
-			pageHeadingTextOverride
-		});
+		const dateValue = getValue(request);
+		const formattedDate = {
+			day: dateValue['date-day'] || dateValue.day || '',
+			month: dateValue['date-month'] || dateValue.month || '',
+			year: dateValue['date-year'] || dateValue.year || ''
+		};
+		const pageContent = dateSubmitted(
+			request.currentAppeal,
+			request.errors,
+			formattedDate,
+			backLinkUrl,
+			{
+				pageHeadingTextOverride
+			}
+		);
 
 		return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 			errors: request.errors,

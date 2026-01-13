@@ -1,4 +1,5 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { applyEdits } from '#lib/edit-utilities.js';
 import { radiosInput } from '#lib/mappers/index.js';
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
 import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
@@ -79,6 +80,13 @@ export const postRedactionStatusFactory =
 	async (request, response, next) => {
 		try {
 			const baseUrl = request.baseUrl;
+			const { editEntrypoint } = request.query;
+
+			if (editEntrypoint) {
+				applyEdits(request, 'addDocument');
+				return response.redirect(`${baseUrl}/check-your-answers`);
+			}
+
 			const redirectUrl = `${baseUrl}/date-submitted`;
 
 			response.redirect(redirectUrl);
@@ -89,9 +97,7 @@ export const postRedactionStatusFactory =
 
 export const renderRedactionStatus = renderRedactionStatusFactory({
 	getValue: (request) =>
-		request.session.addDocument?.redactionStatus ||
-		request.body.redactionStatus ||
-		APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
+		request.session.addDocument?.redactionStatus || request.body.redactionStatus
 });
 
 export const postRedactionStatus = postRedactionStatusFactory({
