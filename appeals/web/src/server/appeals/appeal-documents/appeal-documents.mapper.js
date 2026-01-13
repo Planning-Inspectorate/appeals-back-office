@@ -312,10 +312,6 @@ function mapAddDocumentDetailsPageHeading(folderPath, documentId, appealType = '
 		return `Updated ${folderPathToFolderNameText(folderPath, false)} document`;
 	}
 
-	if (folderPath === 'appellant-case/priorCorrespondenceWithPINS') {
-		return 'Communication with the Planning Inspectorate documents';
-	}
-
 	return `${folderPathToFolderNameText(folderPath)} documents`;
 }
 
@@ -335,10 +331,6 @@ function mapManageFolderPageHeading(folderPath, appealType = '') {
 		return isAdverts
 			? 'Agreement to change the description of the advertisement'
 			: 'Agreement to change the description of development';
-	}
-
-	if (folderPath === 'appellant-case/priorCorrespondenceWithPINS') {
-		return 'Communication with the Planning Inspectorate documents';
 	}
 
 	return `${folderPathToFolderNameText(folderPath)} documents`;
@@ -1856,6 +1848,10 @@ export const folderPathToFolderNameText = (folderPath, capitalizeFirstLetter = t
 	}
 
 	nameText = nameText.trim();
+
+	if (folderPath === 'appellant-case/priorCorrespondenceWithPINS') {
+		nameText = 'communication with the Planning Inspectorate';
+	}
 
 	return capitalizeFirstLetter ? capitalize(nameText) : nameText;
 };
