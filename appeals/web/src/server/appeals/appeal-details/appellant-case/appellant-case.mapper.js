@@ -142,6 +142,17 @@ export async function appellantCasePage(
 		appealDetails.documentationSummary?.appellantCase?.status?.toLowerCase() !== 'valid' &&
 		userHasPermission(permissionNames.setStageOutcome, session)
 	) {
+		if (session.webAppellantCaseReviewOutcome?.validationOutcome) {
+			reviewOutcomeRadiosInputInstruction.properties.items =
+				// @ts-ignore
+				reviewOutcomeRadiosInputInstruction.properties.items.map((item) => {
+					return {
+						...item,
+						checked: item.value === session.webAppellantCaseReviewOutcome?.validationOutcome
+					};
+				});
+		}
+
 		reviewOutcomeComponents.push({
 			type: 'radios',
 			parameters: {
@@ -380,7 +391,7 @@ export function checkAndConfirmPage(
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealId}/appellant-case/invalid`,
+								href: `/appeals-service/appeal-details/${appealId}/appellant-case/invalid/enforcement-notice`,
 								visuallyHiddenText: 'Is the enforcement notice invalid?'
 							}
 						]

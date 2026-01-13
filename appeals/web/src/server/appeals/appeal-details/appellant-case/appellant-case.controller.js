@@ -176,6 +176,12 @@ export const postAppellantCase = async (request, response) => {
 		) {
 			if (reviewOutcome === 'valid') {
 				if (currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+					/** @type {import('../appellant-case/appellant-case.types.js').AppellantCaseSessionValidationOutcome} */
+					request.session.webAppellantCaseReviewOutcome = {
+						...request.session.webAppellantCaseReviewOutcome,
+						validationOutcome: 'valid'
+					};
+
 					return response.redirect(
 						`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/valid/enforcement/ground-a`
 					);
@@ -189,6 +195,12 @@ export const postAppellantCase = async (request, response) => {
 					currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
 					reviewOutcome === 'invalid'
 				) {
+					/** @type {import('../appellant-case/appellant-case.types.js').AppellantCaseSessionValidationOutcome} */
+					request.session.webAppellantCaseReviewOutcome = {
+						...request.session.webAppellantCaseReviewOutcome,
+						validationOutcome: 'invalid'
+					};
+
 					return response.redirect(
 						`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/invalid/enforcement-notice`
 					);

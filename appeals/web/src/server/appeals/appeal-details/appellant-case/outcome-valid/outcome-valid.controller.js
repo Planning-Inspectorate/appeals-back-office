@@ -430,6 +430,8 @@ export const postEnforcementCheckDetails = async (request, response) => {
 			appealId
 		});
 
+		delete session.enforcementDecision;
+
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(
