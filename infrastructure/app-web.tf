@@ -106,6 +106,8 @@ module "app_web" {
     FEATURE_FLAG_EXPEDITED_APPEALS        = var.apps_config.featureFlags.featureFlagExpeditedAppeals
     FEATURE_FLAG_MANUALLY_ADD_REP         = var.apps_config.featureFlags.featureFlagManuallyAddReps
     FEATURE_FLAG_APPELLANT_STATEMENT      = var.apps_config.featureFlags.featureFlagAppellantStatement
+    FEATURE_FLAG_LDC                      = var.apps_config.featureFlags.featureFlagLDC
+
 
     #change LPA
     USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA = var.apps_config.use_system_test_bc_for_change_lpa
