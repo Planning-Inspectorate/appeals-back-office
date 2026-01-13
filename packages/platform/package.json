@@ -12,7 +12,7 @@
     "lint:js": "npx eslint .",
     "lint:js:fix": "npx eslint . --fix",
     "test": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --logHeapUsage --ci --maxWorkers=50%",
-    "test:cov": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --logHeapUsage --ci --coverage",
+    "test:cov": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --logHeapUsage --ci --maxWorkers=50% --coverage",
     "tscheck": "npx tsc -p jsconfig.json --maxNodeModuleJsDepth 0"
   },
   "dependencies": {
