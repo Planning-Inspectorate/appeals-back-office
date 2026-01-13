@@ -56,7 +56,7 @@ apps_config = {
     featureFlagExpeditedAppeals       = false
     featureFlagManuallyAddReps        = false
     featureFlagAppellantStatement     = false
-
+    featureFlagLDC                    = false
   }
 
   use_system_test_bc_for_change_lpa = false
