@@ -5,6 +5,8 @@
  * @returns new version of document with unique values for id and filenames 
  */
 export const generateUniqueDocument = (baseDocument) => {
+	if (!baseDocument) return {}; // some requests do not need a document, e.g. setup inquiry and hearing 
+
 	// generate random id 
 	const id = crypto.randomUUID();
 
