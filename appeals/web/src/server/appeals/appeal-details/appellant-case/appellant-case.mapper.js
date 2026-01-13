@@ -351,7 +351,8 @@ export function checkAndConfirmPage(
 		throw new Error(`validationOutcome "${validationOutcome}" requires invalidOrIncompleteReasons`);
 	}
 
-	const isEnforcementAppeal = enforcementNoticeInvalid && otherLiveAppeals;
+	const isEnforcementAppeal =
+		enforcementNoticeInvalid !== undefined && otherLiveAppeals !== undefined;
 	const validationOutcomeAsString = String(validationOutcome);
 
 	/** @type {PageComponent} */
@@ -455,7 +456,9 @@ export function checkAndConfirmPage(
 	const insetTextComponent = {
 		type: 'inset-text',
 		parameters: {
-			text: 'Confirming this review will inform the relevant parties of the outcome.'
+			text: isEnforcementAppeal
+				? 'We will mark the appeal as invalid and send an email to the relevant parties.'
+				: 'Confirming this review will inform the relevant parties of the outcome.'
 		}
 	};
 
@@ -473,7 +476,10 @@ export function checkAndConfirmPage(
 				: `/appeals-service/appeal-details/${appealId}/appellant-case/${validationOutcome}`,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		heading: 'Check your answers before confirming your review',
-		pageComponents
+		pageComponents,
+		submitButtonProperties: {
+			text: isEnforcementAppeal ? 'Mark appeal as invalid' : 'Confirm'
+		}
 	};
 
 	if (
@@ -651,13 +657,17 @@ export function mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters(
  * @param {string|string[]} [invalidOrIncompleteReasons]
  * @param {Object<string, string[]>} [invalidOrIncompleteReasonsText]
  * @param {DayMonthYearHourMinute} [updatedDueDate]
+ * @param {string} [enforcementNoticeInvalid]
+ * @param {string} [otherLiveAppeals]
  * @returns {import('./appellant-case.types.js').AppellantCaseValidationOutcomeRequest}
  */
 export function mapWebReviewOutcomeToApiReviewOutcome(
 	validationOutcome,
 	invalidOrIncompleteReasons,
 	invalidOrIncompleteReasonsText,
-	updatedDueDate
+	updatedDueDate,
+	enforcementNoticeInvalid,
+	otherLiveAppeals
 ) {
 	let parsedReasons;
 
@@ -673,8 +683,8 @@ export function mapWebReviewOutcomeToApiReviewOutcome(
 
 	return {
 		validationOutcome: validationOutcome,
-		...(validationOutcome === 'invalid' &&
-			invalidOrIncompleteReasons && {
+		...(validationOutcome === 'invalid' && {
+			...(invalidOrIncompleteReasons && {
 				invalidReasons: parsedReasons?.map((reason) => ({
 					id: reason,
 					...(invalidOrIncompleteReasonsText &&
@@ -683,6 +693,9 @@ export function mapWebReviewOutcomeToApiReviewOutcome(
 						})
 				}))
 			}),
+			...(enforcementNoticeInvalid && { enforcementNoticeInvalid }),
+			...(otherLiveAppeals && { otherLiveAppeals })
+		}),
 		...(validationOutcome === 'incomplete' &&
 			invalidOrIncompleteReasons && {
 				incompleteReasons: parsedReasons?.map((reason) => ({

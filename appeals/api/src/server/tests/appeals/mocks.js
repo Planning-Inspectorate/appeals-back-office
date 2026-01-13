@@ -711,6 +711,15 @@ export const enforcementNoticeAppeal = {
 	}
 };
 
+export const enforcementNoticeAppealAppellantCaseInvalid = {
+	...enforcementNoticeAppeal,
+	appellantCase: {
+		...enforcementNoticeAppeal.appellantCase,
+		...invalidAppellantCaseOutcome
+	},
+	id: 4
+};
+
 export const linkedAppeals = [
 	{
 		parentId: householdAppeal.id,

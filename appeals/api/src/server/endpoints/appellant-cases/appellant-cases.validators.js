@@ -92,6 +92,8 @@ const patchAppellantCaseValidator = composeMiddleware(
 	validateStringParameter('writtenOrVerbalPermission'),
 	validateBooleanParameter('groundABarred'),
 	validateStringParameter('otherInformation', LENGTH_1000),
+	validateStringParameter('enforcementNoticeInvalid'),
+	validateStringParameter('otherLiveAppeals'),
 	validationErrorHandler
 );
 

@@ -2,6 +2,7 @@ import { databaseConnector } from '#utils/database-connector.js';
 import logger from '#utils/logger.js';
 import appealRepository from './appeal.repository.js';
 import commonRepository from './common.repository.js';
+import enforcementNoticeAppealOutcomeRepository from './enforcement-notice-appeal-outcome.repository.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcome} UpdateAppellantCaseValidationOutcome */
 /** @typedef {import('#db-client/models.ts').AppellantCaseUpdateInput} AppellantCaseUpdateInput */
@@ -118,7 +119,9 @@ const updateAppellantCaseValidationOutcome = ({
 	validAt,
 	appealDueDate,
 	groundABarred,
-	otherInformation
+	otherInformation,
+	enforcementNoticeInvalid,
+	otherLiveAppeals
 }) => {
 	const transaction = [
 		updateAppellantCaseTable(appellantCaseId, {
@@ -158,17 +161,40 @@ const updateAppellantCaseValidationOutcome = ({
 				data: invalidReasons
 			})
 		);
+
+		if (enforcementNoticeInvalid) {
+			transaction.push(
+				enforcementNoticeAppealOutcomeRepository.createEnforcementNoticeAppealOutcome({
+					appeal: {
+						connect: { id: appealId }
+					},
+					otherInformation,
+					enforcementNoticeInvalid,
+					otherLiveAppeals
+				})
+			);
+		}
 	}
 
 	if (appealId && validAt) {
 		transaction.push(
 			// @ts-ignore
 			appealRepository.updateAppealById(appealId, {
-				caseValidDate: new Date(validAt).toISOString(),
-				groundABarred,
-				otherInformation
+				caseValidDate: new Date(validAt).toISOString()
 			})
 		);
+
+		if (groundABarred) {
+			transaction.push(
+				enforcementNoticeAppealOutcomeRepository.createEnforcementNoticeAppealOutcome({
+					appeal: {
+						connect: { id: appealId }
+					},
+					groundABarred,
+					otherInformation
+				})
+			);
+		}
 	}
 
 	// @ts-ignore

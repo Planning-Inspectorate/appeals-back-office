@@ -453,9 +453,7 @@ const updateAppealById = (
 		agent,
 		applicationReference,
 		procedureTypeId,
-		hearingStartTime,
-		groundABarred,
-		otherInformation
+		hearingStartTime
 	}
 ) =>
 	databaseConnector.appeal.update({
@@ -479,9 +477,7 @@ const updateAppealById = (
 						where: { appealId: id }
 					}
 				}
-			}),
-			...(groundABarred && { groundABarred }),
-			...(otherInformation && { otherInformation })
+			})
 		},
 		include: {
 			appealType: true,

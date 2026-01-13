@@ -13,68 +13,67 @@ datasource db {
 /// Appeal model
 /// Contains information of an appeal managed in the Back-Office.
 model Appeal {
-  id                    Int                  @id @default(autoincrement())
-  reference             String               @unique
-  submissionId          String?
-  appealTimetable       AppealTimetable?
-  appealStatus          AppealStatus[]
-  appealType            AppealType?          @relation(fields: [appealTypeId], references: [id])
-  appealTypeId          Int?
-  procedureType         ProcedureType?       @relation(fields: [procedureTypeId], references: [id])
-  procedureTypeId       Int?
-  address               Address?             @relation(fields: [addressId], references: [id])
-  addressId             Int?
-  neighbouringSites     NeighbouringSite[]
-  lpa                   LPA                  @relation(fields: [lpaId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  lpaId                 Int
-  applicationReference  String?
-  caseCreatedDate       DateTime             @default(now())
-  caseUpdatedDate       DateTime             @default(now())
-  caseValidDate         DateTime?
-  caseExtensionDate     DateTime?
-  caseStartedDate       DateTime?
-  casePublishedDate     DateTime?
-  caseCompletedDate     DateTime?
-  withdrawalRequestDate DateTime?
-  caseResubmittedTypeId Int?
-  caseTransferredId     String?
-  eiaScreeningRequired  Boolean?
-  groundABarred         Boolean?
-  otherInformation      String?
-  specialisms           AppealSpecialism[]
-  allocation            AppealAllocation?
-  allocationId          Int?
-  appellant             ServiceUser?         @relation("appellant", fields: [appellantId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  appellantId           Int?
-  agent                 ServiceUser?         @relation("agent", fields: [agentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  agentId               Int?
-  caseOfficer           User?                @relation("caseOfficer", fields: [caseOfficerUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  caseOfficerUserId     Int?
-  inspector             User?                @relation("inspector", fields: [inspectorUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  inspectorUserId       Int?
-  padsInspector         PADSUser?            @relation("padsInspector", fields: [padsInspectorUserId], references: [sapId], onDelete: NoAction, onUpdate: NoAction)
-  padsInspectorUserId   String?
-  appellantCase         AppellantCase?
-  lpaQuestionnaire      LPAQuestionnaire?
-  siteVisit             SiteVisit?
-  inspectorDecision     InspectorDecision?
-  folders               Folder[]
-  documents             Document[]
-  auditTrail            AuditTrail[]
-  parentAppeals         AppealRelationship[] @relation("childAppeal")
-  childAppeals          AppealRelationship[] @relation("parentAppeal")
-  representations       Representation[]
-  caseNotes             CaseNote[]
-  hearing               Hearing?
-  appealNotifications   AppealNotification[]
-  hearingEstimate       HearingEstimate?
-  inquiry               Inquiry?
-  inquiryEstimate       InquiryEstimate?
-  assignedTeam          Team?                @relation(fields: [assignedTeamId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  assignedTeamId        Int?
-  PersonalList          PersonalList?        @relation("appeal")
-  appealRule6Parties    AppealRule6Party[]   @relation("appealRule6Parties")
-  appealGrounds         AppealGround[]       @relation("appealGrounds")
+  id                             Int                             @id @default(autoincrement())
+  reference                      String                          @unique
+  submissionId                   String?
+  appealTimetable                AppealTimetable?
+  appealStatus                   AppealStatus[]
+  appealType                     AppealType?                     @relation(fields: [appealTypeId], references: [id])
+  appealTypeId                   Int?
+  procedureType                  ProcedureType?                  @relation(fields: [procedureTypeId], references: [id])
+  procedureTypeId                Int?
+  address                        Address?                        @relation(fields: [addressId], references: [id])
+  addressId                      Int?
+  neighbouringSites              NeighbouringSite[]
+  lpa                            LPA                             @relation(fields: [lpaId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  lpaId                          Int
+  applicationReference           String?
+  caseCreatedDate                DateTime                        @default(now())
+  caseUpdatedDate                DateTime                        @default(now())
+  caseValidDate                  DateTime?
+  caseExtensionDate              DateTime?
+  caseStartedDate                DateTime?
+  casePublishedDate              DateTime?
+  caseCompletedDate              DateTime?
+  withdrawalRequestDate          DateTime?
+  caseResubmittedTypeId          Int?
+  caseTransferredId              String?
+  eiaScreeningRequired           Boolean?
+  specialisms                    AppealSpecialism[]
+  allocation                     AppealAllocation?
+  allocationId                   Int?
+  appellant                      ServiceUser?                    @relation("appellant", fields: [appellantId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  appellantId                    Int?
+  agent                          ServiceUser?                    @relation("agent", fields: [agentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  agentId                        Int?
+  caseOfficer                    User?                           @relation("caseOfficer", fields: [caseOfficerUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  caseOfficerUserId              Int?
+  inspector                      User?                           @relation("inspector", fields: [inspectorUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  inspectorUserId                Int?
+  padsInspector                  PADSUser?                       @relation("padsInspector", fields: [padsInspectorUserId], references: [sapId], onDelete: NoAction, onUpdate: NoAction)
+  padsInspectorUserId            String?
+  appellantCase                  AppellantCase?
+  lpaQuestionnaire               LPAQuestionnaire?
+  siteVisit                      SiteVisit?
+  inspectorDecision              InspectorDecision?
+  folders                        Folder[]
+  documents                      Document[]
+  auditTrail                     AuditTrail[]
+  parentAppeals                  AppealRelationship[]            @relation("childAppeal")
+  childAppeals                   AppealRelationship[]            @relation("parentAppeal")
+  representations                Representation[]
+  caseNotes                      CaseNote[]
+  hearing                        Hearing?
+  appealNotifications            AppealNotification[]
+  hearingEstimate                HearingEstimate?
+  inquiry                        Inquiry?
+  inquiryEstimate                InquiryEstimate?
+  assignedTeam                   Team?                           @relation(fields: [assignedTeamId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  assignedTeamId                 Int?
+  PersonalList                   PersonalList?                   @relation("appeal")
+  appealRule6Parties             AppealRule6Party[]              @relation("appealRule6Parties")
+  appealGrounds                  AppealGround[]                  @relation("appealGrounds")
+  enforcementNoticeAppealOutcome EnforcementNoticeAppealOutcome?
 
   @@index([addressId])
   @@index([appealTypeId])
@@ -1062,4 +1061,16 @@ model Ground {
   groundRef         String         @unique
   groundDescription String
   appealGround      AppealGround[]
+}
+
+/// EnforcementNoticeAppealOutcome model
+model EnforcementNoticeAppealOutcome {
+  id                       Int      @id @default(autoincrement())
+  appealId                 Int      @unique
+  groundABarred            Boolean?
+  otherInformation         String?
+  enforcementNoticeInvalid String?
+  otherLiveAppeals         String?
+
+  appeal Appeal @relation(fields: [appealId], references: [id])
 }
