@@ -192,7 +192,9 @@ const calculateTimetable = async (appealType, startedAt, procedureType = 'writte
 	if (startedAt) {
 		const startDate = setTimeInTimeZone(startedAt, DAYTIME_HOUR, DAYTIME_MINUTE);
 
-		const fullAppealTypeKey = appealType === APPEAL_CASE_TYPE.H ? appealType : APPEAL_CASE_TYPE.W;
+		const fullAppealTypeKey = [APPEAL_CASE_TYPE.H, APPEAL_CASE_TYPE.C].includes(appealType)
+			? appealType
+			: APPEAL_CASE_TYPE.W;
 		const expeditedAppealTypeKey = APPEAL_CASE_TYPE.D;
 		const appealTimetableConfig = !isExpeditedAppealType(appealType)
 			? CONFIG_APPEAL_TIMETABLE[fullAppealTypeKey][procedureType]

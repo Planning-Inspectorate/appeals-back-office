@@ -465,6 +465,13 @@ const advertTimetable = {
 	}
 };
 
+const enforcementNoticeTimetable = {
+	...advertTimetable,
+	planningObligationDueDate: {
+		daysFromStartDate: 30
+	}
+};
+
 /** @type {Record<string, Record<string, any>>} */
 export const CONFIG_APPEAL_TIMETABLE = {
 	[APPEAL_CASE_TYPE.W]: {
@@ -502,6 +509,21 @@ export const CONFIG_APPEAL_TIMETABLE = {
 	[APPEAL_CASE_TYPE.D]: {
 		lpaQuestionnaireDueDate: {
 			daysFromStartDate: 5
+		}
+	},
+	[APPEAL_CASE_TYPE.C]: {
+		[APPEAL_CASE_PROCEDURE.WRITTEN]: { ...enforcementNoticeTimetable },
+		[APPEAL_CASE_PROCEDURE.HEARING]: {
+			...enforcementNoticeTimetable,
+			statementOfCommonGroundDueDate: {
+				daysFromStartDate: 25
+			}
+		},
+		[APPEAL_CASE_PROCEDURE.INQUIRY]: {
+			...enforcementNoticeTimetable,
+			statementOfCommonGroundDueDate: {
+				daysFromStartDate: 25
+			}
 		}
 	}
 };
