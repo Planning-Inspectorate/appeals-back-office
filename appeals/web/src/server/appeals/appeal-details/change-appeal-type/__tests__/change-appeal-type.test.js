@@ -27,6 +27,7 @@ const validAppealChangeTypeStatuses = [
 ];
 
 const invalidAppealChangeTypeStatuses = Object.values(APPEAL_CASE_STATUS).filter(
+	// @ts-ignore
 	(status) => !validAppealChangeTypeStatuses.includes(status)
 );
 

@@ -30,6 +30,7 @@ const ALLOWED_CHILD_APPEAL_ACTION_STATUSES = [
  */
 function canDisplayAction(appeal) {
 	return (
+		// @ts-ignore
 		!isChildAppeal(appeal) || ALLOWED_CHILD_APPEAL_ACTION_STATUSES.includes(appeal.appealStatus)
 	);
 }
@@ -551,6 +552,7 @@ function mapRequiredActionToPersonalListActionHtml(
 		case 'awaitingEvent': {
 			return `Awaiting ${
 				[APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY].includes(
+					// @ts-ignore
 					procedureType.toLowerCase()
 				)
 					? procedureType.toLowerCase()

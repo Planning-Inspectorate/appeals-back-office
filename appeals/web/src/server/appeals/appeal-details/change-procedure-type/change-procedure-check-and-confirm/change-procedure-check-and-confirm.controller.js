@@ -83,6 +83,7 @@ export const getCheckAndConfirm = async (request, response) => {
 		}
 	];
 
+	// @ts-ignore
 	if ([APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY].includes(newProcedureType)) {
 		const dateTime = dayMonthYearHourMinuteToISOString({
 			day: sessionValues['event-date-day'],

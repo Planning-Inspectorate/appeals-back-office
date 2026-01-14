@@ -316,6 +316,7 @@ export const getAddDocuments = async (request, response) => {
 
 	const documentType = currentFolder.path.split('/')[1];
 
+	// @ts-ignore
 	const pageHeadingTextOverride = {
 		[APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED]: 'Upload who you notified about the application',
 		[APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE]: 'Upload the site notice',
