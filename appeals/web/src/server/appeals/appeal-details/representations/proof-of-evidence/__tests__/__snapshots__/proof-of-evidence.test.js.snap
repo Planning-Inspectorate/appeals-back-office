@@ -211,7 +211,7 @@ exports[`proof-of-evidence GET /add-document/redacted-status for appellant shoul
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="redactionStatus-3" name="redactionStatus"
-                                        type="radio" value="no_redaction_required" checked>
+                                        type="radio" value="no_redaction_required">
                                         <label class="govuk-label govuk-radios__label" for="redactionStatus-3">No redaction required</label>
                                     </div>
                                 </div>
@@ -256,7 +256,7 @@ exports[`proof-of-evidence GET /add-document/redacted-status for lpa should rend
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="redactionStatus-3" name="redactionStatus"
-                                        type="radio" value="no_redaction_required" checked>
+                                        type="radio" value="no_redaction_required">
                                         <label class="govuk-label govuk-radios__label" for="redactionStatus-3">No redaction required</label>
                                     </div>
                                 </div>

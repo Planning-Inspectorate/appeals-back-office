@@ -1,5 +1,9 @@
 // @ts-nocheck
-import { appealsApiRequests, documentsApiRequest } from '../fixtures/appealsApiRequests';
+import {
+	appealsApiRequests,
+	documentsApiRequest,
+	generateUniqueDocument
+} from '../fixtures/appealsApiRequests';
 import { apiPaths } from './apiPaths.js';
 
 const baseUrl = Cypress.config('apiBaseUrl');
@@ -7,9 +11,13 @@ const baseUrl = Cypress.config('apiBaseUrl');
 export const createApiSubmission = (submission, type) => {
 	const env = baseUrl.indexOf('test') > -1 ? 'test' : 'dev';
 
+	// generate unqique document from base object
+	const baseDocument = documentsApiRequest[env][type];
+	const updatedDocument = generateUniqueDocument(baseDocument);
+
 	return {
 		...submission,
-		...documentsApiRequest[env][type]
+		...updatedDocument
 	};
 };
 

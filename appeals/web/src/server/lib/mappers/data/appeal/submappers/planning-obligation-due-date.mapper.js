@@ -1,6 +1,7 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
@@ -14,9 +15,10 @@ export const mapPlanningObligationDueDate = ({
 
 	if (
 		!appealDetails.startedAt ||
-		![APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY].includes(
-			appealDetails.procedureType?.toLowerCase() ?? ''
-		) ||
+		(appealDetails.appealType !== APPEAL_TYPE.ENFORCEMENT_NOTICE &&
+			![APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY].includes(
+				appealDetails.procedureType?.toLowerCase() ?? ''
+			)) ||
 		!appellantCase?.planningObligation?.hasObligation
 	) {
 		return { id, display: {} };
