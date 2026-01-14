@@ -1,5 +1,5 @@
 import { documentSummaryListItem } from '#lib/mappers/components/index.js';
-import { ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE } from '@pins/appeals/constants/documents.js';
+import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { documentUploadUrlTemplate, mapDocumentManageUrl } from '../common.js';
 
 /** @type {import('../mapper.js').SubMapper} */
@@ -8,8 +8,7 @@ export const mapEnforcementNoticeDocuments = ({ appellantCaseData, userHasUpdate
 		manageUrl: mapDocumentManageUrl(
 			appellantCaseData.appealId,
 			// @ts-ignore
-			appellantCaseData.documents[ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE]
-				?.folderId
+			appellantCaseData.documents[APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE]?.folderId
 		),
 		appealId: appellantCaseData.appealId,
 		editable: userHasUpdateCase,
@@ -18,5 +17,5 @@ export const mapEnforcementNoticeDocuments = ({ appellantCaseData, userHasUpdate
 		text: 'Enforcement notice',
 		folderInfo:
 			// @ts-ignore
-			appellantCaseData.documents[ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE]
+			appellantCaseData.documents[APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE]
 	});

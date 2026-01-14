@@ -1,5 +1,5 @@
 import { documentSummaryListItem } from '#lib/mappers/components/index.js';
-import { APPLICATION_FEE_RECEIPT_DOCTYPE } from '@pins/appeals/constants/documents.js';
+import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { documentUploadUrlTemplate, mapDocumentManageUrl } from '../common.js';
 
 /** @type {import('../mapper.js').SubMapper} */
@@ -8,7 +8,7 @@ export const mapApplicationReceipt = ({ appellantCaseData, userHasUpdateCase }) 
 		manageUrl: mapDocumentManageUrl(
 			appellantCaseData.appealId,
 			// @ts-ignore
-			appellantCaseData.documents[APPLICATION_FEE_RECEIPT_DOCTYPE]?.folderId
+			appellantCaseData.documents[APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT]?.folderId
 		),
 		appealId: appellantCaseData.appealId,
 		editable: userHasUpdateCase,
@@ -16,5 +16,5 @@ export const mapApplicationReceipt = ({ appellantCaseData, userHasUpdateCase }) 
 		id: 'application-receipt',
 		text: 'Application receipt',
 		// @ts-ignore
-		folderInfo: appellantCaseData.documents[APPLICATION_FEE_RECEIPT_DOCTYPE]
+		folderInfo: appellantCaseData.documents[APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT]
 	});

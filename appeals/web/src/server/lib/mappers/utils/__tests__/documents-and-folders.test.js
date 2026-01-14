@@ -1,6 +1,5 @@
 // @ts-nocheck
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
-import { ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE } from '@pins/appeals/constants/documents.js';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 
 describe('documents and folders', () => {
@@ -187,15 +186,15 @@ describe('documents and folders', () => {
 				label: 'Decision letter'
 			},
 			{
-				documentType: ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE,
+				documentType: APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE,
 				label: 'Enforcement notice'
 			},
 			{
-				documentType: ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE_PLAN,
+				documentType: APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE_PLAN,
 				label: 'Enforcement notice plan'
 			},
 			{
-				documentType: ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE.PRIOR_CORRESPONDENCE_WITH_PINS,
+				documentType: APPEAL_DOCUMENT_TYPE.PRIOR_CORRESPONDENCE_WITH_PINS,
 				label: 'Communication with the Planning Inspectorate'
 			}
 		];

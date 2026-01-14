@@ -1,5 +1,5 @@
 import { documentSummaryListItem } from '#lib/mappers/components/index.js';
-import { ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE } from '@pins/appeals/constants/documents.js';
+import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { documentUploadUrlTemplate, mapDocumentManageUrl } from '../common.js';
 
 /** @type {import('../mapper.js').SubMapper} */
@@ -8,9 +8,7 @@ export const mapPriorCorrespondenceWithPINS = ({ appellantCaseData, userHasUpdat
 		manageUrl: mapDocumentManageUrl(
 			appellantCaseData.appealId,
 			// @ts-ignore
-			appellantCaseData.documents[
-				ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE.PRIOR_CORRESPONDENCE_WITH_PINS
-			]?.folderId
+			appellantCaseData.documents[APPEAL_DOCUMENT_TYPE.PRIOR_CORRESPONDENCE_WITH_PINS]?.folderId
 		),
 		appealId: appellantCaseData.appealId,
 		editable: userHasUpdateCase,
@@ -19,7 +17,5 @@ export const mapPriorCorrespondenceWithPINS = ({ appellantCaseData, userHasUpdat
 		text: 'Communication with the Planning Inspectorate',
 		folderInfo:
 			// @ts-ignore
-			appellantCaseData.documents[
-				ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE.PRIOR_CORRESPONDENCE_WITH_PINS
-			]
+			appellantCaseData.documents[APPEAL_DOCUMENT_TYPE.PRIOR_CORRESPONDENCE_WITH_PINS]
 	});
