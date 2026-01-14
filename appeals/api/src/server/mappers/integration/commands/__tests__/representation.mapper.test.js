@@ -1,13 +1,9 @@
 import { APPEAL_REPRESENTATION_TYPE as INTERNAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
-import {
-	APPEAL_CASE_STAGE,
-	APPEAL_DOCUMENT_TYPE,
-	APPEAL_REPRESENTATION_TYPE
-} from '@planning-inspectorate/data-model';
+import { APPEAL_REPRESENTATION_TYPE } from '@planning-inspectorate/data-model';
 import { mapRepresentationIn } from '../representation.mapper.js';
 
 describe('mapRepresentationIn', () => {
-	it('should map Rule 6 statement to RULE_6_STATEMENT document type', () => {
+	it('should map Rule 6 statement to default document type', () => {
 		const submission = {
 			representationType: APPEAL_REPRESENTATION_TYPE.STATEMENT,
 			representation: 'My Rule 6 Statement',
@@ -35,11 +31,11 @@ describe('mapRepresentationIn', () => {
 			INTERNAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT
 		);
 		expect(result.attachments).toHaveLength(1);
-		expect(result.attachments[0].documentType).toBe(APPEAL_DOCUMENT_TYPE.RULE_6_STATEMENT);
-		expect(result.attachments[0].stage).toBe(APPEAL_CASE_STAGE.STATEMENTS);
+		expect(result.attachments[0].documentType).toBe('representationAttachments');
+		expect(result.attachments[0].stage).toBe('representation');
 	});
 
-	it('should map Rule 6 proof to RULE_6_PROOF_OF_EVIDENCE document type', () => {
+	it('should map Rule 6 proof to default document type', () => {
 		const submission = {
 			representationType: APPEAL_REPRESENTATION_TYPE.PROOFS_EVIDENCE,
 			representation: 'My Rule 6 Proof',
@@ -67,8 +63,8 @@ describe('mapRepresentationIn', () => {
 			INTERNAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
 		);
 		expect(result.attachments).toHaveLength(1);
-		expect(result.attachments[0].documentType).toBe(APPEAL_DOCUMENT_TYPE.RULE_6_PROOF_OF_EVIDENCE);
-		expect(result.attachments[0].stage).toBe(APPEAL_CASE_STAGE.STATEMENTS);
+		expect(result.attachments[0].documentType).toBe('representationAttachments');
+		expect(result.attachments[0].stage).toBe('representation');
 	});
 
 	it('should fallback to default for non-Rule 6 representations', () => {
