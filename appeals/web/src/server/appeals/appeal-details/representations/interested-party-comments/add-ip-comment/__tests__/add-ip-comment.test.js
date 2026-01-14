@@ -583,6 +583,45 @@ describe('add-ip-comment', () => {
 		});
 	});
 
+	describe('GET /add/upload', () => {
+		const appealId = 2;
+		let pageHtml;
+
+		beforeEach(async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, { ...appealData, appealId });
+
+			const documentFolderInfo = [
+				{
+					caseId: '2',
+					documents: [],
+					folderId: 55539,
+					path: 'representation/representationAttachments'
+				}
+			];
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}/document-folders?path=representation/representationAttachments`)
+				.reply(200, documentFolderInfo);
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/upload`
+			);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
+		});
+
+		it('should match the snapshot', () => {
+			expect(pageHtml.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render the upload page with correct document title', () => {
+			expect(pageHtml.innerHTML).toContain(
+				'data-document-title="interested party comment document"'
+			);
+		});
+	});
+
 	describe('GET /redaction-status', () => {
 		const appealId = 2;
 

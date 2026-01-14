@@ -105,6 +105,9 @@ describe('proof-of-evidence', () => {
 				expect(unprettifiedElement.innerHTML).toContain(
 					`data-next-page-url="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}/add-document/redaction-status"`
 				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'data-document-title="proof of evidence and witnesses document"'
+				);
 			});
 		});
 

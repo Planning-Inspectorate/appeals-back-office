@@ -6,6 +6,7 @@ import addDocumentRouter from '#appeals/appeal-details/representations/document-
 import manageDocumentsRouter from '#appeals/appeal-details/representations/document-attachments/manage-documents.router.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
+import { setDocumentTitle } from '../../../../../lib/middleware/set-document-title.js';
 import rejectRouter from './reject/reject.router.js';
 import * as controller from './view-and-review.controller.js';
 import {
@@ -21,7 +22,11 @@ router.get('/add-document/review', redirectIfCommentIsUnreviewed);
 
 router.use('/reject', rejectRouter);
 
-router.use('/add-document', addDocumentRouter);
+router.use(
+	'/add-document',
+	setDocumentTitle('interested party comment document'),
+	addDocumentRouter
+);
 
 router
 	.route('/view')

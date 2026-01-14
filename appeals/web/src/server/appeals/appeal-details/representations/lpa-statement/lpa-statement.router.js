@@ -1,6 +1,7 @@
 import { clearUncommittedFilesFromSession } from '#appeals/appeal-documents/appeal-documents.middleware.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 import { Router } from 'express';
+import { setDocumentTitle } from '../../../../lib/middleware/set-document-title.js';
 import { validateStatus } from '../common/validators.js';
 import addDocumentRouter from '../document-attachments/add-document.router.js';
 import { getRepresentationAttachmentsFolder } from '../document-attachments/attachments-middleware.js';
@@ -31,7 +32,12 @@ router.use('/valid', validRouter);
 
 router.use('/redact', redactRouter);
 
-router.use('/add-document', getRepresentationAttachmentsFolder, addDocumentRouter);
+router.use(
+	'/add-document',
+	getRepresentationAttachmentsFolder,
+	setDocumentTitle('LPA statement supporting document'),
+	addDocumentRouter
+);
 
 router.use('/manage-documents', getRepresentationAttachmentsFolder, manageDocumentsRouter);
 

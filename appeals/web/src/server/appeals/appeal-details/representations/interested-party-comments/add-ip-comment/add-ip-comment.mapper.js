@@ -187,6 +187,7 @@ export const uploadPage = (appealDetails, errors, backButtonUrl, folderId, fileU
 	documentType: DOCUMENT_TYPE,
 	allowedTypes: [],
 	nextPageUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/redaction-status`,
+	documentTitle: 'interested party comment document',
 	errors
 });
 

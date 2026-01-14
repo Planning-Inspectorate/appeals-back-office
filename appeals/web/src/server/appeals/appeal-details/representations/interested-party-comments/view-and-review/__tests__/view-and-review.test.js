@@ -621,6 +621,10 @@ describe('interested-party-comments', () => {
 				expect(page.innerHTML).toMatchSnapshot();
 
 				expect(page.querySelector('h1')?.textContent?.trim()).toBe('Upload supporting document');
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				expect(unprettifiedElement.innerHTML).toContain(
+					'data-document-title="interested party comment document"'
+				);
 			});
 
 			it('should have the correct back link', async () => {
