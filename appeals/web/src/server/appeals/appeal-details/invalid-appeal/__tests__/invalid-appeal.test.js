@@ -94,6 +94,7 @@ describe('invalid-appeal', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('Why is the appeal invalid?</h1>');
+			expect(element.innerHTML).toContain('<div class="govuk-hint">Select all that apply');
 			expect(element.innerHTML).toContain('data-module="govuk-checkboxes">');
 			expect(element.innerHTML).toContain(
 				'for="invalid-reason">Appeal has not been submitted on time'
