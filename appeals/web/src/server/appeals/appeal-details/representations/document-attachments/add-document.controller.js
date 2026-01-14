@@ -47,7 +47,9 @@ export const renderDocumentUpload = async (request, response) => {
 		allowMultipleFiles: false,
 		documentType: session.costsDocumentType,
 		preHeadingTextOverride: pageContent?.pageHeadingTextOverride,
-		uploadContainerHeadingTextOverride: pageContent?.addDocument?.uploadContainerHeadingTextOverride
+		uploadContainerHeadingTextOverride:
+			pageContent?.addDocument?.uploadContainerHeadingTextOverride,
+		documentTitle: pageContent?.addDocument?.documentTitle
 	});
 };
 
