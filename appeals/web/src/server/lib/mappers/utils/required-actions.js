@@ -394,6 +394,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			APPEAL_CASE_STATUS.INVALID,
 			APPEAL_CASE_STATUS.WITHDRAWN,
 			APPEAL_CASE_STATUS.TRANSFERRED
+			// @ts-ignore
 		].includes(appealDetails.appealStatus)
 	) {
 		actions.push('addResidencesNetChange');

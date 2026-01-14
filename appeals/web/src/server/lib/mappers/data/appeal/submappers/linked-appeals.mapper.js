@@ -22,6 +22,7 @@ export const mapLinkedAppeals = ({ appealDetails, session }) => {
 			APPEAL_CASE_STATUS.VALIDATION,
 			APPEAL_CASE_STATUS.READY_TO_START,
 			APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+			// @ts-ignore
 		].includes(appealDetails.appealStatus);
 
 	const hasItems = appealDetails.linkedAppeals?.every(

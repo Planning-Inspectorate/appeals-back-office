@@ -198,7 +198,8 @@ const mapListedBuildings = (casedata, appealHasChangedListedBuilding) => {
 		}) ?? [];
 
 	const changedListedBuildings = appealHasChangedListedBuilding
-		? (casedata.changedListedBuildingNumbers || []).map((entry) => {
+		? // @ts-ignore
+		  (casedata.changedListedBuildingNumbers || []).map((/** @type {string} */ entry) => {
 				return {
 					listEntry: entry,
 					affectsListedBuilding: false
@@ -218,20 +219,23 @@ const mapListedBuildings = (casedata, appealHasChangedListedBuilding) => {
  * @returns {*|undefined}
  */
 export const mapDesignatedSiteNames = (casedata, designatedSites) => {
+	// @ts-ignore
 	if (casedata.designatedSitesNames && casedata.designatedSitesNames.length > 0) {
 		const defaultSiteNames = designatedSites.map((site) => site.key);
 
-		const siteNames = casedata.designatedSitesNames.filter((site) =>
+		// @ts-ignore
+		const siteNames = casedata.designatedSitesNames.filter((/** @type {string} */ site) =>
 			defaultSiteNames.includes(site)
 		);
 
+		// @ts-ignore
 		const customSiteName = casedata.designatedSitesNames.find(
 			(/** @type {string} */ site) => !defaultSiteNames.includes(site)
 		);
 
 		return {
 			designatedSiteNames: {
-				create: siteNames.map((site) => {
+				create: siteNames.map((/** @type {string} */ site) => {
 					return {
 						designatedSite: {
 							connect: { key: site }

@@ -17,6 +17,7 @@ export const mapPlanningObligationDueDate = ({
 		!appealDetails.startedAt ||
 		(appealDetails.appealType !== APPEAL_TYPE.ENFORCEMENT_NOTICE &&
 			![APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY].includes(
+				// @ts-ignore
 				appealDetails.procedureType?.toLowerCase() ?? ''
 			)) ||
 		!appellantCase?.planningObligation?.hasObligation

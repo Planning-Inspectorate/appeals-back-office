@@ -51,6 +51,7 @@ export function changeEiaEnvironmentalImpactSchedulePage(appealData, existingVal
  * @returns {string|null}
  */
 export function mapEiaEnvironmentalImpactScheduleRadioValueForService(radioValue) {
+	// @ts-ignore
 	return Object.values(APPEAL_EIA_ENVIRONMENTAL_IMPACT_SCHEDULE).includes(radioValue)
 		? radioValue
 		: null;

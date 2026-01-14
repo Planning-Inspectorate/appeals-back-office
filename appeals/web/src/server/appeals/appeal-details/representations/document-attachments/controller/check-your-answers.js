@@ -71,6 +71,7 @@ export const renderCheckYourAnswers = (request, response) => {
 					}
 				},
 				'Redaction status': {
+					// @ts-ignore
 					value: statusFormatMap[redactionStatus],
 					actions: {
 						Change: {

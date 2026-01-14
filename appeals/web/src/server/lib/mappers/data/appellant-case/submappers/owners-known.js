@@ -27,6 +27,7 @@ export const mapOwnersKnown = ({ appellantCaseData, currentRoute, userHasUpdateC
 	return textSummaryListItem({
 		id: 'owners-known',
 		text: 'Does the appellant know who owns the land involved in the appeal?',
+		// @ts-ignore
 		value: mapOwnersKnownLabelText(knowsOwners),
 		link: `${currentRoute}/owners-known/change`,
 		editable: userHasUpdateCase

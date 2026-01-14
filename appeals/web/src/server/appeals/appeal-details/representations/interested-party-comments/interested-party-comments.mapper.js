@@ -149,6 +149,7 @@ export function sharedIpCommentsPage(
 		APPEAL_CASE_STATUS.CLOSED,
 		APPEAL_CASE_STATUS.WITHDRAWN,
 		APPEAL_CASE_STATUS.INVALID
+		// @ts-ignore
 	].includes(appealDetails.appealStatus);
 
 	/** @type {PageComponent} */
