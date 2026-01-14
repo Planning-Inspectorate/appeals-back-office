@@ -47,7 +47,9 @@ router.post(
 		'address',
 		'appellant',
 		'agent',
-		'lpa'
+		'lpa',
+		'appealGrounds',
+		'appellantCase'
 	]),
 	createAppealTimetableValidator,
 	asyncHandler(startAppeal)
@@ -86,7 +88,9 @@ router.post(
 		'address',
 		'appellant',
 		'agent',
-		'lpa'
+		'lpa',
+		'appealGrounds',
+		'appellantCase'
 	]),
 	asyncHandler(startAppealNotifyPreview)
 );

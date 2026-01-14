@@ -175,6 +175,10 @@ const getStartCaseNotifyParams = async (
 			inquiry_time: formatTime12h(inquiry.inquiryStartTime),
 			inquiry_address: inquiry.inquiryAddress,
 			inquiry_expected_days: inquiry.inquiryEstimationDays
+		}),
+		...(appeal.appealType?.key === APPEAL_CASE_TYPE.C && {
+			appeal_grounds: appeal.appealGrounds?.map((ground) => ground.ground?.groundRef) || [],
+			enforcement_reference: appeal.appellantCase?.enforcementReference
 		})
 	};
 
@@ -190,7 +194,15 @@ const getStartCaseNotifyParams = async (
 					...(inquiry && { is_lpa: false }),
 					site_visit:
 						procedureType === APPEAL_CASE_PROCEDURE.WRITTEN || procedureType === undefined, //undefined procedure types are treated as written
-					costs_info: procedureType === APPEAL_CASE_PROCEDURE.WRITTEN || procedureType === undefined
+					costs_info:
+						procedureType === APPEAL_CASE_PROCEDURE.WRITTEN || procedureType === undefined,
+					...(appeal.appealType?.key === APPEAL_CASE_TYPE.C &&
+						appeal.appellantCase?.planningObligation && {
+							planning_obligation_deadline: formatDate(
+								new Date(timetable.planningObligationDueDate || ''),
+								false
+							)
+						})
 				}
 			}
 		}),

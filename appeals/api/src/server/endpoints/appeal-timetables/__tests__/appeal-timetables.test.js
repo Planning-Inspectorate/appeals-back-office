@@ -1170,24 +1170,6 @@ describe('appeal timetables routes', () => {
 					'appeal-valid-start-case-advertisement-lpa',
 					'appeal-valid-start-case-advertisement-appellant-hearing',
 					'appeal-valid-start-case-advertisement-lpa-hearing'
-				],
-				[
-					'enforcementNoticeAppeal',
-					{ ...enforcementNoticeAppeal, procedureType: { key: 'hearing' } },
-					{
-						finalCommentsDueDate: '2024-08-07T22:59:00.000Z',
-						ipCommentsDueDate: '2024-07-17T22:59:00.000Z',
-						lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
-						lpaStatementDueDate: '2024-07-17T22:59:00.000Z',
-						s106ObligationDueDate: '2024-07-17T22:59:00.000Z',
-						statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z',
-						planningObligationDueDate: '2024-07-17T22:59:00.000Z'
-					},
-					{},
-					'appeal-valid-start-case-s78-appellant',
-					'appeal-valid-start-case-s78-lpa',
-					'appeal-valid-start-case-s78-appellant-hearing',
-					'appeal-valid-start-case-s78-lpa-hearing'
 				]
 			])(
 				'for a %s appeal',
@@ -1724,6 +1706,275 @@ describe('appeal timetables routes', () => {
 					});
 				}
 			);
+
+			describe('for an enforcement notice appeal', () => {
+				const appeal = {
+					...enforcementNoticeAppeal,
+					appealGrounds: [{ ground: { groundRef: 'a' } }]
+				};
+				const baseExpectedTimetableDto = {
+					finalCommentsDueDate: '2024-08-07T22:59:00.000Z',
+					ipCommentsDueDate: '2024-07-17T22:59:00.000Z',
+					lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
+					lpaStatementDueDate: '2024-07-17T22:59:00.000Z',
+					planningObligationDueDate: '2024-07-17T22:59:00.000Z',
+					s106ObligationDueDate: '2024-07-17T22:59:00.000Z'
+				};
+
+				test(`start an appeal timetable with written reps`, async () => {
+					const expectedTimetableDto = {
+						...baseExpectedTimetableDto
+					};
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						...appeal
+					});
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
+					const timetable = mapValues(expectedTimetableDto, (date) => new Date(date));
+
+					const { id } = appeal;
+					const response = await request
+						.post(`/appeals/${id}/appeal-timetables/`)
+						.send({ procedureType: 'written' })
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(201);
+					expect(response.body).toEqual(expectedTimetableDto);
+
+					expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith({
+						create: { ...timetable, appealId: id },
+						update: { ...timetable },
+						where: { appealId: id },
+						include: { appeal: true }
+					});
+
+					const auditDetails = [
+						'The case timeline was created',
+						'Appeal started\nAppeal procedure: written'
+					];
+
+					auditDetails.forEach((details) => {
+						expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+							data: {
+								appealId: id,
+								details,
+								loggedAt: expect.any(Date),
+								userId: 1
+							}
+						});
+					});
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							appeal_type: appeal.appealType.type,
+							appellant_email_address: appeal.appellant.email,
+							child_appeals: [],
+							comment_deadline: '',
+							due_date: dateISOStringToDisplayDate(expectedTimetableDto.lpaQuestionnaireDueDate),
+							final_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.finalCommentsDueDate
+							),
+							ip_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.ipCommentsDueDate
+							),
+							local_planning_authority: appeal.lpa.name,
+							lpa_reference: appeal.applicationReference,
+							lpa_statement_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaStatementDueDate
+							),
+							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
+							questionnaire_due_date: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaQuestionnaireDueDate
+							),
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_date: '5 June 2024',
+							site_visit: true,
+							costs_info: true,
+							statement_of_common_ground_deadline: '',
+							appeal_grounds: ['a'],
+							enforcement_reference: appeal.appellantCase.enforcementReference,
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+						},
+						recipientEmail: appeal.appellant.email,
+						templateName: 'appeal-valid-start-case-enforcement-appellant'
+					});
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							appeal_type: appeal.appealType.type,
+							appellant_email_address: appeal.appellant.email,
+							child_appeals: [],
+							comment_deadline: '',
+							due_date: dateISOStringToDisplayDate(expectedTimetableDto.lpaQuestionnaireDueDate),
+							final_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.finalCommentsDueDate
+							),
+							ip_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.ipCommentsDueDate
+							),
+							local_planning_authority: appeal.lpa.name,
+							lpa_reference: appeal.applicationReference,
+							lpa_statement_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaStatementDueDate
+							),
+							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
+							questionnaire_due_date: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaQuestionnaireDueDate
+							),
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_date: '5 June 2024',
+							statement_of_common_ground_deadline: '',
+							appeal_grounds: ['a'],
+							enforcement_reference: appeal.appellantCase.enforcementReference,
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+						},
+						recipientEmail: appeal.lpa.email,
+						templateName: 'appeal-valid-start-case-enforcement-lpa'
+					});
+				});
+
+				test('start an appeal timetable with written reps and a planning obligation', async () => {
+					const expectedTimetableDto = {
+						...baseExpectedTimetableDto,
+						planningObligationDueDate: '2024-07-17T22:59:00.000Z'
+					};
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						...appeal,
+						appellantCase: {
+							...appeal.appellantCase,
+							planningObligation: true
+						}
+					});
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
+					const timetable = mapValues(expectedTimetableDto, (date) => new Date(date));
+
+					const { id } = appeal;
+					const response = await request
+						.post(`/appeals/${id}/appeal-timetables/`)
+						.send({ procedureType: 'written' })
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(201);
+					expect(response.body).toEqual(expectedTimetableDto);
+
+					expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith({
+						create: { ...timetable, appealId: id },
+						update: { ...timetable },
+						where: { appealId: id },
+						include: { appeal: true }
+					});
+
+					const auditDetails = [
+						'The case timeline was created',
+						'Appeal started\nAppeal procedure: written'
+					];
+
+					auditDetails.forEach((details) => {
+						expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+							data: {
+								appealId: id,
+								details,
+								loggedAt: expect.any(Date),
+								userId: 1
+							}
+						});
+					});
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							appeal_type: appeal.appealType.type,
+							appellant_email_address: appeal.appellant.email,
+							child_appeals: [],
+							comment_deadline: '',
+							due_date: dateISOStringToDisplayDate(expectedTimetableDto.lpaQuestionnaireDueDate),
+							final_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.finalCommentsDueDate
+							),
+							ip_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.ipCommentsDueDate
+							),
+							local_planning_authority: appeal.lpa.name,
+							lpa_reference: appeal.applicationReference,
+							lpa_statement_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaStatementDueDate
+							),
+							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
+							questionnaire_due_date: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaQuestionnaireDueDate
+							),
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_date: '5 June 2024',
+							site_visit: true,
+							costs_info: true,
+							statement_of_common_ground_deadline: '',
+							planning_obligation_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.planningObligationDueDate
+							),
+							appeal_grounds: ['a'],
+							enforcement_reference: appeal.appellantCase.enforcementReference,
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+						},
+						recipientEmail: appeal.appellant.email,
+						templateName: 'appeal-valid-start-case-enforcement-appellant'
+					});
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							appeal_type: appeal.appealType.type,
+							appellant_email_address: appeal.appellant.email,
+							child_appeals: [],
+							comment_deadline: '',
+							due_date: dateISOStringToDisplayDate(expectedTimetableDto.lpaQuestionnaireDueDate),
+							final_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.finalCommentsDueDate
+							),
+							ip_comments_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.ipCommentsDueDate
+							),
+							local_planning_authority: appeal.lpa.name,
+							lpa_reference: appeal.applicationReference,
+							lpa_statement_deadline: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaStatementDueDate
+							),
+							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
+							questionnaire_due_date: dateISOStringToDisplayDate(
+								expectedTimetableDto.lpaQuestionnaireDueDate
+							),
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_date: '5 June 2024',
+							statement_of_common_ground_deadline: '',
+							appeal_grounds: ['a'],
+							enforcement_reference: appeal.appellantCase.enforcementReference,
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+						},
+						recipientEmail: appeal.lpa.email,
+						templateName: 'appeal-valid-start-case-enforcement-lpa'
+					});
+				});
+			});
 
 			test('empty object', async () => {
 				// @ts-ignore
