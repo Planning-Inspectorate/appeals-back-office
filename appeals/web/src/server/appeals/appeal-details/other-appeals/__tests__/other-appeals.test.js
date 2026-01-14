@@ -336,12 +336,12 @@ describe('other-appeals', () => {
 	});
 
 	describe('GET /other-appeals/manage', () => {
-		it('should render the "Manage linked appeals" page', async () => {
+		it('should render the "Manage related appeals" page', async () => {
 			const response = await request.get(`${baseUrl}/1/other-appeals/manage`);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage linked appeals</h1>');
+			expect(element.innerHTML).toContain('Manage related appeals</h1>');
 			expect(element.innerHTML).toContain('Related appeals</h2>');
 			expect(element.innerHTML).toContain('Appeal Reference</th>');
 			expect(element.innerHTML).toContain('Appeal type</th>');
