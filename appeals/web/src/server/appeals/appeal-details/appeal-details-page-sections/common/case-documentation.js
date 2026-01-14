@@ -1,3 +1,5 @@
+import { APPEAL_CASE_PRE_STATEMENTS_STATUS } from '#appeals/appeal.constants.js';
+import config from '#environment/config.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
@@ -8,6 +10,14 @@ import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
  * @returns {PageComponent}
  */
 export const getCaseDocumentation = (mappedData, appealDetails) => {
+	const caseStarted = appealDetails.startedAt;
+	const inquiryEventSetUp = appealDetails.inquiry;
+	const isInquiryProcedureType =
+		appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase();
+	const statementsCompleted = !APPEAL_CASE_PRE_STATEMENTS_STATUS.includes(
+		appealDetails?.appealStatus
+	);
+
 	return {
 		type: 'table',
 		parameters: {
@@ -19,24 +29,31 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 			],
 			rows: [
 				mappedData.appeal.appellantCase.display.tableItem,
-				mappedData.appeal.lpaQuestionnaire.display.tableItem,
+				caseStarted ? mappedData.appeal.lpaQuestionnaire.display.tableItem : [],
 				...(!isChildAppeal(appealDetails)
 					? [
+							caseStarted ? mappedData.appeal.lpaStatement.display.tableItem : [],
 							mappedData.appeal.appellantStatement.display.tableItem,
 							mappedData.appeal.lpaStatement.display.tableItem,
 							...(mappedData.appeal.rule6PartyStatements?.display?.tableItems || []),
-							mappedData.appeal.ipComments.display.tableItem,
-							...(appealDetails.procedureType?.toLowerCase() !==
-							APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase()
+							caseStarted ? mappedData.appeal.ipComments.display.tableItem : [],
+							...(caseStarted && !isInquiryProcedureType && statementsCompleted
 								? [
 										mappedData.appeal.appellantFinalComments.display.tableItem,
 										mappedData.appeal.lpaFinalComments.display.tableItem
-									]
+								  ]
 								: []),
-							mappedData.appeal.appellantProofOfEvidence.display.tableItem,
-							mappedData.appeal.lpaProofOfEvidence.display.tableItem,
-							...(mappedData.appeal.rule6PartyProofs?.display?.tableItems || [])
-						]
+							...(caseStarted && isInquiryProcedureType && inquiryEventSetUp
+								? [
+										mappedData.appeal.appellantProofOfEvidence.display.tableItem,
+										mappedData.appeal.lpaProofOfEvidence.display.tableItem
+								  ]
+								: []),
+							...(mappedData.appeal.rule6PartyProofs?.display?.tableItems || []),
+							...(config.featureFlags.featureFlagAppellantStatement
+								? mappedData.appeal.appellantStatement.display.tableItem
+								: [])
+					  ]
 					: []),
 				mappedData.appeal.environmentalAssessment.display.tableItem
 			].filter(isDefined),
