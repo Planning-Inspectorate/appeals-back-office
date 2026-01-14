@@ -1089,3 +1089,11 @@ model EnforcementNoticeAppealOutcome {
 
   appeal Appeal @relation(fields: [appealId], references: [id])
 }
+
+/// BankHoliday model
+/// Stores bank holidays fetched from GOV.UK
+model BankHoliday {
+  id              Int      @id @default(autoincrement())
+  bankHolidayDate DateTime @unique
+  title           String
+}

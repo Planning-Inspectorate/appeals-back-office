@@ -232,3 +232,8 @@ export interface AppealRule6Party extends schema.AppealRule6Party {
 	serviceUser?: ServiceUser | null;
 	appeal?: Appeal | null;
 }
+
+export interface BankHoliday extends schema.BankHoliday {
+	bankHolidayDate: Date;
+	title: string;
+}

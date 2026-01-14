@@ -2,19 +2,21 @@
   "name": "@pins/functions-bo-appeals-scheduled-jobs",
   "version": "1.0.0",
   "description": "Azure Function to handle time-based events",
-  "main": "src/app.js",
+  "main": "src/*.js",
   "scripts": {
-    "start": "func start"
+    "start": "func start",
+    "test": "node --test --experimental-test-module-mocks"
   },
   "type": "module",
   "dependencies": {
     "@azure/functions": "^4.10.0",
+    "@pins/blob-storage-client": "^0.0.0",
     "@pins/event-client": "^0.0.0",
     "@pins/platform": "^0.0.0",
     "dotenv": "*",
     "got": "*",
     "joi": "*",
-		"@pins/blob-storage-client": "^0.0.0"
+    "mssql": "^12.2.0"
   },
   "devDependencies": {
     "cross-env": "*",
