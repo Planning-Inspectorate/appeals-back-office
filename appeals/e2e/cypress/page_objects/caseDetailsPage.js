@@ -848,7 +848,7 @@ export class CaseDetailsPage extends Page {
 		this.basePageElements.bannerLink().click();
 		this.selectRadioButtonByValue('Accept final comment');
 		this.clickButtonByText('Continue');
-		this.clickButtonByText(`Accept ${type} final comment`);
+		this.clickButtonByText(`Accept ${type} final comments`);
 	}
 
 	checkTimetableDueDatesAndChangeLinks(timetableItems) {
