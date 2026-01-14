@@ -26,11 +26,6 @@ import { mapReasonOptionsToCheckboxItemParameters } from '#lib/validation-outcom
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
-	APPLICATION_FEE_RECEIPT_DOCTYPE,
-	ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE,
-	GROUND_SUPPORTING_DOCTYPE
-} from '@pins/appeals/constants/documents.js';
-import {
 	APPEAL_CASE_STATUS,
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_VIRUS_CHECK_STATUS
@@ -860,21 +855,21 @@ export function getPageHeadingTextOverrideForFolder(folder) {
 			return 'Decision letter from the local planning authority';
 		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
 			return 'Other new supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.A:
+		case APPEAL_DOCUMENT_TYPE.GROUND_A_SUPPORTING:
 			return 'Ground (a) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.B:
+		case APPEAL_DOCUMENT_TYPE.GROUND_B_SUPPORTING:
 			return 'Ground (b) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.C:
+		case APPEAL_DOCUMENT_TYPE.GROUND_C_SUPPORTING:
 			return 'Ground (c) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.D:
+		case APPEAL_DOCUMENT_TYPE.GROUND_D_SUPPORTING:
 			return 'Ground (d) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.E:
+		case APPEAL_DOCUMENT_TYPE.GROUND_E_SUPPORTING:
 			return 'Ground (e) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.F:
+		case APPEAL_DOCUMENT_TYPE.GROUND_F_SUPPORTING:
 			return 'Ground (f) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.G:
+		case APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING:
 			return 'Ground (g) supporting documents';
-		case APPLICATION_FEE_RECEIPT_DOCTYPE:
+		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
 			return 'Application receipt';
 		default:
 			return;
@@ -913,27 +908,27 @@ export function getPageHeadingTextOverrideForAddDocuments(folder, appealType) {
 			return 'Upload your new plans or drawings';
 		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
 			return 'Upload your other new supporting documents';
-		case ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE.PRIOR_CORRESPONDENCE_WITH_PINS:
+		case APPEAL_DOCUMENT_TYPE.PRIOR_CORRESPONDENCE_WITH_PINS:
 			return 'Upload your communication with the Planning Inspectorate';
-		case ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE:
+		case APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE:
 			return 'Upload your enforcement notice';
-		case ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE_PLAN:
+		case APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE_PLAN:
 			return 'Upload your enforcement notice plan';
-		case GROUND_SUPPORTING_DOCTYPE.A:
+		case APPEAL_DOCUMENT_TYPE.GROUND_A_SUPPORTING:
 			return 'Upload your ground (a) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.B:
+		case APPEAL_DOCUMENT_TYPE.GROUND_B_SUPPORTING:
 			return 'Upload your ground (b) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.C:
+		case APPEAL_DOCUMENT_TYPE.GROUND_C_SUPPORTING:
 			return 'Upload your ground (c) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.D:
+		case APPEAL_DOCUMENT_TYPE.GROUND_D_SUPPORTING:
 			return 'Upload your ground (d) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.E:
+		case APPEAL_DOCUMENT_TYPE.GROUND_E_SUPPORTING:
 			return 'Upload your ground (e) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.F:
+		case APPEAL_DOCUMENT_TYPE.GROUND_F_SUPPORTING:
 			return 'Upload your ground (f) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.G:
+		case APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING:
 			return 'Upload your ground (g) supporting documents';
-		case APPLICATION_FEE_RECEIPT_DOCTYPE:
+		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
 			return 'Upload your application receipt';
 		default:
 			break;
@@ -968,21 +963,21 @@ export function getDocumentNameFromFolder(folderPath) {
 			return 'new plans or drawings';
 		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
 			return 'other new supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.A:
+		case APPEAL_DOCUMENT_TYPE.GROUND_A_SUPPORTING:
 			return 'ground (a) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.B:
+		case APPEAL_DOCUMENT_TYPE.GROUND_B_SUPPORTING:
 			return 'ground (b) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.C:
+		case APPEAL_DOCUMENT_TYPE.GROUND_C_SUPPORTING:
 			return 'ground (b) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.D:
+		case APPEAL_DOCUMENT_TYPE.GROUND_D_SUPPORTING:
 			return 'ground (d) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.E:
+		case APPEAL_DOCUMENT_TYPE.GROUND_E_SUPPORTING:
 			return 'ground (e) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.F:
+		case APPEAL_DOCUMENT_TYPE.GROUND_F_SUPPORTING:
 			return 'ground (f) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.G:
+		case APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING:
 			return 'ground (g) supporting documents';
-		case APPLICATION_FEE_RECEIPT_DOCTYPE:
+		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
 			return 'application receipt';
 	}
 }

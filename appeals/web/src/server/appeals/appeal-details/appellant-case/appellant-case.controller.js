@@ -6,9 +6,8 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { APPLICATION_FEE_RECEIPT_DOCTYPE } from '@pins/appeals/constants/documents.js';
 import { CHANGE_APPEAL_TYPE_INVALID_REASON } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { capitalize } from 'lodash-es';
 import {
 	postChangeDocumentDetails,
@@ -45,7 +44,7 @@ import * as appellantCaseService from './appellant-case.service.js';
  */
 const allowedFileTypes = (folderPath) => {
 	switch (folderPath) {
-		case `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPLICATION_FEE_RECEIPT_DOCTYPE}`:
+		case `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT}`:
 			return ['doc', 'docx', 'pdf', 'tif', 'jpg', 'png'];
 		default:
 			return undefined;
