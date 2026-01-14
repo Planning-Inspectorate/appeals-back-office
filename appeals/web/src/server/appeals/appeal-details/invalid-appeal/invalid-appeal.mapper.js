@@ -66,31 +66,35 @@ export const mapInvalidReasonPage = (
 	sourceIsAppellantCase
 ) => {
 	const shortAppealReference = appealShortReference(appealReference);
-	const backLinkUrl =
-		appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
-			? `/appeals-service/appeal-details/${appealId}/appellant-case/invalid/enforcement-notice`
-			: `/appeals-service/appeal-details/${appealId}/${
-					sourceIsAppellantCase ? 'appellant-case' : 'cancel'
-			  }`;
+	const isEnforcementNotice = appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE;
+	const backLinkUrl = isEnforcementNotice
+		? `/appeals-service/appeal-details/${appealId}/appellant-case/invalid/enforcement-notice`
+		: `/appeals-service/appeal-details/${appealId}/${
+				sourceIsAppellantCase ? 'appellant-case' : 'cancel'
+		  }`;
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Why is the appeal invalid?`,
 		backLinkUrl,
-		preHeading: `Appeal ${shortAppealReference} - mark as invalid`,
+		preHeading: `Appeal ${shortAppealReference}${isEnforcementNotice ? '' : ' - mark as invalid'}`,
+		heading: isEnforcementNotice ? 'Why is the appeal invalid?' : undefined,
+		hint: isEnforcementNotice ? 'Select all that apply' : undefined,
 		pageComponents: [
 			{
 				type: 'checkboxes',
 				parameters: {
 					name: 'invalidReason',
 					idPrefix: 'invalid-reason',
-					fieldset: {
-						legend: {
-							text: 'Why is the appeal invalid?',
-							isPageHeading: true,
-							classes: 'govuk-fieldset__legend--l'
-						}
-					},
+					fieldset: isEnforcementNotice
+						? undefined
+						: {
+								legend: {
+									text: 'Why is the appeal invalid?',
+									isPageHeading: true,
+									classes: 'govuk-fieldset__legend--l'
+								}
+						  },
 					items: mappedInvalidReasonOptions,
 					errorMessage: errorMessage && { text: errorMessage }
 				}

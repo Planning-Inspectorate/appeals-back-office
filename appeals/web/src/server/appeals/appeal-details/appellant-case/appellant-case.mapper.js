@@ -372,7 +372,7 @@ export function checkAndConfirmPage(
 		parameters: {
 			rows: [
 				{
-					key: { text: 'Review outcome' },
+					key: { text: isEnforcementAppeal ? 'Review decision' : 'Review outcome' },
 					value: { text: capitalize(validationOutcomeAsString) },
 					actions: {
 						items: [
@@ -398,7 +398,11 @@ export function checkAndConfirmPage(
 					}
 				},
 				{
-					key: { text: `${capitalize(validationOutcomeAsString)} reasons` },
+					key: {
+						text: isEnforcementAppeal
+							? `Why is the appeal ${validationOutcomeAsString}?`
+							: `${capitalize(validationOutcomeAsString)} reasons`
+					},
 					value: {
 						html: '',
 						pageComponents: [
@@ -486,7 +490,9 @@ export function checkAndConfirmPage(
 				? `/appeals-service/appeal-details/${appealId}/appellant-case/${validationOutcome}/date`
 				: `/appeals-service/appeal-details/${appealId}/appellant-case/${validationOutcome}`,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
-		heading: 'Check your answers before confirming your review',
+		heading: isEnforcementAppeal
+			? 'Check details and mark appeal as invalid'
+			: 'Check your answers before confirming your review',
 		pageComponents,
 		submitButtonProperties: {
 			text: isEnforcementAppeal ? 'Mark appeal as invalid' : 'Confirm'

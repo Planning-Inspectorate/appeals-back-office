@@ -5638,13 +5638,13 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Check your answers before confirming your review</h1>
+            <h1 class="govuk-heading-l">Check details and mark appeal as invalid</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review outcome</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>
                     <dd class="govuk-summary-list__value">Invalid</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case">Change<span class="govuk-visually-hidden"> review outcome</span></a>
                     </dd>
@@ -5654,8 +5654,8 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/invalid/enforcement-notice">Change<span class="govuk-visually-hidden"> Is the enforcement notice invalid?</span></a>
                         </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Invalid reasons</dt>
-                    <dd class="govuk-summary-list__value">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Why is the appeal invalid?</dt>
+                    <dd                     class="govuk-summary-list__value">
                         <div class="pins-show-more" data-label="Read more" data-mode="html">
                             <ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet">
                                 <li>Documents have not been submitted on time: test reason text 1</li>
@@ -5663,9 +5663,9 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
                                 <li>Other reason: test reason text 2</li>
                             </ul>
                         </div>
-                    </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/invalid">Change<span class="govuk-visually-hidden"> Invalid reasons</span></a>
-                    </dd>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/invalid">Change<span class="govuk-visually-hidden"> Invalid reasons</span></a>
+                        </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Are there any other live appeals against the enforcement notice?</dt>
                     <dd                     class="govuk-summary-list__value">No</dd>

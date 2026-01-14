@@ -3122,10 +3122,10 @@ describe('appellant-case', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Check your answers before confirming your review</h1>'
+				'Check details and mark appeal as invalid</h1>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Review outcome</dt><dd class="govuk-summary-list__value"> Invalid</dd>'
+				'Review decision</dt><dd class="govuk-summary-list__value"> Invalid</dd>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Is the enforcement notice invalid?</dt><dd class="govuk-summary-list__value"> No</dd>'
