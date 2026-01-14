@@ -1,6 +1,6 @@
 import config from '#config/config.js';
 import { REP_ATTACHMENT_DOCTYPE } from '@pins/appeals/constants/documents.js';
-import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
 import { randomUUID } from 'node:crypto';
 
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
@@ -20,12 +20,7 @@ import { randomUUID } from 'node:crypto';
 export const mapDocumentIn = (doc, stage = null) => {
 	const { filename, documentId, ...metadata } = doc;
 	metadata.fileName = metadata.originalFilename;
-
-	const notRule6Document =
-		metadata.documentType !== APPEAL_DOCUMENT_TYPE.RULE_6_STATEMENT &&
-		metadata.documentType !== APPEAL_DOCUMENT_TYPE.RULE_6_PROOF_OF_EVIDENCE;
-
-	if (stage === 'representation' && notRule6Document) {
+	if (stage === 'representation') {
 		metadata.fileName = `${randomUUID()}_${metadata.originalFilename}`;
 		// @ts-ignore
 		metadata.documentType = REP_ATTACHMENT_DOCTYPE;
