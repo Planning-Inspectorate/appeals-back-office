@@ -5028,7 +5028,7 @@ describe('appeal-details', () => {
 						skipPrettyPrint: true
 					}).querySelectorAll('.govuk-summary-list__row');
 
-					expect(timetableRows.length).toBe(9);
+					expect(timetableRows.length).toBe(8);
 					expect(
 						timetableRows[0].querySelector('dt.govuk-summary-list__key').textContent.trim()
 					).toBe('Valid date');
@@ -5092,15 +5092,9 @@ describe('appeal-details', () => {
 					).toBe('7 January 2025');
 					expect(
 						timetableRows[7].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Case management conference due');
-					expect(
-						timetableRows[7].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('8 January 2025');
-					expect(
-						timetableRows[8].querySelector('dt.govuk-summary-list__key').textContent.trim()
 					).toBe('Inquiry');
 					expect(
-						timetableRows[8].querySelector('dd.govuk-summary-list__value').textContent.trim()
+						timetableRows[7].querySelector('dd.govuk-summary-list__value').textContent.trim()
 					).toBe('10:00am on 1 February 2025');
 				});
 
@@ -5141,7 +5135,7 @@ describe('appeal-details', () => {
 						skipPrettyPrint: true
 					}).querySelectorAll('.govuk-summary-list__row');
 
-					expect(timetableRows.length).toBe(10);
+					expect(timetableRows.length).toBe(9);
 					expect(
 						timetableRows[0].querySelector('dt.govuk-summary-list__key').textContent.trim()
 					).toBe('Valid date');
@@ -5211,15 +5205,9 @@ describe('appeal-details', () => {
 					).toBe('7 January 2025');
 					expect(
 						timetableRows[8].querySelector('dt.govuk-summary-list__key').textContent.trim()
-					).toBe('Case management conference due');
-					expect(
-						timetableRows[8].querySelector('dd.govuk-summary-list__value').textContent.trim()
-					).toBe('8 January 2025');
-					expect(
-						timetableRows[9].querySelector('dt.govuk-summary-list__key').textContent.trim()
 					).toBe('Inquiry');
 					expect(
-						timetableRows[9].querySelector('dd.govuk-summary-list__value').textContent.trim()
+						timetableRows[8].querySelector('dd.govuk-summary-list__value').textContent.trim()
 					).toBe('10:00am on 1 February 2025');
 				});
 			});
