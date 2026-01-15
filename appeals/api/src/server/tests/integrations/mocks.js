@@ -1048,6 +1048,10 @@ export const appealIngestionInputEnforcementNotice = {
 	appellantCase: {
 		create: {
 			...appealIngestionInput.appellantCase.create,
+			appellantProcedurePreference: 'written',
+			appellantProcedurePreferenceDetails: 'Reason for preference',
+			appellantProcedurePreferenceDuration: 3,
+			appellantProcedurePreferenceWitnessCount: 2,
 			appealDecisionDate: '2024-05-31T23:00:00.000Z',
 			applicationDevelopmentAllOrPart: 'all-of-the-development',
 			contactAddress: {
