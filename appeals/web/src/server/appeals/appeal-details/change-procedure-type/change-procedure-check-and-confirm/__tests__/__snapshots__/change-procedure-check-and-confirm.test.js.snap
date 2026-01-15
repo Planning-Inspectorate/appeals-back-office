@@ -340,8 +340,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case management conference due</dt>
                     <dd                     class="govuk-summary-list__value"></dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/change-timetable?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2Finquiry%2Fchange-timetable"
-                            data-cy="change-case-management-conference-due-date">Change <span class="govuk-visually-hidden">Case management conference due date</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Case management conference due date</span></a>
                         </dd>
                 </div>
             </dl>
