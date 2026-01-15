@@ -37,7 +37,6 @@ import { isEmpty, pick } from 'lodash-es';
  * @property {string|undefined} [statementOfCommonGroundDueDate]
  * @property {string|undefined} [planningObligationDueDate]
  * @property {string|undefined} [proofOfEvidenceAndWitnessesDueDate]
- * @property {string|undefined} [caseManagementConferenceDueDate]
  */
 
 /**
@@ -51,7 +50,6 @@ import { isEmpty, pick } from 'lodash-es';
  * @property {string|undefined} [statementOfCommonGroundDueDate]
  * @property {string|undefined} [planningObligationDueDate]
  * @property {string|undefined} [proofOfEvidenceAndWitnessesDueDate]
- * @property {string|undefined} [caseManagementConferenceDueDate]
  * @property {string} [eventDate]
  * @property {string|undefined} [estimationDays]
  * @property {{addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}} [address]
@@ -211,9 +209,6 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
 	sessionValues.appealTimetable.proofOfEvidenceAndWitnessesDueDate =
 		sessionValues.appealTimetable.proofOfEvidenceAndWitnessesDueDate ??
 		appealDetails.appealTimetable.proofOfEvidenceAndWitnessesDueDate;
-	sessionValues.appealTimetable.caseManagementConferenceDueDate =
-		sessionValues.appealTimetable.caseManagementConferenceDueDate ??
-		appealDetails.appealTimetable.caseManagementConferenceDueDate;
 
 	const editing = request.query.editEntrypoint;
 	const sessionKey = editing ? 'changeProcedureType/edit' : 'changeProcedureType';

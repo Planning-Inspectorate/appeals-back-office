@@ -534,41 +534,6 @@ exports[`Change procedure timetable GET /change-timetable Written, Hearing and I
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="case-management-conference-due-date-hint">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Case management conference due</legend>
-                <div id="case-management-conference-due-date-hint"
-                class="govuk-hint">
-                    <div class="govuk-hint">For example, 29 10 2024</div>
-                </div>
-                <div class="govuk-date-input" id="case-management-conference-due-date">
-                    <div class="govuk-date-input__item">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="case-management-conference-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                            id="case-management-conference-due-date-day" name="case-management-conference-due-date-day"
-                            type="text" inputmode="numeric">
-                        </div>
-                    </div>
-                    <div class="govuk-date-input__item">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="case-management-conference-due-date-month">Month</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                            id="case-management-conference-due-date-month" name="case-management-conference-due-date-month"
-                            type="text" inputmode="numeric">
-                        </div>
-                    </div>
-                    <div class="govuk-date-input__item">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="case-management-conference-due-date-year">Year</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
-                            id="case-management-conference-due-date-year" name="case-management-conference-due-date-year"
-                            type="text" inputmode="numeric">
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
-        </div>
         <div class="govuk-button-group">
             <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
         </div>
@@ -790,41 +755,6 @@ exports[`Change procedure timetable GET /change-timetable Written, Hearing and I
                             <label class="govuk-label govuk-date-input__label" for="proof-of-evidence-and-witnesses-due-date-year">Year</label>
                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                             id="proof-of-evidence-and-witnesses-due-date-year" name="proof-of-evidence-and-witnesses-due-date-year"
-                            type="text" inputmode="numeric">
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
-        </div>
-        <div class="govuk-form-group">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="case-management-conference-due-date-hint">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Case management conference due</legend>
-                <div id="case-management-conference-due-date-hint"
-                class="govuk-hint">
-                    <div class="govuk-hint">For example, 29 10 2024</div>
-                </div>
-                <div class="govuk-date-input" id="case-management-conference-due-date">
-                    <div class="govuk-date-input__item">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="case-management-conference-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                            id="case-management-conference-due-date-day" name="case-management-conference-due-date-day"
-                            type="text" inputmode="numeric">
-                        </div>
-                    </div>
-                    <div class="govuk-date-input__item">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="case-management-conference-due-date-month">Month</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                            id="case-management-conference-due-date-month" name="case-management-conference-due-date-month"
-                            type="text" inputmode="numeric">
-                        </div>
-                    </div>
-                    <div class="govuk-date-input__item">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="case-management-conference-due-date-year">Year</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
-                            id="case-management-conference-due-date-year" name="case-management-conference-due-date-year"
                             type="text" inputmode="numeric">
                         </div>
                     </div>

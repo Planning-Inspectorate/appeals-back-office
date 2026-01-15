@@ -5011,8 +5011,7 @@ describe('appeal-details', () => {
 								ipCommentsDueDate: '2025-01-04T00:00:00.000Z',
 								finalCommentsDueDate: '2025-01-05T00:00:00.000Z',
 								statementOfCommonGroundDueDate: '2025-01-06T00:00:00.000Z',
-								proofOfEvidenceAndWitnessesDueDate: '2025-01-07T00:00:00.000Z',
-								caseManagementConferenceDueDate: '2025-01-08T00:00:00.000Z'
+								proofOfEvidenceAndWitnessesDueDate: '2025-01-07T00:00:00.000Z'
 							},
 							hearing: null
 						});
@@ -5119,7 +5118,6 @@ describe('appeal-details', () => {
 								finalCommentsDueDate: '2025-01-05T00:00:00.000Z',
 								statementOfCommonGroundDueDate: '2025-01-06T00:00:00.000Z',
 								proofOfEvidenceAndWitnessesDueDate: '2025-01-07T00:00:00.000Z',
-								caseManagementConferenceDueDate: '2025-01-08T00:00:00.000Z',
 								planningObligationDueDate: '2025-01-09T00:00:00.000Z'
 							}
 						});
@@ -5239,8 +5237,7 @@ describe('appeal-details', () => {
 								ipCommentsDueDate: '2025-01-04T00:00:00.000Z',
 								finalCommentsDueDate: '2025-01-05T00:00:00.000Z',
 								statementOfCommonGroundDueDate: '2025-01-06T00:00:00.000Z',
-								proofOfEvidenceAndWitnessesDueDate: '2025-01-07T00:00:00.000Z',
-								caseManagementConferenceDueDate: '2025-01-08T00:00:00.000Z'
+								proofOfEvidenceAndWitnessesDueDate: '2025-01-07T00:00:00.000Z'
 							},
 							hearing: null
 						});
