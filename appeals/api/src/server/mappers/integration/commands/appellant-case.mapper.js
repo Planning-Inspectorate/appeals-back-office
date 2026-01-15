@@ -64,6 +64,17 @@ export const mapAppellantCaseIn = (command) => {
 
 	const contactAddress = isEnforcementNotice ? mapContactAddressIn(casedata) : null;
 
+	const procedurePreferenceFields =
+		isFullAdverts || isEnforcementNotice
+			? {
+					appellantProcedurePreference: casedata.appellantProcedurePreference,
+					appellantProcedurePreferenceDetails: casedata.appellantProcedurePreferenceDetails,
+					appellantProcedurePreferenceDuration: casedata.appellantProcedurePreferenceDuration,
+					appellantProcedurePreferenceWitnessCount:
+						casedata.appellantProcedurePreferenceWitnessCount
+			  }
+			: null;
+
 	const data = {
 		applicationDate: casedata.applicationDate,
 		applicationDecision: casedata.applicationDecision,
@@ -104,13 +115,9 @@ export const mapAppellantCaseIn = (command) => {
 			},
 			landownerPermission: casedata.hasLandownersPermission
 		}),
-		...(isFullAdverts && {
-			appellantProcedurePreference: casedata.appellantProcedurePreference,
-			appellantProcedurePreferenceDetails: casedata.appellantProcedurePreferenceDetails,
-			appellantProcedurePreferenceDuration: casedata.appellantProcedurePreferenceDuration,
-			appellantProcedurePreferenceWitnessCount: casedata.appellantProcedurePreferenceWitnessCount
-		}),
+		...(isFullAdverts && procedurePreferenceFields),
 		...(isEnforcementNotice && {
+			...procedurePreferenceFields,
 			enforcementNotice: casedata.enforcementNotice,
 			enforcementNoticeListedBuilding: casedata.enforcementNoticeListedBuilding,
 			enforcementIssueDate: casedata.enforcementIssueDate,
