@@ -105,6 +105,10 @@ router.patch(
 	),
 	checkLookupValuesAreValid('incompleteReasons', 'appellantCaseIncompleteReason'),
 	checkLookupValuesAreValid('invalidReasons', 'appellantCaseInvalidReason'),
+	checkLookupValuesAreValid(
+		'enforcementNoticeInvalidReasons',
+		'appellantCaseEnforcementInvalidReason'
+	),
 	asyncHandler(updateAppellantCaseById)
 );
 

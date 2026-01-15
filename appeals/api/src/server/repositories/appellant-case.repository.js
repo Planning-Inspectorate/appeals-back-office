@@ -121,7 +121,8 @@ const updateAppellantCaseValidationOutcome = ({
 	groundABarred,
 	otherInformation,
 	enforcementNoticeInvalid,
-	otherLiveAppeals
+	otherLiveAppeals,
+	enforcementInvalidReasons
 }) => {
 	const transaction = [
 		updateAppellantCaseTable(appellantCaseId, {
@@ -161,19 +162,32 @@ const updateAppellantCaseValidationOutcome = ({
 				data: invalidReasons
 			})
 		);
+	}
 
-		if (enforcementNoticeInvalid) {
-			transaction.push(
-				enforcementNoticeAppealOutcomeRepository.createEnforcementNoticeAppealOutcome({
-					appeal: {
-						connect: { id: appealId }
-					},
-					otherInformation,
-					enforcementNoticeInvalid,
-					otherLiveAppeals
-				})
-			);
-		}
+	if (enforcementNoticeInvalid) {
+		transaction.push(
+			enforcementNoticeAppealOutcomeRepository.createEnforcementNoticeAppealOutcome({
+				appeal: {
+					connect: { id: appealId }
+				},
+				otherInformation,
+				enforcementNoticeInvalid,
+				otherLiveAppeals
+			})
+		);
+	}
+
+	if (enforcementInvalidReasons) {
+		transaction.push(
+			...commonRepository.createIncompleteInvalidReasons({
+				id: appellantCaseId,
+				relationOne: 'appellantCaseId',
+				relationTwo: 'appellantCaseEnforcementInvalidReasonId',
+				manyToManyRelationTable: 'appellantCaseEnforcementInvalidReasonsSelected',
+				incompleteInvalidReasonTextTable: 'appellantCaseEnforcementInvalidReasonText',
+				data: enforcementInvalidReasons
+			})
+		);
 	}
 
 	if (appealId && validAt) {

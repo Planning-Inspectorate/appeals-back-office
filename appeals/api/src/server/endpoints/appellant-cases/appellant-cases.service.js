@@ -76,23 +76,20 @@ export const checkAppellantCaseExists = (req, res, next) => {
  * @param { import('#endpoints/appeals.js').NotifyClient } notifyClient
  */
 export const updateAppellantCaseValidationOutcome = async (
-	{
-		appeal,
-		appellantCaseId,
-		azureAdUserId,
-		data,
-		validationOutcome,
-		validAt,
-		siteAddress,
-		groundABarred,
-		otherInformation,
-		enforcementNoticeInvalid,
-		otherLiveAppeals
-	},
+	{ appeal, appellantCaseId, azureAdUserId, data, validationOutcome, validAt, siteAddress },
 	notifyClient
 ) => {
 	const { id: appealId } = appeal;
-	const { appealDueDate, incompleteReasons, invalidReasons } = data;
+	const {
+		appealDueDate,
+		incompleteReasons,
+		invalidReasons,
+		groundABarred,
+		otherInformation,
+		enforcementNoticeInvalid,
+		otherLiveAppeals,
+		enforcementInvalidReasons
+	} = data;
 	const teamEmail = await getTeamEmailFromAppealId(appealId);
 
 	await appellantCaseRepository.updateAppellantCaseValidationOutcome({
@@ -104,7 +101,8 @@ export const updateAppellantCaseValidationOutcome = async (
 			invalidReasons,
 			...(otherInformation && { otherInformation }),
 			...(enforcementNoticeInvalid && { enforcementNoticeInvalid }),
-			...(otherLiveAppeals && { otherLiveAppeals })
+			...(otherLiveAppeals && { otherLiveAppeals }),
+			...(enforcementInvalidReasons && { enforcementInvalidReasons })
 		}),
 		...(isOutcomeValid(validationOutcome.name) && {
 			appealId,
@@ -214,9 +212,13 @@ export const updateAppellantCaseValidationOutcome = async (
 		}
 
 		if (isOutcomeInvalid(validationOutcome.name)) {
-			const invalidReasonsList = getFormattedReasons(
-				updatedAppellantCase?.appellantCaseInvalidReasonsSelected ?? []
-			);
+			const reasonsToFormat = updatedAppellantCase?.appellantCaseInvalidReasonsSelected?.length
+				? updatedAppellantCase?.appellantCaseInvalidReasonsSelected
+				: updatedAppellantCase?.appellantCaseEnforcementInvalidReasonsSelected?.length
+				? updatedAppellantCase?.appellantCaseEnforcementInvalidReasonsSelected
+				: [];
+
+			const invalidReasonsList = getFormattedReasons(reasonsToFormat);
 			if (!enforcementNoticeInvalid) {
 				const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 				if (!recipientEmail) {

@@ -5,6 +5,7 @@ import { getFeedbackLinkFromAppealTypeName } from '#lib/feedback-form-link.js';
 import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
 import { APPEAL_TYPE, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
@@ -30,7 +31,10 @@ import {
 	otherLiveAppealsPage,
 	viewInvalidAppealPage
 } from './invalid-appeal.mapper.js';
-import { getInvalidStatusCreatedDate } from './invalid-appeal.service.js';
+import {
+	getInvalidStatusCreatedDate,
+	setReviewOutcomeForEnforcementNoticeAppellantCase
+} from './invalid-appeal.service.js';
 
 /**
  *
@@ -602,7 +606,40 @@ export const postCheckDetailsAndMarkEnforcementAsInvalid = async (request, respo
 		return response.status(500).render('app/500.njk');
 	}
 
-	return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
+	const { webAppellantCaseReviewOutcome, enforcementDecision } = request.session;
+
+	try {
+		await setReviewOutcomeForEnforcementNoticeAppellantCase(
+			request.apiClient,
+			currentAppeal.appealId,
+			currentAppeal.appellantCaseId,
+			{
+				...webAppellantCaseReviewOutcome,
+				...enforcementDecision
+			}
+		);
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'appellantCaseInvalidOrIncomplete',
+			appealId: currentAppeal.appealId,
+			text: 'Appeal marked as invalid'
+		});
+
+		delete request.session.webAppellantCaseReviewOutcome;
+		delete request.session.enforcementDecision;
+
+		return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when completing enforcement invalid review'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
 };
 
 /**

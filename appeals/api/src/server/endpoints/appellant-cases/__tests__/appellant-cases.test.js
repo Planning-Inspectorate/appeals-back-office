@@ -1367,7 +1367,7 @@ describe('appellant cases routes', () => {
 				expect(response.status).toEqual(200);
 			});
 
-			test('updates the appellant case for invalid enforcement notice appeal', async () => {
+			test('updates the appellant case for invalid enforcement appeal with invalid enforcement notice', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(
 					enforcementNoticeAppealAppellantCaseInvalid
@@ -1448,6 +1448,82 @@ describe('appellant cases routes', () => {
 						otherInformation: undefined,
 						otherLiveAppeals: 'no',
 						enforcementNoticeInvalid: 'no'
+					}
+				});
+
+				expect(mockNotifySend).not.toHaveBeenCalled();
+				expect(response.status).toEqual(200);
+			});
+
+			test('updates the appellant case for invalid enforcement appeal with valid enforcement notice', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(
+					enforcementNoticeAppealAppellantCaseInvalid
+				);
+				// @ts-ignore
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[1]
+				);
+				// @ts-ignore
+				databaseConnector.appellantCaseEnforcementInvalidReasonsSelected.deleteMany.mockResolvedValue(
+					true
+				);
+				// @ts-ignore
+				databaseConnector.appellantCaseEnforcementInvalidReasonsSelected.createMany.mockResolvedValue(
+					true
+				);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const body = {
+					validationOutcome: 'invalid',
+					enforcementInvalidReasons: [
+						{ id: 1, text: ['has some text'] },
+						{ id: 2, text: ['has some other text'] }
+					],
+					enforcementNoticeInvalid: 'yes',
+					otherInformation: 'Enforcement other information'
+				};
+				const { appellantCase, id } = enforcementNoticeAppealAppellantCaseInvalid;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: {
+						appellantCaseValidationOutcomeId: 2
+					}
+				});
+				expect(
+					databaseConnector.appellantCaseEnforcementInvalidReasonText.deleteMany
+				).toHaveBeenCalled();
+				expect(
+					databaseConnector.appellantCaseEnforcementInvalidReasonText.createMany
+				).toHaveBeenCalledWith({
+					data: [
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseEnforcementInvalidReasonId: 1,
+							text: 'has some text'
+						},
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseEnforcementInvalidReasonId: 2,
+							text: 'has some other text'
+						}
+					]
+				});
+				expect(databaseConnector.enforcementNoticeAppealOutcome.create).toHaveBeenCalledWith({
+					data: {
+						appeal: expect.any(Object),
+						otherInformation: 'Enforcement other information',
+						otherLiveAppeals: undefined,
+						enforcementNoticeInvalid: 'yes'
 					}
 				});
 

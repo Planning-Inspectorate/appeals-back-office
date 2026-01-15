@@ -63,7 +63,11 @@ const patchAppellantCaseValidator = composeMiddleware(
 				throw new Error(ERROR_VALID_VALIDATION_OUTCOME_REASONS_REQUIRED);
 			}
 
-			if (isOutcomeInvalid(value) && !req.body.invalidReasons) {
+			if (
+				isOutcomeInvalid(value) &&
+				!req.body.invalidReasons &&
+				!req.body.enforcementInvalidReasons
+			) {
 				throw new Error(ERROR_VALID_VALIDATION_OUTCOME_REASONS_REQUIRED);
 			}
 

@@ -3,10 +3,11 @@ import { isOutcomeIncomplete, isOutcomeInvalid } from './check-validation-outcom
 /** @typedef {import('@pins/appeals.api').Schema.AppellantCaseIncompleteReasonsSelected} AppellantCaseIncompleteReasonsSelected */
 /** @typedef {import('@pins/appeals.api').Schema.AppellantCaseInvalidReasonsSelected} AppellantCaseInvalidReasonsSelected */
 /** @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaireIncompleteReasonsSelected} LPAQuestionnaireIncompleteReasonsSelected */
+/** @typedef {import('@pins/appeals.api').Schema.AppellantCaseEnforcementInvalidReasonsSelected} AppellantCaseEnforcementInvalidReasonsSelected */
 /** @typedef {import('@pins/appeals.api').Api.InvalidIncompleteReason} InvalidIncompleteReason */
 
 /**
- * @param {AppellantCaseIncompleteReasonsSelected | AppellantCaseInvalidReasonsSelected | LPAQuestionnaireIncompleteReasonsSelected} reason
+ * @param {AppellantCaseIncompleteReasonsSelected | AppellantCaseInvalidReasonsSelected | AppellantCaseEnforcementInvalidReasonsSelected | LPAQuestionnaireIncompleteReasonsSelected  } reason
  * @returns {InvalidIncompleteReason}}
  */
 const mapIncompleteInvalidReasons = (reason) => {
@@ -20,6 +21,11 @@ const mapIncompleteInvalidReasons = (reason) => {
 			name: reason.appellantCaseInvalidReason,
 			text: reason.appellantCaseInvalidReasonText?.map(({ text }) => text)
 		};
+	} else if ('appellantCaseEnforcementInvalidReason' in reason) {
+		return {
+			name: reason.appellantCaseEnforcementInvalidReason,
+			text: reason.appellantCaseEnforcementInvalidReasonText?.map(({ text }) => text)
+		};
 	}
 
 	return {
@@ -32,14 +38,22 @@ const mapIncompleteInvalidReasons = (reason) => {
  * @param {string | null} outcome
  * @param {Array<AppellantCaseIncompleteReasonsSelected | LPAQuestionnaireIncompleteReasonsSelected> | null} [incompleteReasons]
  * @param {AppellantCaseInvalidReasonsSelected[]} [invalidReasons]
+ * @param {AppellantCaseEnforcementInvalidReasonsSelected[]} [enforcementInvalidReasons]
  * @returns {{outcome: string|null, invalidReasons: InvalidIncompleteReason[]|undefined, incompleteReasons: InvalidIncompleteReason[]|undefined } | null}
  */
-const formatValidationOutcomeResponse = (outcome, incompleteReasons, invalidReasons) => {
+const formatValidationOutcomeResponse = (
+	outcome,
+	incompleteReasons,
+	invalidReasons,
+	enforcementInvalidReasons
+) => {
 	if (outcome) {
 		return {
 			outcome: outcome || null,
 			invalidReasons: isOutcomeInvalid(outcome)
-				? invalidReasons?.map((reason) => mapIncompleteInvalidReasons(reason))
+				? (invalidReasons?.length ? invalidReasons : enforcementInvalidReasons)?.map(
+						mapIncompleteInvalidReasons
+				  )
 				: undefined,
 			incompleteReasons: isOutcomeIncomplete(outcome)
 				? incompleteReasons?.map((reason) => mapIncompleteInvalidReasons(reason))
