@@ -513,14 +513,6 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
                 <td class="govuk-table__cell">Not applicable</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
-            <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">Appellant statement</th>
-                <td class="govuk-table__cell">Awaiting start date</td>
-                <td class="govuk-table__cell">Not applicable</td>
-                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/1/appellant-statement/add-document"
-                    data-cy="add-appellant-statement" class="govuk-link">Add<span class="govuk-visually-hidden"> Appellant statement</span></a>
-                </td>
-            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>

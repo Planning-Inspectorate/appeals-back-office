@@ -199,6 +199,14 @@ exports[`appeal-details GET /:appealId Documentation Appellant statement should 
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
             <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Appellant statement</th>
+                <td class="govuk-table__cell">Ready to review</td>
+                <td class="govuk-table__cell">1 January 2025</td>
+                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/appellant-statement?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                    data-cy="review-appellant-statement" class="govuk-link">Review<span class="govuk-visually-hidden"> Appellant statement</span></a>
+                </td>
+            </tr>
+            <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header">LPA statement</th>
                 <td class="govuk-table__cell"></td>
                 <td class="govuk-table__cell"></td>
@@ -213,28 +221,16 @@ exports[`appeal-details GET /:appealId Documentation Appellant statement should 
                 </td>
             </tr>
             <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">Appellant proof of evidence and witness</th>
-                <td class="govuk-table__cell">Awaiting proof of evidence and witness</td>
+                <th scope="row" class="govuk-table__header">Appellant final comments</th>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/proof-of-evidence/appellant/add-representation?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                    data-cy="add-appellant-proofs-evidence" class="govuk-link">Add<span class="govuk-visually-hidden"> Appellant proof of evidence</span></a>
-                </td>
+                <td class="govuk-table__cell"></td>
+                <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
             <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">LPA proof of evidence and witness</th>
-                <td class="govuk-table__cell">Awaiting proof of evidence and witness</td>
+                <th scope="row" class="govuk-table__header">LPA final comments</th>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/proof-of-evidence/lpa/add-representation?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                    data-cy="add-lpa-proofs-evidence" class="govuk-link">Add<span class="govuk-visually-hidden"> LPA proof of evidence</span></a>
-                </td>
-            </tr>
-            <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">Appellant statement</th>
-                <td class="govuk-table__cell">Ready to review</td>
-                <td class="govuk-table__cell">1 January 2025</td>
-                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/appellant-statement?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                    data-cy="review-appellant-statement" class="govuk-link">Review<span class="govuk-visually-hidden"> Appellant statement</span></a>
-                </td>
+                <td class="govuk-table__cell"></td>
+                <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
         </tbody>
     "
@@ -266,10 +262,20 @@ exports[`appeal-details GET /:appealId Documentation Appellant statement should 
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
             <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Appellant statement</th>
+                <td class="govuk-table__cell"></td>
+                <td class="govuk-table__cell"></td>
+                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/appellant-statement/add-document"
+                    data-cy="add-appellant-statement" class="govuk-link">Add<span class="govuk-visually-hidden"> Appellant statement</span></a>
+                </td>
+            </tr>
+            <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header">LPA statement</th>
                 <td class="govuk-table__cell"></td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell govuk-!-text-align-right"></td>
+                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/lpa-statement/add-document"
+                    data-cy="add-lpa-statement" class="govuk-link">Add<span class="govuk-visually-hidden"> LPA statement</span></a>
+                </td>
             </tr>
             <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header">Interested party comments</th>
@@ -280,28 +286,16 @@ exports[`appeal-details GET /:appealId Documentation Appellant statement should 
                 </td>
             </tr>
             <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">Appellant proof of evidence and witness</th>
-                <td class="govuk-table__cell">Awaiting proof of evidence and witness</td>
+                <th scope="row" class="govuk-table__header">Appellant final comments</th>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/proof-of-evidence/appellant/add-representation?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                    data-cy="add-appellant-proofs-evidence" class="govuk-link">Add<span class="govuk-visually-hidden"> Appellant proof of evidence</span></a>
-                </td>
+                <td class="govuk-table__cell"></td>
+                <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
             <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">LPA proof of evidence and witness</th>
-                <td class="govuk-table__cell">Awaiting proof of evidence and witness</td>
-                <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/proof-of-evidence/lpa/add-representation?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                    data-cy="add-lpa-proofs-evidence" class="govuk-link">Add<span class="govuk-visually-hidden"> LPA proof of evidence</span></a>
-                </td>
-            </tr>
-            <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">Appellant statement</th>
+                <th scope="row" class="govuk-table__header">LPA final comments</th>
                 <td class="govuk-table__cell"></td>
                 <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/appellant-statement/add-document"
-                    data-cy="add-appellant-statement" class="govuk-link">Add<span class="govuk-visually-hidden"> Appellant statement</span></a>
-                </td>
+                <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
         </tbody>
     "
@@ -378,14 +372,6 @@ exports[`appeal-details GET /:appealId Documentation Rule 6 party statements and
                     data-cy="review-rule-6-party-proofs-evidence" class="govuk-link">Review<span class="govuk-visually-hidden"> Test Rule 6 Party proof of evidence</span></a>
                 </td>
             </tr>
-            <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">Appellant statement</th>
-                <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/appellant-statement/add-document"
-                    data-cy="add-appellant-statement" class="govuk-link">Add<span class="govuk-visually-hidden"> Appellant statement</span></a>
-                </td>
-            </tr>
         </tbody>
     "
 `;
@@ -459,14 +445,6 @@ exports[`appeal-details GET /:appealId Documentation Rule 6 party statements and
                 <td class="govuk-table__cell"></td>
                 <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/proof-of-evidence/rule-6-party/1/add-representation?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                     data-cy="add-rule-6-party-proofs-evidence" class="govuk-link">Add<span class="govuk-visually-hidden"> Test Rule 6 Party proof of evidence</span></a>
-                </td>
-            </tr>
-            <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">Appellant statement</th>
-                <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell"></td>
-                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/appellant-statement/add-document"
-                    data-cy="add-appellant-statement" class="govuk-link">Add<span class="govuk-visually-hidden"> Appellant statement</span></a>
                 </td>
             </tr>
         </tbody>
