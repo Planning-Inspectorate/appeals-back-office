@@ -1777,7 +1777,7 @@ export const localPlanningDepartmentList = [
 		teamId: 17 // North3
 	},
 	{
-		lpaCode: 'P2745',
+		lpaCode: 'U2750',
 		name: 'North Yorkshire Council',
 		email: 'NYCplanningappeals@northyorks.gov.uk',
 		teamId: 16 // North2
