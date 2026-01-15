@@ -33,9 +33,9 @@ describe('Create Test Data', () => {
 		});
 	});
 	it('Update Case', () => {
-		const caseObj = { reference: '6003035' };
+		const caseObj = { reference: '6004064' };
 		cy.login(users.appeals.caseAdmin);
-		happyPathHelper.updateCase(caseObj, 'LPA_QUESTIONNAIRE', 'COMPLETE', 'S78');
+		happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'FINAL_COMMENTS', 'S78');
 	});
 });
 

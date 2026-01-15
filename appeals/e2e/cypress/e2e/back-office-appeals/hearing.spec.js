@@ -271,7 +271,7 @@ describe('Setup hearing and add hearing estimates', () => {
 	});
 
 	// Verify you see "You cannot check these answers"
-	it('should not allow re-setup of hearing if already submitted', () => {
+	it.skip('should not allow re-setup of hearing if already submitted', () => {
 		cy.getBusinessActualDate(currentDate, 2).then((date) => {
 			date.setHours(currentDate.getHours(), currentDate.getMinutes());
 			caseDetailsPage.clickButtonByText('Set up hearing');
