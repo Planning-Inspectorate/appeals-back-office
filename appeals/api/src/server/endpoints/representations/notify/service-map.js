@@ -63,5 +63,10 @@ export const serviceMap = [
 		status: APPEAL_REPRESENTATION_STATUS.INCOMPLETE,
 		type: APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT,
 		service: service.rule6PartyStatementIncomplete
+	},
+	{
+		status: APPEAL_REPRESENTATION_STATUS.INCOMPLETE,
+		type: APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE,
+		service: service.rule6PartyProofOfEvidenceIncomplete
 	}
 ];
