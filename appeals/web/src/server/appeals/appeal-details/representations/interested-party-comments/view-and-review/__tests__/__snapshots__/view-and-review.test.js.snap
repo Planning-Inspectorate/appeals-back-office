@@ -378,8 +378,10 @@ exports[`interested-party-comments GET /reject/check-your-answers should render 
                 </dd>
         </div>
     </dl>
-    <p class="govuk-body">We will send an email to the interested party to explain why you rejected
-        their comment.</p>
+    <div class="govuk-grid-row govuk-grid-column-two-thirds">
+        <p class="govuk-body">We will send an email to the interested party to explain why you rejected
+            their comment.</p>
+    </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <form method="post" novalidate="novalidate">

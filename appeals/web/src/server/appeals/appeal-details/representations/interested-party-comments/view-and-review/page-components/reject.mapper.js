@@ -1,7 +1,10 @@
 import { rejectionReasonHtml } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { editLink } from '#lib/edit-utilities.js';
-import { simpleHtmlComponent } from '#lib/mappers/components/page-components/html.js';
+import {
+	simpleHtmlComponent,
+	wrapComponents
+} from '#lib/mappers/components/page-components/html.js';
 import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { REPRESENTATION_ADDED_AS_DOCUMENT } from '@pins/appeals/constants/common.js';
@@ -236,7 +239,13 @@ export function rejectCheckYourAnswersPage(
 	const backLinkPath = userProvidedEmail ? 'allow-resubmit' : 'select-reason';
 
 	/** @type {PageComponent[]} */
-	const pageComponents = [summaryListComponent, bottomText];
+	const pageComponents = [
+		summaryListComponent,
+		wrapComponents([bottomText], {
+			opening: '<div class="govuk-grid-row govuk-grid-column-two-thirds">',
+			closing: '</div>'
+		})
+	];
 
 	preRenderPageComponents(pageComponents);
 
