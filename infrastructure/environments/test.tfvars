@@ -53,7 +53,7 @@ apps_config = {
     featureFlagEnforcementNotice      = true
     featureFlagInvalidDecisionLetter  = true
     featureFlagRule6Parties           = true
-    featureFlagExpeditedAppeals       = true
+    featureFlagExpeditedAppeals       = false
     featureFlagManuallyAddReps        = true
     featureFlagAppellantStatement     = true
   }
