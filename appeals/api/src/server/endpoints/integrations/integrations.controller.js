@@ -136,18 +136,19 @@ const importNamedIndividuals = async ({ mainAppealReference, casedata, documents
 		// @ts-ignore
 		casedata?.namedIndividuals?.map((individual) => {
 			const { firstName, lastName, interestInLand, writtenOrVerbalPermission } = individual;
-			// Main appeals appellant is this appeals agent.
-			const agent = users?.find((user) => user.serviceUserType === SERVICE_USER_TYPE.APPELLANT);
+
+			// The main appeals appellant is this appeals agent if no agent exists.
+			const agent =
+				users?.find((user) => user.serviceUserType === SERVICE_USER_TYPE.AGENT) ||
+				users?.find((user) => user.serviceUserType === SERVICE_USER_TYPE.APPELLANT);
+
+			agent.serviceUserType = SERVICE_USER_TYPE.AGENT;
 
 			const data = {
 				users: [{ firstName, lastName, serviceUserType: SERVICE_USER_TYPE.APPELLANT }, ...[agent]],
 				casedata: { ...structuredClone(casedata), interestInLand, writtenOrVerbalPermission },
 				documents: structuredClone(documents)
 			};
-
-			if (agent) {
-				data.users.push(agent);
-			}
 
 			// For now, relate this individual appeal to the main appeal (later we will link them properly)
 			data.casedata.nearbyCaseReferences = [mainAppealReference];
