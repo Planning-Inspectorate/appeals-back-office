@@ -1,6 +1,7 @@
 import { Prisma } from '#db-client/client.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { sendRepresentationReceivedNotifications } from '#endpoints/integrations/integrations.controller.js';
 import representationRepository from '#repositories/representation.repository.js';
 import { isStatePassed } from '#state/transition-state.js';
 import BackOfficeAppError from '#utils/app-error.js';
@@ -13,6 +14,7 @@ import {
 } from '@pins/appeals/constants/common.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
+	AUDIT_TRIAL_RULE_6_PARTY_ID,
 	DEFAULT_PAGE_NUMBER,
 	DEFAULT_PAGE_SIZE,
 	ERROR_NOT_FOUND,
@@ -215,6 +217,7 @@ export async function updateRepresentation(request, response) {
  * */
 export const createRepresentation = () => async (req, res) => {
 	const { appealId, representationType } = req.params;
+	const azureAdUserId = req.get('azureAdUserId');
 
 	const shouldAutoPublish = shouldAutoPublishRep(req.appeal, representationType);
 
@@ -243,6 +246,16 @@ export const createRepresentation = () => async (req, res) => {
 		shouldAutoPublish ? EventType.Create : EventType.Update
 	);
 	await broadcasters.broadcastAppeal(Number(appealId));
+
+	if (representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE) {
+		await sendRepresentationReceivedNotifications(
+			req.appeal,
+			req.notifyClient,
+			azureAdUserId || AUDIT_TRIAL_RULE_6_PARTY_ID,
+			'rule-6-party-proof-of-evidence-received'
+		);
+	}
+
 	return res.status(201).send(rep);
 };
 

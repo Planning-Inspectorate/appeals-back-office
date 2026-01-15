@@ -394,6 +394,15 @@ export const importRepresentation = async (req, res) => {
 		);
 	}
 
+	if (repType === 'rule_6_party_proofs_evidence') {
+		await sendRepresentationReceivedNotifications(
+			req.appeal,
+			req.notifyClient,
+			azureAdUserId,
+			'rule-6-party-proof-of-evidence-received'
+		);
+	}
+
 	return res.status(201).send(rep);
 };
 

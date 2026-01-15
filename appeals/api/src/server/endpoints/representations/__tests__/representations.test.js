@@ -832,6 +832,109 @@ describe('/appeals/:id/reps', () => {
 			});
 		});
 
+		test('200 when rule 6 proof of evidence incomplete is successfully updated with incomplete, appeal type %s', async () => {
+			const appealWithRule6 = {
+				...fullPlanningAppeal,
+				appealRule6Parties: [
+					{
+						id: 1,
+						appealId: 2,
+						serviceUserId: 729,
+						serviceUser: {
+							id: 729,
+							organisationName: 'Rule 6 Party',
+							email: 'rule6party@example.com'
+						}
+					}
+				]
+			};
+			jest
+				.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+				.setSystemTime(new Date('2024-12-11'));
+
+			const mockRepresentation = {
+				id: 1,
+				lpa: false,
+				status: null,
+				representedId: 729,
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: 'Redacted text of the representation',
+				dateCreated: new Date('2024-12-11T12:00:00Z'),
+				notes: 'Some notes',
+				attachments: ['attachment1.pdf', 'attachment2.pdf'],
+				representationType: 'rule_6_party_proofs_evidence',
+				siteVisitRequested: true,
+				source: 'lpa',
+				representationRejectionReasonsSelected: [
+					{
+						representationRejectionReason: {
+							id: 8,
+							name: 'Supporting documents missing',
+							hasText: false
+						},
+						representationRejectionReasonText: []
+					},
+					{
+						representationRejectionReason: {
+							id: 10,
+							name: 'Other',
+							hasText: true
+						},
+						representationRejectionReasonText: [{ text: 'Provided documents were incomplete' }]
+					}
+				]
+			};
+
+			const expectedSiteAddress = [
+				'addressLine1',
+				'addressLine2',
+				'addressTown',
+				'addressCounty',
+				'postcode',
+				'addressCountry'
+			]
+				.map((key) => appealWithRule6.address[key])
+				.filter((value) => value)
+				.join(', ');
+
+			const expectedEmailPayload = {
+				lpa_reference: appealWithRule6.applicationReference,
+				deadline_date: '16 December 2024',
+				appeal_reference_number: appealWithRule6.reference,
+				reasons: ['Supporting documents missing', 'Other: Provided documents were incomplete'],
+				site_address: expectedSiteAddress,
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+			};
+
+			databaseConnector.appeal.findUnique.mockResolvedValue(appealWithRule6);
+			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.update.mockResolvedValue({
+				...mockRepresentation,
+				status: 'incomplete'
+			});
+
+			const response = await request
+				.patch('/appeals/1/reps/1')
+				.send({
+					status: 'incomplete',
+					notes: 'Some notes',
+					allowResubmit: false
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(200);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				azureAdUserId: expect.anything(),
+				notifyClient: expect.anything(),
+				personalisation: expectedEmailPayload,
+				recipientEmail: appealWithRule6.appealRule6Parties[0].serviceUser.email,
+				templateName: 'proof-of-evidence-incomplete'
+			});
+		});
+
 		test('200 when rule 6 party statement incomplete is successfully updated with incomplete', async () => {
 			const appealWithRule6 = {
 				...fullPlanningAppeal,
@@ -1198,7 +1301,16 @@ describe('/appeals/:id/reps', () => {
 		});
 
 		test('201 when rule_6_party_proofs_evidence representation with attachment is successfully created', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...fullPlanningAppeal,
+				appealRule6Parties: [
+					{
+						serviceUser: {
+							email: 'test@test.com'
+						}
+					}
+				]
+			});
 			const mockDocument = {
 				guid: '39ad6cd8-60ab-43f0-a995-4854db8f12c6',
 				name: 'test.pdf'
@@ -1222,6 +1334,22 @@ describe('/appeals/:id/reps', () => {
 				1,
 				'Create'
 			);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(3);
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(3, {
+				azureAdUserId: '732652365',
+				notifyClient: expect.anything(),
+				personalisation: {
+					appeal_reference_number: fullPlanningAppeal.reference,
+					lpa_reference: fullPlanningAppeal.applicationReference,
+					site_address: `${fullPlanningAppeal.address.addressLine1}, ${fullPlanningAppeal.address.addressLine2}, ${householdAppeal.address.addressTown}, ${householdAppeal.address.addressCounty}, ${householdAppeal.address.postcode}, ${householdAppeal.address.addressCountry}`,
+					inquiry_date: '31 March 2022',
+					statement_url: '/mock-front-office-url/rule-6/1345264'
+				},
+				recipientEmail: 'test@test.com',
+				templateName: 'rule-6-party-proof-of-evidence-received'
+			});
 		});
 	});
 
