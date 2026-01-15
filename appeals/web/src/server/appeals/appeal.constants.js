@@ -18,6 +18,9 @@ export const textInputCharacterLimits = {
 	expandedTextareaLength: 8000
 };
 
+/**
+ * @type {(string|*)[]}
+ */
 export const APPEAL_CASE_PRE_STATEMENTS_STATUS = [
 	APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
 	APPEAL_CASE_STATUS.VALIDATION,
