@@ -905,6 +905,17 @@ describe('invalid-appeal', () => {
 				.get('/appeals/appellant-case-enforcement-invalid-reasons')
 				.reply(200, appealCaseEnforcementInvalidReasons)
 				.persist();
+			nock('http://test/')
+				.patch('/appeals/1/appellant-cases/0', {
+					validationOutcome: 'invalid',
+					enforcementInvalidReasons: [
+						{ id: 1, text: ['has some text'] },
+						{ id: 2, text: ['has some other text'] }
+					],
+					enforcementNoticeInvalid: 'yes',
+					otherInformation: 'Enforcement other information'
+				})
+				.reply(200);
 
 			// Populate session data
 			await request.post(`${baseUrl}/appellant-case`).send({ reviewOutcome: 'invalid' });

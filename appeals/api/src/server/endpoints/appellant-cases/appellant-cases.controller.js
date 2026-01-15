@@ -84,11 +84,7 @@ const updateAppellantCaseById = async (req, res) => {
 			interestInLand,
 			writtenOrVerbalPermission,
 			applicationDevelopmentAllOrPart,
-			appealDecisionDate,
-			groundABarred,
-			otherInformation,
-			enforcementNoticeInvalid,
-			otherLiveAppeals
+			appealDecisionDate
 		},
 		params,
 		validationOutcome
@@ -122,11 +118,7 @@ const updateAppellantCaseById = async (req, res) => {
 						data,
 						validationOutcome,
 						validAt,
-						siteAddress,
-						groundABarred,
-						otherInformation,
-						enforcementNoticeInvalid,
-						otherLiveAppeals
+						siteAddress
 					},
 					notifyClient
 			  )

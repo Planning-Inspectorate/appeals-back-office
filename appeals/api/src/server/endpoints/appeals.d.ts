@@ -314,6 +314,7 @@ interface UpdateAppellantCaseValidationOutcome {
 	otherInformation?: string;
 	enforcementNoticeInvalid?: string;
 	otherLiveAppeals?: string;
+	enforcementInvalidReasons?: IncompleteInvalidReasons;
 }
 
 interface UpdateAppellantCaseValidationOutcomeParams {
@@ -334,14 +335,15 @@ interface UpdateAppellantCaseValidationOutcomeParams {
 		appealDueDate: Date;
 		incompleteReasons: IncompleteInvalidReasons;
 		invalidReasons: IncompleteInvalidReasons;
+		groundABarred?: boolean;
+		otherInformation?: string;
+		enforcementNoticeInvalid?: string;
+		otherLiveAppeals?: string;
+		enforcementInvalidReasons?: IncompleteInvalidReasons;
 	};
 	validationOutcome: ValidationOutcome;
 	validAt: Date;
 	siteAddress: string;
-	groundABarred?: boolean;
-	otherInformation?: string;
-	enforcementNoticeInvalid?: string;
-	otherLiveAppeals?: string;
 }
 
 interface SingleLPAQuestionnaireResponse {
