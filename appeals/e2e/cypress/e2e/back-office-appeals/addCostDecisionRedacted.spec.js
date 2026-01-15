@@ -83,7 +83,7 @@ describe('add cost decision and redact', () => {
 			caseDetailsPage.clickManageAppellantCostApplication();
 			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
-			caseDetailsPage.clickButtonByText('upload a new version');
+			caseDetailsPage.clickButtonByText('Upload a new version');
 			caseDetailsPage.uploadSampleFile(sampleFiles.document2);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('Unredacted');

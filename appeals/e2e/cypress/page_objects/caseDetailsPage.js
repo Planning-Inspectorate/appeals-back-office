@@ -60,7 +60,7 @@ export class CaseDetailsPage extends Page {
 		hearingBannerLink: 'setup-hearing',
 		hearingBannerAddressLink: 'add-hearing-address',
 		inquiryBannerLink: 'setup-inquiry',
-		pageHeading: 'h1.govuk-heading-l',
+		pageHeading: 'h1.govuk-heading-l, h1.govuk-fieldset__heading',
 		changeInquiryDate: 'change-inquiry-date',
 		changeInquiryNumberOfDays: 'change-inquiry-expected-number-of-days',
 		addAppellantWithdrawal: 'add-costs-appellant-withdrawal',

@@ -80,7 +80,7 @@ describe('Progress S78 to decision', () => {
 			cy.simulateFinalCommentsDeadlineElapsed(caseObj);
 			cy.reload();
 			caseDetailsPage.basePageElements.bannerLink().click();
-			caseDetailsPage.clickButtonByText('Share final comments');
+			caseDetailsPage.clickButtonByText('Share final comment');
 			caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
 
 			happyPathHelper.setupSiteVisitFromBanner(caseObj);
