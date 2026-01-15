@@ -1351,7 +1351,6 @@ describe('set up inquiry', () => {
 			expect(errorSummaryHtml).toContain('Planning obligation due date must include a day');
 			expect(errorSummaryHtml).toContain('Enter the statement of common ground due date');
 			expect(errorSummaryHtml).toContain('Enter the proof of evidence and witnesses due date');
-			expect(errorSummaryHtml).toContain('Enter the case management conference due date');
 		});
 	});
 
@@ -1613,7 +1612,6 @@ describe('set up inquiry', () => {
 					expect(body).toHaveProperty('ipCommentsDueDate');
 					expect(body).toHaveProperty('statementOfCommonGroundDueDate');
 					expect(body).toHaveProperty('proofOfEvidenceAndWitnessesDueDate');
-					expect(body).toHaveProperty('caseManagementConferenceDueDate');
 					expect(body).toHaveProperty('planningObligationDueDate');
 					return true; // IMPORTANT: return true to match
 				})
@@ -1670,7 +1668,6 @@ describe('set up inquiry', () => {
 					expect(body).toHaveProperty('ipCommentsDueDate');
 					expect(body).toHaveProperty('statementOfCommonGroundDueDate');
 					expect(body).toHaveProperty('proofOfEvidenceAndWitnessesDueDate');
-					expect(body).toHaveProperty('caseManagementConferenceDueDate');
 					expect(body).toHaveProperty('planningObligationDueDate');
 					return true; // IMPORTANT: return true to match
 				})

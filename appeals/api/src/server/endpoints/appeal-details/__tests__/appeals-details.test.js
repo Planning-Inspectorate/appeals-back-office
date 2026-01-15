@@ -164,9 +164,7 @@ const s78AppealDto = {
 		planningObligationDueDate:
 			fullPlanningAppeal.appealTimetable.planningObligationDueDate.toISOString(),
 		proofOfEvidenceAndWitnessesDueDate:
-			fullPlanningAppeal.appealTimetable.proofOfEvidenceAndWitnessesDueDate.toISOString(),
-		caseManagementConferenceDueDate:
-			fullPlanningAppeal.appealTimetable.caseManagementConferenceDueDate.toISOString()
+			fullPlanningAppeal.appealTimetable.proofOfEvidenceAndWitnessesDueDate.toISOString()
 	},
 	appealType: fullPlanningAppeal.appealType.type,
 	appellantCaseId: fullPlanningAppeal.appellantCase.id,

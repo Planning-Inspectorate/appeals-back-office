@@ -65,10 +65,6 @@ export const dueDateDaysInputValidator = (hasPlanningObligation) => {
 			id: 'proof-of-evidence-and-witnesses-due-date',
 			label: 'Proof of evidence and witnesses due date'
 		},
-		caseManagementConferenceDueDate: {
-			id: 'case-management-conference-due-date',
-			label: 'Case management conference due date'
-		},
 		statementOfCommonGroundDueDate: {
 			id: 'statement-of-common-ground-due-date',
 			label: 'Statement of common ground due date'

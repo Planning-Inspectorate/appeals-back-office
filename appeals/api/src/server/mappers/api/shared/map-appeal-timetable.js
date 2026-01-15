@@ -50,10 +50,6 @@ export const mapAppealTimetable = (data) => {
 				proofOfEvidenceAndWitnessesDueDate:
 					(appeal.appealTimetable.proofOfEvidenceAndWitnessesDueDate &&
 						appeal.appealTimetable.proofOfEvidenceAndWitnessesDueDate.toISOString()) ||
-					null,
-				caseManagementConferenceDueDate:
-					(appeal.appealTimetable.caseManagementConferenceDueDate &&
-						appeal.appealTimetable.caseManagementConferenceDueDate.toISOString()) ||
 					null
 			})
 		};

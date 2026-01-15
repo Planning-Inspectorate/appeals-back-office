@@ -53,10 +53,6 @@ export const postInquiryValidator = composeMiddleware(
 		.if((_, { req }) => req.body.isStartCase)
 		.isISO8601()
 		.withMessage('proofOfEvidenceAndWitnessesDueDate must be a valid date'),
-	body('caseManagementConferenceDueDate')
-		.if((_, { req }) => req.body.isStartCase)
-		.isISO8601()
-		.withMessage('caseManagementConferenceDueDate must be a valid date'),
 	body('planningObligationDueDate')
 		.optional({ checkFalsy: true })
 		.custom(() =>

@@ -584,7 +584,6 @@ interface AppealTimetable {
 	statementOfCommonGroundDueDate?: string | null;
 	planningObligationDueDate?: string | null;
 	proofOfEvidenceAndWitnessesDueDate?: string | null;
-	caseManagementConferenceDueDate?: string | null;
 }
 
 interface UpdateTimetableRequest {
@@ -1020,7 +1019,6 @@ type CreateInquiry = {
 	ipCommentsDueDate: Date | string;
 	statementOfCommonGroundDueDate: Date | string;
 	proofOfEvidenceAndWitnessesDueDate: Date | string;
-	caseManagementConferenceDueDate: Date | string;
 	planningObligationDueDate: Date | string | undefined;
 	isStartCase: boolean;
 };

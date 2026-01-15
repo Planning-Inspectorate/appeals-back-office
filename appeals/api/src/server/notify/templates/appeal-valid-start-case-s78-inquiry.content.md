@@ -44,10 +44,6 @@ Due by {{planning_obligation_deadline}}.
 
 {% endif -%}
 
-## Case management conference
-
-Due by {{case_management_conference_deadline}}.
-
 # Inquiry details
 
 ^Date: {{inquiry_date}}

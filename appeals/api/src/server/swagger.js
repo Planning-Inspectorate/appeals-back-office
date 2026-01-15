@@ -564,7 +564,6 @@ export const spec = {
 					ipCommentsDueDate: '2024-05-11T00:00:00.000Z',
 					statementOfCommonGroundDueDate: '2024-05-12T00:00:00.000Z',
 					proofOfEvidenceAndWitnessesDueDate: '2024-05-13T00:00:00.000Z',
-					caseManagementConferenceDueDate: '2024-05-15T00:00:00.000Z',
 					planningObligationDueDate: '2024-05-14T00:00:00.000Z'
 				}
 			}
@@ -942,8 +941,7 @@ export const spec = {
 			statementReviewDate: '2024-08-12',
 			statementOfCommonGroundDueDate: '2024-08-12',
 			planningObligationDueDate: '2024-08-13',
-			proofOfEvidenceAndWitnessesDueDate: '2024-08-14',
-			caseManagementConferenceDueDate: '2024-08-15'
+			proofOfEvidenceAndWitnessesDueDate: '2024-08-14'
 		},
 		UpdateAppealTimetableResponse: {
 			finalCommentReviewDate: '2024-08-09T01:00:00.000Z',
@@ -952,8 +950,7 @@ export const spec = {
 			statementReviewDate: '2024-08-12T01:00:00.000Z',
 			statementOfCommonGroundDueDate: '2024-08-12T01:00:00.000Z',
 			planningObligationDueDate: '2024-08-13T01:00:00.000Z',
-			proofOfEvidenceAndWitnessesDueDate: '2024-08-14T01:00:00.000Z',
-			caseManagementConferenceDueDate: '2024-08-15T00:00:00.000Z'
+			proofOfEvidenceAndWitnessesDueDate: '2024-08-14T01:00:00.000Z'
 		},
 		CalculateAppealTimetableResponse: {
 			finalCommentReviewDate: '2024-08-09T01:00:00.000Z',
@@ -963,7 +960,6 @@ export const spec = {
 			statementOfCommonGroundDueDate: '2024-08-12T01:00:00.000Z',
 			planningObligationDueDate: '2024-08-13T01:00:00.000Z',
 			proofOfEvidenceAndWitnessesDueDate: '2024-08-14T01:00:00.000Z',
-			caseManagementConferenceDueDate: '2024-08-15T00:00:00.000Z',
 			startDate: '2024-08-09T01:00:00.000Z'
 		},
 		AllDocumentRedactionStatusesResponse: {
@@ -1636,12 +1632,6 @@ export const spec = {
 						'Date string of the proofOfEvidenceAndWitnessesDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM',
 					example: '2026-11-10T00:00:00.000Z'
 				},
-				caseManagementConferenceDueDate: {
-					type: 'string',
-					description:
-						'Date string of the caseManagementConferenceDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM',
-					example: '2026-11-10T00:00:00.000Z'
-				},
 				planningObligationDueDate: {
 					type: 'string',
 					description: 'Date string of the planningObligationDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM',
@@ -1724,12 +1714,6 @@ export const spec = {
 				proofOfEvidenceAndWitnessesDueDate: {
 					type: 'string',
 					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
-					example: '2026-11-10T00:00:00.000Z'
-				},
-				caseManagementConferenceDueDate: {
-					type: 'string',
-					description:
-						'Date string of the caseManagementConferenceDueDate: YYYY-MM-DDTHH:MM:SS+HH:MM',
 					example: '2026-11-10T00:00:00.000Z'
 				},
 				planningObligationDueDate: {

@@ -587,8 +587,7 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 				finalCommentsDueDate: '2023-10-12T01:00:00.000Z',
 				statementOfCommonGroundDueDate: '2023-10-15T01:00:00.000Z',
 				planningObligationDueDate: '2023-10-16T01:00:00.000Z',
-				proofOfEvidenceAndWitnessesDueDate: '',
-				caseManagementConferenceDueDate: ''
+				proofOfEvidenceAndWitnessesDueDate: ''
 			});
 		});
 	});

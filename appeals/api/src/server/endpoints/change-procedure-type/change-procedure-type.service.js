@@ -275,8 +275,7 @@ export const changeProcedureToInquiry = async (data, appealId) => {
 					ipCommentsDueDate: data.ipCommentsDueDate,
 					statementOfCommonGroundDueDate: data.statementOfCommonGroundDueDate,
 					planningObligationDueDate: data.planningObligationDueDate,
-					proofOfEvidenceAndWitnessesDueDate: data.proofOfEvidenceAndWitnessesDueDate,
-					caseManagementConferenceDueDate: data.caseManagementConferenceDueDate
+					proofOfEvidenceAndWitnessesDueDate: data.proofOfEvidenceAndWitnessesDueDate
 				}
 			});
 			let existingHearing;
@@ -338,7 +337,6 @@ export const changeProcedureToInquiry = async (data, appealId) => {
  * @param {string} appealProcedure
  * @param {string | undefined} existingAppealProcedure
  * @param {string | undefined} proofOfEvidenceAndWitnessesDueDate
- * @param {string | undefined} caseManagementConferenceDueDate
  * @param {import('#endpoints/appeals.js').SingleAddressResponse | undefined} address
  * @param {string | undefined} eventDate
  * @returns {Promise<void>}
@@ -350,7 +348,6 @@ export const sendChangeProcedureTypeNotifications = async (
 	appealProcedure,
 	existingAppealProcedure,
 	proofOfEvidenceAndWitnessesDueDate,
-	caseManagementConferenceDueDate,
 	address,
 	eventDate
 ) => {
@@ -407,9 +404,6 @@ export const sendChangeProcedureTypeNotifications = async (
 			: '',
 		proof_of_evidence_due_date: proofOfEvidenceAndWitnessesDueDate
 			? dateISOStringToDisplayDate(proofOfEvidenceAndWitnessesDueDate)
-			: '',
-		case_management_conference_due_date: caseManagementConferenceDueDate
-			? dateISOStringToDisplayDate(caseManagementConferenceDueDate)
 			: '',
 		existing_appeal_procedure: existingAppealProcedure ?? '',
 		hearing_date: eventDate ? dateISOStringToDisplayDate(eventDate) : '',
