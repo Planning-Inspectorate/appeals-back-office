@@ -33,7 +33,7 @@ export const errorMessage = (type, replaceValue, additionalValues = {}) => {
 			'Please confirm that the document does not belong anywhere else',
 		TIMEOUT: 'There was a timeout and your files could not be uploaded',
 		NO_FILE: 'Select the {fileTitle}',
-		SIZE_SINGLE_FILE: `The {fileTitle} must be smaller than 100MB`,
+		SIZE_SINGLE_FILE: `The {fileTitle} must be smaller than 250MB`,
 		GENERIC_SINGLE_FILE: `{REPLACE_VALUE} could not be added`,
 		NAME_SINGLE_FILE: `{REPLACE_VALUE} could not be added because the file name is too long or contains special characters. Rename the file and try again.`,
 		DUPLICATE_NAME_SINGLE_FILE: `"{REPLACE_VALUE}" could not be added because a file with this name already exists. Files cannot have duplicate names.`,
