@@ -1141,6 +1141,120 @@ describe('/appeals/representation-submission', () => {
 					expect(databaseConnector.representationAttachment.createMany).toHaveBeenCalled();
 					expect(response.status).toEqual(201);
 				});
+
+				test('valid rep payload: Rule 6 party proof of evidence sends notifications to all parties with correct links', async () => {
+					const validRepresentation = {
+						...validRepresentationRule6PartyProofsEvidence,
+						serviceUserId: (200000000 + 729).toString()
+					};
+
+					// @ts-ignore
+					databaseConnector.folder.findMany.mockResolvedValue(
+						FOLDERS.map((/** @type {string} */ folder, /** @type {number} */ ix) => {
+							return { id: ix + 1, path: folder };
+						})
+					);
+					// @ts-ignore
+					databaseConnector.documentVersion.findMany.mockResolvedValue([
+						{
+							dateCreated: '2024-03-01T13:48:35.847Z',
+							documentGuid: '001',
+							documentType: 'rule6ProofOfEvidence',
+							documentURI: 'https://example.com/doc',
+							filename: 'statement.pdf',
+							mime: 'application/pdf',
+							originalFilename: 'statement.pdf',
+							size: 10293
+						}
+					]);
+
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						id: 2,
+						reference: validRepresentationRule6PartyProofsEvidence.caseReference,
+						appealType: { key: appealCaseType },
+						address: {
+							addressLine1: '123 Test Street',
+							county: 'Testshire',
+							postcode: 'TE1 1ST'
+						},
+						applicationReference: 'LPA/2024/001',
+						inquiry: { inquiryStartTime: new Date('2025-03-15T10:00:00Z') },
+						appealStatus: [
+							{
+								id: 1,
+								status: 'statments',
+								createdAt: new Date('2024-05-27T14:08:50.414Z'),
+								valid: true,
+								appealId: 2
+							}
+						],
+						appellant: null,
+						agent: { email: 'agent@example.com' },
+						lpa: { lpaCode: 'Q9999', email: 'lpa@example.com' },
+						appealRule6Parties: [
+							{
+								id: 1,
+								appealId: 2,
+								serviceUserId: 729,
+								serviceUser: {
+									id: 729,
+									organisationName: 'Rule 6 Party',
+									email: 'rule6party@example.com'
+								}
+							}
+						]
+					});
+
+					const response = await request
+						.post('/appeals/representation-submission')
+						.send(validRepresentation);
+
+					expect(response.status).toEqual(201);
+					expect(global.mockNotifySend).toHaveBeenCalledTimes(3);
+
+					expect(global.mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: expect.any(String),
+						notifyClient: expect.any(Object),
+						templateName: 'rule-6-party-proof-of-evidence-received',
+						recipientEmail: 'agent@example.com',
+						personalisation: {
+							appeal_reference_number: validRepresentationRule6PartyStatement.caseReference,
+							site_address: '123 Test Street, TE1 1ST',
+							lpa_reference: 'LPA/2024/001',
+							statement_url: expect.stringMatching(/\/appeals\/\d+/),
+							inquiry_date: '15 March 2025'
+						}
+					});
+
+					expect(global.mockNotifySend).toHaveBeenNthCalledWith(2, {
+						azureAdUserId: expect.any(String),
+						notifyClient: expect.any(Object),
+						templateName: 'rule-6-party-proof-of-evidence-received',
+						recipientEmail: 'lpa@example.com',
+						personalisation: {
+							appeal_reference_number: validRepresentationRule6PartyStatement.caseReference,
+							site_address: '123 Test Street, TE1 1ST',
+							lpa_reference: 'LPA/2024/001',
+							statement_url: expect.stringMatching(/\/manage-appeals\/\d+/),
+							inquiry_date: '15 March 2025'
+						}
+					});
+
+					expect(global.mockNotifySend).toHaveBeenNthCalledWith(3, {
+						azureAdUserId: expect.any(String),
+						notifyClient: expect.any(Object),
+						templateName: 'rule-6-party-proof-of-evidence-received',
+						recipientEmail: 'rule6party@example.com',
+						personalisation: {
+							appeal_reference_number: validRepresentationRule6PartyStatement.caseReference,
+							site_address: '123 Test Street, TE1 1ST',
+							lpa_reference: 'LPA/2024/001',
+							statement_url: expect.stringMatching(/\/rule-6\/\d+/),
+							inquiry_date: '15 March 2025'
+						}
+					});
+				});
 			}
 		);
 	});
