@@ -10,6 +10,7 @@ import { EstimatedDaysSection } from '../../page_objects/estimatedDaysSection.js
 import { ProcedureTypePage } from '../../page_objects/procedureTypePage';
 import { happyPathHelper } from '../../support/happyPathHelper';
 import { tag } from '../../support/tag';
+import { startCaseTimetableItems } from '../../support/timetables.js';
 import { formatDateAndTime, formatObjectAsString } from '../../support/utils/format';
 
 const caseDetailsPage = new CaseDetailsPage();
@@ -52,29 +53,6 @@ describe('Start case', () => {
 			}
 		]
 	};
-
-	const timetableItems = [
-		{
-			row: 'lpa-questionnaire-due-date',
-			editable: true
-		},
-		{
-			row: 'statement-due-date',
-			editable: true
-		},
-		{
-			row: 'ip-comments-due-date',
-			editable: true
-		},
-		{
-			row: 'statement-of-common-ground-due-date',
-			editable: true
-		},
-		{
-			row: 'proof-of-evidence-and-witnesses-due-date',
-			editable: true
-		}
-	];
 
 	const inquiryAddress = {
 		line1: 'e2e Inquiry Test Address',
@@ -270,7 +248,7 @@ describe('Start case', () => {
 
 				// enter timetable dates
 				cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
-					dateTimeSection.enterInquiryDueDates(timetableItems, startDate, 7);
+					dateTimeSection.enterInquiryDueDates(startCaseTimetableItems, startDate, 7);
 				});
 
 				dateTimeSection.clickButtonByText('Continue');
@@ -327,7 +305,7 @@ describe('Start case', () => {
 
 				// enter timetable dates
 				cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
-					dateTimeSection.enterInquiryDueDates(timetableItems, startDate, 7);
+					dateTimeSection.enterInquiryDueDates(startCaseTimetableItems, startDate, 7);
 				});
 
 				dateTimeSection.clickButtonByText('Continue');

@@ -6,31 +6,13 @@ import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { happyPathHelper } from '../../support/happyPathHelper';
+import { s78ChangeTimetableTimetableItems } from '../../support/timetables.js';
 import { urlPaths } from '../../support/urlPaths';
 
 const listCasesPage = new ListCasesPage();
 const caseDetailsPage = new CaseDetailsPage();
 
 describe('S78 - Case officer update pre populated timetable dates', () => {
-	const timetableItems = [
-		{
-			row: 'lpa-questionnaire-due-date',
-			editable: true
-		},
-		{
-			row: 'lpa-statement-due-date',
-			editable: true
-		},
-		{
-			row: 'ip-comments-due-date',
-			editable: true
-		},
-		{
-			row: 'final-comments-due-date',
-			editable: true
-		}
-	];
-
 	const futureDate = { years: 1, days: 10 };
 	let caseObj;
 
@@ -74,9 +56,9 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startS78Case(caseObj, 'written');
-			caseDetailsPage.checkTimetableDueDatesAndChangeLinks(timetableItems);
-			caseDetailsPage.clickRowChangeLink(timetableItems[0].row);
-			caseDetailsPage.changeTimetableDates(timetableItems, new Date(), 7);
+			caseDetailsPage.checkTimetableDueDatesAndChangeLinks(s78ChangeTimetableTimetableItems);
+			caseDetailsPage.clickRowChangeLink(s78ChangeTimetableTimetableItems[0].row);
+			caseDetailsPage.changeTimetableDates(s78ChangeTimetableTimetableItems, new Date(), 7);
 			caseDetailsPage.checkErrorMessageDisplays(
 				'The lpa questionnaire due date must be in the future'
 			);
@@ -91,11 +73,11 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startS78Case(caseObj, 'written');
-			caseDetailsPage.checkTimetableDueDatesAndChangeLinks(timetableItems);
-			caseDetailsPage.clickRowChangeLink(timetableItems[0].row);
+			caseDetailsPage.checkTimetableDueDatesAndChangeLinks(s78ChangeTimetableTimetableItems);
+			caseDetailsPage.clickRowChangeLink(s78ChangeTimetableTimetableItems[0].row);
 			const nextYear = new Date().getFullYear() + 1;
 			const nonBusinessDate = new Date(nextYear, 0, 1);
-			caseDetailsPage.changeTimetableDates(timetableItems, nonBusinessDate, 1);
+			caseDetailsPage.changeTimetableDates(s78ChangeTimetableTimetableItems, nonBusinessDate, 1);
 			caseDetailsPage.checkErrorMessageDisplays(
 				'The lpa questionnaire due date must be a business day'
 			);
@@ -114,7 +96,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startS78Case(caseObj, 'written');
 			happyPathHelper.reviewS78Lpaq(caseObj);
-			timetableItems[0].editable = false; // lpa questionare date is not editable in statements status
+			s78ChangeTimetableTimetableItems[0].editable = false; // lpa questionare date is not editable in statements status
 			cy.clearCookies();
 			cy.visit(urlPaths.appealsList);
 			listCasesPage.clickAppealByRef(caseObj);
@@ -132,13 +114,13 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startS78Case(caseObj, 'written');
 			happyPathHelper.reviewS78Lpaq(caseObj);
-			timetableItems[0].editable = false; // lpa questionare date is not editable in statements status
+			s78ChangeTimetableTimetableItems[0].editable = false; // lpa questionare date is not editable in statements status
 			cy.clearCookies();
 			cy.visit(urlPaths.appealsList);
 			listCasesPage.clickAppealByRef(caseObj);
-			caseDetailsPage.checkTimetableDueDatesAndChangeLinks(timetableItems);
-			caseDetailsPage.clickRowChangeLink(timetableItems[1].row);
-			caseDetailsPage.changeTimetableDates(timetableItems, new Date(), 7);
+			caseDetailsPage.checkTimetableDueDatesAndChangeLinks(s78ChangeTimetableTimetableItems);
+			caseDetailsPage.clickRowChangeLink(s78ChangeTimetableTimetableItems[1].row);
+			caseDetailsPage.changeTimetableDates(s78ChangeTimetableTimetableItems, new Date(), 7);
 			caseDetailsPage.checkErrorMessageDisplays(
 				'Statements due date must be after the LPA questionnaire due date'
 			);
@@ -155,12 +137,16 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startS78Case(caseObj, 'written');
 			happyPathHelper.reviewS78Lpaq(caseObj);
-			timetableItems[0].editable = false; // lpa questionare date is not editable in statements status
-			caseDetailsPage.checkTimetableDueDatesAndChangeLinks(timetableItems);
-			caseDetailsPage.clickRowChangeLink(timetableItems[1].row);
+			s78ChangeTimetableTimetableItems[0].editable = false; // lpa questionare date is not editable in statements status
+			caseDetailsPage.checkTimetableDueDatesAndChangeLinks(s78ChangeTimetableTimetableItems);
+			caseDetailsPage.clickRowChangeLink(s78ChangeTimetableTimetableItems[1].row);
 			const nextYear = new Date().getFullYear() + 2;
 			const nonBusinessDate = new Date(nextYear, 0, 1);
-			caseDetailsPage.changeTimetableDates([timetableItems[1]], new Date(nextYear, 0, 1), 0);
+			caseDetailsPage.changeTimetableDates(
+				[s78ChangeTimetableTimetableItems[1]],
+				new Date(nextYear, 0, 1),
+				0
+			);
 			caseDetailsPage.checkErrorMessageDisplays('due date must be a business day');
 		});
 	});
@@ -191,9 +177,9 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 			caseDetailsPage.basePageElements.bannerLink().click();
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.checkStatusOfCase('Final comments', 0);
-			timetableItems[0].editable = false; // lpa questionare date is not editable in statements status
-			timetableItems[1].editable = false; // statement due is not editbale
-			timetableItems[2].editable = false; //
+			s78ChangeTimetableTimetableItems[0].editable = false; // lpa questionare date is not editable in statements status
+			s78ChangeTimetableTimetableItems[1].editable = false; // statement due is not editbale
+			s78ChangeTimetableTimetableItems[2].editable = false; //
 			cy.clearCookies();
 			cy.visit(urlPaths.appealsList);
 			listCasesPage.clickAppealByRef(caseObj);
@@ -217,15 +203,15 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 	const verifyDateChanges = (addedDays) => {
 		const safeAddedDays = Math.max(addedDays, 1);
 
-		caseDetailsPage.checkTimetableDueDatesAndChangeLinks(timetableItems);
-		caseDetailsPage.clickRowChangeLink(timetableItems[3].row);
+		caseDetailsPage.checkTimetableDueDatesAndChangeLinks(s78ChangeTimetableTimetableItems);
+		caseDetailsPage.clickRowChangeLink(s78ChangeTimetableTimetableItems[3].row);
 
 		// Get the future business date using Cypress task/helper
 		cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
-			caseDetailsPage.changeTimetableDates(timetableItems, startDate, 7);
+			caseDetailsPage.changeTimetableDates(s78ChangeTimetableTimetableItems, startDate, 7);
 			caseDetailsPage.clickUpdateTimetableDueDates();
 
-			caseDetailsPage.verifyDatesChanged(timetableItems, startDate, 7);
+			caseDetailsPage.verifyDatesChanged(s78ChangeTimetableTimetableItems, startDate, 7);
 			caseDetailsPage.validateBannerMessage('Success', 'Timetable due dates updated');
 		});
 	};

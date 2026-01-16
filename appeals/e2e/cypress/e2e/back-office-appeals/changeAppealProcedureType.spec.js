@@ -11,6 +11,7 @@ import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { EstimatedDaysSection } from '../../page_objects/estimatedDaysSection.js';
 import { ProcedureTypePage } from '../../page_objects/procedureTypePage';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { changeAppealProcedureTypeTimetableItems } from '../../support/timetables.js';
 import { formatDateAndTime, getDateAndTimeValues } from '../../support/utils/format';
 
 const overviewSectionPage = new OverviewSectionPage();
@@ -58,17 +59,6 @@ describe('change appeal procedure types', () => {
 		hours: '10',
 		minutes: '0'
 	};
-
-	const timetableItems = [
-		{
-			row: 'final-comments-due-date',
-			editable: true
-		},
-		{
-			row: 'statement-of-common-ground-due-date',
-			editable: true
-		}
-	];
 
 	beforeEach(() => {
 		setupTestCase();
@@ -143,7 +133,10 @@ describe('change appeal procedure types', () => {
 				// enter POE date, ensure is business day
 				cy.getBusinessActualDate(ipCommentsDueDate, 10).then((date) => {
 					const proofOfEvidenceDate = date;
-					dateTimeSection.enterProofOfEvidenceAndWitnessesDueDate(proofOfEvidenceDate);
+					dateTimeSection.enterDueDates(
+						changeAppealProcedureTypeTimetableItems.slice(2),
+						proofOfEvidenceDate
+					);
 
 					// proceed to cya page and check answers
 					dateTimeSection.clickButtonByText('Continue');
@@ -221,7 +214,11 @@ describe('change appeal procedure types', () => {
 
 			// update final comments due date and check CYA page
 			cy.getBusinessActualDate(new Date(), 60).then((dueDate) => {
-				caseDetailsPage.changeTimetableDates(timetableItems.slice(0, 1), dueDate, 0); //update and continue
+				caseDetailsPage.changeTimetableDates(
+					changeAppealProcedureTypeTimetableItems.slice(0, 1),
+					dueDate,
+					0
+				); //update and continue
 				const updateFinalCommentsDueDate = new Date(dueDate);
 
 				cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Written representations');
@@ -301,7 +298,11 @@ describe('change appeal procedure types', () => {
 
 			// update statement of common ground due date and check CYA page
 			cy.getBusinessActualDate(new Date(), 10).then((dueDate) => {
-				dateTimeSection.enterDueDates(timetableItems.slice(1, 2), dueDate, 0);
+				dateTimeSection.enterDueDates(
+					changeAppealProcedureTypeTimetableItems.slice(1, 2),
+					dueDate,
+					0
+				);
 				dateTimeSection.clickButtonByText('Continue');
 				const updateStatementOfCommonGroundDueDate = new Date(dueDate);
 

@@ -378,6 +378,7 @@ const appealsApiRequests = {
 		statementOfCommonGroundDueDate: "2026-11-10T00:00:00.000Z",
 		proofOfEvidenceAndWitnessesDueDate: "2026-11-10T00:00:00.000Z",
 		planningObligationDueDate: "2026-11-10T00:00:00.000Z",
+		caseManagementConferenceDueDate: "2026-11-10T00:00:00.000Z",
 		address: {
 			addressLine1: "1 Grove Cottage",
 			addressLine2: "Shotesham Road",
