@@ -1075,7 +1075,9 @@ export const appealIngestionInputEnforcementNotice = {
 			siteGridReferenceEasting: undefined,
 			siteGridReferenceNorthing: undefined,
 			numberOfResidencesNetChange: undefined,
-			typeOfPlanningApplication: undefined
+			typeOfPlanningApplication: undefined,
+			planningObligation: false,
+			statusPlanningObligation: null
 		}
 	}
 };
