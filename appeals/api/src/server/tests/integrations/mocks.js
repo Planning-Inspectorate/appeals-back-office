@@ -1045,6 +1045,31 @@ export const appealIngestionInputEnforcementNotice = {
 			key: APPEAL_CASE_TYPE.C
 		}
 	},
+	appellant: {
+		create: {
+			address: {
+				create: {
+					addressCounty: null,
+					addressLine1: 'Flat 2',
+					addressLine2: '123 Fake Street',
+					addressTown: 'London',
+					postcode: 'N1 1AA'
+				}
+			},
+			organisationName: 'A company',
+			salutation: 'Mr',
+			firstName: 'Testy',
+			lastName: 'McTest',
+			email: 'test@test.com',
+			webAddress: undefined,
+			phoneNumber: '0123456789',
+			otherPhoneNumber: undefined,
+			faxNumber: undefined
+		}
+	},
+	agent: {
+		create: undefined
+	},
 	appellantCase: {
 		create: {
 			...appealIngestionInput.appellantCase.create,

@@ -7,7 +7,7 @@ import { mapAppellantCaseIn } from './appellant-case.mapper.js';
 import { mapDocumentIn } from './document.mapper.js';
 import { mapQuestionnaireIn } from './questionnaire.mapper.js';
 import { mapRepresentationIn } from './representation.mapper.js';
-import { mapServiceUserIn } from './service-user.mapper.js';
+import { hasContactAddressData, mapServiceUserIn } from './service-user.mapper.js';
 
 import { renameDuplicateDocuments } from '#endpoints/integrations/integrations.utils.js';
 
@@ -33,8 +33,29 @@ import { renameDuplicateDocuments } from '#endpoints/integrations/integrations.u
  */
 const mapAppealSubmission = (data) => {
 	const { casedata, documents, users } = data;
-	const appellant = users?.find((user) => user.serviceUserType === SERVICE_USER_TYPE.APPELLANT);
-	const agent = users?.find((user) => user.serviceUserType === SERVICE_USER_TYPE.AGENT);
+
+	const contactAddress = hasContactAddressData(casedata)
+		? {
+				addressLine1: casedata.contactAddressLine1,
+				addressLine2: casedata.contactAddressLine2,
+				addressCounty: casedata.contactAddressCounty,
+				addressPostcode: casedata.contactAddressPostcode,
+				addressTown: casedata.contactAddressTown
+			}
+		: null;
+
+	let appellant = users?.find((user) => user.serviceUserType === SERVICE_USER_TYPE.APPELLANT);
+	let agent = users?.find((user) => user.serviceUserType === SERVICE_USER_TYPE.AGENT);
+
+	if (contactAddress) {
+		if (agent) {
+			// @ts-ignore
+			agent = { ...agent, ...contactAddress };
+		} else {
+			// @ts-ignore
+			appellant = { ...appellant, ...contactAddress };
+		}
+	}
 
 	const caseType = mapAppealTypeIn(casedata.caseType || '');
 
@@ -55,8 +76,8 @@ const mapAppealSubmission = (data) => {
 		reference: randomUUID(),
 		submissionId: casedata.submissionId,
 		appealType: { connect: { key: caseType } },
-		appellant: { create: mapServiceUserIn(appellant) },
-		agent: { create: mapServiceUserIn(agent) },
+		appellant: { create: mapServiceUserIn(appellant, !agent && !!contactAddress) },
+		agent: { create: mapServiceUserIn(agent, !!contactAddress) },
 		lpa: {
 			connect: { lpaCode: casedata?.lpaCode }
 		},

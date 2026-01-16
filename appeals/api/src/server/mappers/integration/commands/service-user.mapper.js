@@ -40,3 +40,18 @@ function hasAddressData(data) {
 		data.addressTown
 	);
 }
+
+/**
+ *
+ * @param {*} data
+ * @returns {boolean}
+ */
+export function hasContactAddressData(data) {
+	return (
+		data.contactAddressLine1 ||
+		data.contactAddressLine2 ||
+		data.contactAddressCounty ||
+		data.contactAddressPostcode ||
+		data.contactAddressTown
+	);
+}
