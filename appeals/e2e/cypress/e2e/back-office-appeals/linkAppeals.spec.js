@@ -11,6 +11,7 @@ import { ListCasesPage } from '../../page_objects/listCasesPage.js';
 import { FileUploader, ManageDocument } from '../../page_objects/shared.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 import { tag } from '../../support/tag';
+import { linkAppealsTimetableItems } from '../../support/timetables.js';
 import { urlPaths } from '../../support/urlPaths.js';
 import { formatDateAndTime } from '../../support/utils/format';
 
@@ -30,13 +31,6 @@ const doc = fileUploader.sampleFiles.document;
 const img = fileUploader.sampleFiles.img;
 
 let cases = [];
-
-const timetableItems = [
-	{
-		row: 'lpa-statement-due-date',
-		editable: true
-	}
-];
 
 beforeEach(() => {
 	cy.login(users.appeals.caseAdmin);
@@ -376,7 +370,7 @@ describe.skip('skip all', () => {
 					caseDetailsPage.clickRowChangeLink('lpa-statement-due-date');
 					cy.getBusinessActualDate(new Date(), 14).then((dueDate) => {
 						const formattedDate = formatDateAndTime(dueDate);
-						caseDetailsPage.changeTimetableDates(timetableItems, dueDate, 0);
+						caseDetailsPage.changeTimetableDates(linkAppealsTimetableItems, dueDate, 0);
 						basePage.clickButtonByText('Update timetable due dates');
 						caseDetailsPage.verifyRowValue('LPA statement due', formattedDate.date);
 
@@ -415,7 +409,7 @@ describe.skip('skip all', () => {
 					caseDetailsPage.clickRowChangeLink('lpa-statement-due-date');
 					cy.getBusinessActualDate(new Date(), 14).then((dueDate) => {
 						const formattedDate = formatDateAndTime(dueDate);
-						caseDetailsPage.changeTimetableDates(timetableItems, dueDate, 0);
+						caseDetailsPage.changeTimetableDates(linkAppealsTimetableItems, dueDate, 0);
 						basePage.clickButtonByText('Update timetable due dates');
 						caseDetailsPage.verifyRowValue('LPA statement due', formattedDate.date);
 

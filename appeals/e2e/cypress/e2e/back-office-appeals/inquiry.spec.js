@@ -13,6 +13,7 @@ import { CYASection } from '../../page_objects/cyaSection.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { happyPathHelper } from '../../support/happyPathHelper';
+import { inquiryTimetableItems, replaceTimetableItem } from '../../support/timetables.js';
 import { urlPaths } from '../../support/urlPaths';
 import { formatDateAndTime, formatObjectAsString } from '../../support/utils/format.js';
 
@@ -96,32 +97,11 @@ const expectedCaseDetailsSections = [
 	'Case management'
 ];
 
-const timetableItems = [
-	{
-		row: 'lpa-questionnaire-due-date',
-		editable: true
-	},
-	{
-		row: 'statement-due-date',
-		editable: true
-	},
-	{
-		row: 'ip-comments-due-date',
-		editable: true
-	},
-	{
-		row: 'statement-of-common-ground-due-date',
-		editable: true
-	},
-	{
-		row: 'proof-of-evidence-and-witnesses-due-date',
-		editable: true
-	},
-	{
-		row: 'planning-obligation-due-date',
-		editable: true
-	}
-];
+const timetableItemsWithNewSelector = replaceTimetableItem(
+	inquiryTimetableItems,
+	'statement-due-date',
+	'lpa-statement-due-date'
+);
 
 let caseObj;
 
@@ -520,11 +500,6 @@ it('should update inquiry timetable dates from case details page', () => {
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseObj);
 
-		const timetableItemsWithNewSelector = timetableItems.map((item) => ({
-			...item,
-			row: item.row.replace('statement-due-date', 'lpa-statement-due-date')
-		}));
-
 		inquirySectionPage.verifyInquiryTimetableRowChangeLinkVisible(timetableItemsWithNewSelector);
 
 		caseDetailsPage.clickRowChangeLink('lpa-questionnaire-due-date');
@@ -584,11 +559,6 @@ it('should validate inquiry timetable chronology', () => {
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseObj);
 
-		const timetableItemsWithNewSelector = timetableItems.map((item) => ({
-			...item,
-			row: item.row.replace('statement-due-date', 'lpa-statement-due-date')
-		}));
-
 		caseDetailsPage.clickRowChangeLink('lpa-questionnaire-due-date');
 
 		// update timetable dates
@@ -624,11 +594,6 @@ it('should show business day validation errors for all timetable fields', () => 
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseObj);
-
-		const timetableItemsWithNewSelector = timetableItems.map((item) => ({
-			...item,
-			row: item.row.replace('statement-due-date', 'lpa-statement-due-date')
-		}));
 
 		caseDetailsPage.clickRowChangeLink('lpa-questionnaire-due-date');
 
@@ -1059,7 +1024,7 @@ it('should display the correct status tags when cancelling inquiry', () => {
 
 		// enter timetable dates
 		cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
-			inquirySectionPage.enterTimetableDueDates(timetableItems, startDate, 7);
+			inquirySectionPage.enterTimetableDueDates(inquiryTimetableItems, startDate, 7);
 		});
 
 		caseDetailsPage.clickButtonByText('Continue');
