@@ -4,6 +4,7 @@ export default joi
 	.object({
 		gitSha: joi.string().optional(),
 		NODE_ENV: joi.string().valid('development', 'production', 'test'),
+		isTest: joi.boolean(),
 		PORT: joi.number(),
 		SWAGGER_JSON_DIR: joi.string(),
 		APPLICATIONINSIGHTS_CONNECTION_STRING: joi.string().optional(),

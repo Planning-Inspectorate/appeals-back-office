@@ -1,4 +1,7 @@
 // @ts-nocheck
+process.env.LOG_LEVEL_STDOUT = 'fatal';
+process.env.SESSION_SECRET = 'JEST_SESSION_SECRET';
+
 // Install mocks for third-party integration
 import { getEnabledHearingAppealTypes } from '#common/hearing-appeal-types.js';
 import { getEnabledInquiryAppealTypes } from '#common/inquiry-appeal-types.js';
@@ -14,6 +17,9 @@ process.env.RETRY_MAX_ATTEMPTS = '0';
 if (!nock.isActive()) {
 	nock.activate();
 }
+
+nock.disableNetConnect();
+nock.enableNetConnect('127.0.0.1');
 
 const mockGenerateNotifyPreview = jest
 	.fn()

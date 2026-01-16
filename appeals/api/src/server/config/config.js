@@ -12,6 +12,7 @@ const environment = loadEnvironment(process.env.NODE_ENV, apiDir);
 const { value, error } = schema.validate({
 	gitSha: process.env.GIT_SHA ?? 'NO GIT SHA FOUND',
 	NODE_ENV: environment.NODE_ENV,
+	isTest: environment.NODE_ENV === 'test',
 	PORT: environment.PORT,
 	SWAGGER_JSON_DIR: environment.SWAGGER_JSON_DIR || './src/server/openapi.json',
 	APPLICATIONINSIGHTS_CONNECTION_STRING: environment.APPLICATIONINSIGHTS_CONNECTION_STRING,

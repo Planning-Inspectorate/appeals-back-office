@@ -97,16 +97,17 @@ app.use(
 	})
 );
 
-// Enable CORS - Cross Origin Resource Sharing
-app.use(cors());
+	// Enable CORS - Cross Origin Resource Sharing
+	app.use(cors());
+	// Enable compression middleware
 
-// Enable compression middleware
-app.use(compression());
+	app.use(compression());
 
-app.use(requestID());
+	app.use(requestID());
 
-// Response time header
-app.use(responseTime());
+	// Response time header
+	app.use(responseTime());
+}
 
 // MSAL middleware
 app.use(msalMiddleware);
@@ -118,8 +119,10 @@ app.use(session);
 nunjucksEnvironment.express(app);
 app.set('view engine', 'njk');
 
-// Serve static files (fonts, images, generated CSS and JS, etc)
-app.use(serveStatic('src/server/static', { maxAge: config.cacheControl.maxAge }));
+// Serve static files (fonts, images, generated CSS and JS, etc) - skipped in test
+if (!config.isTest) {
+	app.use(serveStatic('src/server/static', { maxAge: config.cacheControl.maxAge }));
+}
 
 // Make current url global for all nunjucks templates
 app.use((request, response, next) => {

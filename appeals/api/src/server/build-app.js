@@ -18,15 +18,17 @@ const buildApp = (
 ) => {
 	const app = express();
 
-	if (addSwaggerUi) {
+	if (addSwaggerUi && !config.isTest) {
 		addSwaggerUi(app);
 	}
 
 	app.use(bodyParser.json({ limit: config.requestSizeLimit }));
 
-	app.use(compression());
-	app.use(morgan('combined'));
-	app.use(helmet());
+	if (!config.isTest) {
+		app.use(compression());
+		app.use(morgan('combined'));
+		app.use(helmet());
+	}
 
 	app.get('/', (req, res, next) => {
 		if (req.headers['user-agent'] === 'AlwaysOn') {
