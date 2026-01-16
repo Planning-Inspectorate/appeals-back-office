@@ -156,15 +156,12 @@ const importNamedIndividuals = async ({ mainAppealReference, casedata, documents
 			return data;
 		}) || [];
 
-	const childResults = await Promise.all(namedIndividuals.map(importIndividualAppeal));
+	for (const individual of namedIndividuals) {
+		const { id, appealTypeId } = await importIndividualAppeal(individual);
 
-	// For now, we will mark all related enforcement appeals as marked for transfer to horizon
-	await Promise.all(
-		// @ts-ignore
-		childResults.map(({ id, appealTypeId }) =>
-			markAwaitingTransfer(id, appealTypeId, AUDIT_TRIAL_APPELLANT_UUID)
-		)
-	);
+		// For now, we will mark all related enforcement appeals as marked for transfer to horizon
+		await markAwaitingTransfer(id, appealTypeId, AUDIT_TRIAL_APPELLANT_UUID);
+	}
 };
 
 /**
