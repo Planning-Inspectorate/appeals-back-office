@@ -44,7 +44,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Appellant case</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -328,7 +328,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Appellant case</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -654,7 +654,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Appellant case</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -951,7 +951,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Appellant case</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1303,7 +1303,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Appellant case</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1599,7 +1599,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Appellant case</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1856,7 +1856,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Appellant case</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2098,7 +2098,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Appellant case</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2336,7 +2336,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Appellant case</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2729,7 +2729,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Appellant case</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3091,7 +3091,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Appellant case</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3448,7 +3448,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Appellant case</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3705,7 +3705,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Appellant case</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4047,7 +4047,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Appellant case</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -4326,7 +4326,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Appellant case</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -7848,7 +7848,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">Appellant case</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">Appellant case</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
