@@ -144,8 +144,11 @@ const importNamedIndividuals = async ({ mainAppealReference, casedata, documents
 
 			agent.serviceUserType = SERVICE_USER_TYPE.AGENT;
 
+			// The named individual will be the appellant.
+			const appellant = { firstName, lastName, serviceUserType: SERVICE_USER_TYPE.APPELLANT };
+
 			const data = {
-				users: [{ firstName, lastName, serviceUserType: SERVICE_USER_TYPE.APPELLANT }, ...[agent]],
+				users: [appellant, ...[agent]],
 				casedata: { ...structuredClone(casedata), interestInLand, writtenOrVerbalPermission },
 				documents: structuredClone(documents)
 			};
