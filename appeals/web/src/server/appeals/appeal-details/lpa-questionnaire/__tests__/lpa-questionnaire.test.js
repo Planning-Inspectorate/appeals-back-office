@@ -113,6 +113,11 @@ const FieldTestCases = [
 ];
 
 describe('LPA Questionnaire review', () => {
+	afterAll(() => {
+		nock.cleanAll();
+		nock.restore();
+		jest.clearAllMocks();
+	});
 	beforeAll(teardown);
 	beforeEach(installMockApi);
 	afterEach(teardown);

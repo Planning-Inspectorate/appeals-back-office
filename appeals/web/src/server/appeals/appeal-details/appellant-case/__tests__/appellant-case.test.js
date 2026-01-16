@@ -82,6 +82,11 @@ const incompleteReasonsWithoutTextIds = incompleteReasonsWithoutText.map((reason
 const incompleteReasonsWithTextIds = incompleteReasonsWithText.map((reason) => reason.id);
 
 describe('appellant-case', () => {
+	afterAll(() => {
+		nock.cleanAll();
+		nock.restore();
+		jest.clearAllMocks();
+	});
 	beforeEach(installMockApi);
 	afterEach(teardown);
 

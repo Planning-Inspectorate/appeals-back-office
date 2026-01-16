@@ -28,6 +28,11 @@ const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 
 describe('internal correspondence', () => {
+	afterAll(() => {
+		nock.cleanAll();
+		nock.restore();
+		jest.clearAllMocks();
+	});
 	beforeEach(installMockApi);
 	afterEach(teardown);
 
