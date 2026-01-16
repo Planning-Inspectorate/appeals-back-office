@@ -10,6 +10,7 @@ import {
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
 
+import { jest } from '@jest/globals';
 import { APPEAL_CASE_DECISION_OUTCOME } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -30,6 +31,12 @@ const checkYourLpaCostsDecisionPath = '/check-your-lpa-costs-decision';
 const viewDecisionPath = '/view-decision';
 
 describe('issue-decision', () => {
+	afterAll(() => {
+		nock.cleanAll();
+		nock.restore();
+		jest.clearAllMocks();
+	});
+
 	/**
 	 * @type {import("superagent").Response}
 	 */

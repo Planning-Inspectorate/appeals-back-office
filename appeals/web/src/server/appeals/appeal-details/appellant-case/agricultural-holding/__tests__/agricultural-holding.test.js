@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { appealData, appellantCaseDataNotValidated } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -10,6 +11,11 @@ const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 
 describe('agricultural-holding', () => {
+	afterAll(() => {
+		nock.cleanAll();
+		nock.restore();
+		jest.clearAllMocks();
+	});
 	beforeEach(installMockApi);
 	afterEach(teardown);
 

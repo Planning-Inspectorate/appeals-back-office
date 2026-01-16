@@ -1,5 +1,6 @@
 import { appealData } from '#testing/appeals/appeals.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -21,6 +22,11 @@ const appealDataWithoutStartDate = {
 };
 
 describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
+	afterAll(() => {
+		nock.cleanAll();
+		nock.restore();
+		jest.clearAllMocks();
+	});
 	afterEach(teardown);
 
 	describe('GET /change-appeal-procedure-type/written/check-and-confirm', () => {
