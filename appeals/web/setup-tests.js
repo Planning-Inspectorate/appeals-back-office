@@ -1,6 +1,7 @@
-// process.env.LOG_LEVEL_STDOUT = 'fatal';
-// process.env.SESSION_SECRET = 'JEST_SESSION_SECRET';
 // @ts-nocheck
+process.env.LOG_LEVEL_STDOUT = 'fatal';
+process.env.SESSION_SECRET = 'JEST_SESSION_SECRET';
+
 // Install mocks for third-party integration
 import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import { jest } from '@jest/globals';

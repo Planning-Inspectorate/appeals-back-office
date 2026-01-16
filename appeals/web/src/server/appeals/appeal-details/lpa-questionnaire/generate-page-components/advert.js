@@ -22,8 +22,6 @@ export const generateAdvertLpaQuestionnaireComponents = (mappedLPAQData, mappedA
 	if (constraintsDesignationsIndex !== -1) {
 		const rows = pageComponents[constraintsDesignationsIndex].parameters.rows;
 
-		console.log(rows);
-
 		const changedListedBuildingDetails =
 			mappedLPAQData.lpaq?.changedListedBuildingDetails?.display.summaryListItem;
 
