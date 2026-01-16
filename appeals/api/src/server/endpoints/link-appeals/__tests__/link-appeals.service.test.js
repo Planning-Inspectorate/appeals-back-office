@@ -4,6 +4,14 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 import { checkAppealsStatusBeforeLPAQ } from '../link-appeals.service.js';
 
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import {
+	AUDIT_TRAIL_APPEAL_LINK_ADDED,
+	AUDIT_TRAIL_APPEAL_LINK_REMOVED,
+	AUDIT_TRAIL_APPEAL_RELATION_ADDED,
+	AUDIT_TRAIL_APPEAL_RELATION_REMOVED
+} from '@pins/appeals/constants/support.js';
+
 describe('Link Appeals Service', () => {
 	describe('checkAppealsStatusBeforeLPAQ', () => {
 		it('should return true where the linked appeal is the parent and it already has linked children and has status before LPA Questionnaire', () => {
@@ -83,5 +91,31 @@ describe('Link Appeals Service', () => {
 			);
 			expect(result).toBe(false);
 		});
+	});
+});
+
+describe('Audit Trail Content Verification', () => {
+	const mockAppealReference = 'APP/Q9999/D/21/1234567';
+
+	test('should correctly format "Linked appeal added" with reference', () => {
+		const result = stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_ADDED, [mockAppealReference]);
+		expect(result).toBe(`Linked appeal ${mockAppealReference} added`);
+	});
+
+	test('should correctly format "Linked appeal removed" with reference', () => {
+		const result = stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_REMOVED, [mockAppealReference]);
+		expect(result).toBe(`Linked appeal ${mockAppealReference} removed`);
+	});
+
+	test('should correctly format "Related appeal added" with reference', () => {
+		const result = stringTokenReplacement(AUDIT_TRAIL_APPEAL_RELATION_ADDED, [mockAppealReference]);
+		expect(result).toBe(`Related appeal ${mockAppealReference} added`);
+	});
+
+	test('should correctly format "Related appeal removed" with reference', () => {
+		const result = stringTokenReplacement(AUDIT_TRAIL_APPEAL_RELATION_REMOVED, [
+			mockAppealReference
+		]);
+		expect(result).toBe(`Related appeal ${mockAppealReference} removed`);
 	});
 });
