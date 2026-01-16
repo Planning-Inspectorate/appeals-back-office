@@ -129,7 +129,16 @@ export const mapAppellantCaseIn = (command) => {
 			descriptionOfAllegedBreach: casedata.descriptionOfAllegedBreach,
 			applicationDevelopmentAllOrPart: casedata.applicationDevelopmentAllOrPart,
 			contactAddress: { create: contactAddress },
-			appealDecisionDate: casedata.appealDecisionDate
+			appealDecisionDate: casedata.appealDecisionDate,
+			appellantProcedurePreference: command.casedata.appellantProcedurePreference,
+			appellantProcedurePreferenceDetails: command.casedata.appellantProcedurePreferenceDetails,
+			appellantProcedurePreferenceDuration: command.casedata.appellantProcedurePreferenceDuration,
+			appellantProcedurePreferenceWitnessCount:
+				command.casedata.appellantProcedurePreferenceWitnessCount,
+			planningObligation: command.casedata.planningObligation,
+			statusPlanningObligation: command.casedata.statusPlanningObligation,
+			siteGridReferenceEasting: command.casedata.siteGridReferenceEasting,
+			siteGridReferenceNorthing: command.casedata.siteGridReferenceNorthing
 		})
 	};
 
