@@ -395,7 +395,7 @@ const mapSessionValuesForRequest = (values) => {
 					planningObligationDueDate: dateStringToISOString(
 						values.appealTimetable.planningObligationDueDate
 					)
-			  }
+				}
 			: {}),
 		proofOfEvidenceAndWitnessesDueDate: dateStringToISOString(
 			values.appealTimetable.proofOfEvidenceAndWitnessesDueDate

@@ -240,8 +240,8 @@ describe('incomplete proof of evidence', () => {
 						proofOfEvidenceType.type === 'lpa'
 							? 'LPA'
 							: proofOfEvidenceType.type === 'rule-6-party'
-							? 'Test Rule 6 Party'
-							: 'appellant'
+								? 'Test Rule 6 Party'
+								: 'appellant'
 					} proof of evidence and witnesses</h1>`
 				);
 
@@ -275,8 +275,8 @@ describe('incomplete proof of evidence', () => {
 						proofOfEvidenceType.type === 'lpa'
 							? 'LPA'
 							: proofOfEvidenceType.type === 'rule-6-party'
-							? 'Test Rule 6 Party'
-							: 'appellant'
+								? 'Test Rule 6 Party'
+								: 'appellant'
 					} proof of evidence and witnesses</dt>`
 				);
 

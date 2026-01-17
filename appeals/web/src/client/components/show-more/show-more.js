@@ -70,7 +70,7 @@ const htmlModeToggleExpandedNoRowSelector = (
 		: getPreviewTextFromHtmlText(
 				componentInstance,
 				componentInstance.elements.root.getAttribute(ATTRIBUTES.fullText)
-		  );
+			);
 };
 
 const htmlModeToggleExpanded = (/** @type {ShowMoreComponentInstance} */ componentInstance) => {
@@ -89,7 +89,7 @@ const textModeToggleExpanded = (/** @type {ShowMoreComponentInstance} */ compone
 		: getPreviewTextFromFullText(
 				componentInstance,
 				componentInstance.elements.root.getAttribute(ATTRIBUTES.fullText)
-		  );
+			);
 };
 
 const toggleExpanded = (/** @type {ShowMoreComponentInstance} */ componentInstance) => {

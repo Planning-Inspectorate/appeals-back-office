@@ -31,12 +31,12 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 								? [
 										mappedData.appeal.appellantFinalComments.display.tableItem,
 										mappedData.appeal.lpaFinalComments.display.tableItem
-								  ]
+									]
 								: []),
 							mappedData.appeal.appellantProofOfEvidence.display.tableItem,
 							mappedData.appeal.lpaProofOfEvidence.display.tableItem,
 							...(mappedData.appeal.rule6PartyProofs?.display?.tableItems || [])
-					  ]
+						]
 					: []),
 				mappedData.appeal.environmentalAssessment.display.tableItem
 			].filter(isDefined),

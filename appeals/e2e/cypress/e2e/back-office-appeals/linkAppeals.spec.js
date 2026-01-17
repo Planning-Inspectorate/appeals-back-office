@@ -287,8 +287,8 @@ describe.skip('skip all', () => {
 					//lead appeal
 					happyPathHelper.viewCaseDetails(leadCaseObj);
 					happyPathHelper.addNetResidences('Net gain', '4');
-					caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added'),
-						caseDetailsPage.verifyRowValue('Net gain', '4');
+					(caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added'),
+						caseDetailsPage.verifyRowValue('Net gain', '4'));
 
 					//child appeal
 					happyPathHelper.viewCaseDetails(childCaseObj);
@@ -329,8 +329,8 @@ describe.skip('skip all', () => {
 					//lead appeal
 					happyPathHelper.viewCaseDetails(leadCaseObj);
 					happyPathHelper.addNetResidences('Net gain', '4');
-					caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added'),
-						caseDetailsPage.clickViewCaseHistory();
+					(caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added'),
+						caseDetailsPage.clickViewCaseHistory());
 					caseHistoryPage.verifyCaseHistoryValue('Case updated');
 
 					//child appeal

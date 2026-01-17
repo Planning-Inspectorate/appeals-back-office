@@ -82,8 +82,8 @@ describe('appeals generic mappers', () => {
 		const { appeal } = input;
 		const output = isCaseInvalid(appeal.appealStatus)
 			? findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START)
-			: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.INVALID) ??
-			  findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START);
+			: (findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.INVALID) ??
+				findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START));
 
 		console.log(output);
 		expect(output).toBe('2025-03-18T09:12:33.334Z');
@@ -136,8 +136,8 @@ describe('appeals generic mappers', () => {
 		const { appeal } = input;
 		const output = isCaseInvalid(appeal.appealStatus)
 			? findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START)
-			: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.INVALID) ??
-			  findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START);
+			: (findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.INVALID) ??
+				findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START));
 
 		expect(output).toBe('2025-03-19T09:12:33.334Z');
 	});

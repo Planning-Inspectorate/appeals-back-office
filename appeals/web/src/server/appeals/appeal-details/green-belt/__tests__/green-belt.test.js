@@ -17,7 +17,7 @@ const lpaQuestionnaireUrl = `/appeals-service/appeal-details/${appealId}/lpa-que
 const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
 
 describe('green-belt', () => {
-	beforeEach(installMockApi), afterEach(teardown);
+	(beforeEach(installMockApi), afterEach(teardown));
 
 	describe('GET /change', () => {
 		it('should render the greenBelt change page when accessed from LPAQ page', async () => {

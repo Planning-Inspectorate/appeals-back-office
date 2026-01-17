@@ -38,7 +38,7 @@ export function textareaInput({
 			errorMessage: errorMsg
 				? {
 						text: errorMsg
-				  }
+					}
 				: null
 		}
 	};

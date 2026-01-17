@@ -49,7 +49,7 @@ const getAllAppeals = async (
 			? {
 					skip: getSkipValue(pageNumber, pageSize),
 					take: pageSize
-			  }
+				}
 			: {};
 
 	const where = buildAllAppealsWhereClause(
@@ -355,7 +355,7 @@ const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 								some: { valid: true, status }
 							}
 						}
-				  ]
+					]
 				: []),
 			{
 				appealStatus: {

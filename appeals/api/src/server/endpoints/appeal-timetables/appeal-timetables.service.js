@@ -107,13 +107,13 @@ const getStartCaseNotifyParams = async (
 		? 'appeal-start-date-change-appellant'
 		: `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}${
 				hearingSuffix ? `appellant${hearingSuffix}` : inquirySuffix ? inquirySuffix : 'appellant'
-		  }`;
+			}`;
 
 	const lpaTemplate = appeal.caseStartedDate
 		? 'appeal-start-date-change-lpa'
 		: `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}${
 				hearingSuffix ? `lpa${hearingSuffix}` : inquirySuffix ? inquirySuffix : 'lpa'
-		  }`;
+			}`;
 
 	const appellantEmail = appeal.appellant?.email || appeal.agent?.email;
 	const lpaEmail = appeal.lpa?.email || '';
@@ -316,13 +316,13 @@ const generateStartCaseNotifyPreviews = async (
 		? renderTemplate(`${appellant.templateName}.content.md`, {
 				...appellant.personalisation,
 				...commonPersonalisation
-		  })
+			})
 		: '';
 	const lpaTemplate = lpa
 		? renderTemplate(`${lpa.templateName}.content.md`, {
 				...lpa.personalisation,
 				...commonPersonalisation
-		  })
+			})
 		: '';
 
 	return {

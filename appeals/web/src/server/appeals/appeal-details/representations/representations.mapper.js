@@ -133,9 +133,9 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 			? `<a href="${addBackLinkQueryToUrl(
 					request,
 					`/appeals-service/appeal-details/${appeal.appealId}/interested-party-comments#valid`
-			  )}" class="govuk-link">${numIpComments} interested party comment${
+				)}" class="govuk-link">${numIpComments} interested party comment${
 					numIpComments === 1 ? '' : 's'
-			  }</a>`
+				}</a>`
 			: null;
 	})();
 
@@ -147,7 +147,7 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 			? `<a href="${addBackLinkQueryToUrl(
 					request,
 					`/appeals-service/appeal-details/${appeal.appealId}/lpa-statement`
-			  )}" class="govuk-link">1 statement</a>`
+				)}" class="govuk-link">1 statement</a>`
 			: null;
 
 	const valueTexts = [ipCommentsText, lpaStatementText].filter(Boolean);
@@ -167,13 +167,13 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 							totalShareCount === 1 ? 'party' : 'parties'
 						}.</p>`
 					}
-			  }
+				}
 			: {
 					type: 'html',
 					parameters: {
 						html: 'There are no statements or interested party comments to share.'
 					}
-			  };
+				};
 
 	/** @type {PageComponent} */
 	const warningComponent =
@@ -183,13 +183,13 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 					parameters: {
 						text: 'Do not progress to proof of evidence and witnesses if you are awaiting any late statements or interested party comments.'
 					}
-			  }
+				}
 			: {
 					type: 'warning-text',
 					parameters: {
 						text: 'Do not confirm until you have reviewed all of the supporting documents and redacted any sensitive information.'
 					}
-			  };
+				};
 
 	let heading;
 	const hearingIsSetUp = Boolean(appeal.hearing?.hearingStartTime && appeal.hearing?.address);
@@ -217,8 +217,8 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 				valueTexts.length > 0
 					? 'Confirm'
 					: appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY
-					? 'Progress to proof of evidence and witnesses'
-					: 'Progress case'
+						? 'Progress to proof of evidence and witnesses'
+						: 'Progress case'
 		}
 	};
 }

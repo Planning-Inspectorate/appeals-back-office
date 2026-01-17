@@ -53,7 +53,7 @@ const getRepresentations = async (appealId, options, pageNumber, pageSize) => {
 					representationType: {
 						in: options.representationType
 					}
-			  }
+				}
 			: {})
 	};
 

@@ -66,7 +66,7 @@ export const formatHorizonGetCaseData = (data) => {
 							(/** @type {UnnamedStringObject} */ value) =>
 								value['Case Involvement:Case Involvement:Type Of Involvement'] === 'Appellant'
 						)
-				  ]['Case Involvement:Case Involvement:Contact Details']
+					]['Case Involvement:Case Involvement:Contact Details']
 				: null,
 		agentName:
 			convertedData['Case Involvement:Case Involvement'].findIndex(
@@ -78,7 +78,7 @@ export const formatHorizonGetCaseData = (data) => {
 							(/** @type {UnnamedStringObject} */ value) =>
 								value['Case Involvement:Case Involvement:Type Of Involvement'] === 'Agent'
 						)
-				  ]['Case Involvement:Case Involvement:Contact Details']
+					]['Case Involvement:Case Involvement:Contact Details']
 				: null,
 		submissionDate: new Date(convertedData['Case Dates:Receipt Date']).toISOString(),
 		source: 'horizon'

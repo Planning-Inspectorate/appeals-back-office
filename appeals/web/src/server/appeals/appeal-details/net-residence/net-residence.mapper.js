@@ -53,7 +53,7 @@ export function addNetResidence(appealData, errors, netResidence, netLoss, netGa
 									errorMessage: errors?.['net-gain']
 										? {
 												text: errors?.['net-gain'].msg
-										  }
+											}
 										: null,
 									value: netGain || ''
 								}
@@ -78,7 +78,7 @@ export function addNetResidence(appealData, errors, netResidence, netLoss, netGa
 									errorMessage: errors?.['net-loss']
 										? {
 												text: errors?.['net-loss'].msg
-										  }
+											}
 										: null,
 									value: netLoss || ''
 								}

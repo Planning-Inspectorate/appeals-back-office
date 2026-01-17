@@ -198,7 +198,7 @@ export const patchInquiry = async (req, res) => {
 			const details = existingInquiry?.address
 				? stringTokenReplacement(AUDIT_TRAIL_INQUIRY_ADDRESS_UPDATED, [
 						formatAddressSingleLine(formatAddressForDb(address))
-				  ])
+					])
 				: AUDIT_TRAIL_INQUIRY_ADDRESS_ADDED;
 			await createAuditTrail({
 				appealId: appeal.id,

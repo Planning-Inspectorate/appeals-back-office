@@ -19,7 +19,7 @@ export const getSiteDetails = (mappedData, appealDetails) => {
 							mappedData.appeal.siteVisitDate.display.summaryListItem,
 							mappedData.appeal.siteVisitStartTime.display.summaryListItem,
 							mappedData.appeal.siteVisitEndTime.display.summaryListItem
-					  ]
+						]
 					: [mappedData.appeal.siteVisit.display.summaryListItem]),
 				mappedData.appeal.inspectorNeighbouringSites.display.summaryListItem
 			].filter(isDefined)

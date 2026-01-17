@@ -244,8 +244,8 @@ describe('proof-of-evidence', () => {
 						proofOfEvidenceType.type === 'lpa'
 							? 'LPA'
 							: proofOfEvidenceType.type === 'appellant'
-							? 'appellant'
-							: 'rule 6 party'
+								? 'appellant'
+								: 'rule 6 party'
 					} proof of evidence and witnesses</h1>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain(`Redaction status</dt>`);
@@ -256,8 +256,8 @@ describe('proof-of-evidence', () => {
 						proofOfEvidenceType.type === 'lpa'
 							? 'LPA'
 							: proofOfEvidenceType.type === 'appellant'
-							? 'appellant'
-							: 'rule 6 party'
+								? 'appellant'
+								: 'rule 6 party'
 					} proof of evidence and witnesses</button>`
 				);
 			});

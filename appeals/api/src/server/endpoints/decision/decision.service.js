@@ -148,11 +148,11 @@ export const publishDecision = async (
 							...personalisation,
 							has_costs_decision: hasAppellantCostsDecision,
 							feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || '')
-					  }
+						}
 					: {
 							...personalisation,
 							feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || '')
-					  }
+						}
 			});
 		}
 
@@ -169,11 +169,11 @@ export const publishDecision = async (
 							...personalisation,
 							has_costs_decision: hasLpaCostsDecision,
 							feedback_link: FEEDBACK_FORM_LINKS.LPA
-					  }
+						}
 					: {
 							...personalisation,
 							feedback_link: FEEDBACK_FORM_LINKS.LPA
-					  }
+						}
 			});
 		}
 

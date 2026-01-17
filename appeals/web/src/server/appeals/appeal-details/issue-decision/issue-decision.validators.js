@@ -39,7 +39,7 @@ export const validateInvalidReason = isFeatureActive(FEATURE_FLAG_NAMES.INVALID_
 			'Enter reason',
 			textInputCharacterLimits.defaultTextareaLength,
 			`Reason must be ${textInputCharacterLimits.defaultTextareaLength} characters or less`
-	  )
+		)
 	: createTextareaConditionalValidator(
 			'invalidReason',
 			'decision',
@@ -47,4 +47,4 @@ export const validateInvalidReason = isFeatureActive(FEATURE_FLAG_NAMES.INVALID_
 			'Enter a reason',
 			textInputCharacterLimits.defaultTextareaLength,
 			`Reason must be ${textInputCharacterLimits.defaultTextareaLength} characters or less`
-	  );
+		);

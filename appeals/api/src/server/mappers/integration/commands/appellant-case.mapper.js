@@ -29,13 +29,13 @@ export const mapAppellantCaseIn = (command) => {
 	const knowsAllOwners = casedata.knowsAllOwners
 		? {
 				connect: { key: casedata.knowsAllOwners }
-		  }
+			}
 		: null;
 
 	const knowsOtherOwners = casedata.knowsOtherOwners
 		? {
 				connect: { key: casedata.knowsOtherOwners }
-		  }
+			}
 		: null;
 
 	const siteAccessDetails =
@@ -72,7 +72,7 @@ export const mapAppellantCaseIn = (command) => {
 					appellantProcedurePreferenceDuration: casedata.appellantProcedurePreferenceDuration,
 					appellantProcedurePreferenceWitnessCount:
 						casedata.appellantProcedurePreferenceWitnessCount
-			  }
+				}
 			: null;
 
 	const data = {

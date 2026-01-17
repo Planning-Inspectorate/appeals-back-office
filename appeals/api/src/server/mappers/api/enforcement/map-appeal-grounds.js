@@ -16,11 +16,11 @@ export const mapEnforcementAppealGrounds = (data) => {
 	return {
 		appealGrounds: hasEnforcementData
 			? // @ts-ignore
-			  appealGrounds.sort(
+				appealGrounds.sort(
 					// Make sure appeal grounds are sorted in ground ref order
 					(a, b) =>
 						(a?.ground?.groundRef?.charCodeAt(0) || 0) - (b?.ground?.groundRef?.charCodeAt(0) || 0)
-			  ) || []
+				) || []
 			: null
 	};
 };

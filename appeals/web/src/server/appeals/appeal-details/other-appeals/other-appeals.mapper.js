@@ -216,10 +216,10 @@ export function confirmOtherAppealsPage(currentAppeal, relatedAppeal, origin) {
 				? {
 						text: 'Return to search',
 						href: `${origin}/other-appeals/add`
-				  }
+					}
 				: {
 						text: 'Continue'
-				  },
+					},
 		pageComponents
 	};
 
@@ -252,14 +252,14 @@ export function manageOtherAppealsPage(appealData, request, origin) {
 					otherAppeal.externalSource === true
 						? `<a class="govuk-link" href="${generateHorizonAppealUrl(
 								otherAppeal.externalId
-						  )}" aria-label="Appeal ${numberToAccessibleDigitLabel(
+							)}" aria-label="Appeal ${numberToAccessibleDigitLabel(
 								shortAppealReference || ''
-						  )}">${shortAppealReference} (Horizon)</a>`
+							)}">${shortAppealReference} (Horizon)</a>`
 						: `<a class="govuk-link" href="/appeals-service/appeal-details/${
 								otherAppeal.appealId
-						  }" aria-label="Appeal ${numberToAccessibleDigitLabel(
+							}" aria-label="Appeal ${numberToAccessibleDigitLabel(
 								shortAppealReference || ''
-						  )}">${shortAppealReference}</a>`
+							)}">${shortAppealReference}</a>`
 			},
 			{
 				text: otherAppeal.appealType || otherAppeal.externalAppealType || 'Unknown'

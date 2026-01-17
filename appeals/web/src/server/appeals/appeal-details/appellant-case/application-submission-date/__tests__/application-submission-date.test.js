@@ -10,7 +10,7 @@ const appealId = appealData.appealId;
 const appellantCaseId = appealData.appellantCaseId;
 const baseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
 describe('application-submission-date', () => {
-	beforeEach(installMockApi), afterEach(teardown);
+	(beforeEach(installMockApi), afterEach(teardown));
 
 	describe('GET /change', () => {
 		it('should render the applicationSubmissionDate change page', async () => {

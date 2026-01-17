@@ -121,7 +121,7 @@ const updateAppellantCaseById = async (req, res) => {
 						siteAddress
 					},
 					notifyClient
-			  )
+				)
 			: await appellantCaseRepository.updateAppellantCaseById(appellantCaseId, {
 					applicantFirstName,
 					applicantSurname,
@@ -173,7 +173,7 @@ const updateAppellantCaseById = async (req, res) => {
 					writtenOrVerbalPermission,
 					applicationDevelopmentAllOrPart,
 					appealDecisionDate
-			  });
+				});
 
 		await updatePersonalList(appeal.id);
 
@@ -196,7 +196,7 @@ const updateAppellantCaseById = async (req, res) => {
 	const response = validationOutcome
 		? {
 				validationOutcome
-		  }
+			}
 		: {
 				applicantFirstName,
 				applicantSurname,
@@ -216,7 +216,7 @@ const updateAppellantCaseById = async (req, res) => {
 				appellantProcedurePreferenceDetails,
 				appellantProcedurePreferenceDuration,
 				appellantProcedurePreferenceWitnessCount
-		  };
+			};
 
 	return res.send(response);
 };

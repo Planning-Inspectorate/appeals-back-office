@@ -100,7 +100,7 @@ const generateHasSchemaFields = (casedata, listedBuildingsData) => {
 							}
 						};
 					})
-			  }
+				}
 			: undefined;
 
 	return {
@@ -199,12 +199,12 @@ const mapListedBuildings = (casedata, appealHasChangedListedBuilding) => {
 
 	const changedListedBuildings = appealHasChangedListedBuilding
 		? // @ts-ignore
-		  (casedata.changedListedBuildingNumbers || []).map((/** @type {string} */ entry) => {
+			(casedata.changedListedBuildingNumbers || []).map((/** @type {string} */ entry) => {
 				return {
 					listEntry: entry,
 					affectsListedBuilding: false
 				};
-		  })
+			})
 		: [];
 
 	const combinedListedBuildings = [...affectedListedBuildings, ...changedListedBuildings];

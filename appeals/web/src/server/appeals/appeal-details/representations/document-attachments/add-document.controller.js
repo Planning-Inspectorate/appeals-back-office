@@ -26,10 +26,10 @@ export const renderDocumentUpload = async (request, response) => {
 		isAtEditEntrypoint(request) || query.change
 			? preserveQueryString(request, `${baseUrl}/check-your-answers`, {
 					exclude: ['editEntrypoint', 'change']
-			  })
+				})
 			: query.backUrl
-			? constructUrl(String(query.backUrl), currentAppeal.appealId)
-			: representationBaseUrl;
+				? constructUrl(String(query.backUrl), currentAppeal.appealId)
+				: representationBaseUrl;
 
 	if (session.createNewRepresentation && !backButtonUrl.includes('check-your-answers')) {
 		const appealDetailsUrlPattern = /^(\/appeals-service\/appeal-details\/[^/]+).*$/;

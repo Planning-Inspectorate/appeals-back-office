@@ -69,7 +69,9 @@
 	&__dropzone {
 		padding: 60px 15px;
 		outline: 2px dashed colors.govuk-colour("mid-grey");
-		transition: outline-offset 0.1s ease-in-out, background-color 0.1s linear;
+		transition:
+			outline-offset 0.1s ease-in-out,
+			background-color 0.1s linear;
 
 		&--dragover {
 			outline-color: colors.govuk-colour("light-grey", $legacy: "grey-2");

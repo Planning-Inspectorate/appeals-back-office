@@ -97,7 +97,7 @@ export async function appellantCasePage(
 									text: 'Site address'
 								}
 							}
-					  ]
+						]
 					: [])
 			]
 		}

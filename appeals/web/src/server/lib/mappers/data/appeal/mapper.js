@@ -86,7 +86,7 @@ export async function initialiseAndMapAppealData(
 				config.referenceData.appeals.caseOfficerGroupId,
 				session,
 				appealDetails.caseOfficer
-		  )
+			)
 		: null;
 
 	const inspectorUser = appealDetails.inspector
@@ -94,7 +94,7 @@ export async function initialiseAndMapAppealData(
 				config.referenceData.appeals.inspectorGroupId,
 				session,
 				appealDetails.inspector
-		  )
+			)
 		: null;
 	const padsInspectorUser = appealDetails.padsInspector
 		? await usersService.getPadsUserById(appealDetails.padsInspector, request.apiClient)

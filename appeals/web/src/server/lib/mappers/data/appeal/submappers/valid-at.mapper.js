@@ -14,8 +14,8 @@ export const mapValidAt = ({ appealDetails, currentRoute, userHasUpdateCasePermi
 			!appealDetails.caseOfficer || appealDetails.startedAt
 				? ''
 				: appealDetails.validAt
-				? 'Change'
-				: 'Validate',
+					? 'Change'
+					: 'Validate',
 		editable: Boolean(userHasUpdateCasePermission),
 		classes: 'appeal-valid-date'
 	});

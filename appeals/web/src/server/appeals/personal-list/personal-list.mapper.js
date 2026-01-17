@@ -202,7 +202,7 @@ export function personalListPage(
 												status: linkedAppealStatusText
 											}
 										}
-								  ]
+									]
 								: []
 					},
 					{
@@ -330,7 +330,7 @@ function mapRequiredActionToPersonalListActionHtml(
 				? `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 						request,
 						`/appeals-service/appeal-details/${appealId}/appellant-case`
-				  )}">Awaiting appellant update<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					)}">Awaiting appellant update<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				: 'Awaiting appellant update';
 		}
 		case 'assignCaseOfficer': {
@@ -365,7 +365,7 @@ function mapRequiredActionToPersonalListActionHtml(
 				? `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 						request,
 						`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`
-				  )}">Update questionnaire<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					)}">Update questionnaire<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				: 'Update questionnaire';
 		}
 		case 'issueDecision': {
@@ -451,7 +451,7 @@ function mapRequiredActionToPersonalListActionHtml(
 				? `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 						request,
 						`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`
-				  )}">Review LPA questionnaire<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					)}">Review LPA questionnaire<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				: 'Review LPA questionnaire';
 		}
 		case 'reviewLpaStatement': {
@@ -480,7 +480,7 @@ function mapRequiredActionToPersonalListActionHtml(
 				? `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 						request,
 						`/appeals-service/appeal-details/${appealId}/start-case/add`
-				  )}">Start case<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					)}">Start case<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				: 'Start case';
 		}
 		case 'updateLpaStatement': {

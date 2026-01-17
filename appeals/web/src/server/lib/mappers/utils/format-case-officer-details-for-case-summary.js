@@ -18,7 +18,7 @@ export function formatCaseOfficerDetailsForCaseSummary(caseOfficerDetails) {
 						['data-cy']: Object.prototype.hasOwnProperty.call(item.attributes, 'data-cy')
 							? item.attributes['data-cy'] + '-name'
 							: ''
-				  }
+					}
 				: {}
 		})
 	);

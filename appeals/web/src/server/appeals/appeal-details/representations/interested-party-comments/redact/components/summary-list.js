@@ -49,7 +49,7 @@ export const summaryList = (appealDetails, comment, session, redactMatching) => 
 									]
 								}
 							}
-					  ]
+						]
 					: [
 							{
 								key: { text: 'Comment' },
@@ -64,7 +64,7 @@ export const summaryList = (appealDetails, comment, session, redactMatching) => 
 									]
 								}
 							}
-					  ]),
+						]),
 				{
 					key: { text: 'Supporting documents' },
 					value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
@@ -77,7 +77,7 @@ export const summaryList = (appealDetails, comment, session, redactMatching) => 
 											href: `${baseUrl}/manage-documents/${folderId}?backUrl=/interested-party-comments/${comment.id}/redact/confirm`,
 											visuallyHiddenText: 'supporting documents'
 										}
-								  ]
+									]
 								: []),
 							{
 								text: 'Add',

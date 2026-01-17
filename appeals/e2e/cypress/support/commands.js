@@ -526,7 +526,7 @@ Cypress.Commands.add('selectReasonOption', (optionLabel = null) => {
 							Math.random() *
 								$checkboxes.filter((i, elem) => getLabelText(elem) !== 'Other reason').length
 						)
-				  ];
+					];
 
 		// Validate target checkbox exists
 		if (!targetCheckbox) {

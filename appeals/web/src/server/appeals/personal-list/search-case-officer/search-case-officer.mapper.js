@@ -49,7 +49,7 @@ export async function searchCaseOfficerPage(session, backLinkUrl, errors) {
 			errorMessage: errors
 				? {
 						text: errors?.user.msg
-				  }
+					}
 				: undefined
 		}
 	};

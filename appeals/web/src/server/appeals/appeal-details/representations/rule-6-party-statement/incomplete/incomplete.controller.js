@@ -169,7 +169,7 @@ export const renderCheckYourAnswers = async (
 				),
 				isOrderedList: true,
 				isNumberedList: filteredAttachments.length > 1
-		  })
+			})
 		: null;
 
 	const folderId =

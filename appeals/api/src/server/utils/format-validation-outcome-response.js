@@ -53,7 +53,7 @@ const formatValidationOutcomeResponse = (
 			invalidReasons: isOutcomeInvalid(outcome)
 				? (invalidReasons?.length ? invalidReasons : enforcementInvalidReasons)?.map(
 						mapIncompleteInvalidReasons
-				  )
+					)
 				: undefined,
 			incompleteReasons: isOutcomeIncomplete(outcome)
 				? incompleteReasons?.map((reason) => mapIncompleteInvalidReasons(reason))

@@ -39,7 +39,7 @@ export function planningOfficersReportAndSupplementaryDocumentsSection(templateD
 							key: 'Did the appellant submit complete and accurate photographs and plans?',
 							html: formatYesNo(didAppellantSubmitCompletePhotosAndPlans)
 						}
-				  ]
+					]
 				: []),
 			// appears here for householder, in appellant case for other appeal types
 			...(isHASAppeal
@@ -48,7 +48,7 @@ export function planningOfficersReportAndSupplementaryDocumentsSection(templateD
 							key: 'Plans, drawings and list of plans',
 							text: formatDocumentData(plansDrawings)
 						}
-				  ]
+					]
 				: []),
 			{
 				key: 'Relevant policies from statutory development plan',
@@ -80,7 +80,7 @@ export function planningOfficersReportAndSupplementaryDocumentsSection(templateD
 							key: 'When do you expect to formally adopt the community infrastructure levy?',
 							text: formatDate(infrastructureLevyExpectedDate)
 						}
-				  ]
+					]
 				: [])
 		]
 	};

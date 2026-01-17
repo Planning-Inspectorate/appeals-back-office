@@ -49,7 +49,7 @@ export function generateProofOfEvidenceSummaryList(appealId, proofOfEvidence, ru
 				),
 				isOrderedList: true,
 				isNumberedList: filteredAttachments.length > 1
-		  })
+			})
 		: null;
 
 	const proofOfEvidenceTypePath = mapRepresentationTypeToPath(

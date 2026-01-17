@@ -303,7 +303,7 @@ export function checkAndConfirmEnforcementPage(request) {
 											}
 										}
 									])
-							  }
+								}
 							: { text: 'No' })
 					},
 					actions: {

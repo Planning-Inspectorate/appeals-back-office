@@ -215,8 +215,8 @@ export const updateAppellantCaseValidationOutcome = async (
 			const reasonsToFormat = updatedAppellantCase?.appellantCaseInvalidReasonsSelected?.length
 				? updatedAppellantCase?.appellantCaseInvalidReasonsSelected
 				: updatedAppellantCase?.appellantCaseEnforcementInvalidReasonsSelected?.length
-				? updatedAppellantCase?.appellantCaseEnforcementInvalidReasonsSelected
-				: [];
+					? updatedAppellantCase?.appellantCaseEnforcementInvalidReasonsSelected
+					: [];
 
 			const invalidReasonsList = getFormattedReasons(reasonsToFormat);
 			if (!enforcementNoticeInvalid) {
@@ -429,12 +429,12 @@ export const putContactAddress = async (params) => {
 					appealId,
 					appellantCaseId,
 					data: body
-			  })
+				})
 			: await addressRepository.createAppellantCaseContactAddress({
 					appealId,
 					appellantCaseId,
 					data: body
-			  });
+				});
 
 		const addressDetails = addressToString(contactAddress);
 		const details = stringTokenReplacement(AUDIT_TRAIL_ENFORCEMENT_NOTICE_CONTACT_ADDRESS, [

@@ -141,7 +141,7 @@ export function rejectCheckYourAnswersPage(
 											href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/manage-documents/${folderId}/?backUrl=/interested-party-comments/${comment.id}/reject/check-your-answers`,
 											visuallyHiddenText: 'supporting documents'
 										}
-								  ]
+									]
 								: []),
 							{
 								text: 'Add',
@@ -218,7 +218,7 @@ export function rejectCheckYourAnswersPage(
 									]
 								}
 							}
-					  ]
+						]
 					: [])
 			]
 		}

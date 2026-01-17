@@ -74,7 +74,7 @@ export const mapInvalidReasonPage = (
 		? `/appeals-service/appeal-details/${appealId}/appellant-case/invalid/enforcement-notice`
 		: `/appeals-service/appeal-details/${appealId}/${
 				sourceIsAppellantCase ? 'appellant-case' : 'cancel'
-		  }`;
+			}`;
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -97,7 +97,7 @@ export const mapInvalidReasonPage = (
 									isPageHeading: true,
 									classes: 'govuk-fieldset__legend--l'
 								}
-						  },
+							},
 					items: mappedInvalidReasonOptions,
 					errorMessage: errorMessage && { text: errorMessage }
 				}
@@ -244,7 +244,7 @@ export const enforcementNoticeReasonPage = (appealDetails, reasonOptions, errors
 								}
 							}
 						])
-				  }
+					}
 				: undefined
 		};
 	});

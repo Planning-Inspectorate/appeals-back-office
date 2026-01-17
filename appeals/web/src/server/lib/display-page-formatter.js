@@ -246,7 +246,7 @@ const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments
 						isAdditionalDocuments
 							? ` class="govuk-!-margin-bottom-0${
 									i > 0 ? ' govuk-!-padding-top-2' : ''
-							  } govuk-!-padding-bottom-2${i < documents.length - 1 ? ' pins-border-bottom' : ''}"`
+								} govuk-!-padding-bottom-2${i < documents.length - 1 ? ' pins-border-bottom' : ''}"`
 							: ''
 					}><span>`,
 					closing: '</span></li>'

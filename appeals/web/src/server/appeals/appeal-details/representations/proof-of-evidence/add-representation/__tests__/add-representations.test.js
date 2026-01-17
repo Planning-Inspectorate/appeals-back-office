@@ -157,8 +157,8 @@ describe('add representation', () => {
 						proofOfEvidenceType.type === 'lpa'
 							? 'LPA'
 							: proofOfEvidenceType.type === 'appellant'
-							? 'appellant'
-							: 'rule 6 party'
+								? 'appellant'
+								: 'rule 6 party'
 					} proof of evidence and witnesses</button>`
 				);
 				expect(unprettifiedHTML).toContain('Appeal 351062</span>');
@@ -167,8 +167,8 @@ describe('add representation', () => {
 						proofOfEvidenceType.type === 'lpa'
 							? 'LPA'
 							: proofOfEvidenceType.type === 'appellant'
-							? 'appellant'
-							: 'rule 6 party'
+								? 'appellant'
+								: 'rule 6 party'
 					} proof of evidence and witnesses</h1>`
 				);
 				expect(unprettifiedHTML).toContain('Proof of evidence and witnesses</dt>');

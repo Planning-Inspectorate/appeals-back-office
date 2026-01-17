@@ -40,7 +40,7 @@ export function addLinkedAppealPage(
 					errorMessage: errorMsg
 						? {
 								text: errorMsg
-						  }
+							}
 						: undefined,
 					classes: 'govuk-input govuk-input--width-10',
 					label: {
@@ -165,7 +165,7 @@ export function addLinkedAppealCheckAndConfirmPage(request) {
 											]
 										}
 									}
-							  ])
+								])
 					]
 				}
 			},

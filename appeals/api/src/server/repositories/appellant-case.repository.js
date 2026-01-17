@@ -28,7 +28,7 @@ const updateAppellantCaseById = async (id, data) => {
 						connect: {
 							key: data.knowsOtherOwners.toLowerCase()
 						}
-				  }
+					}
 			: undefined;
 
 	if (knowsOtherOwners === null) {

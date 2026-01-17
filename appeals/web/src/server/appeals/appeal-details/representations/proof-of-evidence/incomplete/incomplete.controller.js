@@ -139,7 +139,7 @@ export const renderConfirm = async (
 				),
 				isOrderedList: true,
 				isNumberedList: filteredAttachments.length > 1
-		  })
+			})
 		: null;
 
 	const folderId =
@@ -257,8 +257,8 @@ export const postConfirm = async (request, response) => {
 			proofOfEvidenceType === 'lpa'
 				? 'lpaProofOfEvidenceIncomplete'
 				: proofOfEvidenceType === 'appellant'
-				? 'appellantProofOfEvidenceIncomplete'
-				: 'rule6PartyProofOfEvidenceIncomplete',
+					? 'appellantProofOfEvidenceIncomplete'
+					: 'rule6PartyProofOfEvidenceIncomplete',
 		appealId
 	});
 
