@@ -83,7 +83,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 			timetable: timetable
 				? {
 						lpaQuestionnaireDueDate: timetable.lpaQuestionnaireDueDate.toISOString()
-				  }
+					}
 				: undefined
 		})
 	});

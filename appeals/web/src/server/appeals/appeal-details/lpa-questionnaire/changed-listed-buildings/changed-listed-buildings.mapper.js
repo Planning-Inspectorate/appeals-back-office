@@ -229,7 +229,7 @@ export function changeChangedListedBuildingPage(
 			? listedBuildingData
 			: lpaQuestionnaireData?.listedBuildingDetails?.find(
 					(building) => building.id.toString() === listedBuildingId
-			  )?.listEntry;
+				)?.listEntry;
 
 	/** @type {PageContent} */
 	const pageContent = {

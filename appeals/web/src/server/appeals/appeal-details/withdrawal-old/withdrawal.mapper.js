@@ -135,7 +135,7 @@ export function manageWithdrawalRequestFolderPage(
 											folder.caseId,
 											document.id,
 											document.name
-									  )}" target="_blank">View<span class="govuk-visually-hidden"> document</span></a>`.trim()
+										)}" target="_blank">View<span class="govuk-visually-hidden"> document</span></a>`.trim()
 									: ''
 						}
 					])

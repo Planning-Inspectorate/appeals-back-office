@@ -20,7 +20,7 @@ const { value, error } = schema.validate({
 				environment.DB_CONNECTION_LIMIT
 					? `;connection_limit=${environment.DB_CONNECTION_LIMIT};`
 					: ''
-		  }`
+			}`
 		: undefined,
 	BO_BLOB_STORAGE_ACCOUNT: environment.BO_BLOB_STORAGE_ACCOUNT,
 	BO_BLOB_CONTAINER: environment.BO_BLOB_CONTAINER,

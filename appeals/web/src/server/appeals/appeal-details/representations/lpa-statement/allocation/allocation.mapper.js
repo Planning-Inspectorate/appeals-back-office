@@ -77,7 +77,7 @@ export function allocationLevelPage(appealDetails, allocationLevels, sessionData
 		backLinkUrl: sessionData?.forcedAllocation
 			? `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement${
 					flowRoute === 'valid' ? '' : `/${flowRoute}`
-			  }`
+				}`
 			: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/${flowRoute}/allocation-check`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Allocation level',

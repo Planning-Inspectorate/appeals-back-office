@@ -1631,7 +1631,7 @@ async function addFinalComment(databaseConnector, id, source, sourceId) {
 								id: sourceId
 							}
 						}
-				  }
+					}
 				: {
 						lpa: {
 							connect: {
@@ -1639,7 +1639,7 @@ async function addFinalComment(databaseConnector, id, source, sourceId) {
 								id: sourceId
 							}
 						}
-				  })
+					})
 		},
 		include: {
 			represented: true
@@ -1747,7 +1747,7 @@ async function addProofsEvidence(databaseConnector, id, source, sourceId) {
 								id: sourceId
 							}
 						}
-				  }
+					}
 				: {
 						lpa: {
 							connect: {
@@ -1755,7 +1755,7 @@ async function addProofsEvidence(databaseConnector, id, source, sourceId) {
 								id: sourceId
 							}
 						}
-				  })
+					})
 		},
 		include: {
 			represented: true

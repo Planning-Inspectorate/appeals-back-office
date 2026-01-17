@@ -11,7 +11,7 @@ const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
 const baseUrl = `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`;
 
 describe('eia-development-description', () => {
-	beforeEach(installMockApi), afterEach(teardown);
+	(beforeEach(installMockApi), afterEach(teardown));
 
 	describe('GET /change', () => {
 		it('should render the development description change page with "Agriculture aquaculture" radio option checked if eiaDevelopmentDescription is "agriculture-aquaculture"', async () => {

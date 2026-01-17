@@ -25,7 +25,7 @@ export const mapInquiryDate = ({
 	const value = inquiry?.inquiryStartTime
 		? `${dateISOStringToDisplayTime12hr(inquiry.inquiryStartTime)} on ${dateISOStringToDisplayDate(
 				inquiry.inquiryStartTime
-		  )}`
+			)}`
 		: 'Not set up';
 
 	return textSummaryListItem({

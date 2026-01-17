@@ -38,11 +38,11 @@ export const checkYourAnswersComponent = ({
 							value: value
 								? {
 										text: value
-								  }
+									}
 								: {
 										html,
 										pageComponents: rowComponents || []
-								  },
+									},
 							actions: {
 								items: Object.entries(actions).map(([text, item]) => {
 									return {

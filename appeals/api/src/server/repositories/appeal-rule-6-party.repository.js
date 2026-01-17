@@ -54,10 +54,10 @@ const createAppealRule6Party = ({ appealId, serviceUser }) => {
 			...(serviceUser.id
 				? {
 						connect: { id: serviceUser.id }
-				  }
+					}
 				: {
 						create: serviceUser
-				  })
+					})
 		}
 	};
 

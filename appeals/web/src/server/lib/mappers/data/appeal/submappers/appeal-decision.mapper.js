@@ -41,7 +41,7 @@ export const mapAppealDecision = ({ appealDetails, request }) => {
 				? `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 						request,
 						generateIssueDecisionUrl(appealDetails.appealId)
-				  )}">${actionText}<span class="govuk-visually-hidden"> decision</span></a>`
+					)}">${actionText}<span class="govuk-visually-hidden"> decision</span></a>`
 				: '',
 			actionHtmlClasses: 'appeal-decision-actions'
 		});

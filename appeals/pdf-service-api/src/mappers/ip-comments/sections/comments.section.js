@@ -44,7 +44,7 @@ function mapComment(ipComment) {
 							key: 'Why was the comment rejected?',
 							html: formatBulletedList(rejectionReasons.map(formatReason))
 						}
-				  ]
+					]
 				: [])
 		]
 	};

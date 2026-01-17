@@ -11,7 +11,7 @@ export const mapProcedurePreferenceDuration = ({ lpaQuestionnaireData, currentRo
 			lpaQuestionnaireData?.lpaProcedurePreferenceDuration !== null
 				? `${lpaQuestionnaireData.lpaProcedurePreferenceDuration} day${
 						lpaQuestionnaireData.lpaProcedurePreferenceDuration > 1 ? 's' : ''
-				  }`
+					}`
 				: 'Not applicable',
 		link: `${currentRoute}/procedure-preference/duration/change`,
 		cypressDataName: 'change-procedure-preference-duration'

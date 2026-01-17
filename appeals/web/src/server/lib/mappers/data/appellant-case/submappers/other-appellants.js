@@ -34,9 +34,9 @@ export const mapOtherAppellants = ({ appellantCaseData, currentRoute }) => {
 			html: !hasData
 				? 'No data'
 				: otherAppellants?.length
-				? // @ts-ignore
-				  formatOtherAppellantsAsHtmlList(otherAppellants)
-				: ''
+					? // @ts-ignore
+						formatOtherAppellantsAsHtmlList(otherAppellants)
+					: ''
 		},
 		link: `${currentRoute}/other-appellants/${actionText.toLowerCase()}`,
 		editable: false,

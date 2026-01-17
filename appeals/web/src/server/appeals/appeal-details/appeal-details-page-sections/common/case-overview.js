@@ -58,12 +58,12 @@ const displayProcedureChangeLink = (appealDetails) => {
 	const lpaStatementDueDateElapsed = appealDetails.appealTimetable?.lpaStatementDueDate
 		? dateIsInThePast(
 				dateISOStringToDayMonthYearHourMinute(appealDetails.appealTimetable.lpaStatementDueDate)
-		  )
+			)
 		: false;
 	const ipCommentsDueDateElapsed = appealDetails.appealTimetable?.ipCommentsDueDate
 		? dateIsInThePast(
 				dateISOStringToDayMonthYearHourMinute(appealDetails.appealTimetable.ipCommentsDueDate)
-		  )
+			)
 		: false;
 
 	if (

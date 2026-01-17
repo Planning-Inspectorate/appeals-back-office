@@ -34,7 +34,7 @@ export const mapAppellantProofOfEvidence = ({ appealDetails, currentRoute, reque
 						representationStatus,
 						'appellant-proofs-evidence',
 						request
-				  )
+					)
 				: mapAddRepresentationSummaryActionLink(currentRoute, 'appellant-proofs-evidence', request)
 	});
 };

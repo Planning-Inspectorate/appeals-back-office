@@ -35,12 +35,12 @@ const renderChangeAppealTimetable = async (request, response) => {
 		procedureType === APPEAL_CASE_PROCEDURE?.WRITTEN
 			? 'change-selected-procedure-type'
 			: procedureType === APPEAL_CASE_PROCEDURE.HEARING && session.dateKnown === 'yes'
-			? `${newProcedureType}/date`
-			: procedureType === APPEAL_CASE_PROCEDURE.HEARING && session.dateKnown === 'no'
-			? `${newProcedureType}/change-event-date-known`
-			: procedureType === APPEAL_CASE_PROCEDURE.INQUIRY && session.addressKnown === 'no'
-			? `${newProcedureType}/address-known`
-			: `${newProcedureType}/address-details`
+				? `${newProcedureType}/date`
+				: procedureType === APPEAL_CASE_PROCEDURE.HEARING && session.dateKnown === 'no'
+					? `${newProcedureType}/change-event-date-known`
+					: procedureType === APPEAL_CASE_PROCEDURE.INQUIRY && session.addressKnown === 'no'
+						? `${newProcedureType}/address-known`
+						: `${newProcedureType}/address-details`
 	);
 	const mappedPageContent = mapChangeTimetablePage(
 		sessionValues,

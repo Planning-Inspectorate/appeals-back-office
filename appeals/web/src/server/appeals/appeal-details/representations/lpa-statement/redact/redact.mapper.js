@@ -176,7 +176,7 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 										]
 									}
 								}
-						  ]
+							]
 						: []),
 
 					...(isPublished
@@ -194,7 +194,7 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 															href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/manage-documents/${folderId}?backUrl=/lpa-statement/redact/confirm`,
 															visuallyHiddenText: 'supporting documents'
 														}
-												  ]
+													]
 												: []),
 											{
 												text: 'Add',
@@ -237,7 +237,7 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 													]
 												}
 											}
-									  ]),
+										]),
 								...(sessionData?.allocationLevel && specialisms.length
 									? [
 											{
@@ -273,9 +273,9 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 													]
 												}
 											}
-									  ]
+										]
 									: [])
-						  ])
+							])
 				]
 			}
 		}

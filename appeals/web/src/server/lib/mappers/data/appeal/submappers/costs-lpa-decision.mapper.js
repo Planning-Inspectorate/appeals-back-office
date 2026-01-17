@@ -49,7 +49,7 @@ export const mapCostsLpaDecision = ({ appealDetails, currentRoute, session, requ
 		: addBackLinkQueryToUrl(
 				request,
 				`${currentRoute}/issue-decision/issue-lpa-costs-decision-letter-upload`
-		  );
+			);
 
 	return textSummaryListItem({
 		id: 'lpa-costs-decision',

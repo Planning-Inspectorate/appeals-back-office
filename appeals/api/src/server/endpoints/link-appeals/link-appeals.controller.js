@@ -215,7 +215,7 @@ export const linkExternalAppeal = async (req, res) => {
 				externalSource: true,
 				externalAppealType: formattedLinkedAppeal.appealType,
 				externalId: linkedAppealId?.toString()
-		  }
+			}
 		: {
 				parentId: null,
 				parentRef: formattedLinkedAppeal.appealReference || linkedAppealReference,
@@ -225,7 +225,7 @@ export const linkExternalAppeal = async (req, res) => {
 				externalSource: true,
 				externalAppealType: formattedLinkedAppeal.appealType,
 				externalId: linkedAppealId?.toString()
-		  };
+			};
 
 	const result = await appealRepository.linkAppeal(relationship);
 	await createAuditTrail({

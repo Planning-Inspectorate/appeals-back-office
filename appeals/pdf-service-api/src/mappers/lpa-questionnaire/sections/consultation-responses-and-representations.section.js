@@ -26,7 +26,7 @@ export function consultationResponsesAndRepresentationsSection(templateData) {
 							key: 'Did you consult all the relevant statutory consultees about the development?',
 							html: formatYesNoDetails(consultedBodiesDetails)
 						}
-				  ]
+					]
 				: [])
 		]
 	};

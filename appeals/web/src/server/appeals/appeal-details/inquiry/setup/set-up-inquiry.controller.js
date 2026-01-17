@@ -70,7 +70,7 @@ export const updateInquirySession = (request, response, next) => {
 
 	sessionValues['inquiryEstimationDays'] =
 		sessionValues['inquiryEstimationYesNo'] === 'yes'
-			? sessionValues['inquiryEstimationDays'] ?? request.currentAppeal.inquiry.estimatedDays
+			? (sessionValues['inquiryEstimationDays'] ?? request.currentAppeal.inquiry.estimatedDays)
 			: undefined;
 
 	sessionValues['addressKnown'] =
@@ -90,16 +90,18 @@ export const updateInquirySession = (request, response, next) => {
 		sessionValues['addressKnown'] === 'no'
 			? pick([], ['addressLine1', 'addressLine2', 'town', 'county', 'postCode'])
 			: isEmpty(existingAddressValues)
-			? {
-					...pick(appealDetails.inquiry.address, [
-						'addressLine1',
-						'addressLine2',
-						'town',
-						'county'
-					]),
-					postCode: appealDetails.inquiry.address ? appealDetails.inquiry.address['postcode'] : null
-			  }
-			: existingAddressValues;
+				? {
+						...pick(appealDetails.inquiry.address, [
+							'addressLine1',
+							'addressLine2',
+							'town',
+							'county'
+						]),
+						postCode: appealDetails.inquiry.address
+							? appealDetails.inquiry.address['postcode']
+							: null
+					}
+				: existingAddressValues;
 
 	request.session.changeInquiry = { ...sessionValues, ...addressValues };
 
@@ -675,7 +677,7 @@ export const getInquiryCheckDetails = async (request, response) => {
 										'postCode'
 									]),
 									', '
-							  )
+								)
 							: '',
 					inquiryEstimationDays:
 						session.setUpInquiry?.[appealId]['inquiryEstimationYesNo'] === 'yes'

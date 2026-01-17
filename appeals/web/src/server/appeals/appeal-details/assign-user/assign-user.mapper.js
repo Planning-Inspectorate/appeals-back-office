@@ -104,7 +104,7 @@ export async function assignUserPage(
 			errorMessage: errors
 				? {
 						text: errors?.user.msg
-				  }
+					}
 				: undefined
 		}
 	};
@@ -180,7 +180,7 @@ export async function checkAndConfirmPage(request) {
 						html: generatedTemplate
 					}
 				}
-		  )
+			)
 		: null;
 	return {
 		title: 'Check answers',
@@ -206,6 +206,6 @@ export const mapUserText = (user, userTypeText) => {
 	return user.id === '0'
 		? `Not assigned<br>This will remove the current case ${userTypeText} from the appeal`
 		: user.email
-		? `${user.name}<br>${user.email}`
-		: `${user.name}`;
+			? `${user.name}<br>${user.email}`
+			: `${user.name}`;
 };

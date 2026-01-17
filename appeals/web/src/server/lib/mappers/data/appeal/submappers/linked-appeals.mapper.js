@@ -54,7 +54,7 @@ export const mapLinkedAppeals = ({ appealDetails, session }) => {
 												visuallyHiddenText: 'Linked appeals',
 												attributes: { 'data-cy': 'manage-linked-appeals' }
 											}
-									  ]
+										]
 									: []),
 								...(canAdd
 									? [
@@ -64,9 +64,9 @@ export const mapLinkedAppeals = ({ appealDetails, session }) => {
 												visuallyHiddenText: 'Linked appeals',
 												attributes: { 'data-cy': 'add-linked-appeal' }
 											}
-									  ]
+										]
 									: [])
-						  ])
+							])
 						: []
 				},
 				classes: 'appeal-linked-appeals'

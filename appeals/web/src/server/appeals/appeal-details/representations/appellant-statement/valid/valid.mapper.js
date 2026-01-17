@@ -49,7 +49,7 @@ export const confirmPage = (appealDetails, appellantStatement, specialismData, s
 					),
 					isOrderedList: true,
 					isNumberedList: filteredAttachments.length > 1
-			  })
+				})
 			: null;
 
 	const folderId = filteredAttachments?.[0]?.documentVersion?.document?.folderId ?? null;
@@ -96,7 +96,7 @@ export const confirmPage = (appealDetails, appellantStatement, specialismData, s
 												href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-statement/manage-documents/${folderId}?backUrl=/appellant-statement/valid/confirm`,
 												visuallyHiddenText: 'supporting documents'
 											}
-									  ]
+										]
 									: []),
 								{
 									text: 'Add',
@@ -135,7 +135,7 @@ export const confirmPage = (appealDetails, appellantStatement, specialismData, s
 										]
 									}
 								}
-						  ]),
+							]),
 					...(sessionData?.allocationLevel && specialisms.length
 						? [
 								{
@@ -171,7 +171,7 @@ export const confirmPage = (appealDetails, appellantStatement, specialismData, s
 										]
 									}
 								}
-						  ]
+							]
 						: [])
 				]
 			}

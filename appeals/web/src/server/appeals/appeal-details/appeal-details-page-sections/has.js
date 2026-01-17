@@ -30,8 +30,8 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 	const siteDetails = siteDetailsShouldBeHidden
 		? []
 		: config.featureFlags.featureFlagCancelSiteVisit
-		? getSiteDetails(mappedData, appealDetails)
-		: getSiteDetailsLegacy(mappedData, appealDetails);
+			? getSiteDetails(mappedData, appealDetails)
+			: getSiteDetailsLegacy(mappedData, appealDetails);
 
 	/** @type {PageComponent[]} */
 	const caseTimetable = appealDetails.startedAt
@@ -54,7 +54,7 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 						closing: ''
 					}
 				}
-		  ]
+			]
 		: [
 				{
 					type: 'summary-list',
@@ -69,7 +69,7 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 						closing: ''
 					}
 				}
-		  ];
+			];
 
 	/** @type {PageComponent} */
 	const caseDocumentation = {

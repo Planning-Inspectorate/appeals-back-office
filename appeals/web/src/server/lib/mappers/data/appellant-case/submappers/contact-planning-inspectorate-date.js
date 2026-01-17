@@ -17,10 +17,10 @@ export const mapContactPlanningInspectorateDate = ({
 		value: !hasData
 			? 'No data'
 			: actionText === 'Add'
-			? 'Not answered'
-			: dateISOStringToDisplayDate(
-					appellantCaseData.enforcementNotice?.contactPlanningInspectorateDate
-			  ),
+				? 'Not answered'
+				: dateISOStringToDisplayDate(
+						appellantCaseData.enforcementNotice?.contactPlanningInspectorateDate
+					),
 		link: `${currentRoute}/contact-planning-inspectorate-date/change`,
 		actionText,
 		editable: hasData && userHasUpdateCase

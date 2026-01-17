@@ -29,7 +29,7 @@ export const mapAdditionalDocuments = ({ appellantCaseData }) => ({
 							}
 						}
 					]
-			  }
+				}
 			: {
 					summaryListItems: [
 						{
@@ -42,6 +42,6 @@ export const mapAdditionalDocuments = ({ appellantCaseData }) => ({
 							}
 						}
 					]
-			  })
+				})
 	}
 });

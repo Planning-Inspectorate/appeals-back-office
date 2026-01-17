@@ -459,7 +459,7 @@ export const postEnforcementNoticeReason = async (request, response) => {
 				? [body.invalidReason].flat().map((reason) => ({
 						reasonSelected: Number(reason),
 						reasonText: body[`invalidReason-${reason}`]
-				  }))
+					}))
 				: null
 		};
 

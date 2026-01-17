@@ -32,10 +32,10 @@ const linkedAppealsInclude = isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)
 			lpaQuestionnaire: { include: { lpaQuestionnaireValidationOutcome: true } },
 			appellantCase: { include: { appellantCaseValidationOutcome: true } },
 			inspectorDecision: true
-	  }
+		}
 	: {
 			appealType: true
-	  };
+		};
 
 /**
  * @deprecated too inefficient, use specific selects only

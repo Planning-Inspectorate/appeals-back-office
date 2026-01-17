@@ -35,7 +35,7 @@ export function baseSummaryList(appealId, rule6PartyStatement, { isReview }, rul
 				),
 				isOrderedList: true,
 				isNumberedList: filteredAttachments.length > 1
-		  })
+			})
 		: null;
 
 	const folderId =
@@ -93,11 +93,11 @@ export function baseSummaryList(appealId, rule6PartyStatement, { isReview }, rul
 														href: `/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/redact`,
 														visuallyHiddenText: 'statement'
 													}
-											  ])
+												])
 									]
 								}
 							}
-					  ]
+						]
 					: [
 							{
 								key: { text: 'Statement' },
@@ -124,11 +124,11 @@ export function baseSummaryList(appealId, rule6PartyStatement, { isReview }, rul
 														href: `/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/redact`,
 														visuallyHiddenText: 'statement'
 													}
-											  ])
+												])
 									]
 								}
 							}
-					  ]),
+						]),
 				{
 					key: { text: 'Supporting documents' },
 					value: attachmentsList ? { html: attachmentsList } : { text: 'No documents' },
@@ -141,7 +141,7 @@ export function baseSummaryList(appealId, rule6PartyStatement, { isReview }, rul
 											href: `/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/manage-documents/${folderId}`,
 											visuallyHiddenText: 'supporting documents'
 										}
-								  ]
+									]
 								: []),
 							{
 								text: 'Add',
@@ -251,7 +251,7 @@ export function reviewRule6PartyStatementPage(
 					? {
 							value: COMMENT_STATUS.VALID_REQUIRES_REDACTION,
 							text: 'Redact and accept statement'
-					  }
+						}
 					: undefined,
 				{
 					value: COMMENT_STATUS.INCOMPLETE,

@@ -61,7 +61,7 @@ export const mapInquiryDetails = ({
 						value: { text: `${estimatedDays} Days` },
 						...actions('Estimated Days', 'estimation')
 					}
-			  ]
+				]
 			: []),
 		{
 			key: { text: 'Do you know the address of where the inquiry will take place?' },
@@ -75,7 +75,7 @@ export const mapInquiryDetails = ({
 						value: { html: addressToString({ ...address, postCode: address?.postcode }, '<br>') },
 						...actions('Address', 'address-details')
 					}
-			  ]
+				]
 			: [])
 	];
 

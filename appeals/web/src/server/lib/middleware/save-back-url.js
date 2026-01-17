@@ -72,7 +72,7 @@ export function backLinkGenerator(sessionKey) {
 		return isAtEditEntrypoint(request)
 			? preserveQueryString(request, cyaUrl, { exclude: ['editEntrypoint'] })
 			: prevPageUrl
-			? preserveQueryString(request, prevPageUrl)
-			: flowEntrypoint;
+				? preserveQueryString(request, prevPageUrl)
+				: flowEntrypoint;
 	};
 }

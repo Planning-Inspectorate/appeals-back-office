@@ -55,7 +55,7 @@ export function generateHASComponents(
 									text: lpaText
 								}
 							}
-					  ]
+						]
 					: []),
 				removeSummaryListActions(mappedAppellantCaseData.applicationType.display.summaryListItem),
 				mappedAppellantCaseData.applicationDecision.display.summaryListItem,
@@ -223,9 +223,9 @@ export function generateHASComponents(
 														documentUploadUrlTemplate
 													)
 												}
-										  ]
+											]
 										: [])
-							  ]
+								]
 							: [
 									...(userHasUpdateCasePermission
 										? [
@@ -238,9 +238,9 @@ export function generateHASComponents(
 														documentUploadUrlTemplate
 													)
 												}
-										  ]
+											]
 										: [])
-							  ]
+								]
 				}
 			},
 			rows: mappedAppellantCaseData.additionalDocuments.display.summaryListItems

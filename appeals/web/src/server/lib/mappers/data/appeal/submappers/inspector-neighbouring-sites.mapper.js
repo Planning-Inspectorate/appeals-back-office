@@ -28,7 +28,7 @@ export const mapInspectorNeighbouringSites = ({ appealDetails, currentRoute, ses
 									visuallyHiddenText: 'Interested party and neighbour addresses',
 									attributes: { 'data-cy': 'manage-neighbouring-sites-inspector' }
 								}
-						  ]
+							]
 						: []),
 					...(userHasPermission(permissionNames.updateCase, session)
 						? [
@@ -38,7 +38,7 @@ export const mapInspectorNeighbouringSites = ({ appealDetails, currentRoute, ses
 									visuallyHiddenText: 'Interested party and neighbour addresses',
 									attributes: { 'data-cy': 'add-neighbouring-sites-inspector' }
 								}
-						  ]
+							]
 						: [])
 				]
 			},

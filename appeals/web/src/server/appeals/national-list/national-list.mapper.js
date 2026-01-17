@@ -553,7 +553,7 @@ export function nationalListPage(
 						})
 					}
 				}
-		  ]
+			]
 		: [];
 
 	/** @type {PageContent} */

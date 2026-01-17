@@ -76,7 +76,7 @@ export function reviewFinalCommentsPage(
 								value: COMMENT_STATUS.VALID_REQUIRES_REDACTION,
 								text: 'Redact and accept final comments',
 								checked: false // This status isn't persisted so will always be unchecked
-						  }
+							}
 						: undefined,
 					{
 						value: COMMENT_STATUS.INVALID,

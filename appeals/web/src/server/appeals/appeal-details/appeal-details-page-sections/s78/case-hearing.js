@@ -25,10 +25,10 @@ export const getCaseHearing = (mappedData, appealDetails, session) => {
 		? {
 				type: 'summary-list',
 				parameters: { rows: mappedData.appeal.hearingDetails.display.summaryListItems }
-		  }
+			}
 		: canEditHearing
-		? mappedData.appeal.setUpHearing.display.buttonItem
-		: simpleHtmlComponent('p', { class: 'govuk-body govuk-!-margin-bottom-7' }, 'Not set up');
+			? mappedData.appeal.setUpHearing.display.buttonItem
+			: simpleHtmlComponent('p', { class: 'govuk-body govuk-!-margin-bottom-7' }, 'Not set up');
 
 	const hearingStartTime = appealDetails.hearing?.hearingStartTime;
 	const beginningOfHearingDay =
@@ -52,14 +52,14 @@ export const getCaseHearing = (mappedData, appealDetails, session) => {
 		? {
 				type: 'summary-list',
 				parameters: { rows: mappedData.appeal.hearingEstimates.display.summaryListItems }
-		  }
+			}
 		: canEditHearing
-		? mappedData.appeal.addHearingEstimates.display.htmlItem
-		: simpleHtmlComponent(
-				'p',
-				{ class: 'govuk-body govuk-!-margin-top-6 govuk-!-margin-bottom-2' },
-				'Not set up'
-		  );
+			? mappedData.appeal.addHearingEstimates.display.htmlItem
+			: simpleHtmlComponent(
+					'p',
+					{ class: 'govuk-body govuk-!-margin-top-6 govuk-!-margin-bottom-2' },
+					'Not set up'
+				);
 
 	return [
 		wrapComponents(

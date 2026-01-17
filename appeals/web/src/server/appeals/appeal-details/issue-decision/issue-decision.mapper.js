@@ -75,7 +75,7 @@ export function issueDecisionPage(
 									text: `${appealDetails.appellant.firstName} ${appealDetails.appellant.lastName}`
 								}
 							}
-					  ]
+						]
 					: []),
 				...(appealDetails.appealSite
 					? [
@@ -87,11 +87,11 @@ export function issueDecisionPage(
 									html: appealDetails.appealSite
 										? addressToMultilineStringHtml(
 												/** @type {import('@pins/appeals').Address} */ (appealDetails.appealSite)
-										  )
+											)
 										: null
 								}
 							}
-					  ]
+						]
 					: []),
 				{
 					key: {
@@ -162,7 +162,7 @@ export function issueDecisionPage(
 								errorMessage: errors?.invalidReason
 									? {
 											text: errors?.invalidReason.msg
-									  }
+										}
 									: null
 							}
 						}
@@ -603,8 +603,8 @@ function checkAndConfirmPageRows(appealData, request) {
 			value: html
 				? { html }
 				: href
-				? { html: `<a class="govuk-link" download href="${href}" target="_blank">${value}</a>` }
-				: { text: value },
+					? { html: `<a class="govuk-link" download href="${href}" target="_blank">${value}</a>` }
+					: { text: value },
 			actions: {
 				items: actions
 			}
@@ -697,7 +697,7 @@ export function viewDecisionPageRows(appealData, request, latestDecsionDocumentT
 				key: appealData.linkedAppeals?.length
 					? `Decision for ${
 							appealData.isParentAppeal ? 'lead' : 'child'
-					  } appeal ${appealShortReference(appealData.appealReference)}`
+						} appeal ${appealShortReference(appealData.appealReference)}`
 					: 'Decision',
 				html: `${toSentenceCase(decisionOutcome)}${
 					invalidReasonHtml ? `<br><br>${invalidReasonHtml}` : ''
@@ -786,8 +786,8 @@ export function viewDecisionPageRows(appealData, request, latestDecsionDocumentT
 			value: html
 				? { html }
 				: href
-				? { html: `<a class="govuk-link" download href="${href}" target="_blank">${value}</a>` }
-				: { text: value },
+					? { html: `<a class="govuk-link" download href="${href}" target="_blank">${value}</a>` }
+					: { text: value },
 			actions: {
 				items: actions
 			}
@@ -851,7 +851,7 @@ export function invalidReasonPage(appealDetails, invalidReason, backLinkUrl, err
 			errorMessage: errors?.invalidReason
 				? {
 						text: errors?.invalidReason.msg
-				  }
+					}
 				: null
 		}
 	};

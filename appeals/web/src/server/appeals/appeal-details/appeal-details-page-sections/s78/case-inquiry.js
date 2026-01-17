@@ -26,10 +26,10 @@ export const getCaseInquiry = (mappedData, appealDetails, session) => {
 		? {
 				type: 'summary-list',
 				parameters: { rows: mappedData.appeal.inquiryDetails.display.summaryListItems }
-		  }
+			}
 		: canEditInquiry
-		? mappedData.appeal.setUpInquiry.display.buttonItem
-		: simpleHtmlComponent('p', { class: 'govuk-body govuk-!-margin-bottom-7' }, 'Not set up');
+			? mappedData.appeal.setUpInquiry.display.buttonItem
+			: simpleHtmlComponent('p', { class: 'govuk-body govuk-!-margin-bottom-7' }, 'Not set up');
 
 	const inquiryStartTime = appealDetails.inquiry?.inquiryStartTime;
 
@@ -54,14 +54,14 @@ export const getCaseInquiry = (mappedData, appealDetails, session) => {
 		? {
 				type: 'summary-list',
 				parameters: { rows: mappedData.appeal.inquiryEstimates.display.summaryListItems }
-		  }
+			}
 		: canEditInquiry
-		? mappedData.appeal.addInquiryEstimates.display.htmlItem
-		: simpleHtmlComponent(
-				'p',
-				{ class: 'govuk-body govuk-!-margin-top-6 govuk-!-margin-bottom-2' },
-				'Not set up'
-		  );
+			? mappedData.appeal.addInquiryEstimates.display.htmlItem
+			: simpleHtmlComponent(
+					'p',
+					{ class: 'govuk-body govuk-!-margin-top-6 govuk-!-margin-bottom-2' },
+					'Not set up'
+				);
 
 	return [
 		wrapComponents(

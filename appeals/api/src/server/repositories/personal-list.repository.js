@@ -53,7 +53,7 @@ const getPersonalList = async (userId, pageNumber, pageSize, status, leadAppealI
 												some: { valid: true, status }
 											}
 										}
-								  ]
+									]
 								: []),
 							{
 								appealStatus: {

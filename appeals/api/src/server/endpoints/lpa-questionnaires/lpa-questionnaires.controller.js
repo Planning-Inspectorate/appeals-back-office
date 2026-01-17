@@ -95,7 +95,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 						siteAddress
 					},
 					notifyClient
-			  ))
+				))
 			: await lpaQuestionnaireRepository.updateLPAQuestionnaireById(lpaQuestionnaireId, {
 					lpaStatement,
 					siteAccessDetails,
@@ -129,7 +129,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 					isSiteInAreaOfSpecialControlAdverts,
 					wasApplicationRefusedDueToHighwayOrTraffic,
 					didAppellantSubmitCompletePhotosAndPlans
-			  });
+				});
 
 		const updatedProperties = Object.keys(body).filter((key) => body[key] !== undefined);
 
@@ -190,7 +190,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 	const response = validationOutcome
 		? {
 				validationOutcome
-		  }
+			}
 		: {
 				lpaStatement,
 				siteAccessDetails,
@@ -204,7 +204,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 				hasProtectedSpecies,
 				isAonbNationalLandscape,
 				isGypsyOrTravellerSite
-		  };
+			};
 
 	return res.send(response);
 };

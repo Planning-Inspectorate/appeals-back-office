@@ -466,7 +466,7 @@ export function mapPostScheduleOrManageSiteVisitCommonParameters(
 						year: visitDateYear,
 						hour: visitStartTimeHour,
 						minute: visitStartTimeMinute
-				  })
+					})
 				: undefined,
 		visitEndTime:
 			visitEndTimeHour && visitEndTimeMinute
@@ -476,7 +476,7 @@ export function mapPostScheduleOrManageSiteVisitCommonParameters(
 						year: visitDateYear,
 						hour: visitEndTimeHour,
 						minute: visitEndTimeMinute
-				  })
+					})
 				: undefined,
 		apiVisitType: mapWebVisitTypeToApiVisitType(visitType),
 		previousVisitType: '',

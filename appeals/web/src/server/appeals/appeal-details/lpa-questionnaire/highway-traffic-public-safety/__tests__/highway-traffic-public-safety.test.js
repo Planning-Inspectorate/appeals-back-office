@@ -14,7 +14,7 @@ const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
 const lpaQuestionnaireUrl = `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`;
 
 describe('highway traffic public safety', () => {
-	beforeEach(installMockApi), afterEach(teardown);
+	(beforeEach(installMockApi), afterEach(teardown));
 
 	describe('GET /change', () => {
 		it('should render the highway traffic public safety change page when accessed from LPAQ page', async () => {

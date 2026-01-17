@@ -46,7 +46,7 @@ export const mapEnforcementAppellantCase = (data) => {
 						...restOfAddress,
 						addressId,
 						postCode: postcode ?? ''
-				  }
+					}
 				: null,
 			appealDecisionDate: hasEnforcementData
 				? appellantCase?.appealDecisionDate?.toISOString()

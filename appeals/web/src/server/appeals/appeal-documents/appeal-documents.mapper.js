@@ -1009,10 +1009,10 @@ export function manageFolderPage({
 											}
 										}
 									]
-							  }
+								}
 							: {
 									text: dateISOStringToDisplayDate(document?.latestDocumentVersion?.dateReceived)
-							  },
+								},
 						{
 							text: document?.latestDocumentVersion?.redactionStatus
 						},
@@ -1067,7 +1067,7 @@ function mapVersionDocumentInformationHtmlProperty(document, documentVersion) {
 								document?.caseId,
 								document.id,
 								document.name
-						  )}" target="_blank">${document.name || ''}</a>`
+							)}" target="_blank">${document.name || ''}</a>`
 						: document.name || ''
 			}
 		});
@@ -1130,7 +1130,7 @@ function mapDocumentNameHtmlProperty(document, documentVersion) {
 								document.id,
 								documentVersion.originalFilename,
 								documentVersion.version
-						  )}" target="_blank">${documentVersion.originalFilename || ''}</a>`
+							)}" target="_blank">${documentVersion.originalFilename || ''}</a>`
 						: documentVersion.originalFilename || ''
 			}
 		});
@@ -1285,7 +1285,7 @@ export async function manageDocumentPage({
 											href: changeNameUrl,
 											visuallyHiddenText: `${document.name} name`
 										}
-								  ]
+									]
 								: [])
 						]
 					}
@@ -1337,10 +1337,10 @@ export async function manageDocumentPage({
 									}
 								}
 							]
-					  }
+						}
 					: {
 							text: dateISOStringToDisplayDate(latestVersion?.dateReceived)
-					  },
+						},
 			actions: {
 				items: [
 					...(editable
@@ -1350,7 +1350,7 @@ export async function manageDocumentPage({
 									href: changeDetailsUrl,
 									visuallyHiddenText: `${document.name} date received`
 								}
-						  ]
+							]
 						: [])
 				]
 			}
@@ -1369,7 +1369,7 @@ export async function manageDocumentPage({
 									href: changeDetailsUrl,
 									visuallyHiddenText: `${document.name} redaction status`
 								}
-						  ]
+							]
 						: [])
 				]
 			}
@@ -1485,7 +1485,7 @@ export async function manageDocumentPage({
 															versionNumberText
 														)}">Remove <span class="govuk-visually-hidden"> version ${versionNumberText} of ${
 														document.name
-												  }</span></a>`
+													}</span></a>`
 									}
 								];
 							})

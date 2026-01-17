@@ -49,13 +49,13 @@ export const mapRule6PartyProofs = ({ appealDetails, currentRoute, request }) =>
 										'rule-6-party-proofs-evidence',
 										request,
 										{ id: rule6Party.id, serviceUser: rule6Party.serviceUser }
-								  )
+									)
 								: mapAddRepresentationSummaryActionLink(
 										currentRoute,
 										'rule-6-party-proofs-evidence',
 										request,
 										{ id: rule6Party.id, serviceUser: rule6Party.serviceUser }
-								  )
+									)
 					}).display.tableItem;
 				})
 				.filter(isDefined)

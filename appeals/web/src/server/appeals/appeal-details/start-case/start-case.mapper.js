@@ -172,7 +172,7 @@ export function confirmProcedurePage(appealId, appealReference, procedureType, e
 					summaryText: `Preview email to LPA`,
 					html: emailPreviews.lpa
 				})
-		  ]
+			]
 		: [];
 
 	/** @type {PageContent} */

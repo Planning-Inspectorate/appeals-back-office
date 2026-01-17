@@ -24,7 +24,7 @@ export const formatLinkableAppealSummary = (appeal) => {
 		agentName: appeal.agent
 			? `${appeal.agent?.firstName} ${appeal.agent?.lastName} ${
 					appeal.agent?.organisationName ? '(' + appeal.agent?.organisationName + ')' : ''
-			  }`
+				}`
 			: 'No agent',
 		submissionDate: new Date(appeal.caseCreatedDate).toISOString(),
 		source: 'back-office',

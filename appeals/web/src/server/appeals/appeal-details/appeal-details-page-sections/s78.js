@@ -37,8 +37,8 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 	const siteDetails = siteDetailsShouldBeHidden
 		? []
 		: config.featureFlags.featureFlagCancelSiteVisit
-		? getSiteDetails(mappedData, appealDetails)
-		: getSiteDetailsLegacy(mappedData, appealDetails);
+			? getSiteDetails(mappedData, appealDetails)
+			: getSiteDetailsLegacy(mappedData, appealDetails);
 	/** @type {PageComponent[]} */
 	const caseTimetable = [
 		{
@@ -60,7 +60,7 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 								mappedData.appeal.hearingDate.display.summaryListItem,
 								mappedData.appeal.inquiryDate.display.summaryListItem,
 								mappedData.appeal.finalCommentDueDate.display.summaryListItem
-						  ]
+							]
 						: [])
 				].filter(isDefined)
 			},

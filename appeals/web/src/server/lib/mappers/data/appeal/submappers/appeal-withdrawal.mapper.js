@@ -25,12 +25,12 @@ export const mapAppealWithdrawal = ({
 				link: `${currentRoute}/withdrawal/view`,
 				editable: true,
 				actionText: 'View'
-		  })
+			})
 		: textSummaryListItem({
 				id,
 				text: 'Appeal withdrawal',
 				link: `${currentRoute}/withdrawal/start`,
 				editable: userHasUpdateCasePermission,
 				actionText: 'Start'
-		  });
+			});
 };

@@ -20,7 +20,7 @@ export const mapAppellantCase = (data) => {
 					appellantCase.appellantCaseIncompleteReasonsSelected,
 					appellantCase.appellantCaseInvalidReasonsSelected,
 					appellantCase.appellantCaseEnforcementInvalidReasonsSelected
-			  ) || undefined
+				) || undefined
 			: undefined;
 
 		return {

@@ -27,7 +27,7 @@ export const mapS78LpaQuestionnaire = (data) => {
 								key: 'custom',
 								name: lpaQuestionnaire.designatedSiteNameCustom
 							}
-					  ]
+						]
 					: [])
 			],
 			lpaStatement: lpaQuestionnaire.lpaStatement,

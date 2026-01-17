@@ -125,18 +125,18 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
 				sessionValues.dateKnown = sessionValues.dateKnown
 					? sessionValues.dateKnown
 					: appealDetails.inquiry?.inquiryStartTime
-					? 'yes'
-					: 'no';
+						? 'yes'
+						: 'no';
 				sessionValues.estimationYesNo = sessionValues.estimationYesNo
 					? sessionValues.estimationYesNo
 					: appealDetails.inquiry?.estimatedDays
-					? 'yes'
-					: 'no';
+						? 'yes'
+						: 'no';
 				sessionValues.addressKnown = sessionValues.addressKnown
 					? sessionValues.addressKnown
 					: appealDetails.inquiry?.address
-					? 'yes'
-					: 'no';
+						? 'yes'
+						: 'no';
 			}
 
 			if (
@@ -149,7 +149,7 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
 			sessionValues.estimationDays =
 				sessionValues.estimationYesNo === 'no'
 					? undefined
-					: sessionValues.estimationDays ?? appealDetails.inquiry?.estimatedDays;
+					: (sessionValues.estimationDays ?? appealDetails.inquiry?.estimatedDays);
 
 			if (
 				typeof sessionValues.addressKnown !== 'string' &&
@@ -170,18 +170,18 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
 				sessionValues['addressKnown'] === 'no'
 					? pick([], ['addressLine1', 'addressLine2', 'town', 'county', 'postCode'])
 					: isEmpty(sessionAddressValues)
-					? {
-							...pick(appealDetails.inquiry?.address, [
-								'addressLine1',
-								'addressLine2',
-								'town',
-								'county'
-							]),
-							postCode: appealDetails.inquiry?.address
-								? appealDetails.inquiry?.address['postcode']
-								: null
-					  }
-					: sessionAddressValues;
+						? {
+								...pick(appealDetails.inquiry?.address, [
+									'addressLine1',
+									'addressLine2',
+									'town',
+									'county'
+								]),
+								postCode: appealDetails.inquiry?.address
+									? appealDetails.inquiry?.address['postcode']
+									: null
+							}
+						: sessionAddressValues;
 			sessionValues = { ...sessionValues, ...addressValues };
 			break;
 		}
