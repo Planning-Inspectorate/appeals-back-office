@@ -90,6 +90,7 @@ export function loadConfig() {
 		FEATURE_FLAG_INVALID_DECISION_LETTER,
 		FEATURE_FLAG_RULE_6_PARTIES,
 		FEATURE_FLAG_APPELLANT_STATEMENT,
+		FEATURE_FLAG_RULE_6_STATEMENT,
 		FEATURE_FLAG_LDC
 	} = environment;
 
@@ -168,6 +169,7 @@ export function loadConfig() {
 			featureFlagExpeditedAppeals: FEATURE_FLAG_EXPEDITED_APPEALS === 'true',
 			featureFlagManuallyAddReps: FEATURE_FLAG_MANUALLY_ADD_REP === 'true',
 			featureFlagAppellantStatement: FEATURE_FLAG_APPELLANT_STATEMENT === 'true',
+			featureFlagRule6Statement: FEATURE_FLAG_RULE_6_STATEMENT === 'true',
 			featureFlagLDC: FEATURE_FLAG_LDC === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,

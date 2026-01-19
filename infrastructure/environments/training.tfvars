@@ -56,6 +56,7 @@ apps_config = {
     featureFlagExpeditedAppeals       = false
     featureFlagManuallyAddReps        = false
     featureFlagAppellantStatement     = true
+    featureFlagRule6Statement         = false
     featureFlagLDC                    = false
   }
 

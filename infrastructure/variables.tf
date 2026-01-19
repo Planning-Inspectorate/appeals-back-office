@@ -65,6 +65,7 @@ variable "apps_config" {
       featureFlagExpeditedAppeals       = bool
       featureFlagManuallyAddReps        = bool
       featureFlagAppellantStatement     = bool
+      featureFlagRule6Statement         = bool
       featureFlagLDC                    = bool
     })
 
