@@ -92,7 +92,7 @@ export const publishDecision = async (
 		documentDate,
 		documentGuid,
 		version: 1,
-		outcome: outcome === 'split decision' ? APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION : outcome,
+		outcome: outcome?.replaceAll(' ', '_'),
 		invalidDecisionReason
 	});
 
