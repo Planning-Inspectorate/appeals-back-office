@@ -326,7 +326,7 @@ function mapRequiredActionToPersonalListActionHtml(
 		case 'arrangeSiteVisit': {
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 				request,
-				`/appeals-service/appeal-details/${appealId}/site-visit/schedule-visit`
+				`/appeals-service/appeal-details/${appealId}/site-visit-v2/schedule-visit`
 			)}">Set up site visit<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'awaitingAppellantUpdate': {

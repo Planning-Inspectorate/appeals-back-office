@@ -61,7 +61,6 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 		// Do not display the banner
 		return;
 	}
-
 	switch (bannerDefinitionKey) {
 		case 'awaitingLinkedAppeal':
 			return createNotificationBanner({
@@ -77,11 +76,12 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 				)}">Mark as transferred</a></p>`
 			});
 		case 'readyForSetUpSiteVisit':
+			request.session.readyToSetUp = true;
 			return createNotificationBanner({
 				bannerDefinitionKey,
 				html: `<p class="govuk-notification-banner__heading">Site visit ready to set up</p><p><a class="govuk-notification-banner__link" data-cy="set-up-site-visit-banner" href="${addBackLinkQueryToUrl(
 					request,
-					`/appeals-service/appeal-details/${appealDetails.appealId}/site-visit/schedule-visit`
+					`/appeals-service/appeal-details/${appealDetails.appealId}/site-visit-v2/schedule-visit`
 				)}">Set up site visit</a></p>`
 			});
 		case 'assignCaseOfficer':
@@ -156,7 +156,7 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 				html: `<p class="govuk-notification-banner__heading">Appeal ready for validation</p><p><a class="govuk-notification-banner__link" data-cy="validate-appeal" href="${addBackLinkQueryToUrl(
 					request,
 					`/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case`
-				)}">Validate <span class="govuk-visually-hidden">appeal</span></a></p>`
+				)}">Validates<span class="govuk-visually-hidden">appeal</span></a></p>`
 			});
 		case 'appellantFinalCommentsAwaitingReview':
 			return createNotificationBanner({
@@ -317,6 +317,24 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 					request,
 					`/appeals-service/appeal-details/${appealDetails.appealId}/inquiry/setup/date`
 				)}">Set up inquiry</a>`
+			});
+		}
+		case 'addSiteVisitTime': {
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a class="govuk-heading-s govuk-notification-banner__link" data-cy="add-site-visit-time" href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/site-visit-v2/schedule/schedule-visit-date`
+				)}">Add site visit time</a>`
+			});
+		}
+		case 'addSiteVisitDateTime': {
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a class="govuk-heading-s govuk-notification-banner__link" data-cy="add-site-visit-date-time" href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/site-visit-v2/schedule/schedule-visit-date`
+				)}">Add site visit date and time</a>`
 			});
 		}
 		case 'reviewRule6PartyStatement': {
