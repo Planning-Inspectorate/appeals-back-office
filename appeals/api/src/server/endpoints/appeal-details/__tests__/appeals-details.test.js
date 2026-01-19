@@ -126,7 +126,8 @@ const householdAppealDto = {
 	createdAt: householdAppeal.caseCreatedDate.toISOString(),
 	startedAt: householdAppeal.caseStartedDate?.toISOString(),
 	validAt: householdAppeal.caseValidDate?.toISOString(),
-	enforcementNotice: { appellantCase: {} }
+	enforcementNotice: { appellantCase: {} },
+	appealRule6Parties: {}
 };
 
 const s78AppealDto = {
@@ -243,6 +244,7 @@ const s78AppealDto = {
 		},
 		rule6PartyProofs: {}
 	},
+	appealRule6Parties: {},
 	healthAndSafety: {
 		appellantCase: {
 			details: fullPlanningAppeal.appellantCase.siteSafetyDetails,
@@ -460,7 +462,8 @@ describe('Appeal detail routes', () => {
 								isRedacted: false,
 								receivedAt: null,
 								representationStatus: null,
-								status: 'not_received'
+								status: 'not_received',
+								organisationName: 'Test Organisation'
 							}
 						},
 						rule6PartyProofs: {

@@ -695,7 +695,7 @@ it('should progress to evidence stage after sharing statements and IP comments',
 		cy.simulateStatementsDeadlineElapsed(caseObj);
 
 		// Share statements and transition to evidence stage
-		caseDetailsPage.validateBannerMessage('Important', 'Share IP comments and LPA statement');
+		caseDetailsPage.validateBannerMessage('Important', 'Share IP comments and statements');
 		caseDetailsPage.basePageElements.bannerLink().click();
 		caseDetailsPage.clickButtonByText('Confirm');
 

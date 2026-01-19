@@ -240,6 +240,33 @@ const formatDocumentationSummary = (appeal) => {
 					};
 				}
 				return acc;
+			}, {}) || {},
+		rule6PartyStatements:
+			(appeal.appealRule6Parties || []).reduce((/** @type {Object<string, any>} */ acc, party) => {
+				const rule6RepFromParty = appeal.representations?.filter(
+					(rep) =>
+						rep.representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT &&
+						String(rep.representedId) === String(party.serviceUserId)
+				);
+
+				if (rule6RepFromParty && rule6RepFromParty.length > 0) {
+					acc[party.serviceUserId] = {
+						status: DOCUMENT_STATUS_RECEIVED,
+						representationStatus: rule6RepFromParty[0].status,
+						receivedAt: rule6RepFromParty[0].dateCreated,
+						isRedacted: Boolean(rule6RepFromParty[0].redactedRepresentation),
+						organisationName: party.serviceUser?.organisationName
+					};
+				} else {
+					acc[party.serviceUserId] = {
+						status: DOCUMENT_STATUS_NOT_RECEIVED,
+						representationStatus: null,
+						receivedAt: null,
+						isRedacted: false,
+						organisationName: party.serviceUser?.organisationName
+					};
+				}
+				return acc;
 			}, {}) || {}
 	};
 };

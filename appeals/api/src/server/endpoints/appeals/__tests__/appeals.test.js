@@ -122,6 +122,7 @@ describe('appeals list routes', () => {
 									isRedacted: false
 								},
 								rule6PartyProofs: {},
+								rule6PartyStatements: {},
 								lpaFinalComments: {
 									representationStatus: null,
 									status: 'not_received',
@@ -226,6 +227,14 @@ describe('appeals list routes', () => {
 										receivedAt: '2024-03-25T23:59:59.999Z',
 										isRedacted: false
 									}
+								},
+								rule6PartyStatements: {
+									1: {
+										status: 'not_received',
+										representationStatus: null,
+										receivedAt: null,
+										isRedacted: false
+									}
 								}
 							},
 							isParentAppeal: false,
@@ -271,7 +280,7 @@ describe('appeals list routes', () => {
 					},
 					include: {
 						address: true,
-						appealRule6Parties: true,
+						appealRule6Parties: { include: { serviceUser: true } },
 						appealStatus: { where: { valid: true } },
 						appealType: true,
 						procedureType: true,
@@ -382,6 +391,14 @@ describe('appeals list routes', () => {
 										status: 'received',
 										representationStatus: 'valid',
 										receivedAt: '2024-03-25T23:59:59.999Z',
+										isRedacted: false
+									}
+								},
+								rule6PartyStatements: {
+									1: {
+										status: 'not_received',
+										representationStatus: null,
+										receivedAt: null,
 										isRedacted: false
 									}
 								}
@@ -517,7 +534,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
@@ -650,7 +668,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
@@ -783,7 +802,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
@@ -898,7 +918,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
@@ -1024,7 +1045,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
@@ -1145,7 +1167,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							dueDate: null,
 							isParentAppeal: false,
@@ -1267,7 +1290,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
@@ -1389,7 +1413,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
@@ -1495,7 +1520,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
@@ -1824,7 +1850,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							isParentAppeal: false,
 							isChildAppeal: true,
@@ -1900,7 +1927,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							isParentAppeal: false,
 							isChildAppeal: true,

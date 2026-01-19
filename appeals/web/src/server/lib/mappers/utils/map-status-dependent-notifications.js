@@ -213,7 +213,7 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 				html: `<a href="${addBackLinkQueryToUrl(
 					request,
 					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
-				)}" class="govuk-heading-s govuk-notification-banner__link">Share IP comments and LPA statement</a>`
+				)}" class="govuk-heading-s govuk-notification-banner__link">Share IP comments and statements</a>`
 			});
 		case 'appealValidAndReadyToStart':
 			return createNotificationBanner({

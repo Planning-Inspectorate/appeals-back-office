@@ -126,7 +126,12 @@ const getPersonalList = async (userId, pageNumber, pageSize, status, leadAppealI
 							include: { siteVisitType: true }
 						},
 						hearing: true,
-						inquiry: true
+						inquiry: true,
+						appealRule6Parties: {
+							include: {
+								serviceUser: true
+							}
+						}
 					}
 				}
 			},

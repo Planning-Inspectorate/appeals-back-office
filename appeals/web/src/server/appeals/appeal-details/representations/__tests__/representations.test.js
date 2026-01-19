@@ -191,6 +191,102 @@ describe('representations', () => {
 			expect(textResponse.innerHTML).toContain('with the relevant parties.');
 			expect(textResponse.innerHTML).not.toContain('with the relevant party.');
 		});
+
+		it('should contain links for Rule 6 statements if they exist and are valid', async () => {
+			const appealWithRule6 = {
+				...appealData,
+				appealStatus: 'statements',
+				documentationSummary: {
+					rule6PartyStatements: {
+						'rep-id-1': {
+							organisationName: 'Org One',
+							representationStatus: 'valid'
+						},
+						'rep-id-2': {
+							organisationName: 'Org Two',
+							representationStatus: 'valid'
+						}
+					}
+				}
+			};
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealWithRule6);
+			const response = await request.get(`${baseUrl}/1/share`);
+			const textResponse = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(textResponse.innerHTML).toContain('1 Org One statement');
+			expect(textResponse.innerHTML).toContain('1 Org Two statement');
+		});
+
+		it('should display correctly when LPA, Appellant, and Rule 6 statements all exist', async () => {
+			const appealWithAll = {
+				...appealData,
+				appealStatus: 'statements',
+				documentationSummary: {
+					lpaStatement: {
+						representationStatus: 'valid'
+					},
+					appellantStatement: {
+						representationStatus: 'valid'
+					},
+					rule6PartyStatements: {
+						'rep-id-1': {
+							organisationName: 'Org One',
+							representationStatus: 'valid'
+						},
+						'rep-id-2': {
+							organisationName: 'Org Two',
+							representationStatus: 'valid'
+						}
+					}
+				}
+			};
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealWithAll);
+			const response = await request.get(`${baseUrl}/1/share`);
+			const textResponse = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(textResponse.innerHTML).toContain('1 LPA statement</a>,');
+			expect(textResponse.innerHTML).toContain('1 appellant statement</a>,');
+			expect(textResponse.innerHTML).toContain('1 Org One statement</a>');
+			expect(textResponse.innerHTML).toContain(
+				'and <a href="/appeals-service/appeal-details/1/rule6-statement?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare" class="govuk-link">1 Org Two statement</a>'
+			);
+		});
+
+		it('should display correctly when matching comments and statements exist', async () => {
+			const appealWithAll = {
+				...appealData,
+				appealStatus: 'statements',
+				documentationSummary: {
+					ipComments: {
+						counts: {
+							valid: 2
+						}
+					},
+					lpaStatement: {
+						representationStatus: 'valid'
+					},
+					appellantStatement: {
+						representationStatus: 'valid'
+					},
+					rule6PartyStatements: {
+						'rep-id-1': {
+							organisationName: 'Org One',
+							representationStatus: 'valid'
+						}
+					}
+				}
+			};
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealWithAll);
+			const response = await request.get(`${baseUrl}/1/share`);
+			const textResponse = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(textResponse.innerHTML).toContain('2 interested party comments</a>,');
+			expect(textResponse.innerHTML).toContain('1 LPA statement</a>,');
+			expect(textResponse.innerHTML).toContain('1 appellant statement</a>');
+			expect(textResponse.innerHTML).toContain(
+				'and <a href="/appeals-service/appeal-details/1/rule6-statement?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare" class="govuk-link">1 Org One statement</a>'
+			);
+		});
 	});
 
 	describe('POST /share', () => {

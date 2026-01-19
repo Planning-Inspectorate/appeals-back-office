@@ -111,7 +111,7 @@ describe('mapStatusDependentNotifications', () => {
 		{
 			bannerKey: 'shareCommentsAndLpaStatement',
 			requiredAction: 'shareIpCommentsAndLpaStatement',
-			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Share IP comments and LPA statement</a>`,
+			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Share IP comments and statements</a>`,
 			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
