@@ -50,11 +50,11 @@ apps_config = {
     featureFlagAutoAssignTeam         = true
     featureFlagCancelSiteVisit        = true
     featureFlagSearchCaseOfficer      = true
-    featureFlagEnforcementNotice      = false
+    featureFlagEnforcementNotice      = true
     featureFlagInvalidDecisionLetter  = false
     featureFlagRule6Parties           = false
     featureFlagExpeditedAppeals       = false
-    featureFlagManuallyAddReps        = false
+    featureFlagManuallyAddReps        = true
     featureFlagAppellantStatement     = false
     featureFlagLDC                    = false
   }
