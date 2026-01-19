@@ -16,7 +16,8 @@ describe('notify preview tests', () => {
 					lpa_reference: `planningApplicationReference`,
 					correction_notice_reason: `correctionNotice`,
 					decision_date: `dateISOStringToDisplayDate(file.receivedDate)`,
-					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					feedback_link: '/mock-feedback-link'
 				};
 				const response = await request
 					.post(`/appeals/notify-preview/correction-notice-decision.content.md`)
