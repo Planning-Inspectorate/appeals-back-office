@@ -11,7 +11,7 @@ export const mapSiteVisit = ({ currentRoute, userHasUpdateCasePermission }) => {
 		id,
 		text: 'Set up site visit',
 		buttonOptions: {
-			href: `${currentRoute}/site-visit/schedule-visit`
+			href: `${currentRoute}/site-visit-v2/schedule-visit`
 		}
 	});
 };
@@ -24,7 +24,7 @@ export const mapSiteVisitOld = ({ appealDetails, userHasUpdateCasePermission }) 
 		value: {
 			html: 'Not set up'
 		},
-		link: `/appeals-service/appeal-details/${appealDetails.appealId}/site-visit/schedule-visit`,
+		link: `/appeals-service/appeal-details/${appealDetails.appealId}/site-visit-v2/schedule-visit`,
 		editable: userHasUpdateCasePermission,
 		actionText: 'Set up'
 	});

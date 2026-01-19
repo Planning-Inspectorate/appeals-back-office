@@ -646,16 +646,15 @@ describe('site visit routes', () => {
 			test('returns an error if visitType is not Unaccompanied and visitDate is not given when visitEndTime and visitStartTime are given', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/site-visits`)
 					.send({
 						visitEndTime: '2022-03-31T18:00:00.000Z',
 						visitStartTime: '2022-03-31T16:00:00.000Z',
-						visitType: householdAppeal.siteVisit.siteVisitType.name
+						visitType: householdAppeal.siteVisit.siteVisitType.name,
+						dateTimeKnown: 'yes'
 					})
 					.set('azureAdUserId', azureAdUserId);
-
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
@@ -673,7 +672,8 @@ describe('site visit routes', () => {
 					.send({
 						visitDate: '2023-12-07T00:00:00.000Z',
 						visitStartTime: '2023-12-07T16:00:00.000Z',
-						visitType: householdAppeal.siteVisit.siteVisitType.name
+						visitType: householdAppeal.siteVisit.siteVisitType.name,
+						dateTimeKnown: 'yes'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -694,7 +694,8 @@ describe('site visit routes', () => {
 					.send({
 						visitDate: '2023-12-07T00:00:00.000Z',
 						visitEndTime: '2023-12-07T16:00:00.000Z',
-						visitType: householdAppeal.siteVisit.siteVisitType.name
+						visitType: householdAppeal.siteVisit.siteVisitType.name,
+						dateTimeKnown: 'yes'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -714,7 +715,8 @@ describe('site visit routes', () => {
 					.post(`/appeals/${householdAppeal.id}/site-visits`)
 					.send({
 						visitDate: '2023-12-07T00:00:00.000Z',
-						visitType: 'Accompanied'
+						visitType: 'Accompanied',
+						dateTimeKnown: 'yes'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -736,10 +738,10 @@ describe('site visit routes', () => {
 						visitDate: '07/12/2023',
 						visitEndTime: '2023-12-07T18:00:00.000Z',
 						visitStartTime: '2023-12-07T16:00:00.000Z',
-						visitType: householdAppeal.siteVisit.siteVisitType.name
+						visitType: householdAppeal.siteVisit.siteVisitType.name,
+						dateTimeKnown: 'yes'
 					})
 					.set('azureAdUserId', azureAdUserId);
-
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
@@ -758,7 +760,8 @@ describe('site visit routes', () => {
 						visitDate: '2023-12-07T00:00:00.000Z',
 						visitEndTime: '18:00',
 						visitStartTime: '2023-12-07T16:00:00.000Z',
-						visitType: householdAppeal.siteVisit.siteVisitType.name
+						visitType: householdAppeal.siteVisit.siteVisitType.name,
+						dateTimeKnown: 'yes'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -780,7 +783,8 @@ describe('site visit routes', () => {
 						visitDate: '2023-12-07T00:00:00.000Z',
 						visitEndTime: '2023-12-07T18:00:00.000Z',
 						visitStartTime: '16:00',
-						visitType: householdAppeal.siteVisit.siteVisitType.name
+						visitType: householdAppeal.siteVisit.siteVisitType.name,
+						dateTimeKnown: 'yes'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -802,7 +806,8 @@ describe('site visit routes', () => {
 						visitDate: '2023-12-56T16:00:00.000Z',
 						visitEndTime: '2023-12-07T18:00:00.000Z',
 						visitStartTime: '2023-12-07T16:00:00.000Z',
-						visitType: householdAppeal.siteVisit.siteVisitType.name
+						visitType: householdAppeal.siteVisit.siteVisitType.name,
+						dateTimeKnown: 'yes'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -824,7 +829,8 @@ describe('site visit routes', () => {
 						visitDate: '2023-07-12T00:00:00.000Z',
 						visitEndTime: '2023-07-12T56:00:00.000Z',
 						visitStartTime: '2023-07-12T16:00:00.000Z',
-						visitType: householdAppeal.siteVisit.siteVisitType.name
+						visitType: householdAppeal.siteVisit.siteVisitType.name,
+						dateTimeKnown: 'yes'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -846,7 +852,8 @@ describe('site visit routes', () => {
 						visitDate: '2023-07-12T00:00:00.000Z',
 						visitEndTime: '2023-07-12T18:00:00.000Z',
 						visitStartTime: '2023-07-12T56:00:00.000Z',
-						visitType: householdAppeal.siteVisit.siteVisitType.name
+						visitType: householdAppeal.siteVisit.siteVisitType.name,
+						dateTimeKnown: 'yes'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -870,7 +877,8 @@ describe('site visit routes', () => {
 						visitDate: siteVisit.visitDate,
 						visitEndTime: siteVisit.visitStartTime,
 						visitStartTime: siteVisit.visitEndTime,
-						visitType: 'accompanied'
+						visitType: 'accompanied',
+						dateTimeKnown: 'yes'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -2563,7 +2571,8 @@ describe('site visit routes', () => {
 					.send({
 						visitStartTime: siteVisit.visitStartTime,
 						visitEndTime: siteVisit.visitEndTime,
-						visitType: householdAppeal.siteVisit.siteVisitType.name
+						visitType: householdAppeal.siteVisit.siteVisitType.name,
+						dateTimeKnown: 'yes'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -2588,7 +2597,8 @@ describe('site visit routes', () => {
 					.send({
 						visitDate: siteVisit.visitDate,
 						visitStartTime: siteVisit.visitStartTime,
-						visitType: householdAppeal.siteVisit.siteVisitType.name
+						visitType: householdAppeal.siteVisit.siteVisitType.name,
+						dateTimeKnown: 'yes'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -2613,7 +2623,8 @@ describe('site visit routes', () => {
 					.send({
 						visitDate: siteVisit.visitDate,
 						visitEndTime: siteVisit.visitEndTime,
-						visitType: householdAppeal.siteVisit.siteVisitType.name
+						visitType: householdAppeal.siteVisit.siteVisitType.name,
+						dateTimeKnown: 'yes'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -2647,7 +2658,8 @@ describe('site visit routes', () => {
 						visitEndTime: siteVisit.visitEndTime,
 						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
-						siteVisitChangeType: 'unchanged'
+						siteVisitChangeType: 'unchanged',
+						knowDateTime: true
 					})
 					.set('azureAdUserId', azureAdUserId);
 
