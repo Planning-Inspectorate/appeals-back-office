@@ -8,7 +8,6 @@ import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { CHANGE_APPEAL_TYPE_INVALID_REASON } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
-import { capitalize } from 'lodash-es';
 import {
 	postChangeDocumentDetails,
 	postChangeDocumentFileName,
@@ -350,7 +349,7 @@ export const getAddDocumentDetails = async (request, response) => {
 		backLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/{{folderId}}`,
 		isLateEntry: getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid',
 		...(headingTextOverride && {
-			pageHeadingTextOverride: capitalize(headingTextOverride)
+			pageHeadingTextOverride: capitalizeFirstLetter(headingTextOverride)
 		})
 	});
 };
@@ -471,7 +470,7 @@ export const getManageFolder = async (request, response) => {
 		viewAndEditUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/{{folderId}}/{{documentId}}`,
 		addButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/{{folderId}}`,
 		...(headingTextOverride && {
-			pageHeadingTextOverride: capitalize(headingTextOverride)
+			pageHeadingTextOverride: capitalizeFirstLetter(headingTextOverride)
 		})
 	});
 };

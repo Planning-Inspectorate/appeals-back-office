@@ -855,6 +855,8 @@ export function getPageHeadingTextOverrideForFolder(folder) {
 			return 'Decision letter from the local planning authority';
 		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
 			return 'Other new supporting documents';
+		case APPEAL_DOCUMENT_TYPE.PRIOR_CORRESPONDENCE_WITH_PINS:
+			return 'communication with the Planning Inspectorate';
 		case APPEAL_DOCUMENT_TYPE.GROUND_A_SUPPORTING:
 			return 'Ground (a) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_B_SUPPORTING:
@@ -963,6 +965,8 @@ export function getDocumentNameFromFolder(folderPath) {
 			return 'new plans or drawings';
 		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
 			return 'other new supporting documents';
+		case APPEAL_DOCUMENT_TYPE.PRIOR_CORRESPONDENCE_WITH_PINS:
+			return 'communication with the Planning Inspectorate';
 		case APPEAL_DOCUMENT_TYPE.GROUND_A_SUPPORTING:
 			return 'ground (a) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_B_SUPPORTING:
