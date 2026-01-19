@@ -1,4 +1,3 @@
-import usersService from '#appeals/appeal-users/users-service.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
@@ -10,15 +9,12 @@ import { formatTime } from '@pins/appeals/utils/date-formatter.js';
 import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import {
 	cancelSiteVisitPage,
-	getSiteVisitSuccessBannerTypeAndChangeType,
-	mapPostScheduleOrManageSiteVisitCommonParameters as mapPostScheduleOrManageSiteVisitToUpdateOrCreateSiteVisitParameters,
 	scheduleOrManageSiteVisitConfirmationPage,
-	scheduleOrManageSiteVisitPage,
-	setPreviousVisitTypeIfChanged,
 	siteVisitBookedPage,
 	siteVisitMissedPage,
 	siteVisitMissedPageCya,
-	stringIsSiteVisitConfirmationPageType
+	stringIsSiteVisitConfirmationPageType,
+	typeOfSiteVisitPage
 } from './site-visit.mapper.js';
 import * as siteVisitService from './site-visit.service.js';
 
@@ -31,26 +27,17 @@ import * as siteVisitService from './site-visit.service.js';
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * @param {'schedule' | 'manage'} pageType
  */
-const renderScheduleOrManageSiteVisit = async (request, response, pageType) => {
+const renderTypeOfSiteVisit = async (request, response, pageType) => {
 	const { errors } = request;
 
 	const appealDetails = request.currentAppeal;
 
 	if (appealDetails) {
-		let {
-			body: {
-				'visit-type': visitType,
-				'visit-date-day': visitDateDay,
-				'visit-date-month': visitDateMonth,
-				'visit-date-year': visitDateYear,
-				'visit-start-time-hour': visitStartTimeHour,
-				'visit-start-time-minute': visitStartTimeMinute,
-				'visit-end-time-hour': visitEndTimeHour,
-				'visit-end-time-minute': visitEndTimeMinute
-			}
-		} = request;
+		let visitType = request.body['visit-type'] || '';
 
-		const mappedPageContent = await scheduleOrManageSiteVisitPage(
+		request.session.visitType = visitType;
+		request.session.readyToSetUp = request.session.readyToSetUp || false;
+		const mappedPageContent = await typeOfSiteVisitPage(
 			pageType,
 			appealDetails,
 			request.originalUrl,
@@ -58,13 +45,6 @@ const renderScheduleOrManageSiteVisit = async (request, response, pageType) => {
 			request.session,
 			request,
 			visitType,
-			visitDateDay,
-			visitDateMonth,
-			visitDateYear,
-			visitStartTimeHour,
-			visitStartTimeMinute,
-			visitEndTimeHour,
-			visitEndTimeMinute,
 			errors
 		);
 
@@ -206,138 +186,24 @@ export const renderSiteVisitMissedCya = async (request, response) => {
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
-export const getScheduleSiteVisit = async (request, response) => {
-	renderScheduleOrManageSiteVisit(request, response, 'schedule'); // TODO: refactor to boolean for consistency with renderAssignUser isInspector param
+export const getTypeOfSiteVisit = async (request, response) => {
+	renderTypeOfSiteVisit(request, response, 'schedule');
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getManageSiteVisit = async (request, response) => {
-	renderScheduleOrManageSiteVisit(request, response, 'manage');
+	renderTypeOfSiteVisit(request, response, 'manage');
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
-export const postScheduleSiteVisit = async (request, response) => {
-	postScheduleOrManageSiteVisit(request, response, 'schedule');
-};
-
-/** @type {import('@pins/express').RequestHandler<Response>} */
-export const postManageSiteVisit = async (request, response) => {
-	postScheduleOrManageSiteVisit(request, response, 'manage');
-};
-
-/**
- *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {'schedule' | 'manage'} pageType
- */
-export const postScheduleOrManageSiteVisit = async (request, response, pageType) => {
-	const { errors } = request;
-
-	if (errors) {
-		return renderScheduleOrManageSiteVisit(request, response, pageType);
+export const postTypeOfSiteVisit = async (request, response) => {
+	if (request.errors) {
+		return renderTypeOfSiteVisit(request, response, 'schedule');
 	}
-
-	const {
-		params: { appealId }
-	} = request;
-
-	try {
-		const appealDetails = request.currentAppeal;
-
-		if (appealDetails) {
-			const {
-				body: {
-					/** @type {WebSiteVisitType} */
-					'visit-type': visitType,
-					'visit-date-day': visitDateDay,
-					'visit-date-month': visitDateMonth,
-					'visit-date-year': visitDateYear,
-					'visit-start-time-hour': visitStartTimeHour,
-					'visit-start-time-minute': visitStartTimeMinute,
-					'visit-end-time-hour': visitEndTimeHour,
-					'visit-end-time-minute': visitEndTimeMinute
-				}
-			} = request;
-
-			const inspector =
-				appealDetails.inspector &&
-				(await usersService.getUserById(appealDetails.inspector, request.session));
-
-			const mappedUpdateOrCreateSiteVisitParameters =
-				mapPostScheduleOrManageSiteVisitToUpdateOrCreateSiteVisitParameters(
-					appealId,
-					visitDateDay|| '',
-					visitDateMonth||'',
-					visitDateYear||'',
-					visitStartTimeHour||'',
-					visitStartTimeMinute||'',
-					visitEndTimeHour||'',
-					visitEndTimeMinute||'',
-					visitType,
-					inspector?.name || ''
-				);
-
-			setPreviousVisitTypeIfChanged(
-				mappedUpdateOrCreateSiteVisitParameters,
-				appealDetails.siteVisit?.visitType
-			);
-
-			if (appealDetails.siteVisit?.siteVisitId) {
-				const successBannerAndChangeType = getSiteVisitSuccessBannerTypeAndChangeType(
-					appealDetails,
-					mappedUpdateOrCreateSiteVisitParameters
-				);
-
-				await siteVisitService.updateSiteVisit(
-					request.apiClient,
-					mappedUpdateOrCreateSiteVisitParameters.appealIdNumber,
-					appealDetails.siteVisit?.siteVisitId,
-					mappedUpdateOrCreateSiteVisitParameters.apiVisitType,
-					mappedUpdateOrCreateSiteVisitParameters.visitDate,
-					mappedUpdateOrCreateSiteVisitParameters.visitStartTime,
-					mappedUpdateOrCreateSiteVisitParameters.visitEndTime,
-					mappedUpdateOrCreateSiteVisitParameters.previousVisitType,
-					mappedUpdateOrCreateSiteVisitParameters.inspectorName,
-					successBannerAndChangeType.changeType
-				);
-
-				addNotificationBannerToSession({
-					session: request.session,
-					bannerDefinitionKey: 'siteVisitChangedDefault',
-					appealId: appealDetails.appealId
-				});
-
-				return response.redirect(`/appeals-service/appeal-details/${appealDetails.appealId}`);
-			} else {
-				await siteVisitService.createSiteVisit(
-					request.apiClient,
-					mappedUpdateOrCreateSiteVisitParameters.appealIdNumber,
-					mappedUpdateOrCreateSiteVisitParameters.apiVisitType,
-					mappedUpdateOrCreateSiteVisitParameters.visitDate,
-					mappedUpdateOrCreateSiteVisitParameters.visitStartTime,
-					mappedUpdateOrCreateSiteVisitParameters.visitEndTime,
-					mappedUpdateOrCreateSiteVisitParameters.inspectorName
-				);
-
-				addNotificationBannerToSession({
-					session: request.session,
-					bannerDefinitionKey: 'siteVisitScheduled',
-					appealId: appealDetails.appealId
-				});
-
-				return response.redirect(`/appeals-service/appeal-details/${appealDetails.appealId}`);
-			}
-		}
-		return response.status(404).render('app/404.njk');
-	} catch (error) {
-		logger.error(
-			error,
-			error instanceof Error ? error.message : 'Something went wrong when scheduling the site visit'
-		);
-
-		return response.status(500).render('app/500.njk');
-	}
+	request.session.visitType = request.body['visit-type'];
+	return response.redirect(
+		`/appeals-service/appeal-details/${request.currentAppeal.appealId}/site-visit/schedule`
+	);
 };
 
 /**
@@ -423,7 +289,8 @@ export const postSiteVisitMissedCya = async (request, response) => {
  *
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */ const renderCancelSiteVisit = async (request, response) => {
+ */
+const renderCancelSiteVisit = async (request, response) => {
 	const { errors } = request;
 
 	const appealDetails = request.currentAppeal;

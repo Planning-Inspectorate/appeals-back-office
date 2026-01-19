@@ -44,6 +44,7 @@ import representationsRouter from './representations/representations.router.js';
 import rule6PartiesRouter from './rule-6-parties/rule-6-parties.router.js';
 import safetyRisksRouter from './safety-risks/safety-risks.router.js';
 import serviceUserRouter from './service-user/service-user.router.js';
+import siteVisitV2Router from './site-visit-v2/site-visit.router.js';
 import siteVisitRouter from './site-visit/site-visit.router.js';
 import startDateRouter from './start-case/start-case.router.js';
 import timetableRouter from './timetable/timetable.router.js';
@@ -81,6 +82,12 @@ router.use('/:appealId/appellant-case', appellantCaseRouter);
 router.use('/:appealId/interested-party-comments', interestedPartyCommentsRouter);
 router.use('/:appealId/final-comments', finalCommentsRouter);
 router.use('/:appealId/proof-of-evidence', proofOfEvidenceRouter);
+router.use(
+	'/:appealId/site-visit-v2',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.viewCaseDetails),
+	siteVisitV2Router
+);
 router.use(
 	'/:appealId/site-visit',
 	validateAppeal,
