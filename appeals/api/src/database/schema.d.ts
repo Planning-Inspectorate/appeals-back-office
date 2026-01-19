@@ -1,6 +1,5 @@
 import * as schema from '#utils/db-client/client.ts';
 import { AssignedTeam } from '@pins/appeals.api';
-
 export interface Appeal extends schema.Appeal {
 	parentAppeals?: AppealRelationship[];
 	childAppeals?: AppealRelationship[];
@@ -54,7 +53,6 @@ export interface Hearing extends schema.Hearing {
 export interface Inquiry extends schema.Inquiry {
 	address: Address;
 }
-
 export interface AppealType extends schema.AppealType {}
 export interface AppealTimetable extends schema.AppealTimetable {}
 export interface AppealStatus extends schema.AppealStatus {}
@@ -230,3 +228,7 @@ export interface AppealGround extends AppealGround {
 }
 
 export interface EnforcementNoticeAppealOutcome extends schema.EnforcementNoticeAppealOutcome {}
+export interface AppealRule6Party extends schema.AppealRule6Party {
+	serviceUser?: ServiceUser | null;
+	appeal?: Appeal | null;
+}

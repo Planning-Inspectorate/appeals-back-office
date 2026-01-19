@@ -217,6 +217,15 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				appellantStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW;
 
 			const appellantStatementEnabled = config.featureFlags.featureFlagAppellantStatement;
+			const rule6StatementEnabled = config.featureFlags.featureFlagRule6Statement;
+
+			const rule6PartyStatements = appealDetails.documentationSummary.rule6PartyStatements || {};
+			const rule6StatementRepresentationStatuses = Object.values(rule6PartyStatements).map(
+				(statement) => statement.representationStatus
+			);
+			const rule6StatementAwaitingReview = rule6StatementRepresentationStatuses.some(
+				(status) => status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			);
 
 			const hasItemsToShare =
 				lpaStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.VALID ||
@@ -224,12 +233,19 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				(ipCommentsCounts?.valid && ipCommentsCounts?.valid > 0) ||
 				(appellantStatementEnabled &&
 					(appellantStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.VALID ||
-						appellantStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE));
+						appellantStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE)) ||
+				(rule6StatementEnabled &&
+					rule6StatementRepresentationStatuses.some(
+						(status) =>
+							status === APPEAL_REPRESENTATION_STATUS.VALID ||
+							status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+					));
 
 			const allReviewsCompleted =
 				!ipCommentsAwaitingReview &&
 				!lpaStatementAwaitingReview &&
-				(!appellantStatementEnabled || !appellantStatementAwaitingReview);
+				(!appellantStatementEnabled || !appellantStatementAwaitingReview) &&
+				(!rule6StatementEnabled || !rule6StatementAwaitingReview);
 
 			if (ipCommentsDueDatePassed && statementsDueDatePassed && allReviewsCompleted) {
 				if (hasItemsToShare) {

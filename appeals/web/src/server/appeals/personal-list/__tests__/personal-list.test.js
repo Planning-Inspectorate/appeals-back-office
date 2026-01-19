@@ -495,10 +495,10 @@ describe('personal-list', () => {
 				}
 			},
 			{
-				name: 'Share IP comments and LPA statement',
+				name: 'Share IP comments and statements',
 				requiredAction: 'shareIpCommentsAndLpaStatement',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=%2Fappeals-service%2Fpersonal-list">Share IP comments and LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=%2Fappeals-service%2Fpersonal-list">Share IP comments and statements<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				}
 			},
 			{

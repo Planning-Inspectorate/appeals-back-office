@@ -5,6 +5,7 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import { contextEnum } from '#mappers/context-enum.js';
 import { mapCase } from '#mappers/mapper-factory.js';
 import { notifySend } from '#notify/notify-send.js';
+import appealRule6PartyRepository from '#repositories/appeal-rule-6-party.repository.js';
 import { getAllAppealTypes } from '#repositories/appeal-type.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import serviceUserRepository from '#repositories/service-user.repository.js';
@@ -52,6 +53,12 @@ const loadAndFormatAppeal = async ({
 	const appealTypes = await loadAppealTypes();
 	const linkedAppeals = await loadLinkedAppeals(appeal);
 	const costsDecision = await formatCostsDecision(appeal);
+
+	if (!appeal.appealRule6Parties) {
+		appeal.appealRule6Parties = await appealRule6PartyRepository.getRule6PartiesForAppeal(
+			appeal.id
+		);
+	}
 
 	const mappedAppeal = mapCase({ appeal, appealTypes, linkedAppeals, costsDecision, context });
 	if (!mappedAppeal) {

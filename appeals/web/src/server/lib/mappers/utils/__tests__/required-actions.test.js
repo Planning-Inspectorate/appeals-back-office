@@ -433,6 +433,91 @@ describe('required actions', () => {
 				});
 			});
 
+			describe('Rule 6 Statements', () => {
+				const pastDate = '2025-01-06T23:59:00.000Z';
+				const appealDataWithBothDueDatesPassed = {
+					...appealDataWithStatementsStatus,
+					appealTimetable: {
+						...appealDataWithStatementsStatus.appealTimetable,
+						ipCommentsDueDate: pastDate,
+						lpaStatementDueDate: pastDate
+					}
+				};
+				it('should return "shareIpCommentsAndLpaStatement" if Rule 6 statement is valid and other reviews completed', () => {
+					expect(
+						getRequiredActionsForAppeal(
+							{
+								...appealDataWithBothDueDatesPassed,
+								documentationSummary: {
+									...appealDataWithStatementsStatus.documentationSummary,
+									ipComments: {
+										status: 'received',
+										counts: { awaiting_review: 0, valid: 1 }
+									},
+									rule6PartyStatements: [
+										{
+											status: 'received',
+											representationStatus: 'valid'
+										}
+									]
+								}
+							},
+							'detail'
+						)
+					).toEqual(['shareIpCommentsAndLpaStatement']);
+				});
+
+				it('should NOT return "shareIpCommentsAndLpaStatement" if Rule 6 statement is awaiting review', () => {
+					const actions = getRequiredActionsForAppeal(
+						{
+							...appealDataWithBothDueDatesPassed,
+							documentationSummary: {
+								...appealDataWithStatementsStatus.documentationSummary,
+								ipComments: {
+									status: 'received',
+									counts: { awaiting_review: 0, valid: 1 }
+								},
+								rule6PartyStatements: [
+									{
+										status: 'received',
+										representationStatus: 'awaiting_review'
+									}
+								]
+							}
+						},
+						'detail'
+					);
+					expect(actions).not.toEqual(['shareIpCommentsAndLpaStatement']);
+				});
+
+				it('should return "shareIpCommentsAndLpaStatement" if Rule 6 statement is incomplete', () => {
+					expect(
+						getRequiredActionsForAppeal(
+							{
+								...appealDataWithBothDueDatesPassed,
+								documentationSummary: {
+									...appealDataWithStatementsStatus.documentationSummary,
+									ipComments: {
+										status: 'received',
+										counts: { awaiting_review: 0, valid: 1 }
+									},
+									rule6PartyStatements: [
+										{
+											status: 'received',
+											representationStatus: 'incomplete'
+										}
+									]
+								}
+							},
+							'detail'
+						)
+					).toEqual(['shareIpCommentsAndLpaStatement']);
+				});
+
+				// Note: Currently required-actions.js does NOT seem to push 'reviewRule6Statement'
+				// so we don't test for it yet, or we could test that it prevents progress.
+			});
+
 			describe('reviewIpComments', () => {
 				it('should return "reviewIpComments" if there are ip comments awaiting review, and neither the ip comments due date nor the lpa statement due date have passed', () => {
 					expect(
