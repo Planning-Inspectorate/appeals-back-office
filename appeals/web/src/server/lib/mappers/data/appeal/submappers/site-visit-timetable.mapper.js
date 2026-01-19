@@ -31,14 +31,15 @@ export const mapSiteVisitTimetable = ({ appealDetails, currentRoute, session, re
 			)) ||
 		'Visit date not yet set';
 
+	const link = addBackLinkQueryToUrl(
+		request,
+		`${currentRoute}/site-visit/${hasVisit ? 'schedule' : 'schedule-visit'}`
+	);
 	return textSummaryListItem({
 		id,
 		text: 'Site visit',
 		value: { html: value },
-		link: addBackLinkQueryToUrl(
-			request,
-			`${currentRoute}/site-visit/${hasVisit ? 'manage' : 'schedule'}-visit`
-		),
+		link: link,
 		actionText: hasVisit ? 'Change' : 'Arrange',
 		editable:
 			!isChildAppeal(appealDetails) && userHasPermission(permissionNames.setEvents, session),

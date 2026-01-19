@@ -265,10 +265,14 @@ export const happyPathHelper = {
 	progressSiteVisit(caseObj) {
 		caseDetailsPage.clickSetUpSiteVisitType();
 		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Accompanied'));
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Yes'));
+		caseDetailsPage.clickButtonByText('Continue');
 		dateTimeSection.enterVisitDate(happyPathHelper.validVisitDate());
 		dateTimeSection.enterVisitStartTime('08', '00');
 		dateTimeSection.enterVisitEndTime('12', '00');
-		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Set up site visit');
 		caseDetailsPage.validateBannerMessage('Success', 'Site visit set up');
 		cy.simulateSiteVisit(caseObj).then((caseObj) => {
 			cy.reload();
@@ -278,10 +282,14 @@ export const happyPathHelper = {
 	setupSiteVisitFromBanner(caseObj) {
 		caseDetailsPage.clickSiteVisitBanner();
 		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Accompanied'));
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Yes'));
+		caseDetailsPage.clickButtonByText('Continue');
 		dateTimeSection.enterVisitDate(happyPathHelper.validVisitDate());
 		dateTimeSection.enterVisitStartTime('08', '00');
 		dateTimeSection.enterVisitEndTime('12', '00');
-		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Set up site visit');
 		caseDetailsPage.validateBannerMessage('Success', 'Site visit set up');
 	},
 

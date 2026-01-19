@@ -37,12 +37,16 @@ describe('Schedule site visit', () => {
 		it(`Arrange ${visitType} visit from Site details`, { tags: tag.smoke }, () => {
 			caseDetailsPage.clickSetUpSiteVisitType();
 			caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(visitType));
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Yes'));
+			caseDetailsPage.clickButtonByText('Continue');
 			cy.getBusinessActualDate(new Date(), 28).then((visitDate) => {
 				dateTimeSection.enterVisitDate(visitDate);
 			});
 			dateTimeSection.enterVisitStartTime('08', '00');
-			dateTimeSection.enterVisitEndTime('12', '00');
-			caseDetailsPage.clickButtonByText('Confirm');
+
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.clickButtonByText('Set up site visit');
 			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit set up');
 			caseDetailsPage.validateAnswer('Type', visitType, { matchQuestionCase: true });
 		});
@@ -50,12 +54,19 @@ describe('Schedule site visit', () => {
 		it(`Arrange ${visitType} site visit with time from case timetable`, () => {
 			caseDetailsPage.clickArrangeVisitTypeHasCaseTimetable();
 			caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(visitType));
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Yes'));
+			caseDetailsPage.clickButtonByText('Continue');
 			cy.getBusinessActualDate(new Date(), 28).then((visitDate) => {
 				dateTimeSection.enterVisitDate(visitDate);
 			});
 			dateTimeSection.enterVisitStartTime('08', '00');
-			dateTimeSection.enterVisitEndTime('12', '00');
-			caseDetailsPage.clickButtonByText('Confirm');
+
+			if (visitType !== 'Unaccompanied') {
+				dateTimeSection.enterVisitEndTime('12', '00');
+			}
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.clickButtonByText('Set up site visit');
 			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit set up');
 			caseDetailsPage.validateAnswer('Type', visitType, { matchQuestionCase: true });
 		});
@@ -63,12 +74,18 @@ describe('Schedule site visit', () => {
 		it(`Cancel Site Visit`, { tags: tag.smoke }, () => {
 			caseDetailsPage.clickSetUpSiteVisitType();
 			caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(visitType));
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Yes'));
+			caseDetailsPage.clickButtonByText('Continue');
 			cy.getBusinessActualDate(new Date(), 28).then((visitDate) => {
 				dateTimeSection.enterVisitDate(visitDate);
 			});
 			dateTimeSection.enterVisitStartTime('08', '00');
-			dateTimeSection.enterVisitEndTime('12', '00');
-			caseDetailsPage.clickButtonByText('Confirm');
+			if (visitType !== 'Unaccompanied') {
+				dateTimeSection.enterVisitEndTime('12', '00');
+			}
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.clickButtonByText('Set up site visit');
 			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit set up');
 			caseDetailsPage.clickLinkByText('Cancel site visit');
 			caseDetailsPage.clickButtonByText('Cancel site visit');
@@ -78,12 +95,18 @@ describe('Schedule site visit', () => {
 		it('Missed Site Visit', () => {
 			caseDetailsPage.clickSetUpSiteVisitType();
 			caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(visitType));
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Yes'));
+			caseDetailsPage.clickButtonByText('Continue');
 			cy.getBusinessActualDate(new Date(), -28).then((visitDate) => {
 				dateTimeSection.enterVisitDate(visitDate);
 			});
 			dateTimeSection.enterVisitStartTime('13', '00'); //
-			dateTimeSection.enterVisitEndTime('14', '00'); //
-			caseDetailsPage.clickButtonByText('Confirm');
+			if (visitType !== 'Unaccompanied') {
+				dateTimeSection.enterVisitEndTime('14', '00');
+			}
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.clickButtonByText('Set up site visit');
 			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit set up');
 			caseDetailsPage.clickLinkByText('Record missed site visit');
 			caseDetailsPage.selectRadioButtonByValue('Appellant');
@@ -97,12 +120,7 @@ describe('Schedule site visit', () => {
 	it('should show an error when visit type is not selected', () => {
 		caseDetailsPage.clickSetUpSiteVisitType();
 		// Don’t select a radio button
-		cy.getBusinessActualDate(new Date(), 28).then((visitDate) => {
-			dateTimeSection.enterVisitDate(visitDate);
-		});
-		dateTimeSection.enterVisitStartTime('08', '00');
-		dateTimeSection.enterVisitEndTime('12', '00');
-		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.validateErrorMessage('Select visit type');
 		caseDetailsPage.validateInLineErrorMessage('Select visit type');
 	});
@@ -113,24 +131,31 @@ describe('Schedule site visit', () => {
 	it('should show a sucess banner when a past date is entered for the site visit', () => {
 		caseDetailsPage.clickSetUpSiteVisitType();
 		caseDetailsPage.selectRadioButtonByValue('Unaccompanied');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Yes'));
+		caseDetailsPage.clickButtonByText('Continue');
 		cy.getBusinessActualDate(new Date(), -28).then((pastDate) => {
 			dateTimeSection.enterVisitDate(pastDate);
 		});
 		dateTimeSection.enterVisitStartTime('08', '00');
-		dateTimeSection.enterVisitEndTime('12', '00');
-		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Set up site visit');
 		caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit set up');
 	});
 
 	it('should show an error when the start time is after the end time', () => {
 		caseDetailsPage.clickSetUpSiteVisitType();
-		caseDetailsPage.selectRadioButtonByValue('Unaccompanied');
+		caseDetailsPage.selectRadioButtonByValue('Access required');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Yes'));
+		caseDetailsPage.clickButtonByText('Continue');
 		cy.getBusinessActualDate(new Date(), 28).then((visitDate) => {
 			dateTimeSection.enterVisitDate(visitDate);
 		});
 		dateTimeSection.enterVisitStartTime('15', '00'); // 3:00 PM
-		dateTimeSection.enterVisitEndTime('14', '00'); // 2:00 PM
-		caseDetailsPage.clickButtonByText('Confirm');
+		dateTimeSection.enterVisitEndTime('12', '00');
+
+		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.validateErrorMessage('Start time must be before end time');
 		caseDetailsPage.validateInLineErrorMessage('Start time must be before end time');
 	});

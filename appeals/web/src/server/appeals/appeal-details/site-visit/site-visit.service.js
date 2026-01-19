@@ -17,6 +17,7 @@
  * @param {string|undefined} visitStartTime
  * @param {string|undefined} visitEndTime
  * @param {string} inspectorName
+ * @param {string} knowDateTime
  */
 export async function createSiteVisit(
 	apiClient,
@@ -25,7 +26,8 @@ export async function createSiteVisit(
 	visitDate,
 	visitStartTime,
 	visitEndTime,
-	inspectorName
+	inspectorName,
+	knowDateTime
 ) {
 	return apiClient
 		.post(`appeals/${appealId}/site-visits`, {
@@ -34,7 +36,8 @@ export async function createSiteVisit(
 				visitType,
 				inspectorName,
 				...(visitStartTime !== '' && { visitStartTime }),
-				...(visitEndTime !== '' && { visitEndTime })
+				...(visitEndTime !== '' && { visitEndTime }),
+				knowDateTime
 			}
 		})
 		.json();
