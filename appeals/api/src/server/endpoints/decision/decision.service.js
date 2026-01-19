@@ -363,7 +363,8 @@ export const sendNewDecisionLetter = async (
 		correction_notice_reason: correctionNotice,
 		decision_date: formatDate(decisionDate, false),
 		front_office_url: environment.FRONT_OFFICE_URL || '',
-		team_email_address: await getTeamEmailFromAppealId(appeal.id)
+		team_email_address: await getTeamEmailFromAppealId(appeal.id),
+		feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || '')
 	};
 
 	await Promise.all(

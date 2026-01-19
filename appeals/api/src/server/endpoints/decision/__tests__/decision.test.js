@@ -749,7 +749,8 @@ describe('decision routes', () => {
 						front_office_url: 'https://appeal-planning-decision.service.gov.uk/appeals/1345264',
 						correction_notice_reason: correctionNotice,
 						decision_date: formatDate(decisionDate, false),
-						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						feedback_link: FEEDBACK_FORM_LINKS.HAS
 					}
 				});
 			});
@@ -806,7 +807,8 @@ describe('decision routes', () => {
 					front_office_url: 'https://appeal-planning-decision.service.gov.uk/appeals/1345264',
 					correction_notice_reason: correctionNotice,
 					decision_date: formatDate(decisionDate, false),
-					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					feedback_link: FEEDBACK_FORM_LINKS.HAS
 				}
 			});
 		});
