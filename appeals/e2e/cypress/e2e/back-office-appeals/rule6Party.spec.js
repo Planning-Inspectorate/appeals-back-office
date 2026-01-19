@@ -417,7 +417,7 @@ it('should change rule 6 party contact', () => {
 	);
 });
 
-it.only('add a rule 6 POE', () => {
+it('add a rule 6 POE', () => {
 	// Verify no rule 6 party is added
 	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', 'No rule 6 party');
 
