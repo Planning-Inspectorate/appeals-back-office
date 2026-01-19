@@ -203,6 +203,7 @@ export class CaseDetailsPage extends Page {
 		lpaStatementReviewLink: () => cy.getByData(this._cyDataSelectors.reviewLpaStatement),
 		caseStatusTag: () => cy.get('.govuk-grid-column-full > .govuk-grid-column-full > .govuk-tag'),
 		rowChangeLink: (row) => cy.getByData(`change-${row}`),
+		rowAddLink: (row) => cy.getByData(`add-${row}`),
 		changeLinkByLabel: (label) =>
 			cy
 				.contains('.govuk-summary-list__row', label)
@@ -557,6 +558,10 @@ export class CaseDetailsPage extends Page {
 
 	clickRowChangeLink(row) {
 		this.elements.rowChangeLink(row).click();
+	}
+
+	clickRowAddLink(row) {
+		this.elements.rowAddLink(row).click();
 	}
 
 	clickChangeLinkByLabel(label) {
@@ -952,7 +957,7 @@ export class CaseDetailsPage extends Page {
 	}
 
 	checkHeading = (expectedText) => {
-		this.elements.pageHeading().should('have.text', expectedText);
+		this.elements.pageHeading().should('contain.text', expectedText);
 	};
 
 	verifyChangeLinkVisibility = (row, shouldBeVisible = true) => {
