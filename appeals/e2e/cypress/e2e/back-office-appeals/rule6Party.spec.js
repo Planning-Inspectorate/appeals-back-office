@@ -3,13 +3,17 @@
 
 import { appealsApiRequests } from '../../fixtures/appealsApiRequests';
 import { users } from '../../fixtures/users';
+import { POEcyaPage } from '../../page_objects/POEcyaPage';
 import { ContactsSectionPage } from '../../page_objects/caseDetails/contactsSectionPage.js';
 import { CostsSectionPage } from '../../page_objects/caseDetails/costsSectionPage';
 import { DocumentationSectionPage } from '../../page_objects/caseDetails/documentationSectionPage';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { ContactDetailsPage } from '../../page_objects/contactDetailsPage.js';
 import { CYASection } from '../../page_objects/cyaSection.js';
+import { dateReceivedPage } from '../../page_objects/dateReceivedPage';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
+import { RedactionStatusPage as redactionStatusPage } from '../../page_objects/redactionStatusPage';
+import { uploadPOEAndWitnessDocPage } from '../../page_objects/uploadPOEAndWitnessDocPage';
 import { happyPathHelper } from '../../support/happyPathHelper';
 import { urlPaths } from '../../support/urlPaths';
 
@@ -410,5 +414,41 @@ it('should change rule 6 party contact', () => {
 		`${rule6Details.partyNameUpdated} correspondence`,
 		'No documents available',
 		'costs'
+	);
+});
+
+it.only('add a rule 6 POE', () => {
+	// Verify no rule 6 party is added
+	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', 'No rule 6 party');
+
+	// Add rule 6 contact via API
+	cy.addRule6Party(caseObj);
+
+	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', rule6PartyContact.email);
+	const organisationName = rule6PartyContact.organisationName;
+	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', organisationName);
+
+	caseDetailsPage.clickRowAddLink('rule-6-party-proofs-evidence');
+
+	caseDetailsPage.checkHeading('Upload new proof of evidence and witnesses document');
+	uploadPOEAndWitnessDocPage.fillPage();
+	caseDetailsPage.clickButtonByText('Continue');
+
+	caseDetailsPage.checkHeading('Redaction status');
+	redactionStatusPage.selectOption('No redaction required');
+	caseDetailsPage.clickButtonByText('Continue');
+
+	caseDetailsPage.checkHeading('Received date');
+	dateReceivedPage.checkDateIsPrefilled();
+	caseDetailsPage.clickButtonByText('Continue');
+
+	caseDetailsPage.checkHeading(
+		`Check details and add ${organisationName} proof of evidence and witnesses`
+	);
+	POEcyaPage.clickAddButton(organisationName);
+
+	caseDetailsPage.validateBannerMessage(
+		'Success',
+		'Rule 6 party proof of evidence and witnesses added'
 	);
 });

@@ -1,18 +1,18 @@
 // @ts-nocheck
 /**
- * Takes a base document object and returns new version with unique values for id and filenames   
- * @param {Object} baseDocument base document to be overridden 
- * @returns new version of document with unique values for id and filenames 
+ * Takes a base document object and returns new version with unique values for id and filenames
+ * @param {Object} baseDocument base document to be overridden
+ * @returns new version of document with unique values for id and filenames
  */
 export const generateUniqueDocument = (baseDocument) => {
-	if (!baseDocument) return {}; // some requests do not need a document, e.g. setup inquiry and hearing 
+	if (!baseDocument) return {}; // some requests do not need a document, e.g. setup inquiry and hearing
 
-	// generate random id 
+	// generate random id
 	const id = crypto.randomUUID();
 
 	const document = baseDocument.documents[0];
 
-	// return new document with unique properties 
+	// return new document with unique properties
 	return {
 		documents: [
 			{
@@ -23,7 +23,7 @@ export const generateUniqueDocument = (baseDocument) => {
 			}
 		]
 	};
-} 
+}
 
 const validLpaQuestionnaireCommon = {
 	casedata: {
@@ -429,13 +429,13 @@ const documentsApiRequest = {
 			documents: [
 				{
 					dateCreated: '2024-03-01T13:48:35.847Z',
-					documentId: '{placeholder}', // will be replaced by generated id  
+					documentId: '{placeholder}', // will be replaced by generated id
 					documentType: 'appellantCostsApplication',
 					documentURI:
 						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
-					filename: '{placeholder}', // will be replaced by generated id 
+					filename: '{placeholder}', // will be replaced by generated id
 					mime: 'image/jpeg',
-					originalFilename: '{placeholder}', // will be replaced by generated id 
+					originalFilename: '{placeholder}', // will be replaced by generated id
 					size: 10293
 				}
 			]
@@ -444,13 +444,13 @@ const documentsApiRequest = {
 			documents: [
 				{
 					dateCreated: '2024-03-01T13:48:35.847Z',
-					documentId: '{placeholder}', // will be replaced by generated id 
+					documentId: '{placeholder}', // will be replaced by generated id
 					documentType: 'lpaCostsApplication',
 					documentURI:
 						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
-					filename: '{placeholder}', // will be replaced by generated id 
+					filename: '{placeholder}', // will be replaced by generated id
 					mime: 'image/jpeg',
-					originalFilename: '{placeholder}', // will be replaced by generated id 
+					originalFilename: '{placeholder}', // will be replaced by generated id
 					size: 10293
 				}
 			]
@@ -459,13 +459,13 @@ const documentsApiRequest = {
 			documents: [
 				{
 					dateCreated: '2024-03-01T13:48:35.847Z',
-					documentId: '{placeholder}', // will be replaced by generated id 
+					documentId: '{placeholder}', // will be replaced by generated id
 					documentType: 'interestedPartyComment',
 					documentURI:
 						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
-					filename: '{placeholder}', // will be replaced by generated id 
+					filename: '{placeholder}', // will be replaced by generated id
 					mime: 'image/jpeg',
-					originalFilename: '{placeholder}', // will be replaced by generated id 
+					originalFilename: '{placeholder}', // will be replaced by generated id
 					size: 10293
 				}
 				//generateRandomId
@@ -475,13 +475,13 @@ const documentsApiRequest = {
 			documents: [
 				{
 					dateCreated: '2024-03-01T13:48:35.847Z',
-					documentId: '{placeholder}', // will be replaced by generated id 
+					documentId: '{placeholder}', // will be replaced by generated id
 					documentType: 'lpaStatement',
 					documentURI:
 						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
-					filename: '{placeholder}', // will be replaced by generated id 
+					filename: '{placeholder}', // will be replaced by generated id
 					mime: 'image/jpeg',
-					originalFilename: '{placeholder}', // will be replaced by generated id 
+					originalFilename: '{placeholder}', // will be replaced by generated id
 					size: 10293
 				}
 			]
@@ -490,13 +490,13 @@ const documentsApiRequest = {
 			documents: [
 				{
 					dateCreated: '2024-03-01T13:48:35.847Z',
-					documentId: '{placeholder}', // will be replaced by generated id 
+					documentId: '{placeholder}', // will be replaced by generated id
 					documentType: 'lpaFinalComment',
 					documentURI:
 						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
-					filename: '{placeholder}', // will be replaced by generated id 
+					filename: '{placeholder}', // will be replaced by generated id
 					mime: 'image/jpeg',
-					originalFilename: '{placeholder}', // will be replaced by generated id 
+					originalFilename: '{placeholder}', // will be replaced by generated id
 					size: 10293
 				}
 			]
@@ -505,13 +505,13 @@ const documentsApiRequest = {
 			documents: [
 				{
 					dateCreated: '2024-03-01T13:48:35.847Z',
-					documentId: '{placeholder}', // will be replaced by generated id 
+					documentId: '{placeholder}', // will be replaced by generated id
 					documentType: 'appellantFinalComment',
 					documentURI:
 						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
-					filename: '{placeholder}', // will be replaced by generated id 
+					filename: '{placeholder}', // will be replaced by generated id
 					mime: 'image/jpeg',
-					originalFilename: '{placeholder}', // will be replaced by generated id 
+					originalFilename: '{placeholder}', // will be replaced by generated id
 					size: 10293
 				}
 			]
@@ -520,13 +520,13 @@ const documentsApiRequest = {
 			documents: [
 				{
 					dateCreated: '2024-03-01T13:48:35.847Z',
-					documentId: '{placeholder}', // will be replaced by generated id 
+					documentId: '{placeholder}', // will be replaced by generated id
 					documentType: 'appellantProofOfEvidence',
 					documentURI:
 						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
-					filename: '{placeholder}', // will be replaced by generated id 
+					filename: '{placeholder}', // will be replaced by generated id
 					mime: 'image/jpeg',
-					originalFilename: '{placeholder}', // will be replaced by generated id 
+					originalFilename: '{placeholder}', // will be replaced by generated id
 					size: 10293
 				}
 			]
@@ -535,13 +535,13 @@ const documentsApiRequest = {
 			documents: [
 				{
 					dateCreated: '2024-03-01T13:48:35.847Z',
-					documentId: '{placeholder}', // will be replaced by generated id 
+					documentId: '{placeholder}', // will be replaced by generated id
 					documentType: 'lpaProofOfEvidence',
 					documentURI:
 						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
-					filename: '{placeholder}', // will be replaced by generated id 
+					filename: '{placeholder}', // will be replaced by generated id
 					mime: 'image/jpeg',
-					originalFilename: '{placeholder}', // will be replaced by generated id 
+					originalFilename: '{placeholder}', // will be replaced by generated id
 					size: 10293
 				}
 			]
@@ -552,13 +552,13 @@ const documentsApiRequest = {
 			documents: [
 				{
 					dateCreated: '2024-03-01T13:48:35.847Z',
-					documentId: '{placeholder}', // will be replaced by generated id 
+					documentId: '{placeholder}', // will be replaced by generated id
 					documentType: 'appellantCostsApplication',
 					documentURI:
 						'https://pinsstdocstestukw001.blob.core.windows.net/uploads/087468cc-ae2a-4960-9683-0c2c276607d4/a96085b5-b1ed-4801-a2f9-3b1af3836a61/087468cc-ae2a-4960-9683-0c2c276607d4-appellant-submission.pdf',
-					filename: '{placeholder}', // will be replaced by generated id 
+					filename: '{placeholder}', // will be replaced by generated id
 					mime: 'image/jpeg',
-					originalFilename: '{placeholder}', // will be replaced by generated id 
+					originalFilename: '{placeholder}', // will be replaced by generated id
 					size: 10293
 				}
 			]
@@ -567,13 +567,13 @@ const documentsApiRequest = {
 			documents: [
 				{
 					dateCreated: '2024-03-01T13:48:35.847Z',
-					documentId: '{placeholder}', // will be replaced by generated id 
+					documentId: '{placeholder}', // will be replaced by generated id
 					documentType: 'lpaCostsApplication',
 					documentURI:
 						'https://pinsstdocstestukw001.blob.core.windows.net/uploads/087468cc-ae2a-4960-9683-0c2c276607d4/a96085b5-b1ed-4801-a2f9-3b1af3836a61/087468cc-ae2a-4960-9683-0c2c276607d4-appellant-submission.pdf',
-					filename: '{placeholder}', // will be replaced by generated id 
+					filename: '{placeholder}', // will be replaced by generated id
 					mime: 'image/jpeg',
-					originalFilename: '{placeholder}', // will be replaced by generated id 
+					originalFilename: '{placeholder}', // will be replaced by generated id
 					size: 10293
 				}
 			]
@@ -582,13 +582,13 @@ const documentsApiRequest = {
 			documents: [
 				{
 					dateCreated: '2024-03-01T13:48:35.847Z',
-					documentId: '{placeholder}', // will be replaced by generated id 
+					documentId: '{placeholder}', // will be replaced by generated id
 					documentType: 'interestedPartyComment',
 					documentURI:
 						'https://pinsstdocstestukw001.blob.core.windows.net/uploads/087468cc-ae2a-4960-9683-0c2c276607d4/a96085b5-b1ed-4801-a2f9-3b1af3836a61/087468cc-ae2a-4960-9683-0c2c276607d4-appellant-submission.pdf',
-					filename: '{placeholder}', // will be replaced by generated id 
+					filename: '{placeholder}', // will be replaced by generated id
 					mime: 'image/jpeg',
-					originalFilename: '{placeholder}', // will be replaced by generated id 
+					originalFilename: '{placeholder}', // will be replaced by generated id
 					size: 10293
 				}
 			]
@@ -597,13 +597,13 @@ const documentsApiRequest = {
 			documents: [
 				{
 					dateCreated: '2024-03-01T13:48:35.847Z',
-					documentId: '{placeholder}', // will be replaced by generated id 
+					documentId: '{placeholder}', // will be replaced by generated id
 					documentType: 'lpaStatement',
 					documentURI:
 						'https://pinsstdocstestukw001.blob.core.windows.net/uploads/087468cc-ae2a-4960-9683-0c2c276607d4/a96085b5-b1ed-4801-a2f9-3b1af3836a61/087468cc-ae2a-4960-9683-0c2c276607d4-appellant-submission.pdf',
-					filename: '{placeholder}', // will be replaced by generated id 
+					filename: '{placeholder}', // will be replaced by generated id
 					mime: 'image/jpeg',
-					originalFilename: '{placeholder}', // will be replaced by generated id 
+					originalFilename: '{placeholder}', // will be replaced by generated id
 					size: 10293
 				}
 			]
@@ -612,13 +612,13 @@ const documentsApiRequest = {
 			documents: [
 				{
 					dateCreated: '2024-03-01T13:48:35.847Z',
-					documentId: '{placeholder}', // will be replaced by generated id 
+					documentId: '{placeholder}', // will be replaced by generated id
 					documentType: 'lpaFinalComment',
 					documentURI:
 						'https://pinsstdocstestukw001.blob.core.windows.net/uploads/087468cc-ae2a-4960-9683-0c2c276607d4/a96085b5-b1ed-4801-a2f9-3b1af3836a61/087468cc-ae2a-4960-9683-0c2c276607d4-appellant-submission.pdf',
-					filename: '{placeholder}', // will be replaced by generated id 
+					filename: '{placeholder}', // will be replaced by generated id
 					mime: 'image/jpeg',
-					originalFilename:  '{placeholder}', // will be replaced by generated id 
+					originalFilename:  '{placeholder}', // will be replaced by generated id
 					size: 10293
 				}
 			]
@@ -627,13 +627,13 @@ const documentsApiRequest = {
 			documents: [
 				{
 					dateCreated: '2024-03-01T13:48:35.847Z',
-					documentId: '{placeholder}', // will be replaced by generated id 
+					documentId: '{placeholder}', // will be replaced by generated id
 					documentType: 'appellantFinalComment',
 					documentURI:
 						'https://pinsstdocstestukw001.blob.core.windows.net/uploads/087468cc-ae2a-4960-9683-0c2c276607d4/a96085b5-b1ed-4801-a2f9-3b1af3836a61/087468cc-ae2a-4960-9683-0c2c276607d4-appellant-submission.pdf',
-					filename: '{placeholder}', // will be replaced by generated id 
+					filename: '{placeholder}', // will be replaced by generated id
 					mime: 'image/jpeg',
-					originalFilename: '{placeholder}', // will be replaced by generated id 
+					originalFilename: '{placeholder}', // will be replaced by generated id
 					size: 10293
 				}
 			]
@@ -642,13 +642,13 @@ const documentsApiRequest = {
 			documents: [
 				{
 					dateCreated: '2024-03-01T13:48:35.847Z',
-					documentId: '{placeholder}', // will be replaced by generated id 
+					documentId: '{placeholder}', // will be replaced by generated id
 					documentType: 'appellantProofOfEvidence',
 					documentURI:
 						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
-					filename: '{placeholder}', // will be replaced by generated id 
+					filename: '{placeholder}', // will be replaced by generated id
 					mime: 'image/jpeg',
-					originalFilename: '{placeholder}', // will be replaced by generated id 
+					originalFilename: '{placeholder}', // will be replaced by generated id
 					size: 10293
 				}
 			]
@@ -657,13 +657,13 @@ const documentsApiRequest = {
 			documents: [
 				{
 					dateCreated: '2024-03-01T13:48:35.847Z',
-					documentId: '{placeholder}', // will be replaced by generated id 
+					documentId: '{placeholder}', // will be replaced by generated id
 					documentType: 'lpaProofOfEvidence',
 					documentURI:
 						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
-					filename: '{placeholder}', // will be replaced by generated id 
+					filename: '{placeholder}', // will be replaced by generated id
 					mime: 'image/jpeg',
-					originalFilename: '{placeholder}', // will be replaced by generated id 
+					originalFilename: '{placeholder}', // will be replaced by generated id
 					size: 10293
 				}
 			]
