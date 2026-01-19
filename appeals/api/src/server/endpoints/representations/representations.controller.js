@@ -7,6 +7,7 @@ import { isStatePassed } from '#state/transition-state.js';
 import BackOfficeAppError from '#utils/app-error.js';
 import { currentStatus } from '#utils/current-status.js';
 import { getPageCount } from '#utils/database-pagination.js';
+import { dateIsPast } from '#utils/date-comparison.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
@@ -241,10 +242,7 @@ export const createRepresentation = () => async (req, res) => {
 		...updatePayload
 	});
 
-	await broadcasters.broadcastRepresentation(
-		rep.id,
-		shouldAutoPublish ? EventType.Create : EventType.Update
-	);
+	await broadcasters.broadcastRepresentation(rep.id, EventType.Create);
 	await broadcasters.broadcastAppeal(Number(appealId));
 
 	if (representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE) {
@@ -343,7 +341,7 @@ export async function publish(req, res) {
 
 	/** @type {Record<string, import('./representations.service.js').PublishFunction>} */
 	const handlers = {
-		[APPEAL_CASE_STATUS.STATEMENTS]: representationService.publishLpaStatements,
+		[APPEAL_CASE_STATUS.STATEMENTS]: representationService.publishStatements,
 		[APPEAL_CASE_STATUS.FINAL_COMMENTS]: representationService.publishFinalComments,
 		[APPEAL_CASE_STATUS.EVIDENCE]: representationService.publishProofOfEvidence
 	};
@@ -422,6 +420,20 @@ const shouldAutoPublishRep = (appeal, representationType) => {
 			return (
 				isStatePassed(appeal, APPEAL_CASE_STATUS.FINAL_COMMENTS) ||
 				appeal.appealStatus.some((status) => status.status === APPEAL_CASE_STATUS.FINAL_COMMENTS)
+			);
+		case APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT:
+			return (
+				isStatePassed(appeal, APPEAL_CASE_STATUS.STATEMENTS) &&
+				appeal.appealTimetable?.lpaStatementDueDate !== null &&
+				appeal.appealTimetable?.lpaStatementDueDate !== undefined &&
+				dateIsPast(appeal.appealTimetable?.lpaStatementDueDate, new Date())
+			);
+		case APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE:
+			return (
+				isStatePassed(appeal, APPEAL_CASE_STATUS.EVIDENCE) &&
+				appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate !== null &&
+				appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate !== undefined &&
+				dateIsPast(appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate, new Date())
 			);
 		default:
 			return false;

@@ -17,6 +17,7 @@ import {
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
+import { addDays } from 'date-fns';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -1418,7 +1419,7 @@ describe('/appeals/:id/reps', () => {
 			);
 			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
 				expect.anything(),
-				'Update'
+				'Create'
 			);
 		});
 
@@ -1452,7 +1453,7 @@ describe('/appeals/:id/reps', () => {
 			);
 			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
 				expect.anything(),
-				'Update'
+				'Create'
 			);
 		});
 
@@ -1559,7 +1560,7 @@ describe('/appeals/:id/reps', () => {
 			);
 			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
 				expect.anything(),
-				'Update'
+				'Create'
 			);
 		});
 
@@ -1700,7 +1701,7 @@ describe('/appeals/:id/reps', () => {
 			);
 			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
 				expect.anything(),
-				'Update'
+				'Create'
 			);
 		});
 
@@ -1763,6 +1764,158 @@ describe('/appeals/:id/reps', () => {
 
 			expect(response.status).toEqual(201);
 			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						status: 'published'
+					})
+				})
+			);
+			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
+				expect.anything(),
+				'Create'
+			);
+		});
+
+		test('200 and auto-publishes for rule_6_party_statement rep_type when appeal has PASSED statements state', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealTimetable: {
+					lpaStatementDueDate: new Date('2024-05-23')
+				},
+				appealStatus: [{ valid: false, status: 'statements' }]
+			});
+			databaseConnector.representation.create.mockResolvedValue({
+				id: 1,
+				status: 'published'
+			});
+
+			const response = await request
+				.post('/appeals/1/reps/rule_6_party_statement')
+				.send({
+					redactionStatus: 'unredacted',
+					attachments: [],
+					lpaCode: 'LPA',
+					source: 'lpa',
+					representationText: 'added as document'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						status: 'published'
+					})
+				})
+			);
+			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
+				expect.anything(),
+				'Create'
+			);
+		});
+
+		test('200 and does not auto-publish for rule_6_party_statement rep_type when appeal has PASSED statements state', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealTimetable: {
+					lpaStatementDueDate: addDays(new Date(), 7)
+				},
+				appealStatus: [{ valid: false, status: 'statements' }]
+			});
+			databaseConnector.representation.create.mockResolvedValue({
+				id: 1,
+				status: 'published'
+			});
+
+			const response = await request
+				.post('/appeals/1/reps/rule_6_party_statement')
+				.send({
+					redactionStatus: 'unredacted',
+					attachments: [],
+					lpaCode: 'LPA',
+					source: 'lpa',
+					representationText: 'added as document'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.representation.create).not.toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						status: 'published'
+					})
+				})
+			);
+			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
+				expect.anything(),
+				'Create'
+			);
+		});
+
+		test('200 and auto-publishes for rule_6_party_proofs_evidence rep_type when appeal has PASSED statements state', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealTimetable: {
+					proofOfEvidenceAndWitnessesDueDate: new Date('2024-05-23')
+				},
+				appealStatus: [{ valid: false, status: 'evidence' }]
+			});
+			databaseConnector.representation.create.mockResolvedValue({
+				id: 1,
+				status: 'published'
+			});
+
+			const response = await request
+				.post('/appeals/1/reps/rule_6_party_proofs_evidence')
+				.send({
+					redactionStatus: 'unredacted',
+					attachments: [],
+					lpaCode: 'LPA',
+					source: 'lpa',
+					representationText: 'added as document'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						status: 'published'
+					})
+				})
+			);
+			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
+				expect.anything(),
+				'Create'
+			);
+		});
+
+		test('200 and does not auto-publish for rule_6_party_proofs_evidence rep_type when appeal has PASSED statements state', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealTimetable: {
+					lpaStatementDueDate: addDays(new Date(), 7)
+				},
+				appealStatus: [{ valid: false, status: 'statements' }]
+			});
+			databaseConnector.representation.create.mockResolvedValue({
+				id: 1,
+				status: 'published'
+			});
+
+			const response = await request
+				.post('/appeals/1/reps/rule_6_party_proofs_evidence')
+				.send({
+					redactionStatus: 'unredacted',
+					attachments: [],
+					lpaCode: 'LPA',
+					source: 'lpa',
+					representationText: 'added as document'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.representation.create).not.toHaveBeenCalledWith(
 				expect.objectContaining({
 					data: expect.objectContaining({
 						status: 'published'
@@ -4504,6 +4657,46 @@ describe('/appeals/:id/reps', () => {
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'proof-of-evidence-and-witnesses-shared'
 				});
+			});
+
+			test('send rule 6 proof of evidence S78 with inquiry address', async () => {
+				mockS78Appeal = {
+					...mockS78Appeal,
+					inquiry: {
+						id: 1,
+						inquiryStartTime: '2025-12-13 14:00',
+						estimatedDays: 8,
+						address: {
+							addressLine1: '10 Mole lane',
+							addressLine2: 'Test address 2',
+							addressTown: 'London',
+							addressCounty: 'London',
+							postcode: 'WL3 6GH',
+							addressCountry: 'United Kingdom'
+						}
+					}
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([
+					{ representationType: 'appellant_proofs_evidence' },
+					{ representationType: 'lpa_proofs_evidence' },
+					{ representationType: 'rule_6_party_proofs_evidence' }
+				]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'evidence' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
 			});
 		});
 	});
