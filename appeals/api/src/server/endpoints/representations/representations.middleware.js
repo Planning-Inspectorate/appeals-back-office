@@ -18,11 +18,12 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 const canPublishIpCommentsAndStatements = (currentAppeal) => {
 	const { representations = [], appealTimetable } = currentAppeal || {};
 	const { AWAITING_REVIEW } = APPEAL_REPRESENTATION_STATUS;
-	const { COMMENT, LPA_STATEMENT } = APPEAL_REPRESENTATION_TYPE;
+	const { COMMENT, LPA_STATEMENT, RULE_6_PARTY_STATEMENT } = APPEAL_REPRESENTATION_TYPE;
 
 	const hasRepresentationsAwaitingReview = representations?.some(
 		({ status, representationType }) =>
-			[COMMENT, LPA_STATEMENT].includes(representationType) && status === AWAITING_REVIEW
+			[COMMENT, LPA_STATEMENT, RULE_6_PARTY_STATEMENT].includes(representationType) &&
+			status === AWAITING_REVIEW
 	);
 
 	const today = new Date();
@@ -73,12 +74,14 @@ const canPublishFinalComments = (currentAppeal) => {
 const canPublishProofOfEvidence = (currentAppeal) => {
 	const { representations = [], appealTimetable } = currentAppeal || {};
 	const { AWAITING_REVIEW } = APPEAL_REPRESENTATION_STATUS;
-	const { LPA_PROOFS_EVIDENCE, APPELLANT_PROOFS_EVIDENCE } = APPEAL_REPRESENTATION_TYPE;
+	const { LPA_PROOFS_EVIDENCE, APPELLANT_PROOFS_EVIDENCE, RULE_6_PARTY_PROOFS_EVIDENCE } =
+		APPEAL_REPRESENTATION_TYPE;
 
 	const hasProofOfEvidenceAwaitingReview = representations?.some(
 		({ status, representationType }) =>
-			[LPA_PROOFS_EVIDENCE, APPELLANT_PROOFS_EVIDENCE].includes(representationType) &&
-			status === AWAITING_REVIEW
+			[LPA_PROOFS_EVIDENCE, APPELLANT_PROOFS_EVIDENCE, RULE_6_PARTY_PROOFS_EVIDENCE].includes(
+				representationType
+			) && status === AWAITING_REVIEW
 	);
 
 	const today = new Date();

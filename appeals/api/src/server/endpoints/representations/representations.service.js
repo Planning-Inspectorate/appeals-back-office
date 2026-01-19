@@ -312,9 +312,9 @@ export async function updateRepresentation(repId, payload) {
  *
  * @type {PublishFunction}
  * */
-export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) {
+export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 	if (!isCurrentStatus(appeal, APPEAL_CASE_STATUS.STATEMENTS)) {
-		throw new BackOfficeAppError('appeal in incorrect state to publish LPA statement', 409);
+		throw new BackOfficeAppError('appeal in incorrect state to publish statements', 409);
 	}
 
 	const latestDocumentVersionsUpdated = await documentRepository.setRedactionStatusOnValidation(
@@ -333,7 +333,13 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 		{
 			OR: [
 				{
-					representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
+					representationType: {
+						in: [
+							APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
+							APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT,
+							APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT
+						]
+					},
 					status: {
 						in: [APPEAL_REPRESENTATION_STATUS.VALID, APPEAL_REPRESENTATION_STATUS.INCOMPLETE]
 					}
@@ -525,7 +531,8 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 			representationType: {
 				in: [
 					APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
-					APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
+					APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
+					APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
 				]
 			},
 			status: {
