@@ -28,13 +28,13 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 			],
 			rows: [
 				mappedData.appeal.appellantCase.display.tableItem,
-				caseStarted ? mappedData.appeal.lpaQuestionnaire.display.tableItem : [],
+				caseStarted ? mappedData.appeal.lpaQuestionnaire.display.tableItem : undefined,
 				...(!isChildAppeal(appealDetails)
 					? [
-							mappedData.appeal.appellantStatement.display.tableItem || [],
-							caseStarted ? mappedData.appeal.lpaStatement.display.tableItem : [],
+							mappedData.appeal.appellantStatement.display.tableItem,
+							caseStarted ? mappedData.appeal.lpaStatement.display.tableItem : undefined,
 							...(mappedData.appeal.rule6PartyStatements?.display?.tableItems || []),
-							caseStarted ? mappedData.appeal.ipComments.display.tableItem : [],
+							caseStarted ? mappedData.appeal.ipComments.display.tableItem : undefined,
 							...(caseStarted && !isInquiryProcedureType && statementsCompleted
 								? [
 										mappedData.appeal.appellantFinalComments.display.tableItem,
