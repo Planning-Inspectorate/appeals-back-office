@@ -3,6 +3,7 @@ import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.
 import { generateAdvertLpaQuestionnaireComponents } from './advert.js';
 import { generateCasAdvertLpaQuestionnaireComponents } from './cas-advert.js';
 import { generateCasPlanningLpaQuestionnaireComponents } from './cas-planning.js';
+import { generateEnforcementLpaQuestionnaireComponents } from './enforcement.js';
 import { generateHASLpaQuestionnaireComponents } from './has.js';
 import { generateS20LpaQuestionnaireComponents } from './s20.js';
 import { generateS78LpaQuestionnaireComponents } from './s78.js';
@@ -44,6 +45,11 @@ export function generateCaseTypeSpecificComponents(
 			} else {
 				throw new Error('Feature flag inactive for adverts');
 			}
+		case APPEAL_TYPE.ENFORCEMENT_NOTICE:
+			if (isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
+				return generateEnforcementLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
+			}
+			throw new Error('Enforcement feature flag is disabled');
 		case APPEAL_TYPE.S78:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
 				return generateS78LpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
