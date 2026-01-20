@@ -88,7 +88,7 @@ export function loadConfig() {
 		FEATURE_FLAG_SEARCH_CASE_OFFICER,
 		FEATURE_FLAG_ENFORCEMENT_NOTICE,
 		FEATURE_FLAG_INVALID_DECISION_LETTER,
-		FEATURE_FLAG_RULE_6_PARTIES,
+		FEATURE_FLAG_RULE_6_MVP,
 		FEATURE_FLAG_APPELLANT_STATEMENT,
 		FEATURE_FLAG_RULE_6_STATEMENT,
 		FEATURE_FLAG_LDC
@@ -165,7 +165,7 @@ export function loadConfig() {
 			featureFlagSearchCaseOfficer: FEATURE_FLAG_SEARCH_CASE_OFFICER === 'true',
 			featureFlagEnforcementNotice: FEATURE_FLAG_ENFORCEMENT_NOTICE === 'true',
 			featureFlagInvalidDecisionLetter: FEATURE_FLAG_INVALID_DECISION_LETTER === 'true',
-			featureFlagRule6Parties: FEATURE_FLAG_RULE_6_PARTIES === 'true',
+			featureFlagRule6Mvp: FEATURE_FLAG_RULE_6_MVP === 'true',
 			featureFlagExpeditedAppeals: FEATURE_FLAG_EXPEDITED_APPEALS === 'true',
 			featureFlagManuallyAddReps: FEATURE_FLAG_MANUALLY_ADD_REP === 'true',
 			featureFlagAppellantStatement: FEATURE_FLAG_APPELLANT_STATEMENT === 'true',

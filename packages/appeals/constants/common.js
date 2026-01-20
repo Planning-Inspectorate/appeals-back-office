@@ -22,7 +22,7 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	SEARCH_CASE_OFFICER: 'featureFlagSearchCaseOfficer',
 	ENFORCEMENT_NOTICE: 'featureFlagEnforcementNotice',
 	INVALID_DECISION_LETTER: 'featureFlagInvalidDecisionLetter',
-	RULE_6_PARTIES: 'featureFlagRule6Parties',
+	RULE_6_PARTIES: 'featureFlagRule6Mvp',
 	EXPEDITED_APPEALS: 'featureFlagExpeditedAppeals',
 	MANUALLY_ADD_REPS: 'featureFlagManuallyAddReps',
 	APPELLANT_STATEMENT: 'featureFlagAppellantStatement',

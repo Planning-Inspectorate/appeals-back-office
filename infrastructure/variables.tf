@@ -61,7 +61,7 @@ variable "apps_config" {
       featureFlagSearchCaseOfficer      = bool
       featureFlagEnforcementNotice      = bool
       featureFlagInvalidDecisionLetter  = bool
-      featureFlagRule6Parties           = bool
+      featureFlagRule6Mvp               = bool
       featureFlagExpeditedAppeals       = bool
       featureFlagManuallyAddReps        = bool
       featureFlagAppellantStatement     = bool
