@@ -103,6 +103,7 @@ module "app_web" {
     FEATURE_FLAG_ENFORCEMENT_NOTICE       = var.apps_config.featureFlags.featureFlagEnforcementNotice
     FEATURE_FLAG_INVALID_DECISION_LETTER  = var.apps_config.featureFlags.featureFlagInvalidDecisionLetter
     FEATURE_FLAG_RULE_6_MVP               = var.apps_config.featureFlags.featureFlagRule6Mvp
+    FEATURE_FLAG_RULE_6_POE               = var.apps_config.featureFlags.featureFlagRule6PoE
     FEATURE_FLAG_EXPEDITED_APPEALS        = var.apps_config.featureFlags.featureFlagExpeditedAppeals
     FEATURE_FLAG_MANUALLY_ADD_REP         = var.apps_config.featureFlags.featureFlagManuallyAddReps
     FEATURE_FLAG_APPELLANT_STATEMENT      = var.apps_config.featureFlags.featureFlagAppellantStatement

@@ -1,7 +1,8 @@
+import { serviceUserIdStartRange } from '#mappers/integration/map-service-user-entity.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
-import pino from '#utils/logger.js';
+import { default as logger, default as pino } from '#utils/logger.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
@@ -12,6 +13,7 @@ import {
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
 import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
+import { APPEAL_REPRESENTATION_TYPE } from '@planning-inspectorate/data-model';
 import { schemas, validateFromSchema } from './integrations.validators.js';
 
 /**
@@ -136,6 +138,25 @@ export const validateRepresentation = async (req, res, next) => {
 				appeal: ERROR_NOT_FOUND
 			}
 		});
+	}
+
+	const isRule6PoEActive = isFeatureActive(FEATURE_FLAG_NAMES.RULE_6_PARTIES_POE);
+	if (!isRule6PoEActive && body.representationType === APPEAL_REPRESENTATION_TYPE.PROOFS_EVIDENCE) {
+		const serviceUserId = Number(body.serviceUserId) - serviceUserIdStartRange;
+		const isRule6Party = !!referenceData.appeal.appealRule6Parties?.some(
+			(/** @type {{ serviceUserId: number; }} */ party) => party.serviceUserId === serviceUserId
+		);
+
+		if (isRule6Party) {
+			logger.info(
+				`Blocking Rule 6 PoE submission for appeal '${body.caseReference}' as feature flag is disabled`
+			);
+			return res.status(403).send({
+				errors: {
+					integration: 'Rule 6 Proof of Evidence ingestion is currently disabled'
+				}
+			});
+		}
 	}
 
 	if (isExpeditedAppealType(referenceData.appeal.appealType?.key)) {
