@@ -3517,39 +3517,39 @@ describe('appeal-details', () => {
 					expect(table.innerHTML).toMatchSnapshot();
 
 					const rows = table.querySelectorAll('.govuk-table__body .govuk-table__row');
-					expect(rows[4].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+					expect(rows[3].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
 						'Test Rule 6 Party statement'
 					);
-					expect(rows[4].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+					expect(rows[3].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
 						''
 					);
-					expect(rows[4].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
+					expect(rows[3].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
 						''
 					);
 					expect(
-						rows[4].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
+						rows[3].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
 					).toBe('Add<span class="govuk-visually-hidden"> Test Rule 6 Party statement</span>');
 					expect(
-						rows[4]
+						rows[3]
 							.querySelector('.govuk-table__cell:nth-child(4) a.govuk-link')
 							.getAttribute('href')
 					).toBe('/appeals-service/appeal-details/2/rule-6-party-statement/1/add-document');
-					expect(rows[8].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+					expect(rows[7].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
 						'Test Rule 6 Party proof of evidence and witness'
 					);
-					expect(rows[8].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+					expect(rows[7].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
 						'Awaiting proof of evidence and witness'
 					);
-					expect(rows[8].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
+					expect(rows[7].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
 						''
 					);
 					expect(
-						rows[8].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
+						rows[7].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
 					).toBe(
 						'Add<span class="govuk-visually-hidden"> Test Rule 6 Party proof of evidence</span>'
 					);
 					expect(
-						rows[8]
+						rows[7]
 							.querySelector('.govuk-table__cell:nth-child(4) a.govuk-link')
 							.getAttribute('href')
 					).toBe(
