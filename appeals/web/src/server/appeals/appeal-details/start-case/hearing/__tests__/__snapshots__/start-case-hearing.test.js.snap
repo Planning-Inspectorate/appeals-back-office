@@ -481,10 +481,6 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
                     data-cy="review-appellant-case" class="govuk-link">Review<span class="govuk-visually-hidden"> appellant case</span></a>
                 </td>
             </tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
