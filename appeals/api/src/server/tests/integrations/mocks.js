@@ -439,6 +439,7 @@ export const validLpaQuestionnaireS20 = {
 	casedata: {
 		...validLpaQuestionnaireS78.casedata,
 		caseType: APPEAL_CASE_TYPE.Y,
+		consultHistoricEngland: true,
 		preserveGrantLoan: true
 	},
 	documents: validLpaQuestionnaireS78.documents
@@ -1502,7 +1503,7 @@ export const validLpaQuestionnaireIngestionS20 = {
 				create: {
 					...validLpaQuestionnaireIngestionS78.data.lpaQuestionnaire.connectOrCreate.create,
 					preserveGrantLoan: true,
-					historicEnglandConsultation: undefined
+					historicEnglandConsultation: true
 				}
 			}
 		}
