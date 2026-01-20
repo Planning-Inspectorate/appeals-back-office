@@ -343,9 +343,8 @@ model AppellantCase {
   contactAddressId                               Int?
   appealDecisionDate                             DateTime?
   appellantCaseEnforcementInvalidReasonsSelected AppellantCaseEnforcementInvalidReasonsSelected[]
-
   // Cas adverts fields
-  landownerPermission Boolean?
+  landownerPermission                            Boolean?
 
   appellantCaseAdvertDetails AppellantCaseAdvertDetails[]
 }
@@ -557,6 +556,21 @@ model LPAQuestionnaire {
   isSiteInAreaOfSpecialControlAdverts        Boolean?
   wasApplicationRefusedDueToHighwayOrTraffic Boolean?
   didAppellantSubmitCompletePhotosAndPlans   Boolean?
+
+  //Enforcement fields
+  noticeRelatesToBuildingEngineeringMiningOther Boolean?
+  siteAreaSquareMetres                          Decimal?
+  hasAllegedBreachArea                          Boolean?
+  doesAllegedBreachCreateFloorSpace             Boolean?
+  changeOfUseRefuseOrWaste                      Boolean?
+  changeOfUseMineralExtraction                  Boolean?
+  changeOfUseMineralStorage                     Boolean?
+  relatesToErectionOfBuildingOrBuildings        Boolean?
+  relatesToBuildingWithAgriculturalPurpose      Boolean?
+  relatesToBuildingSingleDwellingHouse          Boolean?
+  affectedTrunkRoadName                         String?
+  isSiteOnCrownLand                             Boolean?
+  article4AffectedDevelopmentRights             String?
 
   @@index([isGreenBelt])
 }
