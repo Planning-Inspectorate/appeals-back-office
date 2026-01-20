@@ -525,15 +525,20 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 		);
 	}
 
+	const representationTypes = [
+		APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
+		APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
+	];
+
+	if (isFeatureActive(FEATURE_FLAG_NAMES.RULE_6_PARTIES_POE)) {
+		representationTypes.push(APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE);
+	}
+
 	const result = await representationRepository.updateRepresentations(
 		appeal.id,
 		{
 			representationType: {
-				in: [
-					APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
-					APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
-					APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
-				]
+				in: representationTypes
 			},
 			status: {
 				in: [

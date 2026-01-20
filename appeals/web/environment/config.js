@@ -89,6 +89,7 @@ export function loadConfig() {
 		FEATURE_FLAG_ENFORCEMENT_NOTICE,
 		FEATURE_FLAG_INVALID_DECISION_LETTER,
 		FEATURE_FLAG_RULE_6_MVP,
+		FEATURE_FLAG_RULE_6_POE,
 		FEATURE_FLAG_APPELLANT_STATEMENT,
 		FEATURE_FLAG_RULE_6_STATEMENT,
 		FEATURE_FLAG_LDC
@@ -166,6 +167,7 @@ export function loadConfig() {
 			featureFlagEnforcementNotice: FEATURE_FLAG_ENFORCEMENT_NOTICE === 'true',
 			featureFlagInvalidDecisionLetter: FEATURE_FLAG_INVALID_DECISION_LETTER === 'true',
 			featureFlagRule6Mvp: FEATURE_FLAG_RULE_6_MVP === 'true',
+			featureFlagRule6PoE: FEATURE_FLAG_RULE_6_POE === 'true',
 			featureFlagExpeditedAppeals: FEATURE_FLAG_EXPEDITED_APPEALS === 'true',
 			featureFlagManuallyAddReps: FEATURE_FLAG_MANUALLY_ADD_REP === 'true',
 			featureFlagAppellantStatement: FEATURE_FLAG_APPELLANT_STATEMENT === 'true',
