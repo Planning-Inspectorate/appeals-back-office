@@ -137,6 +137,7 @@ export const appealsNationalList = {
 		{
 			appealId: 1,
 			appealReference: 'APP/Q9999/D/21/943245',
+			planningApplicationReference: '48269/APP/2021/1482',
 			appealSite: {
 				addressLine1: 'Copthalls',
 				addressLine2: 'Clevedon Road',
@@ -156,6 +157,7 @@ export const appealsNationalList = {
 		{
 			appealId: 2,
 			appealReference: 'APP/Q9999/D/21/129285',
+			planningApplicationReference: null,
 			appealSite: {
 				addressLine1: '19 Beauchamp Road',
 				town: 'Bristol',
