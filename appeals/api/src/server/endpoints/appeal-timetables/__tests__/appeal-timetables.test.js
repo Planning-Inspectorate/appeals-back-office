@@ -1710,7 +1710,11 @@ describe('appeal timetables routes', () => {
 			describe('for an enforcement notice appeal', () => {
 				const appeal = {
 					...enforcementNoticeAppeal,
-					appealGrounds: [{ ground: { groundRef: 'a' } }]
+					appealGrounds: [
+						{ ground: { groundRef: 'c' } },
+						{ ground: { groundRef: 'a' } },
+						{ ground: { groundRef: 'b' } }
+					]
 				};
 				const baseExpectedTimetableDto = {
 					finalCommentsDueDate: '2024-08-07T22:59:00.000Z',
@@ -1799,7 +1803,7 @@ describe('appeal timetables routes', () => {
 							site_visit: true,
 							costs_info: true,
 							statement_of_common_ground_deadline: '',
-							appeal_grounds: ['a'],
+							appeal_grounds: ['a', 'b', 'c'],
 							enforcement_reference: appeal.appellantCase.enforcementReference,
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -1835,7 +1839,7 @@ describe('appeal timetables routes', () => {
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
 							statement_of_common_ground_deadline: '',
-							appeal_grounds: ['a'],
+							appeal_grounds: ['a', 'b', 'c'],
 							enforcement_reference: appeal.appellantCase.enforcementReference,
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -1930,7 +1934,7 @@ describe('appeal timetables routes', () => {
 							planning_obligation_deadline: dateISOStringToDisplayDate(
 								expectedTimetableDto.planningObligationDueDate
 							),
-							appeal_grounds: ['a'],
+							appeal_grounds: ['a', 'b', 'c'],
 							enforcement_reference: appeal.appellantCase.enforcementReference,
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -1966,7 +1970,7 @@ describe('appeal timetables routes', () => {
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_date: '5 June 2024',
 							statement_of_common_ground_deadline: '',
-							appeal_grounds: ['a'],
+							appeal_grounds: ['a', 'b', 'c'],
 							enforcement_reference: appeal.appellantCase.enforcementReference,
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
