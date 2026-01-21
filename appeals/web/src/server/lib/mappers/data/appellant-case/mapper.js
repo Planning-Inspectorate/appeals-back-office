@@ -6,6 +6,7 @@ import { submaps as casAdvertSubmaps } from './cas-advert.js';
 import { submaps as casPlanningSubmaps } from './cas-planning.js';
 import { submaps as enforcementNoticeSubmaps } from './enforcement-notice.js';
 import { submaps as hasSubmaps } from './has.js';
+import { submaps as ldcSubmaps } from './ldc.js';
 import { submaps as s20Submaps } from './s20.js';
 import { submaps as s78Submaps } from './s78.js';
 
@@ -33,7 +34,8 @@ const submaps = {
 	[APPEAL_TYPE.CAS_PLANNING]: casPlanningSubmaps,
 	[APPEAL_TYPE.CAS_ADVERTISEMENT]: casAdvertSubmaps,
 	[APPEAL_TYPE.ADVERTISEMENT]: advertSubmaps,
-	[APPEAL_TYPE.ENFORCEMENT_NOTICE]: enforcementNoticeSubmaps
+	[APPEAL_TYPE.ENFORCEMENT_NOTICE]: enforcementNoticeSubmaps,
+	[APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE]: ldcSubmaps
 };
 
 /**

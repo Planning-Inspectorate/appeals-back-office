@@ -528,6 +528,23 @@ export const appellantCaseList = {
 		]),
 		appellantProcedurePreferenceDuration: randomArrayValue(procedureDurationPossibleValues),
 		appellantProcedurePreferenceWitnessCount: 1
+	},
+	[APPEAL_CASE_TYPE.X]: {
+		siteAreaSquareMetres: 30.9,
+		floorSpaceSquareMetres: 9.7,
+		originalDevelopmentDescription: 'lorem ipsum',
+		changedDevelopmentDescription: false,
+		isGreenBelt: randomBool(),
+		applicationDecisionDate: sub(new Date(), { months: 1 }),
+		applicationDate: sub(new Date(), { weeks: 6 }),
+		typeOfPlanningApplication: 'lawful-development-certificate', // TODO update to APPEAL_TYPE_OF_PLANNING_APPLICATION.LAWFUL_DEVELOPMENT_CERTIFICATE when added to data model,
+		appellantProcedurePreference: randomEnumValue(APPEAL_APPELLANT_PROCEDURE_PREFERENCE),
+		appellantProcedurePreferenceDetails: randomArrayValue([
+			'Need for a detailed examination',
+			null
+		]),
+		appellantProcedurePreferenceDuration: randomArrayValue(procedureDurationPossibleValues),
+		appellantProcedurePreferenceWitnessCount: 1
 	}
 };
 
