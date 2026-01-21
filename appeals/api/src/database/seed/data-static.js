@@ -399,6 +399,11 @@ export const appellantCaseEnforcementInvalidReasons = [
 		id: 7,
 		name: 'The period for compliance is not clear',
 		hasText: true
+	},
+	{
+		id: 8,
+		name: 'Other reason',
+		hasText: true
 	}
 ];
 

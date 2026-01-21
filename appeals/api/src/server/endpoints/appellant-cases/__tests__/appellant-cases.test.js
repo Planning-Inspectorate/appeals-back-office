@@ -1482,7 +1482,8 @@ describe('appellant cases routes', () => {
 					validationOutcome: 'invalid',
 					enforcementInvalidReasons: [
 						{ id: 1, text: ['has some text'] },
-						{ id: 2, text: ['has some other text'] }
+						{ id: 2, text: ['has some other text'] },
+						{ id: 8, text: ['This is the other field'] }
 					],
 					enforcementNoticeInvalid: 'yes',
 					otherInformation: 'Enforcement other information'
@@ -1515,6 +1516,11 @@ describe('appellant cases routes', () => {
 							appellantCaseId: appellantCase.id,
 							appellantCaseEnforcementInvalidReasonId: 2,
 							text: 'has some other text'
+						},
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseEnforcementInvalidReasonId: 8,
+							text: 'This is the other field'
 						}
 					]
 				});

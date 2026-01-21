@@ -1696,7 +1696,8 @@ export const appellantCaseInvalidReasons = [
 export const appealCaseEnforcementInvalidReasons = [
 	{ id: 1, name: 'Enforcement invalid reason one', hasText: true },
 	{ id: 2, name: 'Enforcement invalid reason two', hasText: true },
-	{ id: 3, name: 'Enforcement invalid reason three', hasText: true }
+	{ id: 3, name: 'Enforcement invalid reason three', hasText: true },
+	{ id: 8, name: 'Enforcement invalid other reason', hasText: true }
 ];
 
 export const appellantCaseIncompleteReasons = [
