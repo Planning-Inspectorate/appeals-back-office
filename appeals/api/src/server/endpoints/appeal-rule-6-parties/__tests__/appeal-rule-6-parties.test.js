@@ -4,6 +4,8 @@ import { request } from '../../../app-test.js';
 
 import { fullPlanningAppeal as fullPlanningAppealData } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import * as SUPPORT_CONSTANTS from '@pins/appeals/constants/support.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -31,6 +33,8 @@ describe('appeal rule 6 parties routes', () => {
 			...fullPlanningAppeal,
 			appealRule6Parties: [rule6Party]
 		});
+		// @ts-ignore
+		databaseConnector.user.upsert.mockResolvedValue({ id: 1 });
 	});
 	afterEach(() => {
 		jest.clearAllMocks();
@@ -102,6 +106,26 @@ describe('appeal rule 6 parties routes', () => {
 					'Rule6Party',
 					fullPlanningAppeal.reference
 				);
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: appealId,
+						details: stringTokenReplacement(SUPPORT_CONSTANTS.AUDIT_TRAIL_RULE_6_PARTY_ADDED, [
+							'Test Organisation'
+						]),
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: appealId,
+						details: SUPPORT_CONSTANTS.AUDIT_TRAIL_RULE_6_ADDED_EMAILS_SENT,
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
 
 				expect(response.status).toEqual(201);
 			});
@@ -249,6 +273,18 @@ describe('appeal rule 6 parties routes', () => {
 					fullPlanningAppeal.reference
 				);
 
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: appealId,
+						details: stringTokenReplacement(
+							SUPPORT_CONSTANTS.AUDIT_TRAIL_RULE_6_PARTY_DETAILS_UPDATED,
+							['Test Organisation']
+						),
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					...rule6Party,
@@ -367,6 +403,8 @@ describe('appeal rule 6 parties routes', () => {
 		describe('DELETE', () => {
 			test('deletes a rule 6 party', async () => {
 				// @ts-ignore
+				databaseConnector.appealRule6Party.findUnique.mockResolvedValue(rule6Party);
+				// @ts-ignore
 				databaseConnector.appealRule6Party.delete.mockResolvedValue({
 					appealId,
 					serviceUserId: Number(rule6Party.serviceUserId)
@@ -375,6 +413,29 @@ describe('appeal rule 6 parties routes', () => {
 				const response = await request
 					.delete(`/appeals/${appealId}/rule-6-parties/${rule6Party.id}`)
 					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appealRule6Party.findUnique).toHaveBeenCalledWith({
+					where: { id: Number(rule6Party.id) },
+					select: {
+						id: true,
+						appealId: true,
+						serviceUserId: true,
+						serviceUser: {
+							select: {
+								id: true,
+								organisationName: true,
+								salutation: true,
+								firstName: true,
+								middleName: true,
+								lastName: true,
+								email: true,
+								website: true,
+								phoneNumber: true,
+								addressId: true
+							}
+						}
+					}
+				});
 
 				expect(databaseConnector.appealRule6Party.delete).toHaveBeenCalledWith({
 					where: { id: Number(rule6Party.id) }
@@ -386,6 +447,17 @@ describe('appeal rule 6 parties routes', () => {
 					'Rule6Party',
 					fullPlanningAppeal.reference
 				);
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: appealId,
+						details: stringTokenReplacement(SUPPORT_CONSTANTS.AUDIT_TRAIL_RULE_6_PARTY_WITHDRAWN, [
+							'Test Organisation'
+						]),
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
 
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
