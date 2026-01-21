@@ -155,7 +155,7 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
-                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> 48269/APP/2021/1482</span>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Copthalls, Clevedon Road, West Hill, BS48 1PN</span>
                         </td>
@@ -170,7 +170,7 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="1 2 9 2 8 5"
                             data-cy="129285">129285</a>
                         </td>
-                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"></span>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
                         </td>
@@ -384,7 +384,7 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
-                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> 48269/APP/2021/1482</span>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Copthalls, Clevedon Road, West Hill, BS48 1PN</span>
                         </td>
@@ -399,7 +399,7 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="1 2 9 2 8 5"
                             data-cy="129285">129285</a>
                         </td>
-                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"></span>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
                         </td>
@@ -593,7 +593,7 @@ exports[`national-list GET / should render national list - appeal procedure type
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
-                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> 48269/APP/2021/1482</span>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Copthalls, Clevedon Road, West Hill, BS48 1PN</span>
                         </td>
@@ -766,7 +766,7 @@ exports[`national-list GET / should render national list - appeal type filter ap
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
-                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> 48269/APP/2021/1482</span>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Copthalls, Clevedon Road, West Hill, BS48 1PN</span>
                         </td>
@@ -939,7 +939,7 @@ exports[`national-list GET / should render national list - case team filter appl
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
-                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> 48269/APP/2021/1482</span>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Copthalls, Clevedon Road, West Hill, BS48 1PN</span>
                         </td>
@@ -1112,7 +1112,7 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
-                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> 48269/APP/2021/1482</span>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Copthalls, Clevedon Road, West Hill, BS48 1PN</span>
                         </td>
@@ -1127,7 +1127,7 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="1 2 9 2 8 5"
                             data-cy="129285">129285</a>
                         </td>
-                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"></span>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
                         </td>
@@ -1310,7 +1310,7 @@ exports[`national-list GET / should render national list - no search term - filt
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
-                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> 48269/APP/2021/1482</span>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Copthalls, Clevedon Road, West Hill, BS48 1PN</span>
                         </td>
@@ -1495,7 +1495,7 @@ exports[`national-list GET / should render national list - search term - filter 
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
-                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> 48269/APP/2021/1482</span>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Copthalls, Clevedon Road, West Hill, BS48 1PN</span>
                         </td>
@@ -1815,7 +1815,7 @@ exports[`national-list GET / should render national list - search term 1`] = `
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
-                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> 48269/APP/2021/1482</span>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Copthalls, Clevedon Road, West Hill, BS48 1PN</span>
                         </td>
@@ -1830,7 +1830,7 @@ exports[`national-list GET / should render national list - search term 1`] = `
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="1 2 9 2 8 5"
                             data-cy="129285">129285</a>
                         </td>
-                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"></span>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
                         </td>
@@ -2003,7 +2003,7 @@ exports[`national-list GET / should render the header with navigation containing
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="9 4 3 2 4 5"
                             data-cy="943245">943245</a>
                         </td>
-                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> 48269/APP/2021/1482</span>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Copthalls, Clevedon Road, West Hill, BS48 1PN</span>
                         </td>
@@ -2018,7 +2018,7 @@ exports[`national-list GET / should render the header with navigation containing
                         <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="1 2 9 2 8 5"
                             data-cy="129285">129285</a>
                         </td>
-                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"></span>
                         </td>
                         <td class="govuk-table__cell"><span class="govuk-!-width-one-third">19 Beauchamp Road, Bristol, BS7 8LQ</span>
                         </td>

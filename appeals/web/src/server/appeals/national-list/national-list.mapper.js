@@ -518,7 +518,7 @@ export function nationalListPage(
 								},
 								{
 									html: `<span class="govuk-!-width-one-third">
-										${appeal.planningApplicationReference}
+										${appeal.planningApplicationReference ?? ''}
 									</span>`
 								},
 								{
