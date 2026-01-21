@@ -845,9 +845,10 @@ describe('invalid-appeal', () => {
 				.post(`${baseUrl}/appellant-case/invalid/enforcement-notice`)
 				.send({ enforcementNoticeInvalid: 'yes' });
 			await request.post(`${baseUrl}/appellant-case/invalid/enforcement-notice-reason`).send({
-				invalidReason: ['1', '2'],
+				invalidReason: ['1', '2', '8'],
 				'invalidReason-1': 'has some text',
-				'invalidReason-2': 'has some other text'
+				'invalidReason-2': 'has some other text',
+				'invalidReason-6': 'another reason'
 			});
 			await request.post(`${baseUrl}/appellant-case/invalid/enforcement-other-information`).send({
 				otherInformationValidRadio: 'Yes',
@@ -910,7 +911,8 @@ describe('invalid-appeal', () => {
 					validationOutcome: 'invalid',
 					enforcementInvalidReasons: [
 						{ id: 1, text: ['has some text'] },
-						{ id: 2, text: ['has some other text'] }
+						{ id: 2, text: ['has some other text'] },
+						{ id: 8, text: ['another reason'] }
 					],
 					enforcementNoticeInvalid: 'yes',
 					otherInformation: 'Enforcement other information'
@@ -923,9 +925,10 @@ describe('invalid-appeal', () => {
 				.post(`${baseUrl}/appellant-case/invalid/enforcement-notice`)
 				.send({ enforcementNoticeInvalid: 'yes' });
 			await request.post(`${baseUrl}/appellant-case/invalid/enforcement-notice-reason`).send({
-				invalidReason: ['1', '2'],
+				invalidReason: ['1', '2', '8'],
 				'invalidReason-1': 'has some text',
-				'invalidReason-2': 'has some other text'
+				'invalidReason-2': 'has some other text',
+				'invalidReason-8': 'another reason'
 			});
 			await request.post(`${baseUrl}/appellant-case/invalid/enforcement-other-information`).send({
 				otherInformationValidRadio: 'Yes',

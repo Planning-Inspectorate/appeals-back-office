@@ -744,6 +744,10 @@ exports[`invalid-appeal GET /check-details-and-mark-enforcement-as-invalid shoul
                             data-toggle-text-collapsed="Show more" data-toggle-text-expanded="Show less">
                                 <li>Enforcement invalid reason two: has some other text</li>
                             </div>
+                            <div class="pins-show-more" data-label="" data-mode="html" data-max-before-hiding="300"
+                            data-toggle-text-collapsed="Show more" data-toggle-text-expanded="Show less">
+                                <li>Enforcement invalid other reason:</li>
+                            </div>
                         </ul>
                         </dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/invalid/enforcement-notice-reason">Change<span class="govuk-visually-hidden"> why is the enforcement notice invalid?</span></a>
@@ -861,6 +865,19 @@ exports[`invalid-appeal GET /enforcement-notice-reason should render the enforce
                                     <label class="govuk-label govuk-label--s" for="invalid-reason-3-1">Enter a reason</label>
                                     <input class="govuk-input" id="invalid-reason-3-1"
                                     name="invalidReason-3" type="text">
+                                </div>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
+                                type="checkbox" value="8" data-aria-controls="conditional-invalid-reason-4">
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Enforcement invalid other reason</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-invalid-reason-4">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="invalid-reason-8-1">Enter a reason</label>
+                                    <input class="govuk-input" id="invalid-reason-8-1"
+                                    name="invalidReason-8" type="text">
                                 </div>
                             </div>
                         </div>
@@ -1849,6 +1866,19 @@ exports[`invalid-appeal POST /enforcement-notice-reason should re-render the enf
                                     name="invalidReason-3" type="text">
                                 </div>
                             </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
+                                type="checkbox" value="8" data-aria-controls="conditional-invalid-reason-4">
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Enforcement invalid other reason</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-invalid-reason-4">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="invalid-reason-8-1">Enter a reason</label>
+                                    <input class="govuk-input" id="invalid-reason-8-1"
+                                    name="invalidReason-8" type="text">
+                                </div>
+                            </div>
                         </div>
                     </fieldset>
                 </div>
@@ -1925,6 +1955,19 @@ exports[`invalid-appeal POST /enforcement-notice-reason should re-render the enf
                                     <label class="govuk-label govuk-label--s" for="invalid-reason-3-1">Enter a reason</label>
                                     <input class="govuk-input" id="invalid-reason-3-1"
                                     name="invalidReason-3" type="text">
+                                </div>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
+                                type="checkbox" value="8" data-aria-controls="conditional-invalid-reason-4">
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Enforcement invalid other reason</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-invalid-reason-4">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="invalid-reason-8-1">Enter a reason</label>
+                                    <input class="govuk-input" id="invalid-reason-8-1"
+                                    name="invalidReason-8" type="text">
                                 </div>
                             </div>
                         </div>
