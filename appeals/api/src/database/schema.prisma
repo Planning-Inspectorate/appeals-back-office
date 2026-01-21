@@ -880,7 +880,7 @@ model RepresentationAttachment {
 /// RepresentationRejectionReason model
 /// Contains all possible reasons to reject a comment.
 model RepresentationRejectionReason {
-  id                                     Int                                      @id @default(autoincrement())
+  id                                     Int                                      @id
   name                                   String
   hasText                                Boolean                                  @default(false)
   representationType                     String                                   @default("comment")

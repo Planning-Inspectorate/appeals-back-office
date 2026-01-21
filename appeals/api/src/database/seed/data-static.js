@@ -511,170 +511,234 @@ export const groundsForAppeal = [
 /**
  * An array of representation rejection reasons.
  *
- * @type {Pick<RepresentationRejectionReason, 'name' | 'hasText' | 'representationType'>[]}
+ * @type {Pick<RepresentationRejectionReason, 'id' | 'name' | 'hasText' | 'representationType'>[]}
  */
 export const representationRejectionReasons = [
 	{
-		name: 'Includes personal or medical information',
-		representationType: 'comment',
-		hasText: false
-	},
-	{
-		name: 'Includes inflammatory content',
-		representationType: 'comment',
-		hasText: false
-	},
-	{
-		name: 'Duplicated or repeated comment',
-		representationType: 'comment',
-		hasText: false
-	},
-	{
-		name: 'Not relevant to this appeal',
-		representationType: 'comment',
-		hasText: false
-	},
-	{
-		name: 'Contains links to web pages',
-		representationType: 'comment',
-		hasText: false
-	},
-	{
+		id: 1,
 		name: 'Received after deadline',
 		representationType: 'comment',
 		hasText: false
 	},
 	{
+		id: 2,
+		name: 'Illegible or Incomplete Documentation',
+		representationType: 'comment',
+		hasText: false
+	},
+	{
+		id: 3,
+		name: 'Includes personal or medical information',
+		representationType: 'comment',
+		hasText: false
+	},
+	{
+		id: 4,
+		name: 'Includes inflammatory content',
+		representationType: 'comment',
+		hasText: false
+	},
+	{
+		id: 5,
+		name: 'Duplicated or repeated comment',
+		representationType: 'comment',
+		hasText: false
+	},
+	{
+		id: 6,
+		name: 'Not relevant to this appeal',
+		representationType: 'comment',
+		hasText: false
+	},
+	{
+		id: 7,
+		name: 'Contains links to web pages',
+		representationType: 'comment',
+		hasText: false
+	},
+	{
+		id: 8,
 		name: 'Other reason',
 		representationType: 'comment',
 		hasText: true
 	},
 	{
+		id: 12,
 		name: 'Supporting documents missing',
 		representationType: 'lpa_statement',
 		hasText: true
 	},
 	{
+		id: 13,
 		name: 'No list of suggested conditions',
 		representationType: 'lpa_statement',
 		hasText: false
 	},
 	{
+		id: 14,
 		name: 'Other',
 		representationType: 'lpa_statement',
 		hasText: true
 	},
 	{
+		id: 15,
 		name: 'Supporting documents missing',
 		representationType: 'appellant_statement',
 		hasText: true
 	},
 	{
+		id: 16,
 		name: 'No list of suggested conditions',
 		representationType: 'appellant_statement',
 		hasText: false
 	},
 	{
+		id: 17,
 		name: 'Other',
 		representationType: 'appellant_statement',
 		hasText: true
 	},
 	{
+		id: 18,
 		name: 'Includes personal or medical information',
 		representationType: 'lpa_final_comment',
 		hasText: false
 	},
 	{
+		id: 19,
 		name: 'Includes inflammatory content',
 		representationType: 'lpa_final_comment',
 		hasText: false
 	},
 	{
+		id: 20,
 		name: 'Not relevant to this appeal',
 		representationType: 'lpa_final_comment',
 		hasText: false
 	},
 	{
+		id: 21,
 		name: 'Contains links to web pages',
 		representationType: 'lpa_final_comment',
 		hasText: false
 	},
 	{
+		id: 22,
 		name: 'Other reason',
 		representationType: 'lpa_final_comment',
 		hasText: true
 	},
 	{
+		id: 23,
 		name: 'Includes personal or medical information',
 		representationType: 'appellant_final_comment',
 		hasText: false
 	},
 	{
+		id: 24,
 		name: 'Includes inflammatory content',
 		representationType: 'appellant_final_comment',
 		hasText: false
 	},
 	{
+		id: 25,
 		name: 'Not relevant to this appeal',
 		representationType: 'appellant_final_comment',
 		hasText: false
 	},
 	{
+		id: 26,
 		name: 'Contains links to web pages',
 		representationType: 'appellant_final_comment',
 		hasText: false
 	},
 	{
+		id: 27,
 		name: 'Other reason',
 		representationType: 'appellant_final_comment',
 		hasText: true
 	},
 	{
+		id: 28,
+		name: 'Includes personal or medical information',
+		representationType: 'lpa_proofs_evidence',
+		hasText: false
+	},
+	{
+		id: 29,
+		name: 'Includes inflammatory content',
+		representationType: 'lpa_proofs_evidence',
+		hasText: false
+	},
+	{
+		id: 30,
+		name: 'Not relevant to this appeal',
+		representationType: 'lpa_proofs_evidence',
+		hasText: false
+	},
+	{
+		id: 31,
+		name: 'Contains links to web pages',
+		representationType: 'lpa_proofs_evidence',
+		hasText: false
+	},
+	{
+		id: 32,
+		name: 'Other reason',
+		representationType: 'lpa_proofs_evidence',
+		hasText: true
+	},
+
+	{
+		id: 35,
 		name: 'Not complete',
 		representationType: 'lpa_proofs_evidence',
 		hasText: false
 	},
 	{
+		id: 36,
 		name: 'Not relevant',
 		representationType: 'lpa_proofs_evidence',
 		hasText: false
 	},
 	{
-		name: 'Other reason',
-		representationType: 'lpa_proofs_evidence',
-		hasText: true
-	},
-	{
+		id: 33,
 		name: 'Supporting documents missing',
 		representationType: 'appellant_proofs_evidence',
 		hasText: false
 	},
 	{
+		id: 34,
 		name: 'Other reason',
 		representationType: 'appellant_proofs_evidence',
 		hasText: true
 	},
 	{
+		id: 37,
 		name: 'Supporting documents missing',
 		representationType: 'rule_6_party_statement',
 		hasText: true
 	},
 	{
+		id: 38,
 		name: 'No list of suggested conditions',
 		representationType: 'rule_6_party_statement',
 		hasText: false
 	},
 	{
+		id: 39,
 		name: 'Other',
 		representationType: 'rule_6_party_statement',
 		hasText: true
 	},
 	{
+		id: 40,
 		name: 'Supporting documents missing',
 		representationType: 'rule_6_party_proofs_evidence',
 		hasText: false
 	},
 	{
+		id: 41,
 		name: 'Other',
 		representationType: 'rule_6_party_proofs_evidence',
 		hasText: true
@@ -806,12 +870,12 @@ export async function seedStaticData(databaseConnector) {
 		await databaseConnector.representationRejectionReason.upsert({
 			create: rejectionReason,
 			where: {
-				name_representationType: {
-					name: rejectionReason.name,
-					representationType: rejectionReason.representationType
-				}
+				id: rejectionReason.id
 			},
-			update: {}
+			update: {
+				name: rejectionReason.name,
+				hasText: rejectionReason.hasText
+			}
 		});
 	}
 
