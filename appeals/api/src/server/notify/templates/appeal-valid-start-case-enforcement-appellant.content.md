@@ -51,7 +51,7 @@ Due by {{statement_of_common_ground_deadline}}.
 {% if planning_obligation_deadline -%}
 ## Planning obligation
 
-Due by {{planning_obligation_deadline}}.
+Send to {{team_email_address}} by {{planning_obligation_deadline}}.
 
 {% endif -%}
 
