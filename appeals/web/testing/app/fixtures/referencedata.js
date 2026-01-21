@@ -524,6 +524,10 @@ export const appealDataAdvert = {
 	...appealData,
 	appealType: 'Advertisement'
 };
+export const appealDataLdc = {
+	...appealData,
+	appealType: 'Lawful development certificate appeal'
+};
 
 export const appealDataEnforcementNotice = {
 	...appealData,
