@@ -203,6 +203,13 @@ export const AUDIT_TRAIL_LPAQ_WAS_APPLICATION_REFUSED_DUE_TO_HIGHWAY_OR_TRAFFIC_
 export const AUDIT_TRAIL_LPAQ_DID_APPELLANT_SUBMIT_COMPLETE_PHOTOS_AND_PLANS_UPDATED =
 	'‘Did the appellant submit complete and accurate photographs and plans?’ updated to {replacement0}';
 export const AUDIT_TRAIL_TEAM_ASSIGNED = 'Case team {replacement0} assigned';
+export const AUDIT_TRAIL_RULE_6_PARTY_ADDED = 'Rule 6 party {replacement0} added';
+export const AUDIT_TRAIL_RULE_6_PARTY_WITHDRAWN = 'Rule 6 status withdrawn for {replacement0}';
+export const AUDIT_TRAIL_RULE_6_PARTY_DETAILS_UPDATED =
+	'Rule 6 party {replacement0} details updated';
+export const AUDIT_TRAIL_RULE_6_PARTY_REMOVED = 'Rule 6 party {replacement0} removed';
+export const AUDIT_TRAIL_RULE_6_ADDED_EMAILS_SENT =
+	'Rule 6 added emails sent to LPA, Appellant and Rule 6 party';
 export const AUDIT_TRAIL_RECORD_MISSED_SITE_VISIT = '{replacement0} missed the site visit';
 
 export const AUDIT_TRAIL_LISTED_BUILDING_ADDED = 'A listed building was added';
