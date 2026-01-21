@@ -504,7 +504,9 @@ Cypress.Commands.add('deleteAppeals', (caseObj) => {
 		const appealIds = [];
 
 		for (const obj of caseObjs) {
-			appealIds.push(obj.id);
+			if (obj?.id) {
+				appealIds.push(obj.id);
+			}
 		}
 
 		cy.log(`Deleting case(s) ${appealIds}`);

@@ -4,6 +4,7 @@ import appealRepository from './appeal.repository.js';
 import commonRepository from './common.repository.js';
 import enforcementNoticeAppealOutcomeRepository from './enforcement-notice-appeal-outcome.repository.js';
 
+/** @typedef {import('@pins/appeals.api').Schema.AppellantCase} AppellantCase */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcome} UpdateAppellantCaseValidationOutcome */
 /** @typedef {import('#db-client/models.ts').AppellantCaseUpdateInput} AppellantCaseUpdateInput */
 /** @typedef {import('@pins/appeals.api').Api.AppellantCaseUpdateRequest} AppellantCaseUpdateRequest */
@@ -11,6 +12,24 @@ import enforcementNoticeAppealOutcomeRepository from './enforcement-notice-appea
  * @typedef {import('#db-client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
  * @template T
  */
+
+/**
+ *
+ * @param {number} appealId
+ * @returns {Promise<AppellantCase|undefined|null>}
+ */
+const getAppellantCaseByAppealId = async (appealId) => {
+	const appellantCase = await databaseConnector.appellantCase.findUnique({
+		where: {
+			appealId
+		}
+	});
+
+	if (appellantCase) {
+		// @ts-ignore
+		return appellantCase;
+	}
+};
 
 /**
  * @param {number} id
@@ -216,4 +235,8 @@ const updateAppellantCaseValidationOutcome = ({
 	return tx;
 };
 
-export default { updateAppellantCaseById, updateAppellantCaseValidationOutcome };
+export default {
+	getAppellantCaseByAppealId,
+	updateAppellantCaseById,
+	updateAppellantCaseValidationOutcome
+};

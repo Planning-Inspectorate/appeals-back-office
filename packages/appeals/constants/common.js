@@ -144,7 +144,10 @@ export const FEEDBACK_FORM_LINKS = Object.freeze({
 	FULL_ADVERTS:
 		'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UREdSMUZXUFhUMUdBUERBUFFGVkRQVEFBTS4u',
 
-	LPA: 'https://forms.office.com.mcas.ms/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UNzVFTElMSEJIWlhXWkZFM1E1WDg3RTFPUy4u'
+	LPA: 'https://forms.office.com.mcas.ms/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UNzVFTElMSEJIWlhXWkZFM1E1WDg3RTFPUy4u',
+
+	ENFORCEMENT_NOTICE:
+		'https://forms.cloud.microsoft/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQVRSQlBKOUJVR05TOE1URElSSUVZUjVDMS4u&route=shorturl'
 });
 
 export const REPRESENTATION_ADDED_AS_DOCUMENT = 'Added as a document';
