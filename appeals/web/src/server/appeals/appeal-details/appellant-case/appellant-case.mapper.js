@@ -115,6 +115,12 @@ export async function appellantCasePage(
 		userHasUpdateCase
 	);
 
+	// Remove empty rows
+	appealTypeSpecificComponents.forEach((component) => {
+		// @ts-ignore
+		component.parameters.rows = component.parameters.rows.filter((row) => !!row);
+	});
+
 	const reviewOutcomeRadiosInputInstruction =
 		mappedAppellantCaseData.reviewOutcome.input?.instructions.find(
 			inputInstructionIsRadiosInputInstruction
@@ -131,7 +137,9 @@ export async function appellantCasePage(
 			closing: '</div></div>'
 		},
 		parameters: {
-			text: 'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information.'
+			text: appellantCaseData.isEnforcementChild
+				? 'Do not continue until you have reviewed all of the supporting documents and redacted any sensitive information.'
+				: 'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information.'
 		}
 	};
 
@@ -141,25 +149,44 @@ export async function appellantCasePage(
 		appealDetails.documentationSummary?.appellantCase?.status?.toLowerCase() !== 'valid' &&
 		userHasPermission(permissionNames.setStageOutcome, session)
 	) {
-		if (session.webAppellantCaseReviewOutcome?.validationOutcome) {
-			reviewOutcomeRadiosInputInstruction.properties.items =
-				// @ts-ignore
-				reviewOutcomeRadiosInputInstruction.properties.items.map((item) => {
-					return {
-						...item,
-						checked: item.value === session.webAppellantCaseReviewOutcome?.validationOutcome
-					};
+		if (appellantCaseData.isEnforcementChild) {
+			if (
+				appealDetails.documentationSummary?.appellantCase?.status?.toLowerCase() !== 'incomplete'
+			) {
+				reviewOutcomeComponents.push({
+					type: 'input',
+					parameters: {
+						type: 'hidden',
+						id: 'review-outcome',
+						name: 'reviewOutcome',
+						value: 'continue'
+					}
 				});
-		}
 
-		reviewOutcomeComponents.push({
-			type: 'radios',
-			parameters: {
-				...reviewOutcomeRadiosInputInstruction.properties,
-				errorMessage: errorMessage ? { text: errorMessage } : undefined
+				reviewOutcomeComponents.push(documentsWarningComponent);
 			}
-		});
-		reviewOutcomeComponents.push(documentsWarningComponent);
+		} else {
+			if (session.webAppellantCaseReviewOutcome?.validationOutcome) {
+				reviewOutcomeRadiosInputInstruction.properties.items =
+					// @ts-ignore
+					reviewOutcomeRadiosInputInstruction.properties.items.map((item) => {
+						return {
+							...item,
+							checked: item.value === session.webAppellantCaseReviewOutcome?.validationOutcome
+						};
+					});
+			}
+
+			reviewOutcomeComponents.push({
+				type: 'radios',
+				parameters: {
+					...reviewOutcomeRadiosInputInstruction.properties,
+					errorMessage: errorMessage ? { text: errorMessage } : undefined
+				}
+			});
+
+			reviewOutcomeComponents.push(documentsWarningComponent);
+		}
 	}
 
 	/** @type {PageComponent[]} */
@@ -217,6 +244,7 @@ export async function appellantCasePage(
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Appellant case',
 		headingClasses: 'govuk-heading-l govuk-!-margin-bottom-3',
+		submitButtonText: appellantCaseData.isEnforcementChild ? 'Confirm' : 'Continue',
 		pageComponents: [
 			...errorSummaryPageComponents,
 			...notificationBanners,
