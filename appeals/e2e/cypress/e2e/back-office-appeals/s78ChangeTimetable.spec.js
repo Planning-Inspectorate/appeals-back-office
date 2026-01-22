@@ -208,10 +208,10 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 
 		// Get the future business date using Cypress task/helper
 		cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
-			caseDetailsPage.changeTimetableDates(s78ChangeTimetableTimetableItems, startDate, 7);
+			caseDetailsPage.changeTimetableDates(s78ChangeTimetableTimetableItems, startDate, 21);
 			caseDetailsPage.clickUpdateTimetableDueDates();
 
-			caseDetailsPage.verifyDatesChanged(s78ChangeTimetableTimetableItems, startDate, 7);
+			caseDetailsPage.verifyDatesChanged(s78ChangeTimetableTimetableItems, startDate, 21);
 			caseDetailsPage.validateBannerMessage('Success', 'Timetable due dates updated');
 		});
 	};
