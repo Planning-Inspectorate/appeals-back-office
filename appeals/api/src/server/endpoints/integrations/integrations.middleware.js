@@ -16,6 +16,18 @@ import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.
 import { APPEAL_REPRESENTATION_TYPE } from '@planning-inspectorate/data-model';
 import { schemas, validateFromSchema } from './integrations.validators.js';
 
+/** @type {Record<string, { flag: string, name: string }>} */
+const rule6Config = {
+	[APPEAL_REPRESENTATION_TYPE.PROOFS_EVIDENCE]: {
+		flag: FEATURE_FLAG_NAMES.RULE_6_PARTIES_POE,
+		name: 'Proof of Evidence'
+	},
+	[APPEAL_REPRESENTATION_TYPE.STATEMENT]: {
+		flag: FEATURE_FLAG_NAMES.RULE_6_STATEMENT,
+		name: 'Statement'
+	}
+};
+
 /**
  * @type {import("express").RequestHandler}
  * @returns {Promise<object|void>}
@@ -140,23 +152,16 @@ export const validateRepresentation = async (req, res, next) => {
 		});
 	}
 
-	const isRule6PoEActive = isFeatureActive(FEATURE_FLAG_NAMES.RULE_6_PARTIES_POE);
-	if (!isRule6PoEActive && body.representationType === APPEAL_REPRESENTATION_TYPE.PROOFS_EVIDENCE) {
-		const serviceUserId = Number(body.serviceUserId) - serviceUserIdStartRange;
-		const isRule6Party = !!referenceData.appeal.appealRule6Parties?.some(
-			(/** @type {{ serviceUserId: number; }} */ party) => party.serviceUserId === serviceUserId
-		);
+	const featureFlagResponse = validateRule6FeatureAndParty(
+		res,
+		body.representationType,
+		body.caseReference,
+		body.serviceUserId,
+		referenceData
+	);
 
-		if (isRule6Party) {
-			logger.info(
-				`Blocking Rule 6 PoE submission for appeal '${body.caseReference}' as feature flag is disabled`
-			);
-			return res.status(403).send({
-				errors: {
-					integration: 'Rule 6 Proof of Evidence ingestion is currently disabled'
-				}
-			});
-		}
+	if (featureFlagResponse) {
+		return featureFlagResponse;
 	}
 
 	if (isExpeditedAppealType(referenceData.appeal.appealType?.key)) {
@@ -230,4 +235,46 @@ const loadReferenceData = async (reference, useLeadAppealIfLinked = false) => {
 			};
 		}
 	});
+};
+
+/**
+ * @param {import("express").Response} res
+ * @param {string} representationType
+ * @param {string} caseReference
+ * @param {string} serviceUserId
+ * @param {*} referenceData
+ * @returns {object|undefined}
+ */
+const validateRule6FeatureAndParty = (
+	res,
+	representationType,
+	caseReference,
+	serviceUserId,
+	referenceData
+) => {
+	const config = rule6Config[representationType];
+	if (!config) {
+		return;
+	}
+
+	const isFeatureEnabled = isFeatureActive(config.flag);
+	if (isFeatureEnabled) {
+		return;
+	}
+
+	const serviceUserIdBo = Number(serviceUserId) - serviceUserIdStartRange;
+	const isRule6Party = !!referenceData.appeal.appealRule6Parties?.some(
+		(/** @type {{ serviceUserId: number; }} */ party) => party.serviceUserId === serviceUserIdBo
+	);
+
+	if (isRule6Party) {
+		logger.info(
+			`Blocking Rule 6 ${config.name} submission for appeal '${caseReference}' as feature flag is disabled`
+		);
+		return res.status(403).send({
+			errors: {
+				integration: `Rule 6 ${config.name} ingestion is currently disabled`
+			}
+		});
+	}
 };

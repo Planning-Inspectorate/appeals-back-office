@@ -1,8 +1,10 @@
 import { currentStatus } from '#utils/current-status.js';
 import { dateIsPast } from '#utils/date-comparison.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
-	APPEAL_REPRESENTATION_TYPE
+	APPEAL_REPRESENTATION_TYPE,
+	FEATURE_FLAG_NAMES
 } from '@pins/appeals/constants/common.js';
 import { ERROR_REP_PUBLISH_BLOCKED } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
@@ -18,12 +20,20 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 const canPublishIpCommentsAndStatements = (currentAppeal) => {
 	const { representations = [], appealTimetable } = currentAppeal || {};
 	const { AWAITING_REVIEW } = APPEAL_REPRESENTATION_STATUS;
-	const { COMMENT, LPA_STATEMENT, RULE_6_PARTY_STATEMENT } = APPEAL_REPRESENTATION_TYPE;
+	const { COMMENT, LPA_STATEMENT, RULE_6_PARTY_STATEMENT, APPELLANT_STATEMENT } =
+		APPEAL_REPRESENTATION_TYPE;
+
+	const representationCheckList = [COMMENT, LPA_STATEMENT];
+	if (isFeatureActive(FEATURE_FLAG_NAMES.APPELLANT_STATEMENT)) {
+		representationCheckList.push(APPELLANT_STATEMENT);
+	}
+	if (isFeatureActive(FEATURE_FLAG_NAMES.RULE_6_STATEMENT)) {
+		representationCheckList.push(RULE_6_PARTY_STATEMENT);
+	}
 
 	const hasRepresentationsAwaitingReview = representations?.some(
 		({ status, representationType }) =>
-			[COMMENT, LPA_STATEMENT, RULE_6_PARTY_STATEMENT].includes(representationType) &&
-			status === AWAITING_REVIEW
+			representationCheckList.includes(representationType) && status === AWAITING_REVIEW
 	);
 
 	const today = new Date();

@@ -352,6 +352,13 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 			EventType.Update
 		);
 	}
+	const statementsToPublish = [APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT];
+	if (isFeatureActive(FEATURE_FLAG_NAMES.APPELLANT_STATEMENT)) {
+		statementsToPublish.push(APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT);
+	}
+	if (isFeatureActive(FEATURE_FLAG_NAMES.RULE_6_STATEMENT)) {
+		statementsToPublish.push(APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT);
+	}
 
 	const result = await representationRepository.updateRepresentations(
 		appeal.id,
@@ -359,11 +366,7 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 			OR: [
 				{
 					representationType: {
-						in: [
-							APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
-							APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT,
-							APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT
-						]
+						in: statementsToPublish
 					},
 					status: {
 						in: [APPEAL_REPRESENTATION_STATUS.VALID, APPEAL_REPRESENTATION_STATUS.INCOMPLETE]
