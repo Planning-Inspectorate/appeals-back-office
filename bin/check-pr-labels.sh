@@ -11,6 +11,6 @@ checkPrLabel() {
 
 labels=("e2eSmoke")
 
-for label in "${lables[@]}"; do
+for label in "${labels[@]}"; do
 	checkPrLabel $label
 done
