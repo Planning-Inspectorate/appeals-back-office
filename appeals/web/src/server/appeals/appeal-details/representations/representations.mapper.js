@@ -1,3 +1,4 @@
+import config from '#environment/config.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { ensureArray } from '#lib/array-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
@@ -149,26 +150,33 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 					`/appeals-service/appeal-details/${appeal.appealId}/lpa-statement`
 				)}" class="govuk-link">1 LPA statement</a>`
 			: null;
-
-	const appellantStatementText =
-		appeal.documentationSummary?.appellantStatement?.representationStatus ===
-			APPEAL_REPRESENTATION_STATUS.VALID ||
-		appeal.documentationSummary?.appellantStatement?.representationStatus ===
-			APPEAL_REPRESENTATION_STATUS.INCOMPLETE
-			? `<a href="${addBackLinkQueryToUrl(
-					request,
-					`/appeals-service/appeal-details/${appeal.appealId}/appellant-statement`
-				)}" class="govuk-link">1 appellant statement</a>`
-			: null;
-
-	const rule6StatementTexts = Object.values(
-		appeal.documentationSummary?.rule6PartyStatements || {}
-	)?.map((statement) => {
-		return `<a href="${addBackLinkQueryToUrl(
-			request,
-			`/appeals-service/appeal-details/${appeal.appealId}/rule6-statement`
-		)}" class="govuk-link">1 ${statement.organisationName} statement</a>`;
-	});
+	let appellantStatementText = null;
+	if (config.featureFlags.featureFlagAppellantStatement) {
+		appellantStatementText =
+			appeal.documentationSummary?.appellantStatement?.representationStatus ===
+				APPEAL_REPRESENTATION_STATUS.VALID ||
+			appeal.documentationSummary?.appellantStatement?.representationStatus ===
+				APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+				? `<a href="${addBackLinkQueryToUrl(
+						request,
+						`/appeals-service/appeal-details/${appeal.appealId}/appellant-statement`
+					)}" class="govuk-link">1 appellant statement</a>`
+				: null;
+	}
+	/**
+	 * @type {string[]}
+	 */
+	let rule6StatementTexts = [];
+	if (config.featureFlags.featureFlagRule6Statement) {
+		rule6StatementTexts = Object.values(
+			appeal.documentationSummary?.rule6PartyStatements || {}
+		)?.map((statement) => {
+			return `<a href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appeal.appealId}/rule6-statement`
+			)}" class="govuk-link">1 ${statement.organisationName} statement</a>`;
+		});
+	}
 
 	const valueTexts = /** @type {string[]} */ (
 		[ipCommentsText, lpaStatementText, appellantStatementText, ...rule6StatementTexts].filter(

@@ -9,6 +9,7 @@ import { statementReceivedText, statementStatusText } from '../common.js';
 export const mapRule6PartyStatements = ({ appealDetails, currentRoute, request }) => {
 	const shouldBeDisplayed =
 		config.featureFlags.featureFlagRule6Mvp &&
+		config.featureFlags.featureFlagRule6Statement &&
 		appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase();
 
 	const rule6Parties = appealDetails.appealRule6Parties;

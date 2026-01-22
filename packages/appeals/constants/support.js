@@ -393,7 +393,7 @@ export const ERROR_REP_ONLY_STATEMENT_INCOMPLETE =
 export const ERROR_REP_PUBLISH_USING_ENDPOINT =
 	'LPA statements and final comments can only be published using the dedicated endpoint';
 export const ERROR_REP_PUBLISH_BLOCKED =
-	'Publishing of LPA statements, ip comments and proof of evidence is blocked';
+	'Publishing of Statements and IP comments or Proofs of Evidence is blocked';
 export const ERROR_LINKING_APPEALS =
 	'The appeals cannot be linked as the lead or child are already linked to other appeals.';
 export const ERROR_INVALID_EMAIL = 'must be a valid email';
