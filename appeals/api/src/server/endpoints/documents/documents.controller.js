@@ -213,7 +213,7 @@ export const addDocumentVersion = async (req, res) => {
 				])
 			});
 			if (body.correctionNotice) {
-				sendNewDecisionLetter(
+				await sendNewDecisionLetter(
 					appeal,
 					body.correctionNotice,
 					req.get('azureAdUserId') || '',
