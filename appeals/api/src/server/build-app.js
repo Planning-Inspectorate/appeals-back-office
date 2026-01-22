@@ -25,7 +25,9 @@ const buildApp = (
 	app.use(bodyParser.json({ limit: config.requestSizeLimit }));
 
 	app.use(compression());
-	app.use(morgan('combined'));
+	if (config.log.levelStdout === 'info' || config.log.levelStdout === 'debug') {
+		app.use(morgan('combined'));
+	}
 	app.use(helmet());
 
 	app.get('/', (req, res, next) => {
