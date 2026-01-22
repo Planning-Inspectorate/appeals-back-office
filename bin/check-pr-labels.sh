@@ -1,8 +1,7 @@
 checkPrLabel() {
 	label="$1"
-	echo "Looking for '$label' label in PR"
-	echo pr.json
-	if grep -q $label pr.json; then
+	filePath="$2"
+	if grep -q $label $filePath; then
 		echo "Found '$label' label in PR"
 		echo "##vso[task.setvariable variable=runE2E]true"
 		echo "##vso[task.setvariable variable=$label]true"
@@ -10,7 +9,8 @@ checkPrLabel() {
 }
 
 labels=("e2eSmoke")
+filePath="$1"
 
 for label in "${labels[@]}"; do
-	checkPrLabel $label
+	checkPrLabel $label $filePath
 done

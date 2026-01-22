@@ -97,6 +97,7 @@ extends:
           - task: ShellScript@2
             inputs:
               scriptPath: 'bin/check-pr-labels.sh'
+              args: '$(Build.SourcesDirectory)/pr.json'
             displayName: 'Check PR labels'
           - script: |
               openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
@@ -122,6 +123,7 @@ extends:
               FULL_URL="https://127.0.0.1:10000/devstoreaccount1/document-service-uploads?${SAS_URL}"
 
               echo "##vso[task.setvariable variable=AZURE_BLOB_EMULATOR_SAS_HOST]$FULL_URL"
+            condition: eq(variables['runE2E'], 'true')
             displayName: "Generate SAS Url"
           - script: AZURE_BLOB_EMULATOR_SAS_HOST=$(AZURE_BLOB_EMULATOR_SAS_HOST) AUTH_TENANT_ID=$(AZURE_TENANT_ID) AUTH_CLIENT_SECRET=$(AUTH_CLIENT_SECRET) AUTH_CLIENT_ID=$(AUTH_CLIENT_ID) GIT_SHA=$(Build.SourceVersion) docker-compose up -d
             condition: eq(variables['runE2E'], 'true')
