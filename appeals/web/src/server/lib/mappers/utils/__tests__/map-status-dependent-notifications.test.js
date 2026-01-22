@@ -192,6 +192,18 @@ describe('mapStatusDependentNotifications', () => {
 			requiredAction: 'addInquiryAddress',
 			expectedContainedHtml: `<a class="govuk-link" data-cy="add-inquiry-address" href="/appeals-service/appeal-details/${mockAppealData.appealId}/inquiry/change/address-details?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Add inquiry address</a>`,
 			bannerShouldNotDisplayWhenChildLinkedAppeal: false
+		},
+		{
+			bannerKey: 'reviewRule6PartyStatement',
+			requiredAction: 'reviewRule6PartyStatement',
+			expectedContainedHtml: `<a class="govuk-link" data-cy="review-rule-6-statement" href="/appeals-service/appeal-details/${mockAppealData.appealId}/rule-6-party-statement/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Test Organisation statement awaiting review</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
+			bannerKey: 'reviewRule6PartyProofOfEvidence',
+			requiredAction: 'reviewRule6PartyProofOfEvidence',
+			expectedContainedHtml: `<a class="govuk-link" data-cy="review-rule-6-proof-of-evidence" href="/appeals-service/appeal-details/${mockAppealData.appealId}/proof-of-evidence/rule-6-party/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Test Organisation proof of evidence and witnesses awaiting review</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		}
 	];
 

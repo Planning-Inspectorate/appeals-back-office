@@ -372,6 +372,7 @@ export interface WebDocumentationSummaryEntry extends DocumentationSummaryEntry 
 	counts?: Record<string, number>;
 	isRedacted?: boolean;
 	organisationName?: string;
+	rule6PartyId?: number;
 }
 
 export interface WebDocumentationSummary extends DocumentationSummary {

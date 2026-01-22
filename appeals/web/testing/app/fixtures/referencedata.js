@@ -4686,6 +4686,72 @@ export const appealDataToGetRequiredActions = {
 				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 			}
 		}
+	},
+	awaitingRule6PartyStatement: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealTimetable: {
+			lpaStatementDueDate: futureDate
+		},
+		documentationSummary: {
+			rule6PartyStatements: [
+				{
+					status: DOCUMENT_STATUS_NOT_RECEIVED,
+					organisationName: 'Test Organisation',
+					rule6PartyId: 1
+				}
+			]
+		}
+	},
+	reviewRule6PartyStatement: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealTimetable: {
+			lpaStatementDueDate: futureDate
+		},
+		documentationSummary: {
+			rule6PartyStatements: [
+				{
+					status: DOCUMENT_STATUS_RECEIVED,
+					representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
+					organisationName: 'Test Organisation',
+					rule6PartyId: 1
+				}
+			]
+		}
+	},
+	reviewRule6PartyProofOfEvidence: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
+		appealTimetable: {
+			proofOfEvidenceAndWitnessesDueDate: futureDate
+		},
+		documentationSummary: {
+			rule6PartyProofs: [
+				{
+					status: DOCUMENT_STATUS_RECEIVED,
+					representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
+					organisationName: 'Test Organisation',
+					rule6PartyId: 1
+				}
+			]
+		}
+	},
+	awaitingRule6PartyProofOfEvidence: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
+		appealTimetable: {
+			proofOfEvidenceAndWitnessesDueDate: futureDate
+		},
+		documentationSummary: {
+			rule6PartyProofs: [
+				{
+					status: DOCUMENT_STATUS_NOT_RECEIVED,
+					organisationName: 'Test Organisation',
+					rule6PartyId: 1
+				}
+			]
+		}
 	}
 };
 

@@ -5,6 +5,7 @@ import {
 } from '#lib/mappers/index.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import config from '../../../../../environment/config.js';
 import { getRequiredActionsForAppeal } from './required-actions.js';
 
@@ -24,16 +25,22 @@ export function mapStatusDependentNotifications(appealDetails, request) {
 		.map(mapRequiredActionToNotificationBannerKey)
 		.filter(/** @returns {item is NotificationBannerDefinitionKey} */ (item) => item !== undefined);
 
-	return bannerKeys
-		.map((bannerKey) => mapBannerKeysToNotificationBanners(bannerKey, appealDetails, request))
-		.filter(/** @returns {item is PageComponent} */ (item) => item !== undefined);
+	return bannerKeys.flatMap((bannerKey) => {
+		const banner = mapBannerKeysToNotificationBanners(bannerKey, appealDetails, request);
+		if (!banner) {
+			return [];
+		}
+		return Array.isArray(banner)
+			? banner.filter(/** @returns {item is PageComponent} */ (item) => item !== undefined)
+			: [banner];
+	});
 }
 
 /**
  * @param {NotificationBannerDefinitionKey} bannerDefinitionKey
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
  * @param {import('@pins/express/types/express.js').Request} request
- * @returns {PageComponent|undefined}
+ * @returns {PageComponent|PageComponent[]|undefined}
  */
 function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, request) {
 	// ToDo banners will be removed from this list once the child appeals automatically do the action via the lead appeal
@@ -311,6 +318,46 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 					`/appeals-service/appeal-details/${appealDetails.appealId}/inquiry/setup/date`
 				)}">Set up inquiry</a>`
 			});
+		}
+		case 'reviewRule6PartyStatement': {
+			const banners = Object.values(
+				appealDetails.documentationSummary.rule6PartyStatements || []
+			).flatMap((item) => {
+				if (item.representationStatus !== APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW) {
+					return [];
+				}
+
+				return [
+					createNotificationBanner({
+						bannerDefinitionKey,
+						html: `<a class="govuk-link" data-cy="review-rule-6-statement" href="${addBackLinkQueryToUrl(
+							request,
+							`/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${item.rule6PartyId}`
+						)}">${item.organisationName} statement awaiting review</a>`
+					})
+				];
+			});
+			return banners.length ? banners : undefined;
+		}
+		case 'reviewRule6PartyProofOfEvidence': {
+			const banners = Object.values(
+				appealDetails.documentationSummary.rule6PartyProofs || []
+			).flatMap((item) => {
+				if (item.representationStatus !== APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW) {
+					return [];
+				}
+
+				return [
+					createNotificationBanner({
+						bannerDefinitionKey,
+						html: `<a class="govuk-link" data-cy="review-rule-6-proof-of-evidence" href="${addBackLinkQueryToUrl(
+							request,
+							`/appeals-service/appeal-details/${appealDetails.appealId}/proof-of-evidence/rule-6-party/${item.rule6PartyId}`
+						)}">${item.organisationName} proof of evidence and witnesses awaiting review</a>`
+					})
+				];
+			});
+			return banners.length ? banners : undefined;
 		}
 	}
 }

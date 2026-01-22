@@ -2,6 +2,7 @@
 /* eslint-disable jest/expect-expect */
 import { appealData } from '#testing/app/fixtures/referencedata.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { addDays } from 'date-fns';
 import { getRequiredActionsForAppeal } from '../required-actions.js';
 
 describe('required actions', () => {
@@ -514,8 +515,61 @@ describe('required actions', () => {
 					).toEqual(['shareIpCommentsAndLpaStatement']);
 				});
 
-				// Note: Currently required-actions.js does NOT seem to push 'reviewRule6Statement'
-				// so we don't test for it yet, or we could test that it prevents progress.
+				it('should include "awaitingRule6PartyStatement" if Rule 6 statement is not submitted', () => {
+					expect(
+						getRequiredActionsForAppeal(
+							{
+								...appealDataWithBothDueDatesPassed,
+								appealTimetable: {
+									...appealDataWithBothDueDatesPassed.appealTimetable,
+									lpaStatementDueDate: addDays(new Date(), 30)
+								},
+								documentationSummary: {
+									...appealDataWithStatementsStatus.documentationSummary,
+									ipComments: {
+										status: 'received',
+										counts: { awaiting_review: 0, valid: 1 }
+									},
+									rule6PartyStatements: [
+										{
+											status: 'not_received',
+											representationStatus: 'incomplete'
+										}
+									]
+								}
+							},
+							'detail'
+						)
+					).toContain('awaitingRule6PartyStatement');
+				});
+
+				it('should include "reviewRule6PartyStatement" if Rule 6 statement is awaiting review', () => {
+					expect(
+						getRequiredActionsForAppeal(
+							{
+								...appealDataWithBothDueDatesPassed,
+								appealTimetable: {
+									...appealDataWithBothDueDatesPassed.appealTimetable,
+									lpaStatementDueDate: addDays(new Date(), 30)
+								},
+								documentationSummary: {
+									...appealDataWithStatementsStatus.documentationSummary,
+									ipComments: {
+										status: 'received',
+										counts: { awaiting_review: 0, valid: 1 }
+									},
+									rule6PartyStatements: [
+										{
+											status: 'received',
+											representationStatus: 'awaiting_review'
+										}
+									]
+								}
+							},
+							'detail'
+						)
+					).toContain('reviewRule6PartyStatement');
+				});
 			});
 
 			describe('reviewIpComments', () => {
@@ -1787,6 +1841,62 @@ describe('required actions', () => {
 						'detail'
 					)
 				).toContain('progressToInquiry');
+			});
+
+			it('should include "awaitingRule6PartyProofOfEvidence" if Rule 6 proof of evidence is not submitted', () => {
+				expect(
+					getRequiredActionsForAppeal(
+						{
+							...appealDataWithStatementsStatus,
+							appealTimetable: {
+								...appealDataWithStatementsStatus.appealTimetable,
+								lpaStatementDueDate: addDays(new Date(), 30)
+							},
+							documentationSummary: {
+								...appealDataWithStatementsStatus.documentationSummary,
+								ipComments: {
+									status: 'received',
+									counts: { awaiting_review: 0, valid: 1 }
+								},
+								rule6PartyProofs: [
+									{
+										status: 'not_received',
+										representationStatus: 'incomplete'
+									}
+								]
+							}
+						},
+						'detail'
+					)
+				).toContain('awaitingRule6PartyProofOfEvidence');
+			});
+
+			it('should include "reviewRule6PartyProofOfEvidence" if Rule 6 proof of evidence is awaiting_review', () => {
+				expect(
+					getRequiredActionsForAppeal(
+						{
+							...appealDataWithStatementsStatus,
+							appealTimetable: {
+								...appealDataWithStatementsStatus.appealTimetable,
+								lpaStatementDueDate: addDays(new Date(), 30)
+							},
+							documentationSummary: {
+								...appealDataWithStatementsStatus.documentationSummary,
+								ipComments: {
+									status: 'received',
+									counts: { awaiting_review: 0, valid: 1 }
+								},
+								rule6PartyProofs: [
+									{
+										status: 'received',
+										representationStatus: 'awaiting_review'
+									}
+								]
+							}
+						},
+						'detail'
+					)
+				).toContain('reviewRule6PartyProofOfEvidence');
 			});
 		});
 	});
