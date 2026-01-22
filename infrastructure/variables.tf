@@ -68,6 +68,7 @@ variable "apps_config" {
       featureFlagAppellantStatement     = bool
       featureFlagRule6Statement         = bool
       featureFlagLDC                    = bool
+      featureFlagRule6Costs             = bool
     })
 
     logging = object({

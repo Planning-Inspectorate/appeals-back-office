@@ -59,6 +59,7 @@ apps_config = {
     featureFlagAppellantStatement     = true
     featureFlagRule6Statement         = true
     featureFlagLDC                    = true
+    featureFlagRule6Costs             = true
 
   }
 

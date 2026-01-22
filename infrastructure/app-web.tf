@@ -108,6 +108,7 @@ module "app_web" {
     FEATURE_FLAG_MANUALLY_ADD_REP         = var.apps_config.featureFlags.featureFlagManuallyAddReps
     FEATURE_FLAG_APPELLANT_STATEMENT      = var.apps_config.featureFlags.featureFlagAppellantStatement
     FEATURE_FLAG_RULE_6_STATEMENT         = var.apps_config.featureFlags.featureFlagRule6Statement
+    FEATURE_FLAG_RULE_6_COSTS             = var.apps_config.featureFlags.featureFlagRule6Costs
     FEATURE_FLAG_LDC                      = var.apps_config.featureFlags.featureFlagLDC
 
 

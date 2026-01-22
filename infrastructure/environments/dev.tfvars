@@ -59,7 +59,9 @@ apps_config = {
     featureFlagAppellantStatement     = true
     featureFlagRule6Statement         = true
     featureFlagLDC                    = true
+    featureFlagRule6Costs             = true
   }
+
 
   use_system_test_bc_for_change_lpa = true
 

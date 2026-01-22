@@ -83,6 +83,7 @@ module "app_api" {
     FEATURE_FLAG_INVALID_DECISION_LETTER = var.apps_config.featureFlags.featureFlagInvalidDecisionLetter
     FEATURE_FLAG_RULE_6_MVP              = var.apps_config.featureFlags.featureFlagRule6Mvp
     FEATURE_FLAG_RULE_6_POE              = var.apps_config.featureFlags.featureFlagRule6PoE
+    FEATURE_FLAG_RULE_6_COSTS            = var.apps_config.featureFlags.featureFlagRule6Costs
     FEATURE_FLAG_EXPEDITED_APPEALS       = var.apps_config.featureFlags.featureFlagExpeditedAppeals
     FEATURE_FLAG_LDC                     = var.apps_config.featureFlags.featureFlagLDC
 
