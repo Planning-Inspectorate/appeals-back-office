@@ -58,7 +58,8 @@ const formatAppeal = (appeal, linkedAppeals) => {
 		awaitingLinkedAppeal: null,
 		numberOfResidencesNetChange: appeal.appellantCase?.numberOfResidencesNetChange || null,
 		isInquirySetup: !!appeal.inquiry,
-		hasInquiryAddress: !!appeal.inquiry?.addressId
+		hasInquiryAddress: !!appeal.inquiry?.addressId,
+		enforcementReference: appeal.appellantCase?.enforcementReference
 	};
 };
 

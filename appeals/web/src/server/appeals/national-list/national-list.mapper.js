@@ -6,7 +6,7 @@ import { mapStatusFilterLabel, mapStatusText } from '#lib/appeal-status.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
@@ -516,11 +516,19 @@ export function nationalListPage(
 										shortReference || ''
 									)}" data-cy="${shortReference}" >${shortReference}</a>`
 								},
-								{
-									html: `<span class="govuk-!-width-one-third">
-										${appeal.planningApplicationReference ?? ''}
-									</span>`
-								},
+								...(appeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
+									? [
+											{
+												html: `<span class="govuk-!-width-one-third">${appeal.enforcementReference ?? ''}</span>`
+											}
+										]
+									: [
+											{
+												html: `<span class="govuk-!-width-one-third">
+											${appeal.planningApplicationReference ?? ''}
+										</span>`
+											}
+										]),
 								{
 									// text: addressToString(appeal.appealSite),
 									html: `<span class="govuk-!-width-one-third">${addressToString(

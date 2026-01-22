@@ -639,6 +639,7 @@ interface AppealListResponse {
 	siteGridReferenceNorthing?: string | null;
 	isInquirySetup: boolean | null;
 	hasInquiryAddress: boolean | null;
+	enforcementReference?: string | null;
 }
 
 interface DocumentationSummary {
