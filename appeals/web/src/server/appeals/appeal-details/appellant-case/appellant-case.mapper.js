@@ -131,7 +131,9 @@ export async function appellantCasePage(
 			closing: '</div></div>'
 		},
 		parameters: {
-			text: 'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information.'
+			text: appellantCaseData.isEnforcementChild
+				? 'Do not continue until you have reviewed all of the supporting documents and redacted any sensitive information.'
+				: 'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information.'
 		}
 	};
 
@@ -141,24 +143,37 @@ export async function appellantCasePage(
 		appealDetails.documentationSummary?.appellantCase?.status?.toLowerCase() !== 'valid' &&
 		userHasPermission(permissionNames.setStageOutcome, session)
 	) {
-		if (session.webAppellantCaseReviewOutcome?.validationOutcome) {
-			reviewOutcomeRadiosInputInstruction.properties.items =
-				// @ts-ignore
-				reviewOutcomeRadiosInputInstruction.properties.items.map((item) => {
-					return {
-						...item,
-						checked: item.value === session.webAppellantCaseReviewOutcome?.validationOutcome
-					};
-				});
+		if (appellantCaseData.isEnforcementChild) {
+			reviewOutcomeComponents.push({
+				type: 'input',
+				parameters: {
+					type: 'hidden',
+					id: 'review-outcome',
+					name: 'reviewOutcome',
+					value: 'continue'
+				}
+			});
+		} else {
+			if (session.webAppellantCaseReviewOutcome?.validationOutcome) {
+				reviewOutcomeRadiosInputInstruction.properties.items =
+					// @ts-ignore
+					reviewOutcomeRadiosInputInstruction.properties.items.map((item) => {
+						return {
+							...item,
+							checked: item.value === session.webAppellantCaseReviewOutcome?.validationOutcome
+						};
+					});
+			}
+
+			reviewOutcomeComponents.push({
+				type: 'radios',
+				parameters: {
+					...reviewOutcomeRadiosInputInstruction.properties,
+					errorMessage: errorMessage ? { text: errorMessage } : undefined
+				}
+			});
 		}
 
-		reviewOutcomeComponents.push({
-			type: 'radios',
-			parameters: {
-				...reviewOutcomeRadiosInputInstruction.properties,
-				errorMessage: errorMessage ? { text: errorMessage } : undefined
-			}
-		});
 		reviewOutcomeComponents.push(documentsWarningComponent);
 	}
 

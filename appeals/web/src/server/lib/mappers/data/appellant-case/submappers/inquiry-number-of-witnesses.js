@@ -5,7 +5,7 @@ export const mapInquiryNumberOfWitnesses = ({ appellantCaseData, currentRoute })
 	textSummaryListItem({
 		id: 'inquiry-number-of-witnesses',
 		text: 'How many witnesses would you expect to give evidence at the inquiry?',
-		editable: true,
+		editable: !appellantCaseData.isEnforcementChild,
 		value:
 			appellantCaseData?.appellantProcedurePreferenceWitnessCount != null
 				? `${appellantCaseData.appellantProcedurePreferenceWitnessCount}`

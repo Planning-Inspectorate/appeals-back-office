@@ -194,6 +194,8 @@ interface SingleAppellantCaseResponse {
 		applicationDevelopmentAllOrPart: string | null;
 		appealDecisionDate: string | null;
 	};
+	isEnforcementChild?: boolean | null;
+	isEnforcementParent?: boolean | null;
 	siteAccessRequired?: {
 		details: string | null;
 		isRequired: boolean | null;

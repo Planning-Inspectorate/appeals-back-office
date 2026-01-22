@@ -10,6 +10,7 @@ export const mapApplicationReference = ({
 }) => {
 	const editable =
 		userHasUpdateCase &&
+		!appellantCaseData.isEnforcementChild &&
 		!appealDetails.lpaQuestionnaireId &&
 		appealDetails.appealStatus !== APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE;
 

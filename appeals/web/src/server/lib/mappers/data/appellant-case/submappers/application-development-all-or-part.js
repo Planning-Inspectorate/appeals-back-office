@@ -16,7 +16,7 @@ export const mapApplicationDevelopmentAllOrPart = ({
 			? toSentenceCase(applicationDevelopmentAllOrPart)
 			: 'Not answered',
 		link: `${currentRoute}/${id}/change`,
-		editable: userHasUpdateCase,
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild,
 		actionText: applicationDevelopmentAllOrPart ? 'Change' : 'Add'
 	});
 };

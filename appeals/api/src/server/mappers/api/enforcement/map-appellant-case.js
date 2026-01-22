@@ -1,6 +1,8 @@
 /** @typedef {import('@pins/appeals.api').Api.AppellantCase} AppellantCase */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
 
+import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { mapS78AppellantCase } from '../s78/map-appellant-case.js';
 
 /**
@@ -10,7 +12,7 @@ import { mapS78AppellantCase } from '../s78/map-appellant-case.js';
  */
 export const mapEnforcementAppellantCase = (data) => {
 	const {
-		appeal: { appellantCase }
+		appeal: { appellantCase, parentAppeals = [], childAppeals = [], appealType }
 	} = data;
 
 	const sharedS78Mappers = mapS78AppellantCase(data);
@@ -18,9 +20,17 @@ export const mapEnforcementAppellantCase = (data) => {
 	// @ts-ignore
 	const hasEnforcementData = [true, false].includes(appellantCase?.enforcementNotice);
 	const { id: addressId, postcode, ...restOfAddress } = appellantCase?.contactAddress || {};
+	const isEnforcementChild =
+		parentAppeals.some(({ type }) => type === CASE_RELATIONSHIP_LINKED) &&
+		appealType?.key === APPEAL_CASE_TYPE.C;
+	const isEnforcementParent =
+		childAppeals.some(({ type }) => type === CASE_RELATIONSHIP_LINKED) &&
+		appealType?.key === APPEAL_CASE_TYPE.C;
 
 	return {
 		...sharedS78Mappers,
+		isEnforcementChild,
+		isEnforcementParent,
 		enforcementNotice: {
 			isReceived: hasEnforcementData ? appellantCase?.enforcementNotice : null,
 			isListedBuilding: hasEnforcementData ? appellantCase?.enforcementNoticeListedBuilding : null,

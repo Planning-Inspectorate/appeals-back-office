@@ -7,6 +7,7 @@ import { serviceUserIdStartRange } from '#mappers/integration/map-service-user-e
 import { notifySend } from '#notify/notify-send.js';
 import { getAssignedTeam } from '#repositories/team.repository.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
+import { linkAppeals } from '#utils/link-appeals.js';
 import { markAwaitingTransfer } from '#utils/mark-for-transfer.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
@@ -130,9 +131,9 @@ const importIndividualAppeal = async (data) => {
 
 /**
  * Clones an individual appeal from the main appeal for the submission individual
- * @param {{mainAppealReference: string, casedata: any, documents: Array<any>, users: Array<any>}} data
+ * @param {{parentAppeal: Appeal, casedata: any, documents: Array<any>, users: Array<any>}} data
  */
-const importNamedIndividuals = async ({ mainAppealReference, casedata, documents, users }) => {
+const importNamedIndividuals = async ({ parentAppeal, casedata, documents, users }) => {
 	const namedIndividuals =
 		// @ts-ignore
 		casedata?.namedIndividuals?.map((individual) => {
@@ -154,17 +155,25 @@ const importNamedIndividuals = async ({ mainAppealReference, casedata, documents
 				documents: structuredClone(documents)
 			};
 
-			// For now, relate this individual appeal to the main appeal (later we will link them properly)
-			data.casedata.nearbyCaseReferences = [mainAppealReference];
+			if (!isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_LINKED)) {
+				// For now, relate this individual appeal to the main appeal (later we will link them properly)
+				data.casedata.nearbyCaseReferences = [parentAppeal.reference];
+			}
 
 			return data;
 		}) || [];
 
 	for (const individual of namedIndividuals) {
-		const { id, appealTypeId } = await importIndividualAppeal(individual);
-
-		// For now, we will mark all related enforcement appeals as marked for transfer to horizon
-		await markAwaitingTransfer(id, appealTypeId, AUDIT_TRIAL_APPELLANT_UUID);
+		const childAppeal = await importIndividualAppeal(individual);
+		if (isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_LINKED)) {
+			await linkAppeals(AUDIT_TRAIL_LPA_UUID, parentAppeal, childAppeal);
+		} else {
+			await markAwaitingTransfer(
+				childAppeal.id,
+				childAppeal.appealTypeId,
+				AUDIT_TRIAL_APPELLANT_UUID
+			);
+		}
 	}
 };
 
@@ -177,7 +186,8 @@ export const importAppeal = async (req, res) => {
 	const { casedata, documents, users } = req.body || {};
 	const data = { casedata, documents, users };
 
-	const { id, reference, assignedTeamId, appealTypeId } = await importIndividualAppeal(data);
+	const parentAppeal = await importIndividualAppeal(data);
+	const { id, reference, assignedTeamId, appealTypeId } = await parentAppeal;
 
 	if (
 		isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE) &&
@@ -185,9 +195,12 @@ export const importAppeal = async (req, res) => {
 		// @ts-ignore
 		req.body?.casedata?.namedIndividuals?.length
 	) {
-		await markAwaitingTransfer(id, appealTypeId, AUDIT_TRIAL_APPELLANT_UUID);
+		if (!isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_LINKED)) {
+			await markAwaitingTransfer(id, appealTypeId, AUDIT_TRIAL_APPELLANT_UUID);
+		}
 		await importNamedIndividuals({
-			mainAppealReference: reference,
+			// @ts-ignore
+			parentAppeal,
 			casedata,
 			documents,
 			users

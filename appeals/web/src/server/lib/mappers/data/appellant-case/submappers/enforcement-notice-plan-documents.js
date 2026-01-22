@@ -11,7 +11,7 @@ export const mapEnforcementNoticePlanDocuments = ({ appellantCaseData, userHasUp
 			appellantCaseData.documents[APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE_PLAN]?.folderId
 		),
 		appealId: appellantCaseData.appealId,
-		editable: userHasUpdateCase,
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild,
 		uploadUrlTemplate: documentUploadUrlTemplate,
 		id: 'enforcment-notice-plan-documents',
 		text: 'Enforcement notice plan',

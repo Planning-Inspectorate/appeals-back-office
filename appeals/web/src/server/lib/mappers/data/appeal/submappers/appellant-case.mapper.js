@@ -7,6 +7,9 @@ export const mapAppellantCase = ({ appealDetails, currentRoute, request }) => {
 	const { status } = appealDetails.documentationSummary?.appellantCase ?? {};
 
 	const statusText = (() => {
+		if (appealDetails.awaitingLinkedAppeal) {
+			return 'Awaiting linked appeal';
+		}
 		switch (status?.toLowerCase()) {
 			case 'not_received':
 				return 'Not received';
@@ -44,9 +47,9 @@ export const mapAppellantCase = ({ appealDetails, currentRoute, request }) => {
 		id: 'appellant-case',
 		text: 'Appeal',
 		statusText,
-		receivedText: dateISOStringToDisplayDate(
-			appealDetails?.documentationSummary?.appellantCase?.receivedAt
-		),
+		receivedText: appealDetails.awaitingLinkedAppeal
+			? 'Not applicable'
+			: dateISOStringToDisplayDate(appealDetails?.documentationSummary?.appellantCase?.receivedAt),
 		actionHtml
 	});
 };

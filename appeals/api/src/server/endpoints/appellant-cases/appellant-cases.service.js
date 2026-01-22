@@ -25,8 +25,8 @@ import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js
 import { Prisma } from '#utils/db-client/client.js';
 import { getFormattedReasons } from '#utils/email-formatter.js';
 import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
-import { allAppellantCaseOutcomesAreValid } from '#utils/is-awaiting-linked-appeal.js';
-import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
+import { allAppellantCaseOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
+import { isLinkedAppeal, isParentAppeal } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
@@ -44,6 +44,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import transitionState from '../../state/transition-state.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
@@ -118,11 +119,28 @@ export const updateAppellantCaseValidationOutcome = async (
 		} else {
 			// @ts-ignore
 			const linkedAppeals = await buildListOfLinkedAppeals(appeal);
-			if (allAppellantCaseOutcomesAreValid(linkedAppeals, appealId, validationOutcome)) {
+			let leadAppellantCaseValidationOutcome = {};
+			if (allAppellantCaseOutcomesAreComplete(linkedAppeals, appealId, validationOutcome)) {
+				const leadAppeal = isParentAppeal(appeal) ? appeal : appeal.parentAppeals?.[0]?.parent;
+				leadAppellantCaseValidationOutcome =
+					leadAppeal.appellantCase?.appellantCaseValidationOutcome;
 				await Promise.all(
-					linkedAppeals.map((appeal) => {
-						const validationOutcome = appeal.appellantCase?.appellantCaseValidationOutcome;
+					linkedAppeals.map(async (appeal) => {
+						let validationOutcome = appeal.appellantCase?.appellantCaseValidationOutcome;
 						if (validationOutcome) {
+							if (appeal.appealType?.key === APPEAL_CASE_TYPE.C) {
+								// @ts-ignore
+								if (appeal.appellantCase?.id && leadAppellantCaseValidationOutcome?.id) {
+									await appellantCaseRepository.updateAppellantCaseValidationOutcome({
+										appellantCaseId: appeal.appellantCase?.id,
+										// @ts-ignore
+										appellantCaseValidationOutcomeId: leadAppellantCaseValidationOutcome?.id
+									});
+								}
+								// @ts-ignore
+								validationOutcome = leadAppellantCaseValidationOutcome;
+							}
+							// @ts-ignore
 							return transitionState(appeal.id, azureAdUserId, validationOutcome?.name);
 						}
 					})

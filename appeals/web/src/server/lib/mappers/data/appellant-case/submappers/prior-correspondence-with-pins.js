@@ -11,7 +11,7 @@ export const mapPriorCorrespondenceWithPINS = ({ appellantCaseData, userHasUpdat
 			appellantCaseData.documents[APPEAL_DOCUMENT_TYPE.PRIOR_CORRESPONDENCE_WITH_PINS]?.folderId
 		),
 		appealId: appellantCaseData.appealId,
-		editable: userHasUpdateCase,
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild,
 		uploadUrlTemplate: documentUploadUrlTemplate,
 		id: 'communication-with-pins-documents',
 		text: 'Communication with the Planning Inspectorate',

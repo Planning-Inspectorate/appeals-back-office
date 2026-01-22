@@ -9,7 +9,7 @@ export const mapPlanningObligation = ({ appellantCaseData, userHasUpdateCase }) 
 			appellantCaseData.documents.planningObligation?.folderId
 		),
 		appealId: appellantCaseData.appealId,
-		editable: userHasUpdateCase,
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild,
 		uploadUrlTemplate: documentUploadUrlTemplate,
 		id: 'planning-obligation',
 		text: 'Planning obligation',

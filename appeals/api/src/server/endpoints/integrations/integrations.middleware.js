@@ -2,6 +2,7 @@ import { serviceUserIdStartRange } from '#mappers/integration/map-service-user-e
 import { databaseConnector } from '#utils/database-connector.js';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
+import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import { default as logger, default as pino } from '#utils/logger.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
@@ -139,7 +140,7 @@ export const validateRepresentation = async (req, res, next) => {
 		});
 	}
 
-	const useLeadAppealIfLinked = isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS);
+	const useLeadAppealIfLinked = isLinkedAppealsActive();
 	const referenceData = await loadReferenceData(body?.caseReference, useLeadAppealIfLinked);
 	if (!referenceData?.appeal) {
 		pino.error(

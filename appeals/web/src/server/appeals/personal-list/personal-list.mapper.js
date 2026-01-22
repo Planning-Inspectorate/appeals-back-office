@@ -4,7 +4,11 @@ import { mapStatusFilterLabel, mapStatusText } from '#lib/appeal-status.js';
 import { appealShortReference, linkedAppealStatus } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { removeSummaryListActions } from '#lib/mappers/index.js';
-import { isChildAppeal, isParentAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import {
+	isChildAppeal,
+	isLinkedAppealsActive,
+	isParentAppeal
+} from '#lib/mappers/utils/is-linked-appeal.js';
 import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
@@ -196,7 +200,7 @@ export function personalListPage(
 					{
 						html: '',
 						pageComponents:
-							config.featureFlags.featureFlagLinkedAppeals && linkedAppealStatusText !== ''
+							isLinkedAppealsActive(appeal) && linkedAppealStatusText !== ''
 								? [
 										{
 											type: 'status-tag',

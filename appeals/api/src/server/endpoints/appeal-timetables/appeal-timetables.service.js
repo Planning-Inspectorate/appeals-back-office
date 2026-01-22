@@ -8,16 +8,12 @@ import { notifySend, renderTemplate } from '#notify/notify-send.js';
 import appealTimetableRepository from '#repositories/appeal-timetable.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
+import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { trimAppealType } from '#utils/string-utils.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
-import {
-	FEATURE_FLAG_NAMES,
-	PROCEDURE_TYPE_ID_MAP,
-	PROCEDURE_TYPE_MAP
-} from '@pins/appeals/constants/common.js';
+import { PROCEDURE_TYPE_ID_MAP, PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
 	AUDIT_TRAIL_CASE_STARTED,
@@ -350,8 +346,7 @@ const startCase = async (
 	hearingStartTime
 ) => {
 	try {
-		const isChildAppeal =
-			isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) && Boolean(appeal?.parentAppeals?.length);
+		const isChildAppeal = isLinkedAppealsActive(appeal) && Boolean(appeal?.parentAppeals?.length);
 
 		const appealType = appeal.appealType || null;
 		if (!appealType) {
@@ -451,8 +446,7 @@ const getStartCaseNotifyPreviews = async (
 	inquiry
 ) => {
 	try {
-		const isChildAppeal =
-			isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) && Boolean(appeal?.parentAppeals?.length);
+		const isChildAppeal = isLinkedAppealsActive(appeal) && Boolean(appeal?.parentAppeals?.length);
 
 		const appealType = appeal.appealType || null;
 		if (!appealType) {

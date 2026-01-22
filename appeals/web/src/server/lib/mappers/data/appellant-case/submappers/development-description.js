@@ -7,7 +7,7 @@ export const mapDevelopmentDescription = ({ appellantCaseData, currentRoute, use
 		text: 'Enter the description of development that you submitted in your application',
 		value: appellantCaseData.developmentDescription?.details || 'No data',
 		link: `${currentRoute}/development-description/change`,
-		editable: userHasUpdateCase,
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild,
 		withShowMore: true,
 		showMoreLabelText:
 			'Enter the description of development that you submitted in your application',
