@@ -1,6 +1,6 @@
 import { NotValidReasonResponse } from '../appeal-details.types';
 
-export type AppellantCaseValidationOutcome = 'valid' | 'invalid' | 'incomplete';
+export type AppellantCaseValidationOutcome = 'valid' | 'invalid' | 'incomplete' | 'continue';
 
 export interface AppellantCaseNotValidReasonRequest {
 	id: number;

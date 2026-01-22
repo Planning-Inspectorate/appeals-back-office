@@ -44,7 +44,7 @@
 {%- block pageContent -%}
 	{%- set formComponents = [] -%}
 	{%- for component in pageContent.pageComponents -%}
-		{%- if component.type === 'radios' or component.type === 'checkboxes' or (component.type === 'inset-text' and formComponents | length) or (component.type === 'warning-text' and formComponents | length) -%}
+		{%- if component.type === 'radios' or component.type === 'checkboxes' or (component.type === 'input' and component.parameters.type === 'hidden') or (component.type === 'inset-text' and formComponents | length) or (component.type === 'warning-text' and formComponents | length) -%}
 			{%- set _ = formComponents.push(component) -%}
 		{%- elif component.type !== 'error-summary' and component.type !== 'notification-banner' -%}
 			{%- include "../appeals/components/page-component.njk" -%}

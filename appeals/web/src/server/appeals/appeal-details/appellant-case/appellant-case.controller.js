@@ -35,6 +35,7 @@ import {
 	mapWebReviewOutcomeToApiReviewOutcome
 } from './appellant-case.mapper.js';
 import * as appellantCaseService from './appellant-case.service.js';
+import { setReviewOutcomeForAppellantCase } from './appellant-case.service.js';
 
 /**
  *
@@ -196,6 +197,16 @@ export const postAppellantCase = async (request, response) => {
 						...request.session.webAppellantCaseReviewOutcome,
 						validationOutcome: reviewOutcome
 					};
+
+					if (currentAppeal.isChildAppeal) {
+						await setReviewOutcomeForAppellantCase(
+							request.apiClient,
+							currentAppeal.appealId,
+							currentAppeal.appellantCaseId,
+							request.session.webAppellantCaseReviewOutcome
+						);
+						return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
+					}
 
 					return response.redirect(
 						`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${reviewOutcome}/enforcement-notice`

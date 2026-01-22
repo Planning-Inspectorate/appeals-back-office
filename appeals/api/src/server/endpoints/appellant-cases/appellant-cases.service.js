@@ -28,8 +28,8 @@ import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js
 import { Prisma } from '#utils/db-client/client.js';
 import { getFormattedReasons } from '#utils/email-formatter.js';
 import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
-import { allAppellantCaseOutcomesAreValid } from '#utils/is-awaiting-linked-appeal.js';
-import { isLinkedAppeal, isParentAppeal } from '#utils/is-linked-appeal.js';
+import { allAppellantCaseOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
+import { isChildAppeal, isLinkedAppeal, isParentAppeal } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
@@ -43,6 +43,7 @@ import {
 } from '@pins/appeals/constants/appellant-cases.constants.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import transitionState from '../../state/transition-state.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
@@ -82,6 +83,18 @@ const getChildAppeals = (appeal) =>
 	appeal?.childAppeals
 		?.filter(({ type, child }) => type === CASE_RELATIONSHIP_LINKED && child?.appellantCase)
 		.map(({ child }) => child) || [];
+
+/**
+ *
+ * @param {Partial<Appeal> | undefined} appeal
+ * @returns {Partial<Appeal> | null | undefined}
+ */
+const getLeadAppeal = (appeal) => {
+	if (isParentAppeal(appeal)) {
+		return appeal;
+	}
+	return appeal?.parentAppeals?.[0]?.parent;
+};
 
 /**
  *
@@ -129,10 +142,9 @@ export const updateAppellantCaseValidationOutcome = async (
 	} = data;
 	const teamEmail = await getTeamEmailFromAppealId(appealId);
 
-	await appellantCaseRepository.updateAppellantCaseValidationOutcome({
+	const validationOutcomeData = {
 		appealId,
 		appellantCaseId,
-		validationOutcomeId: validationOutcome.id,
 		...(isOutcomeIncomplete(validationOutcome.name) && { incompleteReasons, appealDueDate }),
 		...(isOutcomeInvalid(validationOutcome.name) && {
 			invalidReasons,
@@ -147,7 +159,36 @@ export const updateAppellantCaseValidationOutcome = async (
 			...(groundABarred && { groundABarred }),
 			...(otherInformation && { otherInformation })
 		})
+	};
+	const leadAppeal = getLeadAppeal(appeal);
+
+	const isEnforcementAppealType = appeal.appealType?.key === APPEAL_CASE_TYPE.C;
+	const isChildEnforcement = isEnforcementAppealType && isChildAppeal(appeal);
+	const isParentEnforcement = isEnforcementAppealType && isParentAppeal(appeal);
+
+	const leadOutcomeId =
+		leadAppeal?.appellantCase?.appellantCaseValidationOutcome?.id ?? validationOutcome.id;
+
+	await appellantCaseRepository.updateAppellantCaseValidationOutcome({
+		...validationOutcomeData,
+		validationOutcomeId: isChildEnforcement ? leadOutcomeId : validationOutcome.id
 	});
+
+	if (isParentEnforcement) {
+		// Keep linked enforcement children in sync with their parent
+		for (const childAppeal of getChildAppeals(appeal)) {
+			const childHasOutcome = Boolean(childAppeal.appellantCase?.appellantCaseValidationOutcome);
+
+			await appellantCaseRepository.updateAppellantCaseValidationOutcome({
+				...validationOutcomeData,
+				appealId: childAppeal?.id,
+				// @ts-ignore
+				appellantCaseId: childAppeal?.appellantCase?.id,
+				// Only set the outcome if one already exists (indicates the child had been confirmed)
+				validationOutcomeId: childHasOutcome ? validationOutcome.id : undefined
+			});
+		}
+	}
 
 	if (!isOutcomeIncomplete(validationOutcome.name)) {
 		if (!isLinkedAppeal(appeal)) {
@@ -155,15 +196,29 @@ export const updateAppellantCaseValidationOutcome = async (
 		} else {
 			// @ts-ignore
 			const linkedAppeals = await buildListOfLinkedAppeals(appeal);
-			if (allAppellantCaseOutcomesAreValid(linkedAppeals, appealId, validationOutcome)) {
-				await Promise.all(
-					linkedAppeals.map((appeal) => {
-						const validationOutcome = appeal.appellantCase?.appellantCaseValidationOutcome;
-						if (validationOutcome) {
-							return transitionState(appeal.id, azureAdUserId, validationOutcome?.name);
-						}
-					})
-				);
+			let leadAppellantCaseValidationOutcome = {};
+			if (allAppellantCaseOutcomesAreComplete(linkedAppeals, appealId, validationOutcome)) {
+				// @ts-ignore
+				leadAppellantCaseValidationOutcome =
+					leadAppeal?.appellantCase?.appellantCaseValidationOutcome;
+				for (const appeal of linkedAppeals) {
+					if (
+						appeal.appealType?.key === APPEAL_CASE_TYPE.C &&
+						appeal.id === leadAppeal?.id &&
+						appeal.appellantCase?.appellantCaseValidationOutcome?.id !==
+							// @ts-ignore
+							leadAppellantCaseValidationOutcome?.id
+					) {
+						await appellantCaseRepository.updateAppellantCaseValidationOutcome({
+							// @ts-ignore
+							appellantCaseId: appeal.appellantCase?.id,
+							// @ts-ignore
+							appellantCaseValidationOutcomeId: leadAppellantCaseValidationOutcome?.id
+						});
+					}
+					// @ts-ignore
+					await transitionState(appeal.id, azureAdUserId, leadAppellantCaseValidationOutcome?.name);
+				}
 			}
 		}
 	}
