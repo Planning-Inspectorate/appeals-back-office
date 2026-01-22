@@ -98,7 +98,6 @@ extends:
             inputs:
               scriptPath: 'bin/check-pr-labels.sh'
             displayName: 'Check PR labels'
-            condition: eq(variables['agent.os'], 'Linux')
           - script: |
               openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
                 -keyout appeals/web/certificate-key.pem \
