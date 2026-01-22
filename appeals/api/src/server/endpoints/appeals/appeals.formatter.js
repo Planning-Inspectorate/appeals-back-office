@@ -229,14 +229,18 @@ const formatDocumentationSummary = (appeal) => {
 						status: DOCUMENT_STATUS_RECEIVED,
 						representationStatus: rule6RepFromParty[0].status,
 						receivedAt: rule6RepFromParty[0].dateCreated,
-						isRedacted: Boolean(rule6RepFromParty[0].redactedRepresentation)
+						isRedacted: Boolean(rule6RepFromParty[0].redactedRepresentation),
+						organisationName: party.serviceUser?.organisationName,
+						rule6PartyId: party.id
 					};
 				} else {
 					acc[party.serviceUserId] = {
 						status: DOCUMENT_STATUS_NOT_RECEIVED,
 						representationStatus: null,
 						receivedAt: null,
-						isRedacted: false
+						isRedacted: false,
+						organisationName: party.serviceUser?.organisationName,
+						rule6PartyId: party.id
 					};
 				}
 				return acc;
@@ -255,7 +259,8 @@ const formatDocumentationSummary = (appeal) => {
 						representationStatus: rule6RepFromParty[0].status,
 						receivedAt: rule6RepFromParty[0].dateCreated,
 						isRedacted: Boolean(rule6RepFromParty[0].redactedRepresentation),
-						organisationName: party.serviceUser?.organisationName
+						organisationName: party.serviceUser?.organisationName,
+						rule6PartyId: party.id
 					};
 				} else {
 					acc[party.serviceUserId] = {
@@ -263,6 +268,7 @@ const formatDocumentationSummary = (appeal) => {
 						representationStatus: null,
 						receivedAt: null,
 						isRedacted: false,
+						rule6PartyId: party.id,
 						organisationName: party.serviceUser?.organisationName
 					};
 				}

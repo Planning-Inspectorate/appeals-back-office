@@ -663,6 +663,7 @@ interface DocumentationSummaryEntry {
 	counts?: Record<string, number>;
 	isRedacted?: boolean;
 	organisationName?: string;
+	rule6PartyId?: number;
 }
 
 interface FolderInfo {

@@ -118,7 +118,8 @@ export const mapDocumentationSummary = (data) => {
 								statement?.redactedRepresentation || ''
 							)
 						),
-						organisationName: rule6Party?.serviceUser?.organisationName
+						organisationName: rule6Party?.serviceUser?.organisationName,
+						rule6PartyId: rule6Party?.id
 					};
 					return acc;
 				},
@@ -166,7 +167,9 @@ export const mapDocumentationSummary = (data) => {
 								proof?.originalRepresentation || '',
 								proof?.redactedRepresentation || ''
 							)
-						)
+						),
+						organisationName: rule6Party?.serviceUser?.organisationName,
+						rule6PartyId: rule6Party?.id
 					};
 					return acc;
 				},

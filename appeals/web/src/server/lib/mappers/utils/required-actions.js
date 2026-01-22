@@ -15,7 +15,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
-/** @typedef {'addHorizonReference'|'awaitingEvent'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'|'progressToProofOfEvidenceAndWitnesses'|'awaitingProofOfEvidenceAndWitnesses'|'progressToInquiry'|'setupInquiry'|'addInquiryAddress'|'awaitingLpaProofOfEvidenceAndWitnesses'|'awaitingAppellantProofOfEvidenceAndWitnesses'|'awaitingAppellantStatement'|'reviewAppellantStatement'} AppealRequiredAction */
+/** @typedef {'addHorizonReference'|'awaitingEvent'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'|'progressToProofOfEvidenceAndWitnesses'|'awaitingProofOfEvidenceAndWitnesses'|'progressToInquiry'|'setupInquiry'|'addInquiryAddress'|'awaitingLpaProofOfEvidenceAndWitnesses'|'awaitingAppellantProofOfEvidenceAndWitnesses'|'awaitingAppellantStatement'|'reviewAppellantStatement'|'awaitingRule6PartyStatement'|'reviewRule6PartyStatement'|'awaitingRule6PartyProofOfEvidence'|'reviewRule6PartyProofOfEvidence'} AppealRequiredAction */
 
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
@@ -226,6 +226,9 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			const rule6StatementAwaitingReview = rule6StatementRepresentationStatuses.some(
 				(status) => status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 			);
+			const rule6StatementNotReceived = Object.values(rule6PartyStatements).some(
+				(item) => item.status === DOCUMENT_STATUS_NOT_RECEIVED
+			);
 
 			const hasItemsToShare =
 				lpaStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.VALID ||
@@ -291,6 +294,13 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 					} else if (appellantStatementAwaitingReview) {
 						actions.push('reviewAppellantStatement');
 					}
+				}
+
+				if (rule6StatementEnabled && rule6StatementNotReceived) {
+					actions.push('awaitingRule6PartyStatement');
+				}
+				if (rule6StatementEnabled && rule6StatementAwaitingReview) {
+					actions.push('reviewRule6PartyStatement');
 				}
 			}
 
@@ -377,6 +387,19 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				appealDetails.documentationSummary?.appellantProofOfEvidence?.status ===
 				APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED;
 
+			const rule6PoEEnabled = config.featureFlags.featureFlagRule6PoE;
+
+			const rule6PartyProofOfEvidence = appealDetails.documentationSummary.rule6PartyProofs || {};
+			const rule6ProofOfEvidenceRepresentationStatuses = Object.values(
+				rule6PartyProofOfEvidence
+			).map((poe) => poe.representationStatus);
+			const rule6ProofOfEvidenceAwaitingReview = rule6ProofOfEvidenceRepresentationStatuses.some(
+				(status) => status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			);
+			const rule6ProofOfEvidenceNotReceived = Object.values(rule6PartyProofOfEvidence).some(
+				(item) => item.status === DOCUMENT_STATUS_NOT_RECEIVED
+			);
+
 			if (!appellantProofOfEvidenceDone && appellantProofOfEvidenceReceived) {
 				actions.push('reviewAppellantProofOfEvidence');
 			}
@@ -392,6 +415,13 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				actions.push('awaitingLpaProofOfEvidenceAndWitnesses');
 			} else if (!appellantProofOfEvidenceReceived) {
 				actions.push('awaitingAppellantProofOfEvidenceAndWitnesses');
+			}
+
+			if (rule6PoEEnabled && rule6ProofOfEvidenceNotReceived) {
+				actions.push('awaitingRule6PartyProofOfEvidence');
+			}
+			if (rule6PoEEnabled && rule6ProofOfEvidenceAwaitingReview) {
+				actions.push('reviewRule6PartyProofOfEvidence');
 			}
 
 			break;

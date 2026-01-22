@@ -225,7 +225,8 @@ describe('appeals list routes', () => {
 										status: 'received',
 										representationStatus: 'valid',
 										receivedAt: '2024-03-25T23:59:59.999Z',
-										isRedacted: false
+										isRedacted: false,
+										rule6PartyId: 1
 									}
 								},
 								rule6PartyStatements: {
@@ -233,7 +234,8 @@ describe('appeals list routes', () => {
 										status: 'not_received',
 										representationStatus: null,
 										receivedAt: null,
-										isRedacted: false
+										isRedacted: false,
+										rule6PartyId: 1
 									}
 								}
 							},
@@ -392,7 +394,8 @@ describe('appeals list routes', () => {
 										status: 'received',
 										representationStatus: 'valid',
 										receivedAt: '2024-03-25T23:59:59.999Z',
-										isRedacted: false
+										isRedacted: false,
+										rule6PartyId: 1
 									}
 								},
 								rule6PartyStatements: {
@@ -400,7 +403,8 @@ describe('appeals list routes', () => {
 										status: 'not_received',
 										representationStatus: null,
 										receivedAt: null,
-										isRedacted: false
+										isRedacted: false,
+										rule6PartyId: 1
 									}
 								}
 							},

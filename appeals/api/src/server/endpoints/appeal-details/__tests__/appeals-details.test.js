@@ -463,7 +463,8 @@ describe('Appeal detail routes', () => {
 								receivedAt: null,
 								representationStatus: null,
 								status: 'not_received',
-								organisationName: 'Test Organisation'
+								organisationName: 'Test Organisation',
+								rule6PartyId: '123'
 							}
 						},
 						rule6PartyProofs: {
@@ -471,7 +472,9 @@ describe('Appeal detail routes', () => {
 								isRedacted: false,
 								receivedAt: null,
 								representationStatus: null,
-								status: 'not_received'
+								status: 'not_received',
+								organisationName: 'Test Organisation',
+								rule6PartyId: '123'
 							}
 						}
 					}
