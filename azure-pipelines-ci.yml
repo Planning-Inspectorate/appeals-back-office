@@ -94,14 +94,11 @@ extends:
               echo "PR_NUMBER: $PR_NUMBER"
               curl -s https://api.github.com/repos/Planning-Inspectorate/appeals-back-office/issues/$PR_NUMBER/labels > pr.json
             displayName: "Fetch PR metadata"
-          - script: |
-              if grep -q "bug" pr.json; then
-                echo "Found 'bug' label in PR"
-                echo "##vso[task.setvariable variable=runE2E]true"
-              else
-                echo "No 'bug' label found"
-              fi
-            displayName: "Check for label"
+          - task: ShellScript@2
+            inputs:
+              scriptPath: 'bin/check-pr-labels.sh'
+            displayName: 'Check PR labels'
+            condition: eq(variables['agent.os'], 'Linux')
           - script: |
               openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
                 -keyout appeals/web/certificate-key.pem \
@@ -199,7 +196,7 @@ extends:
                 APP: appeals
                 AZURE_TENANT_ID: $(AZURE_TENANT_ID)
                 NODE_EXTRA_CA_CERTS: $(Build.SourcesDirectory)/appeals/web/certificate.pem
-              condition: eq(variables['runE2E'], 'true')
+              condition: eq(variables['e2eSmoke'], 'true')
           - script: docker logs api
             condition: eq(variables['runE2E'], 'true')
           - script: docker logs web
