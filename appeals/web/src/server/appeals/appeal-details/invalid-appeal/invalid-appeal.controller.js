@@ -12,8 +12,7 @@ import { APPEAL_TYPE, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common
 import {
 	CHANGE_APPEAL_TYPE_INVALID_REASON,
 	ENFORCEMENT_APPEAL_INVALID_GROUND_A_BARRED,
-	ENFORCEMENT_APPEAL_INVALID_LEGAL_INTEREST,
-	INVALID_APPEAL_OTHER_REASON
+	ENFORCEMENT_APPEAL_INVALID_LEGAL_INTEREST
 } from '@pins/appeals/constants/support.js';
 import { mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters } from '../appellant-case/appellant-case.mapper.js';
 import * as appellantCaseService from '../appellant-case/appellant-case.service.js';
@@ -86,10 +85,8 @@ const renderInvalidReason = async (request, response) => {
 		}
 
 		if (currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
-			if (reason.name !== INVALID_APPEAL_OTHER_REASON) {
-				// @ts-ignore
-				acc.push(reason);
-			}
+			// @ts-ignore
+			acc.push(reason);
 		} else {
 			if (
 				reason.name !== ENFORCEMENT_APPEAL_INVALID_LEGAL_INTEREST &&
@@ -104,6 +101,11 @@ const renderInvalidReason = async (request, response) => {
 	}, []);
 
 	if (filteredReasonOptions) {
+		if (currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+			// set 'Other reason' last
+			filteredReasonOptions.push(filteredReasonOptions.splice(3, 1)[0]);
+		}
+
 		const mappedInvalidReasonOptions = mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters(
 			'invalid',
 			filteredReasonOptions,
@@ -459,7 +461,7 @@ export const postEnforcementNoticeReason = async (request, response) => {
 				? [body.invalidReason].flat().map((reason) => ({
 						reasonSelected: Number(reason),
 						reasonText: body[`invalidReason-${reason}`]
-					}))
+				  }))
 				: null
 		};
 
