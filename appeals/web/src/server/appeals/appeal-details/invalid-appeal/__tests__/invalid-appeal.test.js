@@ -109,6 +109,7 @@ describe('invalid-appeal', () => {
 				'for="invalid-reason-4">Appellant does not have a legal interest in the land'
 			);
 			expect(element.innerHTML).toContain('for="invalid-reason-5">Ground (a) barred');
+			expect(element.innerHTML).toContain('for="invalid-reason-6">Other reason');
 			expect(element.innerHTML).toContain('Continue</button>');
 		});
 	});
