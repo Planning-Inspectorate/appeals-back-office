@@ -92,6 +92,7 @@ export function loadConfig() {
 		FEATURE_FLAG_RULE_6_POE,
 		FEATURE_FLAG_APPELLANT_STATEMENT,
 		FEATURE_FLAG_RULE_6_STATEMENT,
+		FEATURE_FLAG_RULE_6_COSTS,
 		FEATURE_FLAG_LDC
 	} = environment;
 
@@ -172,6 +173,7 @@ export function loadConfig() {
 			featureFlagManuallyAddReps: FEATURE_FLAG_MANUALLY_ADD_REP === 'true',
 			featureFlagAppellantStatement: FEATURE_FLAG_APPELLANT_STATEMENT === 'true',
 			featureFlagRule6Statement: FEATURE_FLAG_RULE_6_STATEMENT === 'true',
+			featureFlagRule6Costs: FEATURE_FLAG_RULE_6_COSTS === 'true',
 			featureFlagLDC: FEATURE_FLAG_LDC === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
