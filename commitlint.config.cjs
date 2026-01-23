@@ -118,7 +118,6 @@ module.exports = {
 				},
 				'ticket-required': ({ ticket }) => {
 					if (!ticket) {
-						console.warn('⚠ Commit message should include a ticket number (PINS-123)');
 						return [
 							false,
 							'commit message should include a ticket number at the end, e.g. (PINS-123)'
