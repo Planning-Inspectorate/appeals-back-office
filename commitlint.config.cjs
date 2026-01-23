@@ -69,8 +69,6 @@ module.exports = {
 						return [true];
 					}
 
-					console.log('type:', type, 'scope:', scope, 'allowedScopes:', allowedScopes);
-
 					// If the `type` belongs to to an empty array in the rule config, any
 					// provided scope will be considered as not allowed
 					if (allowedScopes.length === 0) {
