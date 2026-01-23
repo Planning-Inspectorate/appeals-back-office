@@ -24,6 +24,8 @@ const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const appealId = appealData.appealId;
 const baseUrl = `/appeals-service/appeal-details/${appealId}`;
+const enforcementAppealId = appealDataEnforcementNotice.appealId;
+const enforcementBaseUrl = `/appeals-service/appeal-details/${enforcementAppealId}`;
 
 const invalidReasonsWithoutText = appellantCaseInvalidReasons.filter(
 	(reason) => reason.hasText === false
@@ -74,21 +76,17 @@ describe('invalid-appeal', () => {
 		});
 
 		it('should render the invalid reason page for an enforcement notice', async () => {
-			nock.cleanAll();
 			nock('http://test/')
-				.get('/appeals/1?include=all')
-				.reply(200, {
-					...appealDataEnforcementNotice
-				});
+				.get(`/appeals/${enforcementAppealId}?include=all`)
+				.reply(200, appealDataEnforcementNotice)
+				.persist();
 			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
-				.reply(200, appellantCaseDataNotValidated);
-			nock('http://test/')
-				.get('/appeals/appellant-case-invalid-reasons')
-				.reply(200, appellantCaseInvalidReasons);
+				.get(`/appeals/${enforcementAppealId}/appellant-cases/0`)
+				.reply(200, appellantCaseDataNotValidated)
+				.persist();
 
 			const response = await request.get(
-				`/appeals-service/appeal-details/${appealDataEnforcementNotice.appealId}/invalid/new`
+				`/appeals-service/appeal-details/${enforcementAppealId}/invalid/new`
 			);
 			const element = parseHtml(response.text);
 
@@ -420,7 +418,18 @@ describe('invalid-appeal', () => {
 		});
 
 		it('should render the enforcement notice page', async () => {
-			const response = await request.get(`${baseUrl}/appellant-case/invalid/enforcement-notice`);
+			nock('http://test/')
+				.get(`/appeals/${enforcementAppealId}?include=all`)
+				.reply(200, appealDataEnforcementNotice)
+				.persist();
+			nock('http://test/')
+				.get(`/appeals/${enforcementAppealId}/appellant-cases/0`)
+				.reply(200, appellantCaseDataNotValidated)
+				.persist();
+
+			const response = await request.get(
+				`${enforcementBaseUrl}/appellant-case/invalid/enforcement-notice`
+			);
 
 			const element = parseHtml(response.text);
 
@@ -445,8 +454,13 @@ describe('invalid-appeal', () => {
 		beforeEach(async () => {
 			installMockApi();
 			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
-				.reply(200, appellantCaseDataNotValidated);
+				.get(`/appeals/${enforcementAppealId}?include=all`)
+				.reply(200, appealDataEnforcementNotice)
+				.persist();
+			nock('http://test/')
+				.get(`/appeals/${enforcementAppealId}/appellant-cases/0`)
+				.reply(200, appellantCaseDataNotValidated)
+				.persist();
 			nock('http://test/')
 				.get('/appeals/appellant-case-invalid-reasons')
 				.reply(200, appellantCaseInvalidReasons);
@@ -458,7 +472,7 @@ describe('invalid-appeal', () => {
 
 		it('should re-render the enforcement notice page with the expected error message if no reason was selected', async () => {
 			const response = await request
-				.post(`${baseUrl}/appellant-case/invalid/enforcement-notice`)
+				.post(`${enforcementBaseUrl}/appellant-case/invalid/enforcement-notice`)
 				.send({});
 
 			const element = parseHtml(response.text);
@@ -475,28 +489,32 @@ describe('invalid-appeal', () => {
 		});
 
 		it('should redirect to /invalid/enforcement-notice-reason where enforcementNoticeInvalid is "yes"', async () => {
+			await request.post(`${enforcementBaseUrl}/appellant-case`).send({ reviewOutcome: 'invalid' });
 			const response = await request
-				.post(`${baseUrl}/appellant-case/invalid/enforcement-notice`)
+				.post(`${enforcementBaseUrl}/appellant-case/invalid/enforcement-notice`)
 				.send({
 					enforcementNoticeInvalid: 'yes'
 				});
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/invalid/enforcement-notice-reason'
+				'Found. Redirecting to /appeals-service/appeal-details/5623/appellant-case/invalid/enforcement-notice-reason'
 			);
 		});
 
 		it('should redirect to /invalid where enforcementNoticeInvalid is "no"', async () => {
+			// Populate session data
+			await request.post(`${enforcementBaseUrl}/appellant-case`).send({ reviewOutcome: 'invalid' });
+
 			const response = await request
-				.post(`${baseUrl}/appellant-case/invalid/enforcement-notice`)
+				.post(`${enforcementBaseUrl}/appellant-case/invalid/enforcement-notice`)
 				.send({
 					enforcementNoticeInvalid: 'no'
 				});
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/invalid'
+				'Found. Redirecting to /appeals-service/appeal-details/5623/appellant-case/invalid'
 			);
 		});
 	});
@@ -591,8 +609,13 @@ describe('invalid-appeal', () => {
 		beforeEach(async () => {
 			installMockApi();
 			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
-				.reply(200, appellantCaseDataNotValidated);
+				.get(`/appeals/${enforcementAppealId}?include=all`)
+				.reply(200, appealDataEnforcementNotice)
+				.persist();
+			nock('http://test/')
+				.get(`/appeals/${enforcementAppealId}/appellant-cases/0`)
+				.reply(200, appellantCaseDataNotValidated)
+				.persist();
 			nock('http://test/')
 				.get('/appeals/appellant-case-enforcement-invalid-reasons')
 				.reply(200, appealCaseEnforcementInvalidReasons);
@@ -604,7 +627,7 @@ describe('invalid-appeal', () => {
 
 		it('should render the enforcement notice reasons page with no reasons selected', async () => {
 			const response = await request.get(
-				`${baseUrl}/appellant-case/invalid/enforcement-notice-reason`
+				`${enforcementBaseUrl}/appellant-case/invalid/enforcement-notice-reason`
 			);
 
 			const element = parseHtml(response.text);
@@ -629,8 +652,13 @@ describe('invalid-appeal', () => {
 		beforeEach(async () => {
 			installMockApi();
 			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
-				.reply(200, appellantCaseDataNotValidated);
+				.get(`/appeals/${enforcementAppealId}?include=all`)
+				.reply(200, appealDataEnforcementNotice)
+				.persist();
+			nock('http://test/')
+				.get(`/appeals/${enforcementAppealId}/appellant-cases/0`)
+				.reply(200, appellantCaseDataNotValidated)
+				.persist();
 			nock('http://test/')
 				.get('/appeals/appellant-case-enforcement-invalid-reasons')
 				.reply(200, appealCaseEnforcementInvalidReasons);
@@ -642,7 +670,7 @@ describe('invalid-appeal', () => {
 
 		it('should re-render the enforcement notice reasons page with the expected error message if no reason was selected', async () => {
 			const response = await request
-				.post(`${baseUrl}/appellant-case/invalid/enforcement-notice-reason`)
+				.post(`${enforcementBaseUrl}/appellant-case/invalid/enforcement-notice-reason`)
 				.send({});
 
 			const element = parseHtml(response.text);
@@ -660,7 +688,7 @@ describe('invalid-appeal', () => {
 
 		it('should re-render the enforcement notice reasons page with the expected error message if reasons were selected, but one has an empty text value', async () => {
 			const response = await request
-				.post(`${baseUrl}/appellant-case/invalid/enforcement-notice-reason`)
+				.post(`${enforcementBaseUrl}/appellant-case/invalid/enforcement-notice-reason`)
 				.send({
 					invalidReason: ['1', '2'],
 					'invalidReason-1': 'has some text',
@@ -697,8 +725,11 @@ describe('invalid-appeal', () => {
 		});
 
 		it('should redirect to check details screen on success', async () => {
+			// Populate session data
+			await request.post(`${enforcementBaseUrl}/appellant-case`).send({ reviewOutcome: 'invalid' });
+
 			const response = await request
-				.post(`${baseUrl}/appellant-case/invalid/enforcement-notice-reason`)
+				.post(`${enforcementBaseUrl}/appellant-case/invalid/enforcement-notice-reason`)
 				.send({
 					invalidReason: ['1', '2'],
 					'invalidReason-1': 'has some text',
@@ -707,7 +738,7 @@ describe('invalid-appeal', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				`Found. Redirecting to /appeals-service/appeal-details/${appealId}/appellant-case/invalid/enforcement-other-information`
+				`Found. Redirecting to /appeals-service/appeal-details/${enforcementAppealId}/appellant-case/invalid/enforcement-other-information`
 			);
 		});
 	});
@@ -769,8 +800,13 @@ describe('invalid-appeal', () => {
 		beforeEach(async () => {
 			installMockApi();
 			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
-				.reply(200, appellantCaseDataNotValidated);
+				.get(`/appeals/${enforcementAppealId}?include=all`)
+				.reply(200, appealDataEnforcementNotice)
+				.persist();
+			nock('http://test/')
+				.get(`/appeals/${enforcementAppealId}/appellant-cases/0`)
+				.reply(200, appellantCaseDataNotValidated)
+				.persist();
 			nock('http://test/')
 				.get('/appeals/appellant-case-enforcement-invalid-reasons')
 				.reply(200, appealCaseEnforcementInvalidReasons);
@@ -782,7 +818,7 @@ describe('invalid-appeal', () => {
 
 		it('should re-render the enforcement other information page with the expected error message if neither yes or no is selected', async () => {
 			const response = await request
-				.post(`${baseUrl}/appellant-case/invalid/enforcement-other-information`)
+				.post(`${enforcementBaseUrl}/appellant-case/invalid/enforcement-other-information`)
 				.send({});
 
 			const element = parseHtml(response.text);
@@ -800,7 +836,7 @@ describe('invalid-appeal', () => {
 
 		it(`should re-render the 'Other Information' screen if selection is yes and other information is empty`, async () => {
 			const response = await request
-				.post(`${baseUrl}/appellant-case/invalid/enforcement-other-information`)
+				.post(`${enforcementBaseUrl}/appellant-case/invalid/enforcement-other-information`)
 				.send({ otherInformationValidRadio: 'Yes', otherInformationDetails: '' });
 
 			const element = parseHtml(response.text);
@@ -811,15 +847,17 @@ describe('invalid-appeal', () => {
 		});
 
 		it('should redirect to check details screen on success', async () => {
+			await request.post(`${enforcementBaseUrl}/appellant-case`).send({ reviewOutcome: 'invalid' });
+
 			const response = await request
-				.post(`${baseUrl}/appellant-case/invalid/enforcement-other-information`)
+				.post(`${enforcementBaseUrl}/appellant-case/invalid/enforcement-other-information`)
 				.send({
 					otherInformationValidRadio: 'Yes',
 					otherInformationDetails: 'Enforcement other information'
 				});
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				`Found. Redirecting to /appeals-service/appeal-details/${appealId}/appellant-case/invalid/check-details-and-mark-enforcement-as-invalid`
+				`Found. Redirecting to /appeals-service/appeal-details/${enforcementAppealId}/appellant-case/invalid/check-details-and-mark-enforcement-as-invalid`
 			);
 		});
 	});
@@ -878,7 +916,7 @@ describe('invalid-appeal', () => {
 				'Check details and mark enforcement notice as invalid</h1>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> What is the outcome of your review?</dt><dd class="govuk-summary-list__value"> Invalid</dd>'
+				'<dt class="govuk-summary-list__key"> Review decision</dt><dd class="govuk-summary-list__value"> Invalid</dd>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<dt class="govuk-summary-list__key"> Do you want to add any other information?</dt>'
@@ -894,13 +932,12 @@ describe('invalid-appeal', () => {
 
 	describe('POST /check-details-and-mark-enforcement-as-invalid', () => {
 		beforeEach(async () => {
-			nock.cleanAll();
 			nock('http://test/')
-				.get('/appeals/1?include=all')
+				.get(`/appeals/${enforcementAppealId}?include=all`)
 				.reply(200, appealDataEnforcementNotice)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
+				.get(`/appeals/${enforcementAppealId}/appellant-cases/0`)
 				.reply(200, appellantCaseDataNotValidated)
 				.persist();
 			nock('http://test/')
@@ -908,7 +945,7 @@ describe('invalid-appeal', () => {
 				.reply(200, appealCaseEnforcementInvalidReasons)
 				.persist();
 			nock('http://test/')
-				.patch('/appeals/1/appellant-cases/0', {
+				.patch(`/appeals/${enforcementAppealId}/appellant-cases/0`, {
 					validationOutcome: 'invalid',
 					enforcementInvalidReasons: [
 						{ id: 1, text: ['has some text'] },
@@ -921,20 +958,24 @@ describe('invalid-appeal', () => {
 				.reply(200);
 
 			// Populate session data
-			await request.post(`${baseUrl}/appellant-case`).send({ reviewOutcome: 'invalid' });
+			await request.post(`${enforcementBaseUrl}/appellant-case`).send({ reviewOutcome: 'invalid' });
 			await request
-				.post(`${baseUrl}/appellant-case/invalid/enforcement-notice`)
+				.post(`${enforcementBaseUrl}/appellant-case/invalid/enforcement-notice`)
 				.send({ enforcementNoticeInvalid: 'yes' });
-			await request.post(`${baseUrl}/appellant-case/invalid/enforcement-notice-reason`).send({
-				invalidReason: ['1', '2', '8'],
-				'invalidReason-1': 'has some text',
-				'invalidReason-2': 'has some other text',
-				'invalidReason-8': 'another reason'
-			});
-			await request.post(`${baseUrl}/appellant-case/invalid/enforcement-other-information`).send({
-				otherInformationValidRadio: 'Yes',
-				otherInformationDetails: 'Enforcement other information'
-			});
+			await request
+				.post(`${enforcementBaseUrl}/appellant-case/invalid/enforcement-notice-reason`)
+				.send({
+					invalidReason: ['1', '2', '8'],
+					'invalidReason-1': 'has some text',
+					'invalidReason-2': 'has some other text',
+					'invalidReason-8': 'another reason'
+				});
+			await request
+				.post(`${enforcementBaseUrl}/appellant-case/invalid/enforcement-other-information`)
+				.send({
+					otherInformationValidRadio: 'Yes',
+					otherInformationDetails: 'Enforcement other information'
+				});
 		});
 
 		afterEach(() => {
@@ -943,11 +984,11 @@ describe('invalid-appeal', () => {
 
 		it('should redirect to check details screen on success', async () => {
 			const response = await request.post(
-				`${baseUrl}/appellant-case/invalid/check-details-and-mark-enforcement-as-invalid`
+				`${enforcementBaseUrl}/appellant-case/invalid/check-details-and-mark-enforcement-as-invalid`
 			);
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				`Found. Redirecting to /appeals-service/appeal-details/${appealId}`
+				`Found. Redirecting to /appeals-service/appeal-details/${enforcementAppealId}`
 			);
 		});
 	});

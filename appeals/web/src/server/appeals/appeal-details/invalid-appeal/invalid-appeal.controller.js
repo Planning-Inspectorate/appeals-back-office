@@ -403,11 +403,11 @@ export const postEnforcementNoticeInvalid = async (request, response) => {
 		if (session.webAppellantCaseReviewOutcome.enforcementNoticeInvalid === 'no') {
 			delete session.webAppellantCaseReviewOutcome.enforcementNoticeReason;
 			return response.redirect(
-				`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/invalid`
+				`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${session.webAppellantCaseReviewOutcome.validationOutcome}`
 			);
 		}
 		return response.redirect(
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/invalid/enforcement-notice-reason`
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${session.webAppellantCaseReviewOutcome.validationOutcome}/enforcement-notice-reason`
 		);
 	} catch (error) {
 		logger.error(
@@ -466,7 +466,7 @@ export const postEnforcementNoticeReason = async (request, response) => {
 		};
 
 		return response.redirect(
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/invalid/enforcement-other-information`
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${session.webAppellantCaseReviewOutcome.validationOutcome}/enforcement-other-information`
 		);
 	} catch (error) {
 		logger.error(
@@ -608,7 +608,7 @@ export const postCheckDetailsAndMarkEnforcementAsInvalid = async (request, respo
 		return response.status(500).render('app/500.njk');
 	}
 
-	const { webAppellantCaseReviewOutcome, enforcementDecision } = request.session;
+	const { webAppellantCaseReviewOutcome } = request.session;
 
 	try {
 		await setReviewOutcomeForEnforcementNoticeAppellantCase(
@@ -616,8 +616,7 @@ export const postCheckDetailsAndMarkEnforcementAsInvalid = async (request, respo
 			currentAppeal.appealId,
 			currentAppeal.appellantCaseId,
 			{
-				...webAppellantCaseReviewOutcome,
-				...enforcementDecision
+				...webAppellantCaseReviewOutcome
 			}
 		);
 
@@ -629,7 +628,6 @@ export const postCheckDetailsAndMarkEnforcementAsInvalid = async (request, respo
 		});
 
 		delete request.session.webAppellantCaseReviewOutcome;
-		delete request.session.enforcementDecision;
 
 		return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
 	} catch (error) {

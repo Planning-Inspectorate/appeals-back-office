@@ -531,6 +531,7 @@ export const appealDataLdc = {
 
 export const appealDataEnforcementNotice = {
 	...appealData,
+	appealId: 5623,
 	appealType: 'Enforcement notice appeal'
 };
 

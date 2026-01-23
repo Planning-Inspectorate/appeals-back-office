@@ -15,12 +15,12 @@ exports[`Appellant Case Valid Flow Enforcement Appeals GET /enforcement/check-de
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>
                                 <dd class="govuk-summary-list__value">Valid</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case">Change<span class="govuk-visually-hidden"> review decision</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case">Change<span class="govuk-visually-hidden"> review decision</span></a>
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the appeal ground (a) barred?</dt>
                                 <dd                                 class="govuk-summary-list__value">Yes</dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/enforcement/ground-a">Change<span class="govuk-visually-hidden"> Appeal ground (a) barred</span></a>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/valid/enforcement/ground-a">Change<span class="govuk-visually-hidden"> Appeal ground (a) barred</span></a>
                                     </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you want to add any other information?</dt>
@@ -28,12 +28,12 @@ exports[`Appellant Case Valid Flow Enforcement Appeals GET /enforcement/check-de
                                     <div class="pins-show-more" data-label="" data-mode="text" data-max-before-hiding="300"
                                     data-toggle-text-collapsed="Show more" data-toggle-text-expanded="Show less">Yes: Other information</div>
                                     </dd>
-                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/enforcement/other-information">Change<span class="govuk-visually-hidden"> Other information</span></a>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/valid/enforcement/other-information">Change<span class="govuk-visually-hidden"> Other information</span></a>
                                     </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Valid date for case</dt>
                                 <dd class="govuk-summary-list__value">1 January 2025</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/valid/enforcement/date">Change<span class="govuk-visually-hidden"> Valid date</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/valid/enforcement/date">Change<span class="govuk-visually-hidden"> Valid date</span></a>
                                 </dd>
                             </div>
                         </dl>

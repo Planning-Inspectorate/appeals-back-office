@@ -4,9 +4,9 @@ import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { enhanceCheckboxOptionWithAddAnotherReasonConditionalHtml } from '#lib/enhance-html.js';
 import { yesNoInput } from '#lib/mappers/index.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { LENGTH_300 } from '@pins/appeals/constants/support.js';
-
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
  * @typedef {import('../appellant-case/appellant-case.types.js').AppellantCaseValidationOutcome} AppellantCaseValidationOutcome
@@ -304,9 +304,12 @@ export const otherLiveAppealsPage = (appealDetails, otherLiveAppeals) => ({
  * @returns {PageContent}
  */
 export const checkDetailsAndMarkEnforcementAsInvalid = (appealDetails, reasonOptions, session) => {
-	const { enforcementNoticeReason = [] } = session?.webAppellantCaseReviewOutcome || {};
-	const { otherInformationValidRadio, otherInformationDetails } =
-		session?.enforcementDecision || {};
+	const {
+		enforcementNoticeReason = [],
+		otherInformationValidRadio,
+		otherInformationDetails,
+		validationOutcome
+	} = session?.webAppellantCaseReviewOutcome || {};
 	// @ts-ignore
 	const selectedReasons = enforcementNoticeReason.map((reason) => reason.reasonSelected);
 	const mappedInvalidReasonOptions = reasonOptions
@@ -341,8 +344,8 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (appealDetails, reasonOpt
 		parameters: {
 			rows: [
 				{
-					key: { text: 'What is the outcome of your review?' },
-					value: { text: 'Invalid' },
+					key: { text: 'Review decision' },
+					value: { text: capitalizeFirstLetter(validationOutcome) },
 					actions: {
 						items: [
 							{
@@ -360,8 +363,8 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (appealDetails, reasonOpt
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/invalid/enforcement-notice`,
-								visuallyHiddenText: 'is the enforcement notice invalid?'
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/enforcement-notice`,
+								visuallyHiddenText: `is the enforcement notice ${validationOutcome}?`
 							}
 						]
 					}
@@ -375,8 +378,8 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (appealDetails, reasonOpt
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/invalid/enforcement-notice-reason`,
-								visuallyHiddenText: 'why is the enforcement notice invalid?'
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/enforcement-notice-reason`,
+								visuallyHiddenText: `why is the enforcement notice ${validationOutcome}?`
 							}
 						]
 					}
@@ -401,7 +404,7 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (appealDetails, reasonOpt
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/invalid/enforcement-other-information`,
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/enforcement-other-information`,
 								visuallyHiddenText: 'do you want to add any other information?'
 							}
 						]

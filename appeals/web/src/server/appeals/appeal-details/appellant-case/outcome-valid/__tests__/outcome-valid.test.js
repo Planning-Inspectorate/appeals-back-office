@@ -16,6 +16,10 @@ describe('Appellant Case Valid Flow', () => {
 		const appealId = appealDataEnforcementNotice.appealId;
 		beforeEach(() => {
 			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, appealDataEnforcementNotice)
+				.persist();
+			nock('http://test/')
 				.get(`/appeals/${appealId}?include=appellantCase`)
 				.reply(200, appealDataEnforcementNotice);
 		});
@@ -230,6 +234,12 @@ describe('Appellant Case Valid Flow', () => {
 
 		describe('GET /enforcement/check-details', () => {
 			it(`should render the 'Check details' screen`, async () => {
+				// mock API call
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=appellantCase`)
+					.reply(200, appealDataEnforcementNotice)
+					.persist();
+
 				// set session data
 				const groundAResponse = await request
 					.post(`${baseUrl}/${appealId}/appellant-case/valid/enforcement/ground-a`)
@@ -282,6 +292,10 @@ describe('Appellant Case Valid Flow', () => {
 		describe('POST /enforcement/check-details', () => {
 			it(`should redirect to the Check Details' screen on success`, async () => {
 				// mock API call
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=appellantCase`)
+					.reply(200, appealDataEnforcementNotice)
+					.persist();
 				nock('http://test/')
 					.patch(
 						`/appeals/${appealId}/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`

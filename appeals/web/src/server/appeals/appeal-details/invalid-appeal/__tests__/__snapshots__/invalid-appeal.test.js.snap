@@ -751,14 +751,14 @@ exports[`invalid-appeal GET /check-details-and-mark-enforcement-as-invalid shoul
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the outcome of your review?</dt>
-                    <dd                     class="govuk-summary-list__value">Invalid</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case">Change<span class="govuk-visually-hidden"> review outcome</span></a>
-                        </dd>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>
+                    <dd class="govuk-summary-list__value">Invalid</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case">Change<span class="govuk-visually-hidden"> review outcome</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the enforcement notice invalid?</dt>
                     <dd                     class="govuk-summary-list__value">Yes</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/invalid/enforcement-notice">Change<span class="govuk-visually-hidden"> is the enforcement notice invalid?</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/invalid/enforcement-notice">Change<span class="govuk-visually-hidden"> is the enforcement notice invalid?</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Why is the enforcement notice invalid?</dt>
@@ -778,7 +778,7 @@ exports[`invalid-appeal GET /check-details-and-mark-enforcement-as-invalid shoul
                             </div>
                         </ul>
                         </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/invalid/enforcement-notice-reason">Change<span class="govuk-visually-hidden"> why is the enforcement notice invalid?</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/invalid/enforcement-notice-reason">Change<span class="govuk-visually-hidden"> why is the enforcement notice invalid?</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you want to add any other information?</dt>
@@ -786,7 +786,7 @@ exports[`invalid-appeal GET /check-details-and-mark-enforcement-as-invalid shoul
                         <div class="pins-show-more" data-label="" data-mode="html" data-max-before-hiding="300"
                         data-toggle-text-collapsed="Show more" data-toggle-text-expanded="Show less">Yes: Enforcement other information</div>
                         </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/invalid/enforcement-other-information">Change<span class="govuk-visually-hidden"> do you want to add any other information?</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/invalid/enforcement-other-information">Change<span class="govuk-visually-hidden"> do you want to add any other information?</span></a>
                         </dd>
                 </div>
             </dl>
