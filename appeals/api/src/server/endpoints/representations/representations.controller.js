@@ -22,8 +22,10 @@ import {
 	ERROR_REP_ONLY_STATEMENT_INCOMPLETE,
 	ERROR_REP_PUBLISH_USING_ENDPOINT
 } from '@pins/appeals/constants/support.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { addDays } from 'date-fns';
 import { notifyOnStatusChange } from './notify/index.js';
 import { formatRepresentation } from './representations.formatter.js';
 import * as representationService from './representations.service.js';
@@ -186,10 +188,28 @@ export async function updateRepresentation(request, response) {
 	);
 
 	if (status !== existingRep.status) {
+		let partyName;
+		let extendedDate;
+
+		const isRule6 =
+			updatedRep.representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT;
+		if (isRule6) {
+			partyName = updatedRep.represented?.organisationName;
+		}
+		if (isRule6 && status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE && allowResubmit === 'yes') {
+			try {
+				extendedDate = formatDate(addDays(new Date(), 3), true);
+			} catch (error) {
+				console.error('Error calculating extended date:', error);
+			}
+		}
+
 		const details = getRepStatusAuditLogDetails(
 			status,
 			updatedRep.representationType,
-			!!redactedRepresentation
+			!!redactedRepresentation,
+			partyName || '',
+			extendedDate || ''
 		);
 
 		await createAuditTrail({
@@ -252,6 +272,18 @@ export const createRepresentation = () => async (req, res) => {
 			azureAdUserId || AUDIT_TRIAL_RULE_6_PARTY_ID,
 			'rule-6-party-proof-of-evidence-received'
 		);
+	}
+
+	if (representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT) {
+		const fullRep = await representationService.getRepresentation(rep.id);
+		const partyName = fullRep?.represented?.organisationName;
+		if (partyName) {
+			await createAuditTrail({
+				appealId: parseInt(appealId),
+				azureAdUserId,
+				details: stringTokenReplacement(CONSTANTS.AUDIT_TRAIL_RULE_6_STATEMENT_ADDED, [partyName])
+			});
+		}
 	}
 
 	return res.status(201).send(rep);
