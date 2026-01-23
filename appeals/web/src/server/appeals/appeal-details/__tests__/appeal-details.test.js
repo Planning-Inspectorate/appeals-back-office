@@ -3413,10 +3413,10 @@ describe('appeal-details', () => {
 
 				const response = await request.get(`${baseUrl}/${appealId}`);
 
-				expect(response.text).toMatchSnapshot();
-				expect(response.text).not.toContain('LPA reference');
-
 				const mainHtml = parseHtml(response.text);
+
+				expect(mainHtml.innerHTML).toMatchSnapshot();
+				expect(mainHtml.innerHTML).not.toContain('LPA reference');
 
 				expect(
 					mainHtml
