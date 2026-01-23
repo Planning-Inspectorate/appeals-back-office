@@ -8,11 +8,21 @@ import { capitalize } from 'lodash-es';
 export const TEXT_INPUT_MAX_CHARACTERS = 300;
 export const TEXT_INPUT_MIN_CHARACTERS = 3;
 
+/**
+ * @param {string} [fieldName]
+ * @param {string} [emptyErrorMessage]
+ * @param {number} [maxCharactersAllowed]
+ * @param {string} [maxCharactersErrorMessage]
+ * @param {RegExp} [allowedCharacterRegex]
+ * @param {string} [allowedCharacterErrorMessage]
+ */
 export const createTextInputValidator = (
 	fieldName = 'text',
 	emptyErrorMessage = 'Enter text',
 	maxCharactersAllowed = TEXT_INPUT_MAX_CHARACTERS,
-	maxCharactersErrorMessage = `Text must be ${TEXT_INPUT_MAX_CHARACTERS} characters or less`
+	maxCharactersErrorMessage = `Text must be ${TEXT_INPUT_MAX_CHARACTERS} characters or less`,
+	allowedCharacterRegex = /^[A-Za-z0-9 .,'!&-]+$/,
+	allowedCharacterErrorMessage
 ) =>
 	createValidator(
 		body(fieldName)
@@ -26,12 +36,15 @@ export const createTextInputValidator = (
 				}
 			})
 			.bail()
-			.matches(/^[A-Za-z0-9 .,'!&-]+$/)
-			.withMessage(() => {
-				return `${capitalize(
-					`${camelCaseToWords(fieldName)}`
-				)} must only include letters a to z, numbers 0 to 9, and special characters such as hyphens, spaces and apostrophes`;
-			})
+			.matches(allowedCharacterRegex)
+			.withMessage(
+				allowedCharacterErrorMessage ??
+					(() => {
+						return `${capitalize(
+							`${camelCaseToWords(fieldName)}`
+						)} must only include letters a to z, numbers 0 to 9, and special characters such as hyphens, spaces and apostrophes`;
+					})
+			)
 			.isLength({ max: maxCharactersAllowed })
 			.withMessage(maxCharactersErrorMessage)
 	);

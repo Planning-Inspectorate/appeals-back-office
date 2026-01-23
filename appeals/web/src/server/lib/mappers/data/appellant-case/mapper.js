@@ -16,6 +16,7 @@ import { submaps as s78Submaps } from './s78.js';
  * @property {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
  * @property {string} currentRoute
  * @property {boolean} userHasUpdateCase
+ * @property {import('@pins/express/types/express.js').Request} request
  */
 
 /**
@@ -43,9 +44,16 @@ const submaps = {
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
  * @param {import('../../../../app/auth/auth-session.service.js').SessionWithAuth} session
  * @param {string} currentRoute
+ * @param {import('@pins/express/types/express.js').Request} request
  * @returns {MappedInstructions}
  */
-export function initialiseAndMapData(appellantCaseData, appealDetails, currentRoute, session) {
+export function initialiseAndMapData(
+	appellantCaseData,
+	appealDetails,
+	currentRoute,
+	session,
+	request
+) {
 	if (!appellantCaseData || appellantCaseData === null) {
 		throw new Error('appellantCaseDetails is null or undefined');
 	}
@@ -66,6 +74,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		appellantCaseData,
 		appealDetails,
 		currentRoute,
+		request,
 		userHasUpdateCase
 	};
 	/** @type {Record<string, SubMapper | SubMapperList>} */
