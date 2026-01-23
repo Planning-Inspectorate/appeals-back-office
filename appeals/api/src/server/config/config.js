@@ -75,6 +75,9 @@ const { value, error } = schema.validate({
 		featureFlagEnforcementNotice:
 			environment.FEATURE_FLAG_ENFORCEMENT_NOTICE &&
 			environment.FEATURE_FLAG_ENFORCEMENT_NOTICE === 'true',
+		featureFlagEnforcementLinked:
+			environment.FEATURE_FLAG_ENFORCEMENT_LINKED &&
+			environment.FEATURE_FLAG_ENFORCEMENT_LINKED === 'true',
 		featureFlagInvalidDecisionLetter:
 			environment.FEATURE_FLAG_INVALID_DECISION_LETTER &&
 			environment.FEATURE_FLAG_INVALID_DECISION_LETTER === 'true',
