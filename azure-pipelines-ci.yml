@@ -127,10 +127,28 @@ extends:
             displayName: "Generate SAS Url"
           - script: AZURE_BLOB_EMULATOR_SAS_HOST=$(AZURE_BLOB_EMULATOR_SAS_HOST) AUTH_TENANT_ID=$(AZURE_TENANT_ID) AUTH_CLIENT_SECRET=$(AUTH_CLIENT_SECRET) AUTH_CLIENT_ID=$(AUTH_CLIENT_ID) GIT_SHA=$(Build.SourceVersion) docker-compose up -d
             condition: eq(variables['runE2E'], 'true')
-            displayName: "Start database, api and web docker containers"
+            displayName: "Start database, azurite, api and web docker containers"
           - script: docker ps
             condition: eq(variables['runE2E'], 'true')
             displayName: "Check all containers are up"
+          - script: |
+              az storage cors add \
+                --services b \
+                --methods GET PUT OPTIONS \
+                --origins "*" \
+                --allowed-headers "*" \
+                --exposed-headers "*" \
+                --max-age 200 \
+                --connection-string "DefaultEndpointsProtocol=https;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=https://127.0.0.1:10000/devstoreaccount1;"
+
+              az storage container create \
+                --name document-service-uploads \
+                 --cert ~/Documents/PINS/certificates/certificate.pem \
+                --connection-string "DefaultEndpointsProtocol=https;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=https://127.0.0.1:10000/devstoreaccount1;"
+            condition: eq(variables['runE2E'], 'true')
+            displayName: "Create storage account"
+          - script: docker logs pins_azurite
+            condition: eq(variables['runE2E'], 'true')
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
@@ -192,4 +210,6 @@ extends:
           - script: docker logs api
             condition: eq(variables['runE2E'], 'true')
           - script: docker logs web
+            condition: eq(variables['runE2E'], 'true')
+          - script: docker logs pins_azurite
             condition: eq(variables['runE2E'], 'true')
