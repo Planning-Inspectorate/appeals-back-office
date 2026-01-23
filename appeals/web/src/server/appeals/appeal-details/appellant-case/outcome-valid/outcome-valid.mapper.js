@@ -234,7 +234,7 @@ export function checkAndConfirmEnforcementPage(request) {
 	const {
 		currentAppeal,
 		session: {
-			enforcementDecision: {
+			webAppellantCaseReviewOutcome: {
 				outcome,
 				appealGroundABarred,
 				otherInformationDetails,

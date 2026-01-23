@@ -166,8 +166,8 @@ export const postEnforcementGroundA = async (request, response) => {
 	try {
 		const radioValue = body['enforcementGroundARadio'];
 
-		session.enforcementDecision = {
-			...session.enforcementDecision,
+		session.webAppellantCaseReviewOutcome = {
+			...session.webAppellantCaseReviewOutcome,
 			outcome: 'valid',
 			appealGroundABarred: radioValue
 		};
@@ -201,7 +201,7 @@ const renderEnforcementGroundA = async (request, response, apiErrors) => {
 	const mappedPageContent = updateEnforcementGroundAPage(
 		currentAppeal,
 		backLinkUrl,
-		request.session.enforcementDecision?.appealGroundABarred
+		request.session.webAppellantCaseReviewOutcome?.appealGroundABarred
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
@@ -233,15 +233,16 @@ export const postEnforcementOtherInformation = async (request, response) => {
 		const otherInformationDetails =
 			otherInformationValidRadio === 'Yes' ? body['otherInformationDetails'] : undefined;
 
-		session.enforcementDecision = {
-			...session.enforcementDecision,
+		session.webAppellantCaseReviewOutcome = {
+			...session.webAppellantCaseReviewOutcome,
 			otherInformationValidRadio,
 			otherInformationDetails
 		};
 
 		if (request.route.path === '/enforcement-other-information') {
+			const validationOutcome = session.webAppellantCaseReviewOutcome.validationOutcome;
 			return response.redirect(
-				`/appeals-service/appeal-details/${appealId}/appellant-case/invalid/check-details-and-mark-enforcement-as-invalid`
+				`/appeals-service/appeal-details/${appealId}/appellant-case/${validationOutcome}/check-details-and-mark-enforcement-as-${validationOutcome}`
 			);
 		}
 
@@ -269,7 +270,7 @@ export const postEnforcementOtherInformation = async (request, response) => {
 const renderEnforcementOtherInformation = async (request, response, apiErrors) => {
 	const {
 		currentAppeal,
-		session: { enforcementDecision },
+		session: { webAppellantCaseReviewOutcome },
 		route: { path: routePath }
 	} = request;
 	const errors = request.errors || apiErrors;
@@ -277,8 +278,8 @@ const renderEnforcementOtherInformation = async (request, response, apiErrors) =
 	const mappedPageContent = updateEnforcementOtherInformationPage(
 		currentAppeal,
 		routePath,
-		enforcementDecision?.otherInformationValidRadio,
-		enforcementDecision?.otherInformationDetails,
+		webAppellantCaseReviewOutcome?.otherInformationValidRadio,
+		webAppellantCaseReviewOutcome?.otherInformationDetails,
 		errors
 	);
 
@@ -324,8 +325,8 @@ export const postEnforcementValidDate = async (request, response) => {
 			return renderEnforcementValidDate(request, response, errorMessage);
 		}
 
-		session.enforcementDecision = {
-			...session.enforcementDecision,
+		session.webAppellantCaseReviewOutcome = {
+			...session.webAppellantCaseReviewOutcome,
 			updatedValidDateDay,
 			updatedValidDateMonth,
 			updatedValidDateYear
@@ -356,14 +357,15 @@ export const postEnforcementValidDate = async (request, response) => {
 const renderEnforcementValidDate = async (request, response, apiErrors) => {
 	const {
 		currentAppeal: { appealId, appealReference },
-		session: { enforcementDecision }
+		session: { webAppellantCaseReviewOutcome }
 	} = request;
 
-	const dateValidDay = request.body['valid-date-day'] || enforcementDecision?.updatedValidDateDay;
+	const dateValidDay =
+		request.body['valid-date-day'] || webAppellantCaseReviewOutcome?.updatedValidDateDay;
 	const dateValidMonth =
-		request.body['valid-date-month'] || enforcementDecision?.updatedValidDateMonth;
+		request.body['valid-date-month'] || webAppellantCaseReviewOutcome?.updatedValidDateMonth;
 	const dateValidYear =
-		request.body['valid-date-year'] || enforcementDecision?.updatedValidDateYear;
+		request.body['valid-date-year'] || webAppellantCaseReviewOutcome?.updatedValidDateYear;
 
 	let errors = request.errors || apiErrors;
 
@@ -398,7 +400,7 @@ export const postEnforcementCheckDetails = async (request, response) => {
 	try {
 		const { appealId, appellantCaseId } = currentAppeal;
 		const {
-			enforcementDecision: {
+			webAppellantCaseReviewOutcome: {
 				outcome,
 				appealGroundABarred: appealGroundABarredString,
 				otherInformationValidRadio,
@@ -430,7 +432,7 @@ export const postEnforcementCheckDetails = async (request, response) => {
 			appealId
 		});
 
-		delete session.enforcementDecision;
+		delete session.webAppellantCaseReviewOutcome;
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {

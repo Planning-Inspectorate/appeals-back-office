@@ -190,18 +190,15 @@ export const postAppellantCase = async (request, response) => {
 					`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${reviewOutcome}/date`
 				);
 			} else {
-				if (
-					currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
-					reviewOutcome === 'invalid'
-				) {
+				if (currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
 					/** @type {import('../appellant-case/appellant-case.types.js').AppellantCaseSessionValidationOutcome} */
 					request.session.webAppellantCaseReviewOutcome = {
 						...request.session.webAppellantCaseReviewOutcome,
-						validationOutcome: 'invalid'
+						validationOutcome: reviewOutcome
 					};
 
 					return response.redirect(
-						`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/invalid/enforcement-notice`
+						`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${reviewOutcome}/enforcement-notice`
 					);
 				}
 

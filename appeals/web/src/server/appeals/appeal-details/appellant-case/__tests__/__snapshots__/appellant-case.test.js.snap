@@ -5931,12 +5931,12 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>
                     <dd class="govuk-summary-list__value">Invalid</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case">Change<span class="govuk-visually-hidden"> review outcome</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case">Change<span class="govuk-visually-hidden"> review outcome</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the enforcement notice invalid?</dt>
                     <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/invalid/enforcement-notice">Change<span class="govuk-visually-hidden"> Is the enforcement notice invalid?</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/invalid/enforcement-notice">Change<span class="govuk-visually-hidden"> Is the enforcement notice invalid?</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Why is the appeal invalid?</dt>
@@ -5949,17 +5949,17 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
                             </ul>
                         </div>
                         </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/invalid">Change<span class="govuk-visually-hidden"> Invalid reasons</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/invalid">Change<span class="govuk-visually-hidden"> Invalid reasons</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Are there any other live appeals against the enforcement notice?</dt>
                     <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/invalid/other-live-appeals">Change<span class="govuk-visually-hidden"> Are there any other live appeals against the enforcement notice?</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/invalid/other-live-appeals">Change<span class="govuk-visually-hidden"> Are there any other live appeals against the enforcement notice?</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Updated due date</dt>
                     <dd class="govuk-summary-list__value">1 December 3000</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/invalid/date">Change<span class="govuk-visually-hidden"> updated due date</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/invalid/date">Change<span class="govuk-visually-hidden"> updated due date</span></a>
                     </dd>
                 </div>
             </dl>

@@ -1,0 +1,263 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`incomplete-appeal enforcement notice appeal GET /enforcement-notice-reason should render the enforcement notice reasons page with no reasons selected 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form action="" method="POST" novalidate>
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading"> Why is the enforcement notice invalid?</h1>
+                        </legend>
+                        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="invalid-reason" name="invalidReason"
+                                type="checkbox" value="1" data-aria-controls="conditional-invalid-reason">
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason">Enforcement invalid reason one</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-invalid-reason">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="invalid-reason-1-1">Enter a reason</label>
+                                    <input class="govuk-input" id="invalid-reason-1-1"
+                                    name="invalidReason-1" type="text">
+                                </div>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="invalid-reason-2" name="invalidReason"
+                                type="checkbox" value="2" data-aria-controls="conditional-invalid-reason-2">
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-2">Enforcement invalid reason two</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-invalid-reason-2">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="invalid-reason-2-1">Enter a reason</label>
+                                    <input class="govuk-input" id="invalid-reason-2-1"
+                                    name="invalidReason-2" type="text">
+                                </div>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="invalid-reason-3" name="invalidReason"
+                                type="checkbox" value="3" data-aria-controls="conditional-invalid-reason-3">
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">Enforcement invalid reason three</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-invalid-reason-3">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="invalid-reason-3-1">Enter a reason</label>
+                                    <input class="govuk-input" id="invalid-reason-3-1"
+                                    name="invalidReason-3" type="text">
+                                </div>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
+                                type="checkbox" value="8" data-aria-controls="conditional-invalid-reason-4">
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Enforcement invalid other reason</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-invalid-reason-4">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="invalid-reason-8-1">Enter a reason</label>
+                                    <input class="govuk-input" id="invalid-reason-8-1"
+                                    name="invalidReason-8" type="text">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`incomplete-appeal enforcement notice appeal POST /enforcement-notice-reason should re-render the enforcement notice reasons page with the expected error message if no reason was selected 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#invalid-reason">Select why the enforcement notice is invalid</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form action="" method="POST" novalidate>
+                <div class="govuk-form-group govuk-form-group--error">
+                    <fieldset class="govuk-fieldset" aria-describedby="invalid-reason-error">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading"> Why is the enforcement notice invalid?</h1>
+                        </legend>
+                        <p id="invalid-reason-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select why the enforcement
+                            notice is invalid</p>
+                        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="invalid-reason" name="invalidReason"
+                                type="checkbox" value="1" data-aria-controls="conditional-invalid-reason">
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason">Enforcement invalid reason one</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-invalid-reason">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="invalid-reason-1-1">Enter a reason</label>
+                                    <input class="govuk-input" id="invalid-reason-1-1"
+                                    name="invalidReason-1" type="text">
+                                </div>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="invalid-reason-2" name="invalidReason"
+                                type="checkbox" value="2" data-aria-controls="conditional-invalid-reason-2">
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-2">Enforcement invalid reason two</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-invalid-reason-2">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="invalid-reason-2-1">Enter a reason</label>
+                                    <input class="govuk-input" id="invalid-reason-2-1"
+                                    name="invalidReason-2" type="text">
+                                </div>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="invalid-reason-3" name="invalidReason"
+                                type="checkbox" value="3" data-aria-controls="conditional-invalid-reason-3">
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">Enforcement invalid reason three</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-invalid-reason-3">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="invalid-reason-3-1">Enter a reason</label>
+                                    <input class="govuk-input" id="invalid-reason-3-1"
+                                    name="invalidReason-3" type="text">
+                                </div>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
+                                type="checkbox" value="8" data-aria-controls="conditional-invalid-reason-4">
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Enforcement invalid other reason</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-invalid-reason-4">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="invalid-reason-8-1">Enter a reason</label>
+                                    <input class="govuk-input" id="invalid-reason-8-1"
+                                    name="invalidReason-8" type="text">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`incomplete-appeal enforcement notice appeal POST /enforcement-notice-reason should re-render the enforcement notice reasons page with the expected error message if reasons were selected, but one has an empty text value 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#invalid-reason-2-1">Enter a reason</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form action="" method="POST" novalidate>
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading"> Why is the enforcement notice invalid?</h1>
+                        </legend>
+                        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="invalid-reason" name="invalidReason"
+                                type="checkbox" value="1" checked data-aria-controls="conditional-invalid-reason">
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason">Enforcement invalid reason one</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional" id="conditional-invalid-reason">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="invalid-reason-1-1">Enter a reason</label>
+                                    <input class="govuk-input" id="invalid-reason-1-1"
+                                    name="invalidReason-1" type="text" value="has some text">
+                                </div>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="invalid-reason-2" name="invalidReason"
+                                type="checkbox" value="2" checked data-aria-controls="conditional-invalid-reason-2">
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-2">Enforcement invalid reason two</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional" id="conditional-invalid-reason-2">
+                                <div class="govuk-form-group govuk-form-group--error">
+                                    <label class="govuk-label govuk-label--s" for="invalid-reason-2-1">Enter a reason</label>
+                                    <p id="invalid-reason-2-1-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a reason</p>
+                                    <input                                     class="govuk-input govuk-input--error" id="invalid-reason-2-1" name="invalidReason-2"
+                                    type="text" value="" aria-describedby="invalid-reason-2-1-error">
+                                </div>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="invalid-reason-3" name="invalidReason"
+                                type="checkbox" value="3" data-aria-controls="conditional-invalid-reason-3">
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">Enforcement invalid reason three</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-invalid-reason-3">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="invalid-reason-3-1">Enter a reason</label>
+                                    <input class="govuk-input" id="invalid-reason-3-1"
+                                    name="invalidReason-3" type="text">
+                                </div>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
+                                type="checkbox" value="8" data-aria-controls="conditional-invalid-reason-4">
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Enforcement invalid other reason</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-invalid-reason-4">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="invalid-reason-8-1">Enter a reason</label>
+                                    <input class="govuk-input" id="invalid-reason-8-1"
+                                    name="invalidReason-8" type="text">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
