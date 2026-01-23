@@ -559,11 +559,6 @@ export class CaseDetailsPage extends Page {
 	clickRowChangeLink(row) {
 		this.elements.rowChangeLink(row).click();
 	}
-
-	clickRowAddLink(row) {
-		this.elements.rowAddLink(row).click();
-	}
-
 	clickChangeLinkByLabel(label) {
 		this.elements.changeLinkByLabel(label).click();
 	}
