@@ -19,6 +19,13 @@ const dependabotScopes = ['deps', 'deps-dev'];
 /** @type {import('@commitlint/types').UserConfig} */
 module.exports = {
 	extends: ['@commitlint/config-conventional'],
+	parserPreset: {
+		parserOpts: {
+			headerPattern:
+				/^(?<type>\w+)(?:\((?<scope>[^)]+)\))?: (?<subject>[^(]+?)(?: \((?<ticket>[A-Z]+-\d+)\))?$/,
+			headerCorrespondence: ['type', 'scope', 'subject', 'ticket']
+		}
+	},
 	rules: {
 		'body-max-line-length': [2, 'always', 120], // dependabot needs longer lines, the value is somewhat arbitrary
 		'scope-enums': [
@@ -37,7 +44,8 @@ module.exports = {
 				style: scopes,
 				test: [null, ...scopes]
 			}
-		]
+		],
+		'ticket-required': [1, 'always']
 	},
 	plugins: [
 		{
@@ -60,6 +68,8 @@ module.exports = {
 					if (!allowedScopes) {
 						return [true];
 					}
+
+					console.log('type:', type, 'scope:', scope, 'allowedScopes:', allowedScopes);
 
 					// If the `type` belongs to to an empty array in the rule config, any
 					// provided scope will be considered as not allowed
@@ -105,6 +115,15 @@ module.exports = {
 							.map((s) => `"${s}"`)
 							.join(', ')}`
 					];
+				},
+				'ticket-required': ({ ticket }) => {
+					if (!ticket) {
+						return [
+							false,
+							'commit message should include a ticket number at the end, e.g. (PINS-123)'
+						];
+					}
+					return [true];
 				}
 			}
 		}
