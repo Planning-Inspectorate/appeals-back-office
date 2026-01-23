@@ -51,7 +51,7 @@ module.exports = {
 		{
 			rules: {
 				'scope-enums': (
-					{ type, scope, ticket },
+					{ type, scope },
 					condition,
 					/** @type {Record<string, (string | null)[]>} */ rule
 				) => {
