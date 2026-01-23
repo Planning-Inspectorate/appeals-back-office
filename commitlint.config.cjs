@@ -69,17 +69,6 @@ module.exports = {
 						return [true];
 					}
 
-					console.log(
-						'type:',
-						type,
-						'\nscope:',
-						scope,
-						'\nallowedScope:',
-						allowedScopes,
-						'\nticket:',
-						ticket
-					);
-
 					// If the `type` belongs to to an empty array in the rule config, any
 					// provided scope will be considered as not allowed
 					if (allowedScopes.length === 0) {
@@ -125,17 +114,14 @@ module.exports = {
 							.join(', ')}`
 					];
 				},
-				'ticket-required': ({ scope, type, ticket }) => {
-					console.log('type:', type, '\nscope:', scope, '\nticket:', ticket);
+				'ticket-required': ({ ticket }) => {
 					if (!ticket) {
-						console.log('no ticket error');
 						return [
 							false,
 							'commit message should include a ticket number at the end, e.g. (A2-1234)'
 						];
 					}
 					if (ticket === 'no-ticket') {
-						console.log('no ticket bypass');
 						return [true];
 					}
 					return [true];
