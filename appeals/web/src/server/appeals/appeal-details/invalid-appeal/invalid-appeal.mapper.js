@@ -344,7 +344,7 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (appealDetails, reasonOpt
 		parameters: {
 			rows: [
 				{
-					key: { text: 'Review decision' },
+					key: { text: 'What is the outcome of your review?' },
 					value: { text: capitalizeFirstLetter(validationOutcome) },
 					actions: {
 						items: [
@@ -414,22 +414,30 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (appealDetails, reasonOpt
 		}
 	};
 
+	const title =
+		validationOutcome === 'invalid'
+			? 'Check details and mark enforcement notice as invalid'
+			: 'Check details and mark appeal as incomplete';
+
 	return {
-		title: 'Check details and mark enforcement notice as invalid',
+		title,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/invalid/enforcement-other-information`,
 		preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
-		heading: 'Check details and mark enforcement notice as invalid',
+		heading: title,
 		pageComponents: [
 			summaryListComponent,
 			{
 				type: 'html',
 				parameters: {
-					html: `<p class="govuk-body">We will mark the enforcement notice as invalid and send an email to the relevant parties.</p>`
+					html: `<p class="govuk-body">We will mark the enforcement notice as ${validationOutcome} and send an email to the relevant parties.</p>`
 				}
 			}
 		],
 		submitButtonProperties: {
-			text: 'Mark enforcement notice as invalid',
+			text:
+				validationOutcome === 'invalid'
+					? 'Mark enforcement notice as invalid'
+					: 'Mark appeal as incomplete',
 			id: 'continue'
 		}
 	};
