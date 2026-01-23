@@ -152,6 +152,34 @@ exports[`invalid-appeal GET / , /new should render the invalid reason page for a
                             type="checkbox" value="26">
                             <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-5">Ground (a) barred</label>
                         </div>
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="invalid-reason-6" name="invalidReason"
+                            type="checkbox" value="24" data-aria-controls="conditional-invalid-reason-6">
+                            <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-6">Other reason</label>
+                        </div>
+                        <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                        id="conditional-invalid-reason-6">
+                            <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
+                                <div class="pins-add-another__item govuk-!-margin-top-6">
+                                    <div class="govuk-grid-row">
+                                        <div class="govuk-grid-column-full flex-row space-between">
+                                            <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
+                                            <div class="pins-add-another__remove-button-container"></div>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-grid-row">
+                                        <div class="govuk-grid-column-full">
+                                            <div class="govuk-form-group">
+                                                <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
+                                                id="invalid-reason-24-1" name="invalidReason-24" type="text" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="govuk-button pins-add-another__add-button govuk-button--secondary govuk-!-margin-top-4 govuk-!-margin-bottom-0"
+                                data-module="govuk-button">Add another</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
@@ -744,6 +772,10 @@ exports[`invalid-appeal GET /check-details-and-mark-enforcement-as-invalid shoul
                             data-toggle-text-collapsed="Show more" data-toggle-text-expanded="Show less">
                                 <li>Enforcement invalid reason two: has some other text</li>
                             </div>
+                            <div class="pins-show-more" data-label="" data-mode="html" data-max-before-hiding="300"
+                            data-toggle-text-collapsed="Show more" data-toggle-text-expanded="Show less">
+                                <li>Enforcement invalid other reason:</li>
+                            </div>
                         </ul>
                         </dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/invalid/enforcement-notice-reason">Change<span class="govuk-visually-hidden"> why is the enforcement notice invalid?</span></a>
@@ -861,6 +893,19 @@ exports[`invalid-appeal GET /enforcement-notice-reason should render the enforce
                                     <label class="govuk-label govuk-label--s" for="invalid-reason-3-1">Enter a reason</label>
                                     <input class="govuk-input" id="invalid-reason-3-1"
                                     name="invalidReason-3" type="text">
+                                </div>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
+                                type="checkbox" value="8" data-aria-controls="conditional-invalid-reason-4">
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Enforcement invalid other reason</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-invalid-reason-4">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="invalid-reason-8-1">Enter a reason</label>
+                                    <input class="govuk-input" id="invalid-reason-8-1"
+                                    name="invalidReason-8" type="text">
                                 </div>
                             </div>
                         </div>
@@ -1849,6 +1894,19 @@ exports[`invalid-appeal POST /enforcement-notice-reason should re-render the enf
                                     name="invalidReason-3" type="text">
                                 </div>
                             </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
+                                type="checkbox" value="8" data-aria-controls="conditional-invalid-reason-4">
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Enforcement invalid other reason</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-invalid-reason-4">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="invalid-reason-8-1">Enter a reason</label>
+                                    <input class="govuk-input" id="invalid-reason-8-1"
+                                    name="invalidReason-8" type="text">
+                                </div>
+                            </div>
                         </div>
                     </fieldset>
                 </div>
@@ -1925,6 +1983,19 @@ exports[`invalid-appeal POST /enforcement-notice-reason should re-render the enf
                                     <label class="govuk-label govuk-label--s" for="invalid-reason-3-1">Enter a reason</label>
                                     <input class="govuk-input" id="invalid-reason-3-1"
                                     name="invalidReason-3" type="text">
+                                </div>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
+                                type="checkbox" value="8" data-aria-controls="conditional-invalid-reason-4">
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Enforcement invalid other reason</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-invalid-reason-4">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="invalid-reason-8-1">Enter a reason</label>
+                                    <input class="govuk-input" id="invalid-reason-8-1"
+                                    name="invalidReason-8" type="text">
                                 </div>
                             </div>
                         </div>

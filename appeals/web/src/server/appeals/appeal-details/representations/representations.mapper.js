@@ -147,13 +147,40 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 			? `<a href="${addBackLinkQueryToUrl(
 					request,
 					`/appeals-service/appeal-details/${appeal.appealId}/lpa-statement`
-				)}" class="govuk-link">1 statement</a>`
+				)}" class="govuk-link">1 LPA statement</a>`
 			: null;
 
-	const valueTexts = [ipCommentsText, lpaStatementText].filter(Boolean);
+	const appellantStatementText =
+		appeal.documentationSummary?.appellantStatement?.representationStatus ===
+			APPEAL_REPRESENTATION_STATUS.VALID ||
+		appeal.documentationSummary?.appellantStatement?.representationStatus ===
+			APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+			? `<a href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appeal.appealId}/appellant-statement`
+				)}" class="govuk-link">1 appellant statement</a>`
+			: null;
+
+	const rule6StatementTexts = Object.values(
+		appeal.documentationSummary?.rule6PartyStatements || {}
+	)?.map((statement) => {
+		return `<a href="${addBackLinkQueryToUrl(
+			request,
+			`/appeals-service/appeal-details/${appeal.appealId}/rule6-statement`
+		)}" class="govuk-link">1 ${statement.organisationName} statement</a>`;
+	});
+
+	const valueTexts = /** @type {string[]} */ (
+		[ipCommentsText, lpaStatementText, appellantStatementText, ...rule6StatementTexts].filter(
+			Boolean
+		)
+	);
 
 	const totalLpaStatements = lpaStatementText ? 1 : 0;
-	const totalShareCount = numIpComments + totalLpaStatements;
+	const totalAppellantStatements = appellantStatementText ? 1 : 0;
+	const totalRule6Statements = rule6StatementTexts?.length ?? 0;
+	const totalShareCount =
+		numIpComments + totalLpaStatements + totalAppellantStatements + totalRule6Statements;
 
 	/** @type {PageComponent} */
 	const textComponent =
@@ -163,9 +190,9 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 					parameters: {
 						html: `<p class="govuk-body">We’ll share ${
 							totalShareCount === 1 ? 'the ' : ''
-						}${valueTexts.join(' and ')} with the relevant ${
-							totalShareCount === 1 ? 'party' : 'parties'
-						}.</p>`
+						}${new Intl.ListFormat('en-GB', { style: 'long', type: 'conjunction' }).format(
+							valueTexts
+						)} with the relevant ${totalShareCount === 1 ? 'party' : 'parties'}.</p>`
 					}
 				}
 			: {

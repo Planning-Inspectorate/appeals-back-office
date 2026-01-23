@@ -16,7 +16,12 @@ import {
 	CASE_RELATIONSHIP_RELATED,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_STATUS,
+	APPEAL_REDACTED_STATUS,
+	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_REPRESENTATION_TYPE
+} from '@planning-inspectorate/data-model';
 import { addDays } from 'date-fns';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
@@ -4698,6 +4703,49 @@ describe('/appeals/:id/reps', () => {
 
 				expect(response.status).toEqual(200);
 			});
+		});
+	});
+	describe('POST /appeals/:appealId/reps/publish', () => {
+		test('publish Rule 6 statements', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...fullPlanningAppeal,
+				appealStatus: [{ status: APPEAL_CASE_STATUS.STATEMENTS, valid: true }],
+				childAppeals: [],
+				lpa: { email: 'lpa@example.com' },
+				appellant: { email: 'appellant@example.com' },
+				procedureType: { key: 'written' },
+				appealTimetable: {
+					finalCommentsDueDate: new Date('2024-01-01T00:00:00.000Z'),
+					proofOfEvidenceAndWitnessesDueDate: new Date('2024-02-01T00:00:00.000Z'),
+					ipCommentsDueDate: new Date('2023-01-01T00:00:00.000Z'),
+					lpaStatementDueDate: new Date('2023-01-01T00:00:00.000Z')
+				},
+				documentationSummary: {}
+			});
+
+			databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+			databaseConnector.documentVersion.updateMany.mockResolvedValue({ count: 0 });
+			databaseConnector.representation.updateMany.mockResolvedValue({ count: 2 });
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{
+					id: 1,
+					representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
+					status: APPEAL_REPRESENTATION_STATUS.PUBLISHED
+				},
+				{
+					id: 2,
+					representationType: APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT,
+					status: APPEAL_REPRESENTATION_STATUS.PUBLISHED
+				}
+			]);
+			databaseConnector.auditTrail.create.mockResolvedValue({});
+
+			const response = await request
+				.post('/appeals/2/reps/publish')
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toHaveLength(2);
 		});
 	});
 });

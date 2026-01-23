@@ -51,7 +51,15 @@ export const mapQuestionnaireIn = (command, designatedSites) => {
 				//@ts-ignore
 				...generateCasAdvertSchemaFields(casedata, designatedSites)
 			};
-
+		case APPEAL_CASE_TYPE.C: // ENFORCEMENT
+			return {
+				...generateCommonSchemaFields(casedata),
+				...generateHasSchemaFields(casedata, listedBuildingsData),
+				//@ts-ignore
+				...generateS78SchemaFields(casedata, designatedSites),
+				...generateEnforcementSchemaFields(casedata)
+				//@ts-ignore
+			};
 		default:
 			throw new Error(`Unsupported case type '${casedata.caseType}'`);
 	}
@@ -179,6 +187,31 @@ const generateCasAdvertSchemaFields = (casedata, designatedSites) => {
 		isSiteInAreaOfSpecialControlAdverts: casedata.isSiteInAreaOfSpecialControlAdverts,
 		wasApplicationRefusedDueToHighwayOrTraffic: casedata.wasApplicationRefusedDueToHighwayOrTraffic,
 		didAppellantSubmitCompletePhotosAndPlans: casedata.didAppellantSubmitCompletePhotosAndPlans
+	};
+};
+
+/**
+ *
+ * @param {import('@planning-inspectorate/data-model').Schemas.LPAQEnforcementSubmissionProperties} casedata
+ * @returns
+ */
+const generateEnforcementSchemaFields = (casedata) => {
+	return {
+		// Add enforcement specific fields here when they are defined
+		noticeRelatesToBuildingEngineeringMiningOther:
+			casedata.noticeRelatesToBuildingEngineeringMiningOther,
+		siteAreaSquareMetres: casedata.siteAreaSquareMetres,
+		hasAllegedBreachArea: casedata.hasAllegedBreachArea,
+		doesAllegedBreachCreateFloorSpace: casedata.doesAllegedBreachCreateFloorSpace,
+		changeOfUseRefuseOrWaste: casedata.changeOfUseRefuseOrWaste,
+		changeOfUseMineralExtraction: casedata.changeOfUseMineralExtraction,
+		changeOfUseMineralStorage: casedata.changeOfUseMineralStorage,
+		relatesToErectionOfBuildingOrBuildings: casedata.relatesToErectionOfBuildingOrBuildings,
+		relatesToBuildingWithAgriculturalPurpose: casedata.relatesToBuildingWithAgriculturalPurpose,
+		relatesToBuildingSingleDwellingHouse: casedata.relatesToBuildingSingleDwellingHouse,
+		affectedTrunkRoadName: casedata.affectedTrunkRoadName,
+		isSiteOnCrownLand: casedata.isSiteOnCrownLand,
+		article4AffectedDevelopmentRights: casedata.article4AffectedDevelopmentRights
 	};
 };
 

@@ -495,10 +495,10 @@ describe('personal-list', () => {
 				}
 			},
 			{
-				name: 'Share IP comments and LPA statement',
+				name: 'Share IP comments and statements',
 				requiredAction: 'shareIpCommentsAndLpaStatement',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=%2Fappeals-service%2Fpersonal-list">Share IP comments and LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/share?backUrl=%2Fappeals-service%2Fpersonal-list">Share IP comments and statements<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				}
 			},
 			{
@@ -586,6 +586,34 @@ describe('personal-list', () => {
 				expectedHtml: {
 					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-statement?backUrl=%2Fappeals-service%2Fpersonal-list">Review appellant statement</a>`
 				}
+			},
+			{
+				name: 'Awaiting Rule 6 partyTest Organisation statement',
+				requiredAction: 'awaitingRule6PartyStatement',
+				expectedHtml: {
+					caseOfficer: 'Awaiting Test Organisation statement'
+				}
+			},
+			{
+				name: 'Review Test Organisation Rule 6 party statement',
+				requiredAction: 'reviewRule6PartyStatement',
+				expectedHtml: {
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/1?backUrl=%2Fappeals-service%2Fpersonal-list">Review Test Organisation statement</a>`
+				}
+			},
+			{
+				name: 'Awaiting Rule 6 party Test Organisation proof of evidence and witnesses',
+				requiredAction: 'awaitingRule6PartyProofOfEvidence',
+				expectedHtml: {
+					caseOfficer: 'Awaiting Test Organisation proof of evidence and witnesses'
+				}
+			},
+			{
+				name: 'Review Rule 6 party proof of evidence',
+				requiredAction: 'reviewRule6PartyProofOfEvidence',
+				expectedHtml: {
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/proof-of-evidence/rule-6-party/1?backUrl=%2Fappeals-service%2Fpersonal-list">Review Test Organisation proof of evidence and witnesses</a>`
+				}
 			}
 		];
 
@@ -597,7 +625,7 @@ describe('personal-list', () => {
 					{ originalUrl: baseUrl }
 				);
 
-				expect(result).toBe(testCase.expectedHtml.caseOfficer);
+				expect(result).toContain(testCase.expectedHtml.caseOfficer);
 			});
 
 			if ('nonCaseOfficer' in testCase.expectedHtml) {

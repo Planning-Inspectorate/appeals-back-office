@@ -8,14 +8,9 @@ import {
 	inspectorDecisionData
 } from '#testing/appeals/appeals.js';
 import { createTestEnvironment } from '#testing/index.js';
-import {
-	CASE_OUTCOME_ALLOWED,
-	CASE_OUTCOME_DISMISSED,
-	CASE_OUTCOME_INVALID,
-	CASE_OUTCOME_SPLIT_DECISION
-} from '@pins/appeals/constants/support.js';
 import { parseHtml } from '@pins/platform';
 
+import { APPEAL_CASE_DECISION_OUTCOME } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
 
@@ -91,7 +86,7 @@ describe('issue-decision', () => {
 					'<input class="govuk-radios__input" id="decision-2" name="decision" type="radio" value="dismissed">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="split decision">'
+					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="split_decision">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="invalid">'
@@ -131,7 +126,7 @@ describe('issue-decision', () => {
 						'<input class="govuk-radios__input" id="decision-2" name="decision" type="radio" value="dismissed">'
 					);
 					expect(unprettifiedElement.innerHTML).toContain(
-						'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="split decision">'
+						'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="split_decision">'
 					);
 				});
 			});
@@ -140,7 +135,7 @@ describe('issue-decision', () => {
 				it(`should render the 'decision' page for the child with the expected content`, async () => {
 					issueDecisionLeadResponse = await request
 						.post(`${baseUrl}/3/issue-decision/decision`)
-						.send({ decision: CASE_OUTCOME_ALLOWED });
+						.send({ decision: APPEAL_CASE_DECISION_OUTCOME.ALLOWED });
 
 					const response = await request.get(`${baseUrl}/3${issueDecisionPath}/4${decisionPath}`);
 					const element = parseHtml(response.text);
@@ -161,7 +156,7 @@ describe('issue-decision', () => {
 						'<input class="govuk-radios__input" id="decision-2" name="decision" type="radio" value="dismissed">'
 					);
 					expect(unprettifiedElement.innerHTML).toContain(
-						'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="split decision">'
+						'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="split_decision">'
 					);
 				});
 			});
@@ -189,7 +184,7 @@ describe('issue-decision', () => {
 		it(`should redirect to the decision letter upload page, if the decision is 'Allowed'`, async () => {
 			const response = await request
 				.post(`${baseUrl}/1/issue-decision/decision`)
-				.send({ decision: CASE_OUTCOME_ALLOWED })
+				.send({ decision: APPEAL_CASE_DECISION_OUTCOME.ALLOWED })
 				.expect(302);
 
 			expect(response.headers.location).toBe(
@@ -200,7 +195,7 @@ describe('issue-decision', () => {
 		it(`should redirect to the decision letter upload page, if the decision is 'Dismissed'`, async () => {
 			const response = await request
 				.post(`${baseUrl}/1/issue-decision/decision`)
-				.send({ decision: CASE_OUTCOME_DISMISSED })
+				.send({ decision: APPEAL_CASE_DECISION_OUTCOME.DISMISSED })
 				.expect(302);
 
 			expect(response.headers.location).toBe(
@@ -211,7 +206,7 @@ describe('issue-decision', () => {
 		it(`should redirect to the decision letter upload page, if the decision is 'Split'`, async () => {
 			const response = await request
 				.post(`${baseUrl}/1/issue-decision/decision`)
-				.send({ decision: CASE_OUTCOME_SPLIT_DECISION })
+				.send({ decision: APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION })
 				.expect(302);
 
 			expect(response.headers.location).toBe(
@@ -222,7 +217,7 @@ describe('issue-decision', () => {
 		it(`should redirect to the decision letter page, if the decision is 'Invalid'`, async () => {
 			const response = await request
 				.post(`${baseUrl}/1/issue-decision/decision`)
-				.send({ decision: CASE_OUTCOME_INVALID })
+				.send({ decision: APPEAL_CASE_DECISION_OUTCOME.INVALID })
 				.expect(302);
 
 			expect(response.headers.location).toBe(
@@ -817,7 +812,7 @@ describe('issue-decision', () => {
 
 				issueDecisionResponse = await request
 					.post(`${baseUrl}/1/issue-decision/decision`)
-					.send({ decision: CASE_OUTCOME_ALLOWED });
+					.send({ decision: APPEAL_CASE_DECISION_OUTCOME.ALLOWED });
 
 				uploadDecisionLetterResponse = await request
 					.post(`${baseUrl}/1${issueDecisionPath}${decisionLetterUploadPath}`)
@@ -912,7 +907,7 @@ describe('issue-decision', () => {
 
 				issueDecisionLeadResponse = await request
 					.post(`${baseUrl}/1/issue-decision/decision`)
-					.send({ decision: CASE_OUTCOME_ALLOWED });
+					.send({ decision: APPEAL_CASE_DECISION_OUTCOME.ALLOWED });
 
 				issueDecisionChildResponse = await request
 					.post(`${baseUrl}/1/issue-decision/2/decision`)
@@ -1013,7 +1008,7 @@ describe('issue-decision', () => {
 
 			issueDecisionResponse = await request
 				.post(`${baseUrl}/1/issue-decision/decision`)
-				.send({ decision: CASE_OUTCOME_ALLOWED });
+				.send({ decision: APPEAL_CASE_DECISION_OUTCOME.ALLOWED });
 		});
 		afterEach(teardown);
 

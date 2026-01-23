@@ -2,6 +2,7 @@
 import {
 	casAdvertAppeal,
 	casPlanningAppeal,
+	enforcementNoticeAppeal,
 	fullPlanningAppeal,
 	householdAppeal,
 	listedBuildingAppeal
@@ -34,6 +35,7 @@ import {
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { add, sub } from 'date-fns';
+import { capitalize } from 'lodash-es';
 import { request } from '../../../app-test.js';
 import { sendNewDecisionLetter } from '../decision.service';
 const { databaseConnector } = await import('#utils/database-connector.js');
@@ -173,23 +175,94 @@ describe('decision routes', () => {
 		});
 
 		test.each([
-			['householdAppeal', 'allowed', '', householdAppeal, FEEDBACK_FORM_LINKS.HAS],
-			['casPlanningAppeal', 'allowed', '', casPlanningAppeal, FEEDBACK_FORM_LINKS.CAS_PLANNING],
-			['casAdvertAppeal', 'allowed', '', casAdvertAppeal, FEEDBACK_FORM_LINKS.CAS_ADVERTS],
-			['fullPlanningAppeal', 'allowed', '', fullPlanningAppeal, FEEDBACK_FORM_LINKS.S78],
-			['listedBuildingAppeal', 'allowed', '', listedBuildingAppeal, FEEDBACK_FORM_LINKS.S20],
-			['householdAppeal', 'invalid', '', householdAppeal, FEEDBACK_FORM_LINKS.HAS, 'invalid'],
+			['householdAppeal', 'allowed', '', householdAppeal, FEEDBACK_FORM_LINKS.HAS, 'Householder'],
+			[
+				'casPlanningAppeal',
+				'allowed',
+				'',
+				casPlanningAppeal,
+				FEEDBACK_FORM_LINKS.CAS_PLANNING,
+				'CAS planning'
+			],
+			[
+				'casAdvertAppeal',
+				'dismissed',
+				'',
+				casAdvertAppeal,
+				FEEDBACK_FORM_LINKS.CAS_ADVERTS,
+				'CAS advert'
+			],
+			[
+				'fullPlanningAppeal',
+				'split_decision',
+				'',
+				fullPlanningAppeal,
+				FEEDBACK_FORM_LINKS.S78,
+				'Planning'
+			],
+			[
+				'enforcementNoticeAppeal',
+				'quashed_on_legal_grounds',
+				'',
+				enforcementNoticeAppeal,
+				FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE,
+				'Enforcement Notice'
+			],
+			[
+				'listedBuildingAppeal',
+				'allowed',
+				'',
+				listedBuildingAppeal,
+				FEEDBACK_FORM_LINKS.S20,
+				'Planning listed building and conservation area'
+			],
+			[
+				'householdAppeal',
+				'invalid',
+				'',
+				householdAppeal,
+				FEEDBACK_FORM_LINKS.HAS,
+				'Householder',
+				'invalid'
+			],
 			[
 				'householdAppeal',
 				'invalid',
 				'Because it is.',
 				householdAppeal,
 				FEEDBACK_FORM_LINKS.HAS,
+				'Householder',
+				'invalid'
+			],
+			[
+				'enforcementNoticeAppeal',
+				'invalid',
+				'',
+				enforcementNoticeAppeal,
+				FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE,
+				'Enforcement Notice',
+				'invalid'
+			],
+			[
+				'enforcementNoticeAppeal',
+				'invalid',
+				'Because it is.',
+				enforcementNoticeAppeal,
+				FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE,
+				'Enforcement Notice',
 				'invalid'
 			]
 		])(
 			'returns 200 when all good, appeal type: %s, outcome: %s, reason: %s',
-			async (_, outcome, invalidReason, appeal, expectedFeedbackLink, nextState = 'complete') => {
+			async (
+				appealType,
+				outcome,
+				invalidReason,
+				appeal,
+				expectedFeedbackLink,
+				formattedAppealType,
+				nextState = 'complete'
+			) => {
 				const correctAppealState = {
 					...appeal,
 					appealStatus: [
@@ -199,10 +272,15 @@ describe('decision routes', () => {
 						}
 					]
 				};
+				const enforcementReference = 'ENF/REF';
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(correctAppealState);
 				// @ts-ignore
 				databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+				// @ts-ignore
+				databaseConnector.appellantCase.findUnique.mockResolvedValue({
+					enforcementReference
+				});
 				// @ts-ignore
 				databaseConnector.inspectorDecision.create.mockResolvedValue({});
 
@@ -239,6 +317,7 @@ describe('decision routes', () => {
 
 				const personalisation = {
 					appeal_reference_number: appeal.reference,
+					appeal_type: formattedAppealType,
 					lpa_reference: appeal.applicationReference,
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`
 				};
@@ -252,10 +331,17 @@ describe('decision routes', () => {
 					personalisation.front_office_url = `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`;
 				}
 
+				if (appealType === 'enforcementNoticeAppeal') {
+					personalisation.enforcement_reference = enforcementReference;
+				}
+
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.any(Object),
-					personalisation: { ...personalisation, feedback_link: expectedFeedbackLink },
+					personalisation: {
+						...personalisation,
+						feedback_link: expectedFeedbackLink
+					},
 					templateName: invalidReason
 						? 'decision-is-invalid-appellant'
 						: 'decision-is-allowed-split-dismissed-appellant',
@@ -265,7 +351,13 @@ describe('decision routes', () => {
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.any(Object),
-					personalisation: { ...personalisation, feedback_link: FEEDBACK_FORM_LINKS.LPA },
+					personalisation: {
+						...personalisation,
+						feedback_link:
+							appealType === 'enforcementNoticeAppeal'
+								? FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE
+								: FEEDBACK_FORM_LINKS.LPA
+					},
 					templateName: invalidReason
 						? 'decision-is-invalid-lpa'
 						: 'decision-is-allowed-split-dismissed-lpa',
@@ -275,7 +367,7 @@ describe('decision routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(4);
 
 				let details = stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
-					outcome[0].toUpperCase() + outcome.slice(1)
+					capitalize(outcome.replaceAll('_', ' '))
 				]);
 
 				if (invalidReason) {
@@ -327,7 +419,8 @@ describe('decision routes', () => {
 			['casPlanningAppeal', casPlanningAppeal, FEEDBACK_FORM_LINKS.CAS_PLANNING],
 			['casAdvertAppeal', casAdvertAppeal, FEEDBACK_FORM_LINKS.CAS_ADVERTS],
 			['fullPlanningAppeal', fullPlanningAppeal, FEEDBACK_FORM_LINKS.S78],
-			['listedBuildingAppeal', listedBuildingAppeal, FEEDBACK_FORM_LINKS.S20]
+			['listedBuildingAppeal', listedBuildingAppeal, FEEDBACK_FORM_LINKS.S20],
+			['enforcementNoticeAppeal', enforcementNoticeAppeal, FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE]
 		])(
 			'returns 200 when only issuing appellant costs decisions (%s)',
 			async (_, appeal, expectedFeedbackLink) => {
@@ -602,6 +695,7 @@ describe('decision routes', () => {
 				notifyClient: expect.any(Object),
 				personalisation: {
 					appeal_reference_number: appeal.reference,
+					appeal_type: 'Planning',
 					child_appeals: [childAppeal.childRef],
 					lpa_reference: appeal.applicationReference,
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
@@ -618,6 +712,7 @@ describe('decision routes', () => {
 				notifyClient: expect.any(Object),
 				personalisation: {
 					appeal_reference_number: appeal.reference,
+					appeal_type: 'Planning',
 					child_appeals: [childAppeal.childRef],
 					lpa_reference: appeal.applicationReference,
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
@@ -749,7 +844,8 @@ describe('decision routes', () => {
 						front_office_url: 'https://appeal-planning-decision.service.gov.uk/appeals/1345264',
 						correction_notice_reason: correctionNotice,
 						decision_date: formatDate(decisionDate, false),
-						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						feedback_link: FEEDBACK_FORM_LINKS.HAS
 					}
 				});
 			});
@@ -806,7 +902,8 @@ describe('decision routes', () => {
 					front_office_url: 'https://appeal-planning-decision.service.gov.uk/appeals/1345264',
 					correction_notice_reason: correctionNotice,
 					decision_date: formatDate(decisionDate, false),
-					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					feedback_link: FEEDBACK_FORM_LINKS.HAS
 				}
 			});
 		});

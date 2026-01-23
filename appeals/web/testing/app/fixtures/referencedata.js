@@ -137,6 +137,7 @@ export const appealsNationalList = {
 		{
 			appealId: 1,
 			appealReference: 'APP/Q9999/D/21/943245',
+			planningApplicationReference: '48269/APP/2021/1482',
 			appealSite: {
 				addressLine1: 'Copthalls',
 				addressLine2: 'Clevedon Road',
@@ -156,6 +157,7 @@ export const appealsNationalList = {
 		{
 			appealId: 2,
 			appealReference: 'APP/Q9999/D/21/129285',
+			planningApplicationReference: null,
 			appealSite: {
 				addressLine1: '19 Beauchamp Road',
 				town: 'Bristol',
@@ -521,6 +523,10 @@ export const appealDataCasAdvert = {
 export const appealDataAdvert = {
 	...appealData,
 	appealType: 'Advertisement'
+};
+export const appealDataLdc = {
+	...appealData,
+	appealType: 'Lawful development certificate appeal'
 };
 
 export const appealDataEnforcementNotice = {
@@ -1694,7 +1700,8 @@ export const appellantCaseInvalidReasons = [
 export const appealCaseEnforcementInvalidReasons = [
 	{ id: 1, name: 'Enforcement invalid reason one', hasText: true },
 	{ id: 2, name: 'Enforcement invalid reason two', hasText: true },
-	{ id: 3, name: 'Enforcement invalid reason three', hasText: true }
+	{ id: 3, name: 'Enforcement invalid reason three', hasText: true },
+	{ id: 8, name: 'Enforcement invalid other reason', hasText: true }
 ];
 
 export const appellantCaseIncompleteReasons = [
@@ -4682,6 +4689,72 @@ export const appealDataToGetRequiredActions = {
 				status: DOCUMENT_STATUS_RECEIVED,
 				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 			}
+		}
+	},
+	awaitingRule6PartyStatement: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealTimetable: {
+			lpaStatementDueDate: futureDate
+		},
+		documentationSummary: {
+			rule6PartyStatements: [
+				{
+					status: DOCUMENT_STATUS_NOT_RECEIVED,
+					organisationName: 'Test Organisation',
+					rule6PartyId: 1
+				}
+			]
+		}
+	},
+	reviewRule6PartyStatement: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealTimetable: {
+			lpaStatementDueDate: futureDate
+		},
+		documentationSummary: {
+			rule6PartyStatements: [
+				{
+					status: DOCUMENT_STATUS_RECEIVED,
+					representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
+					organisationName: 'Test Organisation',
+					rule6PartyId: 1
+				}
+			]
+		}
+	},
+	reviewRule6PartyProofOfEvidence: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
+		appealTimetable: {
+			proofOfEvidenceAndWitnessesDueDate: futureDate
+		},
+		documentationSummary: {
+			rule6PartyProofs: [
+				{
+					status: DOCUMENT_STATUS_RECEIVED,
+					representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
+					organisationName: 'Test Organisation',
+					rule6PartyId: 1
+				}
+			]
+		}
+	},
+	awaitingRule6PartyProofOfEvidence: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
+		appealTimetable: {
+			proofOfEvidenceAndWitnessesDueDate: futureDate
+		},
+		documentationSummary: {
+			rule6PartyProofs: [
+				{
+					status: DOCUMENT_STATUS_NOT_RECEIVED,
+					organisationName: 'Test Organisation',
+					rule6PartyId: 1
+				}
+			]
 		}
 	}
 };

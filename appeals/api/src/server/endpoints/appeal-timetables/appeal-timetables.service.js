@@ -177,7 +177,7 @@ const getStartCaseNotifyParams = async (
 			inquiry_expected_days: inquiry.inquiryEstimationDays
 		}),
 		...(appeal.appealType?.key === APPEAL_CASE_TYPE.C && {
-			appeal_grounds: appeal.appealGrounds?.map((ground) => ground.ground?.groundRef) || [],
+			appeal_grounds: appeal.appealGrounds?.map((ground) => ground.ground?.groundRef).sort() || [],
 			enforcement_reference: appeal.appellantCase?.enforcementReference
 		})
 	};

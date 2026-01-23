@@ -371,6 +371,8 @@ export interface WebDocumentationSummaryEntry extends DocumentationSummaryEntry 
 	representationStatus: string | undefined | null;
 	counts?: Record<string, number>;
 	isRedacted?: boolean;
+	organisationName?: string;
+	rule6PartyId?: number;
 }
 
 export interface WebDocumentationSummary extends DocumentationSummary {
@@ -382,6 +384,7 @@ export interface WebDocumentationSummary extends DocumentationSummary {
 	appellantProofOfEvidence?: WebDocumentationSummaryEntry;
 	lpaProofOfEvidence?: WebDocumentationSummaryEntry;
 	appellantStatement?: WebDocumentationSummaryEntry;
+	rule6PartyStatements?: Record<string, WebDocumentationSummaryEntry>;
 }
 
 export interface AppealRule6Party {

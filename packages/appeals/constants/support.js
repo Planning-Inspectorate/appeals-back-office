@@ -2,18 +2,17 @@ import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_DECISION_OUTCOME,
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_CASE_TYPE
+} from '@planning-inspectorate/data-model';
 
 export const VALIDATION_OUTCOME_COMPLETE = 'Complete';
 export const VALIDATION_OUTCOME_INCOMPLETE = 'Incomplete';
 export const VALIDATION_OUTCOME_INVALID = 'Invalid';
 export const VALIDATION_OUTCOME_VALID = 'Valid';
 export const VALIDATION_OUTCOME_CANCEL = 'Cancel';
-
-export const CASE_OUTCOME_ALLOWED = 'allowed';
-export const CASE_OUTCOME_DISMISSED = 'dismissed';
-export const CASE_OUTCOME_SPLIT_DECISION = 'split decision';
-export const CASE_OUTCOME_INVALID = 'invalid';
 
 export const CHANGE_APPEAL_TYPE_INVALID_REASON = 'Wrong appeal type';
 export const INVALID_APPEAL_OTHER_REASON = 'Other reason';
@@ -204,6 +203,13 @@ export const AUDIT_TRAIL_LPAQ_WAS_APPLICATION_REFUSED_DUE_TO_HIGHWAY_OR_TRAFFIC_
 export const AUDIT_TRAIL_LPAQ_DID_APPELLANT_SUBMIT_COMPLETE_PHOTOS_AND_PLANS_UPDATED =
 	'‘Did the appellant submit complete and accurate photographs and plans?’ updated to {replacement0}';
 export const AUDIT_TRAIL_TEAM_ASSIGNED = 'Case team {replacement0} assigned';
+export const AUDIT_TRAIL_RULE_6_PARTY_ADDED = 'Rule 6 party {replacement0} added';
+export const AUDIT_TRAIL_RULE_6_PARTY_WITHDRAWN = 'Rule 6 status withdrawn for {replacement0}';
+export const AUDIT_TRAIL_RULE_6_PARTY_DETAILS_UPDATED =
+	'Rule 6 party {replacement0} details updated';
+export const AUDIT_TRAIL_RULE_6_PARTY_REMOVED = 'Rule 6 party {replacement0} removed';
+export const AUDIT_TRAIL_RULE_6_ADDED_EMAILS_SENT =
+	'Rule 6 added emails sent to LPA, Appellant and Rule 6 party';
 export const AUDIT_TRAIL_RECORD_MISSED_SITE_VISIT = '{replacement0} missed the site visit';
 
 export const AUDIT_TRAIL_LISTED_BUILDING_ADDED = 'A listed building was added';
@@ -380,7 +386,7 @@ export const ERROR_INVALID_DOCUMENT_DATA = 'The integration payload DOCUMENT is 
 export const ERROR_INVALID_LISTED_BUILDING_DATA =
 	'The integration payload LISTED_BUILDING is invalid.';
 export const ERROR_INVALID_APPEAL_STATE = 'The action is invalid on the current appeal state.';
-export const ERROR_CASE_OUTCOME_MUST_BE_ONE_OF = `The case outcome must be one of ${CASE_OUTCOME_ALLOWED}, ${CASE_OUTCOME_DISMISSED}, ${CASE_OUTCOME_SPLIT_DECISION}, ${CASE_OUTCOME_INVALID}`;
+export const ERROR_CASE_OUTCOME_MUST_BE_ONE_OF = `The case outcome must be one of ${Object.values(APPEAL_CASE_DECISION_OUTCOME).join(', ')}`;
 export const ERROR_REP_OUTCOME_MUST_BE_ONE_OF = `The representation status must be one of ${APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW}, ${APPEAL_REPRESENTATION_STATUS.INVALID}, ${APPEAL_REPRESENTATION_STATUS.VALID}`;
 export const ERROR_REP_ONLY_STATEMENT_INCOMPLETE =
 	'Only LPA statements, appellant statements and rule 6 party statements can be set to incomplete';

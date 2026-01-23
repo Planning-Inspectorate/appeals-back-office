@@ -91,6 +91,7 @@ const mockAppellantCaseValidationOutcomeFindMany = jest.fn().mockResolvedValue({
 const mockAppellantCaseValidationOutcomeFindUnique = jest.fn().mockResolvedValue({});
 const mockAppellantCaseUpdate = jest.fn().mockResolvedValue({});
 const mockAppellantCaseFindMany = jest.fn().mockResolvedValue([]);
+const mockAppellantCaseFindUnique = jest.fn().mockResolvedValue({});
 const mockAppellantCaseDeleteMany = jest.fn().mockResolvedValue({});
 const mockLPAQuestionnaireValidationOutcomeFindMany = jest.fn().mockResolvedValue({});
 const mockLPAQuestionnaireValidationOutcomeFindUnique = jest.fn().mockResolvedValue({});
@@ -198,6 +199,7 @@ const mockAppealRule6PartyCreate = jest.fn().mockResolvedValue({});
 const mockAppealRule6PartyUpdate = jest.fn().mockResolvedValue({});
 const mockAppealRule6PartyDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppealRule6PartyDelete = jest.fn().mockResolvedValue({});
+const mockAppealRule6PartyFindUnique = jest.fn().mockResolvedValue({});
 const mockGroundFindMany = jest.fn().mockResolvedValue([]);
 const mockGroundUpsert = jest.fn().mockResolvedValue({});
 const mockGroundDeleteMany = jest.fn().mockResolvedValue({});
@@ -415,6 +417,7 @@ class MockPrismaClient {
 	get appellantCase() {
 		return {
 			update: mockAppellantCaseUpdate,
+			findUnique: mockAppellantCaseFindUnique,
 			findMany: mockAppellantCaseFindMany,
 			deleteMany: mockAppellantCaseDeleteMany
 		};
@@ -714,7 +717,8 @@ class MockPrismaClient {
 			create: mockAppealRule6PartyCreate,
 			update: mockAppealRule6PartyUpdate,
 			deleteMany: mockAppealRule6PartyDeleteMany,
-			delete: mockAppealRule6PartyDelete
+			delete: mockAppealRule6PartyDelete,
+			findUnique: mockAppealRule6PartyFindUnique
 		};
 	}
 

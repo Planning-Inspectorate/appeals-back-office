@@ -36,7 +36,6 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
-	CASE_OUTCOME_INVALID,
 	DECISION_TYPE_APPELLANT_COSTS,
 	DECISION_TYPE_INSPECTOR
 } from '@pins/appeals/constants/support.js';
@@ -121,11 +120,12 @@ export const postIssueDecision = async (request, response) => {
 		session.inspectorDecision = {
 			...request.session.inspectorDecision,
 			outcome: body.decision,
-			invalidReason: body.decision === CASE_OUTCOME_INVALID ? body.invalidReason : ''
+			invalidReason:
+				body.decision === APPEAL_CASE_DECISION_OUTCOME.INVALID ? body.invalidReason : ''
 		};
 	}
 
-	if (session.inspectorDecision.outcome === CASE_OUTCOME_INVALID) {
+	if (session.inspectorDecision.outcome === APPEAL_CASE_DECISION_OUTCOME.INVALID) {
 		if (isFeatureActive(FEATURE_FLAG_NAMES.INVALID_DECISION_LETTER)) {
 			nextPageUrl = `${baseUrl(currentAppeal)}/decision-letter`;
 		} else {

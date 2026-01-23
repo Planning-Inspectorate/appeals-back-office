@@ -104,9 +104,39 @@ const deleteRule6Party = async (rule6PartyId) => {
 	});
 };
 
+/**
+ * @param {number} id
+ * @returns {Promise<AppealRule6Party & { serviceUser: ServiceUser } | null>}
+ */
+const getRule6PartyById = async (id) => {
+	return databaseConnector.appealRule6Party.findUnique({
+		where: { id },
+		select: {
+			id: true,
+			appealId: true,
+			serviceUserId: true,
+			serviceUser: {
+				select: {
+					id: true,
+					organisationName: true,
+					salutation: true,
+					firstName: true,
+					middleName: true,
+					lastName: true,
+					email: true,
+					website: true,
+					phoneNumber: true,
+					addressId: true
+				}
+			}
+		}
+	});
+};
+
 export default {
 	createAppealRule6Party,
 	deleteRule6Party,
 	getRule6PartiesForAppeal,
+	getRule6PartyById,
 	updateRule6Party
 };

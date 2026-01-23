@@ -36,6 +36,7 @@ import { generateCASAdvertComponents } from './page-components/cas-advert.mapper
 import { generateCASComponents } from './page-components/cas.mapper.js';
 import { generateEnforcementNoticeComponents } from './page-components/enforcement-notice.mapper.js';
 import { generateHASComponents } from './page-components/has.mapper.js';
+import { generateLdcComponents } from './page-components/ldc.mapper.js';
 import { generateS20Components } from './page-components/s20.mapper.js';
 import { generateS78Components } from './page-components/s78.mapper.js';
 
@@ -831,6 +832,12 @@ function generateCaseTypeSpecificComponents(
 				);
 			} else {
 				throw new Error('Feature flag inactive for Enforcement notice');
+			}
+		case APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE:
+			if (isFeatureActive(FEATURE_FLAG_NAMES.LDC)) {
+				return generateLdcComponents(appealDetails, appellantCaseData, mappedAppellantCaseData);
+			} else {
+				throw new Error('Feature flag inactive for LDC');
 			}
 		default:
 			throw new Error('Invalid appealType, unable to generate display page');

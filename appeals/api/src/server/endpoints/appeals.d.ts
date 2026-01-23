@@ -662,6 +662,8 @@ interface DocumentationSummaryEntry {
 	representationStatus?: string | undefined | null;
 	counts?: Record<string, number>;
 	isRedacted?: boolean;
+	organisationName?: string;
+	rule6PartyId?: number;
 }
 
 interface FolderInfo {

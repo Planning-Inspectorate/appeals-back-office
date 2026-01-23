@@ -8,6 +8,8 @@ import { isChildAppeal, isParentAppeal } from '#lib/mappers/utils/is-linked-appe
 import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import { DOCUMENT_STATUS_NOT_RECEIVED } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import * as authSession from '../../app/auth/auth-session.service.js';
 
@@ -301,6 +303,7 @@ export function personalListPage(
  * @param {number|null|undefined} lpaQuestionnaireId
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {string} procedureType
+ * @param {import('#appeals/appeal-details/appeal-details.types.js').WebDocumentationSummary} documentationSummary
  * @returns {string|undefined}
  */
 function mapRequiredActionToPersonalListActionHtml(
@@ -310,7 +313,8 @@ function mapRequiredActionToPersonalListActionHtml(
 	appealId,
 	lpaQuestionnaireId,
 	request,
-	procedureType
+	procedureType,
+	documentationSummary
 ) {
 	switch (action) {
 		case 'addHorizonReference': {
@@ -470,7 +474,7 @@ function mapRequiredActionToPersonalListActionHtml(
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 				request,
 				`/appeals-service/appeal-details/${appealId}/share`
-			)}">Share IP comments and LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+			)}">Share IP comments and statements<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'startAppeal': {
 			if (isChildAppeal) {
@@ -543,6 +547,55 @@ function mapRequiredActionToPersonalListActionHtml(
 		case 'awaitingAppellantStatement': {
 			return 'Awaiting appellant statement';
 		}
+		case 'awaitingRule6PartyStatement': {
+			return Object.values(documentationSummary?.rule6PartyStatements || [])
+				.map((item) => {
+					if (item.status === DOCUMENT_STATUS_NOT_RECEIVED) {
+						return `Awaiting ${item.organisationName} statement`;
+					}
+					return undefined;
+				})
+				.filter((x) => x !== undefined)
+				.join('<br>');
+		}
+		case 'reviewRule6PartyStatement': {
+			return Object.values(documentationSummary?.rule6PartyStatements || [])
+				.map((item) => {
+					if (item.representationStatus === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW) {
+						return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+							request,
+							`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${item.rule6PartyId}`
+						)}">Review ${item.organisationName} statement</a>`;
+					}
+					return undefined;
+				})
+				.filter((x) => x !== undefined)
+				.join('<br>');
+		}
+		case 'awaitingRule6PartyProofOfEvidence': {
+			return Object.values(documentationSummary?.rule6PartyProofs || [])
+				.map((item) => {
+					if (item.status === DOCUMENT_STATUS_NOT_RECEIVED) {
+						return `Awaiting ${item.organisationName} proof of evidence and witnesses`;
+					}
+					return undefined;
+				})
+				.filter((x) => x !== undefined)
+				.join('<br>');
+		}
+		case 'reviewRule6PartyProofOfEvidence': {
+			return Object.values(documentationSummary?.rule6PartyProofs || [])
+				.map((item) => {
+					if (item.representationStatus === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW) {
+						return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+							request,
+							`/appeals-service/appeal-details/${appealId}/proof-of-evidence/rule-6-party/${item.rule6PartyId}`
+						)}">Review ${item.organisationName} proof of evidence and witnesses</a>`;
+					}
+					return undefined;
+				})
+				.join('<br>');
+		}
 		case 'reviewAppellantStatement': {
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 				request,
@@ -595,7 +648,8 @@ export function mapActionLinksForAppeal(appeal, isCaseOfficer, request) {
 				appealId,
 				lpaQuestionnaireId,
 				request,
-				procedureType ?? ''
+				procedureType ?? '',
+				appeal.documentationSummary
 			);
 		})
 		.filter((action) => action?.trim())

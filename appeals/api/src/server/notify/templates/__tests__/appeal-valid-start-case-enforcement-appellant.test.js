@@ -270,7 +270,7 @@ describe('appeal-valid-start-case-enforcement-appellant.md', () => {
 			'',
 			'## Planning obligation',
 			'',
-			'Due by 25 January 2025.',
+			'Send to caseofficers@planninginspectorate.gov.uk by 25 January 2025.',
 			'',
 			'## Final comments',
 			'',

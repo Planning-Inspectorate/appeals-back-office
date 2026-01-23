@@ -6,10 +6,12 @@ import { duplicateFiles } from '#endpoints/link-appeals/link-appeals.service.js'
 import { getRepresentations } from '#endpoints/representations/representations.service.js';
 import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
+import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import transitionState from '#state/transition-state.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import { getFeedbackLinkFromAppealTypeKey } from '#utils/feedback-form-link.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { trimAppealType } from '#utils/string-utils.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
 import { FEATURE_FLAG_NAMES, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import {
@@ -28,8 +30,10 @@ import {
 	APPEAL_CASE_DECISION_OUTCOME,
 	APPEAL_CASE_STAGE,
 	APPEAL_CASE_STATUS,
+	APPEAL_CASE_TYPE,
 	APPEAL_DOCUMENT_TYPE
 } from '@planning-inspectorate/data-model';
+import { capitalize } from 'lodash-es';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} Decision */
@@ -57,8 +61,9 @@ const hasCostsDocument = (appeal, appealDocumentType) => {
  * @returns {string}
  */
 const formatIssueDecisionAuditTrail = (outcome, invalidDecisionReason) => {
+	const outcomeFormatted = capitalize(outcome.replaceAll('_', ' '));
 	return stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
-		`${outcome[0].toUpperCase() + outcome.slice(1)}${
+		`${outcomeFormatted}${
 			invalidDecisionReason && isFeatureActive(FEATURE_FLAG_NAMES.INVALID_DECISION_LETTER)
 				? '\n\n Reason: ' + invalidDecisionReason
 				: ''
@@ -92,7 +97,7 @@ export const publishDecision = async (
 		documentDate,
 		documentGuid,
 		version: 1,
-		outcome: outcome === 'split decision' ? APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION : outcome,
+		outcome: outcome?.replaceAll(' ', '_'),
 		invalidDecisionReason
 	});
 
@@ -120,10 +125,14 @@ export const publishDecision = async (
 				? APPEAL_CASE_STATUS.INVALID
 				: APPEAL_CASE_STATUS.COMPLETE;
 
+		const { type = '', key: appealTypeKey = APPEAL_CASE_TYPE.D } = appeal.appealType || {};
+		const appealType = trimAppealType(type);
+
 		const personalisation = {
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
+			appeal_type: appealType,
 			...(invalidDecisionReason && { reasons: [invalidDecisionReason] }),
 			...(!invalidDecisionReason && {
 				front_office_url: environment.FRONT_OFFICE_URL || '',
@@ -134,6 +143,14 @@ export const publishDecision = async (
 						.map((childAppeal) => childAppeal.childRef) || []
 			})
 		};
+
+		if (appealTypeKey === APPEAL_CASE_TYPE.C) {
+			const appellantCase = await appellantCaseRepository.getAppellantCaseByAppealId(appeal.id);
+			// @ts-ignore
+			personalisation.enforcement_reference = appellantCase?.enforcementReference;
+		}
+
+		const feedbackLinkForAppellant = getFeedbackLinkFromAppealTypeKey(appealTypeKey || '');
 
 		if (recipientEmail) {
 			await notifySend({
@@ -147,14 +164,19 @@ export const publishDecision = async (
 					? {
 							...personalisation,
 							has_costs_decision: hasAppellantCostsDecision,
-							feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || '')
+							feedback_link: feedbackLinkForAppellant
 						}
 					: {
 							...personalisation,
-							feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || '')
+							feedback_link: feedbackLinkForAppellant
 						}
 			});
 		}
+
+		const feedbackLinkForLPA =
+			appealTypeKey === APPEAL_CASE_TYPE.C
+				? FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE
+				: FEEDBACK_FORM_LINKS.LPA;
 
 		if (lpaEmail) {
 			await notifySend({
@@ -168,11 +190,11 @@ export const publishDecision = async (
 					? {
 							...personalisation,
 							has_costs_decision: hasLpaCostsDecision,
-							feedback_link: FEEDBACK_FORM_LINKS.LPA
+							feedback_link: feedbackLinkForLPA
 						}
 					: {
 							...personalisation,
-							feedback_link: FEEDBACK_FORM_LINKS.LPA
+							feedback_link: feedbackLinkForLPA
 						}
 			});
 		}
@@ -213,7 +235,7 @@ export const publishChildDecision = async (
 	const result = await appealRepository.setAppealDecision(appealId, {
 		documentDate,
 		version: 1,
-		outcome: outcome === 'split decision' ? APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION : outcome
+		outcome
 	});
 
 	if (result) {
@@ -363,7 +385,8 @@ export const sendNewDecisionLetter = async (
 		correction_notice_reason: correctionNotice,
 		decision_date: formatDate(decisionDate, false),
 		front_office_url: environment.FRONT_OFFICE_URL || '',
-		team_email_address: await getTeamEmailFromAppealId(appeal.id)
+		team_email_address: await getTeamEmailFromAppealId(appeal.id),
+		feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || '')
 	};
 
 	await Promise.all(

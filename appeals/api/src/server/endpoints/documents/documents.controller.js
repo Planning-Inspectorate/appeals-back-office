@@ -162,7 +162,7 @@ export const addDocuments = async (req, res) => {
 				continue;
 			}
 
-			service.addDocumentAudit(auditTrail.guid, 1, auditTrail.audit, 'Create');
+			await service.addDocumentAudit(auditTrail.guid, 1, auditTrail.audit, 'Create');
 		}
 
 		return res.status(204).send();
@@ -213,7 +213,7 @@ export const addDocumentVersion = async (req, res) => {
 				])
 			});
 			if (body.correctionNotice) {
-				sendNewDecisionLetter(
+				await sendNewDecisionLetter(
 					appeal,
 					body.correctionNotice,
 					req.get('azureAdUserId') || '',
@@ -234,7 +234,12 @@ export const addDocumentVersion = async (req, res) => {
 		}
 
 		if (auditTrail) {
-			service.addDocumentAudit(document.guid, updatedDocument.versionId, auditTrail, 'Create');
+			await service.addDocumentAudit(
+				document.guid,
+				updatedDocument.versionId,
+				auditTrail,
+				'Create'
+			);
 		}
 	})();
 
@@ -285,7 +290,7 @@ export const deleteDocumentVersion = async (req, res) => {
 		});
 
 		if (auditTrail) {
-			service.addDocumentAudit(document.guid, Number(version), auditTrail, 'Delete');
+			await service.addDocumentAudit(document.guid, Number(version), auditTrail, 'Delete');
 		}
 	})();
 

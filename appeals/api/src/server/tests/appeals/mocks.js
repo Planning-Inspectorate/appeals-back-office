@@ -684,9 +684,9 @@ export const listedBuildingAppealLPAQuestionnaireIncomplete = {
 };
 
 export const enforcementNoticeAppeal = {
-	...householdAppeal,
+	...fullPlanningAppeal,
 	appellantCase: {
-		...householdAppeal.appellantCase,
+		...fullPlanningAppeal.appellantCase,
 		enforcementNotice: true,
 		contactAddressId: 1,
 		contactAddress: {
@@ -700,9 +700,11 @@ export const enforcementNoticeAppeal = {
 		enforcementEffectiveDate: new Date(),
 		contactPlanningInspectorateDate: new Date(),
 		enforcementReference: 'Reference',
-		interestInLand: 'Land owner',
-		writtenOrVerbalPermission: 'Written',
-		descriptionOfAllegedBreach: 'Description'
+		interestInLand: 'owner',
+		writtenOrVerbalPermission: 'yes',
+		descriptionOfAllegedBreach: 'Description',
+		applicationDevelopmentAllOrPart: 'all',
+		appealDecisionDate: new Date()
 	},
 	appealType: {
 		id: 2,

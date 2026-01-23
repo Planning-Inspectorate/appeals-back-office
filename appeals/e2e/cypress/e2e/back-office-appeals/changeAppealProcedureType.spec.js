@@ -135,7 +135,8 @@ describe('change appeal procedure types', () => {
 					const proofOfEvidenceDate = date;
 					dateTimeSection.enterDueDates(
 						changeAppealProcedureTypeTimetableItems.slice(2),
-						proofOfEvidenceDate
+						proofOfEvidenceDate,
+						0
 					);
 
 					// proceed to cya page and check answers

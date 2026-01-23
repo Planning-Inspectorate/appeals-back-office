@@ -4,6 +4,7 @@ import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { submaps as advertSubmaps } from './advert.js';
 import { submaps as casAdvertSubmaps } from './cas-advert.js';
 import { submaps as casPlanningSubmaps } from './cas-planning.js';
+import { submaps as enforcementSubmaps } from './enforcement.js';
 import { submaps as hasSubmaps } from './has.js';
 import { submaps as s20Submaps } from './s20.js';
 import { submaps as s78Submaps } from './s78.js';
@@ -33,7 +34,8 @@ const submaps = {
 	[APPEAL_TYPE.ADVERTISEMENT]: advertSubmaps,
 	[APPEAL_TYPE.CAS_PLANNING]: casPlanningSubmaps,
 	[APPEAL_TYPE.S78]: s78Submaps,
-	[APPEAL_TYPE.PLANNED_LISTED_BUILDING]: s20Submaps
+	[APPEAL_TYPE.PLANNED_LISTED_BUILDING]: s20Submaps,
+	[APPEAL_TYPE.ENFORCEMENT_NOTICE]: enforcementSubmaps
 };
 
 /**
@@ -62,6 +64,11 @@ export function initialiseAndMapLPAQData(
 	const mappedData = { lpaq: {} };
 
 	const submappers = submaps[appealDetails.appealType];
+
+	if (!submappers) {
+		console.error(`[LPAQ Mapper] No submapper found for appeal type: ${appealDetails.appealType}`);
+		return mappedData;
+	}
 
 	Object.entries(submappers).forEach(([key, submapper]) => {
 		mappedData.lpaq[key] = submapper({

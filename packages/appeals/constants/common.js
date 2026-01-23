@@ -22,10 +22,12 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	SEARCH_CASE_OFFICER: 'featureFlagSearchCaseOfficer',
 	ENFORCEMENT_NOTICE: 'featureFlagEnforcementNotice',
 	INVALID_DECISION_LETTER: 'featureFlagInvalidDecisionLetter',
-	RULE_6_PARTIES: 'featureFlagRule6Parties',
+	RULE_6_PARTIES_MVP: 'featureFlagRule6Mvp',
+	RULE_6_PARTIES_POE: 'featureFlagRule6PoE',
 	EXPEDITED_APPEALS: 'featureFlagExpeditedAppeals',
 	MANUALLY_ADD_REPS: 'featureFlagManuallyAddReps',
 	APPELLANT_STATEMENT: 'featureFlagAppellantStatement',
+	RULE_6_STATEMENT: 'featureFlagRule6Statement',
 	LDC: 'featureFlagLDC'
 });
 
@@ -142,7 +144,10 @@ export const FEEDBACK_FORM_LINKS = Object.freeze({
 	FULL_ADVERTS:
 		'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UREdSMUZXUFhUMUdBUERBUFFGVkRQVEFBTS4u',
 
-	LPA: 'https://forms.office.com.mcas.ms/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UNzVFTElMSEJIWlhXWkZFM1E1WDg3RTFPUy4u'
+	LPA: 'https://forms.office.com.mcas.ms/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UNzVFTElMSEJIWlhXWkZFM1E1WDg3RTFPUy4u',
+
+	ENFORCEMENT_NOTICE:
+		'https://forms.cloud.microsoft/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQVRSQlBKOUJVR05TOE1URElSSUVZUjVDMS4u&route=shorturl'
 });
 
 export const REPRESENTATION_ADDED_AS_DOCUMENT = 'Added as a document';
