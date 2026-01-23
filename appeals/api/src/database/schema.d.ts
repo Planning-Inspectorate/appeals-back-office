@@ -225,6 +225,7 @@ export interface AppealGround extends AppealGround {
 	ground: Ground | null;
 	appealId: number | null;
 	groundId: number | null;
+	isDeleted: boolean | null;
 }
 
 export interface EnforcementNoticeAppealOutcome extends schema.EnforcementNoticeAppealOutcome {}

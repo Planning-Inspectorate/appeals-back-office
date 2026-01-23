@@ -48,14 +48,16 @@ export const mapAppellantCase = (data) => {
 		agriculturalHolding,
 		tenantAgriculturalHolding,
 		otherTenantsAgriculturalHolding,
-		informedTenantsAgriculturalHolding
+		informedTenantsAgriculturalHolding,
+		enforcementReference,
+		contactPlanningInspectorateDate
 	} = appellantCase || {};
 	return {
 		...mapAppellantCaseSharedFields(data),
 		ownerOccupancyStatus: interestInLand ? capitalize(interestInLand) : null,
 		occupancyConditionsMet: mapToBool(writtenOrVerbalPermission),
 		enforcementAppealGroundsDetails: appealGrounds?.length
-			? appealGrounds.map(mapAppealGround)
+			? appealGrounds.filter(({ isDeleted }) => !isDeleted).map(mapAppealGround)
 			: null,
 		previousPlanningPermissionGranted: null,
 		issueDateOfEnforcementNotice: enforcementIssueDate?.toISOString() ?? null,
@@ -67,6 +69,8 @@ export const mapAppellantCase = (data) => {
 		agriculturalHolding: agriculturalHolding ?? null,
 		tenantAgriculturalHolding: tenantAgriculturalHolding ?? null,
 		otherTenantsAgriculturalHolding: otherTenantsAgriculturalHolding ?? null,
-		informedTenantsAgriculturalHolding: informedTenantsAgriculturalHolding ?? null
+		informedTenantsAgriculturalHolding: informedTenantsAgriculturalHolding ?? null,
+		enforcementNoticeReference: enforcementReference ?? null,
+		dateAppellantContactedPins: contactPlanningInspectorateDate?.toISOString() ?? null
 	};
 };
