@@ -3,8 +3,7 @@ import { mapActionComponent } from '#lib/mappers/index.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapSiteArea = ({ lpaQuestionnaireData, currentRoute, session }) => {
-	// @ts-ignore
-	const value = lpaQuestionnaireData?.siteAreaSquareMetres;
+	const value = lpaQuestionnaireData.siteAreaSquareMetres;
 
 	return {
 		id: 'site-area-square-metres',
@@ -21,9 +20,10 @@ export const mapSiteArea = ({ lpaQuestionnaireData, currentRoute, session }) => 
 						mapActionComponent(permissionNames.updateCase, session, {
 							text: value ? 'Change' : 'Add',
 							href: `${currentRoute}/site-area`,
-							visuallyHiddenText: 'area of the appeal site'
+							visuallyHiddenText: 'area of the appeal site',
+							attributes: { 'data-cy': 'change-site-area-square-metres' }
 						})
-					]
+					].filter(Boolean)
 				}
 			}
 		}

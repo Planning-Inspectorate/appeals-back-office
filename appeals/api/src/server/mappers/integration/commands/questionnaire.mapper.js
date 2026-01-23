@@ -16,9 +16,14 @@ export const mapQuestionnaireIn = (command, designatedSites) => {
 	const isS78 = casedata.caseType === APPEAL_CASE_TYPE.W;
 	const isAdverts = casedata.caseType === APPEAL_CASE_TYPE.H;
 	const isLDC = casedata.caseType === APPEAL_CASE_TYPE.X;
+	const isEnforcement = casedata.caseType === APPEAL_CASE_TYPE.C;
 
 	//@ts-ignore
-	const listedBuildingsData = mapListedBuildings(casedata, isS78 || isS20 || isAdverts || isLDC);
+	const listedBuildingsData = mapListedBuildings(
+		// @ts-ignore
+		casedata,
+		isS78 || isS20 || isAdverts || isLDC || isEnforcement
+	);
 
 	switch (casedata.caseType) {
 		case APPEAL_CASE_TYPE.D: // HAS - schema includes common and has fields

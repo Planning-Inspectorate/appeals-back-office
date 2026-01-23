@@ -12017,6 +12017,58 @@
 						"type": "boolean",
 						"example": true
 					},
+					"noticeRelatesToBuildingEngineeringMiningOther": {
+						"type": "boolean",
+						"example": true
+					},
+					"siteAreaSquareMetres": {
+						"type": "number",
+						"example": 25
+					},
+					"hasAllegedBreachArea": {
+						"type": "boolean",
+						"example": true
+					},
+					"doesAllegedBreachCreateFloorSpace": {
+						"type": "boolean",
+						"example": true
+					},
+					"changeOfUseRefuseOrWaste": {
+						"type": "boolean",
+						"example": true
+					},
+					"changeOfUseMineralExtraction": {
+						"type": "boolean",
+						"example": true
+					},
+					"changeOfUseMineralStorage": {
+						"type": "boolean",
+						"example": true
+					},
+					"relatesToErectionOfBuildingOrBuildings": {
+						"type": "boolean",
+						"example": true
+					},
+					"relatesToBuildingWithAgriculturalPurpose": {
+						"type": "boolean",
+						"example": true
+					},
+					"relatesToBuildingSingleDwellingHouse": {
+						"type": "boolean",
+						"example": true
+					},
+					"affectedTrunkRoadName": {
+						"type": "string",
+						"example": "123 Main Street"
+					},
+					"isSiteOnCrownLand": {
+						"type": "boolean",
+						"example": true
+					},
+					"article4AffectedDevelopmentRights": {
+						"type": "string",
+						"example": "the right to develop"
+					},
 					"listedBuildingDetails": {
 						"type": "array",
 						"items": {
@@ -12395,6 +12447,58 @@
 					"preserveGrantLoan": {
 						"type": "boolean",
 						"example": true
+					},
+					"noticeRelatesToBuildingEngineeringMiningOther": {
+						"type": "boolean",
+						"example": true
+					},
+					"siteAreaSquareMetres": {
+						"type": "number",
+						"example": 25
+					},
+					"hasAllegedBreachArea": {
+						"type": "boolean",
+						"example": true
+					},
+					"doesAllegedBreachCreateFloorSpace": {
+						"type": "boolean",
+						"example": true
+					},
+					"changeOfUseRefuseOrWaste": {
+						"type": "boolean",
+						"example": true
+					},
+					"changeOfUseMineralExtraction": {
+						"type": "boolean",
+						"example": true
+					},
+					"changeOfUseMineralStorage": {
+						"type": "boolean",
+						"example": true
+					},
+					"relatesToErectionOfBuildingOrBuildings": {
+						"type": "boolean",
+						"example": true
+					},
+					"relatesToBuildingWithAgriculturalPurpose": {
+						"type": "boolean",
+						"example": true
+					},
+					"relatesToBuildingSingleDwellingHouse": {
+						"type": "boolean",
+						"example": true
+					},
+					"affectedTrunkRoadName": {
+						"type": "string",
+						"example": "123 Main Street"
+					},
+					"isSiteOnCrownLand": {
+						"type": "boolean",
+						"example": true
+					},
+					"article4AffectedDevelopmentRights": {
+						"type": "string",
+						"example": "the right to develop"
 					}
 				},
 				"xml": {
@@ -22773,6 +22877,58 @@
 						"type": "string",
 						"nullable": true
 					},
+					"noticeRelatesToBuildingEngineeringMiningOther": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"siteAreaSquareMetres": {
+						"type": "number",
+						"nullable": true
+					},
+					"hasAllegedBreachArea": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"doesAllegedBreachCreateFloorSpace": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"changeOfUseRefuseOrWaste": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"changeOfUseMineralExtraction": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"changeOfUseMineralStorage": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"relatesToErectionOfBuildingOrBuildings": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"relatesToBuildingWithAgriculturalPurpose": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"relatesToBuildingSingleDwellingHouse": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"affectedTrunkRoadName": {
+						"type": "string",
+						"nullable": true
+					},
+					"isSiteOnCrownLand": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"article4AffectedDevelopmentRights": {
+						"type": "string",
+						"nullable": true
+					},
 					"validation": {
 						"type": "object",
 						"properties": {
@@ -32064,6 +32220,3342 @@
 										}
 									}
 								}
+							},
+							"stopNotice": {
+								"type": "object",
+								"required": ["caseId", "folderId", "path", "documents"],
+								"properties": {
+									"caseId": {
+										"type": "number"
+									},
+									"folderId": {
+										"type": "number"
+									},
+									"path": {
+										"type": "string"
+									},
+									"documents": {
+										"nullable": true,
+										"type": "array",
+										"items": {
+											"type": "object",
+											"required": ["id", "name"],
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"caseId": {
+													"type": "number"
+												},
+												"folderId": {
+													"type": "number"
+												},
+												"name": {
+													"type": "string"
+												},
+												"createdAt": {
+													"type": "string",
+													"format": "date-time"
+												},
+												"latestDocumentVersion": {
+													"type": "object",
+													"required": [
+														"id",
+														"version",
+														"virusCheckStatus",
+														"redactionStatus",
+														"documentURI"
+													],
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"version": {
+															"type": "number"
+														},
+														"fileName": {
+															"type": "string"
+														},
+														"originalFileName": {
+															"type": "string"
+														},
+														"size": {
+															"type": "number"
+														},
+														"mime": {
+															"type": "string"
+														},
+														"createdAt": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"dateReceived": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"redactionStatus": {
+															"type": "string",
+															"enum": ["no_redaction_required", "not_redacted", "redacted"]
+														},
+														"virusCheckStatus": {
+															"type": "string",
+															"enum": ["affected", "not_scanned", "scanned"]
+														},
+														"documentType": {
+															"type": "string",
+															"enum": [
+																"appealNotification",
+																"appellantCaseCorrespondence",
+																"appellantCaseWithdrawalLetter",
+																"appellantCostsApplication",
+																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
+																"appellantCostsWithdrawal",
+																"appellantFinalComment",
+																"appellantProofOfEvidence",
+																"appellantStatement",
+																"appellantWitnessesEvidence",
+																"applicationDecisionLetter",
+																"article4Direction",
+																"caseDecisionLetter",
+																"changedDescription",
+																"communityInfrastructureLevy",
+																"conservationDocuments",
+																"conservationMap",
+																"consultationResponses",
+																"crossTeamCorrespondence",
+																"definitiveMapAndStatementExtract",
+																"definitiveMapStatement",
+																"delegatedReport",
+																"designAccessStatement",
+																"developmentPlanPolicies",
+																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
+																"eiaScreeningDirection",
+																"eiaScreeningOpinion",
+																"emergingPlan",
+																"enforcementList",
+																"enforcementNotice",
+																"enforcementNoticePlan",
+																"environmentalAssessment",
+																"groundAFeeReceipt",
+																"groundASupporting",
+																"groundBSupporting",
+																"groundCSupporting",
+																"groundDSupporting",
+																"groundESupporting",
+																"groundFSupporting",
+																"groundGSupporting",
+																"historicEnglandConsultation",
+																"inspectorCorrespondence",
+																"interestedPartyComment",
+																"localDevelopmentOrder",
+																"lpaCaseCorrespondence",
+																"lpaCostsApplication",
+																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
+																"lpaCostsWithdrawal",
+																"lpaEnforcementNotice",
+																"lpaEnforcementNoticePlan",
+																"lpaFinalComment",
+																"lpaProofOfEvidence",
+																"lpaStatement",
+																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
+																"newPlansDrawings",
+																"originalApplicationForm",
+																"otherNewDocuments",
+																"otherPartyRepresentations",
+																"otherRelevantMatters",
+																"otherRelevantPolicies",
+																"ownershipCertificate",
+																"planShowingExtentOfOrder",
+																"planningContraventionNotice",
+																"planningObligation",
+																"planningOfficerReport",
+																"planningPermission",
+																"plansDrawings",
+																"priorCorrespondenceWithPINS",
+																"relatedApplications",
+																"rule6ProofOfEvidence",
+																"rule6Statement",
+																"rule6WitnessesEvidence",
+																"statementCommonGround",
+																"stopNotice",
+																"supplementaryPlanning",
+																"treePreservationPlan",
+																"uncategorised",
+																"whoNotified",
+																"whoNotifiedLetterToNeighbours",
+																"whoNotifiedPressAdvert",
+																"whoNotifiedSiteNotice"
+															]
+														},
+														"stage": {
+															"type": "string",
+															"enum": [
+																"appeal-decision",
+																"appellant-case",
+																"costs",
+																"evidence",
+																"final-comments",
+																"internal",
+																"lpa-questionnaire",
+																"statements",
+																"third-party-comments",
+																"witnesses"
+															]
+														},
+														"documentURI": {
+															"type": "string"
+														},
+														"isLateEntry": {
+															"type": "boolean"
+														},
+														"isDeleted": {
+															"type": "boolean"
+														},
+														"versionAudit": {
+															"nullable": true,
+															"type": "array",
+															"items": {
+																"type": "object",
+																"required": ["loggedAt", "user", "action", "details"],
+																"properties": {
+																	"loggedAt": {
+																		"type": "string",
+																		"format": "date-time"
+																	},
+																	"user": {
+																		"type": "string",
+																		"format": "uuid"
+																	},
+																	"action": {
+																		"type": "string"
+																	},
+																	"details": {
+																		"type": "string"
+																	}
+																}
+															}
+														}
+													},
+													"nullable": true
+												},
+												"allVersions": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"required": [
+															"id",
+															"version",
+															"virusCheckStatus",
+															"redactionStatus",
+															"documentURI"
+														],
+														"properties": {
+															"id": {
+																"type": "string",
+																"format": "uuid"
+															},
+															"version": {
+																"type": "number"
+															},
+															"fileName": {
+																"type": "string"
+															},
+															"originalFileName": {
+																"type": "string"
+															},
+															"size": {
+																"type": "number"
+															},
+															"mime": {
+																"type": "string"
+															},
+															"createdAt": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"dateReceived": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"redactionStatus": {
+																"type": "string",
+																"enum": ["no_redaction_required", "not_redacted", "redacted"]
+															},
+															"virusCheckStatus": {
+																"type": "string",
+																"enum": ["affected", "not_scanned", "scanned"]
+															},
+															"documentType": {
+																"type": "string",
+																"enum": [
+																	"appealNotification",
+																	"appellantCaseCorrespondence",
+																	"appellantCaseWithdrawalLetter",
+																	"appellantCostsApplication",
+																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
+																	"appellantCostsWithdrawal",
+																	"appellantFinalComment",
+																	"appellantProofOfEvidence",
+																	"appellantStatement",
+																	"appellantWitnessesEvidence",
+																	"applicationDecisionLetter",
+																	"article4Direction",
+																	"caseDecisionLetter",
+																	"changedDescription",
+																	"communityInfrastructureLevy",
+																	"conservationDocuments",
+																	"conservationMap",
+																	"consultationResponses",
+																	"crossTeamCorrespondence",
+																	"definitiveMapAndStatementExtract",
+																	"definitiveMapStatement",
+																	"delegatedReport",
+																	"designAccessStatement",
+																	"developmentPlanPolicies",
+																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
+																	"eiaScreeningDirection",
+																	"eiaScreeningOpinion",
+																	"emergingPlan",
+																	"enforcementList",
+																	"enforcementNotice",
+																	"enforcementNoticePlan",
+																	"environmentalAssessment",
+																	"groundAFeeReceipt",
+																	"groundASupporting",
+																	"groundBSupporting",
+																	"groundCSupporting",
+																	"groundDSupporting",
+																	"groundESupporting",
+																	"groundFSupporting",
+																	"groundGSupporting",
+																	"historicEnglandConsultation",
+																	"inspectorCorrespondence",
+																	"interestedPartyComment",
+																	"localDevelopmentOrder",
+																	"lpaCaseCorrespondence",
+																	"lpaCostsApplication",
+																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
+																	"lpaCostsWithdrawal",
+																	"lpaEnforcementNotice",
+																	"lpaEnforcementNoticePlan",
+																	"lpaFinalComment",
+																	"lpaProofOfEvidence",
+																	"lpaStatement",
+																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
+																	"newPlansDrawings",
+																	"originalApplicationForm",
+																	"otherNewDocuments",
+																	"otherPartyRepresentations",
+																	"otherRelevantMatters",
+																	"otherRelevantPolicies",
+																	"ownershipCertificate",
+																	"planShowingExtentOfOrder",
+																	"planningContraventionNotice",
+																	"planningObligation",
+																	"planningOfficerReport",
+																	"planningPermission",
+																	"plansDrawings",
+																	"priorCorrespondenceWithPINS",
+																	"relatedApplications",
+																	"rule6ProofOfEvidence",
+																	"rule6Statement",
+																	"rule6WitnessesEvidence",
+																	"statementCommonGround",
+																	"stopNotice",
+																	"supplementaryPlanning",
+																	"treePreservationPlan",
+																	"uncategorised",
+																	"whoNotified",
+																	"whoNotifiedLetterToNeighbours",
+																	"whoNotifiedPressAdvert",
+																	"whoNotifiedSiteNotice"
+																]
+															},
+															"stage": {
+																"type": "string",
+																"enum": [
+																	"appeal-decision",
+																	"appellant-case",
+																	"costs",
+																	"evidence",
+																	"final-comments",
+																	"internal",
+																	"lpa-questionnaire",
+																	"statements",
+																	"third-party-comments",
+																	"witnesses"
+																]
+															},
+															"documentURI": {
+																"type": "string"
+															},
+															"isLateEntry": {
+																"type": "boolean"
+															},
+															"isDeleted": {
+																"type": "boolean"
+															},
+															"versionAudit": {
+																"nullable": true,
+																"type": "array",
+																"items": {
+																	"type": "object",
+																	"required": ["loggedAt", "user", "action", "details"],
+																	"properties": {
+																		"loggedAt": {
+																			"type": "string",
+																			"format": "date-time"
+																		},
+																		"user": {
+																			"type": "string",
+																			"format": "uuid"
+																		},
+																		"action": {
+																			"type": "string"
+																		},
+																		"details": {
+																			"type": "string"
+																		}
+																	}
+																}
+															}
+														}
+													},
+													"nullable": true
+												}
+											}
+										}
+									}
+								}
+							},
+							"article4Direction": {
+								"type": "object",
+								"required": ["caseId", "folderId", "path", "documents"],
+								"properties": {
+									"caseId": {
+										"type": "number"
+									},
+									"folderId": {
+										"type": "number"
+									},
+									"path": {
+										"type": "string"
+									},
+									"documents": {
+										"nullable": true,
+										"type": "array",
+										"items": {
+											"type": "object",
+											"required": ["id", "name"],
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"caseId": {
+													"type": "number"
+												},
+												"folderId": {
+													"type": "number"
+												},
+												"name": {
+													"type": "string"
+												},
+												"createdAt": {
+													"type": "string",
+													"format": "date-time"
+												},
+												"latestDocumentVersion": {
+													"type": "object",
+													"required": [
+														"id",
+														"version",
+														"virusCheckStatus",
+														"redactionStatus",
+														"documentURI"
+													],
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"version": {
+															"type": "number"
+														},
+														"fileName": {
+															"type": "string"
+														},
+														"originalFileName": {
+															"type": "string"
+														},
+														"size": {
+															"type": "number"
+														},
+														"mime": {
+															"type": "string"
+														},
+														"createdAt": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"dateReceived": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"redactionStatus": {
+															"type": "string",
+															"enum": ["no_redaction_required", "not_redacted", "redacted"]
+														},
+														"virusCheckStatus": {
+															"type": "string",
+															"enum": ["affected", "not_scanned", "scanned"]
+														},
+														"documentType": {
+															"type": "string",
+															"enum": [
+																"appealNotification",
+																"appellantCaseCorrespondence",
+																"appellantCaseWithdrawalLetter",
+																"appellantCostsApplication",
+																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
+																"appellantCostsWithdrawal",
+																"appellantFinalComment",
+																"appellantProofOfEvidence",
+																"appellantStatement",
+																"appellantWitnessesEvidence",
+																"applicationDecisionLetter",
+																"article4Direction",
+																"caseDecisionLetter",
+																"changedDescription",
+																"communityInfrastructureLevy",
+																"conservationDocuments",
+																"conservationMap",
+																"consultationResponses",
+																"crossTeamCorrespondence",
+																"definitiveMapAndStatementExtract",
+																"definitiveMapStatement",
+																"delegatedReport",
+																"designAccessStatement",
+																"developmentPlanPolicies",
+																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
+																"eiaScreeningDirection",
+																"eiaScreeningOpinion",
+																"emergingPlan",
+																"enforcementList",
+																"enforcementNotice",
+																"enforcementNoticePlan",
+																"environmentalAssessment",
+																"groundAFeeReceipt",
+																"groundASupporting",
+																"groundBSupporting",
+																"groundCSupporting",
+																"groundDSupporting",
+																"groundESupporting",
+																"groundFSupporting",
+																"groundGSupporting",
+																"historicEnglandConsultation",
+																"inspectorCorrespondence",
+																"interestedPartyComment",
+																"localDevelopmentOrder",
+																"lpaCaseCorrespondence",
+																"lpaCostsApplication",
+																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
+																"lpaCostsWithdrawal",
+																"lpaEnforcementNotice",
+																"lpaEnforcementNoticePlan",
+																"lpaFinalComment",
+																"lpaProofOfEvidence",
+																"lpaStatement",
+																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
+																"newPlansDrawings",
+																"originalApplicationForm",
+																"otherNewDocuments",
+																"otherPartyRepresentations",
+																"otherRelevantMatters",
+																"otherRelevantPolicies",
+																"ownershipCertificate",
+																"planShowingExtentOfOrder",
+																"planningContraventionNotice",
+																"planningObligation",
+																"planningOfficerReport",
+																"planningPermission",
+																"plansDrawings",
+																"priorCorrespondenceWithPINS",
+																"relatedApplications",
+																"rule6ProofOfEvidence",
+																"rule6Statement",
+																"rule6WitnessesEvidence",
+																"statementCommonGround",
+																"stopNotice",
+																"supplementaryPlanning",
+																"treePreservationPlan",
+																"uncategorised",
+																"whoNotified",
+																"whoNotifiedLetterToNeighbours",
+																"whoNotifiedPressAdvert",
+																"whoNotifiedSiteNotice"
+															]
+														},
+														"stage": {
+															"type": "string",
+															"enum": [
+																"appeal-decision",
+																"appellant-case",
+																"costs",
+																"evidence",
+																"final-comments",
+																"internal",
+																"lpa-questionnaire",
+																"statements",
+																"third-party-comments",
+																"witnesses"
+															]
+														},
+														"documentURI": {
+															"type": "string"
+														},
+														"isLateEntry": {
+															"type": "boolean"
+														},
+														"isDeleted": {
+															"type": "boolean"
+														},
+														"versionAudit": {
+															"nullable": true,
+															"type": "array",
+															"items": {
+																"type": "object",
+																"required": ["loggedAt", "user", "action", "details"],
+																"properties": {
+																	"loggedAt": {
+																		"type": "string",
+																		"format": "date-time"
+																	},
+																	"user": {
+																		"type": "string",
+																		"format": "uuid"
+																	},
+																	"action": {
+																		"type": "string"
+																	},
+																	"details": {
+																		"type": "string"
+																	}
+																}
+															}
+														}
+													},
+													"nullable": true
+												},
+												"allVersions": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"required": [
+															"id",
+															"version",
+															"virusCheckStatus",
+															"redactionStatus",
+															"documentURI"
+														],
+														"properties": {
+															"id": {
+																"type": "string",
+																"format": "uuid"
+															},
+															"version": {
+																"type": "number"
+															},
+															"fileName": {
+																"type": "string"
+															},
+															"originalFileName": {
+																"type": "string"
+															},
+															"size": {
+																"type": "number"
+															},
+															"mime": {
+																"type": "string"
+															},
+															"createdAt": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"dateReceived": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"redactionStatus": {
+																"type": "string",
+																"enum": ["no_redaction_required", "not_redacted", "redacted"]
+															},
+															"virusCheckStatus": {
+																"type": "string",
+																"enum": ["affected", "not_scanned", "scanned"]
+															},
+															"documentType": {
+																"type": "string",
+																"enum": [
+																	"appealNotification",
+																	"appellantCaseCorrespondence",
+																	"appellantCaseWithdrawalLetter",
+																	"appellantCostsApplication",
+																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
+																	"appellantCostsWithdrawal",
+																	"appellantFinalComment",
+																	"appellantProofOfEvidence",
+																	"appellantStatement",
+																	"appellantWitnessesEvidence",
+																	"applicationDecisionLetter",
+																	"article4Direction",
+																	"caseDecisionLetter",
+																	"changedDescription",
+																	"communityInfrastructureLevy",
+																	"conservationDocuments",
+																	"conservationMap",
+																	"consultationResponses",
+																	"crossTeamCorrespondence",
+																	"definitiveMapAndStatementExtract",
+																	"definitiveMapStatement",
+																	"delegatedReport",
+																	"designAccessStatement",
+																	"developmentPlanPolicies",
+																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
+																	"eiaScreeningDirection",
+																	"eiaScreeningOpinion",
+																	"emergingPlan",
+																	"enforcementList",
+																	"enforcementNotice",
+																	"enforcementNoticePlan",
+																	"environmentalAssessment",
+																	"groundAFeeReceipt",
+																	"groundASupporting",
+																	"groundBSupporting",
+																	"groundCSupporting",
+																	"groundDSupporting",
+																	"groundESupporting",
+																	"groundFSupporting",
+																	"groundGSupporting",
+																	"historicEnglandConsultation",
+																	"inspectorCorrespondence",
+																	"interestedPartyComment",
+																	"localDevelopmentOrder",
+																	"lpaCaseCorrespondence",
+																	"lpaCostsApplication",
+																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
+																	"lpaCostsWithdrawal",
+																	"lpaEnforcementNotice",
+																	"lpaEnforcementNoticePlan",
+																	"lpaFinalComment",
+																	"lpaProofOfEvidence",
+																	"lpaStatement",
+																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
+																	"newPlansDrawings",
+																	"originalApplicationForm",
+																	"otherNewDocuments",
+																	"otherPartyRepresentations",
+																	"otherRelevantMatters",
+																	"otherRelevantPolicies",
+																	"ownershipCertificate",
+																	"planShowingExtentOfOrder",
+																	"planningContraventionNotice",
+																	"planningObligation",
+																	"planningOfficerReport",
+																	"planningPermission",
+																	"plansDrawings",
+																	"priorCorrespondenceWithPINS",
+																	"relatedApplications",
+																	"rule6ProofOfEvidence",
+																	"rule6Statement",
+																	"rule6WitnessesEvidence",
+																	"statementCommonGround",
+																	"stopNotice",
+																	"supplementaryPlanning",
+																	"treePreservationPlan",
+																	"uncategorised",
+																	"whoNotified",
+																	"whoNotifiedLetterToNeighbours",
+																	"whoNotifiedPressAdvert",
+																	"whoNotifiedSiteNotice"
+																]
+															},
+															"stage": {
+																"type": "string",
+																"enum": [
+																	"appeal-decision",
+																	"appellant-case",
+																	"costs",
+																	"evidence",
+																	"final-comments",
+																	"internal",
+																	"lpa-questionnaire",
+																	"statements",
+																	"third-party-comments",
+																	"witnesses"
+																]
+															},
+															"documentURI": {
+																"type": "string"
+															},
+															"isLateEntry": {
+																"type": "boolean"
+															},
+															"isDeleted": {
+																"type": "boolean"
+															},
+															"versionAudit": {
+																"nullable": true,
+																"type": "array",
+																"items": {
+																	"type": "object",
+																	"required": ["loggedAt", "user", "action", "details"],
+																	"properties": {
+																		"loggedAt": {
+																			"type": "string",
+																			"format": "date-time"
+																		},
+																		"user": {
+																			"type": "string",
+																			"format": "uuid"
+																		},
+																		"action": {
+																			"type": "string"
+																		},
+																		"details": {
+																			"type": "string"
+																		}
+																	}
+																}
+															}
+														}
+													},
+													"nullable": true
+												}
+											}
+										}
+									}
+								}
+							},
+							"enforcementList": {
+								"type": "object",
+								"required": ["caseId", "folderId", "path", "documents"],
+								"properties": {
+									"caseId": {
+										"type": "number"
+									},
+									"folderId": {
+										"type": "number"
+									},
+									"path": {
+										"type": "string"
+									},
+									"documents": {
+										"nullable": true,
+										"type": "array",
+										"items": {
+											"type": "object",
+											"required": ["id", "name"],
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"caseId": {
+													"type": "number"
+												},
+												"folderId": {
+													"type": "number"
+												},
+												"name": {
+													"type": "string"
+												},
+												"createdAt": {
+													"type": "string",
+													"format": "date-time"
+												},
+												"latestDocumentVersion": {
+													"type": "object",
+													"required": [
+														"id",
+														"version",
+														"virusCheckStatus",
+														"redactionStatus",
+														"documentURI"
+													],
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"version": {
+															"type": "number"
+														},
+														"fileName": {
+															"type": "string"
+														},
+														"originalFileName": {
+															"type": "string"
+														},
+														"size": {
+															"type": "number"
+														},
+														"mime": {
+															"type": "string"
+														},
+														"createdAt": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"dateReceived": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"redactionStatus": {
+															"type": "string",
+															"enum": ["no_redaction_required", "not_redacted", "redacted"]
+														},
+														"virusCheckStatus": {
+															"type": "string",
+															"enum": ["affected", "not_scanned", "scanned"]
+														},
+														"documentType": {
+															"type": "string",
+															"enum": [
+																"appealNotification",
+																"appellantCaseCorrespondence",
+																"appellantCaseWithdrawalLetter",
+																"appellantCostsApplication",
+																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
+																"appellantCostsWithdrawal",
+																"appellantFinalComment",
+																"appellantProofOfEvidence",
+																"appellantStatement",
+																"appellantWitnessesEvidence",
+																"applicationDecisionLetter",
+																"article4Direction",
+																"caseDecisionLetter",
+																"changedDescription",
+																"communityInfrastructureLevy",
+																"conservationDocuments",
+																"conservationMap",
+																"consultationResponses",
+																"crossTeamCorrespondence",
+																"definitiveMapAndStatementExtract",
+																"definitiveMapStatement",
+																"delegatedReport",
+																"designAccessStatement",
+																"developmentPlanPolicies",
+																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
+																"eiaScreeningDirection",
+																"eiaScreeningOpinion",
+																"emergingPlan",
+																"enforcementList",
+																"enforcementNotice",
+																"enforcementNoticePlan",
+																"environmentalAssessment",
+																"groundAFeeReceipt",
+																"groundASupporting",
+																"groundBSupporting",
+																"groundCSupporting",
+																"groundDSupporting",
+																"groundESupporting",
+																"groundFSupporting",
+																"groundGSupporting",
+																"historicEnglandConsultation",
+																"inspectorCorrespondence",
+																"interestedPartyComment",
+																"localDevelopmentOrder",
+																"lpaCaseCorrespondence",
+																"lpaCostsApplication",
+																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
+																"lpaCostsWithdrawal",
+																"lpaEnforcementNotice",
+																"lpaEnforcementNoticePlan",
+																"lpaFinalComment",
+																"lpaProofOfEvidence",
+																"lpaStatement",
+																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
+																"newPlansDrawings",
+																"originalApplicationForm",
+																"otherNewDocuments",
+																"otherPartyRepresentations",
+																"otherRelevantMatters",
+																"otherRelevantPolicies",
+																"ownershipCertificate",
+																"planShowingExtentOfOrder",
+																"planningContraventionNotice",
+																"planningObligation",
+																"planningOfficerReport",
+																"planningPermission",
+																"plansDrawings",
+																"priorCorrespondenceWithPINS",
+																"relatedApplications",
+																"rule6ProofOfEvidence",
+																"rule6Statement",
+																"rule6WitnessesEvidence",
+																"statementCommonGround",
+																"stopNotice",
+																"supplementaryPlanning",
+																"treePreservationPlan",
+																"uncategorised",
+																"whoNotified",
+																"whoNotifiedLetterToNeighbours",
+																"whoNotifiedPressAdvert",
+																"whoNotifiedSiteNotice"
+															]
+														},
+														"stage": {
+															"type": "string",
+															"enum": [
+																"appeal-decision",
+																"appellant-case",
+																"costs",
+																"evidence",
+																"final-comments",
+																"internal",
+																"lpa-questionnaire",
+																"statements",
+																"third-party-comments",
+																"witnesses"
+															]
+														},
+														"documentURI": {
+															"type": "string"
+														},
+														"isLateEntry": {
+															"type": "boolean"
+														},
+														"isDeleted": {
+															"type": "boolean"
+														},
+														"versionAudit": {
+															"nullable": true,
+															"type": "array",
+															"items": {
+																"type": "object",
+																"required": ["loggedAt", "user", "action", "details"],
+																"properties": {
+																	"loggedAt": {
+																		"type": "string",
+																		"format": "date-time"
+																	},
+																	"user": {
+																		"type": "string",
+																		"format": "uuid"
+																	},
+																	"action": {
+																		"type": "string"
+																	},
+																	"details": {
+																		"type": "string"
+																	}
+																}
+															}
+														}
+													},
+													"nullable": true
+												},
+												"allVersions": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"required": [
+															"id",
+															"version",
+															"virusCheckStatus",
+															"redactionStatus",
+															"documentURI"
+														],
+														"properties": {
+															"id": {
+																"type": "string",
+																"format": "uuid"
+															},
+															"version": {
+																"type": "number"
+															},
+															"fileName": {
+																"type": "string"
+															},
+															"originalFileName": {
+																"type": "string"
+															},
+															"size": {
+																"type": "number"
+															},
+															"mime": {
+																"type": "string"
+															},
+															"createdAt": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"dateReceived": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"redactionStatus": {
+																"type": "string",
+																"enum": ["no_redaction_required", "not_redacted", "redacted"]
+															},
+															"virusCheckStatus": {
+																"type": "string",
+																"enum": ["affected", "not_scanned", "scanned"]
+															},
+															"documentType": {
+																"type": "string",
+																"enum": [
+																	"appealNotification",
+																	"appellantCaseCorrespondence",
+																	"appellantCaseWithdrawalLetter",
+																	"appellantCostsApplication",
+																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
+																	"appellantCostsWithdrawal",
+																	"appellantFinalComment",
+																	"appellantProofOfEvidence",
+																	"appellantStatement",
+																	"appellantWitnessesEvidence",
+																	"applicationDecisionLetter",
+																	"article4Direction",
+																	"caseDecisionLetter",
+																	"changedDescription",
+																	"communityInfrastructureLevy",
+																	"conservationDocuments",
+																	"conservationMap",
+																	"consultationResponses",
+																	"crossTeamCorrespondence",
+																	"definitiveMapAndStatementExtract",
+																	"definitiveMapStatement",
+																	"delegatedReport",
+																	"designAccessStatement",
+																	"developmentPlanPolicies",
+																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
+																	"eiaScreeningDirection",
+																	"eiaScreeningOpinion",
+																	"emergingPlan",
+																	"enforcementList",
+																	"enforcementNotice",
+																	"enforcementNoticePlan",
+																	"environmentalAssessment",
+																	"groundAFeeReceipt",
+																	"groundASupporting",
+																	"groundBSupporting",
+																	"groundCSupporting",
+																	"groundDSupporting",
+																	"groundESupporting",
+																	"groundFSupporting",
+																	"groundGSupporting",
+																	"historicEnglandConsultation",
+																	"inspectorCorrespondence",
+																	"interestedPartyComment",
+																	"localDevelopmentOrder",
+																	"lpaCaseCorrespondence",
+																	"lpaCostsApplication",
+																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
+																	"lpaCostsWithdrawal",
+																	"lpaEnforcementNotice",
+																	"lpaEnforcementNoticePlan",
+																	"lpaFinalComment",
+																	"lpaProofOfEvidence",
+																	"lpaStatement",
+																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
+																	"newPlansDrawings",
+																	"originalApplicationForm",
+																	"otherNewDocuments",
+																	"otherPartyRepresentations",
+																	"otherRelevantMatters",
+																	"otherRelevantPolicies",
+																	"ownershipCertificate",
+																	"planShowingExtentOfOrder",
+																	"planningContraventionNotice",
+																	"planningObligation",
+																	"planningOfficerReport",
+																	"planningPermission",
+																	"plansDrawings",
+																	"priorCorrespondenceWithPINS",
+																	"relatedApplications",
+																	"rule6ProofOfEvidence",
+																	"rule6Statement",
+																	"rule6WitnessesEvidence",
+																	"statementCommonGround",
+																	"stopNotice",
+																	"supplementaryPlanning",
+																	"treePreservationPlan",
+																	"uncategorised",
+																	"whoNotified",
+																	"whoNotifiedLetterToNeighbours",
+																	"whoNotifiedPressAdvert",
+																	"whoNotifiedSiteNotice"
+																]
+															},
+															"stage": {
+																"type": "string",
+																"enum": [
+																	"appeal-decision",
+																	"appellant-case",
+																	"costs",
+																	"evidence",
+																	"final-comments",
+																	"internal",
+																	"lpa-questionnaire",
+																	"statements",
+																	"third-party-comments",
+																	"witnesses"
+																]
+															},
+															"documentURI": {
+																"type": "string"
+															},
+															"isLateEntry": {
+																"type": "boolean"
+															},
+															"isDeleted": {
+																"type": "boolean"
+															},
+															"versionAudit": {
+																"nullable": true,
+																"type": "array",
+																"items": {
+																	"type": "object",
+																	"required": ["loggedAt", "user", "action", "details"],
+																	"properties": {
+																		"loggedAt": {
+																			"type": "string",
+																			"format": "date-time"
+																		},
+																		"user": {
+																			"type": "string",
+																			"format": "uuid"
+																		},
+																		"action": {
+																			"type": "string"
+																		},
+																		"details": {
+																			"type": "string"
+																		}
+																	}
+																}
+															}
+														}
+													},
+													"nullable": true
+												}
+											}
+										}
+									}
+								}
+							},
+							"localDevelopmentOrder": {
+								"type": "object",
+								"required": ["caseId", "folderId", "path", "documents"],
+								"properties": {
+									"caseId": {
+										"type": "number"
+									},
+									"folderId": {
+										"type": "number"
+									},
+									"path": {
+										"type": "string"
+									},
+									"documents": {
+										"nullable": true,
+										"type": "array",
+										"items": {
+											"type": "object",
+											"required": ["id", "name"],
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"caseId": {
+													"type": "number"
+												},
+												"folderId": {
+													"type": "number"
+												},
+												"name": {
+													"type": "string"
+												},
+												"createdAt": {
+													"type": "string",
+													"format": "date-time"
+												},
+												"latestDocumentVersion": {
+													"type": "object",
+													"required": [
+														"id",
+														"version",
+														"virusCheckStatus",
+														"redactionStatus",
+														"documentURI"
+													],
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"version": {
+															"type": "number"
+														},
+														"fileName": {
+															"type": "string"
+														},
+														"originalFileName": {
+															"type": "string"
+														},
+														"size": {
+															"type": "number"
+														},
+														"mime": {
+															"type": "string"
+														},
+														"createdAt": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"dateReceived": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"redactionStatus": {
+															"type": "string",
+															"enum": ["no_redaction_required", "not_redacted", "redacted"]
+														},
+														"virusCheckStatus": {
+															"type": "string",
+															"enum": ["affected", "not_scanned", "scanned"]
+														},
+														"documentType": {
+															"type": "string",
+															"enum": [
+																"appealNotification",
+																"appellantCaseCorrespondence",
+																"appellantCaseWithdrawalLetter",
+																"appellantCostsApplication",
+																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
+																"appellantCostsWithdrawal",
+																"appellantFinalComment",
+																"appellantProofOfEvidence",
+																"appellantStatement",
+																"appellantWitnessesEvidence",
+																"applicationDecisionLetter",
+																"article4Direction",
+																"caseDecisionLetter",
+																"changedDescription",
+																"communityInfrastructureLevy",
+																"conservationDocuments",
+																"conservationMap",
+																"consultationResponses",
+																"crossTeamCorrespondence",
+																"definitiveMapAndStatementExtract",
+																"definitiveMapStatement",
+																"delegatedReport",
+																"designAccessStatement",
+																"developmentPlanPolicies",
+																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
+																"eiaScreeningDirection",
+																"eiaScreeningOpinion",
+																"emergingPlan",
+																"enforcementList",
+																"enforcementNotice",
+																"enforcementNoticePlan",
+																"environmentalAssessment",
+																"groundAFeeReceipt",
+																"groundASupporting",
+																"groundBSupporting",
+																"groundCSupporting",
+																"groundDSupporting",
+																"groundESupporting",
+																"groundFSupporting",
+																"groundGSupporting",
+																"historicEnglandConsultation",
+																"inspectorCorrespondence",
+																"interestedPartyComment",
+																"localDevelopmentOrder",
+																"lpaCaseCorrespondence",
+																"lpaCostsApplication",
+																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
+																"lpaCostsWithdrawal",
+																"lpaEnforcementNotice",
+																"lpaEnforcementNoticePlan",
+																"lpaFinalComment",
+																"lpaProofOfEvidence",
+																"lpaStatement",
+																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
+																"newPlansDrawings",
+																"originalApplicationForm",
+																"otherNewDocuments",
+																"otherPartyRepresentations",
+																"otherRelevantMatters",
+																"otherRelevantPolicies",
+																"ownershipCertificate",
+																"planShowingExtentOfOrder",
+																"planningContraventionNotice",
+																"planningObligation",
+																"planningOfficerReport",
+																"planningPermission",
+																"plansDrawings",
+																"priorCorrespondenceWithPINS",
+																"relatedApplications",
+																"rule6ProofOfEvidence",
+																"rule6Statement",
+																"rule6WitnessesEvidence",
+																"statementCommonGround",
+																"stopNotice",
+																"supplementaryPlanning",
+																"treePreservationPlan",
+																"uncategorised",
+																"whoNotified",
+																"whoNotifiedLetterToNeighbours",
+																"whoNotifiedPressAdvert",
+																"whoNotifiedSiteNotice"
+															]
+														},
+														"stage": {
+															"type": "string",
+															"enum": [
+																"appeal-decision",
+																"appellant-case",
+																"costs",
+																"evidence",
+																"final-comments",
+																"internal",
+																"lpa-questionnaire",
+																"statements",
+																"third-party-comments",
+																"witnesses"
+															]
+														},
+														"documentURI": {
+															"type": "string"
+														},
+														"isLateEntry": {
+															"type": "boolean"
+														},
+														"isDeleted": {
+															"type": "boolean"
+														},
+														"versionAudit": {
+															"nullable": true,
+															"type": "array",
+															"items": {
+																"type": "object",
+																"required": ["loggedAt", "user", "action", "details"],
+																"properties": {
+																	"loggedAt": {
+																		"type": "string",
+																		"format": "date-time"
+																	},
+																	"user": {
+																		"type": "string",
+																		"format": "uuid"
+																	},
+																	"action": {
+																		"type": "string"
+																	},
+																	"details": {
+																		"type": "string"
+																	}
+																}
+															}
+														}
+													},
+													"nullable": true
+												},
+												"allVersions": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"required": [
+															"id",
+															"version",
+															"virusCheckStatus",
+															"redactionStatus",
+															"documentURI"
+														],
+														"properties": {
+															"id": {
+																"type": "string",
+																"format": "uuid"
+															},
+															"version": {
+																"type": "number"
+															},
+															"fileName": {
+																"type": "string"
+															},
+															"originalFileName": {
+																"type": "string"
+															},
+															"size": {
+																"type": "number"
+															},
+															"mime": {
+																"type": "string"
+															},
+															"createdAt": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"dateReceived": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"redactionStatus": {
+																"type": "string",
+																"enum": ["no_redaction_required", "not_redacted", "redacted"]
+															},
+															"virusCheckStatus": {
+																"type": "string",
+																"enum": ["affected", "not_scanned", "scanned"]
+															},
+															"documentType": {
+																"type": "string",
+																"enum": [
+																	"appealNotification",
+																	"appellantCaseCorrespondence",
+																	"appellantCaseWithdrawalLetter",
+																	"appellantCostsApplication",
+																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
+																	"appellantCostsWithdrawal",
+																	"appellantFinalComment",
+																	"appellantProofOfEvidence",
+																	"appellantStatement",
+																	"appellantWitnessesEvidence",
+																	"applicationDecisionLetter",
+																	"article4Direction",
+																	"caseDecisionLetter",
+																	"changedDescription",
+																	"communityInfrastructureLevy",
+																	"conservationDocuments",
+																	"conservationMap",
+																	"consultationResponses",
+																	"crossTeamCorrespondence",
+																	"definitiveMapAndStatementExtract",
+																	"definitiveMapStatement",
+																	"delegatedReport",
+																	"designAccessStatement",
+																	"developmentPlanPolicies",
+																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
+																	"eiaScreeningDirection",
+																	"eiaScreeningOpinion",
+																	"emergingPlan",
+																	"enforcementList",
+																	"enforcementNotice",
+																	"enforcementNoticePlan",
+																	"environmentalAssessment",
+																	"groundAFeeReceipt",
+																	"groundASupporting",
+																	"groundBSupporting",
+																	"groundCSupporting",
+																	"groundDSupporting",
+																	"groundESupporting",
+																	"groundFSupporting",
+																	"groundGSupporting",
+																	"historicEnglandConsultation",
+																	"inspectorCorrespondence",
+																	"interestedPartyComment",
+																	"localDevelopmentOrder",
+																	"lpaCaseCorrespondence",
+																	"lpaCostsApplication",
+																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
+																	"lpaCostsWithdrawal",
+																	"lpaEnforcementNotice",
+																	"lpaEnforcementNoticePlan",
+																	"lpaFinalComment",
+																	"lpaProofOfEvidence",
+																	"lpaStatement",
+																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
+																	"newPlansDrawings",
+																	"originalApplicationForm",
+																	"otherNewDocuments",
+																	"otherPartyRepresentations",
+																	"otherRelevantMatters",
+																	"otherRelevantPolicies",
+																	"ownershipCertificate",
+																	"planShowingExtentOfOrder",
+																	"planningContraventionNotice",
+																	"planningObligation",
+																	"planningOfficerReport",
+																	"planningPermission",
+																	"plansDrawings",
+																	"priorCorrespondenceWithPINS",
+																	"relatedApplications",
+																	"rule6ProofOfEvidence",
+																	"rule6Statement",
+																	"rule6WitnessesEvidence",
+																	"statementCommonGround",
+																	"stopNotice",
+																	"supplementaryPlanning",
+																	"treePreservationPlan",
+																	"uncategorised",
+																	"whoNotified",
+																	"whoNotifiedLetterToNeighbours",
+																	"whoNotifiedPressAdvert",
+																	"whoNotifiedSiteNotice"
+																]
+															},
+															"stage": {
+																"type": "string",
+																"enum": [
+																	"appeal-decision",
+																	"appellant-case",
+																	"costs",
+																	"evidence",
+																	"final-comments",
+																	"internal",
+																	"lpa-questionnaire",
+																	"statements",
+																	"third-party-comments",
+																	"witnesses"
+																]
+															},
+															"documentURI": {
+																"type": "string"
+															},
+															"isLateEntry": {
+																"type": "boolean"
+															},
+															"isDeleted": {
+																"type": "boolean"
+															},
+															"versionAudit": {
+																"nullable": true,
+																"type": "array",
+																"items": {
+																	"type": "object",
+																	"required": ["loggedAt", "user", "action", "details"],
+																	"properties": {
+																		"loggedAt": {
+																			"type": "string",
+																			"format": "date-time"
+																		},
+																		"user": {
+																			"type": "string",
+																			"format": "uuid"
+																		},
+																		"action": {
+																			"type": "string"
+																		},
+																		"details": {
+																			"type": "string"
+																		}
+																	}
+																}
+															}
+														}
+													},
+													"nullable": true
+												}
+											}
+										}
+									}
+								}
+							},
+							"planningPermission": {
+								"type": "object",
+								"required": ["caseId", "folderId", "path", "documents"],
+								"properties": {
+									"caseId": {
+										"type": "number"
+									},
+									"folderId": {
+										"type": "number"
+									},
+									"path": {
+										"type": "string"
+									},
+									"documents": {
+										"nullable": true,
+										"type": "array",
+										"items": {
+											"type": "object",
+											"required": ["id", "name"],
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"caseId": {
+													"type": "number"
+												},
+												"folderId": {
+													"type": "number"
+												},
+												"name": {
+													"type": "string"
+												},
+												"createdAt": {
+													"type": "string",
+													"format": "date-time"
+												},
+												"latestDocumentVersion": {
+													"type": "object",
+													"required": [
+														"id",
+														"version",
+														"virusCheckStatus",
+														"redactionStatus",
+														"documentURI"
+													],
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"version": {
+															"type": "number"
+														},
+														"fileName": {
+															"type": "string"
+														},
+														"originalFileName": {
+															"type": "string"
+														},
+														"size": {
+															"type": "number"
+														},
+														"mime": {
+															"type": "string"
+														},
+														"createdAt": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"dateReceived": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"redactionStatus": {
+															"type": "string",
+															"enum": ["no_redaction_required", "not_redacted", "redacted"]
+														},
+														"virusCheckStatus": {
+															"type": "string",
+															"enum": ["affected", "not_scanned", "scanned"]
+														},
+														"documentType": {
+															"type": "string",
+															"enum": [
+																"appealNotification",
+																"appellantCaseCorrespondence",
+																"appellantCaseWithdrawalLetter",
+																"appellantCostsApplication",
+																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
+																"appellantCostsWithdrawal",
+																"appellantFinalComment",
+																"appellantProofOfEvidence",
+																"appellantStatement",
+																"appellantWitnessesEvidence",
+																"applicationDecisionLetter",
+																"article4Direction",
+																"caseDecisionLetter",
+																"changedDescription",
+																"communityInfrastructureLevy",
+																"conservationDocuments",
+																"conservationMap",
+																"consultationResponses",
+																"crossTeamCorrespondence",
+																"definitiveMapAndStatementExtract",
+																"definitiveMapStatement",
+																"delegatedReport",
+																"designAccessStatement",
+																"developmentPlanPolicies",
+																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
+																"eiaScreeningDirection",
+																"eiaScreeningOpinion",
+																"emergingPlan",
+																"enforcementList",
+																"enforcementNotice",
+																"enforcementNoticePlan",
+																"environmentalAssessment",
+																"groundAFeeReceipt",
+																"groundASupporting",
+																"groundBSupporting",
+																"groundCSupporting",
+																"groundDSupporting",
+																"groundESupporting",
+																"groundFSupporting",
+																"groundGSupporting",
+																"historicEnglandConsultation",
+																"inspectorCorrespondence",
+																"interestedPartyComment",
+																"localDevelopmentOrder",
+																"lpaCaseCorrespondence",
+																"lpaCostsApplication",
+																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
+																"lpaCostsWithdrawal",
+																"lpaEnforcementNotice",
+																"lpaEnforcementNoticePlan",
+																"lpaFinalComment",
+																"lpaProofOfEvidence",
+																"lpaStatement",
+																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
+																"newPlansDrawings",
+																"originalApplicationForm",
+																"otherNewDocuments",
+																"otherPartyRepresentations",
+																"otherRelevantMatters",
+																"otherRelevantPolicies",
+																"ownershipCertificate",
+																"planShowingExtentOfOrder",
+																"planningContraventionNotice",
+																"planningObligation",
+																"planningOfficerReport",
+																"planningPermission",
+																"plansDrawings",
+																"priorCorrespondenceWithPINS",
+																"relatedApplications",
+																"rule6ProofOfEvidence",
+																"rule6Statement",
+																"rule6WitnessesEvidence",
+																"statementCommonGround",
+																"stopNotice",
+																"supplementaryPlanning",
+																"treePreservationPlan",
+																"uncategorised",
+																"whoNotified",
+																"whoNotifiedLetterToNeighbours",
+																"whoNotifiedPressAdvert",
+																"whoNotifiedSiteNotice"
+															]
+														},
+														"stage": {
+															"type": "string",
+															"enum": [
+																"appeal-decision",
+																"appellant-case",
+																"costs",
+																"evidence",
+																"final-comments",
+																"internal",
+																"lpa-questionnaire",
+																"statements",
+																"third-party-comments",
+																"witnesses"
+															]
+														},
+														"documentURI": {
+															"type": "string"
+														},
+														"isLateEntry": {
+															"type": "boolean"
+														},
+														"isDeleted": {
+															"type": "boolean"
+														},
+														"versionAudit": {
+															"nullable": true,
+															"type": "array",
+															"items": {
+																"type": "object",
+																"required": ["loggedAt", "user", "action", "details"],
+																"properties": {
+																	"loggedAt": {
+																		"type": "string",
+																		"format": "date-time"
+																	},
+																	"user": {
+																		"type": "string",
+																		"format": "uuid"
+																	},
+																	"action": {
+																		"type": "string"
+																	},
+																	"details": {
+																		"type": "string"
+																	}
+																}
+															}
+														}
+													},
+													"nullable": true
+												},
+												"allVersions": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"required": [
+															"id",
+															"version",
+															"virusCheckStatus",
+															"redactionStatus",
+															"documentURI"
+														],
+														"properties": {
+															"id": {
+																"type": "string",
+																"format": "uuid"
+															},
+															"version": {
+																"type": "number"
+															},
+															"fileName": {
+																"type": "string"
+															},
+															"originalFileName": {
+																"type": "string"
+															},
+															"size": {
+																"type": "number"
+															},
+															"mime": {
+																"type": "string"
+															},
+															"createdAt": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"dateReceived": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"redactionStatus": {
+																"type": "string",
+																"enum": ["no_redaction_required", "not_redacted", "redacted"]
+															},
+															"virusCheckStatus": {
+																"type": "string",
+																"enum": ["affected", "not_scanned", "scanned"]
+															},
+															"documentType": {
+																"type": "string",
+																"enum": [
+																	"appealNotification",
+																	"appellantCaseCorrespondence",
+																	"appellantCaseWithdrawalLetter",
+																	"appellantCostsApplication",
+																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
+																	"appellantCostsWithdrawal",
+																	"appellantFinalComment",
+																	"appellantProofOfEvidence",
+																	"appellantStatement",
+																	"appellantWitnessesEvidence",
+																	"applicationDecisionLetter",
+																	"article4Direction",
+																	"caseDecisionLetter",
+																	"changedDescription",
+																	"communityInfrastructureLevy",
+																	"conservationDocuments",
+																	"conservationMap",
+																	"consultationResponses",
+																	"crossTeamCorrespondence",
+																	"definitiveMapAndStatementExtract",
+																	"definitiveMapStatement",
+																	"delegatedReport",
+																	"designAccessStatement",
+																	"developmentPlanPolicies",
+																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
+																	"eiaScreeningDirection",
+																	"eiaScreeningOpinion",
+																	"emergingPlan",
+																	"enforcementList",
+																	"enforcementNotice",
+																	"enforcementNoticePlan",
+																	"environmentalAssessment",
+																	"groundAFeeReceipt",
+																	"groundASupporting",
+																	"groundBSupporting",
+																	"groundCSupporting",
+																	"groundDSupporting",
+																	"groundESupporting",
+																	"groundFSupporting",
+																	"groundGSupporting",
+																	"historicEnglandConsultation",
+																	"inspectorCorrespondence",
+																	"interestedPartyComment",
+																	"localDevelopmentOrder",
+																	"lpaCaseCorrespondence",
+																	"lpaCostsApplication",
+																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
+																	"lpaCostsWithdrawal",
+																	"lpaEnforcementNotice",
+																	"lpaEnforcementNoticePlan",
+																	"lpaFinalComment",
+																	"lpaProofOfEvidence",
+																	"lpaStatement",
+																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
+																	"newPlansDrawings",
+																	"originalApplicationForm",
+																	"otherNewDocuments",
+																	"otherPartyRepresentations",
+																	"otherRelevantMatters",
+																	"otherRelevantPolicies",
+																	"ownershipCertificate",
+																	"planShowingExtentOfOrder",
+																	"planningContraventionNotice",
+																	"planningObligation",
+																	"planningOfficerReport",
+																	"planningPermission",
+																	"plansDrawings",
+																	"priorCorrespondenceWithPINS",
+																	"relatedApplications",
+																	"rule6ProofOfEvidence",
+																	"rule6Statement",
+																	"rule6WitnessesEvidence",
+																	"statementCommonGround",
+																	"stopNotice",
+																	"supplementaryPlanning",
+																	"treePreservationPlan",
+																	"uncategorised",
+																	"whoNotified",
+																	"whoNotifiedLetterToNeighbours",
+																	"whoNotifiedPressAdvert",
+																	"whoNotifiedSiteNotice"
+																]
+															},
+															"stage": {
+																"type": "string",
+																"enum": [
+																	"appeal-decision",
+																	"appellant-case",
+																	"costs",
+																	"evidence",
+																	"final-comments",
+																	"internal",
+																	"lpa-questionnaire",
+																	"statements",
+																	"third-party-comments",
+																	"witnesses"
+																]
+															},
+															"documentURI": {
+																"type": "string"
+															},
+															"isLateEntry": {
+																"type": "boolean"
+															},
+															"isDeleted": {
+																"type": "boolean"
+															},
+															"versionAudit": {
+																"nullable": true,
+																"type": "array",
+																"items": {
+																	"type": "object",
+																	"required": ["loggedAt", "user", "action", "details"],
+																	"properties": {
+																		"loggedAt": {
+																			"type": "string",
+																			"format": "date-time"
+																		},
+																		"user": {
+																			"type": "string",
+																			"format": "uuid"
+																		},
+																		"action": {
+																			"type": "string"
+																		},
+																		"details": {
+																			"type": "string"
+																		}
+																	}
+																}
+															}
+														}
+													},
+													"nullable": true
+												}
+											}
+										}
+									}
+								}
+							},
+							"lpaEnforcementNotice": {
+								"type": "object",
+								"required": ["caseId", "folderId", "path", "documents"],
+								"properties": {
+									"caseId": {
+										"type": "number"
+									},
+									"folderId": {
+										"type": "number"
+									},
+									"path": {
+										"type": "string"
+									},
+									"documents": {
+										"nullable": true,
+										"type": "array",
+										"items": {
+											"type": "object",
+											"required": ["id", "name"],
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"caseId": {
+													"type": "number"
+												},
+												"folderId": {
+													"type": "number"
+												},
+												"name": {
+													"type": "string"
+												},
+												"createdAt": {
+													"type": "string",
+													"format": "date-time"
+												},
+												"latestDocumentVersion": {
+													"type": "object",
+													"required": [
+														"id",
+														"version",
+														"virusCheckStatus",
+														"redactionStatus",
+														"documentURI"
+													],
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"version": {
+															"type": "number"
+														},
+														"fileName": {
+															"type": "string"
+														},
+														"originalFileName": {
+															"type": "string"
+														},
+														"size": {
+															"type": "number"
+														},
+														"mime": {
+															"type": "string"
+														},
+														"createdAt": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"dateReceived": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"redactionStatus": {
+															"type": "string",
+															"enum": ["no_redaction_required", "not_redacted", "redacted"]
+														},
+														"virusCheckStatus": {
+															"type": "string",
+															"enum": ["affected", "not_scanned", "scanned"]
+														},
+														"documentType": {
+															"type": "string",
+															"enum": [
+																"appealNotification",
+																"appellantCaseCorrespondence",
+																"appellantCaseWithdrawalLetter",
+																"appellantCostsApplication",
+																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
+																"appellantCostsWithdrawal",
+																"appellantFinalComment",
+																"appellantProofOfEvidence",
+																"appellantStatement",
+																"appellantWitnessesEvidence",
+																"applicationDecisionLetter",
+																"article4Direction",
+																"caseDecisionLetter",
+																"changedDescription",
+																"communityInfrastructureLevy",
+																"conservationDocuments",
+																"conservationMap",
+																"consultationResponses",
+																"crossTeamCorrespondence",
+																"definitiveMapAndStatementExtract",
+																"definitiveMapStatement",
+																"delegatedReport",
+																"designAccessStatement",
+																"developmentPlanPolicies",
+																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
+																"eiaScreeningDirection",
+																"eiaScreeningOpinion",
+																"emergingPlan",
+																"enforcementList",
+																"enforcementNotice",
+																"enforcementNoticePlan",
+																"environmentalAssessment",
+																"groundAFeeReceipt",
+																"groundASupporting",
+																"groundBSupporting",
+																"groundCSupporting",
+																"groundDSupporting",
+																"groundESupporting",
+																"groundFSupporting",
+																"groundGSupporting",
+																"historicEnglandConsultation",
+																"inspectorCorrespondence",
+																"interestedPartyComment",
+																"localDevelopmentOrder",
+																"lpaCaseCorrespondence",
+																"lpaCostsApplication",
+																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
+																"lpaCostsWithdrawal",
+																"lpaEnforcementNotice",
+																"lpaEnforcementNoticePlan",
+																"lpaFinalComment",
+																"lpaProofOfEvidence",
+																"lpaStatement",
+																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
+																"newPlansDrawings",
+																"originalApplicationForm",
+																"otherNewDocuments",
+																"otherPartyRepresentations",
+																"otherRelevantMatters",
+																"otherRelevantPolicies",
+																"ownershipCertificate",
+																"planShowingExtentOfOrder",
+																"planningContraventionNotice",
+																"planningObligation",
+																"planningOfficerReport",
+																"planningPermission",
+																"plansDrawings",
+																"priorCorrespondenceWithPINS",
+																"relatedApplications",
+																"rule6ProofOfEvidence",
+																"rule6Statement",
+																"rule6WitnessesEvidence",
+																"statementCommonGround",
+																"stopNotice",
+																"supplementaryPlanning",
+																"treePreservationPlan",
+																"uncategorised",
+																"whoNotified",
+																"whoNotifiedLetterToNeighbours",
+																"whoNotifiedPressAdvert",
+																"whoNotifiedSiteNotice"
+															]
+														},
+														"stage": {
+															"type": "string",
+															"enum": [
+																"appeal-decision",
+																"appellant-case",
+																"costs",
+																"evidence",
+																"final-comments",
+																"internal",
+																"lpa-questionnaire",
+																"statements",
+																"third-party-comments",
+																"witnesses"
+															]
+														},
+														"documentURI": {
+															"type": "string"
+														},
+														"isLateEntry": {
+															"type": "boolean"
+														},
+														"isDeleted": {
+															"type": "boolean"
+														},
+														"versionAudit": {
+															"nullable": true,
+															"type": "array",
+															"items": {
+																"type": "object",
+																"required": ["loggedAt", "user", "action", "details"],
+																"properties": {
+																	"loggedAt": {
+																		"type": "string",
+																		"format": "date-time"
+																	},
+																	"user": {
+																		"type": "string",
+																		"format": "uuid"
+																	},
+																	"action": {
+																		"type": "string"
+																	},
+																	"details": {
+																		"type": "string"
+																	}
+																}
+															}
+														}
+													},
+													"nullable": true
+												},
+												"allVersions": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"required": [
+															"id",
+															"version",
+															"virusCheckStatus",
+															"redactionStatus",
+															"documentURI"
+														],
+														"properties": {
+															"id": {
+																"type": "string",
+																"format": "uuid"
+															},
+															"version": {
+																"type": "number"
+															},
+															"fileName": {
+																"type": "string"
+															},
+															"originalFileName": {
+																"type": "string"
+															},
+															"size": {
+																"type": "number"
+															},
+															"mime": {
+																"type": "string"
+															},
+															"createdAt": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"dateReceived": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"redactionStatus": {
+																"type": "string",
+																"enum": ["no_redaction_required", "not_redacted", "redacted"]
+															},
+															"virusCheckStatus": {
+																"type": "string",
+																"enum": ["affected", "not_scanned", "scanned"]
+															},
+															"documentType": {
+																"type": "string",
+																"enum": [
+																	"appealNotification",
+																	"appellantCaseCorrespondence",
+																	"appellantCaseWithdrawalLetter",
+																	"appellantCostsApplication",
+																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
+																	"appellantCostsWithdrawal",
+																	"appellantFinalComment",
+																	"appellantProofOfEvidence",
+																	"appellantStatement",
+																	"appellantWitnessesEvidence",
+																	"applicationDecisionLetter",
+																	"article4Direction",
+																	"caseDecisionLetter",
+																	"changedDescription",
+																	"communityInfrastructureLevy",
+																	"conservationDocuments",
+																	"conservationMap",
+																	"consultationResponses",
+																	"crossTeamCorrespondence",
+																	"definitiveMapAndStatementExtract",
+																	"definitiveMapStatement",
+																	"delegatedReport",
+																	"designAccessStatement",
+																	"developmentPlanPolicies",
+																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
+																	"eiaScreeningDirection",
+																	"eiaScreeningOpinion",
+																	"emergingPlan",
+																	"enforcementList",
+																	"enforcementNotice",
+																	"enforcementNoticePlan",
+																	"environmentalAssessment",
+																	"groundAFeeReceipt",
+																	"groundASupporting",
+																	"groundBSupporting",
+																	"groundCSupporting",
+																	"groundDSupporting",
+																	"groundESupporting",
+																	"groundFSupporting",
+																	"groundGSupporting",
+																	"historicEnglandConsultation",
+																	"inspectorCorrespondence",
+																	"interestedPartyComment",
+																	"localDevelopmentOrder",
+																	"lpaCaseCorrespondence",
+																	"lpaCostsApplication",
+																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
+																	"lpaCostsWithdrawal",
+																	"lpaEnforcementNotice",
+																	"lpaEnforcementNoticePlan",
+																	"lpaFinalComment",
+																	"lpaProofOfEvidence",
+																	"lpaStatement",
+																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
+																	"newPlansDrawings",
+																	"originalApplicationForm",
+																	"otherNewDocuments",
+																	"otherPartyRepresentations",
+																	"otherRelevantMatters",
+																	"otherRelevantPolicies",
+																	"ownershipCertificate",
+																	"planShowingExtentOfOrder",
+																	"planningContraventionNotice",
+																	"planningObligation",
+																	"planningOfficerReport",
+																	"planningPermission",
+																	"plansDrawings",
+																	"priorCorrespondenceWithPINS",
+																	"relatedApplications",
+																	"rule6ProofOfEvidence",
+																	"rule6Statement",
+																	"rule6WitnessesEvidence",
+																	"statementCommonGround",
+																	"stopNotice",
+																	"supplementaryPlanning",
+																	"treePreservationPlan",
+																	"uncategorised",
+																	"whoNotified",
+																	"whoNotifiedLetterToNeighbours",
+																	"whoNotifiedPressAdvert",
+																	"whoNotifiedSiteNotice"
+																]
+															},
+															"stage": {
+																"type": "string",
+																"enum": [
+																	"appeal-decision",
+																	"appellant-case",
+																	"costs",
+																	"evidence",
+																	"final-comments",
+																	"internal",
+																	"lpa-questionnaire",
+																	"statements",
+																	"third-party-comments",
+																	"witnesses"
+																]
+															},
+															"documentURI": {
+																"type": "string"
+															},
+															"isLateEntry": {
+																"type": "boolean"
+															},
+															"isDeleted": {
+																"type": "boolean"
+															},
+															"versionAudit": {
+																"nullable": true,
+																"type": "array",
+																"items": {
+																	"type": "object",
+																	"required": ["loggedAt", "user", "action", "details"],
+																	"properties": {
+																		"loggedAt": {
+																			"type": "string",
+																			"format": "date-time"
+																		},
+																		"user": {
+																			"type": "string",
+																			"format": "uuid"
+																		},
+																		"action": {
+																			"type": "string"
+																		},
+																		"details": {
+																			"type": "string"
+																		}
+																	}
+																}
+															}
+														}
+													},
+													"nullable": true
+												}
+											}
+										}
+									}
+								}
+							},
+							"lpaEnforcementNoticePlan": {
+								"type": "object",
+								"required": ["caseId", "folderId", "path", "documents"],
+								"properties": {
+									"caseId": {
+										"type": "number"
+									},
+									"folderId": {
+										"type": "number"
+									},
+									"path": {
+										"type": "string"
+									},
+									"documents": {
+										"nullable": true,
+										"type": "array",
+										"items": {
+											"type": "object",
+											"required": ["id", "name"],
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"caseId": {
+													"type": "number"
+												},
+												"folderId": {
+													"type": "number"
+												},
+												"name": {
+													"type": "string"
+												},
+												"createdAt": {
+													"type": "string",
+													"format": "date-time"
+												},
+												"latestDocumentVersion": {
+													"type": "object",
+													"required": [
+														"id",
+														"version",
+														"virusCheckStatus",
+														"redactionStatus",
+														"documentURI"
+													],
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"version": {
+															"type": "number"
+														},
+														"fileName": {
+															"type": "string"
+														},
+														"originalFileName": {
+															"type": "string"
+														},
+														"size": {
+															"type": "number"
+														},
+														"mime": {
+															"type": "string"
+														},
+														"createdAt": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"dateReceived": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"redactionStatus": {
+															"type": "string",
+															"enum": ["no_redaction_required", "not_redacted", "redacted"]
+														},
+														"virusCheckStatus": {
+															"type": "string",
+															"enum": ["affected", "not_scanned", "scanned"]
+														},
+														"documentType": {
+															"type": "string",
+															"enum": [
+																"appealNotification",
+																"appellantCaseCorrespondence",
+																"appellantCaseWithdrawalLetter",
+																"appellantCostsApplication",
+																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
+																"appellantCostsWithdrawal",
+																"appellantFinalComment",
+																"appellantProofOfEvidence",
+																"appellantStatement",
+																"appellantWitnessesEvidence",
+																"applicationDecisionLetter",
+																"article4Direction",
+																"caseDecisionLetter",
+																"changedDescription",
+																"communityInfrastructureLevy",
+																"conservationDocuments",
+																"conservationMap",
+																"consultationResponses",
+																"crossTeamCorrespondence",
+																"definitiveMapAndStatementExtract",
+																"definitiveMapStatement",
+																"delegatedReport",
+																"designAccessStatement",
+																"developmentPlanPolicies",
+																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
+																"eiaScreeningDirection",
+																"eiaScreeningOpinion",
+																"emergingPlan",
+																"enforcementList",
+																"enforcementNotice",
+																"enforcementNoticePlan",
+																"environmentalAssessment",
+																"groundAFeeReceipt",
+																"groundASupporting",
+																"groundBSupporting",
+																"groundCSupporting",
+																"groundDSupporting",
+																"groundESupporting",
+																"groundFSupporting",
+																"groundGSupporting",
+																"historicEnglandConsultation",
+																"inspectorCorrespondence",
+																"interestedPartyComment",
+																"localDevelopmentOrder",
+																"lpaCaseCorrespondence",
+																"lpaCostsApplication",
+																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
+																"lpaCostsWithdrawal",
+																"lpaEnforcementNotice",
+																"lpaEnforcementNoticePlan",
+																"lpaFinalComment",
+																"lpaProofOfEvidence",
+																"lpaStatement",
+																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
+																"newPlansDrawings",
+																"originalApplicationForm",
+																"otherNewDocuments",
+																"otherPartyRepresentations",
+																"otherRelevantMatters",
+																"otherRelevantPolicies",
+																"ownershipCertificate",
+																"planShowingExtentOfOrder",
+																"planningContraventionNotice",
+																"planningObligation",
+																"planningOfficerReport",
+																"planningPermission",
+																"plansDrawings",
+																"priorCorrespondenceWithPINS",
+																"relatedApplications",
+																"rule6ProofOfEvidence",
+																"rule6Statement",
+																"rule6WitnessesEvidence",
+																"statementCommonGround",
+																"stopNotice",
+																"supplementaryPlanning",
+																"treePreservationPlan",
+																"uncategorised",
+																"whoNotified",
+																"whoNotifiedLetterToNeighbours",
+																"whoNotifiedPressAdvert",
+																"whoNotifiedSiteNotice"
+															]
+														},
+														"stage": {
+															"type": "string",
+															"enum": [
+																"appeal-decision",
+																"appellant-case",
+																"costs",
+																"evidence",
+																"final-comments",
+																"internal",
+																"lpa-questionnaire",
+																"statements",
+																"third-party-comments",
+																"witnesses"
+															]
+														},
+														"documentURI": {
+															"type": "string"
+														},
+														"isLateEntry": {
+															"type": "boolean"
+														},
+														"isDeleted": {
+															"type": "boolean"
+														},
+														"versionAudit": {
+															"nullable": true,
+															"type": "array",
+															"items": {
+																"type": "object",
+																"required": ["loggedAt", "user", "action", "details"],
+																"properties": {
+																	"loggedAt": {
+																		"type": "string",
+																		"format": "date-time"
+																	},
+																	"user": {
+																		"type": "string",
+																		"format": "uuid"
+																	},
+																	"action": {
+																		"type": "string"
+																	},
+																	"details": {
+																		"type": "string"
+																	}
+																}
+															}
+														}
+													},
+													"nullable": true
+												},
+												"allVersions": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"required": [
+															"id",
+															"version",
+															"virusCheckStatus",
+															"redactionStatus",
+															"documentURI"
+														],
+														"properties": {
+															"id": {
+																"type": "string",
+																"format": "uuid"
+															},
+															"version": {
+																"type": "number"
+															},
+															"fileName": {
+																"type": "string"
+															},
+															"originalFileName": {
+																"type": "string"
+															},
+															"size": {
+																"type": "number"
+															},
+															"mime": {
+																"type": "string"
+															},
+															"createdAt": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"dateReceived": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"redactionStatus": {
+																"type": "string",
+																"enum": ["no_redaction_required", "not_redacted", "redacted"]
+															},
+															"virusCheckStatus": {
+																"type": "string",
+																"enum": ["affected", "not_scanned", "scanned"]
+															},
+															"documentType": {
+																"type": "string",
+																"enum": [
+																	"appealNotification",
+																	"appellantCaseCorrespondence",
+																	"appellantCaseWithdrawalLetter",
+																	"appellantCostsApplication",
+																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
+																	"appellantCostsWithdrawal",
+																	"appellantFinalComment",
+																	"appellantProofOfEvidence",
+																	"appellantStatement",
+																	"appellantWitnessesEvidence",
+																	"applicationDecisionLetter",
+																	"article4Direction",
+																	"caseDecisionLetter",
+																	"changedDescription",
+																	"communityInfrastructureLevy",
+																	"conservationDocuments",
+																	"conservationMap",
+																	"consultationResponses",
+																	"crossTeamCorrespondence",
+																	"definitiveMapAndStatementExtract",
+																	"definitiveMapStatement",
+																	"delegatedReport",
+																	"designAccessStatement",
+																	"developmentPlanPolicies",
+																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
+																	"eiaScreeningDirection",
+																	"eiaScreeningOpinion",
+																	"emergingPlan",
+																	"enforcementList",
+																	"enforcementNotice",
+																	"enforcementNoticePlan",
+																	"environmentalAssessment",
+																	"groundAFeeReceipt",
+																	"groundASupporting",
+																	"groundBSupporting",
+																	"groundCSupporting",
+																	"groundDSupporting",
+																	"groundESupporting",
+																	"groundFSupporting",
+																	"groundGSupporting",
+																	"historicEnglandConsultation",
+																	"inspectorCorrespondence",
+																	"interestedPartyComment",
+																	"localDevelopmentOrder",
+																	"lpaCaseCorrespondence",
+																	"lpaCostsApplication",
+																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
+																	"lpaCostsWithdrawal",
+																	"lpaEnforcementNotice",
+																	"lpaEnforcementNoticePlan",
+																	"lpaFinalComment",
+																	"lpaProofOfEvidence",
+																	"lpaStatement",
+																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
+																	"newPlansDrawings",
+																	"originalApplicationForm",
+																	"otherNewDocuments",
+																	"otherPartyRepresentations",
+																	"otherRelevantMatters",
+																	"otherRelevantPolicies",
+																	"ownershipCertificate",
+																	"planShowingExtentOfOrder",
+																	"planningContraventionNotice",
+																	"planningObligation",
+																	"planningOfficerReport",
+																	"planningPermission",
+																	"plansDrawings",
+																	"priorCorrespondenceWithPINS",
+																	"relatedApplications",
+																	"rule6ProofOfEvidence",
+																	"rule6Statement",
+																	"rule6WitnessesEvidence",
+																	"statementCommonGround",
+																	"stopNotice",
+																	"supplementaryPlanning",
+																	"treePreservationPlan",
+																	"uncategorised",
+																	"whoNotified",
+																	"whoNotifiedLetterToNeighbours",
+																	"whoNotifiedPressAdvert",
+																	"whoNotifiedSiteNotice"
+																]
+															},
+															"stage": {
+																"type": "string",
+																"enum": [
+																	"appeal-decision",
+																	"appellant-case",
+																	"costs",
+																	"evidence",
+																	"final-comments",
+																	"internal",
+																	"lpa-questionnaire",
+																	"statements",
+																	"third-party-comments",
+																	"witnesses"
+																]
+															},
+															"documentURI": {
+																"type": "string"
+															},
+															"isLateEntry": {
+																"type": "boolean"
+															},
+															"isDeleted": {
+																"type": "boolean"
+															},
+															"versionAudit": {
+																"nullable": true,
+																"type": "array",
+																"items": {
+																	"type": "object",
+																	"required": ["loggedAt", "user", "action", "details"],
+																	"properties": {
+																		"loggedAt": {
+																			"type": "string",
+																			"format": "date-time"
+																		},
+																		"user": {
+																			"type": "string",
+																			"format": "uuid"
+																		},
+																		"action": {
+																			"type": "string"
+																		},
+																		"details": {
+																			"type": "string"
+																		}
+																	}
+																}
+															}
+														}
+													},
+													"nullable": true
+												}
+											}
+										}
+									}
+								}
+							},
+							"planningContraventionNotice": {
+								"type": "object",
+								"required": ["caseId", "folderId", "path", "documents"],
+								"properties": {
+									"caseId": {
+										"type": "number"
+									},
+									"folderId": {
+										"type": "number"
+									},
+									"path": {
+										"type": "string"
+									},
+									"documents": {
+										"nullable": true,
+										"type": "array",
+										"items": {
+											"type": "object",
+											"required": ["id", "name"],
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"caseId": {
+													"type": "number"
+												},
+												"folderId": {
+													"type": "number"
+												},
+												"name": {
+													"type": "string"
+												},
+												"createdAt": {
+													"type": "string",
+													"format": "date-time"
+												},
+												"latestDocumentVersion": {
+													"type": "object",
+													"required": [
+														"id",
+														"version",
+														"virusCheckStatus",
+														"redactionStatus",
+														"documentURI"
+													],
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"version": {
+															"type": "number"
+														},
+														"fileName": {
+															"type": "string"
+														},
+														"originalFileName": {
+															"type": "string"
+														},
+														"size": {
+															"type": "number"
+														},
+														"mime": {
+															"type": "string"
+														},
+														"createdAt": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"dateReceived": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"redactionStatus": {
+															"type": "string",
+															"enum": ["no_redaction_required", "not_redacted", "redacted"]
+														},
+														"virusCheckStatus": {
+															"type": "string",
+															"enum": ["affected", "not_scanned", "scanned"]
+														},
+														"documentType": {
+															"type": "string",
+															"enum": [
+																"appealNotification",
+																"appellantCaseCorrespondence",
+																"appellantCaseWithdrawalLetter",
+																"appellantCostsApplication",
+																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
+																"appellantCostsWithdrawal",
+																"appellantFinalComment",
+																"appellantProofOfEvidence",
+																"appellantStatement",
+																"appellantWitnessesEvidence",
+																"applicationDecisionLetter",
+																"article4Direction",
+																"caseDecisionLetter",
+																"changedDescription",
+																"communityInfrastructureLevy",
+																"conservationDocuments",
+																"conservationMap",
+																"consultationResponses",
+																"crossTeamCorrespondence",
+																"definitiveMapAndStatementExtract",
+																"definitiveMapStatement",
+																"delegatedReport",
+																"designAccessStatement",
+																"developmentPlanPolicies",
+																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
+																"eiaScreeningDirection",
+																"eiaScreeningOpinion",
+																"emergingPlan",
+																"enforcementList",
+																"enforcementNotice",
+																"enforcementNoticePlan",
+																"environmentalAssessment",
+																"groundAFeeReceipt",
+																"groundASupporting",
+																"groundBSupporting",
+																"groundCSupporting",
+																"groundDSupporting",
+																"groundESupporting",
+																"groundFSupporting",
+																"groundGSupporting",
+																"historicEnglandConsultation",
+																"inspectorCorrespondence",
+																"interestedPartyComment",
+																"localDevelopmentOrder",
+																"lpaCaseCorrespondence",
+																"lpaCostsApplication",
+																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
+																"lpaCostsWithdrawal",
+																"lpaEnforcementNotice",
+																"lpaEnforcementNoticePlan",
+																"lpaFinalComment",
+																"lpaProofOfEvidence",
+																"lpaStatement",
+																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
+																"newPlansDrawings",
+																"originalApplicationForm",
+																"otherNewDocuments",
+																"otherPartyRepresentations",
+																"otherRelevantMatters",
+																"otherRelevantPolicies",
+																"ownershipCertificate",
+																"planShowingExtentOfOrder",
+																"planningContraventionNotice",
+																"planningObligation",
+																"planningOfficerReport",
+																"planningPermission",
+																"plansDrawings",
+																"priorCorrespondenceWithPINS",
+																"relatedApplications",
+																"rule6ProofOfEvidence",
+																"rule6Statement",
+																"rule6WitnessesEvidence",
+																"statementCommonGround",
+																"stopNotice",
+																"supplementaryPlanning",
+																"treePreservationPlan",
+																"uncategorised",
+																"whoNotified",
+																"whoNotifiedLetterToNeighbours",
+																"whoNotifiedPressAdvert",
+																"whoNotifiedSiteNotice"
+															]
+														},
+														"stage": {
+															"type": "string",
+															"enum": [
+																"appeal-decision",
+																"appellant-case",
+																"costs",
+																"evidence",
+																"final-comments",
+																"internal",
+																"lpa-questionnaire",
+																"statements",
+																"third-party-comments",
+																"witnesses"
+															]
+														},
+														"documentURI": {
+															"type": "string"
+														},
+														"isLateEntry": {
+															"type": "boolean"
+														},
+														"isDeleted": {
+															"type": "boolean"
+														},
+														"versionAudit": {
+															"nullable": true,
+															"type": "array",
+															"items": {
+																"type": "object",
+																"required": ["loggedAt", "user", "action", "details"],
+																"properties": {
+																	"loggedAt": {
+																		"type": "string",
+																		"format": "date-time"
+																	},
+																	"user": {
+																		"type": "string",
+																		"format": "uuid"
+																	},
+																	"action": {
+																		"type": "string"
+																	},
+																	"details": {
+																		"type": "string"
+																	}
+																}
+															}
+														}
+													},
+													"nullable": true
+												},
+												"allVersions": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"required": [
+															"id",
+															"version",
+															"virusCheckStatus",
+															"redactionStatus",
+															"documentURI"
+														],
+														"properties": {
+															"id": {
+																"type": "string",
+																"format": "uuid"
+															},
+															"version": {
+																"type": "number"
+															},
+															"fileName": {
+																"type": "string"
+															},
+															"originalFileName": {
+																"type": "string"
+															},
+															"size": {
+																"type": "number"
+															},
+															"mime": {
+																"type": "string"
+															},
+															"createdAt": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"dateReceived": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"redactionStatus": {
+																"type": "string",
+																"enum": ["no_redaction_required", "not_redacted", "redacted"]
+															},
+															"virusCheckStatus": {
+																"type": "string",
+																"enum": ["affected", "not_scanned", "scanned"]
+															},
+															"documentType": {
+																"type": "string",
+																"enum": [
+																	"appealNotification",
+																	"appellantCaseCorrespondence",
+																	"appellantCaseWithdrawalLetter",
+																	"appellantCostsApplication",
+																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
+																	"appellantCostsWithdrawal",
+																	"appellantFinalComment",
+																	"appellantProofOfEvidence",
+																	"appellantStatement",
+																	"appellantWitnessesEvidence",
+																	"applicationDecisionLetter",
+																	"article4Direction",
+																	"caseDecisionLetter",
+																	"changedDescription",
+																	"communityInfrastructureLevy",
+																	"conservationDocuments",
+																	"conservationMap",
+																	"consultationResponses",
+																	"crossTeamCorrespondence",
+																	"definitiveMapAndStatementExtract",
+																	"definitiveMapStatement",
+																	"delegatedReport",
+																	"designAccessStatement",
+																	"developmentPlanPolicies",
+																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
+																	"eiaScreeningDirection",
+																	"eiaScreeningOpinion",
+																	"emergingPlan",
+																	"enforcementList",
+																	"enforcementNotice",
+																	"enforcementNoticePlan",
+																	"environmentalAssessment",
+																	"groundAFeeReceipt",
+																	"groundASupporting",
+																	"groundBSupporting",
+																	"groundCSupporting",
+																	"groundDSupporting",
+																	"groundESupporting",
+																	"groundFSupporting",
+																	"groundGSupporting",
+																	"historicEnglandConsultation",
+																	"inspectorCorrespondence",
+																	"interestedPartyComment",
+																	"localDevelopmentOrder",
+																	"lpaCaseCorrespondence",
+																	"lpaCostsApplication",
+																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
+																	"lpaCostsWithdrawal",
+																	"lpaEnforcementNotice",
+																	"lpaEnforcementNoticePlan",
+																	"lpaFinalComment",
+																	"lpaProofOfEvidence",
+																	"lpaStatement",
+																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
+																	"newPlansDrawings",
+																	"originalApplicationForm",
+																	"otherNewDocuments",
+																	"otherPartyRepresentations",
+																	"otherRelevantMatters",
+																	"otherRelevantPolicies",
+																	"ownershipCertificate",
+																	"planShowingExtentOfOrder",
+																	"planningContraventionNotice",
+																	"planningObligation",
+																	"planningOfficerReport",
+																	"planningPermission",
+																	"plansDrawings",
+																	"priorCorrespondenceWithPINS",
+																	"relatedApplications",
+																	"rule6ProofOfEvidence",
+																	"rule6Statement",
+																	"rule6WitnessesEvidence",
+																	"statementCommonGround",
+																	"stopNotice",
+																	"supplementaryPlanning",
+																	"treePreservationPlan",
+																	"uncategorised",
+																	"whoNotified",
+																	"whoNotifiedLetterToNeighbours",
+																	"whoNotifiedPressAdvert",
+																	"whoNotifiedSiteNotice"
+																]
+															},
+															"stage": {
+																"type": "string",
+																"enum": [
+																	"appeal-decision",
+																	"appellant-case",
+																	"costs",
+																	"evidence",
+																	"final-comments",
+																	"internal",
+																	"lpa-questionnaire",
+																	"statements",
+																	"third-party-comments",
+																	"witnesses"
+																]
+															},
+															"documentURI": {
+																"type": "string"
+															},
+															"isLateEntry": {
+																"type": "boolean"
+															},
+															"isDeleted": {
+																"type": "boolean"
+															},
+															"versionAudit": {
+																"nullable": true,
+																"type": "array",
+																"items": {
+																	"type": "object",
+																	"required": ["loggedAt", "user", "action", "details"],
+																	"properties": {
+																		"loggedAt": {
+																			"type": "string",
+																			"format": "date-time"
+																		},
+																		"user": {
+																			"type": "string",
+																			"format": "uuid"
+																		},
+																		"action": {
+																			"type": "string"
+																		},
+																		"details": {
+																			"type": "string"
+																		}
+																	}
+																}
+															}
+														}
+													},
+													"nullable": true
+												}
+											}
+										}
+									}
+								}
 							}
 						},
 						"nullable": true
@@ -38967,6 +42459,58 @@
 						"nullable": true
 					},
 					"lpaAppealInvalidReasons": {
+						"type": "string",
+						"nullable": true
+					},
+					"noticeRelatesToBuildingEngineeringMiningOther": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"siteAreaSquareMetres": {
+						"type": "number",
+						"nullable": true
+					},
+					"hasAllegedBreachArea": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"doesAllegedBreachCreateFloorSpace": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"changeOfUseRefuseOrWaste": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"changeOfUseMineralExtraction": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"changeOfUseMineralStorage": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"relatesToErectionOfBuildingOrBuildings": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"relatesToBuildingWithAgriculturalPurpose": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"relatesToBuildingSingleDwellingHouse": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"affectedTrunkRoadName": {
+						"type": "string",
+						"nullable": true
+					},
+					"isSiteOnCrownLand": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"article4AffectedDevelopmentRights": {
 						"type": "string",
 						"nullable": true
 					},

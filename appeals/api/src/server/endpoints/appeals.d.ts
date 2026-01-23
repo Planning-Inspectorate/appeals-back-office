@@ -386,6 +386,15 @@ interface SingleLPAQuestionnaireResponse {
 		otherRelevantPolicies?: FolderInfo | null;
 		appealNotification?: FolderInfo | null;
 		historicEnglandConsultation?: FolderInfo | null;
+		// Enforcement
+		enforcementList?: FolderInfo | null;
+		stopNotice?: FolderInfo | null;
+		article4Direction?: FolderInfo | null;
+		localDevelopmentOrder?: FolderInfo | null;
+		planningPermission: FolderInfo | null;
+		lpaEnforcementNotice: FolderInfo | null;
+		lpaEnforcementNoticePlan: FolderInfo | null;
+		planningContraventionNotice: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;
@@ -433,6 +442,20 @@ interface SingleLPAQuestionnaireResponse {
 	isSiteInAreaOfSpecialControlAdverts?: boolean;
 	wasApplicationRefusedDueToHighwayOrTraffic?: boolean;
 	didAppellantSubmitCompletePhotosAndPlans?: boolean;
+	// Enforcement
+	noticeRelatesToBuildingEngineeringMiningOther?: boolean | null;
+	siteAreaSquareMetres?: number | null;
+	hasAllegedBreachArea?: boolean | null;
+	doesAllegedBreachCreateFloorSpace?: boolean | null;
+	changeOfUseRefuseOrWaste?: boolean | null;
+	changeOfUseMineralExtraction?: boolean | null;
+	changeOfUseMineralStorage?: boolean | null;
+	relatesToErectionOfBuildingOrBuildings?: boolean | null;
+	relatesToBuildingWithAgriculturalPurpose?: boolean | null;
+	relatesToBuildingSingleDwellingHouse?: boolean | null;
+	affectedTrunkRoadName?: string | null;
+	isSiteOnCrownLand?: boolean | null;
+	article4AffectedDevelopmentRights?: string | null;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -470,6 +493,20 @@ interface UpdateLPAQuestionnaireRequest {
 	isSiteInAreaOfSpecialControlAdverts?: boolean;
 	wasApplicationRefusedDueToHighwayOrTraffic?: boolean;
 	didAppellantSubmitCompletePhotosAndPlans?: boolean;
+	// Enforcement
+	noticeRelatesToBuildingEngineeringMiningOther?: boolean | null;
+	siteAreaSquareMetres?: number | null;
+	hasAllegedBreachArea?: boolean | null;
+	doesAllegedBreachCreateFloorSpace?: boolean | null;
+	changeOfUseRefuseOrWaste?: boolean | null;
+	changeOfUseMineralExtraction?: boolean | null;
+	changeOfUseMineralStorage?: boolean | null;
+	relatesToErectionOfBuildingOrBuildings?: boolean | null;
+	relatesToBuildingWithAgriculturalPurpose?: boolean | null;
+	relatesToBuildingSingleDwellingHouse?: boolean | null;
+	affectedTrunkRoadName?: string | null;
+	isSiteOnCrownLand?: boolean | null;
+	article4AffectedDevelopmentRights?: string | null;
 }
 
 interface UpdateLPAQuestionnaireValidationOutcomeParams {

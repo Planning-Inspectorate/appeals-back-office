@@ -9,8 +9,9 @@ export const mapNoticeRelatesToOperations = ({
 	booleanSummaryListItem({
 		id: 'notice-relates-to-operations',
 		text: 'Does the enforcement notice relate to building, engineering, mining or other operations?',
-		// @ts-ignore
 		value: lpaQuestionnaireData.noticeRelatesToBuildingEngineeringMiningOther,
 		link: `${currentRoute}/notice-operations/change`,
-		editable: userHasUpdateCase
+		editable: userHasUpdateCase,
+		defaultText: 'No data',
+		addCyAttribute: true
 	});
