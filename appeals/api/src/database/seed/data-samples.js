@@ -537,7 +537,7 @@ export const appellantCaseList = {
 		isGreenBelt: randomBool(),
 		applicationDecisionDate: sub(new Date(), { months: 1 }),
 		applicationDate: sub(new Date(), { weeks: 6 }),
-		typeOfPlanningApplication: 'lawful-development-certificate', // TODO update to APPEAL_TYPE_OF_PLANNING_APPLICATION.LAWFUL_DEVELOPMENT_CERTIFICATE when added to data model,
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.LAWFUL_DEVELOPMENT_CERTIFICATE,
 		appellantProcedurePreference: randomEnumValue(APPEAL_APPELLANT_PROCEDURE_PREFERENCE),
 		appellantProcedurePreferenceDetails: randomArrayValue([
 			'Need for a detailed examination',

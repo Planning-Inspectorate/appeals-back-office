@@ -11,6 +11,7 @@ import {
 	invalidAppellantCaseOutcome,
 	validAppellantCaseOutcome
 } from '#tests/shared/mocks.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE,
@@ -651,6 +652,81 @@ export const fullPlanningAppealAppellantCaseInvalid = {
 		...invalidAppellantCaseOutcome
 	},
 	id: 6
+};
+
+export const ldcAppeal = {
+	...fullPlanningAppeal,
+	id: 3,
+	appealType: {
+		id: 11,
+		type: APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE,
+		key: APPEAL_CASE_TYPE.X
+	},
+	representations: []
+};
+
+export const ldcAppealAppellantCaseValid = {
+	...fullPlanningAppeal,
+	id: 4,
+	appealType: {
+		id: 11,
+		type: APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE,
+		key: APPEAL_CASE_TYPE.X
+	},
+	representations: []
+};
+export const ldcAppealAppellantCaseIncomplete = {
+	...fullPlanningAppeal,
+	id: 5,
+	appealType: {
+		id: 11,
+		type: APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE,
+		key: APPEAL_CASE_TYPE.X
+	},
+	appellantCase: {
+		...householdAppeal.appellantCase,
+		hasDesignAndAccessStatement: true,
+		hasNewPlansOrDrawings: true,
+		hasOtherTenants: true,
+		hasPlanningObligation: true,
+		hasSeparateOwnershipCertificate: true,
+		hasToldTenants: false,
+		isAgriculturalHolding: true,
+		isAgriculturalHoldingTenant: true,
+		isDevelopmentDescriptionStillCorrect: false,
+		newDevelopmentDescription: 'A new extension has been added at the back',
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.LAWFUL_DEVELOPMENT_CERTIFICATE,
+		...incompleteAppellantCaseOutcome
+	},
+
+	caseExtensionDate: new Date(2099, 6, 14),
+	representations: []
+};
+
+export const ldcAppealAppellantCaseInvalid = {
+	...fullPlanningAppeal,
+	id: 6,
+	appealType: {
+		id: 11,
+		type: APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE,
+		key: APPEAL_CASE_TYPE.X
+	},
+	appellantCase: {
+		...householdAppeal.appellantCase,
+		hasDesignAndAccessStatement: true,
+		hasNewPlansOrDrawings: true,
+		hasOtherTenants: true,
+		hasPlanningObligation: true,
+		hasSeparateOwnershipCertificate: true,
+		hasToldTenants: false,
+		isAgriculturalHolding: true,
+		isAgriculturalHoldingTenant: true,
+		isDevelopmentDescriptionStillCorrect: false,
+		newDevelopmentDescription: 'A new extension has been added at the back',
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.LAWFUL_DEVELOPMENT_CERTIFICATE,
+		...invalidAppellantCaseOutcome
+	},
+	representations: []
 };
 
 export const fullPlanningAppealLPAQuestionnaireIncomplete = {

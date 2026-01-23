@@ -392,7 +392,8 @@ export function renderAuditTrailDetail(data) {
 			)?.label || 'Not applicable',
 		AUDIT_TRAIL_WRITTEN_OR_VERBAL_PERMISSION_UPDATED: () => data.writtenOrVerbalPermission,
 		AUDIT_TRAIL_INTEREST_IN_LAND_UPDATED: () =>
-			capitalizeFirstLetter(/** @type {string} */ (data.interestInLand))
+			capitalizeFirstLetter(/** @type {string} */ (data.interestInLand)),
+		AUDIT_TRAIL_SITE_USE_AT_TIME_OF_APPLICATION_UPDATED: () => data.siteUseAtTimeOfApplication
 	};
 
 	if (!auditTrailParameters[constantKey]) {

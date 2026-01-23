@@ -726,7 +726,9 @@ export const spec = {
 			advertInPosition: true,
 			landownerPermission: true,
 			siteGridReferenceEasting: '123456',
-			siteGridReferenceNorthing: '654321'
+			siteGridReferenceNorthing: '654321',
+			siteUseAtTimeOfApplication: 'Residential',
+			applicationMadeUnderActSection: 'existing-development'
 		},
 		UpdateAppellantCaseResponse: {},
 		UpdateLPAQuestionnaireRequest: {

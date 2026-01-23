@@ -84,7 +84,9 @@ const updateAppellantCaseById = async (req, res) => {
 			interestInLand,
 			writtenOrVerbalPermission,
 			applicationDevelopmentAllOrPart,
-			appealDecisionDate
+			appealDecisionDate,
+			siteUseAtTimeOfApplication,
+			applicationMadeUnderActSection
 		},
 		params,
 		validationOutcome
@@ -172,7 +174,9 @@ const updateAppellantCaseById = async (req, res) => {
 					interestInLand,
 					writtenOrVerbalPermission,
 					applicationDevelopmentAllOrPart,
-					appealDecisionDate
+					appealDecisionDate,
+					siteUseAtTimeOfApplication,
+					applicationMadeUnderActSection
 				});
 
 		await updatePersonalList(appeal.id);

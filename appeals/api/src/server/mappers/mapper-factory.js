@@ -81,6 +81,13 @@ function createDataMap(mappingRequest) {
 			const enforcement = createMap(apiMappers.apiEnforcementMappers, mappingRequest);
 			return mergeMaps(caseData, enforcement);
 		}
+		case APPEAL_CASE_TYPE.X: {
+			if (!isFeatureActive(FEATURE_FLAG_NAMES.LDC)) {
+				return caseData;
+			}
+			const ldc = createMap(apiMappers.apiLdcMappers, mappingRequest);
+			return mergeMaps(caseData, ldc);
+		}
 		default:
 			return caseData;
 	}

@@ -2,6 +2,7 @@ import { submaps as advertSubmaps } from './advert.js';
 import { mapNewPlansDrawings } from './submappers/new-plans-drawings.js';
 import { mapOtherNewDocuments } from './submappers/other-new-documents.js';
 import { mapPlanningObligation } from './submappers/planning-obligation.js';
+import { mapSiteUseAtTimeOfApplication } from './submappers/site-use-at-time-of-application.js';
 import { mapStatusPlanningObligation } from './submappers/status-planning-obligation.js';
 
 const keysToRemove = [
@@ -23,5 +24,6 @@ export const submaps = {
 	planningObligation: mapPlanningObligation,
 	statusPlanningObligation: mapStatusPlanningObligation,
 	newPlansDrawings: mapNewPlansDrawings,
-	otherNewDocuments: mapOtherNewDocuments
+	otherNewDocuments: mapOtherNewDocuments,
+	siteUseAtTimeOfApplication: mapSiteUseAtTimeOfApplication
 };

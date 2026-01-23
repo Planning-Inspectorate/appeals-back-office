@@ -173,6 +173,15 @@ const updateableFields = {
 	siteGridReferenceNorthing: {
 		type: 'string',
 		nullable: true
+	},
+	siteUseAtTimeOfApplication: {
+		type: 'string',
+		nullable: true
+	},
+	//TODO: update to enum when data model updated
+	applicationMadeUnderActSection: {
+		type: 'string',
+		nullable: true
 	}
 };
 

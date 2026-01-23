@@ -53,6 +53,7 @@ import planningObligationRouter from './planning-obligation/planning-obligation.
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
 import siteAreaRouter from './site-area/site-area.router.js';
 import siteOwnershipRouter from './site-ownership/site-ownership.router.js';
+import siteUseAtTimeOfApplicationRouter from './site-use-at-time-of-application/site-use-at-time-of-application.router.js';
 import writtenOrVerbalPermissionRouter from './written-or-verbal-permission/written-or-verbal-permission.router.js';
 
 const router = createRouter({ mergeParams: true });
@@ -314,6 +315,12 @@ router.use(
 	'/appeal-decision-date',
 	validateAppealWithInclude(['appellantCase']),
 	appealDecisionDateRouter
+);
+
+router.use(
+	'/site-use-at-time-of-application',
+	validateAppealWithInclude(['appellantCase']),
+	siteUseAtTimeOfApplicationRouter
 );
 
 router
