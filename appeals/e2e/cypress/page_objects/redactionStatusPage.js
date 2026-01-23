@@ -1,24 +1,13 @@
-import { Page } from './basePage';
+import { CaseDetailsPage } from './caseDetailsPage.js';
 
-export class RedactionStatusPage extends Page {
-	selectors = {
+export class RedactionStatusPage extends CaseDetailsPage {
+	redactionPageSelectors = {
 		redacted: '#redactionStatus-2',
 		unredacted: '#redactionStatus',
 		noRedactionRequired: '#redactionStatus-3'
 	};
 
-	static selectOption(optionToSelect) {
-		const page = new RedactionStatusPage();
-		switch (optionToSelect) {
-			case 'Redacted':
-				cy.get(page.selectors.redacted).click();
-				break;
-			case 'Unredacted':
-				cy.get(page.selectors.unredacted).click();
-				break;
-			case 'No redaction required':
-				cy.get(page.selectors.noRedactionRequired).click();
-				break;
-		}
+	selectRedactionOption(optionToSelect) {
+		cy.get(this.redactionPageSelectors[optionToSelect]).click();
 	}
 }

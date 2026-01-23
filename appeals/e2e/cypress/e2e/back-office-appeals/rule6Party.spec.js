@@ -3,17 +3,16 @@
 
 import { appealsApiRequests } from '../../fixtures/appealsApiRequests';
 import { users } from '../../fixtures/users';
-import { POEcyaPage } from '../../page_objects/POEcyaPage';
 import { ContactsSectionPage } from '../../page_objects/caseDetails/contactsSectionPage.js';
 import { CostsSectionPage } from '../../page_objects/caseDetails/costsSectionPage';
 import { DocumentationSectionPage } from '../../page_objects/caseDetails/documentationSectionPage';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { ContactDetailsPage } from '../../page_objects/contactDetailsPage.js';
 import { CYASection } from '../../page_objects/cyaSection.js';
-import { dateReceivedPage } from '../../page_objects/dateReceivedPage';
+import { DateTimeSection } from '../../page_objects/dateTimeSection';
+import { FileUploaderSection } from '../../page_objects/fileUploadSection.js';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
-import { RedactionStatusPage as redactionStatusPage } from '../../page_objects/redactionStatusPage';
-import { uploadPOEAndWitnessDocPage } from '../../page_objects/uploadPOEAndWitnessDocPage';
+import { RedactionStatusPage } from '../../page_objects/redactionStatusPage';
 import { happyPathHelper } from '../../support/happyPathHelper';
 import { urlPaths } from '../../support/urlPaths';
 
@@ -25,6 +24,9 @@ const contactDetailsPage = new ContactDetailsPage();
 const rule6PartyContact = appealsApiRequests.rule6Party.serviceUser;
 const documentationSectionPage = new DocumentationSectionPage();
 const costsSectionPage = new CostsSectionPage();
+const fileUploaderSection = new FileUploaderSection();
+const redactionStatusPage = new RedactionStatusPage();
+const dateTimeSection = new DateTimeSection();
 
 const rule6Details = {
 	partyName: 'TestRuleSixParty',
@@ -417,7 +419,8 @@ it('should change rule 6 party contact', () => {
 	);
 });
 
-it('add a rule 6 POE', () => {
+let sampleFiles = caseDetailsPage.sampleFiles;
+it.only('add a rule 6 POE', () => {
 	// Verify no rule 6 party is added
 	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', 'No rule 6 party');
 
@@ -428,24 +431,24 @@ it('add a rule 6 POE', () => {
 	const organisationName = rule6PartyContact.organisationName;
 	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', organisationName);
 
-	caseDetailsPage.clickRowAddLink('rule-6-party-proofs-evidence');
+	documentationSectionPage.selectAddDocument('rule-6-party-proofs-evidence');
 
 	caseDetailsPage.checkHeading('Upload new proof of evidence and witnesses document');
-	uploadPOEAndWitnessDocPage.fillPage();
+	fileUploaderSection.uploadFile(sampleFiles.document);
 	caseDetailsPage.clickButtonByText('Continue');
 
 	caseDetailsPage.checkHeading('Redaction status');
-	redactionStatusPage.selectOption('No redaction required');
+	redactionStatusPage.selectRedactionOption('noRedactionRequired');
 	caseDetailsPage.clickButtonByText('Continue');
 
 	caseDetailsPage.checkHeading('Received date');
-	dateReceivedPage.checkDateIsPrefilled();
+	dateTimeSection.checkDateIsPrefilled();
 	caseDetailsPage.clickButtonByText('Continue');
 
 	caseDetailsPage.checkHeading(
 		`Check details and add ${organisationName} proof of evidence and witnesses`
 	);
-	POEcyaPage.clickAddButton(organisationName);
+	cyaSection.clickButtonByText(`Add ${organisationName} proof of evidence and witnesses`);
 
 	caseDetailsPage.validateBannerMessage(
 		'Success',
