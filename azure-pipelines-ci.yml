@@ -132,6 +132,8 @@ extends:
             condition: eq(variables['runE2E'], 'true')
             displayName: "Check all containers are up"
           - script: |
+              export REQUESTS_CA_BUNDLE=appeals/web/certificate.pem
+
               az storage cors add \
                 --services b \
                 --methods GET PUT OPTIONS \
