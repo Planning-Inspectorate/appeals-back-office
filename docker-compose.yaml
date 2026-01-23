@@ -66,10 +66,12 @@ services:
             azurite
             --silent
             --blobHost 0.0.0.0
-            --cert ./appeals/web/certificate.pem
-            --key ./appeals/web/certificate-key.pem
+            --cert /certs/certificate.pem
+            --key /certs/certificate-key.pem
             --oauth basic
             --skipApiVersionCheck
+        volumes:
+            - ./appeals/web:/certs
         ports:
             - "10000:10000"
             - "10001:10001"
