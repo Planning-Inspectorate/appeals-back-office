@@ -916,7 +916,7 @@ describe('invalid-appeal', () => {
 				'Check details and mark enforcement notice as invalid</h1>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> Review decision</dt><dd class="govuk-summary-list__value"> Invalid</dd>'
+				'<dt class="govuk-summary-list__key"> What is the outcome of your review?</dt><dd class="govuk-summary-list__value"> Invalid</dd>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<dt class="govuk-summary-list__key"> Do you want to add any other information?</dt>'

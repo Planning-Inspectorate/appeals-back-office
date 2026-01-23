@@ -751,10 +751,10 @@ exports[`invalid-appeal GET /check-details-and-mark-enforcement-as-invalid shoul
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>
-                    <dd class="govuk-summary-list__value">Invalid</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case">Change<span class="govuk-visually-hidden"> review outcome</span></a>
-                    </dd>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the outcome of your review?</dt>
+                    <dd                     class="govuk-summary-list__value">Invalid</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case">Change<span class="govuk-visually-hidden"> review outcome</span></a>
+                        </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the enforcement notice invalid?</dt>
                     <dd                     class="govuk-summary-list__value">Yes</dd>
