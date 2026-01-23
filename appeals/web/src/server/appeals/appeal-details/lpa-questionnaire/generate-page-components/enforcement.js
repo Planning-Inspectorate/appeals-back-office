@@ -75,7 +75,7 @@ export const generateEnforcementLpaQuestionnaireComponents = (
 			card: { title: { text: '3. Notifying relevant parties' } },
 			rows: [
 				mappedLPAQData.lpaq?.appealNotification?.display.summaryListItem,
-				mappedLPAQData.lpaq?.servedNoticeList?.display.summaryListItem
+				mappedLPAQData.lpaq?.enforcementList?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});

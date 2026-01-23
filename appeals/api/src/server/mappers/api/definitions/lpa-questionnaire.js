@@ -141,6 +141,58 @@ const updateableFields = {
 	lpaAppealInvalidReasons: {
 		type: 'string',
 		nullable: true
+	},
+	noticeRelatesToBuildingEngineeringMiningOther: {
+		type: 'boolean',
+		nullable: true
+	},
+	siteAreaSquareMetres: {
+		type: 'number',
+		nullable: true
+	},
+	hasAllegedBreachArea: {
+		type: 'boolean',
+		nullable: true
+	},
+	doesAllegedBreachCreateFloorSpace: {
+		type: 'boolean',
+		nullable: true
+	},
+	changeOfUseRefuseOrWaste: {
+		type: 'boolean',
+		nullable: true
+	},
+	changeOfUseMineralExtraction: {
+		type: 'boolean',
+		nullable: true
+	},
+	changeOfUseMineralStorage: {
+		type: 'boolean',
+		nullable: true
+	},
+	relatesToErectionOfBuildingOrBuildings: {
+		type: 'boolean',
+		nullable: true
+	},
+	relatesToBuildingWithAgriculturalPurpose: {
+		type: 'boolean',
+		nullable: true
+	},
+	relatesToBuildingSingleDwellingHouse: {
+		type: 'boolean',
+		nullable: true
+	},
+	affectedTrunkRoadName: {
+		type: 'string',
+		nullable: true
+	},
+	isSiteOnCrownLand: {
+		type: 'boolean',
+		nullable: true
+	},
+	article4AffectedDevelopmentRights: {
+		type: 'string',
+		nullable: true
 	}
 };
 
@@ -231,7 +283,15 @@ const lpaQuestionnaire = {
 				eiaScopingOpinion: { ...Folder },
 				lpaCaseCorrespondence: { ...Folder },
 				otherRelevantPolicies: { ...Folder },
-				historicEnglandConsultation: { ...Folder }
+				historicEnglandConsultation: { ...Folder },
+				stopNotice: { ...Folder },
+				article4Direction: { ...Folder },
+				enforcementList: { ...Folder },
+				localDevelopmentOrder: { ...Folder },
+				planningPermission: { ...Folder },
+				lpaEnforcementNotice: { ...Folder },
+				lpaEnforcementNoticePlan: { ...Folder },
+				planningContraventionNotice: { ...Folder }
 			},
 			nullable: true
 		}

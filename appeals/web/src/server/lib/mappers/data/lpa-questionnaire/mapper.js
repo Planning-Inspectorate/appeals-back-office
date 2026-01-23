@@ -58,6 +58,9 @@ export function initialiseAndMapLPAQData(
 	if (!appealDetails.appealType) {
 		throw new Error('No appealType on appealDetails');
 	}
+
+	currentRoute = currentRoute.endsWith('/') ? currentRoute.slice(0, -1) : currentRoute;
+
 	const userHasUpdateCase = userHasPermission(permissionNames.updateCase, session);
 
 	/** @type {{lpaq: MappedInstructions}} */

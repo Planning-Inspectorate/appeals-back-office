@@ -7,10 +7,11 @@ export const mapAllegedBreachCreatesFloorSpace = ({
 	userHasUpdateCase
 }) =>
 	booleanSummaryListItem({
-		id: 'breach-floor-space',
+		id: 'enforcement-breach-floor-space',
 		text: 'Does the alleged breach create any floor space?',
-		// @ts-ignore
 		value: lpaQuestionnaireData.doesAllegedBreachCreateFloorSpace,
-		link: `${currentRoute}/breach-floor-space`,
+		link: `${currentRoute}/breach-floor-space/change`,
+		defaultText: 'No data',
+		addCyAttribute: true,
 		editable: userHasUpdateCase
 	});
