@@ -286,6 +286,8 @@ export const AUDIT_TRAIL_APPEAL_DECISION_DATE_UPDATED =
 	'Appeal decision date updated to {replacement0}';
 export const AUDIT_TRAIL_ENFORCEMENT_SUBMISSION_VALID =
 	'Appeal reviewed as valid on {replacement0}\n{replacement1}';
+export const AUDIT_TRAIL_SITE_USE_AT_TIME_OF_APPLICATION_UPDATED =
+	"'What did you use the appeal site for when you made the application?' updated to {replacement0}";
 
 export const DATABASE_ORDER_BY_ASC = 'asc';
 export const DATABASE_ORDER_BY_DESC = 'desc';

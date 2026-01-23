@@ -347,6 +347,10 @@ model AppellantCase {
   landownerPermission                            Boolean?
 
   appellantCaseAdvertDetails AppellantCaseAdvertDetails[]
+
+  //LDC Fields 
+  siteUseAtTimeOfApplication     String?
+  applicationMadeUnderActSection String?
 }
 
 /// AppealGround model

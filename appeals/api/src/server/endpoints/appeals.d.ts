@@ -261,6 +261,8 @@ interface SingleAppellantCaseResponse {
 	siteGridReferenceEasting?: string | null;
 	siteGridReferenceNorthing?: string | null;
 	appealGrounds?: AppealGround[] | null;
+	siteUseAtTimeOfApplication?: string | null;
+	applicationMadeUnderActSection?: string | null;
 }
 
 interface UpdateAppellantCaseRequest {

@@ -468,7 +468,8 @@ describe('appellant-case', () => {
 				.get('/appeals/2/appellant-cases/0')
 				.reply(200, {
 					...appellantCaseDataNotValidated,
-					typeOfPlanningApplication: 'lawful-development-certificate' // TODO update to APPEAL_TYPE_OF_PLANNING_APPLICATION.LAWFUL_DEVELOPMENT_CERTIFICATE when added to data model,
+					typeOfPlanningApplication:
+						APPEAL_TYPE_OF_PLANNING_APPLICATION.LAWFUL_DEVELOPMENT_CERTIFICATE
 				});
 
 			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
@@ -494,6 +495,9 @@ describe('appellant-case', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('3. Application details</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('What date did you submit your application?');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What did you use the appeal site for when you made the application?'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Enter the description of development that you submitted in your application'
 			);

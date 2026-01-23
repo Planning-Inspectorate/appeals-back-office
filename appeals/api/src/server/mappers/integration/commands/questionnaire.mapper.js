@@ -90,8 +90,14 @@ const generateCommonSchemaFields = (casedata) => {
 };
 
 /**
+ * @typedef {import('@planning-inspectorate/data-model').Schemas.LPAQHASSubmissionProperties
+ *   & import('@planning-inspectorate/data-model').Schemas.LPAQCommonSubmissionProperties
+ * } LPAQSubmissionCaseData
+ */
+
+/**
  *
- * @param {import('@planning-inspectorate/data-model').Schemas.LPAQHASSubmissionProperties} casedata
+ * @param {LPAQSubmissionCaseData} casedata
  * @param {{listEntry: string, affectsListedBuilding: boolean }[] | null} listedBuildingsData
  * @returns
  */

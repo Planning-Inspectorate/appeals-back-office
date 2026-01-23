@@ -21,6 +21,10 @@ import {
 	householdAppealAppellantCaseIncomplete,
 	householdAppealAppellantCaseInvalid,
 	householdAppealAppellantCaseValid,
+	ldcAppeal,
+	ldcAppealAppellantCaseIncomplete,
+	ldcAppealAppellantCaseInvalid,
+	ldcAppealAppellantCaseValid,
 	listedBuildingAppeal,
 	listedBuildingAppealAppellantCaseIncomplete,
 	listedBuildingAppealAppellantCaseInvalid,
@@ -99,6 +103,13 @@ describe('appellant cases routes', () => {
 					listedBuildingAppealAppellantCaseValid,
 					listedBuildingAppealAppellantCaseIncomplete,
 					listedBuildingAppealAppellantCaseInvalid
+				],
+				[
+					'ldcAppeal',
+					ldcAppeal,
+					ldcAppealAppellantCaseValid,
+					ldcAppealAppellantCaseIncomplete,
+					ldcAppealAppellantCaseInvalid
 				]
 			])(
 				'%s appellant case GET scenarios',
@@ -1258,6 +1269,37 @@ describe('appellant cases routes', () => {
 						highwayLand: patchBody.highwayLand
 					})
 				});
+			});
+
+			test('updates existing appellant ldc details', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const { id, appellantCase } = householdAppeal;
+				const patchBody = {
+					siteUseAtTimeOfApplication: 'Residential',
+					applicationMadeUnderActSection: 'exisiting-development'
+				};
+
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				console.log(response.error);
+
+				expect(response.status).toEqual(200);
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith(
+					expect.objectContaining({
+						data: expect.objectContaining({
+							applicationMadeUnderActSection: 'exisiting-development',
+							siteUseAtTimeOfApplication: 'Residential'
+						})
+					})
+				);
 			});
 
 			test('returns an error if groundABarred is not a boolean', async () => {
