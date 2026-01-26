@@ -57,7 +57,8 @@ const importIndividualAppeal = async (data) => {
 	if (
 		data.casedata.caseType === APPEAL_CASE_TYPE.W ||
 		data.casedata.caseType === APPEAL_CASE_TYPE.Y ||
-		data.casedata.caseType === APPEAL_CASE_TYPE.H
+		data.casedata.caseType === APPEAL_CASE_TYPE.H ||
+		data.casedata.caseType === APPEAL_CASE_TYPE.X
 	) {
 		// @ts-ignore
 		appellantProcedurePreference =

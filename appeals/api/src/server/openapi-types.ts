@@ -8048,6 +8048,13 @@ export type LpaQuestionnaire = {
 				name: string;
 		  }[]
 		| null;
+	appealUnderActSection?:
+		| 'existing-development'
+		| 'proposed-changes-to-a-listed-building'
+		| 'proposed-use-of-a-development'
+		| null;
+	lpaConsiderAppealInvalid?: boolean | null;
+	lpaAppealInvalidReasons?: string | null;
 	validation?: {
 		outcome?: string | null;
 		incompleteReasons?: {
@@ -14753,6 +14760,13 @@ export interface LpaQuestionnaireUpdateRequest {
 				name: string;
 		  }[]
 		| null;
+	appealUnderActSection?:
+		| 'existing-development'
+		| 'proposed-changes-to-a-listed-building'
+		| 'proposed-use-of-a-development'
+		| null;
+	lpaConsiderAppealInvalid?: boolean | null;
+	lpaAppealInvalidReasons?: string | null;
 	validationOutcomeId?: number | null;
 	validationOutcome?: {
 		id?: number;

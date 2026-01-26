@@ -577,6 +577,11 @@ model LPAQuestionnaire {
   isSiteOnCrownLand                             Boolean?
   article4AffectedDevelopmentRights             String?
 
+  // LDC fields
+  appealUnderActSection    String?
+  lpaConsiderAppealInvalid Boolean?
+  lpaAppealInvalidReasons  String?  @db.NVarChar(MAX)
+
   @@index([isGreenBelt])
 }
 
