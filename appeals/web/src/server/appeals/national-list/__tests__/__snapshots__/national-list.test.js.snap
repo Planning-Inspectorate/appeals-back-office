@@ -12,10 +12,10 @@ exports[`national-list GET / should render national list - 10 pages - all page i
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
-                        (including spaces)</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text" value="" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application or enforcement reference,
+                        or postcode (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text" value="" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
@@ -241,10 +241,10 @@ exports[`national-list GET / should render national list - 15 pages - pagination
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
-                        (including spaces)</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text" value="" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application or enforcement reference,
+                        or postcode (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text" value="" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
@@ -450,10 +450,10 @@ exports[`national-list GET / should render national list - appeal procedure type
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
-                        (including spaces)</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text" value="" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application or enforcement reference,
+                        or postcode (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text" value="" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
@@ -623,10 +623,10 @@ exports[`national-list GET / should render national list - appeal type filter ap
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
-                        (including spaces)</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text" value="" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application or enforcement reference,
+                        or postcode (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text" value="" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
@@ -796,10 +796,10 @@ exports[`national-list GET / should render national list - case team filter appl
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
-                        (including spaces)</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text" value="" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application or enforcement reference,
+                        or postcode (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text" value="" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
@@ -969,10 +969,10 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
-                        (including spaces)</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text" value="" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application or enforcement reference,
+                        or postcode (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text" value="" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
@@ -1157,10 +1157,10 @@ exports[`national-list GET / should render national list - no search term - filt
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
-                        (including spaces)</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text" value="" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application or enforcement reference,
+                        or postcode (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text" value="" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
@@ -1340,10 +1340,10 @@ exports[`national-list GET / should render national list - search term - filter 
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
-                        (including spaces)</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text" value="BS7 8LQ" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application or enforcement reference,
+                        or postcode (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text" value="BS7 8LQ" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
@@ -1525,10 +1525,10 @@ exports[`national-list GET / should render national list - search term - no resu
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
-                        (including spaces)</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text" value="NORESULT" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application or enforcement reference,
+                        or postcode (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text" value="NORESULT" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
@@ -1667,10 +1667,10 @@ exports[`national-list GET / should render national list - search term 1`] = `
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
-                        (including spaces)</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text" value="BS7 8LQ" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application or enforcement reference,
+                        or postcode (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text" value="BS7 8LQ" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
@@ -1860,10 +1860,10 @@ exports[`national-list GET / should render the header with navigation containing
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
-                        (including spaces)</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text" value="" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application or enforcement reference,
+                        or postcode (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text" value="" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
@@ -2048,10 +2048,10 @@ exports[`national-list GET / should show enforcement reference instead of planni
             <form method="GET">
                 <div class="govuk-form-group">
                     <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
-                        (including spaces)</label>
-                    <input class="govuk-input" id="searchTerm" name="searchTerm"
-                    type="text" value="" data-cy="search-term">
+                    for="searchTerm">Enter the appeal reference, planning application or enforcement reference,
+                        or postcode (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm"
+                    name="searchTerm" type="text" value="" data-cy="search-term">
                 </div>
                 <div class="govuk-button-group">
                     <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"

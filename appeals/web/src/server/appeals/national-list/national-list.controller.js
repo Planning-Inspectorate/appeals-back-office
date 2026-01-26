@@ -54,7 +54,7 @@ export const viewNationalList = async (request, response) => {
 	if (searchTerm && searchTerm.length && (searchTerm.length === 1 || searchTerm.length > 50)) {
 		searchTerm = '';
 		searchTermError =
-			'Appeal reference, planning application reference or postcode must be between 2 and 50 characters';
+			'Appeal reference, planning application or enforcement reference, or postcode must be between 2 and 50 characters';
 	}
 
 	const appealTypes = await getAppealTypes(request.apiClient);
