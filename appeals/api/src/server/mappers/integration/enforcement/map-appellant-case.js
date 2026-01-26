@@ -50,7 +50,9 @@ export const mapAppellantCase = (data) => {
 		otherTenantsAgriculturalHolding,
 		informedTenantsAgriculturalHolding,
 		enforcementReference,
-		contactPlanningInspectorateDate
+		contactPlanningInspectorateDate,
+		descriptionOfAllegedBreach,
+		applicationMadeAndFeePaid
 	} = appellantCase || {};
 	return {
 		...mapAppellantCaseSharedFields(data),
@@ -71,6 +73,8 @@ export const mapAppellantCase = (data) => {
 		otherTenantsAgriculturalHolding: otherTenantsAgriculturalHolding ?? null,
 		informedTenantsAgriculturalHolding: informedTenantsAgriculturalHolding ?? null,
 		enforcementNoticeReference: enforcementReference ?? null,
-		dateAppellantContactedPins: contactPlanningInspectorateDate?.toISOString() ?? null
+		dateAppellantContactedPins: contactPlanningInspectorateDate?.toISOString() ?? null,
+		descriptionOfAllegedBreach: descriptionOfAllegedBreach ?? null,
+		applicationMadeAndFeePaid: applicationMadeAndFeePaid ?? null
 	};
 };

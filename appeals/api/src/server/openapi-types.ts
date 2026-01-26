@@ -4414,6 +4414,7 @@ export type AppellantCase = {
 		interestInLand?: string | null;
 		writtenOrVerbalPermission?: string | null;
 		descriptionOfAllegedBreach?: string | null;
+		applicationMadeAndFeePaid?: boolean | null;
 		applicationDevelopmentAllOrPart?: string | null;
 		contactAddress?: {
 			addressId?: number;
@@ -4437,6 +4438,7 @@ export type AppellantCase = {
 	interestInLand?: string | null;
 	writtenOrVerbalPermission?: string | null;
 	descriptionOfAllegedBreach?: string | null;
+	applicationMadeAndFeePaid?: boolean | null;
 	applicationDevelopmentAllOrPart?: string | null;
 	contactAddress?: {
 		addressId?: number;
@@ -14620,6 +14622,7 @@ export interface AppellantCaseUpdateRequest {
 	interestInLand?: string | null;
 	writtenOrVerbalPermission?: string | null;
 	descriptionOfAllegedBreach?: string | null;
+	applicationMadeAndFeePaid?: boolean | null;
 	applicationDevelopmentAllOrPart?: string | null;
 	contactAddress?: {
 		addressId?: number;

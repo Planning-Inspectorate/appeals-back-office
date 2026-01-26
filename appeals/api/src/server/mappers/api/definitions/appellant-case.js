@@ -90,6 +90,10 @@ const updateableFields = {
 		type: 'string',
 		nullable: true
 	},
+	applicationMadeAndFeePaid: {
+		type: 'boolean',
+		nullable: true
+	},
 	applicationDevelopmentAllOrPart: {
 		type: 'string',
 		nullable: true
@@ -362,6 +366,10 @@ const appellantCase = {
 				},
 				descriptionOfAllegedBreach: {
 					type: 'string',
+					nullable: true
+				},
+				applicationMadeAndFeePaid: {
+					type: 'boolean',
 					nullable: true
 				},
 				applicationDevelopmentAllOrPart: {
