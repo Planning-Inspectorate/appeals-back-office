@@ -79,7 +79,8 @@ const renderAppellantCase = async (request, response) => {
 			stripQueryString(request.originalUrl),
 			getBackLinkUrlFromQuery(request),
 			request.session,
-			errors?.['reviewOutcome'].msg
+			errors?.['reviewOutcome'].msg,
+			request
 		);
 
 		return response.status(200).render('patterns/display-page.pattern.njk', {

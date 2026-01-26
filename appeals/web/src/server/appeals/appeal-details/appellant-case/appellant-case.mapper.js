@@ -61,6 +61,7 @@ import { generateS78Components } from './page-components/s78.mapper.js';
  * @param {string|undefined} backUrl
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {string|undefined} errorMessage
+ * @param {import('@pins/express/types/express.js').Request} request
  * @returns {Promise<PageContent>}
  */
 export async function appellantCasePage(
@@ -69,13 +70,15 @@ export async function appellantCasePage(
 	currentRoute,
 	backUrl,
 	session,
-	errorMessage = undefined
+	errorMessage = undefined,
+	request
 ) {
 	const mappedAppellantCaseData = initialiseAndMapData(
 		appellantCaseData,
 		appealDetails,
 		currentRoute,
-		session
+		session,
+		request
 	);
 
 	/**

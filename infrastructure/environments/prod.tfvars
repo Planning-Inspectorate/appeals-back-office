@@ -51,6 +51,7 @@ apps_config = {
     featureFlagCancelSiteVisit        = true
     featureFlagSearchCaseOfficer      = true
     featureFlagEnforcementNotice      = true
+    featureFlagEnforcementLinked      = false
     featureFlagInvalidDecisionLetter  = false
     featureFlagRule6Mvp               = false
     featureFlagRule6PoE               = false
@@ -59,6 +60,7 @@ apps_config = {
     featureFlagAppellantStatement     = false
     featureFlagRule6Statement         = false
     featureFlagLDC                    = false
+    featureFlagRule6Costs             = false
   }
 
   use_system_test_bc_for_change_lpa = false

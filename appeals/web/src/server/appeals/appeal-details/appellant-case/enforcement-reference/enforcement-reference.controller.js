@@ -2,6 +2,7 @@ import { getAppellantCaseFromAppealId } from '#appeals/appeal-details/appellant-
 import { changeEnforcementReferencePage } from '#appeals/appeal-details/appellant-case/enforcement-reference/enforcement-reference.mapper.js';
 import { changeEnforcementReference } from '#appeals/appeal-details/appellant-case/enforcement-reference/enforcement-reference.service.js';
 import logger from '#lib/logger.js';
+import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /**
@@ -23,10 +24,13 @@ export const renderChangeEnforcementReference = async (request, response) => {
 		enforcementReference = appellantCaseData?.enforcementNotice?.reference;
 	}
 
+	const backUrl = getSavedBackUrl(request, 'changeEnforcementReference');
+
 	const mappedPageContent = changeEnforcementReferencePage(
 		currentAppeal,
 		enforcementReference,
-		errors
+		errors,
+		backUrl
 	);
 
 	try {
@@ -65,10 +69,14 @@ export const postChangeEnforcementReference = async (request, response) => {
 			session: request.session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			text: 'Appeal updated'
+			text: 'Enforcement reference updated'
 		});
 
-		return response.redirect(`/appeals-service/appeal-details/${appealId}/appellant-case`);
+		const backUrl = getSavedBackUrl(request, 'changeEnforcementReference');
+
+		return response.redirect(
+			backUrl ?? `/appeals-service/appeal-details/${appealId}/appellant-case`
+		);
 	} catch (error) {
 		logger.error(error);
 

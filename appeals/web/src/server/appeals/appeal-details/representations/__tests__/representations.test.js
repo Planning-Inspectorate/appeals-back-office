@@ -281,7 +281,7 @@ describe('representations', () => {
 			const textResponse = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(textResponse.innerHTML).toContain('2 interested party comments</a>,');
-			expect(textResponse.innerHTML).toContain('1 LPA statement</a>,');
+			expect(textResponse.innerHTML).toContain('1 LPA statement</a>');
 			expect(textResponse.innerHTML).toContain('1 appellant statement</a>');
 			expect(textResponse.innerHTML).toContain(
 				'and <a href="/appeals-service/appeal-details/1/rule6-statement?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare" class="govuk-link">1 Org One statement</a>'

@@ -34,7 +34,8 @@ module "function_scheduled_jobs" {
     # Runtime env variables
     ServiceBusConnection__fullyQualifiedNamespace = local.service_bus_hostname
     # Function env variables
-    API_HOST = module.app_api.default_site_hostname
+    API_HOST              = module.app_api.default_site_hostname
+    SQL_CONNECTION_STRING = local.key_vault_refs["sql-function-connection-string"]
   }
 }
 
@@ -42,5 +43,12 @@ module "function_scheduled_jobs" {
 resource "azurerm_role_assignment" "function_scheduled_jobs_writer" {
   scope                = azurerm_storage_container.appeal_documents.resource_manager_id
   role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = module.function_scheduled_jobs.principal_id
+}
+
+# RBAC for secrets
+resource "azurerm_role_assignment" "function_scheduled_jobs_secrets_user" {
+  scope                = azurerm_key_vault.main.id
+  role_definition_name = "Key Vault Secrets User"
   principal_id         = module.function_scheduled_jobs.principal_id
 }

@@ -3394,6 +3394,36 @@ describe('appeal-details', () => {
 					'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/case-procedure" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
 				);
 			});
+
+			it('Should display enforcement notice reference instead of LPA reference if appeal type is enforcement notice', async () => {
+				const appealId = 2;
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, {
+						...appealDataEnforcementNotice,
+						appealId
+					});
+				nock('http://test/')
+					.get(/appeals\/\d+\/appellant-cases\/\d+/)
+					.reply(200, {
+						enforcementNotice: {
+							reference: 'ENF-123456789'
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				const mainHtml = parseHtml(response.text);
+
+				expect(mainHtml.innerHTML).toMatchSnapshot();
+				expect(mainHtml.innerHTML).not.toContain('LPA reference');
+
+				expect(
+					mainHtml
+						.querySelector('.appeal-enforcement-reference .govuk-summary-list__value')
+						.innerHTML.trim()
+				).toBe('ENF-123456789');
+			});
 		});
 
 		describe('Documentation', () => {

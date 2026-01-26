@@ -225,10 +225,16 @@ export interface AppealGround extends AppealGround {
 	ground: Ground | null;
 	appealId: number | null;
 	groundId: number | null;
+	isDeleted: boolean | null;
 }
 
 export interface EnforcementNoticeAppealOutcome extends schema.EnforcementNoticeAppealOutcome {}
 export interface AppealRule6Party extends schema.AppealRule6Party {
 	serviceUser?: ServiceUser | null;
 	appeal?: Appeal | null;
+}
+
+export interface BankHoliday extends schema.BankHoliday {
+	bankHolidayDate: Date;
+	title: string;
 }

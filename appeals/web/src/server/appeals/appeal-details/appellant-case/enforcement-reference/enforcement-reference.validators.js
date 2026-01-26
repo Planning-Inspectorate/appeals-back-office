@@ -6,6 +6,7 @@ export const validateEnforcementReference = createValidator(
 		'enforcementReference',
 		'Enter the reference number on the enforcement notice',
 		250,
-		'Reference number must be 250 characters or less'
+		'Reference number must be 250 characters or less',
+		/^[A-Za-z0-9 .,'!&/-]+$/
 	)
 );

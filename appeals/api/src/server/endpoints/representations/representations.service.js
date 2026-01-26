@@ -14,6 +14,7 @@ import { isCurrentStatus } from '#utils/current-status.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import logger from '#utils/logger.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { camelToScreamingSnake } from '#utils/string-utils.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
@@ -76,29 +77,53 @@ export const getRepresentationCounts = async (appealId, options = {}) => {
 export const getRepresentation = representationRepository.getById;
 
 /**
- *
  * @param {string} status
  * @param {string} repType
  * @param {Boolean} redactedRep
+ * @param {string} [partyName]
+ * @param {string} [extendedDate]
  * @returns String
  */
-export const getRepStatusAuditLogDetails = (status, repType, redactedRep) => {
+export const getRepStatusAuditLogDetails = (
+	status,
+	repType,
+	redactedRep,
+	partyName,
+	extendedDate
+) => {
 	let auditText;
 	const auditTitle = 'AUDIT_TRAIL_REP_';
 	const valid = '_STATUS_VALID';
 	const invalid = '_STATUS_INVALID';
 	const incomplete = '_STATUS_INCOMPLETE';
+	const incompleteExtended = '_STATUS_INCOMPLETE_EXTENDED';
 	const redactedAccepted = '_STATUS_REDACTED_AND_ACCEPTED';
 
+	let suffix = '';
+
 	if (status === APPEAL_REPRESENTATION_STATUS.VALID && redactedRep === true) {
-		auditText = auditTitle + camelToScreamingSnake(repType) + redactedAccepted;
+		suffix = redactedAccepted;
 	} else if (status === APPEAL_REPRESENTATION_STATUS.VALID) {
-		auditText = auditTitle + camelToScreamingSnake(repType) + valid;
+		suffix = valid;
 	} else if (status === APPEAL_REPRESENTATION_STATUS.INVALID) {
-		auditText = auditTitle + camelToScreamingSnake(repType) + invalid;
+		suffix = invalid;
+	} else if (status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE && extendedDate) {
+		suffix = incompleteExtended;
 	} else if (status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE) {
-		auditText = auditTitle + camelToScreamingSnake(repType) + incomplete;
+		suffix = incomplete;
 	}
+
+	auditText = auditTitle + camelToScreamingSnake(repType) + suffix;
+
+	if (repType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT && partyName) {
+		if (status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE && extendedDate) {
+			// @ts-ignore
+			return stringTokenReplacement(CONSTANTS[auditText], [partyName, partyName, extendedDate]);
+		}
+		// @ts-ignore
+		return stringTokenReplacement(CONSTANTS[auditText], [partyName]);
+	}
+
 	// @ts-ignore
 	return CONSTANTS[auditText];
 };
@@ -327,6 +352,13 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 			EventType.Update
 		);
 	}
+	const statementsToPublish = [APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT];
+	if (isFeatureActive(FEATURE_FLAG_NAMES.APPELLANT_STATEMENT)) {
+		statementsToPublish.push(APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT);
+	}
+	if (isFeatureActive(FEATURE_FLAG_NAMES.RULE_6_STATEMENT)) {
+		statementsToPublish.push(APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT);
+	}
 
 	const result = await representationRepository.updateRepresentations(
 		appeal.id,
@@ -334,11 +366,7 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 			OR: [
 				{
 					representationType: {
-						in: [
-							APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
-							APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT,
-							APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT
-						]
+						in: statementsToPublish
 					},
 					status: {
 						in: [APPEAL_REPRESENTATION_STATUS.VALID, APPEAL_REPRESENTATION_STATUS.INCOMPLETE]
