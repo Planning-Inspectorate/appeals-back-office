@@ -104,7 +104,7 @@ extends:
                 -keyout appeals/web/certificate-key.pem \
                 -out appeals/web/certificate.pem \
                 -subj "/C=UK/ST=./L=./O=./CN=localhost" \
-                -addext "subjectAltName=DNS:localhost,IP:127.0.0.1" \
+                -addext "subjectAltName=DNS:localhost,IP:127.0.0.1,DNS:pins_azurite" \
                 -addext "keyUsage=digitalSignature,keyEncipherment" \
                 -addext "extendedKeyUsage=serverAuth,clientAuth"
             condition: eq(variables['runE2E'], 'true')
@@ -121,8 +121,6 @@ extends:
                 --connection-string "DefaultEndpointsProtocol=https;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=https://127.0.0.1:10000/devstoreaccount1;")
 
               echo "##vso[task.setvariable variable=AZURE_BLOB_EMULATOR_SAS_HOST]https://pins_azurite:10000/devstoreaccount1/document-service-uploads?${SAS_URL}"
-
-              echo $AZURE_BLOB_EMULATOR_SAS_HOST
             condition: eq(variables['runE2E'], 'true')
             displayName: "Generate SAS Url"
           - script: AZURE_BLOB_EMULATOR_SAS_HOST=$(AZURE_BLOB_EMULATOR_SAS_HOST) AUTH_TENANT_ID=$(AZURE_TENANT_ID) AUTH_CLIENT_SECRET=$(AUTH_CLIENT_SECRET) AUTH_CLIENT_ID=$(AUTH_CLIENT_ID) GIT_SHA=$(Build.SourceVersion) docker-compose up -d
@@ -145,9 +143,6 @@ extends:
 
               az storage container create \
                 --name document-service-uploads \
-                --connection-string "DefaultEndpointsProtocol=https;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=https://127.0.0.1:10000/devstoreaccount1;"
-
-              az storage container list \
                 --connection-string "DefaultEndpointsProtocol=https;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=https://127.0.0.1:10000/devstoreaccount1;"
             condition: eq(variables['runE2E'], 'true')
             displayName: "Configure azurite"
