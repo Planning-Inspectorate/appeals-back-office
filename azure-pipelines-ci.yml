@@ -120,7 +120,7 @@ extends:
                 --output tsv \
                 --connection-string "DefaultEndpointsProtocol=https;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=https://127.0.0.1:10000/devstoreaccount1;")
 
-              echo "##vso[task.setvariable variable=AZURE_BLOB_EMULATOR_SAS_HOST]https://127.0.0.1:10000/devstoreaccount1/document-service-uploads?${SAS_URL}"
+              echo "##vso[task.setvariable variable=AZURE_BLOB_EMULATOR_SAS_HOST]https://pins_azurite:10000/devstoreaccount1/document-service-uploads?${SAS_URL}"
 
               echo $AZURE_BLOB_EMULATOR_SAS_HOST
             condition: eq(variables['runE2E'], 'true')
