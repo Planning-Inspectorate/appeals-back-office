@@ -1,3 +1,4 @@
+import { APPEAL_APPEAL_UNDER_ACT_SECTION } from '@planning-inspectorate/data-model';
 import { AppealSummary } from './appeal-summary.js';
 import { DesignatedSiteName } from './designated-site-name.js';
 import { Folder } from './folders-documents.js';
@@ -126,6 +127,19 @@ const updateableFields = {
 		items: {
 			...DesignatedSiteName
 		},
+		nullable: true
+	},
+	appealUnderActSection: {
+		type: 'string',
+		nullable: true,
+		enum: Object.values(APPEAL_APPEAL_UNDER_ACT_SECTION)
+	},
+	lpaConsiderAppealInvalid: {
+		type: 'boolean',
+		nullable: true
+	},
+	lpaAppealInvalidReasons: {
+		type: 'string',
 		nullable: true
 	}
 };

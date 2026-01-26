@@ -22756,6 +22756,23 @@
 						},
 						"nullable": true
 					},
+					"appealUnderActSection": {
+						"type": "string",
+						"nullable": true,
+						"enum": [
+							"existing-development",
+							"proposed-changes-to-a-listed-building",
+							"proposed-use-of-a-development"
+						]
+					},
+					"lpaConsiderAppealInvalid": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"lpaAppealInvalidReasons": {
+						"type": "string",
+						"nullable": true
+					},
 					"validation": {
 						"type": "object",
 						"properties": {
@@ -38934,6 +38951,23 @@
 								}
 							}
 						},
+						"nullable": true
+					},
+					"appealUnderActSection": {
+						"type": "string",
+						"nullable": true,
+						"enum": [
+							"existing-development",
+							"proposed-changes-to-a-listed-building",
+							"proposed-use-of-a-development"
+						]
+					},
+					"lpaConsiderAppealInvalid": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"lpaAppealInvalidReasons": {
+						"type": "string",
 						"nullable": true
 					},
 					"validationOutcomeId": {

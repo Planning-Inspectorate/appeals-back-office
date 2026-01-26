@@ -22,6 +22,7 @@ export const mapAppellantCaseIn = (command) => {
 	const isEnforcementNotice =
 		isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE) &&
 		casedata.caseType === APPEAL_CASE_TYPE.C;
+	const isLDC = casedata.caseType === APPEAL_CASE_TYPE.X;
 
 	// @ts-ignore
 	const sharedFields = createSharedS20S78Fields(command);
@@ -51,10 +52,8 @@ export const mapAppellantCaseIn = (command) => {
 	const advertDetails =
 		(casedata.caseType === APPEAL_CASE_TYPE.ZA || casedata.caseType === APPEAL_CASE_TYPE.H) &&
 		casedata.advertDetails &&
-		// @ts-ignore - type resolved in v2 of data model
 		casedata.advertDetails.length > 0
 			? casedata.advertDetails
-					// @ts-ignore - type resolved in v2 of data model
 					.map((detail) => ({
 						advertInPosition: detail.isAdvertInPosition,
 						highwayLand: detail.isSiteOnHighwayLand
@@ -65,7 +64,7 @@ export const mapAppellantCaseIn = (command) => {
 	const contactAddress = isEnforcementNotice ? mapContactAddressIn(casedata) : null;
 
 	const procedurePreferenceFields =
-		isFullAdverts || isEnforcementNotice
+		isFullAdverts || isEnforcementNotice || isLDC
 			? {
 					appellantProcedurePreference: casedata.appellantProcedurePreference,
 					appellantProcedurePreferenceDetails: casedata.appellantProcedurePreferenceDetails,
@@ -139,6 +138,11 @@ export const mapAppellantCaseIn = (command) => {
 			statusPlanningObligation: command.casedata.statusPlanningObligation,
 			siteGridReferenceEasting: command.casedata.siteGridReferenceEasting,
 			siteGridReferenceNorthing: command.casedata.siteGridReferenceNorthing
+		}),
+		...(isLDC && {
+			...procedurePreferenceFields,
+			siteUseAtTimeOfApplication: command.casedata.siteUseAtTimeOfApplication,
+			applicationMadeUnderActSection: command.casedata.applicationMadeUnderActSection
 		})
 	};
 
