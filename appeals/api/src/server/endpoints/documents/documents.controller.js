@@ -168,6 +168,7 @@ export const addDocuments = async (req, res) => {
 		return res.status(204).send();
 	} catch (/** @type {Object<any, any>} */ error) {
 		if (error.code === 'P2002') {
+			logger.error('Error when uploading documents: ' + error.message);
 			return res.status(409).send({
 				errors: {
 					body: {
