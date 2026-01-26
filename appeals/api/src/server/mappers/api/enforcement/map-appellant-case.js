@@ -39,6 +39,7 @@ export const mapEnforcementAppellantCase = (data) => {
 			descriptionOfAllegedBreach: hasEnforcementData
 				? appellantCase?.descriptionOfAllegedBreach
 				: null,
+			applicationMadeAndFeePaid: appellantCase?.applicationMadeAndFeePaid ?? null,
 			applicationDevelopmentAllOrPart: appellantCase?.applicationDevelopmentAllOrPart ?? null,
 			// @ts-ignore
 			contactAddress: hasEnforcementData

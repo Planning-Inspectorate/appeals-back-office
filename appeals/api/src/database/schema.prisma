@@ -338,6 +338,7 @@ model AppellantCase {
   interestInLand                                 String?
   writtenOrVerbalPermission                      String?
   descriptionOfAllegedBreach                     String?
+  applicationMadeAndFeePaid                      Boolean?
   applicationDevelopmentAllOrPart                String?
   contactAddress                                 Address?                                         @relation(fields: [contactAddressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   contactAddressId                               Int?
