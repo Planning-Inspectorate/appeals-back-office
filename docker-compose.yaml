@@ -25,6 +25,8 @@ services:
             - 'NOTIFY_SEND_MAIL_EMULATOR=true'
             - 'ENABLE_TEST_ENDPOINTS=true'
             - 'NODE_TLS_REJECT_UNAUTHORIZED=0'
+        volumes:
+             - ./appeals/web/certificate.pem:/usr/local/share/ca-certificates/azurite.crt
         ports:
             - 3000:3000
     web:

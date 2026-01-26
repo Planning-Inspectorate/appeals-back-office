@@ -14,6 +14,9 @@ ENV SWAGGER_JSON_DIR=./src/server/openapi.json
 ENV DATABASE_URL=$DATABASE_URL
 ENV GIT_SHA=$GIT_SHA
 
+RUN apk add --no-cache ca-certificates
+RUN update-ca-certificates
+
 WORKDIR /src/app/appeals/api
 RUN npm run prisma-generate
 
