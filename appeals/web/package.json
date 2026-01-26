@@ -28,9 +28,9 @@
     "watch:sass": "chokidar \"src/styles/**/*.scss\" --silent -c \"npm run sass\""
   },
   "dependencies": {
-    "@azure/msal-common": "15.13.3",
-    "@azure/msal-node": "^3.8.4",
-    "@azure/storage-blob": "^12.29.1",
+    "@azure/msal-common": "16.0.2",
+    "@azure/msal-node": "^5.0.2",
+    "@azure/storage-blob": "^12.30.0",
     "@hapi/boom": "10.0.1",
     "@pins/blob-storage-client": "^0.0.0",
     "@pins/express": "^0.0.0",
