@@ -245,7 +245,7 @@ export function nationalListPage(
 				id: 'searchTerm',
 				name: 'searchTerm',
 				label: {
-					text: 'Enter the appeal reference, planning application reference or postcode (including spaces)',
+					text: 'Enter the appeal reference, planning application or enforcement reference, or postcode (including spaces)',
 					classes: 'govuk-caption-m govuk-!-margin-bottom-3 colour--secondary'
 				},
 				value: searchTerm,

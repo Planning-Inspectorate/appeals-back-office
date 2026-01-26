@@ -464,6 +464,13 @@ describe('appeals list routes', () => {
 									applicationReference: {
 										contains: 'MD21'
 									}
+								},
+								{
+									appellantCase: {
+										enforcementReference: {
+											contains: 'MD21'
+										}
+									}
 								}
 							],
 							appealStatus: {
@@ -598,6 +605,13 @@ describe('appeals list routes', () => {
 									applicationReference: {
 										contains: 'md21'
 									}
+								},
+								{
+									appellantCase: {
+										enforcementReference: {
+											contains: 'md21'
+										}
+									}
 								}
 							],
 							appealStatus: {
@@ -731,6 +745,13 @@ describe('appeals list routes', () => {
 								{
 									applicationReference: {
 										contains: 'MD21 5XY'
+									}
+								},
+								{
+									appellantCase: {
+										enforcementReference: {
+											contains: 'MD21 5XY'
+										}
 									}
 								}
 							],
