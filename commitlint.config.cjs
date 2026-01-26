@@ -45,7 +45,8 @@ module.exports = {
 				test: [null, ...scopes]
 			}
 		],
-		'ticket-required': [2, 'always']
+		'ticket-required': [2, 'always'],
+		'subject-case': [0]
 	},
 	plugins: [
 		{
