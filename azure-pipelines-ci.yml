@@ -123,6 +123,8 @@ extends:
               FULL_URL="https://127.0.0.1:10000/devstoreaccount1/document-service-uploads?${SAS_URL}"
 
               echo "##vso[task.setvariable variable=AZURE_BLOB_EMULATOR_SAS_HOST]$FULL_URL"
+
+              echo $(AZURE_BLOB_EMULATOR_SAS_HOST)
             condition: eq(variables['runE2E'], 'true')
             displayName: "Generate SAS Url"
           - script: AZURE_BLOB_EMULATOR_SAS_HOST=$(AZURE_BLOB_EMULATOR_SAS_HOST) AUTH_TENANT_ID=$(AZURE_TENANT_ID) AUTH_CLIENT_SECRET=$(AUTH_CLIENT_SECRET) AUTH_CLIENT_ID=$(AUTH_CLIENT_ID) GIT_SHA=$(Build.SourceVersion) docker-compose up -d
@@ -146,10 +148,10 @@ extends:
               az storage container create \
                 --name document-service-uploads \
                 --connection-string "DefaultEndpointsProtocol=https;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=https://127.0.0.1:10000/devstoreaccount1;"
+
+              az storage container list \ --connection-string "DefaultEndpointsProtocol=https;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=https://127.0.0.1:10000/devstoreaccount1;"
             condition: eq(variables['runE2E'], 'true')
-            displayName: "Create storage account"
-          - script: docker logs pins_azurite
-            condition: eq(variables['runE2E'], 'true')
+            displayName: "Configure azurite"
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
@@ -177,6 +179,9 @@ extends:
           - script: curl --cacert appeals/web/certificate.pem -v https://localhost:8080/health
             displayName: "Web healthcheck"
             condition: eq(variables['runE2E'], 'true')
+          - script: docker logs pins_azurite
+            condition: eq(variables['runE2E'], 'true')
+            displayName: "Azurite healthcheck"
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22

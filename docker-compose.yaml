@@ -18,11 +18,12 @@ services:
         environment:
             - 'NODE_ENV=test'
             - 'DATABASE_URL=sqlserver://db:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true'
-            - 'AZURE_BLOB_STORE_HOST=https://pins_azurite:10000/devstoreaccount1/'
+            - 'BO_BLOB_STORAGE_ACCOUNT=https://pins_azurite:10000/devstoreaccount1/'
             - 'AZURE_BLOB_EMULATOR_SAS_HOST=${AZURE_BLOB_EMULATOR_SAS_HOST}'
             - 'AZURE_BLOB_DEFAULT_CONTAINER=document-service-uploads'
             - 'AZURE_BLOB_USE_EMULATOR=true'
             - 'NOTIFY_SEND_MAIL_EMULATOR=true'
+            - 'ENABLE_TEST_ENDPOINTS=true'
         ports:
             - 3000:3000
     web:
