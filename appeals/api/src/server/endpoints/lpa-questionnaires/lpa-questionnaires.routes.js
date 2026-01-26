@@ -84,7 +84,8 @@ router.patch(
 			'appealStatus',
 			'lpa',
 			'appellant',
-			'agent'
+			'agent',
+			'address'
 		])
 	),
 	checkLPAQuestionnaireExists,
