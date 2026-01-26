@@ -37,16 +37,6 @@ export class CYASection extends CaseDetailsPage {
 	};
 
 	// A C T I O N S
-
-	clickButtonByText(buttonText) {
-		cy.get('#main-content form')
-			.find('button')
-			.contains(buttonText)
-			.should('be.visible')
-			.and('be.enabled')
-			.click();
-	}
-
 	selectChangeAnswer(answer) {
 		cy.getByData('change-' + answer).click();
 	}
