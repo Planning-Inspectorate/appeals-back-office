@@ -313,6 +313,50 @@ describe('appeal timetables routes', () => {
 				expect(response.body).toEqual(requestBody);
 			});
 
+			test('updates appeal timetable and notifies Rule 6 party', async () => {
+				const rule6Party = {
+					id: 1,
+					serviceUser: {
+						email: 'rule6@example.com'
+					}
+				};
+				const appealWithRule6 = {
+					...fullPlanningAppealWithTimetable,
+					appealRule6Parties: [rule6Party]
+				};
+				const requestBody = {
+					lpaQuestionnaireDueDate: utcDate.toISOString(),
+					lpaStatementDueDate: utcDate.toISOString()
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(appealWithRule6);
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+				databaseConnector.appealTimetable.update.mockResolvedValue(1);
+
+				const { appealTimetable, id } = appealWithRule6;
+				const response = await request
+					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
+					.send(requestBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(3);
+
+				expect(mockNotifySend).toHaveBeenCalledWith(
+					expect.objectContaining({
+						recipientEmail: 'rule6@example.com',
+						templateName: 'appeal-timetable-updated',
+						personalisation: expect.objectContaining({
+							appeal_reference_number: appealWithRule6.reference
+						})
+					})
+				);
+			});
+
 			test('returns an error if appealId is not numeric', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(null);

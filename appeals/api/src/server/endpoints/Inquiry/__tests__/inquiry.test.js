@@ -171,6 +171,38 @@ describe('inquiry routes', () => {
 				expect(response.status).toEqual(201);
 			});
 
+			test('creates a single inquiry and notifies Rule 6 party', async () => {
+				const rule6Party = {
+					id: 1,
+					serviceUser: {
+						email: 'rule6@example.com'
+					}
+				};
+				const appealWithRule6 = {
+					...fullPlanningAppeal,
+					appealRule6Parties: [rule6Party]
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(appealWithRule6);
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send(requestData)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(3);
+				expect(mockNotifySend).toHaveBeenCalledWith(
+					expect.objectContaining({
+						recipientEmail: 'rule6@example.com',
+						personalisation: expect.objectContaining({
+							is_lpa: false
+						})
+					})
+				);
+			});
+
 			test('creates a single inquiry with no address or inquiryEndTime', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
@@ -1718,6 +1750,56 @@ describe('inquiry routes', () => {
 				);
 			});
 
+			test('updates a single inquiry and notifies Rule 6 party', async () => {
+				const rule6Party = {
+					id: 1,
+					serviceUser: {
+						email: 'rule6@example.com'
+					}
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					appealRule6Parties: [rule6Party],
+					appealStatus: [
+						{
+							status: APPEAL_CASE_STATUS.EVENT,
+							valid: true
+						}
+					]
+				});
+				databaseConnector.inquiry.findUnique.mockResolvedValue({
+					...inquiry,
+					addressId: null,
+					address: null
+				});
+				databaseConnector.inquiry.update.mockResolvedValue(inquiry);
+
+				const response = await request
+					.patch(`/appeals/${fullPlanningAppeal.id}/inquiry/${inquiry.id}`)
+					.send({
+						inquiryStartTime: '2999-01-01T12:00:00.000Z',
+						inquiryEndTime: '2999-01-01T13:00:00.000Z',
+						estimatedDays: 6,
+						address: inquiryAddress
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(3);
+
+				expect(mockNotifySend).toHaveBeenCalledWith(
+					expect.objectContaining({
+						recipientEmail: 'rule6@example.com',
+						templateName: 'inquiry-updated',
+						personalisation: expect.objectContaining({
+							is_lpa: false
+						})
+					})
+				);
+			});
+
 			test('does not create audit trail for date when date or time has not changed', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
@@ -2968,6 +3050,39 @@ describe('inquiry routes', () => {
 			);
 
 			expect(response.status).toEqual(200);
+		});
+
+		test('deletes a single inquiry and notifies Rule 6 party', async () => {
+			const rule6Party = {
+				id: 1,
+				serviceUser: {
+					email: 'rule6@example.com'
+				}
+			};
+
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...fullPlanningAppeal,
+				appealRule6Parties: [rule6Party],
+				inquiry
+			});
+
+			const response = await request
+				.delete(`/appeals/${fullPlanningAppeal.id}/inquiry/${inquiry.id}`)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(3);
+
+			expect(mockNotifySend).toHaveBeenCalledWith(
+				expect.objectContaining({
+					recipientEmail: 'rule6@example.com',
+					templateName: 'inquiry-cancelled',
+					personalisation: expect.objectContaining({
+						is_lpa: false
+					})
+				})
+			);
 		});
 
 		test('returns an error if appealId is not a number', async () => {
