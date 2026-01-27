@@ -180,7 +180,7 @@ export const addDocuments = async (req, res) => {
 
 		return res
 			.status(500)
-			.send({ errors: { body: ERROR_FAILED_TO_ADD_DOCUMENTS + ' ' + error.message } });
+			.send({ errors: { body: ERROR_FAILED_TO_ADD_DOCUMENTS + ' ' + error.toString() } });
 	}
 };
 
