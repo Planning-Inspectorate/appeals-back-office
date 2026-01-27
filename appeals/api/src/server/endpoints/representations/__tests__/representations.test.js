@@ -662,6 +662,96 @@ describe('/appeals/:id/reps', () => {
 			}
 		);
 
+		test.each([['full planning', appealS78]])(
+			'200 when appellant statement incomplete is successfully updated with rejection, appeal type %s',
+			async (_, appeal) => {
+				jest
+					.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+					.setSystemTime(new Date('2024-12-11'));
+
+				const mockRepresentation = {
+					id: 1,
+					lpa: false,
+					status: null,
+					originalRepresentation: 'Original text of the representation',
+					redactedRepresentation: 'Redacted text of the representation',
+					dateCreated: new Date('2024-12-11T12:00:00Z'),
+					notes: 'Some notes',
+					attachments: ['attachment1.pdf', 'attachment2.pdf'],
+					representationType: 'appellant_statement',
+					siteVisitRequested: true,
+					source: 'citizen',
+					representationRejectionReasonsSelected: [
+						{
+							representationRejectionReason: {
+								id: 8,
+								name: 'Supporting documents missing',
+								hasText: false
+							},
+							representationRejectionReasonText: []
+						},
+						{
+							representationRejectionReason: {
+								id: 10,
+								name: 'Other',
+								hasText: true
+							},
+							representationRejectionReasonText: [{ text: 'Provided documents were incomplete' }]
+						}
+					]
+				};
+
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => appeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedEmailPayload = {
+					lpa_reference: appeal.applicationReference,
+					deadline_date: '',
+					appeal_reference_number: appeal.reference,
+					reasons: ['Supporting documents missing', 'Other: Provided documents were incomplete'],
+					site_address: expectedSiteAddress,
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+				databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+				databaseConnector.representation.update.mockResolvedValue({
+					...mockRepresentation,
+					status: 'incomplete'
+				});
+
+				const response = await request
+					.patch('/appeals/1/reps/1')
+					.send({
+						status: 'incomplete',
+						notes: 'Some notes',
+						allowResubmit: false
+					})
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+				expect(mockNotifySend).toHaveBeenCalledWith({
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: expectedEmailPayload,
+					recipientEmail: appeal.lpa.email,
+					templateName: 'lpa-statement-incomplete'
+				});
+			}
+		);
+
 		test('200 when lpa proof of evidence incomplete is successfully updated with incomplete, appeal type %s', async () => {
 			const appeal = fullPlanningAppeal;
 			jest
