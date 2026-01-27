@@ -46,20 +46,31 @@ export const postCancelAppeal = async (request, response) => {
 
 	const cancelReason = request.body['cancelReasonRadio'];
 
-	if (cancelReason === CANCEL_REASON.INVALID) {
-		return response.redirect(
-			`/appeals-service/appeal-details/${request.currentAppeal.appealId}/invalid/new`
-		);
-	} else if (cancelReason === CANCEL_REASON.WITHDRAWAL) {
-		return response.redirect(
-			`/appeals-service/appeal-details/${request.currentAppeal.appealId}/withdrawal/new`
-		);
+	switch (cancelReason) {
+		case CANCEL_REASON.INVALID:
+			return response.redirect(
+				`/appeals-service/appeal-details/${request.currentAppeal.appealId}/invalid/new`
+			);
+		case CANCEL_REASON.WITHDRAWAL:
+			return response.redirect(
+				`/appeals-service/appeal-details/${request.currentAppeal.appealId}/withdrawal/new`
+			);
+		case CANCEL_REASON.ENFORCEMENT_NOTICE_WITHDRAWN:
+			return response.redirect(
+				`/appeals-service/appeal-details/${request.currentAppeal.appealId}/cancel/enforcement-notice-withdrawal`
+			);
+		case CANCEL_REASON.DID_NOT_PAY:
+			return response.redirect(
+				`/appeals-service/appeal-details/${request.currentAppeal.appealId}/cancel/check-details`
+			);
+		default:
+			return response.status(500).render('app/500.njk');
 	}
-
-	return response.status(500).render('app/500.njk');
 };
 
 const CANCEL_REASON = {
 	INVALID: 'invalid',
-	WITHDRAWAL: 'withdrawal'
+	WITHDRAWAL: 'withdrawal',
+	ENFORCEMENT_NOTICE_WITHDRAWN: 'enforcement-notice-withdrawn',
+	DID_NOT_PAY: 'did-not-pay'
 };
