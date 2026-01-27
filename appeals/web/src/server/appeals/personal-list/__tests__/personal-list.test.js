@@ -582,7 +582,7 @@ describe('personal-list', () => {
 			},
 			{
 				name: 'Review appellant statement',
-				requiredAction: 'reviewAppellantStatement',
+				requiredAction: 'appellantStatementAwaitingReview',
 				expectedHtml: {
 					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-statement?backUrl=%2Fappeals-service%2Fpersonal-list">Review appellant statement</a>`
 				}

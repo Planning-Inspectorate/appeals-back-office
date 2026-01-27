@@ -97,7 +97,7 @@ describe('mapStatusDependentNotifications', () => {
 		},
 		{
 			bannerKey: 'appellantStatementAwaitingReview',
-			requiredAction: 'reviewAppellantStatement',
+			requiredAction: 'appellantStatementAwaitingReview',
 			expectedContainedHtml:
 				'<p class="govuk-notification-banner__heading">Appellant statement awaiting review</p>',
 			bannerShouldNotDisplayWhenChildLinkedAppeal: true

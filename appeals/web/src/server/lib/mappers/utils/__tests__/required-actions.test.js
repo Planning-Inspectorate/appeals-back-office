@@ -1123,7 +1123,7 @@ describe('required actions', () => {
 					).toContain('updateLpaStatement');
 				});
 
-				it('should return "reviewAppellantStatement", "reviewIpComments" and "reviewLpaStatement" if all three are awaiting review', () => {
+				it('should return "appellantStatementAwaitingReview", "reviewIpComments" and "reviewLpaStatement" if all three are awaiting review', () => {
 					expect(
 						getRequiredActionsForAppeal(
 							{
@@ -1158,7 +1158,7 @@ describe('required actions', () => {
 						)
 					).toEqual(
 						expect.arrayContaining([
-							'reviewAppellantStatement',
+							'appellantStatementAwaitingReview',
 							'reviewIpComments',
 							'reviewLpaStatement'
 						])
