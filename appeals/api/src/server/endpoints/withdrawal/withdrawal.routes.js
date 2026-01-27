@@ -38,7 +38,8 @@ router.post(
 		'appealType',
 		'hearing',
 		'procedureType',
-		'siteVisit'
+		'siteVisit',
+		'appealRule6Parties'
 	]),
 	getDateValidator,
 	asyncHandler(postWithdrawal)

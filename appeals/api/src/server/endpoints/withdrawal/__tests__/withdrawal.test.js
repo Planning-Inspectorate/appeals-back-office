@@ -142,5 +142,52 @@ describe('appeal withdrawal routes', () => {
 
 			expect(response.status).toEqual(200);
 		});
+
+		test('notifies Rule 6 party when appeal is withdrawn', async () => {
+			const rule6Party = {
+				id: 1,
+				serviceUser: {
+					email: 'rule6@example.com'
+				}
+			};
+			const correctAppealState = {
+				...householdAppeal,
+				appealRule6Parties: [rule6Party],
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.EVENT,
+						valid: true
+					}
+				],
+				hearing: null
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(correctAppealState);
+
+			const tenDaysAgo = sub(new Date(), { days: 10 });
+			const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
+			const utcDate = setTimeInTimeZone(withoutWeekends, 10, 0);
+
+			const response = await request
+				.post(`/appeals/${householdAppeal.id}/withdrawal`)
+				.send({
+					withdrawalRequestDate: utcDate.toISOString()
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(3);
+
+			// Verify Rule 6 notification
+			expect(mockNotifySend).toHaveBeenCalledWith(
+				expect.objectContaining({
+					recipientEmail: 'rule6@example.com',
+					templateName: 'appeal-withdrawn-lpa', // Generic/LPA template
+					personalisation: expect.objectContaining({
+						feedback_link: FEEDBACK_FORM_LINKS.LPA
+					})
+				})
+			);
+
+			expect(response.status).toEqual(200);
+		});
 	});
 });

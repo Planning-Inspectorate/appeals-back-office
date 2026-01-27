@@ -70,6 +70,23 @@ export const publishWithdrawal = async (
 		});
 	}
 
+	if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
+		appeal.appealRule6Parties.forEach(async (party) => {
+			if (party.serviceUser?.email) {
+				await notifySend({
+					azureAdUserId,
+					templateName: 'appeal-withdrawn-lpa',
+					notifyClient,
+					recipientEmail: party.serviceUser.email,
+					personalisation: {
+						...personalisation,
+						feedback_link: FEEDBACK_FORM_LINKS.LPA
+					}
+				});
+			}
+		});
+	}
+
 	if (result) {
 		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.WITHDRAWN);
 		await broadcasters.broadcastAppeal(appeal.id);
