@@ -46,6 +46,7 @@ import gridReferenceRouter from './grid-reference/grid-reference.router.js';
 import highwayLandRouter from './highway-land/highway-land.router.js';
 import interestInLandRouter from './interest-in-land/interest-in-land.router.js';
 import landownerPermissionRouter from './landowner-permission/landowner-permission.router.js';
+import applicationMadeUnderActSectionRouter from './ldc-type/ldc-type.router.js';
 import outcomeIncompleteRouter from './outcome-incomplete/outcome-incomplete.router.js';
 import outcomeValidRouter from './outcome-valid/outcome-valid.router.js';
 import ownersKnownRouter from './owners-known/owners-known.router.js';
@@ -321,6 +322,12 @@ router.use(
 	'/site-use-at-time-of-application',
 	validateAppealWithInclude(['appellantCase']),
 	siteUseAtTimeOfApplicationRouter
+);
+
+router.use(
+	'/application-made-under-act-section',
+	validateAppealWithInclude(['appellantCase']),
+	applicationMadeUnderActSectionRouter
 );
 
 router

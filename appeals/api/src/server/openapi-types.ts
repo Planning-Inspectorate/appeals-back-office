@@ -4549,7 +4549,11 @@ export type AppellantCase = {
 	siteGridReferenceEasting?: string | null;
 	siteGridReferenceNorthing?: string | null;
 	siteUseAtTimeOfApplication?: string | null;
-	applicationMadeUnderActSection?: string | null;
+	applicationMadeUnderActSection?:
+		| 'existing-development'
+		| 'proposed-changes-to-a-listed-building'
+		| 'proposed-use-of-a-development'
+		| null;
 	validation?: {
 		outcome?: string | null;
 		incompleteReasons?: {
@@ -16865,7 +16869,11 @@ export interface AppellantCaseUpdateRequest {
 	siteGridReferenceEasting?: string | null;
 	siteGridReferenceNorthing?: string | null;
 	siteUseAtTimeOfApplication?: string | null;
-	applicationMadeUnderActSection?: string | null;
+	applicationMadeUnderActSection?:
+		| 'existing-development'
+		| 'proposed-changes-to-a-listed-building'
+		| 'proposed-use-of-a-development'
+		| null;
 	appellantCaseValidationOutcomeId?: number | null;
 	validationOutcome?: {
 		id?: number;
