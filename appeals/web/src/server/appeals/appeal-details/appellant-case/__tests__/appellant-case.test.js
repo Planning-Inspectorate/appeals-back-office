@@ -496,6 +496,9 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('3. Application details</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('What date did you submit your application?');
 			expect(unprettifiedElement.innerHTML).toContain(
+				'What type of lawful development certificate is the appeal about?'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
 				'What did you use the appeal site for when you made the application?'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(

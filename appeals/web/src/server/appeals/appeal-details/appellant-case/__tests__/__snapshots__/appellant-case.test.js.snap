@@ -4480,6 +4480,12 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                     data-cy="change-site-use-at-time-of-application">Change<span class="govuk-visually-hidden"> What did you use the appeal site for when you made the application? (3. Application details)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What type of lawful development certificate is the appeal about?</dt>
+                            <dd                             class="govuk-summary-list__value">Not answered</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-made-under-act-section/change"
+                                    data-cy="change-application-made-under-act-section">Change<span class="govuk-visually-hidden"> What type of lawful development certificate is the appeal about? (3. Application details)</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row appeal-development-description"><dt class="govuk-summary-list__key"> Enter the description of development that you submitted in your application</dt>
                             <dd                             class="govuk-summary-list__value">Test development description details</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/development-description/change"

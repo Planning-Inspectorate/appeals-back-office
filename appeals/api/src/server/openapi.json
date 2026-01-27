@@ -17039,7 +17039,12 @@
 					},
 					"applicationMadeUnderActSection": {
 						"type": "string",
-						"nullable": true
+						"nullable": true,
+						"enum": [
+							"existing-development",
+							"proposed-changes-to-a-listed-building",
+							"proposed-use-of-a-development"
+						]
 					},
 					"validation": {
 						"type": "object",
@@ -42202,7 +42207,12 @@
 					},
 					"applicationMadeUnderActSection": {
 						"type": "string",
-						"nullable": true
+						"nullable": true,
+						"enum": [
+							"existing-development",
+							"proposed-changes-to-a-listed-building",
+							"proposed-use-of-a-development"
+						]
 					},
 					"appellantCaseValidationOutcomeId": {
 						"type": "number",

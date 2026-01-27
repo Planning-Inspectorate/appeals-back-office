@@ -1,4 +1,5 @@
 import { submaps as advertSubmaps } from './advert.js';
+import { mapApplicationMadeUnderActSection } from './submappers/application-made-under-act-section.js';
 import { mapNewPlansDrawings } from './submappers/new-plans-drawings.js';
 import { mapOtherNewDocuments } from './submappers/other-new-documents.js';
 import { mapPlanningObligation } from './submappers/planning-obligation.js';
@@ -25,5 +26,6 @@ export const submaps = {
 	statusPlanningObligation: mapStatusPlanningObligation,
 	newPlansDrawings: mapNewPlansDrawings,
 	otherNewDocuments: mapOtherNewDocuments,
-	siteUseAtTimeOfApplication: mapSiteUseAtTimeOfApplication
+	siteUseAtTimeOfApplication: mapSiteUseAtTimeOfApplication,
+	applicationMadeUnderActSection: mapApplicationMadeUnderActSection
 };

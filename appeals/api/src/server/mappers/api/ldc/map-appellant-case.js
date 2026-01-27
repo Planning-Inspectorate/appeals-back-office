@@ -1,5 +1,6 @@
 /** @typedef {import('@pins/appeals.api').Api.AppellantCase} AppellantCase */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
+/** @typedef  {"existing-development" | "proposed-changes-to-a-listed-building" | "proposed-use-of-a-development" | null | undefined} ApplicationMadeUnderActSection*/
 
 /**
  *
@@ -13,6 +14,8 @@ export const mapLdcAppellantCase = (data) => {
 
 	return {
 		siteUseAtTimeOfApplication: appellantCase?.siteUseAtTimeOfApplication,
-		applicationMadeUnderActSection: appellantCase?.applicationMadeUnderActSection
+		applicationMadeUnderActSection: /** @type {ApplicationMadeUnderActSection} */ (
+			appellantCase?.applicationMadeUnderActSection
+		)
 	};
 };

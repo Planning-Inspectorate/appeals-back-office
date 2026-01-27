@@ -133,6 +133,7 @@ export function generateLdcComponents(appealDetails, appellantCaseData, mappedAp
 			rows: [
 				mappedAppellantCaseData.applicationDate.display.summaryListItem,
 				mappedAppellantCaseData.siteUseAtTimeOfApplication.display.summaryListItem,
+				mappedAppellantCaseData.applicationMadeUnderActSection.display.summaryListItem,
 				mappedAppellantCaseData.developmentDescription.display.summaryListItem,
 				mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
 				mappedAppellantCaseData.relatedAppeals.display.summaryListItem
