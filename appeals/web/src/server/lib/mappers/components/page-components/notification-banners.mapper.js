@@ -790,7 +790,7 @@ const appealActionRequiredToNotificationBannerMapping = {
 	reviewLpaQuestionnaire: 'readyForLpaQuestionnaireReview',
 	awaitingLpaUpdate: 'readyForLpaQuestionnaireReview',
 	reviewLpaStatement: 'lpaStatementAwaitingReview',
-	reviewAppellantStatement: 'appellantStatementAwaitingReview',
+	appellantStatementAwaitingReview: 'appellantStatementAwaitingReview',
 	shareFinalComments: 'shareFinalComments',
 	shareIpCommentsAndLpaStatement: 'shareCommentsAndLpaStatement',
 	startAppeal: 'appealValidAndReadyToStart',

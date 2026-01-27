@@ -596,7 +596,7 @@ function mapRequiredActionToPersonalListActionHtml(
 				})
 				.join('<br>');
 		}
-		case 'reviewAppellantStatement': {
+		case 'appellantStatementAwaitingReview': {
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 				request,
 				`/appeals-service/appeal-details/${appealId}/appellant-statement`

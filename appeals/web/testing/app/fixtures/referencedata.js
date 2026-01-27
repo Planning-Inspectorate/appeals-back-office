@@ -4665,7 +4665,7 @@ export const appealDataToGetRequiredActions = {
 			}
 		}
 	},
-	reviewAppellantStatement: {
+	appellantStatementAwaitingReview: {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
 		appealTimetable: {
