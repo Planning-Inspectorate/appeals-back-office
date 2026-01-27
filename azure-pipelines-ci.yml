@@ -108,7 +108,17 @@ extends:
                 -addext "keyUsage=digitalSignature,keyEncipherment" \
                 -addext "extendedKeyUsage=serverAuth,clientAuth"
             condition: eq(variables['runE2E'], 'true')
-            displayName: "Generate certificate and key"
+            displayName: "Generate certificate and key for web and azurite"
+          - script: |
+              openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+                -keyout appeals/api/certificate-key.pem \
+                -out appeals/api/certificate.pem \
+                -subj "/C=UK/ST=./L=./O=./CN=pins_azurite" \
+                -addext "subjectAltName=DNS:pins_azurite,DNS:localhost,IP:127.0.0.1" \
+                -addext "keyUsage=digitalSignature,keyEncipherment" \
+                -addext "extendedKeyUsage=serverAuth,clientAuth"
+            condition: eq(variables['runE2E'], 'true')
+            displayName: "Generate certificate and key for api"
           - script: |
               SAS_URL=$(az storage container generate-sas \
                 --account-name devstoreaccount1 \
