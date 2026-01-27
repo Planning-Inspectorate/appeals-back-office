@@ -1,4 +1,5 @@
 import {
+	APPEAL_APPLICATION_MADE_UNDER_ACT_SECTION,
 	APPEAL_DEVELOPMENT_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
@@ -182,10 +183,10 @@ const updateableFields = {
 		type: 'string',
 		nullable: true
 	},
-	//TODO: update to enum when data model updated
 	applicationMadeUnderActSection: {
 		type: 'string',
-		nullable: true
+		nullable: true,
+		enum: [...Object.values(APPEAL_APPLICATION_MADE_UNDER_ACT_SECTION)]
 	}
 };
 

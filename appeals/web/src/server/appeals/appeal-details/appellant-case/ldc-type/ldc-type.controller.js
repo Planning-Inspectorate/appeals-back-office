@@ -2,13 +2,13 @@ import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { HTTPError } from 'got';
 import { getAppellantCaseFromAppealId } from '../appellant-case.service.js';
-import { changeSiteUseAtTimeOfApplicationPage } from './site-use-at-time-of-application.mapper.js';
-import { changeSiteUseAtTimeOfApplication } from './site-use-at-time-of-application.service.js';
+import { changeApplicationMadeUnderActSectionPage } from './ldc-type.mapper.js';
+import { changeApplicationMadeUnderActSection } from './ldc-type.service.js';
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-const renderSiteUseAtTimeOfApplication = async (request, response) => {
+export const renderApplicationMadeUnderActSection = async (request, response) => {
 	try {
 		const { errors, currentAppeal } = request;
 
@@ -18,13 +18,13 @@ const renderSiteUseAtTimeOfApplication = async (request, response) => {
 			currentAppeal.appellantCaseId
 		);
 
-		const mappedPageContents = changeSiteUseAtTimeOfApplicationPage(
+		const mappedPageContents = changeApplicationMadeUnderActSectionPage(
 			currentAppeal,
 			appellantCaseData,
-			request.session.siteUseAtTimeOfApplication
+			request.session.applicationMadeUnderActSection
 		);
 
-		delete request.session.siteUseAtTimeOfApplication;
+		delete request.session.applicationMadeUnderActSection;
 
 		return response.status(200).render('patterns/change-page.pattern.njk', {
 			pageContent: mappedPageContents,
@@ -32,7 +32,7 @@ const renderSiteUseAtTimeOfApplication = async (request, response) => {
 		});
 	} catch (error) {
 		logger.error(error);
-		delete request.session.siteUseAtTimeOfApplication;
+		delete request.session.applicationMadeUnderActSection;
 		if (error instanceof HTTPError && error.response.statusCode === 404) {
 			return response.status(404).render('app/404.njk');
 		} else {
@@ -40,19 +40,22 @@ const renderSiteUseAtTimeOfApplication = async (request, response) => {
 		}
 	}
 };
+
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const getSiteUseAtTimeOfApplication = async (request, response) => {
-	return renderSiteUseAtTimeOfApplication(request, response);
+
+export const getApplicationMadeUnderActSection = async (request, response) => {
+	return renderApplicationMadeUnderActSection(request, response);
 };
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const postSiteUseAtTimeOfApplication = async (request, response) => {
+
+export const postApplicationMadeUnderActSection = async (request, response) => {
 	const {
 		params: { appealId },
 		currentAppeal,
@@ -60,18 +63,18 @@ export const postSiteUseAtTimeOfApplication = async (request, response) => {
 		errors
 	} = request;
 
-	request.session.siteUseAtTimeOfApplication = request.body['siteUseAtTimeOfApplication'];
+	request.session.applicationMadeUnderActSection = request.body['applicationMadeUnderActSection'];
 
 	if (errors) {
-		return renderSiteUseAtTimeOfApplication(request, response);
+		return renderApplicationMadeUnderActSection(request, response);
 	}
 
 	try {
-		await changeSiteUseAtTimeOfApplication(
+		await changeApplicationMadeUnderActSection(
 			apiClient,
 			appealId,
 			currentAppeal.appellantCaseId,
-			request.session.siteUseAtTimeOfApplication
+			request.session.applicationMadeUnderActSection
 		);
 
 		addNotificationBannerToSession({
@@ -81,17 +84,17 @@ export const postSiteUseAtTimeOfApplication = async (request, response) => {
 			text: 'Appeal updated'
 		});
 
-		delete request.session.siteUseAtTimeOfApplication;
+		delete request.session.applicationMadeUnderActSection;
 		return response.redirect(`/appeals-service/appeal-details/${appealId}/appellant-case`);
 	} catch (error) {
 		logger.error(error);
 
-		// Check if it's a validation error (400)
-		if (error instanceof HTTPError && error.response.statusCode === 400) {
+		if (error instanceof HTTPError && error.response.statusCode === 404) {
 			// @ts-ignore
 			request.errors = error.response.body.errors;
-			return renderSiteUseAtTimeOfApplication(request, response);
+			return response.status(404).render('app/404.njk');
+		} else {
+			return response.status(500).render('app/500.njk');
 		}
-		return response.status(500).render('app/500.njk');
 	}
 };

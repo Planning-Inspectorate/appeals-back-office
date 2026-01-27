@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`interest-in-land GET /change should render the ldc type page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> What type of lawful development certificate is the appeal about?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="application-made-under-act-section"
+                                        name="applicationMadeUnderActSection" type="radio" value="existing-development">
+                                        <label class="govuk-label govuk-radios__label" for="application-made-under-act-section">Existing development</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="application-made-under-act-section-2"
+                                        name="applicationMadeUnderActSection" type="radio" value="proposed-changes-to-a-listed-building">
+                                        <label class="govuk-label govuk-radios__label" for="application-made-under-act-section-2">Proposed changes to a listed building</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="application-made-under-act-section-3"
+                                        name="applicationMadeUnderActSection" type="radio" value="proposed-use-of-a-development">
+                                        <label class="govuk-label govuk-radios__label" for="application-made-under-act-section-3">Proposed use of a development</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`interest-in-land POST /change should re-render the page with an error if no radio button is selected 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#application-made-under-act-section">Select what type of lawful development certificate the appeal is about</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> What type of lawful development certificate is the appeal about?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="application-made-under-act-section"
+                                        name="applicationMadeUnderActSection" type="radio" value="existing-development">
+                                        <label class="govuk-label govuk-radios__label" for="application-made-under-act-section">Existing development</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="application-made-under-act-section-2"
+                                        name="applicationMadeUnderActSection" type="radio" value="proposed-changes-to-a-listed-building">
+                                        <label class="govuk-label govuk-radios__label" for="application-made-under-act-section-2">Proposed changes to a listed building</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="application-made-under-act-section-3"
+                                        name="applicationMadeUnderActSection" type="radio" value="proposed-use-of-a-development">
+                                        <label class="govuk-label govuk-radios__label" for="application-made-under-act-section-3">Proposed use of a development</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
