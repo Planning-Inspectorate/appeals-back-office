@@ -114,9 +114,8 @@ extends:
                 --account-name devstoreaccount1 \
                 --account-key Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw== \
                 --name document-service-uploads \
-                --permissions rwl \
+                --permissions rw \
                 --expiry 2027-01-03T13:00:00Z \
-                --https-only \
                 --output tsv \
                 --sas-version 2022-11-02 \
                 --connection-string "DefaultEndpointsProtocol=https;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=https://pins_azurite:10000/devstoreaccount1;")
