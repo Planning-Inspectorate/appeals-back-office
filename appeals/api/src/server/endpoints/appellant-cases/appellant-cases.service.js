@@ -257,6 +257,10 @@ export const updateAppellantCaseValidationOutcome = async (
 				}
 			}
 
+			if (otherInformation) {
+				invalidReasonsList.push(otherInformation);
+			}
+
 			const details = `${AUDIT_TRAIL_SUBMISSION_INVALID}\n${formatReasonsToHtmlList(
 				invalidReasonsList
 			)}`;
