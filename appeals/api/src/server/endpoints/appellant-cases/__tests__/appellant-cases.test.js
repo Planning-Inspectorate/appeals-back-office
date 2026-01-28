@@ -1408,7 +1408,7 @@ describe('appellant cases routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: enforcementNoticeAppeal.id,
-						details: `Appeal reviewed as valid on 27 January 2026\nOther information`,
+						details: `Appeal reviewed as valid on 28 January 2026\nOther information`,
 						loggedAt: expect.any(Date),
 						userId: enforcementNoticeAppeal.caseOfficer.id
 					}
