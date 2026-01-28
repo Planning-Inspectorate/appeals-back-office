@@ -625,7 +625,12 @@ export const spec = {
 				siteNotice: folderWithDocs,
 				supplementaryPlanningtestDocuments: folderWithDocs,
 				treePreservationOrder: folderWithDocs,
-				historicEnglandConsultation: folderWithDocs
+				historicEnglandConsultation: folderWithDocs,
+				localDevelopmentOrder: folderWithDocs,
+				planningContraventionNotice: folderWithDocs,
+				enforcementNoticePlan: folderWithDocs,
+				enforcementNotice: folderWithDocs,
+				planningPermission: folderWithDocs
 			},
 			doesAffectAListedBuilding: true,
 			doesAffectAScheduledMonument: true,

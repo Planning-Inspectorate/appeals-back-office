@@ -442,20 +442,10 @@ interface SingleLPAQuestionnaireResponse {
 	isSiteInAreaOfSpecialControlAdverts?: boolean;
 	wasApplicationRefusedDueToHighwayOrTraffic?: boolean;
 	didAppellantSubmitCompletePhotosAndPlans?: boolean;
-	// Enforcement
-	noticeRelatesToBuildingEngineeringMiningOther?: boolean | null;
-	siteAreaSquareMetres?: number | null;
-	hasAllegedBreachArea?: boolean | null;
-	doesAllegedBreachCreateFloorSpace?: boolean | null;
-	changeOfUseRefuseOrWaste?: boolean | null;
-	changeOfUseMineralExtraction?: boolean | null;
-	changeOfUseMineralStorage?: boolean | null;
-	relatesToErectionOfBuildingOrBuildings?: boolean | null;
-	relatesToBuildingWithAgriculturalPurpose?: boolean | null;
-	relatesToBuildingSingleDwellingHouse?: boolean | null;
-	affectedTrunkRoadName?: string | null;
-	isSiteOnCrownLand?: boolean | null;
-	article4AffectedDevelopmentRights?: string | null;
+	noticeRelatesToBuildingEngineeringMiningOther: boolean | null;
+	siteAreaSquareMetres: string | null;
+	hasAllegedBreachArea: boolean | null;
+	doesAllegedBreachCreateFloorSpace: boolean | null;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -493,20 +483,6 @@ interface UpdateLPAQuestionnaireRequest {
 	isSiteInAreaOfSpecialControlAdverts?: boolean;
 	wasApplicationRefusedDueToHighwayOrTraffic?: boolean;
 	didAppellantSubmitCompletePhotosAndPlans?: boolean;
-	// Enforcement
-	noticeRelatesToBuildingEngineeringMiningOther?: boolean | null;
-	siteAreaSquareMetres?: number | null;
-	hasAllegedBreachArea?: boolean | null;
-	doesAllegedBreachCreateFloorSpace?: boolean | null;
-	changeOfUseRefuseOrWaste?: boolean | null;
-	changeOfUseMineralExtraction?: boolean | null;
-	changeOfUseMineralStorage?: boolean | null;
-	relatesToErectionOfBuildingOrBuildings?: boolean | null;
-	relatesToBuildingWithAgriculturalPurpose?: boolean | null;
-	relatesToBuildingSingleDwellingHouse?: boolean | null;
-	affectedTrunkRoadName?: string | null;
-	isSiteOnCrownLand?: boolean | null;
-	article4AffectedDevelopmentRights?: string | null;
 }
 
 interface UpdateLPAQuestionnaireValidationOutcomeParams {
