@@ -22,6 +22,7 @@ import otherAppealsRouter from '../other-appeals/other-appeals.router.js';
 import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
 import affectedListedBuildingsRouter from './affected-listed-buildings/affected-listed-buildings.router.js';
 import affectsScheduledMonumentRouter from './affects-scheduled-monument/affects-scheduled-monument.router.js';
+import allegedBreachCreatesFloorSpaceRouter from './alleged-breach-creates-floor-space/alleged-breach-creates-floor-space.router.js';
 import appellantPhotosAndPlansRouter from './appellant-photos-and-plans/appellant-photos-and-plans.router.js';
 import changedListedBuildingsRouter from './changed-listed-buildings/changed-listed-buildings.router.js';
 import hasCommunityInfrastructureLevyRouter from './community-infrastructure-levy/has-community-infrastructure-levy/has-community-infrastructure-levy.router.js';
@@ -34,6 +35,7 @@ import eiaDevelopmentDescriptionRouter from './environmental-impact-assessment/e
 import eiaEnvironmentalImpactScheduleRouter from './environmental-impact-assessment/eia-environmental-impact-schedule/eia-environmental-impact-schedule.router.js';
 import environmentalAssessmentRouter from './environmental-impact-assessment/environmental-impact-assessment.router.js';
 import extraConditionsRouter from './extra-conditions/extra-conditions.router.js';
+import hasAllegedBreachAreaRouter from './has-alleged-breach-area/has-alleged-breach-area.router.js';
 import hasProtectedSpeciesRouter from './has-protected-species/has-protected-species.router.js';
 import highwayTrafficPublicSafetyRouter from './highway-traffic-public-safety/highway-traffic-public-safety.router.js';
 import isAonbNationalLandscapeRouter from './is-aonb-national-landscape/is-aonb-national-landscape.router.js';
@@ -476,6 +478,20 @@ router.use(
 	validateAppealWithInclude(['lpaQuestionnaire']),
 	assertUserHasPermission(permissionNames.updateCase),
 	relatesToOperationsRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/has-alleged-breach-area',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	hasAllegedBreachAreaRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/alleged-breach-creates-floor-space',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	allegedBreachCreatesFloorSpaceRouter
 );
 
 export default router;
