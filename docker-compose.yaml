@@ -73,6 +73,7 @@ services:
             --queueHost 0.0.0.0
             --tableHost 0.0.0.0
             --blobHttpsPort 10000
+            --blobPort 10000
             --cert /certs/certificate.pem
             --key /certs/certificate-key.pem
             --oauth basic
