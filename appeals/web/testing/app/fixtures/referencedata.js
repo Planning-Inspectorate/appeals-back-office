@@ -1197,7 +1197,20 @@ export const lpaQuestionnaireData = {
 	sensitiveAreaDetails: 'The area is prone to flooding',
 	siteWithinGreenBelt: true,
 	statutoryConsulteesDetails: 'Some other people need to be consulted',
-	validation: null
+	validation: null,
+	noticeRelatesToBuildingEngineeringMiningOther: true,
+	siteAreaSquareMetres: 25,
+	hasAllegedBreachArea: true,
+	doesAllegedBreachCreateFloorSpace: true,
+	changeOfUseRefuseOrWaste: true,
+	changeOfUseMineralExtraction: true,
+	changeOfUseMineralStorage: true,
+	relatesToErectionOfBuildingOrBuildings: true,
+	relatesToBuildingWithAgriculturalPurpose: true,
+	relatesToBuildingSingleDwellingHouse: true,
+	affectedTrunkRoadName: 'trunk road name',
+	isSiteOnCrownLand: true,
+	article4AffectedDevelopmentRights: 'article 4 affected development rights'
 };
 
 export const appellantCaseDataNotValidatedWithDocuments = {
@@ -1600,7 +1613,20 @@ export const lpaQuestionnaireDataNotValidated = {
 	sensitiveAreaDetails: 'The area is prone to flooding',
 	siteWithinGreenBelt: true,
 	consultedBodiesDetails: 'Some other people need to be consulted',
-	validation: null
+	validation: null,
+	noticeRelatesToBuildingEngineeringMiningOther: true,
+	siteAreaSquareMetres: 25,
+	hasAllegedBreachArea: true,
+	doesAllegedBreachCreateFloorSpace: true,
+	changeOfUseRefuseOrWaste: true,
+	changeOfUseMineralExtraction: true,
+	changeOfUseMineralStorage: true,
+	relatesToErectionOfBuildingOrBuildings: true,
+	relatesToBuildingWithAgriculturalPurpose: true,
+	relatesToBuildingSingleDwellingHouse: true,
+	affectedTrunkRoadName: 'trunk road name',
+	isSiteOnCrownLand: true,
+	article4AffectedDevelopmentRights: 'article 4 affected development rights'
 };
 
 export const lpaQuestionnaireDataNotValidatedWithDocuments = {
