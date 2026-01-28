@@ -43,6 +43,7 @@ import neighbouringSiteAccessRouter from './neighbouring-site-access/neighbourin
 import notificationMethodsRouter from './notification-methods/notification-methods.router.js';
 import preserveGrantLoanRouter from './preserve-grant-loan/preserve-grant-loan.router.js';
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
+import relatesToOperationsRouter from './relates-to-operations/relates-to-operations.router.js';
 import specialControlOfAdvertisementRouter from './special-control-of-advertisement/special-control-of-advertisement.router.js';
 
 const router = createRouter({ mergeParams: true });
@@ -469,5 +470,12 @@ router
 		documentsValidators.validateDocumentDeleteAnswer,
 		asyncHandler(controller.postDeleteDocumentPage)
 	);
+
+router.use(
+	'/:lpaQuestionnaireId/relates-to-operations',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	relatesToOperationsRouter
+);
 
 export default router;

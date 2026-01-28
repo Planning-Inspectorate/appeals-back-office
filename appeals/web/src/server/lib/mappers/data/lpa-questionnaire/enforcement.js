@@ -13,8 +13,8 @@ import { mapNoticeRelatesToOperations } from './submappers/map-notice-relates-to
 import { mapRelatesToAgriculturalPurpose } from './submappers/map-relates-to-agricultural-purpose.js';
 import { mapRelatesToErectionOfBuildings } from './submappers/map-relates-to-erection-of-buildings.js';
 import { mapRelatesToSingleDwellingHouse } from './submappers/map-relates-to-single-dwelling-house.js';
-import { mapServedStopNotice } from './submappers/map-served-stop-notice.js';
 import { mapSiteArea } from './submappers/map-site-area.js';
+import { mapStopNotice } from './submappers/map-stop-notice.js';
 import { mapWithinTrunkRoadDistance } from './submappers/map-within-trunk-road-distance.js';
 export const submaps = {
 	...casSubmaps,
@@ -33,7 +33,7 @@ export const submaps = {
 	relatesToErectionOfBuildings: mapRelatesToErectionOfBuildings,
 	relatesToAgriculturalPurpose: mapRelatesToAgriculturalPurpose,
 	relatesToSingleDwellingHouse: mapRelatesToSingleDwellingHouse,
-	servedStopNotice: mapServedStopNotice,
+	stopNotice: mapStopNotice,
 	removedPermittedDevelopmentRights: mapRemovedPermittedDevelopmentRights,
 
 	// Section 2:

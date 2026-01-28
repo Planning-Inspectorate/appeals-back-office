@@ -10,7 +10,7 @@ export const mapNoticeRelatesToOperations = ({
 		id: 'notice-relates-to-operations',
 		text: 'Does the enforcement notice relate to building, engineering, mining or other operations?',
 		value: lpaQuestionnaireData.noticeRelatesToBuildingEngineeringMiningOther,
-		link: `${currentRoute}/notice-operations/change`,
+		link: `${currentRoute}/relates-to-operations/change`,
 		editable: userHasUpdateCase,
 		defaultText: 'No data',
 		addCyAttribute: true
