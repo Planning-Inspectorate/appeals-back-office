@@ -1,4 +1,5 @@
 import { mapRemovedPermittedDevelopmentRights } from '#lib/mappers/data/lpa-questionnaire/submappers/map-removed-permitted-development-rights.js';
+import { submaps as casSubmaps } from './cas-planning.js';
 import { removeQuestions } from './common.js';
 import { submaps as s78Submaps } from './s78.js';
 import { mapAllegedBreachCreatesFloorSpace } from './submappers/map-alleged-breach-creates-floor-space.js';
@@ -16,6 +17,7 @@ import { mapServedStopNotice } from './submappers/map-served-stop-notice.js';
 import { mapSiteArea } from './submappers/map-site-area.js';
 import { mapWithinTrunkRoadDistance } from './submappers/map-within-trunk-road-distance.js';
 export const submaps = {
+	...casSubmaps,
 	// Inherit S78 submaps, but remove irrelevant document based questions
 	...removeQuestions(['eiaScopingOpinion'], s78Submaps),
 	// Section 1:
