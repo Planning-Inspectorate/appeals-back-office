@@ -150,6 +150,8 @@ extends:
               docker exec pins_azurite sha256sum /certs/certificate.pem
               docker exec api sha256sum /usr/local/share/ca-certificates/azurite.crt
             condition: eq(variables['runE2E'], 'true')
+          - script: docker exec -it api node -p "require('https').get('https://pins_azurite:10000', r => console.log('OK')).on('error', e => console.error(e))
+            condition: eq(variables['runE2E'], 'true')
           - script: docker inspect web
             condition: eq(variables['runE2E'], 'true')
           - script: docker inspect api
