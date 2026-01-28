@@ -28,7 +28,8 @@ describe('Add correspondence', () => {
 		const uploadDate = new Date();
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
-			happyPathHelper.assignCaseOfficer(caseObj);
+			cy.assignCaseOfficerViaApi(caseObj);
+			happyPathHelper.viewCaseDetails(caseObj);
 			caseDetailsPage.clickAddCrossTeamCorrespondence();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
@@ -45,7 +46,8 @@ describe('Add correspondence', () => {
 		const uploadDate = new Date();
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
-			happyPathHelper.assignCaseOfficer(caseObj);
+			cy.assignCaseOfficerViaApi(caseObj);
+			happyPathHelper.viewCaseDetails(caseObj);
 			caseDetailsPage.clickAddInspectorCorrespondence();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
@@ -62,7 +64,8 @@ describe('Add correspondence', () => {
 		const uploadDate = new Date();
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
-			happyPathHelper.assignCaseOfficer(caseObj);
+			cy.assignCaseOfficerViaApi(caseObj);
+			happyPathHelper.viewCaseDetails(caseObj);
 			caseDetailsPage.clickAddMainPartyCorrespondence();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
