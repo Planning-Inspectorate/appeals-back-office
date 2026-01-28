@@ -15,7 +15,6 @@ services:
             dockerfile: appeals/api/Dockerfile
             args:
                 GIT_SHA: ${GIT_SHA}
-        command: sh -c "update-ca-certificates && npm run start"
         environment:
             - 'NODE_ENV=test'
             - 'DATABASE_URL=sqlserver://db:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true'
@@ -26,6 +25,7 @@ services:
             - 'NOTIFY_SEND_MAIL_EMULATOR=true'
             - 'ENABLE_TEST_ENDPOINTS=true'
             - 'NODE_TLS_REJECT_UNAUTHORIZED=0'
+            - 'NODE_EXTRA_CA_CERTS: /usr/local/share/ca-certificates/azurite.crt'
         volumes:
              - ./appeals/web/certificate.pem:/usr/local/share/ca-certificates/azurite.crt
         ports:
