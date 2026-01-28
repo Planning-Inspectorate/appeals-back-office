@@ -7,10 +7,9 @@ export const mapChangeOfUseRefuseOrWaste = ({
 	userHasUpdateCase
 }) =>
 	booleanSummaryListItem({
-		id: 'refuse-waste',
+		id: 'change-of-use-refuse-or-waste',
 		text: 'Does the enforcement notice include a change of use of land to dispose refuse or waste materials?',
-		// @ts-ignore
 		value: lpaQuestionnaireData.changeOfUseRefuseOrWaste,
-		link: `${currentRoute}/refuse-waste`,
+		link: `${currentRoute}/change-of-use-refuse-or-waste/change`,
 		editable: userHasUpdateCase
 	});

@@ -4,6 +4,7 @@ import { removeQuestions } from './common.js';
 import { submaps as s78Submaps } from './s78.js';
 import { mapAllegedBreachCreatesFloorSpace } from './submappers/map-alleged-breach-creates-floor-space.js';
 import { mapAppealNotification } from './submappers/map-appeal-notification.js';
+import { mapChangeOfUseMineralExtraction } from './submappers/map-change-of-use-mineral-extraction.js';
 import { mapChangeOfUseMineralStorage } from './submappers/map-change-of-use-mineral-storage.js';
 import { mapChangeOfUseRefuseOrWaste } from './submappers/map-change-of-use-refuse-or-waste.js';
 import { mapCrownLand } from './submappers/map-crown-land.js';
@@ -29,6 +30,7 @@ export const submaps = {
 	isSiteOnCrownLand: mapCrownLand,
 	withinTrunkRoadDistance: mapWithinTrunkRoadDistance,
 	changeOfUseRefuseOrWaste: mapChangeOfUseRefuseOrWaste,
+	changeOfUseMineralExtraction: mapChangeOfUseMineralExtraction,
 	changeOfUseMineralStorage: mapChangeOfUseMineralStorage,
 	relatesToErectionOfBuildings: mapRelatesToErectionOfBuildings,
 	relatesToAgriculturalPurpose: mapRelatesToAgriculturalPurpose,
