@@ -151,7 +151,10 @@ extends:
               docker exec api sha256sum /usr/local/share/ca-certificates/azurite.crt
             condition: eq(variables['runE2E'], 'true')
           - script: docker exec api wget -S -O - https://pins_azurite:10000/devstoreaccount1
-          - script: docker exec api openssl s_client -connect pins_azurite:10000 -showcerts
+          - script: |
+              docker exec -it api sh
+              apk add openssl
+              openssl s_client -connect pins_azurite:10000 -showcerts
             condition: eq(variables['runE2E'], 'true')
           - script: docker inspect web
             condition: eq(variables['runE2E'], 'true')
