@@ -1,5 +1,5 @@
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
-import { calculateTimetable } from '../business-days.js';
+import { calculateTimetable, getFullAppealBaseTimetableKey } from '../business-days.js';
 
 describe('business-days', () => {
 	describe('calculateTimetable', () => {
@@ -58,6 +58,23 @@ describe('business-days', () => {
 				const timetable = await calculateTimetable(t.appealType, t.startedAt);
 				// @ts-ignore
 				expect(timetable).toEqual(t.timetable);
+			});
+		}
+	});
+
+	describe('getFullAppealBaseTimetableKey', () => {
+		const tests = [
+			{ appealType: APPEAL_CASE_TYPE.H, expected: APPEAL_CASE_TYPE.H },
+			{ appealType: APPEAL_CASE_TYPE.X, expected: APPEAL_CASE_TYPE.H },
+			{ appealType: APPEAL_CASE_TYPE.C, expected: APPEAL_CASE_TYPE.C },
+			{ appealType: APPEAL_CASE_TYPE.W, expected: APPEAL_CASE_TYPE.W },
+			{ appealType: 'unknown-type', expected: APPEAL_CASE_TYPE.W }
+		];
+
+		for (const t of tests) {
+			it(`returns correct base timetable key for appeal type ${t.appealType}`, () => {
+				const result = getFullAppealBaseTimetableKey(t.appealType);
+				expect(result).toBe(t.expected);
 			});
 		}
 	});

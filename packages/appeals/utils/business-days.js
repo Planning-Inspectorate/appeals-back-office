@@ -177,6 +177,22 @@ const setTimeInTimeZone = (date, hours, minutes) => {
 };
 
 /**
+ * @param {string} appealType
+ * @returns {string}
+ */
+export const getFullAppealBaseTimetableKey = (appealType) => {
+	switch (appealType) {
+		case APPEAL_CASE_TYPE.H:
+		case APPEAL_CASE_TYPE.X:
+			return APPEAL_CASE_TYPE.H;
+		case APPEAL_CASE_TYPE.C:
+			return APPEAL_CASE_TYPE.C;
+		default:
+			return APPEAL_CASE_TYPE.W;
+	}
+};
+
+/**
  * Calculates the timetable deadlines excluding weekends and bank holidays
  *
  * 1. The deadline day is calculated excluding weekends
@@ -193,10 +209,9 @@ const calculateTimetable = async (appealType, startedAt, procedureType = 'writte
 		const startDate = setTimeInTimeZone(startedAt, DAYTIME_HOUR, DAYTIME_MINUTE);
 
 		// @ts-ignore
-		const fullAppealTypeKey = [APPEAL_CASE_TYPE.H, APPEAL_CASE_TYPE.C].includes(appealType)
-			? appealType
-			: APPEAL_CASE_TYPE.W;
+		const fullAppealTypeKey = getFullAppealBaseTimetableKey(appealType);
 		const expeditedAppealTypeKey = APPEAL_CASE_TYPE.D;
+
 		const appealTimetableConfig = !isExpeditedAppealType(appealType)
 			? CONFIG_APPEAL_TIMETABLE[fullAppealTypeKey][procedureType]
 			: CONFIG_APPEAL_TIMETABLE[expeditedAppealTypeKey];
