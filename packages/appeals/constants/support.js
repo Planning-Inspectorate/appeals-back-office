@@ -35,6 +35,16 @@ export const AUDIT_TRAIL_REP_LPA_STATEMENT_STATUS_INCOMPLETE = 'LPA statement in
 export const AUDIT_TRAIL_REP_LPA_STATEMENT_STATUS_REDACTED_AND_ACCEPTED =
 	'LPA statement redacted and accepted';
 
+//Appellant statement rep logs
+export const AUDIT_TRAIL_REP_APPELLANT_STATEMENT_STATUS_VALID = 'Appellant statement accepted';
+export const AUDIT_TRAIL_REP_APPELLANT_STATEMENT_STATUS_INCOMPLETE =
+	'Appellant statement incomplete';
+export const AUDIT_TRAIL_REP_APPELLANT_STATEMENT_STATUS_REDACTED_AND_ACCEPTED =
+	'Appellant statement redacted and accepted';
+export const AUDIT_TRAIL_REP_APPELLANT_STATEMENT_STATUS_INCOMPLETE_EXTENDED =
+	'Appellant statement incomplete\n\nAppellant statement due date extended to {replacement0}';
+export const AUDIT_TRAIL_REP_APPELLANT_STATEMENT_ADDED = 'The appellant statement was received';
+
 //Rule 6 statement rep logs
 export const AUDIT_TRAIL_RULE_6_STATEMENT_ADDED = '{replacement0} statement added';
 export const AUDIT_TRAIL_REP_RULE_6_PARTY_STATEMENT_STATUS_VALID =
