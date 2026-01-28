@@ -54,6 +54,9 @@ const { databaseConnector } = await import('../../../utils/database-connector.js
 
 describe('appellant cases routes', () => {
 	beforeEach(() => {
+		jest
+			.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+			.setSystemTime(new Date('2026-01-27'));
 		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 		databaseConnector.team.findUnique.mockResolvedValue({
 			id: 1,
@@ -1408,7 +1411,7 @@ describe('appellant cases routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: enforcementNoticeAppeal.id,
-						details: `Appeal reviewed as valid on 28 January 2026\nOther information`,
+						details: `Appeal reviewed as valid on 27 January 2026\nOther information`,
 						loggedAt: expect.any(Date),
 						userId: enforcementNoticeAppeal.caseOfficer.id
 					}
