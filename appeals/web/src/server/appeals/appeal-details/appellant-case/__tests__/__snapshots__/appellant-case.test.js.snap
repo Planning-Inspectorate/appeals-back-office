@@ -4356,7 +4356,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Lawful development certificate</dd>
+                            <dd                             class="govuk-summary-list__value"></dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
                             <dd                             class="govuk-summary-list__value"></dd>

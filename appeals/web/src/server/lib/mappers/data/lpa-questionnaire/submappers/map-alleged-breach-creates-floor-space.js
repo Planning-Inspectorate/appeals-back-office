@@ -9,7 +9,7 @@ export const mapAllegedBreachCreatesFloorSpace = ({
 	booleanSummaryListItem({
 		id: 'enforcement-breach-floor-space',
 		text: 'Does the alleged breach create any floor space?',
-		value: lpaQuestionnaireData.doesAllegedBreachCreateFloorSpace,
+		value: lpaQuestionnaireData?.doesAllegedBreachCreateFloorSpace,
 		link: `${currentRoute}/breach-floor-space/change`,
 		defaultText: 'No data',
 		addCyAttribute: true,

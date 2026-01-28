@@ -343,7 +343,15 @@ export const getAddDocuments = async (request, response) => {
 		[APPEAL_DOCUMENT_TYPE.DEVELOPMENT_PLAN_POLICIES]:
 			'Upload relevant policies from your statutory development plan',
 		[APPEAL_DOCUMENT_TYPE.EMERGING_PLAN]: 'Upload the emerging plan and supporting information',
-		[APPEAL_DOCUMENT_TYPE.SUPPLEMENTARY_PLANNING]: 'Upload supplementary planning documents'
+		[APPEAL_DOCUMENT_TYPE.SUPPLEMENTARY_PLANNING]: 'Upload supplementary planning documents',
+		[APPEAL_DOCUMENT_TYPE.COMMUNITY_INFRASTRUCTURE_LEVY]:
+			'Upload the community infrastructure levy',
+		[APPEAL_DOCUMENT_TYPE.LOCAL_DEVELOPMENT_ORDER]: 'Upload the local development order',
+		[APPEAL_DOCUMENT_TYPE.PLANNING_PERMISSION]:
+			'Upload the planning permission and any other relevant documents',
+		[APPEAL_DOCUMENT_TYPE.LPA_ENFORCEMENT_NOTICE]: 'Upload the enforcement notice',
+		[APPEAL_DOCUMENT_TYPE.LPA_ENFORCEMENT_NOTICE_PLAN]: 'Upload the enforcement notice plan',
+		[APPEAL_DOCUMENT_TYPE.PLANNING_CONTRAVENTION_NOTICE]: 'Upload the planning contravention notice'
 	}[documentType];
 
 	await renderDocumentUpload({
