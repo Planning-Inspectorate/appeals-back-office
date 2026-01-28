@@ -269,7 +269,13 @@ export const associateAppeal = async (req, res) => {
 		await createAuditTrail({
 			appealId: currentAppeal.id,
 			azureAdUserId: req.get('azureAdUserId'),
-			details: AUDIT_TRAIL_APPEAL_RELATION_ADDED
+			details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_RELATION_ADDED, [appealToRelate.reference])
+		});
+
+		await createAuditTrail({
+			appealId: appealToRelate.id,
+			azureAdUserId: req.get('azureAdUserId'),
+			details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_RELATION_ADDED, [currentAppeal.reference])
 		});
 
 		await broadcasters.broadcastAppeal(currentAppeal.id);
@@ -304,11 +310,13 @@ export const associateExternalAppeal = async (req, res) => {
 		externalAppealType: formattedLinkedAppeal.appealType,
 		externalId: linkedAppealId?.toString()
 	};
+
 	const result = await appealRepository.linkAppeal(relationship);
+
 	await createAuditTrail({
 		appealId: currentAppeal.id,
 		azureAdUserId: req.get('azureAdUserId'),
-		details: AUDIT_TRAIL_APPEAL_RELATION_ADDED
+		details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_RELATION_ADDED, [linkedAppealReference])
 	});
 
 	await broadcasters.broadcastAppeal(currentAppeal.id);
@@ -324,13 +332,19 @@ export const unlinkAppeal = async (req, res) => {
 	const { relationshipId } = req.body;
 	const currentAppeal = req.appeal;
 	const linkDetails = await appealRepository.unlinkAppeal(relationshipId);
+
+	const otherRef =
+		linkDetails.parentRef === currentAppeal.reference
+			? linkDetails.childRef
+			: linkDetails.parentRef;
+
 	await createAuditTrail({
 		appealId: currentAppeal.id,
 		azureAdUserId: req.get('azureAdUserId'),
 		details:
 			linkDetails.type === CASE_RELATIONSHIP_LINKED
-				? AUDIT_TRAIL_APPEAL_LINK_REMOVED
-				: AUDIT_TRAIL_APPEAL_RELATION_REMOVED
+				? stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_REMOVED, [otherRef])
+				: stringTokenReplacement(AUDIT_TRAIL_APPEAL_RELATION_REMOVED, [otherRef])
 	});
 
 	await broadcasters.broadcastAppeal(currentAppeal.id);

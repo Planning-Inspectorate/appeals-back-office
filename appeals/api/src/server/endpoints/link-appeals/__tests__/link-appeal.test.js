@@ -1,18 +1,28 @@
 // @ts-nocheck
-import { eventClient } from '#infrastructure/event-client.js';
-import { request } from '#server/app-test.js';
-import { householdAppeal, linkedAppeals } from '#tests/appeals/mocks.js';
-import { documentCreated, documentVersionCreated, savedFolder } from '#tests/documents/mocks.js';
-import { horizonGetCaseSuccessResponse } from '#tests/horizon/mocks.js';
-import { linkedAppealLegacyRequest, linkedAppealRequest } from '#tests/linked-appeals/mocks.js';
-import { azureAdUserId } from '#tests/shared/mocks.js';
-import { parseHorizonGetCaseResponse } from '#utils/mapping/map-horizon.js';
 import { jest } from '@jest/globals';
-import {
-	CASE_RELATIONSHIP_LINKED,
-	CASE_RELATIONSHIP_RELATED
-} from '@pins/appeals/constants/support.js';
-import { EventType } from '@pins/event-client';
+
+const mockCreateAuditTrail = jest.fn().mockResolvedValue(undefined);
+
+jest.unstable_mockModule('#endpoints/audit-trails/audit-trails.service.js', () => ({
+	createAuditTrail: mockCreateAuditTrail
+}));
+
+const { request } = await import('#server/app-test.js');
+const { eventClient } = await import('#infrastructure/event-client.js');
+const { householdAppeal, linkedAppeals } = await import('#tests/appeals/mocks.js');
+const { documentCreated, documentVersionCreated, savedFolder } = await import(
+	'#tests/documents/mocks.js'
+);
+const { horizonGetCaseSuccessResponse } = await import('#tests/horizon/mocks.js');
+const { linkedAppealLegacyRequest, linkedAppealRequest } = await import(
+	'#tests/linked-appeals/mocks.js'
+);
+const { azureAdUserId } = await import('#tests/shared/mocks.js');
+const { parseHorizonGetCaseResponse } = await import('#utils/mapping/map-horizon.js');
+const { CASE_RELATIONSHIP_LINKED, CASE_RELATIONSHIP_RELATED } = await import(
+	'@pins/appeals/constants/support.js'
+);
+const { EventType } = await import('@pins/event-client');
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 const { default: got } = await import('got');
@@ -406,6 +416,58 @@ describe('appeal linked appeals routes', () => {
 						externalId: '20486402'
 					}
 				});
+			});
+
+			test('returns 200 and creates audit trails with references when an internal appeal is related', async () => {
+				const appealToRelate = structuredClone({ ...householdAppeal, id: 3, reference: 'REL-777' });
+
+				databaseConnector.appeal.findUnique.mockResolvedValueOnce(householdAppeal);
+				databaseConnector.appeal.findUnique.mockResolvedValueOnce(appealToRelate);
+				databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+				databaseConnector.appealRelationship.create.mockResolvedValue({});
+
+				const response = await request
+					.post(`/appeals/${householdAppeal.id}/associate-appeal`)
+					.send({
+						linkedAppealId: appealToRelate.id
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+
+				expect(mockCreateAuditTrail).toHaveBeenCalledWith(
+					expect.objectContaining({
+						appealId: householdAppeal.id,
+						details: expect.stringContaining('REL-777')
+					})
+				);
+			});
+
+			test('returns 200 and creates audit trail with reference when an external appeal is related', async () => {
+				const externalRef = 'HORIZON-999';
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				got.post.mockReturnValueOnce({
+					json: jest
+						.fn()
+						.mockResolvedValueOnce(parseHorizonGetCaseResponse(horizonGetCaseSuccessResponse))
+				});
+
+				const response = await request
+					.post(`/appeals/${householdAppeal.id}/associate-legacy-appeal`)
+					.send({
+						linkedAppealReference: externalRef
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+
+				expect(mockCreateAuditTrail).toHaveBeenCalledWith(
+					expect.objectContaining({
+						appealId: householdAppeal.id,
+						details: expect.stringContaining(externalRef)
+					})
+				);
 			});
 		});
 	});
