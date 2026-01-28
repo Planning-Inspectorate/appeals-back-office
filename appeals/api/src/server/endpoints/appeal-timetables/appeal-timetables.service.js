@@ -661,6 +661,20 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, az
 			personalisation
 		});
 	}
+
+	if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
+		appeal.appealRule6Parties.forEach(async (party) => {
+			if (party.serviceUser?.email) {
+				await notifySend({
+					azureAdUserId,
+					templateName,
+					notifyClient,
+					recipientEmail: party.serviceUser.email,
+					personalisation
+				});
+			}
+		});
+	}
 };
 
 /**

@@ -43,7 +43,8 @@ router.post(
 		'appellant',
 		'agent',
 		'lpa',
-		'address'
+		'address',
+		'appealRule6Parties'
 	]),
 	asyncHandler(postInquiry)
 );
@@ -80,7 +81,8 @@ router.patch(
 		'appellant',
 		'agent',
 		'lpa',
-		'address'
+		'address',
+		'appealRule6Parties'
 	]),
 	checkInquiryExists,
 	asyncHandler(patchInquiry)
@@ -105,7 +107,14 @@ router.delete(
         #swagger.responses[500] = {}
      */
 	deleteInquiryParamsValidator,
-	checkAppealExistsByIdAndAddPartialToRequest(['inquiry', 'appellant', 'agent', 'lpa', 'address']),
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'inquiry',
+		'appellant',
+		'agent',
+		'lpa',
+		'address',
+		'appealRule6Parties'
+	]),
 	checkInquiryExists,
 	deleteInquiryDateValidator,
 	asyncHandler(cancelInquiry)
