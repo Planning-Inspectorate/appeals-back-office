@@ -146,9 +146,16 @@ extends:
                 --connection-string "DefaultEndpointsProtocol=https;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=https://127.0.0.1:10000/devstoreaccount1;"
             condition: eq(variables['runE2E'], 'true')
             displayName: "Configure azurite"
+          - script: |
+              docker exec pins_azurite sha256sum /certs/certificate.pem
+              docker exec api sha256sum /usr/local/share/ca-certificates/azurite.crt
+            condition: eq(variables['runE2E'], 'true')
           - script: docker exec api wget -S -O - https://pins_azurite:10000/devstoreaccount1
+            condition: eq(variables['runE2E'], 'true')
           - script: docker inspect web
+            condition: eq(variables['runE2E'], 'true')
           - script: docker inspect api
+            condition: eq(variables['runE2E'], 'true')
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22

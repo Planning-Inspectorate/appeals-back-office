@@ -15,6 +15,7 @@ services:
             dockerfile: appeals/api/Dockerfile
             args:
                 GIT_SHA: ${GIT_SHA}
+        command: sh -c "update-ca-certificates && npm run start"
         environment:
             - 'NODE_ENV=test'
             - 'DATABASE_URL=sqlserver://db:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true'
