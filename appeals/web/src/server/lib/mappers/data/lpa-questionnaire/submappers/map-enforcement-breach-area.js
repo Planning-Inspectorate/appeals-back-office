@@ -7,10 +7,10 @@ export const mapEnforcementBreachArea = ({
 	userHasUpdateCase
 }) =>
 	booleanSummaryListItem({
-		id: 'enforcement-breach-area',
+		id: 'has-alleged-breach-area',
 		text: 'Is the area of the alleged breach the same as the site area?',
 		value: lpaQuestionnaireData.hasAllegedBreachArea,
-		link: `${currentRoute}/breach-area/change`,
+		link: `${currentRoute}/has-alleged-breach-area/change`,
 		defaultText: 'No data',
 		addCyAttribute: true,
 		editable: userHasUpdateCase
