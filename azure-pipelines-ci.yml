@@ -152,7 +152,7 @@ extends:
             condition: eq(variables['runE2E'], 'true')
           - script: docker exec api wget -S -O - https://pins_azurite:10000/devstoreaccount1
           - script: |
-              docker exec -it api sh
+              docker exec -i api sh
               apk add openssl
               openssl s_client -connect pins_azurite:10000 -showcerts
             condition: eq(variables['runE2E'], 'true')
