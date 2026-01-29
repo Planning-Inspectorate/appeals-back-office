@@ -3525,6 +3525,7 @@ describe('/appeals/:id/reps', () => {
 				mockAdvertAppeal.appealStatus[0].status = 'final_comments';
 				mockS78Appeal.appealStatus[0].status = 'final_comments';
 				mockS20Appeal.appealStatus[0].status = 'final_comments';
+				databaseConnector.appealNotification.count.mockResolvedValue(0);
 			});
 
 			test('409 if case is not in FINAL_COMMENTS state', async () => {
@@ -3637,6 +3638,30 @@ describe('/appeals/:id/reps', () => {
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'final-comments-done-lpa'
 				});
+			});
+
+			test('should NOT send "no final comments" email if it was already sent (duplicate check)', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([]); // No comments
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+				databaseConnector.appealNotification.count.mockResolvedValue(1);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'final_comments' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+				const noCommentsCalls = mockNotifySend.mock.calls.filter(
+					(call) => call[0].templateName === 'final-comments-none'
+				);
+				expect(noCommentsCalls.length).toBe(0);
 			});
 
 			test('send notify lpa and appellant final comments S78 when linked', async () => {

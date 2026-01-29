@@ -23,6 +23,7 @@ const mockAppealFindUnique = jest.fn().mockResolvedValue({});
 const mockAppealCreate = jest.fn().mockResolvedValue({});
 const mockAppealDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppealNotificationDeleteMany = jest.fn().mockResolvedValue({});
+const mockAppealNotificationCount = jest.fn().mockResolvedValue(0);
 const mocklPAQuestionnaireDeleteMany = jest.fn().mockResolvedValue({});
 const mocklPAQuestionnaireFindMany = jest.fn().mockResolvedValue([]);
 const mocklPAQuestionnaireCreate = jest.fn().mockResolvedValue({});
@@ -273,7 +274,8 @@ class MockPrismaClient {
 			findUnique: mockAppealFindUnique,
 			createMany: mockAppealCreate,
 			deleteMany: mockAppealNotificationDeleteMany,
-			findFirst: jest.fn().mockResolvedValue(null)
+			findFirst: jest.fn().mockResolvedValue(null),
+			count: mockAppealNotificationCount
 		};
 	}
 

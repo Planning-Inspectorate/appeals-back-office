@@ -838,11 +838,31 @@ function notifyAppellantAboutLpaFinalComments(appeal, notifyClient, azureAdUserI
  * @param {string} azureAdUserId
  * @param {'appellant' | 'local planning authority'} userTypeNoCommentSubmitted
  */
-function notifyNoFinalComments(appeal, notifyClient, azureAdUserId, userTypeNoCommentSubmitted) {
+async function notifyNoFinalComments(
+	appeal,
+	notifyClient,
+	azureAdUserId,
+	userTypeNoCommentSubmitted
+) {
 	const recipientEmail =
 		userTypeNoCommentSubmitted === 'appellant'
 			? appeal.lpa?.email
 			: appeal.agent?.email || appeal.appellant?.email;
+
+	const existingNotification = await databaseConnector.appealNotification.count({
+		where: {
+			caseReference: appeal.reference,
+			template: 'final-comments-none',
+			recipient: recipientEmail || ''
+		}
+	});
+
+	if (existingNotification > 0) {
+		logger.info(
+			`Skipping 'final-comments-none' email to ${recipientEmail} for appeal ${appeal.reference} as it was already sent.`
+		);
+		return;
+	}
 
 	return notifyPublished({
 		appeal,
