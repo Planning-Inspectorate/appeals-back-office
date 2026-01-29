@@ -11,6 +11,6 @@ export const mapRelatesToErectionOfBuildings = ({
 		text: 'Does the enforcement notice include the erection of a building or buildings?',
 		// @ts-ignore
 		value: lpaQuestionnaireData.relatesToErectionOfBuildingOrBuildings,
-		link: `${currentRoute}/erection-buildings`,
+		link: `${currentRoute}/erection-buildings/change`,
 		editable: userHasUpdateCase
 	});

@@ -11,6 +11,6 @@ export const mapRelatesToAgriculturalPurpose = ({
 		text: 'Is the building on agricultural land and will it be used for agricultural purposes?',
 		// @ts-ignore
 		value: lpaQuestionnaireData.relatesToBuildingWithAgriculturalPurpose,
-		link: `${currentRoute}/agricultural-purpose`,
+		link: `${currentRoute}/agricultural-purpose/change`,
 		editable: userHasUpdateCase
 	});
