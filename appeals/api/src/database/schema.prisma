@@ -349,7 +349,7 @@ model AppellantCase {
 
   appellantCaseAdvertDetails AppellantCaseAdvertDetails[]
 
-  //LDC Fields 
+  //LDC Fields
   siteUseAtTimeOfApplication     String?
   applicationMadeUnderActSection String?
 }
@@ -896,7 +896,7 @@ model RepresentationRejectionReason {
   representationType                     String                                   @default("comment")
   representationRejectionReasonsSelected RepresentationRejectionReasonsSelected[]
 
-  @@unique([name, representationType])
+  @@unique([id, name, representationType])
 }
 
 /// RepresentationRejectionReasonsSelected model
