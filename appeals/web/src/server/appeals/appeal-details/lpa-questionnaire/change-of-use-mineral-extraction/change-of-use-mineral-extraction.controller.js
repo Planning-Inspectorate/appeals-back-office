@@ -2,22 +2,22 @@ import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { areIdParamsValid } from '#lib/validators/id-param.validator.js';
 import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
-import { changeRelatesToOperationsPage } from './relates-to-operations.mapper.js';
-import { changeRelatesToOperations } from './relates-to-operations.service.js';
+import { changeOfUseMineralExtractionPage } from './change-of-use-mineral-extraction.mapper.js';
+import { changeOfUseMineralExtraction } from './change-of-use-mineral-extraction.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const getChangeRelatesToOperations = async (request, response) => {
-	return renderChangeRelatesToOperations(request, response);
+export const getChangeOfUseMineralExtraction = async (request, response) => {
+	return renderChangeOfUseMineralExtraction(request, response);
 };
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-const renderChangeRelatesToOperations = async (request, response) => {
+const renderChangeOfUseMineralExtraction = async (request, response) => {
 	try {
 		const { errors, currentAppeal, apiClient } = request;
 
@@ -27,13 +27,13 @@ const renderChangeRelatesToOperations = async (request, response) => {
 			currentAppeal.lpaQuestionnaireId
 		);
 
-		const mappedPageContents = changeRelatesToOperationsPage(
+		const mappedPageContents = changeOfUseMineralExtractionPage(
 			currentAppeal,
 			lpaQuestionnaireData,
-			request.session.relatesToOperations
+			request.session.changeOfUseMineralExtraction
 		);
 
-		delete request.session.relatesToOperations;
+		delete request.session.changeOfUseMineralExtraction;
 
 		return response.status(200).render('patterns/change-page.pattern.njk', {
 			pageContent: mappedPageContents,
@@ -41,7 +41,7 @@ const renderChangeRelatesToOperations = async (request, response) => {
 		});
 	} catch (error) {
 		logger.error(error);
-		delete request.session.relatesToOperations;
+		delete request.session.changeOfUseMineralExtraction;
 		return response.status(500).render('app/500.njk');
 	}
 };
@@ -50,11 +50,11 @@ const renderChangeRelatesToOperations = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const postChangeRelatesToOperations = async (request, response) => {
-	request.session.relatesToOperations = request.body['relatesToOperationsRadio'];
+export const postChangeOfUseMineralExtraction = async (request, response) => {
+	request.session.changeOfUseMineralExtraction = request.body['changeOfUseMineralExtractionRadio'];
 
 	if (request.errors) {
-		return renderChangeRelatesToOperations(request, response);
+		return renderChangeOfUseMineralExtraction(request, response);
 	}
 
 	const {
@@ -67,21 +67,21 @@ export const postChangeRelatesToOperations = async (request, response) => {
 	}
 
 	try {
-		await changeRelatesToOperations(
+		await changeOfUseMineralExtraction(
 			apiClient,
 			appealId,
 			lpaQuestionnaireId,
-			request.session.relatesToOperations
+			request.session.changeOfUseMineralExtraction
 		);
 
 		addNotificationBannerToSession({
 			session: request.session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			text: 'Does the enforcement notice relate to building, engineering, mining or other operations has been updated'
+			text: 'Does the enforcement notice include the change of use of land to dispose of remaining materials after mineral extraction has been updated'
 		});
 
-		delete request.session.relatesToOperations;
+		delete request.session.changeOfUseMineralExtraction;
 
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`

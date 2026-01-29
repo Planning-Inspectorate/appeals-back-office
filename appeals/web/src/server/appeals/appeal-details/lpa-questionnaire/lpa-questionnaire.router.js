@@ -24,6 +24,9 @@ import affectedListedBuildingsRouter from './affected-listed-buildings/affected-
 import affectsScheduledMonumentRouter from './affects-scheduled-monument/affects-scheduled-monument.router.js';
 import allegedBreachCreatesFloorSpaceRouter from './alleged-breach-creates-floor-space/alleged-breach-creates-floor-space.router.js';
 import appellantPhotosAndPlansRouter from './appellant-photos-and-plans/appellant-photos-and-plans.router.js';
+import changeOfUseMineralExtractionRouter from './change-of-use-mineral-extraction/change-of-use-mineral-extraction.router.js';
+import changeOfUseMineralStorageRouter from './change-of-use-mineral-storage/change-of-use-mineral-storage.router.js';
+import changeOfUseRefuseOrWasteRouter from './change-of-use-refuse-or-waste/change-of-use-refuse-or-waste.router.js';
 import changedListedBuildingsRouter from './changed-listed-buildings/changed-listed-buildings.router.js';
 import hasCommunityInfrastructureLevyRouter from './community-infrastructure-levy/has-community-infrastructure-levy/has-community-infrastructure-levy.router.js';
 import infrastructureLevyAdoptedDateRouter from './community-infrastructure-levy/infrastructure-levy-adopted-date/infrastructure-levy-adopted-date.router.js';
@@ -515,6 +518,27 @@ router.use(
 	validateAppealWithInclude(['lpaQuestionnaire']),
 	assertUserHasPermission(permissionNames.updateCase),
 	relatesToAgriculturalPurposeRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/change-of-use-refuse-or-waste',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	changeOfUseRefuseOrWasteRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/change-of-use-mineral-extraction',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	changeOfUseMineralExtractionRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/change-of-use-mineral-storage',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	changeOfUseMineralStorageRouter
 );
 
 export default router;
