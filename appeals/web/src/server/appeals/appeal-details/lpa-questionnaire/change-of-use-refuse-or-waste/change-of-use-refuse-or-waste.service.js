@@ -7,10 +7,10 @@ import { convertFromYesNoToBoolean } from '#lib/boolean-formatter.js';
  * @param {string} updatedData
  * @returns {Promise<{}>}
  */
-export function changeRelatesToOperations(apiClient, appealId, lpaQuestionnaireId, updatedData) {
+export function changeOfUseRefuseOrWaste(apiClient, appealId, lpaQuestionnaireId, updatedData) {
 	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
 		json: {
-			noticeRelatesToBuildingEngineeringMiningOther: convertFromYesNoToBoolean(updatedData)
+			changeOfUseRefuseOrWaste: convertFromYesNoToBoolean(updatedData)
 		}
 	});
 }

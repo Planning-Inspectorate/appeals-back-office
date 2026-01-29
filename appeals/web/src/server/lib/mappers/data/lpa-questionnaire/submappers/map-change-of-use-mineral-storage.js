@@ -7,10 +7,9 @@ export const mapChangeOfUseMineralStorage = ({
 	userHasUpdateCase
 }) =>
 	booleanSummaryListItem({
-		id: 'mineral-storage',
+		id: 'change-of-use-mineral-storage',
 		text: 'Does the enforcement notice include a change of use of land to store minerals in the open?',
-		// @ts-ignore
 		value: lpaQuestionnaireData.changeOfUseMineralStorage,
-		link: `${currentRoute}/mineral-storage`,
+		link: `${currentRoute}/change-of-use-mineral-storage/change`,
 		editable: userHasUpdateCase
 	});
