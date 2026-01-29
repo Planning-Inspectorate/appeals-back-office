@@ -91,10 +91,18 @@ export const generateEnforcementLpaQuestionnaireComponents = (
 			rows: [
 				mappedLPAQData.lpaq?.officersReport?.display.summaryListItem,
 				mappedLPAQData.lpaq?.developmentPlanPolicies?.display.summaryListItem,
-				mappedLPAQData.lpaq?.emergingPlan?.display.summaryListItem,
 				mappedLPAQData.lpaq?.supplementaryPlanning?.display.summaryListItem,
 				mappedLPAQData.lpaq?.otherRelevantPolicies?.display.summaryListItem,
-				mappedLPAQData.lpaq?.additionalDocuments?.display.summaryListItem
+				mappedLPAQData.lpaq?.hasCommunityInfrastructureLevy?.display.summaryListItem,
+				mappedLPAQData.lpaq?.communityInfrastructureLevy?.display.summaryListItem,
+				mappedLPAQData.lpaq?.isInfrastructureLevyFormallyAdopted?.display.summaryListItem,
+				mappedLPAQData.lpaq?.infrastructureLevyAdoptedDate?.display.summaryListItem,
+				mappedLPAQData.lpaq?.infrastructureLevyExpectedDate?.display.summaryListItem,
+				mappedLPAQData.lpaq?.localDevelopmentOrder?.display.summaryListItem,
+				mappedLPAQData.lpaq?.planningPermission?.display.summaryListItem,
+				mappedLPAQData.lpaq?.lpaEnforcementNotice?.display.summaryListItem,
+				mappedLPAQData.lpaq?.lpaEnforcementNoticePlan?.display.summaryListItem,
+				mappedLPAQData.lpaq?.planningContraventionNotice?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});

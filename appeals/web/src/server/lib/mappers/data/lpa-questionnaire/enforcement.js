@@ -17,6 +17,21 @@ import { mapRelatesToSingleDwellingHouse } from './submappers/map-relates-to-sin
 import { mapSiteArea } from './submappers/map-site-area.js';
 import { mapStopNotice } from './submappers/map-stop-notice.js';
 import { mapWithinTrunkRoadDistance } from './submappers/map-within-trunk-road-distance.js';
+
+// Section 3:
+
+// Section 4:
+import { mapPlanningContraventionNotice } from '#lib/mappers/data/lpa-questionnaire/submappers/map-planning-contravetion-notice.js';
+import { mapCommunityInfrastructureLevy } from './submappers/map-community-infrastructure-levy.js';
+import { mapEnforcementNoticePlan } from './submappers/map-enforcement-notice-plan.js';
+import { mapEnforcementNotice } from './submappers/map-enforcement-notice.js';
+import { mapHasCommunityInfrastructureLevy } from './submappers/map-has-community-infrastructure-levy.js';
+import { mapInfrastructureLevyAdoptedDate } from './submappers/map-infrastructure-levy-adopted-date.js';
+import { mapInfrastructureLevyExpectedDate } from './submappers/map-infrastructure-levy-expected-date.js';
+import { mapIsInfrastructureLevyFormallyAdopted } from './submappers/map-is-infrastructure-levy-formally-adopted.js';
+import { mapLocalDevelopmentOrder } from './submappers/map-local-development-order.js';
+import { mapPlanningPermission } from './submappers/map-planning-permission.js';
+
 export const submaps = {
 	...casSubmaps,
 	// Inherit S78 submaps, but remove irrelevant document based questions
@@ -43,9 +58,20 @@ export const submaps = {
 
 	// Section 3:
 	appealNotification: mapAppealNotification,
-	enforcementList: mapEnforcementList
+	enforcementList: mapEnforcementList,
 
 	// Section 4:
+
+	hasCommunityInfrastructureLevy: mapHasCommunityInfrastructureLevy,
+	communityInfrastructureLevy: mapCommunityInfrastructureLevy,
+	isInfrastructureLevyFormallyAdopted: mapIsInfrastructureLevyFormallyAdopted,
+	infrastructureLevyAdoptedDate: mapInfrastructureLevyAdoptedDate,
+	infrastructureLevyExpectedDate: mapInfrastructureLevyExpectedDate,
+	localDevelopmentOrder: mapLocalDevelopmentOrder,
+	planningPermission: mapPlanningPermission,
+	lpaEnforcementNotice: mapEnforcementNotice,
+	lpaEnforcementNoticePlan: mapEnforcementNoticePlan,
+	planningContraventionNotice: mapPlanningContraventionNotice
 
 	// Section 5:
 

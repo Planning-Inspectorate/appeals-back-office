@@ -48,7 +48,6 @@ import preserveGrantLoanRouter from './preserve-grant-loan/preserve-grant-loan.r
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
 import relatesToOperationsRouter from './relates-to-operations/relates-to-operations.router.js';
 import specialControlOfAdvertisementRouter from './special-control-of-advertisement/special-control-of-advertisement.router.js';
-
 const router = createRouter({ mergeParams: true });
 router.param('lpaQuestionnaireId', (req, res, next) => {
 	validateLpaQuestionnaireId(req, res, next);
