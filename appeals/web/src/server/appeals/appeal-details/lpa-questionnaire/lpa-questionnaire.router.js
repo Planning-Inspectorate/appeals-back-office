@@ -46,9 +46,10 @@ import notificationMethodsRouter from './notification-methods/notification-metho
 import pdRightsRemovedRouter from './pd-rights-removed/pd-rights-removed.router.js';
 import preserveGrantLoanRouter from './preserve-grant-loan/preserve-grant-loan.router.js';
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
+import relatesToAgriculturalPurposeRouter from './relates-to-agricultural-purpose/relates-to-agricultural-purpose.router.js';
+import relatesToErectionOfBuildingsRouter from './relates-to-erection-buildings/relates-to-erection-buildings.router.js';
 import relatesToOperationsRouter from './relates-to-operations/relates-to-operations.router.js';
 import specialControlOfAdvertisementRouter from './special-control-of-advertisement/special-control-of-advertisement.router.js';
-
 const router = createRouter({ mergeParams: true });
 router.param('lpaQuestionnaireId', (req, res, next) => {
 	validateLpaQuestionnaireId(req, res, next);
@@ -500,6 +501,20 @@ router.use(
 	validateAppealWithInclude(['lpaQuestionnaire']),
 	assertUserHasPermission(permissionNames.updateCase),
 	pdRightsRemovedRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/erection-buildings',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	relatesToErectionOfBuildingsRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/agricultural-purpose',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	relatesToAgriculturalPurposeRouter
 );
 
 export default router;
