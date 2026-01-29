@@ -126,6 +126,7 @@ export const mapAppellantCaseIn = (command) => {
 			interestInLand: casedata.interestInLand,
 			writtenOrVerbalPermission: casedata.writtenOrVerbalPermission,
 			descriptionOfAllegedBreach: casedata.descriptionOfAllegedBreach,
+			applicationMadeAndFeePaid: casedata.applicationMadeAndFeePaid,
 			applicationDevelopmentAllOrPart: casedata.applicationDevelopmentAllOrPart,
 			contactAddress: { create: contactAddress },
 			appealDecisionDate: casedata.appealDecisionDate,
