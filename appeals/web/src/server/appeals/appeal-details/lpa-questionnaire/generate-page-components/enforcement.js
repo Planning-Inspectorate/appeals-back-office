@@ -54,6 +54,7 @@ export const generateEnforcementLpaQuestionnaireComponents = (
 				mappedLPAQData.lpaq?.withinTrunkRoadDistance?.display.summaryListItem,
 				mappedLPAQData.lpaq?.isSiteOnCrownLand?.display.summaryListItem,
 				mappedLPAQData.lpaq?.stopNotice?.display.summaryListItem,
+				mappedLPAQData.lpaq?.article4Direction?.display.summaryListItem,
 				mappedLPAQData.lpaq?.removedPermittedDevelopmentRights?.display.summaryListItem
 			].filter(isDefined)
 		}

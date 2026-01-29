@@ -4,6 +4,7 @@ import { removeQuestions } from './common.js';
 import { submaps as s78Submaps } from './s78.js';
 import { mapAllegedBreachCreatesFloorSpace } from './submappers/map-alleged-breach-creates-floor-space.js';
 import { mapAppealNotification } from './submappers/map-appeal-notification.js';
+import { mapArticle4Direction } from './submappers/map-article-4-direction.js';
 import { mapChangeOfUseMineralStorage } from './submappers/map-change-of-use-mineral-storage.js';
 import { mapChangeOfUseRefuseOrWaste } from './submappers/map-change-of-use-refuse-or-waste.js';
 import { mapCrownLand } from './submappers/map-crown-land.js';
@@ -34,6 +35,7 @@ export const submaps = {
 	relatesToAgriculturalPurpose: mapRelatesToAgriculturalPurpose,
 	relatesToSingleDwellingHouse: mapRelatesToSingleDwellingHouse,
 	stopNotice: mapStopNotice,
+	article4Direction: mapArticle4Direction,
 	removedPermittedDevelopmentRights: mapRemovedPermittedDevelopmentRights,
 
 	// Section 2:

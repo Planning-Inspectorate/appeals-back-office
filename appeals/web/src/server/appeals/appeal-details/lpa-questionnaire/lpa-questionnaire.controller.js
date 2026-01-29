@@ -343,7 +343,9 @@ export const getAddDocuments = async (request, response) => {
 		[APPEAL_DOCUMENT_TYPE.DEVELOPMENT_PLAN_POLICIES]:
 			'Upload relevant policies from your statutory development plan',
 		[APPEAL_DOCUMENT_TYPE.EMERGING_PLAN]: 'Upload the emerging plan and supporting information',
-		[APPEAL_DOCUMENT_TYPE.SUPPLEMENTARY_PLANNING]: 'Upload supplementary planning documents'
+		[APPEAL_DOCUMENT_TYPE.SUPPLEMENTARY_PLANNING]: 'Upload supplementary planning documents',
+		[APPEAL_DOCUMENT_TYPE.STOP_NOTICE]: 'Upload the stop notice',
+		[APPEAL_DOCUMENT_TYPE.ARTICLE_4_DIRECTION]: 'Upload the article 4 direction'
 	}[documentType];
 
 	await renderDocumentUpload({
