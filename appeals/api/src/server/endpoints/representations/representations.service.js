@@ -115,7 +115,13 @@ export const getRepStatusAuditLogDetails = (
 
 	auditText = auditTitle + camelToScreamingSnake(repType) + suffix;
 
-	if (repType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT && partyName) {
+	if (
+		[
+			APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT,
+			APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
+		].includes(repType) &&
+		partyName
+	) {
 		if (status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE && extendedDate) {
 			// @ts-ignore
 			return stringTokenReplacement(CONSTANTS[auditText], [partyName, partyName, extendedDate]);

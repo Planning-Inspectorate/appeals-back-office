@@ -191,8 +191,10 @@ export async function updateRepresentation(request, response) {
 		let partyName;
 		let extendedDate;
 
-		const isRule6 =
-			updatedRep.representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT;
+		const isRule6 = [
+			APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT,
+			APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
+		].includes(updatedRep.representationType);
 		if (isRule6) {
 			partyName = updatedRep.represented?.organisationName;
 		}
@@ -274,14 +276,23 @@ export const createRepresentation = () => async (req, res) => {
 		);
 	}
 
-	if (representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT) {
+	if (
+		[
+			APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT,
+			APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
+		].includes(representationType)
+	) {
 		const fullRep = await representationService.getRepresentation(rep.id);
 		const partyName = fullRep?.represented?.organisationName;
+		const trail =
+			representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT
+				? CONSTANTS.AUDIT_TRAIL_RULE_6_STATEMENT_ADDED
+				: CONSTANTS.AUDIT_TRAIL_RULE_6_PARTY_PROOFS_EVIDENCE_ADDED;
 		if (partyName) {
 			await createAuditTrail({
 				appealId: parseInt(appealId),
 				azureAdUserId,
-				details: stringTokenReplacement(CONSTANTS.AUDIT_TRAIL_RULE_6_STATEMENT_ADDED, [partyName])
+				details: stringTokenReplacement(trail, [partyName])
 			});
 		}
 	}
@@ -344,6 +355,7 @@ export const updateRejectionReasons = async (req, res) => {
 export const updateRepresentationAttachments = async (req, res) => {
 	const { repId } = req.params;
 	const { attachments } = req.body;
+	const azureAdUserId = req.get('azureAdUserId');
 
 	if (!Array.isArray(attachments) || !attachments.every((id) => typeof id === 'string')) {
 		return res.status(400).send({ errors: { attachments: 'must be an array of strings' } });
@@ -359,6 +371,24 @@ export const updateRepresentationAttachments = async (req, res) => {
 		Number(repId),
 		attachments
 	);
+
+	if (
+		updatedRepresentation.representationType ===
+		APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
+	) {
+		const fullRep = await representationService.getRepresentation(rep.id);
+		const partyName = fullRep?.represented?.organisationName;
+		if (partyName) {
+			await createAuditTrail({
+				appealId: updatedRepresentation.appealId,
+				azureAdUserId: azureAdUserId || AUDIT_TRIAL_RULE_6_PARTY_ID,
+				details: stringTokenReplacement(
+					CONSTANTS.AUDIT_TRAIL_RULE_6_PARTY_PROOFS_EVIDENCE_UPDATED,
+					[partyName]
+				)
+			});
+		}
+	}
 
 	return res.send(updatedRepresentation);
 };

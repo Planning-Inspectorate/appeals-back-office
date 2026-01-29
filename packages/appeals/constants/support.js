@@ -46,6 +46,20 @@ export const AUDIT_TRAIL_REP_RULE_6_PARTY_STATEMENT_STATUS_INCOMPLETE_EXTENDED =
 export const AUDIT_TRAIL_REP_RULE_6_PARTY_STATEMENT_STATUS_INCOMPLETE =
 	'{replacement0} statement incomplete';
 
+//Rule 6 proof of evidence and witnesses rep logs
+export const AUDIT_TRAIL_RULE_6_PARTY_PROOFS_EVIDENCE_ADDED =
+	'{replacement0} proof of evidence and witnesses added';
+export const AUDIT_TRAIL_REP_RULE_6_PARTY_PROOFS_EVIDENCE_STATUS_VALID =
+	'{replacement0} proof of evidence and witnesses accepted';
+export const AUDIT_TRAIL_REP_RULE_6_PARTY_PROOFS_EVIDENCE_STATUS_REDACTED_AND_ACCEPTED =
+	'{replacement0} proof of evidence and witnesses redacted and accepted';
+export const AUDIT_TRAIL_REP_RULE_6_PARTY_PROOFS_EVIDENCE_STATUS_INCOMPLETE_EXTENDED =
+	'{replacement0} proof of evidence and witnesses incomplete\n\n{replacement1} proof of evidence and witnesses due date extended to {replacement2}';
+export const AUDIT_TRAIL_REP_RULE_6_PARTY_PROOFS_EVIDENCE_STATUS_INCOMPLETE =
+	'{replacement0} proof of evidence and witnesses incomplete';
+export const AUDIT_TRAIL_RULE_6_PARTY_PROOFS_EVIDENCE_UPDATED =
+	'{replacement0} proof of evidence and witnesses documents updated';
+
 //Interested party comment rep logs
 export const AUDIT_TRAIL_REP_COMMENT_STATUS_VALID = 'Interested party comment accepted';
 export const AUDIT_TRAIL_REP_COMMENT_STATUS_INVALID = 'Interested party comment rejected';
