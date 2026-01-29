@@ -32,10 +32,10 @@ export const addRule6Party = async (req, res) => {
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	try {
 		await appealRule6PartiesService.addRule6Party(
-			appealId,
-			appeal.reference,
+			appeal,
 			serviceUser,
-			azureAdUserId
+			azureAdUserId,
+			req.notifyClient
 		);
 	} catch (error) {
 		logger.error(error);
@@ -61,10 +61,11 @@ export const updateRule6Party = async (req, res) => {
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	try {
 		const result = await appealRule6PartiesService.updateRule6Party(
-			appeal.reference,
+			appeal,
 			rule6PartyId,
 			serviceUser,
-			azureAdUserId
+			azureAdUserId,
+			req.notifyClient
 		);
 		return res.status(200).send(result);
 	} catch (error) {

@@ -28,6 +28,11 @@ describe('appeal rule 6 parties routes', () => {
 
 	beforeEach(() => {
 		fullPlanningAppeal = JSON.parse(JSON.stringify(fullPlanningAppealData));
+		fullPlanningAppeal.appealTimetable = {
+			lpaStatementDueDate: '2025-05-01T00:00:00.000Z',
+			proofOfEvidenceAndWitnessesDueDate: '2025-06-01T00:00:00.000Z'
+		};
+
 		// @ts-ignore
 		databaseConnector.appeal.findUnique.mockResolvedValue({
 			...fullPlanningAppeal,
@@ -35,6 +40,10 @@ describe('appeal rule 6 parties routes', () => {
 		});
 		// @ts-ignore
 		databaseConnector.user.upsert.mockResolvedValue({ id: 1 });
+		// @ts-ignore
+		databaseConnector.team.findUnique.mockResolvedValue({
+			email: 'team@email.com'
+		});
 	});
 	afterEach(() => {
 		jest.clearAllMocks();
@@ -65,7 +74,7 @@ describe('appeal rule 6 parties routes', () => {
 		});
 
 		describe('POST', () => {
-			test('creates a single rule 6 party', async () => {
+			test('creates a single rule 6 party and sends emails', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 				databaseConnector.appealRule6Party.create.mockResolvedValue({
@@ -124,6 +133,48 @@ describe('appeal rule 6 parties routes', () => {
 						details: SUPPORT_CONSTANTS.AUDIT_TRAIL_RULE_6_ADDED_EMAILS_SENT,
 						loggedAt: expect.any(Date),
 						userId: 1
+					}
+				});
+
+				expect(mockNotifySend).toHaveBeenCalledWith({
+					azureAdUserId,
+					templateName: 'rule-6-status-accepted-rule-6-party',
+					notifyClient: expect.anything(),
+					recipientEmail: 'test@example.com',
+					personalisation: {
+						appeal_reference_number: fullPlanningAppeal.reference,
+						lpa_reference: fullPlanningAppeal.applicationReference,
+						site_address: expect.stringContaining('Maidstone'),
+						statements_due_date: '1 May 2025',
+						proofs_due_date: '1 June 2025',
+						team_email_address: 'team@email.com'
+					}
+				});
+				expect(mockNotifySend).toHaveBeenCalledWith({
+					azureAdUserId,
+					templateName: 'rule-6-status-accepted-main-parties',
+					notifyClient: expect.anything(),
+					recipientEmail: fullPlanningAppeal.agent.email,
+					personalisation: {
+						appeal_reference_number: fullPlanningAppeal.reference,
+						lpa_reference: fullPlanningAppeal.applicationReference,
+						site_address: expect.stringContaining('Maidstone'),
+						rule_6_organisation: 'Test Organisation',
+						team_email_address: 'team@email.com'
+					}
+				});
+
+				expect(mockNotifySend).toHaveBeenCalledWith({
+					azureAdUserId,
+					templateName: 'rule-6-status-accepted-main-parties',
+					notifyClient: expect.anything(),
+					recipientEmail: fullPlanningAppeal.lpa.email,
+					personalisation: {
+						appeal_reference_number: fullPlanningAppeal.reference,
+						lpa_reference: fullPlanningAppeal.applicationReference,
+						site_address: expect.stringContaining('Maidstone'),
+						rule_6_organisation: 'Test Organisation',
+						team_email_address: 'team@email.com'
 					}
 				});
 
@@ -221,7 +272,7 @@ describe('appeal rule 6 parties routes', () => {
 
 	describe('/:appealId/rule-6-parties/:rule6PartyId', () => {
 		describe('PATCH', () => {
-			test('updates a rule 6 party', async () => {
+			test('updates a rule 6 party and sends email', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
@@ -282,6 +333,19 @@ describe('appeal rule 6 parties routes', () => {
 						),
 						loggedAt: expect.any(Date),
 						userId: 1
+					}
+				});
+				expect(mockNotifySend).toHaveBeenCalledWith({
+					azureAdUserId,
+					templateName: 'rule-6-party-updated',
+					notifyClient: expect.anything(),
+					recipientEmail: 'test@example.com',
+					personalisation: {
+						appeal_reference_number: fullPlanningAppeal.reference,
+						lpa_reference: fullPlanningAppeal.applicationReference,
+						site_address: expect.stringContaining('Maidstone'),
+						rule_6_organisation: 'Test Organisation',
+						team_email_address: 'team@email.com'
 					}
 				});
 
@@ -451,7 +515,7 @@ describe('appeal rule 6 parties routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: appealId,
-						details: stringTokenReplacement(SUPPORT_CONSTANTS.AUDIT_TRAIL_RULE_6_PARTY_WITHDRAWN, [
+						details: stringTokenReplacement(SUPPORT_CONSTANTS.AUDIT_TRAIL_RULE_6_PARTY_REMOVED, [
 							'Test Organisation'
 						]),
 						loggedAt: expect.any(Date),
