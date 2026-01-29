@@ -8,6 +8,7 @@ import {
 	appealDataCasPlanning,
 	appealDataEnforcementNotice,
 	appealDataFullPlanning,
+	appealDataLdc,
 	appealDataListedBuilding,
 	appellantCaseDataInvalidOutcome,
 	appellantCaseDataNotValidated,
@@ -336,7 +337,8 @@ describe('invalid-appeal', () => {
 			['listed building', appealDataListedBuilding, FEEDBACK_FORM_LINKS.S20],
 			['cas planning', appealDataCasPlanning, FEEDBACK_FORM_LINKS.CAS_PLANNING],
 			['cas advert', appealDataCasAdvert, FEEDBACK_FORM_LINKS.CAS_ADVERTS],
-			['full advert', appealDataAdvert, FEEDBACK_FORM_LINKS.FULL_ADVERTS]
+			['full advert', appealDataAdvert, FEEDBACK_FORM_LINKS.FULL_ADVERTS],
+			['ldc', appealDataLdc, FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE]
 		])(
 			'should render the invalid appeal check page for %s appeal',
 			async (_, appealData, expectedAppealFeedbackLink) => {

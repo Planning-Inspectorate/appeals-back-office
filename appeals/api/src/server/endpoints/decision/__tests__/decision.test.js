@@ -206,7 +206,7 @@ describe('decision routes', () => {
 				'',
 				enforcementNoticeAppeal,
 				FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE,
-				'Enforcement Notice'
+				'Enforcement notice'
 			],
 			[
 				'listedBuildingAppeal',
@@ -240,7 +240,7 @@ describe('decision routes', () => {
 				'',
 				enforcementNoticeAppeal,
 				FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE,
-				'Enforcement Notice',
+				'Enforcement notice',
 				'invalid'
 			],
 			[
@@ -249,7 +249,7 @@ describe('decision routes', () => {
 				'Because it is.',
 				enforcementNoticeAppeal,
 				FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE,
-				'Enforcement Notice',
+				'Enforcement notice',
 				'invalid'
 			]
 		])(

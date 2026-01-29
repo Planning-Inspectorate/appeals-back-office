@@ -618,7 +618,8 @@ describe('appellant cases routes', () => {
 				['casPlanningAppeal', casPlanningAppealAppellantCaseIncomplete],
 				['casAdvertAppeal', casAdvertAppealAppellantCaseIncomplete],
 				['fullPlanningAppeal', fullPlanningAppealAppellantCaseIncomplete],
-				['listedBuildingAppeal', listedBuildingAppealAppellantCaseIncomplete]
+				['listedBuildingAppeal', listedBuildingAppealAppellantCaseIncomplete],
+				['ldcAppeal', ldcAppealAppellantCaseIncomplete]
 			])(
 				'sends a correctly formatted notify email when the validation outcome is Incomplete for %s appeal',
 				async (_, appeal) => {
@@ -898,7 +899,8 @@ describe('appellant cases routes', () => {
 				],
 				['casAdvertAppeal', casAdvertAppealAppellantCaseInvalid, FEEDBACK_FORM_LINKS.CAS_ADVERTS],
 				['fullPlanningAppeal', fullPlanningAppealAppellantCaseInvalid, FEEDBACK_FORM_LINKS.S78],
-				['listedBuildingAppeal', listedBuildingAppealAppellantCaseInvalid, FEEDBACK_FORM_LINKS.S20]
+				['listedBuildingAppeal', listedBuildingAppealAppellantCaseInvalid, FEEDBACK_FORM_LINKS.S20],
+				['ldc', ldcAppealAppellantCaseInvalid, FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE]
 			])(
 				'sends a correctly formatted notify email when the validation outcome is Invalid for %s appeal',
 				async (_, appeal, expectedFeedbackLink) => {
@@ -981,7 +983,8 @@ describe('appellant cases routes', () => {
 				['casAdvertAppeal', casAdvertAppeal, FEEDBACK_FORM_LINKS.CAS_ADVERTS],
 				['casPlanningAppeal', casPlanningAppeal, FEEDBACK_FORM_LINKS.CAS_PLANNING],
 				['fullPlanningAppeal', fullPlanningAppeal, FEEDBACK_FORM_LINKS.S78],
-				['listedBuildingAppeal', listedBuildingAppeal, FEEDBACK_FORM_LINKS.S20]
+				['listedBuildingAppeal', listedBuildingAppeal, FEEDBACK_FORM_LINKS.S20],
+				['ldc', ldcAppeal, FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE]
 			])(
 				'updates appellant case and sends a notify email when the validation outcome is Valid for %s appeal',
 				async (_, appeal, expectedFeedbackLink) => {
