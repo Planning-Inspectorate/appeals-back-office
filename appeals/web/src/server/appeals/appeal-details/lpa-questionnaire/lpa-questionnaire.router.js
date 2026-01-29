@@ -43,6 +43,7 @@ import isGypsyOrTravellerSiteRouter from './is-gypsy-or-traveller-site/is-gypsy-
 import { validateLpaQuestionnaireId } from './lpa-questionnaire.middleware.js';
 import neighbouringSiteAccessRouter from './neighbouring-site-access/neighbouring-site-access.router.js';
 import notificationMethodsRouter from './notification-methods/notification-methods.router.js';
+import pdRightsRemovedRouter from './pd-rights-removed/pd-rights-removed.router.js';
 import preserveGrantLoanRouter from './preserve-grant-loan/preserve-grant-loan.router.js';
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
 import relatesToOperationsRouter from './relates-to-operations/relates-to-operations.router.js';
@@ -492,6 +493,13 @@ router.use(
 	validateAppealWithInclude(['lpaQuestionnaire']),
 	assertUserHasPermission(permissionNames.updateCase),
 	allegedBreachCreatesFloorSpaceRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/pd-rights-removed',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	pdRightsRemovedRouter
 );
 
 export default router;
