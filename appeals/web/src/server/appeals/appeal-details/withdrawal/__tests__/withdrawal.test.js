@@ -5,6 +5,7 @@ import {
 	appealDataCasAdvert,
 	appealDataCasPlanning,
 	appealDataFullPlanning,
+	appealDataLdc,
 	appealDataListedBuilding,
 	documentFileInfo,
 	documentRedactionStatuses,
@@ -96,7 +97,8 @@ describe('withdrawal', () => {
 			['listed building', appealDataListedBuilding, FEEDBACK_FORM_LINKS.S20],
 			['cas planning', appealDataCasPlanning, FEEDBACK_FORM_LINKS.CAS_PLANNING],
 			['cas advert', appealDataCasAdvert, FEEDBACK_FORM_LINKS.CAS_ADVERTS],
-			['full advert', appealDataAdvert, FEEDBACK_FORM_LINKS.FULL_ADVERTS]
+			['full advert', appealDataAdvert, FEEDBACK_FORM_LINKS.FULL_ADVERTS],
+			['ldc', appealDataLdc, FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE]
 		])('for %s appeal', (_, appealData, expectedAppealFeedbackLink) => {
 			beforeEach(async () => {
 				nock.cleanAll();

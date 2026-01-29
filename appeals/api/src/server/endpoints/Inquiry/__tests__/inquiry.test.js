@@ -7,6 +7,7 @@ import {
 	fullPlanningAppeal as fullPlanningAppealData
 } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
+import { trimAppealType } from '#utils/string-utils.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
@@ -129,7 +130,7 @@ describe('inquiry routes', () => {
 				);
 				const personalisation = {
 					appeal_reference_number: '1345264',
-					appeal_type: appeal.appealType.type,
+					appeal_type: trimAppealType(appeal.appealType.type),
 					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 					lpa_reference: '48269/APP/2021/1482',
 					inquiry_date: '1 January 2999',

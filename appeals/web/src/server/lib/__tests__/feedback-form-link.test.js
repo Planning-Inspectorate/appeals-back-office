@@ -36,6 +36,18 @@ describe('getFeedbackLinkFromAppealTypeName', () => {
 		);
 	});
 
+	test('Enforcement Notice', () => {
+		expect(getFeedbackLinkFromAppealTypeName(APPEAL_TYPE.ENFORCEMENT_NOTICE)).toBe(
+			FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE
+		);
+	});
+
+	test('Lawful Development Certificate', () => {
+		expect(getFeedbackLinkFromAppealTypeName(APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE)).toBe(
+			FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE
+		);
+	});
+
 	test('Fallback', () => {
 		expect(getFeedbackLinkFromAppealTypeName('UNKNOWN')).toBe(FEEDBACK_FORM_LINKS.ALL);
 	});
