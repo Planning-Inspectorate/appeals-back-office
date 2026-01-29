@@ -22,7 +22,7 @@ module.exports = {
 	parserPreset: {
 		parserOpts: {
 			headerPattern:
-				/^(?<type>\w+)(?:\((?<scope>[^)]+)\))?: (?<subject>.*?)(?: \((?<ticket>A2-\d+|no-ticket)\))?$/,
+				/^(?<type>\w+)(?:\((?<scope>[^)]+)\))?: (?<subject>[\s\S]*?)(?: \((?<ticket>A2-\d+|no-ticket)\))?$/,
 			headerCorrespondence: ['type', 'scope', 'subject', 'ticket']
 		}
 	},
