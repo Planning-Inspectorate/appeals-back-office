@@ -9,8 +9,7 @@ export const mapRelatesToSingleDwellingHouse = ({
 	booleanSummaryListItem({
 		id: 'single-dwelling-house',
 		text: 'Is the enforcement notice for a single private dwelling house?',
-		// @ts-ignore
 		value: lpaQuestionnaireData.relatesToBuildingSingleDwellingHouse,
-		link: `${currentRoute}/dwelling-house`,
+		link: `${currentRoute}/single-dwelling-house/change`,
 		editable: userHasUpdateCase
 	});
