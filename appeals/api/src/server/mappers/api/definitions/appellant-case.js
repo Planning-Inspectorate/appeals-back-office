@@ -102,6 +102,10 @@ const updateableFields = {
 	contactAddress: {
 		...Address
 	},
+	applicationDecisionAppealed: {
+		type: 'boolean',
+		nullable: true
+	},
 	isGreenBelt: {
 		type: 'boolean',
 		nullable: true
@@ -379,6 +383,10 @@ const appellantCase = {
 				},
 				contactAddress: {
 					...Address
+				},
+				applicationDecisionAppealed: {
+					type: 'boolean',
+					nullable: true
 				}
 			}
 		}

@@ -342,6 +342,7 @@ model AppellantCase {
   applicationDevelopmentAllOrPart                String?
   contactAddress                                 Address?                                         @relation(fields: [contactAddressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   contactAddressId                               Int?
+  applicationDecisionAppealed                    Boolean?
   appealDecisionDate                             DateTime?
   appellantCaseEnforcementInvalidReasonsSelected AppellantCaseEnforcementInvalidReasonsSelected[]
   // Cas adverts fields
