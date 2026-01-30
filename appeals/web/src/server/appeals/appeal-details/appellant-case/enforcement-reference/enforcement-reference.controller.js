@@ -69,7 +69,7 @@ export const postChangeEnforcementReference = async (request, response) => {
 			session: request.session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			text: 'Enforcement reference updated'
+			text: 'Enforcement notice reference updated'
 		});
 
 		const backUrl = getSavedBackUrl(request, 'changeEnforcementReference');
