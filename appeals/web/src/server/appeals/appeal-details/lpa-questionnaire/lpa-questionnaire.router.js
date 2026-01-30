@@ -54,8 +54,10 @@ import relatesToAgriculturalPurposeRouter from './relates-to-agricultural-purpos
 import relatesToErectionOfBuildingsRouter from './relates-to-erection-buildings/relates-to-erection-buildings.router.js';
 import relatesToOperationsRouter from './relates-to-operations/relates-to-operations.router.js';
 import singleDwellingHouseRouter from './single-dwelling-house/single-dwelling-house.router.js';
+import siteAreaRouter from './site-area/site-area.router.js';
 import specialControlOfAdvertisementRouter from './special-control-of-advertisement/special-control-of-advertisement.router.js';
 import trunkRoadRouter from './trunk-road/trunk-road.router.js';
+
 const router = createRouter({ mergeParams: true });
 router.param('lpaQuestionnaireId', (req, res, next) => {
 	validateLpaQuestionnaireId(req, res, next);
@@ -563,6 +565,13 @@ router.use(
 	validateAppealWithInclude(['lpaQuestionnaire']),
 	assertUserHasPermission(permissionNames.updateCase),
 	trunkRoadRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/site-area',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	siteAreaRouter
 );
 
 export default router;
