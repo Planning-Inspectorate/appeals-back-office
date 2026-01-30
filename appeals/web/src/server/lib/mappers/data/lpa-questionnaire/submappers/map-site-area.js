@@ -19,7 +19,7 @@ export const mapSiteArea = ({ lpaQuestionnaireData, currentRoute, session }) => 
 					items: [
 						mapActionComponent(permissionNames.updateCase, session, {
 							text: value ? 'Change' : 'Add',
-							href: `${currentRoute}/site-area`,
+							href: `${currentRoute}/site-area/change`,
 							visuallyHiddenText: 'area of the appeal site',
 							attributes: { 'data-cy': 'change-site-area-square-metres' }
 						})
