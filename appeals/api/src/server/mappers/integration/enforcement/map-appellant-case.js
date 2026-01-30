@@ -52,7 +52,8 @@ export const mapAppellantCase = (data) => {
 		enforcementReference,
 		contactPlanningInspectorateDate,
 		descriptionOfAllegedBreach,
-		applicationMadeAndFeePaid
+		applicationMadeAndFeePaid,
+		applicationDecisionAppealed
 	} = appellantCase || {};
 	return {
 		...mapAppellantCaseSharedFields(data),
@@ -64,7 +65,7 @@ export const mapAppellantCase = (data) => {
 		previousPlanningPermissionGranted: null,
 		issueDateOfEnforcementNotice: enforcementIssueDate?.toISOString() ?? null,
 		effectiveDateOfEnforcementNotice: enforcementEffectiveDate?.toISOString() ?? null,
-		didAppellantAppealLpaDecision: null,
+		didAppellantAppealLpaDecision: applicationDecisionAppealed ?? null,
 		dateLpaDecisionDue: null,
 		dateLpaDecisionReceived: null,
 		applicationPartOrWholeDevelopment: applicationDevelopmentAllOrPart ?? null,

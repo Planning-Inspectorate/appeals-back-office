@@ -17019,6 +17019,10 @@
 										"type": "string"
 									}
 								}
+							},
+							"applicationDecisionAppealed": {
+								"type": "boolean",
+								"nullable": true
 							}
 						}
 					},
@@ -17096,6 +17100,10 @@
 								"type": "string"
 							}
 						}
+					},
+					"applicationDecisionAppealed": {
+						"type": "boolean",
+						"nullable": true
 					},
 					"isGreenBelt": {
 						"type": "boolean",
@@ -42276,6 +42284,10 @@
 								"type": "string"
 							}
 						}
+					},
+					"applicationDecisionAppealed": {
+						"type": "boolean",
+						"nullable": true
 					},
 					"isGreenBelt": {
 						"type": "boolean",

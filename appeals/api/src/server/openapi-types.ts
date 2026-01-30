@@ -4556,6 +4556,7 @@ export type AppellantCase = {
 			addressCounty?: string | null;
 			postCode: string;
 		};
+		applicationDecisionAppealed?: boolean | null;
 	};
 	enforcementNoticeListedBuilding?: boolean | null;
 	enforcementReference?: string | null;
@@ -4580,6 +4581,7 @@ export type AppellantCase = {
 		addressCounty?: string | null;
 		postCode: string;
 	};
+	applicationDecisionAppealed?: boolean | null;
 	isGreenBelt?: boolean | null;
 	planningObligation?: any;
 	statusPlanningObligation?: string | null;
@@ -16900,6 +16902,7 @@ export interface AppellantCaseUpdateRequest {
 		addressCounty?: string | null;
 		postCode: string;
 	};
+	applicationDecisionAppealed?: boolean | null;
 	isGreenBelt?: boolean | null;
 	planningObligation?: boolean | null;
 	statusPlanningObligation?: string | null;
