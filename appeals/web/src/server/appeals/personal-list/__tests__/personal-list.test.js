@@ -614,6 +614,13 @@ describe('personal-list', () => {
 				expectedHtml: {
 					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/proof-of-evidence/rule-6-party/1?backUrl=%2Fappeals-service%2Fpersonal-list">Review Test Organisation proof of evidence and witnesses</a>`
 				}
+			},
+			{
+				name: 'Enforcement notice appeal incomplete',
+				requiredAction: 'enforcementNoticeAppealIncomplete',
+				expectedHtml: {
+					caseOfficer: `Enforcement notice invalid<br><a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case?backUrl=%2Fappeals-service%2Fpersonal-list">Update case</a>`
+				}
 			}
 		];
 

@@ -194,6 +194,15 @@ const updateAppellantCaseValidationOutcome = ({
 				otherLiveAppeals
 			})
 		);
+
+		if (appealId && appealDueDate) {
+			transaction.push(
+				// @ts-ignore
+				appealRepository.updateAppealById(appealId, {
+					caseExtensionDate: new Date(appealDueDate).toISOString()
+				})
+			);
+		}
 	}
 
 	if (enforcementInvalidReasons) {

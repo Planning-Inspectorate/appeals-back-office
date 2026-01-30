@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`incomplete-appeal GET /check-details-and-mark-enforcement-as-incomplete should render the enforcement notice reasons page with no reasons selected 1`] = `
+exports[`incomplete-appeal enforcement notice appeal GET /check-details-and-mark-enforcement-as-incomplete should render the enforcement notice reasons page with no reasons selected 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>

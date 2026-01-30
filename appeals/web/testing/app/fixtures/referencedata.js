@@ -4783,6 +4783,14 @@ export const appealDataToGetRequiredActions = {
 				}
 			]
 		}
+	},
+	enforcementNoticeAppealIncomplete: {
+		...baseAppealDataToGetRequiredActions,
+		appealType: 'Enforcement notice appeal',
+		appealStatus: 'validation',
+		documentationSummary: {
+			appellantCase: { dueDate: '3000-01-06T23:59:00.000Z', status: 'Incomplete' }
+		}
 	}
 };
 

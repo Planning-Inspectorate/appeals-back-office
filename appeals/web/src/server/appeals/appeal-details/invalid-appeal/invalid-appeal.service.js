@@ -22,7 +22,7 @@ export async function setReviewOutcomeForEnforcementNoticeAppellantCase(
 	return apiClient
 		.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
 			json: {
-				validationOutcome: 'invalid',
+				validationOutcome: reviewOutcome.validationOutcome,
 				enforcementInvalidReasons: reviewOutcome.enforcementNoticeReason?.map(
 					(/** @type {Object<string, string[]>} */ reason) => ({
 						id: reason.reasonSelected,

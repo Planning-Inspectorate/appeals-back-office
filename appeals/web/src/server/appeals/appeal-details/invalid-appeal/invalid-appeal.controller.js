@@ -624,7 +624,7 @@ export const postCheckDetailsAndMarkEnforcementAsInvalid = async (request, respo
 			session: request.session,
 			bannerDefinitionKey: 'appellantCaseInvalidOrIncomplete',
 			appealId: currentAppeal.appealId,
-			text: 'Appeal marked as invalid'
+			text: `Appeal marked as ${webAppellantCaseReviewOutcome.validationOutcome}`
 		});
 
 		delete request.session.webAppellantCaseReviewOutcome;
