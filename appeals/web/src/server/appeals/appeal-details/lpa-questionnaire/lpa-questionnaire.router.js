@@ -43,6 +43,7 @@ import hasProtectedSpeciesRouter from './has-protected-species/has-protected-spe
 import highwayTrafficPublicSafetyRouter from './highway-traffic-public-safety/highway-traffic-public-safety.router.js';
 import isAonbNationalLandscapeRouter from './is-aonb-national-landscape/is-aonb-national-landscape.router.js';
 import isGypsyOrTravellerSiteRouter from './is-gypsy-or-traveller-site/is-gypsy-or-traveller-site.router.js';
+import isOnCrownLandRouter from './is-on-crown-land/is-on-crown-land.router.js';
 import { validateLpaQuestionnaireId } from './lpa-questionnaire.middleware.js';
 import neighbouringSiteAccessRouter from './neighbouring-site-access/neighbouring-site-access.router.js';
 import notificationMethodsRouter from './notification-methods/notification-methods.router.js';
@@ -54,6 +55,7 @@ import relatesToErectionOfBuildingsRouter from './relates-to-erection-buildings/
 import relatesToOperationsRouter from './relates-to-operations/relates-to-operations.router.js';
 import singleDwellingHouseRouter from './single-dwelling-house/single-dwelling-house.router.js';
 import specialControlOfAdvertisementRouter from './special-control-of-advertisement/special-control-of-advertisement.router.js';
+import trunkRoadRouter from './trunk-road/trunk-road.router.js';
 const router = createRouter({ mergeParams: true });
 router.param('lpaQuestionnaireId', (req, res, next) => {
 	validateLpaQuestionnaireId(req, res, next);
@@ -547,6 +549,20 @@ router.use(
 	validateAppealWithInclude(['lpaQuestionnaire']),
 	assertUserHasPermission(permissionNames.updateCase),
 	singleDwellingHouseRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/is-on-crown-land',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	isOnCrownLandRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/trunk-road',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	trunkRoadRouter
 );
 
 export default router;

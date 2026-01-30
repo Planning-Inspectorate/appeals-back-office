@@ -1,16 +1,19 @@
-import { booleanSummaryListItem } from '#lib/mappers/index.js';
+import { booleanWithDetailsSummaryListItem } from '#lib/mappers/index.js';
 
-/** @type {import('../mapper.js').SubMapper} */
+/** @type {import("../mapper.js").SubMapper} */
 export const mapWithinTrunkRoadDistance = ({
 	lpaQuestionnaireData,
 	currentRoute,
 	userHasUpdateCase
 }) =>
-	booleanSummaryListItem({
+	booleanWithDetailsSummaryListItem({
 		id: 'trunk-road',
 		text: 'Is the appeal site within 67 meters of a trunk road?',
-		// @ts-ignore
-		value: lpaQuestionnaireData.affectedTrunkRoadName !== null,
-		link: `${currentRoute}/trunk-road`,
-		editable: userHasUpdateCase
+		value: !!lpaQuestionnaireData.affectedTrunkRoadName,
+		valueDetails: lpaQuestionnaireData.affectedTrunkRoadName,
+		defaultText: '',
+		link: `${currentRoute}/trunk-road/change`,
+		editable: userHasUpdateCase,
+		withShowMore: true,
+		showMoreLabelText: 'Enter the road name'
 	});
