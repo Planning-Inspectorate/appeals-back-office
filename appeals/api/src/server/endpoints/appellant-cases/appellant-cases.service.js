@@ -44,6 +44,7 @@ import {
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import { add } from 'date-fns';
 import transitionState from '../../state/transition-state.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
@@ -141,11 +142,20 @@ export const updateAppellantCaseValidationOutcome = async (
 		enforcementInvalidReasons
 	} = data;
 	const teamEmail = await getTeamEmailFromAppealId(appealId);
+	const incompleteAppealDueDate =
+		appealDueDate || enforcementNoticeInvalid ? add(new Date(), { days: 7 }) : undefined;
 
 	const validationOutcomeData = {
 		appealId,
 		appellantCaseId,
-		...(isOutcomeIncomplete(validationOutcome.name) && { incompleteReasons, appealDueDate }),
+		validationOutcomeId: validationOutcome.id,
+		...(isOutcomeIncomplete(validationOutcome.name) && {
+			incompleteReasons,
+			appealDueDate: incompleteAppealDueDate,
+			...(otherInformation && { otherInformation }),
+			...(enforcementNoticeInvalid && { enforcementNoticeInvalid }),
+			...(enforcementInvalidReasons && { enforcementInvalidReasons })
+		}),
 		...(isOutcomeInvalid(validationOutcome.name) && {
 			invalidReasons,
 			...(otherInformation && { otherInformation }),
@@ -269,9 +279,17 @@ export const updateAppellantCaseValidationOutcome = async (
 				throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 			}
 
-			const incompleteReasonsList = getFormattedReasons(
-				updatedAppellantCase?.appellantCaseIncompleteReasonsSelected ?? []
-			);
+			const reasonsToFormat = updatedAppellantCase?.appellantCaseIncompleteReasonsSelected?.length
+				? updatedAppellantCase?.appellantCaseIncompleteReasonsSelected
+				: updatedAppellantCase?.appellantCaseEnforcementInvalidReasonsSelected?.length
+					? updatedAppellantCase?.appellantCaseEnforcementInvalidReasonsSelected
+					: [];
+
+			const incompleteReasonsList = getFormattedReasons(reasonsToFormat);
+
+			if (otherInformation && otherInformation !== 'no') {
+				incompleteReasonsList.push(otherInformation);
+			}
 
 			const details = `${
 				stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['Appeal']) + '\n'
@@ -283,7 +301,7 @@ export const updateAppellantCaseValidationOutcome = async (
 				details
 			});
 
-			if (updatedDueDate) {
+			if (updatedDueDate && !enforcementNoticeInvalid) {
 				const personalisation = {
 					appeal_reference_number: appeal.reference,
 					lpa_reference: appeal.applicationReference,
@@ -349,7 +367,7 @@ export const updateAppellantCaseValidationOutcome = async (
 				}
 			}
 
-			if (otherInformation) {
+			if (otherInformation && otherInformation !== 'no') {
 				invalidReasonsList.push(otherInformation);
 			}
 

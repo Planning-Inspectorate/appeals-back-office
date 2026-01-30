@@ -150,73 +150,137 @@ describe('incomplete-appeal', () => {
 				);
 			});
 		});
-	});
 
-	describe('GET /check-details-and-mark-enforcement-as-incomplete', () => {
-		beforeEach(async () => {
-			nock.cleanAll();
-			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
-				.reply(200, appealDataEnforcementNotice)
-				.persist();
-			nock('http://test/')
-				.get(`/appeals/${appealId}/appellant-cases/0`)
-				.reply(200, appellantCaseDataNotValidated)
-				.persist();
-			nock('http://test/')
-				.get('/appeals/appellant-case-enforcement-invalid-reasons')
-				.reply(200, appealCaseEnforcementInvalidReasons)
-				.persist();
+		describe('GET /check-details-and-mark-enforcement-as-incomplete', () => {
+			beforeEach(async () => {
+				nock.cleanAll();
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, appealDataEnforcementNotice)
+					.persist();
+				nock('http://test/')
+					.get(`/appeals/${appealId}/appellant-cases/0`)
+					.reply(200, appellantCaseDataNotValidated)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/appellant-case-enforcement-invalid-reasons')
+					.reply(200, appealCaseEnforcementInvalidReasons)
+					.persist();
 
-			// Populate session data
-			await request.post(`${baseUrl}/appellant-case`).send({ reviewOutcome: 'incomplete' });
-			await request
-				.post(`${baseUrl}/appellant-case/incomplete/enforcement-notice`)
-				.send({ enforcementNoticeInvalid: 'yes' });
-			await request.post(`${baseUrl}/appellant-case/incomplete/enforcement-notice-reason`).send({
-				invalidReason: ['1', '2', '8'],
-				'invalidReason-1': 'has some text',
-				'invalidReason-2': 'has some other text',
-				'invalidReason-6': 'another reason'
-			});
-			await request
-				.post(`${baseUrl}/appellant-case/incomplete/enforcement-other-information`)
-				.send({
-					otherInformationValidRadio: 'Yes',
-					otherInformationDetails: 'Enforcement other information'
+				// Populate session data
+				await request.post(`${baseUrl}/appellant-case`).send({ reviewOutcome: 'incomplete' });
+				await request
+					.post(`${baseUrl}/appellant-case/incomplete/enforcement-notice`)
+					.send({ enforcementNoticeInvalid: 'yes' });
+				await request.post(`${baseUrl}/appellant-case/incomplete/enforcement-notice-reason`).send({
+					invalidReason: ['1', '2', '8'],
+					'invalidReason-1': 'has some text',
+					'invalidReason-2': 'has some other text',
+					'invalidReason-6': 'another reason'
 				});
+				await request
+					.post(`${baseUrl}/appellant-case/incomplete/enforcement-other-information`)
+					.send({
+						otherInformationValidRadio: 'Yes',
+						otherInformationDetails: 'Enforcement other information'
+					});
+			});
+
+			afterEach(() => {
+				nock.cleanAll();
+			});
+
+			it('should render the enforcement notice reasons page with no reasons selected', async () => {
+				const response = await request.get(
+					`${baseUrl}/appellant-case/incomplete/check-details-and-mark-enforcement-as-incomplete`
+				);
+
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span>');
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Check details and mark appeal as incomplete</h1>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<dt class="govuk-summary-list__key"> What is the outcome of your review?</dt><dd class="govuk-summary-list__value"> Incomplete</dd>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<dt class="govuk-summary-list__key"> Do you want to add any other information?</dt>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'>Yes: Enforcement other information</div></dd>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Mark appeal as incomplete</button>');
+			});
 		});
 
-		afterEach(() => {
-			nock.cleanAll();
-		});
+		describe('POST /check-details-and-mark-enforcement-as-incomplete', () => {
+			beforeEach(async () => {
+				nock.cleanAll();
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, appealDataEnforcementNotice)
+					.persist();
+				nock('http://test/')
+					.get(`/appeals/${appealId}/appellant-cases/0`)
+					.reply(200, appellantCaseDataNotValidated)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/appellant-case-enforcement-invalid-reasons')
+					.reply(200, appealCaseEnforcementInvalidReasons)
+					.persist();
 
-		it('should render the enforcement notice reasons page with no reasons selected', async () => {
-			const response = await request.get(
-				`${baseUrl}/appellant-case/incomplete/check-details-and-mark-enforcement-as-incomplete`
-			);
+				// Populate session data
+				await request.post(`${baseUrl}/appellant-case`).send({ reviewOutcome: 'incomplete' });
+				await request
+					.post(`${baseUrl}/appellant-case/incomplete/enforcement-notice`)
+					.send({ enforcementNoticeInvalid: 'yes' });
+				await request.post(`${baseUrl}/appellant-case/incomplete/enforcement-notice-reason`).send({
+					invalidReason: ['1', '2', '8'],
+					'invalidReason-1': 'has some text',
+					'invalidReason-2': 'has some other text',
+					'invalidReason-6': 'another reason'
+				});
+				await request
+					.post(`${baseUrl}/appellant-case/incomplete/enforcement-other-information`)
+					.send({
+						otherInformationValidRadio: 'Yes',
+						otherInformationDetails: 'Enforcement other information'
+					});
+			});
 
-			const element = parseHtml(response.text);
+			afterEach(() => {
+				nock.cleanAll();
+			});
 
-			expect(element.innerHTML).toMatchSnapshot();
+			it('should redirect to case details on success', async () => {
+				nock('http://test/')
+					.patch(`/appeals/5623/appellant-cases/0`, {
+						validationOutcome: 'incomplete',
+						enforcementInvalidReasons: [
+							{ id: 1, text: ['has some text'] },
+							{ id: 2, text: ['has some other text'] },
+							{ id: 8, text: [null] }
+						],
+						enforcementNoticeInvalid: 'yes',
+						otherInformation: 'Enforcement other information'
+					})
+					.reply(200);
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				const response = await request.post(
+					`${baseUrl}/appellant-case/incomplete/check-details-and-mark-enforcement-as-incomplete`
+				);
 
-			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span>');
-
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Check details and mark appeal as incomplete</h1>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> What is the outcome of your review?</dt><dd class="govuk-summary-list__value"> Incomplete</dd>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> Do you want to add any other information?</dt>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'>Yes: Enforcement other information</div></dd>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Mark appeal as incomplete</button>');
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to /appeals-service/appeal-details/${appealId}`
+				);
+			});
 		});
 	});
 });

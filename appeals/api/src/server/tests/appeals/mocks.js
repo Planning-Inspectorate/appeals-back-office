@@ -793,7 +793,23 @@ export const enforcementNoticeAppealAppellantCaseInvalid = {
 	...enforcementNoticeAppeal,
 	appellantCase: {
 		...enforcementNoticeAppeal.appellantCase,
-		...invalidAppellantCaseOutcome
+		...invalidAppellantCaseOutcome,
+		appellantCaseEnforcementInvalidReasonsSelected: [
+			{
+				appellantCaseEnforcementInvalidReason: {
+					id: 3,
+					name: 'There is a mistake in the wording',
+					hasText: true
+				},
+				appellantCaseEnforcementInvalidReasonText: [
+					{
+						id: 6,
+						text: 'this is a short reason',
+						appellantCaseEnforcementInvalidReasonId: 3
+					}
+				]
+			}
+		]
 	},
 	id: 4
 };

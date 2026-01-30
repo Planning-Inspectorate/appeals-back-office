@@ -624,6 +624,29 @@ export function mapAppellantCaseNotificationBanners(
 			});
 		}
 
+		if (
+			// @ts-ignore
+			appellantCaseData.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
+			validationOutcome === 'incomplete'
+		) {
+			bannerContentPageComponents.push({
+				type: 'summary-list',
+				parameters: {
+					classes: 'govuk-summary-list--no-border govuk-!-margin-bottom-4',
+					rows: [
+						{
+							key: {
+								text: 'Incomplete reasons'
+							},
+							value: {
+								text: 'Enforcement notice invalid'
+							}
+						}
+					]
+				}
+			});
+		}
+
 		banners.push(
 			createNotificationBanner({
 				bannerDefinitionKey: 'appellantCaseNotValid',

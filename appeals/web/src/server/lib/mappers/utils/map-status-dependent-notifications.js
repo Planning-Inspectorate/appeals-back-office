@@ -6,6 +6,7 @@ import {
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
 import config from '../../../../../environment/config.js';
 import { getRequiredActionsForAppeal } from './required-actions.js';
 
@@ -358,6 +359,48 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 				];
 			});
 			return banners.length ? banners : undefined;
+		}
+		case 'enforcementNoticeAppealIncomplete': {
+			const dueDate = formatDate(
+				// @ts-ignore
+				new Date(appealDetails.documentationSummary.appellantCase?.dueDate)
+			);
+			const listItems = [
+				{ key: 'Due date', value: dueDate },
+				{ key: 'Incomplete reasons', value: 'Enforcement notice invalid' }
+			];
+			/** @type {PageComponent[]} */
+			const bannerContentPageComponents = listItems.map((item) => ({
+				type: 'summary-list',
+				parameters: {
+					classes: 'govuk-summary-list--no-border govuk-!-margin-bottom-4',
+					rows: [
+						{
+							key: {
+								text: item.key
+							},
+							value: {
+								text: item.value
+							}
+						}
+					]
+				}
+			}));
+			bannerContentPageComponents.push({
+				type: 'html',
+				parameters: {
+					html: `<a class="govuk-notification-banner__link" data-cy="" href="${addBackLinkQueryToUrl(
+						request,
+						`/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case`
+					)}">Update appeal</a></p>`
+				}
+			});
+
+			return createNotificationBanner({
+				titleText: `Appeal is incomplete`,
+				bannerDefinitionKey,
+				pageComponents: bannerContentPageComponents
+			});
 		}
 	}
 }

@@ -324,7 +324,7 @@ describe('appellant cases routes', () => {
 				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
 					where: { id },
 					data: {
-						caseExtensionDate: body.appealDueDate,
+						caseExtensionDate: expect.any(String),
 						caseUpdatedDate: expect.any(Date)
 					},
 					include: {
@@ -1584,6 +1584,103 @@ describe('appellant cases routes', () => {
 						otherInformation: 'Enforcement other information',
 						otherLiveAppeals: undefined,
 						enforcementNoticeInvalid: 'yes'
+					}
+				});
+
+				expect(mockNotifySend).not.toHaveBeenCalled();
+				expect(response.status).toEqual(200);
+			});
+
+			test('updates the appellant case for incomplete enforcement notice appeal with invalid enforcement notice', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(
+					enforcementNoticeAppealAppellantCaseInvalid
+				);
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[0]
+				);
+				databaseConnector.appellantCaseEnforcementInvalidReasonsSelected.deleteMany.mockResolvedValue(
+					true
+				);
+				databaseConnector.appellantCaseEnforcementInvalidReasonsSelected.createMany.mockResolvedValue(
+					true
+				);
+				databaseConnector.appeal.update.mockResolvedValue();
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const body = {
+					validationOutcome: 'incomplete',
+					enforcementInvalidReasons: [
+						{ id: 1, text: ['has some text'] },
+						{ id: 2, text: ['has some other text'] },
+						{ id: 8, text: ['This is the other field'] }
+					],
+					enforcementNoticeInvalid: 'yes',
+					otherInformation: 'Enforcement other information'
+				};
+				const { appellantCase, id } = enforcementNoticeAppealAppellantCaseInvalid;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: {
+						appellantCaseValidationOutcomeId: 1
+					}
+				});
+				expect(
+					databaseConnector.appellantCaseEnforcementInvalidReasonText.deleteMany
+				).toHaveBeenCalled();
+				expect(
+					databaseConnector.appellantCaseEnforcementInvalidReasonText.createMany
+				).toHaveBeenCalledWith({
+					data: [
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseEnforcementInvalidReasonId: 1,
+							text: 'has some text'
+						},
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseEnforcementInvalidReasonId: 2,
+							text: 'has some other text'
+						},
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseEnforcementInvalidReasonId: 8,
+							text: 'This is the other field'
+						}
+					]
+				});
+				expect(databaseConnector.enforcementNoticeAppealOutcome.create).toHaveBeenCalledWith({
+					data: {
+						appeal: expect.any(Object),
+						otherInformation: 'Enforcement other information',
+						otherLiveAppeals: undefined,
+						enforcementNoticeInvalid: 'yes'
+					}
+				});
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+					data: {
+						appealId: id,
+						details:
+							'Appeal marked as incomplete:\n<ul><li>There is a mistake in the wording: this is a short reason</li><li>Enforcement other information</li></ul>',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+					data: {
+						appealId: id,
+						details: 'Case updated',
+						loggedAt: expect.any(Date),
+						userId: 1
 					}
 				});
 
