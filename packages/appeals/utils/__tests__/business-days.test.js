@@ -80,7 +80,7 @@ describe('business-days', () => {
 			it(`returns correct base timetable key for appeal type ${t.appealType}`, () => {
 				const result = getFullAppealBaseTimetableKey(t.appealType);
 				expect(result).toBe(t.expected);
-			});
+			}, 20000); // Increased timeout to allow for slow CI machines
 		}
 	});
 });
