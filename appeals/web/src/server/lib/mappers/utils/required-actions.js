@@ -5,7 +5,8 @@ import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dat
 import { isAwaitingLinkedAppeal, isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import {
 	APPEAL_PROOF_OF_EVIDENCE_STATUS,
-	APPEAL_REPRESENTATION_STATUS
+	APPEAL_REPRESENTATION_STATUS,
+	SUPPORTED_APPELLANT_STATEMENT_APPEAL_TYPES
 } from '@pins/appeals/constants/common.js';
 import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
@@ -287,7 +288,11 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 					actions.push('updateLpaStatement');
 				}
 
-				if (appellantStatementEnabled) {
+				if (
+					appellantStatementEnabled &&
+					appellantStatementNotReceived &&
+					SUPPORTED_APPELLANT_STATEMENT_APPEAL_TYPES.includes(appealDetails.appealType)
+				) {
 					if (appellantStatementNotReceived && statementsDueDate) {
 						actions.push('awaitingAppellantStatement');
 					} else if (appellantStatementAwaitingReview) {
