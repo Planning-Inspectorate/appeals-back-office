@@ -209,7 +209,7 @@ function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress, azu
 				email,
 				azureAdUserId
 			);
-		case APPEAL_TYPE.S78:
+		case APPEAL_TYPE.S78: {
 			if (String(appeal.procedureType) === APPEAL_CASE_PROCEDURE.HEARING) {
 				const hearingStartTime = appeal.hearing?.hearingStartTime;
 				const hearingDate = hearingStartTime ? formatDate(hearingStartTime, false) : undefined;
@@ -226,23 +226,55 @@ function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress, azu
 					azureAdUserId
 				);
 			}
-			return sendLpaqCompleteEmail(
-				notifyClient,
-				appeal,
-				s78Fields,
-				s78Template,
-				email,
-				azureAdUserId
-			);
-		default:
-			return sendLpaqCompleteEmail(
-				notifyClient,
-				appeal,
-				s78Fields,
-				s78Template,
-				email,
-				azureAdUserId
-			);
+
+			const s78EmailPromises = [
+				sendLpaqCompleteEmail(notifyClient, appeal, s78Fields, s78Template, email, azureAdUserId)
+			];
+
+			if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
+				for (const party of appeal.appealRule6Parties) {
+					if (party.serviceUser?.email) {
+						s78EmailPromises.push(
+							sendLpaqCompleteEmail(
+								notifyClient,
+								appeal,
+								s78Fields,
+								s78Template,
+								party.serviceUser.email,
+								azureAdUserId
+							)
+						);
+					}
+				}
+			}
+
+			return Promise.all(s78EmailPromises);
+		}
+
+		default: {
+			const emailPromises = [
+				sendLpaqCompleteEmail(notifyClient, appeal, s78Fields, s78Template, email, azureAdUserId)
+			];
+
+			if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
+				for (const party of appeal.appealRule6Parties) {
+					if (party.serviceUser?.email) {
+						emailPromises.push(
+							sendLpaqCompleteEmail(
+								notifyClient,
+								appeal,
+								s78Fields,
+								s78Template,
+								party.serviceUser.email,
+								azureAdUserId
+							)
+						);
+					}
+				}
+			}
+
+			return Promise.all(emailPromises);
+		}
 	}
 }
 
