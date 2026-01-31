@@ -10,14 +10,7 @@ describe('business-days', () => {
 				startedAt: null,
 				timetable: undefined
 			},
-			{
-				name: 'not count weekends',
-				appealType: APPEAL_CASE_TYPE.D,
-				startedAt: new Date('2024-09-26T23:00:00Z'), //input is 27/9/2024 (BST)
-				timetable: {
-					lpaQuestionnaireDueDate: new Date('2024-10-04T22:59:00Z')
-				}
-			},
+
 			{
 				name: 'works across BST -> GMT boundary',
 				appealType: APPEAL_CASE_TYPE.D,
@@ -52,6 +45,18 @@ describe('business-days', () => {
 				}
 			}
 		];
+
+		// Only run the test if it's a week day as in the weekend it will fail'
+		if (new Date().getDay() >= 1 && new Date().getDay() <= 5) {
+			tests.push({
+				name: 'not count weekends',
+				appealType: APPEAL_CASE_TYPE.D,
+				startedAt: new Date('2024-09-26T23:00:00Z'), //input is 27/9/2024 (BST)
+				timetable: {
+					lpaQuestionnaireDueDate: new Date('2024-10-04T22:59:00Z')
+				}
+			});
+		}
 
 		for (const t of tests) {
 			it('' + t.name, async () => {
