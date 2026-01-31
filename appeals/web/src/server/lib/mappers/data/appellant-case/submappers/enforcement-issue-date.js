@@ -11,6 +11,6 @@ export const mapEnforcementIssueDate = ({ appellantCaseData, currentRoute, userH
 			? dateISOStringToDisplayDate(appellantCaseData.enforcementNotice.issueDate)
 			: 'No data',
 		link: `${currentRoute}/enforcement-issue-date/change`,
-		editable: hasData && userHasUpdateCase
+		editable: hasData && userHasUpdateCase && !appellantCaseData.isEnforcementChild
 	});
 };

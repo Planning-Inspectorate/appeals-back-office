@@ -25,7 +25,7 @@ export const mapContactAddress = ({ appellantCaseData, currentRoute, userHasUpda
 		link: contactAddressId
 			? `${currentRoute}/contact-address/change/${contactAddressId}`
 			: `${currentRoute}/contact-address/add`,
-		editable: userHasUpdateCase,
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild,
 		actionText: contactAddressId ? 'Change' : 'Add',
 		classes: 'appeal-contact-address'
 	});

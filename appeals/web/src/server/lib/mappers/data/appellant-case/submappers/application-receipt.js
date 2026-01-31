@@ -11,7 +11,7 @@ export const mapApplicationReceipt = ({ appellantCaseData, userHasUpdateCase }) 
 			appellantCaseData.documents[APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT]?.folderId
 		),
 		appealId: appellantCaseData.appealId,
-		editable: userHasUpdateCase,
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild,
 		uploadUrlTemplate: documentUploadUrlTemplate,
 		id: 'application-receipt',
 		text: 'Application receipt',

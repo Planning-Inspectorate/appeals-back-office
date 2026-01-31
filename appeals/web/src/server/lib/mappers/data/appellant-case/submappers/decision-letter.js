@@ -9,7 +9,7 @@ export const mapDecisionLetter = ({ appellantCaseData, userHasUpdateCase }) =>
 			appellantCaseData.documents.applicationDecisionLetter?.folderId
 		),
 		appealId: appellantCaseData.appealId,
-		editable: userHasUpdateCase,
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild,
 		uploadUrlTemplate: documentUploadUrlTemplate,
 		id: 'decision-letter',
 		text: 'Decision letter from the local planning authority',

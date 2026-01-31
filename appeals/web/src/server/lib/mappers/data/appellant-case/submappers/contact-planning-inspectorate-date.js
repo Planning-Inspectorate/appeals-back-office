@@ -23,6 +23,6 @@ export const mapContactPlanningInspectorateDate = ({
 					),
 		link: `${currentRoute}/contact-planning-inspectorate-date/change`,
 		actionText,
-		editable: hasData && userHasUpdateCase
+		editable: hasData && userHasUpdateCase && !appellantCaseData.isEnforcementChild
 	});
 };

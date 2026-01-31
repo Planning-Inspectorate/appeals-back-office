@@ -11,7 +11,7 @@ export const mapProcedurePreferenceDetails = ({
 		text: 'Why would you prefer this appeal procedure?',
 		value: appellantCaseData.appellantProcedurePreferenceDetails || 'Not answered',
 		link: `${currentRoute}/procedure-preference/details/change`,
-		editable: userHasUpdateCase,
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild,
 		withShowMore: true,
 		showMoreLabelText: 'Reason for preference details'
 	});

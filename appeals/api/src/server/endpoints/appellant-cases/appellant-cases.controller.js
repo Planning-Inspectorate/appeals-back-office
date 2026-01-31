@@ -3,7 +3,6 @@ import { appealDetailService } from '#endpoints/appeal-details/appeal-details.se
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { contextEnum } from '#mappers/context-enum.js';
-import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import logger from '#utils/logger.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
@@ -11,6 +10,7 @@ import { ERROR_FAILED_TO_SAVE_DATA, ERROR_NOT_FOUND } from '@pins/appeals/consta
 import {
 	putContactAddress,
 	renderAuditTrailDetail,
+	updateAppellantCaseData,
 	updateAppellantCaseValidationOutcome
 } from './appellant-cases.service.js';
 
@@ -124,60 +124,64 @@ const updateAppellantCaseById = async (req, res) => {
 					},
 					notifyClient
 				)
-			: await appellantCaseRepository.updateAppellantCaseById(appellantCaseId, {
-					applicantFirstName,
-					applicantSurname,
-					areAllOwnersKnown,
-					knowsOtherOwners,
-					hasAdvertisedAppeal,
-					siteSafetyDetails,
-					siteAccessDetails,
-					ownsAllLand,
-					ownsSomeLand,
-					siteAreaSquareMetres,
-					applicationDate,
-					applicationDecisionDate,
-					isGreenBelt,
-					changedDevelopmentDescription:
-						typeof developmentDescription?.isChanged !== typeof undefined
-							? developmentDescription?.isChanged
-							: undefined,
-					originalDevelopmentDescription:
-						typeof developmentDescription?.details !== typeof undefined
-							? developmentDescription?.details
-							: undefined,
-					applicationDecision,
-					planningObligation,
-					statusPlanningObligation,
-					agriculturalHolding,
-					tenantAgriculturalHolding,
-					otherTenantsAgriculturalHolding,
-					appellantCostsAppliedFor,
-					appellantProcedurePreference,
-					appellantProcedurePreferenceDetails,
-					appellantProcedurePreferenceDuration,
-					appellantProcedurePreferenceWitnessCount,
-					developmentType,
-					numberOfResidencesNetChange,
-					highwayLand,
-					advertInPosition,
-					landownerPermission,
-					siteGridReferenceEasting,
-					siteGridReferenceNorthing,
-					enforcementNotice,
-					enforcementIssueDate,
-					enforcementEffectiveDate,
-					contactPlanningInspectorateDate,
-					enforcementReference,
-					enforcementNoticeListedBuilding,
-					descriptionOfAllegedBreach,
-					interestInLand,
-					writtenOrVerbalPermission,
-					applicationDevelopmentAllOrPart,
-					appealDecisionDate,
-					siteUseAtTimeOfApplication,
-					applicationMadeUnderActSection
-				});
+			: await updateAppellantCaseData(
+					appellantCaseId,
+					{
+						applicantFirstName,
+						applicantSurname,
+						areAllOwnersKnown,
+						knowsOtherOwners,
+						hasAdvertisedAppeal,
+						siteSafetyDetails,
+						siteAccessDetails,
+						ownsAllLand,
+						ownsSomeLand,
+						siteAreaSquareMetres,
+						applicationDate,
+						applicationDecisionDate,
+						isGreenBelt,
+						changedDevelopmentDescription:
+							typeof developmentDescription?.isChanged !== typeof undefined
+								? developmentDescription?.isChanged
+								: undefined,
+						originalDevelopmentDescription:
+							typeof developmentDescription?.details !== typeof undefined
+								? developmentDescription?.details
+								: undefined,
+						applicationDecision,
+						planningObligation,
+						statusPlanningObligation,
+						agriculturalHolding,
+						tenantAgriculturalHolding,
+						otherTenantsAgriculturalHolding,
+						appellantCostsAppliedFor,
+						appellantProcedurePreference,
+						appellantProcedurePreferenceDetails,
+						appellantProcedurePreferenceDuration,
+						appellantProcedurePreferenceWitnessCount,
+						developmentType,
+						numberOfResidencesNetChange,
+						highwayLand,
+						advertInPosition,
+						landownerPermission,
+						siteGridReferenceEasting,
+						siteGridReferenceNorthing,
+						enforcementNotice,
+						enforcementIssueDate,
+						enforcementEffectiveDate,
+						contactPlanningInspectorateDate,
+						enforcementReference,
+						enforcementNoticeListedBuilding,
+						descriptionOfAllegedBreach,
+						interestInLand,
+						writtenOrVerbalPermission,
+						applicationDevelopmentAllOrPart,
+						appealDecisionDate,
+						siteUseAtTimeOfApplication,
+						applicationMadeUnderActSection
+					},
+					appeal
+				);
 
 		await updatePersonalList(appeal.id);
 

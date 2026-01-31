@@ -1,10 +1,8 @@
 import appealRepository from '#repositories/appeal.repository.js';
 import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
-import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
+import { hasChildAppeals, isLinkedAppeal, isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL,
 	ERROR_FAILED_TO_SAVE_DATA
@@ -35,7 +33,7 @@ const startAppeal = async (req, res) => {
 
 		const notifyClient = req.notifyClient;
 
-		if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
+		if (isLinkedAppealsActive(appeal)) {
 			// In the case of an appeal that is not linked, it will be the only appeal to start
 			const appealsToStart = isLinkedAppeal(appeal)
 				? await buildListOfLinkedAppeals(appeal)
@@ -142,8 +140,9 @@ const updateAppealTimetableById = async (req, res) => {
 		const azureAdUserId = req.get('azureAdUserId') || '';
 		await updateAppealTimetable(appeal, body, notifyClient, azureAdUserId);
 
-		if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) && appeal.childAppeals?.length) {
+		if (hasChildAppeals(appeal)) {
 			await Promise.all(
+				// @ts-ignore
 				appeal.childAppeals.map(async (childAppeal) => {
 					const child =
 						childAppeal.child ||

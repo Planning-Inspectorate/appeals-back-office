@@ -212,7 +212,7 @@ export function generateHASComponents(
 											appellantCaseData.documents.appellantCaseCorrespondence.folderId
 										)
 									},
-									...(userHasUpdateCasePermission
+									...(userHasUpdateCasePermission && !appellantCaseData.isEnforcementChild
 										? [
 												{
 													text: 'Add',
@@ -227,7 +227,7 @@ export function generateHASComponents(
 										: [])
 								]
 							: [
-									...(userHasUpdateCasePermission
+									...(userHasUpdateCasePermission && !appellantCaseData.isEnforcementChild
 										? [
 												{
 													text: 'Add',

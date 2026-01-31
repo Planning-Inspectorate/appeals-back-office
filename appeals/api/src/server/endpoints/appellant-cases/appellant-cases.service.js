@@ -7,7 +7,10 @@ import { getFeedbackLinkFromAppealTypeKey } from '#utils/feedback-form-link.js';
 import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
+	AUDIT_TRAIL_ENFORCEMENT_NOTICE_CONTACT_ADDRESS,
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
+	AUDIT_TRAIL_SUBMISSION_INVALID,
+	CASE_RELATIONSHIP_LINKED,
 	ERROR_NO_RECIPIENT_EMAIL,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
@@ -26,7 +29,7 @@ import { Prisma } from '#utils/db-client/client.js';
 import { getFormattedReasons } from '#utils/email-formatter.js';
 import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
 import { allAppellantCaseOutcomesAreValid } from '#utils/is-awaiting-linked-appeal.js';
-import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
+import { isLinkedAppeal, isParentAppeal } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
@@ -38,15 +41,13 @@ import {
 	APPEAL_DEVELOPMENT_TYPES,
 	PLANNING_OBLIGATION_STATUSES
 } from '@pins/appeals/constants/appellant-cases.constants.js';
-import {
-	AUDIT_TRAIL_ENFORCEMENT_NOTICE_CONTACT_ADDRESS,
-	AUDIT_TRAIL_SUBMISSION_INVALID
-} from '@pins/appeals/constants/support.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
 import transitionState from '../../state/transition-state.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('@pins/appeals.api').Api.AppellantCaseUpdateRequest} AppellantCaseUpdateRequest */
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
 /** @typedef {import('express').NextFunction} NextFunction */
@@ -69,6 +70,42 @@ export const checkAppellantCaseExists = (req, res, next) => {
 	}
 
 	next();
+};
+
+/**
+ *
+ * @param {Partial<Appeal> | undefined} appeal
+ * @returns {Partial<Appeal>[]}
+ */
+const getChildAppeals = (appeal) =>
+	// @ts-ignore
+	appeal?.childAppeals
+		?.filter(({ type, child }) => type === CASE_RELATIONSHIP_LINKED && child?.appellantCase)
+		.map(({ child }) => child) || [];
+
+/**
+ *
+ * @param {number} appellantCaseId
+ * @param {AppellantCaseUpdateRequest} data
+ * @param {Appeal} appeal
+ */
+export const updateAppellantCaseData = async (appellantCaseId, data, appeal) => {
+	await appellantCaseRepository.updateAppellantCaseById(appellantCaseId, data);
+	if (!isParentAppeal(appeal)) {
+		return;
+	}
+	// Strip out any fields that are independent of the parent appeal
+	// eslint-disable-next-line no-unused-vars
+	const { interestInLand, writtenOrVerbalPermission, ...childData } = data;
+
+	// Now keep linked children in sync with their parent
+	for (const childAppeal of getChildAppeals(appeal)) {
+		await appellantCaseRepository.updateAppellantCaseById(
+			// @ts-ignore
+			childAppeal?.appellantCase?.id,
+			childData
+		);
+	}
 };
 
 /**

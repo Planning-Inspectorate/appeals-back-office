@@ -9,7 +9,7 @@ export const mapApplicationForm = ({ appellantCaseData, userHasUpdateCase }) =>
 			appellantCaseData.documents.originalApplicationForm?.folderId
 		),
 		appealId: appellantCaseData.appealId,
-		editable: userHasUpdateCase,
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild,
 		uploadUrlTemplate: documentUploadUrlTemplate,
 		id: 'application-form',
 		text: 'Application form',
