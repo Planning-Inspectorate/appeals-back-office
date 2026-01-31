@@ -48,7 +48,7 @@ describe('rule-6-status-accepted-rule-6-party.md', () => {
 			'test@136s7.com',
 			{
 				content: expectedContent,
-				subject: 'We have accepted your application for Rule 6 status.'
+				subject: 'We have accepted your application for Rule 6 status'
 			}
 		);
 	});
