@@ -9,7 +9,7 @@ export const mapInspectorAccess = ({ appellantCaseData, currentRoute, userHasUpd
 		valueDetails: appellantCaseData.siteAccessRequired?.details,
 		defaultText: 'No',
 		link: `${currentRoute}/inspector-access/change/appellant`,
-		editable: userHasUpdateCase,
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild,
 		classes: 'appellantcase-inspector-access',
 		addCyAttribute: true,
 		withShowMore: true,

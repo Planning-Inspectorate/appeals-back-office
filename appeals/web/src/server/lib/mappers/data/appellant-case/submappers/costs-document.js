@@ -9,7 +9,7 @@ export const mapCostsDocument = ({ appellantCaseData, appealDetails, userHasUpda
 			appealDetails.costs.appellantApplicationFolder?.folderId
 		),
 		appealId: appellantCaseData.appealId,
-		editable: userHasUpdateCase,
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild,
 		uploadUrlTemplate: documentUploadUrlTemplate,
 		id: 'costs-appellant',
 		text: 'Application for an award of appeal costs',

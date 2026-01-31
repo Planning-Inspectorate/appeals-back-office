@@ -9,7 +9,7 @@ export const mapHealthAndSafetyIssues = ({ appellantCaseData, currentRoute, user
 		valueDetails: appellantCaseData.healthAndSafety?.details,
 		defaultText: 'No data',
 		link: `${currentRoute}/safety-risks/change/appellant`,
-		editable: userHasUpdateCase,
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild,
 		addCyAttribute: true,
 		withShowMore: true,
 		showMoreLabelText: 'Enter reason'

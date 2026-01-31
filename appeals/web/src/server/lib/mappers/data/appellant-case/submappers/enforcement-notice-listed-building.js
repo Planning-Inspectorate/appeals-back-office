@@ -13,6 +13,6 @@ export const mapEnforcementNoticeListedBuilding = ({
 		value: appellantCaseData.enforcementNotice?.isListedBuilding,
 		defaultText: 'No data',
 		link: `${currentRoute}/enforcement-notice-listed-building/change`,
-		editable: hasData && userHasUpdateCase
+		editable: hasData && userHasUpdateCase && !appellantCaseData.isEnforcementChild
 	});
 };

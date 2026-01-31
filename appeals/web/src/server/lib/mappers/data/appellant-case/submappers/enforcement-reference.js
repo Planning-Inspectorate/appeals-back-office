@@ -14,6 +14,6 @@ export const mapEnforcementReference = ({
 		text: 'What is the reference number on the enforcement notice?',
 		value: appellantCaseData.enforcementNotice?.reference || 'No data',
 		link: addBackLinkQueryToUrl(request, `${currentRoute}/enforcement-reference/change`),
-		editable: hasData && userHasUpdateCase
+		editable: hasData && userHasUpdateCase && !appellantCaseData.isEnforcementChild
 	});
 };

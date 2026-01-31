@@ -15,6 +15,6 @@ export const mapEnforcementEffectiveDate = ({
 			? dateISOStringToDisplayDate(appellantCaseData.enforcementNotice.effectiveDate)
 			: 'No data',
 		link: `${currentRoute}/enforcement-effective-date/change`,
-		editable: hasData && userHasUpdateCase
+		editable: hasData && userHasUpdateCase && !appellantCaseData.isEnforcementChild
 	});
 };

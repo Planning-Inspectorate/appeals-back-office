@@ -21,6 +21,6 @@ export const mapApplicationDecision = ({ appellantCaseData, currentRoute, userHa
 		text: 'Was your application granted or refused?',
 		value,
 		link: `${currentRoute}/application-outcome/change`,
-		editable: userHasUpdateCase
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild
 	});
 };

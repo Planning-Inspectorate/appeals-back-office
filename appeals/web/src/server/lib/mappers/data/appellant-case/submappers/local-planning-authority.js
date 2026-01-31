@@ -17,5 +17,6 @@ export const mapLocalPlanningAuthority = ({
 				: 'Which local planning authority (LPA) do you want to appeal against?',
 		value: appellantCaseData.localPlanningDepartment,
 		link: `${currentRoute}/change-appeal-details/local-planning-authority`,
-		editable: userHasUpdateCase && !isLpaqReceived(appealDetails)
+		editable:
+			userHasUpdateCase && !appellantCaseData.isEnforcementChild && !isLpaqReceived(appealDetails)
 	});

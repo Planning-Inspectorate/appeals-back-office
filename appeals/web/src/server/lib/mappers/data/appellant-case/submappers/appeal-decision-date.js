@@ -11,5 +11,5 @@ export const mapAppealDecisionDate = ({ appellantCaseData, currentRoute, userHas
 			'No data'
 		),
 		link: `${currentRoute}/appeal-decision-date/change`,
-		editable: userHasUpdateCase
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild
 	});
