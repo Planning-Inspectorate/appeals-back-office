@@ -15,5 +15,6 @@ export const mapApplicationDecisionDate = ({
 				: 'What’s the date on the decision letter from the local planning authority?​',
 		value: dateISOStringToDisplayDate(appellantCaseData.applicationDecisionDate, 'No data'),
 		link: `${currentRoute}/application-decision-date/change`,
-		editable: userHasUpdateCase
+		editable: userHasUpdateCase,
+		actionText: appellantCaseData.applicationDecisionDate ? 'Change' : 'Add'
 	});
