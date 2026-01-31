@@ -2,7 +2,7 @@ import { isNetResidencesAppealType } from '#common/net-residences-appeal-types.j
 import config from '#environment/config.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
-import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { isAwaitingLinkedAppeal, isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import {
 	APPEAL_PROOF_OF_EVIDENCE_STATUS,
 	APPEAL_REPRESENTATION_STATUS
@@ -11,7 +11,6 @@ import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	DOCUMENT_STATUS_RECEIVED,
 	VALIDATION_OUTCOME_INCOMPLETE
-	// @ts-ignore
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
@@ -36,7 +35,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			actions.push('assignCaseOfficer');
 			break;
 		case APPEAL_CASE_STATUS.READY_TO_START:
-			if (appealDetails.awaitingLinkedAppeal && config.featureFlags.featureFlagLinkedAppeals) {
+			if (isAwaitingLinkedAppeal(appealDetails)) {
 				actions.push('awaitingLinkedAppeal');
 				break;
 			}
@@ -120,7 +119,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			actions.push('issueDecision');
 			break;
 		case APPEAL_CASE_STATUS.VALIDATION: {
-			if (appealDetails.awaitingLinkedAppeal && config.featureFlags.featureFlagLinkedAppeals) {
+			if (isAwaitingLinkedAppeal(appealDetails)) {
 				actions.push('awaitingLinkedAppeal');
 				break;
 			}
@@ -149,7 +148,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 		}
 		case APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE: {
 			// @ts-ignore
-			if (appealDetails.awaitingLinkedAppeal && config.featureFlags.featureFlagLinkedAppeals) {
+			if (isAwaitingLinkedAppeal(appealDetails)) {
 				actions.push('awaitingLinkedAppeal');
 				break;
 			}

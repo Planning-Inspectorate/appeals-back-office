@@ -1,7 +1,7 @@
 import { mapVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
-import config from '#environment/config.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { dateISOStringToDisplayDate, getOriginalAndLatestLetterDatesObject } from '#lib/dates.js';
+import { isLinkedAppealsActive } from '#lib/mappers/utils/is-linked-appeal.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { toSentenceCase } from '#lib/string-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
@@ -29,7 +29,7 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 		});
 	}
 
-	if (config.featureFlags.featureFlagLinkedAppeals) {
+	if (isLinkedAppealsActive()) {
 		if (mappedData.appeal.leadOrChild.display?.statusTag) {
 			statusTags.push({
 				type: 'status-tag',

@@ -1,7 +1,6 @@
 /** @typedef {import('@pins/appeals.api').Appeals.AppealListResponse} AppealListResponse */
 
-import { isFeatureActive } from '#utils/feature-flags.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 
 const DEFAULT_SORT_VALUE = 'DEFAULT_SORT_VALUE';
 /**
@@ -10,7 +9,7 @@ const DEFAULT_SORT_VALUE = 'DEFAULT_SORT_VALUE';
  * @returns {AppealListResponse[]}
  */
 export const sortAppeals = (appeals) => {
-	if (!isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
+	if (!isLinkedAppealsActive()) {
 		return sortByDueDate(appeals);
 	}
 	return sortLinkedAppeals(appeals);

@@ -4,11 +4,15 @@ import { mapStatusFilterLabel, mapStatusText } from '#lib/appeal-status.js';
 import { appealShortReference, linkedAppealStatus } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { removeSummaryListActions } from '#lib/mappers/index.js';
-import { isChildAppeal, isParentAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import {
+	isChildAppeal,
+	isLinkedAppealsActive,
+	isParentAppeal
+} from '#lib/mappers/utils/is-linked-appeal.js';
 import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
-import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import { APPEAL_REPRESENTATION_STATUS, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { DOCUMENT_STATUS_NOT_RECEIVED } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import * as authSession from '../../app/auth/auth-session.service.js';
@@ -196,7 +200,7 @@ export function personalListPage(
 					{
 						html: '',
 						pageComponents:
-							config.featureFlags.featureFlagLinkedAppeals && linkedAppealStatusText !== ''
+							isLinkedAppealsActive(appeal) && linkedAppealStatusText !== ''
 								? [
 										{
 											type: 'status-tag',
@@ -245,7 +249,7 @@ export function personalListPage(
 	const pageContent = {
 		title: 'Personal list',
 		heading:
-			caseOfficer && caseOfficer?.id != account.localAccountId
+			caseOfficer && caseOfficer?.id !== account.localAccountId
 				? `Appeals assigned to ${caseOfficer.name}`
 				: 'Your appeals',
 		pageComponents: []
@@ -300,6 +304,7 @@ export function personalListPage(
  * @param {boolean} isCaseOfficer
  * @param {boolean} isChildAppeal
  * @param {number} appealId
+ * @param {string|undefined} appealType
  * @param {number|null|undefined} lpaQuestionnaireId
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {string} procedureType
@@ -311,6 +316,7 @@ function mapRequiredActionToPersonalListActionHtml(
 	isCaseOfficer,
 	isChildAppeal,
 	appealId,
+	appealType,
 	lpaQuestionnaireId,
 	request,
 	procedureType,
@@ -330,6 +336,9 @@ function mapRequiredActionToPersonalListActionHtml(
 			)}">Set up site visit<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'awaitingAppellantUpdate': {
+			if (isChildAppeal && appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+				return;
+			}
 			return isCaseOfficer
 				? `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 						request,
@@ -646,6 +655,7 @@ export function mapActionLinksForAppeal(appeal, isCaseOfficer, request) {
 				isCaseOfficer,
 				isChildAppeal(appeal),
 				appealId,
+				appeal.appealType,
 				lpaQuestionnaireId,
 				request,
 				procedureType ?? '',
