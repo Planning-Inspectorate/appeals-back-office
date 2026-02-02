@@ -53,15 +53,14 @@ apps_config = {
     featureFlagEnforcementNotice      = true
     featureFlagEnforcementLinked      = false
     featureFlagInvalidDecisionLetter  = false
-    featureFlagRule6Mvp               = false
-    featureFlagRule6PoE               = true
+    featureFlagRule6Mvp               = true
+    featureFlagRule6PoE               = false
     featureFlagExpeditedAppeals       = false
     featureFlagManuallyAddReps        = true
-    featureFlagAppellantStatement     = true
-    featureFlagLDC                    = true
-    featureFlagRule6Statement         = true
-    featureFlagRule6Costs             = true
-
+    featureFlagAppellantStatement     = false
+    featureFlagRule6Statement         = false
+    featureFlagLDC                    = false
+    featureFlagRule6Costs             = false
   }
 
   use_system_test_bc_for_change_lpa = true
