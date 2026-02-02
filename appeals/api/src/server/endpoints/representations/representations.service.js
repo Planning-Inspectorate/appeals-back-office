@@ -449,32 +449,38 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 			appellantTemplate = 'not-received-statement-and-ip-comments';
 		}
 
-		await notifyPublished({
-			appeal,
-			notifyClient,
-			hasLpaStatement,
-			hasIpComments,
-			isHearingProcedure,
-			isInquiryProcedure,
-			templateName: lpaTemplate,
-			recipientEmail: appeal.lpa?.email,
-			finalCommentsDueDate,
-			whatHappensNext: whatHappensNextLpa,
-			azureAdUserId
-		});
+		const contacts = [
+			{
+				email: appeal.lpa?.email,
+				template: lpaTemplate,
+				whatHappensNextTemplate: whatHappensNextLpa
+			},
+			{
+				email: appeal.agent?.email || appeal.appellant?.email,
+				template: appellantTemplate,
+				whatHappensNextTemplate: whatHappensNextAppellant
+			},
+			...(appeal.appealRule6Parties?.map((rule6Party) => ({
+				email: rule6Party.serviceUser?.email,
+				template: appellantTemplate,
+				whatHappensNextTemplate: whatHappensNextAppellant
+			})) ?? [])
+		];
 
-		await notifyPublished({
-			appeal,
-			notifyClient,
-			hasLpaStatement,
-			hasIpComments,
-			isHearingProcedure,
-			isInquiryProcedure,
-			templateName: appellantTemplate,
-			recipientEmail: appeal.agent?.email || appeal.appellant?.email,
-			finalCommentsDueDate,
-			whatHappensNext: whatHappensNextAppellant,
-			azureAdUserId
+		contacts.forEach(async (contact) => {
+			await notifyPublished({
+				appeal,
+				notifyClient,
+				hasLpaStatement,
+				hasIpComments,
+				isHearingProcedure,
+				isInquiryProcedure,
+				templateName: contact.template,
+				recipientEmail: contact.email,
+				finalCommentsDueDate,
+				whatHappensNext: contact.whatHappensNextTemplate,
+				azureAdUserId
+			});
 		});
 	} catch (error) {
 		logger.error(error);
