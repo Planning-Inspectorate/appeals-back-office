@@ -4796,14 +4796,35 @@ describe('/appeals/:id/reps', () => {
 		});
 	});
 	describe('POST /appeals/:appealId/reps/publish', () => {
+		const emailPayload = {
+			inquiry_address: '',
+			inquiry_date: '',
+			inquiry_detail_warning_text: '',
+			inquiry_expected_days: '',
+			inquiry_time: '',
+			inquiry_witnesses_text: '',
+			inquiry_subject_line: ''
+		};
 		test('publish Rule 6 statements', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue({
+			const mockAppeal = {
 				...fullPlanningAppeal,
+				appealRule6Parties: [
+					{
+						id: 1,
+						serviceUserId: 50,
+						serviceUser: {
+							id: 50,
+							organisationName: 'Rule 6 party',
+							email: 'rule6party@example.com'
+						}
+					}
+				],
 				appealStatus: [{ status: APPEAL_CASE_STATUS.STATEMENTS, valid: true }],
 				childAppeals: [],
 				lpa: { email: 'lpa@example.com' },
 				appellant: { email: 'appellant@example.com' },
-				procedureType: { key: 'written' },
+				agent: { email: 'appellant@example.com' },
+				procedureType: { key: 'inquiry' },
 				appealTimetable: {
 					finalCommentsDueDate: new Date('2024-01-01T00:00:00.000Z'),
 					proofOfEvidenceAndWitnessesDueDate: new Date('2024-02-01T00:00:00.000Z'),
@@ -4811,8 +4832,15 @@ describe('/appeals/:id/reps', () => {
 					lpaStatementDueDate: new Date('2023-01-01T00:00:00.000Z')
 				},
 				documentationSummary: {}
-			});
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
 
+			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+				{
+					key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED,
+					id: 21
+				}
+			]);
 			databaseConnector.documentVersion.findMany.mockResolvedValue([]);
 			databaseConnector.documentVersion.updateMany.mockResolvedValue({ count: 0 });
 			databaseConnector.representation.updateMany.mockResolvedValue({ count: 2 });
@@ -4836,6 +4864,72 @@ describe('/appeals/:id/reps', () => {
 
 			expect(response.status).toEqual(200);
 			expect(response.body).toHaveLength(2);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(3);
+			const expectedSiteAddress = [
+				'addressLine1',
+				'addressLine2',
+				'addressTown',
+				'addressCounty',
+				'postcode',
+				'addressCountry'
+			]
+				.map((key) => mockAppeal.address[key])
+				.filter((value) => value)
+				.join(', ');
+			const expectedEmailPayload = {
+				...emailPayload,
+				lpa_reference: mockAppeal.applicationReference,
+				has_ip_comments: false,
+				has_statement: false,
+				is_hearing_procedure: false,
+				is_inquiry_procedure: false,
+				appeal_reference_number: mockAppeal.reference,
+				final_comments_deadline: '1 January 2024',
+				site_address: expectedSiteAddress,
+				user_type: ''
+			};
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				azureAdUserId: expect.anything(),
+				notifyClient: expect.anything(),
+				personalisation: {
+					...expectedEmailPayload,
+					is_inquiry_procedure: true,
+					what_happens_next:
+						'You need to [submit your proof of evidence and witnesses](/mock-front-office-url/manage-appeals/1345264) by 1 February 2024.',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+				},
+				recipientEmail: mockAppeal.lpa.email,
+				templateName: 'not-received-statement-and-ip-comments'
+			});
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				azureAdUserId: expect.anything(),
+				notifyClient: expect.anything(),
+				personalisation: {
+					...expectedEmailPayload,
+					is_inquiry_procedure: true,
+					what_happens_next:
+						'You need to [submit your proof of evidence and witnesses](/mock-front-office-url/appeals/1345264) by 1 February 2024.',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+				},
+				recipientEmail: mockAppeal.appellant.email,
+				templateName: 'not-received-statement-and-ip-comments'
+			});
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(3, {
+				azureAdUserId: expect.anything(),
+				notifyClient: expect.anything(),
+				personalisation: {
+					...expectedEmailPayload,
+					is_inquiry_procedure: true,
+					what_happens_next:
+						'You need to [submit your proof of evidence and witnesses](/mock-front-office-url/appeals/1345264) by 1 February 2024.',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+				},
+				recipientEmail: mockAppeal.appealRule6Parties[0].serviceUser.email,
+				templateName: 'not-received-statement-and-ip-comments'
+			});
 		});
 	});
 });
