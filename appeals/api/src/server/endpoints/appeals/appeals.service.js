@@ -6,8 +6,7 @@ import lpaRepository from '#repositories/lpa.repository.js';
 import padsUserRepository from '#repositories/pads-user.repository.js';
 import userRepository from '#repositories/user.repository.js';
 import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import { VALIDATION_OUTCOME_COMPLETE } from '@pins/appeals/constants/support.js';
 import {
 	fetchBankHolidaysForDivision,
@@ -194,7 +193,7 @@ async function updateCompletedEvents(azureAdUserId) {
 
 	await Promise.all(
 		appealsToUpdate.map(async (appeal) => {
-			if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
+			if (isLinkedAppealsActive(appeal)) {
 				// @ts-ignore
 				await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 			}

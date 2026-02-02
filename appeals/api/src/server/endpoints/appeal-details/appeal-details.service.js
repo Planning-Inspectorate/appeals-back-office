@@ -11,12 +11,11 @@ import appealRepository from '#repositories/appeal.repository.js';
 import serviceUserRepository from '#repositories/service-user.repository.js';
 import userRepository from '#repositories/user.repository.js';
 import transitionState from '#state/transition-state.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
 import { formatCostsDecision } from '#utils/format-costs-decision.js';
 import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
+import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { camelToScreamingSnake } from '#utils/string-utils.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import * as SUPPORT_CONSTANTS from '@pins/appeals/constants/support.js';
 import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
 import { getCache, setCache } from '@pins/appeals/utils/cache-data.js';
@@ -144,9 +143,9 @@ const assignUser = async (
 
 		let notifyAppellant = false;
 		let templateName = '';
-		if (typeOfAssignedUser == USER_TYPE_CASE_OFFICER && assignedUserId) {
+		if (typeOfAssignedUser === USER_TYPE_CASE_OFFICER && assignedUserId) {
 			details = stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_CASE_OFFICER, [assignedUserId]);
-		} else if (typeOfAssignedUser == USER_TYPE_INSPECTOR && assignedUserId) {
+		} else if (typeOfAssignedUser === USER_TYPE_INSPECTOR && assignedUserId) {
 			details = stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [assignedUserId]);
 		} else if (padsInspector) {
 			details = stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [padsInspector]);
@@ -304,10 +303,8 @@ const loadLinkedAppeals = async (appeal) => {
 	const childAppeals = appeal?.childAppeals?.filter(
 		(childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED
 	);
-	if (
-		!isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) ||
-		(!parentAppeals?.length && !childAppeals?.length)
-	) {
+	// @ts-ignore
+	if (!isLinkedAppealsActive(appeal) || (!parentAppeals?.length && !childAppeals?.length)) {
 		return [];
 	}
 
