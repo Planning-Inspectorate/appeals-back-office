@@ -1,6 +1,7 @@
 import { startAppeal } from '#endpoints/appeal-timetables/appeal-timetables.controller.js';
 import { updateCompletedEvents } from '#endpoints/appeals/appeals.service.js';
 import { postInspectorDecision } from '#endpoints/decision/decision.controller.js';
+import { updateDocumentsAvCheckStatus } from '#endpoints/documents/documents.controller.js';
 import { postHearing } from '#endpoints/hearings/hearing.controller.js';
 import { updateLPAQuestionnaireById } from '#endpoints/lpa-questionnaires/lpa-questionnaires.controller.js';
 import {
@@ -619,4 +620,37 @@ export const simulateSetUpHearing = async (req, res) => {
 	req.params = { appealId: String(appeal.id) };
 
 	return await postHearing(req, res);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * */
+export const simulateDocumentScan = async (req, res) => {
+	const { appealReference } = req.params;
+	const reference = Number(appealReference);
+	const appealId = reference - APPEAL_START_RANGE;
+
+	const documents = await databaseConnector.document.findMany({
+		where: { caseId: appealId, isDeleted: false },
+		include: { latestDocumentVersion: true }
+	});
+
+	if (documents.length === 0) return res.status(400).send(false);
+
+	const documentsBody = [];
+
+	for (const document of documents) {
+		if (document.latestDocumentVersion) {
+			documentsBody.push({
+				id: document.latestDocumentVersion.documentGuid,
+				version: document.latestDocumentVersion.version,
+				virusCheckStatus: 'scanned'
+			});
+		}
+	}
+
+	req.body = { documents: documentsBody };
+
+	return await updateDocumentsAvCheckStatus(req, res);
 };

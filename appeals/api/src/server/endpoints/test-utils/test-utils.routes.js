@@ -3,6 +3,7 @@ import { Router as createRouter } from 'express';
 import {
 	deleteAppeals,
 	retrieveNotifyEmails,
+	simulateDocumentScan,
 	simulateFinalCommentsElapsed,
 	simulateHearingElapsed,
 	simulateInquiryElapsed,
@@ -362,6 +363,26 @@ router.post(
 		#swagger.responses[400] = {}
 	 */
 	asyncHandler(simulateSetUpHearing)
+);
+
+router.post(
+	'/:appealReference/document-scan-complete',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/document-scan-complete'
+		#swagger.description = 'A test endpoint to simulate the completion of the scan of all the latest document versions in an appeal'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {
+			description: 'Documents to update',
+			schema: { $ref: '#/components/schemas/UpdateDocumentsAvCheckResponse' }
+		}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(simulateDocumentScan)
 );
 
 export { router as testUtilsRoutes };

@@ -1,5 +1,6 @@
 // @ts-nocheck
 import {
+	simulateDocumentScan,
 	simulateIssueDecision,
 	simulateReviewAppellantFinalComments,
 	simulateReviewIpComment,
@@ -12,6 +13,7 @@ import {
 	simulateStartAppeal
 } from '#endpoints/test-utils/test-utils.controller.js';
 import { fullPlanningAppeal, householdAppeal } from '#tests/appeals/mocks.js';
+import { documentCreated } from '#tests/documents/mocks.js';
 import { azureAdUserId, lpaQuestionnaireValidationOutcomes } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
@@ -34,6 +36,7 @@ app.post('/:appealReference/share-comments-and-statement', simulateShareIpCommen
 app.post('/:appealReference/issue-decision', simulateIssueDecision);
 app.post('/:appealReference/set-up-site-visit', simulateSetUpSiteVisit);
 app.post('/:appealReference/set-up-hearing', simulateSetUpHearing);
+app.post('/:appealReference/document-scan-complete', simulateDocumentScan);
 const testApiRequest = supertest(app);
 
 describe('test utils routes', () => {
@@ -770,6 +773,51 @@ describe('test utils routes', () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(null);
 
 			const response = await testApiRequest.post('/1/set-up-hearing');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+	});
+
+	describe('POST /:appealReference/document-scan-complete', () => {
+		test('returns 200 for valid appeal with documents to scan', async () => {
+			databaseConnector.document.findMany.mockResolvedValue([
+				{
+					latestDocumentVersion: {
+						documentGuid: documentCreated.guid,
+						version: documentCreated.latestDocumentVersion.version
+					}
+				}
+			]);
+
+			databaseConnector.document.findUnique.mockReturnValue({
+				...documentCreated,
+				allVersions: [documentCreated.latestDocumentVersion]
+			});
+			databaseConnector.documentVersion.update.mockReturnValue({
+				...documentCreated,
+				latestDocumentVersion: {
+					...documentCreated.latestDocumentVersion,
+					virusCheckStatus: 'scanned'
+				}
+			});
+
+			const response = await testApiRequest.post('/1/document-scan-complete');
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				documents: [
+					{
+						id: documentCreated.guid,
+						version: documentCreated.latestDocumentVersion.version,
+						virusCheckStatus: 'scanned'
+					}
+				]
+			});
+		});
+
+		test('returns 400 for no documents to scan', async () => {
+			databaseConnector.document.findMany.mockResolvedValue([]);
+
+			const response = await testApiRequest.post('/1/document-scan-complete');
 			expect(response.status).toEqual(400);
 			expect(response.body).toEqual(false);
 		});
