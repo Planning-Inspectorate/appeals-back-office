@@ -131,6 +131,15 @@ export const getRepStatusAuditLogDetails = (
 		return stringTokenReplacement(CONSTANTS[auditText], [partyName]);
 	}
 
+	if (
+		repType === APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT &&
+		status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE &&
+		extendedDate
+	) {
+		// @ts-ignore
+		return stringTokenReplacement(CONSTANTS[auditText], [extendedDate]);
+	}
+
 	// @ts-ignore
 	return CONSTANTS[auditText];
 };
