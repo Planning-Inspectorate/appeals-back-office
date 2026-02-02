@@ -252,6 +252,23 @@ export const appealsApiClient = {
 			return false;
 		}
 	},
+	async simulateDocumentScanComplete(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/document-scan-complete`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+
+			expect(response.status).eq(200);
+			return true;
+		} catch {
+			return false;
+		}
+	},
 	async loadCaseDetails(reference) {
 		try {
 			const url = `${baseUrl}appeals/case-reference/${reference}`;

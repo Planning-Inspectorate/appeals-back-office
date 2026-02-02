@@ -47,6 +47,7 @@ describe('manage docs on appellant case', () => {
 			happyPathHelper.uploadDocAppellantCase(caseObj);
 			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
+			cy.simulateDocumentsScanComplete(caseObj);
 			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('upload a new version');

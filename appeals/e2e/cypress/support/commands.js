@@ -184,6 +184,14 @@ Cypress.Commands.add('simulateFinalCommentsDeadlineElapsed', (caseObj) => {
 	});
 });
 
+Cypress.Commands.add('simulateDocumentsScanComplete', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.simulateDocumentScanComplete(caseObj.reference);
+		cy.log('Simulated documents scan complete for case ref ' + caseObj.reference);
+		cy.reload();
+	});
+});
+
 Cypress.Commands.add('addRepresentation', (caseObj, type, serviceUserId, representation = null) => {
 	return cy.wrap(null).then(async () => {
 		await appealsApiClient.addRepresentation(
