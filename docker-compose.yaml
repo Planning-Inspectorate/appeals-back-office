@@ -15,16 +15,10 @@ services:
             dockerfile: appeals/api/Dockerfile
             args:
                 GIT_SHA: ${GIT_SHA}
+        env_file:
+            - ./appeals/api/.env.e2e
         environment:
-            - 'NODE_ENV=test'
-            - 'DATABASE_URL=sqlserver://db:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true'
-            - 'BO_BLOB_STORAGE_ACCOUNT=https://pins_azurite:10000/'
             - 'AZURE_BLOB_EMULATOR_SAS_HOST=${AZURE_BLOB_EMULATOR_SAS_HOST}'
-            - 'AZURE_BLOB_DEFAULT_CONTAINER=document-service-uploads'
-            - 'AZURE_BLOB_USE_EMULATOR=true'
-            - 'NOTIFY_SEND_MAIL_EMULATOR=true'
-            - 'ENABLE_TEST_ENDPOINTS=true'
-            - 'NODE_TLS_REJECT_UNAUTHORIZED=0'
             - 'NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/azurite.crt'
         volumes:
              - ./appeals/web/certificate.pem:/usr/local/share/ca-certificates/azurite.crt
@@ -37,31 +31,15 @@ services:
             dockerfile: appeals/web/Dockerfile
             args:
                 GIT_SHA: ${GIT_SHA}
+        env_file:
+            - ./appeals/web/.env.e2e
         environment:
-            - 'NODE_ENV=test'
             - 'AUTH_CLIENT_SECRET=${AUTH_CLIENT_SECRET}'
             - 'AUTH_CLIENT_ID=${AUTH_CLIENT_ID}'
-            - 'APP_HOSTNAME=localhost:8080'
-            - 'API_HOST=http://api:3000'
-            - 'AUTH_DISABLED=false'
-            - 'SESSION_SECRET=dummy-secret'
             - 'AUTH_TENANT_ID=${AUTH_TENANT_ID}'
-            - 'APPEALS_CASE_OFFICER_GROUP_ID=cc4133e5-2319-4762-8a7b-33413701210a'
-            - 'APPEALS_INSPECTOR_GROUP_ID=0724c372-098d-4eef-acfb-bc85cd483dd1'
-            - 'APPEALS_LEGAL_TEAM_GROUP_ID=369caed5-fe22-445e-8cdc-8b2f6746afc7'
-            - 'APPEALS_CS_TEAM_GROUP_ID=455cbf03-f92f-4357-8daa-9f513b21fb73'
-            - 'APPEALS_PADS_GROUP_ID=5afda392-73c5-4c18-a76f-7e3b1933813c'
-            - 'APPEALS_READERS_GROUP_ID=60acabaa-6ac9-4462-828a-b79adc3d802c'
-            - 'HTTPS_ENABLED=true'
-            - 'HTTPS_PORT=8080'
             - 'SSL_CERT_FILE=certificate.pem'
             - 'SSL_KEY_FILE=certificate-key.pem'
-            - 'NODE_TLS_REJECT_UNAUTHORIZED=0'
-            - 'AUTH_REDIRECT_URI=https://localhost:8080/auth/redirect'
-            - 'AZURE_BLOB_STORE_HOST=https://127.0.0.1:10000/devstoreaccount1/'
-            - 'AZURE_BLOB_USE_EMULATOR=true'
             - 'AZURE_BLOB_EMULATOR_SAS_HOST=${AZURE_BLOB_EMULATOR_SAS_HOST_WEB}'
-            - 'AZURE_BLOB_DEFAULT_CONTAINER=document-service-uploads'
         ports:
             - 8080:8080
     pins_azurite:
@@ -69,7 +47,6 @@ services:
         container_name: pins_azurite
         command: >
             azurite
-            --silent
             --blobHost 0.0.0.0
             --queueHost 0.0.0.0
             --tableHost 0.0.0.0

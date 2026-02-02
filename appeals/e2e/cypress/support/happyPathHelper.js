@@ -153,6 +153,7 @@ export const happyPathHelper = {
 	manageDocsAppellantCase(caseObj) {
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 		happyPathHelper.uploadDocAppellantCase(caseObj);
+		cy.simulateDocumentsScanComplete(caseObj);
 		cy.reloadUntilVirusCheckComplete();
 		caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
 		caseDetailsPage.clickLinkByText('View and edit');
