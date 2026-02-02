@@ -198,7 +198,15 @@ export async function updateRepresentation(request, response) {
 		if (isRule6) {
 			partyName = updatedRep.represented?.organisationName;
 		}
-		if (isRule6 && status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE && allowResubmit === 'yes') {
+
+		const isAppellantStatement =
+			updatedRep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT;
+
+		if (
+			(isRule6 || isAppellantStatement) &&
+			status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE &&
+			allowResubmit === 'yes'
+		) {
 			try {
 				extendedDate = formatDate(addDays(new Date(), 3), true);
 			} catch (error) {
@@ -295,6 +303,14 @@ export const createRepresentation = () => async (req, res) => {
 				details: stringTokenReplacement(trail, [partyName])
 			});
 		}
+	}
+
+	if (representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT) {
+		await createAuditTrail({
+			appealId: parseInt(appealId),
+			azureAdUserId,
+			details: CONSTANTS.AUDIT_TRAIL_REP_APPELLANT_STATEMENT_ADDED
+		});
 	}
 
 	return res.status(201).send(rep);
