@@ -1,0 +1,275 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`cancel enforcement GET /invalid should pre-select previously submitted values 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Why is the appeal invalid?</h1>
+            <div class="govuk-hint">Select all that apply.</div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-checkboxes" id="invalid-reason-checkboxes" data-module="govuk-checkboxes">
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="invalid-reason" name="invalidReason"
+                                    type="checkbox" value="1" checked>
+                                    <label class="govuk-label govuk-checkboxes__label" for="invalid-reason">Appeal has not been submitted on time</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="invalid-reason-2" name="invalidReason"
+                                    type="checkbox" value="2">
+                                    <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-2">Documents have not been submitted on time</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="invalid-reason-3" name="invalidReason"
+                                    type="checkbox" value="6">
+                                    <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">Appellant does not have a legal interest in the land</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
+                                    type="checkbox" value="3">
+                                    <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">The appellant does not have the right to appeal</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="invalid-reason-5" name="invalidReason"
+                                    type="checkbox" value="4" checked data-aria-controls="conditional-invalid-reason-5">
+                                    <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-5">Other reason</label>
+                                </div>
+                                <div class="govuk-checkboxes__conditional" id="conditional-invalid-reason-5">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-label--s" for="invalid-reason-4-1">Enter a reason</label>
+                                        <input class="govuk-input" id="invalid-reason-4-1"
+                                        name="invalidReason-4" type="text" value="Eminently legitimate reason">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`cancel enforcement GET /invalid should render the invalid reasons page with the correct radio components 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Why is the appeal invalid?</h1>
+            <div class="govuk-hint">Select all that apply.</div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-checkboxes" id="invalid-reason-checkboxes" data-module="govuk-checkboxes">
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="invalid-reason" name="invalidReason"
+                                    type="checkbox" value="1">
+                                    <label class="govuk-label govuk-checkboxes__label" for="invalid-reason">Appeal has not been submitted on time</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="invalid-reason-2" name="invalidReason"
+                                    type="checkbox" value="2">
+                                    <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-2">Documents have not been submitted on time</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="invalid-reason-3" name="invalidReason"
+                                    type="checkbox" value="6">
+                                    <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">Appellant does not have a legal interest in the land</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
+                                    type="checkbox" value="3">
+                                    <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">The appellant does not have the right to appeal</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="invalid-reason-5" name="invalidReason"
+                                    type="checkbox" value="4" data-aria-controls="conditional-invalid-reason-5">
+                                    <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-5">Other reason</label>
+                                </div>
+                                <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                                id="conditional-invalid-reason-5">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-label--s" for="invalid-reason-4-1">Enter a reason</label>
+                                        <input class="govuk-input" id="invalid-reason-4-1"
+                                        name="invalidReason-4" type="text" value="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`cancel enforcement POST /invalid should re-render the page with errors if no reason selected 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#invalid-reason">Select why the appeal is invalid</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Why is the appeal invalid?</h1>
+            <div class="govuk-hint">Select all that apply.</div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <p id="invalid-reason-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select why the appeal
+                                is invalid</p>
+                            <div class="govuk-checkboxes" id="invalid-reason-checkboxes"
+                            data-module="govuk-checkboxes">
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="invalid-reason" name="invalidReason"
+                                    type="checkbox" value="1" aria-describedby="invalid-reason-error">
+                                    <label class="govuk-label govuk-checkboxes__label" for="invalid-reason">Appeal has not been submitted on time</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="invalid-reason-2" name="invalidReason"
+                                    type="checkbox" value="2" aria-describedby="invalid-reason-error">
+                                    <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-2">Documents have not been submitted on time</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="invalid-reason-3" name="invalidReason"
+                                    type="checkbox" value="6" aria-describedby="invalid-reason-error">
+                                    <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">Appellant does not have a legal interest in the land</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
+                                    type="checkbox" value="3" aria-describedby="invalid-reason-error">
+                                    <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">The appellant does not have the right to appeal</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="invalid-reason-5" name="invalidReason"
+                                    type="checkbox" value="4" data-aria-controls="conditional-invalid-reason-5"
+                                    aria-describedby="invalid-reason-error">
+                                    <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-5">Other reason</label>
+                                </div>
+                                <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                                id="conditional-invalid-reason-5">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-label--s" for="invalid-reason-4-1">Enter a reason</label>
+                                        <input class="govuk-input" id="invalid-reason-4-1"
+                                        name="invalidReason-4" type="text" value="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`cancel enforcement POST /invalid should re-render the page with errors if no text provided for other 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#invalid-reason-4-1">Enter a reason</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Why is the appeal invalid?</h1>
+            <div class="govuk-hint">Select all that apply.</div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-checkboxes" id="invalid-reason-checkboxes" data-module="govuk-checkboxes">
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="invalid-reason" name="invalidReason"
+                                    type="checkbox" value="1">
+                                    <label class="govuk-label govuk-checkboxes__label" for="invalid-reason">Appeal has not been submitted on time</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="invalid-reason-2" name="invalidReason"
+                                    type="checkbox" value="2">
+                                    <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-2">Documents have not been submitted on time</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="invalid-reason-3" name="invalidReason"
+                                    type="checkbox" value="6">
+                                    <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">Appellant does not have a legal interest in the land</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
+                                    type="checkbox" value="3">
+                                    <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">The appellant does not have the right to appeal</label>
+                                </div>
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="invalid-reason-5" name="invalidReason"
+                                    type="checkbox" value="4" checked data-aria-controls="conditional-invalid-reason-5">
+                                    <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-5">Other reason</label>
+                                </div>
+                                <div class="govuk-checkboxes__conditional" id="conditional-invalid-reason-5">
+                                    <div class="govuk-form-group govuk-form-group--error">
+                                        <label class="govuk-label govuk-label--s" for="invalid-reason-4-1">Enter a reason</label>
+                                        <p id="invalid-reason-4-1-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span>
+                                        </p>
+                                        <input class="govuk-input govuk-input--error" id="invalid-reason-4-1"
+                                        name="invalidReason-4" type="text" value="" aria-describedby="invalid-reason-4-1-error">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
