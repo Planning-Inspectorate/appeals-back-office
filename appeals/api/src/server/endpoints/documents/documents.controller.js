@@ -164,8 +164,7 @@ export const addDocuments = async (req, res) => {
 
 			await service.addDocumentAudit(auditTrail.guid, 1, auditTrail.audit, 'Create');
 		}
-
-		return res.status(204).send();
+		return res.status(201).send(documentInfo.documents);
 	} catch (/** @type {Object<any, any>} */ error) {
 		if (error.code === 'P2002') {
 			return res.status(409).send({

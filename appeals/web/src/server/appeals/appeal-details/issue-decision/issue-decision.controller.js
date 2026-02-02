@@ -24,7 +24,10 @@ import {
 	issueDecisionBackUrl,
 	lpaCostsDecisionBackUrl
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
-import { getAttachmentsFolder } from '#appeals/appeal-documents/appeal.documents.service.js';
+import {
+	deleteDocument,
+	getAttachmentsFolder
+} from '#appeals/appeal-documents/appeal.documents.service.js';
 import { isFeatureActive } from '#common/feature-flags.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { getOriginalAndLatestLetterDatesObject, getTodaysISOString } from '#lib/dates.js';
@@ -654,7 +657,13 @@ const postDecisionDocument = async ({ apiClient, decision }) => {
 		fileUploadInfo
 	});
 
-	await createNewDocument(apiClient, appealId, addDocumentsRequestPayload);
+	const newDecisionDocument = await createNewDocument(
+		apiClient,
+		appealId,
+		addDocumentsRequestPayload
+	);
+
+	return newDecisionDocument;
 };
 
 /**
@@ -678,14 +687,13 @@ export const postCheckDecision = async (request, response) => {
 	}
 
 	if (decisions.length) {
-		await Promise.all(
-			decisions
-				.filter((decision) => !decision.isChildAppeal)
-				.map(
-					async (decision) =>
-						decision.files && (await postDecisionDocument({ apiClient, decision }))
-				)
-		);
+		const decisionDocuments = decisions
+			.filter((decision) => !decision.isChildAppeal && decision.files)
+			.map(async (decision) => await postDecisionDocument({ apiClient, decision }));
+
+		const uploadedDocuments = await Promise.all(decisionDocuments);
+		const flattenedUploadedDocuments = uploadedDocuments.flat();
+
 		const decisionsToPost = decisions.map((decision) => {
 			const {
 				appealId,
@@ -707,7 +715,16 @@ export const postCheckDecision = async (request, response) => {
 		});
 
 		if (decisionsToPost.length) {
-			await postInspectorDecision(apiClient, appealId, decisionsToPost);
+			try {
+				await postInspectorDecision(apiClient, appealId, decisionsToPost);
+			} catch (error) {
+				const docToRemove = flattenedUploadedDocuments.map(
+					async (doc) => await deleteDocument(apiClient, doc?.GUID, doc.versionId)
+				);
+				await Promise.all(docToRemove);
+
+				return response.status(500).render('app/500.njk');
+			}
 		}
 	}
 
