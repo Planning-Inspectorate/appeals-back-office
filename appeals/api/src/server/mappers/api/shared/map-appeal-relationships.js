@@ -2,9 +2,8 @@
 /** @typedef {import('@pins/appeals.api').Api.AppealRelationship} AppealRelationship */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
 
-import { isFeatureActive } from '#utils/feature-flags.js';
 import { isAwaitingLinkedAppeal } from '#utils/is-awaiting-linked-appeal.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { hasChildAppeals, isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED
@@ -21,7 +20,7 @@ export const mapAppealRelationships = (data) => {
 	const appealRelationships = [...(appeal.parentAppeals || []), ...(appeal.childAppeals || [])];
 
 	const parentAppeals =
-		isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) && appeal.parentAppeals?.length
+		isLinkedAppealsActive(appeal) && appeal.parentAppeals?.length
 			? appeal.parentAppeals
 					.filter((relationship) => relationship.type === CASE_RELATIONSHIP_LINKED)
 					.map((relationship) => {
@@ -29,19 +28,19 @@ export const mapAppealRelationships = (data) => {
 					})
 			: [];
 
-	const childAppeals =
-		isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) && appeal.childAppeals?.length
-			? appeal.childAppeals
-					.filter((relationship) => relationship.type === CASE_RELATIONSHIP_LINKED)
-					.map((relationship) => {
-						return mapLinkedAppeal(relationship, false);
-					})
-			: [];
+	const childAppeals = hasChildAppeals(appeal)
+		? // @ts-ignore
+			appeal.childAppeals
+				.filter((relationship) => relationship.type === CASE_RELATIONSHIP_LINKED)
+				.map((relationship) => {
+					return mapLinkedAppeal(relationship, false);
+				})
+		: [];
 
 	const linkedAppeals = [...parentAppeals, ...childAppeals];
 
 	const awaitingLinkedAppeal = Boolean(
-		isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) &&
+		isLinkedAppealsActive(appeal) &&
 		data.linkedAppeals?.length &&
 		// @ts-ignore
 		isAwaitingLinkedAppeal(appeal, [
