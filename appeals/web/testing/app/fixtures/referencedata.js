@@ -1724,6 +1724,44 @@ export const appellantCaseInvalidReasons = [
 	}
 ];
 
+export const appellantCaseInvalidReasonsRealIds = [
+	{
+		id: 1,
+		name: 'Appeal has not been submitted on time',
+		hasText: false
+	},
+	{
+		id: 2,
+		name: 'Documents have not been submitted on time',
+		hasText: false
+	},
+	{
+		id: 3,
+		name: 'The appellant does not have the right to appeal',
+		hasText: false
+	},
+	{
+		id: 4,
+		name: 'Other reason',
+		hasText: true
+	},
+	{
+		id: 5,
+		name: 'Wrong appeal type',
+		hasText: false
+	},
+	{
+		id: 6,
+		name: 'Appellant does not have a legal interest in the land',
+		hasText: false
+	},
+	{
+		id: 7,
+		name: 'Ground (a) barred',
+		hasText: false
+	}
+];
+
 export const appealCaseEnforcementInvalidReasons = [
 	{ id: 1, name: 'Enforcement invalid reason one', hasText: true },
 	{ id: 2, name: 'Enforcement invalid reason two', hasText: true },
