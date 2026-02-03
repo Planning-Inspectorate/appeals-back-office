@@ -735,7 +735,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'B1415',
 		name: 'Hastings Borough Council',
-		email: 'dcenquiries@hastings.gov.uk',
+		email: 'planning@hastings.gov.uk',
 		teamId: 12 // East2
 	},
 	{
