@@ -1,7 +1,9 @@
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import {
 	appealCaseEnforcementInvalidReasons,
 	appealDataEnforcementNotice,
-	appellantCaseDataNotValidated
+	appellantCaseDataNotValidated,
+	appellantCaseIncompleteReasons
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
@@ -15,6 +17,163 @@ const baseUrl = `/appeals-service/appeal-details/${appealId}`;
 
 describe('incomplete-appeal', () => {
 	describe('enforcement notice appeal', () => {
+		describe('GET /appellant-case/incomplete', () => {
+			beforeEach(() => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, appealDataEnforcementNotice)
+					.persist();
+				nock('http://test/')
+					.get(`/appeals/${appealId}/appellant-cases/0`)
+					.reply(200, appellantCaseDataNotValidated);
+				nock('http://test/')
+					.get('/appeals/appellant-case-incomplete-reasons')
+					.reply(200, appellantCaseIncompleteReasons);
+			});
+
+			afterEach(() => {
+				nock.cleanAll();
+			});
+
+			it('should render the incomplete reason page and content', async () => {
+				const response = await request.get(`${baseUrl}/appellant-case/incomplete`);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Why is the appeal incomplete?</h1>');
+				expect(element.innerHTML).toContain('data-module="govuk-checkboxes">');
+
+				// Checkbox content check
+				if (!element.textContent) {
+					throw new Error('Test setup failed: The main element was not found in the HTML');
+				}
+				const textContent = element.textContent.replace(/\s+/g, ' ').trim();
+				expect(textContent).toContain('Missing documents');
+				expect(textContent).toContain('Grounds and facts do not match');
+				expect(textContent).toContain('Waiting for appellant to pay the fee');
+				expect(textContent).toContain('Other');
+
+				expect(element.innerHTML).toContain('Continue</button>');
+			});
+		});
+
+		describe('POST /appellant-case/incomplete', () => {
+			beforeEach(async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, appealDataEnforcementNotice)
+					.persist();
+				nock('http://test/')
+					.get(`/appeals/${appealId}/appellant-cases/0`)
+					.reply(200, appellantCaseDataNotValidated);
+				nock('http://test/')
+					.get('/appeals/appellant-case-incomplete-reasons')
+					.reply(200, appellantCaseIncompleteReasons);
+			});
+
+			afterEach(() => {
+				nock.cleanAll();
+			});
+
+			it('should re-render the incomplete reason page with the expected error message if no incomplete reason was provided', async () => {
+				const response = await request.post(`${baseUrl}/appellant-case/incomplete`).send({});
+
+				const element = parseHtml(response.text);
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
+				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+				expect(unprettifiedErrorSummaryHtml).toContain('Select why the appeal is incomplete</a>');
+			});
+
+			it('should re-render the incomplete reason page with the expected error message if "other" incomplete reason was provided but the matching text property is an empty string', async () => {
+				const response = await request.post(`${baseUrl}/appellant-case/incomplete`).send({
+					incompleteReason: 10,
+					['incompleteReason-10']: ''
+				});
+
+				const element = parseHtml(response.text);
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
+				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+				expect(unprettifiedErrorSummaryHtml).toContain('Enter a reason</a>');
+			});
+
+			it('should re-render the incomplete reason page with the expected error message if "other" incomplete reason was provided but the matching text property exceeds the character limit', async () => {
+				const response = await request.post(`${baseUrl}/appellant-case/incomplete`).send({
+					incompleteReason: 10,
+					['incompleteReason-10']: 'a'.repeat(textInputCharacterLimits.checkboxTextItemsLength + 1)
+				});
+
+				const element = parseHtml(response.text);
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
+				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+				expect(unprettifiedErrorSummaryHtml).toContain(
+					`Reason must be ${textInputCharacterLimits.checkboxTextItemsLength} characters or less</a>`
+				);
+			});
+
+			it('should redirect to the missing documents page if selected', async () => {
+				const response = await request.post(`${baseUrl}/appellant-case/incomplete`).send({
+					incompleteReason: ['10', '12', '13', '14'],
+					['incompleteReason-10']: 'a'
+				});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to ${baseUrl}/appellant-case/incomplete/missing-documents`
+				);
+			});
+
+			it('should redirect to the ground and facts do not match page if provided and missing documents is not provided', async () => {
+				const response = await request.post(`${baseUrl}/appellant-case/incomplete`).send({
+					incompleteReason: ['10', '13', '14'],
+					['incompleteReason-10']: 'a'
+				});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to ${baseUrl}/appellant-case/incomplete/grounds-facts-check`
+				);
+			});
+
+			it('should redirect to the receipt due date page if provided and neither missing docs or grounds and facts were provided', async () => {
+				const response = await request.post(`${baseUrl}/appellant-case/incomplete`).send({
+					incompleteReason: ['10', '14'],
+					['incompleteReason-10']: 'a'
+				});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to ${baseUrl}/appellant-case/incomplete/receipt-due-date`
+				);
+			});
+
+			it('should redirect to the enforcement other information page if only the other information was provided', async () => {
+				const response = await request.post(`${baseUrl}/appellant-case/incomplete`).send({
+					incompleteReason: '10',
+					['incompleteReason-10']: 'a'
+				});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to ${baseUrl}/appellant-case/incomplete/enforcement-other-information`
+				);
+			});
+		});
+
 		describe('GET /enforcement-notice-reason', () => {
 			beforeEach(async () => {
 				installMockApi();
