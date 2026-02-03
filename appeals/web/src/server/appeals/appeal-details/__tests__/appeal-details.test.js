@@ -3276,7 +3276,7 @@ describe('appeal-details', () => {
 				);
 			});
 
-			it('Should display procedure type change link if type is enforcement notice', async () => {
+			it('Should not display procedure type change link if type is enforcement notice', async () => {
 				const appealId = 2;
 				nock('http://test/')
 					.get(`/appeals/${appealId}?include=all`)
@@ -3300,7 +3300,7 @@ describe('appeal-details', () => {
 
 				const response = await request.get(`${baseUrl}/${appealId}`);
 
-				expect(response.text).toContain(
+				expect(response.text).not.toContain(
 					'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
 				);
 			});

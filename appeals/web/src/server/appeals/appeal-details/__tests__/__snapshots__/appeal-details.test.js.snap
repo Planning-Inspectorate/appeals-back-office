@@ -5857,9 +5857,6 @@ exports[`appeal-details GET /:appealId Overview Should display enforcement notic
         </div>
         <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
             <dd class="govuk-summary-list__value">Written</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type"
-                data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>
-            </dd>
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
