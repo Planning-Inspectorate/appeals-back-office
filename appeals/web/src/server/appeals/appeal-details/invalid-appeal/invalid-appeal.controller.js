@@ -400,14 +400,16 @@ export const postEnforcementNoticeInvalid = async (request, response) => {
 			enforcementNoticeInvalid: body.enforcementNoticeInvalid
 		};
 
-		if (session.webAppellantCaseReviewOutcome.enforcementNoticeInvalid === 'no') {
+		const { enforcementNoticeInvalid, validationOutcome } = session.webAppellantCaseReviewOutcome;
+
+		if (enforcementNoticeInvalid === 'no') {
 			delete session.webAppellantCaseReviewOutcome.enforcementNoticeReason;
 			return response.redirect(
-				`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${session.webAppellantCaseReviewOutcome.validationOutcome}`
+				`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${validationOutcome}`
 			);
 		}
 		return response.redirect(
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${session.webAppellantCaseReviewOutcome.validationOutcome}/enforcement-notice-reason`
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${validationOutcome}/enforcement-notice-reason`
 		);
 	} catch (error) {
 		logger.error(

@@ -313,6 +313,21 @@ export const appellantCaseIncompleteReasons = [
 		id: 10,
 		name: 'Other',
 		hasText: true
+	},
+	{
+		id: 12,
+		name: 'Missing documents',
+		hasText: false
+	},
+	{
+		id: 13,
+		name: 'Grounds and facts do not match',
+		hasText: false
+	},
+	{
+		id: 14,
+		name: 'Waiting for appellant to pay the fee',
+		hasText: false
 	}
 ];
 

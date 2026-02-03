@@ -6,6 +6,7 @@ import {
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { isAfter, parseISO } from 'date-fns';
 import {
 	mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters,
@@ -23,7 +24,7 @@ const renderIncompleteReason = async (request, response) => {
 	const {
 		errors,
 		body,
-		currentAppeal: { appealId, appealReference, appellantCaseId }
+		currentAppeal: { appealId, appealReference, appellantCaseId, appealType }
 	} = request;
 
 	if (appellantCaseId === null || appellantCaseId === undefined) {
@@ -55,10 +56,14 @@ const renderIncompleteReason = async (request, response) => {
 	const { webAppellantCaseReviewOutcome } = request.session;
 
 	if (incompleteReasonOptions) {
+		const filteredReasons =
+			appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
+				? incompleteReasonOptions.filter((reason) => reason.id > 9 && reason.id !== 11)
+				: incompleteReasonOptions.filter((reason) => reason.id <= 10 || reason.id === 11);
 		const mappedIncompleteReasonOptions =
 			mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters(
 				'incomplete',
-				incompleteReasonOptions,
+				filteredReasons,
 				body,
 				webAppellantCaseReviewOutcome,
 				appellantCaseResponse.validation,
@@ -150,7 +155,7 @@ export const getIncompleteReason = async (request, response) => {
 export const postIncompleteReason = async (request, response) => {
 	const {
 		errors,
-		currentAppeal: { appealId }
+		currentAppeal: { appealId, appealType }
 	} = request;
 
 	if (errors) {
@@ -166,6 +171,28 @@ export const postIncompleteReason = async (request, response) => {
 			reasonsText: getNotValidReasonsTextFromRequestBody(request.body, 'incompleteReason')
 		};
 
+		if (appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+			const redirectMap = {
+				10: 'enforcement-other-information',
+				12: 'missing-documents',
+				13: 'grounds-facts-check',
+				14: 'receipt-due-date'
+			};
+			const redirectPriority = ['12', '13', '14', '10'];
+			const redirectId = redirectPriority.find((id) => request.body.incompleteReason.includes(id));
+
+			if (!redirectId) {
+				logger.error('Something went wrong when completing appellant case review');
+				return response.status(500).render('app/500.njk');
+			}
+
+			// @ts-ignore
+			const redirectRoute = redirectMap[redirectId];
+
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/appellant-case/incomplete/${redirectRoute}`
+			);
+		}
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/appellant-case/incomplete/date`
 		);
