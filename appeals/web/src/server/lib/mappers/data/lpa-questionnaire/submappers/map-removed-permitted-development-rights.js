@@ -8,7 +8,7 @@ export const mapRemovedPermittedDevelopmentRights = ({
 }) =>
 	booleanWithDetailsSummaryListItem({
 		id: 'pd-rights-removed',
-		text: 'Were any permitted development rights removed with the direction?',
+		text: 'Did you remove any permitted development rights for the appeal site?',
 		value: !!lpaQuestionnaireData.article4AffectedDevelopmentRights,
 		valueDetails: lpaQuestionnaireData.article4AffectedDevelopmentRights,
 		defaultText: '',
