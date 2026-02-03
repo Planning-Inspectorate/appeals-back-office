@@ -5,7 +5,7 @@ import { detailsComponent } from '#lib/mappers/components/page-components/detail
 import { radiosInput } from '#lib/mappers/components/page-components/radio.js';
 import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /**
@@ -158,10 +158,17 @@ export function selectProcedurePage(
  * @param {string|number} appealId
  * @param {string} appealReference
  * @param {string} procedureType
+ * @param {string} appealType
  * @param {{appellant: string, lpa: string}} [emailPreviews]
  * @returns {PageContent}
  */
-export function confirmProcedurePage(appealId, appealReference, procedureType, emailPreviews) {
+export function confirmProcedurePage(
+	appealId,
+	appealReference,
+	procedureType,
+	appealType,
+	emailPreviews
+) {
 	const emailPreviewComponents = emailPreviews
 		? [
 				detailsComponent({
@@ -175,10 +182,14 @@ export function confirmProcedurePage(appealId, appealReference, procedureType, e
 			]
 		: [];
 
+	const isEditable =
+		appealType !== APPEAL_TYPE.ENFORCEMENT_NOTICE ||
+		!featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE);
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Check details and start case',
-		backLinkUrl: `/appeals-service/appeal-details/${appealId}/start-case/select-procedure`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}/${isEditable ? `start-case/select-procedure` : ''}`,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		heading: 'Check details and start case',
 		pageComponents: [
@@ -193,7 +204,7 @@ export function confirmProcedurePage(appealId, appealReference, procedureType, e
 							link: editLink(
 								`/appeals-service/appeal-details/${appealId}/start-case/select-procedure`
 							),
-							editable: true
+							editable: isEditable
 						})?.display.summaryListItem
 					]
 				}
