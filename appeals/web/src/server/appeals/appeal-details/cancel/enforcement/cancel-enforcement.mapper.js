@@ -1,4 +1,5 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { yesNoInput } from '#lib/mappers/index.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 
 /**
@@ -61,6 +62,39 @@ export const invalidReasonPage = (appeal, reasonOptions, backLinkUrl, values = {
 					errorMessage: errors?.invalidReason && { text: errors.invalidReason.msg }
 				}
 			}
+		]
+	};
+
+	return pageContent;
+};
+
+/**
+ * @param {Appeal} appeal
+ * @param {string} backLinkUrl
+ * @param {Record<string, string>} [values]
+ * @param {import('@pins/express').ValidationErrors} [errors]
+ * @returns {PageContent}
+ */
+export const legalInterestPage = (appeal, backLinkUrl, values = {}, errors) => {
+	const shortAppealReference = appealShortReference(appeal.appealReference);
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: 'Did the appellant send any information about their legal interest in the land?',
+		backLinkUrl,
+		preHeading: `Appeal ${shortAppealReference}`,
+		pageComponents: [
+			yesNoInput({
+				name: 'legalInterest',
+				value: values['legalInterest'],
+				legendText:
+					'Did the appellant send any information about their legal interest in the land?',
+				legendIsPageHeading: true,
+				errorMessage: errors?.legalInterest?.msg,
+				attributes: {
+					id: 'legal-interest'
+				}
+			})
 		]
 	};
 

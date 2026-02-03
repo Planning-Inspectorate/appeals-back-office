@@ -166,4 +166,116 @@ describe('cancel enforcement', () => {
 			);
 		});
 	});
+
+	describe('GET /legal-interest', () => {
+		beforeEach(async () => {
+			nock('http://test/')
+				.get(`/appeals/${mockAppealId}?include=all`)
+				.reply(200, appealDataEnforcementNotice);
+		});
+
+		it('should render the legal interest page with the correct radio components', async () => {
+			const response = await request.get(
+				`${baseUrl}/${mockAppealId}/cancel/enforcement/legal-interest`
+			);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			expect(element.querySelector('h1')?.innerHTML.trim()).toBe(
+				'Did the appellant send any information about their legal interest in the land?'
+			);
+			const options = element.querySelectorAll('#legal-interest .govuk-radios__item');
+			expect(options.length).toBe(2);
+			expect(options[0].querySelector('label')?.innerHTML.trim()).toBe('Yes');
+			expect(options[1].querySelector('label')?.innerHTML.trim()).toBe('No');
+			expect(element.querySelector('button')?.innerHTML.trim()).toBe('Continue');
+		});
+
+		it('should pre-select previously submitted values', async () => {
+			await request.post(`${baseUrl}/${mockAppealId}/cancel/enforcement/legal-interest`).send({
+				legalInterest: 'yes'
+			});
+			const response = await request.get(
+				`${baseUrl}/${mockAppealId}/cancel/enforcement/legal-interest`
+			);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			expect(element.querySelector('h1')?.innerHTML.trim()).toBe(
+				'Did the appellant send any information about their legal interest in the land?'
+			);
+			const options = element.querySelectorAll('#legal-interest .govuk-radios__item');
+			expect(options.length).toBe(2);
+			expect(options[0].querySelector('input')?.getAttribute('checked')).toBeDefined();
+			expect(options[1].querySelector('input')?.getAttribute('checked')).toBeUndefined();
+		});
+
+		it('should have a back link to the invalid page', async () => {
+			const response = await request.get(
+				`${baseUrl}/${mockAppealId}/cancel/enforcement/legal-interest`
+			);
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(pageHtml.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+				`${baseUrl}/${mockAppealId}/cancel/enforcement/invalid`
+			);
+		});
+
+		it('should have a back link to the CYA page if editing', async () => {
+			const queryString =
+				'?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fcancel%2Fenforcement%2Flegal-interest';
+			const response = await request.get(
+				`${baseUrl}/${mockAppealId}/cancel/enforcement/legal-interest${queryString}`
+			);
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(pageHtml.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+				`${baseUrl}/${mockAppealId}/cancel/enforcement/check-details`
+			);
+		});
+	});
+
+	describe('POST /legal-interest', () => {
+		beforeEach(async () => {
+			nock('http://test/')
+				.get(`/appeals/${mockAppealId}?include=all`)
+				.reply(200, appealDataEnforcementNotice);
+		});
+
+		it('should redirect to the other live appeals page when yes is selected', async () => {
+			const response = await request
+				.post(`${baseUrl}/${mockAppealId}/cancel/enforcement/legal-interest`)
+				.send({ legalInterest: 'yes' });
+			expect(response.status).toBe(302);
+			expect(response.headers.location).toBe(
+				`${baseUrl}/${mockAppealId}/cancel/enforcement/other-live-appeals`
+			);
+		});
+
+		it('should redirect to the other live appeals page when no is selected', async () => {
+			const response = await request
+				.post(`${baseUrl}/${mockAppealId}/cancel/enforcement/legal-interest`)
+				.send({ legalInterest: 'no' });
+			expect(response.status).toBe(302);
+			expect(response.headers.location).toBe(
+				`${baseUrl}/${mockAppealId}/cancel/enforcement/other-live-appeals`
+			);
+		});
+
+		it('should re-render the page with errors if no option selected', async () => {
+			const response = await request
+				.post(`${baseUrl}/${mockAppealId}/cancel/enforcement/legal-interest`)
+				.send({});
+			expect(response.status).toBe(200);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.querySelector('h1')?.innerHTML.trim()).toBe(
+				'Did the appellant send any information about their legal interest in the land?'
+			);
+			expect(element.querySelector('.govuk-error-summary__title')?.innerHTML.trim()).toBe(
+				'There is a problem'
+			);
+			expect(element.querySelector('.govuk-error-summary__body a')?.innerHTML.trim()).toBe(
+				'Select yes if the appellant sent any information about their legal interest in the land'
+			);
+		});
+	});
 });
