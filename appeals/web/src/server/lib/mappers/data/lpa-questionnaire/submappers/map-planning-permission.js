@@ -4,7 +4,7 @@ import { documentInstruction } from '#lib/mappers/data/lpa-questionnaire/common.
 export const mapPlanningPermission = ({ lpaQuestionnaireData, session }) =>
 	documentInstruction({
 		id: 'planning-permission',
-		text: 'Planning permission',
+		text: 'Planning permission and any other relevant documents',
 		folderInfo: lpaQuestionnaireData.documents.planningPermission,
 		cypressDataName: 'planning-permission',
 		lpaQuestionnaireData,
