@@ -220,7 +220,7 @@ describe('final-comments', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Actions</th>');
 			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFolderInfo.pdf</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a href="/appeals-service/appeal-details/2/final-comments/lpa/add-document" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button"> Add document</a>`
+				`<a href="/appeals-service/appeal-details/2/final-comments/lpa/add-document" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button"> Upload document</a>`
 			);
 		});
 	});
@@ -409,7 +409,7 @@ describe('final-comments', () => {
 			nock('http://test/').get('/appeals/2/reps').reply(200, interestedPartyCommentForReview);
 		});
 
-		it('should render the add document details page', async () => {
+		it('should render the upload document details page', async () => {
 			const response = await request.get(`${baseUrl}/2/final-comments/lpa/add-document`);
 			expect(response.statusCode).toBe(200);
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });

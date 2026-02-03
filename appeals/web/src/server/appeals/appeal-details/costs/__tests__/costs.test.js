@@ -157,7 +157,7 @@ describe('costs', () => {
 						);
 					});
 
-					it(`should redirect to the add document details page if upload-info is present in the request body and in the correct format (${costsCategory})`, async () => {
+					it(`should redirect to the upload document details page if upload-info is present in the request body and in the correct format (${costsCategory})`, async () => {
 						const response = await request
 							.post(
 								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}`
@@ -248,7 +248,7 @@ describe('costs', () => {
 						);
 					});
 
-					it(`should redirect to the add document details page if upload-info is present in the request body and in the correct format (${costsCategory})`, async () => {
+					it(`should redirect to the upload document details page if upload-info is present in the request body and in the correct format (${costsCategory})`, async () => {
 						const response = await request
 							.post(
 								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}/1`
@@ -305,7 +305,7 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+						expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 						expect(unprettifiedElement.innerHTML).toContain(
 							`${
 								costsCategory === 'appellant' ? 'Appellant' : 'LPA'
@@ -398,7 +398,7 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+						expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 						expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
 						const errorSummaryElement = parseHtml(response.text, {
@@ -459,7 +459,7 @@ describe('costs', () => {
 
 							const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-							expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+							expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 							expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
 							const errorSummaryElement = parseHtml(response.text, {
@@ -521,7 +521,7 @@ describe('costs', () => {
 
 							const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-							expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+							expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 							expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
 							const errorSummaryElement = parseHtml(response.text, {
@@ -577,7 +577,7 @@ describe('costs', () => {
 
 							const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-							expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+							expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 							expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
 							const errorSummaryElement = parseHtml(response.text, {
@@ -611,7 +611,7 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+						expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 						expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
 						const errorSummaryElement = parseHtml(response.text, {
@@ -648,7 +648,7 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+						expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 						expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
 						const errorSummaryElement = parseHtml(response.text, {
@@ -685,7 +685,7 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+						expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 						expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
 						const errorSummaryElement = parseHtml(response.text, {
@@ -722,7 +722,7 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+						expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 						expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
 						const errorSummaryElement = parseHtml(response.text, {
@@ -759,7 +759,7 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+						expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 						expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
 						const errorSummaryElement = parseHtml(response.text, {
@@ -845,7 +845,7 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+						expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 						expect(unprettifiedElement.innerHTML).toContain(
 							`${
 								costsCategory === 'appellant' ? 'Appellant' : 'LPA'
@@ -941,7 +941,7 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+						expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 						expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
 						const errorSummaryElement = parseHtml(response.text, {
@@ -1002,7 +1002,7 @@ describe('costs', () => {
 
 							const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-							expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+							expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 							expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
 							const errorSummaryElement = parseHtml(response.text, {
@@ -1064,7 +1064,7 @@ describe('costs', () => {
 
 							const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-							expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+							expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 							expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
 							const errorSummaryElement = parseHtml(response.text, {
@@ -1120,7 +1120,7 @@ describe('costs', () => {
 
 							const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-							expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+							expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 							expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
 							const errorSummaryElement = parseHtml(response.text, {
@@ -1154,7 +1154,7 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+						expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 						expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
 
 						const errorSummaryElement = parseHtml(response.text, {
@@ -1220,7 +1220,7 @@ describe('costs', () => {
 						);
 					});
 
-					it(`should render the add documents check and confirm page with summary list displaying info on the uploaded document and relevant change links (${costsCategory} ${costsDocumentType})`, async () => {
+					it(`should render the upload documents check and confirm page with summary list displaying info on the uploaded document and relevant change links (${costsCategory} ${costsDocumentType})`, async () => {
 						const addDocumentsResponse = await request
 							.post(
 								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}`
@@ -1339,7 +1339,7 @@ describe('costs', () => {
 						);
 					});
 
-					it(`should render the add documents check and confirm page with summary list row displaying info on the uploaded document (${costsCategory} ${costsDocumentType})`, async () => {
+					it(`should render the upload documents check and confirm page with summary list row displaying info on the uploaded document (${costsCategory} ${costsDocumentType})`, async () => {
 						const addDocumentsResponse = await request
 							.post(
 								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}/1`
@@ -1473,7 +1473,7 @@ describe('costs', () => {
 							} costs ${costsDocumentType} documents</h1>`
 						);
 						expect(unprettifiedElement.innerHTML).toContain(
-							`<a href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button"> Add document</a>`
+							`<a href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button"> Upload document</a>`
 						);
 					});
 				}
@@ -1924,7 +1924,7 @@ describe('costs', () => {
 				);
 			});
 
-			it(`should redirect to the add document details page if upload-info is present in the request body and in the correct format`, async () => {
+			it(`should redirect to the upload document details page if upload-info is present in the request body and in the correct format`, async () => {
 				const response = await request
 					.post(`${baseUrl}/1/costs/decision/upload-documents/${costsFolder.folderId}`)
 					.send({
@@ -1997,7 +1997,7 @@ describe('costs', () => {
 				);
 			});
 
-			it(`should redirect to the add document details page if upload-info is present in the request body and in the correct format`, async () => {
+			it(`should redirect to the upload document details page if upload-info is present in the request body and in the correct format`, async () => {
 				const response = await request
 					.post(`${baseUrl}/1/costs/decision/upload-documents/${costsFolder.folderId}/1`)
 					.send({
@@ -2045,7 +2045,7 @@ describe('costs', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(`Costs decision document</h1>`);
 				expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 				expect(unprettifiedElement.innerHTML).toContain('Decision date</legend>');
@@ -2114,7 +2114,7 @@ describe('costs', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(`Costs decision document</h1>`);
 
 				const errorSummaryElement = parseHtml(response.text, {
@@ -2153,7 +2153,7 @@ describe('costs', () => {
 
 					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-					expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+					expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(`Costs decision document</h1>`);
 
 					const errorSummaryElement = parseHtml(response.text, {
@@ -2193,7 +2193,7 @@ describe('costs', () => {
 
 					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-					expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+					expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(`Costs decision document</h1>`);
 
 					const errorSummaryElement = parseHtml(response.text, {
@@ -2232,7 +2232,7 @@ describe('costs', () => {
 
 					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-					expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+					expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(`Costs decision document</h1>`);
 
 					const errorSummaryElement = parseHtml(response.text, {
@@ -2264,7 +2264,7 @@ describe('costs', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(`Costs decision document</h1>`);
 
 				const errorSummaryElement = parseHtml(response.text, {
@@ -2335,7 +2335,7 @@ describe('costs', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(`Costs decision document</h1>`);
 				expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 				expect(unprettifiedElement.innerHTML).toContain('Decision date</legend>');
@@ -2404,7 +2404,7 @@ describe('costs', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(`Costs decision document</h1>`);
 
 				const errorSummaryElement = parseHtml(response.text, {
@@ -2443,7 +2443,7 @@ describe('costs', () => {
 
 					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-					expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+					expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(`Costs decision document</h1>`);
 
 					const errorSummaryElement = parseHtml(response.text, {
@@ -2483,7 +2483,7 @@ describe('costs', () => {
 
 					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-					expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+					expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(`Costs decision document</h1>`);
 
 					const errorSummaryElement = parseHtml(response.text, {
@@ -2522,7 +2522,7 @@ describe('costs', () => {
 
 					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-					expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+					expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(`Costs decision document</h1>`);
 
 					const errorSummaryElement = parseHtml(response.text, {
@@ -2554,7 +2554,7 @@ describe('costs', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(`Costs decision document</h1>`);
 
 				const errorSummaryElement = parseHtml(response.text, {
@@ -2919,7 +2919,7 @@ describe('costs', () => {
 				expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(`Costs decision documents</h1>`);
 				expect(unprettifiedElement.innerHTML).toContain(
-					`<a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button"> Add documents</a>`
+					`<a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button"> Upload documents</a>`
 				);
 			});
 		});

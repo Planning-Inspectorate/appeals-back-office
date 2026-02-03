@@ -372,10 +372,10 @@ export function addDocumentDetailsPage({
 }) {
 	/** @type {PageContent} */
 	const pageContent = {
-		title: pageHeadingTextOverride || 'Add document details',
+		title: pageHeadingTextOverride || 'Upload document details',
 		backLinkText: 'Back',
 		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.folderId.toString()),
-		preHeading: 'Add document details',
+		preHeading: 'Upload document details',
 		heading:
 			pageHeadingTextOverride ||
 			mapAddDocumentDetailsPageHeading(folder.path, documentId, appealType),
@@ -939,7 +939,7 @@ export function manageFolderPage({
 	const buttonComponent = {
 		type: 'button',
 		parameters: {
-			text: addButtonTextOverride || 'Add document',
+			text: addButtonTextOverride || 'Upload document',
 			href: addButtonUrl?.replace('{{folderId}}', folder.folderId.toString()),
 			classes: 'govuk-button--secondary'
 		}

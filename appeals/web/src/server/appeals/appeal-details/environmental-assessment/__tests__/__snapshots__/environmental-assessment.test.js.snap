@@ -36,7 +36,7 @@ exports[`environmental-assessment GET /environmental-assessment/manage-documents
         </div>
     </div><a href="/appeals-service/appeal-details/1/environmental-assessment/upload-documents/2864"
     role="button" draggable="false" class="govuk-button govuk-button--secondary"
-    data-module="govuk-button"> Add document</a>
+    data-module="govuk-button"> Upload document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <table class="govuk-table" id="documents-table">

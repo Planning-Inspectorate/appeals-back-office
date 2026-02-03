@@ -55,7 +55,7 @@ export const getManageFolder = async (request, response) => {
 		addButtonUrl,
 		pageHeadingTextOverride:
 			pageContent?.manageDocuments?.pageHeadingTextOverride || 'Supporting documents',
-		addButtonTextOverride: pageContent?.manageDocuments?.addButtonTextOverride || 'Add document',
+		addButtonTextOverride: pageContent?.manageDocuments?.addButtonTextOverride || 'Upload document',
 		dateColumnLabelTextOverride:
 			pageContent?.manageDocuments?.dateColumnLabelTextOverride || 'Date submitted',
 		preHeadingTextOverride: pageContent?.manageDocuments?.preHeadingTextOverride || 'Manage folder'

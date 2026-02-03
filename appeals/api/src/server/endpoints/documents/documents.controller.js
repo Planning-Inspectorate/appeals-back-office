@@ -9,8 +9,8 @@ import {
 	AUDIT_TRAIL_DOCUMENT_UNREDACTED,
 	AUDIT_TRAIL_DOCUMENT_UPLOADED,
 	ERROR_DOCUMENT_NAME_ALREADY_EXISTS,
-	ERROR_FAILED_TO_ADD_DOCUMENTS,
 	ERROR_FAILED_TO_SAVE_DATA,
+	ERROR_FAILED_TO_UPLOAD_DOCUMENTS,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
 
@@ -177,7 +177,7 @@ export const addDocuments = async (req, res) => {
 			});
 		}
 
-		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_ADD_DOCUMENTS } });
+		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_UPLOAD_DOCUMENTS } });
 	}
 };
 

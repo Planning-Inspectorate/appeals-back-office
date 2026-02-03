@@ -12,7 +12,7 @@ const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 
-describe('rule 6 party proof of evidence - add document', () => {
+describe('rule 6 party proof of evidence - upload document', () => {
 	beforeEach(() => {
 		installMockApi();
 
@@ -166,7 +166,7 @@ describe('rule 6 party proof of evidence - add document', () => {
 	});
 
 	describe('POST /add-representation/check-your-answers', () => {
-		it('should call the API to add document and redirect to rule 6 party managed documents page', async () => {
+		it('should call the API to upload document and redirect to rule 6 party managed documents page', async () => {
 			await request.post(flowBaseUrl).send({ 'upload-info': fileUploadInfo });
 			await request
 				.post(`${flowBaseUrl}/redaction-status`)

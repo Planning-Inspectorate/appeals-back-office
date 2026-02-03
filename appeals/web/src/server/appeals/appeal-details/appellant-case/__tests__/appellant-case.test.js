@@ -4089,7 +4089,7 @@ describe('appellant-case', () => {
 			);
 		});
 
-		it('should redirect to the add document details page if upload-info is present in the request body and in the correct format', async () => {
+		it('should redirect to the upload document details page if upload-info is present in the request body and in the correct format', async () => {
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
 				.send({
@@ -4151,7 +4151,7 @@ describe('appellant-case', () => {
 			);
 		});
 
-		it('should redirect to the add document details page if upload-info is present in the request body and in the correct format', async () => {
+		it('should redirect to the upload document details page if upload-info is present in the request body and in the correct format', async () => {
 			const response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1/1`)
 				.send({
@@ -4202,7 +4202,7 @@ describe('appellant-case', () => {
 			);
 		});
 
-		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is not additional documents or changedDescription', async () => {
+		it('should render the upload document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is not additional documents or changedDescription', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
@@ -4227,7 +4227,7 @@ describe('appellant-case', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Appellant statement documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -4267,7 +4267,7 @@ describe('appellant-case', () => {
 				'Agreement to change the description of the advertisement</h1>'
 			]
 		])(
-			'should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is changedDescription and appeal type is %s',
+			'should render the upload document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is changedDescription and appeal type is %s',
 			async (_, appealType, expectedText) => {
 				nock.cleanAll(); // need to remove the nocks so we can change the appeal type
 				nock('http://test/')
@@ -4302,7 +4302,7 @@ describe('appellant-case', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(expectedText);
 				expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 				expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -4315,7 +4315,7 @@ describe('appellant-case', () => {
 			}
 		);
 
-		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has no validation outcome', async () => {
+		it('should render the upload document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has no validation outcome', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
@@ -4340,7 +4340,7 @@ describe('appellant-case', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -4352,7 +4352,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
 
-		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of invalid', async () => {
+		it('should render the upload document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of invalid', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataInvalidOutcome);
@@ -4377,7 +4377,7 @@ describe('appellant-case', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -4389,7 +4389,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
 
-		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of incomplete', async () => {
+		it('should render the upload document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of incomplete', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataIncompleteOutcome);
@@ -4414,7 +4414,7 @@ describe('appellant-case', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -4426,7 +4426,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
 
-		it('should render the add document details page with one item per uploaded document, and with a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of valid', async () => {
+		it('should render the upload document details page with one item per uploaded document, and with a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of valid', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataValidOutcome);
@@ -4451,7 +4451,7 @@ describe('appellant-case', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -4925,7 +4925,7 @@ describe('appellant-case', () => {
 			);
 		});
 
-		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is not additional documents or changed description', async () => {
+		it('should render the upload document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is not additional documents or changed description', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
@@ -4946,7 +4946,7 @@ describe('appellant-case', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Updated appellant statement document</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -4958,7 +4958,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
 
-		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has no validation outcome', async () => {
+		it('should render the upload document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has no validation outcome', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
@@ -4983,7 +4983,7 @@ describe('appellant-case', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Updated additional document</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -4995,7 +4995,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
 
-		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of invalid', async () => {
+		it('should render the upload document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of invalid', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataInvalidOutcome);
@@ -5020,7 +5020,7 @@ describe('appellant-case', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Updated additional document</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -5032,7 +5032,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
 
-		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of incomplete', async () => {
+		it('should render the upload document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of incomplete', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataIncompleteOutcome);
@@ -5057,7 +5057,7 @@ describe('appellant-case', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Updated additional document</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -5069,7 +5069,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
 
-		it('should render the add document details page with one item per uploaded document, and with a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of valid', async () => {
+		it('should render the upload document details page with one item per uploaded document, and with a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of valid', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataValidOutcome);
@@ -5094,7 +5094,7 @@ describe('appellant-case', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Updated additional document</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -5563,7 +5563,7 @@ describe('appellant-case', () => {
 			);
 		});
 
-		it('should render the add documents check and confirm page with summary list displaying info on the uploaded document', async () => {
+		it('should render the upload documents check and confirm page with summary list displaying info on the uploaded document', async () => {
 			const addDocumentsResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`)
 				.send({
@@ -5724,7 +5724,7 @@ describe('appellant-case', () => {
 			);
 		});
 
-		it('should render the add documents check and confirm page with summary list row displaying info on the uploaded document', async () => {
+		it('should render the upload documents check and confirm page with summary list row displaying info on the uploaded document', async () => {
 			const addDocumentsResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1/1`)
 				.send({
@@ -5894,7 +5894,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('ph0-documentFolderInfo.jpeg</span>');
 			expect(unprettifiedElement.innerHTML).toContain('ph1-documentFolderInfo.jpeg</a>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button"> Add document</a>`
+				`<a href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button"> Upload document</a>`
 			);
 		});
 

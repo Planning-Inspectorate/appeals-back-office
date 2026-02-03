@@ -54,12 +54,14 @@ export const renderCheckYourAnswers = (request, response) => {
 	return renderCheckYourAnswersComponent(
 		{
 			title:
-				pageContent?.checkYourAnswer?.pageHeadingTextOverride || 'Check details and add document',
+				pageContent?.checkYourAnswer?.pageHeadingTextOverride ||
+				'Check details and upload document',
 			heading:
-				pageContent?.checkYourAnswer?.pageHeadingTextOverride || 'Check details and add document',
+				pageContent?.checkYourAnswer?.pageHeadingTextOverride ||
+				'Check details and upload document',
 			preHeading: `Appeal ${appealShortReference(appealReference)}`,
 			backLinkUrl: `${baseUrl}/date-submitted`,
-			submitButtonText: pageContent?.checkYourAnswer?.submitButtonTextOverride || 'Add document',
+			submitButtonText: pageContent?.checkYourAnswer?.submitButtonTextOverride || 'Upload document',
 			responses: {
 				[pageContent?.checkYourAnswer?.supportingDocumentTextOverride || 'Supporting document']: {
 					html: `<a class="govuk-link" download href="${blobStoreUrl ?? ''}">${name ?? ''}</a>`,

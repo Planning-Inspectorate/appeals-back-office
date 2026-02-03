@@ -525,7 +525,7 @@ describe('appellant-statements', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Actions</th>');
 			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFolderInfo.pdf</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a href="/appeals-service/appeal-details/2/appellant-statement/add-document" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button"> Add document</a>`
+				`<a href="/appeals-service/appeal-details/2/appellant-statement/add-document" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button"> Upload document</a>`
 			);
 		});
 	});
@@ -717,7 +717,7 @@ describe('appellant-statements', () => {
 					.reply(200, appellantStatementAwaitingReview);
 			});
 
-			it('should render the add document details page', async () => {
+			it('should render the upload document details page', async () => {
 				const response = await request.get(`${baseUrl}/2/appellant-statement/add-document`);
 				expect(response.statusCode).toBe(200);
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });

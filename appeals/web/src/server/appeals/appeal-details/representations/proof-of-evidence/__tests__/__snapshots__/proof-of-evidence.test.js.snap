@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`proof-of-evidence GET /add-document for appellant should render add document page with correct content for appellant 1`] = `
+exports[`proof-of-evidence GET /add-document for appellant should render upload document page with correct content for appellant 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
@@ -52,7 +52,7 @@ exports[`proof-of-evidence GET /add-document for appellant should render add doc
 </main>"
 `;
 
-exports[`proof-of-evidence GET /add-document for lpa should render add document page with correct content for lpa 1`] = `
+exports[`proof-of-evidence GET /add-document for lpa should render upload document page with correct content for lpa 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds top-errors-hook"></div>

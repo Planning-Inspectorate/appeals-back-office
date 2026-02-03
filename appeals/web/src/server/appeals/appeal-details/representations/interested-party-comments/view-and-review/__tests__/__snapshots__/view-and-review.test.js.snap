@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`interested-party-comments GET /add-document GET /add-document should render the add document details page 1`] = `
+exports[`interested-party-comments GET /add-document GET /add-document should render the upload document details page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
@@ -178,7 +178,7 @@ exports[`interested-party-comments GET /manage-documents/:folderId/ should rende
         </div>
     </div><a href="/appeals-service/appeal-details/2/interested-party-comments/5/add-document"
     role="button" draggable="false" class="govuk-button govuk-button--secondary"
-    data-module="govuk-button"> Add document</a>
+    data-module="govuk-button"> Upload document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <table class="govuk-table" id="documents-table">

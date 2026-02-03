@@ -142,7 +142,7 @@ export const addPageContentToLocals = async (req, _res, next) => {
 		preHeadingTextOverride: `Appeal ${shortAppealReference}`,
 		manageDocuments: {
 			pageHeadingTextOverride: `${typeText} proof of evidence and witnesses documents`,
-			addButtonTextOverride: 'Add document',
+			addButtonTextOverride: 'Upload document',
 			dateColumnLabelTextOverride: 'Submitted'
 		},
 		addDocument: {

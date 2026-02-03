@@ -12,7 +12,7 @@ const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 
-describe('rule 6 party statement - add document', () => {
+describe('rule 6 party statement - upload document', () => {
 	beforeEach(() => {
 		installMockApi();
 
@@ -188,7 +188,7 @@ describe('rule 6 party statement - add document', () => {
 				rootElement: 'body'
 			}).innerHTML;
 
-			expect(unprettifiedHTML).toContain('Check details and add document</h1>');
+			expect(unprettifiedHTML).toContain('Check details and upload document</h1>');
 			expect(unprettifiedHTML).toContain('Appeal 351062</span>');
 			expect(unprettifiedHTML).toContain('test-document.txt</a>');
 			expect(unprettifiedHTML).toContain('Redaction status</dt>');
@@ -197,7 +197,7 @@ describe('rule 6 party statement - add document', () => {
 	});
 
 	describe('POST /add-document/check-your-answers', () => {
-		it('should call the API to add document and redirect to rule 6 party statement page', async () => {
+		it('should call the API to upload document and redirect to rule 6 party statement page', async () => {
 			await request.post(`${baseUrl}/2/rule-6-party-statement/1/add-document`).send({
 				'upload-info': fileUploadInfo
 			});

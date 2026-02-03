@@ -2910,7 +2910,7 @@ describe('LPA Questionnaire review', () => {
 			);
 		});
 
-		it('should render the add document details page with one item per unpublished document, and without a late entry status tag and associated details component, if the folder is not additional documents', async () => {
+		it('should render the upload document details page with one item per unpublished document, and without a late entry status tag and associated details component, if the folder is not additional documents', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
@@ -2933,7 +2933,7 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Appeal notification documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -2945,7 +2945,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
 
-		it('should render the add document details page with one item per unpublished document, and without a late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has no validation outcome', async () => {
+		it('should render the upload document details page with one item per unpublished document, and without a late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has no validation outcome', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
@@ -2968,7 +2968,7 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -2980,7 +2980,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
 
-		it('should render the add document details page with one item per unpublished document, and without a late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of incomplete', async () => {
+		it('should render the upload document details page with one item per unpublished document, and without a late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of incomplete', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataIncompleteOutcome);
@@ -3003,7 +3003,7 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -3015,7 +3015,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
 
-		it('should render the add document details page with one item per unpublished document, and with a late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of complete', async () => {
+		it('should render the upload document details page with one item per unpublished document, and with a late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of complete', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataCompleteOutcome);
@@ -3038,7 +3038,7 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -3088,7 +3088,7 @@ describe('LPA Questionnaire review', () => {
 			);
 		});
 
-		it('should render the add document details page with one item per unpublished document, and without a late entry status tag and associated details component, if the folder is not additional documents', async () => {
+		it('should render the upload document details page with one item per unpublished document, and without a late entry status tag and associated details component, if the folder is not additional documents', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
@@ -3111,7 +3111,7 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Updated appeal notification document</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -3123,7 +3123,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
 
-		it('should render the add document details page with one item per unpublished document, and without a late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has no validation outcome', async () => {
+		it('should render the upload document details page with one item per unpublished document, and without a late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has no validation outcome', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
@@ -3146,7 +3146,7 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Updated additional document</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -3158,7 +3158,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
 
-		it('should render the add document details page with one item per unpublished document, and without a late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of incomplete', async () => {
+		it('should render the upload document details page with one item per unpublished document, and without a late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of incomplete', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataIncompleteOutcome);
@@ -3181,7 +3181,7 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Updated additional document</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -3193,7 +3193,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
 
-		it('should render the add document details page with one item per unpublished document, and with a late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of complete', async () => {
+		it('should render the upload document details page with one item per unpublished document, and with a late entry status tag and associated details component, if the folder is additional documents, and the lpa questionnaire has a validation outcome of complete', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataCompleteOutcome);
@@ -3216,7 +3216,7 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('Updated additional document</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
@@ -3728,7 +3728,7 @@ describe('LPA Questionnaire review', () => {
 			);
 		});
 
-		it('should render the add documents check and confirm page with summary list row displaying info on the uploaded document', async () => {
+		it('should render the upload documents check and confirm page with summary list row displaying info on the uploaded document', async () => {
 			const addDocumentsResponse = await request.post(`${baseUrl}/add-documents/1`).send({
 				'upload-info': fileUploadInfo
 			});
@@ -3879,7 +3879,7 @@ describe('LPA Questionnaire review', () => {
 			);
 		});
 
-		it('should render the add documents check and confirm page with summary list row displaying info on the uploaded document', async () => {
+		it('should render the upload documents check and confirm page with summary list row displaying info on the uploaded document', async () => {
 			const addDocumentsResponse = await request.post(`${baseUrl}/add-documents/1/1`).send({
 				'upload-info': fileUploadInfo
 			});
@@ -4043,7 +4043,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('ph0-documentFolderInfo.jpeg</span>');
 			expect(unprettifiedElement.innerHTML).toContain('ph1-documentFolderInfo.jpeg</a>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/${documentFolderInfo.folderId}" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button"> Add document</a>`
+				`<a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/${documentFolderInfo.folderId}" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button"> Upload document</a>`
 			);
 		});
 

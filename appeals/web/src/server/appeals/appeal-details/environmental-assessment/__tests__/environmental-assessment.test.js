@@ -199,7 +199,7 @@ describe('environmental-assessment', () => {
 
 			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true });
 			expect(unprettifiedHtml.innerHTML).toContain(
-				`<a href="/appeals-service/appeal-details/${appealId}/environmental-assessment/upload-documents/${folderId}" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button"> Add document</a>`
+				`<a href="/appeals-service/appeal-details/${appealId}/environmental-assessment/upload-documents/${folderId}" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button"> Upload document</a>`
 			);
 		});
 	});

@@ -92,7 +92,7 @@ describe('proof-of-evidence', () => {
 
 	for (const proofOfEvidenceType of proofOfEvidenceTypes) {
 		describe(`GET /add-document for ${proofOfEvidenceType.type}`, () => {
-			it(`should render add document page with correct content for ${proofOfEvidenceType.type}`, async () => {
+			it(`should render upload document page with correct content for ${proofOfEvidenceType.type}`, async () => {
 				const response = await request.get(
 					`${baseUrl}/2/proof-of-evidence/${proofOfEvidenceType.type}/add-document`
 				);

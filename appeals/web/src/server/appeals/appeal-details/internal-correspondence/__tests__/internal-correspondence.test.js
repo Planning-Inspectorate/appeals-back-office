@@ -197,7 +197,7 @@ describe('internal correspondence', () => {
 				);
 			});
 
-			it(`should redirect to the add document details page if upload-info is present in the request body and in the correct format (${correspondenceCategory})`, async () => {
+			it(`should redirect to the upload document details page if upload-info is present in the request body and in the correct format (${correspondenceCategory})`, async () => {
 				const response = await request
 					.post(
 						// @ts-ignore
@@ -321,7 +321,7 @@ describe('internal correspondence', () => {
 				);
 			});
 
-			it(`should redirect to the add document details page if upload-info is present in the request body and in the correct format (${correspondenceCategory})`, async () => {
+			it(`should redirect to the upload document details page if upload-info is present in the request body and in the correct format (${correspondenceCategory})`, async () => {
 				const response = await request
 					.post(
 						// @ts-ignore
@@ -403,7 +403,7 @@ describe('internal correspondence', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(
 					`${convertToTitle(correspondenceCategory)} correspondence</h1>`
 				);
@@ -513,7 +513,7 @@ describe('internal correspondence', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(
 					`${convertToTitleForChangePage(correspondenceCategory)} correspondence</h1>`
 				);
@@ -577,7 +577,7 @@ describe('internal correspondence', () => {
 
 					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-					expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+					expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(
 						`${convertToTitleForChangePage(correspondenceCategory)} correspondence</h1>`
 					);
@@ -642,7 +642,7 @@ describe('internal correspondence', () => {
 
 					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-					expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+					expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(
 						`${convertToTitleForChangePage(correspondenceCategory)} correspondence</h1>`
 					);
@@ -701,7 +701,7 @@ describe('internal correspondence', () => {
 
 					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-					expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+					expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(
 						`${convertToTitleForChangePage(correspondenceCategory)} correspondence</h1>`
 					);
@@ -738,7 +738,7 @@ describe('internal correspondence', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(
 					`${convertToTitleForChangePage(correspondenceCategory)} correspondence</h1>`
 				);
@@ -846,7 +846,7 @@ describe('internal correspondence', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(
 					`${convertToTitle(correspondenceCategory)} correspondence</h1>`
 				);
@@ -955,7 +955,7 @@ describe('internal correspondence', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(
 					`${convertToTitleForChangePage(correspondenceCategory)} correspondence</h1>`
 				);
@@ -1019,7 +1019,7 @@ describe('internal correspondence', () => {
 
 					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-					expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+					expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(
 						`${convertToTitleForChangePage(correspondenceCategory)} correspondence</h1>`
 					);
@@ -1084,7 +1084,7 @@ describe('internal correspondence', () => {
 
 					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-					expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+					expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(
 						`${convertToTitleForChangePage(correspondenceCategory)} correspondence</h1>`
 					);
@@ -1143,7 +1143,7 @@ describe('internal correspondence', () => {
 
 					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-					expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+					expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 					expect(unprettifiedElement.innerHTML).toContain(
 						`${convertToTitleForChangePage(correspondenceCategory)} correspondence</h1>`
 					);
@@ -1180,7 +1180,7 @@ describe('internal correspondence', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain('Upload document details</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(
 					`${convertToTitleForChangePage(correspondenceCategory)} correspondence</h1>`
 				);
@@ -1268,7 +1268,7 @@ describe('internal correspondence', () => {
 				);
 			});
 
-			it(`should render the add documents check and confirm page with summary list row displaying info on the uploaded document (${correspondenceCategory})`, async () => {
+			it(`should render the upload documents check and confirm page with summary list row displaying info on the uploaded document (${correspondenceCategory})`, async () => {
 				const addDocumentsResponse = await request
 					.post(
 						// @ts-ignore
@@ -1439,7 +1439,7 @@ describe('internal correspondence', () => {
 				);
 			});
 
-			it(`should render the add documents check and confirm page with summary list row displaying info on the uploaded document (${correspondenceCategory})`, async () => {
+			it(`should render the upload documents check and confirm page with summary list row displaying info on the uploaded document (${correspondenceCategory})`, async () => {
 				const addDocumentsResponse = await request
 					.post(
 						// @ts-ignore
@@ -1623,7 +1623,7 @@ describe('internal correspondence', () => {
 					`${convertToTitle(correspondenceCategory)} correspondence documents</h1>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					`<a href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button"> Add document</a>`
+					`<a href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button"> Upload document</a>`
 				);
 			});
 		}
