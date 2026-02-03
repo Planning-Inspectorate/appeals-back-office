@@ -1,4 +1,5 @@
 import { createCheckboxTextItemsValidator } from '#lib/validators/checkbox-text-items.validator.js';
+import { createYesNoRadioValidator } from '#lib/validators/radio.validator.js';
 import { LENGTH_1000, LENGTH_250 } from '@pins/appeals/constants/support.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
@@ -18,4 +19,9 @@ export const validateInvalidReason = createValidator(
 export const validateInvalidReasonTextItems = createCheckboxTextItemsValidator(
 	'invalidReason',
 	LENGTH_250
+);
+
+export const validateLegalInterest = createYesNoRadioValidator(
+	'legalInterest',
+	'Select yes if the appellant sent any information about their legal interest in the land'
 );

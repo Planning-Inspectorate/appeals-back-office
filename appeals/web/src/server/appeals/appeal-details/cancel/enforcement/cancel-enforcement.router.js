@@ -16,4 +16,13 @@ router
 		asyncHandler(controller.postInvalidReason)
 	);
 
+router
+	.route('/legal-interest')
+	.get(asyncHandler(controller.getLegalInterest))
+	.post(
+		saveBodyToSession('cancelAppeal', { scopeToAppeal: true }),
+		validators.validateLegalInterest,
+		asyncHandler(controller.postLegalInterest)
+	);
+
 export default router;
