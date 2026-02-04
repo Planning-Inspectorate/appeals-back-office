@@ -1,5 +1,6 @@
 // @ts-nocheck
-import { tryMapDocument } from '#appeals/appeal-details/audit/audit.mapper.js';
+import { mapEmailToRecipientType } from '#appeals/appeal-details/audit/audit.controller.js';
+import { tryMapDocument, tryMapUsers } from '#appeals/appeal-details/audit/audit.mapper.js';
 import { statusFormatMap } from '#appeals/appeal-details/representations/document-attachments/controller/redaction-status.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import {
@@ -10,6 +11,7 @@ import {
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
+import { AUDIT_TRIAL_RULE_6_PARTY_ID } from '@pins/appeals/constants/support.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -72,6 +74,43 @@ describe('audit', () => {
 		it('should include the redaction status in the audit log display text for a supporting document', async () => {
 			const result = await tryMapDocument(1, auditTrailEntryText, docInfo, null);
 			expect(result).toMatch(/unredacted|no redaction required|redacted/);
+		});
+	});
+
+	describe('tryMapUsers', () => {
+		it('should map Rule 6 party ID to "Rule 6 party"', async () => {
+			const log = `User ${AUDIT_TRIAL_RULE_6_PARTY_ID} did something`;
+			const result = await tryMapUsers(log, {}, {});
+			expect(result).toBe('User Rule 6 party did something');
+		});
+	});
+
+	describe('mapEmailToRecipientType', () => {
+		const appeal = {
+			appellant: { email: 'appellant@example.com' },
+			agent: { email: 'agent@example.com' },
+			lpaEmailAddress: 'lpa@example.com',
+			appealRule6Parties: [{ serviceUser: { email: 'rule6@example.com' } }]
+		};
+		const inspectorEmail = 'inspector@example.com';
+		const caseOfficerEmail = 'caseofficer@example.com';
+		const ipComments = {
+			items: [{ represented: { email: 'ip@example.com' } }]
+		};
+
+		it.each([
+			{ email: 'appellant@example.com', expected: 'appellant' },
+			{ email: 'agent@example.com', expected: 'agent' },
+			{ email: 'lpa@example.com', expected: 'LPA' },
+			{ email: 'caseofficer@example.com', expected: 'case officer' },
+			{ email: 'inspector@example.com', expected: 'inspector' },
+			{ email: 'ip@example.com', expected: 'interested party' },
+			{ email: 'rule6@example.com', expected: 'Rule 6 party' },
+			{ email: 'unknown@example.com', expected: 'unknown' }
+		])('should return "$expected" for $expected email', ({ email, expected }) => {
+			expect(
+				mapEmailToRecipientType(email, appeal, inspectorEmail, caseOfficerEmail, ipComments)
+			).toBe(expected);
 		});
 	});
 

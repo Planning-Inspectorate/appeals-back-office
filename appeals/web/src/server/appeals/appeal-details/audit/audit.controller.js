@@ -235,5 +235,12 @@ export const mapEmailToRecipientType = (
 		return 'interested party';
 	}
 
+	const rule6Parties = appeal.appealRule6Parties || [];
+	for (const rule6Party of rule6Parties) {
+		if (rule6Party.serviceUser?.email?.toLowerCase() === normalizedRecipient) {
+			return 'Rule 6 party';
+		}
+	}
+
 	return 'unknown';
 };
