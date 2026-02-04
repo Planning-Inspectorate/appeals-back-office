@@ -168,14 +168,18 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 	 */
 	let rule6StatementTexts = [];
 	if (config.featureFlags.featureFlagRule6Statement) {
-		rule6StatementTexts = Object.values(
-			appeal.documentationSummary?.rule6PartyStatements || {}
-		)?.map((statement) => {
-			return `<a href="${addBackLinkQueryToUrl(
-				request,
-				`/appeals-service/appeal-details/${appeal.appealId}/rule6-statement`
-			)}" class="govuk-link">1 ${statement.organisationName} statement</a>`;
-		});
+		rule6StatementTexts = Object.values(appeal.documentationSummary?.rule6PartyStatements || {})
+			.filter(
+				(statement) =>
+					statement.representationStatus === APPEAL_REPRESENTATION_STATUS.VALID ||
+					statement.representationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+			)
+			.map((statement) => {
+				return `<a href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appeal.appealId}/rule6-statement`
+				)}" class="govuk-link">1 ${statement.organisationName} statement</a>`;
+			});
 	}
 
 	const valueTexts = /** @type {string[]} */ (
