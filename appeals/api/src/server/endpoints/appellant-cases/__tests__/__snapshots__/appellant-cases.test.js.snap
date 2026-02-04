@@ -1382,6 +1382,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "localPlanningDepartment": "Maidstone Borough Council",
   "numberOfResidencesNetChange": 5,
   "planningApplicationReference": "48269/APP/2021/1482",
+  "planningObligation": {},
   "procedureType": "Written",
   "siteAccessRequired": {
     "details": "There is no mobile reception at the site",
@@ -1456,6 +1457,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "localPlanningDepartment": "Maidstone Borough Council",
   "numberOfResidencesNetChange": 5,
   "planningApplicationReference": "48269/APP/2021/1482",
+  "planningObligation": {},
   "procedureType": "Written",
   "siteAccessRequired": {
     "details": "There is no mobile reception at the site",
@@ -1527,6 +1529,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "localPlanningDepartment": "Maidstone Borough Council",
   "numberOfResidencesNetChange": 5,
   "planningApplicationReference": "48269/APP/2021/1482",
+  "planningObligation": {},
   "procedureType": "Written",
   "siteAccessRequired": {
     "details": "There is no mobile reception at the site",
@@ -1617,6 +1620,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "localPlanningDepartment": "Maidstone Borough Council",
   "numberOfResidencesNetChange": 5,
   "planningApplicationReference": "48269/APP/2021/1482",
+  "planningObligation": {},
   "procedureType": "Written",
   "siteAccessRequired": {
     "details": "There is no mobile reception at the site",

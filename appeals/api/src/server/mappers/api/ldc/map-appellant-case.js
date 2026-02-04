@@ -13,6 +13,10 @@ export const mapLdcAppellantCase = (data) => {
 	} = data;
 
 	return {
+		planningObligation: {
+			hasObligation: appellantCase?.planningObligation,
+			status: appellantCase?.statusPlanningObligation
+		},
 		siteUseAtTimeOfApplication: appellantCase?.siteUseAtTimeOfApplication,
 		applicationMadeUnderActSection: /** @type {ApplicationMadeUnderActSection} */ (
 			appellantCase?.applicationMadeUnderActSection
