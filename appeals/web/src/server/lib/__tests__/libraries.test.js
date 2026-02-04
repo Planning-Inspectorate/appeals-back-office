@@ -1610,7 +1610,7 @@ describe('url-utilities', () => {
 				url: '/appeals-service/all-cases',
 				secure: true,
 				headers: {
-					host: 'localhost:3000'
+					host: 'localhost:3999'
 				},
 				originalUrl: '/appeals-service/all-cases'
 			});

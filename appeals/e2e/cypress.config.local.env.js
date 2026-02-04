@@ -10,7 +10,7 @@ if (!baseConfig.e2e.baseUrl) {
 }
 
 if (!baseConfig.e2e.apiBaseUrl) {
-	baseConfig.e2e.apiBaseUrl = 'http://localhost:3000/';
+	baseConfig.e2e.apiBaseUrl = 'http://localhost:3999/';
 }
 
 module.exports = defineConfig({
