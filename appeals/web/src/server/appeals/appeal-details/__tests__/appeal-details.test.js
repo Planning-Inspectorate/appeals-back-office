@@ -204,6 +204,10 @@ describe('appeal-details', () => {
 							}
 						});
 					nock('http://test/')
+						.get(`/appeals/${appealId}?include=neighbouringSites`)
+						.reply(200, appealData)
+						.persist();
+					nock('http://test/')
 						.get(`/appeals/${appealId}?include=all`)
 						.reply(200, appealData)
 						.persist();
@@ -242,6 +246,10 @@ describe('appeal-details', () => {
 						siteId: 1
 					});
 					nock('http://test/')
+						.get(`/appeals/${appealData.appealId}?include=neighbouringSites`)
+						.reply(200, appealData)
+						.persist();
+					nock('http://test/')
 						.get(`/appeals/${appealData.appealId}?include=all`)
 						.reply(200, appealData)
 						.persist();
@@ -278,6 +286,9 @@ describe('appeal-details', () => {
 					nock('http://test/').delete(`/appeals/${appealReference}/neighbouring-sites`).reply(200, {
 						siteId: 1
 					});
+					nock('http://test/')
+						.get(`/appeals/${appealData.appealId}?include=neighbouringSites`)
+						.reply(200, appealData);
 					nock('http://test/')
 						.get(`/appeals/${appealData.appealId}?include=all`)
 						.reply(200, appealData)

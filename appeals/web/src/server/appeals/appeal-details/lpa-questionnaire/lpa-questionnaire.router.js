@@ -67,7 +67,7 @@ router.param('lpaQuestionnaireId', (req, res, next) => {
 
 router.use(
 	'/:lpaQuestionnaireId/neighbouring-sites',
-	validateAppeal,
+	validateAppealWithInclude(['neighbouringSites']),
 	assertUserHasPermission(permissionNames.updateCase),
 	neighbouringSitesRouter
 );
@@ -223,7 +223,7 @@ router.use(
 
 router.use(
 	'/:lpaQuestionnaireId/neighbouring-site-access',
-	validateAppeal,
+	validateAppealWithInclude(['neighbouringSites']),
 	assertUserHasPermission(permissionNames.updateCase),
 	neighbouringSiteAccessRouter
 );

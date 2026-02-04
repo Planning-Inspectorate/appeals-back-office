@@ -1,4 +1,5 @@
 import logger from '#lib/logger.js';
+import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
@@ -30,23 +31,16 @@ export const getAddNeighbouringSite = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderAddNeighbouringSite = async (request, response) => {
-	const {
-		errors,
-		params: { source }
-	} = request;
-
-	const currentUrl = request.originalUrl;
+	const { errors, originalUrl: currentUrl, currentAppeal: appealDetails } = request;
 
 	//Removes /neighbouring-sites/change/affected from the route to take us back to origin (ie LPA questionnaire page or appeals details)
 	const origin = currentUrl.split('/').slice(0, -3).join('/');
-
-	const appealsDetail = request.currentAppeal;
+	const siteAccessBackUrl = getSavedBackUrl(request, 'neighbouring-site-access-back-url-add');
 
 	const mappedPageContents = addNeighbouringSitePage(
-		appealsDetail,
+		appealDetails,
 		// @ts-ignore
-		source,
-		origin,
+		siteAccessBackUrl === null ? origin : siteAccessBackUrl,
 		request.session.neighbouringSite,
 		errors
 	);
@@ -240,10 +234,17 @@ const renderRemoveNeighbouringSite = async (request, response) => {
 
 	//Removes /neighbouring-sites/change/affected from the route to take us back to origin (ie LPA questionnaire page or appeals details)
 	const origin = currentUrl.split('/').slice(0, -4).join('/');
+	const siteAccessBackUrl = getSavedBackUrl(request, 'neighbouring-site-access-back-url-remove');
 
 	const appealDetails = request.currentAppeal;
 
-	const mappedPageContents = removeNeighbouringSitePage(appealDetails, origin, siteId, errors);
+	const mappedPageContents = removeNeighbouringSitePage(
+		appealDetails,
+		origin,
+		siteId,
+		siteAccessBackUrl,
+		errors
+	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContents,
