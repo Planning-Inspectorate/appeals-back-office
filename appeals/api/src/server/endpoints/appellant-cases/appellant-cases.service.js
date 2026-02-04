@@ -35,7 +35,8 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	addressToString,
 	camelToScreamingSnake,
-	capitalizeFirstLetter
+	capitalizeFirstLetter,
+	trimAppealType
 } from '#utils/string-utils.js';
 import {
 	APPEAL_DEVELOPMENT_TYPES,
@@ -233,6 +234,8 @@ export const updateAppellantCaseValidationOutcome = async (
 		}
 	}
 
+	const updatedAppeal = await appealRepository.getAppealById(Number(appealId));
+
 	if (isOutcomeValid(validationOutcome.name)) {
 		const latestDocumentVersionsUpdated = await documentRepository.setRedactionStatusOnValidation(
 			appeal.id
@@ -245,30 +248,37 @@ export const updateAppellantCaseValidationOutcome = async (
 			);
 		}
 
-		// Don't send for enforcement notice
-		if (groundABarred === undefined) {
-			const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-			if (!recipientEmail) {
-				throw new Error(ERROR_NO_RECIPIENT_EMAIL);
-			}
-			const personalisation = {
-				appeal_reference_number: appeal.reference,
-				lpa_reference: appeal.applicationReference || '',
-				site_address: siteAddress,
-				feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key),
-				team_email_address: teamEmail
-			};
-			await notifySend({
-				azureAdUserId,
-				templateName: 'appeal-confirmed',
-				notifyClient,
-				recipientEmail,
-				personalisation
-			});
+		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+		if (!recipientEmail) {
+			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 		}
+		const isEnforcement = appeal.appealType.key === APPEAL_CASE_TYPE.C;
+		const personalisation = {
+			appeal_reference_number: appeal.reference,
+			lpa_reference: appeal.applicationReference || '',
+			site_address: siteAddress,
+			feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key),
+			team_email_address: teamEmail,
+			...(isEnforcement && {
+				local_planning_authority: updatedAppeal?.lpa?.name || '',
+				appeal_type: trimAppealType(appeal.appealType.type),
+				enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
+				appeal_grounds:
+					updatedAppeal?.appealGrounds?.map((ground) => ground.ground?.groundRef || '').sort() ||
+					[],
+				ground_a_barred: groundABarred || false,
+				other_info: otherInformation || ''
+			})
+		};
+		await notifySend({
+			azureAdUserId,
+			templateName: isEnforcement ? 'appeal-confirmed-enforcement' : 'appeal-confirmed',
+			notifyClient,
+			recipientEmail,
+			personalisation
+		});
 	}
 
-	const updatedAppeal = await appealRepository.getAppealById(Number(appealId));
 	if (updatedAppeal) {
 		const { caseExtensionDate: updatedDueDate, appellantCase: updatedAppellantCase } =
 			updatedAppeal;
