@@ -101,8 +101,8 @@ extends:
             displayName: 'Check PR labels'
           - script: |
               openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-                -keyout appeals/web/certificate-key.pem \
-                -out appeals/web/certificate.pem \
+                -keyout ./certificate-key.pem \
+                -out ./certificate.pem \
                 -subj "/C=UK/ST=./L=./O=./CN=pins_azurite" \
                 -addext "subjectAltName=DNS:pins_azurite,DNS:localhost,IP:127.0.0.1" \
                 -addext "keyUsage=digitalSignature,keyEncipherment" \
@@ -137,15 +137,20 @@ extends:
               echo "##vso[task.setvariable variable=AZURE_BLOB_EMULATOR_SAS_HOST_WEB]https://127.0.0.1:10000/devstoreaccount1/document-service-uploads?${SAS_URL}"
             condition: eq(variables['runE2E'], 'true')
             displayName: "Generate SAS Url Web"
-          - script: AZURE_BLOB_EMULATOR_SAS_HOST=$(AZURE_BLOB_EMULATOR_SAS_HOST) AZURE_BLOB_EMULATOR_SAS_HOST_WEB=$(AZURE_BLOB_EMULATOR_SAS_HOST_WEB) AUTH_TENANT_ID=$(AZURE_TENANT_ID) AUTH_CLIENT_SECRET=$(AUTH_CLIENT_SECRET) AUTH_CLIENT_ID=$(AUTH_CLIENT_ID) GIT_SHA=$(Build.SourceVersion) docker-compose up -d
+          - script: docker-compose up -d
+            env:
+              AZURE_BLOB_EMULATOR_SAS_HOST: $(AZURE_BLOB_EMULATOR_SAS_HOST)
+              AZURE_BLOB_EMULATOR_SAS_HOST_WEB: $(AZURE_BLOB_EMULATOR_SAS_HOST_WEB)
+              AUTH_TENANT_ID: $(AZURE_TENANT_ID)
+              AUTH_CLIENT_SECRET: $(AUTH_CLIENT_SECRET)
+              AUTH_CLIENT_ID: $(AUTH_CLIENT_ID)
+              GIT_SHA: $(Build.SourceVersion)
             condition: eq(variables['runE2E'], 'true')
             displayName: "Start database, azurite, api and web docker containers"
           - script: docker ps
             condition: eq(variables['runE2E'], 'true')
             displayName: "Check all containers are up"
           - script: |
-              export REQUESTS_CA_BUNDLE=appeals/web/certificate.pem
-
               az storage cors add \
                 --services b \
                 --methods GET PUT OPTIONS \
@@ -158,6 +163,8 @@ extends:
               az storage container create \
                 --name document-service-uploads \
                 --connection-string "DefaultEndpointsProtocol=https;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=https://127.0.0.1:10000/devstoreaccount1;"
+            env:
+              REQUESTS_CA_BUNDLE: ./certificate.pem
             condition: eq(variables['runE2E'], 'true')
             displayName: "Configure azurite"
           - template: ../steps/node_script.yml
@@ -170,7 +177,7 @@ extends:
               nodeVersion: 22
               script: npm --prefix ./appeals/api run db:migrate
               environmentVariables:
-                NODE_ENV: test
+                NODE_ENV: development
                 DATABASE_URL: "sqlserver://127.0.0.1:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true"
               condition: eq(variables['runE2E'], 'true')
           - template: ../steps/node_script.yml
@@ -178,13 +185,13 @@ extends:
               nodeVersion: 22
               script: npm --prefix ./appeals/api run db:seed
               environmentVariables:
-                NODE_ENV: test
+                NODE_ENV: development
                 DATABASE_URL: "sqlserver://127.0.0.1:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true"
               condition: eq(variables['runE2E'], 'true')
           - script: curl -v http://localhost:3000/health
             displayName: "Api healthcheck"
             condition: eq(variables['runE2E'], 'true')
-          - script: curl --cacert appeals/web/certificate.pem -v https://localhost:8080/health
+          - script: curl --cacert ./certificate.pem -v https://localhost:8080/health
             displayName: "Web healthcheck"
             condition: eq(variables['runE2E'], 'true')
           - script: docker logs pins_azurite
@@ -212,7 +219,7 @@ extends:
                 HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
                 APP: appeals
                 AZURE_TENANT_ID: $(AZURE_TENANT_ID)
-                NODE_EXTRA_CA_CERTS: $(Build.SourcesDirectory)/appeals/web/certificate.pem
+                NODE_EXTRA_CA_CERTS: $(Build.SourcesDirectory)/certificate.pem
               condition: eq(variables['e2eSmoke'], 'true')
           - script: docker logs api
             condition: eq(variables['runE2E'], 'true')

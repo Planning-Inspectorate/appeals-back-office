@@ -19,7 +19,7 @@ COPY turbo.json .
 COPY packages ./packages
 COPY appeals/web ./appeals/web
 
-RUN npm ci --loglevel notice
+RUN npm ci --loglevel notice --omit=dev
 
 ENV NODE_ENV=production
 ENV APP_RELEASE=true
