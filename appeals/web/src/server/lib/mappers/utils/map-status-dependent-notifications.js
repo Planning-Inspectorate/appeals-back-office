@@ -48,7 +48,6 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 	const ALLOWED_CHILD_APPEAL_BANNERS = [
 		'awaitingLinkedAppeal',
 		'appealAwaitingTransfer',
-		'assignCaseOfficer',
 		'readyForValidation',
 		'readyForLpaQuestionnaireReview',
 		'addHearingAddress',

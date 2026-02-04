@@ -23,7 +23,8 @@ describe('mapStatusDependentNotifications', () => {
 			bannerKey: 'assignCaseOfficer',
 			requiredAction: 'assignCaseOfficer',
 			expectedContainedHtml:
-				'<p class="govuk-notification-banner__heading">Appeal ready to be assigned to case officer</p>'
+				'<p class="govuk-notification-banner__heading">Appeal ready to be assigned to case officer</p>',
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
 			bannerKey: 'readyForDecision',
