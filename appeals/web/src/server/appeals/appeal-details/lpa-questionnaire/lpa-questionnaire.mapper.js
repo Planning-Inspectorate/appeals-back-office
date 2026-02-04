@@ -72,7 +72,8 @@ export async function lpaQuestionnairePage(
 		baseAppealRoute,
 		session,
 		request,
-		false
+		false,
+		true
 	);
 
 	const caseSummary = generateCaseSummary(mappedAppealDetails);
@@ -80,7 +81,6 @@ export async function lpaQuestionnairePage(
 	/** @type {PageComponent[]} */
 	let appealTypeSpecificPageComponents = generateCaseTypeSpecificComponents(
 		appealDetails,
-		mappedAppealDetails,
 		mappedLpaqDetails
 	);
 

@@ -46,6 +46,7 @@ export async function appealDetailsPage(
 		session,
 		request,
 		false,
+		false,
 		appellantFinalComments,
 		lpaFinalComments,
 		appellantCase,

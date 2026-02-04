@@ -3,13 +3,9 @@ import { generateSharedS78S20LpaQuestionnaireComponents } from './shared-s78-s20
 
 /**
  * @param {{lpaq: MappedInstructions}} mappedLPAQData
- * @param {{appeal: MappedInstructions}} mappedAppealDetails
  * @returns {PageComponent[]}
  */
-export const generateEnforcementListedLpaQuestionnaireComponents = (
-	mappedLPAQData,
-	mappedAppealDetails
-) => {
+export const generateEnforcementListedLpaQuestionnaireComponents = (mappedLPAQData) => {
 	/** @type {PageComponent[]} */
 	const pageComponents = [];
 
@@ -58,10 +54,7 @@ export const generateEnforcementListedLpaQuestionnaireComponents = (
 	});
 
 	// SECTION 2: Environmental Impact Assessment
-	const sharedComponents = generateSharedS78S20LpaQuestionnaireComponents(
-		mappedLPAQData,
-		mappedAppealDetails
-	);
+	const sharedComponents = generateSharedS78S20LpaQuestionnaireComponents(mappedLPAQData);
 	pageComponents.push(sharedComponents[0]);
 
 	// SECTION 3: Notifying relevant parties
@@ -112,7 +105,7 @@ export const generateEnforcementListedLpaQuestionnaireComponents = (
 			card: { title: { text: '5. Site access' } },
 			rows: [
 				mappedLPAQData.lpaq?.siteAccess?.display.summaryListItem,
-				mappedAppealDetails.appeal.lpaNeighbouringSites?.display.summaryListItem,
+				mappedLPAQData.lpaq?.lpaNeighbouringSites?.display.summaryListItem,
 				mappedLPAQData.lpaq?.reasonForNeighbourVisits?.display.summaryListItem,
 				mappedLPAQData.lpaq?.lpaHealthAndSafety?.display.summaryListItem
 			].filter(isDefined)

@@ -1,4 +1,4 @@
-import { mapLpaNeighbouringSites } from '../appeal/submappers/lpa-neighbouring-sites.mapper.js';
+import { mapLpaNeighbouringSitesLpaqAdapter } from '../appeal/submappers/lpa-neighbouring-sites.mapper.js';
 import { submaps as hasSubmaps } from './has.js';
 import { mapAppealUnderActSection } from './submappers/map-appeal-under-act-section.js';
 import { mapCommunityInfrastructureLevy } from './submappers/map-community-infrastructure-levy.js';
@@ -38,7 +38,7 @@ export const submaps = {
 	//Section 3
 	siteAccess: mapSiteAccess,
 	reasonForNeighbourVisits: mapReasonForNeighbourVisits,
-	lpaNeighbouringSites: mapLpaNeighbouringSites,
+	lpaNeighbouringSites: mapLpaNeighbouringSitesLpaqAdapter,
 
 	//Section 4
 	procedurePreference: mapProcedurePreference,

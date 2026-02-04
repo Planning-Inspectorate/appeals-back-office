@@ -258,9 +258,9 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                             <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/lpa"
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/neighbouring-sites/add/lpa"
                                             data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (5. Site access)</span></a>
                                         </li>
                                     </ul>
@@ -627,9 +627,9 @@ exports[`LPA Questionnaire review GET / should render the CAS planning LPA Quest
                             <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/lpa-questionnaire/1/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/add/lpa"
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/lpa-questionnaire/1/neighbouring-sites/add/lpa"
                                             data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (5. Site access)</span></a>
                                         </li>
                                     </ul>
@@ -1025,9 +1025,9 @@ exports[`LPA Questionnaire review GET / should render the Cas Advert LPA Questio
                             <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/4/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/4/lpa-questionnaire/1/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/4/neighbouring-sites/add/lpa"
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/4/lpa-questionnaire/1/neighbouring-sites/add/lpa"
                                             data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (5. Site access)</span></a>
                                         </li>
                                     </ul>
@@ -1385,9 +1385,9 @@ exports[`LPA Questionnaire review GET / should render the Householder LPA Questi
                             <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/lpa"
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/neighbouring-sites/add/lpa"
                                             data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (5. Site access)</span></a>
                                         </li>
                                     </ul>
@@ -1634,9 +1634,9 @@ exports[`LPA Questionnaire review GET / should render the Ldc LPA Questionnaire 
                             <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/6/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (3. Site access)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (3. Site access)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/6/neighbouring-sites/add/lpa"
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/neighbouring-sites/add/lpa"
                                             data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (3. Site access)</span></a>
                                         </li>
                                     </ul>
@@ -2145,9 +2145,9 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                             <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (6. Site access)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (6. Site access)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/lpa"
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/neighbouring-sites/add/lpa"
                                             data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (6. Site access)</span></a>
                                         </li>
                                     </ul>
@@ -2567,9 +2567,9 @@ exports[`LPA Questionnaire review GET / should render the advert LPA Questionnai
                             <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/5/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/5/neighbouring-sites/add/lpa"
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/neighbouring-sites/add/lpa"
                                             data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (5. Site access)</span></a>
                                         </li>
                                     </ul>
@@ -2980,9 +2980,9 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                             <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/lpa"
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/neighbouring-sites/add/lpa"
                                             data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (5. Site access)</span></a>
                                         </li>
                                     </ul>
@@ -3336,9 +3336,9 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                             <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/lpa"
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/neighbouring-sites/add/lpa"
                                             data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (5. Site access)</span></a>
                                         </li>
                                     </ul>
@@ -6504,9 +6504,9 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                             <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/lpa"
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/neighbouring-sites/add/lpa"
                                             data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (5. Site access)</span></a>
                                         </li>
                                     </ul>
