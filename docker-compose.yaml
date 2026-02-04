@@ -19,9 +19,8 @@ services:
             - ./appeals/api/.env.e2e
         environment:
             - 'AZURE_BLOB_EMULATOR_SAS_HOST=${AZURE_BLOB_EMULATOR_SAS_HOST}'
-            - 'NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/azurite.crt'
         volumes:
-             - ./appeals/web/certificate.pem:/usr/local/share/ca-certificates/azurite.crt
+             - ./certificate.pem:/certs/certificate.pem
         ports:
             - 3000:3000
     web:
@@ -37,9 +36,10 @@ services:
             - 'AUTH_CLIENT_SECRET=${AUTH_CLIENT_SECRET}'
             - 'AUTH_CLIENT_ID=${AUTH_CLIENT_ID}'
             - 'AUTH_TENANT_ID=${AUTH_TENANT_ID}'
-            - 'SSL_CERT_FILE=certificate.pem'
-            - 'SSL_KEY_FILE=certificate-key.pem'
             - 'AZURE_BLOB_EMULATOR_SAS_HOST=${AZURE_BLOB_EMULATOR_SAS_HOST_WEB}'
+        volumes:
+            - ./certificate.pem:/certs/certificate.pem
+            - ./certificate-key.pem:/certs/certificate-key.pem
         ports:
             - 8080:8080
     pins_azurite:
@@ -55,7 +55,8 @@ services:
             --oauth basic
             --skipApiVersionCheck
         volumes:
-            - ./appeals/web:/certs
+            - ./certificate.pem:/certs/certificate.pem
+            - ./certificate-key.pem:/certs/certificate-key.pem
         ports:
             - "10000:10000"
             - "10001:10001"
