@@ -13,6 +13,11 @@ export const mapLdcAppellantCase = (data) => {
 	} = data;
 
 	return {
+		appellantProcedurePreference: appellantCase?.appellantProcedurePreference,
+		appellantProcedurePreferenceDetails: appellantCase?.appellantProcedurePreferenceDetails,
+		appellantProcedurePreferenceDuration: appellantCase?.appellantProcedurePreferenceDuration,
+		appellantProcedurePreferenceWitnessCount:
+			appellantCase?.appellantProcedurePreferenceWitnessCount,
 		planningObligation: {
 			hasObligation: appellantCase?.planningObligation,
 			status: appellantCase?.statusPlanningObligation

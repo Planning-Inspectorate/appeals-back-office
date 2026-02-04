@@ -1359,6 +1359,10 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   },
   "appellantCaseId": 1,
   "appellantCostsAppliedFor": null,
+  "appellantProcedurePreference": "hearing",
+  "appellantProcedurePreferenceDetails": "Reason for preference",
+  "appellantProcedurePreferenceDuration": 5,
+  "appellantProcedurePreferenceWitnessCount": 1,
   "applicant": {
     "firstName": "Lee",
     "surname": "Thornton",
@@ -1434,6 +1438,10 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   },
   "appellantCaseId": 1,
   "appellantCostsAppliedFor": null,
+  "appellantProcedurePreference": "hearing",
+  "appellantProcedurePreferenceDetails": "Reason for preference",
+  "appellantProcedurePreferenceDuration": 5,
+  "appellantProcedurePreferenceWitnessCount": 1,
   "applicant": {
     "firstName": "Lee",
     "surname": "Thornton",
@@ -1506,6 +1514,10 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   },
   "appellantCaseId": 1,
   "appellantCostsAppliedFor": null,
+  "appellantProcedurePreference": "hearing",
+  "appellantProcedurePreferenceDetails": "Reason for preference",
+  "appellantProcedurePreferenceDuration": 5,
+  "appellantProcedurePreferenceWitnessCount": 1,
   "applicant": {
     "firstName": "Lee",
     "surname": "Thornton",
@@ -1597,6 +1609,10 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   },
   "appellantCaseId": 1,
   "appellantCostsAppliedFor": null,
+  "appellantProcedurePreference": "hearing",
+  "appellantProcedurePreferenceDetails": "Reason for preference",
+  "appellantProcedurePreferenceDuration": 5,
+  "appellantProcedurePreferenceWitnessCount": 1,
   "applicant": {
     "firstName": "Lee",
     "surname": "Thornton",
