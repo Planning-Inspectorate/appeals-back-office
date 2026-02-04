@@ -1,6 +1,6 @@
 // @ts-nocheck
 import {
-	allAppellantCaseOutcomesAreValid,
+	allAppellantCaseOutcomesAreComplete,
 	allLpaQuestionnaireOutcomesAreComplete,
 	isAwaitingLinkedAppeal
 } from '#utils/is-awaiting-linked-appeal.js';
@@ -11,7 +11,7 @@ describe('isAwaitingLinkedAppeal', () => {
 	describe('when appeal status is validation', () => {
 		beforeEach(() => {
 			appeal = {
-				appellantCase: { appellantCaseValidationOutcome: { name: 'valid' } },
+				appellantCase: { appellantCaseValidationOutcome: { name: 'valid', id: 1 } },
 				appealStatus: [{ status: 'validation', valid: true }]
 			};
 		});
@@ -22,7 +22,7 @@ describe('isAwaitingLinkedAppeal', () => {
 					{
 						currentStatus: 'lpa_questionnaire',
 						completedStateList: ['validation'],
-						appellantCase: { appellantCaseValidationOutcome: { name: 'valid' } }
+						appellantCase: { appellantCaseValidationOutcome: { name: 'valid', id: 1 } }
 					},
 					{
 						currentStatus: 'validation',
@@ -39,12 +39,12 @@ describe('isAwaitingLinkedAppeal', () => {
 					{
 						currentStatus: 'lpa_questionnaire',
 						completedStateList: ['validation'],
-						appellantCase: { appellantCaseValidationOutcome: { name: 'valid' } }
+						appellantCase: { appellantCaseValidationOutcome: { name: 'valid', id: 1 } }
 					},
 					{
 						currentStatus: 'validation',
 						completedStateList: [],
-						appellantCase: { appellantCaseValidationOutcome: { name: 'valid' } }
+						appellantCase: { appellantCaseValidationOutcome: { name: 'valid', id: 1 } }
 					}
 				])
 			).toBe(false);
@@ -150,19 +150,19 @@ describe('allLpaQuestionnaireOutcomesAreComplete', () => {
 
 describe('allAppellantCaseOutcomesAreComplete', () => {
 	test('returns true when there are no linked appeals', () => {
-		expect(allAppellantCaseOutcomesAreValid([])).toBe(true);
+		expect(allAppellantCaseOutcomesAreComplete([])).toBe(true);
 	});
 
 	test('returns true when all the linked appeals are valid', () => {
 		expect(
-			allAppellantCaseOutcomesAreValid([
+			allAppellantCaseOutcomesAreComplete([
 				{
 					id: 1,
-					appellantCase: { appellantCaseValidationOutcome: { name: 'valid' } }
+					appellantCase: { appellantCaseValidationOutcome: { name: 'valid', id: 1 } }
 				},
 				{
 					id: 2,
-					appellantCase: { appellantCaseValidationOutcome: { name: 'valid' } }
+					appellantCase: { appellantCaseValidationOutcome: { name: 'valid', id: 1 } }
 				}
 			])
 		).toBe(true);
@@ -170,13 +170,13 @@ describe('allAppellantCaseOutcomesAreComplete', () => {
 
 	test('returns false when at least one of the linked appeals is not valid', () => {
 		expect(
-			allAppellantCaseOutcomesAreValid([
+			allAppellantCaseOutcomesAreComplete([
 				{
 					id: 1
 				},
 				{
 					id: 2,
-					appellantCase: { appellantCaseValidationOutcome: { name: 'valid' } }
+					appellantCase: { appellantCaseValidationOutcome: { name: 'valid', id: 1 } }
 				}
 			])
 		).toBe(false);
@@ -189,10 +189,12 @@ describe('allAppellantCaseOutcomesAreComplete', () => {
 			},
 			{
 				id: 2,
-				appellantCase: { appellantCaseValidationOutcome: { name: 'valid' } }
+				appellantCase: { appellantCaseValidationOutcome: { name: 'valid', id: 1 } }
 			}
 		];
-		expect(allAppellantCaseOutcomesAreValid(linkedAppeals, 1, { name: 'valid' })).toBe(true);
+		expect(allAppellantCaseOutcomesAreComplete(linkedAppeals, 1, { name: 'valid', id: 1 })).toBe(
+			true
+		);
 		expect(linkedAppeals[0].appellantCase.appellantCaseValidationOutcome.name).toBe('valid');
 	});
 });

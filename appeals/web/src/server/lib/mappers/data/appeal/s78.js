@@ -5,6 +5,7 @@ import { mapAppellantFinalComments } from './submappers/appellant-final-comments
 import { mapAppellantStatement } from './submappers/appellant-statement.mapper.js';
 import { mapCaseManagementConferenceDueDate } from './submappers/case-management-conference-due-date.mapper.js';
 import { mapCostsRule6Parties } from './submappers/costs-rule-6-parties.mapper.js';
+import { mapEnforcementReference } from './submappers/enforcement-reference.mapper.js';
 import { mapEnvironmentalAssessment } from './submappers/environmental-assessment.mapper.js';
 import { mapFinalCommentDueDate } from './submappers/final-comment-due-date.mapper.js';
 import { mapAddHearingEstimates } from './submappers/hearing-add-hearing-estimates.js';
@@ -70,5 +71,6 @@ export const submaps = {
 	rule6PartyProofs: mapRule6PartyProofs,
 	costsRule6Parties: mapCostsRule6Parties,
 	appellantStatement: mapAppellantStatement,
-	caseManagementConferenceDueDate: mapCaseManagementConferenceDueDate
+	caseManagementConferenceDueDate: mapCaseManagementConferenceDueDate,
+	enforcementReference: mapEnforcementReference
 };

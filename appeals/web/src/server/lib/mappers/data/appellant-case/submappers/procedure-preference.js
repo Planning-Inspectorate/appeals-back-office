@@ -6,7 +6,7 @@ export const mapProcedurePreference = ({ appellantCaseData, currentRoute }) =>
 	textSummaryListItem({
 		id: 'procedure-preference',
 		text: 'How would you prefer us to decide your appeal?',
-		editable: true,
+		editable: !appellantCaseData.isEnforcementChild,
 		value: getProcedurePreference(appellantCaseData.appellantProcedurePreference),
 		link: `${currentRoute}/procedure-preference/change`,
 		cypressDataName: 'change-procedure-preference'

@@ -22,9 +22,9 @@ const formatAuditTrail = (auditTrail, appealTypeKey) =>
 							folderId: doc.document?.folderId ?? 0,
 							documentType: doc.document?.latestDocumentVersion?.documentType || '',
 							redactionStatus: doc.document?.latestDocumentVersion?.redactionStatus?.key
-					  }
+						}
 					: undefined
-		  }))
+			}))
 		: [];
 
 /**

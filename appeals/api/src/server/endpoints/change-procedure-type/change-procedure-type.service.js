@@ -377,10 +377,10 @@ export const sendChangeProcedureTypeNotifications = async (
 			existingAppealProcedure === 'hearing' && appeal.hearing
 				? `and cancelled your hearing`
 				: existingAppealProcedure === 'inquiry' && appeal.inquiry
-				? `and cancelled your inquiry`
-				: existingAppealProcedure === 'written' && appeal.siteVisit
-				? 'and cancelled your site visit'
-				: ''
+					? `and cancelled your inquiry`
+					: existingAppealProcedure === 'written' && appeal.siteVisit
+						? 'and cancelled your site visit'
+						: ''
 		}.`,
 		appeal_procedure: appealProcedure,
 		team_email_address: await getTeamEmailFromAppealId(appeal.id),

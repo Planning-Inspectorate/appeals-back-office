@@ -133,8 +133,13 @@ exports[`issue-decision GET /decision Linked appeals Linked child appeal should 
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="decision-3" name="decision" type="radio"
-                                        value="split decision">
+                                        value="split_decision">
                                         <label class="govuk-label govuk-radios__label" for="decision-3">Split decision</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="decision-4" name="decision" type="radio"
+                                        value="invalid">
+                                        <label class="govuk-label govuk-radios__label" for="decision-4">Invalid</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -190,8 +195,13 @@ exports[`issue-decision GET /decision Linked appeals Linked lead appeal should r
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="decision-3" name="decision" type="radio"
-                                        value="split decision">
+                                        value="split_decision">
                                         <label class="govuk-label govuk-radios__label" for="decision-3">Split decision</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="decision-4" name="decision" type="radio"
+                                        value="invalid">
+                                        <label class="govuk-label govuk-radios__label" for="decision-4">Invalid</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -247,7 +257,7 @@ exports[`issue-decision GET /decision Single appeal should render the 'what is t
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="decision-3" name="decision" type="radio"
-                                        value="split decision">
+                                        value="split_decision">
                                         <label class="govuk-label govuk-radios__label" for="decision-3">Split decision</label>
                                     </div>
                                     <div class="govuk-radios__item">

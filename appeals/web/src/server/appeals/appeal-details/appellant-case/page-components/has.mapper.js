@@ -55,7 +55,7 @@ export function generateHASComponents(
 									text: lpaText
 								}
 							}
-					  ]
+						]
 					: []),
 				removeSummaryListActions(mappedAppellantCaseData.applicationType.display.summaryListItem),
 				mappedAppellantCaseData.applicationDecision.display.summaryListItem,
@@ -212,7 +212,7 @@ export function generateHASComponents(
 											appellantCaseData.documents.appellantCaseCorrespondence.folderId
 										)
 									},
-									...(userHasUpdateCasePermission
+									...(userHasUpdateCasePermission && !appellantCaseData.isEnforcementChild
 										? [
 												{
 													text: 'Add',
@@ -223,11 +223,11 @@ export function generateHASComponents(
 														documentUploadUrlTemplate
 													)
 												}
-										  ]
+											]
 										: [])
-							  ]
+								]
 							: [
-									...(userHasUpdateCasePermission
+									...(userHasUpdateCasePermission && !appellantCaseData.isEnforcementChild
 										? [
 												{
 													text: 'Add',
@@ -238,9 +238,9 @@ export function generateHASComponents(
 														documentUploadUrlTemplate
 													)
 												}
-										  ]
+											]
 										: [])
-							  ]
+								]
 				}
 			},
 			rows: mappedAppellantCaseData.additionalDocuments.display.summaryListItems

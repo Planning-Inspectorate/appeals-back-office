@@ -51,12 +51,16 @@ apps_config = {
     featureFlagCancelSiteVisit        = true
     featureFlagSearchCaseOfficer      = true
     featureFlagEnforcementNotice      = true
+    featureFlagEnforcementLinked      = true
     featureFlagInvalidDecisionLetter  = true
-    featureFlagRule6Parties           = true
+    featureFlagRule6Mvp               = true
+    featureFlagRule6PoE               = true
     featureFlagExpeditedAppeals       = true
     featureFlagManuallyAddReps        = true
     featureFlagAppellantStatement     = true
+    featureFlagRule6Statement         = true
     featureFlagLDC                    = true
+    featureFlagRule6Costs             = true
 
   }
 

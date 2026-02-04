@@ -49,7 +49,7 @@ export const mapCostsAppellantDecision = ({ appealDetails, currentRoute, session
 		: addBackLinkQueryToUrl(
 				request,
 				`${currentRoute}/issue-decision/issue-appellant-costs-decision-letter-upload`
-		  );
+			);
 
 	return textSummaryListItem({
 		id: 'appellant-costs-decision',

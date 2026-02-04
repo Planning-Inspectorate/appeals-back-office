@@ -54,7 +54,14 @@ router.post(
         #swagger.responses[404] = {}
 	 */
 	validators.addRule6PartyValidator,
-	checkAppealExistsByIdAndAddPartialToRequest(['appealRule6Parties']),
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'appealRule6Parties',
+		'appellant',
+		'agent',
+		'lpa',
+		'address',
+		'appealTimetable'
+	]),
 	asyncHandler(controller.addRule6Party)
 );
 
@@ -83,7 +90,12 @@ router.patch(
         #swagger.responses[404] = {}
 	 */
 	validators.updateRule6PartyValidator,
-	checkAppealExistsByIdAndAddPartialToRequest(['appealRule6Parties']),
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'appealRule6Parties',
+		'lpa',
+		'address',
+		'appealTimetable'
+	]),
 	asyncHandler(controller.updateRule6Party)
 );
 

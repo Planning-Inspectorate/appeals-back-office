@@ -1,9 +1,8 @@
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
 import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
+import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	ERROR_FAILED_TO_SAVE_DATA,
 	VALIDATION_OUTCOME_COMPLETE,
@@ -89,7 +88,7 @@ const postSiteVisit = async (req, res) => {
 
 	try {
 		await createSiteVisit(azureAdUserId, siteVisitData, notifyClient);
-		if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
+		if (isLinkedAppealsActive(appeal)) {
 			await createSiteVisitForLinkedChildAppeals(azureAdUserId, siteVisitData, notifyClient);
 		}
 	} catch (error) {
@@ -98,7 +97,7 @@ const postSiteVisit = async (req, res) => {
 	}
 
 	if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT)) {
-		if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
+		if (isLinkedAppealsActive(appeal)) {
 			await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 		}
 		await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);

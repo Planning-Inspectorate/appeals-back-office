@@ -45,7 +45,7 @@ export const changeServiceUserPage = (
 			errorMessage: errors?.firstName
 				? {
 						text: errors.firstName.msg
-				  }
+					}
 				: undefined
 		}
 	};
@@ -63,7 +63,7 @@ export const changeServiceUserPage = (
 			errorMessage: errors?.lastName
 				? {
 						text: errors.lastName.msg
-				  }
+					}
 				: undefined
 		}
 	};
@@ -81,7 +81,7 @@ export const changeServiceUserPage = (
 			errorMessage: errors?.organisationName
 				? {
 						text: errors.organisationName.msg
-				  }
+					}
 				: undefined
 		}
 	};
@@ -99,7 +99,7 @@ export const changeServiceUserPage = (
 			errorMessage: errors?.emailAddress
 				? {
 						text: errors.emailAddress.msg
-				  }
+					}
 				: undefined
 		}
 	};
@@ -117,7 +117,7 @@ export const changeServiceUserPage = (
 			errorMessage: errors?.phoneNumber
 				? {
 						text: errors.phoneNumber.msg
-				  }
+					}
 				: undefined
 		}
 	};

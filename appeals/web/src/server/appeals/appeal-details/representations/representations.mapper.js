@@ -1,3 +1,4 @@
+import config from '#environment/config.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { ensureArray } from '#lib/array-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
@@ -133,9 +134,9 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 			? `<a href="${addBackLinkQueryToUrl(
 					request,
 					`/appeals-service/appeal-details/${appeal.appealId}/interested-party-comments#valid`
-			  )}" class="govuk-link">${numIpComments} interested party comment${
+				)}" class="govuk-link">${numIpComments} interested party comment${
 					numIpComments === 1 ? '' : 's'
-			  }</a>`
+				}</a>`
 			: null;
 	})();
 
@@ -147,13 +148,47 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 			? `<a href="${addBackLinkQueryToUrl(
 					request,
 					`/appeals-service/appeal-details/${appeal.appealId}/lpa-statement`
-			  )}" class="govuk-link">1 statement</a>`
+				)}" class="govuk-link">1 LPA statement</a>`
 			: null;
+	let appellantStatementText = null;
+	if (config.featureFlags.featureFlagAppellantStatement) {
+		appellantStatementText =
+			appeal.documentationSummary?.appellantStatement?.representationStatus ===
+				APPEAL_REPRESENTATION_STATUS.VALID ||
+			appeal.documentationSummary?.appellantStatement?.representationStatus ===
+				APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+				? `<a href="${addBackLinkQueryToUrl(
+						request,
+						`/appeals-service/appeal-details/${appeal.appealId}/appellant-statement`
+					)}" class="govuk-link">1 appellant statement</a>`
+				: null;
+	}
+	/**
+	 * @type {string[]}
+	 */
+	let rule6StatementTexts = [];
+	if (config.featureFlags.featureFlagRule6Statement) {
+		rule6StatementTexts = Object.values(
+			appeal.documentationSummary?.rule6PartyStatements || {}
+		)?.map((statement) => {
+			return `<a href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appeal.appealId}/rule6-statement`
+			)}" class="govuk-link">1 ${statement.organisationName} statement</a>`;
+		});
+	}
 
-	const valueTexts = [ipCommentsText, lpaStatementText].filter(Boolean);
+	const valueTexts = /** @type {string[]} */ (
+		[ipCommentsText, lpaStatementText, appellantStatementText, ...rule6StatementTexts].filter(
+			Boolean
+		)
+	);
 
 	const totalLpaStatements = lpaStatementText ? 1 : 0;
-	const totalShareCount = numIpComments + totalLpaStatements;
+	const totalAppellantStatements = appellantStatementText ? 1 : 0;
+	const totalRule6Statements = rule6StatementTexts?.length ?? 0;
+	const totalShareCount =
+		numIpComments + totalLpaStatements + totalAppellantStatements + totalRule6Statements;
 
 	/** @type {PageComponent} */
 	const textComponent =
@@ -163,17 +198,17 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 					parameters: {
 						html: `<p class="govuk-body">We’ll share ${
 							totalShareCount === 1 ? 'the ' : ''
-						}${valueTexts.join(' and ')} with the relevant ${
-							totalShareCount === 1 ? 'party' : 'parties'
-						}.</p>`
+						}${new Intl.ListFormat('en-GB', { style: 'long', type: 'conjunction' }).format(
+							valueTexts
+						)} with the relevant ${totalShareCount === 1 ? 'party' : 'parties'}.</p>`
 					}
-			  }
+				}
 			: {
 					type: 'html',
 					parameters: {
 						html: 'There are no statements or interested party comments to share.'
 					}
-			  };
+				};
 
 	/** @type {PageComponent} */
 	const warningComponent =
@@ -183,13 +218,13 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 					parameters: {
 						text: 'Do not progress to proof of evidence and witnesses if you are awaiting any late statements or interested party comments.'
 					}
-			  }
+				}
 			: {
 					type: 'warning-text',
 					parameters: {
 						text: 'Do not confirm until you have reviewed all of the supporting documents and redacted any sensitive information.'
 					}
-			  };
+				};
 
 	let heading;
 	const hearingIsSetUp = Boolean(appeal.hearing?.hearingStartTime && appeal.hearing?.address);
@@ -217,8 +252,8 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 				valueTexts.length > 0
 					? 'Confirm'
 					: appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY
-					? 'Progress to proof of evidence and witnesses'
-					: 'Progress case'
+						? 'Progress to proof of evidence and witnesses'
+						: 'Progress case'
 		}
 	};
 }

@@ -82,8 +82,8 @@ describe('appeals generic mappers', () => {
 		const { appeal } = input;
 		const output = isCaseInvalid(appeal.appealStatus)
 			? findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START)
-			: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.INVALID) ??
-			  findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START);
+			: (findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.INVALID) ??
+				findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START));
 
 		console.log(output);
 		expect(output).toBe('2025-03-18T09:12:33.334Z');
@@ -136,8 +136,8 @@ describe('appeals generic mappers', () => {
 		const { appeal } = input;
 		const output = isCaseInvalid(appeal.appealStatus)
 			? findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START)
-			: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.INVALID) ??
-			  findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START);
+			: (findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.INVALID) ??
+				findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START));
 
 		expect(output).toBe('2025-03-19T09:12:33.334Z');
 	});
@@ -541,6 +541,20 @@ describe('mapAppellantCaseIn', () => {
 			})
 		},
 		{
+			desc: 'LDC case (X)',
+			input: {
+				casedata: {
+					caseType: APPEAL_CASE_TYPE.X,
+					siteUseAtTimeOfApplication: 'test',
+					applicationMadeUnderActSection: 'proposed-use-of-a-development'
+				}
+			},
+			expected: expect.objectContaining({
+				siteUseAtTimeOfApplication: 'test',
+				applicationMadeUnderActSection: 'proposed-use-of-a-development'
+			})
+		},
+		{
 			desc: 'siteAccessDetails and siteSafetyDetails arrays',
 			input: {
 				casedata: { siteAccessDetails: ['access1', 'access2'], siteSafetyDetails: ['safety1'] }
@@ -765,6 +779,22 @@ describe('mapQuestionnaireIn', () => {
 				isSiteInAreaOfSpecialControlAdverts: true,
 				wasApplicationRefusedDueToHighwayOrTraffic: true,
 				didAppellantSubmitCompletePhotosAndPlans: true
+			})
+		},
+		{
+			desc: 'LDC case (X)',
+			input: {
+				casedata: {
+					caseType: APPEAL_CASE_TYPE.X,
+					appealUnderActSection: 'proposed-use-of-a-development',
+					lpaConsiderAppealInvalid: true,
+					lpaAppealInvalidReasons: 'test'
+				}
+			},
+			expected: expect.objectContaining({
+				appealUnderActSection: 'proposed-use-of-a-development',
+				lpaConsiderAppealInvalid: true,
+				lpaAppealInvalidReasons: 'test'
 			})
 		}
 	])('mapQuestionnaireIn: $desc', ({ input, expected }) => {

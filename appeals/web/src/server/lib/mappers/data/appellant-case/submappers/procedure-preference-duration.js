@@ -5,7 +5,7 @@ export const mapProcedurePreferenceDuration = ({ appellantCaseData, currentRoute
 	textSummaryListItem({
 		id: 'procedure-preference-duration',
 		text: 'How many days would you expect the inquiry to last?',
-		editable: true,
+		editable: !appellantCaseData.isEnforcementChild,
 		value: getProcedurePreferenceDuration(appellantCaseData.appellantProcedurePreferenceDuration),
 		link: `${currentRoute}/procedure-preference/duration/change`,
 		cypressDataName: 'change-procedure-preference-duration'

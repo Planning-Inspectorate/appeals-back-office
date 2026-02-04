@@ -1,11 +1,13 @@
 import { Prisma } from '#db-client/client.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { sendRepresentationReceivedNotifications } from '#endpoints/integrations/integrations.controller.js';
 import representationRepository from '#repositories/representation.repository.js';
 import { isStatePassed } from '#state/transition-state.js';
 import BackOfficeAppError from '#utils/app-error.js';
 import { currentStatus } from '#utils/current-status.js';
 import { getPageCount } from '#utils/database-pagination.js';
+import { dateIsPast } from '#utils/date-comparison.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
@@ -13,14 +15,17 @@ import {
 } from '@pins/appeals/constants/common.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
+	AUDIT_TRIAL_RULE_6_PARTY_ID,
 	DEFAULT_PAGE_NUMBER,
 	DEFAULT_PAGE_SIZE,
 	ERROR_NOT_FOUND,
 	ERROR_REP_ONLY_STATEMENT_INCOMPLETE,
 	ERROR_REP_PUBLISH_USING_ENDPOINT
 } from '@pins/appeals/constants/support.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { addDays } from 'date-fns';
 import { notifyOnStatusChange } from './notify/index.js';
 import { formatRepresentation } from './representations.formatter.js';
 import * as representationService from './representations.service.js';
@@ -183,10 +188,38 @@ export async function updateRepresentation(request, response) {
 	);
 
 	if (status !== existingRep.status) {
+		let partyName;
+		let extendedDate;
+
+		const isRule6 = [
+			APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT,
+			APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
+		].includes(updatedRep.representationType);
+		if (isRule6) {
+			partyName = updatedRep.represented?.organisationName;
+		}
+
+		const isAppellantStatement =
+			updatedRep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT;
+
+		if (
+			(isRule6 || isAppellantStatement) &&
+			status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE &&
+			allowResubmit === 'yes'
+		) {
+			try {
+				extendedDate = formatDate(addDays(new Date(), 3), true);
+			} catch (error) {
+				console.error('Error calculating extended date:', error);
+			}
+		}
+
 		const details = getRepStatusAuditLogDetails(
 			status,
 			updatedRep.representationType,
-			!!redactedRepresentation
+			!!redactedRepresentation,
+			partyName || '',
+			extendedDate || ''
 		);
 
 		await createAuditTrail({
@@ -215,6 +248,7 @@ export async function updateRepresentation(request, response) {
  * */
 export const createRepresentation = () => async (req, res) => {
 	const { appealId, representationType } = req.params;
+	const azureAdUserId = req.get('azureAdUserId');
 
 	const shouldAutoPublish = shouldAutoPublishRep(req.appeal, representationType);
 
@@ -238,11 +272,47 @@ export const createRepresentation = () => async (req, res) => {
 		...updatePayload
 	});
 
-	await broadcasters.broadcastRepresentation(
-		rep.id,
-		shouldAutoPublish ? EventType.Create : EventType.Update
-	);
+	await broadcasters.broadcastRepresentation(rep.id, EventType.Create);
 	await broadcasters.broadcastAppeal(Number(appealId));
+
+	if (representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE) {
+		await sendRepresentationReceivedNotifications(
+			req.appeal,
+			req.notifyClient,
+			azureAdUserId || AUDIT_TRIAL_RULE_6_PARTY_ID,
+			'rule-6-party-proof-of-evidence-received'
+		);
+	}
+
+	if (
+		[
+			APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT,
+			APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
+		].includes(representationType)
+	) {
+		const fullRep = await representationService.getRepresentation(rep.id);
+		const partyName = fullRep?.represented?.organisationName;
+		const trail =
+			representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT
+				? CONSTANTS.AUDIT_TRAIL_RULE_6_STATEMENT_ADDED
+				: CONSTANTS.AUDIT_TRAIL_RULE_6_PARTY_PROOFS_EVIDENCE_ADDED;
+		if (partyName) {
+			await createAuditTrail({
+				appealId: parseInt(appealId),
+				azureAdUserId,
+				details: stringTokenReplacement(trail, [partyName])
+			});
+		}
+	}
+
+	if (representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT) {
+		await createAuditTrail({
+			appealId: parseInt(appealId),
+			azureAdUserId,
+			details: CONSTANTS.AUDIT_TRAIL_REP_APPELLANT_STATEMENT_ADDED
+		});
+	}
+
 	return res.status(201).send(rep);
 };
 
@@ -301,6 +371,7 @@ export const updateRejectionReasons = async (req, res) => {
 export const updateRepresentationAttachments = async (req, res) => {
 	const { repId } = req.params;
 	const { attachments } = req.body;
+	const azureAdUserId = req.get('azureAdUserId');
 
 	if (!Array.isArray(attachments) || !attachments.every((id) => typeof id === 'string')) {
 		return res.status(400).send({ errors: { attachments: 'must be an array of strings' } });
@@ -317,6 +388,24 @@ export const updateRepresentationAttachments = async (req, res) => {
 		attachments
 	);
 
+	if (
+		updatedRepresentation.representationType ===
+		APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
+	) {
+		const fullRep = await representationService.getRepresentation(rep.id);
+		const partyName = fullRep?.represented?.organisationName;
+		if (partyName) {
+			await createAuditTrail({
+				appealId: updatedRepresentation.appealId,
+				azureAdUserId: azureAdUserId || AUDIT_TRIAL_RULE_6_PARTY_ID,
+				details: stringTokenReplacement(
+					CONSTANTS.AUDIT_TRAIL_RULE_6_PARTY_PROOFS_EVIDENCE_UPDATED,
+					[partyName]
+				)
+			});
+		}
+	}
+
 	return res.send(updatedRepresentation);
 };
 
@@ -330,7 +419,7 @@ export async function publish(req, res) {
 
 	/** @type {Record<string, import('./representations.service.js').PublishFunction>} */
 	const handlers = {
-		[APPEAL_CASE_STATUS.STATEMENTS]: representationService.publishLpaStatements,
+		[APPEAL_CASE_STATUS.STATEMENTS]: representationService.publishStatements,
 		[APPEAL_CASE_STATUS.FINAL_COMMENTS]: representationService.publishFinalComments,
 		[APPEAL_CASE_STATUS.EVIDENCE]: representationService.publishProofOfEvidence
 	};
@@ -409,6 +498,20 @@ const shouldAutoPublishRep = (appeal, representationType) => {
 			return (
 				isStatePassed(appeal, APPEAL_CASE_STATUS.FINAL_COMMENTS) ||
 				appeal.appealStatus.some((status) => status.status === APPEAL_CASE_STATUS.FINAL_COMMENTS)
+			);
+		case APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT:
+			return (
+				isStatePassed(appeal, APPEAL_CASE_STATUS.STATEMENTS) &&
+				appeal.appealTimetable?.lpaStatementDueDate !== null &&
+				appeal.appealTimetable?.lpaStatementDueDate !== undefined &&
+				dateIsPast(appeal.appealTimetable?.lpaStatementDueDate, new Date())
+			);
+		case APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE:
+			return (
+				isStatePassed(appeal, APPEAL_CASE_STATUS.EVIDENCE) &&
+				appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate !== null &&
+				appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate !== undefined &&
+				dateIsPast(appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate, new Date())
 			);
 		default:
 			return false;

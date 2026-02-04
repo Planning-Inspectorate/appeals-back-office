@@ -5,9 +5,15 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
  * @param {Appeal} appealData
  * @param {string | null} [enforcementReference]
  * @param {import("@pins/express").ValidationErrors | undefined} [errors]
+ * @param {string | null} [backLinkUrl]
  * @returns {PageContent}
  */
-export function changeEnforcementReferencePage(appealData, enforcementReference = null, errors) {
+export function changeEnforcementReferencePage(
+	appealData,
+	enforcementReference = null,
+	errors,
+	backLinkUrl = null
+) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	const enforcementReferenceComponent = /** @type {InputPageComponent} */ {
@@ -29,7 +35,8 @@ export function changeEnforcementReferencePage(appealData, enforcementReference 
 	/** @type {PageContent} */
 	return {
 		title: `Enforcement notice - validation - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
+		backLinkUrl:
+			backLinkUrl ?? `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		// @ts-ignore
 		pageComponents: [enforcementReferenceComponent]

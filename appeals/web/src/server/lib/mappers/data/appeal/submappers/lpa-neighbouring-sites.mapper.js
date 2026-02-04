@@ -17,7 +17,7 @@ export const mapLpaNeighbouringSites = ({
 					appealDetails.neighbouringSites && appealDetails.neighbouringSites.length > 0
 						? displayPageFormatter.formatListOfAddresses(
 								appealDetails.neighbouringSites.filter((site) => site.source === 'lpa')
-						  )
+							)
 						: 'None'
 			},
 			actions: {
@@ -31,7 +31,7 @@ export const mapLpaNeighbouringSites = ({
 									href: `${currentRoute}/neighbouring-sites/manage`,
 									visuallyHiddenText: 'Neighbouring sites (L P A)'
 								}
-						  ]
+							]
 						: []),
 					...(userHasUpdateCasePermission
 						? [
@@ -41,7 +41,7 @@ export const mapLpaNeighbouringSites = ({
 									visuallyHiddenText: 'Neighbouring sites (LPA)',
 									attributes: { 'data-cy': 'add-neighbouring-site-lpa' }
 								}
-						  ]
+							]
 						: [])
 				]
 			},

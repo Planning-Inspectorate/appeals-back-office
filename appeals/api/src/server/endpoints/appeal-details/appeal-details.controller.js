@@ -1,9 +1,8 @@
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { contextEnum } from '#mappers/context-enum.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
+import { hasChildAppeals } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
 import { appealDetailService } from './appeal-details.service.js';
 
@@ -74,7 +73,7 @@ const updateAppealById = async (req, res) => {
 				azureAdUserId,
 				notifyClient
 			);
-			if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) && appeal.childAppeals?.length) {
+			if (hasChildAppeals(appeal)) {
 				await appealDetailService.assignUserForLinkedAppeals(
 					appeal,
 					{ caseOfficer: caseOfficerId, inspector: inspectorId, padsInspector: padsInspectorId },

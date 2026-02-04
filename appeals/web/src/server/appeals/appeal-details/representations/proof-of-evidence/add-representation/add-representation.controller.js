@@ -28,10 +28,10 @@ export const renderDocumentUpload = async (request, response) => {
 	const backButtonUrl = isAtEditEntrypoint(request)
 		? preserveQueryString(request, `${baseUrl}/check-your-answers`, {
 				exclude: ['editEntrypoint']
-		  })
+			})
 		: query.backUrl
-		? String(query.backUrl)
-		: `/appeals-service/appeal-details/${currentAppeal.appealId}`;
+			? String(query.backUrl)
+			: `/appeals-service/appeal-details/${currentAppeal.appealId}`;
 
 	return renderDocumentUploadHelper({
 		request,
@@ -48,8 +48,8 @@ export const renderDocumentUpload = async (request, response) => {
 			proofOfEvidenceType === 'lpa'
 				? APPEAL_DOCUMENT_TYPE.LPA_PROOF_OF_EVIDENCE
 				: proofOfEvidenceType === 'rule-6-party'
-				? APPEAL_DOCUMENT_TYPE.RULE_6_PROOF_OF_EVIDENCE
-				: APPEAL_DOCUMENT_TYPE.APPELLANT_PROOF_OF_EVIDENCE
+					? APPEAL_DOCUMENT_TYPE.RULE_6_PROOF_OF_EVIDENCE
+					: APPEAL_DOCUMENT_TYPE.APPELLANT_PROOF_OF_EVIDENCE
 	});
 };
 
@@ -230,8 +230,8 @@ export const postCheckYourAnswers = async (request, response) => {
 			proofOfEvidenceType === 'lpa'
 				? 'lpaProofOfEvidenceDocumentAddedSuccess'
 				: proofOfEvidenceType === 'rule-6-party'
-				? 'rule6PartyProofOfEvidenceAddedSuccess'
-				: 'appellantProofOfEvidenceDocumentAddedSuccess',
+					? 'rule6PartyProofOfEvidenceAddedSuccess'
+					: 'appellantProofOfEvidenceDocumentAddedSuccess',
 		appealId
 	});
 	return response.redirect(nextPageUrl);

@@ -34,7 +34,7 @@ export const mapLPAProofOfEvidence = ({ appealDetails, currentRoute, request }) 
 						representationStatus,
 						'lpa-proofs-evidence',
 						request
-				  )
+					)
 				: mapAddRepresentationSummaryActionLink(currentRoute, 'lpa-proofs-evidence', request)
 	});
 };

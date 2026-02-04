@@ -12,5 +12,5 @@ export const mapStatusPlanningObligation = ({
 		text: 'What is the status of your planning obligation?',
 		value: formatPlanningObligationStatus(appellantCaseData.planningObligation?.status),
 		link: `${currentRoute}/planning-obligation/status/change`,
-		editable: userHasUpdateCase
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild
 	});

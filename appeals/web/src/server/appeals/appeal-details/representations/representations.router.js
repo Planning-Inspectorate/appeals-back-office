@@ -31,12 +31,6 @@ router.use(
 	rule6PartyStatementRouter
 );
 
-router.use(
-	'/rule-6-party-statement/:rule6PartyId',
-	withSingularRepresentation(APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT),
-	rule6PartyStatementRouter
-);
-
 router.use('/:appealId/proof-of-evidence', proofOfEvidenceRouter);
 
 router

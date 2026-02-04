@@ -104,7 +104,7 @@ export async function lpaQuestionnairePage(
 									text: lpaText
 								}
 							}
-					  ]
+						]
 					: [])
 			]
 		}

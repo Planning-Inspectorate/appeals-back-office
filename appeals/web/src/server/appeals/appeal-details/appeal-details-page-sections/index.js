@@ -41,6 +41,11 @@ export function generateAppealDetailsSections(appealDetails, mappedData, session
 				throw new Error('Feature flag inactive for Enforcement Notice');
 			}
 			return generateS78AppealDetailsPageComponents(appealDetails, mappedData, session);
+		case APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE:
+			if (!isFeatureActive(FEATURE_FLAG_NAMES.LDC)) {
+				throw new Error('Feature flag inactive for LDC');
+			}
+			return generateS78AppealDetailsPageComponents(appealDetails, mappedData, session);
 		default:
 			throw new Error('Invalid appealType, unable to generate display page');
 	}

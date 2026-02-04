@@ -5,7 +5,7 @@ import { CaseDetailsPage } from './caseDetailsPage.js';
 export class CYASection extends CaseDetailsPage {
 	// S E L E C T O R S
 
-	selectors = {
+	cyaSelectors = {
 		previewEmailAppellant: 'preview-email-to-appellant',
 		previewEmailLpa: 'preview-email-to-lpa'
 	};
@@ -27,8 +27,8 @@ export class CYASection extends CaseDetailsPage {
 	};
 
 	previewEmails = {
-		appellant: () => cy.getByData(this.selectors.previewEmailAppellant),
-		lpa: () => cy.getByData(this.selectors.previewEmailLpa)
+		appellant: () => cy.getByData(this.cyaSelectors.previewEmailAppellant),
+		lpa: () => cy.getByData(this.cyaSelectors.previewEmailLpa)
 	};
 
 	fileUploaderElements = {

@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`change-of-use-mineral-storage GET /change should render the changeOfUseMineralStorageRouter change page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Does the enforcement notice include a change of use of land to store minerals in the open?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="change-of-use-mineral-storage-radio"
+                                        name="changeOfUseMineralStorageRadio" type="radio" value="yes" checked>
+                                        <label class="govuk-label govuk-radios__label" for="change-of-use-mineral-storage-radio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="change-of-use-mineral-storage-radio-2"
+                                        name="changeOfUseMineralStorageRadio" type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="change-of-use-mineral-storage-radio-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;

@@ -13,6 +13,6 @@ export const mapLeadOrChild = ({ appealDetails }) => ({
 						),
 						classes: 'govuk-!-margin-left-1 govuk-!-margin-bottom-4'
 					}
-			  }
+				}
 			: {}
 });

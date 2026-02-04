@@ -34,6 +34,9 @@ export const isAppealCaseTypeEnabled = (appealCaseType) => {
 		case APPEAL_CASE_TYPE.C: {
 			return isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE);
 		}
+		case APPEAL_CASE_TYPE.X: {
+			return isFeatureActive(FEATURE_FLAG_NAMES.LDC);
+		}
 	}
 
 	return false;
@@ -79,6 +82,10 @@ export const getEnabledAppealCaseTypes = () => {
 	if (isAppealCaseTypeEnabled(APPEAL_CASE_TYPE.C)) {
 		// @ts-ignore
 		enabledAppeals.push(APPEAL_CASE_TYPE.C);
+	}
+	if (isAppealCaseTypeEnabled(APPEAL_CASE_TYPE.X)) {
+		// @ts-ignore
+		enabledAppeals.push(APPEAL_CASE_TYPE.X);
 	}
 
 	return enabledAppeals;

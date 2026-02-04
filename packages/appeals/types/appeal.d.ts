@@ -36,6 +36,7 @@ export interface AppealSummary {
 	isParentAppeal: boolean;
 	isChildAppeal: boolean;
 	planningApplicationReference: string | null;
+	enforcementReference?: string | null;
 	numberOfResidencesNetChange?: number | null;
 }
 

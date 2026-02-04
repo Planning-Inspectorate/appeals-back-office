@@ -31,13 +31,6 @@ describe('askEnvironmentServiceTeamReviewQuestion', () => {
 			)} not defined in isExpeditedAppealType baseCaseType`
 		);
 		expect(() =>
-			askEnvironmentServiceTeamReviewQuestion(APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE)
-		).toThrow(
-			`Appeal type - ${appealTypeToAppealCaseTypeMapper(
-				APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE
-			)} not defined in isExpeditedAppealType baseCaseType`
-		);
-		expect(() =>
 			askEnvironmentServiceTeamReviewQuestion(APPEAL_TYPE.DISCONTINUANCE_NOTICE)
 		).toThrow(
 			`Appeal type - ${appealTypeToAppealCaseTypeMapper(

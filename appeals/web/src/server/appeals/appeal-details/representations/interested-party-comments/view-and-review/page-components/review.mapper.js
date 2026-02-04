@@ -64,7 +64,7 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment, session
 								value: COMMENT_STATUS.VALID_REQUIRES_REDACTION,
 								text: 'Redact and accept comment',
 								checked: false // This status isn't persisted so will always be unchecked
-						  }
+							}
 						: null
 				].filter(Boolean),
 				{

@@ -6,10 +6,8 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { APPLICATION_FEE_RECEIPT_DOCTYPE } from '@pins/appeals/constants/documents.js';
 import { CHANGE_APPEAL_TYPE_INVALID_REASON } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
-import { capitalize } from 'lodash-es';
+import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import {
 	postChangeDocumentDetails,
 	postChangeDocumentFileName,
@@ -37,6 +35,7 @@ import {
 	mapWebReviewOutcomeToApiReviewOutcome
 } from './appellant-case.mapper.js';
 import * as appellantCaseService from './appellant-case.service.js';
+import { setReviewOutcomeForAppellantCase } from './appellant-case.service.js';
 
 /**
  *
@@ -45,7 +44,7 @@ import * as appellantCaseService from './appellant-case.service.js';
  */
 const allowedFileTypes = (folderPath) => {
 	switch (folderPath) {
-		case `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPLICATION_FEE_RECEIPT_DOCTYPE}`:
+		case `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT}`:
 			return ['doc', 'docx', 'pdf', 'tif', 'jpg', 'png'];
 		default:
 			return undefined;
@@ -81,7 +80,8 @@ const renderAppellantCase = async (request, response) => {
 			stripQueryString(request.originalUrl),
 			getBackLinkUrlFromQuery(request),
 			request.session,
-			errors?.['reviewOutcome'].msg
+			errors?.['reviewOutcome'].msg,
+			request
 		);
 
 		return response.status(200).render('patterns/display-page.pattern.njk', {
@@ -191,18 +191,25 @@ export const postAppellantCase = async (request, response) => {
 					`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${reviewOutcome}/date`
 				);
 			} else {
-				if (
-					currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
-					reviewOutcome === 'invalid'
-				) {
+				if (currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
 					/** @type {import('../appellant-case/appellant-case.types.js').AppellantCaseSessionValidationOutcome} */
 					request.session.webAppellantCaseReviewOutcome = {
 						...request.session.webAppellantCaseReviewOutcome,
-						validationOutcome: 'invalid'
+						validationOutcome: reviewOutcome
 					};
 
+					if (currentAppeal.isChildAppeal) {
+						await setReviewOutcomeForAppellantCase(
+							request.apiClient,
+							currentAppeal.appealId,
+							currentAppeal.appellantCaseId,
+							request.session.webAppellantCaseReviewOutcome
+						);
+						return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
+					}
+
 					return response.redirect(
-						`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/invalid/enforcement-notice`
+						`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${reviewOutcome}/enforcement-notice`
 					);
 				}
 
@@ -351,7 +358,7 @@ export const getAddDocumentDetails = async (request, response) => {
 		backLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/{{folderId}}`,
 		isLateEntry: getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid',
 		...(headingTextOverride && {
-			pageHeadingTextOverride: capitalize(headingTextOverride)
+			pageHeadingTextOverride: capitalizeFirstLetter(headingTextOverride)
 		})
 	});
 };
@@ -472,7 +479,7 @@ export const getManageFolder = async (request, response) => {
 		viewAndEditUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/{{folderId}}/{{documentId}}`,
 		addButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-documents/{{folderId}}`,
 		...(headingTextOverride && {
-			pageHeadingTextOverride: capitalize(headingTextOverride)
+			pageHeadingTextOverride: capitalizeFirstLetter(headingTextOverride)
 		})
 	});
 };

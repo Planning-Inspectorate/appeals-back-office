@@ -2,18 +2,17 @@ import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_DECISION_OUTCOME,
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_CASE_TYPE
+} from '@planning-inspectorate/data-model';
 
 export const VALIDATION_OUTCOME_COMPLETE = 'Complete';
 export const VALIDATION_OUTCOME_INCOMPLETE = 'Incomplete';
 export const VALIDATION_OUTCOME_INVALID = 'Invalid';
 export const VALIDATION_OUTCOME_VALID = 'Valid';
 export const VALIDATION_OUTCOME_CANCEL = 'Cancel';
-
-export const CASE_OUTCOME_ALLOWED = 'allowed';
-export const CASE_OUTCOME_DISMISSED = 'dismissed';
-export const CASE_OUTCOME_SPLIT_DECISION = 'split decision';
-export const CASE_OUTCOME_INVALID = 'invalid';
 
 export const CHANGE_APPEAL_TYPE_INVALID_REASON = 'Wrong appeal type';
 export const INVALID_APPEAL_OTHER_REASON = 'Other reason';
@@ -35,6 +34,41 @@ export const AUDIT_TRAIL_REP_LPA_STATEMENT_STATUS_VALID = 'LPA statement accepte
 export const AUDIT_TRAIL_REP_LPA_STATEMENT_STATUS_INCOMPLETE = 'LPA statement incomplete';
 export const AUDIT_TRAIL_REP_LPA_STATEMENT_STATUS_REDACTED_AND_ACCEPTED =
 	'LPA statement redacted and accepted';
+
+//Appellant statement rep logs
+export const AUDIT_TRAIL_REP_APPELLANT_STATEMENT_STATUS_VALID = 'Appellant statement accepted';
+export const AUDIT_TRAIL_REP_APPELLANT_STATEMENT_STATUS_INCOMPLETE =
+	'Appellant statement incomplete';
+export const AUDIT_TRAIL_REP_APPELLANT_STATEMENT_STATUS_REDACTED_AND_ACCEPTED =
+	'Appellant statement redacted and accepted';
+export const AUDIT_TRAIL_REP_APPELLANT_STATEMENT_STATUS_INCOMPLETE_EXTENDED =
+	'Appellant statement incomplete\n\nAppellant statement due date extended to {replacement0}';
+export const AUDIT_TRAIL_REP_APPELLANT_STATEMENT_ADDED = 'The appellant statement was received';
+
+//Rule 6 statement rep logs
+export const AUDIT_TRAIL_RULE_6_STATEMENT_ADDED = '{replacement0} statement added';
+export const AUDIT_TRAIL_REP_RULE_6_PARTY_STATEMENT_STATUS_VALID =
+	'{replacement0} statement accepted';
+export const AUDIT_TRAIL_REP_RULE_6_PARTY_STATEMENT_STATUS_REDACTED_AND_ACCEPTED =
+	'{replacement0} statement redacted and accepted';
+export const AUDIT_TRAIL_REP_RULE_6_PARTY_STATEMENT_STATUS_INCOMPLETE_EXTENDED =
+	'{replacement0} statement incomplete\n\n{replacement1} statement due date extended to {replacement2}';
+export const AUDIT_TRAIL_REP_RULE_6_PARTY_STATEMENT_STATUS_INCOMPLETE =
+	'{replacement0} statement incomplete';
+
+//Rule 6 proof of evidence and witnesses rep logs
+export const AUDIT_TRAIL_RULE_6_PARTY_PROOFS_EVIDENCE_ADDED =
+	'{replacement0} proof of evidence and witnesses added';
+export const AUDIT_TRAIL_REP_RULE_6_PARTY_PROOFS_EVIDENCE_STATUS_VALID =
+	'{replacement0} proof of evidence and witnesses accepted';
+export const AUDIT_TRAIL_REP_RULE_6_PARTY_PROOFS_EVIDENCE_STATUS_REDACTED_AND_ACCEPTED =
+	'{replacement0} proof of evidence and witnesses redacted and accepted';
+export const AUDIT_TRAIL_REP_RULE_6_PARTY_PROOFS_EVIDENCE_STATUS_INCOMPLETE_EXTENDED =
+	'{replacement0} proof of evidence and witnesses incomplete\n\n{replacement1} proof of evidence and witnesses due date extended to {replacement2}';
+export const AUDIT_TRAIL_REP_RULE_6_PARTY_PROOFS_EVIDENCE_STATUS_INCOMPLETE =
+	'{replacement0} proof of evidence and witnesses incomplete';
+export const AUDIT_TRAIL_RULE_6_PARTY_PROOFS_EVIDENCE_UPDATED =
+	'{replacement0} proof of evidence and witnesses documents updated';
 
 //Interested party comment rep logs
 export const AUDIT_TRAIL_REP_COMMENT_STATUS_VALID = 'Interested party comment accepted';
@@ -101,8 +135,8 @@ export const AUDIT_TRAIL_SITE_VISIT_ARRANGED = 'The site visit was arranged for 
 export const AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED = 'The site visit type was selected';
 export const AUDIT_TRAIL_APPEAL_LINK_ADDED = 'Linked appeal {replacement0} added';
 export const AUDIT_TRAIL_APPEAL_LINK_REMOVED = 'Linked appeal {replacement0} removed';
-export const AUDIT_TRAIL_APPEAL_RELATION_ADDED = 'A related appeal was added';
-export const AUDIT_TRAIL_APPEAL_RELATION_REMOVED = 'A related appeal was removed';
+export const AUDIT_TRAIL_APPEAL_RELATION_ADDED = 'Related appeal {replacement0} added';
+export const AUDIT_TRAIL_APPEAL_RELATION_REMOVED = 'Related appeal {replacement0} removed';
 export const AUDIT_TRAIL_APPLICATION_REFERENCE_UPDATED = 'Planning application reference updated';
 export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_ADDED = 'A neighbouring address was added';
 export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_UPDATED = 'A neighbouring address was updated';
@@ -204,6 +238,12 @@ export const AUDIT_TRAIL_LPAQ_WAS_APPLICATION_REFUSED_DUE_TO_HIGHWAY_OR_TRAFFIC_
 export const AUDIT_TRAIL_LPAQ_DID_APPELLANT_SUBMIT_COMPLETE_PHOTOS_AND_PLANS_UPDATED =
 	'‘Did the appellant submit complete and accurate photographs and plans?’ updated to {replacement0}';
 export const AUDIT_TRAIL_TEAM_ASSIGNED = 'Case team {replacement0} assigned';
+export const AUDIT_TRAIL_RULE_6_PARTY_ADDED = 'Rule 6 party {replacement0} added';
+export const AUDIT_TRAIL_RULE_6_PARTY_DETAILS_UPDATED =
+	'Rule 6 party {replacement0} details updated';
+export const AUDIT_TRAIL_RULE_6_PARTY_REMOVED = 'Rule 6 party {replacement0} removed';
+export const AUDIT_TRAIL_RULE_6_ADDED_EMAILS_SENT =
+	'Rule 6 added emails sent to LPA, Appellant and Rule 6 party';
 export const AUDIT_TRAIL_RECORD_MISSED_SITE_VISIT = '{replacement0} missed the site visit';
 
 export const AUDIT_TRAIL_LISTED_BUILDING_ADDED = 'A listed building was added';
@@ -280,6 +320,10 @@ export const AUDIT_TRAIL_APPEAL_DECISION_DATE_UPDATED =
 	'Appeal decision date updated to {replacement0}';
 export const AUDIT_TRAIL_ENFORCEMENT_SUBMISSION_VALID =
 	'Appeal reviewed as valid on {replacement0}\n{replacement1}';
+export const AUDIT_TRAIL_SITE_USE_AT_TIME_OF_APPLICATION_UPDATED =
+	"'What did you use the appeal site for when you made the application?' updated to {replacement0}";
+export const AUDIT_TRAIL_APPLICATION_MADE_UNDER_ACT_SECTION_UPDATED =
+	"'What type of lawful development certificate is the appeal about?' updated to {replacement0}";
 
 export const DATABASE_ORDER_BY_ASC = 'asc';
 export const DATABASE_ORDER_BY_DESC = 'desc';
@@ -380,14 +424,14 @@ export const ERROR_INVALID_DOCUMENT_DATA = 'The integration payload DOCUMENT is 
 export const ERROR_INVALID_LISTED_BUILDING_DATA =
 	'The integration payload LISTED_BUILDING is invalid.';
 export const ERROR_INVALID_APPEAL_STATE = 'The action is invalid on the current appeal state.';
-export const ERROR_CASE_OUTCOME_MUST_BE_ONE_OF = `The case outcome must be one of ${CASE_OUTCOME_ALLOWED}, ${CASE_OUTCOME_DISMISSED}, ${CASE_OUTCOME_SPLIT_DECISION}, ${CASE_OUTCOME_INVALID}`;
+export const ERROR_CASE_OUTCOME_MUST_BE_ONE_OF = `The case outcome must be one of ${Object.values(APPEAL_CASE_DECISION_OUTCOME).join(', ')}`;
 export const ERROR_REP_OUTCOME_MUST_BE_ONE_OF = `The representation status must be one of ${APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW}, ${APPEAL_REPRESENTATION_STATUS.INVALID}, ${APPEAL_REPRESENTATION_STATUS.VALID}`;
 export const ERROR_REP_ONLY_STATEMENT_INCOMPLETE =
 	'Only LPA statements, appellant statements and rule 6 party statements can be set to incomplete';
 export const ERROR_REP_PUBLISH_USING_ENDPOINT =
 	'LPA statements and final comments can only be published using the dedicated endpoint';
 export const ERROR_REP_PUBLISH_BLOCKED =
-	'Publishing of LPA statements, ip comments and proof of evidence is blocked';
+	'Publishing of Statements and IP comments or Proofs of Evidence is blocked';
 export const ERROR_LINKING_APPEALS =
 	'The appeals cannot be linked as the lead or child are already linked to other appeals.';
 export const ERROR_INVALID_EMAIL = 'must be a valid email';

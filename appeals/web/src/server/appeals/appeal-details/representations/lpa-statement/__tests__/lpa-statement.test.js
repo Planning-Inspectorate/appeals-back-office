@@ -715,7 +715,10 @@ describe('lpa-statements', () => {
 				const response = await request.get(`${baseUrl}/2/lpa-statement/add-document`);
 				expect(response.statusCode).toBe(200);
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-				expect(unprettifiedElement.innerHTML).toContain('Upload supporting document</h1');
+				expect(unprettifiedElement.innerHTML).toContain('Upload supporting document</h1>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'data-document-title="LPA statement supporting document"'
+				);
 			});
 
 			it('should render the redaction status page', async () => {

@@ -71,7 +71,7 @@ export async function appealDetailsPage(
 							formatCaseOfficerDetailsForCaseSummary(
 								mappedData.appeal.caseOfficer.display.summaryListItem
 							)
-					  ]
+						]
 					: []),
 				...(mappedData.appeal.siteAddress.display.summaryListItem
 					? [mappedData.appeal.siteAddress.display.summaryListItem]

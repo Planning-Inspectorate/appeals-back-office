@@ -8,14 +8,10 @@ import {
 	inspectorDecisionData
 } from '#testing/appeals/appeals.js';
 import { createTestEnvironment } from '#testing/index.js';
-import {
-	CASE_OUTCOME_ALLOWED,
-	CASE_OUTCOME_DISMISSED,
-	CASE_OUTCOME_INVALID,
-	CASE_OUTCOME_SPLIT_DECISION
-} from '@pins/appeals/constants/support.js';
 import { parseHtml } from '@pins/platform';
 
+import { jest } from '@jest/globals';
+import { APPEAL_CASE_DECISION_OUTCOME } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
 
@@ -35,6 +31,12 @@ const checkYourLpaCostsDecisionPath = '/check-your-lpa-costs-decision';
 const viewDecisionPath = '/view-decision';
 
 describe('issue-decision', () => {
+	afterAll(() => {
+		nock.cleanAll();
+		nock.restore();
+		jest.clearAllMocks();
+	});
+
 	/**
 	 * @type {import("superagent").Response}
 	 */
@@ -91,7 +93,7 @@ describe('issue-decision', () => {
 					'<input class="govuk-radios__input" id="decision-2" name="decision" type="radio" value="dismissed">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="split decision">'
+					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="split_decision">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="invalid">'
@@ -131,7 +133,7 @@ describe('issue-decision', () => {
 						'<input class="govuk-radios__input" id="decision-2" name="decision" type="radio" value="dismissed">'
 					);
 					expect(unprettifiedElement.innerHTML).toContain(
-						'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="split decision">'
+						'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="split_decision">'
 					);
 				});
 			});
@@ -140,7 +142,7 @@ describe('issue-decision', () => {
 				it(`should render the 'decision' page for the child with the expected content`, async () => {
 					issueDecisionLeadResponse = await request
 						.post(`${baseUrl}/3/issue-decision/decision`)
-						.send({ decision: CASE_OUTCOME_ALLOWED });
+						.send({ decision: APPEAL_CASE_DECISION_OUTCOME.ALLOWED });
 
 					const response = await request.get(`${baseUrl}/3${issueDecisionPath}/4${decisionPath}`);
 					const element = parseHtml(response.text);
@@ -161,7 +163,7 @@ describe('issue-decision', () => {
 						'<input class="govuk-radios__input" id="decision-2" name="decision" type="radio" value="dismissed">'
 					);
 					expect(unprettifiedElement.innerHTML).toContain(
-						'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="split decision">'
+						'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="split_decision">'
 					);
 				});
 			});
@@ -186,49 +188,27 @@ describe('issue-decision', () => {
 			);
 		});
 
-		it(`should redirect to the decision letter upload page, if the decision is 'Allowed'`, async () => {
-			const response = await request
-				.post(`${baseUrl}/1/issue-decision/decision`)
-				.send({ decision: CASE_OUTCOME_ALLOWED })
-				.expect(302);
+		it.each([
+			{ decision: APPEAL_CASE_DECISION_OUTCOME.ALLOWED, expectedPath: '/decision-letter-upload' },
+			{ decision: APPEAL_CASE_DECISION_OUTCOME.DISMISSED, expectedPath: '/decision-letter-upload' },
+			{
+				decision: APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION,
+				expectedPath: '/decision-letter-upload'
+			},
+			{ decision: APPEAL_CASE_DECISION_OUTCOME.INVALID, expectedPath: '/decision-letter' }
+		])(
+			'should redirect to the $expectedPath page, if the decision is $decision',
+			async ({ decision, expectedPath }) => {
+				const response = await request
+					.post(`${baseUrl}/1/issue-decision/decision`)
+					.send({ decision })
+					.expect(302);
 
-			expect(response.headers.location).toBe(
-				'/appeals-service/appeal-details/1/issue-decision/decision-letter-upload'
-			);
-		});
-
-		it(`should redirect to the decision letter upload page, if the decision is 'Dismissed'`, async () => {
-			const response = await request
-				.post(`${baseUrl}/1/issue-decision/decision`)
-				.send({ decision: CASE_OUTCOME_DISMISSED })
-				.expect(302);
-
-			expect(response.headers.location).toBe(
-				'/appeals-service/appeal-details/1/issue-decision/decision-letter-upload'
-			);
-		});
-
-		it(`should redirect to the decision letter upload page, if the decision is 'Split'`, async () => {
-			const response = await request
-				.post(`${baseUrl}/1/issue-decision/decision`)
-				.send({ decision: CASE_OUTCOME_SPLIT_DECISION })
-				.expect(302);
-
-			expect(response.headers.location).toBe(
-				'/appeals-service/appeal-details/1/issue-decision/decision-letter-upload'
-			);
-		});
-
-		it(`should redirect to the decision letter page, if the decision is 'Invalid'`, async () => {
-			const response = await request
-				.post(`${baseUrl}/1/issue-decision/decision`)
-				.send({ decision: CASE_OUTCOME_INVALID })
-				.expect(302);
-
-			expect(response.headers.location).toBe(
-				'/appeals-service/appeal-details/1/issue-decision/decision-letter'
-			);
-		});
+				expect(response.headers.location).toBe(
+					`/appeals-service/appeal-details/1/issue-decision${expectedPath}`
+				);
+			}
+		);
 	});
 
 	describe('GET /decision-letter', () => {
@@ -817,7 +797,7 @@ describe('issue-decision', () => {
 
 				issueDecisionResponse = await request
 					.post(`${baseUrl}/1/issue-decision/decision`)
-					.send({ decision: CASE_OUTCOME_ALLOWED });
+					.send({ decision: APPEAL_CASE_DECISION_OUTCOME.ALLOWED });
 
 				uploadDecisionLetterResponse = await request
 					.post(`${baseUrl}/1${issueDecisionPath}${decisionLetterUploadPath}`)
@@ -912,7 +892,7 @@ describe('issue-decision', () => {
 
 				issueDecisionLeadResponse = await request
 					.post(`${baseUrl}/1/issue-decision/decision`)
-					.send({ decision: CASE_OUTCOME_ALLOWED });
+					.send({ decision: APPEAL_CASE_DECISION_OUTCOME.ALLOWED });
 
 				issueDecisionChildResponse = await request
 					.post(`${baseUrl}/1/issue-decision/2/decision`)
@@ -1003,21 +983,22 @@ describe('issue-decision', () => {
 	describe('POST /issue-decision/check-your-decision', () => {
 		beforeEach(async () => {
 			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
-			nock('http://test/').post('/appeals/1/documents').reply(200, {}).persist();
 			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
-			nock('http://test/').post(`/appeals/1/decision`).reply(200, {});
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
 				.persist();
-
-			issueDecisionResponse = await request
-				.post(`${baseUrl}/1/issue-decision/decision`)
-				.send({ decision: CASE_OUTCOME_ALLOWED });
 		});
 		afterEach(teardown);
 
 		it('should render a 500 error page if no decision files are sent', async () => {
+			nock('http://test/').post(`/appeals/1/decision`).reply(200, {});
+			nock('http://test/').post('/appeals/1/documents').reply(200, {}).persist();
+
+			issueDecisionResponse = await request
+				.post(`${baseUrl}/1/issue-decision/decision`)
+				.send({ decision: APPEAL_CASE_DECISION_OUTCOME.ALLOWED });
+
 			const response = await request
 				.post(`${baseUrl}/1${issueDecisionPath}${checkYourDecisionPath}`)
 				.send({});
@@ -1034,6 +1015,13 @@ describe('issue-decision', () => {
 		});
 
 		it('should redirect to the case details page', async () => {
+			nock('http://test/').post(`/appeals/1/decision`).reply(200, {});
+			nock('http://test/').post('/appeals/1/documents').reply(200, {}).persist();
+
+			issueDecisionResponse = await request
+				.post(`${baseUrl}/1/issue-decision/decision`)
+				.send({ decision: APPEAL_CASE_DECISION_OUTCOME.ALLOWED });
+
 			uploadDecisionLetterResponse = await request
 				.post(`${baseUrl}/1${issueDecisionPath}${decisionLetterUploadPath}`)
 				.send({
@@ -1076,6 +1064,104 @@ describe('issue-decision', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+		});
+
+		it('should render a 500 error page if decision api call fails without cost decisions', async () => {
+			nock('http://test/').post(`/appeals/1/decision`).reply(500, {});
+			nock('http://test/')
+				.post('/appeals/1/documents')
+				.reply(201, [{ GUID: '1', versionId: 1 }]);
+
+			const deleteDocument1 = nock('http://test').delete(`/appeals/documents/1/1`).reply(200, {});
+
+			uploadDecisionLetterResponse = await request
+				.post(`${baseUrl}/1${issueDecisionPath}${decisionLetterUploadPath}`)
+				.send({
+					'upload-info':
+						'[{"name": "test-document.pdf", "GUID": "1", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "caseDecisionLetter", "size": 1, "stage": "appellant-case"}]'
+				});
+
+			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
+
+			const response = await request
+				.post(`${baseUrl}/1${issueDecisionPath}${checkYourDecisionPath}`)
+				.send({});
+
+			expect(response.statusCode).toBe(500);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+
+			expect(deleteDocument1.isDone()).toBe(true);
+		});
+
+		it('should render a 500 error page if decision api call fails with cost decisions', async () => {
+			nock('http://test/').post(`/appeals/1/decision`).reply(500, {});
+			nock('http://test/')
+				.post('/appeals/1/documents')
+				.reply(201, [{ GUID: '1', versionId: 1 }]);
+			nock('http://test/')
+				.post('/appeals/1/documents')
+				.reply(201, [{ GUID: '2', versionId: 1 }]);
+			nock('http://test/')
+				.post('/appeals/1/documents')
+				.reply(201, [{ GUID: '3', versionId: 1 }]);
+
+			const deleteDocument1 = nock('http://test').delete(`/appeals/documents/1/1`).reply(200, {});
+			const deleteDocument2 = nock('http://test').delete(`/appeals/documents/2/1`).reply(200, {});
+			const deleteDocument3 = nock('http://test').delete(`/appeals/documents/3/1`).reply(200, {});
+
+			uploadDecisionLetterResponse = await request
+				.post(`${baseUrl}/1${issueDecisionPath}${decisionLetterUploadPath}`)
+				.send({
+					'upload-info':
+						'[{"name": "test-document.pdf", "GUID": "1", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "caseDecisionLetter", "size": 1, "stage": "appellant-case"}]'
+				});
+
+			issueAppellantCostsDecisionResponse = await request
+				.post(`${baseUrl}/1/issue-decision/appellant-costs-decision`)
+				.send({ appellantCostsDecision: 'true' });
+
+			uploadAppellantCostsDecisionLetterResponse = await request
+				.post(`${baseUrl}/1${issueDecisionPath}${appellantCostsDecisionLetterUploadPath}`)
+				.send({
+					'upload-info':
+						'[{"name": "test-document-appellant.pdf", "GUID": "2", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "appellantCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
+				});
+
+			issueLpaCostsDecisionResponse = await request
+				.post(`${baseUrl}/1/issue-decision/lpa-costs-decision`)
+				.send({ lpaCostsDecision: 'true' });
+
+			uploadLpaCostsDecisionLetterResponse = await request
+				.post(`${baseUrl}/1${issueDecisionPath}${lpaCostsDecisionLetterUploadPath}`)
+				.send({
+					'upload-info':
+						'[{"name": "test-document-lpa.pdf", "GUID": "3", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "lpaCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
+				});
+
+			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
+			expect(issueAppellantCostsDecisionResponse.statusCode).toBe(302);
+			expect(uploadAppellantCostsDecisionLetterResponse.statusCode).toBe(302);
+			expect(issueLpaCostsDecisionResponse.statusCode).toBe(302);
+			expect(uploadLpaCostsDecisionLetterResponse.statusCode).toBe(302);
+
+			const response = await request
+				.post(`${baseUrl}/1${issueDecisionPath}${checkYourDecisionPath}`)
+				.send({});
+
+			expect(response.statusCode).toBe(500);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+
+			expect(deleteDocument1.isDone()).toBe(true);
+			expect(deleteDocument2.isDone()).toBe(true);
+			expect(deleteDocument3.isDone()).toBe(true);
 		});
 	});
 

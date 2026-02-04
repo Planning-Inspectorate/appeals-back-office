@@ -85,7 +85,7 @@ export function allocationLevelPage(
 		backLinkUrl: sessionData?.forcedAllocation
 			? `/appeals-service/appeal-details/${
 					appealDetails.appealId
-			  }/rule-6-party-statement/${rule6PartyId}${flowRoute === 'valid' ? '/' : `/${flowRoute}`}`
+				}/rule-6-party-statement/${rule6PartyId}${flowRoute === 'valid' ? '/' : `/${flowRoute}`}`
 			: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/${flowRoute}/allocation-check`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Allocation level',

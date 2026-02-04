@@ -439,6 +439,7 @@ export const validLpaQuestionnaireS20 = {
 	casedata: {
 		...validLpaQuestionnaireS78.casedata,
 		caseType: APPEAL_CASE_TYPE.Y,
+		consultHistoricEngland: true,
 		preserveGrantLoan: true
 	},
 	documents: validLpaQuestionnaireS78.documents
@@ -1045,9 +1046,38 @@ export const appealIngestionInputEnforcementNotice = {
 			key: APPEAL_CASE_TYPE.C
 		}
 	},
+	appellant: {
+		create: {
+			address: {
+				create: {
+					addressCounty: null,
+					addressLine1: 'Flat 2',
+					addressLine2: '123 Fake Street',
+					addressTown: 'London',
+					postcode: 'N1 1AA'
+				}
+			},
+			organisationName: 'A company',
+			salutation: 'Mr',
+			firstName: 'Testy',
+			lastName: 'McTest',
+			email: 'test@test.com',
+			webAddress: undefined,
+			phoneNumber: '0123456789',
+			otherPhoneNumber: undefined,
+			faxNumber: undefined
+		}
+	},
+	agent: {
+		create: undefined
+	},
 	appellantCase: {
 		create: {
 			...appealIngestionInput.appellantCase.create,
+			appellantProcedurePreference: 'written',
+			appellantProcedurePreferenceDetails: 'Reason for preference',
+			appellantProcedurePreferenceDuration: 3,
+			appellantProcedurePreferenceWitnessCount: 2,
 			appealDecisionDate: '2024-05-31T23:00:00.000Z',
 			applicationDevelopmentAllOrPart: 'all-of-the-development',
 			contactAddress: {
@@ -1071,7 +1101,9 @@ export const appealIngestionInputEnforcementNotice = {
 			siteGridReferenceEasting: undefined,
 			siteGridReferenceNorthing: undefined,
 			numberOfResidencesNetChange: undefined,
-			typeOfPlanningApplication: undefined
+			typeOfPlanningApplication: undefined,
+			planningObligation: false,
+			statusPlanningObligation: null
 		}
 	}
 };
@@ -1471,7 +1503,7 @@ export const validLpaQuestionnaireIngestionS20 = {
 				create: {
 					...validLpaQuestionnaireIngestionS78.data.lpaQuestionnaire.connectOrCreate.create,
 					preserveGrantLoan: true,
-					historicEnglandConsultation: undefined
+					historicEnglandConsultation: true
 				}
 			}
 		}

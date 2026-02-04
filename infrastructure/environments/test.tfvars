@@ -35,7 +35,7 @@ apps_config = {
   featureFlags = {
     featureFlagS78Written             = true
     featureFlagS78Inquiry             = true
-    featureFlagLinkedAppeals          = true
+    featureFlagLinkedAppeals          = false
     featureFlagCAS                    = true
     featureFlagCasAdvert              = true
     featureFlagNotifyCaseHistory      = true
@@ -51,13 +51,16 @@ apps_config = {
     featureFlagCancelSiteVisit        = true
     featureFlagSearchCaseOfficer      = true
     featureFlagEnforcementNotice      = true
-    featureFlagInvalidDecisionLetter  = true
-    featureFlagRule6Parties           = true
-    featureFlagExpeditedAppeals       = true
+    featureFlagEnforcementLinked      = false
+    featureFlagInvalidDecisionLetter  = false
+    featureFlagRule6Mvp               = true
+    featureFlagRule6PoE               = false
+    featureFlagExpeditedAppeals       = false
     featureFlagManuallyAddReps        = true
-    featureFlagAppellantStatement     = true
-    featureFlagLDC                    = true
-
+    featureFlagAppellantStatement     = false
+    featureFlagRule6Statement         = false
+    featureFlagLDC                    = false
+    featureFlagRule6Costs             = false
   }
 
   use_system_test_bc_for_change_lpa = true

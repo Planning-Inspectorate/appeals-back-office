@@ -67,6 +67,7 @@ describe('rule 6 party statement - add document', () => {
 			}).innerHTML;
 
 			expect(unprettifiedHTML).toContain('Upload supporting document');
+			expect(unprettifiedHTML).toContain('data-document-title="Rule 6 party statement document"');
 		});
 	});
 

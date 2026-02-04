@@ -62,4 +62,12 @@ router
 	.get(controller.getOtherLiveAppeals)
 	.post(validators.validateOtherLiveAppeals, controller.postOtherLiveAppeals);
 
+router
+	.route('/check-details-and-mark-enforcement-as-invalid')
+	.get(controller.getCheckDetailsAndMarkEnforcementAsInvalid)
+	.post(
+		assertUserHasPermission(permissionNames.setCaseOutcome),
+		asyncHandler(controller.postCheckDetailsAndMarkEnforcementAsInvalid)
+	);
+
 export default router;

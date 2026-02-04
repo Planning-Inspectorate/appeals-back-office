@@ -33,8 +33,8 @@ const renderChangeGroundsForAppeal = async (request, response) => {
 		const selectedGrounds = errors
 			? []
 			: // @ts-ignore
-			  appellantCaseData.appealGrounds?.map((appealGround) => appealGround?.ground?.groundRef) ??
-			  [];
+				(appellantCaseData.appealGrounds?.map((appealGround) => appealGround?.ground?.groundRef) ??
+				[]);
 
 		const mappedPageContents = changeGroundsForAppealPage(
 			currentAppeal,

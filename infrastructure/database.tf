@@ -106,6 +106,26 @@ resource "azurerm_key_vault_secret" "sql_app_connection_string" {
   tags = local.tags
 }
 
+resource "azurerm_key_vault_secret" "sql_function_connection_string" {
+  key_vault_id = azurerm_key_vault.main.id
+  name         = "${local.service_name}-sql-function-connection-string"
+  value = join(
+    ";",
+    [
+      "Server=${azurerm_mssql_server.primary.fully_qualified_domain_name}",
+      "Database=${azurerm_mssql_database.primary.name}",
+      "User Id=${random_id.sql_app_username.b64_url}",
+      "Password=${random_password.sql_app_password.result}",
+      "Encrypt=true",
+      "TrustServerCertificate=false"
+    ]
+  )
+  content_type    = "connection-string"
+  expiration_date = timeadd(timestamp(), "8760h") # 1 year
+
+  tags = local.tags
+}
+
 resource "random_id" "sql_admin_username" {
   byte_length = 6
   prefix      = "${local.service_name}_admin_"

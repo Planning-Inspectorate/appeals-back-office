@@ -8,16 +8,12 @@ import { notifySend, renderTemplate } from '#notify/notify-send.js';
 import appealTimetableRepository from '#repositories/appeal-timetable.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
+import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { trimAppealType } from '#utils/string-utils.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
-import {
-	FEATURE_FLAG_NAMES,
-	PROCEDURE_TYPE_ID_MAP,
-	PROCEDURE_TYPE_MAP
-} from '@pins/appeals/constants/common.js';
+import { PROCEDURE_TYPE_ID_MAP, PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
 	AUDIT_TRAIL_CASE_STARTED,
@@ -107,13 +103,13 @@ const getStartCaseNotifyParams = async (
 		? 'appeal-start-date-change-appellant'
 		: `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}${
 				hearingSuffix ? `appellant${hearingSuffix}` : inquirySuffix ? inquirySuffix : 'appellant'
-		  }`;
+			}`;
 
 	const lpaTemplate = appeal.caseStartedDate
 		? 'appeal-start-date-change-lpa'
 		: `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}${
 				hearingSuffix ? `lpa${hearingSuffix}` : inquirySuffix ? inquirySuffix : 'lpa'
-		  }`;
+			}`;
 
 	const appellantEmail = appeal.appellant?.email || appeal.agent?.email;
 	const lpaEmail = appeal.lpa?.email || '';
@@ -175,6 +171,10 @@ const getStartCaseNotifyParams = async (
 			inquiry_time: formatTime12h(inquiry.inquiryStartTime),
 			inquiry_address: inquiry.inquiryAddress,
 			inquiry_expected_days: inquiry.inquiryEstimationDays
+		}),
+		...(appeal.appealType?.key === APPEAL_CASE_TYPE.C && {
+			appeal_grounds: appeal.appealGrounds?.map((ground) => ground.ground?.groundRef).sort() || [],
+			enforcement_reference: appeal.appellantCase?.enforcementReference
 		})
 	};
 
@@ -190,7 +190,15 @@ const getStartCaseNotifyParams = async (
 					...(inquiry && { is_lpa: false }),
 					site_visit:
 						procedureType === APPEAL_CASE_PROCEDURE.WRITTEN || procedureType === undefined, //undefined procedure types are treated as written
-					costs_info: procedureType === APPEAL_CASE_PROCEDURE.WRITTEN || procedureType === undefined
+					costs_info:
+						procedureType === APPEAL_CASE_PROCEDURE.WRITTEN || procedureType === undefined,
+					...(appeal.appealType?.key === APPEAL_CASE_TYPE.C &&
+						appeal.appellantCase?.planningObligation && {
+							planning_obligation_deadline: formatDate(
+								new Date(timetable.planningObligationDueDate || ''),
+								false
+							)
+						})
 				}
 			}
 		}),
@@ -304,13 +312,13 @@ const generateStartCaseNotifyPreviews = async (
 		? renderTemplate(`${appellant.templateName}.content.md`, {
 				...appellant.personalisation,
 				...commonPersonalisation
-		  })
+			})
 		: '';
 	const lpaTemplate = lpa
 		? renderTemplate(`${lpa.templateName}.content.md`, {
 				...lpa.personalisation,
 				...commonPersonalisation
-		  })
+			})
 		: '';
 
 	return {
@@ -338,8 +346,7 @@ const startCase = async (
 	hearingStartTime
 ) => {
 	try {
-		const isChildAppeal =
-			isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) && Boolean(appeal?.parentAppeals?.length);
+		const isChildAppeal = isLinkedAppealsActive(appeal) && Boolean(appeal?.parentAppeals?.length);
 
 		const appealType = appeal.appealType || null;
 		if (!appealType) {
@@ -439,8 +446,7 @@ const getStartCaseNotifyPreviews = async (
 	inquiry
 ) => {
 	try {
-		const isChildAppeal =
-			isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) && Boolean(appeal?.parentAppeals?.length);
+		const isChildAppeal = isLinkedAppealsActive(appeal) && Boolean(appeal?.parentAppeals?.length);
 
 		const appealType = appeal.appealType || null;
 		if (!appealType) {
@@ -649,6 +655,20 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, az
 			personalisation
 		});
 	}
+
+	if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
+		appeal.appealRule6Parties.forEach(async (party) => {
+			if (party.serviceUser?.email) {
+				await notifySend({
+					azureAdUserId,
+					templateName,
+					notifyClient,
+					recipientEmail: party.serviceUser.email,
+					personalisation
+				});
+			}
+		});
+	}
 };
 
 /**
@@ -662,6 +682,7 @@ const shouldSendNotify = (appealTypeShorthand, procedureType) => {
 		appealTypeShorthand === APPEAL_CASE_TYPE.ZP ||
 		appealTypeShorthand === APPEAL_CASE_TYPE.ZA ||
 		appealTypeShorthand === APPEAL_CASE_TYPE.H ||
+		//appealTypeShorthand === APPEAL_CASE_TYPE.X ||
 		(appealTypeShorthand === APPEAL_CASE_TYPE.W &&
 			procedureType === APPEAL_CASE_PROCEDURE.WRITTEN) ||
 		(appealTypeShorthand === APPEAL_CASE_TYPE.Y &&

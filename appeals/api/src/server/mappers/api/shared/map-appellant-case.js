@@ -18,8 +18,9 @@ export const mapAppellantCase = (data) => {
 			? formatValidationOutcomeResponse(
 					appellantCase.appellantCaseValidationOutcome?.name || null,
 					appellantCase.appellantCaseIncompleteReasonsSelected,
-					appellantCase.appellantCaseInvalidReasonsSelected
-			  ) || undefined
+					appellantCase.appellantCaseInvalidReasonsSelected,
+					appellantCase.appellantCaseEnforcementInvalidReasonsSelected
+				) || undefined
 			: undefined;
 
 		return {

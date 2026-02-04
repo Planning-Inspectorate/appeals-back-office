@@ -19,7 +19,7 @@ export const mapHearingDate = ({ appealDetails, currentRoute, userHasUpdateCaseP
 	const value = hearing?.hearingStartTime
 		? `${dateISOStringToDisplayTime12hr(hearing.hearingStartTime)} on ${dateISOStringToDisplayDate(
 				hearing.hearingStartTime
-		  )}`
+			)}`
 		: 'Not set up';
 
 	return textSummaryListItem({

@@ -59,6 +59,21 @@ const updateLPAQuestionnaireById = (id, data) => {
 				isSiteInAreaOfSpecialControlAdverts: data.isSiteInAreaOfSpecialControlAdverts,
 				wasApplicationRefusedDueToHighwayOrTraffic: data.wasApplicationRefusedDueToHighwayOrTraffic,
 				didAppellantSubmitCompletePhotosAndPlans: data.didAppellantSubmitCompletePhotosAndPlans,
+				// Enforcement
+				noticeRelatesToBuildingEngineeringMiningOther:
+					data.noticeRelatesToBuildingEngineeringMiningOther,
+				siteAreaSquareMetres: data.siteAreaSquareMetres,
+				hasAllegedBreachArea: data.hasAllegedBreachArea,
+				doesAllegedBreachCreateFloorSpace: data.doesAllegedBreachCreateFloorSpace,
+				changeOfUseRefuseOrWaste: data.changeOfUseRefuseOrWaste,
+				changeOfUseMineralExtraction: data.changeOfUseMineralExtraction,
+				changeOfUseMineralStorage: data.changeOfUseMineralStorage,
+				relatesToErectionOfBuildingOrBuildings: data.relatesToErectionOfBuildingOrBuildings,
+				relatesToBuildingWithAgriculturalPurpose: data.relatesToBuildingWithAgriculturalPurpose,
+				relatesToBuildingSingleDwellingHouse: data.relatesToBuildingSingleDwellingHouse,
+				affectedTrunkRoadName: data.affectedTrunkRoadName,
+				isSiteOnCrownLand: data.isSiteOnCrownLand,
+				article4AffectedDevelopmentRights: data.article4AffectedDevelopmentRights,
 				...processDesignatedSites(id, data, transaction)
 			}
 		})

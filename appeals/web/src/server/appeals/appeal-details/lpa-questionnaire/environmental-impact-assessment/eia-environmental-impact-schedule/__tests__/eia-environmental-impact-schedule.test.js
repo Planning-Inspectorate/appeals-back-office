@@ -11,7 +11,7 @@ const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
 const baseUrl = `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`;
 
 describe('eia-environmental-impact-schedule', () => {
-	beforeEach(installMockApi), afterEach(teardown);
+	(beforeEach(installMockApi), afterEach(teardown));
 
 	describe('GET /change', () => {
 		it('should render the development category change page with "Schedule 1" radio option checked if eiaEnvironmentalImpactSchedule is "schedule-1"', async () => {

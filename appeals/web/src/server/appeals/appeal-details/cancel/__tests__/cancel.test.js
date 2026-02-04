@@ -1,4 +1,4 @@
-import { appealData } from '#testing/appeals/appeals.js';
+import { appealData, appealDataEnforcementNotice } from '#testing/appeals/appeals.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
@@ -19,12 +19,47 @@ describe('cancel', () => {
 			const response = await request.get(`${baseUrl}/${mockAppealId}${cancelPath}`);
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-			expect(unprettifiedElement.innerHTML).toContain(`Why are you cancelling the appeal?</h1>`);
-			expect(unprettifiedElement.innerHTML).toContain('name="cancelReasonRadio"');
-			expect(unprettifiedElement.innerHTML).toContain('Appeal invalid</label>');
-			expect(unprettifiedElement.innerHTML).toContain('Request to withdraw appeal</label>');
-			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+
+			expect(element.querySelector('h1')?.innerHTML.trim()).toBe(
+				'Why are you cancelling the appeal?'
+			);
+			expect(element.querySelectorAll('[name="cancelReasonRadio"]').length).toBe(2);
+			expect(element.querySelector('label[for="cancel-reason-radio"]')?.innerHTML.trim()).toBe(
+				'Appeal invalid'
+			);
+			expect(element.querySelector('label[for="cancel-reason-radio-2"]')?.innerHTML.trim()).toBe(
+				'Request to withdraw appeal'
+			);
+			expect(element.querySelector('button')?.innerHTML.trim()).toBe('Continue');
+		});
+
+		it('should render the correct options for an enforcement notice appeal', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, { ...appealDataEnforcementNotice });
+
+			const response = await request.get(`${baseUrl}/${mockAppealId}${cancelPath}`);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			expect(element.querySelector('h1')?.innerHTML.trim()).toBe(
+				'Why are you cancelling the appeal?'
+			);
+			expect(element.querySelectorAll('[name="cancelReasonRadio"]').length).toBe(4);
+			expect(element.querySelector('label[for="cancel-reason-radio"]')?.innerHTML.trim()).toBe(
+				'Appeal invalid'
+			);
+			expect(element.querySelector('label[for="cancel-reason-radio-2"]')?.innerHTML.trim()).toBe(
+				'LPA has withdrawn the enforcement notice'
+			);
+			expect(element.querySelector('label[for="cancel-reason-radio-3"]')?.innerHTML.trim()).toBe(
+				'Did not pay the ground (a) fee'
+			);
+			expect(element.querySelector('label[for="cancel-reason-radio-4"]')?.innerHTML.trim()).toBe(
+				'Request to withdraw appeal'
+			);
+			expect(element.querySelector('button')?.innerHTML.trim()).toBe('Continue');
 		});
 	});
 
@@ -56,6 +91,28 @@ describe('cancel', () => {
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
 				'Found. Redirecting to /appeals-service/appeal-details/1/withdrawal/new'
+			);
+		});
+
+		it('should redirect to the correct page if enforcement-notice-withdrawn selected', async () => {
+			const response = await request.post(`${baseUrl}/${mockAppealId}${cancelPath}`).send({
+				cancelReasonRadio: 'enforcement-notice-withdrawn'
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/cancel/enforcement-notice-withdrawal'
+			);
+		});
+
+		it('should redirect to the correct page if did-not-pay selected', async () => {
+			const response = await request.post(`${baseUrl}/${mockAppealId}${cancelPath}`).send({
+				cancelReasonRadio: 'did-not-pay'
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/cancel/check-details'
 			);
 		});
 

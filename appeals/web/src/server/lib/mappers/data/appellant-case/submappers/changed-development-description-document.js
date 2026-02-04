@@ -13,7 +13,7 @@ export const mapChangedDevelopmentDescriptionDocument = ({
 			appellantCaseData.documents.changedDescription?.folderId
 		),
 		appealId: appellantCaseData.appealId,
-		editable: userHasUpdateCase,
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild,
 		uploadUrlTemplate: documentUploadUrlTemplate,
 		id: 'changed-development-description.document',
 		text: 'Agreement to change the description of development',

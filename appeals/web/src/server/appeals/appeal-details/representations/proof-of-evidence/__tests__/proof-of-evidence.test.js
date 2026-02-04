@@ -8,6 +8,7 @@ import {
 	proofOfEvidenceForReviewWithAttachments
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -17,6 +18,11 @@ const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 
 describe('proof-of-evidence', () => {
+	afterAll(() => {
+		nock.cleanAll();
+		nock.restore();
+		jest.clearAllMocks();
+	});
 	const proofOfEvidenceTypes = [
 		{
 			type: 'appellant',
@@ -104,6 +110,9 @@ describe('proof-of-evidence', () => {
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					`data-next-page-url="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}/add-document/redaction-status"`
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'data-document-title="proof of evidence and witnesses document"'
 				);
 			});
 		});
@@ -241,8 +250,8 @@ describe('proof-of-evidence', () => {
 						proofOfEvidenceType.type === 'lpa'
 							? 'LPA'
 							: proofOfEvidenceType.type === 'appellant'
-							? 'appellant'
-							: 'rule 6 party'
+								? 'appellant'
+								: 'rule 6 party'
 					} proof of evidence and witnesses</h1>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain(`Redaction status</dt>`);
@@ -253,8 +262,8 @@ describe('proof-of-evidence', () => {
 						proofOfEvidenceType.type === 'lpa'
 							? 'LPA'
 							: proofOfEvidenceType.type === 'appellant'
-							? 'appellant'
-							: 'rule 6 party'
+								? 'appellant'
+								: 'rule 6 party'
 					} proof of evidence and witnesses</button>`
 				);
 			});

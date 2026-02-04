@@ -625,7 +625,12 @@ export const spec = {
 				siteNotice: folderWithDocs,
 				supplementaryPlanningtestDocuments: folderWithDocs,
 				treePreservationOrder: folderWithDocs,
-				historicEnglandConsultation: folderWithDocs
+				historicEnglandConsultation: folderWithDocs,
+				localDevelopmentOrder: folderWithDocs,
+				planningContraventionNotice: folderWithDocs,
+				enforcementNoticePlan: folderWithDocs,
+				enforcementNotice: folderWithDocs,
+				planningPermission: folderWithDocs
 			},
 			doesAffectAListedBuilding: true,
 			doesAffectAScheduledMonument: true,
@@ -656,6 +661,19 @@ export const spec = {
 			isSensitiveArea: true,
 			isSiteVisible: true,
 			isTheSiteWithinAnAONB: true,
+			noticeRelatesToBuildingEngineeringMiningOther: true,
+			siteAreaSquareMetres: 25,
+			hasAllegedBreachArea: true,
+			doesAllegedBreachCreateFloorSpace: true,
+			changeOfUseRefuseOrWaste: true,
+			changeOfUseMineralExtraction: true,
+			changeOfUseMineralStorage: true,
+			relatesToErectionOfBuildingOrBuildings: true,
+			relatesToBuildingWithAgriculturalPurpose: true,
+			relatesToBuildingSingleDwellingHouse: true,
+			affectedTrunkRoadName: '123 Main Street',
+			isSiteOnCrownLand: true,
+			article4AffectedDevelopmentRights: 'the right to develop',
 			listedBuildingDetails: [
 				{
 					listEntry: '123456'
@@ -726,7 +744,9 @@ export const spec = {
 			advertInPosition: true,
 			landownerPermission: true,
 			siteGridReferenceEasting: '123456',
-			siteGridReferenceNorthing: '654321'
+			siteGridReferenceNorthing: '654321',
+			siteUseAtTimeOfApplication: 'Residential',
+			applicationMadeUnderActSection: 'existing-development'
 		},
 		UpdateAppellantCaseResponse: {},
 		UpdateLPAQuestionnaireRequest: {
@@ -755,7 +775,20 @@ export const spec = {
 			sensitiveAreaDetails: 'The area is liable to flooding',
 			validationOutcome: 'incomplete',
 			isGreenBelt: true,
-			preserveGrantLoan: true
+			preserveGrantLoan: true,
+			noticeRelatesToBuildingEngineeringMiningOther: true,
+			siteAreaSquareMetres: 25,
+			hasAllegedBreachArea: true,
+			doesAllegedBreachCreateFloorSpace: true,
+			changeOfUseRefuseOrWaste: true,
+			changeOfUseMineralExtraction: true,
+			changeOfUseMineralStorage: true,
+			relatesToErectionOfBuildingOrBuildings: true,
+			relatesToBuildingWithAgriculturalPurpose: true,
+			relatesToBuildingSingleDwellingHouse: true,
+			affectedTrunkRoadName: '123 Main Street',
+			isSiteOnCrownLand: true,
+			article4AffectedDevelopmentRights: 'the right to develop'
 		},
 		UpdateLPAQuestionnaireResponse: {
 			validationOutcome: {

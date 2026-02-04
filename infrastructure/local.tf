@@ -28,6 +28,7 @@ locals {
       "redis-connection-string"        = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.redis_web_connection_string.versionless_id})"
       "session-secret"                 = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.session_secret.versionless_id})"
       "sql-app-connection-string"      = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.sql_app_connection_string.versionless_id})"
+      "sql-function-connection-string" = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.sql_function_connection_string.versionless_id})"
     }
   )
 

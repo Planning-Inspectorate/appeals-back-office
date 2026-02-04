@@ -147,7 +147,8 @@ export const addPageContentToLocals = async (req, _res, next) => {
 		},
 		addDocument: {
 			pageHeadingTextOverride: `Upload new proof of evidence and witnesses document`,
-			uploadContainerHeadingTextOverride: 'Upload a file'
+			uploadContainerHeadingTextOverride: 'Upload a file',
+			documentTitle: 'proof of evidence and witnesses document'
 		},
 		dateSubmitted: {
 			pageHeadingTextOverride: 'Received date'

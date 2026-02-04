@@ -63,7 +63,7 @@ export function generateCommentSummaryList(
 				),
 				isOrderedList: true,
 				isNumberedList: filteredAttachments.length > 1
-		  })
+			})
 		: null;
 
 	const { address, name, email } = comment.represented || {};
@@ -111,11 +111,11 @@ export function generateCommentSummaryList(
 											href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${comment.id}/edit/site-visit-requested`,
 											visuallyHiddenText: 'site visited requested'
 										}
-								  ]
+									]
 								: []
 						}
 					}
-			  ]),
+				]),
 		{
 			key: { text: 'When did the interested party submit the comment?' },
 			value: { html: dateISOStringToDisplayDate(comment.created) }
@@ -136,7 +136,7 @@ export function generateCommentSummaryList(
 									text: 'Redact',
 									href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${comment.id}/redact`
 								}
-						  ]
+							]
 			}
 		},
 		...(comment.redactedRepresentation && redactMatching
@@ -153,7 +153,7 @@ export function generateCommentSummaryList(
 							]
 						}
 					}
-			  ]
+				]
 			: []),
 		{
 			key: { text: 'Supporting documents' },
@@ -167,7 +167,7 @@ export function generateCommentSummaryList(
 									href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${comment.id}/manage-documents/${folderId}`,
 									visuallyHiddenText: 'supporting documents'
 								}
-						  ]
+							]
 						: []),
 					{
 						text: 'Add',
@@ -184,7 +184,7 @@ export function generateCommentSummaryList(
 						key: { text: 'Why was the comment rejected?' },
 						value: { html: generateRejectionReasonsList(comment) }
 					}
-			  ])
+				])
 	];
 
 	return {

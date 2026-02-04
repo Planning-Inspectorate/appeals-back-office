@@ -16,10 +16,11 @@ export const isAwaitingLinkedAppeal = (appeal, linkedAppeals) => {
 		case APPEAL_CASE_STATUS.VALIDATION: {
 			const validationOutcome =
 				appeal.appellantCase?.appellantCaseValidationOutcome?.name?.toLowerCase();
-			if (validationOutcome !== 'valid') {
+			if (!validationOutcome) {
 				return false;
 			}
-			return !allAppellantCaseOutcomesAreValid(linkedAppeals);
+
+			return !allAppellantCaseOutcomesAreComplete(linkedAppeals, appeal.id);
 		}
 		case APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE: {
 			const validationOutcome =
@@ -74,7 +75,7 @@ export const allLpaQuestionnaireOutcomesAreComplete = (
  * @param {*} [validationOutcome]
  * @returns {*|boolean}
  */
-export const allAppellantCaseOutcomesAreValid = (
+export const allAppellantCaseOutcomesAreComplete = (
 	linkedAppeals,
 	currentAppealId,
 	validationOutcome
@@ -93,7 +94,10 @@ export const allAppellantCaseOutcomesAreValid = (
 			}
 			appeal.appellantCase.appellantCaseValidationOutcome = validationOutcome;
 		}
-		return appeal.appellantCase?.appellantCaseValidationOutcome?.name?.toLowerCase() === 'valid';
+		const {
+			id: appellantCaseValidationOutcomeId = appeal.appellantCase?.appellantCaseValidationOutcomeId
+		} = appeal.appellantCase?.appellantCaseValidationOutcome || {};
+		return !!appellantCaseValidationOutcomeId;
 	});
 };
 

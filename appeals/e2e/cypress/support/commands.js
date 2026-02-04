@@ -504,7 +504,9 @@ Cypress.Commands.add('deleteAppeals', (caseObj) => {
 		const appealIds = [];
 
 		for (const obj of caseObjs) {
-			appealIds.push(obj.id);
+			if (obj?.id) {
+				appealIds.push(obj.id);
+			}
 		}
 
 		cy.log(`Deleting case(s) ${appealIds}`);
@@ -526,7 +528,7 @@ Cypress.Commands.add('selectReasonOption', (optionLabel = null) => {
 							Math.random() *
 								$checkboxes.filter((i, elem) => getLabelText(elem) !== 'Other reason').length
 						)
-				  ];
+					];
 
 		// Validate target checkbox exists
 		if (!targetCheckbox) {

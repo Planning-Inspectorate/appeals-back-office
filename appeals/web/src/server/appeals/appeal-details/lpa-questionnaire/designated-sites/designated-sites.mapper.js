@@ -112,5 +112,5 @@ export function mapChangePageSessionDataToPatchEndpointPayload(sessionData, desi
 				return designatedSiteNames.find(
 					(designatedSiteName) => designatedSiteName.key === designation
 				);
-		  });
+			});
 }

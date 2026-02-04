@@ -40,10 +40,10 @@ export const getManageFolder = async (request, response) => {
 	const backLinkUrl = query.backUrl
 		? constructUrl(String(query.backUrl), currentAppeal.appealId)
 		: representationBackLinkUrlSegments.includes('interested-party-comments')
-		? representationBackLinkUrlSegments
-				.toSpliced(representationBackLinkUrlSegments.length, 0, 'view')
-				.join('/')
-		: representationBackLinkUrlSegments.join('/');
+			? representationBackLinkUrlSegments
+					.toSpliced(representationBackLinkUrlSegments.length, 0, 'view')
+					.join('/')
+			: representationBackLinkUrlSegments.join('/');
 
 	const addButtonUrl = manageFolderBaseUrl.replace('manage-documents', 'add-document');
 

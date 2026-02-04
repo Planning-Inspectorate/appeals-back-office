@@ -28,7 +28,7 @@ export const mapAdditionalDocumentsContents = ({ lpaQuestionnaireData }) => ({
 							}
 						}
 					]
-			  }
+				}
 			: {
 					summaryListItems: [
 						{
@@ -41,6 +41,6 @@ export const mapAdditionalDocumentsContents = ({ lpaQuestionnaireData }) => ({
 							}
 						}
 					]
-			  })
+				})
 	}
 });

@@ -178,7 +178,7 @@ export function redactConfirmPage(appealDetails, appellantStatement, specialismD
 										]
 									}
 								}
-						  ]
+							]
 						: []),
 
 					...(isPublished
@@ -196,7 +196,7 @@ export function redactConfirmPage(appealDetails, appellantStatement, specialismD
 															href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-statement/manage-documents/${folderId}?backUrl=/appellant-statement/redact/confirm`,
 															visuallyHiddenText: 'supporting documents'
 														}
-												  ]
+													]
 												: []),
 											{
 												text: 'Add',
@@ -239,7 +239,7 @@ export function redactConfirmPage(appealDetails, appellantStatement, specialismD
 													]
 												}
 											}
-									  ]),
+										]),
 								...(sessionData?.allocationLevel && specialisms.length
 									? [
 											{
@@ -275,9 +275,9 @@ export function redactConfirmPage(appealDetails, appellantStatement, specialismD
 													]
 												}
 											}
-									  ]
+										]
 									: [])
-						  ])
+							])
 				]
 			}
 		}

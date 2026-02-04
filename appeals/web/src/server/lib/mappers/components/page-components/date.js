@@ -98,7 +98,7 @@ export function dateInput({
 							]
 								.filter(Boolean)
 								.join('<br>')
-					  }
+						}
 					: undefined
 		}
 	};
@@ -182,7 +182,7 @@ export function documentDateInput({
 				errors && hasErrors
 					? {
 							html: [errors[`items[${appealDocumentIndex}].receivedDate`]?.msg]
-					  }
+						}
 					: undefined
 		}
 	};

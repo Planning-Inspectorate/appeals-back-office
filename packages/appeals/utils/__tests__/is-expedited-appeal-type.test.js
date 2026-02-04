@@ -33,6 +33,10 @@ describe('isExpeditedAppealType', () => {
 		expect(isExpeditedAppealType(APPEAL_CASE_TYPE.C)).toBe(false);
 	});
 
+	it('returns false for LDC appealType', () => {
+		expect(isExpeditedAppealType(APPEAL_CASE_TYPE.X)).toBe(false);
+	});
+
 	it('throws an error for null appealType', () => {
 		expect(() => isExpeditedAppealType(null)).toThrow(
 			'Appeal type - null not defined in isExpeditedAppealType baseCaseType'

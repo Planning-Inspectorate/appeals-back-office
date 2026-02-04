@@ -95,7 +95,7 @@ function createTable(commentsData, isReview = false) {
 		? {
 				head: [{ text: 'Interested party' }, { text: 'Submitted' }, { text: 'Action' }],
 				rows: generateTableRows(commentsData.items, isReview)
-		  }
+			}
 		: {};
 }
 
@@ -184,7 +184,7 @@ export function sharedIpCommentsPage(
 									? highlightRedactedSections(
 											comment.redactedRepresentation,
 											comment.originalRepresentation
-									  )
+										)
 									: comment.originalRepresentation || 'No comment',
 								labelText: 'Read more'
 							}
@@ -201,7 +201,7 @@ export function sharedIpCommentsPage(
 											a.documentVersion.document.guid,
 											a.documentVersion.document.name
 										)}" target="_blank">${a.documentVersion.document.name}</a>`
-							  )
+								)
 							: ['No documents'],
 						isOrderedList: true,
 						isNumberedList: comment.attachments.length > 1
@@ -247,7 +247,7 @@ export function sharedIpCommentsPage(
 							closing: '</p>'
 						}
 					)
-			  ]
+				]
 			: []),
 		simpleHtmlComponent('h2', {}, 'Shared IP comments'),
 		table

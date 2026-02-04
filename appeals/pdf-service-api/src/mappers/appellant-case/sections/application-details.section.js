@@ -46,7 +46,7 @@ export function applicationDetailsSection(templateData) {
 							key: 'Agreement to change the description of the advertisement',
 							text: formatDocumentData(changedDescription)
 						}
-				  ]
+					]
 				: []),
 			{
 				key: 'Are there other appeals linked to your development?',
@@ -61,7 +61,7 @@ export function applicationDetailsSection(templateData) {
 							key: 'Decision letter from the local planning authority',
 							html: formatDocumentData(applicationDecisionLetter)
 						}
-				  ])
+					])
 		]
 	};
 }

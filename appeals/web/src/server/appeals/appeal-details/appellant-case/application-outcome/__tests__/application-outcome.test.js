@@ -11,7 +11,7 @@ const appellantCaseId = appealData.appellantCaseId;
 const baseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
 
 describe('application-outcome', () => {
-	beforeEach(installMockApi), afterEach(teardown);
+	(beforeEach(installMockApi), afterEach(teardown));
 
 	describe('GET /change', () => {
 		it('should render the applicationOutcome change page', async () => {

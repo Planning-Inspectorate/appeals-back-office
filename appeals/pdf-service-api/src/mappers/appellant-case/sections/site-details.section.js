@@ -53,7 +53,7 @@ export function siteDetailsSection(templateData) {
 							key: 'Is the advertisement in position?',
 							text: formatYesNo(Boolean(advertisementInPosition))
 						}
-				  ]
+					]
 				: []),
 			{ key: 'Is the appeal site in a green belt?', text: formatYesNo(isGreenBelt) },
 			{
@@ -79,7 +79,7 @@ export function siteDetailsSection(templateData) {
 							key: 'Are there any other tenants?',
 							text: formatYesNo(Boolean(agriculturalHolding?.hasOtherTenants))
 						}
-				  ]
+					]
 				: []),
 			{
 				key: 'Will an inspector need to access your land or property?',
@@ -91,7 +91,7 @@ export function siteDetailsSection(templateData) {
 							key: "Do you have the landowner's permission?",
 							html: formatYesNo(landownerPermission)
 						}
-				  ]
+					]
 				: []),
 			{
 				key: 'Are there any health and safety issues on the appeal site?',

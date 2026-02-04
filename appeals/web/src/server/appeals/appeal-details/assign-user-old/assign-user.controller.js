@@ -210,7 +210,7 @@ export const postAssignOrUnassignUserCheckAndConfirm = async (
 				isUnassign
 					? `/appeals-service/appeal-details/${appealId}/assign-new-user/${
 							isInspector ? 'inspector' : 'case-officer'
-					  }`
+						}`
 					: `/appeals-service/appeal-details/${appealId}`
 			);
 		}

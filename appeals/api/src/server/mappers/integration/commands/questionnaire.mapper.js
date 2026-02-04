@@ -15,9 +15,15 @@ export const mapQuestionnaireIn = (command, designatedSites) => {
 	const isS20 = casedata.caseType === APPEAL_CASE_TYPE.Y;
 	const isS78 = casedata.caseType === APPEAL_CASE_TYPE.W;
 	const isAdverts = casedata.caseType === APPEAL_CASE_TYPE.H;
+	const isLDC = casedata.caseType === APPEAL_CASE_TYPE.X;
+	const isEnforcement = casedata.caseType === APPEAL_CASE_TYPE.C;
 
 	//@ts-ignore
-	const listedBuildingsData = mapListedBuildings(casedata, isS78 || isS20 || isAdverts);
+	const listedBuildingsData = mapListedBuildings(
+		// @ts-ignore
+		casedata,
+		isS78 || isS20 || isAdverts || isLDC || isEnforcement
+	);
 
 	switch (casedata.caseType) {
 		case APPEAL_CASE_TYPE.D: // HAS - schema includes common and has fields
@@ -51,7 +57,21 @@ export const mapQuestionnaireIn = (command, designatedSites) => {
 				//@ts-ignore
 				...generateCasAdvertSchemaFields(casedata, designatedSites)
 			};
-
+		case APPEAL_CASE_TYPE.C: // ENFORCEMENT
+			return {
+				...generateCommonSchemaFields(casedata),
+				...generateHasSchemaFields(casedata, listedBuildingsData),
+				//@ts-ignore
+				...generateS78SchemaFields(casedata, designatedSites),
+				...generateEnforcementSchemaFields(casedata)
+				//@ts-ignore
+			};
+		case APPEAL_CASE_TYPE.X: // LDC - schema includes common, HAS and LDC fields
+			return {
+				...generateCommonSchemaFields(casedata),
+				...generateHasSchemaFields(casedata, listedBuildingsData),
+				...generateLDCSchemaFields(casedata)
+			};
 		default:
 			throw new Error(`Unsupported case type '${casedata.caseType}'`);
 	}
@@ -82,8 +102,14 @@ const generateCommonSchemaFields = (casedata) => {
 };
 
 /**
+ * @typedef {import('@planning-inspectorate/data-model').Schemas.LPAQHASSubmissionProperties
+ *   & import('@planning-inspectorate/data-model').Schemas.LPAQCommonSubmissionProperties
+ * } LPAQSubmissionCaseData
+ */
+
+/**
  *
- * @param {import('@planning-inspectorate/data-model').Schemas.LPAQHASSubmissionProperties} casedata
+ * @param {LPAQSubmissionCaseData} casedata
  * @param {{listEntry: string, affectsListedBuilding: boolean }[] | null} listedBuildingsData
  * @returns
  */
@@ -100,7 +126,7 @@ const generateHasSchemaFields = (casedata, listedBuildingsData) => {
 							}
 						};
 					})
-			  }
+				}
 			: undefined;
 
 	return {
@@ -184,6 +210,44 @@ const generateCasAdvertSchemaFields = (casedata, designatedSites) => {
 
 /**
  *
+ * @param {import('@planning-inspectorate/data-model').Schemas.LPAQEnforcementSubmissionProperties} casedata
+ * @returns
+ */
+const generateEnforcementSchemaFields = (casedata) => {
+	return {
+		// Add enforcement specific fields here when they are defined
+		noticeRelatesToBuildingEngineeringMiningOther:
+			casedata.noticeRelatesToBuildingEngineeringMiningOther,
+		siteAreaSquareMetres: casedata.siteAreaSquareMetres,
+		hasAllegedBreachArea: casedata.hasAllegedBreachArea,
+		doesAllegedBreachCreateFloorSpace: casedata.doesAllegedBreachCreateFloorSpace,
+		changeOfUseRefuseOrWaste: casedata.changeOfUseRefuseOrWaste,
+		changeOfUseMineralExtraction: casedata.changeOfUseMineralExtraction,
+		changeOfUseMineralStorage: casedata.changeOfUseMineralStorage,
+		relatesToErectionOfBuildingOrBuildings: casedata.relatesToErectionOfBuildingOrBuildings,
+		relatesToBuildingWithAgriculturalPurpose: casedata.relatesToBuildingWithAgriculturalPurpose,
+		relatesToBuildingSingleDwellingHouse: casedata.relatesToBuildingSingleDwellingHouse,
+		affectedTrunkRoadName: casedata.affectedTrunkRoadName,
+		isSiteOnCrownLand: casedata.isSiteOnCrownLand,
+		article4AffectedDevelopmentRights: casedata.article4AffectedDevelopmentRights
+	};
+};
+
+/**
+ *
+ * @param {import('@planning-inspectorate/data-model').Schemas.LPAQLDCSubmissionProperties} casedata
+ * @returns
+ */
+const generateLDCSchemaFields = (casedata) => {
+	return {
+		appealUnderActSection: casedata.appealUnderActSection,
+		lpaConsiderAppealInvalid: casedata.lpaConsiderAppealInvalid,
+		lpaAppealInvalidReasons: casedata.lpaAppealInvalidReasons
+	};
+};
+
+/**
+ *
  * @param {import('@planning-inspectorate/data-model').Schemas.LPAQS78SubmissionProperties & import('@planning-inspectorate/data-model').Schemas.LPAQHASSubmissionProperties } casedata
  * @param {boolean} appealHasChangedListedBuilding
  * @returns {{listEntry: string, affectsListedBuilding: boolean }[] | null}
@@ -199,12 +263,12 @@ const mapListedBuildings = (casedata, appealHasChangedListedBuilding) => {
 
 	const changedListedBuildings = appealHasChangedListedBuilding
 		? // @ts-ignore
-		  (casedata.changedListedBuildingNumbers || []).map((/** @type {string} */ entry) => {
+			(casedata.changedListedBuildingNumbers || []).map((/** @type {string} */ entry) => {
 				return {
 					listEntry: entry,
 					affectsListedBuilding: false
 				};
-		  })
+			})
 		: [];
 
 	const combinedListedBuildings = [...affectedListedBuildings, ...changedListedBuildings];

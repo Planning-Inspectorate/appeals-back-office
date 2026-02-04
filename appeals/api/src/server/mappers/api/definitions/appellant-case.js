@@ -1,4 +1,5 @@
 import {
+	APPEAL_APPLICATION_MADE_UNDER_ACT_SECTION,
 	APPEAL_DEVELOPMENT_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
@@ -90,12 +91,20 @@ const updateableFields = {
 		type: 'string',
 		nullable: true
 	},
+	applicationMadeAndFeePaid: {
+		type: 'boolean',
+		nullable: true
+	},
 	applicationDevelopmentAllOrPart: {
 		type: 'string',
 		nullable: true
 	},
 	contactAddress: {
 		...Address
+	},
+	applicationDecisionAppealed: {
+		type: 'boolean',
+		nullable: true
 	},
 	isGreenBelt: {
 		type: 'boolean',
@@ -173,6 +182,15 @@ const updateableFields = {
 	siteGridReferenceNorthing: {
 		type: 'string',
 		nullable: true
+	},
+	siteUseAtTimeOfApplication: {
+		type: 'string',
+		nullable: true
+	},
+	applicationMadeUnderActSection: {
+		type: 'string',
+		nullable: true,
+		enum: [...Object.values(APPEAL_APPLICATION_MADE_UNDER_ACT_SECTION)]
 	}
 };
 
@@ -355,12 +373,20 @@ const appellantCase = {
 					type: 'string',
 					nullable: true
 				},
+				applicationMadeAndFeePaid: {
+					type: 'boolean',
+					nullable: true
+				},
 				applicationDevelopmentAllOrPart: {
 					type: 'string',
 					nullable: true
 				},
 				contactAddress: {
 					...Address
+				},
+				applicationDecisionAppealed: {
+					type: 'boolean',
+					nullable: true
 				}
 			}
 		}

@@ -13,7 +13,7 @@ describe('All cases search', () => {
 	const fieldId = 'searchTerm';
 	const postcode = 'XX12 3XX';
 	const errorMessage =
-		'Appeal reference, planning application reference or postcode must be between 2 and 50 characters';
+		'Appeal reference, planning application or enforcement reference, or postcode must be between 2 and 50 characters';
 
 	before(() => {
 		setupTestCase();

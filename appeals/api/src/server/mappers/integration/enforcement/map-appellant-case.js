@@ -48,25 +48,35 @@ export const mapAppellantCase = (data) => {
 		agriculturalHolding,
 		tenantAgriculturalHolding,
 		otherTenantsAgriculturalHolding,
-		informedTenantsAgriculturalHolding
+		informedTenantsAgriculturalHolding,
+		enforcementReference,
+		contactPlanningInspectorateDate,
+		descriptionOfAllegedBreach,
+		applicationMadeAndFeePaid,
+		applicationDecisionAppealed,
+		appealDecisionDate
 	} = appellantCase || {};
 	return {
 		...mapAppellantCaseSharedFields(data),
 		ownerOccupancyStatus: interestInLand ? capitalize(interestInLand) : null,
 		occupancyConditionsMet: mapToBool(writtenOrVerbalPermission),
 		enforcementAppealGroundsDetails: appealGrounds?.length
-			? appealGrounds.map(mapAppealGround)
+			? appealGrounds.filter(({ isDeleted }) => !isDeleted).map(mapAppealGround)
 			: null,
 		previousPlanningPermissionGranted: null,
 		issueDateOfEnforcementNotice: enforcementIssueDate?.toISOString() ?? null,
 		effectiveDateOfEnforcementNotice: enforcementEffectiveDate?.toISOString() ?? null,
-		didAppellantAppealLpaDecision: null,
+		didAppellantAppealLpaDecision: applicationDecisionAppealed ?? null,
 		dateLpaDecisionDue: null,
-		dateLpaDecisionReceived: null,
+		dateLpaDecisionReceived: appealDecisionDate ?? null,
 		applicationPartOrWholeDevelopment: applicationDevelopmentAllOrPart ?? null,
 		agriculturalHolding: agriculturalHolding ?? null,
 		tenantAgriculturalHolding: tenantAgriculturalHolding ?? null,
 		otherTenantsAgriculturalHolding: otherTenantsAgriculturalHolding ?? null,
-		informedTenantsAgriculturalHolding: informedTenantsAgriculturalHolding ?? null
+		informedTenantsAgriculturalHolding: informedTenantsAgriculturalHolding ?? null,
+		enforcementNoticeReference: enforcementReference ?? null,
+		dateAppellantContactedPins: contactPlanningInspectorateDate?.toISOString() ?? null,
+		descriptionOfAllegedBreach: descriptionOfAllegedBreach ?? null,
+		applicationMadeAndFeePaid: applicationMadeAndFeePaid ?? null
 	};
 };

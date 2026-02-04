@@ -72,19 +72,6 @@ export const ipDetailsPage = (appealDetails, values, backLinkUrl, errors) => ({
 			}
 		},
 		{
-			type: 'checkboxes',
-			parameters: {
-				id: 'do-not-share-ip-name',
-				name: 'do-not-share-ip-name',
-				items: [
-					{
-						text: 'Do not share this interested party name',
-						value: null
-					}
-				]
-			}
-		},
-		{
 			type: 'input',
 			parameters: {
 				id: 'email-address',
@@ -187,6 +174,7 @@ export const uploadPage = (appealDetails, errors, backButtonUrl, folderId, fileU
 	documentType: DOCUMENT_TYPE,
 	allowedTypes: [],
 	nextPageUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/redaction-status`,
+	documentTitle: 'interested party comment document',
 	errors
 });
 

@@ -45,7 +45,7 @@ export const mapAdditionalDocuments = ({ lpaQuestionnaireData, session, ...param
 											buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId)
 										)
 									})
-							  ]
+								]
 							: [
 									mapActionComponent(permissionNames.updateCase, session, {
 										text: 'Add',
@@ -56,7 +56,7 @@ export const mapAdditionalDocuments = ({ lpaQuestionnaireData, session, ...param
 											buildDocumentUploadUrlTemplate(lpaQuestionnaireData.lpaQuestionnaireId)
 										)
 									})
-							  ]
+								]
 				}
 			},
 			rows: mapAdditionalDocumentsContents({ lpaQuestionnaireData, session, ...params }).display

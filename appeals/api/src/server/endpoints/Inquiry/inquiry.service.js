@@ -163,10 +163,20 @@ const sendInquiryNotifications = async (
 		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 	}
 
-	[
+	const recipients = [
 		{ email: appellantEmail, isLpa: false },
 		{ email: lpaEmail, isLpa: true }
-	].forEach(async (item) => {
+	];
+
+	if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
+		appeal.appealRule6Parties.forEach((party) => {
+			if (party.serviceUser?.email) {
+				recipients.push({ email: party.serviceUser.email, isLpa: false });
+			}
+		});
+	}
+
+	recipients.forEach(async (item) => {
 		await notifySend({
 			notifyClient,
 			templateName,

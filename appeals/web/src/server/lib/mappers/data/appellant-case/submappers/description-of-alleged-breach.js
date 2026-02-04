@@ -13,7 +13,7 @@ export const mapDescriptionOfAllegedBreach = ({
 		text: 'Description of the alleged breach',
 		value: appellantCaseData.enforcementNotice?.descriptionOfAllegedBreach || 'No data',
 		link: `${currentRoute}/${id}/change`,
-		editable: hasData && userHasUpdateCase,
+		editable: hasData && userHasUpdateCase && !appellantCaseData.isEnforcementChild,
 		withShowMore: true,
 		toggleTextCollapsed: 'Show more',
 		toggleTextExpanded: 'Show less',

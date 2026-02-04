@@ -9,7 +9,7 @@ export const mapOtherNewDocuments = ({ appellantCaseData, userHasUpdateCase }) =
 			appellantCaseData.documents.otherNewDocuments?.folderId
 		),
 		appealId: appellantCaseData.appealId,
-		editable: userHasUpdateCase,
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild,
 		uploadUrlTemplate: documentUploadUrlTemplate,
 		id: 'new-supporting-documents',
 		text: 'Other new supporting documents',

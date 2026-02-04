@@ -10,7 +10,13 @@ const appealId = appealDataEnforcementNotice.appealId;
 const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
 
 describe('written-or-verbal-permission', () => {
-	beforeEach(installMockApi);
+	beforeEach(() => {
+		installMockApi();
+		nock('http://test/')
+			.get(`/appeals/${appealId}?include=appellantCase`)
+			.reply(200, appealDataEnforcementNotice)
+			.persist();
+	});
 	afterEach(teardown);
 
 	describe('GET /change', () => {
@@ -53,7 +59,9 @@ describe('written-or-verbal-permission', () => {
 
 		it('should update via the api and re-direct to Appellant Case if a radio button is selected', async () => {
 			nock('http://test/')
-				.patch(`/appeals/1/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`)
+				.patch(
+					`/appeals/${appealDataEnforcementNotice.appealId}/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`
+				)
 				.reply(200, {});
 
 			const validData = { writtenOrVerbalPermission: 'yes' };

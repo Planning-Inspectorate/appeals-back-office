@@ -8,5 +8,5 @@ export const mapApplicationDate = ({ appellantCaseData, currentRoute, userHasUpd
 		text: 'What date did you submit your application?',
 		value: dateISOStringToDisplayDate(appellantCaseData.applicationDate),
 		link: `${currentRoute}/application-date/change`,
-		editable: userHasUpdateCase
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild
 	});

@@ -119,9 +119,9 @@ const formatAttachment = (attachment) => {
 							createdAt: documentVersion.document.createdAt,
 							isDeleted: documentVersion.document.isDeleted,
 							latestVersionId: documentVersion.document.latestVersionId
-					  }
+						}
 					: undefined
-		  }
+			}
 		: undefined;
 
 	return {

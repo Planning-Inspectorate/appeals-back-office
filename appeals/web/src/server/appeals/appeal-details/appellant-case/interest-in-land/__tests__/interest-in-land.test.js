@@ -1,4 +1,7 @@
-import { appealDataEnforcementNotice } from '#testing/app/fixtures/referencedata.js';
+import {
+	appealDataEnforcementNotice,
+	appellantCaseDataNotValidated
+} from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
@@ -10,7 +13,13 @@ const appealId = appealDataEnforcementNotice.appealId;
 const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
 
 describe('interest-in-land', () => {
-	beforeEach(installMockApi);
+	beforeEach(() => {
+		installMockApi();
+		nock('http://test/')
+			.get(`/appeals/${appealId}?include=appellantCase`)
+			.reply(200, appealDataEnforcementNotice)
+			.persist();
+	});
 	afterEach(teardown);
 
 	describe('GET /change', () => {
@@ -131,7 +140,12 @@ describe('interest-in-land', () => {
 
 		it('should update via the api and re-direct to Appellant Case if a radio button is selected', async () => {
 			nock('http://test/')
-				.patch(`/appeals/1/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`)
+				.get(`/appeals/${appealDataEnforcementNotice.appealId}/appellant-cases/0`)
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
+				.patch(
+					`/appeals/${appealDataEnforcementNotice.appealId}/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`
+				)
 				.reply(200, {});
 
 			const validData = { interestInLandRadio: 'tenant' };
@@ -148,7 +162,12 @@ describe('interest-in-land', () => {
 
 		it('should update via the api and re-direct to Appellant Case if the "Other" radio button is selected, and an interest in land answer is given', async () => {
 			nock('http://test/')
-				.patch(`/appeals/1/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`)
+				.get(`/appeals/${appealId}/appellant-cases/0`)
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
+				.patch(
+					`/appeals/${appealDataEnforcementNotice.appealId}/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`
+				)
 				.reply(200, {});
 
 			const validData = { interestInLandRadio: 'other', interestInLandOther: 'My interest' };

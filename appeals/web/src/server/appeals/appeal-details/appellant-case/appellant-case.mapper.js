@@ -26,11 +26,6 @@ import { mapReasonOptionsToCheckboxItemParameters } from '#lib/validation-outcom
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
-	APPLICATION_FEE_RECEIPT_DOCTYPE,
-	ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE,
-	GROUND_SUPPORTING_DOCTYPE
-} from '@pins/appeals/constants/documents.js';
-import {
 	APPEAL_CASE_STATUS,
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_VIRUS_CHECK_STATUS
@@ -41,6 +36,7 @@ import { generateCASAdvertComponents } from './page-components/cas-advert.mapper
 import { generateCASComponents } from './page-components/cas.mapper.js';
 import { generateEnforcementNoticeComponents } from './page-components/enforcement-notice.mapper.js';
 import { generateHASComponents } from './page-components/has.mapper.js';
+import { generateLdcComponents } from './page-components/ldc.mapper.js';
 import { generateS20Components } from './page-components/s20.mapper.js';
 import { generateS78Components } from './page-components/s78.mapper.js';
 
@@ -65,6 +61,7 @@ import { generateS78Components } from './page-components/s78.mapper.js';
  * @param {string|undefined} backUrl
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {string|undefined} errorMessage
+ * @param {import('@pins/express/types/express.js').Request} request
  * @returns {Promise<PageContent>}
  */
 export async function appellantCasePage(
@@ -73,13 +70,15 @@ export async function appellantCasePage(
 	currentRoute,
 	backUrl,
 	session,
-	errorMessage = undefined
+	errorMessage = undefined,
+	request
 ) {
 	const mappedAppellantCaseData = initialiseAndMapData(
 		appellantCaseData,
 		appealDetails,
 		currentRoute,
-		session
+		session,
+		request
 	);
 
 	/**
@@ -102,7 +101,7 @@ export async function appellantCasePage(
 									text: 'Site address'
 								}
 							}
-					  ]
+						]
 					: [])
 			]
 		}
@@ -115,6 +114,12 @@ export async function appellantCasePage(
 		mappedAppellantCaseData,
 		userHasUpdateCase
 	);
+
+	// Remove empty rows
+	appealTypeSpecificComponents.forEach((component) => {
+		// @ts-ignore
+		component.parameters.rows = component.parameters.rows.filter((row) => !!row);
+	});
 
 	const reviewOutcomeRadiosInputInstruction =
 		mappedAppellantCaseData.reviewOutcome.input?.instructions.find(
@@ -132,7 +137,9 @@ export async function appellantCasePage(
 			closing: '</div></div>'
 		},
 		parameters: {
-			text: 'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information.'
+			text: appellantCaseData.isEnforcementChild
+				? 'Do not continue until you have reviewed all of the supporting documents and redacted any sensitive information.'
+				: 'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information.'
 		}
 	};
 
@@ -142,25 +149,44 @@ export async function appellantCasePage(
 		appealDetails.documentationSummary?.appellantCase?.status?.toLowerCase() !== 'valid' &&
 		userHasPermission(permissionNames.setStageOutcome, session)
 	) {
-		if (session.webAppellantCaseReviewOutcome?.validationOutcome) {
-			reviewOutcomeRadiosInputInstruction.properties.items =
-				// @ts-ignore
-				reviewOutcomeRadiosInputInstruction.properties.items.map((item) => {
-					return {
-						...item,
-						checked: item.value === session.webAppellantCaseReviewOutcome?.validationOutcome
-					};
+		if (appellantCaseData.isEnforcementChild) {
+			if (
+				appealDetails.documentationSummary?.appellantCase?.status?.toLowerCase() !== 'incomplete'
+			) {
+				reviewOutcomeComponents.push({
+					type: 'input',
+					parameters: {
+						type: 'hidden',
+						id: 'review-outcome',
+						name: 'reviewOutcome',
+						value: 'continue'
+					}
 				});
-		}
 
-		reviewOutcomeComponents.push({
-			type: 'radios',
-			parameters: {
-				...reviewOutcomeRadiosInputInstruction.properties,
-				errorMessage: errorMessage ? { text: errorMessage } : undefined
+				reviewOutcomeComponents.push(documentsWarningComponent);
 			}
-		});
-		reviewOutcomeComponents.push(documentsWarningComponent);
+		} else {
+			if (session.webAppellantCaseReviewOutcome?.validationOutcome) {
+				reviewOutcomeRadiosInputInstruction.properties.items =
+					// @ts-ignore
+					reviewOutcomeRadiosInputInstruction.properties.items.map((item) => {
+						return {
+							...item,
+							checked: item.value === session.webAppellantCaseReviewOutcome?.validationOutcome
+						};
+					});
+			}
+
+			reviewOutcomeComponents.push({
+				type: 'radios',
+				parameters: {
+					...reviewOutcomeRadiosInputInstruction.properties,
+					errorMessage: errorMessage ? { text: errorMessage } : undefined
+				}
+			});
+
+			reviewOutcomeComponents.push(documentsWarningComponent);
+		}
 	}
 
 	/** @type {PageComponent[]} */
@@ -217,7 +243,8 @@ export async function appellantCasePage(
 		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Appellant case',
-		headingClasses: 'govuk-heading-xl govuk-!-margin-bottom-3',
+		headingClasses: 'govuk-heading-l govuk-!-margin-bottom-3',
+		submitButtonText: appellantCaseData.isEnforcementChild ? 'Confirm' : 'Continue',
 		pageComponents: [
 			...errorSummaryPageComponents,
 			...notificationBanners,
@@ -372,7 +399,7 @@ export function checkAndConfirmPage(
 		parameters: {
 			rows: [
 				{
-					key: { text: 'Review outcome' },
+					key: { text: isEnforcementAppeal ? 'Review decision' : 'Review outcome' },
 					value: { text: capitalize(validationOutcomeAsString) },
 					actions: {
 						items: [
@@ -398,7 +425,11 @@ export function checkAndConfirmPage(
 					}
 				},
 				{
-					key: { text: `${capitalize(validationOutcomeAsString)} reasons` },
+					key: {
+						text: isEnforcementAppeal
+							? `Why is the appeal ${validationOutcomeAsString}?`
+							: `${capitalize(validationOutcomeAsString)} reasons`
+					},
 					value: {
 						html: '',
 						pageComponents: [
@@ -486,7 +517,9 @@ export function checkAndConfirmPage(
 				? `/appeals-service/appeal-details/${appealId}/appellant-case/${validationOutcome}/date`
 				: `/appeals-service/appeal-details/${appealId}/appellant-case/${validationOutcome}`,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
-		heading: 'Check your answers before confirming your review',
+		heading: isEnforcementAppeal
+			? 'Check details and mark appeal as invalid'
+			: 'Check your answers before confirming your review',
 		pageComponents,
 		submitButtonProperties: {
 			text: isEnforcementAppeal ? 'Mark appeal as invalid' : 'Confirm'
@@ -584,6 +617,29 @@ export function mapAppellantCaseNotificationBanners(
 							},
 							value: {
 								text: dateISOStringToDisplayDate(appealDueDate)
+							}
+						}
+					]
+				}
+			});
+		}
+
+		if (
+			// @ts-ignore
+			appellantCaseData.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
+			validationOutcome === 'incomplete'
+		) {
+			bannerContentPageComponents.push({
+				type: 'summary-list',
+				parameters: {
+					classes: 'govuk-summary-list--no-border govuk-!-margin-bottom-4',
+					rows: [
+						{
+							key: {
+								text: 'Incomplete reasons'
+							},
+							value: {
+								text: 'Enforcement notice invalid'
 							}
 						}
 					]
@@ -831,6 +887,12 @@ function generateCaseTypeSpecificComponents(
 			} else {
 				throw new Error('Feature flag inactive for Enforcement notice');
 			}
+		case APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE:
+			if (isFeatureActive(FEATURE_FLAG_NAMES.LDC)) {
+				return generateLdcComponents(appealDetails, appellantCaseData, mappedAppellantCaseData);
+			} else {
+				throw new Error('Feature flag inactive for LDC');
+			}
 		default:
 			throw new Error('Invalid appealType, unable to generate display page');
 	}
@@ -854,21 +916,23 @@ export function getPageHeadingTextOverrideForFolder(folder) {
 			return 'Decision letter from the local planning authority';
 		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
 			return 'Other new supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.A:
+		case APPEAL_DOCUMENT_TYPE.PRIOR_CORRESPONDENCE_WITH_PINS:
+			return 'communication with the Planning Inspectorate';
+		case APPEAL_DOCUMENT_TYPE.GROUND_A_SUPPORTING:
 			return 'Ground (a) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.B:
+		case APPEAL_DOCUMENT_TYPE.GROUND_B_SUPPORTING:
 			return 'Ground (b) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.C:
+		case APPEAL_DOCUMENT_TYPE.GROUND_C_SUPPORTING:
 			return 'Ground (c) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.D:
+		case APPEAL_DOCUMENT_TYPE.GROUND_D_SUPPORTING:
 			return 'Ground (d) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.E:
+		case APPEAL_DOCUMENT_TYPE.GROUND_E_SUPPORTING:
 			return 'Ground (e) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.F:
+		case APPEAL_DOCUMENT_TYPE.GROUND_F_SUPPORTING:
 			return 'Ground (f) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.G:
+		case APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING:
 			return 'Ground (g) supporting documents';
-		case APPLICATION_FEE_RECEIPT_DOCTYPE:
+		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
 			return 'Application receipt';
 		default:
 			return;
@@ -907,27 +971,27 @@ export function getPageHeadingTextOverrideForAddDocuments(folder, appealType) {
 			return 'Upload your new plans or drawings';
 		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
 			return 'Upload your other new supporting documents';
-		case ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE.PRIOR_CORRESPONDENCE_WITH_PINS:
+		case APPEAL_DOCUMENT_TYPE.PRIOR_CORRESPONDENCE_WITH_PINS:
 			return 'Upload your communication with the Planning Inspectorate';
-		case ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE:
+		case APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE:
 			return 'Upload your enforcement notice';
-		case ENFORCEMENT_NOTICE_APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE_PLAN:
+		case APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE_PLAN:
 			return 'Upload your enforcement notice plan';
-		case GROUND_SUPPORTING_DOCTYPE.A:
+		case APPEAL_DOCUMENT_TYPE.GROUND_A_SUPPORTING:
 			return 'Upload your ground (a) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.B:
+		case APPEAL_DOCUMENT_TYPE.GROUND_B_SUPPORTING:
 			return 'Upload your ground (b) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.C:
+		case APPEAL_DOCUMENT_TYPE.GROUND_C_SUPPORTING:
 			return 'Upload your ground (c) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.D:
+		case APPEAL_DOCUMENT_TYPE.GROUND_D_SUPPORTING:
 			return 'Upload your ground (d) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.E:
+		case APPEAL_DOCUMENT_TYPE.GROUND_E_SUPPORTING:
 			return 'Upload your ground (e) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.F:
+		case APPEAL_DOCUMENT_TYPE.GROUND_F_SUPPORTING:
 			return 'Upload your ground (f) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.G:
+		case APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING:
 			return 'Upload your ground (g) supporting documents';
-		case APPLICATION_FEE_RECEIPT_DOCTYPE:
+		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
 			return 'Upload your application receipt';
 		default:
 			break;
@@ -962,21 +1026,23 @@ export function getDocumentNameFromFolder(folderPath) {
 			return 'new plans or drawings';
 		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
 			return 'other new supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.A:
+		case APPEAL_DOCUMENT_TYPE.PRIOR_CORRESPONDENCE_WITH_PINS:
+			return 'communication with the Planning Inspectorate';
+		case APPEAL_DOCUMENT_TYPE.GROUND_A_SUPPORTING:
 			return 'ground (a) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.B:
+		case APPEAL_DOCUMENT_TYPE.GROUND_B_SUPPORTING:
 			return 'ground (b) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.C:
+		case APPEAL_DOCUMENT_TYPE.GROUND_C_SUPPORTING:
 			return 'ground (b) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.D:
+		case APPEAL_DOCUMENT_TYPE.GROUND_D_SUPPORTING:
 			return 'ground (d) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.E:
+		case APPEAL_DOCUMENT_TYPE.GROUND_E_SUPPORTING:
 			return 'ground (e) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.F:
+		case APPEAL_DOCUMENT_TYPE.GROUND_F_SUPPORTING:
 			return 'ground (f) supporting documents';
-		case GROUND_SUPPORTING_DOCTYPE.G:
+		case APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING:
 			return 'ground (g) supporting documents';
-		case APPLICATION_FEE_RECEIPT_DOCTYPE:
+		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
 			return 'application receipt';
 	}
 }

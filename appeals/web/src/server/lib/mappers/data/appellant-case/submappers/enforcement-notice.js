@@ -9,6 +9,6 @@ export const mapEnforcementNotice = ({ appellantCaseData, currentRoute, userHasU
 		value: appellantCaseData.enforcementNotice?.isReceived,
 		defaultText: 'No data',
 		link: `${currentRoute}/enforcement-notice/change`,
-		editable: hasData && userHasUpdateCase
+		editable: hasData && userHasUpdateCase && !appellantCaseData.isEnforcementChild
 	});
 };

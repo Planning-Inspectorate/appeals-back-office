@@ -479,6 +479,64 @@ describe('lpa questionnaires routes', () => {
 				expect(response.status).toEqual(200);
 			});
 
+			test('updates an lpa questionnaire when the validation outcome is complete for a full planning appeal with rule 6 parties', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					appealRule6Parties: [
+						{
+							serviceUser: {
+								email: 'rule6@example.com'
+							}
+						}
+					],
+					appealStatus: [
+						{
+							status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+							valid: true
+						}
+					]
+				});
+				// @ts-ignore
+				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
+					lpaQuestionnaireValidationOutcomes[0]
+				);
+				// @ts-ignore
+				databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
+					lpaQuestionnaireIncompleteReasons
+				);
+				// @ts-ignore
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+				// @ts-ignore
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ id: 1, key: 'no_redaction_required' }
+				]);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const body = {
+					validationOutcome: 'Complete'
+				};
+				const { id, lpaQuestionnaire } = fullPlanningAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(3);
+				expect(mockNotifySend).toHaveBeenLastCalledWith(
+					expect.objectContaining({
+						recipientEmail: 'rule6@example.com',
+						templateName: 'lpaq-complete-appellant'
+					})
+				);
+
+				expect(response.status).toEqual(200);
+			});
+
 			test('updates an lpa questionnaire when the validation outcome is incomplete and lpaQuestionnaireDueDate is a weekday', async () => {
 				const householdAppeal = householdAppealLPAQuestionnaireIncomplete;
 				// @ts-ignore

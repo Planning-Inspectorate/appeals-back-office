@@ -133,7 +133,7 @@ export const renderDocumentUpload = async ({
 							documentInfo.name
 					)
 				)
-		  ).toString('base64')
+			).toString('base64')
 		: '';
 
 	let documentName;

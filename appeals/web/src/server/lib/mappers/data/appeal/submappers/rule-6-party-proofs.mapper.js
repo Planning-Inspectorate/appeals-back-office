@@ -12,7 +12,8 @@ import { proofsReceivedText, proofsStatusText } from '../common.js';
 /** @type {import('../mapper.js').SubMapper} */
 export const mapRule6PartyProofs = ({ appealDetails, currentRoute, request }) => {
 	const shouldBeDisplayed =
-		config.featureFlags.featureFlagRule6Parties &&
+		config.featureFlags.featureFlagRule6Mvp &&
+		config.featureFlags.featureFlagRule6PoE &&
 		appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase();
 
 	const rule6Parties = appealDetails.appealRule6Parties;
@@ -49,13 +50,13 @@ export const mapRule6PartyProofs = ({ appealDetails, currentRoute, request }) =>
 										'rule-6-party-proofs-evidence',
 										request,
 										{ id: rule6Party.id, serviceUser: rule6Party.serviceUser }
-								  )
+									)
 								: mapAddRepresentationSummaryActionLink(
 										currentRoute,
 										'rule-6-party-proofs-evidence',
 										request,
 										{ id: rule6Party.id, serviceUser: rule6Party.serviceUser }
-								  )
+									)
 					}).display.tableItem;
 				})
 				.filter(isDefined)

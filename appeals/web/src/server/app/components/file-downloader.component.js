@@ -357,7 +357,7 @@ export const getRepresentationAttachmentFullNames = async (apiClient, caseId) =>
 				? `Interested party comments/${toSentenceCase(
 						representationStatus
 						// @ts-ignore
-				  )}/Comment ${++statusCounts[statusCountKey]}`
+					)}/Comment ${++statusCounts[statusCountKey]}`
 				: toSentenceCase(representation.representationType).replace('Lpa', 'LPA');
 
 		// @ts-ignore

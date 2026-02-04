@@ -49,6 +49,24 @@ describe('enforcement-reference', () => {
 			expect(response.statusCode).toEqual(200);
 			expect(backLinkInnerHtml).toContain(`href="${appellantCaseUrl}`);
 		});
+
+		it('should render the saved back link if set', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+				.reply(200, appellantCaseDataIncompleteOutcome);
+			const response = await request.get(
+				`${appellantCaseUrl}/enforcement-reference/change?backUrl=/appeal/1234`
+			);
+
+			const backLinkHtml = parseHtml(response.text, {
+				rootElement: '.govuk-back-link'
+			});
+
+			expect(response.statusCode).toEqual(200);
+			expect(backLinkHtml.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+				'/appeal/1234'
+			);
+		});
 	});
 
 	describe('POST /change', () => {
@@ -70,6 +88,25 @@ describe('enforcement-reference', () => {
 			expect(response.text).toBe(
 				`Found. Redirecting to /appeals-service/appeal-details/${appealId}/appellant-case`
 			);
+		});
+
+		it('should update via the api and redirect to the saved back link if set', async () => {
+			const validData = {
+				enforcementReference: 'ref-1234'
+			};
+
+			const apiCall = nock('http://test/')
+				.patch(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+				.reply(200, {});
+
+			await request.get(`${appellantCaseUrl}/enforcement-reference/change?backUrl=/appeal/1234`);
+			const response = await request
+				.post(`${appellantCaseUrl}/enforcement-reference/change`)
+				.send(validData);
+
+			expect(apiCall.isDone()).toBe(true);
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(`Found. Redirecting to /appeal/1234`);
 		});
 
 		it('should re-render the page with an error if the field is empty', async () => {

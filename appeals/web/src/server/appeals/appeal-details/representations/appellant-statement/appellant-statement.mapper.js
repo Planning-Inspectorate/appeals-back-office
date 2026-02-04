@@ -34,7 +34,7 @@ export function baseSummaryList(appealId, appellantStatement, { isReview }) {
 				),
 				isOrderedList: true,
 				isNumberedList: filteredAttachments.length > 1
-		  })
+			})
 		: null;
 
 	const folderId = appellantStatement.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
@@ -91,11 +91,11 @@ export function baseSummaryList(appealId, appellantStatement, { isReview }) {
 														href: `/appeals-service/appeal-details/${appealId}/appellant-statement/redact`,
 														visuallyHiddenText: 'statement'
 													}
-											  ])
+												])
 									]
 								}
 							}
-					  ]
+						]
 					: [
 							{
 								key: { text: 'Statement' },
@@ -122,11 +122,11 @@ export function baseSummaryList(appealId, appellantStatement, { isReview }) {
 														href: `/appeals-service/appeal-details/${appealId}/appellant-statement/redact`,
 														visuallyHiddenText: 'statement'
 													}
-											  ])
+												])
 									]
 								}
 							}
-					  ]),
+						]),
 				{
 					key: { text: 'Supporting documents' },
 					value: attachmentsList ? { html: attachmentsList } : { text: 'No documents' },
@@ -139,7 +139,7 @@ export function baseSummaryList(appealId, appellantStatement, { isReview }) {
 											href: `/appeals-service/appeal-details/${appealId}/appellant-statement/manage-documents/${folderId}`,
 											visuallyHiddenText: 'supporting documents'
 										}
-								  ]
+									]
 								: []),
 							{
 								text: 'Add',
@@ -233,7 +233,7 @@ export function reviewAppellantStatementPage(appealDetails, appellantStatement, 
 					? {
 							value: COMMENT_STATUS.VALID_REQUIRES_REDACTION,
 							text: 'Redact and accept statement'
-					  }
+						}
 					: undefined,
 				{
 					value: COMMENT_STATUS.INCOMPLETE,

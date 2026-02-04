@@ -137,6 +137,7 @@ export const appealsNationalList = {
 		{
 			appealId: 1,
 			appealReference: 'APP/Q9999/D/21/943245',
+			planningApplicationReference: '48269/APP/2021/1482',
 			appealSite: {
 				addressLine1: 'Copthalls',
 				addressLine2: 'Clevedon Road',
@@ -156,6 +157,7 @@ export const appealsNationalList = {
 		{
 			appealId: 2,
 			appealReference: 'APP/Q9999/D/21/129285',
+			planningApplicationReference: null,
 			appealSite: {
 				addressLine1: '19 Beauchamp Road',
 				town: 'Bristol',
@@ -522,9 +524,14 @@ export const appealDataAdvert = {
 	...appealData,
 	appealType: 'Advertisement'
 };
+export const appealDataLdc = {
+	...appealData,
+	appealType: 'Lawful development certificate appeal'
+};
 
 export const appealDataEnforcementNotice = {
 	...appealData,
+	appealId: 5623,
 	appealType: 'Enforcement notice appeal'
 };
 
@@ -1190,7 +1197,20 @@ export const lpaQuestionnaireData = {
 	sensitiveAreaDetails: 'The area is prone to flooding',
 	siteWithinGreenBelt: true,
 	statutoryConsulteesDetails: 'Some other people need to be consulted',
-	validation: null
+	validation: null,
+	noticeRelatesToBuildingEngineeringMiningOther: true,
+	siteAreaSquareMetres: 25,
+	hasAllegedBreachArea: true,
+	doesAllegedBreachCreateFloorSpace: true,
+	changeOfUseRefuseOrWaste: true,
+	changeOfUseMineralExtraction: true,
+	changeOfUseMineralStorage: true,
+	relatesToErectionOfBuildingOrBuildings: true,
+	relatesToBuildingWithAgriculturalPurpose: true,
+	relatesToBuildingSingleDwellingHouse: true,
+	affectedTrunkRoadName: 'trunk road name',
+	isSiteOnCrownLand: true,
+	article4AffectedDevelopmentRights: 'article 4 affected development rights'
 };
 
 export const appellantCaseDataNotValidatedWithDocuments = {
@@ -1593,7 +1613,20 @@ export const lpaQuestionnaireDataNotValidated = {
 	sensitiveAreaDetails: 'The area is prone to flooding',
 	siteWithinGreenBelt: true,
 	consultedBodiesDetails: 'Some other people need to be consulted',
-	validation: null
+	validation: null,
+	noticeRelatesToBuildingEngineeringMiningOther: true,
+	siteAreaSquareMetres: 25,
+	hasAllegedBreachArea: true,
+	doesAllegedBreachCreateFloorSpace: true,
+	changeOfUseRefuseOrWaste: true,
+	changeOfUseMineralExtraction: true,
+	changeOfUseMineralStorage: true,
+	relatesToErectionOfBuildingOrBuildings: true,
+	relatesToBuildingWithAgriculturalPurpose: true,
+	relatesToBuildingSingleDwellingHouse: true,
+	affectedTrunkRoadName: 'trunk road name',
+	isSiteOnCrownLand: true,
+	article4AffectedDevelopmentRights: 'article 4 affected development rights'
 };
 
 export const lpaQuestionnaireDataNotValidatedWithDocuments = {
@@ -1691,67 +1724,121 @@ export const appellantCaseInvalidReasons = [
 	}
 ];
 
+export const appellantCaseInvalidReasonsRealIds = [
+	{
+		id: 1,
+		name: 'Appeal has not been submitted on time',
+		hasText: false
+	},
+	{
+		id: 2,
+		name: 'Documents have not been submitted on time',
+		hasText: false
+	},
+	{
+		id: 3,
+		name: 'The appellant does not have the right to appeal',
+		hasText: false
+	},
+	{
+		id: 4,
+		name: 'Other reason',
+		hasText: true
+	},
+	{
+		id: 5,
+		name: 'Wrong appeal type',
+		hasText: false
+	},
+	{
+		id: 6,
+		name: 'Appellant does not have a legal interest in the land',
+		hasText: false
+	},
+	{
+		id: 7,
+		name: 'Ground (a) barred',
+		hasText: false
+	}
+];
+
 export const appealCaseEnforcementInvalidReasons = [
 	{ id: 1, name: 'Enforcement invalid reason one', hasText: true },
 	{ id: 2, name: 'Enforcement invalid reason two', hasText: true },
-	{ id: 3, name: 'Enforcement invalid reason three', hasText: true }
+	{ id: 3, name: 'Enforcement invalid reason three', hasText: true },
+	{ id: 8, name: 'Enforcement invalid other reason', hasText: true }
 ];
 
 export const appellantCaseIncompleteReasons = [
 	{
-		id: 2025,
+		id: 1,
 		name: 'Appellant name is not the same on the application form and appeal form',
 		hasText: false
 	},
 	{
-		id: 2026,
+		id: 2,
 		name: 'Attachments and/or appendices have not been included to the full statement of case',
 		hasText: true
 	},
 	{
-		id: 2027,
+		id: 3,
 		name: "LPA's decision notice is missing",
 		hasText: false
 	},
 	{
-		id: 2028,
+		id: 4,
 		name: "LPA's decision notice is incorrect or incomplete",
 		hasText: true
 	},
 	{
-		id: 2029,
+		id: 5,
 		name: 'Documents and/or plans referred in the application form, decision notice and appeal covering letter are missing',
 		hasText: true
 	},
 	{
-		id: 2030,
+		id: 6,
 		name: 'Agricultural holding certificate and declaration have not been completed on the appeal form',
 		hasText: false
 	},
 	{
-		id: 2031,
+		id: 7,
 		name: 'The original application form is missing',
 		hasText: false
 	},
 	{
-		id: 2032,
+		id: 8,
 		name: 'The original application form is incomplete',
 		hasText: true
 	},
 	{
-		id: 2033,
+		id: 9,
 		name: 'Statement of case and ground of appeal are missing',
 		hasText: false
 	},
 	{
-		id: 2034,
+		id: 11,
 		name: 'Draft statement of common ground is missing',
 		hasText: false
 	},
 	{
-		id: 2035,
+		id: 10,
 		name: 'Other',
 		hasText: true
+	},
+	{
+		id: 12,
+		name: 'Missing documents',
+		hasText: false
+	},
+	{
+		id: 13,
+		name: 'Grounds and facts do not match',
+		hasText: false
+	},
+	{
+		id: 14,
+		name: 'Waiting for appellant to pay the fee',
+		hasText: false
 	}
 ];
 
@@ -4658,7 +4745,7 @@ export const appealDataToGetRequiredActions = {
 			}
 		}
 	},
-	reviewAppellantStatement: {
+	appellantStatementAwaitingReview: {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
 		appealTimetable: {
@@ -4682,6 +4769,80 @@ export const appealDataToGetRequiredActions = {
 				status: DOCUMENT_STATUS_RECEIVED,
 				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 			}
+		}
+	},
+	awaitingRule6PartyStatement: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealTimetable: {
+			lpaStatementDueDate: futureDate
+		},
+		documentationSummary: {
+			rule6PartyStatements: [
+				{
+					status: DOCUMENT_STATUS_NOT_RECEIVED,
+					organisationName: 'Test Organisation',
+					rule6PartyId: 1
+				}
+			]
+		}
+	},
+	reviewRule6PartyStatement: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealTimetable: {
+			lpaStatementDueDate: futureDate
+		},
+		documentationSummary: {
+			rule6PartyStatements: [
+				{
+					status: DOCUMENT_STATUS_RECEIVED,
+					representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
+					organisationName: 'Test Organisation',
+					rule6PartyId: 1
+				}
+			]
+		}
+	},
+	reviewRule6PartyProofOfEvidence: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
+		appealTimetable: {
+			proofOfEvidenceAndWitnessesDueDate: futureDate
+		},
+		documentationSummary: {
+			rule6PartyProofs: [
+				{
+					status: DOCUMENT_STATUS_RECEIVED,
+					representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
+					organisationName: 'Test Organisation',
+					rule6PartyId: 1
+				}
+			]
+		}
+	},
+	awaitingRule6PartyProofOfEvidence: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
+		appealTimetable: {
+			proofOfEvidenceAndWitnessesDueDate: futureDate
+		},
+		documentationSummary: {
+			rule6PartyProofs: [
+				{
+					status: DOCUMENT_STATUS_NOT_RECEIVED,
+					organisationName: 'Test Organisation',
+					rule6PartyId: 1
+				}
+			]
+		}
+	},
+	enforcementNoticeAppealIncomplete: {
+		...baseAppealDataToGetRequiredActions,
+		appealType: 'Enforcement notice appeal',
+		appealStatus: 'validation',
+		documentationSummary: {
+			appellantCase: { dueDate: '3000-01-06T23:59:00.000Z', status: 'Incomplete' }
 		}
 	}
 };

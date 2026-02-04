@@ -174,11 +174,11 @@ exports[`other-appeals GET /other-appeals/manage should render the "Do you want 
 </main>"
 `;
 
-exports[`other-appeals GET /other-appeals/manage should render the "Manage linked appeals" page 1`] = `
+exports[`other-appeals GET /other-appeals/manage should render the "Manage related appeals" page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Manage linked appeals</h1>
+            <h1 class="govuk-heading-l">Manage related appeals</h1>
         </div>
     </div>
     <h2 class="govuk-!-margin-top-6">Related appeals</h2>

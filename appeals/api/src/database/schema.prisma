@@ -338,16 +338,21 @@ model AppellantCase {
   interestInLand                                 String?
   writtenOrVerbalPermission                      String?
   descriptionOfAllegedBreach                     String?
+  applicationMadeAndFeePaid                      Boolean?
   applicationDevelopmentAllOrPart                String?
   contactAddress                                 Address?                                         @relation(fields: [contactAddressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   contactAddressId                               Int?
+  applicationDecisionAppealed                    Boolean?
   appealDecisionDate                             DateTime?
   appellantCaseEnforcementInvalidReasonsSelected AppellantCaseEnforcementInvalidReasonsSelected[]
-
   // Cas adverts fields
-  landownerPermission Boolean?
+  landownerPermission                            Boolean?
 
   appellantCaseAdvertDetails AppellantCaseAdvertDetails[]
+
+  //LDC Fields
+  siteUseAtTimeOfApplication     String?
+  applicationMadeUnderActSection String?
 }
 
 /// AppealGround model
@@ -557,6 +562,26 @@ model LPAQuestionnaire {
   isSiteInAreaOfSpecialControlAdverts        Boolean?
   wasApplicationRefusedDueToHighwayOrTraffic Boolean?
   didAppellantSubmitCompletePhotosAndPlans   Boolean?
+
+  //Enforcement fields
+  noticeRelatesToBuildingEngineeringMiningOther Boolean?
+  siteAreaSquareMetres                          Decimal?
+  hasAllegedBreachArea                          Boolean?
+  doesAllegedBreachCreateFloorSpace             Boolean?
+  changeOfUseRefuseOrWaste                      Boolean?
+  changeOfUseMineralExtraction                  Boolean?
+  changeOfUseMineralStorage                     Boolean?
+  relatesToErectionOfBuildingOrBuildings        Boolean?
+  relatesToBuildingWithAgriculturalPurpose      Boolean?
+  relatesToBuildingSingleDwellingHouse          Boolean?
+  affectedTrunkRoadName                         String?
+  isSiteOnCrownLand                             Boolean?
+  article4AffectedDevelopmentRights             String?
+
+  // LDC fields
+  appealUnderActSection    String?
+  lpaConsiderAppealInvalid Boolean?
+  lpaAppealInvalidReasons  String?  @db.NVarChar(MAX)
 
   @@index([isGreenBelt])
 }
@@ -866,13 +891,13 @@ model RepresentationAttachment {
 /// RepresentationRejectionReason model
 /// Contains all possible reasons to reject a comment.
 model RepresentationRejectionReason {
-  id                                     Int                                      @id @default(autoincrement())
+  id                                     Int                                      @id
   name                                   String
   hasText                                Boolean                                  @default(false)
   representationType                     String                                   @default("comment")
   representationRejectionReasonsSelected RepresentationRejectionReasonsSelected[]
 
-  @@unique([name, representationType])
+  @@unique([id, name, representationType])
 }
 
 /// RepresentationRejectionReasonsSelected model
@@ -1074,4 +1099,12 @@ model EnforcementNoticeAppealOutcome {
   otherLiveAppeals         String?
 
   appeal Appeal @relation(fields: [appealId], references: [id])
+}
+
+/// BankHoliday model
+/// Stores bank holidays fetched from GOV.UK
+model BankHoliday {
+  id              Int      @id @default(autoincrement())
+  bankHolidayDate DateTime @unique
+  title           String
 }

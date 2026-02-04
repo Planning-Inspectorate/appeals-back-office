@@ -3394,6 +3394,36 @@ describe('appeal-details', () => {
 					'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/case-procedure" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
 				);
 			});
+
+			it('Should display enforcement notice reference instead of LPA reference if appeal type is enforcement notice', async () => {
+				const appealId = 2;
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, {
+						...appealDataEnforcementNotice,
+						appealId
+					});
+				nock('http://test/')
+					.get(/appeals\/\d+\/appellant-cases\/\d+/)
+					.reply(200, {
+						enforcementNotice: {
+							reference: 'ENF-123456789'
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				const mainHtml = parseHtml(response.text);
+
+				expect(mainHtml.innerHTML).toMatchSnapshot();
+				expect(mainHtml.innerHTML).not.toContain('LPA reference');
+
+				expect(
+					mainHtml
+						.querySelector('.appeal-enforcement-reference .govuk-summary-list__value')
+						.innerHTML.trim()
+				).toBe('ENF-123456789');
+			});
 		});
 
 		describe('Documentation', () => {
@@ -3655,9 +3685,14 @@ describe('appeal-details', () => {
 				it('should render the correct row without appellant statement', async () => {
 					const appealId = 2;
 					const appeal = {
-						...appealDataFullPlanning,
+						...appealDataEnforcementNotice,
 						appealId,
-						procedureType: APPEAL_CASE_PROCEDURE.INQUIRY
+						procedureType: APPEAL_CASE_PROCEDURE.WRITTEN_REPRESENTATION,
+						appealTimetable: {
+							...appealDataEnforcementNotice.appealTimetable,
+							lpaStatementDueDate: '2024-01-01T00:00:00.000Z'
+						},
+						appealStatus: APPEAL_CASE_STATUS.STATEMENTS
 					};
 					nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appeal);
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
@@ -3678,20 +3713,20 @@ describe('appeal-details', () => {
 					expect(table.innerHTML).toMatchSnapshot();
 
 					const rows = table.querySelectorAll('.govuk-table__body .govuk-table__row');
-					expect(rows[6].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+					expect(rows[2].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
 						'Appellant statement'
 					);
-					expect(rows[6].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+					expect(rows[2].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
 						''
 					);
-					expect(rows[6].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
+					expect(rows[2].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
 						''
 					);
 					expect(
-						rows[6].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
+						rows[2].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
 					).toBe('Add<span class="govuk-visually-hidden"> Appellant statement</span>');
 					expect(
-						rows[6]
+						rows[2]
 							.querySelector('.govuk-table__cell:nth-child(4) a.govuk-link')
 							.getAttribute('href')
 					).toBe('/appeals-service/appeal-details/2/appellant-statement/add-document');
@@ -3700,9 +3735,9 @@ describe('appeal-details', () => {
 				it('should render the correct row with appellant statement awaiting review', async () => {
 					const appealId = 2;
 					const appeal = {
-						...appealDataFullPlanning,
+						...appealDataEnforcementNotice,
 						appealId,
-						procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+						procedureType: APPEAL_CASE_PROCEDURE.WRITTEN_REPRESENTATION,
 						documentationSummary: {
 							appellantStatement: {
 								status: 'received',
@@ -3730,20 +3765,20 @@ describe('appeal-details', () => {
 					expect(table.innerHTML).toMatchSnapshot();
 
 					const rows = table.querySelectorAll('.govuk-table__body .govuk-table__row');
-					expect(rows[6].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+					expect(rows[2].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
 						'Appellant statement'
 					);
-					expect(rows[6].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+					expect(rows[2].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
 						'Ready to review'
 					);
-					expect(rows[6].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
+					expect(rows[2].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
 						'1 January 2025'
 					);
 					expect(
-						rows[6].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
+						rows[2].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
 					).toBe('Review<span class="govuk-visually-hidden"> Appellant statement</span>');
 					expect(
-						rows[6]
+						rows[2]
 							.querySelector('.govuk-table__cell:nth-child(4) a.govuk-link')
 							.getAttribute('href')
 					).toBe(

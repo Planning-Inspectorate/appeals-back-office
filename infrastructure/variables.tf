@@ -60,12 +60,16 @@ variable "apps_config" {
       featureFlagCancelSiteVisit        = bool
       featureFlagSearchCaseOfficer      = bool
       featureFlagEnforcementNotice      = bool
+      featureFlagEnforcementLinked      = bool
       featureFlagInvalidDecisionLetter  = bool
-      featureFlagRule6Parties           = bool
+      featureFlagRule6Mvp               = bool
+      featureFlagRule6PoE               = bool
       featureFlagExpeditedAppeals       = bool
       featureFlagManuallyAddReps        = bool
       featureFlagAppellantStatement     = bool
+      featureFlagRule6Statement         = bool
       featureFlagLDC                    = bool
+      featureFlagRule6Costs             = bool
     })
 
     logging = object({

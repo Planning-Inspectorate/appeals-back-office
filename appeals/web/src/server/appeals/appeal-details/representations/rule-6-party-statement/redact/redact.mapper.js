@@ -195,7 +195,7 @@ export function redactConfirmPage(
 										]
 									}
 								}
-						  ]
+							]
 						: []),
 
 					...(isPublished
@@ -213,7 +213,7 @@ export function redactConfirmPage(
 															href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/manage-documents/${folderId}?backUrl=/rule-6-party-statement/redact/confirm`,
 															visuallyHiddenText: 'supporting documents'
 														}
-												  ]
+													]
 												: []),
 											{
 												text: 'Add',
@@ -256,7 +256,7 @@ export function redactConfirmPage(
 													]
 												}
 											}
-									  ]),
+										]),
 								...(sessionData?.allocationLevel && specialisms.length
 									? [
 											{
@@ -292,9 +292,9 @@ export function redactConfirmPage(
 													]
 												}
 											}
-									  ]
+										]
 									: [])
-						  ])
+							])
 				]
 			}
 		}

@@ -60,7 +60,7 @@ export class CaseDetailsPage extends Page {
 		hearingBannerLink: 'setup-hearing',
 		hearingBannerAddressLink: 'add-hearing-address',
 		inquiryBannerLink: 'setup-inquiry',
-		pageHeading: 'h1.govuk-heading-l',
+		pageHeading: 'h1.govuk-heading-l, h1.govuk-fieldset__heading',
 		changeInquiryDate: 'change-inquiry-date',
 		changeInquiryNumberOfDays: 'change-inquiry-expected-number-of-days',
 		addAppellantWithdrawal: 'add-costs-appellant-withdrawal',
@@ -203,6 +203,7 @@ export class CaseDetailsPage extends Page {
 		lpaStatementReviewLink: () => cy.getByData(this._cyDataSelectors.reviewLpaStatement),
 		caseStatusTag: () => cy.get('.govuk-grid-column-full > .govuk-grid-column-full > .govuk-tag'),
 		rowChangeLink: (row) => cy.getByData(`change-${row}`),
+		rowAddLink: (row) => cy.getByData(`add-${row}`),
 		changeLinkByLabel: (label) =>
 			cy
 				.contains('.govuk-summary-list__row', label)
@@ -558,7 +559,6 @@ export class CaseDetailsPage extends Page {
 	clickRowChangeLink(row) {
 		this.elements.rowChangeLink(row).click();
 	}
-
 	clickChangeLinkByLabel(label) {
 		this.elements.changeLinkByLabel(label).click();
 	}
@@ -848,7 +848,7 @@ export class CaseDetailsPage extends Page {
 		this.basePageElements.bannerLink().click();
 		this.selectRadioButtonByValue('Accept final comment');
 		this.clickButtonByText('Continue');
-		this.clickButtonByText(`Accept ${type} final comment`);
+		this.clickButtonByText(`Accept ${type} final comments`);
 	}
 
 	checkTimetableDueDatesAndChangeLinks(timetableItems) {
@@ -952,7 +952,7 @@ export class CaseDetailsPage extends Page {
 	}
 
 	checkHeading = (expectedText) => {
-		this.elements.pageHeading().should('have.text', expectedText);
+		this.elements.pageHeading().should('contain.text', expectedText);
 	};
 
 	verifyChangeLinkVisibility = (row, shouldBeVisible = true) => {

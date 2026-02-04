@@ -281,3 +281,29 @@ export const rule6PartyStatementIncomplete = async ({
 		}
 	});
 };
+
+/** @type {Service} */
+export const rule6PartyProofOfEvidenceIncomplete = async ({
+	notifyClient,
+	appeal,
+	representation,
+	allowResubmit,
+	azureAdUserId
+}) => {
+	const rule6Party = appeal.appealRule6Parties?.find(
+		(party) => party.serviceUserId === representation.representedId
+	);
+
+	if (!rule6Party?.serviceUser?.email) {
+		throw new Error(`No email found for Rule 6 party on Appeal: ${appeal.reference}`);
+	}
+
+	await proofOfEvidenceNotifySend(
+		notifyClient,
+		appeal,
+		representation,
+		allowResubmit,
+		azureAdUserId,
+		rule6Party.serviceUser.email
+	);
+};

@@ -17,7 +17,9 @@ export const getCaseOverview = (mappedData, appealDetails) => ({
 	type: 'summary-list',
 	parameters: {
 		rows: [
-			removeSummaryListActions(mappedData.appeal?.lpaReference?.display.summaryListItem),
+			appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
+				? mappedData.appeal?.enforcementReference?.display.summaryListItem
+				: removeSummaryListActions(mappedData.appeal?.lpaReference?.display.summaryListItem),
 			displayHorizonReference(appealDetails)
 				? mappedData.appeal?.horizonReference?.display.summaryListItem
 				: undefined,
@@ -58,12 +60,12 @@ const displayProcedureChangeLink = (appealDetails) => {
 	const lpaStatementDueDateElapsed = appealDetails.appealTimetable?.lpaStatementDueDate
 		? dateIsInThePast(
 				dateISOStringToDayMonthYearHourMinute(appealDetails.appealTimetable.lpaStatementDueDate)
-		  )
+			)
 		: false;
 	const ipCommentsDueDateElapsed = appealDetails.appealTimetable?.ipCommentsDueDate
 		? dateIsInThePast(
 				dateISOStringToDayMonthYearHourMinute(appealDetails.appealTimetable.ipCommentsDueDate)
-		  )
+			)
 		: false;
 
 	if (

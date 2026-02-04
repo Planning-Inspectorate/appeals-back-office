@@ -155,10 +155,10 @@ export function decisionLetterUploadBackUrl(request) {
 		isFeatureActive(FEATURE_FLAG_NAMES.INVALID_DECISION_LETTER)
 		? `${baseUrl(currentAppeal)}/decision-letter`
 		: isParentAppeal(currentAppeal)
-		? `${baseUrl(currentAppeal)}/${
-				currentAppeal.linkedAppeals[currentAppeal.linkedAppeals.length - 1].appealId
-		  }/decision`
-		: `${baseUrl(currentAppeal)}/decision`;
+			? `${baseUrl(currentAppeal)}/${
+					currentAppeal.linkedAppeals[currentAppeal.linkedAppeals.length - 1].appealId
+				}/decision`
+			: `${baseUrl(currentAppeal)}/decision`;
 }
 
 /**
@@ -176,10 +176,10 @@ export function appellantCostsDecisionBackUrl(request) {
 	return session.inspectorDecision?.files?.length
 		? `${baseUrl(currentAppeal)}/decision-letter-upload`
 		: session.inspectorDecision.outcome === APPEAL_CASE_DECISION_OUTCOME.INVALID &&
-		  session.inspectorDecision?.invalidReason?.length &&
-		  isFeatureActive(FEATURE_FLAG_NAMES.INVALID_DECISION_LETTER)
-		? `${baseUrl(currentAppeal)}/invalid-reason`
-		: decisionLetterUploadBackUrl(request);
+			  session.inspectorDecision?.invalidReason?.length &&
+			  isFeatureActive(FEATURE_FLAG_NAMES.INVALID_DECISION_LETTER)
+			? `${baseUrl(currentAppeal)}/invalid-reason`
+			: decisionLetterUploadBackUrl(request);
 }
 
 /**
@@ -199,8 +199,8 @@ export function lpaCostsDecisionBackUrl(request) {
 	return session.issueDecision.appellantCostsDecision === 'false'
 		? `${baseUrl(currentAppeal)}/appellant-costs-decision`
 		: appellantHasAppliedForCosts && !appellantDecisionHasAlreadyBeenIssued
-		? `${baseUrl(currentAppeal)}/appellant-costs-decision-letter-upload`
-		: appellantCostsDecisionBackUrl(request);
+			? `${baseUrl(currentAppeal)}/appellant-costs-decision-letter-upload`
+			: appellantCostsDecisionBackUrl(request);
 }
 
 /**

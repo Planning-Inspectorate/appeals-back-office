@@ -10,8 +10,8 @@ export function changeSiteOwnership(apiClient, appealId, appellantCaseId, update
 		updatedSiteOwnership.radio === 'fully'
 			? { ownsAllLand: true, ownsSomeLand: false }
 			: updatedSiteOwnership.radio === 'partially'
-			? { ownsAllLand: false, ownsSomeLand: true }
-			: { ownsAllLand: false, ownsSomeLand: false };
+				? { ownsAllLand: false, ownsSomeLand: true }
+				: { ownsAllLand: false, ownsSomeLand: false };
 
 	return apiClient.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
 		json: {

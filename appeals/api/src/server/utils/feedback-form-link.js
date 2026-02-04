@@ -25,6 +25,9 @@ export function getFeedbackLinkFromAppealTypeKey(appealKey) {
 		case APPEAL_CASE_TYPE.H: // Full Adverts
 			return FEEDBACK_FORM_LINKS.FULL_ADVERTS;
 
+		case APPEAL_CASE_TYPE.C: // Enforcement notice
+			return FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE;
+
 		default:
 			return FEEDBACK_FORM_LINKS.ALL;
 	}

@@ -87,7 +87,7 @@ export class Page {
 		button: () => cy.get(this.selectors.button),
 		buttonByLabelText: (buttonText) =>
 			cy
-				.contains(this.selectors.button, this.exactMatch(buttonText), {
+				.contains(this.selectors.button, buttonText, {
 					matchCase: false,
 					timeout: 20000
 				})
@@ -245,7 +245,8 @@ export class Page {
 	}
 
 	exactMatch(value) {
-		return new RegExp(`^\\s*${value}\\s*$`, 'm');
+		const escaped = value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+		return new RegExp(`^\\s*${escaped}\\s*$`, 'i');
 	}
 
 	/***************************************************************

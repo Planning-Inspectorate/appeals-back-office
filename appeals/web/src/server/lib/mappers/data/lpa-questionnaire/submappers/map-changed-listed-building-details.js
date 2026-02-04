@@ -23,10 +23,10 @@ export const mapChangedListedBuildingDetails = ({
 								(lb) => !lb.affectsListedBuilding
 							) || []
 						)
-				  }
+					}
 				: {
 						text: 'No'
-				  },
+					},
 			actions: {
 				items: [
 					...(lpaQuestionnaireData.listedBuildingDetails?.length
@@ -37,7 +37,7 @@ export const mapChangedListedBuildingDetails = ({
 									visuallyHiddenText: 'changed listed building',
 									attributes: { 'lpaQuestionnaireData-cy': 'manage--listed-building' }
 								})
-						  ]
+							]
 						: []),
 					mapActionComponent(permissionNames.updateCase, session, {
 						text: 'Add',

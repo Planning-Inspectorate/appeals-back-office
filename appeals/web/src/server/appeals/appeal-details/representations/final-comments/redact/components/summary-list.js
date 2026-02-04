@@ -85,7 +85,7 @@ export const summaryList = (
 									]
 								}
 							}
-					  ]
+						]
 					: []),
 				...(isPublished
 					? []
@@ -102,7 +102,7 @@ export const summaryList = (
 														href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/manage-documents/${comment.attachments?.[0]?.documentVersion?.document?.folderId}/?backUrl=/final-comments/${finalCommentsType}/redact/confirm`,
 														visuallyHiddenText: 'supporting documents'
 													}
-											  ]
+												]
 											: []),
 										{
 											text: 'Add',
@@ -125,7 +125,7 @@ export const summaryList = (
 									]
 								}
 							}
-					  ])
+						])
 			]
 		}
 	};

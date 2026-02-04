@@ -3,7 +3,7 @@ import {
 	mapDocumentManageUrl
 } from '#lib/mappers/data/appellant-case/common.js';
 import { documentSummaryListItem } from '#lib/mappers/index.js';
-import { GROUND_SUPPORTING_DOCTYPE } from '@pins/appeals/constants/documents.js';
+import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 
 /** @type {import('../mapper.js').SubMapperList} */
 export const mapSupportingDocumentsForGrounds = ({ appellantCaseData, userHasUpdateCase }) => {
@@ -19,7 +19,8 @@ export const mapSupportingDocumentsForGrounds = ({ appellantCaseData, userHasUpd
 		const { ground } = appealGround || {};
 		const { groundRef = '' } = ground || {};
 		const id = `supporting-documents-for-ground-${groundRef}`;
-		const docType = GROUND_SUPPORTING_DOCTYPE[groundRef.toUpperCase()];
+		// @ts-ignore
+		const docType = APPEAL_DOCUMENT_TYPE[`GROUND_${groundRef.toUpperCase()}_SUPPORTING`];
 		return documentSummaryListItem({
 			manageUrl: mapDocumentManageUrl(
 				appellantCaseData.appealId,

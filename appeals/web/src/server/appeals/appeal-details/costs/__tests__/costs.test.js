@@ -33,6 +33,11 @@ const costsCategoriesNotIncludingDecision = ['appellant', 'lpa'];
 const costsDocumentTypes = ['application', 'withdrawal', 'correspondence'];
 
 describe('costs', () => {
+	afterAll(() => {
+		nock.cleanAll();
+		nock.restore();
+		jest.clearAllMocks();
+	});
 	beforeAll(() => {
 		jest.clearAllMocks();
 	});

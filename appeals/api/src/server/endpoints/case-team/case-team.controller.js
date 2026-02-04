@@ -1,6 +1,5 @@
 import * as caseTeamRepository from '#repositories/team.repository.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import {
 	getTeamEmailFromAppealId,
 	setAssignedTeamId,
@@ -47,10 +46,7 @@ export const updateAssignedTeamId = async (req, res) => {
 	}
 
 	const result = await setAssignedTeamId(appealId, teamId, azureAdUserId);
-	if (
-		Object.hasOwn(result, 'assignedTeamId') &&
-		isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)
-	) {
+	if (Object.hasOwn(result, 'assignedTeamId') && isLinkedAppealsActive()) {
 		await setAssignedTeamIdForLinkedAppeals(appealId, teamId, azureAdUserId);
 	}
 

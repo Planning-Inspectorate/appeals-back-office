@@ -16,6 +16,7 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
+export const emailRequestCache = new Set();
 
 export const templatesDir = path.join(__dirname, 'templates');
 
@@ -59,6 +60,57 @@ export const notifySend = async (options) => {
 	if (!personalisation.front_office_url) {
 		personalisation.front_office_url = config.frontOffice.url;
 	}
+
+	const appealReference = String(personalisation.appeal_reference_number);
+	const fingerprint = `${appealReference}-${templateName}-${recipientEmail}`;
+
+	if (process.env.NODE_ENV !== 'test') {
+		if (emailRequestCache.has(fingerprint)) {
+			logger.info('Blocking duplicate.');
+			return;
+		}
+		emailRequestCache.add(fingerprint);
+		setTimeout(() => emailRequestCache.delete(fingerprint), 2000);
+	}
+
+	if (!personalisation.front_office_url) {
+		personalisation.front_office_url = config.frontOffice.url;
+	}
+
+	const prismaClient = (await import('#utils/database-connector.js')).databaseConnector;
+
+	if (process.env.NODE_ENV !== 'test' && prismaClient) {
+		const previousEmail = await prismaClient.appealNotification.findFirst({
+			where: {
+				caseReference: appealReference,
+				template: templateName,
+				recipient: recipientEmail
+			},
+			orderBy: { dateCreated: 'desc' }
+		});
+
+		if (previousEmail) {
+			const thirtySecondsAgo = new Date(Date.now() - 30 * 1000);
+
+			const existingNotification = await prismaClient.appealNotification.findFirst({
+				where: {
+					caseReference: appealReference,
+					template: templateName,
+					recipient: recipientEmail,
+					dateCreated: { gte: thirtySecondsAgo }
+				}
+			});
+
+			if (existingNotification) {
+				logger.info(
+					{ appealReference, templateName },
+					'Blocked: Identical email found in 30s window.'
+				);
+				return;
+			}
+		}
+	}
+
 	const genericTemplate = config.govNotify.template.generic;
 	const content = renderTemplate(`${templateName}.content.md`, personalisation);
 	const subject = renderTemplate(`${templateName}.subject.md`, personalisation);
@@ -77,7 +129,6 @@ export const notifySend = async (options) => {
 			await notifyClient.sendEmail(genericTemplate, recipientEmail, { subject, content });
 		}
 
-		const prismaClient = (await import('#utils/database-connector.js')).databaseConnector;
 		if (prismaClient) {
 			await prismaClient.appealNotification.createMany({
 				data: [
@@ -152,5 +203,6 @@ export default {
 	templatesDir,
 	nunjucksEnv,
 	notifySend,
-	renderTemplate
+	renderTemplate,
+	emailRequestCache
 };

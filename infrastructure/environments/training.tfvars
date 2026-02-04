@@ -50,13 +50,17 @@ apps_config = {
     featureFlagAutoAssignTeam         = true
     featureFlagCancelSiteVisit        = true
     featureFlagSearchCaseOfficer      = true
-    featureFlagEnforcementNotice      = false
+    featureFlagEnforcementNotice      = true
+    featureFlagEnforcementLinked      = false
     featureFlagInvalidDecisionLetter  = false
-    featureFlagRule6Parties           = false
+    featureFlagRule6Mvp               = true
+    featureFlagRule6PoE               = false
     featureFlagExpeditedAppeals       = false
-    featureFlagManuallyAddReps        = false
-    featureFlagAppellantStatement     = true
+    featureFlagManuallyAddReps        = true
+    featureFlagAppellantStatement     = false
+    featureFlagRule6Statement         = false
     featureFlagLDC                    = false
+    featureFlagRule6Costs             = false
   }
 
   use_system_test_bc_for_change_lpa = false

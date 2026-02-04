@@ -10,7 +10,10 @@ export function installMockAppealsService() {
 
 	// appeal details
 	nock('http://test/')
-		.get(`/appeals/${appealData.appealId}?include=all`)
+		.get(`/appeals/${appealData.appealId}`)
+		.query((actualQueryObject) => {
+			return Object.prototype.hasOwnProperty.call(actualQueryObject, 'include');
+		})
 		.reply(200, appealData)
 		.persist();
 

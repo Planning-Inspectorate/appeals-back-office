@@ -25,7 +25,7 @@ export const renderManageLinkedAppeals = async (request, response) => {
 				(
 					/** @type {import('@pins/appeals.api/src/server/endpoints/appeals.js').LinkedAppeal} */ linkedAppeal
 				) => linkedAppeal.isParentAppeal
-		  )
+			)
 		: undefined;
 
 	const leadAppealData = leadLinkedAppeal?.appealId

@@ -40,7 +40,7 @@ export function uploadDocumentsSection(templateData) {
 							key: 'Decision letter from the local planning authority',
 							html: formatDocumentData(applicationDecisionLetter)
 						}
-				  ]
+					]
 				: []),
 			{ key: 'Appellant statement', html: formatDocumentData(appellantStatement) },
 			// Will not appear for householder
@@ -51,7 +51,7 @@ export function uploadDocumentsSection(templateData) {
 							text: formatSentenceCase(planningObligation?.status, 'Not answered')
 						},
 						{ key: 'Planning obligation', html: formatDocumentData(planningObligationDocuments) }
-				  ]
+					]
 				: []),
 			{ key: 'Draft statement of common ground', html: formatDocumentData(statementCommonGround) },
 			// Will not appear for householder
@@ -61,7 +61,7 @@ export function uploadDocumentsSection(templateData) {
 							key: 'Separate ownership certificate and agricultural land declaration',
 							html: formatDocumentData(ownershipCertificate)
 						}
-				  ]
+					]
 				: []),
 			{
 				key: 'Application for an award of appeal costs',
@@ -74,7 +74,7 @@ export function uploadDocumentsSection(templateData) {
 						{ key: 'Plans, drawings and list of plans', html: formatDocumentData(plansDrawings) },
 						{ key: 'New plans or drawings', html: formatDocumentData(newPlansDrawings) },
 						{ key: 'Other new supporting documents', html: formatDocumentData(otherNewDocuments) }
-				  ]
+					]
 				: [])
 		]
 	};

@@ -1,14 +1,17 @@
+import nunjucksEnvironments from '#app/config/nunjucks.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { enhanceCheckboxOptionWithAddAnotherReasonConditionalHtml } from '#lib/enhance-html.js';
 import { yesNoInput } from '#lib/mappers/index.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-
+import { LENGTH_300 } from '@pins/appeals/constants/support.js';
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
+ * @typedef {import('../appellant-case/appellant-case.types.js').AppellantCaseValidationOutcome} AppellantCaseValidationOutcome
  * @typedef {import("@pins/express").ValidationErrors | undefined} ValidationErrors
- * @typedef {import('@pins/appeals.api').Appeals.ReasonOption & { selected: boolean, text: string }} ReasonOption
+ * @typedef {import('@pins/appeals.api').Appeals.ReasonOption}  ReasonOption
  */
 
 /**
@@ -66,31 +69,35 @@ export const mapInvalidReasonPage = (
 	sourceIsAppellantCase
 ) => {
 	const shortAppealReference = appealShortReference(appealReference);
-	const backLinkUrl =
-		appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
-			? `/appeals-service/appeal-details/${appealId}/appellant-case/invalid/enforcement-notice`
-			: `/appeals-service/appeal-details/${appealId}/${
-					sourceIsAppellantCase ? 'appellant-case' : 'cancel'
-			  }`;
+	const isEnforcementNotice = appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE;
+	const backLinkUrl = isEnforcementNotice
+		? `/appeals-service/appeal-details/${appealId}/appellant-case/invalid/enforcement-notice`
+		: `/appeals-service/appeal-details/${appealId}/${
+				sourceIsAppellantCase ? 'appellant-case' : 'cancel'
+			}`;
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Why is the appeal invalid?`,
 		backLinkUrl,
-		preHeading: `Appeal ${shortAppealReference} - mark as invalid`,
+		preHeading: `Appeal ${shortAppealReference}${isEnforcementNotice ? '' : ' - mark as invalid'}`,
+		heading: isEnforcementNotice ? 'Why is the appeal invalid?' : undefined,
+		hint: isEnforcementNotice ? 'Select all that apply' : undefined,
 		pageComponents: [
 			{
 				type: 'checkboxes',
 				parameters: {
 					name: 'invalidReason',
 					idPrefix: 'invalid-reason',
-					fieldset: {
-						legend: {
-							text: 'Why is the appeal invalid?',
-							isPageHeading: true,
-							classes: 'govuk-fieldset__legend--l'
-						}
-					},
+					fieldset: isEnforcementNotice
+						? undefined
+						: {
+								legend: {
+									text: 'Why is the appeal invalid?',
+									isPageHeading: true,
+									classes: 'govuk-fieldset__legend--l'
+								}
+							},
 					items: mappedInvalidReasonOptions,
 					errorMessage: errorMessage && { text: errorMessage }
 				}
@@ -207,7 +214,7 @@ export const enforcementNoticeInvalidPage = (appealDetails, enforcementNoticeInv
 
 /**
  * @param {Appeal} appealDetails
- * @param {ReasonOption[]} reasonOptions
+ * @param {(ReasonOption & { selected: boolean, text: string })[]} reasonOptions
  * @param {ValidationErrors} [errors]
  * @returns {PageContent}
  */
@@ -237,7 +244,7 @@ export const enforcementNoticeReasonPage = (appealDetails, reasonOptions, errors
 								}
 							}
 						])
-				  }
+					}
 				: undefined
 		};
 	});
@@ -288,3 +295,150 @@ export const otherLiveAppealsPage = (appealDetails, otherLiveAppeals) => ({
 		})
 	]
 });
+
+/**
+ *
+ * @param {Appeal} appealDetails
+ * @param {ReasonOption[]} reasonOptions
+ * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @returns {PageContent}
+ */
+export const checkDetailsAndMarkEnforcementAsInvalid = (appealDetails, reasonOptions, session) => {
+	const {
+		enforcementNoticeReason = [],
+		otherInformationValidRadio,
+		otherInformationDetails,
+		validationOutcome
+	} = session?.webAppellantCaseReviewOutcome || {};
+	// @ts-ignore
+	const selectedReasons = enforcementNoticeReason.map((reason) => reason.reasonSelected);
+	const mappedInvalidReasonOptions = reasonOptions
+		.filter((reason) => selectedReasons.includes(reason.id))
+		.map(({ name, id }) => ({
+			id,
+			name,
+			text:
+				// @ts-ignore
+				enforcementNoticeReason.find(({ reasonSelected }) => reasonSelected === id)?.reasonText ||
+				''
+		}));
+	const formatedEnforcementNoticeReasons = mappedInvalidReasonOptions
+		.map(({ name, text }) =>
+			nunjucksEnvironments.render('appeals/components/page-component.njk', {
+				component: {
+					type: 'show-more',
+					parameters: {
+						html: `<li>${name}: ${text}</li>`,
+						maximumBeforeHiding: LENGTH_300,
+						toggleTextCollapsed: 'Show more',
+						toggleTextExpanded: 'Show less'
+					}
+				}
+			})
+		)
+		.join('');
+
+	/** @type {PageComponent} */
+	const summaryListComponent = {
+		type: 'summary-list',
+		parameters: {
+			rows: [
+				{
+					key: { text: 'What is the outcome of your review?' },
+					value: { text: capitalizeFirstLetter(validationOutcome) },
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case`,
+								visuallyHiddenText: 'review outcome'
+							}
+						]
+					}
+				},
+				{
+					key: { text: 'Is the enforcement notice invalid?' },
+					value: { text: 'Yes' },
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/enforcement-notice`,
+								visuallyHiddenText: `is the enforcement notice ${validationOutcome}?`
+							}
+						]
+					}
+				},
+				{
+					key: { text: 'Why is the enforcement notice invalid?' },
+					value: {
+						html: `<ul class="govuk-list govuk-list--bullet">${formatedEnforcementNoticeReasons}</ul>`
+					},
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/enforcement-notice-reason`,
+								visuallyHiddenText: `why is the enforcement notice ${validationOutcome}?`
+							}
+						]
+					}
+				},
+				{
+					key: { text: 'Do you want to add any other information?' },
+					value: {
+						html: nunjucksEnvironments.render('appeals/components/page-component.njk', {
+							component: {
+								type: 'show-more',
+								parameters: {
+									html:
+										otherInformationValidRadio === 'Yes' ? `Yes: ${otherInformationDetails}` : 'No',
+									maximumBeforeHiding: LENGTH_300,
+									toggleTextCollapsed: 'Show more',
+									toggleTextExpanded: 'Show less'
+								}
+							}
+						})
+					},
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/enforcement-other-information`,
+								visuallyHiddenText: 'do you want to add any other information?'
+							}
+						]
+					}
+				}
+			]
+		}
+	};
+
+	const title =
+		validationOutcome === 'invalid'
+			? 'Check details and mark enforcement notice as invalid'
+			: 'Check details and mark appeal as incomplete';
+
+	return {
+		title,
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/invalid/enforcement-other-information`,
+		preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
+		heading: title,
+		pageComponents: [
+			summaryListComponent,
+			{
+				type: 'html',
+				parameters: {
+					html: `<p class="govuk-body">We will mark the enforcement notice as ${validationOutcome} and send an email to the relevant parties.</p>`
+				}
+			}
+		],
+		submitButtonProperties: {
+			text:
+				validationOutcome === 'invalid'
+					? 'Mark enforcement notice as invalid'
+					: 'Mark appeal as incomplete',
+			id: 'continue'
+		}
+	};
+};

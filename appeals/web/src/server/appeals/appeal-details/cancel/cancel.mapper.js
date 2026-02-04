@@ -1,4 +1,5 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /**
  * @param {import('../appeal-details.types.js').WebAppeal} appealData
@@ -31,6 +32,18 @@ export function mapCancelAppealPage(appealData, errorMessage) {
 							value: 'invalid',
 							text: 'Appeal invalid'
 						},
+						...(appealData.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
+							? [
+									{
+										value: 'enforcement-notice-withdrawn',
+										text: 'LPA has withdrawn the enforcement notice'
+									},
+									{
+										value: 'did-not-pay',
+										text: 'Did not pay the ground (a) fee'
+									}
+								]
+							: []),
 						{
 							value: 'withdrawal',
 							text: 'Request to withdraw appeal'

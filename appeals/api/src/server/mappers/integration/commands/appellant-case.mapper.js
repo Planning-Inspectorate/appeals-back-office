@@ -22,6 +22,7 @@ export const mapAppellantCaseIn = (command) => {
 	const isEnforcementNotice =
 		isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE) &&
 		casedata.caseType === APPEAL_CASE_TYPE.C;
+	const isLDC = casedata.caseType === APPEAL_CASE_TYPE.X;
 
 	// @ts-ignore
 	const sharedFields = createSharedS20S78Fields(command);
@@ -29,13 +30,13 @@ export const mapAppellantCaseIn = (command) => {
 	const knowsAllOwners = casedata.knowsAllOwners
 		? {
 				connect: { key: casedata.knowsAllOwners }
-		  }
+			}
 		: null;
 
 	const knowsOtherOwners = casedata.knowsOtherOwners
 		? {
 				connect: { key: casedata.knowsOtherOwners }
-		  }
+			}
 		: null;
 
 	const siteAccessDetails =
@@ -51,10 +52,8 @@ export const mapAppellantCaseIn = (command) => {
 	const advertDetails =
 		(casedata.caseType === APPEAL_CASE_TYPE.ZA || casedata.caseType === APPEAL_CASE_TYPE.H) &&
 		casedata.advertDetails &&
-		// @ts-ignore - type resolved in v2 of data model
 		casedata.advertDetails.length > 0
 			? casedata.advertDetails
-					// @ts-ignore - type resolved in v2 of data model
 					.map((detail) => ({
 						advertInPosition: detail.isAdvertInPosition,
 						highwayLand: detail.isSiteOnHighwayLand
@@ -63,6 +62,17 @@ export const mapAppellantCaseIn = (command) => {
 			: null;
 
 	const contactAddress = isEnforcementNotice ? mapContactAddressIn(casedata) : null;
+
+	const procedurePreferenceFields =
+		isFullAdverts || isEnforcementNotice || isLDC
+			? {
+					appellantProcedurePreference: casedata.appellantProcedurePreference,
+					appellantProcedurePreferenceDetails: casedata.appellantProcedurePreferenceDetails,
+					appellantProcedurePreferenceDuration: casedata.appellantProcedurePreferenceDuration,
+					appellantProcedurePreferenceWitnessCount:
+						casedata.appellantProcedurePreferenceWitnessCount
+				}
+			: null;
 
 	const data = {
 		applicationDate: casedata.applicationDate,
@@ -104,13 +114,9 @@ export const mapAppellantCaseIn = (command) => {
 			},
 			landownerPermission: casedata.hasLandownersPermission
 		}),
-		...(isFullAdverts && {
-			appellantProcedurePreference: casedata.appellantProcedurePreference,
-			appellantProcedurePreferenceDetails: casedata.appellantProcedurePreferenceDetails,
-			appellantProcedurePreferenceDuration: casedata.appellantProcedurePreferenceDuration,
-			appellantProcedurePreferenceWitnessCount: casedata.appellantProcedurePreferenceWitnessCount
-		}),
+		...(isFullAdverts && procedurePreferenceFields),
 		...(isEnforcementNotice && {
+			...procedurePreferenceFields,
 			enforcementNotice: casedata.enforcementNotice,
 			enforcementNoticeListedBuilding: casedata.enforcementNoticeListedBuilding,
 			enforcementIssueDate: casedata.enforcementIssueDate,
@@ -120,9 +126,24 @@ export const mapAppellantCaseIn = (command) => {
 			interestInLand: casedata.interestInLand,
 			writtenOrVerbalPermission: casedata.writtenOrVerbalPermission,
 			descriptionOfAllegedBreach: casedata.descriptionOfAllegedBreach,
+			applicationMadeAndFeePaid: casedata.applicationMadeAndFeePaid,
 			applicationDevelopmentAllOrPart: casedata.applicationDevelopmentAllOrPart,
 			contactAddress: { create: contactAddress },
-			appealDecisionDate: casedata.appealDecisionDate
+			appealDecisionDate: casedata.appealDecisionDate,
+			appellantProcedurePreference: command.casedata.appellantProcedurePreference,
+			appellantProcedurePreferenceDetails: command.casedata.appellantProcedurePreferenceDetails,
+			appellantProcedurePreferenceDuration: command.casedata.appellantProcedurePreferenceDuration,
+			appellantProcedurePreferenceWitnessCount:
+				command.casedata.appellantProcedurePreferenceWitnessCount,
+			planningObligation: command.casedata.planningObligation,
+			statusPlanningObligation: command.casedata.statusPlanningObligation,
+			siteGridReferenceEasting: command.casedata.siteGridReferenceEasting,
+			siteGridReferenceNorthing: command.casedata.siteGridReferenceNorthing
+		}),
+		...(isLDC && {
+			...procedurePreferenceFields,
+			siteUseAtTimeOfApplication: command.casedata.siteUseAtTimeOfApplication,
+			applicationMadeUnderActSection: command.casedata.applicationMadeUnderActSection
 		})
 	};
 

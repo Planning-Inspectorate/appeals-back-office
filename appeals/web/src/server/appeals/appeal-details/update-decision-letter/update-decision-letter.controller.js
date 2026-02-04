@@ -5,6 +5,7 @@ import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { getFeedbackLinkFromAppealTypeName } from '#lib/feedback-form-link.js';
 import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
@@ -51,6 +52,7 @@ export const renderUpdateDocumentCheckDetails = async (request, response) => {
 		errors,
 		currentAppeal: {
 			appealSite,
+			appealType,
 			appealReference,
 			planningApplicationReference,
 			appealId,
@@ -83,7 +85,8 @@ export const renderUpdateDocumentCheckDetails = async (request, response) => {
 		lpa_reference: planningApplicationReference,
 		correction_notice_reason: correctionNotice,
 		decision_date: dateISOStringToDisplayDate(file.receivedDate),
-		team_email_address: assignedTeamEmail
+		team_email_address: assignedTeamEmail,
+		feedback_link: getFeedbackLinkFromAppealTypeName(appealType)
 	};
 	const templateName = 'correction-notice-decision.content.md';
 	const template = await generateNotifyPreview(request.apiClient, templateName, personalisation);

@@ -6,6 +6,7 @@ import { submaps as casAdvertSubmaps } from './cas-advert.js';
 import { submaps as casPlanningSubmaps } from './cas-planning.js';
 import { submaps as enforcementNoticeSubmaps } from './enforcement-notice.js';
 import { submaps as hasSubmaps } from './has.js';
+import { submaps as ldcSubmaps } from './ldc.js';
 import { submaps as s20Submaps } from './s20.js';
 import { submaps as s78Submaps } from './s78.js';
 
@@ -15,6 +16,7 @@ import { submaps as s78Submaps } from './s78.js';
  * @property {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
  * @property {string} currentRoute
  * @property {boolean} userHasUpdateCase
+ * @property {import('@pins/express/types/express.js').Request} request
  */
 
 /**
@@ -33,7 +35,8 @@ const submaps = {
 	[APPEAL_TYPE.CAS_PLANNING]: casPlanningSubmaps,
 	[APPEAL_TYPE.CAS_ADVERTISEMENT]: casAdvertSubmaps,
 	[APPEAL_TYPE.ADVERTISEMENT]: advertSubmaps,
-	[APPEAL_TYPE.ENFORCEMENT_NOTICE]: enforcementNoticeSubmaps
+	[APPEAL_TYPE.ENFORCEMENT_NOTICE]: enforcementNoticeSubmaps,
+	[APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE]: ldcSubmaps
 };
 
 /**
@@ -41,9 +44,16 @@ const submaps = {
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
  * @param {import('../../../../app/auth/auth-session.service.js').SessionWithAuth} session
  * @param {string} currentRoute
+ * @param {import('@pins/express/types/express.js').Request} request
  * @returns {MappedInstructions}
  */
-export function initialiseAndMapData(appellantCaseData, appealDetails, currentRoute, session) {
+export function initialiseAndMapData(
+	appellantCaseData,
+	appealDetails,
+	currentRoute,
+	session,
+	request
+) {
 	if (!appellantCaseData || appellantCaseData === null) {
 		throw new Error('appellantCaseDetails is null or undefined');
 	}
@@ -64,6 +74,7 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 		appellantCaseData,
 		appealDetails,
 		currentRoute,
+		request,
 		userHasUpdateCase
 	};
 	/** @type {Record<string, SubMapper | SubMapperList>} */

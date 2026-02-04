@@ -49,7 +49,7 @@ export function generateProofOfEvidenceSummaryList(appealId, proofOfEvidence, ru
 				),
 				isOrderedList: true,
 				isNumberedList: filteredAttachments.length > 1
-		  })
+			})
 		: null;
 
 	const proofOfEvidenceTypePath = mapRepresentationTypeToPath(
@@ -64,7 +64,7 @@ export function generateProofOfEvidenceSummaryList(appealId, proofOfEvidence, ru
 				items: [
 					{
 						text: 'Change',
-						href: `/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceTypePath}/manage-documents/${proofOfEvidence.attachments?.[0]?.documentVersion?.document?.folderId}`,
+						href: `/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceTypePath}/manage-documents/${proofOfEvidence.attachments?.[0]?.documentVersion?.document?.folderId}?backUrl=/proof-of-evidence/${proofOfEvidenceTypePath}`,
 						visuallyHiddenText: 'proof of evidence and witnesses'
 					}
 				]

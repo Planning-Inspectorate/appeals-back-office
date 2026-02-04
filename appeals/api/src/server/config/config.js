@@ -20,7 +20,7 @@ const { value, error } = schema.validate({
 				environment.DB_CONNECTION_LIMIT
 					? `;connection_limit=${environment.DB_CONNECTION_LIMIT};`
 					: ''
-		  }`
+			}`
 		: undefined,
 	BO_BLOB_STORAGE_ACCOUNT: environment.BO_BLOB_STORAGE_ACCOUNT,
 	BO_BLOB_CONTAINER: environment.BO_BLOB_CONTAINER,
@@ -75,14 +75,24 @@ const { value, error } = schema.validate({
 		featureFlagEnforcementNotice:
 			environment.FEATURE_FLAG_ENFORCEMENT_NOTICE &&
 			environment.FEATURE_FLAG_ENFORCEMENT_NOTICE === 'true',
+		featureFlagEnforcementLinked:
+			environment.FEATURE_FLAG_ENFORCEMENT_LINKED &&
+			environment.FEATURE_FLAG_ENFORCEMENT_LINKED === 'true',
 		featureFlagInvalidDecisionLetter:
 			environment.FEATURE_FLAG_INVALID_DECISION_LETTER &&
 			environment.FEATURE_FLAG_INVALID_DECISION_LETTER === 'true',
-		featureFlagRule6Parties:
-			environment.FEATURE_FLAG_RULE_6_PARTIES && environment.FEATURE_FLAG_RULE_6_PARTIES === 'true',
+		featureFlagRule6Mvp:
+			environment.FEATURE_FLAG_RULE_6_MVP && environment.FEATURE_FLAG_RULE_6_MVP === 'true',
+		featureFlagRule6PoE:
+			environment.FEATURE_FLAG_RULE_6_POE && environment.FEATURE_FLAG_RULE_6_POE === 'true',
+		featureFlagRule6Statement:
+			environment.FEATURE_FLAG_RULE_6_STATEMENT &&
+			environment.FEATURE_FLAG_RULE_6_STATEMENT === 'true',
 		featureFlagExpeditedAppeals:
 			environment.FEATURE_FLAG_EXPEDITED_APPEALS &&
 			environment.FEATURE_FLAG_EXPEDITED_APPEALS === 'true',
+		featureFlagRule6Costs:
+			environment.FEATURE_FLAG_RULE_6_COSTS && environment.FEATURE_FLAG_RULE_6_COSTS === 'true',
 		featureFlagLDC: environment.FEATURE_FLAG_LDC && environment.FEATURE_FLAG_LDC === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',

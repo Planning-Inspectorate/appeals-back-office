@@ -3,6 +3,18 @@ import { userHasPermission } from '#lib/mappers/index.js';
 import { documentSummaryListItem } from '../../components/instructions/document.js';
 
 /**
+ * @typedef {Object} SubMapperParams
+ * @property {import('./mapper.js').SingleLPAQuestionnaireResponse} lpaQuestionnaireData
+ * @property {import('#lib/appeal-status.js').WebAppeal} appealDetails
+ * @property {string} currentRoute
+ * @property {import('#lib/active-directory-token.js').SessionWithAuth} session
+ * @property {boolean} userHasUpdateCase
+ * @typedef {(params: SubMapperParams) => Instructions} SubMapper
+ * @typedef { Record < string, SubMapper >} submaps */
+/**
+
+
+/**
  * @param {string|number} lpaQuestionnaireId
  * @returns {string}
  */
@@ -61,4 +73,16 @@ export const documentInstruction = ({
 		),
 		cypressDataName
 	});
+};
+
+/** @type {Record<string, SubMapper>} */
+
+/**
+ * @param {string | string[]} questionsToRemove
+ * @param {submaps} submaps
+ */
+export const removeQuestions = (questionsToRemove, submaps) => {
+	return Object.fromEntries(
+		Object.entries(submaps).filter(([key]) => !questionsToRemove.includes(key))
+	);
 };

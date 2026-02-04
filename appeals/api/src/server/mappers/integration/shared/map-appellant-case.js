@@ -13,7 +13,7 @@ export const mapAppellantCase = (data) => {
 
 	return {
 		// @ts-ignore
-		applicationDecision: casedata?.applicationDecision,
+		applicationDecision: casedata?.applicationDecision ?? null,
 		siteAreaSquareMetres: casedata?.siteAreaSquareMetres
 			? Number(casedata.siteAreaSquareMetres)
 			: null,

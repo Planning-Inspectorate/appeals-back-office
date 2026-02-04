@@ -106,7 +106,7 @@ export const dueDateDaysInputValidator = (hasPlanningObligation) => {
 					extractAndProcessDateErrors({
 						fieldNamePrefix: 'planning-obligation-due-date'
 					})
-			  ]
+				]
 			: [])
 	);
 

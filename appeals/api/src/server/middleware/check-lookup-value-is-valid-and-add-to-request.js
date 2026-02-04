@@ -12,9 +12,14 @@ import commonRepository from '#repositories/common.repository.js';
  */
 const checkLookupValueIsValidAndAddToRequest =
 	(fieldName, databaseTable, errorMessage) => async (req, res, next) => {
-		const { [fieldName]: lookupField } = req.body;
+		let { [fieldName]: lookupField } = req.body;
 
 		if (lookupField) {
+			// This allows enforcement child appeals to move to "Awaiting linked appeal"
+			if (fieldName === 'validationOutcome' && lookupField === 'continue') {
+				lookupField = 'valid';
+			}
+
 			const validationOutcomeMatch = await commonRepository.getLookupListValueByName(
 				databaseTable,
 				lookupField

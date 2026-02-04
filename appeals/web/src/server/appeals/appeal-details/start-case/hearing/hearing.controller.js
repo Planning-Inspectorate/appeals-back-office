@@ -252,7 +252,7 @@ export const getHearingConfirm = async (request, response) => {
 									}
 								}
 							}
-					  }
+						}
 					: {})
 			},
 			after: [

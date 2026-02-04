@@ -194,6 +194,8 @@ interface SingleAppellantCaseResponse {
 		applicationDevelopmentAllOrPart: string | null;
 		appealDecisionDate: string | null;
 	};
+	isEnforcementChild?: boolean | null;
+	isEnforcementParent?: boolean | null;
 	siteAccessRequired?: {
 		details: string | null;
 		isRequired: boolean | null;
@@ -261,6 +263,8 @@ interface SingleAppellantCaseResponse {
 	siteGridReferenceEasting?: string | null;
 	siteGridReferenceNorthing?: string | null;
 	appealGrounds?: AppealGround[] | null;
+	siteUseAtTimeOfApplication?: string | null;
+	applicationMadeUnderActSection?: string | null;
 }
 
 interface UpdateAppellantCaseRequest {
@@ -314,6 +318,7 @@ interface UpdateAppellantCaseValidationOutcome {
 	otherInformation?: string;
 	enforcementNoticeInvalid?: string;
 	otherLiveAppeals?: string;
+	enforcementInvalidReasons?: IncompleteInvalidReasons;
 }
 
 interface UpdateAppellantCaseValidationOutcomeParams {
@@ -334,14 +339,15 @@ interface UpdateAppellantCaseValidationOutcomeParams {
 		appealDueDate: Date;
 		incompleteReasons: IncompleteInvalidReasons;
 		invalidReasons: IncompleteInvalidReasons;
+		groundABarred?: boolean;
+		otherInformation?: string;
+		enforcementNoticeInvalid?: string;
+		otherLiveAppeals?: string;
+		enforcementInvalidReasons?: IncompleteInvalidReasons;
 	};
 	validationOutcome: ValidationOutcome;
 	validAt: Date;
 	siteAddress: string;
-	groundABarred?: boolean;
-	otherInformation?: string;
-	enforcementNoticeInvalid?: string;
-	otherLiveAppeals?: string;
 }
 
 interface SingleLPAQuestionnaireResponse {
@@ -382,6 +388,15 @@ interface SingleLPAQuestionnaireResponse {
 		otherRelevantPolicies?: FolderInfo | null;
 		appealNotification?: FolderInfo | null;
 		historicEnglandConsultation?: FolderInfo | null;
+		// Enforcement
+		enforcementList?: FolderInfo | null;
+		stopNotice?: FolderInfo | null;
+		article4Direction?: FolderInfo | null;
+		localDevelopmentOrder?: FolderInfo | null;
+		planningPermission: FolderInfo | null;
+		lpaEnforcementNotice: FolderInfo | null;
+		lpaEnforcementNoticePlan: FolderInfo | null;
+		planningContraventionNotice: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;
@@ -429,6 +444,19 @@ interface SingleLPAQuestionnaireResponse {
 	isSiteInAreaOfSpecialControlAdverts?: boolean;
 	wasApplicationRefusedDueToHighwayOrTraffic?: boolean;
 	didAppellantSubmitCompletePhotosAndPlans?: boolean;
+	noticeRelatesToBuildingEngineeringMiningOther?: boolean | null;
+	changeOfUseRefuseOrWaste?: boolean | null;
+	changeOfUseMineralExtraction?: boolean | null;
+	changeOfUseMineralStorage?: boolean | null;
+	relatesToErectionOfBuildingOrBuildings?: boolean | null;
+	relatesToBuildingWithAgriculturalPurpose?: boolean | null;
+	relatesToBuildingSingleDwellingHouse?: boolean | null;
+	affectedTrunkRoadName?: string | null;
+	isSiteOnCrownLand?: boolean | null;
+	article4AffectedDevelopmentRights?: string | null;
+	siteAreaSquareMetres?: number | null;
+	hasAllegedBreachArea?: boolean | null;
+	doesAllegedBreachCreateFloorSpace?: boolean | null;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -466,6 +494,21 @@ interface UpdateLPAQuestionnaireRequest {
 	isSiteInAreaOfSpecialControlAdverts?: boolean;
 	wasApplicationRefusedDueToHighwayOrTraffic?: boolean;
 	didAppellantSubmitCompletePhotosAndPlans?: boolean;
+
+	// Enforcement
+	noticeRelatesToBuildingEngineeringMiningOther?: boolean | null;
+	siteAreaSquareMetres?: number | null;
+	hasAllegedBreachArea?: boolean | null;
+	doesAllegedBreachCreateFloorSpace?: boolean | null;
+	changeOfUseRefuseOrWaste?: boolean | null;
+	changeOfUseMineralExtraction?: boolean | null;
+	changeOfUseMineralStorage?: boolean | null;
+	relatesToErectionOfBuildingOrBuildings?: boolean | null;
+	relatesToBuildingWithAgriculturalPurpose?: boolean | null;
+	relatesToBuildingSingleDwellingHouse?: boolean | null;
+	affectedTrunkRoadName?: string | null;
+	isSiteOnCrownLand?: boolean | null;
+	article4AffectedDevelopmentRights?: string | null;
 }
 
 interface UpdateLPAQuestionnaireValidationOutcomeParams {
@@ -637,6 +680,7 @@ interface AppealListResponse {
 	siteGridReferenceNorthing?: string | null;
 	isInquirySetup: boolean | null;
 	hasInquiryAddress: boolean | null;
+	enforcementReference?: string | null;
 }
 
 interface DocumentationSummary {
@@ -660,6 +704,8 @@ interface DocumentationSummaryEntry {
 	representationStatus?: string | undefined | null;
 	counts?: Record<string, number>;
 	isRedacted?: boolean;
+	organisationName?: string;
+	rule6PartyId?: number;
 }
 
 interface FolderInfo {

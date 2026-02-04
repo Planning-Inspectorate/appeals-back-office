@@ -11,7 +11,7 @@ const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
 const baseUrl = `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`;
 
 describe('correct-appeal-type', () => {
-	beforeEach(installMockApi), afterEach(teardown);
+	(beforeEach(installMockApi), afterEach(teardown));
 
 	describe('GET /change', () => {
 		it('should render the correctAppealType change page', async () => {

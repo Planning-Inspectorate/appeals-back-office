@@ -21,6 +21,6 @@ export const getAttachmentList = (/** @type {Representation} */ representation) 
 				),
 				isOrderedList: true,
 				isNumberedList: filteredAttachments.length > 1
-		  })
+			})
 		: null;
 };

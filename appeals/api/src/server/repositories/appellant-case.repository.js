@@ -4,6 +4,7 @@ import appealRepository from './appeal.repository.js';
 import commonRepository from './common.repository.js';
 import enforcementNoticeAppealOutcomeRepository from './enforcement-notice-appeal-outcome.repository.js';
 
+/** @typedef {import('@pins/appeals.api').Schema.AppellantCase} AppellantCase */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcome} UpdateAppellantCaseValidationOutcome */
 /** @typedef {import('#db-client/models.ts').AppellantCaseUpdateInput} AppellantCaseUpdateInput */
 /** @typedef {import('@pins/appeals.api').Api.AppellantCaseUpdateRequest} AppellantCaseUpdateRequest */
@@ -11,6 +12,24 @@ import enforcementNoticeAppealOutcomeRepository from './enforcement-notice-appea
  * @typedef {import('#db-client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
  * @template T
  */
+
+/**
+ *
+ * @param {number} appealId
+ * @returns {Promise<AppellantCase|undefined|null>}
+ */
+const getAppellantCaseByAppealId = async (appealId) => {
+	const appellantCase = await databaseConnector.appellantCase.findUnique({
+		where: {
+			appealId
+		}
+	});
+
+	if (appellantCase) {
+		// @ts-ignore
+		return appellantCase;
+	}
+};
 
 /**
  * @param {number} id
@@ -28,7 +47,7 @@ const updateAppellantCaseById = async (id, data) => {
 						connect: {
 							key: data.knowsOtherOwners.toLowerCase()
 						}
-				  }
+					}
 			: undefined;
 
 	if (knowsOtherOwners === null) {
@@ -121,7 +140,8 @@ const updateAppellantCaseValidationOutcome = ({
 	groundABarred,
 	otherInformation,
 	enforcementNoticeInvalid,
-	otherLiveAppeals
+	otherLiveAppeals,
+	enforcementInvalidReasons
 }) => {
 	const transaction = [
 		updateAppellantCaseTable(appellantCaseId, {
@@ -161,19 +181,41 @@ const updateAppellantCaseValidationOutcome = ({
 				data: invalidReasons
 			})
 		);
+	}
 
-		if (enforcementNoticeInvalid) {
+	if (enforcementNoticeInvalid) {
+		transaction.push(
+			enforcementNoticeAppealOutcomeRepository.createEnforcementNoticeAppealOutcome({
+				appeal: {
+					connect: { id: appealId }
+				},
+				otherInformation,
+				enforcementNoticeInvalid,
+				otherLiveAppeals
+			})
+		);
+
+		if (appealId && appealDueDate) {
 			transaction.push(
-				enforcementNoticeAppealOutcomeRepository.createEnforcementNoticeAppealOutcome({
-					appeal: {
-						connect: { id: appealId }
-					},
-					otherInformation,
-					enforcementNoticeInvalid,
-					otherLiveAppeals
+				// @ts-ignore
+				appealRepository.updateAppealById(appealId, {
+					caseExtensionDate: new Date(appealDueDate).toISOString()
 				})
 			);
 		}
+	}
+
+	if (enforcementInvalidReasons) {
+		transaction.push(
+			...commonRepository.createIncompleteInvalidReasons({
+				id: appellantCaseId,
+				relationOne: 'appellantCaseId',
+				relationTwo: 'appellantCaseEnforcementInvalidReasonId',
+				manyToManyRelationTable: 'appellantCaseEnforcementInvalidReasonsSelected',
+				incompleteInvalidReasonTextTable: 'appellantCaseEnforcementInvalidReasonText',
+				data: enforcementInvalidReasons
+			})
+		);
 	}
 
 	if (appealId && validAt) {
@@ -202,4 +244,8 @@ const updateAppellantCaseValidationOutcome = ({
 	return tx;
 };
 
-export default { updateAppellantCaseById, updateAppellantCaseValidationOutcome };
+export default {
+	getAppellantCaseByAppealId,
+	updateAppellantCaseById,
+	updateAppellantCaseValidationOutcome
+};

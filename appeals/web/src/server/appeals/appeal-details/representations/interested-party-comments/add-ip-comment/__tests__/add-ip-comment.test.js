@@ -70,13 +70,6 @@ describe('add-ip-comment', () => {
 			);
 		});
 
-		it('should render a checkbox with label text "Do not share this interested party name"', () => {
-			const checkbox = pageHtml.querySelector('input[type="checkbox"]');
-			const label = pageHtml.querySelector('label[for="do-not-share-ip-name"]');
-			expect(checkbox).not.toBeNull();
-			expect(label.textContent.trim()).toBe('Do not share this interested party name');
-		});
-
 		it('should render the correct back link when editing', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
@@ -580,6 +573,45 @@ describe('add-ip-comment', () => {
 				});
 
 			expect(response.statusCode).toBe(400);
+		});
+	});
+
+	describe('GET /add/upload', () => {
+		const appealId = 2;
+		let pageHtml;
+
+		beforeEach(async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, { ...appealData, appealId });
+
+			const documentFolderInfo = [
+				{
+					caseId: '2',
+					documents: [],
+					folderId: 55539,
+					path: 'representation/representationAttachments'
+				}
+			];
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}/document-folders?path=representation/representationAttachments`)
+				.reply(200, documentFolderInfo);
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/upload`
+			);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
+		});
+
+		it('should match the snapshot', () => {
+			expect(pageHtml.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render the upload page with correct document title', () => {
+			expect(pageHtml.innerHTML).toContain(
+				'data-document-title="interested party comment document"'
+			);
 		});
 	});
 

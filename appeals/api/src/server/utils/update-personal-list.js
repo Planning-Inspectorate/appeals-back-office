@@ -105,9 +105,8 @@ function sleep(ms) {
  */
 export async function refreshPersonalList(forceFullRefresh = false) {
 	try {
-		const appealsWithoutPersonalListEntry = await appealRepository.getAppealIdList(
-			!forceFullRefresh
-		);
+		const appealsWithoutPersonalListEntry =
+			await appealRepository.getAppealIdList(!forceFullRefresh);
 		if (appealsWithoutPersonalListEntry.length > 0) {
 			logger.info(
 				`PersonalList will be refreshed for ${appealsWithoutPersonalListEntry.length} appeals`

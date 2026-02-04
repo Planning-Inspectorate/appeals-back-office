@@ -16,8 +16,8 @@ export const mapCaseDates = (data) => {
 
 	const appellantCaseValidationDate = isCaseInvalid(appeal.appealStatus)
 		? findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START)
-		: findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.INVALID) ??
-		  findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START);
+		: (findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.INVALID) ??
+			findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START));
 
 	const lpaqValidationDate =
 		findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT) ??

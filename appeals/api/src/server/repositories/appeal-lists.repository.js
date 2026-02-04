@@ -49,7 +49,7 @@ const getAllAppeals = async (
 			? {
 					skip: getSkipValue(pageNumber, pageSize),
 					take: pageSize
-			  }
+				}
 			: {};
 
 	const where = buildAllAppealsWhereClause(
@@ -97,7 +97,11 @@ const getAllAppeals = async (
 			siteVisit: true,
 			hearing: true,
 			inquiry: true,
-			appealRule6Parties: true
+			appealRule6Parties: {
+				include: {
+					serviceUser: true
+				}
+			}
 		},
 		orderBy: { caseUpdatedDate: 'desc' },
 		...pagination
@@ -213,6 +217,7 @@ const getAppealsWithoutIncludes = async (
  * @param {number} assignedTeamId
  * @param {number} procedureTypeId
  * @param {string} appellantProcedurePreferencePreFilter
+ * @returns {import('#db-client/models.ts').AppealWhereInput}
  */
 const buildAllAppealsWhereClause = (
 	searchTerm,
@@ -255,6 +260,13 @@ const buildAllAppealsWhereClause = (
 				{
 					applicationReference: {
 						contains: searchTerm
+					}
+				},
+				{
+					appellantCase: {
+						enforcementReference: {
+							contains: searchTerm
+						}
 					}
 				}
 			]
@@ -355,7 +367,7 @@ const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 								some: { valid: true, status }
 							}
 						}
-				  ]
+					]
 				: []),
 			{
 				appealStatus: {
@@ -433,7 +445,11 @@ const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 				},
 				hearing: true,
 				inquiry: true,
-				appealRule6Parties: true
+				appealRule6Parties: {
+					include: {
+						serviceUser: true
+					}
+				}
 			},
 			skip: getSkipValue(pageNumber, pageSize),
 			take: pageSize

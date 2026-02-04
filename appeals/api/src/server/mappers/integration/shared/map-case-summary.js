@@ -17,7 +17,7 @@ export const mapCaseSummary = (data) => {
 		caseId: appeal.id,
 		caseReference: appeal.reference,
 		// @ts-ignore
-		applicationReference: appeal.applicationReference,
+		applicationReference: appeal.applicationReference ?? null,
 		// @ts-ignore
 		lpaCode: appeal.lpa?.lpaCode
 	};

@@ -21,6 +21,10 @@ import {
 	householdAppealAppellantCaseIncomplete,
 	householdAppealAppellantCaseInvalid,
 	householdAppealAppellantCaseValid,
+	ldcAppeal,
+	ldcAppealAppellantCaseIncomplete,
+	ldcAppealAppellantCaseInvalid,
+	ldcAppealAppellantCaseValid,
 	listedBuildingAppeal,
 	listedBuildingAppealAppellantCaseIncomplete,
 	listedBuildingAppealAppellantCaseInvalid,
@@ -50,6 +54,9 @@ const { databaseConnector } = await import('../../../utils/database-connector.js
 
 describe('appellant cases routes', () => {
 	beforeEach(() => {
+		jest
+			.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+			.setSystemTime(new Date('2026-01-27'));
 		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 		databaseConnector.team.findUnique.mockResolvedValue({
 			id: 1,
@@ -99,6 +106,13 @@ describe('appellant cases routes', () => {
 					listedBuildingAppealAppellantCaseValid,
 					listedBuildingAppealAppellantCaseIncomplete,
 					listedBuildingAppealAppellantCaseInvalid
+				],
+				[
+					'ldcAppeal',
+					ldcAppeal,
+					ldcAppealAppellantCaseValid,
+					ldcAppealAppellantCaseIncomplete,
+					ldcAppealAppellantCaseInvalid
 				]
 			])(
 				'%s appellant case GET scenarios',
@@ -310,7 +324,7 @@ describe('appellant cases routes', () => {
 				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
 					where: { id },
 					data: {
-						caseExtensionDate: body.appealDueDate,
+						caseExtensionDate: expect.any(String),
 						caseUpdatedDate: expect.any(Date)
 					},
 					include: {
@@ -1036,6 +1050,78 @@ describe('appellant cases routes', () => {
 				}
 			);
 
+			test('updates appellant case and sends a notify email for valid enforcement notice appeal', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...enforcementNoticeAppeal,
+					appealType: {
+						key: 'C',
+						type: 'Enforcement Notice appeal'
+					},
+					appealGrounds: [
+						{
+							ground: {
+								groundRef: 'b',
+								groundDescription: 'Ground B'
+							}
+						},
+						{
+							ground: {
+								groundRef: 'a',
+								groundDescription: 'Ground A'
+							}
+						}
+					]
+				});
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[2]
+				);
+				databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+				databaseConnector.documentVersion.update.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ id: 1, key: 'no_redaction_required' }
+				]);
+				databaseConnector.document.findUnique.mockResolvedValue(null);
+
+				const patchBody = {
+					validationOutcome: 'valid',
+					groundABarred: false,
+					otherInformation: 'Accio horcrux'
+				};
+				const { appellantCase, id } = enforcementNoticeAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: { appellantCaseValidationOutcomeId: 3 }
+				});
+
+				expect(response.status).toEqual(200);
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: enforcementNoticeAppeal.reference,
+						lpa_reference: enforcementNoticeAppeal.applicationReference,
+						site_address: `${enforcementNoticeAppeal.address.addressLine1}, ${enforcementNoticeAppeal.address.addressLine2}, ${enforcementNoticeAppeal.address.addressTown}, ${enforcementNoticeAppeal.address.addressCounty}, ${enforcementNoticeAppeal.address.postcode}, ${enforcementNoticeAppeal.address.addressCountry}`,
+						feedback_link: FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						local_planning_authority: enforcementNoticeAppeal.lpa.name,
+						appeal_type: 'Enforcement Notice',
+						enforcement_reference: enforcementNoticeAppeal.appellantCase.enforcementReference,
+						appeal_grounds: ['a', 'b'],
+						ground_a_barred: false,
+						other_info: 'Accio horcrux'
+					},
+					recipientEmail: enforcementNoticeAppeal.agent.email,
+					templateName: 'appeal-confirmed-enforcement'
+				});
+			});
+
 			test('updates appellant case site area and procedure preferences', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				databaseConnector.user.upsert.mockResolvedValue({
@@ -1260,6 +1346,37 @@ describe('appellant cases routes', () => {
 				});
 			});
 
+			test('updates existing appellant ldc details', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const { id, appellantCase } = householdAppeal;
+				const patchBody = {
+					siteUseAtTimeOfApplication: 'Residential',
+					applicationMadeUnderActSection: 'exisiting-development'
+				};
+
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				console.log(response.error);
+
+				expect(response.status).toEqual(200);
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith(
+					expect.objectContaining({
+						data: expect.objectContaining({
+							applicationMadeUnderActSection: 'exisiting-development',
+							siteUseAtTimeOfApplication: 'Residential'
+						})
+					})
+				);
+			});
+
 			test('returns an error if groundABarred is not a boolean', async () => {
 				const { id, appellantCase } = enforcementNoticeAppeal;
 				const patchBody = {
@@ -1363,11 +1480,20 @@ describe('appellant cases routes', () => {
 					}
 				});
 
-				expect(mockNotifySend).not.toHaveBeenCalled();
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: enforcementNoticeAppeal.id,
+						details: `Appeal reviewed as valid on 27 January 2026\nOther information`,
+						loggedAt: expect.any(Date),
+						userId: enforcementNoticeAppeal.caseOfficer.id
+					}
+				});
+
+				expect(mockNotifySend).toHaveBeenCalled();
 				expect(response.status).toEqual(200);
 			});
 
-			test('updates the appellant case for invalid enforcement notice appeal', async () => {
+			test('updates the appellant case for invalid enforcement appeal with invalid enforcement notice', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(
 					enforcementNoticeAppealAppellantCaseInvalid
@@ -1448,6 +1574,185 @@ describe('appellant cases routes', () => {
 						otherInformation: undefined,
 						otherLiveAppeals: 'no',
 						enforcementNoticeInvalid: 'no'
+					}
+				});
+
+				expect(mockNotifySend).not.toHaveBeenCalled();
+				expect(response.status).toEqual(200);
+			});
+
+			test('updates the appellant case for invalid enforcement appeal with valid enforcement notice', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(
+					enforcementNoticeAppealAppellantCaseInvalid
+				);
+				// @ts-ignore
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[1]
+				);
+				// @ts-ignore
+				databaseConnector.appellantCaseEnforcementInvalidReasonsSelected.deleteMany.mockResolvedValue(
+					true
+				);
+				// @ts-ignore
+				databaseConnector.appellantCaseEnforcementInvalidReasonsSelected.createMany.mockResolvedValue(
+					true
+				);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const body = {
+					validationOutcome: 'invalid',
+					enforcementInvalidReasons: [
+						{ id: 1, text: ['has some text'] },
+						{ id: 2, text: ['has some other text'] },
+						{ id: 8, text: ['This is the other field'] }
+					],
+					enforcementNoticeInvalid: 'yes',
+					otherInformation: 'Enforcement other information'
+				};
+				const { appellantCase, id } = enforcementNoticeAppealAppellantCaseInvalid;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: {
+						appellantCaseValidationOutcomeId: 2
+					}
+				});
+				expect(
+					databaseConnector.appellantCaseEnforcementInvalidReasonText.deleteMany
+				).toHaveBeenCalled();
+				expect(
+					databaseConnector.appellantCaseEnforcementInvalidReasonText.createMany
+				).toHaveBeenCalledWith({
+					data: [
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseEnforcementInvalidReasonId: 1,
+							text: 'has some text'
+						},
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseEnforcementInvalidReasonId: 2,
+							text: 'has some other text'
+						},
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseEnforcementInvalidReasonId: 8,
+							text: 'This is the other field'
+						}
+					]
+				});
+				expect(databaseConnector.enforcementNoticeAppealOutcome.create).toHaveBeenCalledWith({
+					data: {
+						appeal: expect.any(Object),
+						otherInformation: 'Enforcement other information',
+						otherLiveAppeals: undefined,
+						enforcementNoticeInvalid: 'yes'
+					}
+				});
+
+				expect(mockNotifySend).not.toHaveBeenCalled();
+				expect(response.status).toEqual(200);
+			});
+
+			test('updates the appellant case for incomplete enforcement notice appeal with invalid enforcement notice', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(
+					enforcementNoticeAppealAppellantCaseInvalid
+				);
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[0]
+				);
+				databaseConnector.appellantCaseEnforcementInvalidReasonsSelected.deleteMany.mockResolvedValue(
+					true
+				);
+				databaseConnector.appellantCaseEnforcementInvalidReasonsSelected.createMany.mockResolvedValue(
+					true
+				);
+				databaseConnector.appeal.update.mockResolvedValue();
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const body = {
+					validationOutcome: 'incomplete',
+					enforcementInvalidReasons: [
+						{ id: 1, text: ['has some text'] },
+						{ id: 2, text: ['has some other text'] },
+						{ id: 8, text: ['This is the other field'] }
+					],
+					enforcementNoticeInvalid: 'yes',
+					otherInformation: 'Enforcement other information'
+				};
+				const { appellantCase, id } = enforcementNoticeAppealAppellantCaseInvalid;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: {
+						appellantCaseValidationOutcomeId: 1
+					}
+				});
+				expect(
+					databaseConnector.appellantCaseEnforcementInvalidReasonText.deleteMany
+				).toHaveBeenCalled();
+				expect(
+					databaseConnector.appellantCaseEnforcementInvalidReasonText.createMany
+				).toHaveBeenCalledWith({
+					data: [
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseEnforcementInvalidReasonId: 1,
+							text: 'has some text'
+						},
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseEnforcementInvalidReasonId: 2,
+							text: 'has some other text'
+						},
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseEnforcementInvalidReasonId: 8,
+							text: 'This is the other field'
+						}
+					]
+				});
+				expect(databaseConnector.enforcementNoticeAppealOutcome.create).toHaveBeenCalledWith({
+					data: {
+						appeal: expect.any(Object),
+						otherInformation: 'Enforcement other information',
+						otherLiveAppeals: undefined,
+						enforcementNoticeInvalid: 'yes'
+					}
+				});
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+					data: {
+						appealId: id,
+						details:
+							'Appeal marked as incomplete:\n<ul><li>There is a mistake in the wording: this is a short reason</li><li>Enforcement other information</li></ul>',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+					data: {
+						appealId: id,
+						details: 'Case updated',
+						loggedAt: expect.any(Date),
+						userId: 1
 					}
 				});
 

@@ -11,6 +11,7 @@ import { ListCasesPage } from '../../page_objects/listCasesPage.js';
 import { FileUploader, ManageDocument } from '../../page_objects/shared.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 import { tag } from '../../support/tag';
+import { linkAppealsTimetableItems } from '../../support/timetables.js';
 import { urlPaths } from '../../support/urlPaths.js';
 import { formatDateAndTime } from '../../support/utils/format';
 
@@ -30,13 +31,6 @@ const doc = fileUploader.sampleFiles.document;
 const img = fileUploader.sampleFiles.img;
 
 let cases = [];
-
-const timetableItems = [
-	{
-		row: 'lpa-statement-due-date',
-		editable: true
-	}
-];
 
 beforeEach(() => {
 	cy.login(users.appeals.caseAdmin);
@@ -293,8 +287,8 @@ describe.skip('skip all', () => {
 					//lead appeal
 					happyPathHelper.viewCaseDetails(leadCaseObj);
 					happyPathHelper.addNetResidences('Net gain', '4');
-					caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added'),
-						caseDetailsPage.verifyRowValue('Net gain', '4');
+					(caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added'),
+						caseDetailsPage.verifyRowValue('Net gain', '4'));
 
 					//child appeal
 					happyPathHelper.viewCaseDetails(childCaseObj);
@@ -335,8 +329,8 @@ describe.skip('skip all', () => {
 					//lead appeal
 					happyPathHelper.viewCaseDetails(leadCaseObj);
 					happyPathHelper.addNetResidences('Net gain', '4');
-					caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added'),
-						caseDetailsPage.clickViewCaseHistory();
+					(caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added'),
+						caseDetailsPage.clickViewCaseHistory());
 					caseHistoryPage.verifyCaseHistoryValue('Case updated');
 
 					//child appeal
@@ -376,7 +370,7 @@ describe.skip('skip all', () => {
 					caseDetailsPage.clickRowChangeLink('lpa-statement-due-date');
 					cy.getBusinessActualDate(new Date(), 14).then((dueDate) => {
 						const formattedDate = formatDateAndTime(dueDate);
-						caseDetailsPage.changeTimetableDates(timetableItems, dueDate, 0);
+						caseDetailsPage.changeTimetableDates(linkAppealsTimetableItems, dueDate, 0);
 						basePage.clickButtonByText('Update timetable due dates');
 						caseDetailsPage.verifyRowValue('LPA statement due', formattedDate.date);
 
@@ -415,7 +409,7 @@ describe.skip('skip all', () => {
 					caseDetailsPage.clickRowChangeLink('lpa-statement-due-date');
 					cy.getBusinessActualDate(new Date(), 14).then((dueDate) => {
 						const formattedDate = formatDateAndTime(dueDate);
-						caseDetailsPage.changeTimetableDates(timetableItems, dueDate, 0);
+						caseDetailsPage.changeTimetableDates(linkAppealsTimetableItems, dueDate, 0);
 						basePage.clickButtonByText('Update timetable due dates');
 						caseDetailsPage.verifyRowValue('LPA statement due', formattedDate.date);
 

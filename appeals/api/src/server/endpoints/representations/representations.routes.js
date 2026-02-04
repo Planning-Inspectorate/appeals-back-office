@@ -262,7 +262,8 @@ router.post(
 		'agent',
 		'lpa',
 		'address',
-		'inquiry'
+		'inquiry',
+		'appealRule6Parties'
 	]),
 	validateRepresentationsToPublish,
 	asyncHandler(controller.publish)

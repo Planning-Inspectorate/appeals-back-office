@@ -58,12 +58,12 @@ export function manageLinkedAppealsPage(appealData, appealId, leadLinkedAppeal, 
 							html: isChildOfHorizonAppeal
 								? `<a class="govuk-link" href="${generateHorizonAppealUrl(
 										leadLinkedAppeal?.appealId
-								  )}">${leadLinkedAppeal?.appealReference}</a>`
+									)}">${leadLinkedAppeal?.appealReference}</a>`
 								: `<a class="govuk-link" href="/appeals-service/appeal-details/${
 										leadLinkedAppeal?.appealId
-								  }" aria-label="Appeal ${numberToAccessibleDigitLabel(
+									}" aria-label="Appeal ${numberToAccessibleDigitLabel(
 										appealShortReference(leadLinkedAppeal?.appealReference) || ''
-								  )}">${appealShortReference(leadLinkedAppeal?.appealReference)}</a>`
+									)}">${appealShortReference(leadLinkedAppeal?.appealReference)}</a>`
 						},
 						{
 							text:
@@ -103,13 +103,13 @@ export function manageLinkedAppealsPage(appealData, appealId, leadLinkedAppeal, 
 							html: linkedAppeal.externalSource
 								? `<a class="govuk-link" href="${generateHorizonAppealUrl(
 										linkedAppeal?.appealId
-								  )}" data-cy="${linkedAppeal?.appealReference}"
+									)}" data-cy="${linkedAppeal?.appealReference}"
 								  >${linkedAppeal?.appealReference}</a>`
 								: `<a class="govuk-link" href="/appeals-service/appeal-details/${
 										linkedAppeal?.appealId
-								  }" aria-label="Appeal ${numberToAccessibleDigitLabel(
+									}" aria-label="Appeal ${numberToAccessibleDigitLabel(
 										appealShortReference(linkedAppeal?.appealReference) || ''
-								  )}" data-cy="${linkedAppeal?.appealReference}"
+									)}" data-cy="${linkedAppeal?.appealReference}"
 								  >${appealShortReference(linkedAppeal?.appealReference)}</a>`
 						},
 						{

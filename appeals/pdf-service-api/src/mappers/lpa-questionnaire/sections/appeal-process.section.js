@@ -44,7 +44,7 @@ export function appealProcessSection(templateData) {
 							key: 'How many days would you expect the inquiry/hearing to last?',
 							text: formatSentenceCase(lpaProcedurePreferenceDuration?.toString(), 'N/A')
 						}
-				  ]
+					]
 				: []),
 			{
 				key: 'Are there any other ongoing appeals next to, or close to the site?',

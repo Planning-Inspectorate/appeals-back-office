@@ -40,9 +40,9 @@ export const mapGroundsForAppeal = ({ appellantCaseData, currentRoute, userHasUp
 			html: !hasData
 				? 'No data'
 				: appealGrounds?.length
-				? // @ts-ignore
-				  formatGroundsAsHtmlList(appealGrounds.map((appealGround) => appealGround?.ground))
-				: ''
+					? // @ts-ignore
+						formatGroundsAsHtmlList(appealGrounds.map((appealGround) => appealGround?.ground))
+					: ''
 		},
 		link: `${currentRoute}/grounds-for-appeal/change`,
 		editable: hasData && userHasUpdateCase,

@@ -22,7 +22,11 @@ import otherAppealsRouter from '../other-appeals/other-appeals.router.js';
 import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
 import affectedListedBuildingsRouter from './affected-listed-buildings/affected-listed-buildings.router.js';
 import affectsScheduledMonumentRouter from './affects-scheduled-monument/affects-scheduled-monument.router.js';
+import allegedBreachCreatesFloorSpaceRouter from './alleged-breach-creates-floor-space/alleged-breach-creates-floor-space.router.js';
 import appellantPhotosAndPlansRouter from './appellant-photos-and-plans/appellant-photos-and-plans.router.js';
+import changeOfUseMineralExtractionRouter from './change-of-use-mineral-extraction/change-of-use-mineral-extraction.router.js';
+import changeOfUseMineralStorageRouter from './change-of-use-mineral-storage/change-of-use-mineral-storage.router.js';
+import changeOfUseRefuseOrWasteRouter from './change-of-use-refuse-or-waste/change-of-use-refuse-or-waste.router.js';
 import changedListedBuildingsRouter from './changed-listed-buildings/changed-listed-buildings.router.js';
 import hasCommunityInfrastructureLevyRouter from './community-infrastructure-levy/has-community-infrastructure-levy/has-community-infrastructure-levy.router.js';
 import infrastructureLevyAdoptedDateRouter from './community-infrastructure-levy/infrastructure-levy-adopted-date/infrastructure-levy-adopted-date.router.js';
@@ -34,16 +38,25 @@ import eiaDevelopmentDescriptionRouter from './environmental-impact-assessment/e
 import eiaEnvironmentalImpactScheduleRouter from './environmental-impact-assessment/eia-environmental-impact-schedule/eia-environmental-impact-schedule.router.js';
 import environmentalAssessmentRouter from './environmental-impact-assessment/environmental-impact-assessment.router.js';
 import extraConditionsRouter from './extra-conditions/extra-conditions.router.js';
+import hasAllegedBreachAreaRouter from './has-alleged-breach-area/has-alleged-breach-area.router.js';
 import hasProtectedSpeciesRouter from './has-protected-species/has-protected-species.router.js';
 import highwayTrafficPublicSafetyRouter from './highway-traffic-public-safety/highway-traffic-public-safety.router.js';
 import isAonbNationalLandscapeRouter from './is-aonb-national-landscape/is-aonb-national-landscape.router.js';
 import isGypsyOrTravellerSiteRouter from './is-gypsy-or-traveller-site/is-gypsy-or-traveller-site.router.js';
+import isOnCrownLandRouter from './is-on-crown-land/is-on-crown-land.router.js';
 import { validateLpaQuestionnaireId } from './lpa-questionnaire.middleware.js';
 import neighbouringSiteAccessRouter from './neighbouring-site-access/neighbouring-site-access.router.js';
 import notificationMethodsRouter from './notification-methods/notification-methods.router.js';
+import pdRightsRemovedRouter from './pd-rights-removed/pd-rights-removed.router.js';
 import preserveGrantLoanRouter from './preserve-grant-loan/preserve-grant-loan.router.js';
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
+import relatesToAgriculturalPurposeRouter from './relates-to-agricultural-purpose/relates-to-agricultural-purpose.router.js';
+import relatesToErectionOfBuildingsRouter from './relates-to-erection-buildings/relates-to-erection-buildings.router.js';
+import relatesToOperationsRouter from './relates-to-operations/relates-to-operations.router.js';
+import singleDwellingHouseRouter from './single-dwelling-house/single-dwelling-house.router.js';
+import siteAreaRouter from './site-area/site-area.router.js';
 import specialControlOfAdvertisementRouter from './special-control-of-advertisement/special-control-of-advertisement.router.js';
+import trunkRoadRouter from './trunk-road/trunk-road.router.js';
 
 const router = createRouter({ mergeParams: true });
 router.param('lpaQuestionnaireId', (req, res, next) => {
@@ -469,5 +482,96 @@ router
 		documentsValidators.validateDocumentDeleteAnswer,
 		asyncHandler(controller.postDeleteDocumentPage)
 	);
+
+router.use(
+	'/:lpaQuestionnaireId/relates-to-operations',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	relatesToOperationsRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/has-alleged-breach-area',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	hasAllegedBreachAreaRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/alleged-breach-creates-floor-space',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	allegedBreachCreatesFloorSpaceRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/pd-rights-removed',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	pdRightsRemovedRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/erection-buildings',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	relatesToErectionOfBuildingsRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/agricultural-purpose',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	relatesToAgriculturalPurposeRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/change-of-use-refuse-or-waste',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	changeOfUseRefuseOrWasteRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/change-of-use-mineral-extraction',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	changeOfUseMineralExtractionRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/change-of-use-mineral-storage',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	changeOfUseMineralStorageRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/single-dwelling-house',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	singleDwellingHouseRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/is-on-crown-land',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	isOnCrownLandRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/trunk-road',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	trunkRoadRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/site-area',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	siteAreaRouter
+);
 
 export default router;

@@ -114,7 +114,7 @@ export const mapTeamText = (team) => {
 		team.id === 0
 			? `Not assigned<br>This will remove the current case team from the appeal`
 			: team.email
-			? `${team.name}<br>${team.email}`
-			: `${team.name}`;
+				? `${team.name}<br>${team.email}`
+				: `${team.name}`;
 	return renderedText;
 };

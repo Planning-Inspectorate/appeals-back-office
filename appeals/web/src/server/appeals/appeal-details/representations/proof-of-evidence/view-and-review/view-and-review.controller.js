@@ -15,9 +15,11 @@ import { reviewProofOfEvidencePage } from './view-and-review.mapper.js';
 export const render = (contentMapper, templatePath) => (request, response) => {
 	const { errors, currentRepresentation, currentAppeal, session, query, currentRule6Party } =
 		request;
-	const backUrl = query.backUrl ? String(query.backUrl) : '/';
 
-	let { proofOfEvidenceType } = request.params;
+	let { proofOfEvidenceType, appealId } = request.params;
+	const backUrl = query.backUrl
+		? String(query.backUrl)
+		: `/appeals-service/appeal-details/${appealId}`;
 
 	if (!currentRepresentation) {
 		return response.status(404).render('app/404.njk');

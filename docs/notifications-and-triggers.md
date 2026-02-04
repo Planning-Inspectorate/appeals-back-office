@@ -352,3 +352,23 @@ The following notifications are sent from the back-office using these [Notify Te
 - **Appeal type:** all
 - **Notify Template:** [rearrange-missed-site-visit-lpa](../appeals/api/src/server/notify/templates/rearrange-missed-site-visit-lpa.content.md)
 - **Trigger:** Setting up a site visit after recording a missed site visit
+
+## Rule 6 Party
+
+### Rule 6 Party admitted - Rule 6 party
+
+- **Appeal type:** Inquiry
+- **Notify Template:** [rule-6-status-accepted-rule-6-party](../appeals/api/src/server/notify/templates/rule-6-status-accepted-rule-6-party.content.md)
+- **Trigger:** Added a Rule 6 party to the appeal
+
+### Rule 6 Party admitted - Main parties
+
+- **Appeal type:** Inquiry
+- **Notify Template:** [rule-6-status-accepted-main-parties](../appeals/api/src/server/notify/templates/rule-6-status-accepted-main-parties.content.md)
+- **Trigger:** Added a Rule 6 party to the appeal
+
+### Rule 6 Party updated
+
+- **Appeal type:** Inquiry
+- **Notify Template:** [rule-6-party-updated](../appeals/api/src/server/notify/templates/rule-6-party-updated.content.md)
+- **Trigger:** Updated Rule 6 party details

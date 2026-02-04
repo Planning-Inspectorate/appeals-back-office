@@ -15,7 +15,7 @@ export const mapEiaDevelopmentDescription = ({
 			// @ts-ignore
 			eiaDescriptions[lpaQuestionnaireData.eiaDevelopmentDescription]
 				? // @ts-ignore
-				  eiaDescriptions[lpaQuestionnaireData.eiaDevelopmentDescription]
+					eiaDescriptions[lpaQuestionnaireData.eiaDevelopmentDescription]
 				: 'No Data',
 		link: `${currentRoute}/eia-development-description/change`,
 		editable: userHasUpdateCase,

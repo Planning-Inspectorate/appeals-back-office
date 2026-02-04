@@ -59,7 +59,7 @@ export function constraintsDesignationsAndOtherIssuesSection(templateData) {
 							key: 'Does the development change a listed building?',
 							html: formatList(changedListedBuildingList, 'No')
 						}
-				  ]
+					]
 				: []),
 			{
 				key: 'Does the development affect the setting of listed buildings?',
@@ -72,7 +72,7 @@ export function constraintsDesignationsAndOtherIssuesSection(templateData) {
 							key: 'Was a grant or loan made to preserve the listed building at the appeal site?',
 							text: formatYesNo(preserveGrantLoan)
 						}
-				  ]
+					]
 				: []),
 			// does not appear for householder
 			...(!isHASAppeal
@@ -81,7 +81,7 @@ export function constraintsDesignationsAndOtherIssuesSection(templateData) {
 							key: 'Would the development affect a scheduled monument?',
 							text: formatYesNo(affectsScheduledMonument)
 						}
-				  ]
+					]
 				: []),
 			{
 				key: 'Conservation area map and guidance',
@@ -94,7 +94,7 @@ export function constraintsDesignationsAndOtherIssuesSection(templateData) {
 							key: 'Would the development affect a protected species?',
 							text: formatYesNo(hasProtectedSpecies)
 						}
-				  ]
+					]
 				: []),
 			...([APPEAL_TYPE.CAS_ADVERTISEMENT, APPEAL_TYPE.ADVERTISEMENT].includes(appealType)
 				? [
@@ -102,7 +102,7 @@ export function constraintsDesignationsAndOtherIssuesSection(templateData) {
 							key: 'Is the site in an area of special control of advertisements?',
 							html: formatYesNo(isSiteInAreaOfSpecialControlAdverts)
 						}
-				  ]
+					]
 				: []),
 			{
 				key: 'Green belt',
@@ -131,7 +131,7 @@ export function constraintsDesignationsAndOtherIssuesSection(templateData) {
 							key: 'Definitive map and statement extract',
 							html: formatDocumentData(definitiveMapStatement)
 						}
-				  ]
+					]
 				: []),
 			// only appears for s20 listed buildings appeals
 			...([APPEAL_TYPE.PLANNED_LISTED_BUILDING].includes(appealType)
@@ -140,7 +140,7 @@ export function constraintsDesignationsAndOtherIssuesSection(templateData) {
 							key: 'Historic England consultation',
 							html: formatDocumentData(historicEnglandConsultation)
 						}
-				  ]
+					]
 				: [])
 		]
 	};

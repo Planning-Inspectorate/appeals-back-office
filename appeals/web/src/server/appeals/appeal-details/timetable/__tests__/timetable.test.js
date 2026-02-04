@@ -11,6 +11,11 @@ const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details/1/timetable';
 
 describe('Timetable', () => {
+	afterAll(() => {
+		nock.cleanAll();
+		nock.restore();
+		jest.clearAllMocks();
+	});
 	beforeEach(() => {
 		//mocking the for example date for snapshots
 		Date.now = jest.fn(() => new Date(Date.UTC(2024, 8, 14)).valueOf());

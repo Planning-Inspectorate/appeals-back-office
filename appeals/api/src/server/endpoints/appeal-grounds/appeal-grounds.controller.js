@@ -1,4 +1,5 @@
 import { updateAppealGround } from '#endpoints/appeal-grounds/appeal-grounds.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { getAllGrounds } from '#repositories/ground.repository.js';
 import logger from '#utils/logger.js';
 import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
@@ -48,6 +49,8 @@ const updateGroundsForAppealByAppealId = async (req, res) => {
 				updateAppealGround(azureAdUserId, { groundRef, groundId, appealId, isDeleted })
 			)
 		);
+
+		await broadcasters.broadcastAppeal(appealId);
 	} catch (error) {
 		if (error) {
 			logger.error(error);
@@ -90,6 +93,8 @@ const updateFactsForGroundByAppealIdAndGroundRef = async (req, res) => {
 			// @ts-ignore
 			factsForGround
 		});
+
+		await broadcasters.broadcastAppeal(appealId);
 	} catch (error) {
 		if (error) {
 			logger.error(error);

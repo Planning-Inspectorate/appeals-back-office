@@ -50,8 +50,8 @@ export const postConfirmAcceptProofOfEvidence = async (request, response) => {
 			currentRepresentation.representationType === 'appellant_proofs_evidence'
 				? 'appellantProofOfEvidenceAcceptSuccess'
 				: currentRepresentation.representationType === 'rule_6_party_proofs_evidence'
-				? 'rule6PartyProofOfEvidenceAcceptSuccess'
-				: 'lpaProofOfEvidenceAcceptSuccess';
+					? 'rule6PartyProofOfEvidenceAcceptSuccess'
+					: 'lpaProofOfEvidenceAcceptSuccess';
 
 		addNotificationBannerToSession({
 			session: session,

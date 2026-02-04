@@ -1,0 +1,25 @@
+BEGIN TRY
+
+BEGIN TRAN;
+
+-- CreateTable
+CREATE TABLE [dbo].[BankHoliday] (
+    [id] INT NOT NULL IDENTITY(1,1),
+    [bankHolidayDate] DATETIME2 NOT NULL,
+    [title] NVARCHAR(1000) NOT NULL,
+    CONSTRAINT [BankHoliday_pkey] PRIMARY KEY CLUSTERED ([id]),
+    CONSTRAINT [BankHoliday_bankHolidayDate_key] UNIQUE NONCLUSTERED ([bankHolidayDate])
+);
+
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH

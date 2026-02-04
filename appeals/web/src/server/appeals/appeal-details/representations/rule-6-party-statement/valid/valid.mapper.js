@@ -49,7 +49,7 @@ export const confirmPage = (appealDetails, rule6PartyStatement, specialismData, 
 					),
 					isOrderedList: true,
 					isNumberedList: filteredAttachments.length > 1
-			  })
+				})
 			: null;
 
 	const folderId = filteredAttachments?.[0]?.documentVersion?.document?.folderId ?? null;
@@ -96,7 +96,7 @@ export const confirmPage = (appealDetails, rule6PartyStatement, specialismData, 
 												href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyStatement.id}/manage-documents/${folderId}?backUrl=/rule-6-party-statement/${rule6PartyStatement.id}/valid/confirm`,
 												visuallyHiddenText: 'supporting documents'
 											}
-									  ]
+										]
 									: []),
 								{
 									text: 'Add',
@@ -135,7 +135,7 @@ export const confirmPage = (appealDetails, rule6PartyStatement, specialismData, 
 										]
 									}
 								}
-						  ]),
+							]),
 					...(sessionData?.allocationLevel && specialisms.length
 						? [
 								{
@@ -171,7 +171,7 @@ export const confirmPage = (appealDetails, rule6PartyStatement, specialismData, 
 										]
 									}
 								}
-						  ]
+							]
 						: [])
 				]
 			}

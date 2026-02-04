@@ -27,7 +27,7 @@ export const mapCasAdvertLpaQuestionnaire = (data) => {
 								key: 'custom',
 								name: lpaQuestionnaire.designatedSiteNameCustom
 							}
-					  ]
+						]
 					: [])
 			],
 			extraConditions: lpaQuestionnaire.newConditionDetails,

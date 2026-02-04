@@ -61,8 +61,8 @@ const getBackLinkUrl = (request, prevPageUrl, cyaUrl) => {
 	return isAtEditEntrypoint(request)
 		? preserveQueryString(request, cyaUrl, { exclude: ['editEntrypoint'] })
 		: prevPageUrl
-		? preserveQueryString(request, prevPageUrl)
-		: flowEntrypoint;
+			? preserveQueryString(request, prevPageUrl)
+			: flowEntrypoint;
 };
 
 /**
@@ -441,7 +441,7 @@ const hearingStartTimeForUpdate = (sessionData, existingStartTime) => {
 				year: sessionData['hearing-date-year'],
 				hour: sessionData['hearing-time-hour'],
 				minute: sessionData['hearing-time-minute']
-		  })
+			})
 		: existingStartTime;
 };
 

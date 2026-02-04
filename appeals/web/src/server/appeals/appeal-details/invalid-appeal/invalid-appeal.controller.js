@@ -5,14 +5,14 @@ import { getFeedbackLinkFromAppealTypeName } from '#lib/feedback-form-link.js';
 import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
 import { APPEAL_TYPE, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import {
 	CHANGE_APPEAL_TYPE_INVALID_REASON,
 	ENFORCEMENT_APPEAL_INVALID_GROUND_A_BARRED,
-	ENFORCEMENT_APPEAL_INVALID_LEGAL_INTEREST,
-	INVALID_APPEAL_OTHER_REASON
+	ENFORCEMENT_APPEAL_INVALID_LEGAL_INTEREST
 } from '@pins/appeals/constants/support.js';
 import { mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters } from '../appellant-case/appellant-case.mapper.js';
 import * as appellantCaseService from '../appellant-case/appellant-case.service.js';
@@ -22,6 +22,7 @@ import {
 } from '../representations/common/components/reject-reasons.js';
 import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import {
+	checkDetailsAndMarkEnforcementAsInvalid,
 	decisionInvalidConfirmationPage,
 	enforcementNoticeInvalidPage,
 	enforcementNoticeReasonPage,
@@ -29,7 +30,10 @@ import {
 	otherLiveAppealsPage,
 	viewInvalidAppealPage
 } from './invalid-appeal.mapper.js';
-import { getInvalidStatusCreatedDate } from './invalid-appeal.service.js';
+import {
+	getInvalidStatusCreatedDate,
+	setReviewOutcomeForEnforcementNoticeAppellantCase
+} from './invalid-appeal.service.js';
 
 /**
  *
@@ -81,10 +85,8 @@ const renderInvalidReason = async (request, response) => {
 		}
 
 		if (currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
-			if (reason.name !== INVALID_APPEAL_OTHER_REASON) {
-				// @ts-ignore
-				acc.push(reason);
-			}
+			// @ts-ignore
+			acc.push(reason);
 		} else {
 			if (
 				reason.name !== ENFORCEMENT_APPEAL_INVALID_LEGAL_INTEREST &&
@@ -99,6 +101,11 @@ const renderInvalidReason = async (request, response) => {
 	}, []);
 
 	if (filteredReasonOptions) {
+		if (currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+			// set 'Other reason' last
+			filteredReasonOptions.push(filteredReasonOptions.splice(3, 1)[0]);
+		}
+
 		const mappedInvalidReasonOptions = mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters(
 			'invalid',
 			filteredReasonOptions,
@@ -393,14 +400,16 @@ export const postEnforcementNoticeInvalid = async (request, response) => {
 			enforcementNoticeInvalid: body.enforcementNoticeInvalid
 		};
 
-		if (session.webAppellantCaseReviewOutcome.enforcementNoticeInvalid === 'no') {
+		const { enforcementNoticeInvalid, validationOutcome } = session.webAppellantCaseReviewOutcome;
+
+		if (enforcementNoticeInvalid === 'no') {
 			delete session.webAppellantCaseReviewOutcome.enforcementNoticeReason;
 			return response.redirect(
-				`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/invalid`
+				`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${validationOutcome}`
 			);
 		}
 		return response.redirect(
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/invalid/enforcement-notice-reason`
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${validationOutcome}/enforcement-notice-reason`
 		);
 	} catch (error) {
 		logger.error(
@@ -454,12 +463,12 @@ export const postEnforcementNoticeReason = async (request, response) => {
 				? [body.invalidReason].flat().map((reason) => ({
 						reasonSelected: Number(reason),
 						reasonText: body[`invalidReason-${reason}`]
-				  }))
+					}))
 				: null
 		};
 
 		return response.redirect(
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/invalid/enforcement-other-information`
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${session.webAppellantCaseReviewOutcome.validationOutcome}/enforcement-other-information`
 		);
 	} catch (error) {
 		logger.error(
@@ -536,7 +545,7 @@ const renderEnforcementNoticeReasonPage = async (request, response, apiErrors) =
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getOtherLiveAppeals = async (request, response) => {
-	renderOtherLiveAppealsPage(request, response);
+	return renderOtherLiveAppealsPage(request, response);
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -586,4 +595,90 @@ const renderOtherLiveAppealsPage = async (request, response, apiErrors) => {
 		pageContent: mappedPageContent,
 		errors
 	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getCheckDetailsAndMarkEnforcementAsInvalid = async (request, response) => {
+	return renderCheckDetailsAndMarkEnforcementAsInvalid(request, response);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const postCheckDetailsAndMarkEnforcementAsInvalid = async (request, response) => {
+	const { currentAppeal } = request;
+
+	if (!objectContainsAllKeys(request.session, 'webAppellantCaseReviewOutcome')) {
+		return response.status(500).render('app/500.njk');
+	}
+
+	const { webAppellantCaseReviewOutcome } = request.session;
+
+	try {
+		await setReviewOutcomeForEnforcementNoticeAppellantCase(
+			request.apiClient,
+			currentAppeal.appealId,
+			currentAppeal.appellantCaseId,
+			{
+				...webAppellantCaseReviewOutcome
+			}
+		);
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'appellantCaseInvalidOrIncomplete',
+			appealId: currentAppeal.appealId,
+			text: `Appeal marked as ${webAppellantCaseReviewOutcome.validationOutcome}`
+		});
+
+		delete request.session.webAppellantCaseReviewOutcome;
+
+		return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when completing enforcement invalid review'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+const renderCheckDetailsAndMarkEnforcementAsInvalid = async (request, response) => {
+	try {
+		if (!objectContainsAllKeys(request.session, 'webAppellantCaseReviewOutcome')) {
+			return response.status(500).render('app/500.njk');
+		}
+
+		const reasonOptions =
+			await appellantCaseService.getAppellantCaseEnforcementInvalidReasonOptions(request.apiClient);
+
+		if (!reasonOptions) {
+			throw new Error('error retrieving invalid enforcement reason options');
+		}
+
+		const mappedPageContent = checkDetailsAndMarkEnforcementAsInvalid(
+			request.currentAppeal,
+			reasonOptions,
+			request.session
+		);
+
+		return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
+			pageContent: mappedPageContent
+		});
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when completing enforcement invalid review'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
 };

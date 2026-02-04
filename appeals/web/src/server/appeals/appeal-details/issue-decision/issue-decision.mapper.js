@@ -21,16 +21,13 @@ import {
 } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { toSentenceCase } from '#lib/string-utilities.js';
 import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
-	CASE_OUTCOME_ALLOWED,
-	CASE_OUTCOME_DISMISSED,
-	CASE_OUTCOME_INVALID,
-	CASE_OUTCOME_SPLIT_DECISION,
 	DECISION_TYPE_APPELLANT_COSTS,
 	DECISION_TYPE_LPA_COSTS,
 	LENGTH_300
 } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_DECISION_OUTCOME } from '@planning-inspectorate/data-model';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -75,7 +72,7 @@ export function issueDecisionPage(
 									text: `${appealDetails.appellant.firstName} ${appealDetails.appellant.lastName}`
 								}
 							}
-					  ]
+						]
 					: []),
 				...(appealDetails.appealSite
 					? [
@@ -87,11 +84,11 @@ export function issueDecisionPage(
 									html: appealDetails.appealSite
 										? addressToMultilineStringHtml(
 												/** @type {import('@pins/appeals').Address} */ (appealDetails.appealSite)
-										  )
+											)
 										: null
 								}
 							}
-					  ]
+						]
 					: []),
 				{
 					key: {
@@ -115,60 +112,64 @@ export function issueDecisionPage(
 
 	const heading = linkType ? `Decision for ${linkType} appeal ${decisionAppealReference}` : '';
 
-	const items = [
-		{
-			value: CASE_OUTCOME_ALLOWED,
-			text: toSentenceCase(CASE_OUTCOME_ALLOWED),
-			checked: inspectorDecision?.outcome === CASE_OUTCOME_ALLOWED
-		},
-		{
-			value: CASE_OUTCOME_DISMISSED,
-			text: toSentenceCase(CASE_OUTCOME_DISMISSED),
-			checked: inspectorDecision?.outcome === CASE_OUTCOME_DISMISSED
-		},
-		{
-			value: CASE_OUTCOME_SPLIT_DECISION,
-			text: toSentenceCase(CASE_OUTCOME_SPLIT_DECISION),
-			checked: inspectorDecision?.outcome === CASE_OUTCOME_SPLIT_DECISION
-		}
-	];
+	const {
+		ALLOWED,
+		DISMISSED,
+		NOTICE_UPHELD,
+		NOTICE_VARIED_AND_UPHELD,
+		PLANNING_PERMISSION_GRANTED,
+		QUASHED_ON_LEGAL_GROUNDS,
+		SPLIT_DECISION,
+		INVALID
+	} = APPEAL_CASE_DECISION_OUTCOME;
 
-	if (!isLinkedAppeal(appealDetails)) {
-		if (isFeatureActive(FEATURE_FLAG_NAMES.INVALID_DECISION_LETTER)) {
-			items.push({
-				value: CASE_OUTCOME_INVALID,
-				text: toSentenceCase(CASE_OUTCOME_INVALID),
-				checked: inspectorDecision?.outcome === CASE_OUTCOME_INVALID
-			});
-		} else {
-			items.push({
-				value: CASE_OUTCOME_INVALID,
-				text: toSentenceCase(CASE_OUTCOME_INVALID),
-				checked: inspectorDecision?.outcome === CASE_OUTCOME_INVALID,
-				// @ts-ignore
-				conditional: {
-					html: renderPageComponentsToHtml([
-						{
-							type: 'textarea',
-							parameters: {
-								name: 'invalidReason',
-								id: 'invalid-reason',
-								value: inspectorDecision?.invalidReason ?? '',
-								label: {
-									text: 'Reason',
-									classes: 'govuk-label--s'
-								},
-								hint: { text: 'We will share the reason with the relevant parties' },
-								errorMessage: errors?.invalidReason
-									? {
-											text: errors?.invalidReason.msg
-									  }
-									: null
-							}
+	const decisionTypes =
+		appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
+			? [
+					NOTICE_UPHELD,
+					NOTICE_VARIED_AND_UPHELD,
+					PLANNING_PERMISSION_GRANTED,
+					QUASHED_ON_LEGAL_GROUNDS,
+					SPLIT_DECISION,
+					INVALID
+				]
+			: [ALLOWED, DISMISSED, SPLIT_DECISION, INVALID];
+
+	const items = decisionTypes.map((decisionType) => ({
+		value: decisionType,
+		text: toSentenceCase(decisionType),
+		checked: inspectorDecision?.outcome === decisionType
+	}));
+
+	if (
+		!isLinkedAppeal(appealDetails) &&
+		!isFeatureActive(FEATURE_FLAG_NAMES.INVALID_DECISION_LETTER)
+	) {
+		const invalidDecisionItem = items.find((item) => item.value === INVALID);
+		if (invalidDecisionItem) {
+			// @ts-ignore
+			invalidDecisionItem.conditional = {
+				html: renderPageComponentsToHtml([
+					{
+						type: 'textarea',
+						parameters: {
+							name: 'invalidReason',
+							id: 'invalid-reason',
+							value: inspectorDecision?.invalidReason ?? '',
+							label: {
+								text: 'Reason',
+								classes: 'govuk-label--s'
+							},
+							hint: { text: 'We will share the reason with the relevant parties' },
+							errorMessage: errors?.invalidReason
+								? {
+										text: errors?.invalidReason.msg
+									}
+								: null
 						}
-					])
-				}
-			});
+					}
+				])
+			};
 		}
 	}
 
@@ -603,8 +604,8 @@ function checkAndConfirmPageRows(appealData, request) {
 			value: html
 				? { html }
 				: href
-				? { html: `<a class="govuk-link" download href="${href}" target="_blank">${value}</a>` }
-				: { text: value },
+					? { html: `<a class="govuk-link" download href="${href}" target="_blank">${value}</a>` }
+					: { text: value },
 			actions: {
 				items: actions
 			}
@@ -697,7 +698,7 @@ export function viewDecisionPageRows(appealData, request, latestDecsionDocumentT
 				key: appealData.linkedAppeals?.length
 					? `Decision for ${
 							appealData.isParentAppeal ? 'lead' : 'child'
-					  } appeal ${appealShortReference(appealData.appealReference)}`
+						} appeal ${appealShortReference(appealData.appealReference)}`
 					: 'Decision',
 				html: `${toSentenceCase(decisionOutcome)}${
 					invalidReasonHtml ? `<br><br>${invalidReasonHtml}` : ''
@@ -786,8 +787,8 @@ export function viewDecisionPageRows(appealData, request, latestDecsionDocumentT
 			value: html
 				? { html }
 				: href
-				? { html: `<a class="govuk-link" download href="${href}" target="_blank">${value}</a>` }
-				: { text: value },
+					? { html: `<a class="govuk-link" download href="${href}" target="_blank">${value}</a>` }
+					: { text: value },
 			actions: {
 				items: actions
 			}
@@ -851,7 +852,7 @@ export function invalidReasonPage(appealDetails, invalidReason, backLinkUrl, err
 			errorMessage: errors?.invalidReason
 				? {
 						text: errors?.invalidReason.msg
-				  }
+					}
 				: null
 		}
 	};

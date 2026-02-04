@@ -51,7 +51,7 @@ export function siteAccessSection(templateData) {
 							key: 'Address of the neighbour’s land or property',
 							html: formatNeighbouringSites(neighbouringSites)
 						}
-				  ]
+					]
 				: []),
 			{
 				key: 'Are there any potential safety risks?',

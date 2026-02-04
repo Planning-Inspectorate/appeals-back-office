@@ -122,6 +122,7 @@ describe('appeals list routes', () => {
 									isRedacted: false
 								},
 								rule6PartyProofs: {},
+								rule6PartyStatements: {},
 								lpaFinalComments: {
 									representationStatus: null,
 									status: 'not_received',
@@ -224,7 +225,17 @@ describe('appeals list routes', () => {
 										status: 'received',
 										representationStatus: 'valid',
 										receivedAt: '2024-03-25T23:59:59.999Z',
-										isRedacted: false
+										isRedacted: false,
+										rule6PartyId: 1
+									}
+								},
+								rule6PartyStatements: {
+									1: {
+										status: 'not_received',
+										representationStatus: null,
+										receivedAt: null,
+										isRedacted: false,
+										rule6PartyId: 1
 									}
 								}
 							},
@@ -264,14 +275,15 @@ describe('appeals list routes', () => {
 									APPEAL_CASE_TYPE.ZP,
 									APPEAL_CASE_TYPE.ZA,
 									APPEAL_CASE_TYPE.H,
-									APPEAL_CASE_TYPE.C
+									APPEAL_CASE_TYPE.C,
+									APPEAL_CASE_TYPE.X
 								]
 							}
 						}
 					},
 					include: {
 						address: true,
-						appealRule6Parties: true,
+						appealRule6Parties: { include: { serviceUser: true } },
 						appealStatus: { where: { valid: true } },
 						appealType: true,
 						procedureType: true,
@@ -382,7 +394,17 @@ describe('appeals list routes', () => {
 										status: 'received',
 										representationStatus: 'valid',
 										receivedAt: '2024-03-25T23:59:59.999Z',
-										isRedacted: false
+										isRedacted: false,
+										rule6PartyId: 1
+									}
+								},
+								rule6PartyStatements: {
+									1: {
+										status: 'not_received',
+										representationStatus: null,
+										receivedAt: null,
+										isRedacted: false,
+										rule6PartyId: 1
 									}
 								}
 							},
@@ -442,6 +464,13 @@ describe('appeals list routes', () => {
 									applicationReference: {
 										contains: 'MD21'
 									}
+								},
+								{
+									appellantCase: {
+										enforcementReference: {
+											contains: 'MD21'
+										}
+									}
 								}
 							],
 							appealStatus: {
@@ -517,7 +546,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
@@ -575,6 +605,13 @@ describe('appeals list routes', () => {
 									applicationReference: {
 										contains: 'md21'
 									}
+								},
+								{
+									appellantCase: {
+										enforcementReference: {
+											contains: 'md21'
+										}
+									}
 								}
 							],
 							appealStatus: {
@@ -650,7 +687,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
@@ -708,6 +746,13 @@ describe('appeals list routes', () => {
 									applicationReference: {
 										contains: 'MD21 5XY'
 									}
+								},
+								{
+									appellantCase: {
+										enforcementReference: {
+											contains: 'MD21 5XY'
+										}
+									}
 								}
 							],
 							appealStatus: {
@@ -783,7 +828,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
@@ -898,7 +944,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
@@ -1024,7 +1071,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
@@ -1145,7 +1193,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							dueDate: null,
 							isParentAppeal: false,
@@ -1267,7 +1316,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
@@ -1389,7 +1439,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
@@ -1495,7 +1546,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							isParentAppeal: false,
 							isChildAppeal: false,
@@ -1824,7 +1876,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							isParentAppeal: false,
 							isChildAppeal: true,
@@ -1900,7 +1953,8 @@ describe('appeals list routes', () => {
 									representationStatus: null,
 									isRedacted: false
 								},
-								rule6PartyProofs: {}
+								rule6PartyProofs: {},
+								rule6PartyStatements: {}
 							},
 							isParentAppeal: false,
 							isChildAppeal: true,

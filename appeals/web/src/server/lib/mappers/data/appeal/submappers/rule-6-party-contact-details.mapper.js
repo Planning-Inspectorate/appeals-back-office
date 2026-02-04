@@ -14,7 +14,7 @@ export const mapRule6PartyContactDetails = ({
 	const { appealId } = appealDetails;
 
 	if (
-		!config.featureFlags.featureFlagRule6Parties ||
+		!config.featureFlags.featureFlagRule6Mvp ||
 		appealDetails.procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase()
 	) {
 		return { id, display: {} };

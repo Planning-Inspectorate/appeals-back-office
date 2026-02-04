@@ -61,7 +61,7 @@ export const mapHearingDetails = ({
 						value: { html: addressToString({ ...address, postCode: address?.postcode }, '<br>') },
 						...actions('Address', 'address-details')
 					}
-			  ]
+				]
 			: [])
 	];
 

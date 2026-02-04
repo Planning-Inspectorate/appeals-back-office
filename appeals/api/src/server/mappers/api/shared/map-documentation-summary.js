@@ -105,13 +105,21 @@ export const mapDocumentationSummary = (data) => {
 				appeal.appealRule6Parties,
 				(acc, rule6Party) => {
 					const statement = rule6PartyStatements?.find(
-						(statement) => statement.representedId === rule6Party.serviceUserId
+						(statement) => String(statement.representedId) === String(rule6Party.serviceUserId)
 					);
 					acc[String(rule6Party.serviceUserId)] = {
 						status: statement ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 						receivedAt: statement?.dateCreated.toISOString() ?? null,
 						representationStatus: statement?.status ?? null,
-						isRedacted: Boolean(statement?.redactedRepresentation && redactLPAStatementMatching)
+						isRedacted: Boolean(
+							statement?.redactedRepresentation &&
+							checkRedactedText(
+								statement?.originalRepresentation || '',
+								statement?.redactedRepresentation || ''
+							)
+						),
+						organisationName: rule6Party?.serviceUser?.organisationName,
+						rule6PartyId: rule6Party?.id
 					};
 					return acc;
 				},
@@ -147,13 +155,21 @@ export const mapDocumentationSummary = (data) => {
 				appeal.appealRule6Parties,
 				(acc, rule6Party) => {
 					const proof = rule6PartyProofs?.find(
-						(proof) => proof.representedId === rule6Party.serviceUserId
+						(proof) => String(proof.representedId) === String(rule6Party.serviceUserId)
 					);
 					acc[String(rule6Party.serviceUserId)] = {
 						status: proof ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 						receivedAt: proof?.dateCreated.toISOString() ?? null,
 						representationStatus: proof?.status ?? null,
-						isRedacted: Boolean(proof?.redactedRepresentation && redactLPAStatementMatching)
+						isRedacted: Boolean(
+							proof?.redactedRepresentation &&
+							checkRedactedText(
+								proof?.originalRepresentation || '',
+								proof?.redactedRepresentation || ''
+							)
+						),
+						organisationName: rule6Party?.serviceUser?.organisationName,
+						rule6PartyId: rule6Party?.id
 					};
 					return acc;
 				},

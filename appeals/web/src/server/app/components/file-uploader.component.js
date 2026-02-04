@@ -19,7 +19,7 @@ export const createNewDocument = async (apiClient, caseId, payload) => {
 			error,
 			error instanceof Error
 				? error.message
-				: 'An error occurred while attempting to patch the documents API endpoint'
+				: 'An error occurred while attempting to post to appeals/${caseId}/documents API endpoint'
 		);
 		throw error;
 	}

@@ -53,7 +53,7 @@ export const summaryList = (appealDetails, comment, finalCommentsType, attachmen
 									href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/manage-documents/${comment.attachments?.[0]?.documentVersion?.document?.folderId}/?backUrl=/final-comments/${finalCommentsType}/accept`,
 									visuallyHiddenText: 'supporting documents'
 								}
-						  ]
+							]
 						: []),
 					{
 						text: 'Add',

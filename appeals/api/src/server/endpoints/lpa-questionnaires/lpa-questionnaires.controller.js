@@ -71,7 +71,21 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			preserveGrantLoan,
 			isSiteInAreaOfSpecialControlAdverts,
 			wasApplicationRefusedDueToHighwayOrTraffic,
-			didAppellantSubmitCompletePhotosAndPlans
+			didAppellantSubmitCompletePhotosAndPlans,
+			// Enforcement
+			noticeRelatesToBuildingEngineeringMiningOther,
+			siteAreaSquareMetres,
+			hasAllegedBreachArea,
+			doesAllegedBreachCreateFloorSpace,
+			changeOfUseRefuseOrWaste,
+			changeOfUseMineralExtraction,
+			changeOfUseMineralStorage,
+			relatesToErectionOfBuildingOrBuildings,
+			relatesToBuildingWithAgriculturalPurpose,
+			relatesToBuildingSingleDwellingHouse,
+			affectedTrunkRoadName,
+			isSiteOnCrownLand,
+			article4AffectedDevelopmentRights
 		},
 		params,
 		validationOutcome
@@ -95,7 +109,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 						siteAddress
 					},
 					notifyClient
-			  ))
+				))
 			: await lpaQuestionnaireRepository.updateLPAQuestionnaireById(lpaQuestionnaireId, {
 					lpaStatement,
 					siteAccessDetails,
@@ -128,8 +142,22 @@ const updateLPAQuestionnaireById = async (req, res) => {
 					preserveGrantLoan,
 					isSiteInAreaOfSpecialControlAdverts,
 					wasApplicationRefusedDueToHighwayOrTraffic,
-					didAppellantSubmitCompletePhotosAndPlans
-			  });
+					didAppellantSubmitCompletePhotosAndPlans,
+					// Enforcement
+					noticeRelatesToBuildingEngineeringMiningOther,
+					siteAreaSquareMetres,
+					hasAllegedBreachArea,
+					doesAllegedBreachCreateFloorSpace,
+					changeOfUseRefuseOrWaste,
+					changeOfUseMineralExtraction,
+					changeOfUseMineralStorage,
+					relatesToErectionOfBuildingOrBuildings,
+					relatesToBuildingWithAgriculturalPurpose,
+					relatesToBuildingSingleDwellingHouse,
+					affectedTrunkRoadName,
+					isSiteOnCrownLand,
+					article4AffectedDevelopmentRights
+				});
 
 		const updatedProperties = Object.keys(body).filter((key) => body[key] !== undefined);
 
@@ -190,7 +218,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 	const response = validationOutcome
 		? {
 				validationOutcome
-		  }
+			}
 		: {
 				lpaStatement,
 				siteAccessDetails,
@@ -203,8 +231,22 @@ const updateLPAQuestionnaireById = async (req, res) => {
 				affectsScheduledMonument,
 				hasProtectedSpecies,
 				isAonbNationalLandscape,
-				isGypsyOrTravellerSite
-		  };
+				isGypsyOrTravellerSite,
+				// Enforcement
+				noticeRelatesToBuildingEngineeringMiningOther,
+				siteAreaSquareMetres,
+				hasAllegedBreachArea,
+				doesAllegedBreachCreateFloorSpace,
+				changeOfUseRefuseOrWaste,
+				changeOfUseMineralExtraction,
+				changeOfUseMineralStorage,
+				relatesToErectionOfBuildingOrBuildings,
+				relatesToBuildingWithAgriculturalPurpose,
+				relatesToBuildingSingleDwellingHouse,
+				affectedTrunkRoadName,
+				isSiteOnCrownLand,
+				article4AffectedDevelopmentRights
+			};
 
 	return res.send(response);
 };

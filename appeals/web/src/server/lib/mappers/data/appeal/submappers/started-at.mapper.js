@@ -1,7 +1,6 @@
-import config from '#environment/config.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
-import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { isAwaitingLinkedAppeal, isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapStartedAt = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) => {
@@ -12,8 +11,7 @@ export const mapStartedAt = ({ appealDetails, currentRoute, userHasUpdateCasePer
 
 	const lpaQuestionnaireStatus = appealDetails.documentationSummary.lpaQuestionnaire?.status || '';
 
-	const awaitingLinkedAppeal =
-		appealDetails.awaitingLinkedAppeal && config.featureFlags.featureFlagLinkedAppeals;
+	const awaitingLinkedAppeal = isAwaitingLinkedAppeal(appealDetails);
 
 	return textSummaryListItem({
 		id,

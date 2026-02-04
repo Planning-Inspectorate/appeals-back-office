@@ -18,6 +18,7 @@ describe('correction-notice-decision.md', () => {
 				existing_appeal_type: 'Householder',
 				correction_notice_reason: 'There has been a mistake - but we fixed it thanks',
 				decision_date: '01 January 2025',
+				feedback_link: '/mock-feedback-link',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
@@ -48,7 +49,7 @@ describe('correction-notice-decision.md', () => {
 			'',
 			'# Feedback',
 			'',
-			'We welcome your feedback on our appeals service. Tell us on this short [feedback form](https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u).',
+			'We welcome your feedback on our appeals service. Tell us on this short [feedback form](/mock-feedback-link).',
 			'',
 			'The Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'

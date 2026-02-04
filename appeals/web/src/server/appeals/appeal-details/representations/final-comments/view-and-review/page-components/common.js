@@ -54,7 +54,7 @@ export function generateCommentsSummaryList(appealId, comment, isReview = false)
 				),
 				isOrderedList: true,
 				isNumberedList: filteredAttachments.length > 1
-		  })
+			})
 		: null;
 
 	const commentTypePath = mapRepresentationTypeToPath(comment.representationType);
@@ -83,7 +83,7 @@ export function generateCommentsSummaryList(appealId, comment, isReview = false)
 								}
 							}
 						]
-				  },
+					},
 			actions: {
 				items:
 					(!redactedCommentDifferent || !comment.redactedRepresentation) && !isReview
@@ -93,7 +93,7 @@ export function generateCommentsSummaryList(appealId, comment, isReview = false)
 									href: `/appeals-service/appeal-details/${appealId}/final-comments/${commentTypePath}/redact`,
 									visuallyHiddenText: 'final comments'
 								}
-						  ]
+							]
 						: []
 			}
 		},
@@ -123,7 +123,7 @@ export function generateCommentsSummaryList(appealId, comment, isReview = false)
 							]
 						}
 					}
-			  ]
+				]
 			: []),
 		{
 			key: { text: 'Supporting documents' },
@@ -137,7 +137,7 @@ export function generateCommentsSummaryList(appealId, comment, isReview = false)
 									href: `/appeals-service/appeal-details/${appealId}/final-comments/${commentTypePath}/manage-documents/${folderId}`,
 									visuallyHiddenText: 'supporting documents'
 								}
-						  ]
+							]
 						: []),
 					{
 						text: 'Add',

@@ -22,7 +22,7 @@ export const mapAffectsListedBuildingDetails = ({
 							lpaQuestionnaireData.listedBuildingDetails.filter((lb) => lb.affectsListedBuilding) ||
 								[]
 						)
-				  }
+					}
 				: { text: 'No' },
 			actions: {
 				items: [
@@ -34,7 +34,7 @@ export const mapAffectsListedBuildingDetails = ({
 									visuallyHiddenText: 'affected listed building',
 									attributes: { 'lpaQuestionnaireData-cy': 'manage-affected-listed-building' }
 								})
-						  ]
+							]
 						: []),
 					mapActionComponent(permissionNames.updateCase, session, {
 						text: 'Add',
