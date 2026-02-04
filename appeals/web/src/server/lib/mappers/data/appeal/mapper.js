@@ -56,6 +56,7 @@ const submaps = {
  * @param {SessionWithAuth} session
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {boolean} [skipAssignedUsersData]
+ * @param {boolean} [skipNeighbouringSitesMapping]
  * @param {import('#appeals/appeal-details/representations/representations.service.js').Representation} [appellantFinalComments]
  * @param {import('#appeals/appeal-details/representations/representations.service.js').Representation} [lpaFinalComments]
  * @param {import('#appeals/appeal-details/representations/representations.service.js').Representation} [appellantProofOfEvidence]
@@ -69,6 +70,7 @@ export async function initialiseAndMapAppealData(
 	session,
 	request,
 	skipAssignedUsersData = false,
+	skipNeighbouringSitesMapping = false,
 	appellantFinalComments,
 	lpaFinalComments,
 	appellantCase,
@@ -112,6 +114,9 @@ export async function initialiseAndMapAppealData(
 		appeal: {}
 	};
 	Object.entries(submappers).forEach(([key, submapper]) => {
+		if (key === 'lpaNeighbouringSites' && skipNeighbouringSitesMapping) {
+			return;
+		}
 		mappedData.appeal[key] = submapper({
 			appealDetails,
 			currentRoute: stripQueryString(currentRoute),

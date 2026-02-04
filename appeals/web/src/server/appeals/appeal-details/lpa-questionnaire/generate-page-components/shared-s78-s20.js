@@ -3,13 +3,9 @@ import { isDefined } from '#lib/ts-utilities.js';
 /**
  *
  * @param {{lpaq: MappedInstructions}} mappedLPAQData
- * @param {{appeal: MappedInstructions}} mappedAppealDetails
  * @returns {PageComponent[]}
  */
-export const generateSharedS78S20LpaQuestionnaireComponents = (
-	mappedLPAQData,
-	mappedAppealDetails
-) => {
+export const generateSharedS78S20LpaQuestionnaireComponents = (mappedLPAQData) => {
 	/** @type {PageComponent[]} */
 	const pageComponents = [];
 
@@ -141,7 +137,7 @@ export const generateSharedS78S20LpaQuestionnaireComponents = (
 			rows: [
 				mappedLPAQData.lpaq?.siteAccess?.display.summaryListItem,
 				mappedLPAQData.lpaq?.reasonForNeighbourVisits?.display.summaryListItem,
-				mappedAppealDetails.appeal.lpaNeighbouringSites?.display.summaryListItem,
+				mappedLPAQData.lpaq?.lpaNeighbouringSites?.display.summaryListItem,
 				mappedLPAQData.lpaq?.lpaHealthAndSafety?.display.summaryListItem
 			].filter(isDefined)
 		}
