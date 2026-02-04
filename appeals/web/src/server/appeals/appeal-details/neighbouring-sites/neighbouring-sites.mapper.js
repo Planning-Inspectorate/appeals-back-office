@@ -18,18 +18,17 @@ import {
 /**
  * @param {Appeal} appealData
  * @param {import('@pins/appeals').Address} currentAddress
- * @param {Source} source
- * @param {string} origin
+ * @param {string} backLinkUrl
  * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
-export function addNeighbouringSitePage(appealData, source, origin, currentAddress, errors) {
+export function addNeighbouringSitePage(appealData, backLinkUrl, currentAddress, errors) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Add interested party address',
-		backLinkUrl: origin,
+		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Add interested party address',
 		pageComponents: addressInputs({ address: currentAddress, errors })
@@ -200,10 +199,11 @@ function neighbouringSiteTableRowFormatter(site) {
  * @param {Appeal} appealData
  * @param {string} siteId
  * @param {string} origin
+ * @param {string | undefined} siteAccessBackUrl
  * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
-export function removeNeighbouringSitePage(appealData, origin, siteId, errors) {
+export function removeNeighbouringSitePage(appealData, origin, siteId, siteAccessBackUrl, errors) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	let siteAddress;
@@ -217,10 +217,13 @@ export function removeNeighbouringSitePage(appealData, origin, siteId, errors) {
 			].address;
 	}
 
+	const backLinkUrl =
+		siteAccessBackUrl === undefined ? `${origin}/neighbouring-sites/manage` : siteAccessBackUrl;
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Remove neighbouring site`,
-		backLinkUrl: `${origin}/neighbouring-sites/manage`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Remove neighbouring site',
 		prePageComponents: [

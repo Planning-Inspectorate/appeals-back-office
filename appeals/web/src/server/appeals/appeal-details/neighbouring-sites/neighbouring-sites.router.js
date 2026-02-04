@@ -1,3 +1,4 @@
+import { saveBackUrl } from '#lib/middleware/save-back-url.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controller from './neighbouring-sites.controller.js';
@@ -7,7 +8,10 @@ const router = createRouter({ mergeParams: true });
 
 router
 	.route('/add/:source')
-	.get(asyncHandler(controller.getAddNeighbouringSite))
+	.get(
+		saveBackUrl('neighbouring-site-access-back-url-add'),
+		asyncHandler(controller.getAddNeighbouringSite)
+	)
 	.post(validators.validateAddNeighbouringSite, asyncHandler(controller.postAddNeighbouringSite));
 
 router
@@ -19,7 +23,10 @@ router.route('/manage').get(asyncHandler(controller.getManageNeighbouringSites))
 
 router
 	.route('/remove/site/:siteId')
-	.get(asyncHandler(controller.getRemoveNeighbouringSite))
+	.get(
+		saveBackUrl('neighbouring-site-access-back-url-remove'),
+		asyncHandler(controller.getRemoveNeighbouringSite)
+	)
 	.post(
 		validators.validateNeighbouringSiteDeleteAnswer,
 		asyncHandler(controller.postRemoveNeighbouringSite)
