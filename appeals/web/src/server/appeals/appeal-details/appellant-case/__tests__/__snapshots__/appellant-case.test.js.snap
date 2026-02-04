@@ -4600,6 +4600,12 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-new-plans-drawings">Add<span class="govuk-visually-hidden"> New plans or drawings (5. Upload documents)</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter from the local planning authority</dt>
+                            <dd                             class="govuk-summary-list__value">No documents</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
+                                    data-cy="add-decision-letter">Add<span class="govuk-visually-hidden"> Decision letter from the local planning authority (5. Upload documents)</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Other new supporting documents</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-new-supporting-documents">Add<span class="govuk-visually-hidden"> Other new supporting documents (5. Upload documents)</span></a>
