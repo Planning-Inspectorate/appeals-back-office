@@ -92,24 +92,6 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="notifications-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
-                            <dd                             class="govuk-summary-list__value">
-                                <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
-                                    </li>
-                                </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
-                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
-                                        </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
-                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
-                                        </li>
-                                    </ul>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How did you notify relevant parties about this application?</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="pins-summary-list__value">
@@ -135,6 +117,24 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification">Add<span class="govuk-visually-hidden"> Press advertisement (2. Notifying relevant parties)</span></a>
                             </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list pins-file-list">
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
+                                    </li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
+                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
+                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
@@ -455,24 +455,6 @@ exports[`LPA Questionnaire review GET / should render the CAS planning LPA Quest
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="notifications-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
-                            <dd                             class="govuk-summary-list__value">
-                                <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
-                                    </li>
-                                </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/manage-documents/2/"
-                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
-                                        </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/2"
-                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
-                                        </li>
-                                    </ul>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How did you notify relevant parties about this application?</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="pins-summary-list__value">
@@ -498,6 +480,24 @@ exports[`LPA Questionnaire review GET / should render the CAS planning LPA Quest
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification">Add<span class="govuk-visually-hidden"> Press advertisement (2. Notifying relevant parties)</span></a>
                             </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list pins-file-list">
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
+                                    </li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/manage-documents/2/"
+                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/2"
+                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
@@ -810,24 +810,6 @@ exports[`LPA Questionnaire review GET / should render the Cas Advert LPA Questio
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
-                            <dd                             class="govuk-summary-list__value">
-                                <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
-                                    </li>
-                                </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/manage-documents/2/"
-                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
-                                        </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/2"
-                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
-                                        </li>
-                                    </ul>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How did you notify relevant parties about this application?</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="pins-summary-list__value">
@@ -853,6 +835,24 @@ exports[`LPA Questionnaire review GET / should render the Cas Advert LPA Questio
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification">Add<span class="govuk-visually-hidden"> Press advertisement (2. Notifying relevant parties)</span></a>
                             </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list pins-file-list">
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
+                                    </li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/manage-documents/2/"
+                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/2"
+                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
@@ -1183,24 +1183,6 @@ exports[`LPA Questionnaire review GET / should render the Householder LPA Questi
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="notifications-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
-                            <dd                             class="govuk-summary-list__value">
-                                <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
-                                    </li>
-                                </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
-                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
-                                        </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
-                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
-                                        </li>
-                                    </ul>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How did you notify relevant parties about this application?</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="pins-summary-list__value">
@@ -1226,6 +1208,24 @@ exports[`LPA Questionnaire review GET / should render the Householder LPA Questi
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification">Add<span class="govuk-visually-hidden"> Press advertisement (2. Notifying relevant parties)</span></a>
                             </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list pins-file-list">
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
+                                    </li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
+                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
+                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
@@ -1630,24 +1630,6 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
-                            <dd                             class="govuk-summary-list__value">
-                                <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
-                                    </li>
-                                </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/manage-documents/2/"
-                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (3. Notifying relevant parties)</span></a>
-                                        </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/2"
-                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (3. Notifying relevant parties)</span></a>
-                                        </li>
-                                    </ul>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How did you notify relevant parties about this application?</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="pins-summary-list__value">
@@ -1673,6 +1655,24 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification">Add<span class="govuk-visually-hidden"> Press advertisement (3. Notifying relevant parties)</span></a>
                             </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list pins-file-list">
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
+                                    </li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/manage-documents/2/"
+                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (3. Notifying relevant parties)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/2"
+                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (3. Notifying relevant parties)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
@@ -2070,24 +2070,6 @@ exports[`LPA Questionnaire review GET / should render the advert LPA Questionnai
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
-                            <dd                             class="govuk-summary-list__value">
-                                <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
-                                    </li>
-                                </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/manage-documents/2/"
-                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
-                                        </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/2"
-                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
-                                        </li>
-                                    </ul>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How did you notify relevant parties about this application?</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="pins-summary-list__value">
@@ -2113,6 +2095,24 @@ exports[`LPA Questionnaire review GET / should render the advert LPA Questionnai
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification">Add<span class="govuk-visually-hidden"> Press advertisement (2. Notifying relevant parties)</span></a>
                             </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list pins-file-list">
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
+                                    </li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/manage-documents/2/"
+                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/2"
+                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
@@ -2499,24 +2499,6 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="notifications-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
-                            <dd                             class="govuk-summary-list__value">
-                                <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
-                                    </li>
-                                </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
-                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
-                                        </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
-                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
-                                        </li>
-                                    </ul>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How did you notify relevant parties about this application?</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="pins-summary-list__value">
@@ -2542,6 +2524,24 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification">Add<span class="govuk-visually-hidden"> Press advertisement (2. Notifying relevant parties)</span></a>
                             </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list pins-file-list">
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
+                                    </li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
+                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
+                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
@@ -2844,24 +2844,6 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="notifications-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
-                            <dd                             class="govuk-summary-list__value">
-                                <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
-                                    </li>
-                                </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
-                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
-                                        </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
-                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
-                                        </li>
-                                    </ul>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How did you notify relevant parties about this application?</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="pins-summary-list__value">
@@ -2887,6 +2869,24 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification">Add<span class="govuk-visually-hidden"> Press advertisement (2. Notifying relevant parties)</span></a>
                             </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list pins-file-list">
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
+                                    </li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
+                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
+                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
@@ -5998,24 +5998,6 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="notifications-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
-                            <dd                             class="govuk-summary-list__value">
-                                <ul class="govuk-list pins-file-list">
-                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
-                                    </li>
-                                </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
-                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
-                                        </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
-                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
-                                        </li>
-                                    </ul>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How did you notify relevant parties about this application?</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="pins-summary-list__value">
@@ -6041,6 +6023,24 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification">Add<span class="govuk-visually-hidden"> Press advertisement (2. Notifying relevant parties)</span></a>
                             </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list pins-file-list">
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
+                                    </li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
+                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
+                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
