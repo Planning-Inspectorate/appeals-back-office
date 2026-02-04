@@ -5,6 +5,7 @@
 
 import { applyEdits } from '#lib/edit-utilities.js';
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
+import { preserveQueryString } from '#lib/url-utilities.js';
 import { dateSubmitted } from '../add-document.mapper.js';
 
 const getBackLinkUrl = backLinkGenerator('addDocument');
@@ -20,7 +21,7 @@ export const renderDateSubmittedFactory =
 		const baseUrl = request.baseUrl;
 		const backLinkUrl = getBackLinkUrl(
 			request,
-			`${baseUrl}/redaction-status`,
+			preserveQueryString(request, `${baseUrl}/redaction-status`),
 			`${baseUrl}/check-your-answers`
 		);
 
