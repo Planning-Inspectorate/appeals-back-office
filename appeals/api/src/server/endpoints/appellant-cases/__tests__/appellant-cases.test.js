@@ -1053,7 +1053,7 @@ describe('appellant cases routes', () => {
 				}
 			);
 
-			test('updates appellant case and sends a notify email for valid enforcement notice appeal', async () => {
+			test('updates appellant case and sends notify emails for valid enforcement notice appeal', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...enforcementNoticeAppeal,
 					appealType: {
@@ -1103,7 +1103,7 @@ describe('appellant cases routes', () => {
 				});
 
 				expect(response.status).toEqual(200);
-				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
@@ -1121,7 +1121,27 @@ describe('appellant cases routes', () => {
 						other_info: 'Accio horcrux'
 					},
 					recipientEmail: enforcementNoticeAppeal.agent.email,
-					templateName: 'appeal-confirmed-enforcement'
+					templateName: 'appeal-confirmed-enforcement-appellant'
+				});
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: enforcementNoticeAppeal.reference,
+						lpa_reference: enforcementNoticeAppeal.applicationReference,
+						site_address: `${enforcementNoticeAppeal.address.addressLine1}, ${enforcementNoticeAppeal.address.addressLine2}, ${enforcementNoticeAppeal.address.addressTown}, ${enforcementNoticeAppeal.address.addressCounty}, ${enforcementNoticeAppeal.address.postcode}, ${enforcementNoticeAppeal.address.addressCountry}`,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						local_planning_authority: enforcementNoticeAppeal.lpa.name,
+						appeal_type: 'Enforcement Notice',
+						enforcement_reference: enforcementNoticeAppeal.appellantCase.enforcementReference,
+						appeal_grounds: ['a', 'b'],
+						ground_a_barred: false,
+						other_info: 'Accio horcrux',
+						appellant_contact_details: 'Lee Thornton, test@1367.com, 01234 567 890',
+						agent_contact_details: 'John Smith, test@136s7.com, 09876 543 210'
+					},
+					recipientEmail: enforcementNoticeAppeal.lpa.email,
+					templateName: 'appeal-confirmed-enforcement-lpa'
 				});
 			});
 

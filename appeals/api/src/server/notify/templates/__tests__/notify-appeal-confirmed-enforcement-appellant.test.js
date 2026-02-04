@@ -1,11 +1,11 @@
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
-describe('appeal-confirmed-enforcement.md', () => {
+describe('appeal-confirmed-enforcement-appellant.md', () => {
 	test('should call notify sendEmail with the correct data - multiple grounds, ground a barred, with other info', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'appeal-confirmed-enforcement',
+			templateName: 'appeal-confirmed-enforcement-appellant',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -84,7 +84,7 @@ describe('appeal-confirmed-enforcement.md', () => {
 	test('should call notify sendEmail with the correct data - single grounds, not ground a barred, no other info', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'appeal-confirmed-enforcement',
+			templateName: 'appeal-confirmed-enforcement-appellant',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -150,7 +150,7 @@ describe('appeal-confirmed-enforcement.md', () => {
 	test('should call notify sendEmail with the correct data - single grounds, not ground a barred, with other info', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'appeal-confirmed-enforcement',
+			templateName: 'appeal-confirmed-enforcement-appellant',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -220,7 +220,7 @@ describe('appeal-confirmed-enforcement.md', () => {
 	test('should call notify sendEmail with the correct data - multiple grounds, ground a barred, no other info', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'appeal-confirmed-enforcement',
+			templateName: 'appeal-confirmed-enforcement-appellant',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
