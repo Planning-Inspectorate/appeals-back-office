@@ -37,7 +37,6 @@ apps_config = {
     featureFlagS78Inquiry             = true
     featureFlagLinkedAppeals          = true
     featureFlagLinkedAppealsUnlink    = true
-    featureFlagCasAdvert              = true
     featureFlagNotifyCaseHistory      = true
     featureFlagSimplifyTeamAssignment = true
     featureFlagPdfDownload            = true
