@@ -13,7 +13,12 @@ import {
 	updateDueDatePage
 } from '../appellant-case.mapper.js';
 import * as appellantCaseService from '../appellant-case.service.js';
-import { mapIncompleteReasonPage } from './outcome-incomplete.mapper.js';
+import {
+	enforcementMissingDocumentsPage,
+	mapIncompleteReasonPage,
+	updateFeeReceiptDueDatePage
+} from './outcome-incomplete.mapper.js';
+import { getAppellantCaseEnforcementMissingDocuments } from './outcome-incomplete.service.js';
 
 /**
  *
@@ -73,6 +78,7 @@ const renderIncompleteReason = async (request, response) => {
 		const pageContent = mapIncompleteReasonPage(
 			appealId,
 			appealReference,
+			appealType,
 			mappedIncompleteReasonOptions,
 			errors ? errors['incompleteReason']?.msg : undefined
 		);
@@ -173,7 +179,7 @@ export const postIncompleteReason = async (request, response) => {
 
 		if (appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
 			const redirectMap = {
-				10: 'enforcement-other-information',
+				10: 'date',
 				12: 'missing-documents',
 				13: 'grounds-facts-check',
 				14: 'receipt-due-date'
@@ -221,7 +227,7 @@ export const postUpdateDueDate = async (request, response) => {
 
 	const {
 		body,
-		currentAppeal: { appealId }
+		currentAppeal: { appealId, appealType }
 	} = request;
 
 	if (!objectContainsAllKeys(body, ['due-date-day', 'due-date-month', 'due-date-year'])) {
@@ -251,8 +257,216 @@ export const postUpdateDueDate = async (request, response) => {
 			year: updatedDueDateYear
 		};
 
+		if (appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/appellant-case/incomplete/check-details-and-mark-enforcement-as-incomplete`
+			);
+		}
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/appellant-case/check-your-answers`
+		);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when completing appellant case review'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {import('@pins/express').ValidationErrors} [apiErrors]
+ */
+export const renderMissingDocumentsPage = async (request, response, apiErrors) => {
+	const { errors = apiErrors, body, currentAppeal, session } = request;
+
+	if (typeof currentAppeal?.appellantCaseId !== 'number') {
+		return response.status(404).render('app/404.njk');
+	}
+
+	const missingDocumentOptions = await getAppellantCaseEnforcementMissingDocuments(
+		request.apiClient
+	);
+	if (missingDocumentOptions) {
+		const pageContent = enforcementMissingDocumentsPage(
+			currentAppeal.appealId,
+			currentAppeal.appealReference,
+			// @ts-ignore
+			missingDocumentOptions.map((option) => {
+				if (errors) {
+					const selected = body.missingDocuments?.includes(option.id.toString()) ?? false;
+					return {
+						...option,
+						selected,
+						text: (selected && body[`missingDocuments-${option.id}`]) ?? ''
+					};
+				}
+				const reason = session?.webAppellantCaseReviewOutcome?.enforcementNoticeReason?.find(
+					(/** @type {{reasonSelected:number, reasonText:string}} */ reason) =>
+						reason.reasonSelected === option.id
+				);
+				const selected = reason?.reasonSelected ?? false;
+				return { ...option, selected, text: (selected && reason?.reasonText) ?? '' };
+			}),
+			errors
+		);
+
+		return response.status(200).render('patterns/display-page.pattern.njk', {
+			pageContent,
+			errors
+		});
+	}
+
+	return response.status(500).render('app/500.njk');
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getMissingDocuments = async (request, response) => {
+	renderMissingDocumentsPage(request, response);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const postMissingDocuments = async (request, response) => {
+	const {
+		currentAppeal: { appealId },
+		body,
+		errors,
+		session
+	} = request;
+
+	/** @type {import('../appellant-case.types.js').AppellantCaseSessionValidationOutcome} */
+	session.webAppellantCaseReviewOutcome = {
+		...session.webAppellantCaseReviewOutcome,
+		missingDocuments: body.missingDocuments
+			? [body.missingDocuments].flat().map((reason) => ({
+					reasonSelected: Number(reason),
+					reasonText: body[`missingDocuments-${reason}`]
+				}))
+			: null
+	};
+
+	if (errors) {
+		return renderMissingDocumentsPage(request, response);
+	}
+
+	const redirectMap = {
+		13: 'grounds-facts-check',
+		14: 'receipt-due-date'
+	};
+	const reasons = session.webAppellantCaseReviewOutcome.reasons;
+	const reasonsArray = Array.isArray(reasons) ? reasons : [reasons];
+	const redirectId = reasonsArray.find((/** @type { string } */ reason) => reason in redirectMap);
+	if (redirectId) {
+		return response.redirect(
+			// @ts-ignore
+			`/appeals-service/appeal-details/${appealId}/appellant-case/incomplete/${redirectMap[redirectId]}`
+		);
+	}
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${appealId}/appellant-case/incomplete/date`
+	);
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+const renderReceiptFeeDueDate = async (request, response) => {
+	const { body, currentAppeal, errors } = request;
+	let dueDateDay, dueDateMonth, dueDateYear;
+
+	if (request.session.webAppellantCaseReviewOutcome?.feeReceiptDueDate) {
+		dueDateDay = request.session.webAppellantCaseReviewOutcome.feeReceiptDueDate.day;
+		dueDateMonth = request.session.webAppellantCaseReviewOutcome.feeReceiptDueDate.month;
+		dueDateYear = request.session.webAppellantCaseReviewOutcome.feeReceiptDueDate.year;
+	}
+
+	if (objectContainsAllKeys(body, ['due-date-day', 'due-date-month', 'due-date-year'])) {
+		dueDateDay = request.body['due-date-day'];
+		dueDateMonth = request.body['due-date-month'];
+		dueDateYear = request.body['due-date-year'];
+	}
+
+	const mappedPageContent = updateFeeReceiptDueDatePage(
+		currentAppeal,
+		errors,
+		dueDateDay,
+		dueDateMonth,
+		dueDateYear
+	);
+
+	return response.status(200).render('appeals/appeal/update-date.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getRecieptDueDate = async (request, response) => {
+	return renderReceiptFeeDueDate(request, response);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postReceiptDueDate = async (request, response) => {
+	if (!objectContainsAllKeys(request.session, 'webAppellantCaseReviewOutcome')) {
+		return response.status(500).render('app/500.njk');
+	}
+
+	const {
+		body,
+		currentAppeal: { appealId }
+	} = request;
+
+	if (
+		!objectContainsAllKeys(body, [
+			'fee-receipt-due-date-day',
+			'fee-receipt-due-date-month',
+			'fee-receipt-due-date-year'
+		])
+	) {
+		return response.status(500).render('app/500.njk');
+	}
+
+	if (request.errors) {
+		return renderReceiptFeeDueDate(request, response);
+	}
+
+	try {
+		const feeReceiptDueDateDay = parseInt(body['fee-receipt-due-date-day'], 10);
+		const feeReceiptDueDateMonth = parseInt(body['fee-receipt-due-date-month'], 10);
+		const feeReceiptDueDateYear = parseInt(body['fee-receipt-due-date-year'], 10);
+
+		if (
+			Number.isNaN(feeReceiptDueDateDay) ||
+			Number.isNaN(feeReceiptDueDateMonth) ||
+			Number.isNaN(feeReceiptDueDateYear)
+		) {
+			return response.status(500).render('app/500.njk');
+		}
+
+		request.session.webAppellantCaseReviewOutcome.feeReceiptDueDate = {
+			day: feeReceiptDueDateDay,
+			month: feeReceiptDueDateMonth,
+			year: feeReceiptDueDateYear
+		};
+
+		const reasons = request.session.webAppellantCaseReviewOutcome.reasons;
+		const reasonsArray = Array.isArray(reasons) ? reasons : [reasons];
+		if (reasonsArray.some((/** @type { string } */ reason) => ['12', '13'].includes(reason))) {
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/appellant-case/incomplete/date`
+			);
+		}
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/appellant-case/incomplete/check-details-and-mark-enforcement-as-incomplete`
 		);
 	} catch (error) {
 		logger.error(

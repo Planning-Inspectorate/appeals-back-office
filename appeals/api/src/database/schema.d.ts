@@ -87,6 +87,8 @@ export interface AppellantCaseIncompleteReason extends schema.AppellantCaseIncom
 export interface AppellantCaseInvalidReason extends schema.AppellantCaseInvalidReason {}
 export interface AppellantCaseEnforcementInvalidReason
 	extends schema.AppellantCaseEnforcementInvalidReason {}
+export interface AppellantCaseEnforcementMissingDocument
+	extends schema.AppellantCaseEnforcementMissingDocument {}
 export interface AppellantCaseIncompleteReasonsSelected
 	extends schema.AppellantCaseIncompleteReasonsSelected {
 	appellantCaseIncompleteReason: AppellantCaseIncompleteReasons;

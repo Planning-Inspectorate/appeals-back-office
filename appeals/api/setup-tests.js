@@ -87,6 +87,7 @@ const mockAppellantCaseEnforcementInvalidReasonsSelectedDeleteMany = jest
 const mockAppellantCaseEnforcementInvalidReasonsSelectedCreateMany = jest
 	.fn()
 	.mockResolvedValue({});
+const mockAppellantCaseEnforcementMissingDocumentFindMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseValidationOutcomeFindMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseValidationOutcomeFindUnique = jest.fn().mockResolvedValue({});
 const mockAppellantCaseUpdate = jest.fn().mockResolvedValue({});
@@ -404,6 +405,12 @@ class MockPrismaClient {
 		return {
 			findMany: mockAppellantCaseEnforcementInvalidReasonFindMany,
 			findUnique: mockAppellantCaseEnforcementInvalidReasonFindUnique
+		};
+	}
+
+	get appellantCaseEnforcementMissingDocument() {
+		return {
+			findMany: mockAppellantCaseEnforcementMissingDocumentFindMany
 		};
 	}
 

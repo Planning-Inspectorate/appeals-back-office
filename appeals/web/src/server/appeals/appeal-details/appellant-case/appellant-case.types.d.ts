@@ -25,4 +25,5 @@ export interface AppellantCaseSessionValidationOutcome {
 	validationOutcome: AppellantCaseValidationOutcome;
 	reasons?: string | string[];
 	reasonsText?: Object<string, string[]>;
+	incompleteReasons?: Object<string, string[]>;
 }

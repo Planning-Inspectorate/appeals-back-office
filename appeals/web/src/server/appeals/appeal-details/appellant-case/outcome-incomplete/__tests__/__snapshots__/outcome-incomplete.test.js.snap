@@ -209,6 +209,158 @@ exports[`incomplete-appeal enforcement notice appeal GET /enforcement-notice-rea
 </main>"
 `;
 
+exports[`incomplete-appeal enforcement notice appeal GET /missing-documents should render the missing documents page and content 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form action="" method="POST" novalidate>
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading"> Which documents are missing?</h1>
+                        </legend>
+                        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="missing-documents" name="missingDocuments"
+                                type="checkbox" value="1" data-aria-controls="conditional-missing-documents">
+                                <label class="govuk-label govuk-checkboxes__label" for="missing-documents">Grounds of appeal supporting documents</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-missing-documents">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="missing-documents-1-1">Enter more information</label>
+                                    <input class="govuk-input" id="missing-documents-1-1"
+                                    name="missingDocuments-1" type="text">
+                                </div>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="missing-documents-2" name="missingDocuments"
+                                type="checkbox" value="2" data-aria-controls="conditional-missing-documents-2">
+                                <label class="govuk-label govuk-checkboxes__label" for="missing-documents-2">Enforcement notice</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-missing-documents-2">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="missing-documents-2-1">Enter more information</label>
+                                    <input class="govuk-input" id="missing-documents-2-1"
+                                    name="missingDocuments-2" type="text">
+                                </div>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="missing-documents-3" name="missingDocuments"
+                                type="checkbox" value="3" data-aria-controls="conditional-missing-documents-3">
+                                <label class="govuk-label govuk-checkboxes__label" for="missing-documents-3">Agreement to change the description of the development</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-missing-documents-3">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="missing-documents-3-1">Enter more information</label>
+                                    <input class="govuk-input" id="missing-documents-3-1"
+                                    name="missingDocuments-3" type="text">
+                                </div>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="missing-documents-4" name="missingDocuments"
+                                type="checkbox" value="4" data-aria-controls="conditional-missing-documents-4">
+                                <label class="govuk-label govuk-checkboxes__label" for="missing-documents-4">Planning obligation</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-missing-documents-4">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="missing-documents-4-1">Enter more information</label>
+                                    <input class="govuk-input" id="missing-documents-4-1"
+                                    name="missingDocuments-4" type="text">
+                                </div>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="missing-documents-5" name="missingDocuments"
+                                type="checkbox" value="5" data-aria-controls="conditional-missing-documents-5">
+                                <label class="govuk-label govuk-checkboxes__label" for="missing-documents-5">Application for an award of appeal costs</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-missing-documents-5">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="missing-documents-5-1">Enter more information</label>
+                                    <input class="govuk-input" id="missing-documents-5-1"
+                                    name="missingDocuments-5" type="text">
+                                </div>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="missing-documents-6" name="missingDocuments"
+                                type="checkbox" value="6" data-aria-controls="conditional-missing-documents-6">
+                                <label class="govuk-label govuk-checkboxes__label" for="missing-documents-6">Other new supporting documents</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-missing-documents-6">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-label--s" for="missing-documents-6-1">Enter more information</label>
+                                    <input class="govuk-input" id="missing-documents-6-1"
+                                    name="missingDocuments-6" type="text">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`incomplete-appeal enforcement notice appeal GET /receipt-due-date should render the receipt due date page and content 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Ground (a) fee receipt due date</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group">
+            <div id="fee-receipt-due-date-hint" class="govuk-hint">
+                <div class="govuk-hint">For example, 31 3 2025</div>
+            </div>
+            <div class="govuk-date-input" id="fee-receipt-due-date">
+                <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="fee-receipt-due-date-day">Day</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                        id="fee-receipt-due-date-day" name="fee-receipt-due-date-day" type="text"
+                        inputmode="numeric">
+                    </div>
+                </div>
+                <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="fee-receipt-due-date-month">Month</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                        id="fee-receipt-due-date-month" name="fee-receipt-due-date-month" type="text"
+                        inputmode="numeric">
+                    </div>
+                </div>
+                <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="fee-receipt-due-date-year">Year</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                        id="fee-receipt-due-date-year" name="fee-receipt-due-date-year" type="text"
+                        inputmode="numeric">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
 exports[`incomplete-appeal enforcement notice appeal POST /appellant-case/incomplete should re-render the incomplete reason page with the expected error message if "other" incomplete reason was provided but the matching text property exceeds the character limit 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">

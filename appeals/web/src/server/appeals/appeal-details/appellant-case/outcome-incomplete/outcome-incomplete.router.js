@@ -24,7 +24,10 @@ import {
 	validateOtherInformation,
 	validateOtherInterestInLand
 } from '../outcome-valid/outcome-valid.validators.js';
-import { dateFieldNamePrefix } from './outcome-incomplete.constants.js';
+import {
+	dateFieldNamePrefix,
+	feeReceiptDateFieldNamePrefix
+} from './outcome-incomplete.constants.js';
 import * as controller from './outcome-incomplete.controller.js';
 import * as validators from './outcome-incomplete.validators.js';
 
@@ -81,6 +84,28 @@ router
 	.post(
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(postCheckDetailsAndMarkEnforcementAsInvalid)
+	);
+
+router
+	.route('/missing-documents')
+	.get(controller.getMissingDocuments)
+	.post(
+		validators.validateMissingDocumentReason,
+		validators.validateMissingDocumentReasonTextItems,
+		controller.postMissingDocuments
+	);
+
+router
+	.route('/receipt-due-date')
+	.get(controller.getRecieptDueDate)
+	.post(
+		validators.validateFeeRecieptDueDateFields,
+		validators.validateFeeRecieptDueDateValid,
+		validators.validateFeeRecieptDueDateInFuture,
+		extractAndProcessDateErrors({
+			fieldNamePrefix: feeReceiptDateFieldNamePrefix
+		}),
+		controller.postReceiptDueDate
 	);
 
 export default router;

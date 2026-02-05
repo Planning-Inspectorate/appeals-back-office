@@ -330,23 +330,24 @@ model AppellantCase {
   typeOfPlanningApplication                String?
 
   // Enforcement fields
-  enforcementNoticeListedBuilding                Boolean?
-  enforcementIssueDate                           DateTime?
-  enforcementEffectiveDate                       DateTime?
-  contactPlanningInspectorateDate                DateTime?
-  enforcementReference                           String?
-  interestInLand                                 String?
-  writtenOrVerbalPermission                      String?
-  descriptionOfAllegedBreach                     String?
-  applicationMadeAndFeePaid                      Boolean?
-  applicationDevelopmentAllOrPart                String?
-  contactAddress                                 Address?                                         @relation(fields: [contactAddressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  contactAddressId                               Int?
-  applicationDecisionAppealed                    Boolean?
-  appealDecisionDate                             DateTime?
-  appellantCaseEnforcementInvalidReasonsSelected AppellantCaseEnforcementInvalidReasonsSelected[]
+  enforcementNoticeListedBuilding                  Boolean?
+  enforcementIssueDate                             DateTime?
+  enforcementEffectiveDate                         DateTime?
+  contactPlanningInspectorateDate                  DateTime?
+  enforcementReference                             String?
+  interestInLand                                   String?
+  writtenOrVerbalPermission                        String?
+  descriptionOfAllegedBreach                       String?
+  applicationMadeAndFeePaid                        Boolean?
+  applicationDevelopmentAllOrPart                  String?
+  contactAddress                                   Address?                                           @relation(fields: [contactAddressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  contactAddressId                                 Int?
+  applicationDecisionAppealed                      Boolean?
+  appealDecisionDate                               DateTime?
+  appellantCaseEnforcementInvalidReasonsSelected   AppellantCaseEnforcementInvalidReasonsSelected[]
+  appellantCaseEnforcementMissingDocumentsSelected AppellantCaseEnforcementMissingDocumentsSelected[]
   // Cas adverts fields
-  landownerPermission                            Boolean?
+  landownerPermission                              Boolean?
 
   appellantCaseAdvertDetails AppellantCaseAdvertDetails[]
 
@@ -477,6 +478,40 @@ model AppellantCaseEnforcementInvalidReasonText {
 
   @@index([appellantCaseId])
   @@index([appellantCaseEnforcementInvalidReasonId])
+}
+
+/// AppellantCaseEnforcementMissingDocument
+/// Contains information on all missing documents for an enforcement notice appeal.
+model AppellantCaseEnforcementMissingDocument {
+  id                                              Int                                                @id
+  name                                            String                                             @unique
+  hasText                                         Boolean                                            @default(false)
+  appellantCaseEnforcementMissingDocumentSelected AppellantCaseEnforcementMissingDocumentsSelected[]
+}
+
+/// AppellantCaseEnforcementMissingDocumentsSelected model
+/// Contains information on the missing enforcement notice appeal documents.
+model AppellantCaseEnforcementMissingDocumentsSelected {
+  appellantCaseEnforcementMissingDocument     AppellantCaseEnforcementMissingDocument       @relation(fields: [appellantCaseEnforcementMissingDocumentId], references: [id])
+  appellantCaseEnforcementMissingDocumentId   Int
+  appellantCase                               AppellantCase                                 @relation(fields: [appellantCaseId], references: [id])
+  appellantCaseId                             Int
+  appellantCaseEnforcementMissingDocumentText AppellantCaseEnforcementMissingDocumentText[]
+
+  @@id([appellantCaseEnforcementMissingDocumentId, appellantCaseId])
+}
+
+/// AppellantCaseEnforcementMissingDocumentText model
+/// Contains information on reasons to consider an enforcement notice appeal document missing.
+model AppellantCaseEnforcementMissingDocumentText {
+  id                                               Int                                              @id @default(autoincrement())
+  text                                             String
+  appellantCaseEnforcementMissingDocumentsSelected AppellantCaseEnforcementMissingDocumentsSelected @relation(fields: [appellantCaseEnforcementMissingDocumentId, appellantCaseId], references: [appellantCaseEnforcementMissingDocumentId, appellantCaseId])
+  appellantCaseEnforcementMissingDocumentId        Int
+  appellantCaseId                                  Int
+
+  @@index([appellantCaseId])
+  @@index([appellantCaseEnforcementMissingDocumentId])
 }
 
 /// KnowledgeOfOtherLandowners model

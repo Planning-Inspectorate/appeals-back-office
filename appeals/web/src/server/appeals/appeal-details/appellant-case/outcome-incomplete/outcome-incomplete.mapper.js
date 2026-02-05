@@ -1,5 +1,8 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { enhanceCheckboxOptionWithAddAnotherReasonConditionalHtml } from '#lib/enhance-html.js';
+import { dateInput } from '#lib/mappers/index.js';
+import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /**
  *
@@ -41,6 +44,7 @@ export function decisionIncompleteConfirmationPage(appealId, appealReference) {
 /**
  * @param {string} appealId
  * @param {string} appealReference
+ * @param {string} appealType
  * @param {import('#appeals/appeals.types.js').CheckboxItemParameter[]} mappedIncompleteReasonOptions
  * @param {string | undefined} errorMessage
  * @returns {PageContent}
@@ -48,6 +52,7 @@ export function decisionIncompleteConfirmationPage(appealId, appealReference) {
 export const mapIncompleteReasonPage = (
 	appealId,
 	appealReference,
+	appealType,
 	mappedIncompleteReasonOptions,
 	errorMessage = undefined
 ) => {
@@ -65,7 +70,7 @@ export const mapIncompleteReasonPage = (
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Why is the appeal incomplete?`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealId}/appellant-case`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}/appellant-case${appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ? '/incomplete/enforcement-notice' : ''}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			{
@@ -100,3 +105,125 @@ export const mapIncompleteReasonPage = (
 		);
 	return pageContent;
 };
+
+/**
+ * @param {string} appealId
+ * @param {string} appealReference
+ * @param {(any & { selected: boolean, text: string })[]} reasonOptions
+ * @param {import("@pins/express").ValidationErrors | undefined} [errors]
+ * @returns {PageContent}
+ */
+export const enforcementMissingDocumentsPage = (
+	appealId,
+	appealReference,
+	reasonOptions,
+	errors
+) => {
+	const mappedEnforcementMissingDocuments = reasonOptions.map((reason) => {
+		const reasonId = `missing-documents-${reason.id}-1`;
+		const reasonName = `missingDocuments-${reason.id}`;
+		const reasonError = errors?.[`${reasonName}-1`];
+		return {
+			value: reason.id,
+			text: reason.name,
+			checked: reason.selected || !!reason.text,
+			conditional: reason.hasText
+				? {
+						html: renderPageComponentsToHtml([
+							{
+								type: 'input',
+								parameters: {
+									id: reasonId,
+									name: reasonName,
+									value: reason.text ?? '',
+									...(reasonError && { errorMessage: { text: reasonError.msg } }),
+									label: {
+										text: 'Enter more information',
+										classes: 'govuk-label--s'
+									}
+								}
+							}
+						])
+					}
+				: undefined
+		};
+	});
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: 'Which documents are missing?',
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}/appellant-case/incomplete`,
+		preHeading: `Appeal ${appealShortReference(appealReference)}`,
+		pageComponents: [
+			{
+				type: 'checkboxes',
+				parameters: {
+					name: 'missingDocuments',
+					idPrefix: 'missing-documents',
+					fieldset: {
+						legend: {
+							text: 'Which documents are missing?',
+							isPageHeading: true,
+							classes: 'govuk-fieldset__legend--l'
+						}
+					},
+					items: mappedEnforcementMissingDocuments,
+					...(errors?.missingDocuments && { errorMessage: { text: errors.missingDocuments.msg } })
+				}
+			}
+		]
+	};
+
+	return pageContent;
+};
+
+/**
+ * @param {import('../appellant-case.mapper.js').Appeal} appealData
+ * @param {number | string} [dueDateDay]
+ * @param {number | string} [dueDateMonth]
+ * @param {number | string} [dueDateYear]
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
+ * @returns {PageContent}
+ */
+export function updateFeeReceiptDueDatePage(
+	appealData,
+	errors,
+	dueDateDay,
+	dueDateMonth,
+	dueDateYear
+) {
+	let existingDueDate = {
+		day: dueDateDay,
+		month: dueDateMonth,
+		year: dueDateYear
+	};
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: 'Ground (a) fee receipt due date',
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case/incomplete/`,
+		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
+		heading: 'Ground (a) fee receipt due date',
+		submitButtonProperties: {
+			text: 'Continue',
+			type: 'submit'
+		},
+		pageComponents: [
+			dateInput({
+				name: 'fee-receipt-due-date',
+				id: 'fee-receipt-due-date',
+				namePrefix: 'fee-receipt-due-date',
+				hint: 'For example, 31 3 2025',
+				value: {
+					day: existingDueDate.day,
+					month: existingDueDate.month,
+					year: existingDueDate.year
+				},
+				legendText: '',
+				errors: errors
+			})
+		]
+	};
+
+	return pageContent;
+}

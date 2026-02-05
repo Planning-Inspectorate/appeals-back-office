@@ -3,7 +3,8 @@ import {
 	appealCaseEnforcementInvalidReasons,
 	appealDataEnforcementNotice,
 	appellantCaseDataNotValidated,
-	appellantCaseIncompleteReasons
+	appellantCaseIncompleteReasons,
+	missingDocumentOptions
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
@@ -161,7 +162,7 @@ describe('incomplete-appeal', () => {
 				);
 			});
 
-			it('should redirect to the enforcement other information page if only the other information was provided', async () => {
+			it('should redirect to the appeal due date page if only the other information was provided', async () => {
 				const response = await request.post(`${baseUrl}/appellant-case/incomplete`).send({
 					incompleteReason: '10',
 					['incompleteReason-10']: 'a'
@@ -169,7 +170,7 @@ describe('incomplete-appeal', () => {
 
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toBe(
-					`Found. Redirecting to ${baseUrl}/appellant-case/incomplete/enforcement-other-information`
+					`Found. Redirecting to ${baseUrl}/appellant-case/incomplete/date`
 				);
 			});
 		});
@@ -438,6 +439,340 @@ describe('incomplete-appeal', () => {
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toBe(
 					`Found. Redirecting to /appeals-service/appeal-details/${appealId}`
+				);
+			});
+		});
+
+		describe('GET /missing-documents', () => {
+			beforeEach(() => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, appealDataEnforcementNotice)
+					.persist();
+				nock('http://test/')
+					.get(`/appeals/${appealId}/appellant-cases/0`)
+					.reply(200, appellantCaseDataNotValidated);
+				nock('http://test/')
+					.get('/appeals/appellant-case-incomplete-reasons')
+					.reply(200, appellantCaseIncompleteReasons);
+				nock('http://test/')
+					.get('/appeals/appellant-case-enforcement-missing-documents')
+					.reply(200, missingDocumentOptions);
+			});
+
+			afterEach(() => {
+				nock.cleanAll();
+			});
+
+			it('should render the missing documents page and content', async () => {
+				const response = await request.get(
+					`${baseUrl}/appellant-case/incomplete/missing-documents`
+				);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Which documents are missing?</h1>');
+				expect(element.innerHTML).toContain('data-module="govuk-checkboxes">');
+
+				// Checkbox content check
+				if (!element.textContent) {
+					throw new Error('Test setup failed: The main element was not found in the HTML');
+				}
+				const textContent = element.textContent.replace(/\s+/g, ' ').trim();
+				expect(textContent).toContain('Grounds of appeal supporting documents');
+				expect(textContent).toContain('Enforcement notice');
+				expect(textContent).toContain('Agreement to change the description of the development');
+				expect(textContent).toContain('Planning obligation');
+				expect(textContent).toContain('Application for an award of appeal costs');
+				expect(textContent).toContain('Other');
+
+				expect(element.innerHTML).toContain('Continue</button>');
+			});
+		});
+
+		describe('POST /missing-documents', () => {
+			beforeEach(() => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, appealDataEnforcementNotice)
+					.persist();
+				nock('http://test/')
+					.get(`/appeals/${appealId}/appellant-cases/0`)
+					.reply(200, appellantCaseDataNotValidated);
+				nock('http://test/')
+					.get('/appeals/appellant-case-incomplete-reasons')
+					.reply(200, appellantCaseIncompleteReasons);
+				nock('http://test/')
+					.get('/appeals/appellant-case-enforcement-missing-documents')
+					.reply(200, missingDocumentOptions);
+			});
+
+			afterEach(() => {
+				nock.cleanAll();
+			});
+
+			it('should render an error if no missing documents is selected', async () => {
+				const response = await request
+					.post(`${baseUrl}/appellant-case/incomplete/missing-documents`)
+					.send({});
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toContain('govuk-error-summary__title');
+
+				const errorLink = element.querySelector('.govuk-error-summary__list li a');
+				expect(errorLink?.innerHTML.trim()).toBe('Select which documents are missing');
+			});
+
+			const missingDocumentTestCases = [
+				{ name: 'Grounds of appeal supporting documents', id: '1' },
+				{ name: 'Enforcement notice', id: '2' },
+				{ name: 'Agreement to change the description of the development', id: '3' },
+				{ name: 'Planning obligation', id: '4' },
+				{ name: 'Application for an award of appeal costs', id: '5' },
+				{ name: 'Other new supporting documents', id: '6' }
+			];
+
+			it.each(missingDocumentTestCases)(
+				'should re-render missing document page if $name is selected but accompanying more information is not given',
+				async ({ id }) => {
+					const response = await request
+						.post(`${baseUrl}/appellant-case/incomplete/missing-documents`)
+						.send({
+							missingDocuments: id,
+							[`missingDocuments-${id}`]: ''
+						});
+					const element = parseHtml(response.text);
+
+					expect(element.innerHTML).toContain('govuk-error-summary__title');
+
+					const errorLink = element.querySelector('.govuk-error-summary__list li a');
+					expect(errorLink?.innerHTML.trim()).toBe('Enter more information');
+				}
+			);
+
+			it.each(missingDocumentTestCases)(
+				'should re-render missing document page if $name is selected and accompanying more information is greater than 250 chars',
+				async ({ id }) => {
+					const longString =
+						'The quick brown fox jumps over the lazy dog, but in the world of software development, we often find ourselves writing strings that serve no purpose other than to test the character limits of specific database columns or UI components like text areas. 12345';
+
+					const response = await request
+						.post(`${baseUrl}/appellant-case/incomplete/missing-documents`)
+						.send({
+							missingDocuments: id,
+							[`missingDocuments-${id}`]: longString
+						});
+					const element = parseHtml(response.text);
+
+					expect(element.innerHTML).toContain('govuk-error-summary__title');
+
+					const errorLink = element.querySelector('.govuk-error-summary__list li a');
+					expect(errorLink?.innerHTML.trim()).toBe(
+						'More information must be 250 characters or less'
+					);
+				}
+			);
+
+			it('should redirect to "Ground (a) fee receipt due date" page if selection "Why is the appeal incomplete" page', async () => {
+				// Populate session data
+				await request.post(`${baseUrl}/appellant-case`).send({ reviewOutcome: 'invalid' });
+				await request
+					.post(`${baseUrl}/appellant-case/incomplete`)
+					.send({ incompleteReason: ['12', '14'], ['incompleteReason-10']: '' });
+
+				const response = await request
+					.post(`${baseUrl}/appellant-case/incomplete/missing-documents`)
+					.send({
+						missingDocuments: '1',
+						[`missingDocuments-1`]: 'longString'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to /appeals-service/appeal-details/${appealId}/appellant-case/incomplete/receipt-due-date`
+				);
+			});
+
+			it('should redirect to "Update appeal due date" page if no other selection is made on "Why is the appeal incomplete" page', async () => {
+				// Populate session data
+				await request.post(`${baseUrl}/appellant-case`).send({ reviewOutcome: 'invalid' });
+				await request
+					.post(`${baseUrl}/appellant-case/incomplete`)
+					.send({ incompleteReason: ['12'], ['incompleteReason-10']: '' });
+
+				const response = await request
+					.post(`${baseUrl}/appellant-case/incomplete/missing-documents`)
+					.send({
+						missingDocuments: '1',
+						[`missingDocuments-1`]: 'longString'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to /appeals-service/appeal-details/${appealId}/appellant-case/incomplete/date`
+				);
+			});
+		});
+
+		describe('GET /receipt-due-date', () => {
+			beforeEach(() => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, appealDataEnforcementNotice)
+					.persist();
+				nock('http://test/')
+					.get(`/appeals/${appealId}/appellant-cases/0`)
+					.reply(200, appellantCaseDataNotValidated);
+				nock('http://test/')
+					.get('/appeals/appellant-case-incomplete-reasons')
+					.reply(200, appellantCaseIncompleteReasons);
+			});
+
+			afterEach(() => {
+				nock.cleanAll();
+			});
+
+			it('should render the receipt due date page and content', async () => {
+				const response = await request.get(`${baseUrl}/appellant-case/incomplete/receipt-due-date`);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Ground (a) fee receipt due date');
+				expect(element.innerHTML).toContain('name="fee-receipt-due-date-day');
+				expect(element.innerHTML).toContain('name="fee-receipt-due-date-month"');
+				expect(element.innerHTML).toContain('name="fee-receipt-due-date-year"');
+				expect(element.innerHTML).toContain('Continue</button>');
+			});
+		});
+
+		describe('POST /receipt-due-date', () => {
+			beforeEach(async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, appealDataEnforcementNotice)
+					.persist();
+				nock('http://test/')
+					.get(`/appeals/${appealId}/appellant-cases/0`)
+					.reply(200, appellantCaseDataNotValidated);
+				nock('http://test/')
+					.get('/appeals/appellant-case-incomplete-reasons')
+					.reply(200, appellantCaseIncompleteReasons);
+
+				// Populate session data
+				await request.post(`${baseUrl}/appellant-case`).send({ reviewOutcome: 'invalid' });
+			});
+
+			afterEach(() => {
+				nock.cleanAll();
+			});
+
+			const invalidDateTestCases = [
+				{
+					name: 'all fields missing',
+					payload: {
+						'fee-receipt-due-date-day': '',
+						'fee-receipt-due-date-month': '',
+						'fee-receipt-due-date-year': ''
+					},
+					expectedError: 'Enter the ground (a) fee receipt due date'
+				},
+				{
+					name: 'missing day',
+					payload: {
+						'fee-receipt-due-date-day': '',
+						'fee-receipt-due-date-month': '10',
+						'fee-receipt-due-date-year': '2050'
+					},
+					expectedError: 'The ground (a) fee receipt due date must include a day'
+				},
+				{
+					name: 'missing month',
+					payload: {
+						'fee-receipt-due-date-day': '10',
+						'fee-receipt-due-date-month': '',
+						'fee-receipt-due-date-year': '2050'
+					},
+					expectedError: 'The ground (a) fee receipt due date must include a month'
+				},
+				{
+					name: 'missing year',
+					payload: {
+						'fee-receipt-due-date-day': '10',
+						'fee-receipt-due-date-month': '12',
+						'fee-receipt-due-date-year': ''
+					},
+					expectedError: 'The ground (a) fee receipt due date must include a year'
+				},
+				{
+					name: 'not a real date',
+					payload: {
+						'fee-receipt-due-date-day': '29',
+						'fee-receipt-due-date-month': '2',
+						'fee-receipt-due-date-year': '3000'
+					},
+					expectedError: 'The ground (a) fee receipt due date must be a real date'
+				},
+				{
+					name: 'must be in the future',
+					payload: {
+						'fee-receipt-due-date-day': '25',
+						'fee-receipt-due-date-month': '2',
+						'fee-receipt-due-date-year': '1950'
+					},
+					expectedError: 'The ground (a) fee receipt due date must be in the future'
+				}
+			];
+
+			it.each(invalidDateTestCases)(
+				'should re-render edit timetable page with $name error',
+				async ({ payload, expectedError }) => {
+					const response = await request
+						.post(`${baseUrl}/appellant-case/incomplete/receipt-due-date`)
+						.send(payload);
+					const element = parseHtml(response.text);
+
+					expect(element.innerHTML).toContain('govuk-error-summary__title');
+
+					const errorLink = element.querySelector('.govuk-error-summary__list li a');
+					expect(errorLink?.innerHTML.trim()).toBe(expectedError);
+				}
+			);
+
+			it('should redirect the update appeal due date page if the only "Missing documents" or "Grounds and facts do not match" were selected on the "Why is the appeal incomplete?" page', async () => {
+				await request.post(`${baseUrl}/appellant-case/incomplete`).send({
+					incompleteReason: ['12', '13', '14']
+				});
+
+				const response = await request
+					.post(`${baseUrl}/appellant-case/incomplete/receipt-due-date`)
+					.send({
+						'fee-receipt-due-date-day': '1',
+						'fee-receipt-due-date-month': '5',
+						'fee-receipt-due-date-year': '3000'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to /appeals-service/appeal-details/${appealId}/appellant-case/incomplete/date`
+				);
+			});
+
+			it('should redirect the check details page if the only "Missing documents" or "Grounds and facts do not match" were not selected on the "Why is the appeal incomplete?" page', async () => {
+				await request.post(`${baseUrl}/appellant-case/incomplete`).send({
+					incompleteReason: '14'
+				});
+
+				const response = await request
+					.post(`${baseUrl}/appellant-case/incomplete/receipt-due-date`)
+					.send({
+						'fee-receipt-due-date-day': '1',
+						'fee-receipt-due-date-month': '5',
+						'fee-receipt-due-date-year': '3000'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to /appeals-service/appeal-details/${appealId}/appellant-case/incomplete/check-details-and-mark-enforcement-as-incomplete`
 				);
 			});
 		});
