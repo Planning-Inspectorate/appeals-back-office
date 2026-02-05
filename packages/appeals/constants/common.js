@@ -15,7 +15,6 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	LINKED_APPEALS: 'featureFlagLinkedAppeals',
 	LINKED_APPEALS_UNLINK: 'featureFlagLinkedAppealsUnlink',
 	CHANGE_PROCEDURE_TYPE: 'featureFlagChangeProcedureType',
-	ADVERTISEMENT: 'featureFlagAdvertisement',
 	HEARING_POST_MVP: 'featureFlagHearingPostMvp',
 	AUTO_ASSIGN_TEAM: 'featureFlagAutoAssignTeam',
 	SEARCH_CASE_OFFICER: 'featureFlagSearchCaseOfficer',

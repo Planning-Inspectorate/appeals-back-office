@@ -53,7 +53,6 @@ variable "apps_config" {
       featureFlagNetResidenceS20        = bool
       featureFlagCancelCase             = bool
       featureFlagChangeProcedureType    = bool
-      featureFlagAdvertisement          = bool
       featureFlagHearingPostMvp         = bool
       featureFlagAutoAssignTeam         = bool
       featureFlagCancelSiteVisit        = bool
