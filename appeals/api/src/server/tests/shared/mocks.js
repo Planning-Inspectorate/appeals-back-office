@@ -27,6 +27,7 @@ const lookupListData = [
 export const auditTrails = lookupListData;
 export const appellantCaseIncompleteReasons = lookupListData;
 export const appellantCaseInvalidReasons = lookupListData;
+export const appellantCaseEnforcementMissingDocuments = lookupListData;
 export const appellantCaseEnforcementInvalidReasons = lookupListData;
 export const lpaQuestionnaireIncompleteReasons = lookupListData;
 export const knowledgeOfOtherLandowners = lookupListData;

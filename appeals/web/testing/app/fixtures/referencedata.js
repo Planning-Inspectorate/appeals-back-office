@@ -5131,3 +5131,12 @@ export const caseTeams = [
 		name: 'temp4'
 	}
 ];
+
+export const missingDocumentOptions = [
+	{ id: 1, name: 'Grounds of appeal supporting documents', hasText: true },
+	{ id: 2, name: 'Enforcement notice', hasText: true },
+	{ id: 3, name: 'Agreement to change the description of the development', hasText: true },
+	{ id: 4, name: 'Planning obligation', hasText: true },
+	{ id: 5, name: 'Application for an award of appeal costs', hasText: true },
+	{ id: 6, name: 'Other new supporting documents', hasText: true }
+];

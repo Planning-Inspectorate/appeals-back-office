@@ -333,7 +333,8 @@ export function updateDueDatePage(
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: 'Update appeal due date',
 		submitButtonProperties: {
-			text: 'Save and continue',
+			text:
+				appealData.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ? 'Continue' : 'Save and continue',
 			type: 'submit'
 		},
 		pageComponents: [

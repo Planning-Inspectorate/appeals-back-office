@@ -19,6 +19,7 @@ import { importListedBuildingsDataset } from './seed-listed-buildings.js';
  * @typedef {import('@pins/appeals.api').Schema.AppellantCaseIncompleteReason} AppellantCaseIncompleteReason
  * @typedef {import('@pins/appeals.api').Schema.AppellantCaseInvalidReason} AppellantCaseInvalidReason
  * @typedef {import('@pins/appeals.api').Schema.AppellantCaseEnforcementInvalidReason} AppellantCaseEnforcementInvalidReason
+ * @typedef {import('@pins/appeals.api').Schema.AppellantCaseEnforcementMissingDocument} AppellantCaseEnforcementMissingDocument
  * @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaireValidationOutcome} LPAQuestionnaireValidationOutcome
  * @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaireIncompleteReason} LPAQuestionnaireIncompleteReason
  * @typedef {import('@pins/appeals.api').Schema.LPANotificationMethods} LPANotificationMethods
@@ -418,6 +419,44 @@ export const appellantCaseEnforcementInvalidReasons = [
 	{
 		id: 8,
 		name: 'Other reason',
+		hasText: true
+	}
+];
+
+/**
+ * An array of appellant case enforcement notice missing documents.
+ *
+ * @type {Pick<AppellantCaseEnforcementMissingDocument, 'id' |'name' | 'hasText'>[]}
+ */
+export const appellantCaseEnforcementMissingDocuments = [
+	{
+		id: 1,
+		name: 'Grounds of appeal supporting documents',
+		hasText: true
+	},
+	{
+		id: 2,
+		name: 'Enforcement notice',
+		hasText: true
+	},
+	{
+		id: 3,
+		name: 'Agreement to change the description of the development',
+		hasText: true
+	},
+	{
+		id: 4,
+		name: 'Planning obligation',
+		hasText: true
+	},
+	{
+		id: 5,
+		name: 'Application for an award of appeal costs',
+		hasText: true
+	},
+	{
+		id: 6,
+		name: 'Other new supporting documents',
 		hasText: true
 	}
 ];
@@ -904,6 +943,15 @@ export async function seedStaticData(databaseConnector) {
 			create: ground,
 			where: { groundRef: ground.groundRef },
 			update: ground
+		});
+	}
+	for (const appellantCaseEnforcementMissingDocument of appellantCaseEnforcementMissingDocuments) {
+		await databaseConnector.appellantCaseEnforcementMissingDocument.upsert({
+			create: appellantCaseEnforcementMissingDocument,
+			where: { id: appellantCaseEnforcementMissingDocument.id },
+			update: {
+				name: appellantCaseEnforcementMissingDocument.name
+			}
 		});
 	}
 

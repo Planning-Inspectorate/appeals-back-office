@@ -12,6 +12,8 @@ import {
 	dayMonthYearHourMinuteToISOString
 } from '../dates.js';
 
+const messageFieldNameExceptions = ['ground (a) fee receipt due date'];
+
 export const createDateInputFieldsValidator = (
 	fieldNamePrefix = 'date',
 	messageFieldNamePrefix = 'Date',
@@ -42,7 +44,11 @@ export const createDateInputFieldsValidator = (
 			);
 
 			if (!day && !month && !year) {
-				throw new Error(`all-fields::Enter the ${lowerCase(messageFieldNamePrefix)}`, {
+				const fieldName = messageFieldNameExceptions.includes(messageFieldNamePrefix)
+					? messageFieldNamePrefix
+					: lowerCase(messageFieldNamePrefix);
+
+				throw new Error(`all-fields::Enter the ${fieldName}`, {
 					cause: 'all-fields'
 				});
 			}
@@ -69,7 +75,11 @@ export const createDateInputFieldsValidator = (
 					if (index === missingParts.length - 2) return `${acc}${part} and `;
 					return `${acc}${part}, `;
 				}, '');
-				throw new Error(`${joinedCause}::${messageFieldNamePrefix} must include ${messageSuffix}`);
+				const prefix = messageFieldNameExceptions.includes(messageFieldNamePrefix) ? 'The ' : '';
+
+				throw new Error(
+					`${joinedCause}::${prefix}${messageFieldNamePrefix} must include ${messageSuffix}`
+				);
 			}
 
 			if (!/^\d+$/.test(day)) {
@@ -217,7 +227,11 @@ export const createDateInputDateInFutureValidator = (
 				return dateIsInTheFuture({ day: dayNumber, month: monthNumber, year: yearNumber });
 			})
 			.withMessage(
-				`all-fields::The ${lowerCase(messageFieldNamePrefix || '')} must be in the future`
+				`all-fields::The ${
+					messageFieldNameExceptions.includes(messageFieldNamePrefix)
+						? messageFieldNamePrefix
+						: lowerCase(messageFieldNamePrefix) || ''
+				} must be in the future`
 			)
 	);
 
