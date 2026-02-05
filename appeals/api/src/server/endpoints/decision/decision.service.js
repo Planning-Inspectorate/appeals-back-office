@@ -410,8 +410,7 @@ export const sendNewDecisionLetter = async (
 	});
 
 	const relevantEmails = [
-		appeal.agent?.email,
-		appeal.appellant?.email,
+		appeal.agent?.email || appeal.appellant?.email,
 		appeal.lpa?.email,
 		...representations.comments.map((comment) => comment.represented?.email).filter(Boolean)
 	];
