@@ -862,16 +862,12 @@ function generateCaseTypeSpecificComponents(
 				userHasUpdateCasePermission
 			);
 		case APPEAL_TYPE.ADVERTISEMENT:
-			if (isFeatureActive(FEATURE_FLAG_NAMES.ADVERTISEMENT)) {
-				return generateAdvertComponents(
-					appealDetails,
-					appellantCaseData,
-					mappedAppellantCaseData,
-					userHasUpdateCasePermission
-				);
-			} else {
-				throw new Error('Feature flag inactive for adverts');
-			}
+			return generateAdvertComponents(
+				appealDetails,
+				appellantCaseData,
+				mappedAppellantCaseData,
+				userHasUpdateCasePermission
+			);
 		case APPEAL_TYPE.ENFORCEMENT_NOTICE:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
 				return generateEnforcementNoticeComponents(
