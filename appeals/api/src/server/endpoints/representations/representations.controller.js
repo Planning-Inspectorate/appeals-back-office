@@ -14,6 +14,7 @@ import {
 } from '@pins/appeals/constants/common.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
+	AUDIT_TRIAL_APPELLANT_UUID,
 	AUDIT_TRIAL_RULE_6_PARTY_ID,
 	DEFAULT_PAGE_NUMBER,
 	DEFAULT_PAGE_SIZE,
@@ -305,6 +306,16 @@ export const createRepresentation = () => async (req, res) => {
 	}
 
 	if (representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT) {
+		await sendRepresentationReceivedNotifications(
+			req.appeal,
+			req.notifyClient,
+			azureAdUserId || AUDIT_TRIAL_APPELLANT_UUID,
+			'appellant-statement-received',
+			true,
+			false,
+			false
+		);
+
 		await createAuditTrail({
 			appealId: parseInt(appealId),
 			azureAdUserId,
