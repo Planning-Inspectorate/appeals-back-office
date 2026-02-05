@@ -1,9 +1,9 @@
 import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import {
+	canDisplayAction,
 	createNotificationBanner,
 	mapRequiredActionToNotificationBannerKey
 } from '#lib/mappers/index.js';
-import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
@@ -19,6 +19,10 @@ import { getRequiredActionsForAppeal } from './required-actions.js';
  * @returns {PageComponent[]}
  */
 export function mapStatusDependentNotifications(appealDetails, request) {
+	if (!canDisplayAction(appealDetails)) {
+		return [];
+	}
+
 	const requiredActions = getRequiredActionsForAppeal(appealDetails, 'detail');
 
 	/** @type {import('../components/index.js').NotificationBannerDefinitionKey[]} */
@@ -44,24 +48,6 @@ export function mapStatusDependentNotifications(appealDetails, request) {
  * @returns {PageComponent|PageComponent[]|undefined}
  */
 function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, request) {
-	// ToDo banners will be removed from this list once the child appeals automatically do the action via the lead appeal
-	const ALLOWED_CHILD_APPEAL_BANNERS = [
-		'awaitingLinkedAppeal',
-		'appealAwaitingTransfer',
-		'readyForValidation',
-		'readyForLpaQuestionnaireReview',
-		'addHearingAddress',
-		'setupHearing',
-		'setupInquiry',
-		'addInquiryAddress',
-		'addResidencesNetChange'
-	];
-
-	if (isChildAppeal(appealDetails) && !ALLOWED_CHILD_APPEAL_BANNERS.includes(bannerDefinitionKey)) {
-		// Do not display the banner
-		return;
-	}
-
 	switch (bannerDefinitionKey) {
 		case 'awaitingLinkedAppeal':
 			return createNotificationBanner({

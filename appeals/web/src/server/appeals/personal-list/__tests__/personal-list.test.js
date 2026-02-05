@@ -11,6 +11,7 @@ import {
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -398,7 +399,9 @@ describe('personal-list', () => {
 				name: 'Awaiting LPA questionnaire',
 				requiredAction: 'awaitingLpaQuestionnaire',
 				expectedHtml: {
-					caseOfficer: 'Awaiting LPA questionnaire'
+					caseOfficer: 'Awaiting LPA questionnaire',
+					childAppeal: 'Awaiting LPA questionnaire',
+					childEnforcementAppeal: ''
 				}
 			},
 			{
@@ -413,7 +416,8 @@ describe('personal-list', () => {
 				requiredAction: 'awaitingLpaUpdate',
 				expectedHtml: {
 					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}?backUrl=%2Fappeals-service%2Fpersonal-list">Update questionnaire<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`,
-					nonCaseOfficer: 'Update questionnaire'
+					nonCaseOfficer: 'Update questionnaire',
+					childEnforcementAppeal: ''
 				}
 			},
 			{
@@ -427,7 +431,9 @@ describe('personal-list', () => {
 				name: 'LPA questionnaire overdue',
 				requiredAction: 'lpaQuestionnaireOverdue',
 				expectedHtml: {
-					caseOfficer: 'LPA questionnaire overdue'
+					caseOfficer: 'LPA questionnaire overdue',
+					childAppeal: 'LPA questionnaire overdue',
+					childEnforcementAppeal: ''
 				}
 			},
 			{
@@ -656,6 +662,22 @@ describe('personal-list', () => {
 					);
 
 					expect(result).toBe(testCase.expectedHtml.childAppeal);
+				});
+			}
+
+			if ('childEnforcementAppeal' in testCase.expectedHtml) {
+				it(`should not return an action link HTML when getRequiredActionsForAppeal returns "${testCase.requiredAction}" and is an enforcement child appeal`, async () => {
+					const result = mapActionLinksForAppeal(
+						{
+							...appealDataToGetRequiredActions[testCase.requiredAction],
+							isChildAppeal: true,
+							appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE
+						},
+						true,
+						{ originalUrl: baseUrl }
+					);
+
+					expect(result).toBe(testCase.expectedHtml.childEnforcementAppeal);
 				});
 			}
 		}
