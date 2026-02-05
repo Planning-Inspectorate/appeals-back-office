@@ -68,7 +68,7 @@ export const mapAppellantCase = (data) => {
 		effectiveDateOfEnforcementNotice: enforcementEffectiveDate?.toISOString() ?? null,
 		didAppellantAppealLpaDecision: applicationDecisionAppealed ?? null,
 		dateLpaDecisionDue: null,
-		dateLpaDecisionReceived: appealDecisionDate ?? null,
+		dateLpaDecisionReceived: appealDecisionDate?.toISOString() ?? null,
 		applicationPartOrWholeDevelopment: applicationDevelopmentAllOrPart ?? null,
 		agriculturalHolding: agriculturalHolding ?? null,
 		tenantAgriculturalHolding: tenantAgriculturalHolding ?? null,
