@@ -15,7 +15,8 @@ Use a feature flag when a feature is likely to take more than one sprint to deve
 | Environment | Value |
 | ----------- | ----- |
 | dev         | true  |
-| test        | true  |
+| staging     | true  |
+| test        | false |
 | training    | false |
 | prod        | false |
 

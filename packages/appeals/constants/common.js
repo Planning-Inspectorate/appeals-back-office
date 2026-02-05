@@ -12,7 +12,6 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	SECTION_78_INQUIRY: 'featureFlagS78Inquiry',
 	NET_RESIDENCE: 'featureFlagNetResidence',
 	NET_RESIDENCE_S20: 'featureFlagNetResidenceS20',
-	CAS: 'featureFlagCAS',
 	CAS_ADVERT: 'featureFlagCasAdvert',
 	LINKED_APPEALS: 'featureFlagLinkedAppeals',
 	CHANGE_PROCEDURE_TYPE: 'featureFlagChangeProcedureType',

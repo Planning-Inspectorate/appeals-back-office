@@ -19,7 +19,7 @@ export const isAppealTypeEnabled = (type) => {
 			return true;
 		}
 		case APPEAL_CASE_TYPE.ZP: {
-			return isFeatureActive(FEATURE_FLAG_NAMES.CAS);
+			return true;
 		}
 		case APPEAL_CASE_TYPE.ZA: {
 			return isFeatureActive(FEATURE_FLAG_NAMES.CAS_ADVERT);

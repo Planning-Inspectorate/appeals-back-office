@@ -844,16 +844,12 @@ function generateCaseTypeSpecificComponents(
 				userHasUpdateCasePermission
 			);
 		case APPEAL_TYPE.CAS_PLANNING:
-			if (isFeatureActive(FEATURE_FLAG_NAMES.CAS)) {
-				return generateCASComponents(
-					appealDetails,
-					appellantCaseData,
-					mappedAppellantCaseData,
-					userHasUpdateCasePermission
-				);
-			} else {
-				throw new Error('Feature flag inactive for CAS');
-			}
+			return generateCASComponents(
+				appealDetails,
+				appellantCaseData,
+				mappedAppellantCaseData,
+				userHasUpdateCasePermission
+			);
 		case APPEAL_TYPE.CAS_ADVERTISEMENT:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.CAS_ADVERT)) {
 				return generateCASAdvertComponents(

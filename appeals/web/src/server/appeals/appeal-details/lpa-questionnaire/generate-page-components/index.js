@@ -28,11 +28,7 @@ export function generateCaseTypeSpecificComponents(
 		case APPEAL_TYPE.HOUSEHOLDER:
 			return generateHASLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
 		case APPEAL_TYPE.CAS_PLANNING:
-			if (isFeatureActive(FEATURE_FLAG_NAMES.CAS)) {
-				return generateCasPlanningLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
-			} else {
-				throw new Error('Feature flag inactive for CAS');
-			}
+			return generateCasPlanningLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
 		case APPEAL_TYPE.CAS_ADVERTISEMENT:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.CAS_ADVERT)) {
 				return generateCasAdvertLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
