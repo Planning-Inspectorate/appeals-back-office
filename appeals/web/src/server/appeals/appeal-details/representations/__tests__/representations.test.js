@@ -192,6 +192,28 @@ describe('representations', () => {
 			expect(textResponse.innerHTML).not.toContain('with the relevant party.');
 		});
 
+		it('should show plural "parties" text when there is at least one rule 6 comment', async () => {
+			const appealWithStatements = {
+				...appealData,
+				appealStatus: 'statements',
+				documentationSummary: {
+					rule6PartyStatements: {
+						'rep-id-1': {
+							organisationName: 'Org One',
+							representationStatus: 'valid'
+						}
+					}
+				}
+			};
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealWithStatements);
+
+			const response = await request.get(`${baseUrl}/1/share`);
+			const textResponse = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(textResponse.innerHTML).toContain('with the relevant parties.');
+			expect(textResponse.innerHTML).not.toContain('with the relevant party.');
+		});
+
 		it('should contain links for Rule 6 statements if they exist and are valid', async () => {
 			const appealWithRule6 = {
 				...appealData,

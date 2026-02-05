@@ -204,7 +204,7 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 							totalShareCount === 1 ? 'the ' : ''
 						}${new Intl.ListFormat('en-GB', { style: 'long', type: 'conjunction' }).format(
 							valueTexts
-						)} with the relevant ${totalShareCount === 1 ? 'party' : 'parties'}.</p>`
+						)} with the relevant ${totalShareCount === 1 && totalRule6Statements === 0 ? 'party' : 'parties'}.</p>`
 					}
 				}
 			: {
