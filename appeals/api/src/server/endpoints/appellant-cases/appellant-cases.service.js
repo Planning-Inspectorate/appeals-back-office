@@ -27,6 +27,7 @@ import auditApplicationDecisionMapper from '#utils/audit-application-decision-ma
 import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
 import { Prisma } from '#utils/db-client/client.js';
 import { getFormattedReasons } from '#utils/email-formatter.js';
+import { formatContactDetails } from '#utils/format-contact-details.js';
 import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
 import { allAppellantCaseOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
 import { isChildAppeal, isLinkedAppeal, isParentAppeal } from '#utils/is-linked-appeal.js';
@@ -35,7 +36,8 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	addressToString,
 	camelToScreamingSnake,
-	capitalizeFirstLetter
+	capitalizeFirstLetter,
+	trimAppealType
 } from '#utils/string-utils.js';
 import {
 	APPEAL_DEVELOPMENT_TYPES,
@@ -233,6 +235,8 @@ export const updateAppellantCaseValidationOutcome = async (
 		}
 	}
 
+	const updatedAppeal = await appealRepository.getAppealById(Number(appealId));
+
 	if (isOutcomeValid(validationOutcome.name)) {
 		const latestDocumentVersionsUpdated = await documentRepository.setRedactionStatusOnValidation(
 			appeal.id
@@ -245,30 +249,53 @@ export const updateAppellantCaseValidationOutcome = async (
 			);
 		}
 
-		// Don't send for enforcement notice
-		if (groundABarred === undefined) {
-			const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-			if (!recipientEmail) {
-				throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+		if (!recipientEmail) {
+			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+		}
+		const isEnforcement = appeal.appealType.key === APPEAL_CASE_TYPE.C;
+		const personalisation = {
+			appeal_reference_number: appeal.reference,
+			lpa_reference: appeal.applicationReference || '',
+			site_address: siteAddress,
+			team_email_address: teamEmail,
+			...(isEnforcement && {
+				local_planning_authority: updatedAppeal?.lpa?.name || '',
+				appeal_type: trimAppealType(appeal.appealType.type),
+				enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
+				appeal_grounds:
+					updatedAppeal?.appealGrounds?.map((ground) => ground.ground?.groundRef || '').sort() ||
+					[],
+				ground_a_barred: groundABarred || false,
+				other_info: otherInformation || ''
+			})
+		};
+		await notifySend({
+			azureAdUserId,
+			templateName: isEnforcement ? 'appeal-confirmed-enforcement-appellant' : 'appeal-confirmed',
+			notifyClient,
+			recipientEmail,
+			personalisation: {
+				...personalisation,
+				feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key)
 			}
-			const personalisation = {
-				appeal_reference_number: appeal.reference,
-				lpa_reference: appeal.applicationReference || '',
-				site_address: siteAddress,
-				feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key),
-				team_email_address: teamEmail
-			};
+		});
+		if (isEnforcement) {
+			const { agent, appellant } = updatedAppeal || {};
 			await notifySend({
 				azureAdUserId,
-				templateName: 'appeal-confirmed',
+				templateName: 'appeal-confirmed-enforcement-lpa',
 				notifyClient,
-				recipientEmail,
-				personalisation
+				recipientEmail: updatedAppeal?.lpa?.email,
+				personalisation: {
+					...personalisation,
+					agent_contact_details: agent ? formatContactDetails(agent) : '',
+					appellant_contact_details: appellant ? formatContactDetails(appellant) : ''
+				}
 			});
 		}
 	}
 
-	const updatedAppeal = await appealRepository.getAppealById(Number(appealId));
 	if (updatedAppeal) {
 		const { caseExtensionDate: updatedDueDate, appellantCase: updatedAppellantCase } =
 			updatedAppeal;

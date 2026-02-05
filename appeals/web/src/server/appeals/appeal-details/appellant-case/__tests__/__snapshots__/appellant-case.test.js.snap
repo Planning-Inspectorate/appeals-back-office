@@ -4600,6 +4600,12 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-new-plans-drawings">Add<span class="govuk-visually-hidden"> New plans or drawings (5. Upload documents)</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter from the local planning authority</dt>
+                            <dd                             class="govuk-summary-list__value">No documents</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
+                                    data-cy="add-decision-letter">Add<span class="govuk-visually-hidden"> Decision letter from the local planning authority (5. Upload documents)</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Other new supporting documents</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-new-supporting-documents">Add<span class="govuk-visually-hidden"> Other new supporting documents (5. Upload documents)</span></a>
@@ -5999,12 +6005,12 @@ exports[`appellant-case GET /appellant-case/incomplete should render the incompl
                         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
-                                type="checkbox" value="2025">
+                                type="checkbox" value="1">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Appellant name is not the same on the application form and appeal form</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
-                                type="checkbox" value="2026" data-aria-controls="conditional-incomplete-reason-2">
+                                type="checkbox" value="2" data-aria-controls="conditional-incomplete-reason-2">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Attachments and/or appendices have not been included to the full statement
                                     of case</label>
                             </div>
@@ -6014,7 +6020,7 @@ exports[`appellant-case GET /appellant-case/incomplete should render the incompl
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2026-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-2-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -6022,8 +6028,7 @@ exports[`appellant-case GET /appellant-case/incomplete should render the incompl
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2026-1" name="incompleteReason-2026" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-2-1" name="incompleteReason-2" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -6034,12 +6039,12 @@ exports[`appellant-case GET /appellant-case/incomplete should render the incompl
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
-                                type="checkbox" value="2027">
+                                type="checkbox" value="3">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">LPA&#39;s decision notice is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-4" name="incompleteReason"
-                                type="checkbox" value="2028" data-aria-controls="conditional-incomplete-reason-4">
+                                type="checkbox" value="4" data-aria-controls="conditional-incomplete-reason-4">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-4">LPA&#39;s decision notice is incorrect or incomplete</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -6048,7 +6053,7 @@ exports[`appellant-case GET /appellant-case/incomplete should render the incompl
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2028-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-4-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -6056,8 +6061,7 @@ exports[`appellant-case GET /appellant-case/incomplete should render the incompl
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2028-1" name="incompleteReason-2028" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-4-1" name="incompleteReason-4" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -6068,7 +6072,7 @@ exports[`appellant-case GET /appellant-case/incomplete should render the incompl
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-5" name="incompleteReason"
-                                type="checkbox" value="2029" data-aria-controls="conditional-incomplete-reason-5">
+                                type="checkbox" value="5" data-aria-controls="conditional-incomplete-reason-5">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-5">Documents and/or plans referred in the application form, decision notice
                                     and appeal covering letter are missing</label>
                             </div>
@@ -6078,7 +6082,7 @@ exports[`appellant-case GET /appellant-case/incomplete should render the incompl
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2029-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-5-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -6086,8 +6090,7 @@ exports[`appellant-case GET /appellant-case/incomplete should render the incompl
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2029-1" name="incompleteReason-2029" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-5-1" name="incompleteReason-5" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -6098,18 +6101,18 @@ exports[`appellant-case GET /appellant-case/incomplete should render the incompl
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-6" name="incompleteReason"
-                                type="checkbox" value="2030">
+                                type="checkbox" value="6">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-6">Agricultural holding certificate and declaration have not been completed
                                     on the appeal form</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-7" name="incompleteReason"
-                                type="checkbox" value="2031">
+                                type="checkbox" value="7">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-7">The original application form is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-8" name="incompleteReason"
-                                type="checkbox" value="2032" data-aria-controls="conditional-incomplete-reason-8">
+                                type="checkbox" value="8" data-aria-controls="conditional-incomplete-reason-8">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-8">The original application form is incomplete</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -6118,7 +6121,7 @@ exports[`appellant-case GET /appellant-case/incomplete should render the incompl
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2032-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-8-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -6126,8 +6129,7 @@ exports[`appellant-case GET /appellant-case/incomplete should render the incompl
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2032-1" name="incompleteReason-2032" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-8-1" name="incompleteReason-8" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -6138,17 +6140,17 @@ exports[`appellant-case GET /appellant-case/incomplete should render the incompl
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-9" name="incompleteReason"
-                                type="checkbox" value="2033">
+                                type="checkbox" value="9">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-9">Statement of case and ground of appeal are missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-10" name="incompleteReason"
-                                type="checkbox" value="2034">
+                                type="checkbox" value="11">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-10">Draft statement of common ground is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-11" name="incompleteReason"
-                                type="checkbox" value="2035" data-aria-controls="conditional-incomplete-reason-11">
+                                type="checkbox" value="10" data-aria-controls="conditional-incomplete-reason-11">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-11">Other</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -6157,7 +6159,7 @@ exports[`appellant-case GET /appellant-case/incomplete should render the incompl
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2035-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-10-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -6165,8 +6167,7 @@ exports[`appellant-case GET /appellant-case/incomplete should render the incompl
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2035-1" name="incompleteReason-2035" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-10-1" name="incompleteReason-10" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -8503,7 +8504,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#incomplete-reason-2026-1">Reason must be 1000 characters or less</a>
+                            <li><a href="#incomplete-reason-2-1">Reason must be 1000 characters or less</a>
                             </li>
                         </ul>
                     </div>
@@ -8526,12 +8527,12 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
-                                type="checkbox" value="2025">
+                                type="checkbox" value="1">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Appellant name is not the same on the application form and appeal form</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
-                                type="checkbox" value="2026" checked data-aria-controls="conditional-incomplete-reason-2">
+                                type="checkbox" value="2" checked data-aria-controls="conditional-incomplete-reason-2">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Attachments and/or appendices have not been included to the full statement
                                     of case</label>
                             </div>
@@ -8540,19 +8541,18 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2026-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-2-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group govuk-form-group--error">
-                                                    <p id="incomplete-reason-2026-1-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Reason must be 1000 characters
+                                                    <p id="incomplete-reason-2-1-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Reason must be 1000 characters
                                                         or less</p>
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0 govuk-input--error"
-                                                    id="incomplete-reason-2026-1" name="incompleteReason-2026" type="text"
-                                                    value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-                                                    aria-describedby="incomplete-reason-2026-1-error">
+                                                    id="incomplete-reason-2-1" name="incompleteReason-2" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                                                    aria-describedby="incomplete-reason-2-1-error">
                                                 </div>
                                             </div>
                                         </div>
@@ -8563,12 +8563,12 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
-                                type="checkbox" value="2027">
+                                type="checkbox" value="3">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">LPA&#39;s decision notice is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-4" name="incompleteReason"
-                                type="checkbox" value="2028" data-aria-controls="conditional-incomplete-reason-4">
+                                type="checkbox" value="4" data-aria-controls="conditional-incomplete-reason-4">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-4">LPA&#39;s decision notice is incorrect or incomplete</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -8577,7 +8577,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2028-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-4-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -8585,8 +8585,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2028-1" name="incompleteReason-2028" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-4-1" name="incompleteReason-4" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -8597,7 +8596,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-5" name="incompleteReason"
-                                type="checkbox" value="2029" data-aria-controls="conditional-incomplete-reason-5">
+                                type="checkbox" value="5" data-aria-controls="conditional-incomplete-reason-5">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-5">Documents and/or plans referred in the application form, decision notice
                                     and appeal covering letter are missing</label>
                             </div>
@@ -8607,7 +8606,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2029-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-5-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -8615,8 +8614,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2029-1" name="incompleteReason-2029" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-5-1" name="incompleteReason-5" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -8627,18 +8625,18 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-6" name="incompleteReason"
-                                type="checkbox" value="2030">
+                                type="checkbox" value="6">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-6">Agricultural holding certificate and declaration have not been completed
                                     on the appeal form</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-7" name="incompleteReason"
-                                type="checkbox" value="2031">
+                                type="checkbox" value="7">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-7">The original application form is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-8" name="incompleteReason"
-                                type="checkbox" value="2032" data-aria-controls="conditional-incomplete-reason-8">
+                                type="checkbox" value="8" data-aria-controls="conditional-incomplete-reason-8">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-8">The original application form is incomplete</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -8647,7 +8645,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2032-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-8-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -8655,8 +8653,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2032-1" name="incompleteReason-2032" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-8-1" name="incompleteReason-8" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -8667,17 +8664,17 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-9" name="incompleteReason"
-                                type="checkbox" value="2033">
+                                type="checkbox" value="9">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-9">Statement of case and ground of appeal are missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-10" name="incompleteReason"
-                                type="checkbox" value="2034">
+                                type="checkbox" value="11">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-10">Draft statement of common ground is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-11" name="incompleteReason"
-                                type="checkbox" value="2035" data-aria-controls="conditional-incomplete-reason-11">
+                                type="checkbox" value="10" data-aria-controls="conditional-incomplete-reason-11">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-11">Other</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -8686,7 +8683,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2035-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-10-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -8694,8 +8691,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2035-1" name="incompleteReason-2035" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-10-1" name="incompleteReason-10" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -8723,7 +8719,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#incomplete-reason-2026">Enter a reason</a>
+                            <li><a href="#incomplete-reason-2">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -8746,12 +8742,12 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
-                                type="checkbox" value="2025">
+                                type="checkbox" value="1">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Appellant name is not the same on the application form and appeal form</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
-                                type="checkbox" value="2026" checked data-aria-controls="conditional-incomplete-reason-2">
+                                type="checkbox" value="2" checked data-aria-controls="conditional-incomplete-reason-2">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Attachments and/or appendices have not been included to the full statement
                                     of case</label>
                             </div>
@@ -8760,7 +8756,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2026-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-2-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -8768,8 +8764,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2026-1" name="incompleteReason-2026" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-2-1" name="incompleteReason-2" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -8780,12 +8775,12 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
-                                type="checkbox" value="2027">
+                                type="checkbox" value="3">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">LPA&#39;s decision notice is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-4" name="incompleteReason"
-                                type="checkbox" value="2028" data-aria-controls="conditional-incomplete-reason-4">
+                                type="checkbox" value="4" data-aria-controls="conditional-incomplete-reason-4">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-4">LPA&#39;s decision notice is incorrect or incomplete</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -8794,7 +8789,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2028-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-4-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -8802,8 +8797,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2028-1" name="incompleteReason-2028" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-4-1" name="incompleteReason-4" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -8814,7 +8808,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-5" name="incompleteReason"
-                                type="checkbox" value="2029" data-aria-controls="conditional-incomplete-reason-5">
+                                type="checkbox" value="5" data-aria-controls="conditional-incomplete-reason-5">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-5">Documents and/or plans referred in the application form, decision notice
                                     and appeal covering letter are missing</label>
                             </div>
@@ -8824,7 +8818,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2029-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-5-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -8832,8 +8826,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2029-1" name="incompleteReason-2029" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-5-1" name="incompleteReason-5" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -8844,18 +8837,18 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-6" name="incompleteReason"
-                                type="checkbox" value="2030">
+                                type="checkbox" value="6">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-6">Agricultural holding certificate and declaration have not been completed
                                     on the appeal form</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-7" name="incompleteReason"
-                                type="checkbox" value="2031">
+                                type="checkbox" value="7">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-7">The original application form is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-8" name="incompleteReason"
-                                type="checkbox" value="2032" data-aria-controls="conditional-incomplete-reason-8">
+                                type="checkbox" value="8" data-aria-controls="conditional-incomplete-reason-8">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-8">The original application form is incomplete</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -8864,7 +8857,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2032-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-8-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -8872,8 +8865,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2032-1" name="incompleteReason-2032" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-8-1" name="incompleteReason-8" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -8884,17 +8876,17 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-9" name="incompleteReason"
-                                type="checkbox" value="2033">
+                                type="checkbox" value="9">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-9">Statement of case and ground of appeal are missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-10" name="incompleteReason"
-                                type="checkbox" value="2034">
+                                type="checkbox" value="11">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-10">Draft statement of common ground is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-11" name="incompleteReason"
-                                type="checkbox" value="2035" data-aria-controls="conditional-incomplete-reason-11">
+                                type="checkbox" value="10" data-aria-controls="conditional-incomplete-reason-11">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-11">Other</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -8903,7 +8895,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2035-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-10-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -8911,8 +8903,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2035-1" name="incompleteReason-2035" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-10-1" name="incompleteReason-10" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -8940,7 +8931,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#incomplete-reason-2026-1">Enter a reason</a>
+                            <li><a href="#incomplete-reason-2-1">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -8963,12 +8954,12 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
-                                type="checkbox" value="2025">
+                                type="checkbox" value="1">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Appellant name is not the same on the application form and appeal form</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
-                                type="checkbox" value="2026" checked data-aria-controls="conditional-incomplete-reason-2">
+                                type="checkbox" value="2" checked data-aria-controls="conditional-incomplete-reason-2">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Attachments and/or appendices have not been included to the full statement
                                     of case</label>
                             </div>
@@ -8977,17 +8968,17 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2026-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-2-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group govuk-form-group--error">
-                                                    <p id="incomplete-reason-2026-1-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a reason</p>
+                                                    <p id="incomplete-reason-2-1-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a reason</p>
                                                     <input                                                     class="govuk-input pins-add-another__item-input govuk-!-margin-0 govuk-input--error"
-                                                    id="incomplete-reason-2026-1" name="incompleteReason-2026" type="text"
-                                                    value="" aria-describedby="incomplete-reason-2026-1-error">
+                                                    id="incomplete-reason-2-1" name="incompleteReason-2" type="text" value=""
+                                                    aria-describedby="incomplete-reason-2-1-error">
                                                 </div>
                                             </div>
                                         </div>
@@ -8998,12 +8989,12 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
-                                type="checkbox" value="2027">
+                                type="checkbox" value="3">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">LPA&#39;s decision notice is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-4" name="incompleteReason"
-                                type="checkbox" value="2028" data-aria-controls="conditional-incomplete-reason-4">
+                                type="checkbox" value="4" data-aria-controls="conditional-incomplete-reason-4">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-4">LPA&#39;s decision notice is incorrect or incomplete</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -9012,7 +9003,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2028-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-4-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9020,8 +9011,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2028-1" name="incompleteReason-2028" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-4-1" name="incompleteReason-4" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9032,7 +9022,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-5" name="incompleteReason"
-                                type="checkbox" value="2029" data-aria-controls="conditional-incomplete-reason-5">
+                                type="checkbox" value="5" data-aria-controls="conditional-incomplete-reason-5">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-5">Documents and/or plans referred in the application form, decision notice
                                     and appeal covering letter are missing</label>
                             </div>
@@ -9042,7 +9032,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2029-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-5-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9050,8 +9040,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2029-1" name="incompleteReason-2029" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-5-1" name="incompleteReason-5" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9062,18 +9051,18 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-6" name="incompleteReason"
-                                type="checkbox" value="2030">
+                                type="checkbox" value="6">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-6">Agricultural holding certificate and declaration have not been completed
                                     on the appeal form</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-7" name="incompleteReason"
-                                type="checkbox" value="2031">
+                                type="checkbox" value="7">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-7">The original application form is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-8" name="incompleteReason"
-                                type="checkbox" value="2032" data-aria-controls="conditional-incomplete-reason-8">
+                                type="checkbox" value="8" data-aria-controls="conditional-incomplete-reason-8">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-8">The original application form is incomplete</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -9082,7 +9071,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2032-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-8-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9090,8 +9079,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2032-1" name="incompleteReason-2032" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-8-1" name="incompleteReason-8" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9102,17 +9090,17 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-9" name="incompleteReason"
-                                type="checkbox" value="2033">
+                                type="checkbox" value="9">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-9">Statement of case and ground of appeal are missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-10" name="incompleteReason"
-                                type="checkbox" value="2034">
+                                type="checkbox" value="11">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-10">Draft statement of common ground is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-11" name="incompleteReason"
-                                type="checkbox" value="2035" data-aria-controls="conditional-incomplete-reason-11">
+                                type="checkbox" value="10" data-aria-controls="conditional-incomplete-reason-11">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-11">Other</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -9121,7 +9109,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2035-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-10-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9129,8 +9117,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2035-1" name="incompleteReason-2035" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-10-1" name="incompleteReason-10" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9158,7 +9145,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#incomplete-reason-2026">Enter a reason</a>
+                            <li><a href="#incomplete-reason-2">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -9181,12 +9168,12 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
-                                type="checkbox" value="2025">
+                                type="checkbox" value="1">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Appellant name is not the same on the application form and appeal form</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
-                                type="checkbox" value="2026" checked data-aria-controls="conditional-incomplete-reason-2">
+                                type="checkbox" value="2" checked data-aria-controls="conditional-incomplete-reason-2">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Attachments and/or appendices have not been included to the full statement
                                     of case</label>
                             </div>
@@ -9195,7 +9182,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2026-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-2-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9203,8 +9190,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2026-1" name="incompleteReason-2026" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-2-1" name="incompleteReason-2" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9215,12 +9201,12 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
-                                type="checkbox" value="2027">
+                                type="checkbox" value="3">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">LPA&#39;s decision notice is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-4" name="incompleteReason"
-                                type="checkbox" value="2028" checked data-aria-controls="conditional-incomplete-reason-4">
+                                type="checkbox" value="4" checked data-aria-controls="conditional-incomplete-reason-4">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-4">LPA&#39;s decision notice is incorrect or incomplete</label>
                             </div>
                             <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason-4">
@@ -9228,7 +9214,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2028-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-4-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9236,8 +9222,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2028-1" name="incompleteReason-2028" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-4-1" name="incompleteReason-4" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9248,7 +9233,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-5" name="incompleteReason"
-                                type="checkbox" value="2029" data-aria-controls="conditional-incomplete-reason-5">
+                                type="checkbox" value="5" data-aria-controls="conditional-incomplete-reason-5">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-5">Documents and/or plans referred in the application form, decision notice
                                     and appeal covering letter are missing</label>
                             </div>
@@ -9258,7 +9243,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2029-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-5-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9266,8 +9251,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2029-1" name="incompleteReason-2029" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-5-1" name="incompleteReason-5" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9278,18 +9262,18 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-6" name="incompleteReason"
-                                type="checkbox" value="2030">
+                                type="checkbox" value="6">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-6">Agricultural holding certificate and declaration have not been completed
                                     on the appeal form</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-7" name="incompleteReason"
-                                type="checkbox" value="2031">
+                                type="checkbox" value="7">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-7">The original application form is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-8" name="incompleteReason"
-                                type="checkbox" value="2032" data-aria-controls="conditional-incomplete-reason-8">
+                                type="checkbox" value="8" data-aria-controls="conditional-incomplete-reason-8">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-8">The original application form is incomplete</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -9298,7 +9282,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2032-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-8-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9306,8 +9290,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2032-1" name="incompleteReason-2032" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-8-1" name="incompleteReason-8" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9318,17 +9301,17 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-9" name="incompleteReason"
-                                type="checkbox" value="2033">
+                                type="checkbox" value="9">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-9">Statement of case and ground of appeal are missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-10" name="incompleteReason"
-                                type="checkbox" value="2034">
+                                type="checkbox" value="11">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-10">Draft statement of common ground is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-11" name="incompleteReason"
-                                type="checkbox" value="2035" data-aria-controls="conditional-incomplete-reason-11">
+                                type="checkbox" value="10" data-aria-controls="conditional-incomplete-reason-11">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-11">Other</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -9337,7 +9320,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2035-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-10-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9345,8 +9328,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2035-1" name="incompleteReason-2035" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-10-1" name="incompleteReason-10" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9374,7 +9356,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#incomplete-reason-2026-1">Enter a reason</a>
+                            <li><a href="#incomplete-reason-2-1">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -9397,12 +9379,12 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
-                                type="checkbox" value="2025">
+                                type="checkbox" value="1">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Appellant name is not the same on the application form and appeal form</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
-                                type="checkbox" value="2026" checked data-aria-controls="conditional-incomplete-reason-2">
+                                type="checkbox" value="2" checked data-aria-controls="conditional-incomplete-reason-2">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Attachments and/or appendices have not been included to the full statement
                                     of case</label>
                             </div>
@@ -9411,17 +9393,17 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2026-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-2-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group govuk-form-group--error">
-                                                    <p id="incomplete-reason-2026-1-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a reason</p>
+                                                    <p id="incomplete-reason-2-1-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a reason</p>
                                                     <input                                                     class="govuk-input pins-add-another__item-input govuk-!-margin-0 govuk-input--error"
-                                                    id="incomplete-reason-2026-1" name="incompleteReason-2026" type="text"
-                                                    value="" aria-describedby="incomplete-reason-2026-1-error">
+                                                    id="incomplete-reason-2-1" name="incompleteReason-2" type="text" value=""
+                                                    aria-describedby="incomplete-reason-2-1-error">
                                                 </div>
                                             </div>
                                         </div>
@@ -9432,12 +9414,12 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
-                                type="checkbox" value="2027">
+                                type="checkbox" value="3">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">LPA&#39;s decision notice is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-4" name="incompleteReason"
-                                type="checkbox" value="2028" checked data-aria-controls="conditional-incomplete-reason-4">
+                                type="checkbox" value="4" checked data-aria-controls="conditional-incomplete-reason-4">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-4">LPA&#39;s decision notice is incorrect or incomplete</label>
                             </div>
                             <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason-4">
@@ -9445,7 +9427,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2028-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-4-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9453,8 +9435,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2028-1" name="incompleteReason-2028" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-4-1" name="incompleteReason-4" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9465,7 +9446,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-5" name="incompleteReason"
-                                type="checkbox" value="2029" data-aria-controls="conditional-incomplete-reason-5">
+                                type="checkbox" value="5" data-aria-controls="conditional-incomplete-reason-5">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-5">Documents and/or plans referred in the application form, decision notice
                                     and appeal covering letter are missing</label>
                             </div>
@@ -9475,7 +9456,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2029-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-5-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9483,8 +9464,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2029-1" name="incompleteReason-2029" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-5-1" name="incompleteReason-5" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9495,18 +9475,18 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-6" name="incompleteReason"
-                                type="checkbox" value="2030">
+                                type="checkbox" value="6">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-6">Agricultural holding certificate and declaration have not been completed
                                     on the appeal form</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-7" name="incompleteReason"
-                                type="checkbox" value="2031">
+                                type="checkbox" value="7">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-7">The original application form is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-8" name="incompleteReason"
-                                type="checkbox" value="2032" data-aria-controls="conditional-incomplete-reason-8">
+                                type="checkbox" value="8" data-aria-controls="conditional-incomplete-reason-8">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-8">The original application form is incomplete</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -9515,7 +9495,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2032-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-8-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9523,8 +9503,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2032-1" name="incompleteReason-2032" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-8-1" name="incompleteReason-8" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9535,17 +9514,17 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-9" name="incompleteReason"
-                                type="checkbox" value="2033">
+                                type="checkbox" value="9">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-9">Statement of case and ground of appeal are missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-10" name="incompleteReason"
-                                type="checkbox" value="2034">
+                                type="checkbox" value="11">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-10">Draft statement of common ground is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-11" name="incompleteReason"
-                                type="checkbox" value="2035" data-aria-controls="conditional-incomplete-reason-11">
+                                type="checkbox" value="10" data-aria-controls="conditional-incomplete-reason-11">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-11">Other</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -9554,7 +9533,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2035-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-10-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9562,8 +9541,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2035-1" name="incompleteReason-2035" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-10-1" name="incompleteReason-10" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9591,7 +9569,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#incomplete-reason-2026-1">Reason must be 1000 characters or less</a>
+                            <li><a href="#incomplete-reason-2-1">Reason must be 1000 characters or less</a>
                             </li>
                         </ul>
                     </div>
@@ -9614,12 +9592,12 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
-                                type="checkbox" value="2025">
+                                type="checkbox" value="1">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Appellant name is not the same on the application form and appeal form</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
-                                type="checkbox" value="2026" checked data-aria-controls="conditional-incomplete-reason-2">
+                                type="checkbox" value="2" checked data-aria-controls="conditional-incomplete-reason-2">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Attachments and/or appendices have not been included to the full statement
                                     of case</label>
                             </div>
@@ -9628,19 +9606,18 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2026-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-2-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group govuk-form-group--error">
-                                                    <p id="incomplete-reason-2026-1-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Reason must be 1000 characters
+                                                    <p id="incomplete-reason-2-1-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Reason must be 1000 characters
                                                         or less</p>
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0 govuk-input--error"
-                                                    id="incomplete-reason-2026-1" name="incompleteReason-2026" type="text"
-                                                    value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-                                                    aria-describedby="incomplete-reason-2026-1-error">
+                                                    id="incomplete-reason-2-1" name="incompleteReason-2" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                                                    aria-describedby="incomplete-reason-2-1-error">
                                                 </div>
                                             </div>
                                         </div>
@@ -9651,12 +9628,12 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
-                                type="checkbox" value="2027">
+                                type="checkbox" value="3">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">LPA&#39;s decision notice is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-4" name="incompleteReason"
-                                type="checkbox" value="2028" checked data-aria-controls="conditional-incomplete-reason-4">
+                                type="checkbox" value="4" checked data-aria-controls="conditional-incomplete-reason-4">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-4">LPA&#39;s decision notice is incorrect or incomplete</label>
                             </div>
                             <div class="govuk-checkboxes__conditional" id="conditional-incomplete-reason-4">
@@ -9664,7 +9641,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2028-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-4-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9672,8 +9649,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2028-1" name="incompleteReason-2028" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-4-1" name="incompleteReason-4" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9684,7 +9660,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-5" name="incompleteReason"
-                                type="checkbox" value="2029" data-aria-controls="conditional-incomplete-reason-5">
+                                type="checkbox" value="5" data-aria-controls="conditional-incomplete-reason-5">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-5">Documents and/or plans referred in the application form, decision notice
                                     and appeal covering letter are missing</label>
                             </div>
@@ -9694,7 +9670,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2029-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-5-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9702,8 +9678,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2029-1" name="incompleteReason-2029" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-5-1" name="incompleteReason-5" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9714,18 +9689,18 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-6" name="incompleteReason"
-                                type="checkbox" value="2030">
+                                type="checkbox" value="6">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-6">Agricultural holding certificate and declaration have not been completed
                                     on the appeal form</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-7" name="incompleteReason"
-                                type="checkbox" value="2031">
+                                type="checkbox" value="7">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-7">The original application form is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-8" name="incompleteReason"
-                                type="checkbox" value="2032" data-aria-controls="conditional-incomplete-reason-8">
+                                type="checkbox" value="8" data-aria-controls="conditional-incomplete-reason-8">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-8">The original application form is incomplete</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -9734,7 +9709,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2032-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-8-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9742,8 +9717,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2032-1" name="incompleteReason-2032" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-8-1" name="incompleteReason-8" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9754,17 +9728,17 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-9" name="incompleteReason"
-                                type="checkbox" value="2033">
+                                type="checkbox" value="9">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-9">Statement of case and ground of appeal are missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-10" name="incompleteReason"
-                                type="checkbox" value="2034">
+                                type="checkbox" value="11">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-10">Draft statement of common ground is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-11" name="incompleteReason"
-                                type="checkbox" value="2035" data-aria-controls="conditional-incomplete-reason-11">
+                                type="checkbox" value="10" data-aria-controls="conditional-incomplete-reason-11">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-11">Other</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -9773,7 +9747,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2035-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-10-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9781,8 +9755,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2035-1" name="incompleteReason-2035" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-10-1" name="incompleteReason-10" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9835,12 +9808,12 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                         <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason" name="incompleteReason"
-                                type="checkbox" value="2025">
+                                type="checkbox" value="1">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason">Appellant name is not the same on the application form and appeal form</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-2" name="incompleteReason"
-                                type="checkbox" value="2026" data-aria-controls="conditional-incomplete-reason-2">
+                                type="checkbox" value="2" data-aria-controls="conditional-incomplete-reason-2">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-2">Attachments and/or appendices have not been included to the full statement
                                     of case</label>
                             </div>
@@ -9850,7 +9823,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2026-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-2-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9858,8 +9831,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2026-1" name="incompleteReason-2026" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-2-1" name="incompleteReason-2" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9870,12 +9842,12 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-3" name="incompleteReason"
-                                type="checkbox" value="2027">
+                                type="checkbox" value="3">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-3">LPA&#39;s decision notice is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-4" name="incompleteReason"
-                                type="checkbox" value="2028" data-aria-controls="conditional-incomplete-reason-4">
+                                type="checkbox" value="4" data-aria-controls="conditional-incomplete-reason-4">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-4">LPA&#39;s decision notice is incorrect or incomplete</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -9884,7 +9856,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2028-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-4-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9892,8 +9864,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2028-1" name="incompleteReason-2028" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-4-1" name="incompleteReason-4" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9904,7 +9875,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-5" name="incompleteReason"
-                                type="checkbox" value="2029" data-aria-controls="conditional-incomplete-reason-5">
+                                type="checkbox" value="5" data-aria-controls="conditional-incomplete-reason-5">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-5">Documents and/or plans referred in the application form, decision notice
                                     and appeal covering letter are missing</label>
                             </div>
@@ -9914,7 +9885,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2029-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-5-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9922,8 +9893,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2029-1" name="incompleteReason-2029" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-5-1" name="incompleteReason-5" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9934,18 +9904,18 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-6" name="incompleteReason"
-                                type="checkbox" value="2030">
+                                type="checkbox" value="6">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-6">Agricultural holding certificate and declaration have not been completed
                                     on the appeal form</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-7" name="incompleteReason"
-                                type="checkbox" value="2031">
+                                type="checkbox" value="7">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-7">The original application form is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-8" name="incompleteReason"
-                                type="checkbox" value="2032" data-aria-controls="conditional-incomplete-reason-8">
+                                type="checkbox" value="8" data-aria-controls="conditional-incomplete-reason-8">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-8">The original application form is incomplete</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -9954,7 +9924,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2032-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-8-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -9962,8 +9932,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2032-1" name="incompleteReason-2032" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-8-1" name="incompleteReason-8" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -9974,17 +9943,17 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-9" name="incompleteReason"
-                                type="checkbox" value="2033">
+                                type="checkbox" value="9">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-9">Statement of case and ground of appeal are missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-10" name="incompleteReason"
-                                type="checkbox" value="2034">
+                                type="checkbox" value="11">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-10">Draft statement of common ground is missing</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="incomplete-reason-11" name="incompleteReason"
-                                type="checkbox" value="2035" data-aria-controls="conditional-incomplete-reason-11">
+                                type="checkbox" value="10" data-aria-controls="conditional-incomplete-reason-11">
                                 <label class="govuk-label govuk-checkboxes__label" for="incomplete-reason-11">Other</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
@@ -9993,7 +9962,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="incomplete-reason-2035-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="incomplete-reason-10-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -10001,8 +9970,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                                             <div class="govuk-grid-column-full">
                                                 <div class="govuk-form-group">
                                                     <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
-                                                    id="incomplete-reason-2035-1" name="incompleteReason-2035" type="text"
-                                                    value="">
+                                                    id="incomplete-reason-10-1" name="incompleteReason-10" type="text" value="">
                                                 </div>
                                             </div>
                                         </div>

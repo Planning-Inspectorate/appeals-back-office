@@ -19,7 +19,8 @@ describe('change contacts', () => {
 			caseObj = ref;
 			appeal = caseObj;
 			cy.login(users.appeals.caseAdmin);
-			happyPathHelper.assignCaseOfficer(ref);
+			cy.assignCaseOfficerViaApi(ref);
+			happyPathHelper.viewCaseDetails(ref);
 		});
 	});
 

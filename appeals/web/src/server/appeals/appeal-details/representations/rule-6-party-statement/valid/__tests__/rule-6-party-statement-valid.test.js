@@ -18,6 +18,7 @@ const serviceUserId = 88;
 
 const rule6PartyStatementAwaitingReview = {
 	...lpaStatementAwaitingReview,
+	author: 'Test Organisation',
 	representationType: 'rule_6_party_statement',
 	represented: {
 		id: serviceUserId
@@ -213,6 +214,7 @@ describe('rule 6 party statement valid', () => {
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
 					...appealDataWithRule6Party,
+					allocationDetails: null,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -289,6 +291,34 @@ describe('rule 6 party statement valid', () => {
 			expect(innerHTML).toContain(
 				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-level" class="govuk-back-link"`
 			);
+		});
+	});
+
+	describe('GET /confirm', () => {
+		it('should render the confirm page with expected content including the party name in the title', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, {
+					...appealDataWithRule6Party,
+					allocationDetails: null,
+					appealId,
+					appealStatus: 'statements'
+				});
+
+			nock('http://test/')
+				.get('/appeals/appeal-allocation-specialisms')
+				.reply(200, allocationDetailsData.specialisms);
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/confirm`
+			);
+
+			expect(response.statusCode).toBe(200);
+			const { innerHTML } = parseHtml(response.text);
+			expect(innerHTML).toMatchSnapshot();
+
+			expect(innerHTML).toContain('Check details and accept Test Organisation statement</h1>');
+			expect(innerHTML).toContain('Accept statement</button>');
 		});
 	});
 });

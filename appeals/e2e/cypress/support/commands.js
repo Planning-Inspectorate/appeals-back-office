@@ -499,9 +499,7 @@ Cypress.Commands.add('deleteEstimateViaApi', (procedureType, caseObj) => {
 
 Cypress.Commands.add('assignCaseOfficerViaApi', (caseObj) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(caseObj.reference);
-		const appealId = await details.appealId;
-		return await appealsApiClient.assignCaseOfficer(appealId);
+		return await appealsApiClient.assignCaseOfficer(caseObj.id);
 	});
 });
 

@@ -492,6 +492,26 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 				azureAdUserId
 			});
 		});
+
+		if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
+			for (const party of appeal.appealRule6Parties) {
+				if (party.serviceUser?.email) {
+					await notifyPublished({
+						appeal,
+						notifyClient,
+						hasLpaStatement,
+						hasIpComments,
+						isHearingProcedure,
+						isInquiryProcedure,
+						templateName: appellantTemplate,
+						recipientEmail: party.serviceUser.email,
+						finalCommentsDueDate,
+						whatHappensNext: whatHappensNextAppellant,
+						azureAdUserId
+					});
+				}
+			}
+		}
 	} catch (error) {
 		logger.error(error);
 	}
@@ -616,20 +636,43 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
 		);
 
+		const isLpaValid =
+			lpaProofOfEvidence &&
+			lpaProofOfEvidence.status !== APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW;
+
+		const isAppellantValid =
+			appellantProofOfEvidence &&
+			appellantProofOfEvidence.status !== APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW;
+
+		const rule6PartiesStatus = (appeal.appealRule6Parties || []).map((party) => {
+			const rep = appeal.representations?.find(
+				(r) =>
+					r.representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE &&
+					r.representedId === party.serviceUser?.id
+			);
+			const isValid = rep && rep.status !== APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW;
+			return { party, isValid };
+		});
+
+		const areAllRule6Valid = rule6PartiesStatus.every((p) => p.isValid);
+		const allValid = isLpaValid && isAppellantValid && areAllRule6Valid;
+
 		const inquiryDetailWarningText =
 			'The details of the inquiry are subject to change. We will contact you by email if we make any changes.';
 		const inquiryWitnessesText =
 			'Your witnesses should be available for the duration of the inquiry.';
-		const inquiryDate = dateISOStringToDisplayDate(
-			typeof appeal.inquiry?.inquiryStartTime === 'string'
-				? appeal.inquiry?.inquiryStartTime
-				: appeal.inquiry?.inquiryStartTime.toISOString()
-		);
-		const inquiryTime = formatTime12h(
-			typeof appeal.inquiry?.inquiryStartTime === 'string'
-				? new Date(appeal.inquiry?.inquiryStartTime)
-				: appeal.inquiry?.inquiryStartTime
-		);
+		const inquiryDate =
+			dateISOStringToDisplayDate(
+				typeof appeal.inquiry?.inquiryStartTime === 'string'
+					? appeal.inquiry?.inquiryStartTime
+					: appeal.inquiry?.inquiryStartTime.toISOString()
+			) || 'Not Available';
+		const inquiryTime =
+			formatTime12h(
+				typeof appeal.inquiry?.inquiryStartTime === 'string'
+					? new Date(appeal.inquiry?.inquiryStartTime)
+					: appeal.inquiry?.inquiryStartTime
+			) || 'Not available';
 
 		const inquiryAddress = appeal.inquiry?.address
 			? formatAddressSingleLine(appeal.inquiry?.address)
@@ -641,77 +684,178 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 			? `You need to attend the inquiry on ${inquiryDate}.`
 			: 'We will contact you by email when we set up the inquiry';
 
-		if (
-			!lpaProofOfEvidence ||
-			lpaProofOfEvidence.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
-		) {
-			await notifyPublished({
-				appeal,
-				notifyClient,
-				isInquiryProcedure: true,
-				templateName: 'not-received-proof-of-evidence-and-witnesses',
-				recipientEmail: appeal.agent?.email || appeal.appellant?.email,
-				whatHappensNext,
-				azureAdUserId,
-				inquiryDetailWarningText,
-				inquiryWitnessesText,
-				inquiryDate,
-				inquiryTime,
-				inquiryExpectedDays,
-				inquiryAddress,
-				inquirySubjectLine:
-					'We did not receive any proof of evidence and witnesses from local planning authority or any other parties'
+		if (allValid) {
+			const validParties = [];
+			validParties.push({
+				name: 'local planning authority',
+				id: 'lpa'
 			});
-		}
-
-		if (
-			!appellantProofOfEvidence ||
-			appellantProofOfEvidence.status === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
-		) {
-			await notifyPublished({
-				appeal,
-				notifyClient,
-				isInquiryProcedure: true,
-				templateName: 'not-received-proof-of-evidence-and-witnesses',
-				recipientEmail: appeal.lpa?.email,
-				whatHappensNext,
-				azureAdUserId,
-				inquiryDetailWarningText,
-				inquiryWitnessesText,
-				inquiryDate,
-				inquiryTime,
-				inquiryExpectedDays,
-				inquiryAddress,
-				inquirySubjectLine:
-					'We did not receive any proof of evidence and witnesses from appellant or any other parties'
-			});
-		}
-
-		if (lpaProofOfEvidence && appellantProofOfEvidence) {
-			await notifyPublished({
-				appeal,
-				notifyClient,
-				isInquiryProcedure: true,
-				templateName: 'proof-of-evidence-and-witnesses-shared',
-				recipientEmail: appeal.agent?.email || appeal.appellant?.email,
-				whatHappensNext: 'appeals',
-				azureAdUserId,
-				inquiryDate,
-				inquirySubjectLine: 'local planning authority'
+			validParties.push({
+				name: 'appellant',
+				id: 'appellant'
 			});
 
-			await notifyPublished({
-				appeal,
-				notifyClient,
-				isInquiryProcedure: true,
-				templateName: 'proof-of-evidence-and-witnesses-shared',
-				recipientEmail: appeal.lpa?.email,
-				whatHappensNext: 'manage-appeals',
-				azureAdUserId,
-				inquiryDate,
-				inquirySubjectLine: 'appellant'
-			});
-			return result;
+			for (const r6 of rule6PartiesStatus) {
+				validParties.push({
+					name: r6.party.serviceUser?.organisationName,
+					id: r6.party.id,
+					isRule6: true
+				});
+			}
+
+			const recipients = [];
+
+			if (appeal.lpa?.email) {
+				recipients.push({
+					email: appeal.lpa.email,
+					type: 'lpa'
+				});
+			}
+
+			const appellantEmail = appeal.agent?.email || appeal.appellant?.email;
+			if (appellantEmail) {
+				recipients.push({
+					email: appellantEmail,
+					type: 'appellant'
+				});
+			}
+
+			for (const { party } of rule6PartiesStatus) {
+				if (party.serviceUser?.email) {
+					recipients.push({
+						email: party.serviceUser.email,
+						type: 'rule6',
+						id: party.id
+					});
+				}
+			}
+
+			for (const recipient of recipients) {
+				const partiesToNotifyAbout = validParties.filter((party) => {
+					if (recipient.type === 'lpa' && party.id === 'lpa') return false;
+					if (recipient.type === 'appellant' && party.id === 'appellant') return false;
+					if (recipient.type === 'rule6' && party.id === recipient.id) return false;
+					return true;
+				});
+
+				const formatter = new Intl.ListFormat('en', {
+					style: 'long',
+					type: 'conjunction'
+				});
+				const partyNames = partiesToNotifyAbout
+					.map((p) => p.name)
+					.filter(/** @type {(name: any) => name is string} */ (name) => !!name);
+				const partyNamesList = formatter.format(partyNames);
+
+				await notifyPublished({
+					appeal,
+					notifyClient,
+					isInquiryProcedure: true,
+					templateName: 'proof-of-evidence-and-witnesses-shared',
+					recipientEmail: recipient.email,
+					whatHappensNext:
+						recipient.type === 'lpa'
+							? 'manage-appeals'
+							: recipient.type === 'rule6'
+								? 'rule-6'
+								: 'appeals',
+					azureAdUserId,
+					inquiryDetailWarningText,
+					inquiryWitnessesText,
+					inquiryDate,
+					inquiryTime,
+					inquiryExpectedDays,
+					inquiryAddress,
+					inquirySubjectLine: partyNamesList
+				});
+			}
+		} else {
+			const missingParties = [];
+			if (!isLpaValid) {
+				missingParties.push({
+					name: 'local planning authority',
+					id: 'lpa'
+				});
+			}
+			if (!isAppellantValid) {
+				missingParties.push({
+					name: 'appellant',
+					id: 'appellant'
+				});
+			}
+
+			for (const failedR6 of rule6PartiesStatus.filter((r) => !r.isValid)) {
+				missingParties.push({
+					name: failedR6.party.serviceUser?.organisationName,
+					id: failedR6.party.id,
+					isRule6: true
+				});
+			}
+
+			const recipients = [];
+
+			if (appeal.lpa?.email) {
+				recipients.push({
+					email: appeal.lpa.email,
+					type: 'lpa'
+				});
+			}
+
+			const appellantEmail = appeal.agent?.email || appeal.appellant?.email;
+			if (appellantEmail) {
+				recipients.push({
+					email: appellantEmail,
+					type: 'appellant'
+				});
+			}
+
+			for (const { party } of rule6PartiesStatus) {
+				if (party.serviceUser?.email) {
+					recipients.push({
+						email: party.serviceUser.email,
+						type: 'rule6',
+						id: party.id
+					});
+				}
+			}
+
+			for (const recipient of recipients) {
+				const partiesToNotifyAbout = missingParties.filter((party) => {
+					if (recipient.type === 'lpa' && party.id === 'lpa') return false;
+					if (recipient.type === 'appellant' && party.id === 'appellant') return false;
+					if (recipient.type === 'rule6' && party.id === recipient.id) return false;
+					return true;
+				});
+
+				if (partiesToNotifyAbout.length > 0) {
+					const formatter = new Intl.ListFormat('en', {
+						style: 'long',
+						type: 'disjunction'
+					});
+					const partyNames = partiesToNotifyAbout
+						.map((p) => p.name)
+						.filter(/** @type {(name: any) => name is string} */ (name) => !!name);
+					const partyNamesList = formatter.format(partyNames);
+					const subject = `We did not receive any proof of evidence and witnesses from the ${partyNamesList}`;
+
+					await notifyPublished({
+						appeal,
+						notifyClient,
+						isInquiryProcedure: true,
+						templateName: 'not-received-proof-of-evidence-and-witnesses',
+						recipientEmail: recipient.email,
+						whatHappensNext,
+						azureAdUserId,
+						inquiryDetailWarningText,
+						inquiryWitnessesText,
+						inquiryDate,
+						inquiryTime,
+						inquiryExpectedDays,
+						inquiryAddress,
+						inquirySubjectLine: subject
+					});
+				}
+			}
 		}
 	} catch (error) {
 		logger.error(error);

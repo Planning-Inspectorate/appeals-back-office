@@ -1771,59 +1771,74 @@ export const appealCaseEnforcementInvalidReasons = [
 
 export const appellantCaseIncompleteReasons = [
 	{
-		id: 2025,
+		id: 1,
 		name: 'Appellant name is not the same on the application form and appeal form',
 		hasText: false
 	},
 	{
-		id: 2026,
+		id: 2,
 		name: 'Attachments and/or appendices have not been included to the full statement of case',
 		hasText: true
 	},
 	{
-		id: 2027,
+		id: 3,
 		name: "LPA's decision notice is missing",
 		hasText: false
 	},
 	{
-		id: 2028,
+		id: 4,
 		name: "LPA's decision notice is incorrect or incomplete",
 		hasText: true
 	},
 	{
-		id: 2029,
+		id: 5,
 		name: 'Documents and/or plans referred in the application form, decision notice and appeal covering letter are missing',
 		hasText: true
 	},
 	{
-		id: 2030,
+		id: 6,
 		name: 'Agricultural holding certificate and declaration have not been completed on the appeal form',
 		hasText: false
 	},
 	{
-		id: 2031,
+		id: 7,
 		name: 'The original application form is missing',
 		hasText: false
 	},
 	{
-		id: 2032,
+		id: 8,
 		name: 'The original application form is incomplete',
 		hasText: true
 	},
 	{
-		id: 2033,
+		id: 9,
 		name: 'Statement of case and ground of appeal are missing',
 		hasText: false
 	},
 	{
-		id: 2034,
+		id: 11,
 		name: 'Draft statement of common ground is missing',
 		hasText: false
 	},
 	{
-		id: 2035,
+		id: 10,
 		name: 'Other',
 		hasText: true
+	},
+	{
+		id: 12,
+		name: 'Missing documents',
+		hasText: false
+	},
+	{
+		id: 13,
+		name: 'Grounds and facts do not match',
+		hasText: false
+	},
+	{
+		id: 14,
+		name: 'Waiting for appellant to pay the fee',
+		hasText: false
 	}
 ];
 

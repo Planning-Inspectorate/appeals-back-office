@@ -77,4 +77,25 @@ describe('lpa-questionnaire.mapper', () => {
 		expect(received.text).toEqual('');
 		expect(action.html).toContain('class="govuk-link">View<span');
 	});
+
+	it('Should not be visible if child enforcement appeal', () => {
+		params.appealDetails.isChildAppeal = true;
+		params.appealDetails.appealType = 'Enforcement notice appeal';
+		const result = mapLpaQuestionnaire(params);
+		expect(result.display.tableItem).toEqual(undefined);
+	});
+
+	it('Should be visible if lead enforcement appeal', () => {
+		params.appealDetails.isParentAppeal = true;
+		params.appealDetails.appealType = 'Enforcement notice appeal';
+		const result = mapLpaQuestionnaire(params);
+		expect(result.display.tableItem).not.toEqual(undefined);
+	});
+
+	it('Should be visible if child planning appeal', () => {
+		params.appealDetails.isChildAppeal = true;
+		params.appealDetails.appealType = 'Planning appeal';
+		const result = mapLpaQuestionnaire(params);
+		expect(result.display.tableItem).not.toEqual(undefined);
+	});
 });

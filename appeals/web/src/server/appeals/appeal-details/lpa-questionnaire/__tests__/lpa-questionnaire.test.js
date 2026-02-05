@@ -155,6 +155,42 @@ describe('LPA Questionnaire review', () => {
 		expect(response.text).not.toContain('Is householder the correct type of appeal?');
 	});
 
+	it('should render Enforcement section 5', async () => {
+		const appealId = 100;
+		const lpaqId = 200;
+
+		nock('http://test/')
+			.get(new RegExp(`/appeals/${appealId}/lpa-questionnaires/${lpaqId}`))
+			.reply(200, {
+				...lpaQuestionnaireData,
+				appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
+				siteAreaSquareMetres: 500,
+				isSiteOnCrownLand: true
+			});
+
+		nock('http://test/')
+			.get(new RegExp(`/appeals/${appealId}`))
+			.reply(200, {
+				...lpaqAppealData,
+				appealId,
+				appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE
+			})
+			.persist();
+
+		const response = await request.get(
+			`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaqId}`
+		);
+		expect(response.text).toContain('5. Site access');
+		expect(response.text).toContain(
+			'Will the inspector need access to the appellant’s land or property?'
+		);
+		expect(response.text).toContain(
+			'Will the inspector need to enter a neighbour’s land or property?'
+		);
+		expect(response.text).toContain('Address of the neighbour’s land or property');
+		expect(response.text).toContain('Are there any potential safety risks?');
+	});
+
 	describe('Notification banners', () => {
 		it('should render a success notification banner when "is correct appeal type" is updated', async () => {
 			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/2`).reply(200, {});

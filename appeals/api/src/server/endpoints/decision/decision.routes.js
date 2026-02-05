@@ -45,7 +45,8 @@ router.post(
 		'lpa',
 		'folders',
 		'appealType',
-		'childAppeals'
+		'childAppeals',
+		'appealRule6Parties'
 	]),
 	getDecisionsValidator,
 	getDecisionTypeValidator,

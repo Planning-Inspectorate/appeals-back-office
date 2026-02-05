@@ -163,6 +163,26 @@ describe('representation mapper', () => {
 			});
 		}
 
+		for (const representationType of [
+			APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
+			APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
+			APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
+		]) {
+			test(`Mapping valid Proof of Evidence type: ${representationType}`, async () => {
+				// @ts-ignore
+				const mapped = mapRepresentationEntity({ ...mockRepresentation, representationType });
+				// @ts-ignore
+				expect(mapped.representationType).toEqual('proofs_evidence');
+
+				const validationResult = await validateFromSchema(
+					schemas.events.appealRepresentation,
+					// @ts-ignore
+					mapped
+				);
+				expect(validationResult).toBe(true);
+			});
+		}
+
 		test('Mapping rejection reasons', async () => {
 			const mapped = mapRepresentationEntity({
 				...mockRepresentation,

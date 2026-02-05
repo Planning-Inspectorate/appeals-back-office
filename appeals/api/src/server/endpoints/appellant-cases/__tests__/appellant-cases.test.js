@@ -618,7 +618,8 @@ describe('appellant cases routes', () => {
 				['casPlanningAppeal', casPlanningAppealAppellantCaseIncomplete],
 				['casAdvertAppeal', casAdvertAppealAppellantCaseIncomplete],
 				['fullPlanningAppeal', fullPlanningAppealAppellantCaseIncomplete],
-				['listedBuildingAppeal', listedBuildingAppealAppellantCaseIncomplete]
+				['listedBuildingAppeal', listedBuildingAppealAppellantCaseIncomplete],
+				['ldcAppeal', ldcAppealAppellantCaseIncomplete]
 			])(
 				'sends a correctly formatted notify email when the validation outcome is Incomplete for %s appeal',
 				async (_, appeal) => {
@@ -898,7 +899,8 @@ describe('appellant cases routes', () => {
 				],
 				['casAdvertAppeal', casAdvertAppealAppellantCaseInvalid, FEEDBACK_FORM_LINKS.CAS_ADVERTS],
 				['fullPlanningAppeal', fullPlanningAppealAppellantCaseInvalid, FEEDBACK_FORM_LINKS.S78],
-				['listedBuildingAppeal', listedBuildingAppealAppellantCaseInvalid, FEEDBACK_FORM_LINKS.S20]
+				['listedBuildingAppeal', listedBuildingAppealAppellantCaseInvalid, FEEDBACK_FORM_LINKS.S20],
+				['ldc', ldcAppealAppellantCaseInvalid, FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE]
 			])(
 				'sends a correctly formatted notify email when the validation outcome is Invalid for %s appeal',
 				async (_, appeal, expectedFeedbackLink) => {
@@ -981,7 +983,8 @@ describe('appellant cases routes', () => {
 				['casAdvertAppeal', casAdvertAppeal, FEEDBACK_FORM_LINKS.CAS_ADVERTS],
 				['casPlanningAppeal', casPlanningAppeal, FEEDBACK_FORM_LINKS.CAS_PLANNING],
 				['fullPlanningAppeal', fullPlanningAppeal, FEEDBACK_FORM_LINKS.S78],
-				['listedBuildingAppeal', listedBuildingAppeal, FEEDBACK_FORM_LINKS.S20]
+				['listedBuildingAppeal', listedBuildingAppeal, FEEDBACK_FORM_LINKS.S20],
+				['ldc', ldcAppeal, FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE]
 			])(
 				'updates appellant case and sends a notify email when the validation outcome is Valid for %s appeal',
 				async (_, appeal, expectedFeedbackLink) => {
@@ -1049,6 +1052,98 @@ describe('appellant cases routes', () => {
 					expect(response.status).toEqual(200);
 				}
 			);
+
+			test('updates appellant case and sends notify emails for valid enforcement notice appeal', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...enforcementNoticeAppeal,
+					appealType: {
+						key: 'C',
+						type: 'Enforcement Notice appeal'
+					},
+					appealGrounds: [
+						{
+							ground: {
+								groundRef: 'b',
+								groundDescription: 'Ground B'
+							}
+						},
+						{
+							ground: {
+								groundRef: 'a',
+								groundDescription: 'Ground A'
+							}
+						}
+					]
+				});
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[2]
+				);
+				databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+				databaseConnector.documentVersion.update.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ id: 1, key: 'no_redaction_required' }
+				]);
+				databaseConnector.document.findUnique.mockResolvedValue(null);
+
+				const patchBody = {
+					validationOutcome: 'valid',
+					groundABarred: false,
+					otherInformation: 'Accio horcrux'
+				};
+				const { appellantCase, id } = enforcementNoticeAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: { appellantCaseValidationOutcomeId: 3 }
+				});
+
+				expect(response.status).toEqual(200);
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: enforcementNoticeAppeal.reference,
+						lpa_reference: enforcementNoticeAppeal.applicationReference,
+						site_address: `${enforcementNoticeAppeal.address.addressLine1}, ${enforcementNoticeAppeal.address.addressLine2}, ${enforcementNoticeAppeal.address.addressTown}, ${enforcementNoticeAppeal.address.addressCounty}, ${enforcementNoticeAppeal.address.postcode}, ${enforcementNoticeAppeal.address.addressCountry}`,
+						feedback_link: FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						local_planning_authority: enforcementNoticeAppeal.lpa.name,
+						appeal_type: 'Enforcement Notice',
+						enforcement_reference: enforcementNoticeAppeal.appellantCase.enforcementReference,
+						appeal_grounds: ['a', 'b'],
+						ground_a_barred: false,
+						other_info: 'Accio horcrux'
+					},
+					recipientEmail: enforcementNoticeAppeal.agent.email,
+					templateName: 'appeal-confirmed-enforcement-appellant'
+				});
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: enforcementNoticeAppeal.reference,
+						lpa_reference: enforcementNoticeAppeal.applicationReference,
+						site_address: `${enforcementNoticeAppeal.address.addressLine1}, ${enforcementNoticeAppeal.address.addressLine2}, ${enforcementNoticeAppeal.address.addressTown}, ${enforcementNoticeAppeal.address.addressCounty}, ${enforcementNoticeAppeal.address.postcode}, ${enforcementNoticeAppeal.address.addressCountry}`,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						local_planning_authority: enforcementNoticeAppeal.lpa.name,
+						appeal_type: 'Enforcement Notice',
+						enforcement_reference: enforcementNoticeAppeal.appellantCase.enforcementReference,
+						appeal_grounds: ['a', 'b'],
+						ground_a_barred: false,
+						other_info: 'Accio horcrux',
+						appellant_contact_details: 'Lee Thornton, test@1367.com, 01234 567 890',
+						agent_contact_details: 'John Smith, test@136s7.com, 09876 543 210'
+					},
+					recipientEmail: enforcementNoticeAppeal.lpa.email,
+					templateName: 'appeal-confirmed-enforcement-lpa'
+				});
+			});
 
 			test('updates appellant case site area and procedure preferences', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
@@ -1417,7 +1512,7 @@ describe('appellant cases routes', () => {
 					}
 				});
 
-				expect(mockNotifySend).not.toHaveBeenCalled();
+				expect(mockNotifySend).toHaveBeenCalled();
 				expect(response.status).toEqual(200);
 			});
 

@@ -206,7 +206,7 @@ describe('decision routes', () => {
 				'',
 				enforcementNoticeAppeal,
 				FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE,
-				'Enforcement Notice'
+				'Enforcement notice'
 			],
 			[
 				'listedBuildingAppeal',
@@ -240,7 +240,7 @@ describe('decision routes', () => {
 				'',
 				enforcementNoticeAppeal,
 				FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE,
-				'Enforcement Notice',
+				'Enforcement notice',
 				'invalid'
 			],
 			[
@@ -249,7 +249,7 @@ describe('decision routes', () => {
 				'Because it is.',
 				enforcementNoticeAppeal,
 				FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE,
-				'Enforcement Notice',
+				'Enforcement notice',
 				'invalid'
 			]
 		])(
@@ -768,6 +768,277 @@ describe('decision routes', () => {
 
 			expect(response.status).toEqual(201);
 		});
+
+		test('returns 200 and sends emails to rule 6 parties when confirmed', async () => {
+			const appeal = {
+				...fullPlanningAppeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				],
+				appealRule6Parties: [
+					{
+						id: 1,
+						appealId: 2,
+						serviceUserId: 1,
+						proofEvidenceReceived: true,
+						serviceUser: {
+							email: 'rule6@example.com'
+						}
+					}
+				]
+			};
+
+			const outcome = 'allowed';
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.inspectorDecision.create.mockResolvedValue({});
+
+			const tenDaysAgo = sub(new Date(), { days: 10 });
+			const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
+			const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
+
+			const response = await request
+				.post(`/appeals/${appeal.id}/decision`)
+				.send({
+					decisions: [
+						{
+							decisionType: DECISION_TYPE_INSPECTOR,
+							outcome,
+							documentDate: utcDate.toISOString(),
+							documentGuid: documentCreated.guid
+						}
+					]
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(3);
+
+			const personalisation = {
+				appeal_reference_number: appeal.reference,
+				appeal_type: 'Planning',
+				lpa_reference: appeal.applicationReference,
+				site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+				child_appeals: [],
+				decision_date: formatDate(utcDate, false),
+				front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
+			};
+
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.any(Object),
+				personalisation: {
+					...personalisation,
+					feedback_link: FEEDBACK_FORM_LINKS.S78
+				},
+				templateName: 'decision-is-allowed-split-dismissed-appellant',
+				recipientEmail: appeal.agent.email
+			});
+
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.any(Object),
+				personalisation: {
+					...personalisation,
+					feedback_link: FEEDBACK_FORM_LINKS.LPA
+				},
+				templateName: 'decision-is-allowed-split-dismissed-lpa',
+				recipientEmail: appeal.lpa.email
+			});
+
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.any(Object),
+				personalisation: {
+					...personalisation,
+					feedback_link: FEEDBACK_FORM_LINKS.S78
+				},
+				templateName: 'decision-is-allowed-split-dismissed-appellant',
+				recipientEmail: 'rule6@example.com'
+			});
+
+			expect(response.status).toEqual(201);
+		});
+
+		test('returns 200 and sends emails to rule 6 parties when sending appellant cost decision', async () => {
+			const appeal = {
+				...fullPlanningAppeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				],
+				appealRule6Parties: [
+					{
+						id: 1,
+						appealId: 2,
+						serviceUserId: 1,
+						proofEvidenceReceived: true,
+						serviceUser: {
+							email: 'rule6@example.com'
+						}
+					}
+				]
+			};
+
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.inspectorDecision.create.mockResolvedValue({});
+
+			const tenDaysAgo = sub(new Date(), { days: 10 });
+			const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
+			const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
+
+			const response = await request
+				.post(`/appeals/${appeal.id}/decision`)
+				.send({
+					decisions: [
+						{
+							decisionType: DECISION_TYPE_APPELLANT_COSTS,
+							documentDate: utcDate.toISOString(),
+							documentGuid: documentCreated.guid
+						}
+					]
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(3);
+
+			const personalisation = {
+				appeal_reference_number: appeal.reference,
+				lpa_reference: appeal.applicationReference,
+				site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+				front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
+			};
+
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.any(Object),
+				personalisation: {
+					...personalisation,
+					feedback_link: FEEDBACK_FORM_LINKS.S78
+				},
+				templateName: 'appellant-costs-decision-appellant',
+				recipientEmail: appeal.agent.email
+			});
+
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.any(Object),
+				personalisation: {
+					...personalisation,
+					feedback_link: FEEDBACK_FORM_LINKS.LPA
+				},
+				templateName: 'appellant-costs-decision-lpa',
+				recipientEmail: appeal.lpa.email
+			});
+
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.any(Object),
+				personalisation: {
+					...personalisation,
+					feedback_link: FEEDBACK_FORM_LINKS.S78
+				},
+				templateName: 'appellant-costs-decision-appellant',
+				recipientEmail: 'rule6@example.com'
+			});
+
+			expect(response.status).toEqual(201);
+		});
+
+		test('returns 200 and sends emails to rule 6 parties when sending lpa cost decision', async () => {
+			const appeal = {
+				...fullPlanningAppeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				],
+				appealRule6Parties: [
+					{
+						id: 1,
+						appealId: 2,
+						serviceUserId: 1,
+						proofEvidenceReceived: true,
+						serviceUser: {
+							email: 'rule6@example.com'
+						}
+					}
+				]
+			};
+
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.inspectorDecision.create.mockResolvedValue({});
+
+			const tenDaysAgo = sub(new Date(), { days: 10 });
+			const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
+			const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
+
+			const response = await request
+				.post(`/appeals/${appeal.id}/decision`)
+				.send({
+					decisions: [
+						{
+							decisionType: DECISION_TYPE_LPA_COSTS,
+							documentDate: utcDate.toISOString(),
+							documentGuid: documentCreated.guid
+						}
+					]
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(3);
+
+			const personalisation = {
+				appeal_reference_number: appeal.reference,
+				lpa_reference: appeal.applicationReference,
+				site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+				front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
+			};
+
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.any(Object),
+				templateName: 'lpa-costs-decision-appellant',
+				personalisation: {
+					...personalisation,
+					feedback_link: FEEDBACK_FORM_LINKS.S78
+				},
+				recipientEmail: appeal.agent.email
+			});
+
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.any(Object),
+				personalisation: {
+					...personalisation,
+					feedback_link: FEEDBACK_FORM_LINKS.LPA
+				},
+				templateName: 'lpa-costs-decision-lpa',
+				recipientEmail: appeal.lpa.email
+			});
+
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.any(Object),
+				templateName: 'lpa-costs-decision-appellant',
+				personalisation: {
+					...personalisation,
+					feedback_link: FEEDBACK_FORM_LINKS.S78
+				},
+				recipientEmail: 'rule6@example.com'
+			});
+
+			expect(response.status).toEqual(201);
+		});
+
+		//TODO: Add test for rule 6 party cost comms when the comms are added
 	});
 
 	describe('sendNewDecisionLetter', () => {
@@ -821,11 +1092,10 @@ describe('decision routes', () => {
 				decisionDate
 			);
 
-			expect(mockNotifySend).toHaveBeenCalledTimes(5);
+			expect(mockNotifySend).toHaveBeenCalledTimes(4);
 
 			const expectedRecipients = [
 				{ type: 'agent', email: correctAppealState.agent.email },
-				{ type: 'appellant', email: correctAppealState.appellant.email },
 				{ type: 'lpa', email: correctAppealState.lpa.email },
 				{ type: 'commenter', email: 'commenter2@test.com' },
 				{ type: 'commenter', email: 'commenter1@test.com' }
@@ -858,6 +1128,212 @@ describe('decision routes', () => {
 					userId: correctAppealState.caseOfficer.id
 				}
 			});
+		});
+
+		test('sends correction notice to all unique emails and creates audit trail, prefers agent email over appellant when both exist', async () => {
+			const correctAppealState = {
+				...householdAppeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				]
+			};
+
+			databaseConnector.representation.count.mockResolvedValue(2);
+			databaseConnector.appeal.findUnique.mockResolvedValue(correctAppealState);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{
+					represented: {
+						email: 'commenter1@test.com'
+					}
+				},
+				{
+					represented: {
+						email: 'commenter2@test.com'
+					}
+				}
+			]);
+
+			const correctionNotice = 'Test correction notice';
+			const decisionDate = new Date('2023-11-10');
+
+			const appealWithAgentAndAppellant = {
+				...correctAppealState,
+				agent: {
+					...correctAppealState.agent,
+					email: 'agent@example.com'
+				},
+				appellant: {
+					...correctAppealState.appellant,
+					email: 'appellant@example.com'
+				}
+			};
+
+			await sendNewDecisionLetter(
+				appealWithAgentAndAppellant,
+				correctionNotice,
+				azureAdUserId,
+				mockNotifyClient,
+				decisionDate
+			);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(4);
+
+			const expectedRecipients = [
+				{ type: 'agent', email: 'agent@example.com' },
+				{ type: 'lpa', email: appealWithAgentAndAppellant.lpa.email.trim().toLowerCase() },
+				{ type: 'commenter', email: 'commenter2@test.com' },
+				{ type: 'commenter', email: 'commenter1@test.com' }
+			];
+
+			const recipients = mockNotifySend.mock.calls.map(([arg]) => arg.recipientEmail);
+			expect(recipients).not.toContain('appellant@example.com');
+
+			expectedRecipients.forEach((recipient) => {
+				expect(mockNotifySend).toHaveBeenCalledWith({
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.any(Object),
+					templateName: 'correction-notice-decision',
+					recipientEmail: recipient.email,
+					personalisation: {
+						appeal_reference_number: appealWithAgentAndAppellant.reference,
+						lpa_reference: appealWithAgentAndAppellant.applicationReference,
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						front_office_url: 'https://appeal-planning-decision.service.gov.uk/appeals/1345264',
+						correction_notice_reason: correctionNotice,
+						decision_date: formatDate(decisionDate, false),
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						feedback_link: FEEDBACK_FORM_LINKS.HAS
+					}
+				});
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: appealWithAgentAndAppellant.id,
+					details: stringTokenReplacement(AUDIT_TRAIL_CORRECTION_NOTICE_ADDED, [correctionNotice]),
+					loggedAt: expect.any(Date),
+					userId: appealWithAgentAndAppellant.caseOfficer.id
+				}
+			});
+		});
+
+		test('sends correction notice to all unique emails and creates audit trail, falls back to appellant when agent missing', async () => {
+			const correctAppealState = {
+				...householdAppeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				]
+			};
+
+			databaseConnector.representation.count.mockResolvedValue(2);
+			databaseConnector.appeal.findUnique.mockResolvedValue(correctAppealState);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{
+					represented: {
+						email: 'commenter1@test.com'
+					}
+				},
+				{
+					represented: {
+						email: 'commenter2@test.com'
+					}
+				}
+			]);
+
+			const correctionNotice = 'Test correction notice';
+			const decisionDate = new Date('2023-11-10');
+
+			const appealWithMissingAgent = {
+				...correctAppealState,
+				agent: null,
+				appellant: {
+					...correctAppealState.appellant,
+					email: 'appellant@example.com'
+				}
+			};
+
+			await sendNewDecisionLetter(
+				appealWithMissingAgent,
+				correctionNotice,
+				azureAdUserId,
+				mockNotifyClient,
+				decisionDate
+			);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(4);
+
+			const expectedRecipients = [
+				{ type: 'appellant', email: 'appellant@example.com' },
+				{ type: 'lpa', email: appealWithMissingAgent.lpa.email.trim().toLowerCase() },
+				{ type: 'commenter', email: 'commenter2@test.com' },
+				{ type: 'commenter', email: 'commenter1@test.com' }
+			];
+
+			const recipients = mockNotifySend.mock.calls.map(([arg]) => arg.recipientEmail);
+			expect(recipients).not.toContain(correctAppealState.agent?.email);
+			expect(recipients).toContain('appellant@example.com');
+
+			expectedRecipients.forEach((recipient) => {
+				expect(mockNotifySend).toHaveBeenCalledWith({
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.any(Object),
+					templateName: 'correction-notice-decision',
+					recipientEmail: recipient.email,
+					personalisation: {
+						appeal_reference_number: appealWithMissingAgent.reference,
+						lpa_reference: appealWithMissingAgent.applicationReference,
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						front_office_url: 'https://appeal-planning-decision.service.gov.uk/appeals/1345264',
+						correction_notice_reason: correctionNotice,
+						decision_date: formatDate(decisionDate, false),
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						feedback_link: FEEDBACK_FORM_LINKS.HAS
+					}
+				});
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: appealWithMissingAgent.id,
+					details: stringTokenReplacement(AUDIT_TRAIL_CORRECTION_NOTICE_ADDED, [correctionNotice]),
+					loggedAt: expect.any(Date),
+					userId: appealWithMissingAgent.caseOfficer.id
+				}
+			});
+		});
+
+		test('de-dupes exact duplicate commenter emails', async () => {
+			const correctAppealState = {
+				...householdAppeal,
+				appealStatus: [{ status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION, valid: true }]
+			};
+
+			databaseConnector.representation.count.mockResolvedValue(2);
+			databaseConnector.appeal.findUnique.mockResolvedValue(correctAppealState);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{ represented: { email: 'dup@test.com' } },
+				{ represented: { email: 'dup@test.com' } }
+			]);
+
+			await sendNewDecisionLetter(
+				correctAppealState,
+				'Test correction notice',
+				azureAdUserId,
+				mockNotifyClient,
+				new Date('2023-11-10')
+			);
+
+			const recipients = mockNotifySend.mock.calls.map(([arg]) => arg.recipientEmail);
+			expect(recipients.filter((e) => e === 'dup@test.com')).toHaveLength(1);
 		});
 
 		test('handles missing emails correctly', async () => {

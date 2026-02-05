@@ -24,6 +24,12 @@ export function getFeedbackLinkFromAppealTypeName(appealName) {
 		case APPEAL_TYPE.ADVERTISEMENT: // Full Adverts
 			return FEEDBACK_FORM_LINKS.FULL_ADVERTS;
 
+		case APPEAL_TYPE.ENFORCEMENT_NOTICE: // Enforcement notice
+			return FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE;
+
+		case APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE: // Lawful development certificate
+			return FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE;
+
 		default:
 			return FEEDBACK_FORM_LINKS.ALL;
 	}

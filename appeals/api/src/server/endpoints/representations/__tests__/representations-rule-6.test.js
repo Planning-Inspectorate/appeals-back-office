@@ -1,6 +1,13 @@
 // @ts-nocheck
 import { fullPlanningAppeal, householdAppeal } from '#tests/appeals/mocks.js';
 import { jest } from '@jest/globals';
+import {
+	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_REPRESENTATION_TYPE
+} from '@pins/appeals/constants/common.js';
+import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
+
+const { notifySend } = await import('#notify/notify-send.js');
 
 let request;
 let databaseConnector;
@@ -390,5 +397,306 @@ describe('Rule 6 Representations', () => {
 				})
 			);
 		});
+	});
+});
+describe('publishProofOfEvidence', () => {
+	const appealId = 1;
+	const azureAdUserId = '732652365';
+
+	const mockAppeal = {
+		id: appealId,
+		reference: '123456',
+		applicationReference: 'APP/123/456',
+		lpa: { email: 'lpa@example.com' },
+		agent: { email: 'agent@example.com' },
+		appellant: { email: 'appellant@example.com' },
+		appealStatus: [{ status: 'evidence', valid: true }],
+		appealRule6Parties: [
+			{
+				id: 1,
+				serviceUser: {
+					id: 101,
+					email: 'r6_1@example.com',
+					organisationName: 'Rule 6 Org 1'
+				}
+			},
+			{
+				id: 2,
+				serviceUser: {
+					id: 102,
+					email: 'r6_2@example.com',
+					organisationName: 'Rule 6 Org 2'
+				}
+			}
+		],
+		representations: [],
+		inquiry: {
+			inquiryStartTime: new Date().toISOString(),
+			estimatedDays: 1,
+			address: { addressLine1: '123 High St' }
+		},
+		appealType: { key: 'D' }
+	};
+	beforeAll(async () => {
+		const appTest = await import('#server/app-test.js');
+		request = appTest.request;
+		const db = await import('#utils/database-connector.js');
+		databaseConnector = db.databaseConnector;
+	});
+	beforeEach(() => {
+		jest.clearAllMocks();
+		databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+		databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+			{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+		]);
+		databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+		databaseConnector.representation.updateMany.mockResolvedValue([]);
+		databaseConnector.representation.findMany.mockResolvedValue([]);
+		databaseConnector.appealStatus.create.mockResolvedValue({});
+
+		databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+	});
+
+	it('should send a single aggregated email to each recipient when multiple parties are invalid', async () => {
+		const testAppeal = {
+			...mockAppeal,
+			representations: [
+				{
+					representationType: APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE,
+					representedId: 102,
+					status: APPEAL_REPRESENTATION_STATUS.VALID
+				}
+			]
+		};
+		databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
+		const response = await request
+			.post(`/appeals/${appealId}/reps/publish`)
+			.query({ type: 'evidence' })
+			.set('azureAdUserId', azureAdUserId);
+
+		expect(response.status).toEqual(200);
+		expect(notifySend).toHaveBeenCalledTimes(4);
+
+		const findCall = (email) =>
+			notifySend.mock.calls.find((call) => call[0].recipientEmail === email);
+
+		const callLpa = findCall('lpa@example.com');
+		expect(callLpa).toBeDefined();
+		expect(callLpa[0].personalisation.inquiry_subject_line).toContain('appellant or Rule 6 Org 1');
+		expect(callLpa[0].personalisation.inquiry_subject_line).not.toContain(
+			'local planning authority'
+		);
+
+		const callApp = findCall('agent@example.com');
+		expect(callApp).toBeDefined();
+		expect(callApp[0].personalisation.inquiry_subject_line).toContain(
+			'local planning authority or Rule 6 Org 1'
+		);
+		expect(callApp[0].personalisation.inquiry_subject_line).not.toContain('appellant');
+
+		const callR6_1 = findCall('r6_1@example.com');
+		expect(callR6_1).toBeDefined();
+		expect(callR6_1[0].personalisation.inquiry_subject_line).toContain(
+			'local planning authority or appellant'
+		);
+		expect(callR6_1[0].personalisation.inquiry_subject_line).not.toContain('Rule 6 Org 1');
+
+		const callR6_2 = findCall('r6_2@example.com');
+		expect(callR6_2).toBeDefined();
+		expect(callR6_2[0].personalisation.inquiry_subject_line).toContain(
+			'local planning authority, appellant, or Rule 6 Org 1'
+		);
+	});
+
+	it('should send "Exchange of proof" email to all parties when ALL parties have submitted valid PoE', async () => {
+		const testAppeal = {
+			...mockAppeal,
+			representations: [
+				{
+					representationType: APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
+					status: APPEAL_REPRESENTATION_STATUS.VALID
+				},
+				{
+					representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
+					status: APPEAL_REPRESENTATION_STATUS.VALID
+				},
+				{
+					representationType: APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE,
+					representedId: 101,
+					status: APPEAL_REPRESENTATION_STATUS.VALID
+				},
+				{
+					representationType: APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE,
+					representedId: 102,
+					status: APPEAL_REPRESENTATION_STATUS.VALID
+				}
+			]
+		};
+
+		databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
+
+		const response = await request
+			.post(`/appeals/${appealId}/reps/publish`)
+			.query({ type: 'evidence' })
+			.set('azureAdUserId', azureAdUserId);
+
+		expect(response.status).toEqual(200);
+
+		expect(notifySend).toHaveBeenCalledTimes(4);
+
+		const findCall = (email) =>
+			notifySend.mock.calls.find((call) => call[0].recipientEmail === email);
+
+		const callLpa = findCall('lpa@example.com');
+		expect(callLpa).toBeDefined();
+		expect(callLpa[0].personalisation.inquiry_subject_line).toContain(
+			'appellant, Rule 6 Org 1, and Rule 6 Org 2'
+		);
+
+		const callApp = findCall('agent@example.com');
+		expect(callApp).toBeDefined();
+		expect(callApp[0].personalisation.inquiry_subject_line).toContain(
+			'local planning authority, Rule 6 Org 1, and Rule 6 Org 2'
+		);
+
+		const callR6_1 = findCall('r6_1@example.com');
+		expect(callR6_1).toBeDefined();
+		expect(callR6_1[0].personalisation.inquiry_subject_line).toContain(
+			'local planning authority, appellant, and Rule 6 Org 2'
+		);
+
+		const callR6_2 = findCall('r6_2@example.com');
+		expect(callR6_2).toBeDefined();
+		expect(callR6_2[0].personalisation.inquiry_subject_line).toContain(
+			'local planning authority, appellant, and Rule 6 Org 1'
+		);
+
+		notifySend.mock.calls.forEach((call) => {
+			expect(call[0].templateName).toEqual('proof-of-evidence-and-witnesses-shared');
+		});
+	});
+
+	it('should notify others when LPA is missing PoE (LPA gets no email)', async () => {
+		const testAppeal = {
+			...mockAppeal,
+			representations: [
+				{
+					representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
+					status: APPEAL_REPRESENTATION_STATUS.VALID
+				},
+				{
+					representationType: APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE,
+					representedId: 101,
+					status: APPEAL_REPRESENTATION_STATUS.VALID
+				},
+				{
+					representationType: APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE,
+					representedId: 102,
+					status: APPEAL_REPRESENTATION_STATUS.VALID
+				}
+			]
+		};
+
+		databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
+
+		await request
+			.post(`/appeals/${appealId}/reps/publish`)
+			.query({ type: 'evidence' })
+			.set('azureAdUserId', azureAdUserId);
+
+		expect(notifySend).toHaveBeenCalledTimes(3);
+
+		const callApp = notifySend.mock.calls.find(
+			(call) => call[0].recipientEmail === 'agent@example.com'
+		);
+		expect(callApp).toBeDefined();
+		expect(callApp[0].personalisation.inquiry_subject_line).toContain('local planning authority');
+	});
+
+	it('should notify others when Appellant is missing PoE (Appellant gets no email)', async () => {
+		const testAppeal = {
+			...mockAppeal,
+			representations: [
+				{
+					representationType: APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
+					status: APPEAL_REPRESENTATION_STATUS.VALID
+				},
+				{
+					representationType: APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE,
+					representedId: 101,
+					status: APPEAL_REPRESENTATION_STATUS.VALID
+				},
+				{
+					representationType: APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE,
+					representedId: 102,
+					status: APPEAL_REPRESENTATION_STATUS.VALID
+				}
+			]
+		};
+
+		databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
+
+		await request
+			.post(`/appeals/${appealId}/reps/publish`)
+			.query({ type: 'evidence' })
+			.set('azureAdUserId', azureAdUserId);
+
+		expect(notifySend).toHaveBeenCalledTimes(3);
+
+		const callLpa = notifySend.mock.calls.find(
+			(call) => call[0].recipientEmail === 'lpa@example.com'
+		);
+		const callR6_1 = notifySend.mock.calls.find(
+			(call) => call[0].recipientEmail === 'r6_1@example.com'
+		);
+		const callR6_2 = notifySend.mock.calls.find(
+			(call) => call[0].recipientEmail === 'r6_2@example.com'
+		);
+		expect(callLpa).toBeDefined();
+		expect(callR6_1).toBeDefined();
+		expect(callR6_2).toBeDefined();
+		expect(callLpa[0].personalisation.inquiry_subject_line).toContain('appellant');
+		expect(callR6_1[0].personalisation.inquiry_subject_line).toContain('appellant');
+		expect(callR6_2[0].personalisation.inquiry_subject_line).toContain('appellant');
+	});
+
+	it('should handle multiple Rule 6 parties missing PoE (Cross-notification logic)', async () => {
+		const testAppeal = {
+			...mockAppeal,
+			representations: [
+				{
+					representationType: APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
+					status: APPEAL_REPRESENTATION_STATUS.VALID
+				},
+				{
+					representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
+					status: APPEAL_REPRESENTATION_STATUS.VALID
+				}
+			]
+		};
+
+		databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
+
+		await request
+			.post(`/appeals/${appealId}/reps/publish`)
+			.query({ type: 'evidence' })
+			.set('azureAdUserId', azureAdUserId);
+
+		expect(notifySend).toHaveBeenCalledTimes(4);
+
+		const findCall = (email) =>
+			notifySend.mock.calls.find((call) => call[0].recipientEmail === email);
+
+		const callLpa = findCall('lpa@example.com');
+		expect(callLpa[0].personalisation.inquiry_subject_line).toContain('Rule 6 Org 1');
+		expect(callLpa[0].personalisation.inquiry_subject_line).toContain('Rule 6 Org 2');
+
+		const callR6_1 = findCall('r6_1@example.com');
+		expect(callR6_1[0].personalisation.inquiry_subject_line).not.toContain('Rule 6 Org 1');
+		expect(callR6_1[0].personalisation.inquiry_subject_line).toContain('Rule 6 Org 2');
+
+		const callR6_2 = findCall('r6_2@example.com');
+		expect(callR6_2[0].personalisation.inquiry_subject_line).toContain('Rule 6 Org 1');
+		expect(callR6_2[0].personalisation.inquiry_subject_line).not.toContain('Rule 6 Org 2');
 	});
 });

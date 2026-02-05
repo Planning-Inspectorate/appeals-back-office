@@ -44,7 +44,7 @@ describe('rule-6-party-updated.md', () => {
 			'test@136s7.com',
 			{
 				content: expectedContent,
-				subject: 'We have updated the contact details for a Rule 6 group.'
+				subject: 'We have updated the contact details for a Rule 6 group'
 			}
 		);
 	});
@@ -88,7 +88,7 @@ describe('rule-6-party-updated.md', () => {
 			'test@136s7.com',
 			{
 				content: expectedContent,
-				subject: 'We have updated the contact details for a Rule 6 group.'
+				subject: 'We have updated the contact details for a Rule 6 group'
 			}
 		);
 	});

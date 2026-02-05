@@ -33,6 +33,18 @@ describe('getFeedbackLinkFromAppealTypeKey', () => {
 		);
 	});
 
+	test('Enforcement notice', () => {
+		expect(getFeedbackLinkFromAppealTypeKey(APPEAL_CASE_TYPE.C)).toBe(
+			FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE
+		);
+	});
+
+	test('Lawful development certificate', () => {
+		expect(getFeedbackLinkFromAppealTypeKey(APPEAL_CASE_TYPE.X)).toBe(
+			FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE
+		);
+	});
+
 	test('Fallback', () => {
 		expect(getFeedbackLinkFromAppealTypeKey('UNKNOWN')).toBe(FEEDBACK_FORM_LINKS.ALL);
 	});
