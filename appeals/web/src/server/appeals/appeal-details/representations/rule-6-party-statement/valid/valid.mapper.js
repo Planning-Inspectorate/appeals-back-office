@@ -181,11 +181,15 @@ export const confirmPage = (appealDetails, rule6PartyStatement, specialismData, 
 	preRenderPageComponents(pageComponents);
 
 	return {
-		title: 'Check details and accept rule6Party statement',
+		title: `Check details and accept ${rule6PartyStatement.author} statement`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyStatement.id}/valid/allocation-specialisms`,
 		preHeading: `Appeal ${shortReference}`,
-		heading: 'Check details and accept rule6Party statement',
-		submitButtonText: 'Accept rule6Party statement',
+		heading: `Check details and accept ${rule6PartyStatement.author} statement`,
+		submitButtonProperties: {
+			text: 'Accept statement',
+			type: 'submit',
+			preventDoubleClick: true
+		},
 		pageComponents
 	};
 };

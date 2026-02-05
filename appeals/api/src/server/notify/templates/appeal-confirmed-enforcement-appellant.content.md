@@ -2,6 +2,7 @@ We have confirmed your appeal and you have submitted all of the information we n
 
 The appeal will continue on the following grounds:
 
+{% if appeal_grounds.length -%}
 {% if appeal_grounds.length > 1 -%}
 {%- for ground in appeal_grounds -%}
 - Ground ({{ ground }})
@@ -9,6 +10,7 @@ The appeal will continue on the following grounds:
 {%- else -%}
 Ground ({{ appeal_grounds[0] }})
 {% endif %}
+{% endif -%}
 {% include 'parts/appeal-details.md' %}
 
 {% if ground_a_barred -%}

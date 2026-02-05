@@ -338,12 +338,9 @@ describe('change appeal procedure types', () => {
 		cy.createCase({ caseType: 'W' }).then((ref) => {
 			caseObj = ref;
 			appeal = caseObj;
-			cy.addLpaqSubmissionToCase(caseObj);
-			cy.assignCaseOfficerViaApi(caseObj);
-			happyPathHelper.viewCaseDetails(caseObj);
-			caseDetailsPage.checkStatusOfCase('Validation', 0);
-			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'READY_TO_START', 'S78', 'WRITTEN');
 			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
+			cy.addLpaqSubmissionToCase(caseObj);
 		});
 	};
 });

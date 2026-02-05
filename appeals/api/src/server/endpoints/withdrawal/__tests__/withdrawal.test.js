@@ -5,6 +5,7 @@ import {
 	casPlanningAppeal,
 	fullPlanningAppeal,
 	householdAppeal,
+	ldcAppeal,
 	listedBuildingAppeal
 } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
@@ -79,7 +80,8 @@ describe('appeal withdrawal routes', () => {
 			['casAdvert', casAdvertAppeal, FEEDBACK_FORM_LINKS.CAS_ADVERTS],
 			['advertisement', advertisementAppeal, FEEDBACK_FORM_LINKS.FULL_ADVERTS],
 			['fullPlanning', fullPlanningAppeal, FEEDBACK_FORM_LINKS.S78],
-			['listedBuilding', listedBuildingAppeal, FEEDBACK_FORM_LINKS.S20]
+			['listedBuilding', listedBuildingAppeal, FEEDBACK_FORM_LINKS.S20],
+			['ldc', ldcAppeal, FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE]
 		])('returns 200 when appeal: %s is withdrawn', async (_, appeal, expectedFeedbackLink) => {
 			const correctAppealState = {
 				...appeal,

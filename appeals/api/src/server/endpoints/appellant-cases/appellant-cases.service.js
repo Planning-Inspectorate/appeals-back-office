@@ -27,6 +27,7 @@ import auditApplicationDecisionMapper from '#utils/audit-application-decision-ma
 import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
 import { Prisma } from '#utils/db-client/client.js';
 import { getFormattedReasons } from '#utils/email-formatter.js';
+import { formatContactDetails } from '#utils/format-contact-details.js';
 import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
 import { allAppellantCaseOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
 import { isChildAppeal, isLinkedAppeal, isParentAppeal } from '#utils/is-linked-appeal.js';
@@ -257,7 +258,6 @@ export const updateAppellantCaseValidationOutcome = async (
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
-			feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key),
 			team_email_address: teamEmail,
 			...(isEnforcement && {
 				local_planning_authority: updatedAppeal?.lpa?.name || '',
@@ -272,11 +272,28 @@ export const updateAppellantCaseValidationOutcome = async (
 		};
 		await notifySend({
 			azureAdUserId,
-			templateName: isEnforcement ? 'appeal-confirmed-enforcement' : 'appeal-confirmed',
+			templateName: isEnforcement ? 'appeal-confirmed-enforcement-appellant' : 'appeal-confirmed',
 			notifyClient,
 			recipientEmail,
-			personalisation
+			personalisation: {
+				...personalisation,
+				feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key)
+			}
 		});
+		if (isEnforcement) {
+			const { agent, appellant } = updatedAppeal || {};
+			await notifySend({
+				azureAdUserId,
+				templateName: 'appeal-confirmed-enforcement-lpa',
+				notifyClient,
+				recipientEmail: updatedAppeal?.lpa?.email,
+				personalisation: {
+					...personalisation,
+					agent_contact_details: agent ? formatContactDetails(agent) : '',
+					appellant_contact_details: appellant ? formatContactDetails(appellant) : ''
+				}
+			});
+		}
 	}
 
 	if (updatedAppeal) {

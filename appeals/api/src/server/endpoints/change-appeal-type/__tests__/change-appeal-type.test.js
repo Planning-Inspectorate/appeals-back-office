@@ -6,6 +6,7 @@ import {
 	casPlanningAppeal,
 	fullPlanningAppeal,
 	householdAppeal,
+	ldcAppeal,
 	listedBuildingAppeal
 } from '#tests/appeals/mocks.js';
 import { appellantCaseValidationOutcomes, azureAdUserId } from '#tests/shared/mocks.js';
@@ -227,7 +228,8 @@ describe('appeal change type resubmit routes', () => {
 			['casPlanning', casPlanningAppeal, 1],
 			['casAdvert', casAdvertAppeal, 1],
 			['fullPlanning', fullPlanningAppeal, 1],
-			['listedBuilding', listedBuildingAppeal, 1]
+			['listedBuilding', listedBuildingAppeal, 1],
+			['ldc', ldcAppeal, 1]
 		])('returns 200 when appeal status is correct: %s', async (_, appeal, newType) => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
@@ -690,73 +692,240 @@ describe('appeal change update routes', () => {
 			});
 		});
 
-		test.each([
-			['assign case officer', APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER],
-			['validation', APPEAL_CASE_STATUS.VALIDATION]
-		])('successfully updates appeal type for valid case status: %s', async (_, caseStatus) => {
-			const appealWithValidCaseStatus = {
-				...householdAppeal,
-				appealStatus: [
-					{
-						status: caseStatus,
-						valid: true
-					}
+		describe('when appeal status is assign case officer', () => {
+			const caseStatus = APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER;
+
+			beforeEach(() => {
+				jest.clearAllMocks();
+			});
+
+			test.each([
+				['householder to planning', householdAppeal, 10, 'householder appeal', 'planning appeal'],
+				['planning to householder', fullPlanningAppeal, 1, 'planning appeal', 'householder appeal'],
+				[
+					's20 to householder',
+					listedBuildingAppeal,
+					1,
+					'planning listed building and conservation area appeal',
+					'householder appeal'
+				],
+				[
+					'casAdvert to householder',
+					casAdvertAppeal,
+					1,
+					'commercial advertisement (CAS) appeal',
+					'householder appeal'
+				],
+				[
+					'casPlanning to householder',
+					casPlanningAppeal,
+					1,
+					'commercial planning (CAS) appeal',
+					'householder appeal'
+				],
+				[
+					'advertisement to householder',
+					advertisementAppeal,
+					1,
+					'advertisement appeal',
+					'householder appeal'
+				],
+				[
+					'ldc to householder',
+					ldcAppeal,
+					1,
+					'lawful development certificate appeal',
+					'householder appeal'
 				]
-			};
+			])(
+				'successfully updates %s appeal type',
+				async (_, sourceAppeal, targetTypeId, expectedExistingType, expectedNewType) => {
+					const appealWithValidCaseStatus = {
+						...sourceAppeal,
+						appealStatus: [
+							{
+								status: caseStatus,
+								valid: true
+							}
+						]
+					};
 
-			// @ts-ignore
-			databaseConnector.appeal.findUnique.mockResolvedValue(appealWithValidCaseStatus);
-			// @ts-ignore
-			databaseConnector.appealType.findMany.mockResolvedValue(appealTypes);
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appealWithValidCaseStatus);
+					// @ts-ignore
+					databaseConnector.appealType.findMany.mockResolvedValue(appealTypes);
 
-			const response = await request
-				.post(`/appeals/${householdAppeal.id}/appeal-update-request`)
-				.send({
-					newAppealTypeId: 10
-				})
-				.set('azureAdUserId', azureAdUserId);
+					const response = await request
+						.post(`/appeals/${sourceAppeal.id}/appeal-update-request`)
+						.send({
+							newAppealTypeId: targetTypeId
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-			expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
-				where: { id: householdAppeal.id },
-				data: {
-					appealTypeId: 10
+					expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+						where: { id: sourceAppeal.id },
+						data: {
+							appealTypeId: targetTypeId
+						}
+					});
+
+					expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(
+						appealWithValidCaseStatus.id
+					);
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appealWithValidCaseStatus.reference,
+							lpa_reference: appealWithValidCaseStatus.applicationReference,
+							site_address: `${appealWithValidCaseStatus.address.addressLine1}, ${appealWithValidCaseStatus.address.addressLine2}, ${appealWithValidCaseStatus.address.addressTown}, ${appealWithValidCaseStatus.address.addressCounty}, ${appealWithValidCaseStatus.address.postcode}, ${appealWithValidCaseStatus.address.addressCountry}`,
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+							existing_appeal_type: expectedExistingType,
+							new_appeal_type: expectedNewType
+						},
+						recipientEmail: appealWithValidCaseStatus.agent.email,
+						templateName: 'appeal-type-change-in-manage-appeals-appellant'
+					});
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appealWithValidCaseStatus.reference,
+							lpa_reference: appealWithValidCaseStatus.applicationReference,
+							site_address: `${appealWithValidCaseStatus.address.addressLine1}, ${appealWithValidCaseStatus.address.addressLine2}, ${appealWithValidCaseStatus.address.addressTown}, ${appealWithValidCaseStatus.address.addressCounty}, ${appealWithValidCaseStatus.address.postcode}, ${appealWithValidCaseStatus.address.addressCountry}`,
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+							existing_appeal_type: expectedExistingType,
+							new_appeal_type: expectedNewType
+						},
+						recipientEmail: appealWithValidCaseStatus.lpa.email,
+						templateName: 'appeal-type-change-in-manage-appeals-lpa'
+					});
+
+					expect(response.status).toEqual(200);
 				}
+			);
+		});
+
+		describe('when appeal status is validation', () => {
+			const caseStatus = APPEAL_CASE_STATUS.VALIDATION;
+
+			beforeEach(() => {
+				jest.clearAllMocks();
 			});
 
-			expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(appealWithValidCaseStatus.id);
+			test.each([
+				['householder to planning', householdAppeal, 10, 'householder appeal', 'planning appeal'],
+				['planning to householder', fullPlanningAppeal, 1, 'planning appeal', 'householder appeal'],
+				[
+					's20 to householder',
+					listedBuildingAppeal,
+					1,
+					'planning listed building and conservation area appeal',
+					'householder appeal'
+				],
+				[
+					'casAdvert to householder',
+					casAdvertAppeal,
+					1,
+					'commercial advertisement (CAS) appeal',
+					'householder appeal'
+				],
+				[
+					'casPlanning to householder',
+					casPlanningAppeal,
+					1,
+					'commercial planning (CAS) appeal',
+					'householder appeal'
+				],
+				[
+					'advertisement to householder',
+					advertisementAppeal,
+					1,
+					'advertisement appeal',
+					'householder appeal'
+				],
+				[
+					'ldc to householder',
+					ldcAppeal,
+					1,
+					'lawful development certificate appeal',
+					'householder appeal'
+				]
+			])(
+				'successfully updates %s appeal type',
+				async (_, sourceAppeal, targetTypeId, expectedExistingType, expectedNewType) => {
+					const appealWithValidCaseStatus = {
+						...sourceAppeal,
+						appealStatus: [
+							{
+								status: caseStatus,
+								valid: true
+							}
+						]
+					};
 
-			expect(mockNotifySend).toHaveBeenCalledTimes(2);
-			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-				notifyClient: expect.anything(),
-				personalisation: {
-					appeal_reference_number: appealWithValidCaseStatus.reference,
-					lpa_reference: appealWithValidCaseStatus.applicationReference,
-					site_address: `${appealWithValidCaseStatus.address.addressLine1}, ${appealWithValidCaseStatus.address.addressLine2}, ${appealWithValidCaseStatus.address.addressTown}, ${appealWithValidCaseStatus.address.addressCounty}, ${appealWithValidCaseStatus.address.postcode}, ${appealWithValidCaseStatus.address.addressCountry}`,
-					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-					existing_appeal_type: 'householder appeal',
-					new_appeal_type: 'planning appeal'
-				},
-				recipientEmail: appealWithValidCaseStatus.agent.email,
-				templateName: 'appeal-type-change-in-manage-appeals-appellant'
-			});
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appealWithValidCaseStatus);
+					// @ts-ignore
+					databaseConnector.appealType.findMany.mockResolvedValue(appealTypes);
 
-			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-				notifyClient: expect.anything(),
-				personalisation: {
-					appeal_reference_number: appealWithValidCaseStatus.reference,
-					lpa_reference: appealWithValidCaseStatus.applicationReference,
-					site_address: `${appealWithValidCaseStatus.address.addressLine1}, ${appealWithValidCaseStatus.address.addressLine2}, ${appealWithValidCaseStatus.address.addressTown}, ${appealWithValidCaseStatus.address.addressCounty}, ${appealWithValidCaseStatus.address.postcode}, ${appealWithValidCaseStatus.address.addressCountry}`,
-					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-					existing_appeal_type: 'householder appeal',
-					new_appeal_type: 'planning appeal'
-				},
-				recipientEmail: appealWithValidCaseStatus.lpa.email,
-				templateName: 'appeal-type-change-in-manage-appeals-lpa'
-			});
+					const response = await request
+						.post(`/appeals/${sourceAppeal.id}/appeal-update-request`)
+						.send({
+							newAppealTypeId: targetTypeId
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-			expect(response.status).toEqual(200);
+					expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+						where: { id: sourceAppeal.id },
+						data: {
+							appealTypeId: targetTypeId
+						}
+					});
+
+					expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(
+						appealWithValidCaseStatus.id
+					);
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appealWithValidCaseStatus.reference,
+							lpa_reference: appealWithValidCaseStatus.applicationReference,
+							site_address: `${appealWithValidCaseStatus.address.addressLine1}, ${appealWithValidCaseStatus.address.addressLine2}, ${appealWithValidCaseStatus.address.addressTown}, ${appealWithValidCaseStatus.address.addressCounty}, ${appealWithValidCaseStatus.address.postcode}, ${appealWithValidCaseStatus.address.addressCountry}`,
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+							existing_appeal_type: expectedExistingType,
+							new_appeal_type: expectedNewType
+						},
+						recipientEmail: appealWithValidCaseStatus.agent.email,
+						templateName: 'appeal-type-change-in-manage-appeals-appellant'
+					});
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appealWithValidCaseStatus.reference,
+							lpa_reference: appealWithValidCaseStatus.applicationReference,
+							site_address: `${appealWithValidCaseStatus.address.addressLine1}, ${appealWithValidCaseStatus.address.addressLine2}, ${appealWithValidCaseStatus.address.addressTown}, ${appealWithValidCaseStatus.address.addressCounty}, ${appealWithValidCaseStatus.address.postcode}, ${appealWithValidCaseStatus.address.addressCountry}`,
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+							existing_appeal_type: expectedExistingType,
+							new_appeal_type: expectedNewType
+						},
+						recipientEmail: appealWithValidCaseStatus.lpa.email,
+						templateName: 'appeal-type-change-in-manage-appeals-lpa'
+					});
+
+					expect(response.status).toEqual(200);
+				}
+			);
 		});
 
 		test('successfully deletes surplus appellant documents when type is changed from planning appeal to householder appeal', async () => {

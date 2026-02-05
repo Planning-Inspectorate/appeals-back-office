@@ -490,7 +490,7 @@ export function nationalListPage(
 								text: 'Appeal reference'
 							},
 							{
-								text: 'Planning application reference'
+								text: 'Application or enforcement reference'
 							},
 							{
 								text: 'Site address'

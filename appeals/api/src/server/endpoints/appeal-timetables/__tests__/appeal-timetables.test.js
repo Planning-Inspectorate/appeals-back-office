@@ -17,6 +17,7 @@ import {
 } from '#tests/appeals/timetableMocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { trimAppealType } from '#utils/string-utils.js';
 import { jest } from '@jest/globals';
 import { PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
@@ -712,7 +713,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
-								appeal_type: appeal.appealType.type,
+								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
 								comment_deadline: '',
@@ -750,7 +751,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
-								appeal_type: appeal.appealType.type,
+								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
 								comment_deadline: '',
@@ -809,7 +810,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
-								appeal_type: appeal.appealType.type,
+								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
 								comment_deadline: '',
@@ -847,7 +848,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
-								appeal_type: appeal.appealType.type,
+								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
 								comment_deadline: '',
@@ -967,7 +968,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
-							appeal_type: appeal.appealType.type,
+							appeal_type: trimAppealType(appeal.appealType.type),
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
 							comment_deadline: '',
@@ -1003,7 +1004,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
-							appeal_type: appeal.appealType.type,
+							appeal_type: trimAppealType(appeal.appealType.type),
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
 							comment_deadline: '',
@@ -1096,7 +1097,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: '1345264',
-							appeal_type: appeal.appealType.type,
+							appeal_type: trimAppealType(appeal.appealType.type),
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
 							comment_deadline: '',
@@ -1132,7 +1133,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
-							appeal_type: appeal.appealType.type,
+							appeal_type: trimAppealType(appeal.appealType.type),
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
 							comment_deadline: '',
@@ -1277,7 +1278,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
-								appeal_type: appeal.appealType.type,
+								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
 								comment_deadline: '',
@@ -1315,7 +1316,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
-								appeal_type: appeal.appealType.type,
+								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
 								comment_deadline: '',
@@ -1424,7 +1425,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
-								appeal_type: appeal.appealType.type,
+								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
 								comment_deadline: '',
@@ -1464,7 +1465,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
-								appeal_type: appeal.appealType.type,
+								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
 								comment_deadline: '',
@@ -1551,7 +1552,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
-								appeal_type: appeal.appealType.type,
+								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
 								comment_deadline: '',
@@ -1589,7 +1590,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
-								appeal_type: appeal.appealType.type,
+								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
 								comment_deadline: '',
@@ -1678,7 +1679,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
-								appeal_type: appeal.appealType.type,
+								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: ['1111111', '3333333'],
 								comment_deadline: '',
@@ -1716,7 +1717,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
-								appeal_type: appeal.appealType.type,
+								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: ['1111111', '3333333'],
 								comment_deadline: '',
@@ -1822,7 +1823,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
-							appeal_type: appeal.appealType.type,
+							appeal_type: trimAppealType(appeal.appealType.type),
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
 							comment_deadline: '',
@@ -1860,7 +1861,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
-							appeal_type: appeal.appealType.type,
+							appeal_type: trimAppealType(appeal.appealType.type),
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
 							comment_deadline: '',
@@ -1950,7 +1951,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
-							appeal_type: appeal.appealType.type,
+							appeal_type: trimAppealType(appeal.appealType.type),
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
 							comment_deadline: '',
@@ -1991,7 +1992,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
-							appeal_type: appeal.appealType.type,
+							appeal_type: trimAppealType(appeal.appealType.type),
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
 							comment_deadline: '',

@@ -192,6 +192,7 @@ export function generateLdcComponents(appealDetails, appellantCaseData, mappedAp
 				mappedAppellantCaseData.planningObligation.display.summaryListItem,
 				mappedAppellantCaseData.statementCommonGround.display.summaryListItem,
 				mappedAppellantCaseData.newPlansDrawings.display.summaryListItem,
+				mappedAppellantCaseData.decisionLetter.display.summaryListItem,
 				mappedAppellantCaseData.otherNewDocuments.display.summaryListItem
 			]
 		}

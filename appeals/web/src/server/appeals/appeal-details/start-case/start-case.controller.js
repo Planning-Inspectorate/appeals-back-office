@@ -161,7 +161,21 @@ export const postChangeDate = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getSelectProcedure = async (request, response) => {
-	renderSelectProcedure(request, response);
+	const {
+		currentAppeal: { appealType, appealId },
+		session
+	} = request;
+	if (
+		appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
+		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)
+	) {
+		session.startCaseAppealProcedure = {
+			[appealId]: { appealProcedure: APPEAL_CASE_PROCEDURE.WRITTEN }
+		};
+
+		return response.redirect(preserveQueryString(request, redirectionTarget(request)));
+	}
+	return renderSelectProcedure(request, response);
 };
 
 /**
@@ -273,7 +287,7 @@ const redirectionTarget = (request) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getConfirmProcedure = async (request, response) => {
-	renderConfirmProcedure(request, response);
+	return renderConfirmProcedure(request, response);
 };
 
 /**
@@ -321,6 +335,7 @@ const renderConfirmProcedure = async (request, response) => {
 		appealId,
 		appealReference,
 		sessionValues?.appealProcedure,
+		appealType,
 		emailPreviews
 	);
 

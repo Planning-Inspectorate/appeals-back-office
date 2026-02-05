@@ -267,7 +267,7 @@ export function personalListPage(
 		pageContent.pageComponents?.push(filterComponent, casesComponent);
 	} else {
 		pageContent.heading =
-			isSearchedCO && caseOfficer?.id != account.localAccountId
+			isSearchedCO && caseOfficer?.id !== account.localAccountId
 				? `${caseOfficer.name} is not assigned to any appeals`
 				: 'You are not assigned to any appeals';
 		pageContent.pageComponents?.push(searchAllCasesButton);
@@ -347,6 +347,9 @@ function mapRequiredActionToPersonalListActionHtml(
 				: 'Awaiting appellant update';
 		}
 		case 'assignCaseOfficer': {
+			if (isChildAppeal) {
+				return;
+			}
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 				request,
 				`/appeals-service/appeal-details/${appealId}/assign-case-officer/search-case-officer`

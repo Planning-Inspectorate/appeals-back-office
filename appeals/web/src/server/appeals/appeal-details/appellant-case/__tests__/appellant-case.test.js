@@ -541,6 +541,9 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Planning obligation');
 			expect(unprettifiedElement.innerHTML).toContain('Draft statement of common ground');
 			expect(unprettifiedElement.innerHTML).toContain('New plans or drawings');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Decision letter from the local planning authority'
+			);
 			expect(unprettifiedElement.innerHTML).toContain('Other new supporting documents');
 
 			expect(unprettifiedElement.innerHTML).not.toContain('Additional documents</h2>');

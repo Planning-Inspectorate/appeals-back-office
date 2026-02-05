@@ -129,6 +129,7 @@ export const mapAppellantCaseIn = (command) => {
 			applicationMadeAndFeePaid: casedata.applicationMadeAndFeePaid,
 			applicationDevelopmentAllOrPart: casedata.applicationDevelopmentAllOrPart,
 			contactAddress: { create: contactAddress },
+			applicationDecisionAppealed: casedata.applicationDecisionAppealed,
 			appealDecisionDate: casedata.appealDecisionDate,
 			appellantProcedurePreference: command.casedata.appellantProcedurePreference,
 			appellantProcedurePreferenceDetails: command.casedata.appellantProcedurePreferenceDetails,

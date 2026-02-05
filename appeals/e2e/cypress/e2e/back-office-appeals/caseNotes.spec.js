@@ -21,14 +21,14 @@ describe('add case notes', () => {
 			caseObj = ref;
 			appeal = caseObj;
 			cy.login(users.appeals.caseAdmin);
-			happyPathHelper.assignCaseOfficer(ref);
+			cy.assignCaseOfficerViaApi(ref);
+			happyPathHelper.viewCaseDetails(ref);
 		});
 	});
 
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
-		caseDetailsPage.navigateToAppealsService();
-		listCasesPage.clickAppealByRef(caseObj);
+		happyPathHelper.viewCaseDetails(caseObj);
 		caseDetailsPage.clickCaseNotes();
 	});
 

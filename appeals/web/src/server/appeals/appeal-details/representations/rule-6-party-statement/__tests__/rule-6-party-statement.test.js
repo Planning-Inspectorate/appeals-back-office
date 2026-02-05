@@ -231,4 +231,21 @@ describe('rule 6 party statement - add document', () => {
 			);
 		});
 	});
+
+	describe('POST /add-document/redaction-status (edit)', () => {
+		it('should redirect to the date submitted page when changing from check your answers', async () => {
+			const response = await request
+				.post(
+					`${baseUrl}/2/rule-6-party-statement/1/add-document/redaction-status?editEntrypoint=${baseUrl}/2/rule-6-party-statement/1/add-document/redaction-status`
+				)
+				.send({
+					redactionStatus: 'no_redaction_required'
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				`Found. Redirecting to /appeals-service/appeal-details/2/rule-6-party-statement/1/add-document/date-submitted?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Frule-6-party-statement%2F1%2Fadd-document%2Fredaction-status`
+			);
+		});
+	});
 });

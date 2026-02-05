@@ -143,7 +143,7 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
-                        <th scope="col" class="govuk-table__header">Planning application reference</th>
+                        <th scope="col" class="govuk-table__header">Application or enforcement reference</th>
                         <th scope="col" class="govuk-table__header">Site address</th>
                         <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
                         <th scope="col" class="govuk-table__header">Appeal type</th>
@@ -372,7 +372,7 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
-                        <th scope="col" class="govuk-table__header">Planning application reference</th>
+                        <th scope="col" class="govuk-table__header">Application or enforcement reference</th>
                         <th scope="col" class="govuk-table__header">Site address</th>
                         <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
                         <th scope="col" class="govuk-table__header">Appeal type</th>
@@ -581,7 +581,7 @@ exports[`national-list GET / should render national list - appeal procedure type
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
-                        <th scope="col" class="govuk-table__header">Planning application reference</th>
+                        <th scope="col" class="govuk-table__header">Application or enforcement reference</th>
                         <th scope="col" class="govuk-table__header">Site address</th>
                         <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
                         <th scope="col" class="govuk-table__header">Appeal type</th>
@@ -754,7 +754,7 @@ exports[`national-list GET / should render national list - appeal type filter ap
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
-                        <th scope="col" class="govuk-table__header">Planning application reference</th>
+                        <th scope="col" class="govuk-table__header">Application or enforcement reference</th>
                         <th scope="col" class="govuk-table__header">Site address</th>
                         <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
                         <th scope="col" class="govuk-table__header">Appeal type</th>
@@ -927,7 +927,7 @@ exports[`national-list GET / should render national list - case team filter appl
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
-                        <th scope="col" class="govuk-table__header">Planning application reference</th>
+                        <th scope="col" class="govuk-table__header">Application or enforcement reference</th>
                         <th scope="col" class="govuk-table__header">Site address</th>
                         <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
                         <th scope="col" class="govuk-table__header">Appeal type</th>
@@ -1100,7 +1100,7 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
-                        <th scope="col" class="govuk-table__header">Planning application reference</th>
+                        <th scope="col" class="govuk-table__header">Application or enforcement reference</th>
                         <th scope="col" class="govuk-table__header">Site address</th>
                         <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
                         <th scope="col" class="govuk-table__header">Appeal type</th>
@@ -1298,7 +1298,7 @@ exports[`national-list GET / should render national list - no search term - filt
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
-                        <th scope="col" class="govuk-table__header">Planning application reference</th>
+                        <th scope="col" class="govuk-table__header">Application or enforcement reference</th>
                         <th scope="col" class="govuk-table__header">Site address</th>
                         <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
                         <th scope="col" class="govuk-table__header">Appeal type</th>
@@ -1483,7 +1483,7 @@ exports[`national-list GET / should render national list - search term - filter 
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
-                        <th scope="col" class="govuk-table__header">Planning application reference</th>
+                        <th scope="col" class="govuk-table__header">Application or enforcement reference</th>
                         <th scope="col" class="govuk-table__header">Site address</th>
                         <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
                         <th scope="col" class="govuk-table__header">Appeal type</th>
@@ -1803,7 +1803,7 @@ exports[`national-list GET / should render national list - search term 1`] = `
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
-                        <th scope="col" class="govuk-table__header">Planning application reference</th>
+                        <th scope="col" class="govuk-table__header">Application or enforcement reference</th>
                         <th scope="col" class="govuk-table__header">Site address</th>
                         <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
                         <th scope="col" class="govuk-table__header">Appeal type</th>
@@ -1991,7 +1991,7 @@ exports[`national-list GET / should render the header with navigation containing
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
-                        <th scope="col" class="govuk-table__header">Planning application reference</th>
+                        <th scope="col" class="govuk-table__header">Application or enforcement reference</th>
                         <th scope="col" class="govuk-table__header">Site address</th>
                         <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
                         <th scope="col" class="govuk-table__header">Appeal type</th>
@@ -2176,7 +2176,7 @@ exports[`national-list GET / should show enforcement reference instead of planni
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
-                        <th scope="col" class="govuk-table__header">Planning application reference</th>
+                        <th scope="col" class="govuk-table__header">Application or enforcement reference</th>
                         <th scope="col" class="govuk-table__header">Site address</th>
                         <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
                         <th scope="col" class="govuk-table__header">Appeal type</th>

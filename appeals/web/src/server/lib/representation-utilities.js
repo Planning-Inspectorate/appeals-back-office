@@ -66,12 +66,9 @@ export function mapRepresentationDocumentSummaryActionLink(
 	}<span class="govuk-visually-hidden"> ${visuallyHiddenText}</span></a>`;
 
 	if (
-		![
-			'appellant-final-comments',
-			'lpa-final-comments',
-			'lpa-statement',
-			'appellant-statement'
-		].includes(representationType) &&
+		!['appellant-final-comments', 'lpa-final-comments', 'lpa-statement'].includes(
+			representationType
+		) &&
 		documentationStatus !== 'received'
 	) {
 		return addLink;

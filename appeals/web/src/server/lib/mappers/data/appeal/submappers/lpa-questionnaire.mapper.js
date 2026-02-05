@@ -1,13 +1,20 @@
 import {
+	dateIsInThePast,
 	dateISOStringToDayMonthYearHourMinute,
-	dateISOStringToDisplayDate,
-	dateIsInThePast
+	dateISOStringToDisplayDate
 } from '#lib/dates.js';
 import { documentationFolderTableItem } from '#lib/mappers/index.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapLpaQuestionnaire = ({ appealDetails, currentRoute, request }) => {
+	const id = 'lpa-questionnaire';
+
+	if (appealDetails.isChildAppeal && appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+		return { id, display: {} };
+	}
+
 	const { status } = appealDetails.documentationSummary?.lpaQuestionnaire ?? {};
 
 	const statusText = (() => {
@@ -72,7 +79,7 @@ export const mapLpaQuestionnaire = ({ appealDetails, currentRoute, request }) =>
 	})();
 
 	return documentationFolderTableItem({
-		id: 'lpa-questionnaire',
+		id,
 		text: 'LPA questionnaire',
 		statusText,
 		receivedText,

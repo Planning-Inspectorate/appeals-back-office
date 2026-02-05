@@ -21,9 +21,7 @@ describe('Change start date', () => {
 	it('Change Start date', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			happyPathHelper.startCase(caseObj);
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
 			happyPathHelper.changeStartDate(caseObj);
 			let dueDate = new Date();
 			caseDetailsPage.verifyDateChanges('start-date', dueDate);
@@ -33,11 +31,13 @@ describe('Change start date', () => {
 	it('Change Start date - hearing', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
-			happyPathHelper.assignCaseOfficer(caseObj);
-			caseDetailsPage.checkStatusOfCase('Validation', 0);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-			happyPathHelper.startS78Case(caseObj, 'hearing');
+			happyPathHelper.advanceTo(
+				caseObj,
+				'ASSIGN_CASE_OFFICER',
+				'LPA_QUESTIONNAIRE',
+				'S78',
+				'HEARING'
+			);
 			happyPathHelper.changeStartDate(caseObj);
 			let dueDate = new Date();
 			caseDetailsPage.verifyDateChanges('start-date', dueDate);

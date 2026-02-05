@@ -18,9 +18,7 @@ const setupTestCase = () => {
 	cy.login(users.appeals.caseAdmin);
 	cy.createCase().then((ref) => {
 		appeal = ref;
-		happyPathHelper.assignCaseOfficer(appeal);
-		happyPathHelper.reviewAppellantCase(appeal);
-		happyPathHelper.startCase(appeal);
+		happyPathHelper.advanceTo(ref, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
 	});
 };
 

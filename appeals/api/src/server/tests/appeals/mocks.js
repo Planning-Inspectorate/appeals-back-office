@@ -11,7 +11,7 @@ import {
 	invalidAppellantCaseOutcome,
 	validAppellantCaseOutcome
 } from '#tests/shared/mocks.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, APPEAL_TYPE_CHANGE_APPEALS } from '@pins/appeals/constants/common.js';
 import {
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE,
@@ -161,8 +161,8 @@ export const householdAppeal = {
 		id: 2,
 		key: APPEAL_CASE_TYPE.D,
 		processCode: 'HAS',
-		type: 'Householder',
-		changeAppealType: 'Householder'
+		type: APPEAL_TYPE.HOUSEHOLDER,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.HOUSEHOLDER
 	},
 	appellantCase: {
 		id: 1,
@@ -290,8 +290,9 @@ export const advertisementAppeal = {
 	id: 7,
 	appealType: {
 		id: 14,
-		type: 'Advertisement',
-		key: APPEAL_CASE_TYPE.H
+		type: APPEAL_TYPE.ADVERTISEMENT,
+		key: APPEAL_CASE_TYPE.H,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.ADVERTISEMENT
 	},
 	appellantCase: {
 		...householdAppeal.appellantCase,
@@ -324,8 +325,9 @@ export const casPlanningAppeal = {
 	id: 7,
 	appealType: {
 		id: 14,
-		type: 'CAS planning',
-		key: APPEAL_CASE_TYPE.ZP
+		type: APPEAL_TYPE.CAS_PLANNING,
+		key: APPEAL_CASE_TYPE.ZP,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.CAS_PLANNING
 	},
 	appellantCase: {
 		...householdAppeal.appellantCase,
@@ -339,8 +341,9 @@ export const casAdvertAppeal = {
 	id: 7,
 	appealType: {
 		id: 13,
-		type: 'CAS advert',
-		key: APPEAL_CASE_TYPE.ZA
+		type: APPEAL_TYPE.CAS_ADVERTISEMENT,
+		key: APPEAL_CASE_TYPE.ZA,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.CAS_ADVERTISEMENT
 	},
 	appellantCase: {
 		...householdAppeal.appellantCase,
@@ -383,7 +386,8 @@ export const fullPlanningAppeal = {
 	appealType: {
 		id: 1,
 		key: APPEAL_CASE_TYPE.W,
-		type: 'Planning'
+		type: APPEAL_TYPE.S78,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.S78
 	},
 	appellantCase: {
 		...householdAppeal.appellantCase,
@@ -428,8 +432,9 @@ export const listedBuildingAppeal = {
 	id: 3,
 	appealType: {
 		id: 12,
-		type: 'Planning listed building and conservation area',
-		key: APPEAL_CASE_TYPE.Y
+		type: APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+		key: APPEAL_CASE_TYPE.Y,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.PLANNED_LISTED_BUILDING
 	},
 	representations: []
 };
@@ -439,8 +444,9 @@ export const listedBuildingAppealAppellantCaseValid = {
 	id: 4,
 	appealType: {
 		id: 12,
-		type: 'Planning listed building and conservation area',
-		key: APPEAL_CASE_TYPE.Y
+		type: APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+		key: APPEAL_CASE_TYPE.Y,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.PLANNED_LISTED_BUILDING
 	},
 	representations: []
 };
@@ -449,8 +455,9 @@ export const listedBuildingAppealAppellantCaseIncomplete = {
 	id: 5,
 	appealType: {
 		id: 12,
-		type: 'Planning listed building and conservation area',
-		key: APPEAL_CASE_TYPE.Y
+		type: APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+		key: APPEAL_CASE_TYPE.Y,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.PLANNED_LISTED_BUILDING
 	},
 	appellantCase: {
 		...householdAppeal.appellantCase,
@@ -477,8 +484,9 @@ export const listedBuildingAppealAppellantCaseInvalid = {
 	id: 6,
 	appealType: {
 		id: 12,
-		type: 'Planning listed building and conservation area appeal',
-		key: APPEAL_CASE_TYPE.Y
+		type: APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+		key: APPEAL_CASE_TYPE.Y,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.PLANNED_LISTED_BUILDING
 	},
 	appellantCase: {
 		...householdAppeal.appellantCase,
@@ -504,7 +512,8 @@ export const fullPlanningAppealCaseValid = {
 	appealType: {
 		id: 1,
 		key: APPEAL_CASE_TYPE.W,
-		type: 'Full Planning'
+		type: APPEAL_TYPE.S78,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.S78
 	},
 	appellantCase: {
 		...householdAppeal.appellantCase,
@@ -660,73 +669,42 @@ export const ldcAppeal = {
 	appealType: {
 		id: 11,
 		type: APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE,
-		key: APPEAL_CASE_TYPE.X
+		key: APPEAL_CASE_TYPE.X,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.LAWFUL_DEVELOPMENT_CERTIFICATE
+	},
+	appellantCase: {
+		...fullPlanningAppeal.appellantCase,
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.LAWFUL_DEVELOPMENT_CERTIFICATE
 	},
 	representations: []
 };
 
 export const ldcAppealAppellantCaseValid = {
-	...fullPlanningAppeal,
-	id: 4,
-	appealType: {
-		id: 11,
-		type: APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE,
-		key: APPEAL_CASE_TYPE.X
-	},
-	representations: []
-};
-export const ldcAppealAppellantCaseIncomplete = {
-	...fullPlanningAppeal,
-	id: 5,
-	appealType: {
-		id: 11,
-		type: APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE,
-		key: APPEAL_CASE_TYPE.X
-	},
+	...ldcAppeal,
 	appellantCase: {
-		...householdAppeal.appellantCase,
-		hasDesignAndAccessStatement: true,
-		hasNewPlansOrDrawings: true,
-		hasOtherTenants: true,
-		hasPlanningObligation: true,
-		hasSeparateOwnershipCertificate: true,
-		hasToldTenants: false,
-		isAgriculturalHolding: true,
-		isAgriculturalHoldingTenant: true,
-		isDevelopmentDescriptionStillCorrect: false,
-		newDevelopmentDescription: 'A new extension has been added at the back',
-		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.LAWFUL_DEVELOPMENT_CERTIFICATE,
+		...ldcAppeal.appellantCase,
+		...validAppellantCaseOutcome
+	},
+	id: 4
+};
+
+export const ldcAppealAppellantCaseIncomplete = {
+	...ldcAppeal,
+	appellantCase: {
+		...ldcAppeal.appellantCase,
 		...incompleteAppellantCaseOutcome
 	},
-
-	caseExtensionDate: new Date(2099, 6, 14),
-	representations: []
+	id: 5,
+	caseExtensionDate: new Date(2099, 6, 14)
 };
 
 export const ldcAppealAppellantCaseInvalid = {
-	...fullPlanningAppeal,
-	id: 6,
-	appealType: {
-		id: 11,
-		type: APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE,
-		key: APPEAL_CASE_TYPE.X
-	},
+	...ldcAppeal,
 	appellantCase: {
-		...householdAppeal.appellantCase,
-		hasDesignAndAccessStatement: true,
-		hasNewPlansOrDrawings: true,
-		hasOtherTenants: true,
-		hasPlanningObligation: true,
-		hasSeparateOwnershipCertificate: true,
-		hasToldTenants: false,
-		isAgriculturalHolding: true,
-		isAgriculturalHoldingTenant: true,
-		isDevelopmentDescriptionStillCorrect: false,
-		newDevelopmentDescription: 'A new extension has been added at the back',
-		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.LAWFUL_DEVELOPMENT_CERTIFICATE,
+		...ldcAppeal.appellantCase,
 		...invalidAppellantCaseOutcome
 	},
-	representations: []
+	id: 6
 };
 
 export const fullPlanningAppealLPAQuestionnaireIncomplete = {
@@ -785,7 +763,8 @@ export const enforcementNoticeAppeal = {
 	appealType: {
 		id: 2,
 		key: APPEAL_CASE_TYPE.C,
-		type: 'Enforcement Notice'
+		type: APPEAL_TYPE.ENFORCEMENT_NOTICE,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.ENFORCEMENT_NOTICE
 	}
 };
 

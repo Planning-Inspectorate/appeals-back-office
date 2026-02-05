@@ -287,6 +287,36 @@ describe('representations', () => {
 				'and <a href="/appeals-service/appeal-details/1/rule6-statement?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare" class="govuk-link">1 Org One statement</a>'
 			);
 		});
+
+		it('should NOT display Rule 6 statements if they are not valid or incomplete', async () => {
+			const appealWithInvalidRule6 = {
+				...appealData,
+				appealStatus: 'statements',
+				documentationSummary: {
+					rule6PartyStatements: {
+						'rep-id-1': {
+							organisationName: 'Org One',
+							representationStatus: 'awaiting_review'
+						},
+						'rep-id-2': {
+							organisationName: 'Org Two',
+							representationStatus: 'invalid'
+						},
+						'rep-id-3': {
+							organisationName: 'Org Three',
+							representationStatus: 'valid'
+						}
+					}
+				}
+			};
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealWithInvalidRule6);
+			const response = await request.get(`${baseUrl}/1/share`);
+			const textResponse = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(textResponse.innerHTML).not.toContain('Org One statement');
+			expect(textResponse.innerHTML).not.toContain('Org Two statement');
+			expect(textResponse.innerHTML).toContain('1 Org Three statement');
+		});
 	});
 
 	describe('POST /share', () => {

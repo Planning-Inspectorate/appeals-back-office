@@ -28,15 +28,7 @@ describe('add cost decision and redact', () => {
 	it('add costs decsion and redact', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
-			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			happyPathHelper.startCase(caseObj);
-			happyPathHelper.reviewLpaq(caseObj);
-			happyPathHelper.setupSiteVisitFromBanner(caseObj);
-			cy.simulateSiteVisit(caseObj).then((caseObj) => {
-				cy.reload();
-			});
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'HAS');
 			caseDetailsPage.clickIssueAppellantCostsDecision();
 			caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
 			caseDetailsPage.clickButtonByText('Continue');
@@ -48,9 +40,7 @@ describe('add cost decision and redact', () => {
 	it('change the redaction status of a cost decsion', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			happyPathHelper.startCase(caseObj);
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
 			caseDetailsPage.clickAddAppellantApplication();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
@@ -71,9 +61,7 @@ describe('add cost decision and redact', () => {
 	it('Upload new version and change filename', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			happyPathHelper.startCase(caseObj);
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
 			caseDetailsPage.clickAddAppellantApplication();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');

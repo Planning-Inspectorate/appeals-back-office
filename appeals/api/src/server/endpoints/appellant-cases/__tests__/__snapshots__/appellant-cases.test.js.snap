@@ -671,7 +671,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
-  "appealType": "Full Planning",
+  "appealType": "Planning appeal",
   "appellant": {
     "email": "test@1367.com",
     "firstName": "Lee",
@@ -752,7 +752,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
-  "appealType": "Planning",
+  "appealType": "Planning appeal",
   "appellant": {
     "email": "test@1367.com",
     "firstName": "Lee",
@@ -830,7 +830,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
-  "appealType": "Planning",
+  "appealType": "Planning appeal",
   "appellant": {
     "email": "test@1367.com",
     "firstName": "Lee",
@@ -927,7 +927,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
-  "appealType": "Planning",
+  "appealType": "Planning appeal",
   "appellant": {
     "email": "test@1367.com",
     "firstName": "Lee",
@@ -1395,7 +1395,10 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
-  "typeOfPlanningApplication": "full-appeal",
+  "typeOfPlanningApplication": "lawful-development-certificate",
+  "validation": {
+    "outcome": "Valid",
+  },
 }
 `;
 
@@ -1466,7 +1469,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
-  "typeOfPlanningApplication": "full-appeal",
+  "typeOfPlanningApplication": "lawful-development-certificate",
 }
 `;
 
@@ -1670,7 +1673,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
-  "appealType": "Planning listed building and conservation area",
+  "appealType": "Planning listed building and conservation area appeal",
   "appellant": {
     "email": "test@1367.com",
     "firstName": "Lee",
@@ -1747,7 +1750,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
-  "appealType": "Planning listed building and conservation area",
+  "appealType": "Planning listed building and conservation area appeal",
   "appellant": {
     "email": "test@1367.com",
     "firstName": "Lee",
@@ -1824,7 +1827,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
-  "appealType": "Planning listed building and conservation area",
+  "appealType": "Planning listed building and conservation area appeal",
   "appellant": {
     "email": "test@1367.com",
     "firstName": "Lee",
