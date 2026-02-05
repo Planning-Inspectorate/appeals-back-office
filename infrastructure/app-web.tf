@@ -87,7 +87,6 @@ module "app_web" {
     FEATURE_FLAG_S78_INQUIRY              = var.apps_config.featureFlags.featureFlagS78Inquiry
     FEATURE_FLAG_LINKED_APPEALS           = var.apps_config.featureFlags.featureFlagLinkedAppeals
     FEATURE_FLAG_LINKED_APPEALS_UNLINK    = var.apps_config.featureFlags.featureFlagLinkedAppealsUnlink
-    FEATURE_FLAG_CAS_ADVERT               = var.apps_config.featureFlags.featureFlagCasAdvert
     FEATURE_FLAG_ADVERTISEMENT            = var.apps_config.featureFlags.featureFlagAdvertisement
     FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT = var.apps_config.featureFlags.featureFlagSimplifyTeamAssignment
     FEATURE_FLAG_PDF_DOWNLOAD             = var.apps_config.featureFlags.featureFlagPdfDownload
