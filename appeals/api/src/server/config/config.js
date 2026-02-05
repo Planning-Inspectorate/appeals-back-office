@@ -56,8 +56,6 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_S78_INQUIRY && environment.FEATURE_FLAG_S78_INQUIRY === 'true',
 		featureFlagLinkedAppeals:
 			environment.FEATURE_FLAG_LINKED_APPEALS && environment.FEATURE_FLAG_LINKED_APPEALS === 'true',
-		featureFlagCasAdvert:
-			environment.FEATURE_FLAG_CAS_ADVERT && environment.FEATURE_FLAG_CAS_ADVERT === 'true',
 		featureFlagNetResidence:
 			environment.FEATURE_FLAG_NET_RESIDENCE && environment.FEATURE_FLAG_NET_RESIDENCE === 'true',
 		featureFlagNetResidenceS20:
