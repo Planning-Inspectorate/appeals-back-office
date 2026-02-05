@@ -1516,24 +1516,18 @@ describe('appellant cases routes', () => {
 				expect(response.status).toEqual(200);
 			});
 
-			test('updates the appellant case for invalid enforcement appeal with invalid enforcement notice', async () => {
-				// @ts-ignore
+			test('updates the appellant case for invalid enforcement appeal with valid enforcement notice', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(
 					enforcementNoticeAppealAppellantCaseInvalid
 				);
-				// @ts-ignore
 				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
 					appellantCaseValidationOutcomes[1]
 				);
-				// @ts-ignore
 				databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue(
 					appellantCaseInvalidReasons
 				);
-				// @ts-ignore
 				databaseConnector.appellantCaseInvalidReasonsSelected.deleteMany.mockResolvedValue(true);
-				// @ts-ignore
 				databaseConnector.appellantCaseInvalidReasonsSelected.createMany.mockResolvedValue(true);
-				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({
 					id: 1,
 					azureAdUserId
@@ -1604,24 +1598,19 @@ describe('appellant cases routes', () => {
 				expect(response.status).toEqual(200);
 			});
 
-			test('updates the appellant case for invalid enforcement appeal with valid enforcement notice', async () => {
-				// @ts-ignore
+			test('updates the appellant case for invalid enforcement appeal with invalid enforcement notice', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(
 					enforcementNoticeAppealAppellantCaseInvalid
 				);
-				// @ts-ignore
 				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
 					appellantCaseValidationOutcomes[1]
 				);
-				// @ts-ignore
 				databaseConnector.appellantCaseEnforcementInvalidReasonsSelected.deleteMany.mockResolvedValue(
 					true
 				);
-				// @ts-ignore
 				databaseConnector.appellantCaseEnforcementInvalidReasonsSelected.createMany.mockResolvedValue(
 					true
 				);
-				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({
 					id: 1,
 					azureAdUserId
@@ -1682,7 +1671,24 @@ describe('appellant cases routes', () => {
 					}
 				});
 
-				expect(mockNotifySend).not.toHaveBeenCalled();
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: '1345264',
+						enforcement_reference: 'Reference',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						reason_1: 'has some text',
+						reason_2: 'has some other text',
+						reason_8: 'This is the other field',
+						other_info: 'Enforcement other information',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					},
+					recipientEmail: enforcementNoticeAppeal.agent.email,
+					templateName: 'enforcement-notice-invalid-appellant'
+				});
+
 				expect(response.status).toEqual(200);
 			});
 
