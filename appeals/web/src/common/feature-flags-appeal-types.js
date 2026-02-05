@@ -29,7 +29,7 @@ export const isAppealCaseTypeEnabled = (appealCaseType) => {
 			return true;
 		}
 		case APPEAL_CASE_TYPE.H: {
-			return isFeatureActive(FEATURE_FLAG_NAMES.ADVERTISEMENT);
+			return true;
 		}
 		case APPEAL_CASE_TYPE.C: {
 			return isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE);

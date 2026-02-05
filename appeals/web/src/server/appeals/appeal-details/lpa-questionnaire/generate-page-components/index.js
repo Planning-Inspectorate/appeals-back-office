@@ -32,11 +32,7 @@ export function generateCaseTypeSpecificComponents(
 		case APPEAL_TYPE.CAS_ADVERTISEMENT:
 			return generateCasAdvertLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
 		case APPEAL_TYPE.ADVERTISEMENT:
-			if (isFeatureActive(FEATURE_FLAG_NAMES.ADVERTISEMENT)) {
-				return generateAdvertLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
-			} else {
-				throw new Error('Feature flag inactive for adverts');
-			}
+			return generateAdvertLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
 		case APPEAL_TYPE.ENFORCEMENT_NOTICE:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
 				return generateEnforcementLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
