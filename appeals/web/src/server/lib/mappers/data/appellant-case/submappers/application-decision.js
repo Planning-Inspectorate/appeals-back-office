@@ -12,7 +12,7 @@ export const mapApplicationDecision = ({ appellantCaseData, currentRoute, userHa
 			case APPEAL_APPLICATION_DECISION.REFUSED:
 				return 'Refused';
 			default:
-				return '';
+				return 'Not answered';
 		}
 	})();
 
