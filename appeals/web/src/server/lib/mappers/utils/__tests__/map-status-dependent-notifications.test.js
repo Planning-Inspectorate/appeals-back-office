@@ -218,9 +218,9 @@ describe('mapStatusDependentNotifications', () => {
 			);
 
 			expect(Array.isArray(result)).toBe(true);
-			expect(result[0].type).toBe('notification-banner');
-			expect(result[0].parameters.type).toBe('important');
-			expect(result[0].parameters.html).toContain(testCase.expectedContainedHtml);
+			expect(result[0]?.type).toBe('notification-banner');
+			expect(result[0]?.parameters.type).toBe('important');
+			expect(result[0]?.parameters.html).toContain(testCase.expectedContainedHtml);
 		});
 	}
 
@@ -236,9 +236,9 @@ describe('mapStatusDependentNotifications', () => {
 			);
 
 			expect(Array.isArray(result)).toBe(true);
-			expect(result[0].type).toBe('notification-banner');
-			expect(result[0].parameters.type).toBe('important');
-			expect(result[0].parameters.html).toContain(testCase.expectedContainedHtml);
+			expect(result[0]?.type).toBe('notification-banner');
+			expect(result[0]?.parameters.type).toBe('important');
+			expect(result[0]?.parameters.html).toContain(testCase.expectedContainedHtml);
 		});
 	}
 

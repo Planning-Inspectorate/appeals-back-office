@@ -3,7 +3,7 @@ import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { mapStatusFilterLabel, mapStatusText } from '#lib/appeal-status.js';
 import { appealShortReference, linkedAppealStatus } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import { removeSummaryListActions } from '#lib/mappers/index.js';
+import { canDisplayAction, removeSummaryListActions } from '#lib/mappers/index.js';
 import {
 	isChildAppeal,
 	isLinkedAppealsActive,
@@ -12,9 +12,9 @@ import {
 import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
-import { APPEAL_REPRESENTATION_STATUS, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { DOCUMENT_STATUS_NOT_RECEIVED } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import * as authSession from '../../app/auth/auth-session.service.js';
 
 /** @typedef {import('@pins/appeals').AppealSummary} AppealSummary */
@@ -23,23 +23,6 @@ import * as authSession from '../../app/auth/auth-session.service.js';
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
 /** @typedef {import('../../app/auth/auth.service').AccountInfo} AccountInfo */
 /** @typedef {Partial<AppealSummary & { appealTimetable: Record<string,string>, awaitingLinkedAppeal: boolean, costsDecision?: CostsDecision}>} PersonalListAppeal */
-
-const ALLOWED_CHILD_APPEAL_ACTION_STATUSES = [
-	APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
-	APPEAL_CASE_STATUS.VALIDATION,
-	APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
-];
-
-/**
- * @param {AppealSummary} appeal
- * @return {boolean}
- */
-function canDisplayAction(appeal) {
-	return (
-		// @ts-ignore
-		!isChildAppeal(appeal) || ALLOWED_CHILD_APPEAL_ACTION_STATUSES.includes(appeal.appealStatus)
-	);
-}
 
 /**
  * @param {AppealList|void} appealsAssignedToCurrentUser
@@ -183,9 +166,8 @@ export function personalListPage(
 					isParentAppeal(appeal),
 					isChildAppeal(appeal)
 				);
-				const actionLinks = canDisplayAction(appeal)
-					? mapActionLinksForAppeal(appeal, isCaseOfficer, request)
-					: '';
+
+				const actionLinks = mapActionLinksForAppeal(appeal, isCaseOfficer, request);
 
 				const urlToAppealsDetail = addBackLinkQueryToUrl(
 					request,
@@ -336,9 +318,6 @@ function mapRequiredActionToPersonalListActionHtml(
 			)}">Set up site visit<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'awaitingAppellantUpdate': {
-			if (isChildAppeal && appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
-				return;
-			}
 			return isCaseOfficer
 				? `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 						request,
@@ -347,9 +326,6 @@ function mapRequiredActionToPersonalListActionHtml(
 				: 'Awaiting appellant update';
 		}
 		case 'assignCaseOfficer': {
-			if (isChildAppeal) {
-				return;
-			}
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 				request,
 				`/appeals-service/appeal-details/${appealId}/assign-case-officer/search-case-officer`
@@ -489,9 +465,6 @@ function mapRequiredActionToPersonalListActionHtml(
 			)}">Share IP comments and statements<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'startAppeal': {
-			if (isChildAppeal) {
-				return;
-			}
 			return isCaseOfficer
 				? `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 						request,
@@ -643,6 +616,10 @@ function mapRequiredActionToPersonalListActionHtml(
  * @returns {string}
  */
 export function mapActionLinksForAppeal(appeal, isCaseOfficer, request) {
+	if (!canDisplayAction(appeal)) {
+		return '';
+	}
+
 	const requiredActions = getRequiredActionsForAppeal(
 		{
 			...appeal,

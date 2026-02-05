@@ -22,6 +22,28 @@ import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorat
 /** @typedef {import('#appeals/personal-list/personal-list.mapper').PersonalListAppeal} PersonalListAppeal */
 
 /**
+ * @param {PersonalListAppeal | WebAppeal} appeal
+ * @return {boolean}
+ */
+export function canDisplayAction(appeal) {
+	if (!isChildAppeal(appeal)) {
+		return true;
+	}
+	switch (appeal.appealStatus) {
+		case APPEAL_CASE_STATUS.VALIDATION:
+			return true;
+		case APPEAL_CASE_STATUS.AWAITING_TRANSFER:
+			return true;
+		case APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE:
+			return appeal.appealType !== APPEAL_TYPE.ENFORCEMENT_NOTICE;
+		case APPEAL_CASE_STATUS.EVENT:
+			return appeal.procedureType !== APPEAL_CASE_PROCEDURE.WRITTEN;
+		default:
+			return false;
+	}
+}
+
+/**
  * This logic is documented in `docs/reference/appeal-action-required-logic.md`. Please ensure this document is kept updated to reflect any changes made in this function.
  * @param {WebAppeal|PersonalListAppeal} appealDetails
  * @param { 'summary'|'detail' } view
