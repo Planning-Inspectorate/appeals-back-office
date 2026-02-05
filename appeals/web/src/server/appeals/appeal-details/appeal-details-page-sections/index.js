@@ -15,9 +15,6 @@ export function generateAppealDetailsSections(appealDetails, mappedData, session
 		case APPEAL_TYPE.HOUSEHOLDER:
 			return generateHasAppealDetailsPageComponents(appealDetails, mappedData, session);
 		case APPEAL_TYPE.CAS_PLANNING:
-			if (!isFeatureActive(FEATURE_FLAG_NAMES.CAS)) {
-				throw new Error('Feature flag inactive for CAS');
-			}
 			return generateHasAppealDetailsPageComponents(appealDetails, mappedData, session);
 		case APPEAL_TYPE.CAS_ADVERTISEMENT:
 			if (!isFeatureActive(FEATURE_FLAG_NAMES.CAS_ADVERT)) {
