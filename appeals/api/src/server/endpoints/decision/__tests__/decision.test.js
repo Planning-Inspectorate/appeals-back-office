@@ -1092,11 +1092,10 @@ describe('decision routes', () => {
 				decisionDate
 			);
 
-			expect(mockNotifySend).toHaveBeenCalledTimes(5);
+			expect(mockNotifySend).toHaveBeenCalledTimes(4);
 
 			const expectedRecipients = [
 				{ type: 'agent', email: correctAppealState.agent.email },
-				{ type: 'appellant', email: correctAppealState.appellant.email },
 				{ type: 'lpa', email: correctAppealState.lpa.email },
 				{ type: 'commenter', email: 'commenter2@test.com' },
 				{ type: 'commenter', email: 'commenter1@test.com' }
@@ -1129,6 +1128,212 @@ describe('decision routes', () => {
 					userId: correctAppealState.caseOfficer.id
 				}
 			});
+		});
+
+		test('sends correction notice to all unique emails and creates audit trail, prefers agent email over appellant when both exist', async () => {
+			const correctAppealState = {
+				...householdAppeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				]
+			};
+
+			databaseConnector.representation.count.mockResolvedValue(2);
+			databaseConnector.appeal.findUnique.mockResolvedValue(correctAppealState);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{
+					represented: {
+						email: 'commenter1@test.com'
+					}
+				},
+				{
+					represented: {
+						email: 'commenter2@test.com'
+					}
+				}
+			]);
+
+			const correctionNotice = 'Test correction notice';
+			const decisionDate = new Date('2023-11-10');
+
+			const appealWithAgentAndAppellant = {
+				...correctAppealState,
+				agent: {
+					...correctAppealState.agent,
+					email: 'agent@example.com'
+				},
+				appellant: {
+					...correctAppealState.appellant,
+					email: 'appellant@example.com'
+				}
+			};
+
+			await sendNewDecisionLetter(
+				appealWithAgentAndAppellant,
+				correctionNotice,
+				azureAdUserId,
+				mockNotifyClient,
+				decisionDate
+			);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(4);
+
+			const expectedRecipients = [
+				{ type: 'agent', email: 'agent@example.com' },
+				{ type: 'lpa', email: appealWithAgentAndAppellant.lpa.email.trim().toLowerCase() },
+				{ type: 'commenter', email: 'commenter2@test.com' },
+				{ type: 'commenter', email: 'commenter1@test.com' }
+			];
+
+			const recipients = mockNotifySend.mock.calls.map(([arg]) => arg.recipientEmail);
+			expect(recipients).not.toContain('appellant@example.com');
+
+			expectedRecipients.forEach((recipient) => {
+				expect(mockNotifySend).toHaveBeenCalledWith({
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.any(Object),
+					templateName: 'correction-notice-decision',
+					recipientEmail: recipient.email,
+					personalisation: {
+						appeal_reference_number: appealWithAgentAndAppellant.reference,
+						lpa_reference: appealWithAgentAndAppellant.applicationReference,
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						front_office_url: 'https://appeal-planning-decision.service.gov.uk/appeals/1345264',
+						correction_notice_reason: correctionNotice,
+						decision_date: formatDate(decisionDate, false),
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						feedback_link: FEEDBACK_FORM_LINKS.HAS
+					}
+				});
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: appealWithAgentAndAppellant.id,
+					details: stringTokenReplacement(AUDIT_TRAIL_CORRECTION_NOTICE_ADDED, [correctionNotice]),
+					loggedAt: expect.any(Date),
+					userId: appealWithAgentAndAppellant.caseOfficer.id
+				}
+			});
+		});
+
+		test('sends correction notice to all unique emails and creates audit trail, falls back to appellant when agent missing', async () => {
+			const correctAppealState = {
+				...householdAppeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				]
+			};
+
+			databaseConnector.representation.count.mockResolvedValue(2);
+			databaseConnector.appeal.findUnique.mockResolvedValue(correctAppealState);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{
+					represented: {
+						email: 'commenter1@test.com'
+					}
+				},
+				{
+					represented: {
+						email: 'commenter2@test.com'
+					}
+				}
+			]);
+
+			const correctionNotice = 'Test correction notice';
+			const decisionDate = new Date('2023-11-10');
+
+			const appealWithMissingAgent = {
+				...correctAppealState,
+				agent: null,
+				appellant: {
+					...correctAppealState.appellant,
+					email: 'appellant@example.com'
+				}
+			};
+
+			await sendNewDecisionLetter(
+				appealWithMissingAgent,
+				correctionNotice,
+				azureAdUserId,
+				mockNotifyClient,
+				decisionDate
+			);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(4);
+
+			const expectedRecipients = [
+				{ type: 'appellant', email: 'appellant@example.com' },
+				{ type: 'lpa', email: appealWithMissingAgent.lpa.email.trim().toLowerCase() },
+				{ type: 'commenter', email: 'commenter2@test.com' },
+				{ type: 'commenter', email: 'commenter1@test.com' }
+			];
+
+			const recipients = mockNotifySend.mock.calls.map(([arg]) => arg.recipientEmail);
+			expect(recipients).not.toContain(correctAppealState.agent?.email);
+			expect(recipients).toContain('appellant@example.com');
+
+			expectedRecipients.forEach((recipient) => {
+				expect(mockNotifySend).toHaveBeenCalledWith({
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.any(Object),
+					templateName: 'correction-notice-decision',
+					recipientEmail: recipient.email,
+					personalisation: {
+						appeal_reference_number: appealWithMissingAgent.reference,
+						lpa_reference: appealWithMissingAgent.applicationReference,
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						front_office_url: 'https://appeal-planning-decision.service.gov.uk/appeals/1345264',
+						correction_notice_reason: correctionNotice,
+						decision_date: formatDate(decisionDate, false),
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						feedback_link: FEEDBACK_FORM_LINKS.HAS
+					}
+				});
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: appealWithMissingAgent.id,
+					details: stringTokenReplacement(AUDIT_TRAIL_CORRECTION_NOTICE_ADDED, [correctionNotice]),
+					loggedAt: expect.any(Date),
+					userId: appealWithMissingAgent.caseOfficer.id
+				}
+			});
+		});
+
+		test('de-dupes exact duplicate commenter emails', async () => {
+			const correctAppealState = {
+				...householdAppeal,
+				appealStatus: [{ status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION, valid: true }]
+			};
+
+			databaseConnector.representation.count.mockResolvedValue(2);
+			databaseConnector.appeal.findUnique.mockResolvedValue(correctAppealState);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{ represented: { email: 'dup@test.com' } },
+				{ represented: { email: 'dup@test.com' } }
+			]);
+
+			await sendNewDecisionLetter(
+				correctAppealState,
+				'Test correction notice',
+				azureAdUserId,
+				mockNotifyClient,
+				new Date('2023-11-10')
+			);
+
+			const recipients = mockNotifySend.mock.calls.map(([arg]) => arg.recipientEmail);
+			expect(recipients.filter((e) => e === 'dup@test.com')).toHaveLength(1);
 		});
 
 		test('handles missing emails correctly', async () => {
