@@ -133,7 +133,9 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
 				(e) => `${e.instancePath || '/'}: ${e.message}`
 			);
 
-			pino.error(`Error validating appeal: ${errorDetails[0]}`);
+			pino.error(
+				`Error validating appeal ${appealId}, case reference ${appeal.reference}: ${errorDetails[0]}`
+			);
 			return false;
 		}
 

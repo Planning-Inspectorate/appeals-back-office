@@ -95,6 +95,14 @@ const updateableFields = {
 		type: 'boolean',
 		nullable: true
 	},
+	retrospectiveApplication: {
+		type: 'boolean',
+		nullable: true
+	},
+	groundAFeePaid: {
+		type: 'boolean',
+		nullable: true
+	},
 	applicationDevelopmentAllOrPart: {
 		type: 'string',
 		nullable: true
@@ -374,6 +382,14 @@ const appellantCase = {
 					nullable: true
 				},
 				applicationMadeAndFeePaid: {
+					type: 'boolean',
+					nullable: true
+				},
+				retrospectiveApplication: {
+					type: 'boolean',
+					nullable: true
+				},
+				groundAFeePaid: {
 					type: 'boolean',
 					nullable: true
 				},

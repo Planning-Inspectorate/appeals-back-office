@@ -127,6 +127,8 @@ export const mapAppellantCaseIn = (command) => {
 			writtenOrVerbalPermission: casedata.writtenOrVerbalPermission,
 			descriptionOfAllegedBreach: casedata.descriptionOfAllegedBreach,
 			applicationMadeAndFeePaid: casedata.applicationMadeAndFeePaid,
+			retrospectiveApplication: casedata.retrospectiveApplication,
+			groundAFeePaid: casedata.groundAFeePaid,
 			applicationDevelopmentAllOrPart: casedata.applicationDevelopmentAllOrPart,
 			contactAddress: { create: contactAddress },
 			applicationDecisionAppealed: casedata.applicationDecisionAppealed,
