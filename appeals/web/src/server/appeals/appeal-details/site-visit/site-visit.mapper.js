@@ -633,7 +633,9 @@ export const cancelSiteVisitPage = (appealDetails, emailTemplate) => {
 			{
 				type: 'html',
 				parameters: {
-					html: `<p class="govuk-body">We will send an email to the appellant and LPA to tell them that we have cancelled the site visit.</p>`
+					html: `<p class="govuk-body">We will send an email to the appellant
+ ${appealDetails.siteVisit?.visitType === 'Accompanied' ? `and the LPA ` : ''}
+to tell them that we have cancelled the site visit.</p>`
 				}
 			},
 			{
@@ -647,17 +649,21 @@ export const cancelSiteVisitPage = (appealDetails, emailTemplate) => {
 					html: emailTemplate
 				}
 			},
-			{
-				type: 'details',
-				wrapperHtml: {
-					opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-					closing: '</div></div>'
-				},
-				parameters: {
-					summaryText: `Preview email to LPA`,
-					html: emailTemplate
-				}
-			}
+			...(appealDetails.siteVisit?.visitType === 'Accompanied'
+				? [
+						{
+							type: 'details',
+							wrapperHtml: {
+								opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+								closing: '</div></div>'
+							},
+							parameters: {
+								summaryText: `Preview email to LPA`,
+								html: emailTemplate
+							}
+						}
+					]
+				: [])
 		]
 	};
 };

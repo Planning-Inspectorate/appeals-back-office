@@ -2879,15 +2879,6 @@ describe('site visit routes', () => {
 						userId: 1
 					}
 				});
-				const siteAddress = householdAppeal.address
-					? formatAddressSingleLine(householdAppeal.address)
-					: 'Address not available';
-				const personalisation = {
-					appeal_reference_number: householdAppeal.reference,
-					lpa_reference: householdAppeal.applicationReference,
-					site_address: siteAddress,
-					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
-				};
 
 				expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.appealStatus.update).toHaveBeenCalledTimes(1);
@@ -2906,7 +2897,56 @@ describe('site visit routes', () => {
 					data: { valid: true }
 				});
 
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({ siteVisitId: 1 });
+
+				databaseConnector.appeal.findUnique.mockReset();
+				databaseConnector.appealStatus.findFirst.mockReset();
+			});
+			test('deletes a site visit and keeps the status if the status is LPAQ', async () => {
+				householdAppeal.appealStatus[0] = 'lpa_questionnaire';
+				// @ts-ignore
+				databaseConnector.appeal.findUnique
+					.mockResolvedValueOnce(householdAppeal)
+					.mockResolvedValue({
+						...householdAppeal,
+						siteVisit: null
+					});
+
+				const response = await request
+					.delete(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
+					.send()
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.siteVisit.delete).toHaveBeenCalledWith({
+					where: { id: householdAppeal.siteVisit.id }
+				});
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: householdAppeal.id,
+						details: 'Site visit cancelled',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+
+				const siteAddress = householdAppeal.address
+					? formatAddressSingleLine(householdAppeal.address)
+					: 'Address not available';
+				const personalisation = {
+					appeal_reference_number: householdAppeal.reference,
+					lpa_reference: householdAppeal.applicationReference,
+					site_address: siteAddress,
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+				};
+
+				expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledTimes(0);
+				expect(databaseConnector.appealStatus.update).toHaveBeenCalledTimes(0);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
@@ -2916,21 +2956,13 @@ describe('site visit routes', () => {
 					templateName: 'site-visit-cancelled'
 				});
 
-				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-					notifyClient: expect.anything(),
-					personalisation: personalisation,
-					recipientEmail: householdAppeal.lpa.email,
-					templateName: 'site-visit-cancelled'
-				});
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({ siteVisitId: 1 });
 
 				databaseConnector.appeal.findUnique.mockReset();
-				databaseConnector.appealStatus.findFirst.mockReset();
 			});
-			test('deletes a site visit and keeps the status if the status is LPAQ', async () => {
-				householdAppeal.appealStatus[0] = 'lpa_questionnaire';
+			test('deletes a site visit and and notifies the LPA if visit type is accompanied', async () => {
+				householdAppeal.siteVisit.siteVisitType.name = 'Accompanied';
 
 				// @ts-ignore
 				databaseConnector.appeal.findUnique
