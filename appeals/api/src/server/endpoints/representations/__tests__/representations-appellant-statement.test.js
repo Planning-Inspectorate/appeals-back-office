@@ -61,6 +61,24 @@ describe('Appellant Statement Representations', () => {
 					})
 				})
 			);
+
+			const personalisation = {
+				appeal_reference_number: '1345264',
+				site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+				lpa_reference: '48269/APP/2021/1482',
+				inquiry_date: '31 March 2022',
+				statement_url: '/mock-front-office-url/appeals/1345264'
+			};
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				azureAdUserId: '732652365',
+				notifyClient: expect.anything(),
+				personalisation,
+				recipientEmail: 'test@136s7.com',
+				templateName: 'appellant-statement-received'
+			});
 		});
 	});
 
