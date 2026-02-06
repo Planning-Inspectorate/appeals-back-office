@@ -4547,6 +4547,8 @@ export type AppellantCase = {
 		writtenOrVerbalPermission?: string | null;
 		descriptionOfAllegedBreach?: string | null;
 		applicationMadeAndFeePaid?: boolean | null;
+		retrospectiveApplication?: boolean | null;
+		groundAFeePaid?: boolean | null;
 		applicationDevelopmentAllOrPart?: string | null;
 		contactAddress?: {
 			addressId?: number;
@@ -4572,6 +4574,8 @@ export type AppellantCase = {
 	writtenOrVerbalPermission?: string | null;
 	descriptionOfAllegedBreach?: string | null;
 	applicationMadeAndFeePaid?: boolean | null;
+	retrospectiveApplication?: boolean | null;
+	groundAFeePaid?: boolean | null;
 	applicationDevelopmentAllOrPart?: string | null;
 	contactAddress?: {
 		addressId?: number;
@@ -16893,6 +16897,8 @@ export interface AppellantCaseUpdateRequest {
 	writtenOrVerbalPermission?: string | null;
 	descriptionOfAllegedBreach?: string | null;
 	applicationMadeAndFeePaid?: boolean | null;
+	retrospectiveApplication?: boolean | null;
+	groundAFeePaid?: boolean | null;
 	applicationDevelopmentAllOrPart?: string | null;
 	contactAddress?: {
 		addressId?: number;

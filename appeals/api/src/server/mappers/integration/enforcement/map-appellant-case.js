@@ -53,6 +53,8 @@ export const mapAppellantCase = (data) => {
 		contactPlanningInspectorateDate,
 		descriptionOfAllegedBreach,
 		applicationMadeAndFeePaid,
+		retrospectiveApplication,
+		groundAFeePaid,
 		applicationDecisionAppealed,
 		appealDecisionDate
 	} = appellantCase || {};
@@ -77,6 +79,8 @@ export const mapAppellantCase = (data) => {
 		enforcementNoticeReference: enforcementReference ?? null,
 		dateAppellantContactedPins: contactPlanningInspectorateDate?.toISOString() ?? null,
 		descriptionOfAllegedBreach: descriptionOfAllegedBreach ?? null,
-		applicationMadeAndFeePaid: applicationMadeAndFeePaid ?? null
+		applicationMadeAndFeePaid: applicationMadeAndFeePaid ?? null,
+		retrospectiveApplication: retrospectiveApplication ?? null,
+		groundAFeePaid: groundAFeePaid ?? null
 	};
 };
