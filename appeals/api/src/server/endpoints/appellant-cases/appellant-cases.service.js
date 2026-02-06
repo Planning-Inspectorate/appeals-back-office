@@ -402,20 +402,30 @@ export const updateAppellantCaseValidationOutcome = async (
 					{}
 				);
 
+				const personalisation = {
+					appeal_reference_number: appeal.reference,
+					enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
+					site_address: siteAddress,
+					...reasonParams,
+					other_info: otherInformation || '',
+					team_email_address: teamEmail
+				};
 				await notifySend({
 					azureAdUserId,
 					templateName: 'enforcement-notice-invalid-appellant',
 					notifyClient,
 					recipientEmail: applicantEmail,
-					personalisation: {
-						appeal_reference_number: appeal.reference,
-						enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
-						site_address: siteAddress,
-						...reasonParams,
-						other_info: otherInformation || '',
-						team_email_address: teamEmail
-					}
+					personalisation
 				});
+				if (updatedAppeal.lpa?.email) {
+					await notifySend({
+						azureAdUserId,
+						templateName: 'enforcement-notice-invalid-lpa',
+						notifyClient,
+						recipientEmail: updatedAppeal.lpa.email,
+						personalisation
+					});
+				}
 			}
 
 			if (otherInformation && otherInformation !== 'no') {
