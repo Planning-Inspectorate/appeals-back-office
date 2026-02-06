@@ -1223,7 +1223,7 @@ describe('appellant cases routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body.errors).toHaveProperty(
 					'appellantProcedurePreference',
-					'Must be null or one of the following values: hearing, inquiry, written'
+					'Must be null or one of the following values: hearing, inquiry, written, writtenPart1'
 				);
 			});
 			test('returns an error if appellantProcedurePreferenceDuration is outside the allowed range', async () => {

@@ -339,7 +339,7 @@ model AppellantCase {
   writtenOrVerbalPermission                        String?
   descriptionOfAllegedBreach                       String?
   applicationMadeAndFeePaid                        Boolean?
-	retrospectiveApplication                         Boolean?
+  retrospectiveApplication                         Boolean?
   groundAFeePaid                                   Boolean?
   applicationDevelopmentAllOrPart                  String?
   contactAddress                                   Address?                                           @relation(fields: [contactAddressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
