@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`site-visit GET /site-visit/delete should render the manage visit page 1`] = `
+exports[`site-visit GET /site-visit/delete should render the manage visit page and but not show LPA preview if siteVisitType is  "'Unaccompanied'" 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
@@ -12,8 +12,48 @@ exports[`site-visit GET /site-visit/delete should render the manage visit page 1
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <p class="govuk-body">We will send an email to the appellant and LPA to tell them that we have
-                            cancelled the site visit.</p>
+                        <p class="govuk-body">We will send an email to the appellant to tell them that we have cancelled
+                            the site visit.</p>
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <details class="govuk-details">
+                                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                                    </summary>
+                                    <div class="govuk-details__text">We have cancelled the site visit. # Appeal details ^Appeal reference number:
+                                        ABC45678 Address: 10, Test Street Planning application reference: 12345XYZ
+                                        # What happens next We will contact you when we set up a new site visit.
+                                        The Planning Inspectorate caseofficers@planninginspectorate.gov.uk</div>
+                                </details>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Cancel site visit</button>
+                    </form>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full"><a class="govuk-link" href="/appeals-service/appeal-details/1">Keep site visit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`site-visit GET /site-visit/delete should render the manage visit page and show LPA preview if siteVisitType is "Accompanied" 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Confirm that you want to cancel the site visit</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <p class="govuk-body">We will send an email to the appellant and the LPA to tell them that we
+                            have cancelled the site visit.</p>
                         <div class="govuk-grid-row">
                             <div class="govuk-grid-column-full">
                                 <details class="govuk-details">

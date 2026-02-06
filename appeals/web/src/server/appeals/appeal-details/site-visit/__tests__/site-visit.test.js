@@ -1216,8 +1216,9 @@ describe('site-visit', () => {
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 	});
+
 	describe('GET /site-visit/delete', () => {
-		it('should render the manage visit page', async () => {
+		it('should render the manage visit page and show LPA preview if siteVisitType is "Accompanied"', async () => {
 			nock('http://test/')
 				.post(`/appeals/notify-preview/site-visit-cancelled.content.md`)
 				.reply(200, template);
@@ -1226,6 +1227,8 @@ describe('site-visit', () => {
 				email: 'caseofficers@planninginspectorate.gov.uk',
 				name: 'standard email'
 			});
+			nock('http://test/').get('/appeals/1').reply(200, appealData);
+
 			const response = await request.get(`${baseUrl}/1${siteVisitPath}/delete`);
 			const element = parseHtml(response.text);
 
@@ -1238,7 +1241,38 @@ describe('site-visit', () => {
 				'href="/appeals-service/appeal-details/1">Keep site visit</a>'
 			);
 		});
+
+		it('should render the manage visit page and but not show LPA preview if siteVisitType is  "\'Unaccompanied\'"', async () => {
+			nock.cleanAll();
+
+			const unaccompaniedData = {
+				...appealData,
+				siteVisit: { ...appealData.siteVisit, visitType: 'Unaccompanied' }
+			};
+
+			nock('http://test/')
+				.post(`/appeals/notify-preview/site-visit-cancelled.content.md`)
+				.reply(200, template);
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
+			nock('http://test/').get('/appeals/1?include=all').reply(200, unaccompaniedData);
+
+			const response = await request.get(`${baseUrl}/1${siteVisitPath}/delete`);
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Confirm that you want to cancel the site visit</h1>');
+			expect(element.innerHTML).toContain('Preview email to appellant</span>');
+			expect(element.innerHTML).toContain('Cancel site visit</button>');
+
+			expect(element.innerHTML).not.toContain('Preview email to LPA</span>');
+		});
 	});
+
 	describe('POST /site-visit/delete', () => {
 		afterEach(() => {
 			nock.cleanAll();

@@ -615,6 +615,7 @@ const sendCancelledSiteVisitNotification = async ({ appeal, azureAdUserId, notif
 	const siteAddress = appeal.address
 		? formatAddressSingleLine(appeal.address)
 		: 'Address not available';
+	const isAccompaniedVisit = appeal.siteVisit?.siteVisitType.name === 'Accompanied';
 
 	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
 
@@ -637,7 +638,7 @@ const sendCancelledSiteVisitNotification = async ({ appeal, azureAdUserId, notif
 		});
 	}
 
-	if (appeal.lpa?.email) {
+	if (appeal.lpa?.email && isAccompaniedVisit) {
 		await notifySend({
 			azureAdUserId,
 			templateName,
