@@ -333,6 +333,30 @@ export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
 				wasApplicationRefusedDueToHighwayOrTraffic: randomBool(),
 				didAppellantSubmitCompletePhotosAndPlans: randomBool()
 			};
+		case APPEAL_CASE_TYPE.X:
+			return {
+				isCorrectAppealType: true,
+
+				hasInfrastructureLevy: randomBool(),
+				isInfrastructureLevyFormallyAdopted: randomBool(),
+				infrastructureLevyAdoptedDate: randomBool() ? new Date(2023, 4, 9) : null,
+				infrastructureLevyExpectedDate: randomBool() ? new Date(2023, 4, 9) : null,
+
+				siteSafetyDetails: 'There may be no mobile reception at the site',
+				siteAccessDetails:
+					'There is a tall hedge around the site which obstructs the view of the site',
+				reasonForNeighbourVisits: randomArrayValue(['test reason for neighbour visits text', null]),
+
+				lpaProcedurePreference: randomEnumValue(APPEAL_LPA_PROCEDURE_PREFERENCE),
+				lpaProcedurePreferenceDetails: randomArrayValue(['Need for a detailed examination', null]),
+				lpaProcedurePreferenceDuration: randomArrayValue(procedureDurationPossibleValues),
+
+				lpaStatement: null,
+				lpaCostsAppliedFor: false,
+				lpaqCreatedDate: new Date(2023, 4, 9),
+				lpaQuestionnaireSubmittedDate: new Date(2023, 4, 9)
+			};
+
 		default:
 			return;
 	}

@@ -90,6 +90,10 @@ const appealDataAdvert = {
 	...lpaqAppealData,
 	appealType: 'Advertisement'
 };
+const appealDataLdc = {
+	...lpaqAppealData,
+	appealType: 'Lawful development certificate appeal'
+};
 
 const FieldTestCases = [
 	{
@@ -1269,6 +1273,35 @@ describe('LPA Questionnaire review', () => {
 				'Are there any other ongoing appeals next to, or close to the site?</dt>'
 			);
 			expect(element.innerHTML).toContain('Are there any new conditions?</dt>');
+
+			expect(element.innerHTML).toContain('Additional documents</h2>');
+		}, 10000);
+
+		it('should render the Ldc LPA Questionnaire page with the expected content', async () => {
+			nock('http://test/')
+				.get('/appeals/5?include=all')
+				.reply(200, {
+					...appealDataLdc,
+					appealId: 6
+				});
+			nock('http://test/')
+				.get('/appeals/6/lpa-questionnaires/1')
+				.reply(200, {
+					...lpaQuestionnaireDataNotValidated,
+					lpaQuestionnaireId: 1
+				});
+
+			const response = await request.get('/appeals-service/appeal-details/5/lpa-questionnaire/1');
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('LPA questionnaire</h1>');
+
+			expect(element.innerHTML).toContain('1. Constraints, designations and other issues</h2>');
+			expect(element.innerHTML).toContain(
+				'Is lawful development certificate appeal the correct type of appeal?</dt>'
+			);
 
 			expect(element.innerHTML).toContain('Additional documents</h2>');
 		}, 10000);
