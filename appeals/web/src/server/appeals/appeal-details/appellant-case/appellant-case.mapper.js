@@ -139,7 +139,9 @@ export async function appellantCasePage(
 		parameters: {
 			text: appellantCaseData.isEnforcementChild
 				? 'Do not continue until you have reviewed all of the supporting documents and redacted any sensitive information.'
-				: 'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information.'
+				: appellantCaseData.isEnforcementParent
+					? 'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information for each linked appeal.'
+					: 'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information.'
 		}
 	};
 
