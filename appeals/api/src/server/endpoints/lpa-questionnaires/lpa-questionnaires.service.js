@@ -59,7 +59,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 ) => {
 	let timetable = undefined;
 
-	const { id: appealId, applicationReference: lpaReference } = appeal;
+	const { id: appealId, applicationReference: lpaReference, enforcementReference } = appeal;
 	const { lpaQuestionnaireDueDate, incompleteReasons } = data;
 
 	if (!isCurrentStatus(appeal, APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE)) {
@@ -93,15 +93,20 @@ const updateLPAQuestionnaireValidationOutcome = async (
 			await transitionState(appealId, azureAdUserId, validationOutcome.name);
 		} else {
 			const linkedAppeals = await buildListOfLinkedAppeals(appeal);
-			if (allLpaQuestionnaireOutcomesAreComplete(linkedAppeals, appealId, validationOutcome)) {
-				await Promise.all(
-					linkedAppeals.map((appeal) => {
+			if (appeal.appealType?.type === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+				// Just transition all linked enforcements as child enforcements do not have a LPA Questionnaire
+				for (const appeal of linkedAppeals) {
+					await transitionState(appeal.id, azureAdUserId, validationOutcome.name);
+				}
+			} else {
+				if (allLpaQuestionnaireOutcomesAreComplete(linkedAppeals, appealId, validationOutcome)) {
+					for (const appeal of linkedAppeals) {
 						const validationOutcome = appeal.lpaQuestionnaire?.lpaQuestionnaireValidationOutcome;
 						if (validationOutcome) {
-							return transitionState(appeal.id, azureAdUserId, validationOutcome.name);
+							await transitionState(appeal.id, azureAdUserId, validationOutcome.name);
 						}
-					})
-				);
+					}
+				}
 			}
 		}
 	} else {
@@ -150,6 +155,11 @@ const updateLPAQuestionnaireValidationOutcome = async (
 				reasons: incompleteReasonsList,
 				team_email_address: await getTeamEmailFromAppealId(appeal.id)
 			};
+
+			if (enforcementReference) {
+				// @ts-ignore
+				personalisation.enforcement_reference = enforcementReference;
+			}
 
 			await notifySend({
 				azureAdUserId,
@@ -209,7 +219,8 @@ function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress, azu
 				email,
 				azureAdUserId
 			);
-		case APPEAL_TYPE.S78: {
+		case APPEAL_TYPE.S78:
+		case APPEAL_TYPE.ENFORCEMENT_NOTICE: {
 			if (String(appeal.procedureType) === APPEAL_CASE_PROCEDURE.HEARING) {
 				const hearingStartTime = appeal.hearing?.hearingStartTime;
 				const hearingDate = hearingStartTime ? formatDate(hearingStartTime, false) : undefined;
