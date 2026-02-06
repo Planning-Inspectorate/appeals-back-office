@@ -68,7 +68,7 @@ We have closed the appeal. The enforcement notice will not take effect.
 
 You should seek legal advice if you want to challenge this decision.
 
-(Find out more about the enforcement appeal process)[https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide].
+[Find out more about the enforcement appeal process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).
 
 Planning Inspectorate
 {{team_email_address}}

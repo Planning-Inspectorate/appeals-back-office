@@ -34,7 +34,7 @@ describe('appeal-confirmed-enforcement-lpa.md', () => {
 			'- Ground (b)',
 			'- Ground (c)',
 			'',
-			'You can (view the appeal in the manage your appeals service)[/mock-front-office-url/manage-appeals/134526].',
+			'You can [view the appeal in the manage your appeals service](/mock-front-office-url/manage-appeals/134526).',
 			'',
 			'# Appeal details',
 			'',
@@ -50,7 +50,7 @@ describe('appeal-confirmed-enforcement-lpa.md', () => {
 			'- after you made a related planning application',
 			'- within 2 years from the date the application or appeal made stopped being considered',
 			'',
-			'Your appeal does not meet the requirements for this ground from (section 174(2A to 2B) of the Town and Country Planning Act 1990)[https://www.legislation.gov.uk/ukpga/1990/8/section/174].',
+			'Your appeal does not meet the requirements for this ground from [section 174(2A to 2B) of the Town and Country Planning Act 1990](https://www.legislation.gov.uk/ukpga/1990/8/section/174).',
 			'',
 			'# Other information',
 			'',
@@ -60,7 +60,7 @@ describe('appeal-confirmed-enforcement-lpa.md', () => {
 			'',
 			'We will contact you when we start the appeal.',
 			'',
-			'(Find out about the enforcement appeals process)[https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide].',
+			'[Find out about the enforcement appeals process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).',
 			'',
 			'Planning Inspectorate'
 		].join('\n');
@@ -110,7 +110,7 @@ describe('appeal-confirmed-enforcement-lpa.md', () => {
 			'',
 			'Ground (a)',
 			'',
-			'You can (view the appeal in the manage your appeals service)[/mock-front-office-url/manage-appeals/134526].',
+			'You can [view the appeal in the manage your appeals service](/mock-front-office-url/manage-appeals/134526).',
 			'',
 			'# Appeal details',
 			'',
@@ -129,7 +129,7 @@ describe('appeal-confirmed-enforcement-lpa.md', () => {
 			'',
 			'Send an email to caseofficers@planninginspectorate.gov.uk to confirm if the appellant has paid the correct fee on the enforcement notice.',
 			'',
-			'(Find out about the enforcement appeals process)[https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide].',
+			'[Find out about the enforcement appeals process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).',
 			'',
 			'Planning Inspectorate'
 		].join('\n');
@@ -179,7 +179,7 @@ describe('appeal-confirmed-enforcement-lpa.md', () => {
 			'',
 			'Ground (b)',
 			'',
-			'You can (view the appeal in the manage your appeals service)[/mock-front-office-url/manage-appeals/134526].',
+			'You can [view the appeal in the manage your appeals service](/mock-front-office-url/manage-appeals/134526).',
 			'',
 			'# Appeal details',
 			'',
@@ -193,7 +193,7 @@ describe('appeal-confirmed-enforcement-lpa.md', () => {
 			'',
 			'We will contact you when we start the appeal.',
 			'',
-			'(Find out about the enforcement appeals process)[https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide].',
+			'[Find out about the enforcement appeals process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).',
 			'',
 			'Planning Inspectorate'
 		].join('\n');
@@ -243,7 +243,7 @@ describe('appeal-confirmed-enforcement-lpa.md', () => {
 			'',
 			'Ground (c)',
 			'',
-			'You can (view the appeal in the manage your appeals service)[/mock-front-office-url/manage-appeals/134526].',
+			'You can [view the appeal in the manage your appeals service](/mock-front-office-url/manage-appeals/134526).',
 			'',
 			'# Appeal details',
 			'',
@@ -261,7 +261,7 @@ describe('appeal-confirmed-enforcement-lpa.md', () => {
 			'',
 			'We will contact you when we start the appeal.',
 			'',
-			'(Find out about the enforcement appeals process)[https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide].',
+			'[Find out about the enforcement appeals process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).',
 			'',
 			'Planning Inspectorate'
 		].join('\n');
@@ -312,7 +312,7 @@ describe('appeal-confirmed-enforcement-lpa.md', () => {
 			'- Ground (b)',
 			'- Ground (c)',
 			'',
-			'You can (view the appeal in the manage your appeals service)[/mock-front-office-url/manage-appeals/134526].',
+			'You can [view the appeal in the manage your appeals service](/mock-front-office-url/manage-appeals/134526).',
 			'',
 			'# Appeal details',
 			'',
@@ -328,13 +328,13 @@ describe('appeal-confirmed-enforcement-lpa.md', () => {
 			'- after you made a related planning application',
 			'- within 2 years from the date the application or appeal made stopped being considered',
 			'',
-			'Your appeal does not meet the requirements for this ground from (section 174(2A to 2B) of the Town and Country Planning Act 1990)[https://www.legislation.gov.uk/ukpga/1990/8/section/174].',
+			'Your appeal does not meet the requirements for this ground from [section 174(2A to 2B) of the Town and Country Planning Act 1990](https://www.legislation.gov.uk/ukpga/1990/8/section/174).',
 			'',
 			'# What happens next',
 			'',
 			'We will contact you when we start the appeal.',
 			'',
-			'(Find out about the enforcement appeals process)[https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide].',
+			'[Find out about the enforcement appeals process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).',
 			'',
 			'Planning Inspectorate'
 		].join('\n');

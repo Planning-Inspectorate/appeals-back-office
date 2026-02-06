@@ -80,7 +80,7 @@ describe('enforcement-notice-invalid-lpa.md', () => {
 			'',
 			'You should seek legal advice if you want to challenge this decision.',
 			'',
-			'(Find out more about the enforcement appeal process)[https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide].',
+			'[Find out more about the enforcement appeal process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).',
 			'',
 			'Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
@@ -158,7 +158,7 @@ describe('enforcement-notice-invalid-lpa.md', () => {
 			'',
 			'You should seek legal advice if you want to challenge this decision.',
 			'',
-			'(Find out more about the enforcement appeal process)[https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide].',
+			'[Find out more about the enforcement appeal process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).',
 			'',
 			'Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
@@ -232,7 +232,7 @@ describe('enforcement-notice-invalid-lpa.md', () => {
 			'',
 			'You should seek legal advice if you want to challenge this decision.',
 			'',
-			'(Find out more about the enforcement appeal process)[https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide].',
+			'[Find out more about the enforcement appeal process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).',
 			'',
 			'Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'

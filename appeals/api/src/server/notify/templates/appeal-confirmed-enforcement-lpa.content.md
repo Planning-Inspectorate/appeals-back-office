@@ -11,7 +11,7 @@ The appeal will continue on the following grounds:
 Ground ({{ appeal_grounds[0] }})
 {% endif %}
 {% endif -%}
-You can (view the appeal in the manage your appeals service)[{{front_office_url}}/manage-appeals/{{appeal_reference_number}}].
+You can [view the appeal in the manage your appeals service]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}).
 
 # Appeal details
 
@@ -30,7 +30,7 @@ We cannot consider ground (a) because the enforcement notice was issued:
 - after you made a related planning application
 - within 2 years from the date the application or appeal made stopped being considered
 
-Your appeal does not meet the requirements for this ground from (section 174(2A to 2B) of the Town and Country Planning Act 1990)[https://www.legislation.gov.uk/ukpga/1990/8/section/174].
+Your appeal does not meet the requirements for this ground from [section 174(2A to 2B) of the Town and Country Planning Act 1990](https://www.legislation.gov.uk/ukpga/1990/8/section/174).
 
 {% endif -%}
 {% if other_info -%}
@@ -47,6 +47,6 @@ We will contact you when we start the appeal.
 Send an email to {{team_email_address}} to confirm if the appellant has paid the correct fee on the enforcement notice.
 
 {% endif -%}
-(Find out about the enforcement appeals process)[https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide].
+[Find out about the enforcement appeals process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).
 
 Planning Inspectorate
