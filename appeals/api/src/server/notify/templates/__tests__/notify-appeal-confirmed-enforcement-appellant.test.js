@@ -37,7 +37,7 @@ describe('appeal-confirmed-enforcement-appellant.md', () => {
 			'',
 			'^Appeal reference number: 134526',
 			'Address: 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-			'Enforcement reference: 12345/ENF/1234/1234',
+			'Enforcement notice reference: 12345/ENF/1234/1234',
 			'',
 			'# Ground (a) barred',
 			'',
@@ -53,9 +53,11 @@ describe('appeal-confirmed-enforcement-appellant.md', () => {
 			'',
 			'# What happens next',
 			'',
-			'1. We will send you an email when we have reviewed the other information you have provided.',
+			'1. Download a copy of your appeal form.',
 			'2. [Find the email address for your local planning authority](https://www.gov.uk/government/publications/sending-a-copy-of-the-appeal-form-to-the-council/sending-a-copy-to-the-council).',
 			'3. Email the copy of your appeal form and the documents you uploaded to: Bristol City Council.',
+			'',
+			'You must send a copy of your appeal form and documents to the local planning authority, it’s a legal requirement.',
 			'',
 			'[Find out about the enforcement appeals process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).',
 			'',
@@ -63,7 +65,7 @@ describe('appeal-confirmed-enforcement-appellant.md', () => {
 			'',
 			'[Give feedback on the appeals service](https://forms.office.com/r/9U4Sq9rEff) (takes 2 minutes)',
 			'',
-			'The Planning Inspectorate',
+			'Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 
@@ -76,7 +78,7 @@ describe('appeal-confirmed-enforcement-appellant.md', () => {
 			'test@136s7.com',
 			{
 				content: expectedContent,
-				subject: 'We have reviewed your appeal: 134526'
+				subject: 'We have confirmed your appeal: 134526'
 			}
 		);
 	});
@@ -100,7 +102,7 @@ describe('appeal-confirmed-enforcement-appellant.md', () => {
 				enforcement_reference: '12345/ENF/1234/1234',
 				appeal_grounds: ['a'],
 				ground_a_barred: false,
-				other_info: ''
+				other_info: 'No'
 			}
 		};
 
@@ -115,13 +117,15 @@ describe('appeal-confirmed-enforcement-appellant.md', () => {
 			'',
 			'^Appeal reference number: 134526',
 			'Address: 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-			'Enforcement reference: 12345/ENF/1234/1234',
+			'Enforcement notice reference: 12345/ENF/1234/1234',
 			'',
 			'# What happens next',
 			'',
-			'1. We will send you an email when we have reviewed the other information you have provided.',
+			'1. Download a copy of your appeal form.',
 			'2. [Find the email address for your local planning authority](https://www.gov.uk/government/publications/sending-a-copy-of-the-appeal-form-to-the-council/sending-a-copy-to-the-council).',
 			'3. Email the copy of your appeal form and the documents you uploaded to: Bristol City Council.',
+			'',
+			'You must send a copy of your appeal form and documents to the local planning authority, it’s a legal requirement.',
 			'',
 			'[Find out about the enforcement appeals process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).',
 			'',
@@ -129,7 +133,7 @@ describe('appeal-confirmed-enforcement-appellant.md', () => {
 			'',
 			'[Give feedback on the appeals service](https://forms.office.com/r/9U4Sq9rEff) (takes 2 minutes)',
 			'',
-			'The Planning Inspectorate',
+			'Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 
@@ -142,7 +146,7 @@ describe('appeal-confirmed-enforcement-appellant.md', () => {
 			'test@136s7.com',
 			{
 				content: expectedContent,
-				subject: 'We have reviewed your appeal: 134526'
+				subject: 'We have confirmed your appeal: 134526'
 			}
 		);
 	});
@@ -181,7 +185,7 @@ describe('appeal-confirmed-enforcement-appellant.md', () => {
 			'',
 			'^Appeal reference number: 134526',
 			'Address: 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-			'Enforcement reference: 12345/ENF/1234/1234',
+			'Enforcement notice reference: 12345/ENF/1234/1234',
 			'',
 			'# Other information',
 			'',
@@ -189,9 +193,11 @@ describe('appeal-confirmed-enforcement-appellant.md', () => {
 			'',
 			'# What happens next',
 			'',
-			'1. We will send you an email when we have reviewed the other information you have provided.',
+			'1. Download a copy of your appeal form.',
 			'2. [Find the email address for your local planning authority](https://www.gov.uk/government/publications/sending-a-copy-of-the-appeal-form-to-the-council/sending-a-copy-to-the-council).',
 			'3. Email the copy of your appeal form and the documents you uploaded to: Bristol City Council.',
+			'',
+			'You must send a copy of your appeal form and documents to the local planning authority, it’s a legal requirement.',
 			'',
 			'[Find out about the enforcement appeals process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).',
 			'',
@@ -199,7 +205,7 @@ describe('appeal-confirmed-enforcement-appellant.md', () => {
 			'',
 			'[Give feedback on the appeals service](https://forms.office.com/r/9U4Sq9rEff) (takes 2 minutes)',
 			'',
-			'The Planning Inspectorate',
+			'Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 
@@ -212,7 +218,7 @@ describe('appeal-confirmed-enforcement-appellant.md', () => {
 			'test@136s7.com',
 			{
 				content: expectedContent,
-				subject: 'We have reviewed your appeal: 134526'
+				subject: 'We have confirmed your appeal: 134526'
 			}
 		);
 	});
@@ -236,7 +242,7 @@ describe('appeal-confirmed-enforcement-appellant.md', () => {
 				enforcement_reference: '12345/ENF/1234/1234',
 				appeal_grounds: ['b', 'c'],
 				ground_a_barred: true,
-				other_info: ''
+				other_info: 'No'
 			}
 		};
 
@@ -252,7 +258,7 @@ describe('appeal-confirmed-enforcement-appellant.md', () => {
 			'',
 			'^Appeal reference number: 134526',
 			'Address: 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-			'Enforcement reference: 12345/ENF/1234/1234',
+			'Enforcement notice reference: 12345/ENF/1234/1234',
 			'',
 			'# Ground (a) barred',
 			'',
@@ -264,9 +270,11 @@ describe('appeal-confirmed-enforcement-appellant.md', () => {
 			'',
 			'# What happens next',
 			'',
-			'1. We will send you an email when we have reviewed the other information you have provided.',
+			'1. Download a copy of your appeal form.',
 			'2. [Find the email address for your local planning authority](https://www.gov.uk/government/publications/sending-a-copy-of-the-appeal-form-to-the-council/sending-a-copy-to-the-council).',
 			'3. Email the copy of your appeal form and the documents you uploaded to: Bristol City Council.',
+			'',
+			'You must send a copy of your appeal form and documents to the local planning authority, it’s a legal requirement.',
 			'',
 			'[Find out about the enforcement appeals process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).',
 			'',
@@ -274,7 +282,7 @@ describe('appeal-confirmed-enforcement-appellant.md', () => {
 			'',
 			'[Give feedback on the appeals service](https://forms.office.com/r/9U4Sq9rEff) (takes 2 minutes)',
 			'',
-			'The Planning Inspectorate',
+			'Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 
@@ -287,7 +295,7 @@ describe('appeal-confirmed-enforcement-appellant.md', () => {
 			'test@136s7.com',
 			{
 				content: expectedContent,
-				subject: 'We have reviewed your appeal: 134526'
+				subject: 'We have confirmed your appeal: 134526'
 			}
 		);
 	});
