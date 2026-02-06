@@ -1461,6 +1461,66 @@ exports[`LPA Questionnaire review GET / should render the Ldc LPA Questionnaire 
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title"> 2. Planning officer’s report and supplementary documents</h2>
+                </div>
+                <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning officer’s report</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list pins-file-list">
+                                    <li><span><div class="govuk-body govuk-!-margin-bottom-2">officersReport.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
+                                    </li>
+                                </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/manage-documents/7/"
+                                            data-cy="manage-officers-report">Change<span class="govuk-visually-hidden"> Planning officer’s report (2. Planning officer’s report and supplementary documents)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/7"
+                                            data-cy="add-officers-report">Add<span class="govuk-visually-hidden"> Planning officer’s report (2. Planning officer’s report and supplementary documents)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Community infrastructure levy</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/has-community-infrastructure-levy/change"
+                                    data-cy="change-has-community-infrastructure-levy">Change<span class="govuk-visually-hidden"> Community infrastructure levy (2. Planning officer’s report and supplementary documents)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Community infrastructure levy</dt>
+                            <dd                             class="govuk-summary-list__value">No documents</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-community-infrastructure-levy">Add<span class="govuk-visually-hidden"> Community infrastructure levy (2. Planning officer’s report and supplementary documents)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row lpa-is-infrastructure-levy-formally-adopted"><dt class="govuk-summary-list__key"> Is the community infrastructure levy formally adopted?</dt>
+                            <dd                             class="govuk-summary-list__value">No documents</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/is-infrastructure-levy-formally-adopted/change"
+                                    data-cy="change-is-infrastructure-levy-formally-adopted">Change<span class="govuk-visually-hidden"> Is the community infrastructure levy formally adopted? (2. Planning officer’s report and supplementary documents)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> When was the community infrastructure levy formally adopted?</dt>
+                            <dd                             class="govuk-summary-list__value">Not applicable</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/infrastructure-levy-adopted-date/change"
+                                    data-cy="change-infrastructure-levy-adopted-date">Change<span class="govuk-visually-hidden"> When was the community infrastructure levy formally adopted? (2. Planning officer’s report and supplementary documents)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> When do you expect to formally adopt the community infrastructure levy?</dt>
+                            <dd                             class="govuk-summary-list__value">Not applicable</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/infrastructure-levy-expected-date/change"
+                                    data-cy="change-infrastructure-levy-expected-date">Change<span class="govuk-visually-hidden"> When do you expect to formally adopt the community infrastructure levy? (2. Planning officer’s report and supplementary documents)</span></a>
+                                </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
                     <h2 class="govuk-summary-card__title"> Additional documents</h2>
                     <ul class="govuk-summary-card__actions">
                         <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/manage-documents/21/">Manage<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
