@@ -1185,6 +1185,19 @@ export const enforcementAppeals = Array.from({ length: 10 }, () => {
 	});
 });
 
+export const enforcementListedBuildingAppeals = Array.from({ length: 10 }, () => {
+	const randomDays = Math.floor(Math.random() * 30) + 1;
+
+	return appealFactory({
+		typeShorthand: APPEAL_CASE_TYPE.F,
+		assignCaseOfficer: false,
+		status: {
+			status: APPEAL_CASE_STATUS.VALIDATION,
+			createdAt: getPastDate({ days: randomDays })
+		}
+	});
+});
+
 const appealsData = [
 	...appealsReadyToStart,
 	...newAppeals,
@@ -1196,7 +1209,8 @@ const appealsData = [
 	...newAdvertAppeals,
 	...newLdcAppeals,
 	...appealsReadyToIssueDecision,
-	...enforcementAppeals
+	...enforcementAppeals,
+	...enforcementListedBuildingAppeals
 ];
 
 /**

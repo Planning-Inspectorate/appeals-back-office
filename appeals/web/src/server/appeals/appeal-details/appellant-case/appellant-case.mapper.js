@@ -876,6 +876,7 @@ function generateCaseTypeSpecificComponents(
 				throw new Error('Feature flag inactive for adverts');
 			}
 		case APPEAL_TYPE.ENFORCEMENT_NOTICE:
+		case APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
 				return generateEnforcementNoticeComponents(
 					appealDetails,

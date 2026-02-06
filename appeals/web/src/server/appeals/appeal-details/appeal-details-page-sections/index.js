@@ -34,6 +34,7 @@ export function generateAppealDetailsSections(appealDetails, mappedData, session
 			}
 			return generateS78AppealDetailsPageComponents(appealDetails, mappedData, session);
 		case APPEAL_TYPE.ENFORCEMENT_NOTICE:
+		case APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING:
 			if (!isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
 				throw new Error('Feature flag inactive for Enforcement Notice');
 			}

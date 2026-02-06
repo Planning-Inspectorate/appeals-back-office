@@ -276,7 +276,8 @@ describe('appeals list routes', () => {
 									APPEAL_CASE_TYPE.ZA,
 									APPEAL_CASE_TYPE.H,
 									APPEAL_CASE_TYPE.C,
-									APPEAL_CASE_TYPE.X
+									APPEAL_CASE_TYPE.X,
+									APPEAL_CASE_TYPE.F
 								]
 							}
 						}
