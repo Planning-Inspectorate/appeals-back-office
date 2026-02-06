@@ -1671,7 +1671,7 @@ describe('appellant cases routes', () => {
 					}
 				});
 
-				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
@@ -1687,6 +1687,22 @@ describe('appellant cases routes', () => {
 					},
 					recipientEmail: enforcementNoticeAppeal.agent.email,
 					templateName: 'enforcement-notice-invalid-appellant'
+				});
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: '1345264',
+						enforcement_reference: 'Reference',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						reason_1: 'has some text',
+						reason_2: 'has some other text',
+						reason_8: 'This is the other field',
+						other_info: 'Enforcement other information',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					},
+					recipientEmail: enforcementNoticeAppeal.lpa.email,
+					templateName: 'enforcement-notice-invalid-lpa'
 				});
 
 				expect(response.status).toEqual(200);
