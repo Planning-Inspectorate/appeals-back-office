@@ -1303,6 +1303,32 @@ describe('LPA Questionnaire review', () => {
 				'Is lawful development certificate appeal the correct type of appeal?</dt>'
 			);
 
+			expect(element.innerHTML).toContain(
+				'2. Planning officer’s report and supplementary documents</h2>'
+			);
+			expect(element.innerHTML).toContain('Planning officer’s report</dt>');
+			expect(element.innerHTML).toContain('Community infrastructure levy</dt>');
+			expect(element.innerHTML).toContain('Community infrastructure levy</dt>');
+			expect(element.innerHTML).toContain(
+				'Is the community infrastructure levy formally adopted?</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'When was the community infrastructure levy formally adopted?</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'When do you expect to formally adopt the community infrastructure levy?</dt>'
+			);
+
+			expect(element.innerHTML).toContain('3. Site access</h2>');
+			expect(element.innerHTML).toContain(
+				'Will the inspector need access to the appellant’s land or property?</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'Will the inspector need to enter a neighbour’s land or property?</dt>'
+			);
+			expect(element.innerHTML).toContain('Address of the neighbour’s land or property</dt>');
+			expect(element.innerHTML).toContain('Are there any potential safety risks?</dt>');
+
 			expect(element.innerHTML).toContain('Additional documents</h2>');
 		}, 10000);
 
