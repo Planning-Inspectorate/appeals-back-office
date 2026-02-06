@@ -1329,6 +1329,18 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain('Address of the neighbour’s land or property</dt>');
 			expect(element.innerHTML).toContain('Are there any potential safety risks?</dt>');
 
+			expect(element.innerHTML).toContain('4. Appeal process</h2>');
+			expect(element.innerHTML).toContain(
+				'Which procedure do you think is most appropriate for this appeal?</dt>'
+			);
+			expect(element.innerHTML).toContain('Why would you prefer this procedure?</dt>');
+			expect(element.innerHTML).toContain(
+				'How many days would you expect the inquiry to last?</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'Are there any other ongoing appeals next to, or close to the site?</dt>'
+			);
+
 			expect(element.innerHTML).toContain('Additional documents</h2>');
 		}, 10000);
 
