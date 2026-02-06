@@ -1419,6 +1419,78 @@ exports[`LPA Questionnaire review GET / should render the Householder LPA Questi
 </main>"
 `;
 
+exports[`LPA Questionnaire review GET / should render the Ldc LPA Questionnaire page with the expected content 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-3">LPA questionnaire</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <dl class="govuk-summary-list govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
+                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                </div>
+                <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
+                    <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title"> 1. Constraints, designations and other issues</h2>
+                </div>
+                <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list" id="constraints-summary">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is lawful development certificate appeal the correct type of appeal?</dt>
+                            <dd                             class="govuk-summary-list__value">Yes</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/is-correct-appeal-type/change"
+                                    data-cy="change-is-correct-appeal-type">Change<span class="govuk-visually-hidden"> Is lawful development certificate appeal the correct type of appeal? (1. Constraints, designations and other issues)</span></a>
+                                </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title"> Additional documents</h2>
+                    <ul class="govuk-summary-card__actions">
+                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/manage-documents/21/">Manage<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
+                        </li>
+                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/21">Add<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ol class="govuk-list govuk-list--number pins-file-list">
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/undefined/ph0.jpg' data-cy='document-undefined' target="_blank" class="govuk-link">ph0.jpg</a></span>
+                                    </li>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/undefined/ph1.jpg' data-cy='document-undefined' target="_blank" class="govuk-link">ph1.jpg</a></span>
+                                    </li>
+                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/undefined/ph2.jpg' data-cy='document-undefined' target="_blank" class="govuk-link">ph2.jpg</a></span>
+                                    </li>
+                                </ol>
+                                </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire page with the expected content 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">

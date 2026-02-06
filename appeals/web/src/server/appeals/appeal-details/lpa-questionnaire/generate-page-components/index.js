@@ -5,6 +5,7 @@ import { generateCasAdvertLpaQuestionnaireComponents } from './cas-advert.js';
 import { generateCasPlanningLpaQuestionnaireComponents } from './cas-planning.js';
 import { generateEnforcementLpaQuestionnaireComponents } from './enforcement.js';
 import { generateHASLpaQuestionnaireComponents } from './has.js';
+import { generateLdcLpaQuestionnaireComponents } from './ldc.js';
 import { generateS20LpaQuestionnaireComponents } from './s20.js';
 import { generateS78LpaQuestionnaireComponents } from './s78.js';
 
@@ -44,6 +45,12 @@ export function generateCaseTypeSpecificComponents(
 				return generateAdvertLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
 			} else {
 				throw new Error('Feature flag inactive for adverts');
+			}
+		case APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE:
+			if (isFeatureActive(FEATURE_FLAG_NAMES.LDC)) {
+				return generateLdcLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
+			} else {
+				throw new Error('Feature flag inactive for Ldc');
 			}
 		case APPEAL_TYPE.ENFORCEMENT_NOTICE:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
