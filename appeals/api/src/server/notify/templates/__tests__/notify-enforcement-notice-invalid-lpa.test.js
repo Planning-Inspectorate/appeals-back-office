@@ -194,7 +194,7 @@ describe('enforcement-notice-invalid-lpa.md', () => {
 				reason_2: 'reason 2',
 				reason_5: 'reason 5',
 				reason_8: 'reason 8',
-				other_info: '',
+				other_info: 'No',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};

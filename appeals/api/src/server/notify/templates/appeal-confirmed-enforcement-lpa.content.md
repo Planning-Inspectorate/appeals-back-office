@@ -33,7 +33,7 @@ We cannot consider ground (a) because the enforcement notice was issued:
 Your appeal does not meet the requirements for this ground from [section 174(2A to 2B) of the Town and Country Planning Act 1990](https://www.legislation.gov.uk/ukpga/1990/8/section/174).
 
 {% endif -%}
-{% if other_info -%}
+{% if other_info and other_info != 'No' -%}
 # Other information
 
 {{ other_info }}

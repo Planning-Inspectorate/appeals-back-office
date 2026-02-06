@@ -166,7 +166,7 @@ describe('appeal-confirmed-enforcement-lpa.md', () => {
 				enforcement_reference: '12345/ENF/1234/1234',
 				appeal_grounds: ['b'],
 				ground_a_barred: false,
-				other_info: '',
+				other_info: 'No',
 				agent_contact_details: 'Agent Smith, agent.smith@matrix.com, 07000000123',
 				appellant_contact_details: 'Thomas A Anderson, neo@matrix.com, 07000000456'
 			}
@@ -298,7 +298,7 @@ describe('appeal-confirmed-enforcement-lpa.md', () => {
 				enforcement_reference: '12345/ENF/1234/1234',
 				appeal_grounds: ['b', 'c'],
 				ground_a_barred: true,
-				other_info: '',
+				other_info: 'No',
 				agent_contact_details: 'Agent Smith, agent.smith@matrix.com, 07000000123',
 				appellant_contact_details: 'Thomas A Anderson, neo@matrix.com, 07000000456'
 			}

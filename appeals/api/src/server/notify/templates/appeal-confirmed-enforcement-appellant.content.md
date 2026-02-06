@@ -11,7 +11,11 @@ The appeal will continue on the following grounds:
 Ground ({{ appeal_grounds[0] }})
 {% endif %}
 {% endif -%}
-{% include 'parts/appeal-details.md' %}
+# Appeal details
+
+^Appeal reference number: {{appeal_reference_number}}
+Address: {{site_address}}
+Enforcement notice reference: {{enforcement_reference}}
 
 {% if ground_a_barred -%}
 # Ground (a) barred
@@ -23,7 +27,7 @@ We cannot consider ground (a) because the enforcement notice was issued:
 Your appeal does not meet the requirements for this ground from [section 174(2A to 2B) of the Town and Country Planning Act 1990](https://www.legislation.gov.uk/ukpga/1990/8/section/174).
 
 {% endif -%}
-{% if other_info -%}
+{% if other_info and other_info != 'No' -%}
 # Other information
 
 {{ other_info }}
@@ -31,9 +35,11 @@ Your appeal does not meet the requirements for this ground from [section 174(2A 
 {% endif -%}
 # What happens next
 
-1. We will send you an email when we have reviewed the other information you have provided.
+1. Download a copy of your appeal form.
 2. [Find the email address for your local planning authority](https://www.gov.uk/government/publications/sending-a-copy-of-the-appeal-form-to-the-council/sending-a-copy-to-the-council).
-3. Email the copy of your appeal form and the documents you uploaded to: Bristol City Council.
+3. Email the copy of your appeal form and the documents you uploaded to: {{local_planning_authority}}.
+
+You must send a copy of your appeal form and documents to the local planning authority, it’s a legal requirement.
 
 [Find out about the enforcement appeals process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).
 
@@ -41,5 +47,5 @@ Your appeal does not meet the requirements for this ground from [section 174(2A 
 
 [Give feedback on the appeals service]({{feedback_link}}) (takes 2 minutes)
 
-The Planning Inspectorate
+Planning Inspectorate
 {{team_email_address}}

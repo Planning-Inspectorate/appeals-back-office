@@ -56,7 +56,7 @@ Enforcement notice reference: {{enforcement_reference}}
 {{reason_8}}
 
 {% endif -%}
-{% if other_info -%}
+{% if other_info and other_info != 'No' -%}
 # Other information
 
 {{ other_info }}
