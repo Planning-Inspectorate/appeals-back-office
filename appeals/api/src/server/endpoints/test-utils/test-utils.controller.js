@@ -443,7 +443,7 @@ export const simulateShareIpCommentsAndLpaStatement = async (req, res) => {
 	const { appealReference } = req.params;
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: { reference: appealReference },
-		include: { appealStatus: true }
+		include: { appealStatus: true, lpa: true, appellant: true }
 	});
 
 	if (!appeal) return res.status(400).send(false);
@@ -461,7 +461,8 @@ export const simulateShareIpCommentsAndLpaStatement = async (req, res) => {
 export const simulateReviewLpaFinalComments = async (req, res) => {
 	const { appealReference } = req.params;
 	const appeal = await databaseConnector.appeal.findUnique({
-		where: { reference: appealReference }
+		where: { reference: appealReference },
+		include: { appealStatus: true, lpa: true, appellant: true }
 	});
 
 	if (!appeal) return res.status(400).send(false);
@@ -492,7 +493,8 @@ export const simulateReviewLpaFinalComments = async (req, res) => {
 export const simulateReviewAppellantFinalComments = async (req, res) => {
 	const { appealReference } = req.params;
 	const appeal = await databaseConnector.appeal.findUnique({
-		where: { reference: appealReference }
+		where: { reference: appealReference },
+		include: { appealStatus: true, lpa: true, appellant: true }
 	});
 
 	if (!appeal) return res.status(400).send(false);
@@ -553,7 +555,7 @@ export const simulateSetUpSiteVisit = async (req, res) => {
 	const { appealReference } = req.params;
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: { reference: appealReference },
-		include: { appealStatus: true }
+		include: { appealStatus: true, lpa: true, appellant: true }
 	});
 
 	if (!appeal) return res.status(400).send(false);
