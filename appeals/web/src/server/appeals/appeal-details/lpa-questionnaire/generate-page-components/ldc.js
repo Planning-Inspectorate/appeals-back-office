@@ -76,5 +76,27 @@ export const generateLdcLpaQuestionnaireComponents = (mappedLPAQData, mappedAppe
 		}
 	});
 
+	pageComponents.push({
+		/** @type {'summary-list'} */
+		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
+		parameters: {
+			card: {
+				title: {
+					text: '4. Appeal process'
+				}
+			},
+			rows: [
+				mappedLPAQData.lpaq?.procedurePreference?.display.summaryListItem,
+				mappedLPAQData.lpaq?.procedurePreferenceDetails?.display.summaryListItem,
+				mappedLPAQData.lpaq?.procedurePreferenceDuration?.display.summaryListItem,
+				mappedLPAQData.lpaq?.otherAppeals?.display.summaryListItem
+			].filter(isDefined)
+		}
+	});
+
 	return pageComponents;
 };

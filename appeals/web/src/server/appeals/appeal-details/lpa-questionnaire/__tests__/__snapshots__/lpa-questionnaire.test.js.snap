@@ -1567,6 +1567,44 @@ exports[`LPA Questionnaire review GET / should render the Ldc LPA Questionnaire 
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title"> 4. Appeal process</h2>
+                </div>
+                <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which procedure do you think is most appropriate for this appeal?</dt>
+                            <dd                             class="govuk-summary-list__value">Not applicable</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/procedure-preference/change"
+                                    data-cy="change-procedure-preference">Change<span class="govuk-visually-hidden"> Which procedure do you think is most appropriate for this appeal? (4. Appeal process)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Why would you prefer this procedure?</dt>
+                            <dd                             class="govuk-summary-list__value">Not applicable</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/procedure-preference/details/change"
+                                    data-cy="change-procedure-preference-details">Change<span class="govuk-visually-hidden"> Why would you prefer this procedure? (4. Appeal process)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How many days would you expect the inquiry to last?</dt>
+                            <dd                             class="govuk-summary-list__value">Not applicable</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/procedure-preference/duration/change"
+                                    data-cy="change-procedure-preference-duration">Change<span class="govuk-visually-hidden"> How many days would you expect the inquiry to last? (4. Appeal process)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Are there any other ongoing appeals next to, or close to the site?</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/other-appeals/add"
+                                    data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Related appeals (4. Appeal process)</span></a>
+                                </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
                     <h2 class="govuk-summary-card__title"> Additional documents</h2>
                     <ul class="govuk-summary-card__actions">
                         <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/manage-documents/21/">Manage<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
