@@ -10,9 +10,6 @@ export const generateLdcLpaQuestionnaireComponents = (mappedLPAQData, mappedAppe
 	/** @type {PageComponent[]} */
 	const pageComponents = [];
 
-	//Needed in PART 3 causes ts-check to error if not included here
-	console.log('mappedAppealDetails', mappedAppealDetails);
-
 	pageComponents.push({
 		/** @type {'summary-list'} */
 		type: 'summary-list',
@@ -53,6 +50,28 @@ export const generateLdcLpaQuestionnaireComponents = (mappedLPAQData, mappedAppe
 				mappedLPAQData.lpaq?.isInfrastructureLevyFormallyAdopted?.display.summaryListItem,
 				mappedLPAQData.lpaq?.infrastructureLevyAdoptedDate?.display.summaryListItem,
 				mappedLPAQData.lpaq?.infrastructureLevyExpectedDate?.display.summaryListItem
+			].filter(isDefined)
+		}
+	});
+
+	pageComponents.push({
+		/** @type {'summary-list'} */
+		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
+		parameters: {
+			card: {
+				title: {
+					text: '3. Site access'
+				}
+			},
+			rows: [
+				mappedLPAQData.lpaq?.siteAccess?.display.summaryListItem,
+				mappedLPAQData.lpaq?.reasonForNeighbourVisits?.display.summaryListItem,
+				mappedAppealDetails.appeal.lpaNeighbouringSites?.display.summaryListItem,
+				mappedLPAQData.lpaq?.lpaHealthAndSafety?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});
