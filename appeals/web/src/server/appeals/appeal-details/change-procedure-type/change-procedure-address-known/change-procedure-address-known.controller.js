@@ -67,6 +67,9 @@ export const postChangeInquiryAddressKnown = async (request, response) => {
 	delete sessionValues['postCode'];
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-timetable`
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-timetable`
+		)
 	);
 };
