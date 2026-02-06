@@ -17,7 +17,7 @@ export const mapEnforcementAppealOtherAppellants = (data) => {
 
 	let otherAppellants = [];
 
-	if (!isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_LINKED)) {
+	if (isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_LINKED)) {
 		const linkedAppellants = linkedAppeals?.map(({ child }) => child.appellant) || [];
 		const parentAppellant = linkedAppeals?.length && linkedAppeals[0].parent.appellant;
 

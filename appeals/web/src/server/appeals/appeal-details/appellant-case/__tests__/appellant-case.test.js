@@ -624,6 +624,7 @@ describe('appellant-case', () => {
 				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataEnforcementNotice,
+					appealStatus: 'validation',
 					appealId: 2
 				});
 			nock('http://test/')
@@ -709,6 +710,214 @@ describe('appellant-case', () => {
 				'Application for an award of appeal costs</dt>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Other new supporting documents</dt>');
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the outcome of your review?</legend><div class="govuk-radios"'
+			);
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information.</strong>'
+			);
+		});
+		it('should render the appellant case page with the expected content (Lead Enforcement notice)', async () => {
+			nock('http://test/')
+				.get('/appeals/2?include=all')
+				.reply(200, {
+					...appealDataEnforcementNotice,
+					appealStatus: 'validation',
+					appealId: 2
+				});
+			nock('http://test/')
+				.get('/appeals/2/appellant-cases/0')
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					enforcementNotice: {
+						isReceived: true,
+						isListedBuilding: true,
+						issueDate: '2021-01-01',
+						effectiveDate: '2021-01-02',
+						contactPlanningInspectorateDate: '2021-01-03',
+						reference: '123456789'
+					},
+					otherAppellants: [
+						{
+							firstName: 'John',
+							lastName: 'Smith',
+							email: 'john.test@example.pins.test'
+						},
+						{
+							firstName: 'Malcolm',
+							lastName: 'Jones',
+							email: 'malcolm.test@example.pins.test'
+						}
+					],
+					isEnforcementParent: true,
+					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+				});
+
+			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appellant case</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the address of the appeal site?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('What is your contact address?</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('What is your interest in the land?</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Will an inspector need to access your land or property?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are there any health and safety issues on the appeal site?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Other new supporting documents</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How would you prefer us to decide your appeal?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Why would you prefer this appeal procedure?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How many days would you expect the inquiry to last?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How many witnesses would you expect to give evidence at the inquiry?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are there other appeals linked to your development?</dt>'
+			);
+			// upload document section
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Communication with the Planning Inspectorate</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Enforcement notice</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Enforcement notice plan</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Application form</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change the description of development</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Decision letter from the local planning authority</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the status of your planning obligation?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Planning obligation</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Application for an award of appeal costs</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Other new supporting documents</dt>');
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the outcome of your review?</legend><div class="govuk-radios"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information for each linked appeal.</strong>'
+			);
+		});
+		it('should render the appellant case page with the expected content (Child Enforcement notice)', async () => {
+			nock('http://test/')
+				.get('/appeals/2?include=all')
+				.reply(200, {
+					...appealDataEnforcementNotice,
+					appealStatus: 'validation',
+					appealId: 2
+				});
+			nock('http://test/')
+				.get('/appeals/2/appellant-cases/0')
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					enforcementNotice: {
+						isReceived: true,
+						isListedBuilding: true,
+						issueDate: '2021-01-01',
+						effectiveDate: '2021-01-02',
+						contactPlanningInspectorateDate: '2021-01-03',
+						reference: '123456789'
+					},
+					otherAppellants: [
+						{
+							firstName: 'John',
+							lastName: 'Smith',
+							email: 'john.test@example.pins.test'
+						},
+						{
+							firstName: 'Malcolm',
+							lastName: 'Jones',
+							email: 'malcolm.test@example.pins.test'
+						}
+					],
+					isEnforcementChild: true,
+					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+				});
+
+			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appellant case</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the address of the appeal site?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('What is your contact address?</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('What is your interest in the land?</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Will an inspector need to access your land or property?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are there any health and safety issues on the appeal site?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Other new supporting documents</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How would you prefer us to decide your appeal?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Why would you prefer this appeal procedure?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How many days would you expect the inquiry to last?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How many witnesses would you expect to give evidence at the inquiry?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are there other appeals linked to your development?</dt>'
+			);
+			// upload document section
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Communication with the Planning Inspectorate</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Enforcement notice</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Enforcement notice plan</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Application form</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change the description of development</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Decision letter from the local planning authority</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the status of your planning obligation?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Planning obligation</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Application for an award of appeal costs</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Other new supporting documents</dt>');
+
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'What is the outcome of your review?</legend><div class="govuk-radios"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Do not continue until you have reviewed all of the supporting documents and redacted any sensitive information.</strong>'
+			);
 		});
 
 		it('should render the appellant case page with the expected content (Enforcement notice) when no enforcement data', async () => {
