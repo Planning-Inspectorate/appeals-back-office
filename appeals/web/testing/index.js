@@ -6,6 +6,9 @@ import { installAuthMock } from './app/mocks/auth.js';
 import { installMockAppealsService } from './appeals/mocks/api.js';
 import { installFixedDate } from './util/date.js';
 
+nock.disableNetConnect();
+nock.enableNetConnect('127.0.0.1');
+
 /** @typedef {import('./appeals/appeals.test').AppealGroupId} AppealGroupId */
 
 let sessionId = 1;
