@@ -1319,6 +1319,16 @@ describe('LPA Questionnaire review', () => {
 				'When do you expect to formally adopt the community infrastructure levy?</dt>'
 			);
 
+			expect(element.innerHTML).toContain('3. Site access</h2>');
+			expect(element.innerHTML).toContain(
+				'Will the inspector need access to the appellant’s land or property?</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'Will the inspector need to enter a neighbour’s land or property?</dt>'
+			);
+			expect(element.innerHTML).toContain('Address of the neighbour’s land or property</dt>');
+			expect(element.innerHTML).toContain('Are there any potential safety risks?</dt>');
+
 			expect(element.innerHTML).toContain('Additional documents</h2>');
 		}, 10000);
 

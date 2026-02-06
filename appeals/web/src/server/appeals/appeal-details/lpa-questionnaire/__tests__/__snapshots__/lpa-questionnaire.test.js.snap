@@ -1521,6 +1521,52 @@ exports[`LPA Questionnaire review GET / should render the Ldc LPA Questionnaire 
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title"> 3. Site access</h2>
+                </div>
+                <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Will the inspector need access to the appellant’s land or property?</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/inspector-access/change/lpa"
+                                    data-cy="change-does-site-require-inspector-access">Change<span class="govuk-visually-hidden"> Will the inspector need access to the appellant’s land or property? (3. Site access)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row lpa-neighbouring-site-access"><dt class="govuk-summary-list__key"> Will the inspector need to enter a neighbour’s land or property?</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/neighbouring-site-access/change"
+                                    data-cy="change-neighbouring-site-access">Change<span class="govuk-visually-hidden"> Will the inspector need to enter a neighbour’s land or property? (3. Site access)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Address of the neighbour’s land or property</dt>
+                            <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (3. Site access)</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/neighbouring-sites/add/lpa"
+                                            data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (3. Site access)</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row lpa-health-and-safety"><dt class="govuk-summary-list__key"> Are there any potential safety risks?</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/safety-risks/change/lpa"
+                                    data-cy="change-health-and-safety">Change<span class="govuk-visually-hidden"> Are there any potential safety risks? (3. Site access)</span></a>
+                                </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
                     <h2 class="govuk-summary-card__title"> Additional documents</h2>
                     <ul class="govuk-summary-card__actions">
                         <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/manage-documents/21/">Manage<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
