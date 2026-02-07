@@ -44,10 +44,10 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 							...(caseStarted && isInquiryProcedureType && inquiryEventSetUp
 								? [
 										mappedData.appeal.appellantProofOfEvidence.display.tableItem || [],
-										mappedData.appeal.lpaProofOfEvidence.display.tableItem || []
+										mappedData.appeal.lpaProofOfEvidence.display.tableItem || [],
+										...(mappedData.appeal.rule6PartyProofs?.display?.tableItems || [])
 									]
-								: []),
-							...(mappedData.appeal.rule6PartyProofs?.display?.tableItems || [])
+								: [])
 						]
 					: []),
 				mappedData.appeal.environmentalAssessment.display.tableItem
