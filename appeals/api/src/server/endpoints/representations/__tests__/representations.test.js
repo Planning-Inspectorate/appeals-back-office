@@ -1909,44 +1909,6 @@ describe('/appeals/:id/reps', () => {
 			);
 		});
 
-		test('200 and does not auto-publish for rule_6_party_statement rep_type when appeal has PASSED statements state', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue({
-				...householdAppeal,
-				appealTimetable: {
-					lpaStatementDueDate: addDays(new Date(), 7)
-				},
-				appealStatus: [{ valid: false, status: 'statements' }]
-			});
-			databaseConnector.representation.create.mockResolvedValue({
-				id: 1,
-				status: 'published'
-			});
-
-			const response = await request
-				.post('/appeals/1/reps/rule_6_party_statement')
-				.send({
-					redactionStatus: 'unredacted',
-					attachments: [],
-					lpaCode: 'LPA',
-					source: 'lpa',
-					representationText: 'added as document'
-				})
-				.set('azureAdUserId', '732652365');
-
-			expect(response.status).toEqual(201);
-			expect(databaseConnector.representation.create).not.toHaveBeenCalledWith(
-				expect.objectContaining({
-					data: expect.objectContaining({
-						status: 'published'
-					})
-				})
-			);
-			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
-				expect.anything(),
-				'Create'
-			);
-		});
-
 		test('200 and auto-publishes for rule_6_party_proofs_evidence rep_type when appeal has PASSED statements state', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,

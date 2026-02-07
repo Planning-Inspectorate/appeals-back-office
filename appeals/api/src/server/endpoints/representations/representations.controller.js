@@ -7,7 +7,6 @@ import { isStatePassed } from '#state/transition-state.js';
 import BackOfficeAppError from '#utils/app-error.js';
 import { currentStatus } from '#utils/current-status.js';
 import { getPageCount } from '#utils/database-pagination.js';
-import { dateIsPast } from '#utils/date-comparison.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
@@ -500,19 +499,9 @@ const shouldAutoPublishRep = (appeal, representationType) => {
 				appeal.appealStatus.some((status) => status.status === APPEAL_CASE_STATUS.FINAL_COMMENTS)
 			);
 		case APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT:
-			return (
-				isStatePassed(appeal, APPEAL_CASE_STATUS.STATEMENTS) &&
-				appeal.appealTimetable?.lpaStatementDueDate !== null &&
-				appeal.appealTimetable?.lpaStatementDueDate !== undefined &&
-				dateIsPast(appeal.appealTimetable?.lpaStatementDueDate, new Date())
-			);
+			return isStatePassed(appeal, APPEAL_CASE_STATUS.STATEMENTS);
 		case APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE:
-			return (
-				isStatePassed(appeal, APPEAL_CASE_STATUS.EVIDENCE) &&
-				appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate !== null &&
-				appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate !== undefined &&
-				dateIsPast(appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate, new Date())
-			);
+			return isStatePassed(appeal, APPEAL_CASE_STATUS.EVIDENCE);
 		default:
 			return false;
 	}
