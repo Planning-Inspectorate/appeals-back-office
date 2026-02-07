@@ -38,8 +38,7 @@ const getOutcomeValidator = composeMiddleware(
 const getDateValidator = composeMiddleware(
 	validateDateParameter({
 		parameterName: 'decisions.*.documentDate',
-		mustBeNotBeFutureDate: true,
-		mustBeBusinessDay: true
+		mustBeNotBeFutureDate: true
 	})
 );
 
