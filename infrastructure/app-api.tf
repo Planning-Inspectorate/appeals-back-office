@@ -72,6 +72,7 @@ module "app_api" {
     FEATURE_FLAG_S78_WRITTEN             = var.apps_config.featureFlags.featureFlagS78Written
     FEATURE_FLAG_S78_INQUIRY             = var.apps_config.featureFlags.featureFlagS78Inquiry
     FEATURE_FLAG_LINKED_APPEALS          = var.apps_config.featureFlags.featureFlagLinkedAppeals
+    FEATURE_FLAG_LINKED_APPEALS_UNLINK   = var.apps_config.featureFlags.featureFlagLinkedAppealsUnlink
     FEATURE_FLAG_CAS_ADVERT              = var.apps_config.featureFlags.featureFlagCasAdvert
     FEATURE_FLAG_NET_RESIDENCE           = var.apps_config.featureFlags.featureFlagNetResidence
     FEATURE_FLAG_NET_RESIDENCE_S20       = var.apps_config.featureFlags.featureFlagNetResidenceS20
