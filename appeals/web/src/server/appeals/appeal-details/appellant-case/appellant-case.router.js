@@ -52,6 +52,7 @@ import outcomeValidRouter from './outcome-valid/outcome-valid.router.js';
 import ownersKnownRouter from './owners-known/owners-known.router.js';
 import planningObligationRouter from './planning-obligation/planning-obligation.router.js';
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
+import retrospectiveApplicationRouter from './retrospective-application/retrospective-application.router.js';
 import siteAreaRouter from './site-area/site-area.router.js';
 import siteOwnershipRouter from './site-ownership/site-ownership.router.js';
 import siteUseAtTimeOfApplicationRouter from './site-use-at-time-of-application/site-use-at-time-of-application.router.js';
@@ -297,6 +298,13 @@ router.use(
 	validateAppealWithInclude(['appellantCase']),
 	assertUserHasPermission(permissionNames.updateCase),
 	interestInLandRouter
+);
+
+router.use(
+	'/retrospective-application',
+	validateAppealWithInclude(['appellantCase']),
+	assertUserHasPermission(permissionNames.updateCase),
+	retrospectiveApplicationRouter
 );
 
 router.use(

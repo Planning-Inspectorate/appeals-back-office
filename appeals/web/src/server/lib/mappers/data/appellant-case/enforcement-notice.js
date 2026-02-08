@@ -1,7 +1,7 @@
 import { mapAppealDecisionDate } from '#lib/mappers/data/appellant-case/submappers/appeal-decision-date.js';
 import { mapApplicationDevelopmentAllOrPart } from '#lib/mappers/data/appellant-case/submappers/application-development-all-or-part.js';
-import { mapApplicationReceipt } from '#lib/mappers/data/appellant-case/submappers/application-receipt.js';
 import { mapDescriptionOfAllegedBreach } from '#lib/mappers/data/appellant-case/submappers/description-of-alleged-breach.js';
+import { mapGroundAFeeReceipt } from '#lib/mappers/data/appellant-case/submappers/ground-a-fee-receipt.js';
 import { submaps as s78Submaps } from './s78.js';
 import { mapContactAddress } from './submappers/contact-address.js';
 import { mapContactPlanningInspectorateDate } from './submappers/contact-planning-inspectorate-date.js';
@@ -17,6 +17,7 @@ import { mapGroundsForAppeal } from './submappers/grounds-for-appeal.js';
 import { mapInterestInLand } from './submappers/interest-in-land.js';
 import { mapOtherAppellants } from './submappers/other-appellants.js';
 import { mapPriorCorrespondenceWithPINS } from './submappers/prior-correspondence-with-pins.js';
+import { mapRetrospectiveApplication } from './submappers/retrospective-application.js';
 import { mapSupportingDocumentsForGrounds } from './submappers/supporting-documents-for-grounds.js';
 import { mapWrittenOrVerbalPermission } from './submappers/written-or-verbal-permission.js';
 
@@ -37,7 +38,8 @@ export const submaps = {
 	groundsForAppeal: mapGroundsForAppeal,
 	factsForGrounds: mapFactsForGrounds,
 	supportingDocumentsForGrounds: mapSupportingDocumentsForGrounds,
-	applicationReceipt: mapApplicationReceipt,
+	retrospectiveApplication: mapRetrospectiveApplication,
+	groundAFeeReceipt: mapGroundAFeeReceipt,
 	applicationDevelopmentAllOrPart: mapApplicationDevelopmentAllOrPart,
 	appealDecisionDate: mapAppealDecisionDate,
 	priorCorrespondenceWithPINS: mapPriorCorrespondenceWithPINS,

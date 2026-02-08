@@ -2476,7 +2476,10 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row grounds-for-appeal"><dt class="govuk-summary-list__key"> Grounds of appeal</dt>
                             <dd class="govuk-summary-list__value">No data</dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application receipt</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Did anyone submit a retrospective planning application?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ground (a) fee receipt</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was the application for all or part of the development?</dt>
@@ -2825,9 +2828,14 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row grounds-for-appeal"><dt class="govuk-summary-list__key"> Grounds of appeal</dt>
                             <dd class="govuk-summary-list__value">No data</dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application receipt</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Did anyone submit a retrospective planning application?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/retrospective-application/change">Change<span class="govuk-visually-hidden"> Did anyone submit a retrospective planning application? (3. Grounds and facts)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ground (a) fee receipt</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-application-receipt">Add<span class="govuk-visually-hidden"> Application receipt (3. Grounds and facts)</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-ground-a-fee-receipt">Add<span class="govuk-visually-hidden"> Ground (a) fee receipt (3. Grounds and facts)</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was the application for all or part of the development?</dt>
@@ -3226,9 +3234,14 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row grounds-for-appeal"><dt class="govuk-summary-list__key"> Grounds of appeal</dt>
                             <dd class="govuk-summary-list__value">No data</dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application receipt</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Did anyone submit a retrospective planning application?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/retrospective-application/change">Change<span class="govuk-visually-hidden"> Did anyone submit a retrospective planning application? (3. Grounds and facts)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ground (a) fee receipt</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-application-receipt">Add<span class="govuk-visually-hidden"> Application receipt (3. Grounds and facts)</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-ground-a-fee-receipt">Add<span class="govuk-visually-hidden"> Ground (a) fee receipt (3. Grounds and facts)</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was the application for all or part of the development?</dt>
@@ -4233,9 +4246,14 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row grounds-for-appeal"><dt class="govuk-summary-list__key"> Grounds of appeal</dt>
                             <dd class="govuk-summary-list__value">No data</dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application receipt</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Did anyone submit a retrospective planning application?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/retrospective-application/change">Change<span class="govuk-visually-hidden"> Did anyone submit a retrospective planning application? (3. Grounds and facts)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ground (a) fee receipt</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-application-receipt">Add<span class="govuk-visually-hidden"> Application receipt (3. Grounds and facts)</span></a>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-ground-a-fee-receipt">Add<span class="govuk-visually-hidden"> Ground (a) fee receipt (3. Grounds and facts)</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was the application for all or part of the development?</dt>
