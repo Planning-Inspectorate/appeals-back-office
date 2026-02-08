@@ -184,7 +184,8 @@ export async function postAcceptStatement(request, response) {
 
 	if (
 		session.acceptAppellantStatement?.[currentAppeal.appealId].allocationLevelAndSpecialisms ===
-		'yes'
+			'yes' ||
+		session.acceptAppellantStatement?.[currentAppeal.appealId].forcedAllocation
 	) {
 		const specialisms = ensureArray(
 			session.acceptAppellantStatement[currentAppeal.appealId].allocationSpecialisms
