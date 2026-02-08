@@ -190,7 +190,8 @@ export async function postAcceptStatement(request, response) {
 
 	if (
 		session.acceptRule6PartyStatement?.[currentAppeal.appealId].allocationLevelAndSpecialisms ===
-		'yes'
+			'yes' ||
+		session.acceptRule6PartyStatement?.[currentAppeal.appealId].forcedAllocation
 	) {
 		const specialisms = ensureArray(
 			session.acceptRule6PartyStatement[currentAppeal.appealId].allocationSpecialisms
