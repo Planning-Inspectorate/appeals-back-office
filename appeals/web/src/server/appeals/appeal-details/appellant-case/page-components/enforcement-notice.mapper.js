@@ -125,7 +125,8 @@ export function generateEnforcementNoticeComponents(
 				...getSummaryListItems(mappedAppellantCaseData.factsForGrounds),
 				// @ts-ignore
 				...getSummaryListItems(mappedAppellantCaseData.supportingDocumentsForGrounds),
-				mappedAppellantCaseData.applicationReceipt.display.summaryListItem,
+				mappedAppellantCaseData.retrospectiveApplication.display.summaryListItem,
+				mappedAppellantCaseData.groundAFeeReceipt.display.summaryListItem,
 				mappedAppellantCaseData.applicationDevelopmentAllOrPart.display.summaryListItem,
 				mappedAppellantCaseData.applicationReference.display.summaryListItem,
 				mappedAppellantCaseData.applicationDate.display.summaryListItem,

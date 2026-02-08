@@ -190,6 +190,7 @@ interface SingleAppellantCaseResponse {
 		contactAddress: Address | null;
 		interestInLand: string | null;
 		writtenOrVerbalPermission: string | null;
+		retrospectiveApplication: boolean | null;
 		descriptionOfAllegedBreach: string | null;
 		applicationDevelopmentAllOrPart: string | null;
 		appealDecisionDate: string | null;
@@ -238,6 +239,7 @@ interface SingleAppellantCaseResponse {
 		priorCorrespondenceWithPINS?: FolderInfo | null;
 		enforcementNotice?: FolderInfo | null;
 		enforcementNoticePlan?: FolderInfo | null;
+		groundAFeeReceipt?: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	isGreenBelt?: boolean | null;
