@@ -16,6 +16,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters } from '../appellant-case/appellant-case.mapper.js';
 import * as appellantCaseService from '../appellant-case/appellant-case.service.js';
+import * as outcomeIncompleteService from '../appellant-case/outcome-incomplete/outcome-incomplete.service.js';
 import {
 	buildRejectionReasons,
 	rejectionReasonHtml
@@ -403,7 +404,6 @@ export const postEnforcementNoticeInvalid = async (request, response) => {
 		const { enforcementNoticeInvalid, validationOutcome } = session.webAppellantCaseReviewOutcome;
 
 		if (enforcementNoticeInvalid === 'no') {
-			delete session.webAppellantCaseReviewOutcome.enforcementNoticeReason;
 			return response.redirect(
 				`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${validationOutcome}`
 			);
@@ -655,16 +655,33 @@ const renderCheckDetailsAndMarkEnforcementAsInvalid = async (request, response) 
 			return response.status(500).render('app/500.njk');
 		}
 
-		const reasonOptions =
+		const enforcementInvalidReasonOptions =
 			await appellantCaseService.getAppellantCaseEnforcementInvalidReasonOptions(request.apiClient);
 
-		if (!reasonOptions) {
+		const incompleteReasonOptions =
+			request.session?.webAppellantCaseReviewOutcome?.validationOutcome === 'incomplete'
+				? await appellantCaseService.getAppellantCaseNotValidReasonOptionsForOutcome(
+						request.apiClient,
+						'incomplete'
+					)
+				: [];
+
+		const missingDocuments =
+			request.session?.webAppellantCaseReviewOutcome?.validationOutcome === 'incomplete'
+				? await outcomeIncompleteService.getAppellantCaseEnforcementMissingDocuments(
+						request.apiClient
+					)
+				: [];
+
+		if (!enforcementInvalidReasonOptions) {
 			throw new Error('error retrieving invalid enforcement reason options');
 		}
 
 		const mappedPageContent = checkDetailsAndMarkEnforcementAsInvalid(
 			request.currentAppeal,
-			reasonOptions,
+			enforcementInvalidReasonOptions,
+			incompleteReasonOptions,
+			missingDocuments,
 			request.session
 		);
 
