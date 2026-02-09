@@ -1,3 +1,4 @@
+import featureFlags from '#common/feature-flags.js';
 import { appealData, appealDataEnforcementNotice } from '#testing/appeals/appeals.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
@@ -9,10 +10,14 @@ const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 const cancelPath = '/cancel';
 const mockAppealId = '1';
+const originalIsFeatureActive = featureFlags.isFeatureActive;
 
 describe('cancel', () => {
 	beforeEach(installMockApi);
-	afterEach(teardown);
+	afterEach(() => {
+		featureFlags.isFeatureActive = originalIsFeatureActive;
+		teardown();
+	});
 
 	describe('GET /new', () => {
 		it('should render the cancel appeal page with radio components', async () => {
@@ -34,6 +39,7 @@ describe('cancel', () => {
 		});
 
 		it('should render the correct options for an enforcement notice appeal', async () => {
+			featureFlags.isFeatureActive = () => true;
 			nock.cleanAll();
 			nock('http://test/')
 				.get('/appeals/1?include=all')
@@ -57,6 +63,30 @@ describe('cancel', () => {
 				'Did not pay the ground (a) fee'
 			);
 			expect(element.querySelector('label[for="cancel-reason-radio-4"]')?.innerHTML.trim()).toBe(
+				'Request to withdraw appeal'
+			);
+			expect(element.querySelector('button')?.innerHTML.trim()).toBe('Continue');
+		});
+
+		it('should render the default options for an enforcement notice appeal when feature flag is off', async () => {
+			featureFlags.isFeatureActive = () => false;
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, { ...appealDataEnforcementNotice });
+
+			const response = await request.get(`${baseUrl}/${mockAppealId}${cancelPath}`);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			expect(element.querySelector('h1')?.innerHTML.trim()).toBe(
+				'Why are you cancelling the appeal?'
+			);
+			expect(element.querySelectorAll('[name="cancelReasonRadio"]').length).toBe(2);
+			expect(element.querySelector('label[for="cancel-reason-radio"]')?.innerHTML.trim()).toBe(
+				'Appeal invalid'
+			);
+			expect(element.querySelector('label[for="cancel-reason-radio-2"]')?.innerHTML.trim()).toBe(
 				'Request to withdraw appeal'
 			);
 			expect(element.querySelector('button')?.innerHTML.trim()).toBe('Continue');

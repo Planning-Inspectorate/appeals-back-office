@@ -21,6 +21,7 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	SEARCH_CASE_OFFICER: 'featureFlagSearchCaseOfficer',
 	ENFORCEMENT_NOTICE: 'featureFlagEnforcementNotice',
 	ENFORCEMENT_LINKED: 'featureFlagEnforcementLinked',
+	ENFORCEMENT_CANCEL: 'featureFlagEnforcementCancel',
 	INVALID_DECISION_LETTER: 'featureFlagInvalidDecisionLetter',
 	RULE_6_PARTIES_MVP: 'featureFlagRule6Mvp',
 	RULE_6_PARTIES_POE: 'featureFlagRule6PoE',
