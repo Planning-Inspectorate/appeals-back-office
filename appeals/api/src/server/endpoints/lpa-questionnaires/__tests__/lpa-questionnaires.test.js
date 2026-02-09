@@ -5,6 +5,7 @@ import {
 	casAdvertAppealLPAQuestionnaireIncomplete,
 	casPlanningAppeal,
 	casPlanningAppealLPAQuestionnaireIncomplete,
+	enforcementNoticeAppeal,
 	fullPlanningAppeal,
 	fullPlanningAppealLPAQuestionnaireIncomplete,
 	householdAppeal,
@@ -306,6 +307,42 @@ describe('lpa questionnaires routes', () => {
 					}
 				],
 				[
+					'enforcementNoticeAppeal',
+					{
+						appeal: enforcementNoticeAppeal,
+						templateName: 'lpaq-complete-appellant',
+						personalisation: {
+							lpa_reference: enforcementNoticeAppeal.applicationReference,
+							appeal_reference_number: enforcementNoticeAppeal.reference,
+							site_address: `${enforcementNoticeAppeal.address.addressLine1}, ${enforcementNoticeAppeal.address.addressLine2}, ${enforcementNoticeAppeal.address.addressTown}, ${enforcementNoticeAppeal.address.addressCounty}, ${enforcementNoticeAppeal.address.postcode}, ${fullPlanningAppeal.address.addressCountry}`,
+							what_happens_next:
+								'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.',
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+						}
+					}
+				],
+				[
+					'enforcementNoticeAppeal linked',
+					{
+						appeal: {
+							...enforcementNoticeAppeal,
+							childAppeals: [
+								{ type: 'linked', childId: 98 },
+								{ type: 'linked', childId: 99 }
+							]
+						},
+						templateName: 'lpaq-complete-appellant',
+						personalisation: {
+							lpa_reference: enforcementNoticeAppeal.applicationReference,
+							appeal_reference_number: enforcementNoticeAppeal.reference,
+							site_address: `${enforcementNoticeAppeal.address.addressLine1}, ${enforcementNoticeAppeal.address.addressLine2}, ${enforcementNoticeAppeal.address.addressTown}, ${enforcementNoticeAppeal.address.addressCounty}, ${enforcementNoticeAppeal.address.postcode}, ${fullPlanningAppeal.address.addressCountry}`,
+							what_happens_next:
+								'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.',
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+						}
+					}
+				],
+				[
 					'fullPlanningAppeal',
 					{
 						appeal: fullPlanningAppeal,
@@ -373,6 +410,11 @@ describe('lpa questionnaires routes', () => {
 								}
 							]
 						});
+					// @ts-ignore
+					databaseConnector.appealRelationship.findMany.mockResolvedValue([
+						{ child: { id: 98 } },
+						{ child: { id: 99 } }
+					]);
 					// @ts-ignore
 					databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
 						lpaQuestionnaireValidationOutcomes[0]

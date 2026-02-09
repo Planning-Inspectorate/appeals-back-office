@@ -4,13 +4,12 @@ import {
 	isOutcomeValid
 } from '#utils/check-validation-outcome.js';
 import { getFeedbackLinkFromAppealTypeKey } from '#utils/feedback-form-link.js';
-import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
 	AUDIT_TRAIL_ENFORCEMENT_NOTICE_CONTACT_ADDRESS,
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
 	AUDIT_TRAIL_SUBMISSION_INVALID,
-	CASE_RELATIONSHIP_LINKED,
 	ERROR_NO_RECIPIENT_EMAIL,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
@@ -31,6 +30,7 @@ import { formatContactDetails } from '#utils/format-contact-details.js';
 import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
 import { allAppellantCaseOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
 import { isChildAppeal, isLinkedAppeal, isParentAppeal } from '#utils/is-linked-appeal.js';
+import { getChildAppeals, getLeadAppeal } from '#utils/link-appeals.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
@@ -43,7 +43,6 @@ import {
 	APPEAL_DEVELOPMENT_TYPES,
 	PLANNING_OBLIGATION_STATUSES
 } from '@pins/appeals/constants/appellant-cases.constants.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
@@ -79,36 +78,14 @@ export const checkAppellantCaseExists = (req, res, next) => {
 
 /**
  *
- * @param {Partial<Appeal> | undefined} appeal
- * @returns {Partial<Appeal>[]}
- */
-const getChildAppeals = (appeal) =>
-	// @ts-ignore
-	appeal?.childAppeals
-		?.filter(({ type, child }) => type === CASE_RELATIONSHIP_LINKED && child?.appellantCase)
-		.map(({ child }) => child) || [];
-
-/**
- *
- * @param {Partial<Appeal> | undefined} appeal
- * @returns {Partial<Appeal> | null | undefined}
- */
-const getLeadAppeal = (appeal) => {
-	if (isParentAppeal(appeal)) {
-		return appeal;
-	}
-	return appeal?.parentAppeals?.[0]?.parent;
-};
-
-/**
- *
  * @param {number} appellantCaseId
  * @param {AppellantCaseUpdateRequest} data
  * @param {Appeal} appeal
  */
 export const updateAppellantCaseData = async (appellantCaseId, data, appeal) => {
 	await appellantCaseRepository.updateAppellantCaseById(appellantCaseId, data);
-	if (!isParentAppeal(appeal)) {
+	// Only sync the child appellant case with the parent when the appeal type is enforcement notice
+	if (!isParentAppeal(appeal) || appeal.appealType?.type !== APPEAL_TYPE.ENFORCEMENT_NOTICE) {
 		return;
 	}
 	// Strip out any fields that are independent of the parent appeal

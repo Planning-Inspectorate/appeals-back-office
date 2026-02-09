@@ -6,6 +6,7 @@ import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { uncapitalizeFirstLetter } from '#lib/string-utilities.js';
 import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { DOCUMENT_FOLDER_DISPLAY_LABELS } from '@pins/appeals/constants/documents.js';
 import askEnvironmentServiceTeamReviewQuestion from '@pins/appeals/utils/ask-environment-service-team-review-question.js';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
@@ -34,6 +35,7 @@ import {
 	mapWebValidationOutcomeToApiValidationOutcome
 } from './lpa-questionnaire.mapper.js';
 import * as lpaQuestionnaireService from './lpa-questionnaire.service.js';
+
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import("@pins/express/types/express.js").ValidationErrors | string | null} errors
@@ -45,6 +47,12 @@ const renderLpaQuestionnaire = async (request, response, errors = null) => {
 		params: { lpaQuestionnaireId },
 		session
 	} = request;
+
+	const { isChildAppeal, appealType } = currentAppeal;
+	if (appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE && isChildAppeal) {
+		// Should not be able to access LPA questionnaire for child enforcement notice appeals
+		return response.status(404).render('app/404.njk');
+	}
 
 	const lpaQuestionnaire = await lpaQuestionnaireService.getLpaQuestionnaireFromId(
 		request.apiClient,
