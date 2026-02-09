@@ -14,7 +14,12 @@ You must attend the site visit with our inspector and a representative from the 
 
 You will accompany the inspector throughout the visit.
 
-If you need to contact us, include our appeal reference number in any communication.
+Email {{team_email_address}} to either give:
+
+- the details of who will be at the site to give the inspector access
+- your consent for the inspector to access the site by themselves
+
+Include your appeal reference number in the subject of your email: {{appeal_reference_number}}.
 
 Planning Inspectorate
 {{team_email_address}}
