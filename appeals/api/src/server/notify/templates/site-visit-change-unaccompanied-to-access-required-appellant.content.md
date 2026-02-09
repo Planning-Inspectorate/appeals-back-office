@@ -14,7 +14,9 @@ You can provide written consent for access for our inspector at {{team_email_add
 
 You cannot give the inspector any documents or discuss the appeal with them.
 
+For health and safety reasons, make sure any pets are safely secured during the site visit. 
+
 The inspector will carry out the inspection on their own.
 
-The Planning Inspectorate
+Planning Inspectorate
 {{team_email_address}}
