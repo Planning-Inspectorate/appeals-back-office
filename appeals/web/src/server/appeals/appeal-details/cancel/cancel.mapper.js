@@ -1,5 +1,6 @@
+import featureFlags from '#common/feature-flags.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /**
  * @param {import('../appeal-details.types.js').WebAppeal} appealData
@@ -8,6 +9,9 @@ import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
  */
 export function mapCancelAppealPage(appealData, errorMessage) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
+	const showEnforcementOptions =
+		appealData.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
+		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_CANCEL);
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -32,7 +36,7 @@ export function mapCancelAppealPage(appealData, errorMessage) {
 							value: 'invalid',
 							text: 'Appeal invalid'
 						},
-						...(appealData.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
+						...(showEnforcementOptions
 							? [
 									{
 										value: 'enforcement-notice-withdrawn',

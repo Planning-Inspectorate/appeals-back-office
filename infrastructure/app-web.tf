@@ -101,6 +101,7 @@ module "app_web" {
     FEATURE_FLAG_SEARCH_CASE_OFFICER      = var.apps_config.featureFlags.featureFlagSearchCaseOfficer
     FEATURE_FLAG_ENFORCEMENT_NOTICE       = var.apps_config.featureFlags.featureFlagEnforcementNotice
     FEATURE_FLAG_ENFORCEMENT_LINKED       = var.apps_config.featureFlags.featureFlagEnforcementLinked
+    FEATURE_FLAG_ENFORCEMENT_CANCEL       = var.apps_config.featureFlags.featureFlagEnforcementCancel
     FEATURE_FLAG_INVALID_DECISION_LETTER  = var.apps_config.featureFlags.featureFlagInvalidDecisionLetter
     FEATURE_FLAG_RULE_6_MVP               = var.apps_config.featureFlags.featureFlagRule6Mvp
     FEATURE_FLAG_RULE_6_POE               = var.apps_config.featureFlags.featureFlagRule6PoE
