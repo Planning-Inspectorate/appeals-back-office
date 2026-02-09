@@ -12,5 +12,9 @@ You will accompany the inspector throughout the visit.
 
 If you need to contact us, include our appeal reference number in any communication.
 
-The Planning Inspectorate
+# About the site visit
+
+For health and safety reasons, make sure any pets are safely secured during the site visit. 
+
+Planning Inspectorate
 {{team_email_address}}
