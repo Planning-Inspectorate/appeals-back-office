@@ -145,6 +145,8 @@ export const mapAppellantCaseIn = (command) => {
 		}),
 		...(isLDC && {
 			...procedurePreferenceFields,
+			planningObligation: command.casedata.planningObligation,
+			statusPlanningObligation: command.casedata.statusPlanningObligation,
 			siteUseAtTimeOfApplication: command.casedata.siteUseAtTimeOfApplication,
 			applicationMadeUnderActSection: command.casedata.applicationMadeUnderActSection
 		})
