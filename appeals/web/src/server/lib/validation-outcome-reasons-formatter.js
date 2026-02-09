@@ -119,7 +119,7 @@ function getAddAnotherTextItemsFromBody(
 /**
  *
  * @param {Object<string, any>} requestBody
- * @param {'invalidReason'|'incompleteReason'} reasonKey
+ * @param {'invalidReason'|'incompleteReason'|'missingDocuments'} reasonKey
  * @returns {Object<string, string[]>}
  */
 export function getNotValidReasonsTextFromRequestBody(requestBody, reasonKey) {

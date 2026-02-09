@@ -50,14 +50,6 @@ const renderIncompleteReason = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	if (
-		request.session.webAppellantCaseReviewOutcome &&
-		(request.session.webAppellantCaseReviewOutcome.appealId !== appealId ||
-			request.session.webAppellantCaseReviewOutcome.validationOutcome !== 'incomplete')
-	) {
-		delete request.session.webAppellantCaseReviewOutcome;
-	}
-
 	const { webAppellantCaseReviewOutcome } = request.session;
 
 	if (incompleteReasonOptions) {
@@ -171,6 +163,7 @@ export const postIncompleteReason = async (request, response) => {
 	try {
 		/** @type {import('../appellant-case.types.js').AppellantCaseSessionValidationOutcome} */
 		request.session.webAppellantCaseReviewOutcome = {
+			...request.session.webAppellantCaseReviewOutcome,
 			appealId,
 			validationOutcome: 'incomplete',
 			reasons: request.body.incompleteReason,
@@ -343,12 +336,10 @@ export const postMissingDocuments = async (request, response) => {
 	/** @type {import('../appellant-case.types.js').AppellantCaseSessionValidationOutcome} */
 	session.webAppellantCaseReviewOutcome = {
 		...session.webAppellantCaseReviewOutcome,
-		missingDocuments: body.missingDocuments
-			? [body.missingDocuments].flat().map((reason) => ({
-					reasonSelected: Number(reason),
-					reasonText: body[`missingDocuments-${reason}`]
-				}))
-			: null
+		missingDocuments: body.missingDocuments,
+		missingDocumentsText: body.missingDocuments
+			? getNotValidReasonsTextFromRequestBody(request.body, 'missingDocuments')
+			: undefined
 	};
 
 	if (errors) {

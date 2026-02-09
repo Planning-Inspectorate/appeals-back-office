@@ -4,9 +4,12 @@ import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { enhanceCheckboxOptionWithAddAnotherReasonConditionalHtml } from '#lib/enhance-html.js';
 import { yesNoInput } from '#lib/mappers/index.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { LENGTH_300 } from '@pins/appeals/constants/support.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
+import { capitalize } from 'lodash-es';
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
  * @typedef {import('../appellant-case/appellant-case.types.js').AppellantCaseValidationOutcome} AppellantCaseValidationOutcome
@@ -300,11 +303,20 @@ export const otherLiveAppealsPage = (appealDetails, otherLiveAppeals) => ({
  *
  * @param {Appeal} appealDetails
  * @param {ReasonOption[]} reasonOptions
+ * @param {ReasonOption[]} incompleteReasonOptions
+ * @param {ReasonOption[]} missingDocuments
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @returns {PageContent}
  */
-export const checkDetailsAndMarkEnforcementAsInvalid = (appealDetails, reasonOptions, session) => {
+export const checkDetailsAndMarkEnforcementAsInvalid = (
+	appealDetails,
+	reasonOptions,
+	incompleteReasonOptions,
+	missingDocuments,
+	session
+) => {
 	const {
+		enforcementNoticeInvalid,
 		enforcementNoticeReason = [],
 		otherInformationValidRadio,
 		otherInformationDetails,
@@ -358,7 +370,7 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (appealDetails, reasonOpt
 				},
 				{
 					key: { text: 'Is the enforcement notice invalid?' },
-					value: { text: 'Yes' },
+					value: { text: capitalizeFirstLetter(enforcementNoticeInvalid) },
 					actions: {
 						items: [
 							{
@@ -368,51 +380,150 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (appealDetails, reasonOpt
 							}
 						]
 					}
-				},
-				{
-					key: { text: 'Why is the enforcement notice invalid?' },
-					value: {
-						html: `<ul class="govuk-list govuk-list--bullet">${formatedEnforcementNoticeReasons}</ul>`
-					},
-					actions: {
-						items: [
-							{
-								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/enforcement-notice-reason`,
-								visuallyHiddenText: `why is the enforcement notice ${validationOutcome}?`
-							}
-						]
-					}
-				},
-				{
-					key: { text: 'Do you want to add any other information?' },
-					value: {
-						html: nunjucksEnvironments.render('appeals/components/page-component.njk', {
-							component: {
-								type: 'show-more',
-								parameters: {
-									html:
-										otherInformationValidRadio === 'Yes' ? `Yes: ${otherInformationDetails}` : 'No',
-									maximumBeforeHiding: LENGTH_300,
-									toggleTextCollapsed: 'Show more',
-									toggleTextExpanded: 'Show less'
-								}
-							}
-						})
-					},
-					actions: {
-						items: [
-							{
-								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/enforcement-other-information`,
-								visuallyHiddenText: 'do you want to add any other information?'
-							}
-						]
-					}
 				}
 			]
 		}
 	};
+
+	if (formatedEnforcementNoticeReasons) {
+		summaryListComponent.parameters.rows.push({
+			key: { text: 'Why is the enforcement notice invalid?' },
+			value: {
+				html: `<ul class="govuk-list govuk-list--bullet">${formatedEnforcementNoticeReasons}</ul>`
+			},
+			actions: {
+				items: [
+					{
+						text: 'Change',
+						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/enforcement-notice-reason`,
+						visuallyHiddenText: `why is the enforcement notice ${validationOutcome}?`
+					}
+				]
+			}
+		});
+	}
+
+	// appeal incomplete
+	if (session?.webAppellantCaseReviewOutcome.reasons) {
+		summaryListComponent.parameters.rows.push({
+			key: {
+				text: `Why is the appeal ${validationOutcome}?`
+			},
+			value: {
+				html: mapReasonsToReasonsListHtml(
+					incompleteReasonOptions,
+					session?.webAppellantCaseReviewOutcome.reasons,
+					session?.webAppellantCaseReviewOutcome.reasonsText
+				)
+			},
+			actions: {
+				items: [
+					{
+						text: 'Change',
+						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}`,
+						visuallyHiddenText: `${capitalize(validationOutcome)} reasons`
+					}
+				]
+			}
+		});
+	}
+
+	// documents incomplete
+	if (session?.webAppellantCaseReviewOutcome.missingDocuments) {
+		summaryListComponent.parameters.rows.push({
+			key: {
+				text: `Which documents are incomplete?`
+			},
+			value: {
+				html: nunjucksEnvironments.render('appeals/components/page-component.njk', {
+					component: {
+						type: 'show-more',
+						parameters: {
+							html: mapReasonsToReasonsListHtml(
+								missingDocuments,
+								session?.webAppellantCaseReviewOutcome.missingDocuments,
+								session?.webAppellantCaseReviewOutcome.missingDocumentsText
+							)
+						}
+					}
+				})
+			},
+			actions: {
+				items: [
+					{
+						text: 'Change',
+						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/missing-documents`,
+						visuallyHiddenText: `${capitalize(validationOutcome)} reasons`
+					}
+				]
+			}
+		});
+	}
+
+	// ground (a) fee receipt due date
+	if (session?.webAppellantCaseReviewOutcome.feeReceiptDueDate) {
+		const dueDate = session.webAppellantCaseReviewOutcome.feeReceiptDueDate;
+		summaryListComponent.parameters.rows.push({
+			key: { text: 'Ground (a) fee receipt due date' },
+			value: { text: formatDate(new Date(dueDate.year, dueDate.month, dueDate.day)) },
+			actions: {
+				items: [
+					{
+						text: 'Change',
+						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/incomplete/receipt-due-date`,
+						visuallyHiddenText: 'Ground (a) fee receipt due date'
+					}
+				]
+			}
+		});
+	}
+
+	// appeal due date
+	if (session?.webAppellantCaseReviewOutcome.updatedDueDate) {
+		const dueDate = session.webAppellantCaseReviewOutcome.updatedDueDate;
+		summaryListComponent.parameters.rows.push({
+			key: { text: 'Appeal due date' },
+			value: { text: formatDate(new Date(dueDate.year, dueDate.month, dueDate.day)) },
+			actions: {
+				items: [
+					{
+						text: 'Change',
+						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/date`,
+						visuallyHiddenText: 'Appeal due date'
+					}
+				]
+			}
+		});
+	}
+
+	// other information
+	if (otherInformationDetails) {
+		summaryListComponent.parameters.rows.push({
+			key: { text: 'Do you want to add any other information?' },
+			value: {
+				html: nunjucksEnvironments.render('appeals/components/page-component.njk', {
+					component: {
+						type: 'show-more',
+						parameters: {
+							html: otherInformationValidRadio === 'Yes' ? `Yes: ${otherInformationDetails}` : 'No',
+							maximumBeforeHiding: LENGTH_300,
+							toggleTextCollapsed: 'Show more',
+							toggleTextExpanded: 'Show less'
+						}
+					}
+				})
+			},
+			actions: {
+				items: [
+					{
+						text: 'Change',
+						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/enforcement-other-information`,
+						visuallyHiddenText: 'do you want to add any other information?'
+					}
+				]
+			}
+		});
+	}
 
 	const title =
 		validationOutcome === 'invalid'

@@ -326,7 +326,19 @@ describe('incomplete-appeal', () => {
 					.get('/appeals/appellant-case-enforcement-invalid-reasons')
 					.reply(200, appealCaseEnforcementInvalidReasons)
 					.persist();
+				nock('http://test/')
+					.get('/appeals/appellant-case-enforcement-missing-documents')
+					.reply(200, missingDocumentOptions);
+				nock('http://test/')
+					.get('/appeals/appellant-case-incomplete-reasons')
+					.reply(200, appellantCaseIncompleteReasons);
+			});
 
+			afterEach(() => {
+				nock.cleanAll();
+			});
+
+			it('should render the check details page where the enforcement notice is invalid', async () => {
 				// Populate session data
 				await request.post(`${baseUrl}/appellant-case`).send({ reviewOutcome: 'incomplete' });
 				await request
@@ -344,13 +356,7 @@ describe('incomplete-appeal', () => {
 						otherInformationValidRadio: 'Yes',
 						otherInformationDetails: 'Enforcement other information'
 					});
-			});
 
-			afterEach(() => {
-				nock.cleanAll();
-			});
-
-			it('should render the enforcement notice reasons page with no reasons selected', async () => {
 				const response = await request.get(
 					`${baseUrl}/appellant-case/incomplete/check-details-and-mark-enforcement-as-incomplete`
 				);
@@ -374,6 +380,80 @@ describe('incomplete-appeal', () => {
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'>Yes: Enforcement other information</div></dd>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Mark appeal as incomplete</button>');
+			});
+
+			it('should render the check details page where the enforcement notice is valid', async () => {
+				// Populate session data
+				// review outcome
+				await request.post(`${baseUrl}/appellant-case`).send({ reviewOutcome: 'incomplete' });
+				// enforcement notice invalid
+				await request
+					.post(`${baseUrl}/appellant-case/invalid/enforcement-notice`)
+					.send({ enforcementNoticeInvalid: 'no' });
+				// why is appeal incomplete
+				await request.post(`${baseUrl}/appellant-case/incomplete`).send({
+					incompleteReason: ['12', '14', '10'],
+					'incompleteReason-10': 'Some other reason text'
+				});
+				// which documents are incomplete
+				await request.post(`${baseUrl}/appellant-case/incomplete/missing-documents`).send({
+					missingDocuments: ['1', '2'],
+					'missingDocuments-1': 'Where is this doc',
+					'missingDocuments-2': 'Where is this other doc'
+				});
+				// ground (a) receipt due date
+				await request.post(`${baseUrl}/appellant-case/incomplete/receipt-due-date`).send({
+					'fee-receipt-due-date-day': '1',
+					'fee-receipt-due-date-month': '5',
+					'fee-receipt-due-date-year': '3000'
+				});
+				// appeal due date
+				await request.post(`${baseUrl}/appellant-case/incomplete/date`).send({
+					'due-date-day': '2',
+					'due-date-month': '7',
+					'due-date-year': '3000'
+				});
+
+				const response = await request.get(
+					`${baseUrl}/appellant-case/incomplete/check-details-and-mark-enforcement-as-incomplete`
+				);
+
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span>');
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Check details and mark appeal as incomplete</h1>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<dt class="govuk-summary-list__key"> What is the outcome of your review?</dt><dd class="govuk-summary-list__value"> Incomplete</dd>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<dt class="govuk-summary-list__key"> Is the enforcement notice invalid?</dt><dd class="govuk-summary-list__value"> No</dd>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<dt class="govuk-summary-list__key"> Why is the appeal incomplete?</dt>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<li>Waiting for appellant to pay the fee</li></ul></dd>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<dt class="govuk-summary-list__key"> Which documents are incomplete?</dt>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<li>Grounds of appeal supporting documents: Where is this doc</li>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<dt class="govuk-summary-list__key"> Ground (a) fee receipt due date</dt><dd class="govuk-summary-list__value"> 1 Jun 3000</dd>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<dt class="govuk-summary-list__key"> Appeal due date</dt><dd class="govuk-summary-list__value"> 2 Aug 3000</dd>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Mark appeal as incomplete</button>');
 			});
