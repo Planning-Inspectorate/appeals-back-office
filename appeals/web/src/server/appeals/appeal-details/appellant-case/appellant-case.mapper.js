@@ -34,6 +34,7 @@ import { capitalize } from 'lodash-es';
 import { generateAdvertComponents } from './page-components/adverts.mapper.js';
 import { generateCASAdvertComponents } from './page-components/cas-advert.mapper.js';
 import { generateCASComponents } from './page-components/cas.mapper.js';
+import { generateEnforcementListedComponents } from './page-components/enforcement-listed.mapper.js';
 import { generateEnforcementNoticeComponents } from './page-components/enforcement-notice.mapper.js';
 import { generateHASComponents } from './page-components/has.mapper.js';
 import { generateLdcComponents } from './page-components/ldc.mapper.js';
@@ -876,7 +877,6 @@ function generateCaseTypeSpecificComponents(
 				throw new Error('Feature flag inactive for adverts');
 			}
 		case APPEAL_TYPE.ENFORCEMENT_NOTICE:
-		case APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
 				return generateEnforcementNoticeComponents(
 					appealDetails,
@@ -893,6 +893,13 @@ function generateCaseTypeSpecificComponents(
 			} else {
 				throw new Error('Feature flag inactive for LDC');
 			}
+		case APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING:
+			return generateEnforcementListedComponents(
+				appealDetails,
+				appellantCaseData,
+				mappedAppellantCaseData,
+				userHasUpdateCasePermission
+			);
 		default:
 			throw new Error('Invalid appealType, unable to generate display page');
 	}
