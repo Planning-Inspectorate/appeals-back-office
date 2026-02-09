@@ -6617,7 +6617,7 @@ describe('appeal-details', () => {
 				nock('http://test/')
 					.get(`/appeals/${appealId}?include=all`)
 					.reply(200, { ...appealData, appealStatus: APPEAL_CASE_STATUS.VALIDATION });
-				const response = await request.get(`${baseUrl}/${appealId}`);
+				const response = await request.get(`${baseUrl}/${appealId}?backUrl=/some-back-link`);
 
 				const cancelSection = parseHtml(response.text, {
 					skipPrettyPrint: true,

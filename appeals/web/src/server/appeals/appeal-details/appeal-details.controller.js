@@ -1,4 +1,5 @@
 import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
+import { stripQueryString } from '#lib/url-utilities.js';
 import { APPEAL_REPRESENTATION_TYPE, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { appealDetailsPage } from './appeal-details.mapper.js';
@@ -62,7 +63,7 @@ export const viewAppealDetails = async (request, response) => {
 	const mappedPageContent = await appealDetailsPage(
 		currentAppeal,
 		appealCaseNotes,
-		currentUrl,
+		stripQueryString(currentUrl),
 		session,
 		request,
 		appellantFinalComments,
