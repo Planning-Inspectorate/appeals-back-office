@@ -1533,7 +1533,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'Q3820',
 		name: 'Crawley Borough Council',
-		email: 'development.control@crawley.gov.uk',
+		email: 'planningappeals@crawley.gov.uk',
 		teamId: 12 // East2
 	},
 	{
