@@ -6,11 +6,13 @@ You must now attend the site visit with our inspector (or their representative) 
 
 You will accompany the inspector throughout the visit.
 
-# Visit details
+# About the visit
 
 Our inspector will visit {{site_address}} at {{start_time}} on {{visit_date}}.
 
+For health and safety reasons, make sure any pets are safely secured during the site visit. 
+
 If you need to contact us, include our appeal reference number in any communication.
 
-The Planning Inspectorate
+Planning Inspectorate
 {{team_email_address}}
