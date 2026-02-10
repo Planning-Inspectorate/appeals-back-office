@@ -10,6 +10,8 @@ import {
 	householdAppeal,
 	householdAppealLPAQuestionnaireComplete,
 	householdAppealLPAQuestionnaireIncomplete,
+	ldcAppeal,
+	ldcAppealLPAQuestionnaireIncomplete,
 	listedBuildingAppeal,
 	listedBuildingAppealLPAQuestionnaireIncomplete
 } from '#tests/appeals/mocks.js';
@@ -327,6 +329,21 @@ describe('lpa questionnaires routes', () => {
 							lpa_reference: listedBuildingAppeal.applicationReference,
 							appeal_reference_number: listedBuildingAppeal.reference,
 							site_address: `${listedBuildingAppeal.address.addressLine1}, ${listedBuildingAppeal.address.addressLine2}, ${listedBuildingAppeal.address.addressTown}, ${listedBuildingAppeal.address.addressCounty}, ${listedBuildingAppeal.address.postcode}, ${listedBuildingAppeal.address.addressCountry}`,
+							what_happens_next:
+								'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.',
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+						}
+					}
+				],
+				[
+					'ldcAppeal',
+					{
+						appeal: ldcAppeal,
+						templateName: 'lpaq-complete-appellant',
+						personalisation: {
+							lpa_reference: ldcAppeal.applicationReference,
+							appeal_reference_number: ldcAppeal.reference,
+							site_address: `${ldcAppeal.address.addressLine1}, ${ldcAppeal.address.addressLine2}, ${ldcAppeal.address.addressTown}, ${ldcAppeal.address.addressCounty}, ${ldcAppeal.address.postcode}, ${ldcAppeal.address.addressCountry}`,
 							what_happens_next:
 								'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.',
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -1073,7 +1090,8 @@ describe('lpa questionnaires routes', () => {
 				['cas planning', casPlanningAppealLPAQuestionnaireIncomplete],
 				['cas advert', casAdvertAppealLPAQuestionnaireIncomplete],
 				['full planning', fullPlanningAppealLPAQuestionnaireIncomplete],
-				['listed building', listedBuildingAppealLPAQuestionnaireIncomplete]
+				['listed building', listedBuildingAppealLPAQuestionnaireIncomplete],
+				['ldc', ldcAppealLPAQuestionnaireIncomplete]
 			])(
 				'sends a correctly formatted notify email when the outcome is incomplete for a %s appeal',
 				async (_, appealLPAQIncomplete) => {

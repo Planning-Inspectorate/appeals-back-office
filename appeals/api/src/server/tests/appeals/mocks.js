@@ -707,6 +707,21 @@ export const ldcAppealAppellantCaseInvalid = {
 	id: 6
 };
 
+export const ldcAppealLPAQuestionnaireIncomplete = {
+	...ldcAppeal,
+	appealStatus: [
+		{
+			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+			valid: true
+		}
+	],
+	lpaQuestionnaire: {
+		...listedBuildingAppeal.lpaQuestionnaire,
+		...incompleteLPAQuestionnaireOutcome
+	},
+	id: 5
+};
+
 export const fullPlanningAppealLPAQuestionnaireIncomplete = {
 	...fullPlanningAppeal,
 	appealStatus: [
