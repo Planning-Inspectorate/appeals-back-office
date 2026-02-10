@@ -64,7 +64,6 @@ extends:
             parameters:
               nodeVersion: 22
               script: npm run check
-              displayName: 'Code Quality Checks (Parallel)'
               environmentVariables:
                 TURBO_TEAM: $(TURBO_TEAM)
                 TURBO_API: $(TURBO_API)
@@ -77,7 +76,6 @@ extends:
                 fi
 
                 $(test-script)
-              displayName: Run tests
               nodeVersion: 22
               environmentVariables:
                 TURBO_TEAM: $(TURBO_TEAM)
