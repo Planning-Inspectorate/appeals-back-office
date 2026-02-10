@@ -51,7 +51,7 @@ extends:
               restoreKeys: |
                 turbo | "$(Agent.OS)" | turbo.json
                 turbo | "$(Agent.OS)",
-              displayName: 'Cache Turbo'
+              displayName: Cache Turbo
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
