@@ -1,4 +1,7 @@
-import { appealDataEnforcementNotice } from '#testing/app/fixtures/referencedata.js';
+import {
+	appealDataEnforcementListedBuilding,
+	appealDataEnforcementNotice
+} from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform/testing/html-parser.js';
 import nock from 'nock';
@@ -23,7 +26,6 @@ describe('Appellant Case Valid Flow', () => {
 				.get(`/appeals/${appealId}?include=appellantCase`)
 				.reply(200, appealDataEnforcementNotice);
 		});
-
 		describe('GET /enforcement/ground-a', () => {
 			it(`should render the 'Is the appeal ground (a) barred?' screen`, async () => {
 				const response = await request.get(
@@ -233,6 +235,9 @@ describe('Appellant Case Valid Flow', () => {
 		});
 
 		describe('GET /enforcement/check-details', () => {
+			afterEach(() => {
+				nock.cleanAll();
+			});
 			it(`should render the 'Check details' screen`, async () => {
 				// mock API call
 				nock('http://test/')
@@ -278,6 +283,182 @@ describe('Appellant Case Valid Flow', () => {
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Review decision</dt>');
 				expect(unprettifiedElement.innerHTML).toContain('Is the appeal ground (a) barred?</dt>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Do you want to add any other information?</dt>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Valid date for case</dt>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'We will mark the appeal as valid and send an email to the relevant parties.</p>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Mark appeal as valid</button>');
+			});
+		});
+
+		describe('POST /enforcement/check-details', () => {
+			it(`should redirect to the Check Details' screen on success`, async () => {
+				// mock API call
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=appellantCase`)
+					.reply(200, appealDataEnforcementNotice)
+					.persist();
+				nock('http://test/')
+					.patch(
+						`/appeals/${appealId}/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`
+					)
+					.reply(200);
+
+				// set session data
+				const groundAResponse = await request
+					.post(`${baseUrl}/${appealId}/appellant-case/valid/enforcement/ground-a`)
+					.send({ enforcementGroundARadio: 'yes' });
+				expect(groundAResponse.statusCode).toBe(302);
+
+				const otherInformationRepsonse = await request
+					.post(`${baseUrl}/${appealId}/appellant-case/valid/enforcement/other-information`)
+					.send({
+						otherInformationValidRadio: 'Yes',
+						otherInformationDetails: 'Other information'
+					});
+				expect(otherInformationRepsonse.statusCode).toBe(302);
+
+				const dateResponse = await request
+					.post(`${baseUrl}/${appealId}/appellant-case/valid/enforcement/date`)
+					.send({
+						'valid-date-day': '1',
+						'valid-date-month': 'Jan',
+						'valid-date-year': '2025'
+					});
+				expect(dateResponse.statusCode).toBe(302);
+
+				// check details response
+				const response = await request.post(
+					`${baseUrl}/${appealId}/appellant-case/valid/enforcement/check-details`
+				);
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to /appeals-service/appeal-details/${appealId}`
+				);
+			});
+		});
+
+		it(`should redirect to the Check Details' screen on success`, async () => {
+			// mock API call
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=appellantCase`)
+				.reply(200, appealDataEnforcementNotice)
+				.persist();
+			nock('http://test/')
+				.patch(
+					`/appeals/${appealId}/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`
+				)
+				.reply(200);
+
+			// set session data
+			const groundAResponse = await request
+				.post(`${baseUrl}/${appealId}/appellant-case/valid/enforcement/ground-a`)
+				.send({ enforcementGroundARadio: 'yes' });
+			expect(groundAResponse.statusCode).toBe(302);
+
+			const otherInformationRepsonse = await request
+				.post(`${baseUrl}/${appealId}/appellant-case/valid/enforcement/other-information`)
+				.send({
+					otherInformationValidRadio: 'Yes',
+					otherInformationDetails: 'Other information'
+				});
+			expect(otherInformationRepsonse.statusCode).toBe(302);
+
+			const dateResponse = await request
+				.post(`${baseUrl}/${appealId}/appellant-case/valid/enforcement/date`)
+				.send({
+					'valid-date-day': '1',
+					'valid-date-month': 'Jan',
+					'valid-date-year': '2025'
+				});
+			expect(dateResponse.statusCode).toBe(302);
+
+			// check details response
+			const response = await request.post(
+				`${baseUrl}/${appealId}/appellant-case/valid/enforcement/check-details`
+			);
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				`Found. Redirecting to /appeals-service/appeal-details/${appealId}`
+			);
+		});
+	});
+
+	describe('Enforcement listed Appeals', () => {
+		const appealId = appealDataEnforcementNotice.appealId;
+		beforeEach(() => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, appealDataEnforcementListedBuilding)
+				.persist();
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=appellantCase`)
+				.reply(200, appealDataEnforcementListedBuilding);
+		});
+		describe('GET /enforcement/check-details', () => {
+			afterEach(() => {
+				nock.cleanAll();
+			});
+			it(`should render the 'Check details' screen for ELB`, async () => {
+				// mock API call
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=appellantCase`)
+					.reply(200, appealDataEnforcementListedBuilding)
+					.persist();
+
+				// set session data
+
+				const validCaseRepsonse = await request.post(`${baseUrl}/${appealId}/appellant-case`).send({
+					reviewOutcome: 'valid'
+				});
+
+				expect(validCaseRepsonse.statusCode).toBe(302);
+
+				const otherInformationRepsonse = await request
+					.post(`${baseUrl}/${appealId}/appellant-case/valid/enforcement/other-information`)
+					.send({
+						webAppellantCaseReviewOutcome: {
+							validationOutcome: 'valid',
+							outcome: 'valid'
+						},
+						otherInformationValidRadio: 'Yes',
+						otherInformationDetails: 'Other information'
+					});
+				expect(otherInformationRepsonse.statusCode).toBe(302);
+
+				const dateResponse = await request
+					.post(`${baseUrl}/${appealId}/appellant-case/valid/enforcement/date`)
+					.send({
+						'valid-date-day': '1',
+						'valid-date-month': 'Jan',
+						'valid-date-year': '2025',
+						validationOutcome: 'valid',
+						outcome: 'valid'
+					});
+				expect(dateResponse.statusCode).toBe(302);
+
+				// get details
+				const response = await request.get(
+					`${baseUrl}/${appealId}/appellant-case/valid/enforcement/check-details`
+				);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Check details and mark appeal as valid</h1>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Review decision</dt>');
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'Is the appeal ground (a) barred?</dt>'
+				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'Do you want to add any other information?</dt>'
 				);
