@@ -31,10 +31,8 @@ extends:
     validationJobs:
       - name: Run Linting & Tests
         variables:
-        - name: isMergeQueue
-          value: ${{ startsWith(variables['Build.SourceBranch'], 'refs/heads/gh-readonly-queue') }}
         - name: test-script
-          ${{ if eq(variables.isMergeQueue, true) }}:
+          ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/gh-readonly-queue') }}:
             value: npm run test
           ${{ else }}:
             value: npm run test:changed
