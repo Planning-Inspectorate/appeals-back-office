@@ -69,8 +69,11 @@ extends:
           - template: ../steps/node_script.yml
             parameters:
             - script: |
-                if [ "$(isMergeQueue)" = "true" ]; then
+                if [[ "$(Build.SourceBranch)" == refs/heads/gh-readonly-queue* ]]; then
+                  echo "Merge queue build → disabling Turbo cache"
                   export TURBO_CACHE=false
+                else
+                  echo "Normal build → Turbo cache enabled"
                 fi
 
                 $(test-script)
