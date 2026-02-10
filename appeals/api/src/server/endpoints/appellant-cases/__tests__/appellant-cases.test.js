@@ -1709,9 +1709,10 @@ describe('appellant cases routes', () => {
 			});
 
 			test('updates the appellant case for incomplete enforcement notice appeal with invalid enforcement notice', async () => {
-				databaseConnector.appeal.findUnique.mockResolvedValue(
-					enforcementNoticeAppealAppellantCaseInvalid
-				);
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...enforcementNoticeAppealAppellantCaseInvalid,
+					caseExtensionDate: '2035-07-14T00:00:00.000Z'
+				});
 				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
 					appellantCaseValidationOutcomes[0]
 				);
@@ -1721,7 +1722,6 @@ describe('appellant cases routes', () => {
 				databaseConnector.appellantCaseEnforcementInvalidReasonsSelected.createMany.mockResolvedValue(
 					true
 				);
-				databaseConnector.appeal.update.mockResolvedValue();
 				databaseConnector.user.upsert.mockResolvedValue({
 					id: 1,
 					azureAdUserId
@@ -1801,7 +1801,24 @@ describe('appellant cases routes', () => {
 					}
 				});
 
-				expect(mockNotifySend).not.toHaveBeenCalled();
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: '1345264',
+						enforcement_reference: 'Reference',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						reason_1: 'has some text',
+						reason_2: 'has some other text',
+						reason_8: 'This is the other field',
+						other_info: 'Enforcement other information',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						due_date: '14 July 2035'
+					},
+					recipientEmail: enforcementNoticeAppealAppellantCaseInvalid.lpa.email,
+					templateName: 'enforcement-notice-incomplete-lpa'
+				});
 				expect(response.status).toEqual(200);
 			});
 		});
