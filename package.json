@@ -29,7 +29,7 @@
 		"test:cov": "turbo run test:cov -- --coverage",
     	"test:changed": "turbo run test:cov --filter=...[origin/main] --concurrency=2",
     	"test:changed:cov": "turbo run test:cov --filter=...[origin/main] --concurrency=2 -- --coverage",
-		"check": "turbo run commitlint tscheck lint:js format-check --concurrency=2 --continue",
+		"check": "turbo run commitlint tscheck lint:js format-check --concurrency=2 --continue --summarize",
 		"web": "npm run dev --workspace=@pins/appeals.web",
 		"api": "npm run dev --workspace=@pins/appeals.api",
 		"pdf-service": "npm run start:dev --workspace=@pins/pdf-service-api",

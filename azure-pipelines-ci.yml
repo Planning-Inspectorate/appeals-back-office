@@ -64,24 +64,14 @@ extends:
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
-              script: npm run check -- --summarize
+              script: npm run check
               environmentVariables:
                 TURBO_TEAM: $(TURBO_TEAM)
                 TURBO_API: $(TURBO_API)
                 TURBO_TOKEN: $(TURBO_TOKEN)
           - template: ../steps/node_script.yml
             parameters:
-              script: |
-                set -e  
-                if [ "$(Build.SourceBranch)" = "refs/heads/gh-readonly-queue"* ]; then
-                  echo "Merge queue build → disabling Turbo cache"
-                  export TURBO_CACHE=false
-                else
-                  echo "Normal build → Turbo cache enabled"
-                  export TURBO_CACHE=true
-                fi
-
-                $(test-script)
+              script: $(test-script)
               nodeVersion: 22
               environmentVariables:
                 TURBO_TEAM: $(TURBO_TEAM)
