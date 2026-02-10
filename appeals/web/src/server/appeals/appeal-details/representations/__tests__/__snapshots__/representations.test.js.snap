@@ -9,8 +9,8 @@ exports[`representations GET /share should contain correct content if inquiry an
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <p class="govuk-body">We’ll share <a class="govuk-link" href="/appeals-service/appeal-details/1/proof-of-evidence/appellant?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare">appellant proof of evidence</a> and
-                <a                 class="govuk-link" href="/appeals-service/appeal-details/1/proof-of-evidence/lpa?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare">LPA proof of evidence</a>with the relevant parties.</p>
+            <p class="govuk-body">We’ll share <a class="govuk-link" href="/appeals-service/appeal-details/1/proof-of-evidence/appellant/manage-documents?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare">appellant proof of evidence</a> and
+                <a                 class="govuk-link" href="/appeals-service/appeal-details/1/proof-of-evidence/lpa/manage-documents?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare">LPA proof of evidence</a>with the relevant parties.</p>
             <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
                 <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Do not share until you
                     have reviewed all of the supporting documents and redacted any sensitive

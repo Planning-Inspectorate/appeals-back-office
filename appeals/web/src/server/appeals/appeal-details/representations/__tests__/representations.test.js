@@ -133,12 +133,12 @@ describe('representations', () => {
 			expect(
 				textResponse.querySelectorAll('p.govuk-body a.govuk-link')[0]?.getAttribute('href')
 			).toBe(
-				`/appeals-service/appeal-details/1/proof-of-evidence/appellant?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare`
+				`/appeals-service/appeal-details/1/proof-of-evidence/appellant/manage-documents?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare`
 			);
 			expect(
 				textResponse.querySelectorAll('p.govuk-body a.govuk-link')[1]?.getAttribute('href')
 			).toBe(
-				`/appeals-service/appeal-details/1/proof-of-evidence/lpa?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare`
+				`/appeals-service/appeal-details/1/proof-of-evidence/lpa/manage-documents?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare`
 			);
 			expect(textResponse.innerHTML.toString()).toContain(
 				`Warning</span> Do not share until you have reviewed all of the supporting documents and redacted any sensitive information.</strong>`
@@ -200,7 +200,8 @@ describe('representations', () => {
 					rule6PartyStatements: {
 						'rep-id-1': {
 							organisationName: 'Org One',
-							representationStatus: 'valid'
+							representationStatus: 'valid',
+							rule6PartyId: 1
 						}
 					}
 				}
@@ -222,11 +223,13 @@ describe('representations', () => {
 					rule6PartyStatements: {
 						'rep-id-1': {
 							organisationName: 'Org One',
-							representationStatus: 'valid'
+							representationStatus: 'valid',
+							rule6PartyId: 1
 						},
 						'rep-id-2': {
 							organisationName: 'Org Two',
-							representationStatus: 'valid'
+							representationStatus: 'valid',
+							rule6PartyId: 2
 						}
 					}
 				}
@@ -253,11 +256,13 @@ describe('representations', () => {
 					rule6PartyStatements: {
 						'rep-id-1': {
 							organisationName: 'Org One',
-							representationStatus: 'valid'
+							representationStatus: 'valid',
+							rule6PartyId: 1
 						},
 						'rep-id-2': {
 							organisationName: 'Org Two',
-							representationStatus: 'valid'
+							representationStatus: 'valid',
+							rule6PartyId: 2
 						}
 					}
 				}
@@ -270,7 +275,7 @@ describe('representations', () => {
 			expect(textResponse.innerHTML).toContain('1 appellant statement</a>,');
 			expect(textResponse.innerHTML).toContain('1 Org One statement</a>');
 			expect(textResponse.innerHTML).toContain(
-				'and <a href="/appeals-service/appeal-details/1/rule6-statement?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare" class="govuk-link">1 Org Two statement</a>'
+				'and <a href="/appeals-service/appeal-details/1/rule-6-party-statement/2?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare" class="govuk-link">1 Org Two statement</a>'
 			);
 		});
 
@@ -293,7 +298,8 @@ describe('representations', () => {
 					rule6PartyStatements: {
 						'rep-id-1': {
 							organisationName: 'Org One',
-							representationStatus: 'valid'
+							representationStatus: 'valid',
+							rule6PartyId: 1
 						}
 					}
 				}
@@ -306,7 +312,7 @@ describe('representations', () => {
 			expect(textResponse.innerHTML).toContain('1 LPA statement</a>');
 			expect(textResponse.innerHTML).toContain('1 appellant statement</a>');
 			expect(textResponse.innerHTML).toContain(
-				'and <a href="/appeals-service/appeal-details/1/rule6-statement?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare" class="govuk-link">1 Org One statement</a>'
+				'and <a href="/appeals-service/appeal-details/1/rule-6-party-statement/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare" class="govuk-link">1 Org One statement</a>'
 			);
 		});
 
