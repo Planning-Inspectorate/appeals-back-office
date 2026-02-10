@@ -31,11 +31,14 @@ extends:
     validationJobs:
       - name: Run Linting & Tests
         variables:
+        - name: TURBO_CACHE_DIR
+          value: $(Pipeline.Workspace)/.turbo
         - name: test-script
           ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/gh-readonly-queue') }}:
             value: npm run test
           ${{ else }}:
             value: npm run test:changed
+          
         steps:
           - task: Cache@2
             inputs:
@@ -47,7 +50,7 @@ extends:
           - task: Cache@2
             inputs:
               key: 'turbo | "$(Agent.OS)" | turbo.json | package-lock.json'
-              path: 'node_modules/.cache/turbo'
+              path: $(TURBO_CACHE_DIR)
               restoreKeys: |
                 turbo | "$(Agent.OS)" | turbo.json
                 turbo | "$(Agent.OS)",
@@ -61,16 +64,7 @@ extends:
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
-              script: |
-                set -e  
-                if [ "$(Build.SourceBranch)" = "refs/heads/gh-readonly-queue"* ]; then
-                  echo "Merge queue build → disabling Turbo cache"
-                  export TURBO_CACHE=false
-                else
-                  echo "Normal build → Turbo cache enabled"
-                  export TURBO_CACHE=true
-                fi
-                npm run check
+              script: npm run check -- --summarize
               environmentVariables:
                 TURBO_TEAM: $(TURBO_TEAM)
                 TURBO_API: $(TURBO_API)
