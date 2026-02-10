@@ -535,6 +535,12 @@ export const appealDataEnforcementNotice = {
 	appealType: 'Enforcement notice appeal'
 };
 
+export const appealDataEnforcementListedBuilding = {
+	...appealData,
+	appealId: 5624,
+	appealType: 'Enforcement listed building and conservation area appeal'
+};
+
 export const appellantCaseDataNotValidated = {
 	appealId: 1,
 	appealReference: 'TEST/919276',
