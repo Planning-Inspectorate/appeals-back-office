@@ -8,7 +8,7 @@ import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js
 import { allLpaQuestionnaireOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { camelToScreamingSnake } from '#utils/string-utils.js';
+import { camelToScreamingSnake, capitalizeFirstLetter } from '#utils/string-utils.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import { updateLPAQuestionnaireValidationOutcome } from './lpa-questionnaires.service.js';
 
@@ -72,6 +72,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			isSiteInAreaOfSpecialControlAdverts,
 			wasApplicationRefusedDueToHighwayOrTraffic,
 			didAppellantSubmitCompletePhotosAndPlans,
+			appealUnderActSection,
 			// Enforcement
 			noticeRelatesToBuildingEngineeringMiningOther,
 			siteAreaSquareMetres,
@@ -143,6 +144,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 					isSiteInAreaOfSpecialControlAdverts,
 					wasApplicationRefusedDueToHighwayOrTraffic,
 					didAppellantSubmitCompletePhotosAndPlans,
+					appealUnderActSection,
 					// Enforcement
 					noticeRelatesToBuildingEngineeringMiningOther,
 					siteAreaSquareMetres,
@@ -170,7 +172,9 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			AUDIT_TRAIL_LPAQ_WAS_APPLICATION_REFUSED_DUE_TO_HIGHWAY_OR_TRAFFIC_UPDATED: () =>
 				body.wasApplicationRefusedDueToHighwayOrTraffic ? 'Yes' : 'No',
 			AUDIT_TRAIL_LPAQ_DID_APPELLANT_SUBMIT_COMPLETE_PHOTOS_AND_PLANS_UPDATED: () =>
-				body.didAppellantSubmitCompletePhotosAndPlans ? 'Yes' : 'No'
+				body.didAppellantSubmitCompletePhotosAndPlans ? 'Yes' : 'No',
+			AUDIT_TRAIL_LPAQ_APPEAL_UNDER_ACT_SECTION_UPDATED: () =>
+				capitalizeFirstLetter((body.appealUnderActSection || '').replaceAll('-', ' '))
 		};
 
 		// Make sure we only create unique audit trail details for properties that have changed.
@@ -187,6 +191,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 				})
 			)
 		];
+
 		await Promise.all(
 			auditTrailDetails.map((details) =>
 				createAuditTrail({

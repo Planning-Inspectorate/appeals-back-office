@@ -44,6 +44,7 @@ import highwayTrafficPublicSafetyRouter from './highway-traffic-public-safety/hi
 import isAonbNationalLandscapeRouter from './is-aonb-national-landscape/is-aonb-national-landscape.router.js';
 import isGypsyOrTravellerSiteRouter from './is-gypsy-or-traveller-site/is-gypsy-or-traveller-site.router.js';
 import isOnCrownLandRouter from './is-on-crown-land/is-on-crown-land.router.js';
+import appealUnderActSectionRouter from './ldc-type/ldc-type.router.js';
 import { validateLpaQuestionnaireId } from './lpa-questionnaire.middleware.js';
 import neighbouringSiteAccessRouter from './neighbouring-site-access/neighbouring-site-access.router.js';
 import notificationMethodsRouter from './notification-methods/notification-methods.router.js';
@@ -572,6 +573,13 @@ router.use(
 	validateAppealWithInclude(['lpaQuestionnaire']),
 	assertUserHasPermission(permissionNames.updateCase),
 	siteAreaRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/appeal-under-act-section',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	appealUnderActSectionRouter
 );
 
 export default router;
