@@ -12,6 +12,7 @@ import {
 	casPlanningAppealAppellantCaseInvalid,
 	casPlanningAppealAppellantCaseValid,
 	enforcementNoticeAppeal,
+	enforcementNoticeAppealAppellantCaseIncomplete,
 	enforcementNoticeAppealAppellantCaseInvalid,
 	fullPlanningAppeal,
 	fullPlanningAppealAppellantCaseIncomplete,
@@ -1493,14 +1494,18 @@ describe('appellant cases routes', () => {
 						appealType: true
 					}
 				});
-				expect(databaseConnector.enforcementNoticeAppealOutcome.create).toHaveBeenCalledWith({
-					data: {
-						appeal: expect.any(Object),
+				expect(databaseConnector.enforcementNoticeAppealOutcome.upsert).toHaveBeenCalledWith({
+					create: {
+						appeal: { connect: { id } },
 						groundABarred: true,
-						otherInformation: 'Other information',
-						otherLiveAppeals: undefined,
-						enforcementNoticeInvalid: undefined
-					}
+						otherInformation: 'Other information'
+					},
+					update: {
+						appeal: { connect: { id } },
+						groundABarred: true,
+						otherInformation: 'Other information'
+					},
+					where: { appealId: id }
 				});
 
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
@@ -1585,13 +1590,16 @@ describe('appellant cases routes', () => {
 						}
 					]
 				});
-				expect(databaseConnector.enforcementNoticeAppealOutcome.create).toHaveBeenCalledWith({
-					data: {
-						appeal: expect.any(Object),
-						otherInformation: undefined,
+				expect(databaseConnector.enforcementNoticeAppealOutcome.upsert).toHaveBeenCalledWith({
+					create: expect.any(Object),
+					update: {
+						appeal: { connect: { id } },
 						otherLiveAppeals: 'no',
+						groundAFeeReceiptDueDate: undefined,
+						otherInformation: undefined,
 						enforcementNoticeInvalid: 'no'
-					}
+					},
+					where: { appealId: id }
 				});
 
 				expect(mockNotifySend).not.toHaveBeenCalled();
@@ -1662,13 +1670,16 @@ describe('appellant cases routes', () => {
 						}
 					]
 				});
-				expect(databaseConnector.enforcementNoticeAppealOutcome.create).toHaveBeenCalledWith({
-					data: {
-						appeal: expect.any(Object),
+				expect(databaseConnector.enforcementNoticeAppealOutcome.upsert).toHaveBeenCalledWith({
+					create: expect.any(Object),
+					update: {
+						appeal: { connect: { id } },
 						otherInformation: 'Enforcement other information',
-						otherLiveAppeals: undefined,
-						enforcementNoticeInvalid: 'yes'
-					}
+						enforcementNoticeInvalid: 'yes',
+						groundAFeeReceiptDueDate: undefined,
+						otherLiveAppeals: undefined
+					},
+					where: { appealId: id }
 				});
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
@@ -1773,13 +1784,16 @@ describe('appellant cases routes', () => {
 						}
 					]
 				});
-				expect(databaseConnector.enforcementNoticeAppealOutcome.create).toHaveBeenCalledWith({
-					data: {
-						appeal: expect.any(Object),
+				expect(databaseConnector.enforcementNoticeAppealOutcome.upsert).toHaveBeenCalledWith({
+					create: expect.any(Object),
+					update: {
+						appeal: { connect: { id } },
 						otherInformation: 'Enforcement other information',
 						otherLiveAppeals: undefined,
-						enforcementNoticeInvalid: 'yes'
-					}
+						enforcementNoticeInvalid: 'yes',
+						groundAFeeReceiptDueDate: undefined
+					},
+					where: { appealId: id }
 				});
 
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
@@ -1819,6 +1833,102 @@ describe('appellant cases routes', () => {
 					recipientEmail: enforcementNoticeAppealAppellantCaseInvalid.lpa.email,
 					templateName: 'enforcement-notice-incomplete-lpa'
 				});
+				expect(response.status).toEqual(200);
+			});
+
+			test('updates the appellant case for incomplete enforcement notice appeal with valid enforcement notice', async () => {
+				databaseConnector.appellantCaseIncompleteReason.findMany.mockResolvedValue([
+					{
+						id: 12,
+						name: 'Value 1'
+					}
+				]);
+				databaseConnector.appeal.findUnique.mockResolvedValue(
+					enforcementNoticeAppealAppellantCaseIncomplete
+				);
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[0]
+				);
+				databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany.mockResolvedValue(true);
+				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(true);
+				databaseConnector.appellantCaseEnforcementMissingDocumentText.deleteMany.mockResolvedValue(
+					true
+				);
+				databaseConnector.appellantCaseEnforcementMissingDocumentText.createMany.mockResolvedValue(
+					true
+				);
+				databaseConnector.appeal.update.mockResolvedValue();
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const body = {
+					appealDueDate: '2099-07-14T00:00:00.000Z',
+					enforcementMissingDocuments: [{ id: 1, text: ['Missing doc'] }],
+					enforcementNoticeInvalid: 'yes',
+					feeReceiptDueDate: '2099-07-14T00:00:00.000Z',
+					incompleteReasons: [{ id: 12 }],
+					validationOutcome: 'incomplete'
+				};
+				const { appellantCase, id } = enforcementNoticeAppealAppellantCaseIncomplete;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: {
+						appellantCaseValidationOutcomeId: 1
+					}
+				});
+				expect(
+					databaseConnector.appellantCaseEnforcementMissingDocumentText.deleteMany
+				).toHaveBeenCalled();
+				expect(
+					databaseConnector.appellantCaseEnforcementMissingDocumentText.createMany
+				).toHaveBeenCalledWith({
+					data: [
+						{
+							appellantCaseId: 1,
+							appellantCaseEnforcementMissingDocumentId: 1,
+							text: 'Missing doc'
+						}
+					]
+				});
+				expect(databaseConnector.enforcementNoticeAppealOutcome.upsert).toHaveBeenCalledWith({
+					create: expect.any(Object),
+					update: {
+						appeal: { connect: { id } },
+						otherInformation: undefined,
+						enforcementNoticeInvalid: 'yes',
+						groundAFeeReceiptDueDate: '2099-07-14T00:00:00.000Z',
+						otherLiveAppeals: undefined
+					},
+					where: { appealId: id }
+				});
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+					data: {
+						appealId: id,
+						details:
+							'Appeal marked as incomplete:\n<ul><li>Missing information</li><li>Ground (a) fee receipt due date</li></ul>',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+					data: {
+						appealId: id,
+						details: 'Case updated',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+
+				expect(mockNotifySend).not.toHaveBeenCalled();
 				expect(response.status).toEqual(200);
 			});
 		});

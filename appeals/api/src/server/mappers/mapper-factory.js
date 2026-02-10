@@ -233,7 +233,8 @@ function createDataLayout(caseMap, mappingRequest) {
 				lpaEmailAddress: appeal.lpa?.email,
 				transferStatus: appealTransferStatus,
 				enforcementNotice: {
-					appellantCase: { ...appellantCase?.enforcementNotice }
+					appellantCase: { ...appellantCase?.enforcementNotice },
+					appealOutcome: { ...appeal.enforcementNoticeAppealOutcome }
 				},
 				...createFoldersLayout(folders, contextEnum.appealDetails)
 			};

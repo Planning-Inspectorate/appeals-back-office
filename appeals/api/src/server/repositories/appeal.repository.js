@@ -89,6 +89,12 @@ export const appealDetailsInclude = /** @type {const} */ {
 					appellantCaseEnforcementInvalidReasonText: true
 				}
 			},
+			appellantCaseEnforcementMissingDocumentsSelected: {
+				include: {
+					appellantCaseEnforcementMissingDocument: true,
+					appellantCaseEnforcementMissingDocumentText: true
+				}
+			},
 			appellantCaseValidationOutcome: true,
 			knowsOtherOwners: true,
 			knowsAllOwners: true,
@@ -181,7 +187,8 @@ export const appealDetailsInclude = /** @type {const} */ {
 		include: {
 			serviceUser: true
 		}
-	}
+	},
+	enforcementNoticeAppealOutcome: true
 };
 
 /** all includes, can be selected from, don't include this, just select from it */
@@ -229,6 +236,12 @@ export const appealDetailsIncludeMap = /** @type {const} */ {
 				include: {
 					appellantCaseEnforcementInvalidReason: true,
 					appellantCaseEnforcementInvalidReasonText: true
+				}
+			},
+			appellantCaseEnforcementMissingDocumentsSelected: {
+				include: {
+					appellantCaseEnforcementMissingDocument: true,
+					appellantCaseEnforcementMissingDocumentText: true
 				}
 			},
 			appellantCaseValidationOutcome: true,
@@ -324,7 +337,8 @@ export const appealDetailsIncludeMap = /** @type {const} */ {
 		include: {
 			serviceUser: true
 		}
-	}
+	},
+	enforcementNoticeAppealOutcome: true
 };
 
 /**
