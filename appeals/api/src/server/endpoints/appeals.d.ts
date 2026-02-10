@@ -321,6 +321,8 @@ interface UpdateAppellantCaseValidationOutcome {
 	enforcementNoticeInvalid?: string;
 	otherLiveAppeals?: string;
 	enforcementInvalidReasons?: IncompleteInvalidReasons;
+	enforcementMissingDocuments?: IncompleteInvalidReasons;
+	groundAFeeReceiptDueDate?: Date;
 }
 
 interface UpdateAppellantCaseValidationOutcomeParams {
@@ -346,6 +348,8 @@ interface UpdateAppellantCaseValidationOutcomeParams {
 		enforcementNoticeInvalid?: string;
 		otherLiveAppeals?: string;
 		enforcementInvalidReasons?: IncompleteInvalidReasons;
+		enforcementMissingDocuments?: IncompleteInvalidReasons;
+		feeReceiptDueDate?: Date;
 	};
 	validationOutcome: ValidationOutcome;
 	validAt: Date;
@@ -685,6 +689,8 @@ interface AppealListResponse {
 	isInquirySetup: boolean | null;
 	hasInquiryAddress: boolean | null;
 	enforcementReference?: string | null;
+	enforcementNoticeInvalid?: string | null;
+	enforcementNoticeGroundAFeeReceiptDueDate?: Date | null;
 }
 
 interface DocumentationSummary {

@@ -131,6 +131,12 @@ const getPersonalList = async (userId, pageNumber, pageSize, status, leadAppealI
 							include: {
 								serviceUser: true
 							}
+						},
+						enforcementNoticeAppealOutcome: {
+							select: {
+								enforcementNoticeInvalid: true,
+								groundAFeeReceiptDueDate: true
+							}
 						}
 					}
 				}

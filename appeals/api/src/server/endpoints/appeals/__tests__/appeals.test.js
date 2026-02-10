@@ -1883,6 +1883,8 @@ describe('appeals list routes', () => {
 							isParentAppeal: false,
 							isChildAppeal: true,
 							isHearingSetup: false,
+							enforcementNoticeInvalid: null,
+							enforcementNoticeGroundAFeeReceiptDueDate: null,
 							hasHearingAddress: false,
 							awaitingLinkedAppeal: true,
 							costsDecision: null,
@@ -1957,6 +1959,8 @@ describe('appeals list routes', () => {
 								rule6PartyProofs: {},
 								rule6PartyStatements: {}
 							},
+							enforcementNoticeInvalid: null,
+							enforcementNoticeGroundAFeeReceiptDueDate: null,
 							isParentAppeal: false,
 							isChildAppeal: true,
 							isHearingSetup: false,

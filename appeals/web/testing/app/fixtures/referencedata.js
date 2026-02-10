@@ -4849,6 +4849,11 @@ export const appealDataToGetRequiredActions = {
 		appealStatus: 'validation',
 		documentationSummary: {
 			appellantCase: { dueDate: '3000-01-06T23:59:00.000Z', status: 'Incomplete' }
+		},
+		enforcementNotice: {
+			appealOutcome: {
+				enforcementNoticeInvalid: 'yes'
+			}
 		}
 	}
 };

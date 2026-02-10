@@ -36,6 +36,13 @@ const renderIncompleteReason = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	if (
+		request.session.webAppellantCaseReviewOutcome &&
+		request.session.webAppellantCaseReviewOutcome.appealId !== appealId
+	) {
+		delete request.session.webAppellantCaseReviewOutcome;
+	}
+
 	const [appellantCaseResponse, incompleteReasonOptions] = await Promise.all([
 		appellantCaseService
 			.getAppellantCaseFromAppealId(request.apiClient, appealId, appellantCaseId)

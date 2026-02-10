@@ -1128,12 +1128,13 @@ model Ground {
 
 /// EnforcementNoticeAppealOutcome model
 model EnforcementNoticeAppealOutcome {
-  id                       Int      @id @default(autoincrement())
-  appealId                 Int      @unique
+  id                       Int       @id @default(autoincrement())
+  appealId                 Int       @unique
   groundABarred            Boolean?
   otherInformation         String?
   enforcementNoticeInvalid String?
   otherLiveAppeals         String?
+  groundAFeeReceiptDueDate DateTime?
 
   appeal Appeal @relation(fields: [appealId], references: [id])
 }
