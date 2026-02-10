@@ -72,7 +72,9 @@ export const mapInvalidReasonPage = (
 	sourceIsAppellantCase
 ) => {
 	const shortAppealReference = appealShortReference(appealReference);
-	const isEnforcementNotice = appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE;
+	const isEnforcementNotice =
+		appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
+		appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING;
 	const backLinkUrl = isEnforcementNotice
 		? `/appeals-service/appeal-details/${appealId}/appellant-case/invalid/enforcement-notice`
 		: `/appeals-service/appeal-details/${appealId}/${
