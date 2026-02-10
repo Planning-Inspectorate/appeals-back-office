@@ -161,6 +161,14 @@ Cypress.Commands.add('addLpaqSubmissionToCase', (caseObj) => {
 	});
 });
 
+Cypress.Commands.add('addAppellantStatementToCase', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.appellantStatementSubmission(caseObj.reference);
+		cy.log('Added appellant statement to case ref ' + caseObj.reference);
+		cy.reload();
+	});
+});
+
 Cypress.Commands.add('simulateSiteVisit', (caseObj) => {
 	return cy.wrap(null).then(async () => {
 		await appealsApiClient.simulateSiteVisitElapsed(caseObj.reference);

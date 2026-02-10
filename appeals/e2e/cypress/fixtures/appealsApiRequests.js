@@ -339,6 +339,22 @@ const appealsApiRequests = {
 		representationSubmittedDate: '2025-01-22T13:48:35.847Z',
 		lpaCode: 'Q9999'
 	},
+	appellantStatement: {
+		caseReference: '6000000',
+		representation: 'Hello, not about cheese but still a rep of some kind (IP comment)',
+		representationType: 'statement',
+		representationSubmittedDate: new Date(),
+		documents: [],
+		newUser: {
+			emailAddress: 'test@test.com',
+			firstName: 'Testy',
+			lastName: 'McTest',
+			salutation: 'Mr',
+			serviceUserType: 'InterestedParty',
+			organisation: 'A company',
+			telephoneNumber: '0123456789'
+		}
+	},
 	appellantFinalComment: {
 		caseReference: '6000000',
 		representation:
