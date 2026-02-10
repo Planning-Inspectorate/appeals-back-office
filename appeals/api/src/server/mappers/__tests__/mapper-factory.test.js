@@ -213,6 +213,33 @@ describe('appeals api mappers', () => {
 		expect(s78AppCaseOutput).toHaveProperty('developmentDescription');
 		expect(s78AppCaseOutput).toHaveProperty('planningObligation');
 	});
+
+	test('should only map the lpaq fields for LDC', async () => {
+		const appealLDC = {
+			...mocks.ldcAppeal,
+			folders: []
+		};
+
+		// @ts-ignore
+		const ldcAppCaseOutput = mapCase({ appeal: appealLDC, context: contextEnum.lpaQuestionnaire });
+
+		expect(ldcAppCaseOutput).toHaveProperty('hasInfrastructureLevy');
+		expect(ldcAppCaseOutput).toHaveProperty('isInfrastructureLevyFormallyAdopted');
+		expect(ldcAppCaseOutput).toHaveProperty('infrastructureLevyAdoptedDate');
+		expect(ldcAppCaseOutput).toHaveProperty('infrastructureLevyExpectedDate');
+
+		expect(ldcAppCaseOutput).toHaveProperty('reasonForNeighbourVisits');
+
+		expect(ldcAppCaseOutput).toHaveProperty('lpaProcedurePreference');
+		expect(ldcAppCaseOutput).toHaveProperty('lpaProcedurePreferenceDetails');
+		expect(ldcAppCaseOutput).toHaveProperty('lpaProcedurePreferenceDuration');
+
+		expect(ldcAppCaseOutput).toHaveProperty('appealUnderActSection');
+		expect(ldcAppCaseOutput).toHaveProperty('lpaConsiderAppealInvalid');
+		expect(ldcAppCaseOutput).toHaveProperty('lpaAppealInvalidReasons');
+
+		expect(ldcAppCaseOutput).not.toHaveProperty('planningObligation');
+	});
 });
 
 describe('appeals integration mappers', () => {

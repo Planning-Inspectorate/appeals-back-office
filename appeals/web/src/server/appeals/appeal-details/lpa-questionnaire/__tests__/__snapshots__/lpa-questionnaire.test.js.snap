@@ -1452,6 +1452,12 @@ exports[`LPA Questionnaire review GET / should render the Ldc LPA Questionnaire 
                                     data-cy="change-is-correct-appeal-type">Change<span class="govuk-visually-hidden"> Is lawful development certificate appeal the correct type of appeal? (1. Constraints, designations and other issues)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What type of lawful development certificate is the appeal about?</dt>
+                            <dd                             class="govuk-summary-list__value">Not answered</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/appeal-under-act-section/change"
+                                    data-cy="change-appeal-under-act-section">Change<span class="govuk-visually-hidden"> What type of lawful development certificate is the appeal about? (1. Constraints, designations and other issues)</span></a>
+                                </dd>
+                        </div>
                     </dl>
                 </div>
             </div>

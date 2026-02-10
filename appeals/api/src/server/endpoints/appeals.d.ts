@@ -459,6 +459,7 @@ interface SingleLPAQuestionnaireResponse {
 	siteAreaSquareMetres?: number | null;
 	hasAllegedBreachArea?: boolean | null;
 	doesAllegedBreachCreateFloorSpace?: boolean | null;
+	appealUnderActSection?: string | null;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -496,6 +497,7 @@ interface UpdateLPAQuestionnaireRequest {
 	isSiteInAreaOfSpecialControlAdverts?: boolean;
 	wasApplicationRefusedDueToHighwayOrTraffic?: boolean;
 	didAppellantSubmitCompletePhotosAndPlans?: boolean;
+	appealUnderActSection?: string | null;
 
 	// Enforcement
 	noticeRelatesToBuildingEngineeringMiningOther?: boolean | null;
