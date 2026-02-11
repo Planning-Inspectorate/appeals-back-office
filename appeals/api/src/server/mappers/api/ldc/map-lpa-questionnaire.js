@@ -2,6 +2,8 @@
 /** @typedef {import('@pins/appeals.api').Api.LpaQuestionnaire} LpaQuestionnaire */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
 
+import { isValidLawfulDevelopmentCertificateType } from '#utils/mapping/map-enums.js';
+
 /**
  *
  * @param {MappingRequest} data
@@ -27,7 +29,15 @@ export const mapLdcLpaQuestionnaire = (data) => {
 
 			lpaProcedurePreference: lpaQuestionnaire.lpaProcedurePreference,
 			lpaProcedurePreferenceDetails: lpaQuestionnaire.lpaProcedurePreferenceDetails,
-			lpaProcedurePreferenceDuration: lpaQuestionnaire.lpaProcedurePreferenceDuration
+			lpaProcedurePreferenceDuration: lpaQuestionnaire.lpaProcedurePreferenceDuration,
+
+			appealUnderActSection: isValidLawfulDevelopmentCertificateType(
+				lpaQuestionnaire.appealUnderActSection
+			)
+				? lpaQuestionnaire.appealUnderActSection
+				: null,
+			lpaConsiderAppealInvalid: lpaQuestionnaire.lpaConsiderAppealInvalid,
+			lpaAppealInvalidReasons: lpaQuestionnaire.lpaAppealInvalidReasons
 		};
 	}
 };
