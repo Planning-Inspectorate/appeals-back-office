@@ -30,7 +30,7 @@ describe('rule-6-party-proof-of-evidence-received.md', () => {
 			'',
 			'# What happens next',
 			'',
-			'You can [view the statement in the appeals service](/mock-front-office-url/manage-appeals/ABC45678).',
+			'You can [view the proof of evidence and witnesses in the appeals service](/mock-front-office-url/manage-appeals/ABC45678).',
 			'',
 			'The date of the inquiry is 15 March 2025.',
 			'',

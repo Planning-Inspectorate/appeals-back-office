@@ -1495,7 +1495,7 @@ exports[`LPA Questionnaire review GET / should render the Ldc LPA Questionnaire 
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row lpa-is-infrastructure-levy-formally-adopted"><dt class="govuk-summary-list__key"> Is the community infrastructure levy formally adopted?</dt>
-                            <dd                             class="govuk-summary-list__value">No documents</dd>
+                            <dd                             class="govuk-summary-list__value">Not answered</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/is-infrastructure-levy-formally-adopted/change"
                                     data-cy="change-is-infrastructure-levy-formally-adopted">Change<span class="govuk-visually-hidden"> Is the community infrastructure levy formally adopted? (2. Planning officer’s report and supplementary documents)</span></a>
                                 </dd>
@@ -2002,7 +2002,7 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row lpa-is-infrastructure-levy-formally-adopted"><dt class="govuk-summary-list__key"> Is the community infrastructure levy formally adopted?</dt>
-                            <dd                             class="govuk-summary-list__value">No documents</dd>
+                            <dd                             class="govuk-summary-list__value">Not answered</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/is-infrastructure-levy-formally-adopted/change"
                                     data-cy="change-is-infrastructure-levy-formally-adopted">Change<span class="govuk-visually-hidden"> Is the community infrastructure levy formally adopted? (5. Planning officer’s report and supplementary documents)</span></a>
                                 </dd>

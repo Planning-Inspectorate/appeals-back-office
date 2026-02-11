@@ -112,7 +112,7 @@ const FieldTestCases = [
 		fieldName: 'isInfrastructureLevyFormallyAdopted',
 		text: 'Is the community infrastructure levy formally adopted?',
 		cssClass: 'lpa-is-infrastructure-levy-formally-adopted',
-		undefinedValue: 'No documents'
+		undefinedValue: 'Not answered'
 	}
 ];
 

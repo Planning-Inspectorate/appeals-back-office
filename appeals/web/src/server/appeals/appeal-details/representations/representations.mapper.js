@@ -177,7 +177,7 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 			.map((statement) => {
 				return `<a href="${addBackLinkQueryToUrl(
 					request,
-					`/appeals-service/appeal-details/${appeal.appealId}/rule6-statement`
+					`/appeals-service/appeal-details/${appeal.appealId}/rule-6-party-statement/${statement.rule6PartyId}`
 				)}" class="govuk-link">1 ${statement.organisationName} statement</a>`;
 			});
 	}
@@ -350,32 +350,56 @@ export function proofOfEvidenceSharePage(appeal, request, backUrl) {
 		appeal.documentationSummary.lpaProofOfEvidence?.representationStatus
 	);
 
+	const rule6ProofsOfEvidenceTexts = appeal.documentationSummary?.rule6PartyProofs
+		? Object.values(appeal.documentationSummary?.rule6PartyProofs || {})
+				.filter((proof) => shareableStatuses.includes(proof.representationStatus))
+				.map((proof) => {
+					const urlPath = `/appeals-service/appeal-details/${appeal.appealId}/proof-of-evidence/rule-6-party/${proof.rule6PartyId}/manage-documents`;
+
+					return `<a href="${addBackLinkQueryToUrl(
+						request,
+						urlPath
+					)}" class="govuk-link">1 ${proof.organisationName} proof of evidence</a>`;
+				})
+		: [];
+
 	const infoText = (() => {
 		const appellantProofOfEvidenceLink = `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 			request,
-			`/appeals-service/appeal-details/${appeal.appealId}/proof-of-evidence/appellant`
+			`/appeals-service/appeal-details/${appeal.appealId}/proof-of-evidence/appellant/manage-documents`
 		)}">appellant proof of evidence</a>`;
 		const lpaProofOfEvidenceLink = `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 			request,
-			`/appeals-service/appeal-details/${appeal.appealId}/proof-of-evidence/lpa`
+			`/appeals-service/appeal-details/${appeal.appealId}/proof-of-evidence/lpa/manage-documents`
 		)}">LPA proof of evidence</a>`;
 
-		if (hasValidAppellantProofOfEvidence && hasValidLpaProofOfEvidence) {
-			return `We’ll share ${appellantProofOfEvidenceLink} and ${lpaProofOfEvidenceLink} with the relevant parties.`;
-		}
+		const links = [
+			hasValidAppellantProofOfEvidence ? appellantProofOfEvidenceLink : null,
+			hasValidLpaProofOfEvidence ? lpaProofOfEvidenceLink : null,
+			...rule6ProofsOfEvidenceTexts
+		].filter(Boolean);
 
-		if (hasValidAppellantProofOfEvidence && !hasValidLpaProofOfEvidence) {
-			return `We’ll share ${appellantProofOfEvidenceLink} with the relevant parties.`;
-		}
+		const totalLpaPoE = hasValidLpaProofOfEvidence ? 1 : 0;
+		const totalAppellantPoE = hasValidAppellantProofOfEvidence ? 1 : 0;
+		const totalRule6PoE = rule6ProofsOfEvidenceTexts?.length ?? 0;
+		const totalShareCount = totalLpaPoE + totalAppellantPoE + totalRule6PoE;
 
-		if (!hasValidAppellantProofOfEvidence && hasValidLpaProofOfEvidence) {
-			return `We’ll share ${lpaProofOfEvidenceLink} with the relevant parties.`;
+		if (links.length > 0) {
+			const formattedLinks = new Intl.ListFormat('en-GB', {
+				style: 'long',
+				type: 'conjunction'
+			}).format(/** @type {string[]} */ (links));
+
+			return `We’ll share ${formattedLinks} with the relevant ${totalShareCount === 1 && totalRule6PoE === 0 ? 'party' : 'parties'}.`;
 		}
 
 		return `There are no proof of evidence and witnesses to share.`;
 	})();
 
-	const hasItemsToShare = hasValidLpaProofOfEvidence || hasValidAppellantProofOfEvidence;
+	const hasItemsToShare =
+		hasValidLpaProofOfEvidence ||
+		hasValidAppellantProofOfEvidence ||
+		rule6ProofsOfEvidenceTexts.length > 0;
 	const title = hasItemsToShare
 		? 'Confirm that you want to share proof of evidence'
 		: 'Progress to inquiry';
