@@ -19,6 +19,7 @@ import {
 	AUDIT_TRAIL_LPA_UUID,
 	AUDIT_TRAIL_LPAQ_IMPORT_MSG,
 	AUDIT_TRAIL_REP_IMPORT_MSG,
+	AUDIT_TRAIL_RULE_6_STATEMENT_ADDED,
 	AUDIT_TRAIL_SYSTEM_UUID,
 	AUDIT_TRAIL_TEAM_ASSIGNED,
 	AUDIT_TRIAL_APPELLANT_UUID,
@@ -416,9 +417,23 @@ export const importRepresentation = async (req, res) => {
 		default:
 			azureAdUserId = AUDIT_TRAIL_SYSTEM_UUID;
 	}
+	let details = stringTokenReplacement(AUDIT_TRAIL_REP_IMPORT_MSG, [repType]);
+
+	if (repType === 'rule_6_party_statement') {
+		const party = req.appeal.appealRule6Parties?.find(
+			(party) => party.serviceUserId === serviceUserId
+		);
+
+		if (party) {
+			details = stringTokenReplacement(AUDIT_TRAIL_RULE_6_STATEMENT_ADDED, [
+				party.serviceUser?.organisationName || 'Rule 6 party'
+			]);
+		}
+	}
+
 	await createAuditTrail({
 		appealId,
-		details: stringTokenReplacement(AUDIT_TRAIL_REP_IMPORT_MSG, [repType]),
+		details,
 		azureAdUserId: azureAdUserId
 	});
 
