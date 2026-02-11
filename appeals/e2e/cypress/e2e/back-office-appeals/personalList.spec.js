@@ -1,10 +1,10 @@
 import { users } from '../../fixtures/users';
-import { Page } from '../../page_objects/basePage';
+import { PersonalListPage } from '../../page_objects/caseDetails/personalListPage';
 import { happyPathHelper } from '../../support/happyPathHelper';
 import { urlPaths } from '../../support/urlPaths';
 
-const basePage = new Page();
 let caseObj;
+const personalListPage = new PersonalListPage();
 
 const setupTestCase = () => {
 	cy.login(users.appeals.caseAdmin);
@@ -38,11 +38,11 @@ afterEach(() => {
 	cy.deleteAppeals(appeal);
 });
 
-it('review appellant statement entry point', () => {
+it('Display Review CTA for appellant statement on personal list page', () => {
 	cy.addLpaqSubmissionToCase(caseObj);
 	cy.reviewLpaqSubmission(caseObj);
 	cy.addAppellantStatementToCase(caseObj);
 
 	cy.visit(urlPaths.personalListFilteredStatement);
-	basePage.verifyActionRequiredLink(caseObj.reference, 'Review appellant statement');
+	personalListPage.verifyActionRequiredLink(caseObj.reference, 'Review appellant statement');
 });
