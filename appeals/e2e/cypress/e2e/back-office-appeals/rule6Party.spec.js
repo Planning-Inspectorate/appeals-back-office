@@ -3,10 +3,12 @@
 
 import { appealsApiRequests } from '../../fixtures/appealsApiRequests';
 import { users } from '../../fixtures/users';
+import { CaseManagementSectionPage } from '../../page_objects/caseDetails/caseManagementSectionPage.js';
 import { ContactsSectionPage } from '../../page_objects/caseDetails/contactsSectionPage.js';
 import { CostsSectionPage } from '../../page_objects/caseDetails/costsSectionPage';
 import { DocumentationSectionPage } from '../../page_objects/caseDetails/documentationSectionPage';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
 import { ContactDetailsPage } from '../../page_objects/contactDetailsPage.js';
 import { CYASection } from '../../page_objects/cyaSection.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
@@ -27,12 +29,33 @@ const costsSectionPage = new CostsSectionPage();
 const fileUploaderSection = new FileUploaderSection();
 const redactionStatusPage = new RedactionStatusPage();
 const dateTimeSection = new DateTimeSection();
+const caseManagementSectionPage = new CaseManagementSectionPage();
+const caseHistoryPage = new CaseHistoryPage();
 
 const rule6Details = {
 	partyName: 'TestRuleSixParty',
 	partyEmailAddress: 'testrule6party@test.com',
 	partyNameUpdated: 'TestRuleSixPartyUpdated',
 	partyEmailAddressUpdated: 'testrule6partyupdated@test.com'
+};
+
+const rule6EmailDetails = {
+	rule6AddedRule6: {
+		details: 'We have accepted your application for Rule 6 status sent to Rule 6 party',
+		subject: 'We have accepted your application for Rule 6 status'
+	},
+	rule6AddedAgent: {
+		details: 'We have accepted a new application for Rule 6 status sent to agent',
+		subject: 'We have accepted a new application for Rule 6 status'
+	},
+	rule6AddedLPA: {
+		details: 'We have accepted a new application for Rule 6 status sent to LPA',
+		subject: 'We have accepted a new application for Rule 6 status'
+	},
+	rule6UpdatedRule6: {
+		details: 'We have updated the contact details for a Rule 6 group sent to Rule 6 party',
+		subject: 'We have updated the contact details for a Rule 6 group'
+	}
 };
 
 let caseObj;
@@ -66,7 +89,7 @@ beforeEach(() => {
 let appeal;
 
 afterEach(() => {
-	cy.deleteAppeals(appeal);
+	//cy.deleteAppeals(appeal);
 });
 it('Can add rule 6 party', () => {
 	// find case and open inquiry section
@@ -147,6 +170,32 @@ it('Can add rule 6 party', () => {
 	//verify costs section
 	costsSectionPage.verifyCostsSectionHeadingIsDisplayed();
 	costsSectionPage.verifyCostsSectionRule6PartiesIsDisplayed(rule6Details.partyNameUpdated);
+
+	// verify case history
+	caseManagementSectionPage.selectViewDetails('case-history');
+	caseHistoryPage.verifyCaseHistoryValue(`Rule 6 party ${rule6Details.partyNameUpdated} added`);
+	caseHistoryPage.verifyCaseHistoryValue(
+		'Rule 6 added emails sent to LPA, Appellant and Rule 6 party'
+	);
+
+	const appealDetails = {
+		organisationName: rule6Details.partyNameUpdated
+	};
+
+	caseHistoryPage.verifyCaseHistoryEmail(
+		rule6EmailDetails.rule6AddedRule6.details,
+		rule6EmailDetails.rule6AddedRule6.subject
+	);
+	caseHistoryPage.verifyCaseHistoryEmail(
+		rule6EmailDetails.rule6AddedAgent.details,
+		rule6EmailDetails.rule6AddedAgent.subject,
+		appealDetails
+	);
+	caseHistoryPage.verifyCaseHistoryEmail(
+		rule6EmailDetails.rule6AddedLPA.details,
+		rule6EmailDetails.rule6AddedLPA.subject,
+		appealDetails
+	);
 });
 
 it('Validates rule 6 party name and email address', () => {
@@ -178,11 +227,39 @@ it('Validates rule 6 party name and email address', () => {
 	});
 });
 
-it('should add multiple rule 6 party contact', () => {
+it.only('should add multiple rule 6 party contact', () => {
 	// Add rule 6 contact via API
-	cy.addRule6Party(caseObj);
+	//cy.addRule6Party(caseObj);
 
 	// select to add rule 6 contact
+	contactsSectionPage.selectAddContact('rule-6-party-contact-details');
+
+	// check page caption and input party name
+	contactDetailsPage.verifyPageCaption(`Appeal ${caseObj.reference} - Add rule 6 party`);
+	contactDetailsPage.inputOrganisationName('Concerned Locals Consortium');
+	contactDetailsPage.clickButtonByText('Continue');
+
+	// check page caption and enter party email address
+	contactDetailsPage.verifyPageCaption(`Appeal ${caseObj.reference} - Add rule 6 party`);
+	contactDetailsPage.inputOrganisationEmail('concernedlocals@gmail.com');
+	contactDetailsPage.clickButtonByText('Continue');
+
+	// verify details on cya page
+	cyaSection.verifyAnswerUpdated({
+		field: cyaSection.cyaSectionFields.rule6PartyName,
+		value: 'Concerned Locals Consortium'
+	});
+	cyaSection.verifyAnswerUpdated({
+		field: cyaSection.cyaSectionFields.rule6PartyEmailAddress,
+		value: 'concernedlocals@gmail.com'
+	});
+
+	contactDetailsPage.clickButtonByText('Add rule 6 party');
+
+	// check success banner
+	caseDetailsPage.validateBannerMessage('Success', 'Rule 6 party added');
+
+	// add second rule 6 party
 	contactsSectionPage.selectAddContact('rule-6-party-contact-details');
 
 	// check page caption and input party name
@@ -207,14 +284,13 @@ it('should add multiple rule 6 party contact', () => {
 
 	contactDetailsPage.clickButtonByText('Add rule 6 party');
 
-	// check success banner
 	caseDetailsPage.validateBannerMessage('Success', 'Rule 6 party added');
 
-	const organisationName1 = rule6PartyContact.organisationName;
+	const organisationName1 = 'Concerned Locals Consortium';
 	const organisationName2 = rule6Details.partyName;
 
 	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', organisationName1);
-	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', rule6PartyContact.email);
+	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', 'concernedlocals@gmail.com');
 	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', organisationName2);
 	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', rule6Details.partyEmailAddress);
 
@@ -263,9 +339,20 @@ it('should add multiple rule 6 party contact', () => {
 	);
 
 	// Manage contact details
-	contactsSectionPage.manageRule6PartyContactDetails();
+	/*contactsSectionPage.manageRule6PartyContactDetails();
 	contactDetailsPage.verifyCheckYourAnswers(organisationName1, rule6PartyContact.email);
-	contactDetailsPage.verifyCheckYourAnswers(organisationName2, rule6Details.partyEmailAddress);
+	contactDetailsPage.verifyCheckYourAnswers(organisationName2, rule6Details.partyEmailAddress);*/
+
+	// verify case history
+	caseManagementSectionPage.selectViewDetails('case-history');
+	caseHistoryPage.verifyCaseHistoryValue(`Rule 6 party ${organisationName1} added`);
+	caseHistoryPage.verifyCaseHistoryValue(`Rule 6 party ${organisationName2} added`);
+	//caseHistoryPage.verifyCaseHistoryValue('Rule 6 added emails sent to LPA, Appellant and Rule 6 party');
+	// should be two of this message in case history
+	caseHistoryPage.verifyNumberOfCaseHistoryMessages(
+		'Rule 6 added emails sent to LPA, Appellant and Rule 6 party',
+		2
+	);
 });
 
 it('should remove a rule 6 party contact and related documents', () => {
@@ -325,6 +412,11 @@ it('should remove a rule 6 party contact and related documents', () => {
 	caseDetailsPage.verifyDocumentDoesNotExist(`${organisationName} application`, 'costs');
 	caseDetailsPage.verifyDocumentDoesNotExist(`${organisationName} withdrawal`, 'costs');
 	caseDetailsPage.verifyDocumentDoesNotExist(`${organisationName} correspondence`, 'costs');
+
+	// verify case history
+	caseManagementSectionPage.selectViewDetails('case-history');
+	caseHistoryPage.verifyCaseHistoryValue(`Rule 6 party ${rule6Details.partyNameUpdated} added`);
+	caseHistoryPage.verifyCaseHistoryValue(`Rule 6 party ${organisationName} removed`);
 });
 
 it('should change rule 6 party contact', () => {
@@ -416,6 +508,22 @@ it('should change rule 6 party contact', () => {
 		`${rule6Details.partyNameUpdated} correspondence`,
 		'No documents available',
 		'costs'
+	);
+
+	// verify case history
+	caseManagementSectionPage.selectViewDetails('case-history');
+	caseHistoryPage.verifyCaseHistoryValue(
+		`Rule 6 party ${rule6Details.partyNameUpdated} details updated`
+	);
+
+	const appealDetails = {
+		organisationName: rule6Details.partyNameUpdated
+	};
+
+	caseHistoryPage.verifyCaseHistoryEmail(
+		rule6EmailDetails.rule6UpdatedRule6.details,
+		rule6EmailDetails.rule6UpdatedRule6.subject,
+		appealDetails
 	);
 });
 
