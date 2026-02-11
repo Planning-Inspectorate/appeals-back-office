@@ -91,6 +91,51 @@ exports[`planning-obligation GET /status/change should render the change plannin
 </main>"
 `;
 
+exports[`planning-obligation GET /status/change should render the change planning obligation status page with "Not yet started" radio option checked if planningObligation.status is "not started yet" 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> What is the status of your planning obligation?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="planning-obligation-status-radio"
+                                        name="planningObligationStatusRadio" type="radio" value="not_started" checked>
+                                        <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio">Not started yet</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="planning-obligation-status-radio-2"
+                                        name="planningObligationStatusRadio" type="radio" value="finalised">
+                                        <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio-2">Finalised</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="planning-obligation-status-radio-3"
+                                        name="planningObligationStatusRadio" type="radio" value="not-applicable">
+                                        <label class="govuk-label govuk-radios__label" for="planning-obligation-status-radio-3">Not applicable</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`planning-obligation GET /status/change should render the change planning obligation status page with "Not yet started" radio option checked if planningObligation.status is "not_started" 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">

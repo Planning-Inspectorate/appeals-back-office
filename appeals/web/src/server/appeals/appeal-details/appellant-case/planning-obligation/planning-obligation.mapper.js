@@ -44,7 +44,10 @@ export const changePlanningObligationStatusPage = (
 						{
 							value: 'not_started',
 							text: 'Not started yet',
-							checked: planningObligationStatus === 'not_started'
+							// historic data may be 'no started yet'
+							checked:
+								planningObligationStatus === 'not_started' ||
+								planningObligationStatus === 'not started yet'
 						},
 						{
 							value: 'finalised',
