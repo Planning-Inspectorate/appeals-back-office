@@ -341,7 +341,7 @@ const appealsApiRequests = {
 	},
 	appellantStatement: {
 		caseReference: '6000000',
-		representation: 'Hello, not about cheese but still a rep of some kind (IP comment)',
+		representation: 'Hello, not about cheese but still a rep of some kind (Appellant statement)',
 		representationType: 'statement',
 		representationSubmittedDate: new Date(),
 		documents: [],

@@ -435,16 +435,6 @@ export class Page {
 			.last()
 			.should('have.text', expectedTagText);
 	}
-
-	verifyActionRequiredLink(caseObj, expectedLinkText) {
-		cy.get(this.selectors.link)
-			.contains(caseObj)
-			.parents('tr')
-			.within(() => {
-				cy.contains('a.govuk-link', expectedLinkText).should('be.visible');
-			});
-	}
-
 	verifyTagOnAllCasesPage(caseObj, expectedTagText, index = 0) {
 		cy.getByData(caseObj)
 			.parent('td')
