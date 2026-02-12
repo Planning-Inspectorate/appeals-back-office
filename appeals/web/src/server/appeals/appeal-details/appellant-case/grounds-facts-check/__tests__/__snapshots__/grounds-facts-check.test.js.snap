@@ -1,0 +1,174 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`grounds GET /grounds-and-facts should render the change grounds page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Which grounds do not match the facts?</h1>
+                                </legend>
+                                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="grounds-facts" name="groundsFacts"
+                                        type="checkbox" value="a" data-aria-controls="conditional-grounds-facts">
+                                        <label class="govuk-label govuk-checkboxes__label" for="grounds-facts">Ground (a)</label>
+                                    </div>
+                                    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                                    id="conditional-grounds-facts">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="1">Enter a reason</label>
+                                            <input class="govuk-input" id="1" name="ground-a"
+                                            type="text">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="grounds-facts-2" name="groundsFacts"
+                                        type="checkbox" value="b" data-aria-controls="conditional-grounds-facts-2">
+                                        <label class="govuk-label govuk-checkboxes__label" for="grounds-facts-2">Ground (b)</label>
+                                    </div>
+                                    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                                    id="conditional-grounds-facts-2">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="2">Enter a reason</label>
+                                            <input class="govuk-input" id="2" name="ground-b"
+                                            type="text">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="grounds-facts-3" name="groundsFacts"
+                                        type="checkbox" value="c" data-aria-controls="conditional-grounds-facts-3">
+                                        <label class="govuk-label govuk-checkboxes__label" for="grounds-facts-3">Ground (c)</label>
+                                    </div>
+                                    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                                    id="conditional-grounds-facts-3">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="3">Enter a reason</label>
+                                            <input class="govuk-input" id="3" name="ground-c"
+                                            type="text">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="grounds-facts-4" name="groundsFacts"
+                                        type="checkbox" value="d" data-aria-controls="conditional-grounds-facts-4">
+                                        <label class="govuk-label govuk-checkboxes__label" for="grounds-facts-4">Ground (d)</label>
+                                    </div>
+                                    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                                    id="conditional-grounds-facts-4">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="4">Enter a reason</label>
+                                            <input class="govuk-input" id="4" name="ground-d"
+                                            type="text">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="grounds-facts-5" name="groundsFacts"
+                                        type="checkbox" value="e" data-aria-controls="conditional-grounds-facts-5">
+                                        <label class="govuk-label govuk-checkboxes__label" for="grounds-facts-5">Ground (e)</label>
+                                    </div>
+                                    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                                    id="conditional-grounds-facts-5">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="5">Enter a reason</label>
+                                            <input class="govuk-input" id="5" name="ground-e"
+                                            type="text">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="grounds-facts-6" name="groundsFacts"
+                                        type="checkbox" value="f" data-aria-controls="conditional-grounds-facts-6">
+                                        <label class="govuk-label govuk-checkboxes__label" for="grounds-facts-6">Ground (f)</label>
+                                    </div>
+                                    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                                    id="conditional-grounds-facts-6">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="6">Enter a reason</label>
+                                            <input class="govuk-input" id="6" name="ground-f"
+                                            type="text">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="grounds-facts-7" name="groundsFacts"
+                                        type="checkbox" value="g" data-aria-controls="conditional-grounds-facts-7">
+                                        <label class="govuk-label govuk-checkboxes__label" for="grounds-facts-7">Ground (g)</label>
+                                    </div>
+                                    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                                    id="conditional-grounds-facts-7">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="7">Enter a reason</label>
+                                            <input class="govuk-input" id="7" name="ground-g"
+                                            type="text">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="grounds-facts-8" name="groundsFacts"
+                                        type="checkbox" value="h" data-aria-controls="conditional-grounds-facts-8">
+                                        <label class="govuk-label govuk-checkboxes__label" for="grounds-facts-8">Ground (h)</label>
+                                    </div>
+                                    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                                    id="conditional-grounds-facts-8">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="8">Enter a reason</label>
+                                            <input class="govuk-input" id="8" name="ground-h"
+                                            type="text">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="grounds-facts-9" name="groundsFacts"
+                                        type="checkbox" value="i" data-aria-controls="conditional-grounds-facts-9">
+                                        <label class="govuk-label govuk-checkboxes__label" for="grounds-facts-9">Ground (i)</label>
+                                    </div>
+                                    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                                    id="conditional-grounds-facts-9">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="9">Enter a reason</label>
+                                            <input class="govuk-input" id="9" name="ground-i"
+                                            type="text">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="grounds-facts-10" name="groundsFacts"
+                                        type="checkbox" value="j" data-aria-controls="conditional-grounds-facts-10">
+                                        <label class="govuk-label govuk-checkboxes__label" for="grounds-facts-10">Ground (j)</label>
+                                    </div>
+                                    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                                    id="conditional-grounds-facts-10">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="10">Enter a reason</label>
+                                            <input class="govuk-input" id="10" name="ground-j"
+                                            type="text">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="grounds-facts-11" name="groundsFacts"
+                                        type="checkbox" value="k" data-aria-controls="conditional-grounds-facts-11">
+                                        <label class="govuk-label govuk-checkboxes__label" for="grounds-facts-11">Ground (k)</label>
+                                    </div>
+                                    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                                    id="conditional-grounds-facts-11">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="11">Enter a reason</label>
+                                            <input class="govuk-input" id="11" name="ground-k"
+                                            type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;

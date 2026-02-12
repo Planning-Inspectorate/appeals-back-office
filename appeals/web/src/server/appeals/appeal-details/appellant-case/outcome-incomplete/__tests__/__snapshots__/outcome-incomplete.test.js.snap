@@ -108,13 +108,10 @@ exports[`incomplete-appeal enforcement notice appeal GET /check-details-and-mark
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/incomplete/enforcement-notice-reason">Change<span class="govuk-visually-hidden"> why is the enforcement notice incomplete?</span></a>
                         </dd>
                 </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you want to add any other information?</dt>
-                    <dd                     class="govuk-summary-list__value">
-                        <div class="pins-show-more" data-label="" data-mode="html" data-max-before-hiding="300"
-                        data-toggle-text-collapsed="Show more" data-toggle-text-expanded="Show less">Yes: Enforcement other information</div>
-                        </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/incomplete/enforcement-other-information">Change<span class="govuk-visually-hidden"> do you want to add any other information?</span></a>
-                        </dd>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal due date</dt>
+                    <dd class="govuk-summary-list__value">2 July 3000</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/incomplete/date">Change<span class="govuk-visually-hidden"> Appeal due date</span></a>
+                    </dd>
                 </div>
             </dl>
             <p class="govuk-body">We will mark the appeal as incomplete and send an email to the relevant

@@ -1857,6 +1857,43 @@
 				}
 			}
 		},
+		"/appeals/appellant-case-enforcement-grounds-mismatch-facts": {
+			"get": {
+				"tags": ["Appellant Case Enforcement Grounds Mismatch Facts"],
+				"description": "Gets appellant case enforcement grounds mismatch facts",
+				"parameters": [
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Appellant case enforcement grounds mismatch facts",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AllAppellantCaseEnforcementGroundsMismatchFactsResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/AllAppellantCaseEnforcementGroundsMismatchFactsResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
 		"/appeals/appellant-case-validation-outcomes": {
 			"get": {
 				"tags": ["Appellant Case Validation Outcomes"],
