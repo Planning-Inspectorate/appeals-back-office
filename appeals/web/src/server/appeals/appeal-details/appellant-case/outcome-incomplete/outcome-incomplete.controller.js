@@ -1,3 +1,4 @@
+import { setReviewOutcomeForEnforcementNoticeAppellantCase } from '#appeals/appeal-details/invalid-appeal/invalid-appeal.service.js';
 import {
 	calculateIncompleteDueDate,
 	dateISOStringToDayMonthYearHourMinute,
@@ -5,19 +6,23 @@ import {
 } from '#lib/dates.js';
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { isAfter, parseISO } from 'date-fns';
+import * as appellantCaseService from '../../appellant-case/appellant-case.service.js';
+import { isAnyEnforcementAppealType } from '../appellant-case.controller.js';
 import {
 	mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters,
 	updateDueDatePage
 } from '../appellant-case.mapper.js';
-import * as appellantCaseService from '../appellant-case.service.js';
 import {
+	checkDetailsAndMarkEnforcementAsIncomplete,
 	enforcementMissingDocumentsPage,
 	mapIncompleteReasonPage,
 	updateFeeReceiptDueDatePage
 } from './outcome-incomplete.mapper.js';
+import * as outcomeIncompleteService from './outcome-incomplete.service.js';
 import { getAppellantCaseEnforcementMissingDocuments } from './outcome-incomplete.service.js';
 
 /**
@@ -60,10 +65,14 @@ const renderIncompleteReason = async (request, response) => {
 	const { webAppellantCaseReviewOutcome } = request.session;
 
 	if (incompleteReasonOptions) {
-		const filteredReasons =
-			appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
-				? incompleteReasonOptions.filter((reason) => reason.id > 9 && reason.id !== 11)
-				: incompleteReasonOptions.filter((reason) => reason.id <= 10 || reason.id === 11);
+		console.log(incompleteReasonOptions);
+		const filteredReasons = isAnyEnforcementAppealType(appealType)
+			? appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+				? incompleteReasonOptions.filter(
+						(reason) => reason.id > 9 && reason.id !== 11 && reason.id !== 14
+					)
+				: incompleteReasonOptions.filter((reason) => reason.id > 9 && reason.id !== 11)
+			: incompleteReasonOptions.filter((reason) => reason.id <= 10 || reason.id === 11);
 		const mappedIncompleteReasonOptions =
 			mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters(
 				'incomplete',
@@ -177,7 +186,7 @@ export const postIncompleteReason = async (request, response) => {
 			reasonsText: getNotValidReasonsTextFromRequestBody(request.body, 'incompleteReason')
 		};
 
-		if (appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+		if (isAnyEnforcementAppealType(appealType)) {
 			const redirectMap = {
 				10: 'date',
 				12: 'missing-documents',
@@ -261,7 +270,12 @@ export const postUpdateDueDate = async (request, response) => {
 			return response.redirect(
 				`/appeals-service/appeal-details/${appealId}/appellant-case/incomplete/check-details-and-mark-enforcement-as-incomplete`
 			);
+		} else if (appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING) {
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/appellant-case/incomplete/enforcement-other-information`
+			);
 		}
+
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/appellant-case/check-your-answers`
 		);
@@ -472,6 +486,101 @@ export const postReceiptDueDate = async (request, response) => {
 			error instanceof Error
 				? error.message
 				: 'Something went wrong when completing appellant case review'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getCheckDetailsAndMarkEnforcementAsIncomplete = async (request, response) => {
+	return renderCheckDetailsAndMarkEnforcementAsIncomplete(request, response);
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+const renderCheckDetailsAndMarkEnforcementAsIncomplete = async (request, response) => {
+	try {
+		if (!objectContainsAllKeys(request.session, 'webAppellantCaseReviewOutcome')) {
+			return response.status(500).render('app/500.njk');
+		}
+
+		const incompleteReasonOptions =
+			request.session?.webAppellantCaseReviewOutcome?.validationOutcome === 'incomplete'
+				? await appellantCaseService.getAppellantCaseNotValidReasonOptionsForOutcome(
+						request.apiClient,
+						'incomplete'
+					)
+				: [];
+
+		const missingDocuments =
+			request.session?.webAppellantCaseReviewOutcome?.validationOutcome === 'incomplete'
+				? await outcomeIncompleteService.getAppellantCaseEnforcementMissingDocuments(
+						request.apiClient
+					)
+				: [];
+
+		const mappedPageContent = checkDetailsAndMarkEnforcementAsIncomplete(
+			request.currentAppeal,
+			incompleteReasonOptions,
+			missingDocuments,
+			request.session
+		);
+
+		return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
+			pageContent: mappedPageContent
+		});
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when completing enforcement invalid review'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const postCheckDetailsAndMarkEnforcementAsIncomplete = async (request, response) => {
+	const { currentAppeal } = request;
+
+	if (!objectContainsAllKeys(request.session, 'webAppellantCaseReviewOutcome')) {
+		return response.status(500).render('app/500.njk');
+	}
+
+	const { webAppellantCaseReviewOutcome } = request.session;
+
+	try {
+		await setReviewOutcomeForEnforcementNoticeAppellantCase(
+			request.apiClient,
+			currentAppeal.appealId,
+			currentAppeal.appellantCaseId,
+			{
+				...webAppellantCaseReviewOutcome
+			}
+		);
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'appellantCaseInvalidOrIncomplete',
+			appealId: currentAppeal.appealId,
+			text: `Appeal marked as ${webAppellantCaseReviewOutcome.validationOutcome}`
+		});
+
+		delete request.session.webAppellantCaseReviewOutcome;
+
+		return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when completing enforcement invalid review'
 		);
 
 		return response.status(500).render('app/500.njk');

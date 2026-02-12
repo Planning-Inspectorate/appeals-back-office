@@ -40,6 +40,7 @@ import { generateHASComponents } from './page-components/has.mapper.js';
 import { generateLdcComponents } from './page-components/ldc.mapper.js';
 import { generateS20Components } from './page-components/s20.mapper.js';
 import { generateS78Components } from './page-components/s78.mapper.js';
+import { isAnyEnforcementAppealType } from './appellant-case.controller.js';
 
 /**
  * @typedef {import('../../appeals.types.js').DayMonthYearHourMinute} DayMonthYearHourMinute
@@ -393,8 +394,7 @@ export function checkAndConfirmPage(
 		throw new Error(`validationOutcome "${validationOutcome}" requires invalidOrIncompleteReasons`);
 	}
 
-	const isEnforcementAppeal =
-		enforcementNoticeInvalid !== undefined && otherLiveAppeals !== undefined;
+	const isEnforcementAppeal = isAnyEnforcementAppealType(session.webAppellantCaseReviewOutcome?.appealType);
 	const validationOutcomeAsString = String(validationOutcome);
 
 	/** @type {PageComponent} */

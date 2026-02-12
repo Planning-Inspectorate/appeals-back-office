@@ -86,6 +86,19 @@ export async function setReviewOutcomeForEnforcementNoticeAppellantCase(
 	appellantCaseId,
 	reviewOutcome
 ) {
+	console.log('request', {
+		validationOutcome: reviewOutcome.validationOutcome,
+		enforcementInvalidReasons: reviewOutcome.enforcementNoticeReason?.map(
+			(/** @type {Object<string, string[]>} */ reason) => ({
+				id: reason.reasonSelected,
+				text: [reason.reasonText]
+			})
+		),
+		enforcementNoticeInvalid: reviewOutcome.enforcementNoticeInvalid,
+		otherInformation:
+			reviewOutcome.otherInformationDetails ?? reviewOutcome.otherInformationValidRadio,
+
+	})
 	return apiClient
 		.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
 			json: {

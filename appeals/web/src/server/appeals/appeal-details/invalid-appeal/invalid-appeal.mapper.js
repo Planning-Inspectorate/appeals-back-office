@@ -326,6 +326,7 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (
 	} = session?.webAppellantCaseReviewOutcome || {};
 	// @ts-ignore
 	const selectedReasons = enforcementNoticeReason.map((reason) => reason.reasonSelected);
+	console.log(session?.webAppellantCaseReviewOutcome, 'test');
 	const mappedInvalidReasonOptions = reasonOptions
 		.filter((reason) => selectedReasons.includes(reason.id))
 		.map(({ name, id }) => ({
