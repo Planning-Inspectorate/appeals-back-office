@@ -136,8 +136,20 @@ const renderUpdateDueDate = async (request, response) => {
 		dueDateYear = request.body['due-date-year'];
 	}
 
+	let backLinkUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/incomplete/`;
+	if (currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+		if (
+			request.session.webAppellantCaseReviewOutcome?.missingDocuments &&
+			request.session.webAppellantCaseReviewOutcome?.feeReceiptDueDate
+		) {
+			backLinkUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/incomplete/receipt-due-date`;
+		} else if (request.session.webAppellantCaseReviewOutcome?.missingDocuments) {
+			backLinkUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/incomplete/missing-documents`;
+		}
+	}
 	const mappedPageContent = updateDueDatePage(
 		currentAppeal,
+		backLinkUrl,
 		errors,
 		dueDateDay,
 		dueDateMonth,
@@ -307,12 +319,27 @@ export const renderMissingDocumentsPage = async (request, response, apiErrors) =
 						text: (selected && body[`missingDocuments-${option.id}`]) ?? ''
 					};
 				}
-				const reason = session?.webAppellantCaseReviewOutcome?.enforcementNoticeReason?.find(
-					(/** @type {{reasonSelected:number, reasonText:string}} */ reason) =>
-						reason.reasonSelected === option.id
+				const missingDocumentsSession = Array.isArray(
+					session?.webAppellantCaseReviewOutcome?.missingDocuments
+				)
+					? session?.webAppellantCaseReviewOutcome?.missingDocuments
+					: [session?.webAppellantCaseReviewOutcome?.missingDocuments];
+				const missingDocument = missingDocumentsSession.find(
+					(/** @type {{missingDocument:string}} */ missingDocument) => {
+						const id = Number(missingDocument);
+						const optionId = option.id;
+						return id === optionId;
+					}
 				);
-				const selected = reason?.reasonSelected ?? false;
-				return { ...option, selected, text: (selected && reason?.reasonText) ?? '' };
+				const selected = missingDocument ?? false;
+				return {
+					...option,
+					selected,
+					text:
+						(selected &&
+							session?.webAppellantCaseReviewOutcome?.missingDocumentsText[missingDocument]) ??
+						''
+				};
 			}),
 			errors
 		);
@@ -393,8 +420,13 @@ const renderReceiptFeeDueDate = async (request, response) => {
 		dueDateYear = request.body['due-date-year'];
 	}
 
+	const backLinkUrl = request.session.webAppellantCaseReviewOutcome?.missingDocuments?.length
+		? `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/incomplete/missing-documents`
+		: `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/incomplete/`;
+
 	const mappedPageContent = updateFeeReceiptDueDatePage(
 		currentAppeal,
+		backLinkUrl,
 		errors,
 		dueDateDay,
 		dueDateMonth,
