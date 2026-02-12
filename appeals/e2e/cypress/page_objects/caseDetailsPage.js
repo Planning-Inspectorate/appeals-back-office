@@ -961,27 +961,24 @@ export class CaseDetailsPage extends Page {
 	};
 
 	// Verify document status in either the documentation table or costs table
-	verifyDocumentStatus(documentName, expectedStatus, tableType) {
-		const tableConfig = {
-			documentation: {
-				selector: '#case-documentation-table',
-				statusCell: 'td:nth-child(2)' // First td contains status
-			},
-			costs: {
-				selector: '#case-costs-table',
-				statusCell: '[class*="-status"]' // Cell with class containing "-status"
-			}
-		};
+	verifyDocumentationValue(tableType, columnHeader, documentName, expectedValue) {
+		const selector = { documentation: '#case-documentation-table', costs: '#case-costs-table' }[
+			tableType
+		];
+		if (!selector) throw new Error(`Invalid table type: ${tableType}`);
 
-		const config = tableConfig[tableType];
+		cy.get(selector).within(() => {
+			cy.get('thead th').then(($headers) => {
+				const index =
+					$headers
+						.toArray()
+						.findIndex(
+							(h) => h.textContent.toLowerCase().trim() === columnHeader.toLowerCase().trim()
+						) + 1;
 
-		if (!config) {
-			throw new Error(`Invalid table type: ${tableType}. Use 'documentation' or 'costs'`);
-		}
-
-		cy.get(config.selector).within(() => {
-			cy.contains('tr', documentName).within(() => {
-				cy.get(config.statusCell).should('have.text', expectedStatus);
+				cy.contains('tr', documentName).within(() => {
+					cy.get(`td:nth-child(${index})`).should('have.text', expectedValue);
+				});
 			});
 		});
 	}
