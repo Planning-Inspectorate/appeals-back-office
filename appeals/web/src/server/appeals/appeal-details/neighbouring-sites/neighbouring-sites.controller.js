@@ -324,6 +324,7 @@ const renderChangeNeighbouringSite = async (request, response) => {
 	const mappedPageContents = changeNeighbouringSitePage(
 		appealDetails,
 		request.session.neighbouringSite,
+		request.originalUrl,
 		siteId,
 		errors
 	);
@@ -350,13 +351,11 @@ export const postChangeNeighbouringSite = async (request, response) => {
 	if (request.errors) {
 		return renderChangeNeighbouringSite(request, response);
 	}
-	const {
-		params: { appealId, siteId }
-	} = request;
 
-	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/neighbouring-sites/change/site/${siteId}/check-and-confirm`
-	);
+	const basePath = getOriginPathname(request);
+	const postUrl = `${basePath}/check-and-confirm`;
+
+	return response.redirect(postUrl);
 };
 
 /**
@@ -390,6 +389,7 @@ const renderChangeNeighbouringSiteCheckAndConfirm = async (request, response) =>
 	const mappedPageContent = changeNeighbouringSiteCheckAndConfirmPage(
 		appealData,
 		request.session.neighbouringSite,
+		request.originalUrl,
 		siteId
 	);
 
@@ -409,7 +409,7 @@ export const postChangeNeighbouringSiteCheckAndConfirm = async (request, respons
 	}
 
 	const {
-		params: { appealId, siteId }
+		params: { appealId, siteId, lpaQuestionnaireId }
 	} = request;
 
 	if (request.errors) {
@@ -429,9 +429,14 @@ export const postChangeNeighbouringSiteCheckAndConfirm = async (request, respons
 			appealId
 		});
 
+		const basePath = getOriginPathname(request);
+		const postUrl = basePath.includes('/lpa-questionnaire')
+			? `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`
+			: `/appeals-service/appeal-details/${appealId}`;
+
 		delete request.session.neighbouringSite;
 
-		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+		return response.redirect(postUrl);
 	} catch (error) {
 		logger.error(error);
 	}
