@@ -21,6 +21,7 @@ import { notifySend } from '#notify/notify-send.js';
 import addressRepository from '#repositories/address.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
+import commonRepository from '#repositories/common.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import auditApplicationDecisionMapper from '#utils/audit-application-decision-mapper.js';
 import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
@@ -320,11 +321,57 @@ export const updateAppellantCaseValidationOutcome = async (
 					stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['Appeal']) + '\n'
 				}${formatReasonsToHtmlList(reasonsToFormat)}`;
 
-				createAuditTrail({
+				await createAuditTrail({
 					appealId,
 					azureAdUserId,
 					details
 				});
+
+				if (updatedDueDate) {
+					const missingDocumentOptions = await commonRepository.getLookupList(
+						'appellantCaseEnforcementMissingDocument'
+					);
+					const personalisation = {
+						appeal_reference_number: appeal.reference,
+						site_address: siteAddress,
+						enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
+						...(enforcementMissingDocuments && {
+							missing_documents: enforcementMissingDocuments.map(
+								(document) =>
+									`${missingDocumentOptions.find((option) => option.id === document.id)?.name}: ${document.text?.[0] || ''}`
+							)
+						}),
+						...(updatedAppeal?.enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate && {
+							fee_due_date: formatDate(
+								new Date(updatedAppeal.enforcementNoticeAppealOutcome.groundAFeeReceiptDueDate)
+							)
+						}),
+						local_planning_authority: updatedAppeal?.lpa?.name || '',
+						other_info: incompleteReasons?.find((reason) => reason.id === 10)?.['text']?.[0] || '',
+						team_email_address: teamEmail,
+						due_date: formatDate(new Date(updatedDueDate), false),
+						appeal_grounds:
+							updatedAppeal?.appealGrounds
+								?.map((ground) => ground.ground?.groundRef || '')
+								.sort() || []
+					};
+					await notifySend({
+						azureAdUserId,
+						templateName: 'enforcement-appeal-incomplete-appellant',
+						notifyClient,
+						recipientEmail,
+						personalisation
+					});
+					if (updatedAppeal.lpa?.email) {
+						await notifySend({
+							azureAdUserId,
+							templateName: 'enforcement-appeal-incomplete-lpa',
+							notifyClient,
+							recipientEmail: updatedAppeal?.lpa?.email,
+							personalisation
+						});
+					}
+				}
 			} else {
 				const reasonsToFormat = updatedAppellantCase?.appellantCaseIncompleteReasonsSelected?.length
 					? updatedAppellantCase?.appellantCaseIncompleteReasonsSelected
@@ -342,7 +389,7 @@ export const updateAppellantCaseValidationOutcome = async (
 					stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['Appeal']) + '\n'
 				}${formatReasonsToHtmlList(incompleteReasonsList)}`;
 
-				createAuditTrail({
+				await createAuditTrail({
 					appealId,
 					azureAdUserId,
 					details
