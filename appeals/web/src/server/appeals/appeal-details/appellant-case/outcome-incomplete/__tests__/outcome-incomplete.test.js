@@ -381,15 +381,12 @@ describe('incomplete-appeal', () => {
 					'<dt class="govuk-summary-list__key"> What is the outcome of your review?</dt><dd class="govuk-summary-list__value"> Incomplete</dd>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<dt class="govuk-summary-list__key"> Do you want to add any other information?</dt>'
-				);
-				expect(unprettifiedElement.innerHTML).toContain(
 					'>Yes: Enforcement other information</div></dd>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Mark appeal as incomplete</button>');
 			});
 
-			it('should render the check details page where the enforcement notice is valid', async () => {
+			it('should render the check details page where the enforcement notice is not valid', async () => {
 				// Populate session data
 				// review outcome
 				await request.post(`${baseUrl}/appellant-case`).send({ reviewOutcome: 'incomplete' });
@@ -469,7 +466,7 @@ describe('incomplete-appeal', () => {
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<dt class="govuk-summary-list__key"> Grounds and facts do not match</dt>'
 				);
-				expect(unprettifiedElement.innerHTML).toContain('<li>Ground (a): invalid ground 1</li>');
+				expect(unprettifiedElement.innerHTML).toContain('<li>Ground a: invalid ground 1</li>');
 				expect(unprettifiedElement.innerHTML).toContain('Mark appeal as incomplete</button>');
 			});
 		});

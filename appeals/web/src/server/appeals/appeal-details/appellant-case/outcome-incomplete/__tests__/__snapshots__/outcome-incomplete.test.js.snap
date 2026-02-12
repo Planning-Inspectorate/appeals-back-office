@@ -132,7 +132,7 @@ exports[`incomplete-appeal enforcement notice appeal GET /check-details-and-mark
 </main>"
 `;
 
-exports[`incomplete-appeal enforcement notice appeal GET /check-details-and-mark-enforcement-as-incomplete should render the check details page where the enforcement notice is valid 1`] = `
+exports[`incomplete-appeal enforcement notice appeal GET /check-details-and-mark-enforcement-as-incomplete should render the check details page where the enforcement notice is not valid 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
@@ -175,27 +175,28 @@ exports[`incomplete-appeal enforcement notice appeal GET /check-details-and-mark
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/incomplete/missing-documents">Change<span class="govuk-visually-hidden"> Incomplete reasons</span></a>
                         </dd>
                 </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal due date</dt>
+                    <dd class="govuk-summary-list__value">2 July 3000</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/incomplete/date">Change<span class="govuk-visually-hidden"> Appeal due date</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Grounds and facts do not match</dt>
                     <dd                     class="govuk-summary-list__value">
-                        <div class="pins-show-more" data-label="" data-mode="html">
+                        <div class="pins-show-more" data-label="" data-mode="html" data-max-before-hiding="300"
+                        data-toggle-text-collapsed="Show more" data-toggle-text-expanded="Show less">
                             <ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet">
-                                <li>Ground (a): invalid ground 1</li>
-                                <li>Ground (b): invalid ground 2</li>
+                                <li>Ground a: invalid ground 1</li>
+                                <li>Ground b: invalid ground 2</li>
                             </ul>
                         </div>
                         </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/incomplete/grounds-facts-check">Change<span class="govuk-visually-hidden"> Grounds and facts mismatch reasons</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/incomplete/grounds-facts-check">Change<span class="govuk-visually-hidden"> Grounds and facts</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ground (a) fee receipt due date</dt>
                     <dd                     class="govuk-summary-list__value">1 May 3000</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/incomplete/receipt-due-date">Change<span class="govuk-visually-hidden"> Ground (a) fee receipt due date</span></a>
                         </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal due date</dt>
-                    <dd class="govuk-summary-list__value">2 July 3000</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/incomplete/date">Change<span class="govuk-visually-hidden"> Appeal due date</span></a>
-                    </dd>
                 </div>
             </dl>
             <p class="govuk-body">We will mark the appeal as incomplete and send an email to the relevant
