@@ -7,6 +7,7 @@ import { ContactsSectionPage } from '../../page_objects/caseDetails/contactsSect
 import { CostsSectionPage } from '../../page_objects/caseDetails/costsSectionPage';
 import { DocumentationSectionPage } from '../../page_objects/caseDetails/documentationSectionPage';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
 import { ContactDetailsPage } from '../../page_objects/contactDetailsPage.js';
 import { CYASection } from '../../page_objects/cyaSection.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
@@ -15,6 +16,7 @@ import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { RedactionStatusPage } from '../../page_objects/redactionStatusPage';
 import { happyPathHelper } from '../../support/happyPathHelper';
 import { urlPaths } from '../../support/urlPaths';
+import { formatDateAndTime } from '../../support/utils/format';
 
 const caseDetailsPage = new CaseDetailsPage();
 const listCasesPage = new ListCasesPage();
@@ -27,12 +29,20 @@ const costsSectionPage = new CostsSectionPage();
 const fileUploaderSection = new FileUploaderSection();
 const redactionStatusPage = new RedactionStatusPage();
 const dateTimeSection = new DateTimeSection();
+const caseHistoryPage = new CaseHistoryPage();
 
 const rule6Details = {
 	partyName: 'TestRuleSixParty',
 	partyEmailAddress: 'testrule6party@test.com',
 	partyNameUpdated: 'TestRuleSixPartyUpdated',
 	partyEmailAddressUpdated: 'testrule6partyupdated@test.com'
+};
+
+const rule6Party = {
+	serviceUser: {
+		organisationName: 'Rule Six Locals Consortium',
+		email: 'rule6locals@test.com'
+	}
 };
 
 let caseObj;
@@ -219,47 +229,55 @@ it('should add multiple rule 6 party contact', () => {
 	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', rule6Details.partyEmailAddress);
 
 	// Verify rule 6 party on details page - Documentation section
-	caseDetailsPage.verifyDocumentStatus(
+	caseDetailsPage.verifyDocumentationValue(
+		'documentation',
+		'Status',
 		`${organisationName1} proof of evidence and witness`,
-		'Awaiting proof of evidence and witness',
-		'documentation'
+		'Awaiting proof of evidence and witness'
 	);
-	caseDetailsPage.verifyDocumentStatus(
+	caseDetailsPage.verifyDocumentationValue(
+		'documentation',
+		'Status',
 		`${organisationName2} proof of evidence and witness`,
-		'Awaiting proof of evidence and witness',
-		'documentation'
+		'Awaiting proof of evidence and witness'
 	);
 
 	// Verify rule 6 party on details page - Cost section
-	caseDetailsPage.verifyDocumentStatus(
+	caseDetailsPage.verifyDocumentationValue(
+		'costs',
+		'Status',
 		`${organisationName1} application`,
-		'No documents available',
-		'costs'
+		'No documents available'
 	);
-	caseDetailsPage.verifyDocumentStatus(
+	caseDetailsPage.verifyDocumentationValue(
+		'costs',
+		'Status',
 		`${organisationName1} withdrawal`,
-		'No documents available',
-		'costs'
+		'No documents available'
 	);
-	caseDetailsPage.verifyDocumentStatus(
+	caseDetailsPage.verifyDocumentationValue(
+		'costs',
+		'Status',
 		`${organisationName1} correspondence`,
-		'No documents available',
-		'costs'
+		'No documents available'
 	);
-	caseDetailsPage.verifyDocumentStatus(
+	caseDetailsPage.verifyDocumentationValue(
+		'costs',
+		'Status',
 		`${organisationName2} application`,
-		'No documents available',
-		'costs'
+		'No documents available'
 	);
-	caseDetailsPage.verifyDocumentStatus(
+	caseDetailsPage.verifyDocumentationValue(
+		'costs',
+		'Status',
 		`${organisationName2} withdrawal`,
-		'No documents available',
-		'costs'
+		'No documents available'
 	);
-	caseDetailsPage.verifyDocumentStatus(
+	caseDetailsPage.verifyDocumentationValue(
+		'costs',
+		'Status',
 		`${organisationName2} correspondence`,
-		'No documents available',
-		'costs'
+		'No documents available'
 	);
 
 	// Manage contact details
@@ -281,27 +299,31 @@ it('should remove a rule 6 party contact and related documents', () => {
 	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', organisationName);
 
 	// Verify rule 6 party on details page - Documentation section
-	caseDetailsPage.verifyDocumentStatus(
+	caseDetailsPage.verifyDocumentationValue(
+		'documentation',
+		'Status',
 		`${organisationName} proof of evidence and witness`,
-		'Awaiting proof of evidence and witness',
-		'documentation'
+		'Awaiting proof of evidence and witness'
 	);
 
 	// Verify rule 6 party on details page - Cost section
-	caseDetailsPage.verifyDocumentStatus(
+	caseDetailsPage.verifyDocumentationValue(
+		'costs',
+		'Status',
 		`${organisationName} application`,
-		'No documents available',
-		'costs'
+		'No documents available'
 	);
-	caseDetailsPage.verifyDocumentStatus(
+	caseDetailsPage.verifyDocumentationValue(
+		'costs',
+		'Status',
 		`${organisationName} withdrawal`,
-		'No documents available',
-		'costs'
+		'No documents available'
 	);
-	caseDetailsPage.verifyDocumentStatus(
+	caseDetailsPage.verifyDocumentationValue(
+		'costs',
+		'Status',
 		`${organisationName} correspondence`,
-		'No documents available',
-		'costs'
+		'No documents available'
 	);
 
 	// Remove rule 6 party
@@ -395,27 +417,31 @@ it('should change rule 6 party contact', () => {
 	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', rule6Details.partyEmailAddressUpdated);
 
 	// Verify rule 6 party on details page - Documentation section
-	caseDetailsPage.verifyDocumentStatus(
+	caseDetailsPage.verifyDocumentationValue(
+		'documentation',
+		'Status',
 		`${rule6Details.partyNameUpdated} proof of evidence and witness`,
-		'Awaiting proof of evidence and witness',
-		'documentation'
+		'Awaiting proof of evidence and witness'
 	);
 
 	// Verify rule 6 party on details page - Cost section
-	caseDetailsPage.verifyDocumentStatus(
+	caseDetailsPage.verifyDocumentationValue(
+		'costs',
+		'Status',
 		`${rule6Details.partyNameUpdated} application`,
-		'No documents available',
-		'costs'
+		'No documents available'
 	);
-	caseDetailsPage.verifyDocumentStatus(
+	caseDetailsPage.verifyDocumentationValue(
+		'costs',
+		'Status',
 		`${rule6Details.partyNameUpdated} withdrawal`,
-		'No documents available',
-		'costs'
+		'No documents available'
 	);
-	caseDetailsPage.verifyDocumentStatus(
+	caseDetailsPage.verifyDocumentationValue(
+		'costs',
+		'Status',
 		`${rule6Details.partyNameUpdated} correspondence`,
-		'No documents available',
-		'costs'
+		'No documents available'
 	);
 });
 
@@ -455,3 +481,252 @@ it('add a rule 6 POE', () => {
 		'Rule 6 party proof of evidence and witnesses added'
 	);
 });
+
+it('should mark rule 6 POE complete', () => {
+	setupCaseForRule6StatementReview();
+	cy.simulateStatementsDeadlineElapsed(caseObj);
+	cy.shareCommentsAndStatementsViaApi(caseObj);
+
+	cy.getRule6ServiceUserId(caseObj, rule6Party.serviceUser.email).then((serviceUserId) => {
+		cy.log(`Service User ID: ${serviceUserId}`);
+
+		cy.addRepresentation(caseObj, 'rule6ProofOfEvidence', serviceUserId);
+		cy.reload();
+
+		caseDetailsPage.validateBannerMessage(
+			'Important',
+			`${rule6Party.serviceUser.organisationName} proof of evidence and witnesses awaiting review`
+		);
+
+		// Complete the evidence review workflow for Rule 6
+		documentationSectionPage.navigateToAddProofOfEvidenceReview('rule-6-proof-of-evidence');
+		caseDetailsPage.selectRadioButtonByValue('Complete');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText(
+			`${rule6Party.serviceUser.organisationName} proof of evidence and witnesses`
+		);
+
+		// Bug - Rule 6 POE success banner shows generic 'Rule 6 party' text instead of the party name (A2-6823)
+		caseDetailsPage.validateBannerMessage(
+			'Success',
+			`Rule 6 party proof of evidence and witnesses accepted`
+		);
+	});
+
+	// Check Rule 6 POE status (Complete) - Documentation section
+	caseDetailsPage.verifyDocumentationValue(
+		'documentation',
+		'Status',
+		`${rule6Party.serviceUser.organisationName} proof of evidence and witness`,
+		'Completed'
+	);
+
+	caseDetailsPage.verifyDocumentationValue(
+		'documentation',
+		'Date',
+		`${rule6Party.serviceUser.organisationName} proof of evidence and witness`,
+		formatDateAndTime(new Date()).date
+	);
+});
+
+it('should mark rule 6 POE incomplete', () => {
+	setupCaseForRule6StatementReview();
+	cy.simulateStatementsDeadlineElapsed(caseObj);
+	cy.shareCommentsAndStatementsViaApi(caseObj);
+
+	cy.getRule6ServiceUserId(caseObj, rule6Party.serviceUser.email).then((serviceUserId) => {
+		cy.log(`Service User ID: ${serviceUserId}`);
+
+		cy.addRepresentation(caseObj, 'rule6ProofOfEvidence', serviceUserId);
+		cy.reload();
+
+		caseDetailsPage.validateBannerMessage(
+			'Important',
+			`${rule6Party.serviceUser.organisationName} proof of evidence and witnesses awaiting review`
+		);
+
+		// Complete the evidence review workflow for Rule 6
+		documentationSectionPage.navigateToAddProofOfEvidenceReview('rule-6-proof-of-evidence');
+		caseDetailsPage.selectRadioButtonByValue('Mark as incomplete');
+		caseDetailsPage.clickButtonByText('Continue');
+
+		caseDetailsPage.chooseCheckboxByText('Supporting documents missing');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Confirm statement is incomplete');
+
+		// Bug - Rule 6 POE success banner shows generic 'Rule 6 party' text instead of the party name (A2-6823)
+		caseDetailsPage.validateBannerMessage('Success', `Rule 6 party proof of evidence incomplete`);
+	});
+
+	// Check Rule 6 POE status (Complete) - Documentation section
+	caseDetailsPage.verifyDocumentationValue(
+		'documentation',
+		'Status',
+		`${rule6Party.serviceUser.organisationName} proof of evidence and witness`,
+		'Incomplete'
+	);
+
+	caseDetailsPage.verifyDocumentationValue(
+		'documentation',
+		'Date',
+		`${rule6Party.serviceUser.organisationName} proof of evidence and witness`,
+		formatDateAndTime(new Date()).date
+	);
+});
+
+it('should show correct history when statement is accepted', () => {
+	setupCaseForRule6StatementReview();
+
+	cy.getRule6ServiceUserId(caseObj, rule6Party.serviceUser.email).then((serviceUserId) => {
+		cy.log(`Service User ID: ${serviceUserId}`);
+
+		cy.addRepresentation(caseObj, 'rule6PartyStatement', serviceUserId);
+		cy.reload();
+
+		caseDetailsPage.validateBannerMessage(
+			'Important',
+			`${rule6Party.serviceUser.organisationName} statement awaiting review`
+		);
+
+		// Complete the statement review workflow for Rule 6
+		documentationSectionPage.navigateToAddProofOfEvidenceReview('rule-6-statement');
+		caseDetailsPage.selectRadioButtonByValue('Accept statement');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue('No');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Accept statement');
+
+		caseDetailsPage.validateBannerMessage(
+			'Success',
+			`${rule6Party.serviceUser.organisationName} statement accepted`
+		);
+
+		// Verify Case History
+		caseDetailsPage.clickViewCaseHistory();
+		caseHistoryPage.verifyCaseHistoryValue(
+			`${rule6Party.serviceUser.organisationName} statement accepted`
+		);
+	});
+});
+
+it('should show correct history when statement is redacted and accepted', () => {
+	setupCaseForRule6StatementReview();
+
+	cy.getRule6ServiceUserId(caseObj, rule6Party.serviceUser.email).then((serviceUserId) => {
+		cy.log(`Service User ID: ${serviceUserId}`);
+
+		cy.addRepresentation(caseObj, 'rule6PartyStatement', serviceUserId);
+		cy.reload();
+
+		caseDetailsPage.validateBannerMessage(
+			'Important',
+			`${rule6Party.serviceUser.organisationName} statement awaiting review`
+		);
+
+		// Complete the statement review workflow for Rule 6
+		documentationSectionPage.navigateToAddProofOfEvidenceReview('rule-6-statement');
+		caseDetailsPage.selectRadioButtonByValue('Redact and accept statement');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue('No');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Accept statement');
+
+		caseDetailsPage.validateBannerMessage(
+			'Success',
+			`${rule6Party.serviceUser.organisationName} statement accepted`
+		);
+		// Verify Case History
+		caseDetailsPage.clickViewCaseHistory();
+		caseHistoryPage.verifyCaseHistoryValue(
+			`${rule6Party.serviceUser.organisationName} statement redacted and accepted`
+		);
+	});
+});
+
+it('should show correct history when statement is incomplete without resubmit', () => {
+	setupCaseForRule6StatementReview();
+
+	cy.getRule6ServiceUserId(caseObj, rule6Party.serviceUser.email).then((serviceUserId) => {
+		cy.log(`Service User ID: ${serviceUserId}`);
+
+		cy.addRepresentation(caseObj, 'rule6PartyStatement', serviceUserId);
+		cy.reload();
+
+		caseDetailsPage.validateBannerMessage(
+			'Important',
+			`${rule6Party.serviceUser.organisationName} statement awaiting review`
+		);
+
+		// Complete the statement review workflow for Rule 6
+		documentationSectionPage.navigateToAddProofOfEvidenceReview('rule-6-statement');
+		caseDetailsPage.selectRadioButtonByValue('Statement incomplete');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.chooseCheckboxByText('No list of suggested conditions');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue('No');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Confirm statement is incomplete');
+
+		caseDetailsPage.validateBannerMessage(
+			'Success',
+			`${rule6Party.serviceUser.organisationName} statement is incomplete`
+		);
+		// Verify Case History
+		caseDetailsPage.clickViewCaseHistory();
+		caseHistoryPage.verifyCaseHistoryValue(
+			`${rule6Party.serviceUser.organisationName} statement incomplete`
+		);
+	});
+});
+
+it('should show correct history when statement is incomplete with resubmit', () => {
+	setupCaseForRule6StatementReview();
+
+	cy.getRule6ServiceUserId(caseObj, rule6Party.serviceUser.email).then((serviceUserId) => {
+		cy.log(`Service User ID: ${serviceUserId}`);
+
+		cy.addRepresentation(caseObj, 'rule6PartyStatement', serviceUserId);
+		cy.reload();
+
+		caseDetailsPage.validateBannerMessage(
+			'Important',
+			`${rule6Party.serviceUser.organisationName} statement awaiting review`
+		);
+
+		// Complete the statement review workflow for Rule 6
+		documentationSectionPage.navigateToAddProofOfEvidenceReview('rule-6-statement');
+		caseDetailsPage.selectRadioButtonByValue('Statement incomplete');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.chooseCheckboxByText('No list of suggested conditions');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue('Yes');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Confirm statement is incomplete');
+
+		caseDetailsPage.validateBannerMessage(
+			'Success',
+			`${rule6Party.serviceUser.organisationName} statement is incomplete`
+		);
+		// Verify Case History
+		caseDetailsPage.clickViewCaseHistory();
+		caseHistoryPage.verifyCaseHistoryValue(
+			`${rule6Party.serviceUser.organisationName} statement incomplete`
+		);
+		caseHistoryPage.verifyCaseHistoryValue(
+			`${rule6Party.serviceUser.organisationName} statement due date extended`
+		);
+	});
+});
+
+const setupCaseForRule6StatementReview = () => {
+	cy.addAllocationLevelAndSpecialisms(caseObj);
+	cy.addLpaqSubmissionToCase(caseObj);
+	cy.reviewLpaqSubmission(caseObj);
+
+	// Add & Review statement & IP comment Via Api
+	cy.addRepresentation(caseObj, 'lpaStatement', null);
+	cy.reviewStatementViaApi(caseObj);
+
+	cy.addRule6Party(caseObj, rule6Party);
+};

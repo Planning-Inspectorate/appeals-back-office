@@ -730,17 +730,45 @@ it('should complete LPA/Appellant POE and progress to awaiting inquiry', () => {
 		caseDetailsPage.checkStatusOfCase('Evidence', 0);
 
 		// Verify POE status (Awaiting proof of evidence and witness) - Documentation section
-		const appellantPOE = { rowIndex: 4, cellIndex: 0, textToMatch: status[0], strict: true };
-		const lpaPOE = { rowIndex: 5, cellIndex: 0, textToMatch: status[0], strict: true };
-		caseDetailsPage.verifyTableCellText(appellantPOE);
-		caseDetailsPage.verifyTableCellText(lpaPOE);
+		caseDetailsPage.verifyDocumentationValue(
+			'documentation',
+			'Status',
+			'Appellant proof of evidence and witness',
+			status[0]
+		);
+
+		caseDetailsPage.verifyDocumentationValue(
+			'documentation',
+			'Status',
+			'LPA proof of evidence and witness',
+			status[0]
+		);
+
+		// check date value is blank
+		caseDetailsPage.verifyDocumentationValue(
+			'documentation',
+			'Date',
+			'Appellant proof of evidence and witness',
+			''
+		);
+
+		caseDetailsPage.verifyDocumentationValue(
+			'documentation',
+			'Date',
+			'LPA proof of evidence and witness',
+			''
+		);
 
 		// Process LPA proof of evidence submission (FO) via Api
 		inquirySectionPage.addProofOfEvidenceViaApi(caseObj, 'lpaProofOfEvidence');
 
 		// Verify LPA POE status (Received) - Documentation section
-		const lpaPOEReceived = { rowIndex: 5, cellIndex: 0, textToMatch: status[1], strict: true };
-		caseDetailsPage.verifyTableCellText(lpaPOEReceived);
+		caseDetailsPage.verifyDocumentationValue(
+			'documentation',
+			'Status',
+			'LPA proof of evidence and witness',
+			status[1]
+		);
 
 		// Complete the evidence review workflow for LPA POE
 		documentationSectionPage.navigateToAddProofOfEvidenceReview('lpa-proofs-evidence');
@@ -755,20 +783,23 @@ it('should complete LPA/Appellant POE and progress to awaiting inquiry', () => {
 		);
 
 		// Verify LPA POE status (Completed) - Documentation section
-		const lpaPOECompleted = { rowIndex: 5, cellIndex: 0, textToMatch: status[2], strict: true };
-		caseDetailsPage.verifyTableCellText(lpaPOECompleted);
+		caseDetailsPage.verifyDocumentationValue(
+			'documentation',
+			'Status',
+			'LPA proof of evidence and witness',
+			status[2]
+		);
 
 		// Process Appellant proof of evidence submission (FO) via Api
 		inquirySectionPage.addProofOfEvidenceViaApi(caseObj, 'appellantProofOfEvidence');
 
 		// Verify Appellant POE status (Received) - Documentation section
-		const appellantPOEReceived = {
-			rowIndex: 4,
-			cellIndex: 0,
-			textToMatch: status[1],
-			strict: true
-		};
-		caseDetailsPage.verifyTableCellText(appellantPOEReceived);
+		caseDetailsPage.verifyDocumentationValue(
+			'documentation',
+			'Status',
+			'Appellant proof of evidence and witness',
+			status[1]
+		);
 
 		// Complete the evidence review workflow for Appellant POE
 		documentationSectionPage.navigateToAddProofOfEvidenceReview('appellant-proofs-evidence');
@@ -783,13 +814,12 @@ it('should complete LPA/Appellant POE and progress to awaiting inquiry', () => {
 		);
 
 		// Check Appellant POE status (Completed) - Documentation section
-		const appellantPOECompleted = {
-			rowIndex: 5,
-			cellIndex: 0,
-			textToMatch: status[2],
-			strict: true
-		};
-		caseDetailsPage.verifyTableCellText(appellantPOECompleted);
+		caseDetailsPage.verifyDocumentationValue(
+			'documentation',
+			'Status',
+			'Appellant proof of evidence and witness',
+			status[2]
+		);
 
 		// Elapse POE
 		cy.simulateProofOfEvidenceElapsed(caseObj);
@@ -1167,7 +1197,7 @@ it('should progress to inquiry with only complete appellant POE (no LPA POE)', (
 
 		inquirySectionPage.verifyInquiryHeader(headers.inquiry.shareSubmittedEvidence);
 		inquirySectionPage.verifyConfirmationMessage(
-			'We’ll share appellant proof of evidence with the relevant parties.'
+			'We’ll share appellant proof of evidence with the relevant party.'
 		);
 		caseDetailsPage.verifyWarningText(
 			'Do not share until you have reviewed all of the supporting documents and redacted any sensitive information.'
@@ -1220,7 +1250,7 @@ it('should progress to inquiry with only complete LPA POE (no appellant POE)', (
 
 		inquirySectionPage.verifyInquiryHeader(headers.inquiry.shareSubmittedEvidence);
 		inquirySectionPage.verifyConfirmationMessage(
-			'We’ll share LPA proof of evidence with the relevant parties.'
+			'We’ll share LPA proof of evidence with the relevant party.'
 		);
 		caseDetailsPage.verifyWarningText(
 			'Do not share until you have reviewed all of the supporting documents and redacted any sensitive information.'
@@ -1275,7 +1305,7 @@ it('should progress to inquiry with only incomplete LPA POE (no appellant POE)',
 
 		inquirySectionPage.verifyInquiryHeader(headers.inquiry.shareSubmittedEvidence);
 		inquirySectionPage.verifyConfirmationMessage(
-			'We’ll share LPA proof of evidence with the relevant parties.'
+			'We’ll share LPA proof of evidence with the relevant party.'
 		);
 		caseDetailsPage.verifyWarningText(
 			'Do not share until you have reviewed all of the supporting documents and redacted any sensitive information.'
@@ -1330,7 +1360,7 @@ it('should progress to inquiry with only incomplete appellant POE (no LPA POE)',
 
 		inquirySectionPage.verifyInquiryHeader(headers.inquiry.shareSubmittedEvidence);
 		inquirySectionPage.verifyConfirmationMessage(
-			'We’ll share appellant proof of evidence with the relevant parties.'
+			'We’ll share appellant proof of evidence with the relevant party.'
 		);
 		caseDetailsPage.verifyWarningText(
 			'Do not share until you have reviewed all of the supporting documents and redacted any sensitive information.'
@@ -1378,13 +1408,12 @@ it('should progress to inquiry with both incomplete LPA and appellant POE submis
 		caseDetailsPage.validateBannerMessage('Success', 'Appellant proof of evidence incomplete');
 
 		// Check Appellant POE status (Incomplete) - Documentation section
-		const appellantPOECompleted = {
-			rowIndex: 4,
-			cellIndex: 0,
-			textToMatch: 'Incomplete',
-			strict: true
-		};
-		caseDetailsPage.verifyTableCellText(appellantPOECompleted);
+		caseDetailsPage.verifyDocumentationValue(
+			'documentation',
+			'Status',
+			'Appellant proof of evidence and witness',
+			'Incomplete'
+		);
 
 		// Process LPA proof of evidence submission (FO) via Api
 		inquirySectionPage.addProofOfEvidenceViaApi(caseObj, 'lpaProofOfEvidence');
@@ -1404,8 +1433,12 @@ it('should progress to inquiry with both incomplete LPA and appellant POE submis
 		caseDetailsPage.validateBannerMessage('Success', 'LPA proof of evidence incomplete');
 
 		// Verify LPA POE status (Incomplete) - Documentation section
-		const lpaPOECompleted = { rowIndex: 5, cellIndex: 0, textToMatch: 'Incomplete', strict: true };
-		caseDetailsPage.verifyTableCellText(lpaPOECompleted);
+		caseDetailsPage.verifyDocumentationValue(
+			'documentation',
+			'Status',
+			'LPA proof of evidence and witness',
+			'Incomplete'
+		);
 
 		// Elapse POE
 		cy.simulateProofOfEvidenceElapsed(caseObj);

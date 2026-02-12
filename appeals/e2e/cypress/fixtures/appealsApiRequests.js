@@ -436,7 +436,23 @@ const appealsApiRequests = {
 			organisationName: "Concerned Locals Consortium",
 			email: "concernedlocals@gmail.com"
 		}
-	}
+	},
+	rule6PartyStatement: {
+		caseReference: '6000000',
+		representation: 'Hello, not about cheese but still a rep of some kind (Rule 6 Party Statement)',
+		representationType: 'statement',
+		representationSubmittedDate: new Date().toISOString(),
+		serviceUserId: '2000000',
+		isRule6Party: true
+	},
+	rule6ProofOfEvidence: {
+		caseReference: '6000000',
+		representation: 'Hello, not about cheese but still a rep of some kind (Rule 6 Proof Of Evidence)',
+		representationType: 'proofs_evidence',
+		representationSubmittedDate: new Date().toISOString(),
+		serviceUserId: '2000000',
+		isRule6Party: true
+	},
 };
 
 const documentsApiRequest = {
@@ -561,6 +577,36 @@ const documentsApiRequest = {
 					size: 10293
 				}
 			]
+		},
+		rule6PartyStatement: {
+			documents: [
+				{
+					dateCreated: '2024-03-01T13:48:35.847Z',
+					documentId: '{placeholder}', // will be replaced by generated id
+					documentType: 'rule6Statement',
+					documentURI:
+						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+					filename: '{placeholder}', // will be replaced by generated id
+					mime: 'image/jpeg',
+					originalFilename: '{placeholder}', // will be replaced by generated id
+					size: 10293
+				}
+			]
+		},
+		rule6ProofOfEvidence: {
+			documents: [
+				{
+					dateCreated: '2024-03-01T13:48:35.847Z',
+					documentId: '{placeholder}', // will be replaced by generated id
+					documentType: 'rule6ProofOfEvidence',
+					documentURI:
+						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+					filename: '{placeholder}', // will be replaced by generated id
+					mime: 'image/jpeg',
+					originalFilename: '{placeholder}', // will be replaced by generated id
+					size: 10293
+				}
+			]
 		}
 	},
 	test: {
@@ -675,6 +721,36 @@ const documentsApiRequest = {
 					dateCreated: '2024-03-01T13:48:35.847Z',
 					documentId: '{placeholder}', // will be replaced by generated id
 					documentType: 'lpaProofOfEvidence',
+					documentURI:
+						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+					filename: '{placeholder}', // will be replaced by generated id
+					mime: 'image/jpeg',
+					originalFilename: '{placeholder}', // will be replaced by generated id
+					size: 10293
+				}
+			]
+		},
+		rule6PartyStatement: {
+			documents: [
+				{
+					dateCreated: '2024-03-01T13:48:35.847Z',
+					documentId: '{placeholder}', // will be replaced by generated id
+					documentType: 'rule6Statement',
+					documentURI:
+						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+					filename: '{placeholder}', // will be replaced by generated id
+					mime: 'image/jpeg',
+					originalFilename: '{placeholder}', // will be replaced by generated id
+					size: 10293
+				}
+			]
+		},
+		rule6ProofOfEvidence: {
+			documents: [
+				{
+					dateCreated: '2024-03-01T13:48:35.847Z',
+					documentId: '{placeholder}', // will be replaced by generated id
+					documentType: 'rule6ProofOfEvidence',
 					documentURI:
 						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
 					filename: '{placeholder}', // will be replaced by generated id
