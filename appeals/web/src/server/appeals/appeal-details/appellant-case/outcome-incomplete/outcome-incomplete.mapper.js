@@ -179,6 +179,7 @@ export const enforcementMissingDocumentsPage = (
 
 /**
  * @param {import('../appellant-case.mapper.js').Appeal} appealData
+ * @param {string} backLinkUrl
  * @param {number | string} [dueDateDay]
  * @param {number | string} [dueDateMonth]
  * @param {number | string} [dueDateYear]
@@ -187,6 +188,7 @@ export const enforcementMissingDocumentsPage = (
  */
 export function updateFeeReceiptDueDatePage(
 	appealData,
+	backLinkUrl,
 	errors,
 	dueDateDay,
 	dueDateMonth,
@@ -201,7 +203,7 @@ export function updateFeeReceiptDueDatePage(
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Ground (a) fee receipt due date',
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case/incomplete/`,
+		backLinkUrl,
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: 'Ground (a) fee receipt due date',
 		submitButtonProperties: {

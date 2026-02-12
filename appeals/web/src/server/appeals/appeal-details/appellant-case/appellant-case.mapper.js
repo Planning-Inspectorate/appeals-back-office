@@ -299,6 +299,7 @@ export function getValidationOutcomeFromAppellantCase(appellantCaseData) {
 
 /**
  * @param {Appeal} appealData
+ * @param {string} backLinkUrl
  * @param {number | string} [dueDateDay]
  * @param {number | string} [dueDateMonth]
  * @param {number | string} [dueDateYear]
@@ -308,6 +309,7 @@ export function getValidationOutcomeFromAppellantCase(appellantCaseData) {
  */
 export function updateDueDatePage(
 	appealData,
+	backLinkUrl,
 	errors,
 	dueDateDay,
 	dueDateMonth,
@@ -332,7 +334,7 @@ export function updateDueDatePage(
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Check answers',
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case/incomplete/`,
+		backLinkUrl,
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: 'Update appeal due date',
 		submitButtonProperties: {
