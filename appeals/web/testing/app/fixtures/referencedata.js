@@ -5175,3 +5175,17 @@ export const missingDocumentOptions = [
 	{ id: 5, name: 'Application for an award of appeal costs', hasText: true },
 	{ id: 6, name: 'Other new supporting documents', hasText: true }
 ];
+
+export const enforcementGroundsMismatchFacts = [
+	{ name: 'a', id: 1, hasText: true },
+	{ name: 'b', id: 2, hasText: true },
+	{ name: 'c', id: 3, hasText: true },
+	{ name: 'd', id: 4, hasText: true },
+	{ name: 'e', id: 5, hasText: true },
+	{ name: 'f', id: 6, hasText: true },
+	{ name: 'g', id: 7, hasText: true },
+	{ name: 'h', id: 8, hasText: true },
+	{ name: 'i', id: 9, hasText: true },
+	{ name: 'j', id: 10, hasText: true },
+	{ name: 'k', id: 11, hasText: true }
+];

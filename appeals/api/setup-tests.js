@@ -96,6 +96,19 @@ const mockAppellantCaseEnforcementMissingDocumentsSelectedDeleteMany = jest
 const mockAppellantCaseEnforcementMissingDocumentsSelectedCreateMany = jest
 	.fn()
 	.mockResolvedValue({});
+const mockAppellantCaseEnforcementGroundsMismatchFactsFindMany = jest.fn().mockResolvedValue([]);
+const mockAppellantCaseEnforcementGroundsMismatchFactsTextDeleteMany = jest
+	.fn()
+	.mockResolvedValue({});
+const mockAppellantCaseEnforcementGroundsMismatchFactsTextCreateMany = jest
+	.fn()
+	.mockResolvedValue({});
+const mockAppellantCaseEnforcementGroundsMismatchFactsSelectedDeleteMany = jest
+	.fn()
+	.mockResolvedValue({});
+const mockAppellantCaseEnforcementGroundsMismatchFactsSelectedCreateMany = jest
+	.fn()
+	.mockResolvedValue({});
 const mockAppellantCaseValidationOutcomeFindMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseValidationOutcomeFindUnique = jest.fn().mockResolvedValue({});
 const mockAppellantCaseUpdate = jest.fn().mockResolvedValue({});
@@ -433,6 +446,26 @@ class MockPrismaClient {
 		return {
 			deleteMany: mockAppellantCaseEnforcementMissingDocumentsSelectedDeleteMany,
 			createMany: mockAppellantCaseEnforcementMissingDocumentsSelectedCreateMany
+		};
+	}
+
+	get appellantCaseEnforcementGroundsMismatchFacts() {
+		return {
+			findMany: mockAppellantCaseEnforcementGroundsMismatchFactsFindMany
+		};
+	}
+
+	get appellantCaseEnforcementGroundsMismatchFactsText() {
+		return {
+			deleteMany: mockAppellantCaseEnforcementGroundsMismatchFactsTextDeleteMany,
+			createMany: mockAppellantCaseEnforcementGroundsMismatchFactsTextCreateMany
+		};
+	}
+
+	get appellantCaseEnforcementGroundsMismatchFactsSelected() {
+		return {
+			deleteMany: mockAppellantCaseEnforcementGroundsMismatchFactsSelectedDeleteMany,
+			createMany: mockAppellantCaseEnforcementGroundsMismatchFactsSelectedCreateMany
 		};
 	}
 

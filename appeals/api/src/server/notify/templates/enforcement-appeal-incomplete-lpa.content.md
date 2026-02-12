@@ -19,6 +19,17 @@ Enforcement notice reference: {{enforcement_reference}}
 {{ missing_documents[0] }}
 {% endif %}
 {% endif -%}
+{% if grounds_and_facts.length -%}
+## Grounds and facts do not match
+
+{% if grounds_and_facts.length > 1 -%}
+{%- for grounds_and_fact in grounds_and_facts -%}
+- {{ grounds_and_fact }}
+{% endfor %}
+{%- else -%}
+{{ grounds_and_facts[0] }}
+{% endif %}
+{% endif -%}
 {% if fee_due_date -%}
 ## Pay the ground (a) fee
 
@@ -39,7 +50,7 @@ If you do not receive the correct fee by {{fee_due_date}} ground (a) will not co
 {% endset -%}
 # What happens next
 
-{% if fee_due_date and (missing_documents.length or other_info) -%}
+{% if fee_due_date and (missing_documents.length or other_info or grounds_and_facts.length) -%}
 The appellant needs to send the missing information to us by {{due_date}} and pay the fee by {{fee_due_date}}.
 
 Send an email to {{team_email_address}} to confirm when you receive the fee. Include the details of each appellant that pays the fee.

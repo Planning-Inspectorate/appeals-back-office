@@ -8,17 +8,21 @@ import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { isAfter, parseISO } from 'date-fns';
+import * as appellantCaseService from '../../appellant-case/appellant-case.service.js';
 import {
 	mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters,
 	updateDueDatePage
 } from '../appellant-case.mapper.js';
-import * as appellantCaseService from '../appellant-case.service.js';
 import {
 	enforcementMissingDocumentsPage,
+	groundsFactsCheckPage,
 	mapIncompleteReasonPage,
 	updateFeeReceiptDueDatePage
 } from './outcome-incomplete.mapper.js';
-import { getAppellantCaseEnforcementMissingDocuments } from './outcome-incomplete.service.js';
+import {
+	getAppellantCaseEnforcementGroundsMismatch,
+	getAppellantCaseEnforcementMissingDocuments
+} from './outcome-incomplete.service.js';
 
 /**
  *
@@ -143,6 +147,8 @@ const renderUpdateDueDate = async (request, response) => {
 			request.session.webAppellantCaseReviewOutcome?.feeReceiptDueDate
 		) {
 			backLinkUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/incomplete/receipt-due-date`;
+		} else if (request.session.webAppellantCaseReviewOutcome?.groundsFacts) {
+			backLinkUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/incomplete/grounds-facts-check`;
 		} else if (request.session.webAppellantCaseReviewOutcome?.missingDocuments) {
 			backLinkUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/incomplete/missing-documents`;
 		}
@@ -420,9 +426,11 @@ const renderReceiptFeeDueDate = async (request, response) => {
 		dueDateYear = request.body['due-date-year'];
 	}
 
-	const backLinkUrl = request.session.webAppellantCaseReviewOutcome?.missingDocuments?.length
-		? `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/incomplete/missing-documents`
-		: `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/incomplete/`;
+	const backLinkUrl = request.session.webAppellantCaseReviewOutcome?.groundsFacts
+		? `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/incomplete/grounds-facts-check`
+		: request.session.webAppellantCaseReviewOutcome?.missingDocuments?.length
+			? `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/incomplete/missing-documents`
+			: `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/incomplete/`;
 
 	const mappedPageContent = updateFeeReceiptDueDatePage(
 		currentAppeal,
@@ -508,4 +516,132 @@ export const postReceiptDueDate = async (request, response) => {
 
 		return response.status(500).render('app/500.njk');
 	}
+};
+
+/**
+ * @typedef { import('@pins/appeals.api').Appeals.ReasonOption } ReasonOption
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getGroundsFactsCheck = async (request, response) => {
+	return renderGroundsFactsCheck(request, response);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+const renderGroundsFactsCheck = async (request, response) => {
+	try {
+		const { body, currentAppeal, errors, session } = request;
+
+		const groundsMismatchFactsList = await getAppellantCaseEnforcementGroundsMismatch(
+			request.apiClient
+		);
+
+		const filteredGroundsMismatchFactsList =
+			currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
+				? groundsMismatchFactsList.filter((/** @type {{ id: number; }} */ ground) => ground.id <= 7)
+				: groundsMismatchFactsList;
+
+		const backLinkUrl = request.session.webAppellantCaseReviewOutcome?.missingDocuments
+			? `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/incomplete/missing-documents`
+			: `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/incomplete`;
+
+		const mappedPageContents = groundsFactsCheckPage(
+			currentAppeal.appealReference,
+			// @ts-ignore
+			filteredGroundsMismatchFactsList.map((option) => {
+				if (errors) {
+					const selected = body.groundsFacts?.includes(option.id.toString()) ?? false;
+					return {
+						...option,
+						selected,
+						text: (selected && body[`groundsFacts-${option.id}`]) ?? ''
+					};
+				}
+				const groundsFactsSession = Array.isArray(
+					session?.webAppellantCaseReviewOutcome?.groundsFacts
+				)
+					? session?.webAppellantCaseReviewOutcome?.groundsFacts
+					: [session?.webAppellantCaseReviewOutcome?.groundsFacts];
+				const groundsFacts = groundsFactsSession.find(
+					(/** @type {{groundsFacts:string}} */ groundsFacts) => {
+						const id = Number(groundsFacts);
+						const optionId = option.id;
+						return id === optionId;
+					}
+				);
+				const selected = groundsFacts ?? false;
+				return {
+					...option,
+					selected,
+					text:
+						(selected && session?.webAppellantCaseReviewOutcome?.groundsFactsText[groundsFacts]) ??
+						''
+				};
+			}),
+			backLinkUrl,
+			errors
+		);
+
+		return response.status(200).render('patterns/change-page.pattern.njk', {
+			pageContent: mappedPageContents,
+			errors
+		});
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when completing grounds and facts check'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postGroundsFactsCheck = async (request, response) => {
+	const {
+		currentAppeal: { appealId },
+		body,
+		errors,
+		session
+	} = request;
+
+	/** @type {import('../appellant-case.types.js').AppellantCaseSessionValidationOutcome} */
+	session.webAppellantCaseReviewOutcome = {
+		...session.webAppellantCaseReviewOutcome,
+		groundsFacts: body.groundsFacts,
+		groundsFactsText: body.groundsFacts
+			? getNotValidReasonsTextFromRequestBody(request.body, 'groundsFacts')
+			: undefined
+	};
+
+	if (errors) {
+		return renderGroundsFactsCheck(request, response);
+	}
+
+	const redirectMap = {
+		10: 'date',
+		14: 'receipt-due-date'
+	};
+	const reasons = session.webAppellantCaseReviewOutcome.reasons;
+	const reasonsArray = Array.isArray(reasons) ? reasons : [reasons];
+	const redirectId = reasonsArray.find((/** @type { string } */ reason) => reason in redirectMap);
+	if (redirectId) {
+		console.log('grounds facts post', reasons, redirectId);
+		return response.redirect(
+			// @ts-ignore
+			`/appeals-service/appeal-details/${appealId}/appellant-case/incomplete/${redirectMap[redirectId]}`
+		);
+	}
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${appealId}/appellant-case/incomplete/date`
+	);
 };
