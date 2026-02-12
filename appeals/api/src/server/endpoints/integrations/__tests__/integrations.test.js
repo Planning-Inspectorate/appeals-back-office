@@ -25,8 +25,10 @@ import {
 	validLpaQuestionnaireIngestionAdvert,
 	validLpaQuestionnaireIngestionCasAdvert,
 	validLpaQuestionnaireIngestionHas,
+	validLpaQuestionnaireIngestionLdc,
 	validLpaQuestionnaireIngestionS20,
 	validLpaQuestionnaireIngestionS78,
+	validLpaQuestionnaireLdc,
 	validLpaQuestionnaireS20,
 	validLpaQuestionnaireS78,
 	validRepresentationAppellantFinalComment,
@@ -365,7 +367,8 @@ describe('/appeals/lpaq-submission', () => {
 				validLpaQuestionnaireIngestionCasAdvert,
 				validLpaQuestionnaireCasAdverts
 			],
-			['ADVERTISEMENT', validLpaQuestionnaireIngestionAdvert, validLpaQuestionnaireAdverts]
+			['ADVERTISEMENT', validLpaQuestionnaireIngestionAdvert, validLpaQuestionnaireAdverts],
+			['LDC', validLpaQuestionnaireIngestionLdc, validLpaQuestionnaireLdc]
 		])(
 			'POST valid %s lpaq payload and create lpaq submission',
 			async (_, ingestion, questionnaire) => {
