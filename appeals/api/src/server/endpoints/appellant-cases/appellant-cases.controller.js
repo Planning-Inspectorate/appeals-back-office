@@ -5,6 +5,7 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import { contextEnum } from '#mappers/context-enum.js';
 import logger from '#utils/logger.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import { ERROR_FAILED_TO_SAVE_DATA, ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import {
@@ -196,6 +197,16 @@ const updateAppellantCaseById = async (req, res) => {
 		});
 
 		await broadcasters.broadcastAppeal(appeal.id);
+
+		if (appeal.childAppeals?.length && appeal.appealType?.type === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+			// broadcast all linked child enforcement notice appeals broadcast
+			await Promise.all(
+				appeal.childAppeals
+					.filter(({ type }) => type === 'linked')
+					// @ts-ignore
+					.map(({ childId }) => broadcasters.broadcastAppeal(childId))
+			);
+		}
 	} catch (error) {
 		if (error) {
 			logger.error(error);
