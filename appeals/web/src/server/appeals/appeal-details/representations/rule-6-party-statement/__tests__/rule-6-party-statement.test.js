@@ -12,6 +12,9 @@ const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 
+/** @type {{items: any[], itemCount: number}} */
+let repsResponse = { items: [], itemCount: 0 };
+
 describe('rule 6 party statement - add document', () => {
 	beforeEach(() => {
 		installMockApi();
@@ -27,7 +30,10 @@ describe('rule 6 party statement - add document', () => {
 					{
 						id: 1,
 						serviceUserId: 100,
-						partyName: 'Test Rule 6 Party'
+						partyName: 'Test Rule 6 Party',
+						serviceUser: {
+							organisationName: 'Test Rule 6 Party'
+						}
 					}
 				],
 				rule6PartyId: 1
@@ -49,8 +55,10 @@ describe('rule 6 party statement - add document', () => {
 		nock('http://test/').patch('/appeals/2/reps/3670/attachments').reply(200, {}).persist();
 		nock('http://test/')
 			.get('/appeals/2/reps?type=rule_6_party_statement')
-			.reply(200, { items: [], itemCount: 0 })
+			.reply(200, () => repsResponse)
 			.persist();
+
+		repsResponse = { items: [], itemCount: 0 };
 	});
 
 	afterEach(teardown);
@@ -229,6 +237,44 @@ describe('rule 6 party statement - add document', () => {
 			expect(response.text).toBe(
 				`Found. Redirecting to /appeals-service/appeal-details/2/rule-6-party-statement/1`
 			);
+
+			repsResponse = {
+				items: [
+					{
+						id: 1,
+						status: 'awaiting_review',
+						author: 'Test Rule 6 Party',
+						represented: {
+							id: 100
+						},
+						attachments: [
+							{
+								documentVersion: {
+									document: {
+										caseId: 2,
+										guid: '1',
+										name: 'test-document.txt'
+									}
+								},
+								version: 1
+							}
+						]
+					}
+				],
+				itemCount: 1
+			};
+
+			const responseFromRedirect = await request.get(
+				'/appeals-service/appeal-details/2/rule-6-party-statement/1'
+			);
+
+			const notificationBannerHtml = parseHtml(responseFromRedirect.text, {
+				rootElement: '.govuk-notification-banner--success',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(notificationBannerHtml).toContain('Success</h3>');
+			expect(notificationBannerHtml).toContain('Test Rule 6 Party statement added</p>');
 		});
 	});
 

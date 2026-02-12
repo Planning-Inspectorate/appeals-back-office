@@ -27,7 +27,10 @@ describe('rule 6 party proof of evidence - add document', () => {
 					{
 						id: 1,
 						serviceUserId: 100,
-						partyName: 'Test Rule 6 Party'
+						partyName: 'Test Rule 6 Party',
+						serviceUser: {
+							organisationName: 'Test Rule 6 Party'
+						}
 					}
 				],
 				rule6PartyId: 1
@@ -35,8 +38,20 @@ describe('rule 6 party proof of evidence - add document', () => {
 			.persist();
 
 		nock('http://test/')
-			.get('/appeals/2/document-folders?path=representation/representationAttachments')
-			.reply(200, [{ folderId: 1234, path: 'representation/attachments' }])
+			.get('/appeals/2/document-folders')
+			.query(true)
+			.reply(200, [{ folderId: 1234, path: 'representation/representationAttachments', caseId: 2 }])
+			.persist();
+
+		nock('http://test/')
+			.get('/appeals/2/document-folders/1234')
+			.query(true)
+			.reply(200, {
+				folderId: 1234,
+				caseId: 2,
+				path: 'representation/representationAttachments',
+				documents: []
+			})
 			.persist();
 
 		nock('http://test/')
@@ -156,7 +171,7 @@ describe('rule 6 party proof of evidence - add document', () => {
 			}).innerHTML;
 
 			expect(unprettifiedHTML).toContain(
-				'Check details and add Rule 6 party proof of evidence and witnesses</h1>'
+				'Check details and add Test Rule 6 Party proof of evidence and witnesses</h1>'
 			);
 			expect(unprettifiedHTML).toContain('Appeal 351062</span>');
 			expect(unprettifiedHTML).toContain('test-document.txt</a>');
@@ -187,6 +202,41 @@ describe('rule 6 party proof of evidence - add document', () => {
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
 				`Found. Redirecting to /appeals-service/appeal-details/2/proof-of-evidence/rule-6-party/1/manage-documents/1234`
+			);
+
+			nock('http://test/')
+				.get('/appeals/2/reps?type=rule_6_party_proofs_evidence')
+				.reply(200, {
+					itemCount: 1,
+					items: [
+						{
+							id: 1,
+							status: 'valid',
+							representationType: 'rule_6_party_proofs_evidence',
+							represented: { id: 100 },
+							attachments: [
+								{
+									id: 1,
+									documentGuid: '1'
+								}
+							]
+						}
+					]
+				})
+				.persist();
+
+			const responseFromRedirect = await request.get(
+				'/appeals-service/appeal-details/2/proof-of-evidence/rule-6-party/1/manage-documents/1234'
+			);
+
+			const notificationBannerHtml = parseHtml(responseFromRedirect.text, {
+				rootElement: '.govuk-notification-banner--success',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(notificationBannerHtml).toContain('Success</h3>');
+			expect(notificationBannerHtml).toContain(
+				'Test Rule 6 Party proof of evidence and witnesses added</p>'
 			);
 		});
 	});
