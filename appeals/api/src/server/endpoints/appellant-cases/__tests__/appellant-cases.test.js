@@ -1866,7 +1866,7 @@ describe('appellant cases routes', () => {
 				const body = {
 					appealDueDate: '2099-07-14T00:00:00.000Z',
 					enforcementMissingDocuments: [{ id: 1, text: ['Missing doc'] }],
-					enforcementNoticeInvalid: 'yes',
+					enforcementNoticeInvalid: 'no',
 					feeReceiptDueDate: '2099-07-14T00:00:00.000Z',
 					incompleteReasons: [{ id: 12 }],
 					validationOutcome: 'incomplete'
@@ -1902,7 +1902,7 @@ describe('appellant cases routes', () => {
 					update: {
 						appeal: { connect: { id } },
 						otherInformation: undefined,
-						enforcementNoticeInvalid: 'yes',
+						enforcementNoticeInvalid: 'no',
 						groundAFeeReceiptDueDate: '2099-07-14T00:00:00.000Z',
 						otherLiveAppeals: undefined
 					},

@@ -343,6 +343,25 @@ export const updateAppellantCaseValidationOutcome = async (
 					stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['Appeal']) + '\n'
 				}${formatReasonsToHtmlList(reasonsToFormat)}`;
 
+				const personalisation = {
+					appeal_reference_number: appeal.reference,
+					enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
+					site_address: siteAddress,
+					...getEnforcementInvalidReasonsParams(enforcementInvalidReasons),
+					other_info: otherInformation || '',
+					team_email_address: teamEmail,
+					due_date: updatedDueDate ? formatDate(new Date(updatedDueDate), false) : ''
+				};
+				if (updatedAppeal.lpa?.email) {
+					await notifySend({
+						azureAdUserId,
+						templateName: 'enforcement-appeal-incomplete-lpa',
+						notifyClient,
+						recipientEmail: updatedAppeal?.lpa?.email,
+						personalisation
+					});
+				}
+
 				createAuditTrail({
 					appealId,
 					azureAdUserId,
