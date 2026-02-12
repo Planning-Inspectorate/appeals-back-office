@@ -35,7 +35,7 @@ extends:
           ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/gh-readonly-queue') }}:
             value: npm run test
           ${{ else }}:
-            value: npm run test:cov
+            value: npm run test:changed
         steps:
           - task: Cache@2
             inputs:
