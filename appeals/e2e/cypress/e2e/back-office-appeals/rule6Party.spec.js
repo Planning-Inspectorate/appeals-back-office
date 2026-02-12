@@ -488,8 +488,6 @@ it('should mark rule 6 POE complete', () => {
 	cy.shareCommentsAndStatementsViaApi(caseObj);
 
 	cy.getRule6ServiceUserId(caseObj, rule6Party.serviceUser.email).then((serviceUserId) => {
-		cy.log(`Service User ID: ${serviceUserId}`);
-
 		cy.addRepresentation(caseObj, 'rule6ProofOfEvidence', serviceUserId);
 		cy.reload();
 
@@ -506,7 +504,7 @@ it('should mark rule 6 POE complete', () => {
 			`${rule6Party.serviceUser.organisationName} proof of evidence and witnesses`
 		);
 
-		// Bug - Rule 6 POE success banner shows generic 'Rule 6 party' text instead of the party name (A2-6823)
+		// Todo: Bug - Rule 6 POE success banner shows generic 'Rule 6 party' text instead of the party name (A2-6823)
 		caseDetailsPage.validateBannerMessage(
 			'Success',
 			`Rule 6 party proof of evidence and witnesses accepted`
@@ -535,8 +533,6 @@ it('should mark rule 6 POE incomplete', () => {
 	cy.shareCommentsAndStatementsViaApi(caseObj);
 
 	cy.getRule6ServiceUserId(caseObj, rule6Party.serviceUser.email).then((serviceUserId) => {
-		cy.log(`Service User ID: ${serviceUserId}`);
-
 		cy.addRepresentation(caseObj, 'rule6ProofOfEvidence', serviceUserId);
 		cy.reload();
 
@@ -554,11 +550,11 @@ it('should mark rule 6 POE incomplete', () => {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm statement is incomplete');
 
-		// Bug - Rule 6 POE success banner shows generic 'Rule 6 party' text instead of the party name (A2-6823)
+		// Todo: Bug - Rule 6 POE success banner shows generic 'Rule 6 party' text instead of the party name (A2-6823)
 		caseDetailsPage.validateBannerMessage('Success', `Rule 6 party proof of evidence incomplete`);
 	});
 
-	// Check Rule 6 POE status (Complete) - Documentation section
+	// Check Rule 6 POE status (incomplete) - Documentation section
 	caseDetailsPage.verifyDocumentationValue(
 		'documentation',
 		'Status',
@@ -601,6 +597,14 @@ it('should show correct history when statement is accepted', () => {
 			`${rule6Party.serviceUser.organisationName} statement accepted`
 		);
 
+		// Check Rule 6 Statement status (Accepted) - Documentation section
+		caseDetailsPage.verifyDocumentationValue(
+			'documentation',
+			'Status',
+			`${rule6Party.serviceUser.organisationName} statement`,
+			'Accepted'
+		);
+
 		// Verify Case History
 		caseDetailsPage.clickViewCaseHistory();
 		caseHistoryPage.verifyCaseHistoryValue(
@@ -636,6 +640,15 @@ it('should show correct history when statement is redacted and accepted', () => 
 			'Success',
 			`${rule6Party.serviceUser.organisationName} statement accepted`
 		);
+
+		// Check Rule 6 Statement status (Accepted and Redacted) - Documentation section
+		caseDetailsPage.verifyDocumentationValue(
+			'documentation',
+			'Status',
+			`${rule6Party.serviceUser.organisationName} statement`,
+			'Accepted'
+		);
+
 		// Verify Case History
 		caseDetailsPage.clickViewCaseHistory();
 		caseHistoryPage.verifyCaseHistoryValue(
@@ -672,6 +685,15 @@ it('should show correct history when statement is incomplete without resubmit', 
 			'Success',
 			`${rule6Party.serviceUser.organisationName} statement is incomplete`
 		);
+
+		// Check Rule 6 Statement status (Incomplete) - Documentation section
+		caseDetailsPage.verifyDocumentationValue(
+			'documentation',
+			'Status',
+			`${rule6Party.serviceUser.organisationName} statement`,
+			'Incomplete'
+		);
+
 		// Verify Case History
 		caseDetailsPage.clickViewCaseHistory();
 		caseHistoryPage.verifyCaseHistoryValue(
@@ -708,6 +730,15 @@ it('should show correct history when statement is incomplete with resubmit', () 
 			'Success',
 			`${rule6Party.serviceUser.organisationName} statement is incomplete`
 		);
+
+		// Check Rule 6 Statement status (Incomplete) - Documentation section
+		caseDetailsPage.verifyDocumentationValue(
+			'documentation',
+			'Status',
+			`${rule6Party.serviceUser.organisationName} statement`,
+			'Incomplete'
+		);
+
 		// Verify Case History
 		caseDetailsPage.clickViewCaseHistory();
 		caseHistoryPage.verifyCaseHistoryValue(
