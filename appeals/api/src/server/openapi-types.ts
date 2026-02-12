@@ -2043,9 +2043,9 @@ export interface SingleLPAQuestionnaireResponse {
 	/** @example 25 */
 	siteAreaSquareMetres?: number;
 	/** @example true */
-	hasAllegedBreachArea?: boolean;
+	areaOfAllegedBreachInSquareMetres?: number;
 	/** @example true */
-	doesAllegedBreachCreateFloorSpace?: boolean;
+	floorSpaceCreatedByBreachInSquareMetres?: number;
 	/** @example true */
 	changeOfUseRefuseOrWaste?: boolean;
 	/** @example true */
@@ -2233,9 +2233,9 @@ export interface UpdateLPAQuestionnaireRequest {
 	/** @example 25 */
 	siteAreaSquareMetres?: number;
 	/** @example true */
-	hasAllegedBreachArea?: boolean;
+	areaOfAllegedBreachInSquareMetres?: number;
 	/** @example true */
-	doesAllegedBreachCreateFloorSpace?: boolean;
+	floorSpaceCreatedByBreachInSquareMetres?: number;
 	/** @example true */
 	changeOfUseRefuseOrWaste?: boolean;
 	/** @example true */
@@ -8199,8 +8199,8 @@ export type LpaQuestionnaire = {
 	lpaAppealInvalidReasons?: string | null;
 	noticeRelatesToBuildingEngineeringMiningOther?: boolean | null;
 	siteAreaSquareMetres?: number | null;
-	hasAllegedBreachArea?: boolean | null;
-	doesAllegedBreachCreateFloorSpace?: boolean | null;
+	areaOfAllegedBreachInSquareMetres?: number | null;
+	floorSpaceCreatedByBreachInSquareMetres?: number | null;
 	changeOfUseRefuseOrWaste?: boolean | null;
 	changeOfUseMineralExtraction?: boolean | null;
 	changeOfUseMineralStorage?: boolean | null;
@@ -17043,8 +17043,8 @@ export interface LpaQuestionnaireUpdateRequest {
 	lpaAppealInvalidReasons?: string | null;
 	noticeRelatesToBuildingEngineeringMiningOther?: boolean | null;
 	siteAreaSquareMetres?: number | null;
-	hasAllegedBreachArea?: boolean | null;
-	doesAllegedBreachCreateFloorSpace?: boolean | null;
+	areaOfAllegedBreachInSquareMetres?: number | null;
+	floorSpaceCreatedByBreachInSquareMetres?: number | null;
 	changeOfUseRefuseOrWaste?: boolean | null;
 	changeOfUseMineralExtraction?: boolean | null;
 	changeOfUseMineralStorage?: boolean | null;

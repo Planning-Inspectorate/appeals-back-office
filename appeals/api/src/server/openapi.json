@@ -12723,13 +12723,13 @@
 						"type": "number",
 						"example": 25
 					},
-					"hasAllegedBreachArea": {
-						"type": "boolean",
-						"example": true
+					"areaOfAllegedBreachInSquareMetres": {
+						"type": "number",
+						"example": 10
 					},
-					"doesAllegedBreachCreateFloorSpace": {
-						"type": "boolean",
-						"example": true
+					"floorSpaceCreatedByBreachInSquareMetres": {
+						"type": "number",
+						"example": 4
 					},
 					"changeOfUseRefuseOrWaste": {
 						"type": "boolean",

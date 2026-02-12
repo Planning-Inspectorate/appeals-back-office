@@ -43,8 +43,8 @@ export const generateEnforcementLpaQuestionnaireComponents = (
 				// 2. Enforcement Specific Questions
 				mappedLPAQData.lpaq?.noticeRelatesToOperations?.display.summaryListItem,
 				mappedLPAQData.lpaq?.siteAreaSquareMetres?.display.summaryListItem,
-				mappedLPAQData.lpaq?.hasAllegedBreachArea?.display.summaryListItem,
-				mappedLPAQData.lpaq?.allegedBreachCreatesFloorSpace?.display.summaryListItem,
+				mappedLPAQData.lpaq?.areaOfAllegedBreachInSquareMetres?.display.summaryListItem,
+				mappedLPAQData.lpaq?.floorSpaceCreatedByBreachInSquareMetres?.display.summaryListItem,
 				mappedLPAQData.lpaq?.changeOfUseRefuseOrWaste?.display.summaryListItem,
 				mappedLPAQData.lpaq?.changeOfUseMineralExtraction?.display.summaryListItem,
 				mappedLPAQData.lpaq?.changeOfUseMineralStorage?.display.summaryListItem,

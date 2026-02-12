@@ -62,6 +62,7 @@ export function conditionalFormatter(id, name, hint, details, type = 'textarea')
  * @param {string} [params.legendTextSize]
  * @param {boolean} [params.legendIsPageHeading]
  * @param {ConditionalParams} [params.yesConditional]
+ * @param {ConditionalParams} [params.noConditional]
  * @param {string} [params.customYesLabel]
  * @param {string} [params.customNoLabel]
  * @param {string|Object} [params.hint]
@@ -77,6 +78,7 @@ export function yesNoInput({
 	legendTextSize = 'l',
 	legendIsPageHeading = false,
 	yesConditional,
+	noConditional,
 	customYesLabel,
 	customNoLabel,
 	hint,
@@ -99,20 +101,29 @@ export function yesNoInput({
 		);
 	}
 
+	/** @type {RadioItem} */
+	const no = {
+		value: 'no',
+		text: customNoLabel || 'No',
+		checked: value === false || value === 'false' || value === 'no'
+	};
+	if (noConditional) {
+		no.conditional = conditionalFormatter(
+			noConditional.id,
+			noConditional.name,
+			noConditional.hint,
+			noConditional.details,
+			noConditional.type
+		);
+	}
+
 	/** @type {RadiosPageComponent} */
 	const component = {
 		type: 'radios',
 		parameters: {
 			name,
 			idPrefix: id || kebabCase(name),
-			items: [
-				yes,
-				{
-					value: 'no',
-					text: customNoLabel || 'No',
-					checked: value === false || value === 'false' || value === 'no'
-				}
-			],
+			items: [yes, no],
 			errorMessage: errorMessage ? { text: errorMessage } : undefined,
 			attributes
 		}

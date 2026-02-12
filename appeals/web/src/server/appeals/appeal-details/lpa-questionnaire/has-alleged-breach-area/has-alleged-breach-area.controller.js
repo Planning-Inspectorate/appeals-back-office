@@ -2,22 +2,22 @@ import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { areIdParamsValid } from '#lib/validators/id-param.validator.js';
 import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
-import { changeHasAllegedBreachAreaPage } from './has-alleged-breach-area.mapper.js';
-import { changeHasAllegedBreachArea } from './has-alleged-breach-area.service.js';
+import { changeAreaOfAllegedBreachInSquareMetresPage } from './has-alleged-breach-area.mapper.js';
+import { changeAreaOfAllegedBreachInSquareMetres } from './has-alleged-breach-area.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const getChangeHasAllegedBreachArea = async (request, response) => {
-	return renderChangeHasAllegedBreachArea(request, response);
+export const getChangeAreaOfAllegedBreachInSquareMetres = async (request, response) => {
+	return renderChangeAreaOfAllegedBreachInSquareMetres(request, response);
 };
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-const renderChangeHasAllegedBreachArea = async (request, response) => {
+const renderChangeAreaOfAllegedBreachInSquareMetres = async (request, response) => {
 	try {
 		const { errors, currentAppeal, apiClient } = request;
 
@@ -27,13 +27,13 @@ const renderChangeHasAllegedBreachArea = async (request, response) => {
 			currentAppeal.lpaQuestionnaireId
 		);
 
-		const mappedPageContents = changeHasAllegedBreachAreaPage(
+		const mappedPageContents = changeAreaOfAllegedBreachInSquareMetresPage(
 			currentAppeal,
 			lpaQuestionnaireData,
-			request.session.HasAllegedBreachArea
+			request.session.areaOfAllegedBreachInSquareMetres
 		);
 
-		delete request.session.HasAllegedBreachArea;
+		delete request.session.areaOfAllegedBreachInSquareMetres;
 
 		return response.status(200).render('patterns/change-page.pattern.njk', {
 			pageContent: mappedPageContents,
@@ -41,7 +41,7 @@ const renderChangeHasAllegedBreachArea = async (request, response) => {
 		});
 	} catch (error) {
 		logger.error(error);
-		delete request.session.HasAllegedBreachArea;
+		delete request.session.areaOfAllegedBreachInSquareMetres;
 		return response.status(500).render('app/500.njk');
 	}
 };
@@ -50,11 +50,14 @@ const renderChangeHasAllegedBreachArea = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const postChangeHasAllegedBreachArea = async (request, response) => {
-	request.session.hasAllegedBreachArea = request.body['hasAllegedBreachAreaRadio'];
+export const postChangeAreaOfAllegedBreachInSquareMetres = async (request, response) => {
+	request.session.areaOfAllegedBreachInSquareMetres = {
+		radio: request.body['areaOfAllegedBreachInSquareMetresRadio'],
+		details: request.body['areaOfAllegedBreachInSquareMetres']
+	};
 
 	if (request.errors) {
-		return renderChangeHasAllegedBreachArea(request, response);
+		return renderChangeAreaOfAllegedBreachInSquareMetres(request, response);
 	}
 
 	const {
@@ -67,11 +70,11 @@ export const postChangeHasAllegedBreachArea = async (request, response) => {
 	}
 
 	try {
-		await changeHasAllegedBreachArea(
+		await changeAreaOfAllegedBreachInSquareMetres(
 			apiClient,
 			appealId,
 			lpaQuestionnaireId,
-			request.session.hasAllegedBreachArea
+			request.session.areaOfAllegedBreachInSquareMetres
 		);
 
 		addNotificationBannerToSession({
@@ -81,7 +84,7 @@ export const postChangeHasAllegedBreachArea = async (request, response) => {
 			text: 'Is the area of the alleged breach the same as the site area has been updated'
 		});
 
-		delete request.session.hasAllegedBreachArea;
+		delete request.session.areaOfAllegedBreachInSquareMetres;
 
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`

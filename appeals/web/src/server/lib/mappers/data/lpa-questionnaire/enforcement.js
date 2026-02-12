@@ -40,8 +40,8 @@ export const submaps = {
 	// Section 1:
 	noticeRelatesToOperations: mapNoticeRelatesToOperations,
 	siteAreaSquareMetres: mapSiteArea,
-	hasAllegedBreachArea: mapEnforcementBreachArea,
-	allegedBreachCreatesFloorSpace: mapAllegedBreachCreatesFloorSpace,
+	areaOfAllegedBreachInSquareMetres: mapEnforcementBreachArea,
+	floorSpaceCreatedByBreachInSquareMetres: mapAllegedBreachCreatesFloorSpace,
 
 	isSiteOnCrownLand: mapCrownLand,
 	withinTrunkRoadDistance: mapWithinTrunkRoadDistance,

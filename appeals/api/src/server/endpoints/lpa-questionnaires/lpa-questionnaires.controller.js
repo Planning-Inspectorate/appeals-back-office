@@ -75,8 +75,8 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			// Enforcement
 			noticeRelatesToBuildingEngineeringMiningOther,
 			siteAreaSquareMetres,
-			hasAllegedBreachArea,
-			doesAllegedBreachCreateFloorSpace,
+			areaOfAllegedBreachInSquareMetres,
+			floorSpaceCreatedByBreachInSquareMetres,
 			changeOfUseRefuseOrWaste,
 			changeOfUseMineralExtraction,
 			changeOfUseMineralStorage,
@@ -146,8 +146,8 @@ const updateLPAQuestionnaireById = async (req, res) => {
 					// Enforcement
 					noticeRelatesToBuildingEngineeringMiningOther,
 					siteAreaSquareMetres,
-					hasAllegedBreachArea,
-					doesAllegedBreachCreateFloorSpace,
+					areaOfAllegedBreachInSquareMetres,
+					floorSpaceCreatedByBreachInSquareMetres,
 					changeOfUseRefuseOrWaste,
 					changeOfUseMineralExtraction,
 					changeOfUseMineralStorage,
@@ -235,8 +235,8 @@ const updateLPAQuestionnaireById = async (req, res) => {
 				// Enforcement
 				noticeRelatesToBuildingEngineeringMiningOther,
 				siteAreaSquareMetres,
-				hasAllegedBreachArea,
-				doesAllegedBreachCreateFloorSpace,
+				areaOfAllegedBreachInSquareMetres,
+				floorSpaceCreatedByBreachInSquareMetres,
 				changeOfUseRefuseOrWaste,
 				changeOfUseMineralExtraction,
 				changeOfUseMineralStorage,

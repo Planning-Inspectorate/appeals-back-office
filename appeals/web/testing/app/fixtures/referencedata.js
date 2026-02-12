@@ -1200,8 +1200,8 @@ export const lpaQuestionnaireData = {
 	validation: null,
 	noticeRelatesToBuildingEngineeringMiningOther: true,
 	siteAreaSquareMetres: 25,
-	hasAllegedBreachArea: true,
-	doesAllegedBreachCreateFloorSpace: true,
+	areaOfAllegedBreachInSquareMetres: 25,
+	floorSpaceCreatedByBreachInSquareMetres: 20,
 	changeOfUseRefuseOrWaste: true,
 	changeOfUseMineralExtraction: true,
 	changeOfUseMineralStorage: true,
@@ -1616,8 +1616,8 @@ export const lpaQuestionnaireDataNotValidated = {
 	validation: null,
 	noticeRelatesToBuildingEngineeringMiningOther: true,
 	siteAreaSquareMetres: 25,
-	hasAllegedBreachArea: true,
-	doesAllegedBreachCreateFloorSpace: true,
+	areaOfAllegedBreachInSquareMetres: 25,
+	floorSpaceCreatedByBreachInSquareMetres: 20,
 	changeOfUseRefuseOrWaste: true,
 	changeOfUseMineralExtraction: true,
 	changeOfUseMineralStorage: true,
@@ -5140,3 +5140,5 @@ export const missingDocumentOptions = [
 	{ id: 5, name: 'Application for an award of appeal costs', hasText: true },
 	{ id: 6, name: 'Other new supporting documents', hasText: true }
 ];
+
+
