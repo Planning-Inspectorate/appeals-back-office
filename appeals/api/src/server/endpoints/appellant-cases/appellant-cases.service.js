@@ -354,10 +354,13 @@ export const updateAppellantCaseValidationOutcome = async (
 				) {
 					reasonsToFormat.push('Missing information');
 				}
+				if (appellantCase?.appellantCaseEnforcementGroundsMismatchSelected?.length) {
+					reasonsToFormat.push('Grounds mismatch');
+				}
+
 				if (enforcementNoticeAppealOutcome.groundAFeeReceiptDueDate) {
 					reasonsToFormat.push('Ground (a) fee receipt due date');
 				}
-
 				const details = `${
 					stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['Appeal']) + '\n'
 				}${formatReasonsToHtmlList(reasonsToFormat)}`;

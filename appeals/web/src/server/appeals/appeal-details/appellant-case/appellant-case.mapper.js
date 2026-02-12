@@ -29,6 +29,7 @@ import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
 import { mapReasonOptionsToCheckboxItemParameters } from '#lib/validation-outcome-reasons-formatter.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
+import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	APPEAL_CASE_STATUS,
 	APPEAL_DOCUMENT_TYPE,
@@ -396,7 +397,6 @@ export function checkAndConfirmPage(
 	) {
 		throw new Error(`validationOutcome "${validationOutcome}" requires invalidOrIncompleteReasons`);
 	}
-
 	const isEnforcementAppeal =
 		enforcementNoticeInvalid !== undefined && otherLiveAppeals !== undefined;
 	const validationOutcomeAsString = String(validationOutcome);
@@ -564,6 +564,7 @@ export function checkAndConfirmPage(
  */
 export function mapAppellantCaseNotificationBanners(
 	appellantCaseData,
+	// @ts-ignore
 	currentRoute,
 	session,
 	validationOutcome,
@@ -573,6 +574,8 @@ export function mapAppellantCaseNotificationBanners(
 ) {
 	const banners = mapNotificationBannersFromSession(session, 'appellantCase', appealId);
 
+	// @ts-ignore
+	const appealType = appellantCaseData.appealType;
 	if (
 		getDocumentsForVirusStatus(appellantCaseData, APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED).length > 0
 	) {
@@ -581,7 +584,6 @@ export function mapAppellantCaseNotificationBanners(
 
 	if (validationOutcome === 'invalid' || validationOutcome === 'incomplete') {
 		notValidReasons = ensureArray(notValidReasons);
-
 		const listClasses = 'govuk-!-margin-top-0';
 
 		/** @type {PageComponent[]} */
@@ -632,11 +634,7 @@ export function mapAppellantCaseNotificationBanners(
 			});
 		}
 
-		if (
-			// @ts-ignore
-			appellantCaseData.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
-			validationOutcome === 'incomplete'
-		) {
+		if (isAnyEnforcementAppealType(appealType) && validationOutcome === 'incomplete') {
 			bannerContentPageComponents.push({
 				type: 'summary-list',
 				parameters: {
@@ -647,7 +645,10 @@ export function mapAppellantCaseNotificationBanners(
 								text: 'Incomplete reasons'
 							},
 							value: {
-								text: 'Enforcement notice invalid'
+								text:
+									appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+										? 'Appeal Incomplete'
+										: 'Enforcement notice invalid'
 							}
 						}
 					]
