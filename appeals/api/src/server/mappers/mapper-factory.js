@@ -138,6 +138,13 @@ function createIntegrationMap(mappingRequest) {
 			const ldc = createMap(integrationMappers.integrationLDCMappers, mappingRequest);
 			return mergeMaps(caseData, ldc);
 		}
+		case APPEAL_CASE_TYPE.F: {
+			const enforcementListedBuilding = createMap(
+				integrationMappers.integrationEnforcementListedMappers,
+				mappingRequest
+			);
+			return mergeMaps(caseData, enforcementListedBuilding);
+		}
 		default:
 			return caseData;
 	}
