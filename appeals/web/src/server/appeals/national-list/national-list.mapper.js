@@ -132,6 +132,9 @@ export function nationalListPage(
 	if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_INQUIRY)) {
 		enabledAppealProcedures.push(APPEAL_CASE_PROCEDURE.INQUIRY);
 	}
+	if (isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS)) {
+		enabledAppealProcedures.push(APPEAL_CASE_PROCEDURE.WRITTEN_PART_1);
+	}
 
 	const appealTypeFilterItemsArray = [
 		{

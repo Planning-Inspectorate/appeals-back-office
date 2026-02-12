@@ -26,7 +26,10 @@ export const generateLdcLpaQuestionnaireComponents = (mappedLPAQData, mappedAppe
 					text: '1. Constraints, designations and other issues'
 				}
 			},
-			rows: [mappedLPAQData.lpaq?.isCorrectAppealType?.display.summaryListItem].filter(isDefined)
+			rows: [
+				mappedLPAQData.lpaq?.isCorrectAppealType?.display.summaryListItem,
+				mappedLPAQData.lpaq?.appealUnderActSection?.display.summaryListItem
+			].filter(isDefined)
 		}
 	});
 

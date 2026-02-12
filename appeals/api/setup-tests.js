@@ -88,6 +88,14 @@ const mockAppellantCaseEnforcementInvalidReasonsSelectedCreateMany = jest
 	.fn()
 	.mockResolvedValue({});
 const mockAppellantCaseEnforcementMissingDocumentFindMany = jest.fn().mockResolvedValue({});
+const mockAppellantCaseEnforcementMissingDocumentTextDeleteMany = jest.fn().mockResolvedValue({});
+const mockAppellantCaseEnforcementMissingDocumentTextCreateMany = jest.fn().mockResolvedValue({});
+const mockAppellantCaseEnforcementMissingDocumentsSelectedDeleteMany = jest
+	.fn()
+	.mockResolvedValue({});
+const mockAppellantCaseEnforcementMissingDocumentsSelectedCreateMany = jest
+	.fn()
+	.mockResolvedValue({});
 const mockAppellantCaseValidationOutcomeFindMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseValidationOutcomeFindUnique = jest.fn().mockResolvedValue({});
 const mockAppellantCaseUpdate = jest.fn().mockResolvedValue({});
@@ -207,7 +215,7 @@ const mockGroundDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppealGroundUpsert = jest.fn().mockResolvedValue({});
 const mockAppealGroundCreateMany = jest.fn().mockResolvedValue({});
 const mockAppealGroundDelete = jest.fn().mockResolvedValue({});
-const mockEnforcementNoticeAppealOutcomeCreate = jest.fn().mockResolvedValue({});
+const mockEnforcementNoticeAppealOutcomeUpsert = jest.fn().mockResolvedValue({});
 
 const mockNotifySend = jest.fn().mockImplementation(async (params) => {
 	const { doNotMockNotifySend = false, ...options } = params || {};
@@ -411,6 +419,20 @@ class MockPrismaClient {
 	get appellantCaseEnforcementMissingDocument() {
 		return {
 			findMany: mockAppellantCaseEnforcementMissingDocumentFindMany
+		};
+	}
+
+	get appellantCaseEnforcementMissingDocumentText() {
+		return {
+			deleteMany: mockAppellantCaseEnforcementMissingDocumentTextDeleteMany,
+			createMany: mockAppellantCaseEnforcementMissingDocumentTextCreateMany
+		};
+	}
+
+	get appellantCaseEnforcementMissingDocumentsSelected() {
+		return {
+			deleteMany: mockAppellantCaseEnforcementMissingDocumentsSelectedDeleteMany,
+			createMany: mockAppellantCaseEnforcementMissingDocumentsSelectedCreateMany
 		};
 	}
 
@@ -754,7 +776,7 @@ class MockPrismaClient {
 
 	get enforcementNoticeAppealOutcome() {
 		return {
-			create: mockEnforcementNoticeAppealOutcomeCreate
+			upsert: mockEnforcementNoticeAppealOutcomeUpsert
 		};
 	}
 

@@ -122,8 +122,8 @@ exports[`incomplete-appeal enforcement notice appeal GET /check-details-and-mark
                         </dd>
                 </div>
             </dl>
-            <p class="govuk-body">We will mark the enforcement notice as incomplete and send an email to
-                the relevant parties.</p>
+            <p class="govuk-body">We will mark the appeal as incomplete and send an email to the relevant
+                parties.</p>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">
@@ -219,8 +219,8 @@ exports[`incomplete-appeal enforcement notice appeal GET /check-details-and-mark
                         </dd>
                 </div>
             </dl>
-            <p class="govuk-body">We will mark the enforcement notice as incomplete and send an email to
-                the relevant parties.</p>
+            <p class="govuk-body">We will mark the appeal as incomplete and send an email to the relevant
+                parties.</p>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">

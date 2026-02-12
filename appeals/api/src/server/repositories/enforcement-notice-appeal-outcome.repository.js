@@ -7,14 +7,18 @@ import { databaseConnector } from '#utils/database-connector.js';
 /** @typedef {import('@pins/appeals.api').Schema.EnforcementNoticeAppealOutcome} EnforcementNoticeAppealOutcome */
 
 /**
- *
+ * @param {import('#db-client/client.ts').Prisma.EnforcementNoticeAppealOutcomeWhereUniqueInput} where
  * @param {import('#db-client/client.ts').Prisma.EnforcementNoticeAppealOutcomeCreateInput} data
  * @returns {PrismaPromise<EnforcementNoticeAppealOutcome>}
  */
-const createEnforcementNoticeAppealOutcome = (data) => {
-	return databaseConnector.enforcementNoticeAppealOutcome.create({ data });
+const upsertEnforcementNoticeAppealOutcome = (where, data) => {
+	return databaseConnector.enforcementNoticeAppealOutcome.upsert({
+		where,
+		update: data,
+		create: data
+	});
 };
 
 export default {
-	createEnforcementNoticeAppealOutcome
+	upsertEnforcementNoticeAppealOutcome
 };

@@ -36,6 +36,9 @@ router
 router
 	.route('/change/site/:siteId/check-and-confirm')
 	.get(asyncHandler(controller.getChangeNeighbouringSiteCheckAndConfirm))
-	.post(asyncHandler(controller.postChangeNeighbouringSiteCheckAndConfirm));
+	.post(
+		validators.validateAppealId,
+		asyncHandler(controller.postChangeNeighbouringSiteCheckAndConfirm)
+	);
 
 export default router;

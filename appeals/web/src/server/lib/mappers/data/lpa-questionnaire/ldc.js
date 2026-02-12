@@ -1,5 +1,6 @@
 import { mapLpaNeighbouringSites } from '../appeal/submappers/lpa-neighbouring-sites.mapper.js';
 import { submaps as hasSubmaps } from './has.js';
+import { mapAppealUnderActSection } from './submappers/map-appeal-under-act-section.js';
 import { mapCommunityInfrastructureLevy } from './submappers/map-community-infrastructure-levy.js';
 import { mapHasCommunityInfrastructureLevy } from './submappers/map-has-community-infrastructure-levy.js';
 import { mapInfrastructureLevyAdoptedDate } from './submappers/map-infrastructure-levy-adopted-date.js';
@@ -27,5 +28,7 @@ export const submaps = {
 	procedurePreference: mapProcedurePreference,
 	procedurePreferenceDetails: mapProcedurePreferenceDetails,
 	procedurePreferenceDuration: mapProcedurePreferenceDuration,
-	otherAppeals: mapOtherAppeals
+	otherAppeals: mapOtherAppeals,
+
+	appealUnderActSection: mapAppealUnderActSection
 };

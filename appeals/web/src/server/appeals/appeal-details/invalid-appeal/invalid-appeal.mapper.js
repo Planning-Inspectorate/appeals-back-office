@@ -72,7 +72,9 @@ export const mapInvalidReasonPage = (
 	sourceIsAppellantCase
 ) => {
 	const shortAppealReference = appealShortReference(appealReference);
-	const isEnforcementNotice = appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE;
+	const isEnforcementNotice =
+		appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
+		appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING;
 	const backLinkUrl = isEnforcementNotice
 		? `/appeals-service/appeal-details/${appealId}/appellant-case/invalid/enforcement-notice`
 		: `/appeals-service/appeal-details/${appealId}/${
@@ -529,6 +531,10 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (
 		validationOutcome === 'invalid'
 			? 'Check details and mark enforcement notice as invalid'
 			: 'Check details and mark appeal as incomplete';
+	const helperText =
+		validationOutcome === 'invalid'
+			? `<p class="govuk-body">We will mark the enforcement notice as ${validationOutcome} and send an email to the relevant parties.</p>`
+			: `<p class="govuk-body">We will mark the appeal as ${validationOutcome} and send an email to the relevant parties.</p>`; // TO DO CHECK THIS ON OTHER FLOW TOO
 
 	return {
 		title,
@@ -540,7 +546,7 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (
 			{
 				type: 'html',
 				parameters: {
-					html: `<p class="govuk-body">We will mark the enforcement notice as ${validationOutcome} and send an email to the relevant parties.</p>`
+					html: helperText
 				}
 			}
 		],

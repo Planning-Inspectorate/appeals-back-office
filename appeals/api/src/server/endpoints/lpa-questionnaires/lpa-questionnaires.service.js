@@ -11,7 +11,8 @@ import { isOutcomeComplete, isOutcomeIncomplete } from '#utils/check-validation-
 import { isCurrentStatus } from '#utils/current-status.js';
 import { getFormattedReasons } from '#utils/email-formatter.js';
 import { allLpaQuestionnaireOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
-import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
+import { isLinkedAppeal, isParentAppeal } from '#utils/is-linked-appeal.js';
+import { getChildAppeals } from '#utils/link-appeals.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
@@ -27,6 +28,7 @@ import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorat
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionnaireValidationOutcomeParams} UpdateLPAQuestionnaireValidationOutcomeParams */
+/** @typedef {import('@pins/appeals.api').Api.LpaQuestionnaireUpdateRequest} LpaQuestionnaireUpdateRequest */
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Api.LpaQuestionnaire} LpaQuestionnaire */
 
@@ -75,18 +77,38 @@ const updateLPAQuestionnaireValidationOutcome = async (
 		};
 	}
 
-	await lpaQuestionnaireRepository.updateLPAQuestionnaireById(lpaQuestionnaireId, {
-		validationOutcomeId: validationOutcome.id,
-		...(isOutcomeIncomplete(validationOutcome.name) && {
-			appealId,
-			incompleteReasons,
-			timetable: timetable
-				? {
-						lpaQuestionnaireDueDate: timetable.lpaQuestionnaireDueDate.toISOString()
-					}
-				: undefined
-		})
-	});
+	const childAppeals = getChildAppeals(appeal);
+
+	/**
+	 *
+	 * @param {number} lpaQuestionnaireId
+	 * @returns {Promise<void>}
+	 */
+	const updateLPAQuestionnaireOutcome = async (lpaQuestionnaireId) => {
+		await lpaQuestionnaireRepository.updateLPAQuestionnaireById(lpaQuestionnaireId, {
+			validationOutcomeId: validationOutcome.id,
+			...(isOutcomeIncomplete(validationOutcome.name) && {
+				appealId,
+				incompleteReasons,
+				timetable: timetable
+					? {
+							lpaQuestionnaireDueDate: timetable.lpaQuestionnaireDueDate.toISOString()
+						}
+					: undefined
+			})
+		});
+	};
+
+	await updateLPAQuestionnaireOutcome(lpaQuestionnaireId);
+
+	if (isParentAppeal(appeal) && appeal.appealType?.type === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+		// Now keep linked enforcement notice children in sync with their parent
+		for (const childAppeal of childAppeals) {
+			if (typeof childAppeal?.lpaQuestionnaire?.id === 'number') {
+				await updateLPAQuestionnaireOutcome(childAppeal.lpaQuestionnaire.id);
+			}
+		}
+	}
 
 	if (!isOutcomeIncomplete(validationOutcome.name)) {
 		if (!isLinkedAppeal(appeal)) {
@@ -322,4 +344,32 @@ async function sendLpaqCompleteEmail(
 	});
 }
 
-export { checkLPAQuestionnaireExists, updateLPAQuestionnaireValidationOutcome };
+/**
+ * @param {number} lpaQuestionnaireId
+ * @param {LpaQuestionnaireUpdateRequest} data
+ * @param {Appeal} appeal
+ */
+async function updateLPAQuestionnaire(lpaQuestionnaireId, data, appeal) {
+	await lpaQuestionnaireRepository.updateLPAQuestionnaireById(lpaQuestionnaireId, data);
+	// Only sync the child LPAQ with the parent when the appeal type is enforcement notice
+	if (!isParentAppeal(appeal) || appeal.appealType?.type !== APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+		return;
+	}
+
+	// Now keep linked enforcement notice children in sync with their parent
+	for (const childAppeal of getChildAppeals(appeal)) {
+		if (typeof childAppeal?.lpaQuestionnaire?.id !== 'number') {
+			continue;
+		}
+		await lpaQuestionnaireRepository.updateLPAQuestionnaireById(
+			childAppeal?.lpaQuestionnaire?.id,
+			data
+		);
+	}
+}
+
+export {
+	checkLPAQuestionnaireExists,
+	updateLPAQuestionnaire,
+	updateLPAQuestionnaireValidationOutcome
+};

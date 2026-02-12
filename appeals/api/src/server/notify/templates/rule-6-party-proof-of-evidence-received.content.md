@@ -4,7 +4,7 @@ We have received proof of evidence and witnesses from a Rule 6 party.
 
 # What happens next
 
-You can [view the statement in the appeals service]({{statement_url}}).
+You can [view the proof of evidence and witnesses in the appeals service]({{statement_url}}).
 
 The date of the inquiry is {{inquiry_date}}.
 

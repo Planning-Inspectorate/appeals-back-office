@@ -555,6 +555,46 @@ describe('mapAppellantCaseIn', () => {
 			})
 		},
 		{
+			desc: 'Enforcement listed building case (F)',
+			input: {
+				casedata: {
+					caseType: APPEAL_CASE_TYPE.F,
+					enforcementNotice: true,
+					enforcementNoticeListedBuilding: true,
+					enforcementReference: 'abcd1234',
+					enforcementIssueDate: '2025-03-16T09:12:33.334Z',
+					enforcementEffectiveDate: '2025-03-15T09:12:33.334Z',
+					contactPlanningInspectorateDate: '2025-03-18T09:12:33.334Z',
+					contactAddressLine1: 'contactAddressLine1',
+					contactAddressLine2: 'contactAddressLine2',
+					contactAddressCounty: 'contactAddressCounty',
+					contactAddressPostcode: 'contactAddressPostcode',
+					contactAddressTown: 'contactAddressTown',
+					interestInLand: 'owner',
+					descriptionOfAllegedBreach: 'decription of alleged breach'
+				}
+			},
+			expected: expect.objectContaining({
+				enforcementNotice: true,
+				enforcementReference: 'abcd1234',
+				enforcementNoticeListedBuilding: true,
+				enforcementIssueDate: '2025-03-16T09:12:33.334Z',
+				enforcementEffectiveDate: '2025-03-15T09:12:33.334Z',
+				contactPlanningInspectorateDate: '2025-03-18T09:12:33.334Z',
+				contactAddress: {
+					create: {
+						addressLine1: 'contactAddressLine1',
+						addressLine2: 'contactAddressLine2',
+						addressCounty: 'contactAddressCounty',
+						postcode: 'contactAddressPostcode',
+						addressTown: 'contactAddressTown'
+					}
+				},
+				interestInLand: 'owner',
+				descriptionOfAllegedBreach: 'decription of alleged breach'
+			})
+		},
+		{
 			desc: 'siteAccessDetails and siteSafetyDetails arrays',
 			input: {
 				casedata: { siteAccessDetails: ['access1', 'access2'], siteSafetyDetails: ['safety1'] }

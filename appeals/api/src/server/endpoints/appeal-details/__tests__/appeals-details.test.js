@@ -126,7 +126,7 @@ const householdAppealDto = {
 	createdAt: householdAppeal.caseCreatedDate.toISOString(),
 	startedAt: householdAppeal.caseStartedDate?.toISOString(),
 	validAt: householdAppeal.caseValidDate?.toISOString(),
-	enforcementNotice: { appellantCase: {} },
+	enforcementNotice: { appellantCase: {}, appealOutcome: {} },
 	appealRule6Parties: {}
 };
 
@@ -277,7 +277,7 @@ const s78AppealDto = {
 	createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
 	startedAt: fullPlanningAppeal.caseStartedDate?.toISOString(),
 	validAt: fullPlanningAppeal.caseValidDate?.toISOString(),
-	enforcementNotice: { appellantCase: {} }
+	enforcementNotice: { appellantCase: {}, appealOutcome: {} }
 };
 
 const folders = [

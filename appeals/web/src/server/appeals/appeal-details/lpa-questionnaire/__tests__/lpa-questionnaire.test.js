@@ -112,7 +112,7 @@ const FieldTestCases = [
 		fieldName: 'isInfrastructureLevyFormallyAdopted',
 		text: 'Is the community infrastructure levy formally adopted?',
 		cssClass: 'lpa-is-infrastructure-levy-formally-adopted',
-		undefinedValue: 'No documents'
+		undefinedValue: 'Not answered'
 	}
 ];
 
@@ -1328,6 +1328,9 @@ describe('LPA Questionnaire review', () => {
 			);
 			expect(element.innerHTML).toContain('Address of the neighbour’s land or property</dt>');
 			expect(element.innerHTML).toContain('Are there any potential safety risks?</dt>');
+			expect(element.innerHTML).toContain(
+				'What type of lawful development certificate is the appeal about?'
+			);
 
 			expect(element.innerHTML).toContain('4. Appeal process</h2>');
 			expect(element.innerHTML).toContain(

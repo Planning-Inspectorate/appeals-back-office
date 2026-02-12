@@ -932,7 +932,7 @@ export function getPageHeadingTextOverrideForFolder(folder) {
 		case APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING:
 			return 'Ground (g) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
-			return 'Application receipt';
+			return 'Ground (a) fee receipt';
 		default:
 			return;
 	}
@@ -991,7 +991,7 @@ export function getPageHeadingTextOverrideForAddDocuments(folder, appealType) {
 		case APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING:
 			return 'Upload your ground (g) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
-			return 'Upload your application receipt';
+			return 'Upload your ground (a) fee receipt';
 		default:
 			break;
 	}
@@ -1042,6 +1042,6 @@ export function getDocumentNameFromFolder(folderPath) {
 		case APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING:
 			return 'ground (g) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
-			return 'application receipt';
+			return 'ground (a) fee receipt';
 	}
 }

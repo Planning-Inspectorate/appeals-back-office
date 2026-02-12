@@ -508,3 +508,45 @@ exports[`Appellant Case Valid Flow Enforcement Appeals POST /enforcement/other-i
     </div>
 </main>"
 `;
+
+exports[`Appellant Case Valid Flow Enforcement listed Appeals GET /enforcement/check-details should render the 'Check details' screen for ELB 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and mark appeal as valid</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>
+                                <dd class="govuk-summary-list__value">Valid</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5624/appellant-case">Change<span class="govuk-visually-hidden"> review decision</span></a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you want to add any other information?</dt>
+                                <dd                                 class="govuk-summary-list__value">
+                                    <div class="pins-show-more" data-label="" data-mode="text" data-max-before-hiding="300"
+                                    data-toggle-text-collapsed="Show more" data-toggle-text-expanded="Show less">Yes: Other information</div>
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5624/appellant-case/valid/enforcement/other-information">Change<span class="govuk-visually-hidden"> Other information</span></a>
+                                    </dd>
+                            </div>
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Valid date for case</dt>
+                                <dd class="govuk-summary-list__value">1 January 2025</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5624/appellant-case/valid/enforcement/date">Change<span class="govuk-visually-hidden"> Valid date</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <p class="govuk-body">We will mark the appeal as valid and send an email to the relevant parties.</p>
+                        <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Mark appeal as valid</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;

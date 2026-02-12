@@ -81,12 +81,18 @@ export interface AppellantCase extends schema.AppellantCase {
 	knowsOtherOwners?: KnowledgeOfOtherLandowners | null;
 	appellantCaseAdvertDetails?: AppellantCaseAdvertDetails[];
 	contactAddress?: Address | null;
+	appellantCaseEnforcementMissingDocumentsSelected?: AppellantCaseEnforcementMissingDocumentsSelected[];
 }
 export interface AppellantCaseValidationOutcome extends schema.AppellantCaseValidationOutcome {}
 export interface AppellantCaseIncompleteReason extends schema.AppellantCaseIncompleteReason {}
 export interface AppellantCaseInvalidReason extends schema.AppellantCaseInvalidReason {}
 export interface AppellantCaseEnforcementInvalidReason
 	extends schema.AppellantCaseEnforcementInvalidReason {}
+export interface AppellantCaseEnforcementMissingDocumentsSelected
+	extends schema.AppellantCaseEnforcementMissingDocumentsSelected {
+	appellantCaseEnforcementMissingDocument: AppellantCaseEnforcementMissingDocument;
+	appellantCaseEnforcementMissingDocumentText: AppellantCaseEnforcementMissingDocumentText[];
+}
 export interface AppellantCaseEnforcementMissingDocument
 	extends schema.AppellantCaseEnforcementMissingDocument {}
 export interface AppellantCaseIncompleteReasonsSelected

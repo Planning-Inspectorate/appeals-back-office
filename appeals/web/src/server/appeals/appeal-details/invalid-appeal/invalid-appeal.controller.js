@@ -14,6 +14,7 @@ import {
 	ENFORCEMENT_APPEAL_INVALID_GROUND_A_BARRED,
 	ENFORCEMENT_APPEAL_INVALID_LEGAL_INTEREST
 } from '@pins/appeals/constants/support.js';
+import { isAnyEnforcementAppealType } from '../appellant-case/appellant-case.controller.js';
 import { mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters } from '../appellant-case/appellant-case.mapper.js';
 import * as appellantCaseService from '../appellant-case/appellant-case.service.js';
 import * as outcomeIncompleteService from '../appellant-case/outcome-incomplete/outcome-incomplete.service.js';
@@ -85,24 +86,35 @@ const renderInvalidReason = async (request, response) => {
 			return acc;
 		}
 
-		if (currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+		const isEnforcementNotice = currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE;
+		const isEnforcementListedBuilding =
+			currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING;
+
+		if (isEnforcementNotice) {
 			// @ts-ignore
 			acc.push(reason);
-		} else {
-			if (
-				reason.name !== ENFORCEMENT_APPEAL_INVALID_LEGAL_INTEREST &&
-				reason.name !== ENFORCEMENT_APPEAL_INVALID_GROUND_A_BARRED
-			) {
-				// @ts-ignore
-				acc.push(reason);
-			}
+			return acc;
+		}
+
+		if (isEnforcementListedBuilding && reason.name === ENFORCEMENT_APPEAL_INVALID_LEGAL_INTEREST) {
+			// @ts-ignore
+			acc.push(reason);
+			return acc;
+		}
+
+		if (
+			reason.name !== ENFORCEMENT_APPEAL_INVALID_LEGAL_INTEREST &&
+			reason.name !== ENFORCEMENT_APPEAL_INVALID_GROUND_A_BARRED
+		) {
+			// @ts-ignore
+			acc.push(reason);
 		}
 
 		return acc;
 	}, []);
 
 	if (filteredReasonOptions) {
-		if (currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+		if (isAnyEnforcementAppealType(currentAppeal.appealType)) {
 			// set 'Other reason' last
 			filteredReasonOptions.push(filteredReasonOptions.splice(3, 1)[0]);
 		}
@@ -181,7 +193,7 @@ export const postInvalidReason = async (request, response) => {
 		};
 
 		if (request.baseUrl.includes('appellant-case')) {
-			if (appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+			if (isAnyEnforcementAppealType(appealType)) {
 				return response.redirect(
 					`/appeals-service/appeal-details/${appealId}/appellant-case/invalid/other-live-appeals`
 				);

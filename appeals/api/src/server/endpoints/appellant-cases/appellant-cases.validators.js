@@ -102,6 +102,21 @@ const patchAppellantCaseValidator = composeMiddleware(
 	validateStringParameter('otherInformation', LENGTH_1000),
 	validateStringParameter('enforcementNoticeInvalid'),
 	validateStringParameter('otherLiveAppeals'),
+	validateIncompleteInvalidReasonParameter('enforcementMissingDocuments'),
+	validateDateParameter({
+		parameterName: 'feeReceiptDueDate',
+		mustBeFutureDate: true,
+		customFn: (
+			/** @type {any} */ value,
+			/** @type {{ req: { body: { validationOutcome: string } } }} */ { req }
+		) => {
+			if (value && !isOutcomeIncomplete(req.body.validationOutcome)) {
+				throw new Error(ERROR_ONLY_FOR_INCOMPLETE_VALIDATION_OUTCOME);
+			}
+
+			return value;
+		}
+	}),
 	validationErrorHandler
 );
 

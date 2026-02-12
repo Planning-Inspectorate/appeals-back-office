@@ -808,6 +808,37 @@ export const enforcementNoticeAppealAppellantCaseInvalid = {
 	id: 4
 };
 
+export const enforcementNoticeAppealAppellantCaseIncomplete = {
+	...enforcementNoticeAppeal,
+	appellantCase: {
+		...enforcementNoticeAppeal.appellantCase,
+		...incompleteAppellantCaseOutcome,
+		appellantCaseEnforcementInvalidReasonsSelected: [
+			{
+				appellantCaseEnforcementInvalidReason: {
+					id: 3,
+					name: 'There is a mistake in the wording',
+					hasText: true
+				},
+				appellantCaseEnforcementInvalidReasonText: [
+					{
+						id: 6,
+						text: 'this is a short reason',
+						appellantCaseEnforcementInvalidReasonId: 3
+					}
+				]
+			}
+		],
+		appellantCaseEnforcementMissingDocumentsSelected: [{ id: 12 }],
+		groundAFeeReceiptDueDate: new Date()
+	},
+	enforcementNoticeAppealOutcome: {
+		enforcementNoticeInvalid: 'no',
+		groundAFeeReceiptDueDate: new Date()
+	},
+	id: 4
+};
+
 export const linkedAppeals = [
 	{
 		parentId: householdAppeal.id,

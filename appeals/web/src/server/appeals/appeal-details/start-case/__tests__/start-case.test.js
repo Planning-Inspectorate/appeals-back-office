@@ -208,7 +208,7 @@ describe('start-case', () => {
 				'name="appealProcedure" type="radio" value="inquiry">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="appealProcedure" type="radio" value="expeditedAppeals">'
+				'name="appealProcedure" type="radio" value="writtenPart1">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});

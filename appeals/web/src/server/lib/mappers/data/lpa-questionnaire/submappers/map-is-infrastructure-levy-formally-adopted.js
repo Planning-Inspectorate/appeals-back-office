@@ -14,7 +14,7 @@ export const mapIsInfrastructureLevyFormallyAdopted = ({
 			lpaQuestionnaireData.isInfrastructureLevyFormallyAdopted === null
 				? null
 				: lpaQuestionnaireData.isInfrastructureLevyFormallyAdopted,
-		defaultText: 'No documents',
+		defaultText: 'Not answered',
 		addCyAttribute: true,
 		link: `${currentRoute}/is-infrastructure-levy-formally-adopted/change`,
 		editable: userHasUpdateCase,

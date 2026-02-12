@@ -5,6 +5,7 @@ import {
 	createPostcodeValidator,
 	createTownValidator
 } from '#lib/validators/address.validator.js';
+import { areIdParamsValid } from '#lib/validators/id-param.validator.js';
 import { createTextInputOptionalValidator } from '#lib/validators/text-input-validator.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
@@ -28,3 +29,16 @@ export const validateNeighbouringSiteDeleteAnswer = createValidator(
 		.notEmpty()
 		.withMessage('Select yes if you want to remove this site')
 );
+
+/**
+ * @type {import("express").RequestHandler}
+ * @returns {Promise<void>}
+ */
+export const validateAppealId = async (req, res, next) => {
+	const { appealId } = req.params;
+
+	if (!areIdParamsValid(appealId)) {
+		return res.status(400).render('app/400.njk');
+	}
+	next();
+};

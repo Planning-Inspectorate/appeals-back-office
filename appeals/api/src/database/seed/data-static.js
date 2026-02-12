@@ -138,6 +138,10 @@ export const procedureTypes = [
 	{
 		key: APPEAL_CASE_PROCEDURE.WRITTEN,
 		name: 'Written'
+	},
+	{
+		key: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
+		name: 'Part 1'
 	}
 ];
 
@@ -931,10 +935,7 @@ export async function seedStaticData(databaseConnector) {
 			where: {
 				id: rejectionReason.id
 			},
-			update: {
-				name: rejectionReason.name,
-				hasText: rejectionReason.hasText
-			}
+			update: rejectionReason
 		});
 	}
 

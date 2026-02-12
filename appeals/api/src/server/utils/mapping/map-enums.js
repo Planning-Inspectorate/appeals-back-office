@@ -1,4 +1,5 @@
 import {
+	APPEAL_APPEAL_UNDER_ACT_SECTION,
 	APPEAL_CASE_DECISION_OUTCOME,
 	APPEAL_CASE_STAGE,
 	APPEAL_CASE_TYPE,
@@ -112,4 +113,14 @@ export const isValidDevelopmentType = (developmentType) => {
 	if (!developmentType) return false;
 	//@ts-ignore
 	return Object.values(APPEAL_DEVELOPMENT_TYPE).includes(developmentType);
+};
+
+/**
+ * @param {string | null | undefined} lawfulDevelopmentType
+ * @returns {lawfulDevelopmentType is AppealS78Case['appealUnderActSection']}
+ */
+export const isValidLawfulDevelopmentCertificateType = (lawfulDevelopmentType) => {
+	if (!lawfulDevelopmentType) return false;
+	//@ts-ignore
+	return Object.values(APPEAL_APPEAL_UNDER_ACT_SECTION).includes(lawfulDevelopmentType);
 };

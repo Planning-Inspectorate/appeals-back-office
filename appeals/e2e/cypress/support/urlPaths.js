@@ -8,5 +8,7 @@ export const urlPaths = {
 	allCases: '/appeals-service/all-cases?pageSize=1000&pageNumber=1',
 	caseDetails: '/appeals-service/appeal-details',
 	personalListFilteredEvidence:
-		'/appeals-service/personal-list?pageSize=1000&pageNumber=1&appealStatusFilter=evidence'
+		'/appeals-service/personal-list?pageSize=1000&pageNumber=1&appealStatusFilter=evidence',
+	personalListFilteredStatement:
+		'/appeals-service/personal-list?pageSize=1000&pageNumber=1&appealStatusFilter=statements'
 };

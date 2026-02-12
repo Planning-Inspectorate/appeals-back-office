@@ -98,6 +98,10 @@ export function addNeighbouringSiteCheckAndConfirmPage(
  */
 export function manageNeighbouringSitesPage(request, appealData) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
+	const originalUrl = request.originalUrl;
+	const backLinkUrl = originalUrl.includes('/lpa-questionnaire')
+		? `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}`
+		: `/appeals-service/appeal-details/${appealData.appealId}`;
 
 	const notificationBanners = mapNotificationBannersFromSession(
 		request.session,
@@ -116,7 +120,7 @@ export function manageNeighbouringSitesPage(request, appealData) {
 	/**@type {PageContent} */
 	const pageContent = {
 		title: `Manage neighbouring sites`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}`,
+		backLinkUrl: backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Manage neighbouring sites',
 		pageComponents: [
@@ -259,10 +263,17 @@ export function removeNeighbouringSitePage(appealData, origin, siteId, errors) {
  * @param {Appeal} appealData
  * @param {import('@pins/appeals.api').Appeals.AppealSite} neighbouringSiteData
  * @param {string} siteId
+ * @param {string} originalUrl
  * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
-export function changeNeighbouringSitePage(appealData, neighbouringSiteData, siteId, errors) {
+export function changeNeighbouringSitePage(
+	appealData,
+	neighbouringSiteData,
+	originalUrl,
+	siteId,
+	errors
+) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	let address;
@@ -276,10 +287,14 @@ export function changeNeighbouringSitePage(appealData, neighbouringSiteData, sit
 		address = neighbouringSiteData;
 	}
 
+	const backLinkUrl = originalUrl.includes('/lpa-questionnaire')
+		? `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/neighbouring-sites/manage`
+		: `/appeals-service/appeal-details/${appealData.appealId}/neighbouring-sites/manage`;
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Change neighbouring site address`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/neighbouring-sites/manage`,
+		backLinkUrl: backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Change neighbouring site address',
 		// @ts-ignore this is fine, AppealSite is an Address with more mandatory fields
@@ -293,19 +308,24 @@ export function changeNeighbouringSitePage(appealData, neighbouringSiteData, sit
  * @param {Appeal} appealData
  * @param {import('@pins/appeals.api').Appeals.AppealSite} neighbouringSiteData
  * @param {string} siteId
+ * @param {string} originalUrl
  * @returns {PageContent}
  */
 export function changeNeighbouringSiteCheckAndConfirmPage(
 	appealData,
 	neighbouringSiteData,
+	originalUrl,
 	siteId
 ) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
+	const backLinkUrl = originalUrl.includes('/lpa-questionnaire')
+		? `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/neighbouring-sites/change/site/${siteId}`
+		: `/appeals-service/appeal-details/${appealData.appealId}/neighbouring-sites/change/site/${siteId}`;
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Details of neighbouring site you're updating for ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/neighbouring-sites/change/site/${siteId}`,
+		backLinkUrl: backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Check your answers',
 		pageComponents: [

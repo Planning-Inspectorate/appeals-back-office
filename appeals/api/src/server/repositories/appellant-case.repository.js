@@ -141,7 +141,9 @@ const updateAppellantCaseValidationOutcome = ({
 	otherInformation,
 	enforcementNoticeInvalid,
 	otherLiveAppeals,
-	enforcementInvalidReasons
+	enforcementInvalidReasons,
+	enforcementMissingDocuments,
+	groundAFeeReceiptDueDate
 }) => {
 	const transaction = [
 		updateAppellantCaseTable(appellantCaseId, {
@@ -185,14 +187,18 @@ const updateAppellantCaseValidationOutcome = ({
 
 	if (enforcementNoticeInvalid) {
 		transaction.push(
-			enforcementNoticeAppealOutcomeRepository.createEnforcementNoticeAppealOutcome({
-				appeal: {
-					connect: { id: appealId }
-				},
-				otherInformation,
-				enforcementNoticeInvalid,
-				otherLiveAppeals
-			})
+			enforcementNoticeAppealOutcomeRepository.upsertEnforcementNoticeAppealOutcome(
+				{ appealId: appealId },
+				{
+					appeal: {
+						connect: { id: appealId }
+					},
+					otherInformation,
+					enforcementNoticeInvalid,
+					otherLiveAppeals,
+					groundAFeeReceiptDueDate
+				}
+			)
 		);
 
 		if (appealId && appealDueDate) {
@@ -228,15 +234,31 @@ const updateAppellantCaseValidationOutcome = ({
 
 		if (groundABarred) {
 			transaction.push(
-				enforcementNoticeAppealOutcomeRepository.createEnforcementNoticeAppealOutcome({
-					appeal: {
-						connect: { id: appealId }
-					},
-					groundABarred,
-					otherInformation
-				})
+				enforcementNoticeAppealOutcomeRepository.upsertEnforcementNoticeAppealOutcome(
+					{ appealId: appealId },
+					{
+						appeal: {
+							connect: { id: appealId }
+						},
+						groundABarred,
+						otherInformation
+					}
+				)
 			);
 		}
+	}
+
+	if (enforcementMissingDocuments) {
+		transaction.push(
+			...commonRepository.createIncompleteInvalidReasons({
+				id: appellantCaseId,
+				relationOne: 'appellantCaseId',
+				relationTwo: 'appellantCaseEnforcementMissingDocumentId',
+				manyToManyRelationTable: 'appellantCaseEnforcementMissingDocumentsSelected',
+				incompleteInvalidReasonTextTable: 'appellantCaseEnforcementMissingDocumentText',
+				data: enforcementMissingDocuments
+			})
+		);
 	}
 
 	// @ts-ignore

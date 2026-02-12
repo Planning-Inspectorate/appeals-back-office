@@ -474,7 +474,13 @@ describe('incomplete-appeal', () => {
 					.get('/appeals/appellant-case-enforcement-invalid-reasons')
 					.reply(200, appealCaseEnforcementInvalidReasons)
 					.persist();
+			});
 
+			afterEach(() => {
+				nock.cleanAll();
+			});
+
+			it('should redirect to case details on success where the enforcement notice is invalid', async () => {
 				// Populate session data
 				await request.post(`${baseUrl}/appellant-case`).send({ reviewOutcome: 'incomplete' });
 				await request
@@ -492,24 +498,54 @@ describe('incomplete-appeal', () => {
 						otherInformationValidRadio: 'Yes',
 						otherInformationDetails: 'Enforcement other information'
 					});
-			});
 
-			afterEach(() => {
-				nock.cleanAll();
-			});
-
-			it('should redirect to case details on success', async () => {
 				nock('http://test/')
-					.patch(`/appeals/5623/appellant-cases/0`, {
-						validationOutcome: 'incomplete',
-						enforcementInvalidReasons: [
-							{ id: 1, text: ['has some text'] },
-							{ id: 2, text: ['has some other text'] },
-							{ id: 8, text: [null] }
-						],
-						enforcementNoticeInvalid: 'yes',
-						otherInformation: 'Enforcement other information'
-					})
+					.patch(`/appeals/5623/appellant-cases/0`, () => true)
+					.reply(200);
+
+				const response = await request.post(
+					`${baseUrl}/appellant-case/incomplete/check-details-and-mark-enforcement-as-incomplete`
+				);
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to /appeals-service/appeal-details/${appealId}`
+				);
+			});
+
+			it('should redirect to case details on success where the enforcement notice is valid', async () => {
+				// Populate session data
+				// review outcome
+				await request.post(`${baseUrl}/appellant-case`).send({ reviewOutcome: 'incomplete' });
+				// enforcement notice invalid
+				await request
+					.post(`${baseUrl}/appellant-case/invalid/enforcement-notice`)
+					.send({ enforcementNoticeInvalid: 'no' });
+				// why is appeal incomplete
+				await request.post(`${baseUrl}/appellant-case/incomplete`).send({
+					incompleteReason: ['12', '14', '10'],
+					'incompleteReason-10': 'Some other reason text'
+				});
+				// which documents are incomplete
+				await request.post(`${baseUrl}/appellant-case/incomplete/missing-documents`).send({
+					missingDocuments: ['1'],
+					'missingDocuments-1': 'Missing doc'
+				});
+				// ground (a) receipt due date
+				await request.post(`${baseUrl}/appellant-case/incomplete/receipt-due-date`).send({
+					'fee-receipt-due-date-day': '1',
+					'fee-receipt-due-date-month': '5',
+					'fee-receipt-due-date-year': '3000'
+				});
+				// appeal due date
+				await request.post(`${baseUrl}/appellant-case/incomplete/date`).send({
+					'due-date-day': '2',
+					'due-date-month': '7',
+					'due-date-year': '3000'
+				});
+
+				nock('http://test/')
+					.patch(`/appeals/5623/appellant-cases/0`, () => true)
 					.reply(200);
 
 				const response = await request.post(

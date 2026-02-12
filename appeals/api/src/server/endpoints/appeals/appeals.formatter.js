@@ -116,7 +116,11 @@ const formatPersonalListItem = async ({
 		costsDecision: appealIsCompleteOrWithdrawn ? await formatCostsDecision(appeal) : null,
 		numberOfResidencesNetChange: appellantCase?.numberOfResidencesNetChange ?? null,
 		isInquirySetup: !!inquiry,
-		hasInquiryAddress: !!inquiry?.addressId
+		hasInquiryAddress: !!inquiry?.addressId,
+		enforcementNoticeInvalid:
+			appeal.enforcementNoticeAppealOutcome?.enforcementNoticeInvalid || null,
+		enforcementNoticeGroundAFeeReceiptDueDate:
+			appeal.enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate || null
 	};
 };
 

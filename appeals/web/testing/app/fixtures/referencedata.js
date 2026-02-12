@@ -535,6 +535,12 @@ export const appealDataEnforcementNotice = {
 	appealType: 'Enforcement notice appeal'
 };
 
+export const appealDataEnforcementListedBuilding = {
+	...appealData,
+	appealId: 5624,
+	appealType: 'Enforcement listed building and conservation area appeal'
+};
+
 export const appellantCaseDataNotValidated = {
 	appealId: 1,
 	appealReference: 'TEST/919276',
@@ -4843,6 +4849,11 @@ export const appealDataToGetRequiredActions = {
 		appealStatus: 'validation',
 		documentationSummary: {
 			appellantCase: { dueDate: '3000-01-06T23:59:00.000Z', status: 'Incomplete' }
+		},
+		enforcementNotice: {
+			appealOutcome: {
+				enforcementNoticeInvalid: 'yes'
+			}
 		}
 	}
 };

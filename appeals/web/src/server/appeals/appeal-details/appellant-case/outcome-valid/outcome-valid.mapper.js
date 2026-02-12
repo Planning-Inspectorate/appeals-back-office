@@ -268,23 +268,25 @@ export function checkAndConfirmEnforcementPage(request) {
 						]
 					}
 				},
-				{
-					key: {
-						text: 'Is the appeal ground (a) barred?'
-					},
-					value: {
-						text: capitalizeFirstLetter(appealGroundABarred)
-					},
-					actions: {
-						items: [
-							{
-								href: `${baseUrl}/valid/enforcement/ground-a`,
-								text: 'Change',
-								visuallyHiddenText: 'Appeal ground (a) barred'
+				appealGroundABarred
+					? {
+							key: {
+								text: 'Is the appeal ground (a) barred?'
+							},
+							value: {
+								text: capitalizeFirstLetter(appealGroundABarred)
+							},
+							actions: {
+								items: [
+									{
+										href: `${baseUrl}/valid/enforcement/ground-a`,
+										text: 'Change',
+										visuallyHiddenText: 'Appeal ground (a) barred'
+									}
+								]
 							}
-						]
-					}
-				},
+						}
+					: null,
 				{
 					key: {
 						text: 'Do you want to add any other information?'

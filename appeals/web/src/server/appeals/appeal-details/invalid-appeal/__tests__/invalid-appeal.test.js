@@ -6,6 +6,7 @@ import {
 	appealDataAdvert,
 	appealDataCasAdvert,
 	appealDataCasPlanning,
+	appealDataEnforcementListedBuilding,
 	appealDataEnforcementNotice,
 	appealDataFullPlanning,
 	appealDataLdc,
@@ -109,6 +110,41 @@ describe('invalid-appeal', () => {
 			);
 			expect(element.innerHTML).toContain('for="invalid-reason-5">Ground (a) barred');
 			expect(element.innerHTML).toContain('for="invalid-reason-6">Other reason');
+			expect(element.innerHTML).toContain('Continue</button>');
+		});
+
+		it('should render the invalid reason page for an enforcement listed building', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealDataEnforcementListedBuilding.appealId}?include=all`)
+				.reply(200, appealDataEnforcementListedBuilding)
+				.persist();
+			nock('http://test/')
+				.get(`/appeals/${appealDataEnforcementListedBuilding.appealId}/appellant-cases/0`)
+				.reply(200, appellantCaseDataNotValidated)
+				.persist();
+
+			const response = await request.get(
+				`/appeals-service/appeal-details/${appealDataEnforcementListedBuilding.appealId}/invalid/new`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Why is the appeal invalid?</h1>');
+			expect(element.innerHTML).toContain('<div class="govuk-hint">Select all that apply');
+			expect(element.innerHTML).toContain('data-module="govuk-checkboxes">');
+			expect(element.innerHTML).toContain(
+				'for="invalid-reason">Appeal has not been submitted on time'
+			);
+			expect(element.innerHTML).toContain(
+				'for="invalid-reason-2">Documents have not been submitted on time'
+			);
+			expect(element.innerHTML).toContain(
+				'for="invalid-reason-3">The appellant does not have the right to appeal'
+			);
+			expect(element.innerHTML).toContain(
+				'for="invalid-reason-4">Appellant does not have a legal interest in the land'
+			);
+			expect(element.innerHTML).toContain('for="invalid-reason-5">Other reason');
 			expect(element.innerHTML).toContain('Continue</button>');
 		});
 	});

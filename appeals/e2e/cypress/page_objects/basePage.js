@@ -435,7 +435,6 @@ export class Page {
 			.last()
 			.should('have.text', expectedTagText);
 	}
-
 	verifyTagOnAllCasesPage(caseObj, expectedTagText, index = 0) {
 		cy.getByData(caseObj)
 			.parent('td')

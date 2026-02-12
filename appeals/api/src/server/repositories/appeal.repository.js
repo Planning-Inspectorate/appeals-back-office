@@ -43,7 +43,7 @@ const linkedAppealsInclude = isLinkedAppealsActive()
  * @type {Omit<typeof appealDetailsIncludeMap, 'caseNotes'>}
  * legacy all data include
  **/
-export const appealDetailsInclude = /** @type {const} */ {
+export const appealDetailsInclude = /** @type {Object} */ {
 	address: true,
 	procedureType: true,
 	parentAppeals: {
@@ -87,6 +87,12 @@ export const appealDetailsInclude = /** @type {const} */ {
 				include: {
 					appellantCaseEnforcementInvalidReason: true,
 					appellantCaseEnforcementInvalidReasonText: true
+				}
+			},
+			appellantCaseEnforcementMissingDocumentsSelected: {
+				include: {
+					appellantCaseEnforcementMissingDocument: true,
+					appellantCaseEnforcementMissingDocumentText: true
 				}
 			},
 			appellantCaseValidationOutcome: true,
@@ -181,11 +187,12 @@ export const appealDetailsInclude = /** @type {const} */ {
 		include: {
 			serviceUser: true
 		}
-	}
+	},
+	enforcementNoticeAppealOutcome: true
 };
 
 /** all includes, can be selected from, don't include this, just select from it */
-export const appealDetailsIncludeMap = /** @type {const} */ {
+export const appealDetailsIncludeMap = /** @type {Object} */ {
 	address: true,
 	procedureType: true,
 	parentAppeals: {
@@ -229,6 +236,12 @@ export const appealDetailsIncludeMap = /** @type {const} */ {
 				include: {
 					appellantCaseEnforcementInvalidReason: true,
 					appellantCaseEnforcementInvalidReasonText: true
+				}
+			},
+			appellantCaseEnforcementMissingDocumentsSelected: {
+				include: {
+					appellantCaseEnforcementMissingDocument: true,
+					appellantCaseEnforcementMissingDocumentText: true
 				}
 			},
 			appellantCaseValidationOutcome: true,
@@ -324,7 +337,8 @@ export const appealDetailsIncludeMap = /** @type {const} */ {
 		include: {
 			serviceUser: true
 		}
-	}
+	},
+	enforcementNoticeAppealOutcome: true
 };
 
 /**
@@ -630,10 +644,10 @@ const getLinkedAppeals = async (appealReference, relationshipType) => {
 /**
  *
  * @param {number} appealId
- * @param {string} relationshipType
+ * @param {string} [relationshipType]
  * @returns {Promise<AppealRelationship[]>}
  */
-const getLinkedAppealsById = async (appealId, relationshipType) => {
+export const getLinkedAppealsById = async (appealId, relationshipType = 'linked') => {
 	// ToDo Fix this typescript type
 	// @ts-ignore
 	return await databaseConnector.appealRelationship.findMany({

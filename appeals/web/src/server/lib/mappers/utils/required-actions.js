@@ -162,7 +162,11 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			if (appellantCaseOverdue) {
 				actions.push('appellantCaseOverdue');
 			} else if (appellantCaseIncomplete) {
-				if (appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+				if (
+					appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
+					// @ts-ignore
+					appealDetails.enforcementNotice?.appealOutcome?.enforcementNoticeInvalid === 'yes'
+				) {
 					actions.push('enforcementNoticeAppealIncomplete');
 				} else {
 					actions.push('awaitingAppellantUpdate');

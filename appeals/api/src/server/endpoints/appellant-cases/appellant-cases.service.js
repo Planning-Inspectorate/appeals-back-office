@@ -4,13 +4,12 @@ import {
 	isOutcomeValid
 } from '#utils/check-validation-outcome.js';
 import { getFeedbackLinkFromAppealTypeKey } from '#utils/feedback-form-link.js';
-import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
 	AUDIT_TRAIL_ENFORCEMENT_NOTICE_CONTACT_ADDRESS,
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
 	AUDIT_TRAIL_SUBMISSION_INVALID,
-	CASE_RELATIONSHIP_LINKED,
 	ERROR_NO_RECIPIENT_EMAIL,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
@@ -31,6 +30,7 @@ import { formatContactDetails } from '#utils/format-contact-details.js';
 import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
 import { allAppellantCaseOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
 import { isChildAppeal, isLinkedAppeal, isParentAppeal } from '#utils/is-linked-appeal.js';
+import { getChildAppeals, getLeadAppeal } from '#utils/link-appeals.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
@@ -78,36 +78,14 @@ export const checkAppellantCaseExists = (req, res, next) => {
 
 /**
  *
- * @param {Partial<Appeal> | undefined} appeal
- * @returns {Partial<Appeal>[]}
- */
-const getChildAppeals = (appeal) =>
-	// @ts-ignore
-	appeal?.childAppeals
-		?.filter(({ type, child }) => type === CASE_RELATIONSHIP_LINKED && child?.appellantCase)
-		.map(({ child }) => child) || [];
-
-/**
- *
- * @param {Partial<Appeal> | undefined} appeal
- * @returns {Partial<Appeal> | null | undefined}
- */
-const getLeadAppeal = (appeal) => {
-	if (isParentAppeal(appeal)) {
-		return appeal;
-	}
-	return appeal?.parentAppeals?.[0]?.parent;
-};
-
-/**
- *
  * @param {number} appellantCaseId
  * @param {AppellantCaseUpdateRequest} data
  * @param {Appeal} appeal
  */
 export const updateAppellantCaseData = async (appellantCaseId, data, appeal) => {
 	await appellantCaseRepository.updateAppellantCaseById(appellantCaseId, data);
-	if (!isParentAppeal(appeal)) {
+	// Only sync the child appellant case with the parent when the appeal type is enforcement notice
+	if (!isParentAppeal(appeal) || appeal.appealType?.type !== APPEAL_TYPE.ENFORCEMENT_NOTICE) {
 		return;
 	}
 	// Strip out any fields that are independent of the parent appeal
@@ -122,6 +100,20 @@ export const updateAppellantCaseData = async (appellantCaseId, data, appeal) => 
 			childData
 		);
 	}
+};
+
+/**
+ * @param {{ id: number, text?: string[] | undefined }[] | undefined} enforcementInvalidReasons
+ * @returns {Record<string, string> | undefined}
+ */
+const getEnforcementInvalidReasonsParams = (enforcementInvalidReasons) => {
+	return enforcementInvalidReasons?.reduce(
+		(acc, reason) => ({
+			...acc,
+			[`reason_${reason.id}`]: reason.text?.[0] || ''
+		}),
+		{}
+	);
 };
 
 /**
@@ -141,7 +133,9 @@ export const updateAppellantCaseValidationOutcome = async (
 		otherInformation,
 		enforcementNoticeInvalid,
 		otherLiveAppeals,
-		enforcementInvalidReasons
+		enforcementInvalidReasons,
+		enforcementMissingDocuments,
+		feeReceiptDueDate
 	} = data;
 	const teamEmail = await getTeamEmailFromAppealId(appealId);
 	const incompleteAppealDueDate =
@@ -156,7 +150,9 @@ export const updateAppellantCaseValidationOutcome = async (
 			appealDueDate: incompleteAppealDueDate,
 			...(otherInformation && { otherInformation }),
 			...(enforcementNoticeInvalid && { enforcementNoticeInvalid }),
-			...(enforcementInvalidReasons && { enforcementInvalidReasons })
+			...(enforcementInvalidReasons && { enforcementInvalidReasons }),
+			...(enforcementMissingDocuments && { enforcementMissingDocuments }),
+			...(feeReceiptDueDate && { groundAFeeReceiptDueDate: feeReceiptDueDate })
 		}),
 		...(isOutcomeInvalid(validationOutcome.name) && {
 			invalidReasons,
@@ -306,45 +302,91 @@ export const updateAppellantCaseValidationOutcome = async (
 				throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 			}
 
-			const reasonsToFormat = updatedAppellantCase?.appellantCaseIncompleteReasonsSelected?.length
-				? updatedAppellantCase?.appellantCaseIncompleteReasonsSelected
-				: updatedAppellantCase?.appellantCaseEnforcementInvalidReasonsSelected?.length
-					? updatedAppellantCase?.appellantCaseEnforcementInvalidReasonsSelected
-					: [];
+			if (
+				updatedAppeal.appealType?.type === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
+				updatedAppeal.enforcementNoticeAppealOutcome?.enforcementNoticeInvalid === 'no'
+			) {
+				const reasonsToFormat = [];
+				const { appellantCase, enforcementNoticeAppealOutcome } = updatedAppeal;
+				if (appellantCase?.appellantCaseEnforcementMissingDocumentsSelected?.length) {
+					reasonsToFormat.push('Missing information');
+				}
 
-			const incompleteReasonsList = getFormattedReasons(reasonsToFormat);
+				if (enforcementNoticeAppealOutcome.groundAFeeReceiptDueDate) {
+					reasonsToFormat.push('Ground (a) fee receipt due date');
+				}
 
-			if (otherInformation && otherInformation !== 'no') {
-				incompleteReasonsList.push(otherInformation);
-			}
+				const details = `${
+					stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['Appeal']) + '\n'
+				}${formatReasonsToHtmlList(reasonsToFormat)}`;
 
-			const details = `${
-				stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['Appeal']) + '\n'
-			}${formatReasonsToHtmlList(incompleteReasonsList)}`;
-
-			createAuditTrail({
-				appealId,
-				azureAdUserId,
-				details
-			});
-
-			if (updatedDueDate && !enforcementNoticeInvalid) {
-				const personalisation = {
-					appeal_reference_number: appeal.reference,
-					lpa_reference: appeal.applicationReference,
-					site_address: siteAddress,
-					due_date: formatDate(new Date(updatedDueDate), false),
-					reasons: incompleteReasonsList,
-					team_email_address: teamEmail
-				};
-
-				await notifySend({
+				createAuditTrail({
+					appealId,
 					azureAdUserId,
-					templateName: 'appeal-incomplete',
-					notifyClient,
-					recipientEmail,
-					personalisation
+					details
 				});
+			} else {
+				const reasonsToFormat = updatedAppellantCase?.appellantCaseIncompleteReasonsSelected?.length
+					? updatedAppellantCase?.appellantCaseIncompleteReasonsSelected
+					: updatedAppellantCase?.appellantCaseEnforcementInvalidReasonsSelected?.length
+						? updatedAppellantCase?.appellantCaseEnforcementInvalidReasonsSelected
+						: [];
+
+				const incompleteReasonsList = getFormattedReasons(reasonsToFormat);
+
+				if (otherInformation && otherInformation !== 'no') {
+					incompleteReasonsList.push(otherInformation);
+				}
+
+				const details = `${
+					stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['Appeal']) + '\n'
+				}${formatReasonsToHtmlList(incompleteReasonsList)}`;
+
+				createAuditTrail({
+					appealId,
+					azureAdUserId,
+					details
+				});
+
+				if (updatedDueDate) {
+					if (!enforcementNoticeInvalid) {
+						const personalisation = {
+							appeal_reference_number: appeal.reference,
+							lpa_reference: appeal.applicationReference,
+							site_address: siteAddress,
+							due_date: formatDate(new Date(updatedDueDate), false),
+							reasons: incompleteReasonsList,
+							team_email_address: teamEmail
+						};
+
+						await notifySend({
+							azureAdUserId,
+							templateName: 'appeal-incomplete',
+							notifyClient,
+							recipientEmail,
+							personalisation
+						});
+					} else if (enforcementNoticeInvalid === 'yes') {
+						const personalisation = {
+							appeal_reference_number: appeal.reference,
+							enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
+							site_address: siteAddress,
+							...getEnforcementInvalidReasonsParams(enforcementInvalidReasons),
+							other_info: otherInformation || '',
+							team_email_address: teamEmail,
+							due_date: formatDate(new Date(updatedDueDate), false)
+						};
+						if (updatedAppeal.lpa?.email) {
+							await notifySend({
+								azureAdUserId,
+								templateName: 'enforcement-notice-incomplete-lpa',
+								notifyClient,
+								recipientEmail: updatedAppeal?.lpa?.email,
+								personalisation
+							});
+						}
+					}
+				}
 			}
 		}
 
@@ -394,19 +436,11 @@ export const updateAppellantCaseValidationOutcome = async (
 					});
 				}
 			} else if (enforcementNoticeInvalid === 'yes') {
-				const reasonParams = enforcementInvalidReasons?.reduce(
-					(acc, reason) => ({
-						...acc,
-						[`reason_${reason.id}`]: reason.text?.[0] || ''
-					}),
-					{}
-				);
-
 				const personalisation = {
 					appeal_reference_number: appeal.reference,
 					enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
 					site_address: siteAddress,
-					...reasonParams,
+					...getEnforcementInvalidReasonsParams(enforcementInvalidReasons),
 					other_info: otherInformation || '',
 					team_email_address: teamEmail
 				};

@@ -102,6 +102,7 @@ export const postValidDate = async (request, response) => {
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(
+			// @ts-ignore
 			error,
 			error instanceof Error
 				? error.message
@@ -177,6 +178,7 @@ export const postEnforcementGroundA = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(
+			// @ts-ignore
 			error,
 			error instanceof Error
 				? error.message
@@ -232,7 +234,6 @@ export const postEnforcementOtherInformation = async (request, response) => {
 		const otherInformationValidRadio = body['otherInformationValidRadio'];
 		const otherInformationDetails =
 			otherInformationValidRadio === 'Yes' ? body['otherInformationDetails'] : undefined;
-
 		session.webAppellantCaseReviewOutcome = {
 			...session.webAppellantCaseReviewOutcome,
 			otherInformationValidRadio,
@@ -251,6 +252,7 @@ export const postEnforcementOtherInformation = async (request, response) => {
 		);
 	} catch (error) {
 		logger.error(
+			// @ts-ignore
 			error,
 			error instanceof Error
 				? error.message
@@ -331,13 +333,13 @@ export const postEnforcementValidDate = async (request, response) => {
 			updatedValidDateMonth,
 			updatedValidDateYear
 		};
-
 		const { appealId } = currentAppeal;
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/appellant-case/valid/enforcement/check-details`
 		);
 	} catch (error) {
 		logger.error(
+			// @ts-ignore
 			error,
 			error instanceof Error
 				? error.message
@@ -437,6 +439,7 @@ export const postEnforcementCheckDetails = async (request, response) => {
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(
+			// @ts-ignore
 			error,
 			error instanceof Error
 				? error.message

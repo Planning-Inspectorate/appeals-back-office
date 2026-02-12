@@ -3,14 +3,18 @@ import { appealDetailService } from '#endpoints/appeal-details/appeal-details.se
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { contextEnum } from '#mappers/context-enum.js';
-import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
 import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
 import { allLpaQuestionnaireOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
+import { isParentAppeal } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { camelToScreamingSnake } from '#utils/string-utils.js';
+import { camelToScreamingSnake, capitalizeFirstLetter } from '#utils/string-utils.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
-import { updateLPAQuestionnaireValidationOutcome } from './lpa-questionnaires.service.js';
+import {
+	updateLPAQuestionnaire,
+	updateLPAQuestionnaireValidationOutcome
+} from './lpa-questionnaires.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -72,6 +76,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			isSiteInAreaOfSpecialControlAdverts,
 			wasApplicationRefusedDueToHighwayOrTraffic,
 			didAppellantSubmitCompletePhotosAndPlans,
+			appealUnderActSection,
 			// Enforcement
 			noticeRelatesToBuildingEngineeringMiningOther,
 			siteAreaSquareMetres,
@@ -110,54 +115,58 @@ const updateLPAQuestionnaireById = async (req, res) => {
 					},
 					notifyClient
 				))
-			: await lpaQuestionnaireRepository.updateLPAQuestionnaireById(lpaQuestionnaireId, {
-					lpaStatement,
-					siteAccessDetails,
-					siteSafetyDetails,
-					isGreenBelt,
-					extraConditions,
-					lpaCostsAppliedFor,
-					isConservationArea,
-					isCorrectAppealType,
-					lpaNotificationMethods,
-					eiaColumnTwoThreshold,
-					eiaRequiresEnvironmentalStatement,
-					eiaEnvironmentalImpactSchedule,
-					eiaDevelopmentDescription,
-					affectsScheduledMonument,
-					hasProtectedSpecies,
-					isAonbNationalLandscape,
-					isGypsyOrTravellerSite,
-					hasInfrastructureLevy,
-					isInfrastructureLevyFormallyAdopted,
-					infrastructureLevyAdoptedDate,
-					infrastructureLevyExpectedDate,
-					lpaProcedurePreference,
-					lpaProcedurePreferenceDetails,
-					lpaProcedurePreferenceDuration,
-					eiaSensitiveAreaDetails,
-					consultedBodiesDetails,
-					reasonForNeighbourVisits,
-					designatedSiteNames,
-					preserveGrantLoan,
-					isSiteInAreaOfSpecialControlAdverts,
-					wasApplicationRefusedDueToHighwayOrTraffic,
-					didAppellantSubmitCompletePhotosAndPlans,
-					// Enforcement
-					noticeRelatesToBuildingEngineeringMiningOther,
-					siteAreaSquareMetres,
-					areaOfAllegedBreachInSquareMetres,
-					floorSpaceCreatedByBreachInSquareMetres,
-					changeOfUseRefuseOrWaste,
-					changeOfUseMineralExtraction,
-					changeOfUseMineralStorage,
-					relatesToErectionOfBuildingOrBuildings,
-					relatesToBuildingWithAgriculturalPurpose,
-					relatesToBuildingSingleDwellingHouse,
-					affectedTrunkRoadName,
-					isSiteOnCrownLand,
-					article4AffectedDevelopmentRights
-				});
+			: await updateLPAQuestionnaire(
+					lpaQuestionnaireId,
+					{
+						lpaStatement,
+						siteAccessDetails,
+						siteSafetyDetails,
+						isGreenBelt,
+						extraConditions,
+						lpaCostsAppliedFor,
+						isConservationArea,
+						isCorrectAppealType,
+						lpaNotificationMethods,
+						eiaColumnTwoThreshold,
+						eiaRequiresEnvironmentalStatement,
+						eiaEnvironmentalImpactSchedule,
+						eiaDevelopmentDescription,
+						affectsScheduledMonument,
+						hasProtectedSpecies,
+						isAonbNationalLandscape,
+						isGypsyOrTravellerSite,
+						hasInfrastructureLevy,
+						isInfrastructureLevyFormallyAdopted,
+						infrastructureLevyAdoptedDate,
+						infrastructureLevyExpectedDate,
+						lpaProcedurePreference,
+						lpaProcedurePreferenceDetails,
+						lpaProcedurePreferenceDuration,
+						eiaSensitiveAreaDetails,
+						consultedBodiesDetails,
+						reasonForNeighbourVisits,
+						designatedSiteNames,
+						preserveGrantLoan,
+						isSiteInAreaOfSpecialControlAdverts,
+						wasApplicationRefusedDueToHighwayOrTraffic,
+						didAppellantSubmitCompletePhotosAndPlans,
+						appealUnderActSection, // Enforcement
+						noticeRelatesToBuildingEngineeringMiningOther,
+						siteAreaSquareMetres,
+						areaOfAllegedBreachInSquareMetres,
+						floorSpaceCreatedByBreachInSquareMetres,
+						changeOfUseRefuseOrWaste,
+						changeOfUseMineralExtraction,
+						changeOfUseMineralStorage,
+						relatesToErectionOfBuildingOrBuildings,
+						relatesToBuildingWithAgriculturalPurpose,
+						relatesToBuildingSingleDwellingHouse,
+						affectedTrunkRoadName,
+						isSiteOnCrownLand,
+						article4AffectedDevelopmentRights
+					},
+					appeal
+				);
 
 		const updatedProperties = Object.keys(body).filter((key) => body[key] !== undefined);
 
@@ -170,7 +179,9 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			AUDIT_TRAIL_LPAQ_WAS_APPLICATION_REFUSED_DUE_TO_HIGHWAY_OR_TRAFFIC_UPDATED: () =>
 				body.wasApplicationRefusedDueToHighwayOrTraffic ? 'Yes' : 'No',
 			AUDIT_TRAIL_LPAQ_DID_APPELLANT_SUBMIT_COMPLETE_PHOTOS_AND_PLANS_UPDATED: () =>
-				body.didAppellantSubmitCompletePhotosAndPlans ? 'Yes' : 'No'
+				body.didAppellantSubmitCompletePhotosAndPlans ? 'Yes' : 'No',
+			AUDIT_TRAIL_LPAQ_APPEAL_UNDER_ACT_SECTION_UPDATED: () =>
+				capitalizeFirstLetter((body.appealUnderActSection || '').replaceAll('-', ' '))
 		};
 
 		// Make sure we only create unique audit trail details for properties that have changed.
@@ -187,6 +198,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 				})
 			)
 		];
+
 		await Promise.all(
 			auditTrailDetails.map((details) =>
 				createAuditTrail({
@@ -200,13 +212,23 @@ const updateLPAQuestionnaireById = async (req, res) => {
 		await broadcasters.broadcastAppeal(appeal.id);
 
 		const linkedAppeals = await buildListOfLinkedAppeals(appeal);
+		const otherAppealIds = linkedAppeals
+			.map((linkedAppeal) => linkedAppeal.id)
+			.filter((linkedAppealId) => linkedAppealId !== appeal.id);
+
+		if (otherAppealIds.length > 0) {
+			if (isParentAppeal(appeal) && appeal.appealType?.type === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+				// Now keep linked enforcement notice children in sync with their parent
+				await Promise.all(otherAppealIds.map((id) => broadcasters.broadcastAppeal(id)));
+			}
+		}
+
 		if (allLpaQuestionnaireOutcomesAreComplete(linkedAppeals)) {
 			// broadcast all linked appeals apart from the appeal already broadcast
-			await Promise.all(
-				linkedAppeals
-					.filter((linkedAppeal) => linkedAppeal.id !== appeal.id)
-					.map((linkedAppeal) => broadcasters.broadcastAppeal(linkedAppeal.id))
-			);
+			const linkedAppealIds = linkedAppeals
+				.map((linkedAppeal) => linkedAppeal.id)
+				.filter((linkedAppealId) => linkedAppealId !== appeal.id);
+			await Promise.all(linkedAppealIds.map((id) => broadcasters.broadcastAppeal(id)));
 		}
 	} catch (error) {
 		if (error) {

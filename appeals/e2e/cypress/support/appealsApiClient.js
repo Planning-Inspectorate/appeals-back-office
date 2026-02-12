@@ -99,6 +99,36 @@ export const appealsApiClient = {
 			throw error;
 		}
 	},
+	async appellantStatementSubmission(reference) {
+		try {
+			const requestBody = createApiSubmission(appealsApiRequests.appellantStatement);
+			requestBody.caseReference = reference;
+
+			const url = baseUrl + apiPaths.repSubmission;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				},
+				body: JSON.stringify(requestBody)
+			});
+
+			expect(response.status).eq(201);
+
+			const responseBody = await response.json();
+			expect(responseBody).to.be.an('object');
+			cy.log();
+			expect(responseBody).to.deep.equal({
+				appealId
+			});
+
+			return await response.json();
+		} catch {
+			return false;
+		}
+	},
+
 	async addRepresentation(reference, type, serviceUserId, representation) {
 		const submission = createApiSubmission(appealsApiRequests[type], type);
 		submission.caseReference = reference;

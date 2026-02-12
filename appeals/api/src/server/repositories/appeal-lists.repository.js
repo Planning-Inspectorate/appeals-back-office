@@ -449,6 +449,12 @@ const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 					include: {
 						serviceUser: true
 					}
+				},
+				enforcementNoticeAppealOutcome: {
+					select: {
+						enforcementNoticeInvalid: true,
+						groundAFeeReceiptDueDate: true
+					}
 				}
 			},
 			skip: getSkipValue(pageNumber, pageSize),

@@ -17,7 +17,7 @@ import { schemas, validateFromSchema } from '../integrations.validators.js';
 /**
  *
  * @param {number} appealId
- * @param {string} updateType
+ * @param {string} [updateType]
  */
 export const broadcastAppeal = async (appealId, updateType = EventType.Update) => {
 	if (!config.serviceBusEnabled && config.NODE_ENV !== 'development') {
