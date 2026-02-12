@@ -350,12 +350,11 @@ describe('incomplete-appeal', () => {
 					'invalidReason-2': 'has some other text',
 					'invalidReason-6': 'another reason'
 				});
-				await request
-					.post(`${baseUrl}/appellant-case/incomplete/enforcement-other-information`)
-					.send({
-						otherInformationValidRadio: 'Yes',
-						otherInformationDetails: 'Enforcement other information'
-					});
+				await request.post(`${baseUrl}/appellant-case/incomplete/date`).send({
+					'due-date-day': '2',
+					'due-date-month': '7',
+					'due-date-year': '3000'
+				});
 
 				const response = await request.get(
 					`${baseUrl}/appellant-case/incomplete/check-details-and-mark-enforcement-as-incomplete`
@@ -374,9 +373,6 @@ describe('incomplete-appeal', () => {
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<dt class="govuk-summary-list__key"> What is the outcome of your review?</dt><dd class="govuk-summary-list__value"> Incomplete</dd>'
-				);
-				expect(unprettifiedElement.innerHTML).toContain(
-					'<dt class="govuk-summary-list__key"> Do you want to add any other information?</dt>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'>Yes: Enforcement other information</div></dd>'

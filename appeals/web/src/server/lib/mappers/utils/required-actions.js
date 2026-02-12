@@ -1,3 +1,4 @@
+import { isAnyEnforcementAppealType } from '#appeals/appeal-details/appellant-case/appellant-case.controller.js';
 import { isNetResidencesAppealType } from '#common/net-residences-appeal-types.js';
 import config from '#environment/config.js';
 import { isStatePassed } from '#lib/appeal-status.js';
@@ -15,7 +16,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
-/** @typedef {'addHorizonReference'|'awaitingEvent'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'|'progressToProofOfEvidenceAndWitnesses'|'awaitingProofOfEvidenceAndWitnesses'|'progressToInquiry'|'setupInquiry'|'addInquiryAddress'|'awaitingLpaProofOfEvidenceAndWitnesses'|'awaitingAppellantProofOfEvidenceAndWitnesses'|'awaitingAppellantStatement'|'appellantStatementAwaitingReview'|'awaitingRule6PartyStatement'|'reviewRule6PartyStatement'|'awaitingRule6PartyProofOfEvidence'|'reviewRule6PartyProofOfEvidence'|'enforcementNoticeAppealIncomplete'} AppealRequiredAction */
+/** @typedef {'addHorizonReference'|'awaitingEvent'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'|'progressToProofOfEvidenceAndWitnesses'|'awaitingProofOfEvidenceAndWitnesses'|'progressToInquiry'|'setupInquiry'|'addInquiryAddress'|'awaitingLpaProofOfEvidenceAndWitnesses'|'awaitingAppellantProofOfEvidenceAndWitnesses'|'awaitingAppellantStatement'|'appellantStatementAwaitingReview'|'awaitingRule6PartyStatement'|'reviewRule6PartyStatement'|'awaitingRule6PartyProofOfEvidence'|'reviewRule6PartyProofOfEvidence'|'enforcementNoticeAppealIncomplete'|'enforcementListedAppealIncomplete'} AppealRequiredAction */
 
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
@@ -163,11 +164,15 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				actions.push('appellantCaseOverdue');
 			} else if (appellantCaseIncomplete) {
 				if (
-					appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
+					isAnyEnforcementAppealType(appealDetails.appealType) &&
 					// @ts-ignore
 					appealDetails.enforcementNoticeInvalid === 'yes'
 				) {
-					actions.push('enforcementNoticeAppealIncomplete');
+					const banner =
+						appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+							? 'enforcementListedAppealIncomplete'
+							: 'enforcementNoticeAppealIncomplete';
+					actions.push(banner);
 				} else {
 					actions.push('awaitingAppellantUpdate');
 				}
