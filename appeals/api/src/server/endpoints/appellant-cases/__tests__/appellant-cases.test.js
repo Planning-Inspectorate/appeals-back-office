@@ -49,6 +49,7 @@ import {
 	LENGTH_8
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { appellantCaseEnforcementMissingDocuments } from '../../../../database/seed/data-static.js';
 import { request } from '../../../app-test.js';
 
 const { databaseConnector } = await import('../../../utils/database-connector.js');
@@ -281,26 +282,20 @@ describe('appellant cases routes', () => {
 				expect(response.status).toEqual(200);
 			});
 			test('updates appellant case when the validation outcome is Incomplete without reason text and with an appeal due date', async () => {
-				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(
 					householdAppealAppellantCaseIncomplete
 				);
-				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({
 					id: 1,
 					azureAdUserId
 				});
-				// @ts-ignore
 				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
 					appellantCaseValidationOutcomes[0]
 				);
-				// @ts-ignore
 				databaseConnector.appellantCaseIncompleteReason.findMany.mockResolvedValue(
 					appellantCaseIncompleteReasons
 				);
-				// @ts-ignore
 				databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany.mockResolvedValue(true);
-				// @ts-ignore
 				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(true);
 
 				const body = {
@@ -1839,13 +1834,36 @@ describe('appellant cases routes', () => {
 			test('updates the appellant case for incomplete enforcement notice appeal with valid enforcement notice', async () => {
 				databaseConnector.appellantCaseIncompleteReason.findMany.mockResolvedValue([
 					{
+						id: 10,
+						name: 'Other',
+						hasText: true
+					},
+					{
 						id: 12,
-						name: 'Value 1'
+						name: 'Value 1',
+						hasText: false
 					}
 				]);
-				databaseConnector.appeal.findUnique.mockResolvedValue(
-					enforcementNoticeAppealAppellantCaseIncomplete
-				);
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...enforcementNoticeAppealAppellantCaseIncomplete,
+					caseExtensionDate: '2035-07-14T00:00:00.000Z',
+					appealGrounds: [
+						{
+							ground: {
+								groundRef: 'a'
+							}
+						},
+						{
+							ground: {
+								groundRef: 'b'
+							}
+						}
+					],
+					enforcementNoticeAppealOutcome: {
+						...enforcementNoticeAppealAppellantCaseIncomplete.enforcementNoticeAppealOutcome,
+						groundAFeeReceiptDueDate: '2035-08-14T00:00:00.000Z'
+					}
+				});
 				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
 					appellantCaseValidationOutcomes[0]
 				);
@@ -1862,13 +1880,16 @@ describe('appellant cases routes', () => {
 					id: 1,
 					azureAdUserId
 				});
+				databaseConnector.appellantCaseEnforcementMissingDocument.findMany.mockResolvedValue(
+					appellantCaseEnforcementMissingDocuments
+				);
 
 				const body = {
 					appealDueDate: '2099-07-14T00:00:00.000Z',
 					enforcementMissingDocuments: [{ id: 1, text: ['Missing doc'] }],
-					enforcementNoticeInvalid: 'yes',
-					feeReceiptDueDate: '2099-07-14T00:00:00.000Z',
-					incompleteReasons: [{ id: 12 }],
+					enforcementNoticeInvalid: 'no',
+					feeReceiptDueDate: '2035-08-14T00:00:00.000Z',
+					incompleteReasons: [{ id: 10, text: ['Other reason'] }, { id: 12 }],
 					validationOutcome: 'incomplete'
 				};
 				const { appellantCase, id } = enforcementNoticeAppealAppellantCaseIncomplete;
@@ -1902,8 +1923,8 @@ describe('appellant cases routes', () => {
 					update: {
 						appeal: { connect: { id } },
 						otherInformation: undefined,
-						enforcementNoticeInvalid: 'yes',
-						groundAFeeReceiptDueDate: '2099-07-14T00:00:00.000Z',
+						enforcementNoticeInvalid: 'no',
+						groundAFeeReceiptDueDate: '2035-08-14T00:00:00.000Z',
 						otherLiveAppeals: undefined
 					},
 					where: { appealId: id }
@@ -1928,7 +1949,33 @@ describe('appellant cases routes', () => {
 					}
 				});
 
-				expect(mockNotifySend).not.toHaveBeenCalled();
+				const personalisation = {
+					appeal_reference_number: '1345264',
+					enforcement_reference: 'Reference',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					local_planning_authority: 'Maidstone Borough Council',
+					due_date: '14 July 2035',
+					fee_due_date: '14 Aug 2035',
+					missing_documents: ['Grounds of appeal supporting documents: Missing doc'],
+					other_info: 'Other reason',
+					appeal_grounds: ['a', 'b']
+				};
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: enforcementNoticeAppealAppellantCaseIncomplete.agent.email,
+					templateName: 'enforcement-appeal-incomplete-appellant'
+				});
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: enforcementNoticeAppealAppellantCaseIncomplete.lpa.email,
+					templateName: 'enforcement-appeal-incomplete-lpa'
+				});
 				expect(response.status).toEqual(200);
 			});
 		});
