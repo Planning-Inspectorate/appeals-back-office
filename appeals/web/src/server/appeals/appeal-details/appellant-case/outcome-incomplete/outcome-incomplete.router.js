@@ -108,4 +108,13 @@ router
 		controller.postReceiptDueDate
 	);
 
+router
+	.route('/grounds-facts-check')
+	.get(controller.getGroundsFactsCheck)
+	.post(
+		validators.validateGroundsAndFactsCheck,
+		validators.validateGroundsAndFactsCheckTextItems,
+		controller.postGroundsFactsCheck
+	);
+
 export default router;

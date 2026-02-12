@@ -56,3 +56,18 @@ export const validateFeeRecieptDueDateInFuture = createDateInputDateInFutureVali
 	'fee-receipt-due-date',
 	'ground (a) fee receipt due date'
 );
+
+export const validateGroundsAndFactsCheck = createValidator(
+	body('groundsFacts')
+		.exists()
+		.withMessage('Select which grounds do not match the facts')
+		.bail()
+		.notEmpty()
+		.withMessage('Select which grounds do not match the facts')
+);
+
+export const validateGroundsAndFactsCheckTextItems = createCheckboxTextItemsValidator(
+	'groundsFacts',
+	LENGTH_250,
+	'a reason'
+);

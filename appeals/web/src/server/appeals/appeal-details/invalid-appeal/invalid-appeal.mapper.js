@@ -306,6 +306,7 @@ export const otherLiveAppealsPage = (appealDetails, otherLiveAppeals) => ({
  * @param {ReasonOption[]} reasonOptions
  * @param {ReasonOption[]} incompleteReasonOptions
  * @param {ReasonOption[]} missingDocuments
+ * @param {ReasonOption[]} groundsAndFactsMismatch
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @returns {PageContent}
  */
@@ -314,6 +315,7 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (
 	reasonOptions,
 	incompleteReasonOptions,
 	missingDocuments,
+	groundsAndFactsMismatch,
 	session
 ) => {
 	const {
@@ -491,6 +493,38 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (
 						text: 'Change',
 						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/date`,
 						visuallyHiddenText: 'Appeal due date'
+					}
+				]
+			}
+		});
+	}
+
+	// Grounds and facts mismatch
+	if (session?.webAppellantCaseReviewOutcome.groundsFacts) {
+		summaryListComponent.parameters.rows.push({
+			key: {
+				text: 'Grounds and facts do not match'
+			},
+			value: {
+				html: nunjucksEnvironments.render('appeals/components/page-component.njk', {
+					component: {
+						type: 'show-more',
+						parameters: {
+							html: mapReasonsToReasonsListHtml(
+								groundsAndFactsMismatch,
+								session?.webAppellantCaseReviewOutcome.groundsFacts,
+								session?.webAppellantCaseReviewOutcome.groundsFactsText
+							)
+						}
+					}
+				})
+			},
+			actions: {
+				items: [
+					{
+						text: 'Change',
+						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/grounds-facts-check`,
+						visuallyHiddenText: 'Grounds and facts mismatch reasons'
 					}
 				]
 			}
