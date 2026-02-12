@@ -935,10 +935,7 @@ export async function seedStaticData(databaseConnector) {
 			where: {
 				id: rejectionReason.id
 			},
-			update: {
-				name: rejectionReason.name,
-				hasText: rejectionReason.hasText
-			}
+			update: rejectionReason
 		});
 	}
 
