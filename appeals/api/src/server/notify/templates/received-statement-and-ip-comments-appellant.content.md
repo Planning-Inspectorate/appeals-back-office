@@ -1,6 +1,12 @@
 
 
-{% if has_statement and has_ip_comments -%}
+{% if has_statement and has_rule_6_statement -%}
+We have received:
+- all statements
+- comments from interested parties
+{% elif has_statement and has_rule_6_parties and not has_rule_6_statement -%}
+   We have received the local planning authority's questionnaire and any comments from interested parties.
+{% elif has_statement and has_ip_comments -%}
    We have received the local planning authority's questionnaire, all statements and comments from interested parties.
 {% elif has_statement -%}
    We have received a statement from the local planning authority.
@@ -12,10 +18,10 @@
 You can [view this information in the appeals service]({{front_office_url}}/appeals/{{appeal_reference_number}}).
 {% endif -%}
 
-{% if not has_statement -%}
+{% if not has_statement and not has_rule_6_parties -%}
    The local planning authority did not submit a statement.
 {% endif -%}
-{% if not has_ip_comments -%}
+{% if not has_ip_comments and not has_rule_6_parties -%}
    We did not receive any comments from interested parties.
 {% endif -%}
 
