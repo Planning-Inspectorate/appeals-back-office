@@ -1,0 +1,1 @@
+We have received your statement: {{appeal_reference_number}}
