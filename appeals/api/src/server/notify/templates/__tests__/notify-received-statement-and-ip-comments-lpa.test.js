@@ -6,7 +6,6 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 		appeal_reference_number: 'ABC45678',
 		site_address: '10, Test Street',
 		lpa_reference: '12345XYZ',
-		final_comments_deadline: '01 January 2021',
 		subject: 'Submit your final comments'
 	};
 
@@ -249,6 +248,49 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 			{
 				content: expectedContent,
 				subject: "We've received all statements and comments: ABC45678"
+			}
+		);
+	});
+
+	test('should include rule 6 content when there is a rule 6 party and all parties submitted a statement', async () => {
+		const notifySendData = {
+			doNotMockNotifySend: true,
+			templateName: 'received-statement-and-ip-comments-lpa',
+			notifyClient,
+			recipientEmail,
+			personalisation: {
+				...basePersonalisation,
+				is_inquiry_procedure: true,
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+				has_statement: true,
+				has_rule_6_statement: true,
+				has_rule_6_parties: true
+			}
+		};
+
+		const expectedContent = [
+			'We have received:',
+			'- all statements',
+			'- comments from interested parties',
+			'You can [view this information in the appeals service](/mock-front-office-url/manage-appeals/ABC45678).',
+			'# Appeal details',
+			'',
+			'^Appeal reference number: ABC45678',
+			'Address: 10, Test Street',
+			'Planning application reference: 12345XYZ',
+			'',
+			'The Planning Inspectorate',
+			'caseofficers@planninginspectorate.gov.uk'
+		].join('\n');
+
+		await notifySend(notifySendData);
+
+		expect(notifyClient.sendEmail).toHaveBeenCalledWith(
+			{ id: 'mock-appeal-generic-id' },
+			recipientEmail,
+			{
+				content: expectedContent,
+				subject: 'Submit your proof of evidence and witnesses: ABC45678'
 			}
 		);
 	});
