@@ -5,6 +5,10 @@ describe('formatPlanningObligationStatus', () => {
 		expect(formatPlanningObligationStatus('not_started')).toBe('Not yet started');
 	});
 
+	test('returns "Not yet started" for not started yet status', () => {
+		expect(formatPlanningObligationStatus('not started yet')).toBe('Not yet started');
+	});
+
 	test('returns "Finalised" for finalised status', () => {
 		expect(formatPlanningObligationStatus('finalised')).toBe('Finalised');
 	});

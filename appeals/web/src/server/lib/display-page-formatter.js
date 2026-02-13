@@ -398,7 +398,9 @@ export function generateHorizonAppealUrl(appealId) {
  */
 export const formatPlanningObligationStatus = (planningObligationStatus) => {
 	switch (planningObligationStatus) {
+		// historic data may be 'not started yet'
 		case 'not_started':
+		case 'not started yet':
 			return 'Not yet started';
 		case 'finalised':
 			return 'Finalised';

@@ -49,6 +49,41 @@ describe('planning-obligation', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 
+		it('should render the change planning obligation status page with "Not yet started" radio option checked if planningObligation.status is "not started yet"', async () => {
+			nock('http://test/')
+				.get(`/appeals/1/appellant-cases/${appealData.appellantCaseId}`)
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					planningObligation: {
+						...appellantCaseDataNotValidated.planningObligation,
+						status: 'not started yet'
+					}
+				});
+
+			const response = await request.get(
+				`${baseUrl}/1/appellant-case/planning-obligation/status/change`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the status of your planning obligation?</h1>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="planningObligationStatusRadio" type="radio" value="not_started" checked>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="planningObligationStatusRadio" type="radio" value="finalised">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="planningObligationStatusRadio" type="radio" value="not-applicable">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+		});
+
 		it('should render the change planning obligation status page with "Finalised" radio option checked if planningObligation.status is "finalised"', async () => {
 			nock('http://test/')
 				.get(`/appeals/1/appellant-cases/${appealData.appellantCaseId}`)
