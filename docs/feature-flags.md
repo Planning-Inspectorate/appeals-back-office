@@ -51,3 +51,4 @@ if (config.featureFlags.featureFlagNewFeature) {
 4. Add the feature flag to your relevant `.env` files in the `api` directory and/or the `web` directory.
 5. Add the feature flag to the relevant `.env.example` files in the `api` directory and/or the `web` directory.
 6. Add the feature flag to the relevant `.env.test` files in the `api` directory and/or the `web` directory.
+7. Add the feature flag to the relevant `.env.e2e` files in the `api` directory and/or the `web` directory.
