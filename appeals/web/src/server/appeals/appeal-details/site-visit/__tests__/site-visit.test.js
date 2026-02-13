@@ -1266,9 +1266,9 @@ describe('site-visit', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('Confirm that you want to cancel the site visit</h1>');
-			expect(element.innerHTML).toContain('Preview email to appellant</span>');
 			expect(element.innerHTML).toContain('Cancel site visit</button>');
 
+			expect(element.innerHTML).not.toContain('Preview email to appellant</span>');
 			expect(element.innerHTML).not.toContain('Preview email to LPA</span>');
 		});
 	});
