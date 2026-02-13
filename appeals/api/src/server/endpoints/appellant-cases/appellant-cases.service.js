@@ -460,6 +460,37 @@ export const updateAppellantCaseValidationOutcome = async (
 						personalisation
 					});
 				}
+			} else if (enforcementNoticeInvalid === 'no' && isEnforcementAppealType) {
+				if (!applicantEmail) {
+					throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+				}
+
+				const personalisation = {
+					appeal_reference_number: appeal.reference,
+					enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
+					site_address: siteAddress,
+					reasons: invalidReasonsList,
+					other_info: otherInformation || '',
+					team_email_address: teamEmail
+				};
+
+				await notifySend({
+					azureAdUserId,
+					templateName: 'enforcement-appeal-invalid-appellant',
+					notifyClient,
+					recipientEmail: applicantEmail,
+					personalisation
+				});
+
+				if (updatedAppeal.lpa?.email) {
+					await notifySend({
+						azureAdUserId,
+						templateName: 'enforcement-appeal-invalid-lpa',
+						notifyClient,
+						recipientEmail: updatedAppeal.lpa.email,
+						personalisation
+					});
+				}
 			}
 
 			if (otherInformation && otherInformation !== 'no') {
