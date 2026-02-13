@@ -5,6 +5,9 @@ import {
 	getFoldersForAppeal
 } from '#endpoints/documents/documents.service.js';
 import { copyBlobs } from '#utils/blob-copy.js';
+import { databaseConnector } from '#utils/database-connector.js';
+import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
 import rhea from 'rhea';
 
 const { generate_uuid } = rhea;
@@ -63,11 +66,73 @@ export const checkAppealsStatusBeforeLPAQ = (appeal, linkedAppeal, isCurrentAppe
 };
 
 /**
+ *
+ * @param {Appeal} currentLead
+ * @param {Appeal} appealToReplaceLead
+ * @returns {Promise<*>}
+ */
+export const replaceLeadAppeal = async (currentLead, appealToReplaceLead) => {
+	const { childAppeals } = currentLead;
+	const relationships =
+		childAppeals
+			?.filter((childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED)
+			.map((childAppeal) => {
+				const { childId, childRef, type } = childAppeal;
+				const { id: parentId, reference: parentRef } = appealToReplaceLead;
+				if (parentId === childId) {
+					return {
+						parentId,
+						parentRef,
+						childId: currentLead.id,
+						childRef: currentLead.reference,
+						type
+					};
+				} else {
+					return { parentId, parentRef, childId, childRef, type };
+				}
+			}) || [];
+
+	await databaseConnector.$transaction(async (tx) => {
+		await tx.appealRelationship.deleteMany({ where: { parentId: currentLead.id } });
+		await Promise.allSettled(
+			relationships.map(async (relationship) => {
+				await tx.appealRelationship.create({
+					data: relationship
+				});
+			})
+		);
+	});
+};
+
+/**
+ * Unlinks the child appeal.
+ * @param {Appeal} appeal
+ * @returns {Promise<*>}
+ */
+export const unlinkChildAppeal = async (appeal) => {
+	await databaseConnector.appealRelationship.deleteMany({ where: { childId: appeal.id } });
+};
+
+/**
+ * Duplicates the files from the source appeal to the destination appeal for all stages.
+ * @param {Appeal} sourceAppeal
+ * @param {Appeal} destinationAppeal
+ * @returns {Promise<*>}
+ */
+export const duplicateAllFiles = async (sourceAppeal, destinationAppeal) => {
+	return Promise.allSettled(
+		Object.values(APPEAL_CASE_STAGE).map((stage) =>
+			duplicateFiles(sourceAppeal, destinationAppeal, stage)
+		)
+	);
+};
+
+/**
  * Duplicates the files from the source appeal to the destination appeal for a particular stage.
  * @param {Appeal} sourceAppeal
  * @param {Appeal} destinationAppeal
  * @param {string} stage
- * @returns {Promise<*>}
+ * @returns {Promise<{sourceAppealRef: string, destinationAppealRef: string, stage: string}>}
  */
 export const duplicateFiles = async (sourceAppeal, destinationAppeal, stage) => {
 	const sourceFolders = await getFoldersForAppeal(sourceAppeal.id, stage);
@@ -129,4 +194,9 @@ export const duplicateFiles = async (sourceAppeal, destinationAppeal, stage) => 
 		destinationAppeal,
 		true
 	);
+	return {
+		sourceAppealRef: sourceAppeal.reference,
+		destinationAppealRef: destinationAppeal.reference,
+		stage
+	};
 };

@@ -6,7 +6,8 @@ import {
 	associateExternalAppeal,
 	linkAppeal,
 	linkExternalAppeal,
-	unlinkAppeal
+	unlinkAppeal,
+	updateLinkedAppeals
 } from './link-appeals.controller.js';
 import {
 	postLinkAppealValidator,
@@ -143,6 +144,34 @@ router.delete(
 	 */
 	checkAppealExistsByIdAndAddPartialToRequest([]),
 	asyncHandler(unlinkAppeal)
+);
+
+router.patch(
+	'/:appealId/update-linked-appeals',
+	/*
+		#swagger.tags = ['Linked Appeals']
+		#swagger.path = '/appeals/{appealId}/update-linked-appeals'
+		#swagger.description = 'Update linked appeal relationships'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.requestBody = {
+			in: 'body',
+			description: 'Update Linked Appeals Request',
+			schema: { $ref: '#/components/schemas/UpdateLinkedAppealsRequest' },
+			required: true
+		}
+		#swagger.responses[400] = {}
+	 */
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'appealStatus',
+		'appealType',
+		'parentAppeals',
+		'childAppeals'
+	]),
+	asyncHandler(updateLinkedAppeals)
 );
 
 export { router as linkAppealsRoutes };

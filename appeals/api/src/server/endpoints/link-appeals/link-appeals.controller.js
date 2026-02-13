@@ -9,9 +9,12 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import { getAppealFromHorizon } from '#utils/horizon-gateway.js';
+import { isLinkedAppeal, isParentAppeal } from '#utils/is-linked-appeal.js';
+import { getChildAppeals, getLeadAppeal } from '#utils/link-appeals.js';
 import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
+import { logger } from '@azure/identity';
 import {
 	AUDIT_TRAIL_APPEAL_LINK_ADDED,
 	AUDIT_TRAIL_APPEAL_LINK_REMOVED,
@@ -25,7 +28,10 @@ import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
 import {
 	canLinkAppeals,
 	checkAppealsStatusBeforeLPAQ,
-	duplicateFiles
+	duplicateAllFiles,
+	duplicateFiles,
+	replaceLeadAppeal,
+	unlinkChildAppeal
 } from './link-appeals.service.js';
 
 /** @typedef {import('express').Request} Request */
@@ -348,5 +354,83 @@ export const unlinkAppeal = async (req, res) => {
 	});
 
 	await broadcasters.broadcastAppeal(currentAppeal.id);
+	return res.status(200).send(true);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const updateLinkedAppeals = async (req, res) => {
+	const { appeal } = req;
+	const { appealRefToReplaceLead, operation } = req.body;
+
+	if (!operation) {
+		return res.status(400).send('Missing operation field');
+	}
+
+	if (!isLinkedAppeal(appeal)) {
+		return res.status(400).send('Appeal is not linked to another appeal');
+	}
+
+	if (operation === 'switch') {
+		if (!appealRefToReplaceLead) {
+			return res.status(400).send('Appeal to replace lead is required');
+		}
+	}
+
+	const currentLead = getLeadAppeal(appeal);
+
+	if (!currentLead) {
+		return res.status(400).send('Appeal has no lead appeal');
+	}
+
+	const appealToReplaceLead =
+		appealRefToReplaceLead &&
+		getChildAppeals(appeal).find((childAppeal) => childAppeal.reference === appealRefToReplaceLead);
+
+	if (appealRefToReplaceLead && !appealToReplaceLead) {
+		return res.status(400).send('Appeal to replace lead is not a child of the lead');
+	}
+
+	switch (operation) {
+		case 'switch': {
+			// @ts-ignore
+			const duplicateFilesResults = await duplicateAllFiles(currentLead, appealToReplaceLead);
+			logger.info(duplicateFilesResults, operation);
+			// @ts-ignore
+			const replaceLeadResults = await replaceLeadAppeal(currentLead, appealToReplaceLead);
+			logger.info(replaceLeadResults, operation);
+			break;
+		}
+		case 'unlink': {
+			if (isParentAppeal(appeal)) {
+				if (!appealToReplaceLead) {
+					return res
+						.status(400)
+						.send('Appeal to replace lead is required for unlinking a parent appeal');
+				}
+				const duplicateFilesResults = await duplicateAllFiles(appeal, appealToReplaceLead);
+				logger.info(duplicateFilesResults, operation);
+				// @ts-ignore
+				const replaceLeadResults = await replaceLeadAppeal(appeal, appealToReplaceLead);
+				logger.info(replaceLeadResults, operation);
+			} else {
+				// @ts-ignore
+				const duplicateFilesResults = await duplicateAllFiles(currentLead, appeal);
+				logger.info(duplicateFilesResults, operation);
+			}
+			await unlinkChildAppeal(appeal);
+			await updatePersonalList(appeal.id);
+			break;
+		}
+		default: {
+			return res.status(400).send('Invalid operation');
+		}
+	}
+
+	await updatePersonalList(appealToReplaceLead?.id || currentLead?.id);
+
 	return res.status(200).send(true);
 };

@@ -27,6 +27,13 @@ export interface UnlinkAppealRequest {
 	relationshipId?: number;
 }
 
+export interface UpdateLinkedAppealsRequest {
+	/** @example "51243165" */
+	appealRefToReplaceLead?: string;
+	/** @example "unlink" */
+	operation?: string;
+}
+
 export interface RepUpdateRequest {
 	/** @example "valid" */
 	status?: string;
