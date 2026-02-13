@@ -175,4 +175,74 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 			}
 		);
 	});
+
+	test('should include rule 6 content when there is a rule 6 party and all parties submitted a statement', async () => {
+		const expectedContent = [
+			'We have received:',
+			'- all statements',
+			'- comments from interested parties',
+			'You can [view this information in the appeals service](/mock-front-office-url/appeals/ABC45678).',
+			'# Appeal details',
+			'',
+			'^Appeal reference number: ABC45678',
+			'Address: 10, Test Street',
+			'Planning application reference: 12345XYZ',
+			'',
+			'# What happens next',
+			'',
+			'You need to [submit your final comments](/mock-front-office-url/appeals/ABC45678) by 01 January 2021.',
+			'',
+			'The Planning Inspectorate',
+			'caseofficers@planninginspectorate.gov.uk'
+		].join('\n');
+
+		notifySendData.personalisation.is_inquiry_procedure = true;
+		notifySendData.personalisation.has_statement = true;
+		notifySendData.personalisation.has_rule_6_statement = true;
+		notifySendData.personalisation.has_rule_6_parties = true;
+
+		await notifySend(notifySendData);
+
+		expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+			{ id: 'mock-appeal-generic-id' },
+			'test@136s7.com',
+			{
+				content: expectedContent,
+				subject: 'Submit your proof of evidence and witnesses: ABC45678'
+			}
+		);
+	});
+
+	test('should include rule 6 content when there is a rule 6 party but did not submit a statement', async () => {
+		const expectedContent = [
+			"We have received the local planning authority's questionnaire and any comments from interested parties.",
+			'You can [view this information in the appeals service](/mock-front-office-url/appeals/ABC45678).',
+			'# Appeal details',
+			'',
+			'^Appeal reference number: ABC45678',
+			'Address: 10, Test Street',
+			'Planning application reference: 12345XYZ',
+			'',
+			'# What happens next',
+			'',
+			'You need to [submit your final comments](/mock-front-office-url/appeals/ABC45678) by 01 January 2021.',
+			'',
+			'The Planning Inspectorate',
+			'caseofficers@planninginspectorate.gov.uk'
+		].join('\n');
+
+		notifySendData.personalisation.is_inquiry_procedure = true;
+		notifySendData.personalisation.has_rule_6_parties = true;
+
+		await notifySend(notifySendData);
+
+		expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+			{ id: 'mock-appeal-generic-id' },
+			'test@136s7.com',
+			{
+				content: expectedContent,
+				subject: 'Submit your proof of evidence and witnesses: ABC45678'
+			}
+		);
+	});
 });
