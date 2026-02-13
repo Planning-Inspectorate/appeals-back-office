@@ -70,8 +70,8 @@ extends:
             parameters:
                 nodeVersion: 22
                 script: npm run format-check
-          - script: git diff --name-only origin/main...HEAD
-            displayName: 'Debug git refs'
+          - script: git diff --name-only HEAD^..HEAD
+            displayName: 'Git diff from prev commit'
           - template: ../steps/node_script.yml
             parameters:
               script: $(test-script)
