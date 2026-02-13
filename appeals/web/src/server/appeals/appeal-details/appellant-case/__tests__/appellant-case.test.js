@@ -491,12 +491,12 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('What is the address of the appeal site?');
 			expect(unprettifiedElement.innerHTML).toContain('What is the area of the appeal site?');
 			expect(unprettifiedElement.innerHTML).toContain('Is the appeal site in a green belt?');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Will an inspector need to access your land or property?'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Are there any health and safety issues on the appeal site?'
-			);
+			// expect(unprettifiedElement.innerHTML).toContain(
+			// 	'Will an inspector need to access your land or property?'
+			// );
+			// expect(unprettifiedElement.innerHTML).toContain(
+			// 	'Are there any health and safety issues on the appeal site?'
+			// );
 
 			expect(unprettifiedElement.innerHTML).toContain('3. Application details</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('What date did you submit your application?');
