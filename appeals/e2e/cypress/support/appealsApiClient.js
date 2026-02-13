@@ -871,7 +871,7 @@ export const appealsApiClient = {
 		}
 	},
 
-	async addRule6Party(appealId, requestBodyOverride = null) {
+	async addRule6Party(appealId, requestBodyOverride) {
 		try {
 			const url = `${baseUrl}appeals/${appealId}/rule-6-parties`;
 
