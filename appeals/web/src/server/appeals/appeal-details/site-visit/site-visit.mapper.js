@@ -630,27 +630,16 @@ export const cancelSiteVisitPage = (appealDetails, emailTemplate) => {
 			}
 		],
 		pageComponents: [
-			{
-				type: 'html',
-				parameters: {
-					html: `<p class="govuk-body">We will send an email to the appellant
+			...(appealDetails.siteVisit?.visitType !== 'Unaccompanied'
+				? [
+						{
+							type: 'html',
+							parameters: {
+								html: `<p class="govuk-body">We will send an email to the appellant
  ${appealDetails.siteVisit?.visitType === 'Accompanied' ? `and the LPA ` : ''}
 to tell them that we have cancelled the site visit.</p>`
-				}
-			},
-			{
-				type: 'details',
-				wrapperHtml: {
-					opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-					closing: '</div></div>'
-				},
-				parameters: {
-					summaryText: `Preview email to appellant`,
-					html: emailTemplate
-				}
-			},
-			...(appealDetails.siteVisit?.visitType === 'Accompanied'
-				? [
+							}
+						},
 						{
 							type: 'details',
 							wrapperHtml: {
@@ -658,10 +647,25 @@ to tell them that we have cancelled the site visit.</p>`
 								closing: '</div></div>'
 							},
 							parameters: {
-								summaryText: `Preview email to LPA`,
+								summaryText: `Preview email to appellant`,
 								html: emailTemplate
 							}
-						}
+						},
+						...(appealDetails.siteVisit?.visitType === 'Accompanied'
+							? [
+									{
+										type: 'details',
+										wrapperHtml: {
+											opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+											closing: '</div></div>'
+										},
+										parameters: {
+											summaryText: `Preview email to LPA`,
+											html: emailTemplate
+										}
+									}
+								]
+							: [])
 					]
 				: [])
 		]
