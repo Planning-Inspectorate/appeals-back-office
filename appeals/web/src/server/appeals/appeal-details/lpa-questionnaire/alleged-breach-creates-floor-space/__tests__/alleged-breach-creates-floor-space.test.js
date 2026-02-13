@@ -33,7 +33,8 @@ describe('alleged-breach-creates-floor-space', () => {
 	describe('POST /change', () => {
 		it('should re-direct to LPA questionnaire if "yes"', async () => {
 			const validData = {
-				allegedBreachCreatesFloorSpaceRadio: 'yes'
+				floorSpaceCreatedByBreachInSquareMetresRadio: 'yes',
+				floorSpaceCreatedByBreachInSquareMetres: '20'
 			};
 
 			nock('http://test/')
@@ -52,7 +53,7 @@ describe('alleged-breach-creates-floor-space', () => {
 
 		it('should re-direct to LPA questionnaire if "no"', async () => {
 			const validData = {
-				allegedBreachCreatesFloorSpaceRadio: 'no'
+				floorSpaceCreatedByBreachInSquareMetresRadio: 'no'
 			};
 
 			nock('http://test/')

@@ -150,12 +150,12 @@ const updateableFields = {
 		type: 'number',
 		nullable: true
 	},
-	hasAllegedBreachArea: {
-		type: 'boolean',
+	areaOfAllegedBreachInSquareMetres: {
+		type: 'number',
 		nullable: true
 	},
-	doesAllegedBreachCreateFloorSpace: {
-		type: 'boolean',
+	floorSpaceCreatedByBreachInSquareMetres: {
+		type: 'number',
 		nullable: true
 	},
 	changeOfUseRefuseOrWaste: {

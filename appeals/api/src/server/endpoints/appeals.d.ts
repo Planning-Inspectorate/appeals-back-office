@@ -461,9 +461,9 @@ interface SingleLPAQuestionnaireResponse {
 	isSiteOnCrownLand?: boolean | null;
 	article4AffectedDevelopmentRights?: string | null;
 	siteAreaSquareMetres?: number | null;
-	hasAllegedBreachArea?: boolean | null;
-	doesAllegedBreachCreateFloorSpace?: boolean | null;
 	appealUnderActSection?: string | null;
+	areaOfAllegedBreachInSquareMetres?: number | null;
+	floorSpaceCreatedByBreachInSquareMetres?: number | null;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -506,8 +506,8 @@ interface UpdateLPAQuestionnaireRequest {
 	// Enforcement
 	noticeRelatesToBuildingEngineeringMiningOther?: boolean | null;
 	siteAreaSquareMetres?: number | null;
-	hasAllegedBreachArea?: boolean | null;
-	doesAllegedBreachCreateFloorSpace?: boolean | null;
+	areaOfAllegedBreachInSquareMetres?: number | null;
+	floorSpaceCreatedByBreachInSquareMetres?: number | null;
 	changeOfUseRefuseOrWaste?: boolean | null;
 	changeOfUseMineralExtraction?: boolean | null;
 	changeOfUseMineralStorage?: boolean | null;

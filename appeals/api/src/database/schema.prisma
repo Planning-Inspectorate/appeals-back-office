@@ -603,8 +603,8 @@ model LPAQuestionnaire {
   //Enforcement fields
   noticeRelatesToBuildingEngineeringMiningOther Boolean?
   siteAreaSquareMetres                          Decimal?
-  hasAllegedBreachArea                          Boolean?
-  doesAllegedBreachCreateFloorSpace             Boolean?
+  areaOfAllegedBreachInSquareMetres             Decimal?
+  floorSpaceCreatedByBreachInSquareMetres       Decimal?
   changeOfUseRefuseOrWaste                      Boolean?
   changeOfUseMineralExtraction                  Boolean?
   changeOfUseMineralStorage                     Boolean?

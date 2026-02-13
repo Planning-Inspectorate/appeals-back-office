@@ -222,8 +222,8 @@ const generateEnforcementSchemaFields = (casedata) => {
 		noticeRelatesToBuildingEngineeringMiningOther:
 			casedata.noticeRelatesToBuildingEngineeringMiningOther,
 		siteAreaSquareMetres: casedata.siteAreaSquareMetres,
-		hasAllegedBreachArea: casedata.hasAllegedBreachArea,
-		doesAllegedBreachCreateFloorSpace: casedata.doesAllegedBreachCreateFloorSpace,
+		areaOfAllegedBreachInSquareMetres: casedata.areaOfAllegedBreachInSquareMetres,
+		floorSpaceCreatedByBreachInSquareMetres: casedata.floorSpaceCreatedByBreachInSquareMetres,
 		changeOfUseRefuseOrWaste: casedata.changeOfUseRefuseOrWaste,
 		changeOfUseMineralExtraction: casedata.changeOfUseMineralExtraction,
 		changeOfUseMineralStorage: casedata.changeOfUseMineralStorage,
