@@ -66,11 +66,14 @@ export const mapQuestionnaireIn = (command, designatedSites) => {
 				...generateEnforcementSchemaFields(casedata)
 				//@ts-ignore
 			};
-		case APPEAL_CASE_TYPE.X: // LDC - schema includes common, HAS and LDC fields
+		case APPEAL_CASE_TYPE.X: // LDC - schema includes common, HAS, S78 and LDC fields
 			return {
 				...generateCommonSchemaFields(casedata),
 				...generateHasSchemaFields(casedata, listedBuildingsData),
+				//@ts-ignore
+				...generateS78SchemaFields(casedata, designatedSites),
 				...generateLDCSchemaFields(casedata)
+				//@ts-ignore
 			};
 		default:
 			throw new Error(`Unsupported case type '${casedata.caseType}'`);

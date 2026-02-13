@@ -112,7 +112,10 @@ export const notifySend = async (options) => {
 	}
 
 	const genericTemplate = config.govNotify.template.generic;
-	const content = renderTemplate(`${templateName}.content.md`, personalisation);
+	const content = renderTemplate(`${templateName}.content.md`, personalisation).replaceAll(
+		'\r\n',
+		'\n'
+	);
 	const subject = renderTemplate(`${templateName}.subject.md`, personalisation);
 	const renderedMessage = generateNotifyPreview(content);
 	const renderedSubject = generateNotifyPreview(`Subject: ${subject}`, true);

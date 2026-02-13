@@ -298,6 +298,8 @@ export const AUDIT_TRAIL_ENFORCEMENT_REFERENCE_UPDATED =
 	'Enforcement notice reference updated to {replacement0}';
 export const AUDIT_TRAIL_DESCRIPTION_OF_ALLEGED_BREACH_UPDATED =
 	'Description of the alleged breach updated to {replacement0}';
+export const AUDIT_TRAIL_RETROSPECTIVE_APPLICATION_UPDATED =
+	"'Did anyone submit a retrospective planning application?' updated to {replacement0}";
 export const AUDIT_TRAIL_APPLICATION_DEVELOPMENT_ALL_OR_PART_UPDATED =
 	"'Was the application for all or part of the development?' updated to {replacement0}";
 export const AUDIT_TRAIL_ENFORCEMENT_ISSUE_DATE_UPDATED =

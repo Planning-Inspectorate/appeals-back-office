@@ -540,6 +540,42 @@ export const validLpaQuestionnaireCasAdverts = {
 	]
 };
 
+export const validLpaQuestionnaireLdc = {
+	casedata: {
+		...validLpaQuestionnaireCommon.casedata,
+		...validLpaQuestionnaireS78.casedata,
+		caseType: APPEAL_CASE_TYPE.X,
+		// LDC specific LPAQ submission fields
+		appealUnderActSection: 'proposed-changes-to-a-listed-building',
+		lpaConsiderAppealInvalid: true,
+		lpaAppealInvalidReasons: 'invalid reasons'
+	},
+	documents: [
+		{
+			dateCreated: '2024-03-01T13:48:35.847Z',
+			documentId: '001',
+			documentType: 'lpaCostsWithdrawal',
+			documentURI:
+				'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+			filename: 'img2.jpg',
+			mime: 'image/jpeg',
+			originalFilename: 'oimg.jpg',
+			size: 10293
+		},
+		{
+			dateCreated: '2024-03-01T13:48:35.847Z',
+			documentId: '001',
+			documentType: 'lpaCostsApplication',
+			documentURI:
+				'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+			filename: 'img3.jpg',
+			mime: 'image/jpeg',
+			originalFilename: 'oimg.jpg',
+			size: 10293
+		}
+	]
+};
+
 export const validRepresentationIp = {
 	caseReference: '6004741',
 	representation: 'Hello, not about cheese but still a rep of some kind (IP comment)',
@@ -1504,6 +1540,31 @@ export const validLpaQuestionnaireIngestionS20 = {
 					...validLpaQuestionnaireIngestionS78.data.lpaQuestionnaire.connectOrCreate.create,
 					preserveGrantLoan: true,
 					historicEnglandConsultation: true
+				}
+			}
+		}
+	}
+};
+
+export const validLpaQuestionnaireIngestionLdc = {
+	...validLpaQuestionnaireIngestionCommon,
+	...validLpaQuestionnaireIngestionS78,
+	data: {
+		...validLpaQuestionnaireIngestionCommon.data,
+		...validLpaQuestionnaireIngestionS78.data,
+		lpaQuestionnaire: {
+			...validLpaQuestionnaireIngestionCommon.data.lpaQuestionnaire,
+			...validLpaQuestionnaireIngestionS78.data.lpaQuestionnaire,
+			connectOrCreate: {
+				...validLpaQuestionnaireIngestionCommon.data.lpaQuestionnaire.connectOrCreate,
+				...validLpaQuestionnaireIngestionS78.data.lpaQuestionnaire.connectOrCreate,
+				create: {
+					...validLpaQuestionnaireIngestionCommon.data.lpaQuestionnaire.connectOrCreate.create,
+					...validLpaQuestionnaireIngestionS78.data.lpaQuestionnaire.connectOrCreate.create,
+					// LDC specific LPAQ submission fields
+					appealUnderActSection: 'proposed-changes-to-a-listed-building',
+					lpaConsiderAppealInvalid: true,
+					lpaAppealInvalidReasons: 'invalid reasons'
 				}
 			}
 		}

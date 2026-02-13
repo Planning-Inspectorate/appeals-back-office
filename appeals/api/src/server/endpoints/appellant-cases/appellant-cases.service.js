@@ -590,6 +590,8 @@ export function renderAuditTrailDetail(data) {
 
 		AUDIT_TRAIL_ENFORCEMENT_REFERENCE_UPDATED: () => data.enforcementReference,
 		AUDIT_TRAIL_DESCRIPTION_OF_ALLEGED_BREACH_UPDATED: () => data.descriptionOfAllegedBreach,
+		AUDIT_TRAIL_RETROSPECTIVE_APPLICATION_UPDATED: () =>
+			data.retrospectiveApplication ? 'Yes' : 'No',
 		AUDIT_TRAIL_APPLICATION_DEVELOPMENT_ALL_OR_PART_UPDATED: () =>
 			capitalizeFirstLetter(
 				/** @type {string} */ (data.applicationDevelopmentAllOrPart || '').replaceAll('-', ' ')
