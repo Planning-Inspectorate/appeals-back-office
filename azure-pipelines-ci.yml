@@ -72,6 +72,8 @@ extends:
                 script: npm run format-check
           - script: git diff --name-only HEAD^...HEAD
             displayName: 'Git diff from prev commit'
+          - script: git log --oneline -3
+            displayName: 'Debug git log'
           - template: ../steps/node_script.yml
             parameters:
               script: $(test-script)
