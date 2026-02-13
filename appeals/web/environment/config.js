@@ -93,7 +93,15 @@ export function loadConfig() {
 		FEATURE_FLAG_APPELLANT_STATEMENT,
 		FEATURE_FLAG_RULE_6_STATEMENT,
 		FEATURE_FLAG_RULE_6_COSTS,
-		FEATURE_FLAG_LDC
+		FEATURE_FLAG_LDC,
+		FEATURE_FLAG_S20_HEARING,
+		FEATURE_FLAG_S20_INQUIRY,
+		FEATURE_FLAG_ENFORCEMENT_NOTICE_HEARING,
+		FEATURE_FLAG_ENFORCEMENT_NOTICE_INQUIRY,
+		FEATURE_FLAG_LDC_HEARING,
+		FEATURE_FLAG_LDC_INQUIRY,
+		FEATURE_FLAG_ELB_HEARING,
+		FEATURE_FLAG_ELB_INQUIRY
 	} = environment;
 
 	const config = {
@@ -174,7 +182,15 @@ export function loadConfig() {
 			featureFlagAppellantStatement: FEATURE_FLAG_APPELLANT_STATEMENT === 'true',
 			featureFlagRule6Statement: FEATURE_FLAG_RULE_6_STATEMENT === 'true',
 			featureFlagRule6Costs: FEATURE_FLAG_RULE_6_COSTS === 'true',
-			featureFlagLDC: FEATURE_FLAG_LDC === 'true'
+			featureFlagLDC: FEATURE_FLAG_LDC === 'true',
+			featureFlagS20Hearing: FEATURE_FLAG_S20_HEARING === 'true',
+			featureFlagS20Inquiry: FEATURE_FLAG_S20_INQUIRY === 'true',
+			featureFlagEnforcementNoticeHearing: FEATURE_FLAG_ENFORCEMENT_NOTICE_HEARING === 'true',
+			featureFlagEnforcementNoticeInquiry: FEATURE_FLAG_ENFORCEMENT_NOTICE_INQUIRY === 'true',
+			featureFlagLdcHearing: FEATURE_FLAG_LDC_HEARING === 'true',
+			featureFlagLdcInquiry: FEATURE_FLAG_LDC_INQUIRY === 'true',
+			featureFlagElbHearing: FEATURE_FLAG_ELB_HEARING === 'true',
+			featureFlagElbInquiry: FEATURE_FLAG_ELB_INQUIRY === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		pdfServiceHost: PDF_SERVICE_HOST
