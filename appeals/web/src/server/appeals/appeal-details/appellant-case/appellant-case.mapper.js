@@ -130,21 +130,21 @@ export async function appellantCasePage(
 	/** @type {PageComponent[]} */
 	const reviewOutcomeComponents = [];
 
-	/** @type {PageComponent} */
-	const documentsWarningComponent = {
-		type: 'warning-text',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds">',
-			closing: '</div></div>'
-		},
-		parameters: {
-			text: appellantCaseData.isEnforcementChild
-				? 'Do not continue until you have reviewed all of the supporting documents and redacted any sensitive information.'
-				: appellantCaseData.isEnforcementParent
-					? 'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information for each linked appeal.'
-					: 'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information.'
-		}
-	};
+	/** @type {PageComponent | null} */
+	const documentsWarningComponent = appellantCaseData.isEnforcementChild
+		? null
+		: {
+				type: 'warning-text',
+				wrapperHtml: {
+					opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds">',
+					closing: '</div></div>'
+				},
+				parameters: {
+					text: appellantCaseData.isEnforcementParent
+						? 'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information for each linked appeal.'
+						: 'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information.'
+				}
+			};
 
 	if (
 		reviewOutcomeRadiosInputInstruction &&
@@ -165,8 +165,6 @@ export async function appellantCasePage(
 						value: 'continue'
 					}
 				});
-
-				reviewOutcomeComponents.push(documentsWarningComponent);
 			}
 		} else {
 			if (session.webAppellantCaseReviewOutcome?.validationOutcome) {
@@ -188,7 +186,9 @@ export async function appellantCasePage(
 				}
 			});
 
-			reviewOutcomeComponents.push(documentsWarningComponent);
+			if (documentsWarningComponent) {
+				reviewOutcomeComponents.push(documentsWarningComponent);
+			}
 		}
 	}
 
@@ -299,6 +299,7 @@ export function getValidationOutcomeFromAppellantCase(appellantCaseData) {
 
 /**
  * @param {Appeal} appealData
+ * @param {string} backLinkUrl
  * @param {number | string} [dueDateDay]
  * @param {number | string} [dueDateMonth]
  * @param {number | string} [dueDateYear]
@@ -308,6 +309,7 @@ export function getValidationOutcomeFromAppellantCase(appellantCaseData) {
  */
 export function updateDueDatePage(
 	appealData,
+	backLinkUrl,
 	errors,
 	dueDateDay,
 	dueDateMonth,
@@ -332,7 +334,7 @@ export function updateDueDatePage(
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Check answers',
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case/incomplete/`,
+		backLinkUrl,
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: 'Update appeal due date',
 		submitButtonProperties: {

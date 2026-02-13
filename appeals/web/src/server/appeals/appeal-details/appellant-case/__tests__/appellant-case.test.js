@@ -716,6 +716,10 @@ describe('appellant-case', () => {
 			);
 
 			expect(unprettifiedElement.innerHTML).toContain(
+				'<strong class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span>'
+			);
+
+			expect(unprettifiedElement.innerHTML).toContain(
 				'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information.</strong>'
 			);
 		});
@@ -814,6 +818,9 @@ describe('appellant-case', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain(
 				'What is the outcome of your review?</legend><div class="govuk-radios"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<strong class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information for each linked appeal.</strong>'
@@ -915,8 +922,9 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain(
 				'What is the outcome of your review?</legend><div class="govuk-radios"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Do not continue until you have reviewed all of the supporting documents and redacted any sensitive information.</strong>'
+
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'<strong class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span>'
 			);
 		});
 

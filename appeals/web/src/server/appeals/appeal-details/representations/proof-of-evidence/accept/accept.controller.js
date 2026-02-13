@@ -36,7 +36,8 @@ export const postConfirmAcceptProofOfEvidence = async (request, response) => {
 			params: { appealId },
 			session,
 			apiClient,
-			currentRepresentation
+			currentRepresentation,
+			currentRule6Party
 		} = request;
 
 		await setRepresentationStatus(
@@ -53,10 +54,19 @@ export const postConfirmAcceptProofOfEvidence = async (request, response) => {
 					? 'rule6PartyProofOfEvidenceAcceptSuccess'
 					: 'lpaProofOfEvidenceAcceptSuccess';
 
+		let bannerText = undefined;
+		if (
+			currentRepresentation.representationType === 'rule_6_party_proofs_evidence' &&
+			currentRule6Party
+		) {
+			bannerText = `${currentRule6Party.serviceUser.organisationName} proof of evidence and witnesses accepted`;
+		}
+
 		addNotificationBannerToSession({
 			session: session,
 			bannerDefinitionKey: acceptProofOfEvidenceBannerType,
-			appealId
+			appealId,
+			text: bannerText
 		});
 
 		delete request.session.reviewProofOfEvidence;

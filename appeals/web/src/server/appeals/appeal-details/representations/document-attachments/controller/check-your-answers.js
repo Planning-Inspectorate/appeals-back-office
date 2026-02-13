@@ -109,6 +109,10 @@ export const postCheckYourAnswers = async (request, response) => {
 	} = request;
 	const { appealId } = currentAppeal;
 
+	const rule6Party = currentAppeal.appealRule6Parties?.find(
+		(/** @type {AppealRule6Party} */ { id }) => id === Number(rule6PartyId)
+	);
+
 	const representationType =
 		currentRepresentation?.representationType ?? getRepresentationType(request.baseUrl);
 	const id = currentRepresentation?.id;
@@ -156,9 +160,6 @@ export const postCheckYourAnswers = async (request, response) => {
 
 			await createNewDocument(apiClient, appealId, addDocumentsRequestPayload);
 
-			const rule6Party = currentAppeal.appealRule6Parties?.find(
-				(/** @type {AppealRule6Party} */ { id }) => id === Number(rule6PartyId)
-			);
 			const representedId = rule6Party?.serviceUserId;
 
 			const payload = buildPayload(
@@ -194,6 +195,8 @@ export const postCheckYourAnswers = async (request, response) => {
 
 	/**@type {import('../../../../../lib/mappers/index.js').NotificationBannerDefinitionKey} */
 	let bannerDefinitionKey;
+	/** @type {string|undefined} */
+	let bannerText = undefined;
 
 	switch (representationType) {
 		case 'comment':
@@ -227,12 +230,18 @@ export const postCheckYourAnswers = async (request, response) => {
 			bannerDefinitionKey = session.createNewRepresentation
 				? 'rule6PartyStatementAddedSuccess'
 				: 'rule6PartyStatementDocumentAddedSuccess';
+			if (rule6Party && session.createNewRepresentation) {
+				bannerText = `${rule6Party.serviceUser.organisationName} statement added`;
+			}
 			break;
 		case 'rule_6_party_proofs_evidence':
 			nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
 			bannerDefinitionKey = session.createNewRepresentation
 				? 'rule6PartyProofOfEvidenceAddedSuccess'
 				: 'rule6PartyProofOfEvidenceDocumentAddedSuccess';
+			if (rule6Party && session.createNewRepresentation) {
+				bannerText = `${rule6Party.serviceUser.organisationName} proof of evidence and witnesses added`;
+			}
 			break;
 		default:
 			bannerDefinitionKey = 'finalCommentsDocumentAddedSuccess';
@@ -242,7 +251,8 @@ export const postCheckYourAnswers = async (request, response) => {
 	addNotificationBannerToSession({
 		session,
 		bannerDefinitionKey: bannerDefinitionKey,
-		appealId
+		appealId,
+		text: bannerText
 	});
 	return response.redirect(nextPageUrl);
 };

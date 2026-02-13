@@ -35,6 +35,22 @@ describe('proof-of-evidence', () => {
 				rule6PartyId: 3670
 			})
 			.persist();
+
+		nock('http://test/').get('/appeals/2/case-notes').reply(200, []).persist();
+
+		nock('http://test/').get('/appeals/2/appellant-cases/0').reply(200, {}).persist();
+
+		nock('http://test/')
+			.get('/appeals/2/reps?type=appellant_final_comment,lpa_final_comment')
+			.reply(200, { items: [], itemCount: 0 })
+			.persist();
+
+		nock('http://test/')
+			.get(
+				'/appeals/2/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence'
+			)
+			.reply(200, { items: [], itemCount: 0 })
+			.persist();
 	});
 
 	afterEach(teardown);
@@ -123,5 +139,51 @@ describe('proof-of-evidence', () => {
 				);
 			});
 		}
+	});
+	describe('POST /', () => {
+		it('should call the API to accept the proof of evidence and redirect to the case details page with a success banner', async () => {
+			const proofOfEvidenceType = proofOfEvidenceTypes[2];
+			const rule6Representation = {
+				...proofOfEvidenceForReviewWithAttachments,
+				items: [
+					{
+						...proofOfEvidenceForReviewWithAttachments.items[0],
+						representationType: 'rule_6_party_proofs_evidence'
+					}
+				]
+			};
+
+			nock('http://test/')
+				.get(`/appeals/2/reps?type=rule_6_party_proofs_evidence`)
+				.reply(200, rule6Representation)
+				.persist();
+
+			nock('http://test/')
+				.patch(`/appeals/2/reps/3670`)
+				.reply(200, {
+					...rule6Representation.items[0],
+					status: 'valid'
+				})
+				.persist();
+
+			const response = await request.post(
+				`${baseUrl}/2/proof-of-evidence/${proofOfEvidenceType.type}/3670/accept`
+			);
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(`Found. Redirecting to /appeals-service/appeal-details/2`);
+
+			const responseFromRedirect = await request.get('/appeals-service/appeal-details/2');
+
+			const notificationBannerHtml = parseHtml(responseFromRedirect.text, {
+				rootElement: '.govuk-notification-banner--success',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(notificationBannerHtml).toContain('Success</h3>');
+			expect(notificationBannerHtml).toContain(
+				'Test Rule 6 Party proof of evidence and witnesses accepted</p>'
+			);
+		});
 	});
 });

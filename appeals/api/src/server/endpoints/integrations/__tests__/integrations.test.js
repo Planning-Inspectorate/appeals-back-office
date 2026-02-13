@@ -946,6 +946,15 @@ describe('/appeals/representation-submission', () => {
 					expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
 					expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
 					expect(databaseConnector.representationAttachment.createMany).toHaveBeenCalled();
+
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith(
+						expect.objectContaining({
+							data: expect.objectContaining({
+								details: 'Test Organisation statement added'
+							})
+						})
+					);
+
 					expect(response.status).toEqual(201);
 				});
 
@@ -1318,6 +1327,8 @@ const createIntegrationMocks = (/** @type {*} */ appealIngestionInput) => {
 	databaseConnector.team.findFirst.mockResolvedValue({
 		id: 1
 	});
+	// @ts-ignore
+	databaseConnector.user.upsert.mockResolvedValue({ id: 1 });
 	// @ts-ignore
 	databaseConnector.lPA.findUnique.mockResolvedValue({
 		teamId: 1

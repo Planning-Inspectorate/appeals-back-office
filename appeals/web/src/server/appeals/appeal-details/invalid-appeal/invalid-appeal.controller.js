@@ -409,7 +409,11 @@ export const postEnforcementNoticeInvalid = async (request, response) => {
 
 	try {
 		session.webAppellantCaseReviewOutcome = {
-			...session.webAppellantCaseReviewOutcome,
+			...(body.enforcementNoticeInvalid ===
+				session.webAppellantCaseReviewOutcome?.enforcementNoticeInvalid &&
+				session.webAppellantCaseReviewOutcome),
+			validationOutcome: session.webAppellantCaseReviewOutcome?.validationOutcome,
+			appealId: currentAppeal.appealId,
 			enforcementNoticeInvalid: body.enforcementNoticeInvalid
 		};
 
