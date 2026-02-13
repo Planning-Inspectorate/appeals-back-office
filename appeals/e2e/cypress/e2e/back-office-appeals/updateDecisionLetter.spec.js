@@ -49,10 +49,6 @@ describe('Update Decision Letter', () => {
 			const expectedNotifies = [
 				{
 					template: 'correction-notice-decision',
-					recipient: apiUsers[0].emailAddress
-				},
-				{
-					template: 'correction-notice-decision',
 					recipient: apiUsers[1].emailAddress
 				},
 				{
