@@ -420,9 +420,16 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 	const hasIpComments = result.some(
 		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
 	);
+	const hasRule6Statement = result.some(
+		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT
+	);
+	const hasRule6Parties =
+		Array.isArray(appeal.appealRule6Parties) && appeal.appealRule6Parties.length > 0;
 	const isHearingProcedure = String(appeal.procedureType?.key) === APPEAL_CASE_PROCEDURE.HEARING;
 
 	const isInquiryProcedure = String(appeal.procedureType?.key) === APPEAL_CASE_PROCEDURE.INQUIRY;
+	const lpaPath = `${config.frontOffice.url}/manage-appeals/${appeal.reference}`;
+	const appellantPath = `${config.frontOffice.url}/appeals/${appeal.reference}`;
 
 	try {
 		let whatHappensNextAppellant;
@@ -442,38 +449,47 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 				whatHappensNextLpa = `We will contact you when the hearing has been set up.`;
 			}
 		} else if (isInquiryProcedure) {
-			whatHappensNextAppellant = `You need to [submit your proof of evidence and witnesses](${config.frontOffice.url}/appeals/${appeal.reference}) by ${proofOfEvidenceDueDate}.`;
-			whatHappensNextLpa = `You need to [submit your proof of evidence and witnesses](${config.frontOffice.url}/manage-appeals/${appeal.reference}) by ${proofOfEvidenceDueDate}.`;
+			whatHappensNextAppellant = `You need to [submit your proof of evidence and witnesses](${appellantPath}) by ${proofOfEvidenceDueDate}.`;
+			whatHappensNextLpa = `You need to [submit your proof of evidence and witnesses](${lpaPath}) by ${proofOfEvidenceDueDate}.`;
 		} else {
-			whatHappensNextAppellant = `You need to [submit your final comments](${config.frontOffice.url}/appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
+			whatHappensNextAppellant = `You need to [submit your final comments](${appellantPath}) by ${finalCommentsDueDate}.`;
 			whatHappensNextLpa = hasIpComments
-				? `You need to [submit your final comments](${config.frontOffice.url}/manage-appeals/${appeal.reference}) by ${finalCommentsDueDate}.`
+				? `You need to [submit your final comments](${lpaPath}) by ${finalCommentsDueDate}.`
 				: `The inspector will visit the site and we will contact you when we have made the decision.`;
 		}
 
 		let lpaTemplate = 'received-statement-and-ip-comments-lpa';
 		let appellantTemplate = 'received-statement-and-ip-comments-appellant';
+		let rule6Template = 'received-statement-and-ip-comments-appellant';
 
-		if (isInquiryProcedure && !hasLpaStatement && !hasIpComments) {
+		if (isInquiryProcedure && !hasLpaStatement && !hasIpComments && !hasRule6Statement) {
 			lpaTemplate = 'not-received-statement-and-ip-comments';
 			appellantTemplate = 'not-received-statement-and-ip-comments';
+			rule6Template = 'not-received-statement-and-ip-comments';
+		} else if (isInquiryProcedure && !hasLpaStatement && hasRule6Statement) {
+			lpaTemplate = 'rule-6-statement-received';
+			appellantTemplate = 'rule-6-statement-received';
+			rule6Template = 'received-only-rule-6-statement-rule-6-party';
 		}
 
 		const contacts = [
 			{
 				email: appeal.lpa?.email,
 				template: lpaTemplate,
-				whatHappensNextTemplate: whatHappensNextLpa
+				whatHappensNextTemplate: whatHappensNextLpa,
+				url: lpaPath
 			},
 			{
 				email: appeal.agent?.email || appeal.appellant?.email,
 				template: appellantTemplate,
-				whatHappensNextTemplate: whatHappensNextAppellant
+				whatHappensNextTemplate: whatHappensNextAppellant,
+				url: appellantPath
 			},
 			...(appeal.appealRule6Parties?.map((rule6Party) => ({
 				email: rule6Party.serviceUser?.email,
-				template: appellantTemplate,
-				whatHappensNextTemplate: whatHappensNextAppellant
+				template: rule6Template,
+				whatHappensNextTemplate: whatHappensNextAppellant,
+				url: undefined
 			})) ?? [])
 		];
 
@@ -483,8 +499,11 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 				notifyClient,
 				hasLpaStatement,
 				hasIpComments,
+				hasRule6Parties,
+				hasRule6Statement,
 				isHearingProcedure,
 				isInquiryProcedure,
+				statementUrl: contact.url,
 				templateName: contact.template,
 				recipientEmail: contact.email,
 				finalCommentsDueDate,
@@ -492,26 +511,6 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 				azureAdUserId
 			});
 		});
-
-		if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
-			for (const party of appeal.appealRule6Parties) {
-				if (party.serviceUser?.email) {
-					await notifyPublished({
-						appeal,
-						notifyClient,
-						hasLpaStatement,
-						hasIpComments,
-						isHearingProcedure,
-						isInquiryProcedure,
-						templateName: appellantTemplate,
-						recipientEmail: party.serviceUser.email,
-						finalCommentsDueDate,
-						whatHappensNext: whatHappensNextAppellant,
-						azureAdUserId
-					});
-				}
-			}
-		}
 	} catch (error) {
 		logger.error(error);
 	}
@@ -874,8 +873,11 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
  * @property {string} [whatHappensNext]
  * @property {boolean} [hasLpaStatement]
  * @property {boolean} [hasIpComments]
+ * @property {boolean} [hasRule6Parties]
+ * @property {boolean} [hasRule6Statement]
  * @property {boolean} [isHearingProcedure]
  * @property {boolean} [isInquiryProcedure]
+ * @property {string} [statementUrl]
  * @property {string} [inquirySubjectLine]
  * @property {string} [userTypeNoCommentSubmitted]
  * @property {string} azureAdUserId
@@ -900,8 +902,11 @@ async function notifyPublished({
 	whatHappensNext = '',
 	hasLpaStatement = false,
 	hasIpComments = false,
+	hasRule6Parties = false,
+	hasRule6Statement = false,
 	isHearingProcedure = false,
 	isInquiryProcedure = false,
+	statementUrl = '',
 	userTypeNoCommentSubmitted = '',
 	inquiryDetailWarningText = '',
 	inquiryWitnessesText = '',
@@ -941,8 +946,11 @@ async function notifyPublished({
 			what_happens_next: whatHappensNext,
 			has_ip_comments: hasIpComments,
 			has_statement: hasLpaStatement,
+			has_rule_6_parties: hasRule6Parties,
+			has_rule_6_statement: hasRule6Statement,
 			is_hearing_procedure: isHearingProcedure,
 			is_inquiry_procedure: isInquiryProcedure,
+			statement_url: statementUrl,
 			user_type: userTypeNoCommentSubmitted,
 			team_email_address: await getTeamEmailFromAppealId(appeal.id),
 			inquiry_detail_warning_text: inquiryDetailWarningText,
