@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { householdAppeal } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
@@ -159,6 +160,7 @@ describe('addresses routes', () => {
 						userId: householdAppeal.caseOfficer.id
 					}
 				});
+				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(householdAppeal.id);
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual(dataToSave);
 			});
