@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { formatCamelCaseToWords } from '../../support/utils/format.js';
 import { Page } from '../basePage';
 import { CaseDetailsPage } from '../caseDetailsPage.js';
 import { CASE_HISTORY_STATES } from './caseHistoryStates';
@@ -15,7 +16,7 @@ export class CaseHistoryPage extends Page {
 	fixturesPath = 'cypress/fixtures/';
 	states = CASE_HISTORY_STATES;
 
-	verifyCaseHistory(groupArray, caseRef) {
+	verifyCaseHistory(groupArray, caseRef = '', appealDetails) {
 		caseDetailsPage.clickViewCaseHistory();
 		const state = this.states[groupArray];
 
@@ -47,6 +48,60 @@ export class CaseHistoryPage extends Page {
 				});
 		});
 		caseDetailsPage.clickBackLink();
+	}
+
+	verifyCaseHistoryEmail(detail, subject, appealDetails = {}) {
+		let found = false;
+		const expectedDetails = detail.trim().toLowerCase();
+		const expectedSubject = `Subject: ${subject}`;
+
+		cy.get('.govuk-table__body')
+			.children()
+			.each(($row) => {
+				const rowText = $row.text().trim().toLowerCase();
+				if (rowText.includes(expectedDetails)) {
+					found = true;
+
+					cy.wrap($row)
+						.find('.govuk-details__summary-text')
+						.contains('View email')
+						.should('exist')
+						.click();
+
+					cy.wrap($row).find('.govuk-details__text').should('be.visible');
+
+					cy.wrap($row).find('.govuk-details__text').should('contain', expectedSubject);
+
+					// are there appeal details to check (e.g. for inquiry or hearing)
+					if (appealDetails) {
+						Object.keys(appealDetails).forEach((key) => {
+							const appealValue = `${formatCamelCaseToWords(key)}: ${appealDetails[key]}`;
+							cy.wrap($row).find('.govuk-details__text').should('contain', appealValue);
+						});
+					}
+				}
+			})
+			.then(() => {
+				expect(found, `Expected at least one row to contain "${expectedDetails}"`).to.be.true;
+			});
+	}
+
+	verifyNumberOfCaseHistoryMessages(expectedMessage, expectedMessageCount) {
+		let messageCount = 0;
+		cy.get('.govuk-table__body')
+			.children()
+			.each(($row) => {
+				const rowText = $row.text().trim().toLowerCase();
+				if (rowText.includes(expectedMessage.toLowerCase())) {
+					messageCount++;
+				}
+			})
+			.then(() => {
+				expect(
+					messageCount,
+					`Expected to find "${expectedMessageCount}" messages with ${expectedMessage}`
+				).to.equal(expectedMessageCount);
+			});
 	}
 
 	verifyCaseHistoryValue(value, checkIncluded = true) {
