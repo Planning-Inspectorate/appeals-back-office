@@ -2625,15 +2625,6 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     <input class="govuk-input" id="review-outcome" name="reviewOutcome" type="hidden"
                     value="continue">
                 </div>
-                <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-two-thirds">
-                        <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                            <strong                             class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Do not continue until
-                                you have reviewed all of the supporting documents and redacted any sensitive
-                                information.</strong>
-                        </div>
-                    </div>
-                </div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
         </div>
