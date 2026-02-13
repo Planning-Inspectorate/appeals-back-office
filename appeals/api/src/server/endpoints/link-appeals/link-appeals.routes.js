@@ -1,4 +1,6 @@
 import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkFeatureActive } from '#middleware/check-feature-active.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import {
@@ -6,7 +8,8 @@ import {
 	associateExternalAppeal,
 	linkAppeal,
 	linkExternalAppeal,
-	unlinkAppeal
+	unlinkAppeal,
+	updateLinkedAppeals
 } from './link-appeals.controller.js';
 import {
 	postLinkAppealValidator,
@@ -143,6 +146,35 @@ router.delete(
 	 */
 	checkAppealExistsByIdAndAddPartialToRequest([]),
 	asyncHandler(unlinkAppeal)
+);
+
+router.post(
+	'/:appealId/update-linked-appeals',
+	/*
+		#swagger.tags = ['Linked Appeals']
+		#swagger.path = '/appeals/{appealId}/update-linked-appeals'
+		#swagger.description = 'Update linked appeal relationships'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.requestBody = {
+			in: 'body',
+			description: 'Update Linked Appeals Request',
+			schema: { $ref: '#/components/schemas/UpdateLinkedAppealsRequest' },
+			required: true
+		}
+		#swagger.responses[400] = {}
+	 */
+	checkFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS_UNLINK),
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'appealStatus',
+		'appealType',
+		'parentAppeals',
+		'childAppeals'
+	]),
+	asyncHandler(updateLinkedAppeals)
 );
 
 export { router as linkAppealsRoutes };

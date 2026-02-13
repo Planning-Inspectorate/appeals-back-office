@@ -4549,6 +4549,53 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/update-linked-appeals": {
+			"post": {
+				"tags": ["Linked Appeals"],
+				"description": "Update linked appeal relationships",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"400": {
+						"description": "Bad Request"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Update Linked Appeals Request",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateLinkedAppealsRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateLinkedAppealsRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/neighbouring-sites": {
 			"post": {
 				"tags": ["Neighbouring sites"],
@@ -7983,6 +8030,22 @@
 				},
 				"xml": {
 					"name": "UnlinkAppealRequest"
+				}
+			},
+			"UpdateLinkedAppealsRequest": {
+				"type": "object",
+				"properties": {
+					"appealRefToReplaceLead": {
+						"type": "string",
+						"example": "51243165"
+					},
+					"operation": {
+						"type": "string",
+						"example": "unlink"
+					}
+				},
+				"xml": {
+					"name": "UpdateLinkedAppealsRequest"
 				}
 			},
 			"RepUpdateRequest": {

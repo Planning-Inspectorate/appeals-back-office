@@ -19,7 +19,8 @@ import {
 	linkedAppealRequest,
 	relatedAppealLegacyRequest,
 	relatedAppealRequest,
-	unlinkAppealRequest
+	unlinkAppealRequest,
+	updateLinkedAppealsRequest
 } from '#tests/linked-appeals/mocks.js';
 import { createRepRequest, repResponse, repUpdateRequest } from '#tests/representations/mocks.js';
 import {
@@ -76,6 +77,9 @@ export const spec = {
 		},
 		UnlinkAppealRequest: {
 			...unlinkAppealRequest
+		},
+		UpdateLinkedAppealsRequest: {
+			...updateLinkedAppealsRequest
 		},
 		RepUpdateRequest: {
 			...repUpdateRequest

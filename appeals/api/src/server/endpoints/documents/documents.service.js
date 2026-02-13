@@ -264,7 +264,9 @@ export const addDocumentsToAppeal = async (upload, appeal, skipBlobValidation = 
 		}
 	}
 
-	const documentsCreated = await addDocumentAndVersion(appeal, documentsToSendToDatabase);
+	const documentsCreated = documentsToSendToDatabase?.length
+		? await addDocumentAndVersion(appeal, documentsToSendToDatabase)
+		: [];
 
 	for (const document of documentsCreated) {
 		if (document?.documentGuid) {

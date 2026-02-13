@@ -1,5 +1,11 @@
 // @ts-nocheck
 import { jest } from '@jest/globals';
+import { ERROR_NOT_FOUND, ERROR_UNLINKING_APPEALS } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
+import {
+	LINK_APPEALS_SWITCH_OPERATION,
+	LINK_APPEALS_UNLINK_OPERATION
+} from '../link-appeals.constants.js';
 
 jest.resetModules();
 
@@ -58,260 +64,610 @@ describe('appeal linked appeals routes', () => {
 	});
 	describe('POST', () => {
 		describe('Linked appeals', () => {
-			test('returns 400 when the ID in the request is null', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			describe('/:appealId/link-appeal', () => {
+				test('returns 400 when the ID in the request is null', async () => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
-				const response = await request
-					.post(`/appeals/${householdAppeal.id}/link-appeal`)
-					.send({
-						...linkedAppealRequest,
-						linkedAppealId: null
-					})
-					.set('azureAdUserId', azureAdUserId);
+					const response = await request
+						.post(`/appeals/${householdAppeal.id}/link-appeal`)
+						.send({
+							...linkedAppealRequest,
+							linkedAppealId: null
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(400);
-			});
-
-			test('returns 400 when the ID in the request is not a number', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
-
-				const response = await request
-					.post(`/appeals/${householdAppeal.id}/link-appeal`)
-					.send({
-						...linkedAppealRequest,
-						linkedAppealId: 'a string'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-			});
-
-			test('returns 404 when an internal appeal to link is not found', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValueOnce(null);
-
-				const response = await request
-					.post(`/appeals/${householdAppeal.id}/link-appeal`)
-					.send({
-						...linkedAppealRequest,
-						linkedAppealId: 100
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(404);
-			});
-
-			test('returns 400 when an external appeal reference is empty', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
-
-				const response = await request
-					.post(`/appeals/${householdAppeal.id}/link-legacy-appeal`)
-					.send({
-						...linkedAppealLegacyRequest,
-						linkedAppealReference: ''
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-			});
-
-			test('returns 400 when an external appeal reference is null', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
-
-				const response = await request
-					.post(`/appeals/${householdAppeal.id}/link-legacy-appeal`)
-					.send({
-						...linkedAppealLegacyRequest,
-						linkedAppealReference: null
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-			});
-
-			test('returns 409 when an internal appeal is already a parent', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValueOnce({
-					...householdAppeal,
-					childAppeals: linkedAppeals
+					expect(response.status).toEqual(400);
 				});
 
-				const response = await request
-					.post(`/appeals/${householdAppeal.id}/link-appeal`)
-					.send({
-						...linkedAppealRequest,
-						isCurrentAppealParent: false
-					})
-					.set('azureAdUserId', azureAdUserId);
+				test('returns 400 when the ID in the request is not a number', async () => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+					// @ts-ignore
+					databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 
-				expect(response.status).toEqual(409);
-			});
+					const response = await request
+						.post(`/appeals/${householdAppeal.id}/link-appeal`)
+						.send({
+							...linkedAppealRequest,
+							linkedAppealId: 'a string'
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-			test('returns 201 when an internal appeal is linked', async () => {
-				const childAppeal = structuredClone({ ...householdAppeal, id: 2, reference: '4567654' });
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValueOnce(householdAppeal);
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValueOnce(childAppeal);
-				// @ts-ignore
-				databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
-				// @ts-ignore
-				databaseConnector.folder.findMany.mockResolvedValue([mockSavedFolderWithValidDates]);
-				databaseConnector.document.create.mockReturnValue(documentCreated);
-				databaseConnector.documentVersion.create.mockResolvedValue(documentVersionCreated);
-
-				got.post.mockReturnValueOnce({
-					json: jest
-						.fn()
-						.mockResolvedValueOnce(parseHorizonGetCaseResponse(horizonGetCaseSuccessResponse))
+					expect(response.status).toEqual(400);
 				});
 
-				const response = await request
-					.post(`/appeals/${householdAppeal.id}/link-appeal`)
-					.send({
-						...linkedAppealRequest,
-						linkedAppealReference: '123456'
-					})
-					.set('azureAdUserId', azureAdUserId);
+				test('returns 404 when an internal appeal to link is not found', async () => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+					// @ts-ignore
+					databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValueOnce(null);
 
-				expect(response.status).toEqual(201);
-				expect(databaseConnector.appealRelationship.create).toHaveBeenCalledTimes(1);
-				expect(databaseConnector.appealRelationship.create).toHaveBeenCalledWith({
-					data: {
-						parentId: householdAppeal.id,
-						parentRef: householdAppeal.reference,
-						childRef: childAppeal.reference,
-						childId: childAppeal.id,
-						type: CASE_RELATIONSHIP_LINKED,
-						externalSource: false
-					}
+					const response = await request
+						.post(`/appeals/${householdAppeal.id}/link-appeal`)
+						.send({
+							...linkedAppealRequest,
+							linkedAppealId: 100
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(404);
 				});
 
-				expect(eventClient.sendEvents).toHaveBeenCalledWith(
-					'appeal-document-to-move',
-					[
-						{
-							importedURI: `https://127.0.0.1:10000/document-service-uploads/appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf`,
-							originalURI: `https://127.0.0.1:10000/document-service-uploads/appeal/6000001/27d0fda4-8a9a-4f5a-a158-68eaea676158/v1/mydoc.pdf`
+				test('returns 409 when an internal appeal is already a parent', async () => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValueOnce({
+						...householdAppeal,
+						childAppeals: linkedAppeals
+					});
+
+					const response = await request
+						.post(`/appeals/${householdAppeal.id}/link-appeal`)
+						.send({
+							...linkedAppealRequest,
+							isCurrentAppealParent: false
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(409);
+				});
+
+				test('returns 201 when an internal appeal is linked', async () => {
+					const childAppeal = structuredClone({ ...householdAppeal, id: 2, reference: '4567654' });
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValueOnce(householdAppeal);
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValueOnce(childAppeal);
+					// @ts-ignore
+					databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+					// @ts-ignore
+					databaseConnector.folder.findMany.mockResolvedValue([mockSavedFolderWithValidDates]);
+					databaseConnector.document.create.mockReturnValue(documentCreated);
+					databaseConnector.documentVersion.create.mockResolvedValue(documentVersionCreated);
+
+					got.post.mockReturnValueOnce({
+						json: jest
+							.fn()
+							.mockResolvedValueOnce(parseHorizonGetCaseResponse(horizonGetCaseSuccessResponse))
+					});
+
+					const response = await request
+						.post(`/appeals/${householdAppeal.id}/link-appeal`)
+						.send({
+							...linkedAppealRequest,
+							linkedAppealReference: '123456'
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(201);
+					expect(databaseConnector.appealRelationship.create).toHaveBeenCalledTimes(1);
+					expect(databaseConnector.appealRelationship.create).toHaveBeenCalledWith({
+						data: {
+							parentId: householdAppeal.id,
+							parentRef: householdAppeal.reference,
+							childRef: childAppeal.reference,
+							childId: childAppeal.id,
+							type: CASE_RELATIONSHIP_LINKED,
+							externalSource: false
 						}
-					],
-					EventType.Create
-				);
+					});
 
-				expect(databaseConnector.document.create).toHaveBeenCalledWith({
-					data: {
-						caseId: 1,
-						folderId: 23,
-						guid: 'mock-uuid',
-						name: 'mydoc-4567654.pdf'
-					}
-				});
+					expect(eventClient.sendEvents).toHaveBeenCalledWith(
+						'appeal-document-to-move',
+						[
+							{
+								importedURI: `https://127.0.0.1:10000/document-service-uploads/appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf`,
+								originalURI: `https://127.0.0.1:10000/document-service-uploads/appeal/6000001/27d0fda4-8a9a-4f5a-a158-68eaea676158/v1/mydoc.pdf`
+							}
+						],
+						EventType.Create
+					);
 
-				expect(databaseConnector.documentVersion.create).toHaveBeenCalledWith({
-					data: {
-						blobStorageContainer: 'document-service-uploads',
-						blobStoragePath: 'appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf',
-						dateReceived: expect.any(Date),
-						documentGuid: 'mock-uuid',
-						documentType: 'appellantCostApplication',
-						documentURI:
-							'https://127.0.0.1:10000/document-service-uploads/appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf',
-						draft: false,
-						fileName: 'mydoc.pdf',
-						isLateEntry: false,
-						lastModified: expect.any(Date),
-						mime: 'application/pdf',
-						originalFilename: 'mydoc-4567654.pdf',
-						published: false,
-						redactionStatusId: 1,
-						size: 14699,
-						stage: 'costs',
-						version: 1,
-						virusCheckStatus: 'affected'
-					}
-				});
+					expect(databaseConnector.document.create).toHaveBeenCalledWith({
+						data: {
+							caseId: 1,
+							folderId: 23,
+							guid: 'mock-uuid',
+							name: 'mydoc-4567654.pdf'
+						}
+					});
 
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+					expect(databaseConnector.documentVersion.create).toHaveBeenCalledWith({
+						data: {
+							blobStorageContainer: 'document-service-uploads',
+							blobStoragePath: 'appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf',
+							dateReceived: expect.any(Date),
+							documentGuid: 'mock-uuid',
+							documentType: 'appellantCostApplication',
+							documentURI:
+								'https://127.0.0.1:10000/document-service-uploads/appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf',
+							draft: false,
+							fileName: 'mydoc.pdf',
+							isLateEntry: false,
+							lastModified: expect.any(Date),
+							mime: 'application/pdf',
+							originalFilename: 'mydoc-4567654.pdf',
+							published: false,
+							redactionStatusId: 1,
+							size: 14699,
+							stage: 'costs',
+							version: 1,
+							virusCheckStatus: 'affected'
+						}
+					});
 
-				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-					notifyClient: expect.anything(),
-					personalisation: {
-						appeal_reference_number: householdAppeal.reference,
-						lead_appeal_reference_number: householdAppeal.reference,
-						child_appeal_reference_number: childAppeal.reference,
-						event_type: 'site visit',
-						lpa_reference: householdAppeal.applicationReference,
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						linked_before_lpa_questionnaire: true,
-						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
-					},
-					recipientEmail: householdAppeal.agent.email,
-					templateName: 'link-appeal'
-				});
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-					notifyClient: expect.anything(),
-					personalisation: {
-						appeal_reference_number: householdAppeal.reference,
-						lead_appeal_reference_number: householdAppeal.reference,
-						child_appeal_reference_number: childAppeal.reference,
-						event_type: 'site visit',
-						lpa_reference: householdAppeal.applicationReference,
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						linked_before_lpa_questionnaire: true,
-						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
-					},
-					recipientEmail: householdAppeal.agent.email,
-					templateName: 'link-appeal'
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: householdAppeal.reference,
+							lead_appeal_reference_number: householdAppeal.reference,
+							child_appeal_reference_number: childAppeal.reference,
+							event_type: 'site visit',
+							lpa_reference: householdAppeal.applicationReference,
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							linked_before_lpa_questionnaire: true,
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+						},
+						recipientEmail: householdAppeal.agent.email,
+						templateName: 'link-appeal'
+					});
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: householdAppeal.reference,
+							lead_appeal_reference_number: householdAppeal.reference,
+							child_appeal_reference_number: childAppeal.reference,
+							event_type: 'site visit',
+							lpa_reference: householdAppeal.applicationReference,
+							site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							linked_before_lpa_questionnaire: true,
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+						},
+						recipientEmail: householdAppeal.agent.email,
+						templateName: 'link-appeal'
+					});
 				});
 			});
+			describe('/:appealId/link-legacy-appeal', () => {
+				test('returns 400 when an external appeal reference is empty', async () => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+					// @ts-ignore
+					databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 
-			test('returns 200 when an external appeal reference is received', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
-				got.post.mockReturnValueOnce({
-					json: jest
-						.fn()
-						.mockResolvedValueOnce(parseHorizonGetCaseResponse(horizonGetCaseSuccessResponse))
+					const response = await request
+						.post(`/appeals/${householdAppeal.id}/link-legacy-appeal`)
+						.send({
+							...linkedAppealLegacyRequest,
+							linkedAppealReference: ''
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(400);
 				});
 
-				const response = await request
-					.post(`/appeals/${householdAppeal.id}/link-legacy-appeal`)
-					.send({
-						...linkedAppealLegacyRequest,
-						linkedAppealReference: '123456'
-					})
-					.set('azureAdUserId', azureAdUserId);
+				test('returns 400 when an external appeal reference is null', async () => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+					// @ts-ignore
+					databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 
-				expect(response.status).toEqual(200);
-				expect(databaseConnector.appealRelationship.create).toHaveBeenCalledTimes(1);
-				expect(databaseConnector.appealRelationship.create).toHaveBeenCalledWith({
-					data: {
-						parentId: null,
-						parentRef: '1000000',
-						childRef: householdAppeal.reference,
-						childId: householdAppeal.id,
-						type: CASE_RELATIONSHIP_LINKED,
-						externalSource: true,
-						externalAppealType: 'Planning Appeal (W)',
-						externalId: '20486402'
-					}
+					const response = await request
+						.post(`/appeals/${householdAppeal.id}/link-legacy-appeal`)
+						.send({
+							...linkedAppealLegacyRequest,
+							linkedAppealReference: null
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(400);
+				});
+
+				test('returns 200 when an external appeal reference is received', async () => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+					// @ts-ignore
+					databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+					got.post.mockReturnValueOnce({
+						json: jest
+							.fn()
+							.mockResolvedValueOnce(parseHorizonGetCaseResponse(horizonGetCaseSuccessResponse))
+					});
+
+					const response = await request
+						.post(`/appeals/${householdAppeal.id}/link-legacy-appeal`)
+						.send({
+							...linkedAppealLegacyRequest,
+							linkedAppealReference: '123456'
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(200);
+					expect(databaseConnector.appealRelationship.create).toHaveBeenCalledTimes(1);
+					expect(databaseConnector.appealRelationship.create).toHaveBeenCalledWith({
+						data: {
+							parentId: null,
+							parentRef: '1000000',
+							childRef: householdAppeal.reference,
+							childId: householdAppeal.id,
+							type: CASE_RELATIONSHIP_LINKED,
+							externalSource: true,
+							externalAppealType: 'Planning Appeal (W)',
+							externalId: '20486402'
+						}
+					});
+				});
+			});
+			describe('/:appealId/update-linked-appeals', () => {
+				test('returns 400 when the operation is missing', async () => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+					const response = await request
+						.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
+						.send({})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(400);
+					expect(response.text).toEqual('Missing operation field');
+				});
+
+				test(`returns 400 when the operation is not "${LINK_APPEALS_SWITCH_OPERATION}" or "${LINK_APPEALS_UNLINK_OPERATION}"`, async () => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						...householdAppeal,
+						childAppeals: [{ type: CASE_RELATIONSHIP_LINKED, childRef: '123456' }]
+					});
+
+					const response = await request
+						.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
+						.send({ operation: 'invalid' })
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(400);
+					expect(response.text).toEqual('Invalid operation');
+				});
+
+				describe(`operation is "${LINK_APPEALS_SWITCH_OPERATION}"`, () => {
+					test('returns 400 when the appeal is not linked', async () => {
+						// @ts-ignore
+						databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+						const response = await request
+							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
+							.send({ operation: LINK_APPEALS_SWITCH_OPERATION })
+							.set('azureAdUserId', azureAdUserId);
+
+						expect(response.status).toEqual(400);
+						expect(response.text).toEqual('Operation is only valid for linked appeals');
+					});
+
+					test('returns 400 when the appeal is linked and appealRefToReplaceLead has not been set', async () => {
+						// @ts-ignore
+						databaseConnector.appeal.findUnique.mockResolvedValue({
+							...householdAppeal,
+							childAppeals: [{ type: CASE_RELATIONSHIP_LINKED, childRef: '123456' }]
+						});
+
+						const response = await request
+							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
+							.send({ operation: LINK_APPEALS_SWITCH_OPERATION })
+							.set('azureAdUserId', azureAdUserId);
+
+						expect(response.status).toEqual(400);
+						expect(response.text).toEqual(
+							'Appeal to replace lead is required for "switch" operation'
+						);
+					});
+
+					test('returns 400 when the appeal is not a parent and appealRefToReplaceLead is set', async () => {
+						// @ts-ignore
+						databaseConnector.appeal.findUnique.mockResolvedValue({
+							...householdAppeal,
+							parentAppeals: [
+								{
+									type: CASE_RELATIONSHIP_LINKED
+								}
+							]
+						});
+
+						const response = await request
+							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
+							.send({ operation: LINK_APPEALS_SWITCH_OPERATION, appealRefToReplaceLead: '456123' })
+							.set('azureAdUserId', azureAdUserId);
+
+						expect(response.status).toEqual(400);
+						expect(response.text).toEqual('Switching the lead is only valid for parent appeals');
+					});
+
+					test('returns 400 when the appeal is a parent and appealRefToReplaceLead is not a child of this parent', async () => {
+						// @ts-ignore
+						databaseConnector.appeal.findUnique.mockResolvedValue({
+							...householdAppeal,
+							childAppeals: [
+								{
+									type: CASE_RELATIONSHIP_LINKED,
+									child: { appellantCase: {}, reference: '123456' }
+								}
+							]
+						});
+
+						const response = await request
+							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
+							.send({ operation: LINK_APPEALS_SWITCH_OPERATION, appealRefToReplaceLead: '456123' })
+							.set('azureAdUserId', azureAdUserId);
+
+						expect(response.status).toEqual(400);
+						expect(response.text).toEqual('Appeal to replace lead is not a child of the lead');
+					});
+
+					test('returns 200 when the appeal is a parent and appealRefToReplaceLead is a child of this parent', async () => {
+						databaseConnector.folder.findMany.mockResolvedValue([]);
+						databaseConnector.appealRelationship.deleteMany.mockResolvedValue({});
+						databaseConnector.appealRelationship.create.mockResolvedValue({});
+						// @ts-ignore
+						databaseConnector.appeal.findUnique.mockResolvedValue({
+							...householdAppeal,
+							childAppeals: [
+								{
+									type: CASE_RELATIONSHIP_LINKED,
+									childId: 456,
+									childRef: '456123',
+									child: { appellantCase: {}, id: 456, reference: '456123' }
+								}
+							]
+						});
+
+						const response = await request
+							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
+							.send({ operation: LINK_APPEALS_SWITCH_OPERATION, appealRefToReplaceLead: '456123' })
+							.set('azureAdUserId', azureAdUserId);
+
+						expect(databaseConnector.folder.findMany).toHaveBeenCalledTimes(
+							Object.values(APPEAL_CASE_STAGE).length * 2
+						);
+
+						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledTimes(1);
+						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledWith({
+							where: {
+								parentId: householdAppeal.id
+							}
+						});
+
+						expect(databaseConnector.appealRelationship.create).toHaveBeenNthCalledWith(1, {
+							data: {
+								childId: householdAppeal.id,
+								childRef: householdAppeal.reference,
+								parentId: 456,
+								parentRef: '456123',
+								type: CASE_RELATIONSHIP_LINKED
+							}
+						});
+
+						expect(response.status).toEqual(200);
+						expect(response.text).toEqual('true');
+					});
+				});
+
+				describe(`operation is "${LINK_APPEALS_UNLINK_OPERATION}"`, () => {
+					test('returns 400 when the appeal is not linked', async () => {
+						// @ts-ignore
+						databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+						const response = await request
+							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
+							.send({ operation: LINK_APPEALS_UNLINK_OPERATION })
+							.set('azureAdUserId', azureAdUserId);
+
+						expect(response.status).toEqual(400);
+						expect(response.text).toEqual('Operation is only valid for linked appeals');
+					});
+
+					test('returns 400 when the appeal is a child and appealRefToReplaceLead is set', async () => {
+						databaseConnector.folder.findMany.mockResolvedValue([]);
+						databaseConnector.appealRelationship.deleteMany.mockResolvedValue({});
+						databaseConnector.appealRelationship.create.mockResolvedValue({});
+						// @ts-ignore
+						databaseConnector.appeal.findUnique.mockResolvedValue({
+							...householdAppeal,
+							parentAppeals: [
+								{
+									type: CASE_RELATIONSHIP_LINKED,
+									parent: { appellantCase: {}, reference: '456123' }
+								}
+							]
+						});
+
+						const response = await request
+							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
+							.send({ operation: LINK_APPEALS_UNLINK_OPERATION, appealRefToReplaceLead: '456123' })
+							.set('azureAdUserId', azureAdUserId);
+
+						expect(response.status).toEqual(400);
+						expect(response.text).toEqual(
+							'Unlinking a child appeal does not require replacing the lead'
+						);
+					});
+
+					test('returns 400 when the appeal is a parent and appealRefToReplaceLead is not set', async () => {
+						databaseConnector.folder.findMany.mockResolvedValue([]);
+						databaseConnector.appealRelationship.deleteMany.mockResolvedValue({});
+						databaseConnector.appealRelationship.create.mockResolvedValue({});
+						// @ts-ignore
+						databaseConnector.appeal.findUnique.mockResolvedValue({
+							...householdAppeal,
+							childAppeals: [
+								{
+									type: CASE_RELATIONSHIP_LINKED
+								}
+							]
+						});
+
+						const response = await request
+							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
+							.send({ operation: LINK_APPEALS_UNLINK_OPERATION })
+							.set('azureAdUserId', azureAdUserId);
+
+						expect(response.status).toEqual(400);
+						expect(response.text).toEqual(
+							'Appeal to replace lead is required for unlinking a parent appeal'
+						);
+					});
+
+					test('returns 200 when the appeal is a child and appealRefToReplaceLead is not set', async () => {
+						databaseConnector.folder.findMany.mockResolvedValue([]);
+						databaseConnector.appealRelationship.deleteMany.mockResolvedValue({});
+						// @ts-ignore
+						databaseConnector.appeal.findUnique.mockResolvedValue({
+							...householdAppeal,
+							parentAppeals: [
+								{
+									type: CASE_RELATIONSHIP_LINKED,
+									parentId: 456,
+									parentRef: '456123',
+									parent: { appellantCase: {}, id: 456, reference: '456123' }
+								}
+							]
+						});
+
+						const response = await request
+							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
+							.send({ operation: LINK_APPEALS_UNLINK_OPERATION })
+							.set('azureAdUserId', azureAdUserId);
+
+						expect(databaseConnector.folder.findMany).toHaveBeenCalledTimes(
+							Object.values(APPEAL_CASE_STAGE).length * 2
+						);
+
+						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledTimes(1);
+						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledWith({
+							where: {
+								childId: householdAppeal.id
+							}
+						});
+
+						expect(response.status).toEqual(200);
+						expect(response.text).toEqual('true');
+					});
+
+					test('returns 200 when the appeal is a parent and appealRefToReplaceLead is a child of this parent', async () => {
+						databaseConnector.folder.findMany.mockResolvedValue([]);
+						databaseConnector.appealRelationship.deleteMany.mockResolvedValue({});
+						databaseConnector.appealRelationship.create.mockResolvedValue({});
+						// @ts-ignore
+						databaseConnector.appeal.findUnique.mockResolvedValue({
+							...householdAppeal,
+							childAppeals: [
+								{
+									type: CASE_RELATIONSHIP_LINKED,
+									childId: 456,
+									childRef: '456123',
+									child: { appellantCase: {}, id: 456, reference: '456123' }
+								},
+								{
+									type: CASE_RELATIONSHIP_LINKED,
+									childId: 789,
+									childRef: '789456',
+									child: { appellantCase: {}, id: 789, reference: '789456' }
+								}
+							]
+						});
+
+						const response = await request
+							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
+							.send({ operation: LINK_APPEALS_UNLINK_OPERATION, appealRefToReplaceLead: '456123' })
+							.set('azureAdUserId', azureAdUserId);
+
+						expect(databaseConnector.folder.findMany).toHaveBeenCalledTimes(
+							Object.values(APPEAL_CASE_STAGE).length * 2
+						);
+
+						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledTimes(2);
+						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledWith({
+							where: {
+								childId: householdAppeal.id
+							}
+						});
+
+						expect(databaseConnector.appealRelationship.create).toHaveBeenCalledTimes(2);
+						expect(databaseConnector.appealRelationship.create).toHaveBeenNthCalledWith(1, {
+							data: {
+								childId: householdAppeal.id,
+								childRef: householdAppeal.reference,
+								parentId: 456,
+								parentRef: '456123',
+								type: CASE_RELATIONSHIP_LINKED
+							}
+						});
+						expect(databaseConnector.appealRelationship.create).toHaveBeenNthCalledWith(2, {
+							data: {
+								childId: 789,
+								childRef: '789456',
+								parentId: 456,
+								parentRef: '456123',
+								type: CASE_RELATIONSHIP_LINKED
+							}
+						});
+
+						expect(response.status).toEqual(200);
+						expect(response.text).toEqual('true');
+					});
+
+					test('returns 500 when copying documents throws an exception', async () => {
+						databaseConnector.folder.findMany.mockResolvedValue([]);
+						databaseConnector.appealRelationship.deleteMany.mockImplementation(() => {
+							throw new Error(ERROR_NOT_FOUND);
+						});
+						// @ts-ignore
+						databaseConnector.appeal.findUnique.mockResolvedValue({
+							...householdAppeal,
+							parentAppeals: [
+								{
+									type: CASE_RELATIONSHIP_LINKED,
+									parentId: 456,
+									parentRef: '456123',
+									parent: { appellantCase: {}, id: 456, reference: '456123' }
+								}
+							]
+						});
+
+						const response = await request
+							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
+							.send({ operation: LINK_APPEALS_UNLINK_OPERATION })
+							.set('azureAdUserId', azureAdUserId);
+
+						expect(response.status).toEqual(500);
+						expect(response.body).toMatchObject({
+							errors: {
+								body: ERROR_UNLINKING_APPEALS
+							}
+						});
+					});
 				});
 			});
 		});
