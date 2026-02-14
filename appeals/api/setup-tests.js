@@ -87,7 +87,7 @@ const mockAppellantCaseEnforcementInvalidReasonsSelectedDeleteMany = jest
 const mockAppellantCaseEnforcementInvalidReasonsSelectedCreateMany = jest
 	.fn()
 	.mockResolvedValue({});
-const mockAppellantCaseEnforcementMissingDocumentFindMany = jest.fn().mockResolvedValue({});
+const mockAppellantCaseEnforcementMissingDocumentFindMany = jest.fn().mockResolvedValue([]);
 const mockAppellantCaseEnforcementMissingDocumentTextDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseEnforcementMissingDocumentTextCreateMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseEnforcementMissingDocumentsSelectedDeleteMany = jest
