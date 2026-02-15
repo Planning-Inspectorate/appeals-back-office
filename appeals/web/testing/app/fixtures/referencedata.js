@@ -1925,6 +1925,27 @@ export const appealTypesData = [
 		key: APPEAL_CASE_TYPE.ZP,
 		enabled: false,
 		changeAppealType: 'Commercial planning (CAS)'
+	},
+	{
+		id: 80,
+		type: 'Enforcement notice appeal',
+		key: APPEAL_CASE_TYPE.C,
+		enabled: false,
+		changeAppealType: 'Enforcement notice'
+	},
+	{
+		id: 81,
+		type: 'Lawful development certificate appeal',
+		key: APPEAL_CASE_TYPE.X,
+		enabled: false,
+		changeAppealType: 'Lawful development certificate'
+	},
+	{
+		id: 82,
+		type: 'Enforcement listed building and conservation area appeal',
+		key: APPEAL_CASE_TYPE.F,
+		enabled: false,
+		changeAppealType: 'Enforcement listed building and conservation area'
 	}
 ];
 

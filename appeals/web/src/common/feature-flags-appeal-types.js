@@ -57,27 +57,18 @@ export const getEnabledAppealTypes = () => {
 };
 
 export const getEnabledAppealCaseTypes = () => {
-	const enabledAppeals = [APPEAL_CASE_TYPE.D];
+	const enabledAppeals = [
+		APPEAL_CASE_TYPE.D,
+		APPEAL_CASE_TYPE.Y,
+		APPEAL_CASE_TYPE.ZP,
+		APPEAL_CASE_TYPE.ZA,
+		APPEAL_CASE_TYPE.H,
+		APPEAL_CASE_TYPE.F
+	];
 
 	if (isAppealCaseTypeEnabled(APPEAL_CASE_TYPE.W)) {
 		// @ts-ignore
 		enabledAppeals.push(APPEAL_CASE_TYPE.W);
-	}
-	if (isAppealCaseTypeEnabled(APPEAL_CASE_TYPE.Y)) {
-		// @ts-ignore
-		enabledAppeals.push(APPEAL_CASE_TYPE.Y);
-	}
-	if (isAppealCaseTypeEnabled(APPEAL_CASE_TYPE.H)) {
-		// @ts-ignore
-		enabledAppeals.push(APPEAL_CASE_TYPE.H);
-	}
-	if (isAppealCaseTypeEnabled(APPEAL_CASE_TYPE.ZA)) {
-		// @ts-ignore
-		enabledAppeals.push(APPEAL_CASE_TYPE.ZA);
-	}
-	if (isAppealCaseTypeEnabled(APPEAL_CASE_TYPE.ZP)) {
-		// @ts-ignore
-		enabledAppeals.push(APPEAL_CASE_TYPE.ZP);
 	}
 	if (isAppealCaseTypeEnabled(APPEAL_CASE_TYPE.C)) {
 		// @ts-ignore
