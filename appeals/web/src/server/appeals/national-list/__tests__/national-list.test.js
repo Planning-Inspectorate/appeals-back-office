@@ -130,6 +130,13 @@ describe('national-list', () => {
 			);
 			expect(unprettifiedElement.innerHTML).toContain('CAS advert</option>');
 			expect(unprettifiedElement.innerHTML).toContain('CAS planning</option>');
+			expect(unprettifiedElement.innerHTML).toContain('Enforcement notice appeal</option>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Lawful development certificate appeal</option>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Enforcement listed building and conservation area appeal</option>'
+			);
 		});
 
 		it('should render correct case teams dropdown in filters', async () => {
