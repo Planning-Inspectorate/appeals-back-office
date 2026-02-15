@@ -6,12 +6,16 @@ export const mapRetrospectiveApplication = ({
 	currentRoute,
 	userHasUpdateCase
 }) => {
+	const retrospectiveApplication =
+		appellantCaseData.enforcementNotice?.retrospectiveApplication || null;
+
 	return booleanSummaryListItem({
 		id: 'retrospective-application',
 		text: 'Did anyone submit a retrospective planning application?',
-		value: appellantCaseData.enforcementNotice?.retrospectiveApplication,
-		defaultText: 'No data',
+		value: retrospectiveApplication,
+		defaultText: 'Not answered',
 		link: `${currentRoute}/retrospective-application/change`,
-		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild,
+		actionText: retrospectiveApplication !== null ? 'Change' : 'Add'
 	});
 };
