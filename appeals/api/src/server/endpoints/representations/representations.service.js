@@ -305,6 +305,7 @@ export const updateAttachments = async (repId, attachments) => {
 			);
 		}
 	}
+	await broadcasters.broadcastRepresentation(repId, EventType.Create);
 
 	return updatedRepresentation;
 };
