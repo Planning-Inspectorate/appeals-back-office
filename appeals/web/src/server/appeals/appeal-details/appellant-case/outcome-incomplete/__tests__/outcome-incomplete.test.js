@@ -450,10 +450,10 @@ describe('incomplete-appeal', () => {
 					'<li>Grounds of appeal supporting documents: Where is this doc</li>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<dt class="govuk-summary-list__key"> Ground (a) fee receipt due date</dt><dd class="govuk-summary-list__value"> 1 Jun 3000</dd>'
+					'<dt class="govuk-summary-list__key"> Ground (a) fee receipt due date</dt><dd class="govuk-summary-list__value"> 1 May 3000</dd>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<dt class="govuk-summary-list__key"> Appeal due date</dt><dd class="govuk-summary-list__value"> 2 Aug 3000</dd>'
+					'<dt class="govuk-summary-list__key"> Appeal due date</dt><dd class="govuk-summary-list__value"> 2 July 3000</dd>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Mark appeal as incomplete</button>');
 			});

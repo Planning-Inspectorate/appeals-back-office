@@ -1,6 +1,6 @@
 import nunjucksEnvironments from '#app/config/nunjucks.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate, dayMonthYearHourMinuteToDisplayDate } from '#lib/dates.js';
 import { enhanceCheckboxOptionWithAddAnotherReasonConditionalHtml } from '#lib/enhance-html.js';
 import { yesNoInput } from '#lib/mappers/index.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
@@ -8,7 +8,6 @@ import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { LENGTH_300 } from '@pins/appeals/constants/support.js';
-import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { capitalize } from 'lodash-es';
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -464,10 +463,10 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (
 
 	// ground (a) fee receipt due date
 	if (session?.webAppellantCaseReviewOutcome.feeReceiptDueDate) {
-		const dueDate = session.webAppellantCaseReviewOutcome.feeReceiptDueDate;
+		const { day, month, year } = session.webAppellantCaseReviewOutcome.feeReceiptDueDate;
 		summaryListComponent.parameters.rows.push({
 			key: { text: 'Ground (a) fee receipt due date' },
-			value: { text: formatDate(new Date(dueDate.year, dueDate.month, dueDate.day)) },
+			value: { text: dayMonthYearHourMinuteToDisplayDate({ day, month, year }) },
 			actions: {
 				items: [
 					{
@@ -482,10 +481,10 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (
 
 	// appeal due date
 	if (session?.webAppellantCaseReviewOutcome.updatedDueDate) {
-		const dueDate = session.webAppellantCaseReviewOutcome.updatedDueDate;
+		const { day, month, year } = session.webAppellantCaseReviewOutcome.updatedDueDate;
 		summaryListComponent.parameters.rows.push({
 			key: { text: 'Appeal due date' },
-			value: { text: formatDate(new Date(dueDate.year, dueDate.month, dueDate.day)) },
+			value: { text: dayMonthYearHourMinuteToDisplayDate({ day, month, year }) },
 			actions: {
 				items: [
 					{
