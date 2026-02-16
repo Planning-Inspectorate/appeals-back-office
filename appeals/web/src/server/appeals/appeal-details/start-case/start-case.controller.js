@@ -1,4 +1,6 @@
 import featureFlags from '#common/feature-flags.js';
+import { getEnabledHearingAppealTypes } from '#common/hearing-appeal-types.js';
+import { getEnabledInquiryAppealTypes } from '#common/inquiry-appeal-types.js';
 import { dateISOStringToDisplayDate, getTodaysISOString } from '#lib/dates.js';
 import {
 	applyEditsForAppeal,
@@ -38,7 +40,15 @@ export const getStartDate = async (request, response) => {
 		delete session.startCaseAppealProcedure?.[appealId];
 	}
 
-	if ([APPEAL_TYPE.S78, APPEAL_TYPE.ENFORCEMENT_NOTICE].includes(appealType)) {
+	const hearingOrInquiryEnabled =
+		getEnabledHearingAppealTypes().includes(appealType) ||
+		getEnabledInquiryAppealTypes().includes(appealType);
+
+	if (
+		// S78 and enforcement should always go to select procedure, other appeal types should only go to select procedure if hearing or inquiry is enabled for that appeal type
+		[APPEAL_TYPE.S78, APPEAL_TYPE.ENFORCEMENT_NOTICE].includes(appealType) ||
+		hearingOrInquiryEnabled
+	) {
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/start-case/select-procedure${
 				request.query?.backUrl ? `?backUrl=${request.query?.backUrl}` : ''
@@ -165,9 +175,16 @@ export const getSelectProcedure = async (request, response) => {
 		currentAppeal: { appealType, appealId },
 		session
 	} = request;
+
+	const hearingOrInquiryEnabled =
+		getEnabledHearingAppealTypes().includes(appealType) ||
+		getEnabledInquiryAppealTypes().includes(appealType);
+
+	// enforcement should redirect to check your answers if hearing or inquiry is not enabled, as there is only one procedure option available
 	if (
 		appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
-		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)
+		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE) &&
+		!hearingOrInquiryEnabled
 	) {
 		session.startCaseAppealProcedure = {
 			[appealId]: { appealProcedure: APPEAL_CASE_PROCEDURE.WRITTEN }
@@ -185,7 +202,7 @@ export const getSelectProcedure = async (request, response) => {
  */
 const renderSelectProcedure = async (request, response) => {
 	const {
-		currentAppeal: { appealId, appealReference },
+		currentAppeal: { appealId, appealReference, appealType },
 		errors
 	} = request;
 
@@ -199,6 +216,7 @@ const renderSelectProcedure = async (request, response) => {
 
 	const mappedPageContent = selectProcedurePage(
 		appealReference,
+		appealType,
 		backUrl,
 		{ appealProcedure: sessionValues?.appealProcedure },
 		errors ? errors['appealProcedure']?.msg : undefined

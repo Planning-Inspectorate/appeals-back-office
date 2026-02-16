@@ -182,7 +182,7 @@ describe.skip('skip all', () => {
 					caseDetailsPage.verifyLinkExists('Cancel appeal', true);
 					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 					happyPathHelper.reviewAppellantCase(leadCaseObj);
-					happyPathHelper.startS78Case(leadCaseObj, 'written');
+					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
 					caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 					caseDetailsPage.verifyLinkExists('Cancel appeal', false);
 
@@ -208,7 +208,7 @@ describe.skip('skip all', () => {
 					happyPathHelper.viewCaseDetails(leadCaseObj);
 					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 					happyPathHelper.reviewAppellantCase(leadCaseObj);
-					happyPathHelper.startS78Case(leadCaseObj, 'written');
+					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
 					caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 					caseDetailsPage.verifyActionExists('Appeal procedure', false);
 
@@ -240,7 +240,7 @@ describe.skip('skip all', () => {
 					happyPathHelper.viewCaseDetails(leadCaseObj);
 					happyPathHelper.reviewAppellantCase(leadCaseObj);
 					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
-					happyPathHelper.startS78Case(leadCaseObj, 'written');
+					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
 					happyPathHelper.reviewS78Lpaq(leadCaseObj);
 
 					//child appeal
@@ -277,7 +277,7 @@ describe.skip('skip all', () => {
 					happyPathHelper.viewCaseDetails(leadCaseObj);
 					happyPathHelper.reviewAppellantCase(leadCaseObj);
 					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
-					happyPathHelper.startS78Case(leadCaseObj, 'written');
+					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
 					happyPathHelper.reviewS78Lpaq(leadCaseObj);
 
 					//child appeal
@@ -319,7 +319,7 @@ describe.skip('skip all', () => {
 					happyPathHelper.viewCaseDetails(leadCaseObj);
 					happyPathHelper.reviewAppellantCase(leadCaseObj);
 					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
-					happyPathHelper.startS78Case(leadCaseObj, 'written');
+					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
 					happyPathHelper.reviewS78Lpaq(leadCaseObj);
 
 					//child appeal
@@ -362,7 +362,7 @@ describe.skip('skip all', () => {
 					happyPathHelper.viewCaseDetails(leadCaseObj);
 					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 					happyPathHelper.reviewAppellantCase(leadCaseObj);
-					happyPathHelper.startS78Case(leadCaseObj, 'written');
+					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
 
 					//update statements due date
 					caseDetailsPage.appeal;
@@ -401,7 +401,7 @@ describe.skip('skip all', () => {
 					happyPathHelper.viewCaseDetails(leadCaseObj);
 					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 					happyPathHelper.reviewAppellantCase(leadCaseObj);
-					happyPathHelper.startS78Case(leadCaseObj, 'written');
+					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
 
 					//update statements due date
 					caseDetailsPage.appeal;
@@ -455,7 +455,7 @@ describe.skip('skip all', () => {
 					caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 					happyPathHelper.reviewAppellantCase(leadCaseObj);
-					happyPathHelper.startS78Case(leadCaseObj, 'written');
+					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
 					caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 					//review child LPAQs
@@ -588,7 +588,7 @@ describe.skip('skip all', () => {
 						caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 						happyPathHelper.reviewAppellantCase(leadCaseObj);
-						happyPathHelper.startS78Case(leadCaseObj, 'written');
+						happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
 						caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 						//review child LPAQs
@@ -698,7 +698,7 @@ describe.skip('skip all', () => {
 						caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 						happyPathHelper.reviewAppellantCase(leadCaseObj);
-						happyPathHelper.startS78Case(leadCaseObj, 'written');
+						happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
 						caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 						//review child LPAQs
@@ -814,7 +814,7 @@ describe.skip('skip all', () => {
 						caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 						happyPathHelper.reviewAppellantCase(leadCaseObj);
-						happyPathHelper.startS78Case(leadCaseObj, 'written');
+						happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
 						caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 						//review child LPAQs
@@ -1005,7 +1005,7 @@ describe.skip('skip all', () => {
 					cy.assignCaseOfficerViaApi(leadCaseObj);
 					happyPathHelper.viewCaseDetails(leadCaseObj);
 					happyPathHelper.reviewAppellantCase(leadCaseObj);
-					happyPathHelper.startS78Case(leadCaseObj, 'written');
+					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
 					caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 					happyPathHelper.reviewS78Lpaq(leadCaseObj);
 					caseDetailsPage.checkStatusOfCase('Statements', 0);
@@ -1025,7 +1025,7 @@ describe.skip('skip all', () => {
 					cy.assignCaseOfficerViaApi(childCaseObj);
 					happyPathHelper.viewCaseDetails(childCaseObj);
 					happyPathHelper.reviewAppellantCase(childCaseObj);
-					happyPathHelper.startS78Case(childCaseObj, 'written');
+					happyPathHelper.startCaseWithProcedureType(childCaseObj, 'written');
 					caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 					happyPathHelper.reviewS78Lpaq(childCaseObj);
 					caseDetailsPage.checkStatusOfCase('Statements', 0);

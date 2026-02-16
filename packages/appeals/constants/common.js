@@ -28,7 +28,15 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	MANUALLY_ADD_REPS: 'featureFlagManuallyAddReps',
 	APPELLANT_STATEMENT: 'featureFlagAppellantStatement',
 	RULE_6_STATEMENT: 'featureFlagRule6Statement',
-	LDC: 'featureFlagLDC'
+	LDC: 'featureFlagLDC',
+	S20_HEARING: 'featureFlagS20Hearing',
+	S20_INQUIRY: 'featureFlagS20Inquiry',
+	ENFORCEMENT_HEARING: 'featureFlagEnforcementNoticeHearing',
+	ENFORCEMENT_INQUIRY: 'featureFlagEnforcementNoticeInquiry',
+	LDC_HEARING: 'featureFlagLdcHearing',
+	LDC_INQUIRY: 'featureFlagLdcInquiry',
+	ELB_HEARING: 'featureFlagElbHearing',
+	ELB_INQUIRY: 'featureFlagElbInquiry'
 });
 
 export const APPEAL_TYPE = Object.freeze({

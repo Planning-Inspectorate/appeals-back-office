@@ -50,7 +50,7 @@ describe('Progress S78 to decision', () => {
 			happyPathHelper.reviewAppellantCase(caseObj);
 			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 
-			happyPathHelper.startS78Case(caseObj, 'written');
+			happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
 			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 			// Display all expected case detail sections for written cases

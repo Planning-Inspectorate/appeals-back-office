@@ -63,7 +63,7 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Confirm');
 	},
 
-	startS78Case(caseObj, procedureType) {
+	startCaseWithProcedureType(caseObj, procedureType) {
 		if (procedureType === 'hearing') {
 			return happyPathHelper.startS78HearingCase(caseObj, procedureType);
 		} else if (procedureType === 'inquiry') {
