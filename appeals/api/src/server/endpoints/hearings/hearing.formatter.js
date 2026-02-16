@@ -13,6 +13,7 @@ const formatHearing = (appeal) => {
 			appealId: hearing.appealId,
 			hearingStartTime: hearing.hearingStartTime,
 			hearingEndTime: hearing.hearingEndTime,
+			estimatedDays: hearing.estimatedDays,
 			hearingId: hearing.id,
 			addressId: hearing.addressId,
 			address: hearing.address

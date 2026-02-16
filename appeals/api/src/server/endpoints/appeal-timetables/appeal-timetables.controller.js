@@ -48,7 +48,8 @@ const startAppeal = async (req, res) => {
 							notifyClient,
 							req.get('azureAdUserId') || '',
 							body.procedureType || appeal.procedureType?.key,
-							body.hearingStartTime
+							body.hearingStartTime,
+							body.hearingEstimatedDays
 						)
 					)
 				);
@@ -75,7 +76,8 @@ const startAppeal = async (req, res) => {
 				notifyClient,
 				req.get('azureAdUserId') || '',
 				body.procedureType || appeal.procedureType?.key,
-				body.hearingStartTime
+				body.hearingStartTime,
+				body.hearingEstimatedDays
 			);
 
 			if (result.success) {
@@ -112,6 +114,7 @@ const startAppealNotifyPreview = async (req, res) => {
 				req.get('azureAdUserId') || '',
 				body.procedureType || appeal.procedureType?.key,
 				body.hearingStartTime,
+				body.hearingEstimatedDays,
 				body.inquiry
 			);
 			return res.status(200).send(result);
