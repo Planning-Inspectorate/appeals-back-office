@@ -444,7 +444,7 @@ describe('mapAppellantCaseIn', () => {
 				casedata: {
 					caseType: APPEAL_CASE_TYPE.C,
 					enforcementNotice: true,
-					enforcementNoticeListedBuilding: true,
+					enforcementNoticeListedBuilding: false,
 					enforcementReference: 'abcd1234',
 					enforcementIssueDate: '2025-03-16T09:12:33.334Z',
 					enforcementEffectiveDate: '2025-03-15T09:12:33.334Z',
@@ -464,7 +464,7 @@ describe('mapAppellantCaseIn', () => {
 			expected: expect.objectContaining({
 				enforcementNotice: true,
 				enforcementReference: 'abcd1234',
-				enforcementNoticeListedBuilding: true,
+				enforcementNoticeListedBuilding: false,
 				enforcementIssueDate: '2025-03-16T09:12:33.334Z',
 				enforcementEffectiveDate: '2025-03-15T09:12:33.334Z',
 				contactPlanningInspectorateDate: '2025-03-18T09:12:33.334Z',

@@ -5,6 +5,7 @@ import {
 	appealIngestionInputAdverts,
 	appealIngestionInputCasAdverts,
 	appealIngestionInputCasPlanning,
+	appealIngestionInputEnforcementListedBuilding,
 	appealIngestionInputEnforcementNotice,
 	appealIngestionInputS20,
 	appealIngestionInputS20Written,
@@ -15,6 +16,7 @@ import {
 	validAppellantCaseAdverts,
 	validAppellantCaseCasAdverts,
 	validAppellantCaseCasPlanning,
+	validAppellantCaseEnforcementListedBuilding,
 	validAppellantCaseEnforcementNotice,
 	validAppellantCaseS20,
 	validAppellantCaseS78,
@@ -143,6 +145,12 @@ describe('/appeals/case-submission', () => {
 				'ENFORCEMENT_NOTICE',
 				appealIngestionInputEnforcementNotice,
 				validAppellantCaseEnforcementNotice,
+				{ id: 1 }
+			],
+			[
+				'ENFORCEMENT_LISTED_BUILDING',
+				appealIngestionInputEnforcementListedBuilding,
+				validAppellantCaseEnforcementListedBuilding,
 				{ id: 1 }
 			]
 		])(

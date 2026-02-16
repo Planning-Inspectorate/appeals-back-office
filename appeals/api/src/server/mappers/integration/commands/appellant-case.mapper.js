@@ -116,7 +116,7 @@ export const mapAppellantCaseIn = (command) => {
 		...(isEnforcementNotice && {
 			...procedurePreferenceFields,
 			enforcementNotice: casedata.enforcementNotice,
-			enforcementNoticeListedBuilding: casedata.enforcementNoticeListedBuilding,
+			enforcementNoticeListedBuilding: false,
 			enforcementIssueDate: casedata.enforcementIssueDate,
 			enforcementEffectiveDate: casedata.enforcementEffectiveDate,
 			contactPlanningInspectorateDate: casedata.contactPlanningInspectorateDate,
@@ -144,17 +144,14 @@ export const mapAppellantCaseIn = (command) => {
 		...(isEnforcementListedBuilding && {
 			...procedurePreferenceFields,
 			enforcementNotice: casedata.enforcementNotice,
-			enforcementNoticeListedBuilding: casedata.enforcementNoticeListedBuilding,
+			enforcementNoticeListedBuilding: true,
 			enforcementIssueDate: casedata.enforcementIssueDate,
 			enforcementEffectiveDate: casedata.enforcementEffectiveDate,
 			contactPlanningInspectorateDate: casedata.contactPlanningInspectorateDate,
 			enforcementReference: casedata.enforcementReference,
 			interestInLand: casedata.interestInLand,
 			descriptionOfAllegedBreach: casedata.descriptionOfAllegedBreach,
-			applicationMadeAndFeePaid: casedata.applicationMadeAndFeePaid,
-			contactAddress: { create: contactAddress },
-			planningObligation: command.casedata.planningObligation,
-			statusPlanningObligation: command.casedata.statusPlanningObligation
+			contactAddress: { create: contactAddress }
 		})
 	};
 

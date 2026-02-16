@@ -57,12 +57,7 @@ const importIndividualAppeal = async (data) => {
 
 	let appellantProcedurePreference = APPEAL_APPELLANT_PROCEDURE_PREFERENCE.WRITTEN;
 
-	if (
-		data.casedata.caseType === APPEAL_CASE_TYPE.W ||
-		data.casedata.caseType === APPEAL_CASE_TYPE.Y ||
-		data.casedata.caseType === APPEAL_CASE_TYPE.H ||
-		data.casedata.caseType === APPEAL_CASE_TYPE.X
-	) {
+	if (doesCaseTypeAllowAppellantToChoosePreference(data.casedata.caseType)) {
 		// @ts-ignore
 		appellantProcedurePreference =
 			data.casedata.appellantProcedurePreference || APPEAL_APPELLANT_PROCEDURE_PREFERENCE.WRITTEN;
@@ -192,8 +187,7 @@ export const importAppeal = async (req, res) => {
 	const { id, reference, assignedTeamId, appealTypeId } = await parentAppeal;
 
 	if (
-		isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE) &&
-		casedata.caseType === APPEAL_CASE_TYPE.C &&
+		isEnforcementCaseType(casedata?.caseType) &&
 		// @ts-ignore
 		req.body?.casedata?.namedIndividuals?.length
 	) {
@@ -495,3 +489,24 @@ const writeDocumentAuditTrail = async (appealId, document, azureAdUserId) => {
 		await addDocumentAudit(document.documentGuid, 1, auditTrail, EventType.Create);
 	}
 };
+
+/**
+ *
+ * @param {string|undefined} caseType
+ * @returns {boolean}
+ */
+const isEnforcementCaseType = (caseType) =>
+	caseType === APPEAL_CASE_TYPE.C || caseType === APPEAL_CASE_TYPE.F;
+
+/**
+ *
+ * @param {string|undefined} caseType
+ * @returns {boolean}
+ */
+const doesCaseTypeAllowAppellantToChoosePreference = (caseType) =>
+	caseType === APPEAL_CASE_TYPE.W ||
+	caseType === APPEAL_CASE_TYPE.Y ||
+	caseType === APPEAL_CASE_TYPE.H ||
+	caseType === APPEAL_CASE_TYPE.X ||
+	caseType === APPEAL_CASE_TYPE.C ||
+	caseType === APPEAL_CASE_TYPE.F;
