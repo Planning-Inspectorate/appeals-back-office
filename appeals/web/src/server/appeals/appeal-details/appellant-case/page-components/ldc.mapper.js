@@ -104,7 +104,6 @@ export function generateLdcComponents(appealDetails, appellantCaseData, mappedAp
 			},
 			rows: [
 				mappedAppellantCaseData.siteAddress.display.summaryListItem,
-				mappedAppellantCaseData.siteArea.display.summaryListItem,
 				mappedAppellantCaseData.inGreenBelt.display.summaryListItem,
 				mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
 				mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem
