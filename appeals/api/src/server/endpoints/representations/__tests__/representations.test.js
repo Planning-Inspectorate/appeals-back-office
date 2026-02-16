@@ -5,6 +5,7 @@ import {
 	appealAdvert,
 	appealS20,
 	appealS78,
+	enforcementNoticeAppeal,
 	fullPlanningAppeal,
 	householdAppeal,
 	listedBuildingAppeal
@@ -2322,6 +2323,7 @@ describe('/appeals/:id/reps', () => {
 		let mockAdvertAppeal;
 		let mockS78Appeal;
 		let mockS20Appeal;
+		let mockEnforcementNoticeAppeal;
 		const emailPayload = {
 			inquiry_address: '',
 			inquiry_date: '',
@@ -2345,6 +2347,12 @@ describe('/appeals/:id/reps', () => {
 			mockS20Appeal = structuredClone({
 				...appealS20,
 				representations: appealS20.representations.filter((rep) => rep.status !== 'awaiting_review')
+			});
+			mockEnforcementNoticeAppeal = structuredClone({
+				...enforcementNoticeAppeal,
+				representations: enforcementNoticeAppeal.representations.filter(
+					(rep) => rep.status !== 'awaiting_review'
+				)
 			});
 		});
 
@@ -2803,6 +2811,105 @@ describe('/appeals/:id/reps', () => {
 						loggedAt: expect.any(Date),
 						userId: 1
 					}
+				});
+			});
+
+			test('send notifies when statements shared for enforcement notice appeal', async () => {
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => mockEnforcementNoticeAppeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedEmailPayload = {
+					...emailPayload,
+					lpa_reference: '',
+					enforcement_reference: 'ENF-12345',
+					appeal_reference_number: mockEnforcementNoticeAppeal.reference,
+					has_rule_6_parties: false,
+					has_rule_6_statement: false,
+					has_ip_comments: true,
+					has_statement: true,
+					final_comments_deadline: '29 December 2019',
+					site_address: expectedSiteAddress,
+					user_type: '',
+					is_hearing_procedure: false,
+					is_inquiry_procedure: false,
+					statement_url: `/mock-front-office-url/manage-appeals/${mockEnforcementNoticeAppeal.reference}`,
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...mockEnforcementNoticeAppeal,
+					appealStatus: [
+						{
+							status: 'statements',
+							valid: true
+						}
+					],
+					appealTimetable: {
+						ipCommentsDueDate: new Date('2019-12-29T23:59:00.000Z'),
+						lpaStatementDueDate: new Date('2019-12-29T23:59:00.000Z'),
+						finalCommentsDueDate: new Date('2019-12-29T23:59:00.000Z')
+					},
+					appealRule6Parties: [],
+					appellantCase: {
+						...mockEnforcementNoticeAppeal.appellantCase,
+						enforcementReference: 'ENF-12345'
+					},
+					applicationReference: undefined
+				});
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([
+					{ representationType: 'lpa_statement' },
+					{ representationType: 'comment' }
+				]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'statements' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						what_happens_next:
+							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/1345264) by 29 December 2019.',
+						statement_url: `/mock-front-office-url/manage-appeals/${mockEnforcementNoticeAppeal.reference}`
+					},
+					recipientEmail: mockEnforcementNoticeAppeal.lpa.email,
+					templateName: 'received-statement-and-ip-comments-lpa'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						what_happens_next:
+							'You need to [submit your final comments](/mock-front-office-url/appeals/1345264) by 29 December 2019.',
+						statement_url: `/mock-front-office-url/appeals/${mockEnforcementNoticeAppeal.reference}`
+					},
+					recipientEmail: 'test@136s7.com',
+					templateName: 'received-statement-and-ip-comments-appellant'
 				});
 			});
 

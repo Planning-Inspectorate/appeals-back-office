@@ -32,7 +32,11 @@ import formatDate, {
 	formatTime12h
 } from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_CASE_STATUS,
+	APPEAL_CASE_TYPE
+} from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
@@ -919,9 +923,11 @@ async function notifyPublished({
 	azureAdUserId
 }) {
 	const lpaReference = appeal.applicationReference;
-	if (!lpaReference) {
+	const enforcementReference =
+		appeal.appealType?.key === APPEAL_CASE_TYPE.C && appeal.appellantCase?.enforcementReference;
+	if (!lpaReference && !enforcementReference) {
 		throw new Error(
-			`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no applicationReference in appeal`
+			`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no applicationReference or enforcementReference in appeal`
 		);
 	}
 	if (!recipientEmail) {
@@ -942,7 +948,8 @@ async function notifyPublished({
 		personalisation: {
 			appeal_reference_number: appeal.reference,
 			site_address: siteAddress,
-			lpa_reference: lpaReference,
+			lpa_reference: lpaReference || '',
+			...(enforcementReference && { enforcement_reference: enforcementReference }),
 			final_comments_deadline: finalCommentsDueDate,
 			what_happens_next: whatHappensNext,
 			has_ip_comments: hasIpComments,

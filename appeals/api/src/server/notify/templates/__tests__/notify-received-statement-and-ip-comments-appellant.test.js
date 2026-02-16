@@ -40,6 +40,7 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 			'caseofficers@planninginspectorate.gov.uk'
 		];
 	});
+
 	test('should call notify sendEmail with the correct data when there is both a statement and ip comments', async () => {
 		const expectedContent = [
 			"We have received the local planning authority's questionnaire, all statements and comments from interested parties.",
@@ -58,6 +59,7 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 			}
 		);
 	});
+
 	test('should call notify sendEmail with the correct data when there is a statement but no ip comments', async () => {
 		const expectedContent = [
 			'We have received comments from interested parties.',
@@ -78,6 +80,7 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 			}
 		);
 	});
+
 	test('should call notify sendEmail with the correct data when there are ip comments but no statement', async () => {
 		const expectedContent = [
 			'We have received a statement from the local planning authority.',
@@ -131,6 +134,7 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 			}
 		);
 	});
+
 	test('should call notify sendEmail with the correct data when a hearing procedure', async () => {
 		const expectedContent = [
 			"We have received the local planning authority's questionnaire, all statements and comments from interested parties.",
@@ -153,6 +157,7 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 			}
 		);
 	});
+
 	test('should call notify sendEmail with the correct data when a inquiry procedure', async () => {
 		const expectedContent = [
 			"We have received the local planning authority's questionnaire, all statements and comments from interested parties.",
@@ -242,6 +247,44 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 			{
 				content: expectedContent,
 				subject: 'Submit your proof of evidence and witnesses: ABC45678'
+			}
+		);
+	});
+
+	test('should show enforcement reference instead of application reference if present', async () => {
+		const expectedContent = [
+			"We have received the local planning authority's questionnaire, all statements and comments from interested parties.",
+			'You can [view this information in the appeals service](/mock-front-office-url/appeals/ABC45678).',
+			'# Appeal details',
+			'',
+			'^Appeal reference number: ABC45678',
+			'Address: 10, Test Street',
+			'Enforcement notice reference: ENF-12345',
+			'',
+			'# What happens next',
+			'',
+			'You need to [submit your final comments](/mock-front-office-url/appeals/ABC45678) by 01 January 2021.',
+			'',
+			'The Planning Inspectorate',
+			'caseofficers@planninginspectorate.gov.uk'
+		].join('\n');
+
+		await notifySend({
+			...notifySendData,
+			personalisation: {
+				...notifySendData.personalisation,
+				enforcement_reference: 'ENF-12345'
+			}
+		});
+
+		expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+			{
+				id: 'mock-appeal-generic-id'
+			},
+			'test@136s7.com',
+			{
+				content: expectedContent,
+				subject: 'Submit your final comments: ABC45678'
 			}
 		);
 	});
