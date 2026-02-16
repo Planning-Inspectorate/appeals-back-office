@@ -62,6 +62,8 @@ export const postRejectReason = async (request, response, next) => {
 		return renderSelectReason(request, response, next);
 	}
 
+	applyEdits(request, 'rejectIpComment');
+
 	if (currentRepresentation.represented.email) {
 		return response
 			.status(200)
