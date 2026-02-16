@@ -71,6 +71,14 @@ export function updateBankHolidays(service) {
 				WHERE bankHolidayDate > @today AND bankHolidayDate NOT IN (${params})
 			`);
 
+			context.log('Populating the calendarDate');
+			await request.query(`EXEC dbo.spPopulateCalendarDates;`);
+
+			context.log('Populating the next business dates');
+			await request.query(`EXEC dbo.spPopulateNextBusinessDates @BusinessDays = 5;`);
+			await request.query(`EXEC dbo.spPopulateNextBusinessDates @BusinessDays = 30;`);
+			await request.query(`EXEC dbo.spPopulateNextBusinessDates @BusinessDays = 40;`);
+
 			await transaction.commit();
 			context.log('Bank holidays updated successfully');
 		} catch (error) {

@@ -1145,3 +1145,24 @@ model BankHoliday {
   bankHolidayDate DateTime @unique
   title           String
 }
+
+/// CalendarDate model
+/// Stores calendar dates and whether the date is a weekend or bank holiday
+model CalendarDate {
+  currentDate   DateTime @id @db.Date
+  isWeekend     Boolean
+  isBankHoliday Boolean
+
+  @@index([isWeekend, isBankHoliday])
+}
+
+/// NextBusinessDate model
+/// Stores calendar dates and whether the date is a business date
+model NextBusinessDate {
+  currentDate    DateTime @db.Date
+  noBusinessDays Int
+  businessDate   DateTime @db.Date
+
+  @@id([currentDate, noBusinessDays])
+  @@index([businessDate])
+}
