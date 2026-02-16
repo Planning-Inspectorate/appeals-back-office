@@ -391,8 +391,7 @@ export const updateRepresentationAttachments = async (req, res) => {
 		updatedRepresentation.representationType ===
 		APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
 	) {
-		const fullRep = await representationService.getRepresentation(rep.id);
-		const partyName = fullRep?.represented?.organisationName;
+		const partyName = rep?.represented?.organisationName;
 		if (partyName) {
 			await createAuditTrail({
 				appealId: updatedRepresentation.appealId,
