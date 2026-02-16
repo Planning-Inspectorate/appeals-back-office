@@ -18,10 +18,10 @@ export const changeSiteUseAtTimeOfApplicationPage = (
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `What did you use the appeal site for when you made the application? `,
+		title: `What did you use the appeal site for when you made the application?`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `What did you use the appeal site for when you made the application? `,
+		heading: `What did you use the appeal site for when you made the application?`,
 		pageComponents: [
 			{
 				type: 'character-count',
