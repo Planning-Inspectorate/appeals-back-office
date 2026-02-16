@@ -50,6 +50,18 @@ const environment = loadEnvironment(process.env.NODE_ENV);
 /** @typedef {import('@pins/appeals.api').Appeals.TimetableDeadlineDate} TimetableDeadlineDate */
 
 /**
+ * @param {string | undefined} procedureType
+ * @returns {string}
+ */
+const mapProcedureTypeForAudit = (procedureType) => {
+	if (procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1) {
+		return 'Part 1';
+	}
+
+	return procedureType || APPEAL_CASE_PROCEDURE.WRITTEN;
+};
+
+/**
  * @param {Request} req
  * @param {Response} res
  * @param {NextFunction} next
@@ -194,9 +206,13 @@ const getStartCaseNotifyParams = async (
 					...commonEmailVariables,
 					...(inquiry && { is_lpa: false }),
 					site_visit:
-						procedureType === APPEAL_CASE_PROCEDURE.WRITTEN || procedureType === undefined, //undefined procedure types are treated as written
+						procedureType === APPEAL_CASE_PROCEDURE.WRITTEN ||
+						procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 ||
+						procedureType === undefined, //undefined procedure types are treated as written
 					costs_info:
-						procedureType === APPEAL_CASE_PROCEDURE.WRITTEN || procedureType === undefined,
+						procedureType === APPEAL_CASE_PROCEDURE.WRITTEN ||
+						procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 ||
+						procedureType === undefined,
 					...(appeal.appealType?.key === APPEAL_CASE_TYPE.C &&
 						appeal.appellantCase?.planningObligation && {
 							planning_obligation_deadline: formatDate(
@@ -399,7 +415,9 @@ const startCase = async (
 			await createAuditTrail({
 				appealId: appeal.id,
 				azureAdUserId,
-				details: stringTokenReplacement(AUDIT_TRAIL_CASE_STARTED, [procedureType || 'written'])
+				details: stringTokenReplacement(AUDIT_TRAIL_CASE_STARTED, [
+					mapProcedureTypeForAudit(procedureType)
+				])
 			});
 
 			if (hearingStartTime) {
@@ -702,9 +720,11 @@ const shouldSendNotify = (appealTypeShorthand, procedureType) => {
 		appealTypeShorthand === APPEAL_CASE_TYPE.H ||
 		//appealTypeShorthand === APPEAL_CASE_TYPE.X ||
 		(appealTypeShorthand === APPEAL_CASE_TYPE.W &&
-			procedureType === APPEAL_CASE_PROCEDURE.WRITTEN) ||
+			(procedureType === APPEAL_CASE_PROCEDURE.WRITTEN ||
+				procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1)) ||
 		(appealTypeShorthand === APPEAL_CASE_TYPE.Y &&
-			procedureType === APPEAL_CASE_PROCEDURE.WRITTEN) ||
+			(procedureType === APPEAL_CASE_PROCEDURE.WRITTEN ||
+				procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1)) ||
 		procedureType === undefined
 	);
 };

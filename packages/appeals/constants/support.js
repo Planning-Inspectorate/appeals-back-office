@@ -524,6 +524,7 @@ const enforcementNoticeTimetable = {
 export const CONFIG_APPEAL_TIMETABLE = {
 	[APPEAL_CASE_TYPE.W]: {
 		[APPEAL_CASE_PROCEDURE.WRITTEN]: { ...s78timetable },
+		[APPEAL_CASE_PROCEDURE.WRITTEN_PART_1]: { ...s78timetable },
 		[APPEAL_CASE_PROCEDURE.HEARING]: {
 			...s78timetable,
 			statementOfCommonGroundDueDate: {

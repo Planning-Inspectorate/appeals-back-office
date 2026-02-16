@@ -1164,6 +1164,76 @@ describe('appeal timetables routes', () => {
 				}
 			);
 
+			test('starts a full planning timetable with part 1 procedure', async () => {
+				const appeal = {
+					...fullPlanningAppeal,
+					procedureType: { key: 'writtenPart1' }
+				};
+				const expectedTimetableDto = {
+					lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
+					finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
+					ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
+					lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
+					s106ObligationDueDate: '2024-07-24T22:59:00.000Z'
+				};
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const { id } = appeal;
+				const response = await request
+					.post(`/appeals/${id}/appeal-timetables/`)
+					.send({ procedureType: 'writtenPart1' })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+				expect(response.body).toEqual(expectedTimetableDto);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith(
+					expect.objectContaining({
+						where: { id },
+						data: expect.objectContaining({
+							procedureTypeId: 4
+						})
+					})
+				);
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: id,
+						details: 'Appeal started\nAppeal procedure: Part 1',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(
+					1,
+					expect.objectContaining({
+						templateName: 'appeal-valid-start-case-s78-appellant',
+						personalisation: expect.objectContaining({
+							procedure_type: 'Part 1',
+							site_visit: true,
+							costs_info: true
+						})
+					})
+				);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(
+					2,
+					expect.objectContaining({
+						templateName: 'appeal-valid-start-case-s78-lpa',
+						personalisation: expect.objectContaining({
+							procedure_type: 'Part 1'
+						})
+					})
+				);
+			});
+
 			describe.each([
 				[
 					'fullPlanning',
