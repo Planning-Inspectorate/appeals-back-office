@@ -31,11 +31,14 @@ extends:
     validationJobs:
       - name: Run Linting & Tests
         variables:
+        - name: TURBO_CACHE_DIR
+          value: $(Pipeline.Workspace)/.turbo
         - name: test-script
           ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/gh-readonly-queue') }}:
             value: npm run test
           ${{ else }}:
-            value: npm run test:cov
+            value: npm run test:changed
+          
         steps:
           - task: Cache@2
             inputs:
@@ -44,6 +47,14 @@ extends:
                 npm | "$(Agent.OS)" | package-lock.json
               path: $(npm_config_cache)
             displayName: Cache NPM
+          - task: Cache@2
+            inputs:
+              key: 'turbo | "$(Agent.OS)" | turbo.json | package-lock.json'
+              path: $(TURBO_CACHE_DIR)
+              restoreKeys: |
+                turbo | "$(Agent.OS)" | turbo.json
+                turbo | "$(Agent.OS)",
+              displayName: Cache Turbo
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
@@ -53,23 +64,11 @@ extends:
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
-              script: npm run commitlint
-          - template: ../steps/node_script.yml
-            parameters:
-              nodeVersion: 22
-              script: npm run tscheck
+              script: npm run check
               environmentVariables:
                 TURBO_TEAM: $(TURBO_TEAM)
                 TURBO_API: $(TURBO_API)
                 TURBO_TOKEN: $(TURBO_TOKEN)
-          - template: ../steps/node_script.yml
-            parameters:
-              nodeVersion: 22
-              script: npm run lint:js
-          - template: ../steps/node_script.yml
-            parameters:
-                nodeVersion: 22
-                script: npm run format-check
           - template: ../steps/node_script.yml
             parameters:
               script: $(test-script)

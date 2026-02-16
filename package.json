@@ -25,8 +25,11 @@
 		"prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
 		"tscheck": "turbo run prisma-generate --concurrency=1 && turbo run tscheck --parallel",
 		"dev": "turbo run dev --filter=./appeals/* --no-cache --parallel --continue",
-		"test": "dotenv turbo run test -- --concurrency=2",
-		"test:cov": "dotenv turbo run test:cov -- --concurrency=2",
+		"test": "turbo run test --concurrency=2",
+		"test:cov": "turbo run test:cov -- --coverage",
+    	"test:changed": "turbo run test:cov --filter=...[origin/main] --concurrency=2",
+    	"test:changed:cov": "turbo run test:cov --filter=...[origin/main] --concurrency=2 -- --coverage",
+		"check": "turbo run commitlint tscheck lint:js format-check --concurrency=2 --continue --summarize",
 		"web": "npm run dev --workspace=@pins/appeals.web",
 		"api": "npm run dev --workspace=@pins/appeals.api",
 		"pdf-service": "npm run start:dev --workspace=@pins/pdf-service-api",
@@ -40,7 +43,7 @@
 		"joi": "^17.7.0",
 		"node-cache": "^5.1.2",
 		"nodemon": "3.0.3",
-    "turbo": "1.2.14"
+    "turbo": "2.8.3"
   },
 	"devDependencies": {
 		"@commitlint/cli": "20.3.1",

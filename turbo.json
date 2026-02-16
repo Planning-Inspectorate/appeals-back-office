@@ -3,23 +3,46 @@
 	"pipeline": {
 		"build": {
 			"outputs": ["src/server/static/scripts/**", "src/server/static/styles/**"],
-			"dependsOn": ["^build", "$NODE_ENV", "$APP_RELEASE"]
+			"dependsOn": ["^build", "$NODE_ENV"],
+			"dotEnv": [".env"]
 		},
 		"build:release": {
 			"outputs": ["src/server/static/scripts/**", "src/server/static/styles/**"],
-			"dependsOn": ["^build", "$NODE_ENV", "$APP_RELEASE"]
+			"dependsOn": ["^build", "$NODE_ENV"],
+			"dotEnv": [".env"]
 		},
 		"topo": {
 			"dependsOn": ["^topo"]
 		},
 		"test": {
-			"outputs": ["coverage/**"],
-			"dependsOn": ["topo"]
+			"outputs": [],
+			"inputs": [
+				"src/**/*.{js,ts}",
+				"**/__tests__/*.test.{js,ts}",
+				"**/__tests__/**/*.test.{js,ts}",
+				"**/__tests__/__snapshots__/**",
+				"jest.config.js",
+				"jest.setup.js",
+				".env",
+				".env.test"
+			],
+			"dotEnv": [".env.test", ".env"]
 		},
 		"test:cov": {
-			"outputs": ["coverage/**"]
+			"outputs": [],
+			"inputs": [
+				"src/**/*.{js,ts}",
+				"**/__tests__/**/*.test.{js,ts}",
+				"**/__tests__/__snapshots__/**",
+				"jest.config.js",
+				"jest.setup.js",
+				".env",
+				".env.test"
+			],
+			"dotEnv": [".env.test", ".env"]
 		},
 		"lint:js": {
+			"cache": true,
 			"dependsOn": ["^build"],
 			"outputs": []
 		},
@@ -31,10 +54,20 @@
 			"cache": false
 		},
 		"tscheck": {
-			"dependsOn": ["topo"]
+			"cache": true,
+			"dependsOn": []
+		},
+		"commitlint": {
+			"cache": true,
+			"outputs": []
+		},
+		"format-check": {
+			"cache": true,
+			"outputs": []
 		},
 		"dev": {
-			"cache": false
+			"cache": false,
+			"dotEnv": [".env"]
 		},
 		"clean": {
 			"cache": false
