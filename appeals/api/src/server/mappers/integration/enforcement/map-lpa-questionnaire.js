@@ -10,8 +10,8 @@ import { mapLpaQuestionnaireSharedFields } from '../shared/s20s78/map-lpa-questi
 export const mapLpaQuestionnaire = (data) => {
 	const { lpaQuestionnaire } = data.appeal;
 
-	return {
-		...mapLpaQuestionnaireSharedFields(data),
+	return /** @type {any} */ ({
+		...mapLpaQuestionnaireSharedFields(data, ['hasEmergingPlan', 'eiaScopingOpinion']),
 		noticeRelatesToBuildingEngineeringMiningOther:
 			lpaQuestionnaire?.noticeRelatesToBuildingEngineeringMiningOther ?? null,
 		siteAreaSquareMetres: lpaQuestionnaire?.siteAreaSquareMetres
@@ -31,5 +31,5 @@ export const mapLpaQuestionnaire = (data) => {
 		affectedTrunkRoadName: lpaQuestionnaire?.affectedTrunkRoadName ?? null,
 		isSiteOnCrownLand: lpaQuestionnaire?.isSiteOnCrownLand ?? null,
 		article4AffectedDevelopmentRights: lpaQuestionnaire?.article4AffectedDevelopmentRights ?? null
-	};
+	});
 };

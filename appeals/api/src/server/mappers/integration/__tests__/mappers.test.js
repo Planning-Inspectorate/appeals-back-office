@@ -836,6 +836,92 @@ describe('mapQuestionnaireIn', () => {
 				lpaConsiderAppealInvalid: true,
 				lpaAppealInvalidReasons: 'test'
 			})
+		},
+		{
+			desc: 'Enforcement case (C) - maps all general fields and nulls excluded ones',
+			input: {
+				casedata: {
+					caseType: APPEAL_CASE_TYPE.C,
+					lpaQuestionnaireSubmittedDate: '2025-10-22',
+					siteAccessDetails: ['access1'],
+					siteSafetyDetails: ['safety1'],
+
+					// S78 Shared
+					affectsScheduledMonument: true,
+					isAonbNationalLandscape: true,
+					isGypsyOrTravellerSite: false,
+					isPublicRightOfWay: true,
+					hasProtectedSpecies: true,
+					hasTreePreservationOrder: false,
+					hasStatutoryConsultees: true,
+					hasConsultationResponses: false,
+					hasSupplementaryPlanningDocs: true,
+					hasInfrastructureLevy: false,
+					isInfrastructureLevyFormallyAdopted: false,
+					infrastructureLevyAdoptedDate: null,
+					infrastructureLevyExpectedDate: null,
+					lpaProcedurePreference: 'Hearing',
+					lpaProcedurePreferenceDetails: 'Complex legal arguments',
+					lpaProcedurePreferenceDuration: 3,
+					hasEmergingPlan: true,
+					eiaScopingOpinion: true,
+
+					// Enforcement
+					noticeRelatesToBuildingEngineeringMiningOther: true,
+					siteAreaSquareMetres: 120,
+					hasAllegedBreachArea: true,
+					doesAllegedBreachCreateFloorSpace: false,
+					changeOfUseRefuseOrWaste: true,
+					changeOfUseMineralExtraction: false,
+					changeOfUseMineralStorage: true,
+					relatesToErectionOfBuildingOrBuildings: true,
+					relatesToBuildingWithAgriculturalPurpose: false,
+					relatesToBuildingSingleDwellingHouse: true,
+					affectedTrunkRoadName: 'M25',
+					isSiteOnCrownLand: false,
+					article4AffectedDevelopmentRights: 'Permitted development removed'
+				}
+			},
+			expected: expect.objectContaining({
+				lpaQuestionnaireSubmittedDate: '2025-10-22',
+				siteAccessDetails: 'access1',
+				siteSafetyDetails: 'safety1',
+
+				// S78 Shared
+				affectsScheduledMonument: true,
+				isAonbNationalLandscape: true,
+				isGypsyOrTravellerSite: false,
+				isPublicRightOfWay: true,
+				hasProtectedSpecies: true,
+				hasTreePreservationOrder: false,
+				hasStatutoryConsultees: true,
+				hasConsultationResponses: false,
+				hasSupplementaryPlanningDocs: true,
+				hasInfrastructureLevy: false,
+				isInfrastructureLevyFormallyAdopted: false,
+				infrastructureLevyAdoptedDate: null,
+				infrastructureLevyExpectedDate: null,
+				lpaProcedurePreference: 'Hearing',
+				lpaProcedurePreferenceDetails: 'Complex legal arguments',
+				lpaProcedurePreferenceDuration: 3,
+				hasEmergingPlan: null,
+				eiaScopingOpinion: null,
+
+				// Enforcement
+				noticeRelatesToBuildingEngineeringMiningOther: true,
+				siteAreaSquareMetres: 120,
+				hasAllegedBreachArea: true,
+				doesAllegedBreachCreateFloorSpace: false,
+				changeOfUseRefuseOrWaste: true,
+				changeOfUseMineralExtraction: false,
+				changeOfUseMineralStorage: true,
+				relatesToErectionOfBuildingOrBuildings: true,
+				relatesToBuildingWithAgriculturalPurpose: false,
+				relatesToBuildingSingleDwellingHouse: true,
+				affectedTrunkRoadName: 'M25',
+				isSiteOnCrownLand: false,
+				article4AffectedDevelopmentRights: 'Permitted development removed'
+			})
 		}
 	])('mapQuestionnaireIn: $desc', ({ input, expected }) => {
 		const result = mapQuestionnaireIn(input, designatedSites);

@@ -10,7 +10,7 @@ import { mapLpaQuestionnaireSharedFields } from '../shared/s20s78/map-lpa-questi
 export const mapLpaQuestionnaire = (data) => {
 	const { lpaQuestionnaire } = data.appeal;
 
-	return {
+	return /** @type {any} */ ({
 		...mapLpaQuestionnaireSharedFields(data),
 		//TODO: remove enforcement fields not used in elb
 		noticeRelatesToBuildingEngineeringMiningOther:
@@ -32,5 +32,5 @@ export const mapLpaQuestionnaire = (data) => {
 		affectedTrunkRoadName: lpaQuestionnaire?.affectedTrunkRoadName ?? null,
 		isSiteOnCrownLand: lpaQuestionnaire?.isSiteOnCrownLand ?? null,
 		article4AffectedDevelopmentRights: lpaQuestionnaire?.article4AffectedDevelopmentRights ?? null
-	};
+	});
 };

@@ -62,8 +62,9 @@ export const mapQuestionnaireIn = (command, designatedSites) => {
 				...generateCommonSchemaFields(casedata),
 				...generateHasSchemaFields(casedata, listedBuildingsData),
 				//@ts-ignore
-				...generateS78SchemaFields(casedata, designatedSites),
-				...generateEnforcementSchemaFields(casedata)
+				...generateS78SchemaFields(casedata, designatedSites, ['hasEmergingPlan']),
+				...generateEnforcementSchemaFields(casedata),
+				eiaScopingOpinion: null
 				//@ts-ignore
 			};
 		case APPEAL_CASE_TYPE.X: // LDC - schema includes common, HAS, S78 and LDC fields
@@ -97,10 +98,10 @@ const generateCommonSchemaFields = (casedata) => {
 			: null;
 
 	return {
-		lpaQuestionnaireSubmittedDate: casedata.lpaQuestionnaireSubmittedDate,
+		lpaQuestionnaireSubmittedDate: casedata.lpaQuestionnaireSubmittedDate ?? null,
 		siteAccessDetails,
 		siteSafetyDetails,
-		reasonForNeighbourVisits: casedata.reasonForNeighbourVisits
+		reasonForNeighbourVisits: casedata.reasonForNeighbourVisits ?? null
 	};
 };
 
@@ -133,12 +134,12 @@ const generateHasSchemaFields = (casedata, listedBuildingsData) => {
 			: undefined;
 
 	return {
-		lpaStatement: casedata.lpaStatement,
-		isCorrectAppealType: casedata.isCorrectAppealType,
-		isGreenBelt: casedata.isGreenBelt,
-		inConservationArea: casedata.inConservationArea,
-		newConditionDetails: casedata.newConditionDetails,
-		lpaCostsAppliedFor: casedata.lpaCostsAppliedFor,
+		lpaStatement: casedata.lpaStatement ?? null,
+		isCorrectAppealType: casedata.isCorrectAppealType ?? null,
+		isGreenBelt: casedata.isGreenBelt ?? null,
+		inConservationArea: casedata.inConservationArea ?? null,
+		newConditionDetails: casedata.newConditionDetails ?? null,
+		lpaCostsAppliedFor: casedata.lpaCostsAppliedFor ?? null,
 		...(listedBuildingsData && {
 			listedBuildingDetails: {
 				create: listedBuildingsData
@@ -149,41 +150,49 @@ const generateHasSchemaFields = (casedata, listedBuildingsData) => {
 };
 
 /**
- *
  * @param {import('@planning-inspectorate/data-model').Schemas.LPAQuestionnaireCommand} casedata
  * @param {DesignatedSite[]} designatedSites
+ * @param {string[]} [fieldsToExclude=[]]
  * @returns
  */
-const generateS78SchemaFields = (casedata, designatedSites) => {
-	return {
-		affectsScheduledMonument: casedata.affectsScheduledMonument,
-		isAonbNationalLandscape: casedata.isAonbNationalLandscape,
-		isGypsyOrTravellerSite: casedata.isGypsyOrTravellerSite,
-		isPublicRightOfWay: casedata.isPublicRightOfWay,
+const generateS78SchemaFields = (casedata, designatedSites, fieldsToExclude = []) => {
+	const fields = {
+		affectsScheduledMonument: casedata.affectsScheduledMonument ?? null,
+		isAonbNationalLandscape: casedata.isAonbNationalLandscape ?? null,
+		isGypsyOrTravellerSite: casedata.isGypsyOrTravellerSite ?? null,
+		isPublicRightOfWay: casedata.isPublicRightOfWay ?? null,
 		// @ts-ignore - values defined before type narrowing
 		...mapDesignatedSiteNames(casedata, designatedSites),
-		eiaEnvironmentalImpactSchedule: casedata.eiaEnvironmentalImpactSchedule,
-		eiaDevelopmentDescription: casedata.eiaDevelopmentDescription,
-		eiaSensitiveAreaDetails: casedata.eiaSensitiveAreaDetails,
-		eiaColumnTwoThreshold: casedata.eiaColumnTwoThreshold,
-		eiaScreeningOpinion: casedata.eiaScreeningOpinion,
-		eiaRequiresEnvironmentalStatement: casedata.eiaRequiresEnvironmentalStatement,
-		eiaCompletedEnvironmentalStatement: casedata.eiaCompletedEnvironmentalStatement,
-		consultedBodiesDetails: casedata.consultedBodiesDetails,
-		hasProtectedSpecies: casedata.hasProtectedSpecies,
-		hasTreePreservationOrder: casedata.hasTreePreservationOrder,
-		hasStatutoryConsultees: casedata.hasStatutoryConsultees,
-		hasConsultationResponses: casedata.hasConsultationResponses,
-		hasEmergingPlan: casedata.hasEmergingPlan,
-		hasSupplementaryPlanningDocs: casedata.hasSupplementaryPlanningDocs,
-		hasInfrastructureLevy: casedata.hasInfrastructureLevy,
-		isInfrastructureLevyFormallyAdopted: casedata.isInfrastructureLevyFormallyAdopted,
-		infrastructureLevyAdoptedDate: casedata.infrastructureLevyAdoptedDate,
-		infrastructureLevyExpectedDate: casedata.infrastructureLevyExpectedDate,
-		lpaProcedurePreference: casedata.lpaProcedurePreference,
-		lpaProcedurePreferenceDetails: casedata.lpaProcedurePreferenceDetails,
-		lpaProcedurePreferenceDuration: casedata.lpaProcedurePreferenceDuration
+		eiaEnvironmentalImpactSchedule: casedata.eiaEnvironmentalImpactSchedule ?? null,
+		eiaDevelopmentDescription: casedata.eiaDevelopmentDescription ?? null,
+		eiaSensitiveAreaDetails: casedata.eiaSensitiveAreaDetails ?? null,
+		eiaColumnTwoThreshold: casedata.eiaColumnTwoThreshold ?? null,
+		eiaScreeningOpinion: casedata.eiaScreeningOpinion ?? null,
+		eiaScopingOpinion: casedata.eiaScopingOpinion ?? null,
+		eiaRequiresEnvironmentalStatement: casedata.eiaRequiresEnvironmentalStatement ?? null,
+		eiaCompletedEnvironmentalStatement: casedata.eiaCompletedEnvironmentalStatement ?? null,
+		consultedBodiesDetails: casedata.consultedBodiesDetails ?? null,
+		hasProtectedSpecies: casedata.hasProtectedSpecies ?? null,
+		hasTreePreservationOrder: casedata.hasTreePreservationOrder ?? null,
+		hasStatutoryConsultees: casedata.hasStatutoryConsultees ?? null,
+		hasConsultationResponses: casedata.hasConsultationResponses ?? null,
+		hasEmergingPlan: casedata.hasEmergingPlan ?? null,
+		hasSupplementaryPlanningDocs: casedata.hasSupplementaryPlanningDocs ?? null,
+		hasInfrastructureLevy: casedata.hasInfrastructureLevy ?? null,
+		isInfrastructureLevyFormallyAdopted: casedata.isInfrastructureLevyFormallyAdopted ?? null,
+		infrastructureLevyAdoptedDate: casedata.infrastructureLevyAdoptedDate ?? null,
+		infrastructureLevyExpectedDate: casedata.infrastructureLevyExpectedDate ?? null,
+		lpaProcedurePreference: casedata.lpaProcedurePreference ?? null,
+		lpaProcedurePreferenceDetails: casedata.lpaProcedurePreferenceDetails ?? null,
+		lpaProcedurePreferenceDuration: casedata.lpaProcedurePreferenceDuration ?? null
 	};
+	fieldsToExclude.forEach((key) => {
+		if (key in fields) {
+			fields[key] = null;
+		}
+	});
+
+	return fields;
 };
 
 /**
@@ -194,20 +203,22 @@ const generateS78SchemaFields = (casedata, designatedSites) => {
  */
 const generateCasAdvertSchemaFields = (casedata, designatedSites) => {
 	return {
-		affectsScheduledMonument: casedata.affectsScheduledMonument,
-		isAonbNationalLandscape: casedata.isAonbNationalLandscape,
+		affectsScheduledMonument: casedata.affectsScheduledMonument ?? null,
+		isAonbNationalLandscape: casedata.isAonbNationalLandscape ?? null,
 		// @ts-ignore - values defined before type narrowing
 		...mapDesignatedSiteNames(casedata, designatedSites),
-		consultedBodiesDetails: casedata.consultedBodiesDetails,
-		hasProtectedSpecies: casedata.hasProtectedSpecies,
-		hasStatutoryConsultees: casedata.hasStatutoryConsultees,
-		hasEmergingPlan: casedata.hasEmergingPlan,
-		lpaProcedurePreference: casedata.lpaProcedurePreference,
-		lpaProcedurePreferenceDetails: casedata.lpaProcedurePreferenceDetails,
-		lpaProcedurePreferenceDuration: casedata.lpaProcedurePreferenceDuration,
-		isSiteInAreaOfSpecialControlAdverts: casedata.isSiteInAreaOfSpecialControlAdverts,
-		wasApplicationRefusedDueToHighwayOrTraffic: casedata.wasApplicationRefusedDueToHighwayOrTraffic,
-		didAppellantSubmitCompletePhotosAndPlans: casedata.didAppellantSubmitCompletePhotosAndPlans
+		consultedBodiesDetails: casedata.consultedBodiesDetails ?? null,
+		hasProtectedSpecies: casedata.hasProtectedSpecies ?? null,
+		hasStatutoryConsultees: casedata.hasStatutoryConsultees ?? null,
+		hasEmergingPlan: casedata.hasEmergingPlan ?? null,
+		lpaProcedurePreference: casedata.lpaProcedurePreference ?? null,
+		lpaProcedurePreferenceDetails: casedata.lpaProcedurePreferenceDetails ?? null,
+		lpaProcedurePreferenceDuration: casedata.lpaProcedurePreferenceDuration ?? null,
+		isSiteInAreaOfSpecialControlAdverts: casedata.isSiteInAreaOfSpecialControlAdverts ?? null,
+		wasApplicationRefusedDueToHighwayOrTraffic:
+			casedata.wasApplicationRefusedDueToHighwayOrTraffic ?? null,
+		didAppellantSubmitCompletePhotosAndPlans:
+			casedata.didAppellantSubmitCompletePhotosAndPlans ?? null
 	};
 };
 
@@ -220,19 +231,20 @@ const generateEnforcementSchemaFields = (casedata) => {
 	return {
 		// Add enforcement specific fields here when they are defined
 		noticeRelatesToBuildingEngineeringMiningOther:
-			casedata.noticeRelatesToBuildingEngineeringMiningOther,
-		siteAreaSquareMetres: casedata.siteAreaSquareMetres,
-		hasAllegedBreachArea: casedata.hasAllegedBreachArea,
-		doesAllegedBreachCreateFloorSpace: casedata.doesAllegedBreachCreateFloorSpace,
-		changeOfUseRefuseOrWaste: casedata.changeOfUseRefuseOrWaste,
-		changeOfUseMineralExtraction: casedata.changeOfUseMineralExtraction,
-		changeOfUseMineralStorage: casedata.changeOfUseMineralStorage,
-		relatesToErectionOfBuildingOrBuildings: casedata.relatesToErectionOfBuildingOrBuildings,
-		relatesToBuildingWithAgriculturalPurpose: casedata.relatesToBuildingWithAgriculturalPurpose,
-		relatesToBuildingSingleDwellingHouse: casedata.relatesToBuildingSingleDwellingHouse,
-		affectedTrunkRoadName: casedata.affectedTrunkRoadName,
-		isSiteOnCrownLand: casedata.isSiteOnCrownLand,
-		article4AffectedDevelopmentRights: casedata.article4AffectedDevelopmentRights
+			casedata.noticeRelatesToBuildingEngineeringMiningOther ?? null,
+		siteAreaSquareMetres: casedata.siteAreaSquareMetres ?? null,
+		hasAllegedBreachArea: casedata.hasAllegedBreachArea ?? null,
+		doesAllegedBreachCreateFloorSpace: casedata.doesAllegedBreachCreateFloorSpace ?? null,
+		changeOfUseRefuseOrWaste: casedata.changeOfUseRefuseOrWaste ?? null,
+		changeOfUseMineralExtraction: casedata.changeOfUseMineralExtraction ?? null,
+		changeOfUseMineralStorage: casedata.changeOfUseMineralStorage ?? null,
+		relatesToErectionOfBuildingOrBuildings: casedata.relatesToErectionOfBuildingOrBuildings ?? null,
+		relatesToBuildingWithAgriculturalPurpose:
+			casedata.relatesToBuildingWithAgriculturalPurpose ?? null,
+		relatesToBuildingSingleDwellingHouse: casedata.relatesToBuildingSingleDwellingHouse ?? null,
+		affectedTrunkRoadName: casedata.affectedTrunkRoadName ?? null,
+		isSiteOnCrownLand: casedata.isSiteOnCrownLand ?? null,
+		article4AffectedDevelopmentRights: casedata.article4AffectedDevelopmentRights ?? null
 	};
 };
 
@@ -243,9 +255,9 @@ const generateEnforcementSchemaFields = (casedata) => {
  */
 const generateLDCSchemaFields = (casedata) => {
 	return {
-		appealUnderActSection: casedata.appealUnderActSection,
-		lpaConsiderAppealInvalid: casedata.lpaConsiderAppealInvalid,
-		lpaAppealInvalidReasons: casedata.lpaAppealInvalidReasons
+		appealUnderActSection: casedata.appealUnderActSection ?? null,
+		lpaConsiderAppealInvalid: casedata.lpaConsiderAppealInvalid ?? null,
+		lpaAppealInvalidReasons: casedata.lpaAppealInvalidReasons ?? null
 	};
 };
 

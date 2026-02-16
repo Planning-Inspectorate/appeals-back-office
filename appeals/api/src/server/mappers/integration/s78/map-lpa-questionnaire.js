@@ -10,7 +10,7 @@ import { mapLpaQuestionnaireSharedFields } from '../shared/s20s78/map-lpa-questi
  * @returns {AppealS78Case}
  */
 export const mapLpaQuestionnaire = (data) => {
-	return {
+	return /** @type {any} */ ({
 		...mapLpaQuestionnaireSharedFields(data)
-	};
+	});
 };

@@ -274,7 +274,7 @@ export interface QuestionnaireData {
 			/** @example "magna proident incididunt in non" */
 			neighbouringSiteSafetyDetails?: string;
 		}[];
-		reasonForNeighbourVisits?: undefined;
+		reasonForNeighbourVisits?: any;
 		/** @example "D" */
 		caseType?: string;
 		/** @example "cupidatat ipsum eu culpa" */

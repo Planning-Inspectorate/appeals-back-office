@@ -14,9 +14,9 @@ export const mapLpaQuestionnaire = (data) => {
 
 	const casedata = appeal.lpaQuestionnaire;
 
-	return {
+	return /** @type {any} */ ({
 		...mapLpaQuestionnaireSharedFields(data),
 		preserveGrantLoan: casedata?.preserveGrantLoan ?? null,
 		consultHistoricEngland: casedata?.historicEnglandConsultation ?? null
-	};
+	});
 };

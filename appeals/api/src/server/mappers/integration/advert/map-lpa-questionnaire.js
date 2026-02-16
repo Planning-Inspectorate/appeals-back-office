@@ -14,12 +14,12 @@ export const mapLpaQuestionnaire = (data) => {
 
 	const casedata = appeal.lpaQuestionnaire;
 
-	return {
+	return /** @type {any} */ ({
 		...mapLpaQuestionnaireSharedFields(data),
 		isSiteInAreaOfSpecialControlAdverts: casedata?.isSiteInAreaOfSpecialControlAdverts ?? null,
 		wasApplicationRefusedDueToHighwayOrTraffic:
 			casedata?.wasApplicationRefusedDueToHighwayOrTraffic ?? null,
 		didAppellantSubmitCompletePhotosAndPlans:
 			casedata?.didAppellantSubmitCompletePhotosAndPlans ?? null
-	};
+	});
 };

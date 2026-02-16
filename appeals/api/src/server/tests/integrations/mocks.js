@@ -342,7 +342,7 @@ const validLpaQuestionnaireCommon = {
 				neighbouringSiteSafetyDetails: 'magna proident incididunt in non'
 			}
 		],
-		reasonForNeighbourVisits: undefined
+		reasonForNeighbourVisits: null
 	},
 	documents: [
 		{
@@ -429,7 +429,7 @@ export const validLpaQuestionnaireS78 = {
 		lpaFinalCommentDetails: '',
 		lpaAddedWitnesses: true,
 		siteWithinSSSI: true,
-		reasonForNeighbourVisits: undefined,
+		reasonForNeighbourVisits: null,
 		importantInformation: '',
 		redeterminedIndicator: '',
 		dateCostsReportDespatched: '2023-07-27T20:30:00.000Z',
@@ -1327,7 +1327,7 @@ const validLpaQuestionnaireIngestionCommon = {
 			connectOrCreate: {
 				create: {
 					lpaQuestionnaireSubmittedDate: '2024-05-31T23:00:00.000Z',
-					reasonForNeighbourVisits: undefined,
+					reasonForNeighbourVisits: null,
 					siteAccessDetails: 'Here it is',
 					siteSafetyDetails: 'Fine'
 				},
@@ -1568,6 +1568,7 @@ export const validLpaQuestionnaireIngestionS78 = {
 					eiaScreeningOpinion: true,
 					eiaRequiresEnvironmentalStatement: true,
 					eiaCompletedEnvironmentalStatement: true,
+					eiaScopingOpinion: null,
 					consultedBodiesDetails: '',
 					hasProtectedSpecies: true,
 					hasStatutoryConsultees: true,

@@ -5,11 +5,11 @@ import { mapDate } from '#utils/mapping/map-dates.js';
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
 
 /**
- *
  * @param {MappingRequest} data
- * @returns {AppealS78Case}
+ * @param {string[]} [fieldsToExclude=[]]
+ * @returns {Partial<AppealS78Case>}
  */
-export const mapLpaQuestionnaireSharedFields = (data) => {
+export const mapLpaQuestionnaireSharedFields = (data, fieldsToExclude = []) => {
 	const { appeal } = data;
 
 	const casedata = appeal.lpaQuestionnaire;
@@ -19,7 +19,8 @@ export const mapLpaQuestionnaireSharedFields = (data) => {
 		...(casedata?.designatedSiteNameCustom ? [casedata?.designatedSiteNameCustom] : [])
 	];
 
-	return {
+	/** @type {Object<string, any>} */
+	const fields = {
 		extraConditions: casedata?.newConditionDetails ?? null,
 		isPublicRightOfWay: casedata?.isPublicRightOfWay ?? null,
 		affectsScheduledMonument: casedata?.affectsScheduledMonument ?? null,
@@ -67,4 +68,12 @@ export const mapLpaQuestionnaireSharedFields = (data) => {
 		siteNoticesSentDate: mapDate(casedata?.siteNoticesSentDate),
 		siteWithinSSSI: casedata?.siteWithinSSSI ?? null
 	};
+
+	fieldsToExclude.forEach((key) => {
+		if (key in fields) {
+			fields[key] = null;
+		}
+	});
+
+	return fields;
 };
