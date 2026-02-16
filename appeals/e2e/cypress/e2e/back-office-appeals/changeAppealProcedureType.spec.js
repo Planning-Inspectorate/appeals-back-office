@@ -74,7 +74,7 @@ describe('change appeal procedure types', () => {
 		// caption that should be shown when changing appeal procedure type
 		const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
 
-		happyPathHelper.startS78Case(caseObj, 'hearing');
+		happyPathHelper.startCaseWithProcedureType(caseObj, 'hearing');
 		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 		const writtenDetails = { ...overviewDetails, appealProcedure: 'Hearing' };
@@ -165,7 +165,7 @@ describe('change appeal procedure types', () => {
 	});
 
 	it('change appeal procedure type - should not allow change procedure after statements have been shared', () => {
-		happyPathHelper.startS78Case(caseObj, 'hearing');
+		happyPathHelper.startCaseWithProcedureType(caseObj, 'hearing');
 
 		// progress to statements shared status
 		happyPathHelper.reviewLPaStatement(caseObj);
@@ -181,7 +181,7 @@ describe('change appeal procedure types', () => {
 		// caption that should be shown when changing appeal procedure type
 		const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
 
-		happyPathHelper.startS78Case(caseObj, 'written');
+		happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
 		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 		const writtenDetails = { ...overviewDetails, appealProcedure: 'Written' };
@@ -248,7 +248,7 @@ describe('change appeal procedure types', () => {
 		// caption that should be shown when changing appeal procedure type
 		const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
 
-		happyPathHelper.startS78Case(caseObj, 'hearing');
+		happyPathHelper.startCaseWithProcedureType(caseObj, 'hearing');
 		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 		// Add planning obligation

@@ -688,7 +688,7 @@ describe('Setup hearing and add hearing estimates', () => {
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-			happyPathHelper.startS78Case(caseObj, 'hearing');
+			happyPathHelper.startCaseWithProcedureType(caseObj, 'hearing');
 			caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
 			caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
 			happyPathHelper.reviewLPaStatement(caseObj);
@@ -765,7 +765,7 @@ describe('Setup hearing and add hearing estimates', () => {
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-			happyPathHelper.startS78Case(caseObj, 'hearing');
+			happyPathHelper.startCaseWithProcedureType(caseObj, 'hearing');
 			caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
 			caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
 		});

@@ -1,8 +1,11 @@
 import featureFlags from '#common/feature-flags.js';
+import { getEnabledHearingAppealTypes } from '#common/hearing-appeal-types.js';
+import { getEnabledInquiryAppealTypes } from '#common/inquiry-appeal-types.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { appealData } from '#testing/appeals/appeals.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -112,6 +115,158 @@ describe('start-case', () => {
 		});
 	});
 
+	describe('GET /start-case/add - redirect logic based on enabled hearing/inquiry types', () => {
+		beforeEach(() => {
+			jest.clearAllMocks();
+		});
+
+		describe('should redirect to select procedure page', () => {
+			it.each([
+				[
+					'when appeal type is enabled for hearings only',
+					APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE,
+					[APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE],
+					[]
+				],
+				[
+					'when appeal type is enabled for inquiries only',
+					APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+					[],
+					[APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING]
+				],
+				[
+					'when appeal type is enabled for both hearings and inquiries',
+					APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+					[APPEAL_TYPE.PLANNED_LISTED_BUILDING],
+					[APPEAL_TYPE.PLANNED_LISTED_BUILDING]
+				],
+				[
+					'when appeal type is in a mix of enabled types (hearing)',
+					APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE,
+					[
+						APPEAL_TYPE.S78,
+						APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE,
+						APPEAL_TYPE.ENFORCEMENT_NOTICE
+					],
+					[APPEAL_TYPE.S78, APPEAL_TYPE.ENFORCEMENT_NOTICE]
+				],
+				[
+					'when appeal type is in a mix of enabled types (inquiry)',
+					APPEAL_TYPE.ENFORCEMENT_NOTICE,
+					[APPEAL_TYPE.S78, APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE],
+					[APPEAL_TYPE.S78, APPEAL_TYPE.ENFORCEMENT_NOTICE, APPEAL_TYPE.PLANNED_LISTED_BUILDING]
+				],
+				['for S78 appeals regardless of enabled types (empty arrays)', APPEAL_TYPE.S78, [], []],
+				[
+					'for enforcement appeals regardless of enabled types (empty arrays)',
+					APPEAL_TYPE.ENFORCEMENT_NOTICE,
+					[],
+					[]
+				]
+			])('%s', async (_, appealType, hearingTypes, inquiryTypes) => {
+				// @ts-ignore
+				getEnabledHearingAppealTypes.mockReturnValue(hearingTypes);
+				// @ts-ignore
+				getEnabledInquiryAppealTypes.mockReturnValue(inquiryTypes);
+
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, {
+						...appealDataWithoutStartDate,
+						appealType
+					});
+
+				const response = await request.get(`${baseUrl}/1/start-case/add`);
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure'
+				);
+			});
+		});
+
+		describe('should render start date page', () => {
+			afterAll(() => {
+				jest.clearAllMocks();
+			});
+
+			it.each([
+				[
+					'when appeal type is not enabled for hearings or inquiries',
+					APPEAL_TYPE.ADVERTISEMENT,
+					[],
+					[]
+				],
+				[
+					'when appeal type is not in any enabled types',
+					APPEAL_TYPE.ADVERTISEMENT,
+					[APPEAL_TYPE.S78, APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE],
+					[APPEAL_TYPE.ENFORCEMENT_NOTICE, APPEAL_TYPE.PLANNED_LISTED_BUILDING]
+				]
+			])('%s', async (_, appealType, hearingTypes, inquiryTypes) => {
+				// @ts-ignore
+				getEnabledHearingAppealTypes.mockReturnValue(hearingTypes);
+				// @ts-ignore
+				getEnabledInquiryAppealTypes.mockReturnValue(inquiryTypes);
+
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, {
+						...appealDataWithoutStartDate,
+						appealType
+					});
+
+				const response = await request.get(`${baseUrl}/1/start-case/add`);
+
+				expect(response.statusCode).toBe(200);
+				const element = parseHtml(response.text);
+				expect(element.innerHTML).toContain('Start case</h1>');
+			});
+		});
+
+		it('should redirect to select procedure and preserve backUrl query parameter when appeal type is enabled for hearings', async () => {
+			// @ts-ignore
+			getEnabledHearingAppealTypes.mockReturnValue([APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE]);
+			// @ts-ignore
+			getEnabledInquiryAppealTypes.mockReturnValue([]);
+
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE
+				});
+
+			const response = await request.get(`${baseUrl}/1/start-case/add?backUrl=/test/back/url`);
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure?backUrl=/test/back/url'
+			);
+		});
+
+		it('should redirect to select procedure and preserve backUrl query parameter when appeal type is enabled for inquiries', async () => {
+			// @ts-ignore
+			getEnabledHearingAppealTypes.mockReturnValue([]);
+			// @ts-ignore
+			getEnabledInquiryAppealTypes.mockReturnValue([APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING]);
+
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+				});
+
+			const response = await request.get(`${baseUrl}/1/start-case/add?backUrl=/custom/back/path`);
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure?backUrl=/custom/back/path'
+			);
+		});
+	});
+
 	describe('POST /start-case/add', () => {
 		it('should redirect to appeal details page', async () => {
 			nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataWithoutStartDate);
@@ -168,6 +323,18 @@ describe('start-case', () => {
 	});
 
 	describe('GET /start-case/select-procedure', () => {
+		beforeEach(() => {
+			// we only check for the S78 appeal type and expect hearing and inquiry to be enabled
+			// @ts-ignore
+			getEnabledHearingAppealTypes.mockReturnValue([APPEAL_TYPE.S78]);
+			// @ts-ignore
+			getEnabledInquiryAppealTypes.mockReturnValue([APPEAL_TYPE.S78]);
+		});
+
+		afterEach(() => {
+			jest.clearAllMocks();
+		});
+
 		it('should render the select procedure page with the expected content', async () => {
 			nock('http://test/')
 				.get('/appeals/1?include=all')
@@ -382,6 +549,207 @@ describe('start-case', () => {
 			expect(html.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
 				'/appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
 			);
+		});
+
+		describe('radio button content based on enabled appeal types', () => {
+			beforeEach(() => {
+				jest.clearAllMocks();
+			});
+
+			afterAll(() => {
+				jest.clearAllMocks();
+				// @ts-ignore
+				getEnabledHearingAppealTypes.mockReturnValue([APPEAL_TYPE.S78]);
+				// @ts-ignore
+				getEnabledInquiryAppealTypes.mockReturnValue([APPEAL_TYPE.S78]);
+			});
+
+			it('should show hearing radio when appeal type is enabled for hearings only', async () => {
+				// @ts-ignore
+				getEnabledHearingAppealTypes.mockReturnValue([APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE]);
+				// @ts-ignore
+				getEnabledInquiryAppealTypes.mockReturnValue([]);
+
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, {
+						...appealDataWithoutStartDate,
+						appealType: APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE
+					});
+
+				const response = await request.get(
+					'/appeals-service/appeal-details/1/start-case/select-procedure'
+				);
+
+				expect(response.statusCode).toBe(200);
+				const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="hearing"');
+				expect(unprettifiedHtml).not.toContain(
+					'name="appealProcedure" type="radio" value="inquiry"'
+				);
+			});
+
+			it('should show inquiry radio when appeal type is enabled for inquiries only', async () => {
+				// @ts-ignore
+				getEnabledHearingAppealTypes.mockReturnValue([]);
+				// @ts-ignore
+				getEnabledInquiryAppealTypes.mockReturnValue([APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING]);
+
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, {
+						...appealDataWithoutStartDate,
+						appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+					});
+
+				const response = await request.get(
+					'/appeals-service/appeal-details/1/start-case/select-procedure'
+				);
+
+				expect(response.statusCode).toBe(200);
+				const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="inquiry"');
+				expect(unprettifiedHtml).not.toContain(
+					'name="appealProcedure" type="radio" value="hearing"'
+				);
+			});
+
+			it('should show both hearing and inquiry radios when appeal type is enabled for both', async () => {
+				// @ts-ignore
+				getEnabledHearingAppealTypes.mockReturnValue([APPEAL_TYPE.PLANNED_LISTED_BUILDING]);
+				// @ts-ignore
+				getEnabledInquiryAppealTypes.mockReturnValue([APPEAL_TYPE.PLANNED_LISTED_BUILDING]);
+
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, {
+						...appealDataWithoutStartDate,
+						appealType: APPEAL_TYPE.PLANNED_LISTED_BUILDING
+					});
+
+				const response = await request.get(
+					'/appeals-service/appeal-details/1/start-case/select-procedure'
+				);
+
+				expect(response.statusCode).toBe(200);
+				const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="hearing"');
+				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="inquiry"');
+			});
+
+			it('should show hearing radio when appeal type is in mixed enabled hearing types', async () => {
+				// @ts-ignore
+				getEnabledHearingAppealTypes.mockReturnValue([
+					APPEAL_TYPE.S78,
+					APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE,
+					APPEAL_TYPE.ENFORCEMENT_NOTICE
+				]);
+				// @ts-ignore
+				getEnabledInquiryAppealTypes.mockReturnValue([APPEAL_TYPE.PLANNED_LISTED_BUILDING]);
+
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, {
+						...appealDataWithoutStartDate,
+						appealType: APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE
+					});
+
+				const response = await request.get(
+					'/appeals-service/appeal-details/1/start-case/select-procedure'
+				);
+
+				expect(response.statusCode).toBe(200);
+				const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="hearing"');
+				expect(unprettifiedHtml).not.toContain(
+					'name="appealProcedure" type="radio" value="inquiry"'
+				);
+			});
+
+			it('should show inquiry radio when appeal type is in mixed enabled inquiry types', async () => {
+				// @ts-ignore
+				getEnabledHearingAppealTypes.mockReturnValue([APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE]);
+				// @ts-ignore
+				getEnabledInquiryAppealTypes.mockReturnValue([
+					APPEAL_TYPE.S78,
+					APPEAL_TYPE.ENFORCEMENT_NOTICE,
+					APPEAL_TYPE.PLANNED_LISTED_BUILDING
+				]);
+
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, {
+						...appealDataWithoutStartDate,
+						appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE
+					});
+
+				const response = await request.get(
+					'/appeals-service/appeal-details/1/start-case/select-procedure'
+				);
+
+				expect(response.statusCode).toBe(200);
+				const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="inquiry"');
+				expect(unprettifiedHtml).not.toContain(
+					'name="appealProcedure" type="radio" value="hearing"'
+				);
+			});
+
+			it('should show all radio button labels for S78 when hearing and inquiry are enabled', async () => {
+				// @ts-ignore
+				getEnabledHearingAppealTypes.mockReturnValue([APPEAL_TYPE.S78]);
+				// @ts-ignore
+				getEnabledInquiryAppealTypes.mockReturnValue([APPEAL_TYPE.S78]);
+
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, {
+						...appealDataWithoutStartDate,
+						appealType: APPEAL_TYPE.S78
+					});
+
+				const response = await request.get(
+					'/appeals-service/appeal-details/1/start-case/select-procedure'
+				);
+
+				expect(response.statusCode).toBe(200);
+				const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="hearing"');
+				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="inquiry"');
+				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="written"');
+				expect(unprettifiedHtml).toContain(
+					'name="appealProcedure" type="radio" value="writtenPart1"'
+				);
+			});
+
+			it('should redirect to check and confirm page when appeal type is enforcement and enforcement hearing and inquiry are not enabled', async () => {
+				// @ts-ignore
+				getEnabledHearingAppealTypes.mockReturnValue([]);
+				// @ts-ignore
+				getEnabledInquiryAppealTypes.mockReturnValue([]);
+
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, {
+						...appealDataWithoutStartDate,
+						appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE
+					});
+
+				const response = await request.get(
+					'/appeals-service/appeal-details/1/start-case/select-procedure'
+				);
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
+				);
+			});
 		});
 	});
 

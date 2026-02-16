@@ -1,4 +1,7 @@
+import { getEnabledAppealTypes } from '#common/feature-flags-appeal-types.js';
 import featureFlags from '#common/feature-flags.js';
+import { getEnabledHearingAppealTypes } from '#common/hearing-appeal-types.js';
+import { getEnabledInquiryAppealTypes } from '#common/inquiry-appeal-types.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { editLink } from '#lib/edit-utilities.js';
 import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
@@ -90,6 +93,7 @@ export function changeDatePage(appealId, appealReference, today) {
 
 /**
  * @param {string} appealReference
+ * @param {string} appealType
  * @param {string} backLinkUrl
  * @param {{appealProcedure: string}} [storedSessionData]
  * @param {string|undefined} errorMessage
@@ -97,6 +101,7 @@ export function changeDatePage(appealId, appealReference, today) {
  */
 export function selectProcedurePage(
 	appealReference,
+	appealType,
 	backLinkUrl,
 	storedSessionData,
 	errorMessage = undefined
@@ -104,18 +109,22 @@ export function selectProcedurePage(
 	const dataMappers = [
 		{
 			case: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
-			featureFlag: FEATURE_FLAG_NAMES.EXPEDITED_APPEALS
+			featureFlag: FEATURE_FLAG_NAMES.EXPEDITED_APPEALS,
+			appeals: [APPEAL_TYPE.S78]
 		},
 		{
 			case: APPEAL_CASE_PROCEDURE.WRITTEN,
-			featureFlag: FEATURE_FLAG_NAMES.SECTION_78
+			featureFlag: FEATURE_FLAG_NAMES.SECTION_78,
+			appeals: getEnabledAppealTypes()
 		},
 		{
-			case: APPEAL_CASE_PROCEDURE.HEARING
+			case: APPEAL_CASE_PROCEDURE.HEARING,
+			appeals: getEnabledHearingAppealTypes()
 		},
 		{
 			case: APPEAL_CASE_PROCEDURE.INQUIRY,
-			featureFlag: FEATURE_FLAG_NAMES.SECTION_78_INQUIRY
+			featureFlag: FEATURE_FLAG_NAMES.SECTION_78_INQUIRY,
+			appeals: getEnabledInquiryAppealTypes()
 		}
 	];
 
@@ -123,7 +132,10 @@ export function selectProcedurePage(
 	const radioItems = [];
 
 	dataMappers.map((item) => {
-		if (!item.featureFlag || featureFlags.isFeatureActive(item.featureFlag)) {
+		if (
+			(!item.featureFlag || featureFlags.isFeatureActive(item.featureFlag)) &&
+			item.appeals.includes(appealType)
+		) {
 			radioItems.push({
 				value: item.case,
 				text: appealProcedureToLabelText(item.case),
