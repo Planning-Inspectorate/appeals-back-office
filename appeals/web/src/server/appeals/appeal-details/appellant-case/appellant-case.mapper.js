@@ -213,17 +213,25 @@ export async function appellantCasePage(
 	}
 
 	const existingValidationOutcome = getValidationOutcomeFromAppellantCase(appellantCaseData);
-	const notificationBanners = mapAppellantCaseNotificationBanners(
-		appellantCaseData,
-		currentRoute,
-		session,
-		existingValidationOutcome,
-		existingValidationOutcome === 'invalid'
-			? appellantCaseData.validation?.invalidReasons || []
-			: appellantCaseData.validation?.incompleteReasons || [],
-		appealDetails?.appealId,
-		appealDetails?.documentationSummary.appellantCase?.dueDate
-	);
+
+	const hideNotificationBannerForIncompleteValidEnforcement =
+		appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
+		existingValidationOutcome === 'incomplete' &&
+		appealDetails.enforcementNotice?.appealOutcome?.enforcementNoticeInvalid === 'no';
+
+	const notificationBanners = hideNotificationBannerForIncompleteValidEnforcement
+		? []
+		: mapAppellantCaseNotificationBanners(
+				appellantCaseData,
+				currentRoute,
+				session,
+				existingValidationOutcome,
+				existingValidationOutcome === 'invalid'
+					? appellantCaseData.validation?.invalidReasons || []
+					: appellantCaseData.validation?.incompleteReasons || [],
+				appealDetails?.appealId,
+				appealDetails?.documentationSummary.appellantCase?.dueDate
+			);
 
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 

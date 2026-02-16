@@ -176,12 +176,12 @@ exports[`incomplete-appeal enforcement notice appeal GET /check-details-and-mark
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ground (a) fee receipt due date</dt>
-                    <dd                     class="govuk-summary-list__value">1 Jun 3000</dd>
+                    <dd                     class="govuk-summary-list__value">1 May 3000</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/incomplete/receipt-due-date">Change<span class="govuk-visually-hidden"> Ground (a) fee receipt due date</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal due date</dt>
-                    <dd class="govuk-summary-list__value">2 Aug 3000</dd>
+                    <dd class="govuk-summary-list__value">2 July 3000</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/incomplete/date">Change<span class="govuk-visually-hidden"> Appeal due date</span></a>
                     </dd>
                 </div>

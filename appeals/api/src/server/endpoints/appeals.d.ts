@@ -141,6 +141,7 @@ interface SingleAppealDetailsResponse {
 	inquiryEstimate?: InquiryEstimate | null;
 	numberOfResidencesNetChange?: number | null;
 	enforcementNotice?: {
+		appealOutcome?: EnforcementNoticeAppealOutcome;
 		appellantCase: EnforcementNoticeAppellantCase;
 	};
 }
@@ -959,6 +960,15 @@ interface EnforcementNoticeAppellantCase {
 	reference?: string | null;
 	writtenOrVerbalPermission?: string | null;
 	appellantDecisionDate?: string | null;
+}
+
+interface EnforcementNoticeAppealOutcome {
+	appealId: number;
+	enforcementNoticeInvalid: string;
+	groundABarred?: string;
+	groundAFeeReceiptDueDate?: string;
+	otherInformation?: string;
+	otherLiveAppeals?: string;
 }
 
 export interface CreateCaseNote {

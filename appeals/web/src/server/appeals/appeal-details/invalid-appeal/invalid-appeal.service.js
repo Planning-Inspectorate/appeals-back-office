@@ -33,44 +33,44 @@ const mapIncompleteReviewOutcomeApiResponse = (/** @type {any} */ reviewOutcome)
 		if (!missingDocumentReasons.every((value) => !Number.isNaN(value))) {
 			throw new Error('failed to parse one or more missing document IDs to integer');
 		}
-
-		return {
-			...(reviewOutcome.missingDocuments && {
-				// @ts-ignore
-				enforcementMissingDocuments: missingDocumentReasons.map((reason) => ({
-					id: reason,
-					...(reviewOutcome.missingDocumentsText &&
-						reviewOutcome.missingDocumentsText[reason] && {
-							text: reviewOutcome.missingDocumentsText[reason]
-						})
-				}))
-			}),
-			...(reviewOutcome.reasons && {
-				// @ts-ignore
-				incompleteReasons: parsedReasons.map((reason) => ({
-					id: reason,
-					...(reviewOutcome.reasonsText &&
-						reviewOutcome.reasonsText[reason] && {
-							text: reviewOutcome.reasonsText[reason]
-						})
-				}))
-			}),
-			...(reviewOutcome.updatedDueDate && {
-				appealDueDate: dayMonthYearHourMinuteToISOString({
-					...reviewOutcome.updatedDueDate,
-					hour: DEADLINE_HOUR,
-					minute: DEADLINE_MINUTE
-				})
-			}),
-			...(reviewOutcome.feeReceiptDueDate && {
-				feeReceiptDueDate: dayMonthYearHourMinuteToISOString({
-					...reviewOutcome.feeReceiptDueDate,
-					hour: DEADLINE_HOUR,
-					minute: DEADLINE_MINUTE
-				})
-			})
-		};
 	}
+
+	return {
+		...(reviewOutcome.missingDocuments && {
+			// @ts-ignore
+			enforcementMissingDocuments: missingDocumentReasons.map((reason) => ({
+				id: reason,
+				...(reviewOutcome.missingDocumentsText &&
+					reviewOutcome.missingDocumentsText[reason] && {
+						text: reviewOutcome.missingDocumentsText[reason]
+					})
+			}))
+		}),
+		...(reviewOutcome.reasons && {
+			// @ts-ignore
+			incompleteReasons: parsedReasons.map((reason) => ({
+				id: reason,
+				...(reviewOutcome.reasonsText &&
+					reviewOutcome.reasonsText[reason] && {
+						text: reviewOutcome.reasonsText[reason]
+					})
+			}))
+		}),
+		...(reviewOutcome.updatedDueDate && {
+			appealDueDate: dayMonthYearHourMinuteToISOString({
+				...reviewOutcome.updatedDueDate,
+				hour: DEADLINE_HOUR,
+				minute: DEADLINE_MINUTE
+			})
+		}),
+		...(reviewOutcome.feeReceiptDueDate && {
+			feeReceiptDueDate: dayMonthYearHourMinuteToISOString({
+				...reviewOutcome.feeReceiptDueDate,
+				hour: DEADLINE_HOUR,
+				minute: DEADLINE_MINUTE
+			})
+		})
+	};
 };
 
 /**
