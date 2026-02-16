@@ -156,6 +156,7 @@ interface UpdateAppealRequest {
 	agent?: number | null;
 	procedureTypeId?: number | null;
 	hearingStartTime?: string;
+	hearingEstimatedDays?: number;
 }
 
 interface SingleAppellantCaseResponse {
@@ -604,6 +605,7 @@ interface Hearing {
 	hearingId: number;
 	hearingStartTime: string;
 	hearingEndTime?: string;
+	estimatedDays?: number;
 	addressId?: number;
 	address: Schema.Address;
 }
@@ -1061,6 +1063,7 @@ type CreateHearing = {
 	appealId: number;
 	hearingStartTime: Date | string;
 	hearingEndTime: Date | string | undefined;
+	estimatedDays: string | undefined;
 	address: Omit<Schema.Address, 'id'> | undefined;
 };
 
@@ -1096,6 +1099,7 @@ type UpdateHearing = {
 	hearingId: number;
 	hearingStartTime: Date | string;
 	hearingEndTime: Date | string | undefined;
+	estimatedDays: number | undefined;
 	addressId?: number;
 	address?: Omit<Schema.Address, 'id'> | null;
 };
@@ -1112,6 +1116,7 @@ type HearingResponse = {
 	hearingEndTime: Date | null;
 	address: Schema.Address | null;
 	addressId: number | null;
+	estimatedDays: number | undefined | null;
 };
 
 type InquiryResponse = {

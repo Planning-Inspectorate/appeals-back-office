@@ -15,6 +15,7 @@ export const mapHearing = (data) => {
 			hearingId: appeal.hearing.id,
 			hearingStartTime: appeal.hearing.hearingStartTime?.toISOString() || '',
 			hearingEndTime: appeal.hearing.hearingEndTime?.toISOString() || '',
+			estimatedDays: appeal.hearing.estimatedDays || undefined,
 			addressId: appeal.hearing.addressId || undefined,
 			...(appeal.hearing.address && {
 				address: {

@@ -981,6 +981,7 @@ model Hearing {
   appealId         Int       @unique
   hearingStartTime DateTime
   hearingEndTime   DateTime?
+  estimatedDays    Int?
   addressId        Int?
   address          Address?  @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   appeal           Appeal    @relation(fields: [appealId], references: [id], onDelete: NoAction, onUpdate: NoAction)

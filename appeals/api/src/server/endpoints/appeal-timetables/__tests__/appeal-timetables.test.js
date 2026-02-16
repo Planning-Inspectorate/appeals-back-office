@@ -1364,7 +1364,11 @@ describe('appeal timetables routes', () => {
 						const { id } = appeal;
 						const response = await request
 							.post(`/appeals/${id}/appeal-timetables/`)
-							.send({ procedureType: 'hearing', hearingStartTime: '2024-07-10T13:45:00.000Z' })
+							.send({
+								procedureType: 'hearing',
+								hearingStartTime: '2024-07-10T13:45:00.000Z',
+								hearingEstimatedDays: 8
+							})
 							.set('azureAdUserId', azureAdUserId);
 
 						expect(response.status).toEqual(201);
@@ -1384,9 +1388,11 @@ describe('appeal timetables routes', () => {
 								hearing: {
 									upsert: {
 										create: {
+											estimatedDays: 8,
 											hearingStartTime: '2024-07-10T13:45:00.000Z'
 										},
 										update: {
+											estimatedDays: 8,
 											hearingStartTime: '2024-07-10T13:45:00.000Z'
 										},
 										where: {
@@ -1454,6 +1460,7 @@ describe('appeal timetables routes', () => {
 								),
 								hearing_date: '10 July 2024',
 								hearing_time: '2:45pm',
+								hearing_expected_days: 8,
 								team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 							},
 							recipientEmail: appeal.appellant.email,
@@ -1492,6 +1499,7 @@ describe('appeal timetables routes', () => {
 								),
 								hearing_date: '10 July 2024',
 								hearing_time: '2:45pm',
+								hearing_expected_days: 8,
 								...personalisation,
 								team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 							},
@@ -2165,7 +2173,8 @@ describe('appeal timetables routes', () => {
 				.send({
 					startDate: '2024-06-12T22:59:00.000Z',
 					procedureType: 'hearing',
-					hearingStartTime: '2024-06-12T12:00:00.000Z'
+					hearingStartTime: '2024-06-12T12:00:00.000Z',
+					hearingEstimatedDays: '5'
 				});
 
 			expect(response.status).toEqual(200);
@@ -2177,6 +2186,31 @@ describe('appeal timetables routes', () => {
 			expect(lpaPreview).toContain(
 				'You have a new planning appeal against the application 48269/APP/2021/1482.'
 			);
+			expect(appellantPreview).toContain('Expected days: 5');
+			expect(lpaPreview).toContain('Expected days: 5');
+		});
+
+		test('hides expected days in the rendered HTML when hearingEstimatedDays is not provided', async () => {
+			const appeal = {
+				...fullPlanningAppeal
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+
+			const { id } = fullPlanningAppeal;
+			const response = await request
+				.post(`/appeals/${id}/appeal-timetables/notify-preview`)
+				.set('azureAdUserId', azureAdUserId)
+				.send({
+					startDate: '2024-06-12T22:59:00.000Z',
+					procedureType: 'hearing',
+					hearingStartTime: '2024-06-12T12:00:00.000Z'
+				});
+
+			expect(response.status).toEqual(200);
+			const appellantPreview = response.body.appellant;
+			const lpaPreview = response.body.lpa;
+			expect(appellantPreview).not.toContain('Expected days:');
+			expect(lpaPreview).not.toContain('Expected days:');
 		});
 
 		test('returns an error if the appeal is a child appeal', async () => {
