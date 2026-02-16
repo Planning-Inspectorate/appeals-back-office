@@ -14,6 +14,7 @@ import { newLine2LineBreak } from '#lib/string-utilities.js';
  * @param {boolean} [options.addCyAttribute]
  * @param {boolean} options.editable
  * @param {string} [options.classes]
+ * @param {string} [options.actionText]
  * @returns {Instructions}
  */
 export function booleanSummaryListItem({
@@ -24,13 +25,14 @@ export function booleanSummaryListItem({
 	link,
 	addCyAttribute,
 	editable,
-	classes
+	classes,
+	actionText = 'Change'
 }) {
 	/** @type {ActionItemProperties[]} */
 	const actions = [];
 	if (editable) {
 		actions.push({
-			text: 'Change',
+			text: actionText,
 			visuallyHiddenText: text,
 			href: link,
 			attributes: addCyAttribute && { 'data-cy': 'change-' + id }

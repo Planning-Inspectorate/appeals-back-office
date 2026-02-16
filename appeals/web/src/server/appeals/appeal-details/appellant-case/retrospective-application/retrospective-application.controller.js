@@ -55,6 +55,10 @@ const renderChangeRetrospectiveApplication = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postChangeRetrospectiveApplication = async (request, response) => {
+	if (request.errors) {
+		return renderChangeRetrospectiveApplication(request, response);
+	}
+
 	const retrospectiveApplication = request.body.retrospectiveApplication === 'yes';
 
 	const {

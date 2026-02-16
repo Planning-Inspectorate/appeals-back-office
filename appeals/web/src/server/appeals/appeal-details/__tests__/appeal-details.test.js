@@ -5,8 +5,11 @@ import { dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 import {
 	activeDirectoryUsersData,
 	appealData,
+	appealDataEnforcementListedBuilding,
 	appealDataEnforcementNotice,
 	appealDataFullPlanning,
+	appealDataLdc,
+	appealDataListedBuilding,
 	appellantFinalCommentsAwaitingReview,
 	caseNotes,
 	costsFolderInfoAppellantApplication,
@@ -6804,6 +6807,75 @@ describe('appeal-details', () => {
 			expect(siteSection).toContain('Site</h2>');
 			expect(siteSection).not.toContain('Cancel site visit</a>');
 			expect(siteSection).not.toContain('Record missed site visit</a>');
+		});
+
+		for (const procedureType of [APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY]) {
+			it.each([
+				['S78', appealDataFullPlanning],
+				['S20', appealDataListedBuilding],
+				['Enforcement', { ...appealDataEnforcementNotice, appealId: 1 }],
+				['LDC', appealDataLdc],
+				['ELB', { ...appealDataEnforcementListedBuilding, appealId: 1 }]
+			])(
+				`should not render the site visit section for %s cases with a procedureType of ${procedureType}`,
+				async (_, specificAppealTypeData) => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, {
+							...specificAppealTypeData,
+							procedureType: procedureType,
+							completedStateList: [APPEAL_CASE_STATUS.READY_TO_START]
+						});
+
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment`)
+						.reply(200, {
+							itemCount: 0,
+							items: [
+								...appellantFinalCommentsAwaitingReview.items,
+								...lpaFinalCommentsAwaitingReview.items
+							]
+						});
+
+					nock('http://test/')
+						.get(
+							`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+						)
+						.reply(200, {
+							itemCount: 0,
+							items: [
+								...appellantFinalCommentsAwaitingReview.items,
+								...lpaFinalCommentsAwaitingReview.items
+							]
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+					expect(response.statusCode).toBe(200);
+
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+					expect(unprettifiedHTML).toContain('Case details</h1>');
+					expect(unprettifiedHTML).not.toContain('<div id="site-visit-section">');
+					expect(unprettifiedHTML).not.toContain('Site</h2>');
+				}
+			);
+		}
+
+		it('should render the site visit section when the appeal has procedure type: undefined (and so is written)', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, {
+					...appealData,
+					procedureType: undefined,
+					completedStateList: [APPEAL_CASE_STATUS.READY_TO_START]
+				});
+			const response = await request.get(`${baseUrl}/${appealId}`);
+
+			const siteSection = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '#site-visit-section'
+			}).innerHTML;
+			expect(siteSection).toContain('Site</h2>');
 		});
 	});
 

@@ -5,6 +5,7 @@ import { addDocumentAudit } from '#endpoints/documents/documents.service.js';
 import { commandMappers } from '#mappers/integration/commands/index.js';
 import { serviceUserIdStartRange } from '#mappers/integration/map-service-user-entity.js';
 import { notifySend } from '#notify/notify-send.js';
+import { getLinkedAppealsById } from '#repositories/appeal.repository.js';
 import { getAssignedTeam } from '#repositories/team.repository.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import { linkAppeals } from '#utils/link-appeals.js';
@@ -18,6 +19,7 @@ import {
 	AUDIT_TRAIL_LPA_UUID,
 	AUDIT_TRAIL_LPAQ_IMPORT_MSG,
 	AUDIT_TRAIL_REP_IMPORT_MSG,
+	AUDIT_TRAIL_RULE_6_STATEMENT_ADDED,
 	AUDIT_TRAIL_SYSTEM_UUID,
 	AUDIT_TRAIL_TEAM_ASSIGNED,
 	AUDIT_TRIAL_APPELLANT_UUID,
@@ -211,27 +213,31 @@ export const importAppeal = async (req, res) => {
 };
 
 /**
- * @param {{body: LPAQuestionnaireCommand, appeal: Appeal, designatedSites: DesignatedSite[]}} req
- * @param {Response} res
- * @returns {Promise<Response>}
+ * @param {string} caseReference
+ * @param {Omit<import('#db-client/models.ts').LPAQuestionnaireCreateInput, 'appeal'>} questionnaire
+ * @param {import('#db-client/models.ts').DocumentVersionCreateInput[]} documents
+ * @param {string[] | null} relatedReferences
+ * @returns
  */
-export const importLpaqSubmission = async (req, res) => {
-	const { caseReference, questionnaire, documents, relatedReferences } =
-		commandMappers.mapQuestionnaireSubmission(req.body, req.appeal, req.designatedSites);
-
-	const casedata = await integrationService.importLPAQuestionnaire(
+export const importIndividualLpaqSubmission = async (
+	caseReference,
+	questionnaire,
+	documents,
+	relatedReferences
+) => {
+	const caseData = await integrationService.importLPAQuestionnaire(
 		caseReference,
 		questionnaire,
 		documents,
 		relatedReferences
 	);
 
-	if (!casedata.appeal) {
-		return res.status(404);
+	if (!caseData.appeal) {
+		return caseData;
 	}
 
-	const { documentVersions } = casedata;
-	const { id, reference } = casedata.appeal;
+	const { documentVersions } = caseData;
+	const { id } = caseData.appeal;
 
 	await createAuditTrail({
 		appealId: id,
@@ -252,6 +258,44 @@ export const importLpaqSubmission = async (req, res) => {
 			]);
 		})
 	);
+
+	return caseData;
+};
+
+/**
+ * @param {{body: LPAQuestionnaireCommand, appeal: Appeal, designatedSites: DesignatedSite[]}} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const importLpaqSubmission = async (req, res) => {
+	const { caseReference, questionnaire, documents, relatedReferences } =
+		commandMappers.mapQuestionnaireSubmission(req.body, req.appeal, req.designatedSites);
+
+	const caseData = await importIndividualLpaqSubmission(
+		caseReference,
+		questionnaire,
+		documents,
+		relatedReferences
+	);
+
+	if (!caseData?.appeal) {
+		return res.status(404);
+	}
+
+	const { id, reference } = caseData.appeal;
+
+	if (
+		isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_LINKED) &&
+		req.appeal.appealType?.key === APPEAL_CASE_TYPE.C
+		// Create cloned lpaq for each child enforcement notice appeal
+	) {
+		const linkedAppeals = await getLinkedAppealsById(id);
+
+		for (const { childRef } of linkedAppeals) {
+			await importIndividualLpaqSubmission(childRef, questionnaire, [], relatedReferences);
+		}
+	}
+
 	return res.status(201).send({ id, reference });
 };
 
@@ -373,9 +417,23 @@ export const importRepresentation = async (req, res) => {
 		default:
 			azureAdUserId = AUDIT_TRAIL_SYSTEM_UUID;
 	}
+	let details = stringTokenReplacement(AUDIT_TRAIL_REP_IMPORT_MSG, [repType]);
+
+	if (repType === 'rule_6_party_statement') {
+		const party = req.appeal.appealRule6Parties?.find(
+			(party) => party.serviceUserId === serviceUserId
+		);
+
+		if (party) {
+			details = stringTokenReplacement(AUDIT_TRAIL_RULE_6_STATEMENT_ADDED, [
+				party.serviceUser?.organisationName || 'Rule 6 party'
+			]);
+		}
+	}
+
 	await createAuditTrail({
 		appealId,
-		details: stringTokenReplacement(AUDIT_TRAIL_REP_IMPORT_MSG, [repType]),
+		details,
 		azureAdUserId: azureAdUserId
 	});
 

@@ -3,8 +3,6 @@
 
 import { mapContactAddressIn } from '#mappers/integration/commands/address.mapper.js';
 import { createSharedS20S78Fields } from '#mappers/integration/shared/s20s78/appellant-case-fields.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 /**
@@ -19,10 +17,9 @@ export const mapAppellantCaseIn = (command) => {
 	const isAdverts =
 		casedata.caseType === APPEAL_CASE_TYPE.ZA || casedata.caseType === APPEAL_CASE_TYPE.H;
 	const isFullAdverts = casedata.caseType === APPEAL_CASE_TYPE.H;
-	const isEnforcementNotice =
-		isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE) &&
-		casedata.caseType === APPEAL_CASE_TYPE.C;
+	const isEnforcementNotice = casedata.caseType === APPEAL_CASE_TYPE.C;
 	const isLDC = casedata.caseType === APPEAL_CASE_TYPE.X;
+	const isEnforcementListedBuilding = casedata.caseType === APPEAL_CASE_TYPE.F;
 
 	// @ts-ignore
 	const sharedFields = createSharedS20S78Fields(command);
@@ -61,10 +58,11 @@ export const mapAppellantCaseIn = (command) => {
 					.filter(Boolean)
 			: null;
 
-	const contactAddress = isEnforcementNotice ? mapContactAddressIn(casedata) : null;
+	const contactAddress =
+		isEnforcementNotice || isEnforcementListedBuilding ? mapContactAddressIn(casedata) : null;
 
 	const procedurePreferenceFields =
-		isFullAdverts || isEnforcementNotice || isLDC
+		isFullAdverts || isEnforcementNotice || isLDC || isEnforcementListedBuilding
 			? {
 					appellantProcedurePreference: casedata.appellantProcedurePreference,
 					appellantProcedurePreferenceDetails: casedata.appellantProcedurePreferenceDetails,
@@ -133,15 +131,8 @@ export const mapAppellantCaseIn = (command) => {
 			contactAddress: { create: contactAddress },
 			applicationDecisionAppealed: casedata.applicationDecisionAppealed,
 			appealDecisionDate: casedata.appealDecisionDate,
-			appellantProcedurePreference: command.casedata.appellantProcedurePreference,
-			appellantProcedurePreferenceDetails: command.casedata.appellantProcedurePreferenceDetails,
-			appellantProcedurePreferenceDuration: command.casedata.appellantProcedurePreferenceDuration,
-			appellantProcedurePreferenceWitnessCount:
-				command.casedata.appellantProcedurePreferenceWitnessCount,
 			planningObligation: command.casedata.planningObligation,
-			statusPlanningObligation: command.casedata.statusPlanningObligation,
-			siteGridReferenceEasting: command.casedata.siteGridReferenceEasting,
-			siteGridReferenceNorthing: command.casedata.siteGridReferenceNorthing
+			statusPlanningObligation: command.casedata.statusPlanningObligation
 		}),
 		...(isLDC && {
 			...procedurePreferenceFields,
@@ -149,6 +140,21 @@ export const mapAppellantCaseIn = (command) => {
 			statusPlanningObligation: command.casedata.statusPlanningObligation,
 			siteUseAtTimeOfApplication: command.casedata.siteUseAtTimeOfApplication,
 			applicationMadeUnderActSection: command.casedata.applicationMadeUnderActSection
+		}),
+		...(isEnforcementListedBuilding && {
+			...procedurePreferenceFields,
+			enforcementNotice: casedata.enforcementNotice,
+			enforcementNoticeListedBuilding: casedata.enforcementNoticeListedBuilding,
+			enforcementIssueDate: casedata.enforcementIssueDate,
+			enforcementEffectiveDate: casedata.enforcementEffectiveDate,
+			contactPlanningInspectorateDate: casedata.contactPlanningInspectorateDate,
+			enforcementReference: casedata.enforcementReference,
+			interestInLand: casedata.interestInLand,
+			descriptionOfAllegedBreach: casedata.descriptionOfAllegedBreach,
+			applicationMadeAndFeePaid: casedata.applicationMadeAndFeePaid,
+			contactAddress: { create: contactAddress },
+			planningObligation: command.casedata.planningObligation,
+			statusPlanningObligation: command.casedata.statusPlanningObligation
 		})
 	};
 

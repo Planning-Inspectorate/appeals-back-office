@@ -577,10 +577,43 @@ Cypress.Commands.add('reviewLpaqSubmission', (caseObj) => {
 	});
 });
 
-Cypress.Commands.add('addRule6Party', (caseObj) => {
+Cypress.Commands.add('addRule6Party', (caseObj, requestBodyOverride = null) => {
 	return cy.wrap(null).then(async () => {
-		await appealsApiClient.addRule6Party(caseObj.id);
+		await appealsApiClient.addRule6Party(caseObj.id, requestBodyOverride);
 		cy.log('Add rule 6 party for case ref ' + caseObj.reference);
 		cy.reload();
+	});
+});
+
+Cypress.Commands.add('getRule6ServiceUserId', (caseObj, rule6Email) => {
+	return cy.wrap(null).then(async () => {
+		const responseData = await appealsApiClient.loadCaseDetails(caseObj.reference);
+
+		// Check if appealRule6Parties object exists
+		if (!responseData.appealRule6Parties || !Array.isArray(responseData.appealRule6Parties)) {
+			throw new Error('No appealRule6Parties found in response');
+		}
+
+		// Find the Rule 6 party with the matching email
+		const rule6Party = responseData.appealRule6Parties.find(
+			(party) =>
+				party.serviceUser &&
+				party.serviceUser.email &&
+				party.serviceUser.email.toLowerCase() === rule6Email.toString().toLowerCase()
+		);
+
+		if (!rule6Party) {
+			throw new Error(
+				`No Rule 6 party found with email: ${rule6Email}. Available emails: ${responseData.appealRule6Parties
+					.map((p) => p.serviceUser?.email)
+					.filter(Boolean)
+					.join(', ')}`
+			);
+		}
+
+		const rule6PartyServiceUserId = 200000000 + rule6Party.serviceUserId;
+
+		// Return the serviceUserId
+		return rule6PartyServiceUserId.toString();
 	});
 });

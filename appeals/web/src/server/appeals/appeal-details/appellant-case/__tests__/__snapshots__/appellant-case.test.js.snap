@@ -2477,7 +2477,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                             <dd class="govuk-summary-list__value">No data</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Did anyone submit a retrospective planning application?</dt>
-                            <dd                             class="govuk-summary-list__value">No data</dd>
+                            <dd                             class="govuk-summary-list__value">Not answered</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ground (a) fee receipt</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
@@ -2624,15 +2624,6 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 <div class="govuk-form-group">
                     <input class="govuk-input" id="review-outcome" name="reviewOutcome" type="hidden"
                     value="continue">
-                </div>
-                <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-two-thirds">
-                        <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                            <strong                             class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Do not continue until
-                                you have reviewed all of the supporting documents and redacted any sensitive
-                                information.</strong>
-                        </div>
-                    </div>
                 </div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
             </form>
@@ -2829,8 +2820,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                             <dd class="govuk-summary-list__value">No data</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Did anyone submit a retrospective planning application?</dt>
-                            <dd                             class="govuk-summary-list__value">No data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/retrospective-application/change">Change<span class="govuk-visually-hidden"> Did anyone submit a retrospective planning application? (3. Grounds and facts)</span></a>
+                            <dd                             class="govuk-summary-list__value">Not answered</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/retrospective-application/change">Add<span class="govuk-visually-hidden"> Did anyone submit a retrospective planning application? (3. Grounds and facts)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ground (a) fee receipt</dt>
@@ -3235,8 +3226,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                             <dd class="govuk-summary-list__value">No data</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Did anyone submit a retrospective planning application?</dt>
-                            <dd                             class="govuk-summary-list__value">No data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/retrospective-application/change">Change<span class="govuk-visually-hidden"> Did anyone submit a retrospective planning application? (3. Grounds and facts)</span></a>
+                            <dd                             class="govuk-summary-list__value">Not answered</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/retrospective-application/change">Add<span class="govuk-visually-hidden"> Did anyone submit a retrospective planning application? (3. Grounds and facts)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ground (a) fee receipt</dt>
@@ -4247,8 +4238,8 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                             <dd class="govuk-summary-list__value">No data</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Did anyone submit a retrospective planning application?</dt>
-                            <dd                             class="govuk-summary-list__value">No data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/retrospective-application/change">Change<span class="govuk-visually-hidden"> Did anyone submit a retrospective planning application? (3. Grounds and facts)</span></a>
+                            <dd                             class="govuk-summary-list__value">Not answered</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/retrospective-application/change">Add<span class="govuk-visually-hidden"> Did anyone submit a retrospective planning application? (3. Grounds and facts)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Ground (a) fee receipt</dt>

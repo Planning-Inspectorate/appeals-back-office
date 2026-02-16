@@ -1602,7 +1602,44 @@ describe('appellant cases routes', () => {
 					where: { appealId: id }
 				});
 
-				expect(mockNotifySend).not.toHaveBeenCalled();
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId,
+					notifyClient: expect.anything(),
+					templateName: 'enforcement-appeal-invalid-appellant',
+					recipientEmail: enforcementNoticeAppeal.agent.email,
+					personalisation: {
+						appeal_reference_number: enforcementNoticeAppeal.reference,
+						enforcement_reference: enforcementNoticeAppeal.appellantCase.enforcementReference,
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						reasons: [
+							'Appeal has not been submitted on time',
+							'Other: The appeal site address does not match'
+						],
+						other_info: '',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					}
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId,
+					notifyClient: expect.anything(),
+					templateName: 'enforcement-appeal-invalid-lpa',
+					recipientEmail: enforcementNoticeAppeal.lpa.email,
+					personalisation: {
+						appeal_reference_number: enforcementNoticeAppeal.reference,
+						enforcement_reference: enforcementNoticeAppeal.appellantCase.enforcementReference,
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						reasons: [
+							'Appeal has not been submitted on time',
+							'Other: The appeal site address does not match'
+						],
+						other_info: '',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					}
+				});
+
 				expect(response.status).toEqual(200);
 			});
 

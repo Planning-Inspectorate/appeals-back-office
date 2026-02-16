@@ -1,4 +1,5 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import addressRepository from '#repositories/address.repository.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
@@ -46,6 +47,8 @@ const updateAddressById = async (req, res) => {
 	let updatedAddress;
 	try {
 		updatedAddress = await addressRepository.updateAddressById(Number(addressId), updateAddress);
+
+		await broadcasters.broadcastAppeal(parseInt(appealId));
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });

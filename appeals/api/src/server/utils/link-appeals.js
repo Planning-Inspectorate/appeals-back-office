@@ -1,6 +1,7 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import appealRepository from '#repositories/appeal.repository.js';
+import { isParentAppeal } from '#utils/is-linked-appeal.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
 import {
@@ -9,6 +10,29 @@ import {
 } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+
+/**
+ *
+ * @param {Partial<Appeal> | undefined} appeal
+ * @returns {Partial<Appeal>[]}
+ */
+export const getChildAppeals = (appeal) =>
+	// @ts-ignore
+	appeal?.childAppeals
+		?.filter(({ type, child }) => type === CASE_RELATIONSHIP_LINKED && child?.appellantCase)
+		.map(({ child }) => child) || [];
+
+/**
+ *
+ * @param {Partial<Appeal> | undefined} appeal
+ * @returns {Partial<Appeal> | null | undefined}
+ */
+export const getLeadAppeal = (appeal) => {
+	if (isParentAppeal(appeal)) {
+		return appeal;
+	}
+	return appeal?.parentAppeals?.[0]?.parent;
+};
 
 /**
  *

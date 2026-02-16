@@ -913,10 +913,15 @@ export const appealsApiClient = {
 		}
 	},
 
-	async addRule6Party(appealId) {
+	async addRule6Party(appealId, requestBodyOverride) {
 		try {
 			const url = `${baseUrl}appeals/${appealId}/rule-6-parties`;
-			const requestBody = createApiSubmission(appealsApiRequests.rule6Party);
+
+			// Use override if provided, otherwise create default
+			const requestBody = requestBodyOverride
+				? requestBodyOverride
+				: createApiSubmission(appealsApiRequests.rule6Party);
+
 			console.log(requestBody);
 
 			const response = await fetch(url, {
@@ -933,7 +938,7 @@ export const appealsApiClient = {
 			expect(responseBody.serviceUser).to.deep.equal(requestBody.serviceUser);
 			expect(responseBody.appealId).to.deep.equal(appealId);
 
-			return await response.json();
+			return responseBody;
 		} catch (error) {
 			cy.writeLog(`Error adding rule 6 party for appeal ${appealId}:`, error);
 			return false;

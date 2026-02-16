@@ -534,11 +534,18 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (
 	const helperText =
 		validationOutcome === 'invalid'
 			? `<p class="govuk-body">We will mark the enforcement notice as ${validationOutcome} and send an email to the relevant parties.</p>`
-			: `<p class="govuk-body">We will mark the appeal as ${validationOutcome} and send an email to the relevant parties.</p>`; // TO DO CHECK THIS ON OTHER FLOW TOO
+			: `<p class="govuk-body">We will mark the appeal as ${validationOutcome} and send an email to the relevant parties.</p>`;
+
+	const backLinkUrl =
+		enforcementNoticeInvalid === 'yes'
+			? `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/invalid/enforcement-other-information`
+			: session?.webAppellantCaseReviewOutcome.updatedDueDate
+				? `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/date`
+				: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/incomplete/receipt-due-date`;
 
 	return {
 		title,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/invalid/enforcement-other-information`,
+		backLinkUrl,
 		preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 		heading: title,
 		pageComponents: [

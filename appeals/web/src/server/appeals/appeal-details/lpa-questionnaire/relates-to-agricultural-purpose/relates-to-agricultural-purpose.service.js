@@ -10,7 +10,7 @@ import { convertFromYesNoToBoolean } from '#lib/boolean-formatter.js';
 export function relatesToAgriculturalPurpose(apiClient, appealId, lpaQuestionnaireId, updatedData) {
 	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
 		json: {
-			relatesToAgriculturalPurpose: convertFromYesNoToBoolean(updatedData)
+			relatesToBuildingWithAgriculturalPurpose: convertFromYesNoToBoolean(updatedData)
 		}
 	});
 }
