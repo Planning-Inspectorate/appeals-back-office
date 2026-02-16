@@ -57,6 +57,13 @@ export function issueDecisionPage(
 	backUrl,
 	errors
 ) {
+	const { appellant } = appealDetails;
+
+	const appellantName =
+		!appellant?.firstName && !appellant?.lastName && appellant?.organisationName
+			? appellant.organisationName
+			: `${appellant?.firstName} ${appellant?.lastName}`;
+
 	/** @type {PageComponent} */
 	const summaryBlock = {
 		type: 'summary-list',
@@ -69,7 +76,7 @@ export function issueDecisionPage(
 									text: 'Appellant'
 								},
 								value: {
-									text: `${appealDetails.appellant.firstName} ${appealDetails.appellant.lastName}`
+									text: appellantName
 								}
 							}
 						]
