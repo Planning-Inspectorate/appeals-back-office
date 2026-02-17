@@ -31,13 +31,12 @@ const getHearingById = async (id) => {
  *  appealId: number;
  * 	hearingStartTime: Date | string;
  * 	hearingEndTime?: Date | string;
- *  estimatedDays?: string | number;
  *  address?: Omit<Address, 'id'>
  * }} data
  * @returns
  */
 const createHearingById = (data) => {
-	const { appealId, hearingStartTime, hearingEndTime, estimatedDays, address } = data;
+	const { appealId, hearingStartTime, hearingEndTime, address } = data;
 
 	const hearingData = {
 		appeal: {
@@ -45,9 +44,6 @@ const createHearingById = (data) => {
 		},
 		hearingStartTime,
 		hearingEndTime,
-		...(estimatedDays && {
-			estimatedDays: Number(estimatedDays)
-		}),
 		...(address && {
 			address: {
 				create: {
@@ -73,13 +69,12 @@ const createHearingById = (data) => {
  *  appealId: number;
  * 	hearingStartTime: Date | string;
  * 	hearingEndTime?: Date | string;
- *  estimatedDays?: string | number;
  *  address?: Omit<Address, 'id'> | null
  *  addressId?: number
  * }} data
  */
 const updateHearingById = (id, data) => {
-	const { appealId, hearingStartTime, hearingEndTime, estimatedDays, address, addressId } = data;
+	const { appealId, hearingStartTime, hearingEndTime, address, addressId } = data;
 
 	let addressStatement = {};
 
@@ -110,9 +105,6 @@ const updateHearingById = (id, data) => {
 		}),
 		hearingStartTime,
 		hearingEndTime,
-		...(estimatedDays !== undefined && {
-			estimatedDays: Number(estimatedDays)
-		}),
 		...addressStatement
 	};
 

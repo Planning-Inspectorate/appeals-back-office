@@ -49,7 +49,7 @@ export const getHearingById = async (req, res) => {
  */
 export const postHearing = async (req, res) => {
 	const {
-		body: { hearingStartTime, hearingEndTime, estimatedDays, address },
+		body: { hearingStartTime, hearingEndTime, address },
 		params,
 		appeal
 	} = req;
@@ -62,7 +62,6 @@ export const postHearing = async (req, res) => {
 				appealId,
 				hearingStartTime,
 				hearingEndTime,
-				estimatedDays,
 				...(address && {
 					address: {
 						addressLine1: address.addressLine1,
@@ -112,7 +111,7 @@ export const postHearing = async (req, res) => {
  */
 export const rearrangeHearing = async (req, res) => {
 	const {
-		body: { hearingStartTime, hearingEndTime, estimatedDays, address, addressId },
+		body: { hearingStartTime, hearingEndTime, address, addressId },
 		params,
 		appeal
 	} = req;
@@ -132,7 +131,6 @@ export const rearrangeHearing = async (req, res) => {
 				hearingId,
 				hearingStartTime,
 				hearingEndTime,
-				estimatedDays,
 				addressId,
 				...(address !== undefined && {
 					address: address === null ? null : formatAddressForDb(address)

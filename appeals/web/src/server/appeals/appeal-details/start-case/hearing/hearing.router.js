@@ -30,16 +30,6 @@ router
 	);
 
 router
-	.route('/estimation')
-	.get(asyncHandler(controller.getHearingEstimation))
-	.post(
-		validators.validateEstimationYesNo,
-		validators.validateEstimationDays,
-		saveBodyToSession('startCaseAppealProcedure', { scopeToAppeal: true }),
-		asyncHandler(controller.postHearingEstimation)
-	);
-
-router
 	.route('/confirm')
 	.get(asyncHandler(controller.getHearingConfirm))
 	.post(asyncHandler(controller.postHearingConfirm));
