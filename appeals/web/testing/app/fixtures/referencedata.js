@@ -4871,6 +4871,7 @@ export const appealDataToGetRequiredActions = {
 		documentationSummary: {
 			appellantCase: { dueDate: '3000-01-06T23:59:00.000Z', status: 'Incomplete' }
 		},
+		enforcementNoticeInvalid: 'yes',
 		enforcementNotice: {
 			appealOutcome: {
 				enforcementNoticeInvalid: 'yes'

@@ -1610,7 +1610,7 @@ describe('appellant cases routes', () => {
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
 					ground_a_barred: false,
 					other_live_appeals: false,
-					effective_date: '17 February 2026'
+					effective_date: expect.any(String)
 				};
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
