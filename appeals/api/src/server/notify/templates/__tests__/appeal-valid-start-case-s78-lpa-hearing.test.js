@@ -24,6 +24,7 @@ describe('appeal-valid-start-case-lpa-hearing.md', () => {
 				planning_obligation_deadline: '01 May 2025',
 				hearing_date: '01 April 2025',
 				hearing_time: '1pm',
+				hearing_expected_days: '2',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
@@ -66,6 +67,7 @@ describe('appeal-valid-start-case-lpa-hearing.md', () => {
 			'',
 			'^Date: 01 April 2025',
 			'Time: 1pm',
+			'Expected days: 2',
 			'',
 			'We will contact you if we make any changes to the hearing.',
 			'',

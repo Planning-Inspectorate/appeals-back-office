@@ -213,7 +213,7 @@ describe('change hearing', () => {
 				.reply(200, { ...appealWithHearing, appealId });
 		});
 
-		it('should redirect to /hearing/change/address with valid inputs', async () => {
+		it('should redirect to /hearing/change/estimation with valid inputs', async () => {
 			const response = await request.post(`${baseUrl}/${appealId}/hearing/change/date`).send({
 				'hearing-date-day': '01',
 				'hearing-date-month': '02',
@@ -223,7 +223,7 @@ describe('change hearing', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.headers.location).toBe(`${baseUrl}/${appealId}/hearing/change/address`);
+			expect(response.headers.location).toBe(`${baseUrl}/${appealId}/hearing/change/estimation`);
 		});
 
 		it('should return 400 on invalid date with appropriate error message', async () => {
@@ -352,9 +352,9 @@ describe('change hearing', () => {
 			expect(pageHtml.querySelector('input[name="addressKnown"]')).not.toBeNull();
 		});
 
-		it('should have a back link to the date page', () => {
+		it('should have a back link to the estimation page', () => {
 			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
-				`${baseUrl}/${appealId}/hearing/change/date`
+				`${baseUrl}/${appealId}/hearing/change/estimation`
 			);
 		});
 
@@ -384,7 +384,7 @@ describe('change hearing', () => {
 			);
 		});
 
-		it('should have a back link to the date page if editing began on a previous page', async () => {
+		it('should have a back link to the estimation page if editing began on a previous page', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.twice()
@@ -406,7 +406,7 @@ describe('change hearing', () => {
 			const html = parseHtml(response.text, { rootElement: 'body' });
 
 			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
-				`${baseUrl}/${appealId}/hearing/change/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fchange%2Fdate`
+				`${baseUrl}/${appealId}/hearing/change/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fchange%2Fdate`
 			);
 		});
 
@@ -480,7 +480,8 @@ describe('change hearing', () => {
 			await request.post(editUrl).send({ addressKnown: 'yes' });
 
 			const response = await request.get(editUrl);
-			const html = parseHtml(response.text, { rootElement: 'body' });
+			expect(response.statusCode).toBe(200);
+			const html = parseHtml(response.text);
 
 			expect(
 				html.querySelector('input[name="addressKnown"][value="yes"]')?.getAttribute('checked')
@@ -598,7 +599,7 @@ describe('change hearing', () => {
 			);
 		});
 
-		it('should have a back link to the date page if editing began on a previous page', async () => {
+		it('should have a back link to the estimation page if editing began on a previous page', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealWithHearing, appealId });
@@ -610,7 +611,7 @@ describe('change hearing', () => {
 			const html = parseHtml(response.text, { rootElement: 'body' });
 
 			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
-				`${baseUrl}/${appealId}/hearing/change/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fchange%2Fdate`
+				`${baseUrl}/${appealId}/hearing/change/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fchange%2Fdate`
 			);
 		});
 
@@ -1159,7 +1160,7 @@ describe('change hearing', () => {
 
 		it('should show 500 page if error is thrown', async () => {
 			nock('http://test/')
-				.post(`/appeals/${appealId}/hearing`)
+				.patch(`/appeals/${appealId}/hearing/${appealWithHearing.hearing.hearingId}`)
 				.reply(500, { error: 'Internal Server Error' });
 
 			// set session data with post requests to previous pages
