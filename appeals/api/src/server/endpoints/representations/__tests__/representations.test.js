@@ -4693,7 +4693,7 @@ describe('/appeals/:id/reps', () => {
 
 				expect(response.status).toEqual(200);
 
-				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					azureAdUserId: expect.anything(),
@@ -4716,6 +4716,28 @@ describe('/appeals/:id/reps', () => {
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'not-received-proof-of-evidence-and-witnesses'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						what_happens_next: 'appeals',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						inquiry_address: expectedinquiryAddress,
+						inquiry_date: '13 December 2025',
+						inquiry_detail_warning_text:
+							'The details of the inquiry are subject to change. We will contact you by email if we make any changes.',
+						inquiry_expected_days: '8',
+						inquiry_time: '2:00pm',
+						inquiry_witnesses_text:
+							'Your witnesses should be available for the duration of the inquiry.',
+						inquiry_subject_line: ['local planning authority'],
+						is_inquiry_procedure: true
+					},
+					recipientEmail: appealS78.appellant.email,
+					templateName: 'proof-of-evidence-and-witnesses-shared'
 				});
 			});
 
@@ -4815,9 +4837,31 @@ describe('/appeals/:id/reps', () => {
 
 				expect(response.status).toEqual(200);
 
-				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						what_happens_next: 'manage-appeals',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						inquiry_address: expectedinquiryAddress,
+						inquiry_date: '13 December 2025',
+						inquiry_detail_warning_text:
+							'The details of the inquiry are subject to change. We will contact you by email if we make any changes.',
+						inquiry_expected_days: '8',
+						inquiry_time: '2:00pm',
+						inquiry_witnesses_text:
+							'Your witnesses should be available for the duration of the inquiry.',
+						inquiry_subject_line: ['appellant'],
+						is_inquiry_procedure: true
+					},
+					recipientEmail: appealS78.lpa.email,
+					templateName: 'proof-of-evidence-and-witnesses-shared'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					azureAdUserId: expect.anything(),
 					notifyClient: expect.anything(),
 					personalisation: {
@@ -4971,7 +5015,7 @@ describe('/appeals/:id/reps', () => {
 						inquiry_time: '2:00pm',
 						inquiry_witnesses_text:
 							'Your witnesses should be available for the duration of the inquiry.',
-						inquiry_subject_line: 'appellant',
+						inquiry_subject_line: ['appellant'],
 						is_inquiry_procedure: true
 					},
 					recipientEmail: appealS78.lpa.email,
@@ -4993,7 +5037,7 @@ describe('/appeals/:id/reps', () => {
 						inquiry_time: '2:00pm',
 						inquiry_witnesses_text:
 							'Your witnesses should be available for the duration of the inquiry.',
-						inquiry_subject_line: 'local planning authority',
+						inquiry_subject_line: ['local planning authority'],
 						is_inquiry_procedure: true
 					},
 					recipientEmail: appealS78.appellant.email,

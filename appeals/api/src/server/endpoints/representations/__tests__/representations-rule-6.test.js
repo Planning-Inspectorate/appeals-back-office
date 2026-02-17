@@ -457,7 +457,7 @@ describe('publishProofOfEvidence', () => {
 		databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
 	});
 
-	it('should send a single aggregated email to each recipient when multiple parties are invalid', async () => {
+	it('should send a mixed aggregated email to each recipient when multiple parties are invalid', async () => {
 		const testAppeal = {
 			...mockAppeal,
 			representations: [
@@ -482,30 +482,25 @@ describe('publishProofOfEvidence', () => {
 
 		const callLpa = findCall('lpa@example.com');
 		expect(callLpa).toBeDefined();
-		expect(callLpa[0].personalisation.inquiry_subject_line).toContain('appellant or Rule 6 Org 1');
-		expect(callLpa[0].personalisation.inquiry_subject_line).not.toContain(
-			'local planning authority'
-		);
+		expect(callLpa[0].templateName).toBe('proof-of-evidence-and-witnesses-shared');
+		expect(callLpa[0].personalisation.inquiry_subject_line).toContain('Rule 6 Org 2');
 
 		const callApp = findCall('agent@example.com');
 		expect(callApp).toBeDefined();
-		expect(callApp[0].personalisation.inquiry_subject_line).toContain(
-			'local planning authority or Rule 6 Org 1'
-		);
-		expect(callApp[0].personalisation.inquiry_subject_line).not.toContain('appellant');
+		expect(callApp[0].templateName).toBe('proof-of-evidence-and-witnesses-shared');
+		expect(callApp[0].personalisation.inquiry_subject_line).toContain('Rule 6 Org 2');
 
 		const callR6_1 = findCall('r6_1@example.com');
 		expect(callR6_1).toBeDefined();
-		expect(callR6_1[0].personalisation.inquiry_subject_line).toContain(
-			'local planning authority or appellant'
-		);
-		expect(callR6_1[0].personalisation.inquiry_subject_line).not.toContain('Rule 6 Org 1');
+		expect(callR6_1[0].templateName).toBe('proof-of-evidence-and-witnesses-shared');
+		expect(callR6_1[0].personalisation.inquiry_subject_line).toContain('Rule 6 Org 2');
 
 		const callR6_2 = findCall('r6_2@example.com');
 		expect(callR6_2).toBeDefined();
-		expect(callR6_2[0].personalisation.inquiry_subject_line).toContain(
-			'local planning authority, appellant, or Rule 6 Org 1'
-		);
+		expect(callR6_2[0].templateName).toBe('not-received-proof-of-evidence-and-witnesses');
+		expect(callR6_2[0].personalisation.inquiry_subject_line).toContain('local planning authority');
+		expect(callR6_2[0].personalisation.inquiry_subject_line).toContain('appellant');
+		expect(callR6_2[0].personalisation.inquiry_subject_line).toContain('Rule 6 Org 1');
 	});
 
 	it('should send "Exchange of proof" email to all parties when ALL parties have submitted valid PoE', async () => {
@@ -549,26 +544,26 @@ describe('publishProofOfEvidence', () => {
 
 		const callLpa = findCall('lpa@example.com');
 		expect(callLpa).toBeDefined();
-		expect(callLpa[0].personalisation.inquiry_subject_line).toContain(
-			'appellant, Rule 6 Org 1, and Rule 6 Org 2'
+		expect(callLpa[0].personalisation.inquiry_subject_line).toEqual(
+			expect.arrayContaining(['appellant', 'Rule 6 Org 1', 'Rule 6 Org 2'])
 		);
 
 		const callApp = findCall('agent@example.com');
 		expect(callApp).toBeDefined();
-		expect(callApp[0].personalisation.inquiry_subject_line).toContain(
-			'local planning authority, Rule 6 Org 1, and Rule 6 Org 2'
+		expect(callApp[0].personalisation.inquiry_subject_line).toEqual(
+			expect.arrayContaining(['local planning authority', 'Rule 6 Org 1', 'Rule 6 Org 2'])
 		);
 
 		const callR6_1 = findCall('r6_1@example.com');
 		expect(callR6_1).toBeDefined();
-		expect(callR6_1[0].personalisation.inquiry_subject_line).toContain(
-			'local planning authority, appellant, and Rule 6 Org 2'
+		expect(callR6_1[0].personalisation.inquiry_subject_line).toEqual(
+			expect.arrayContaining(['local planning authority', 'appellant', 'Rule 6 Org 2'])
 		);
 
 		const callR6_2 = findCall('r6_2@example.com');
 		expect(callR6_2).toBeDefined();
-		expect(callR6_2[0].personalisation.inquiry_subject_line).toContain(
-			'local planning authority, appellant, and Rule 6 Org 1'
+		expect(callR6_2[0].personalisation.inquiry_subject_line).toEqual(
+			expect.arrayContaining(['local planning authority', 'appellant', 'Rule 6 Org 1'])
 		);
 
 		notifySend.mock.calls.forEach((call) => {
@@ -576,7 +571,7 @@ describe('publishProofOfEvidence', () => {
 		});
 	});
 
-	it('should notify others when LPA is missing PoE (LPA gets no email)', async () => {
+	it('should notify others when LPA is missing PoE (LPA gets Shared email)', async () => {
 		const testAppeal = {
 			...mockAppeal,
 			representations: [
@@ -604,16 +599,23 @@ describe('publishProofOfEvidence', () => {
 			.query({ type: 'evidence' })
 			.set('azureAdUserId', azureAdUserId);
 
-		expect(notifySend).toHaveBeenCalledTimes(3);
+		expect(notifySend).toHaveBeenCalledTimes(4);
+
+		const callLpa = notifySend.mock.calls.find(
+			(call) => call[0].recipientEmail === 'lpa@example.com'
+		);
+		expect(callLpa).toBeDefined();
+		expect(callLpa[0].templateName).toBe('proof-of-evidence-and-witnesses-shared');
 
 		const callApp = notifySend.mock.calls.find(
 			(call) => call[0].recipientEmail === 'agent@example.com'
 		);
 		expect(callApp).toBeDefined();
+		expect(callApp[0].templateName).toBe('not-received-proof-of-evidence-and-witnesses');
 		expect(callApp[0].personalisation.inquiry_subject_line).toContain('local planning authority');
 	});
 
-	it('should notify others when Appellant is missing PoE (Appellant gets no email)', async () => {
+	it('should notify others when Appellant is missing PoE (Appellant gets Shared email)', async () => {
 		const testAppeal = {
 			...mockAppeal,
 			representations: [
@@ -641,23 +643,20 @@ describe('publishProofOfEvidence', () => {
 			.query({ type: 'evidence' })
 			.set('azureAdUserId', azureAdUserId);
 
-		expect(notifySend).toHaveBeenCalledTimes(3);
+		expect(notifySend).toHaveBeenCalledTimes(4);
+
+		const callApp = notifySend.mock.calls.find(
+			(call) => call[0].recipientEmail === 'agent@example.com'
+		);
+		expect(callApp).toBeDefined();
+		expect(callApp[0].templateName).toBe('proof-of-evidence-and-witnesses-shared');
 
 		const callLpa = notifySend.mock.calls.find(
 			(call) => call[0].recipientEmail === 'lpa@example.com'
 		);
-		const callR6_1 = notifySend.mock.calls.find(
-			(call) => call[0].recipientEmail === 'r6_1@example.com'
-		);
-		const callR6_2 = notifySend.mock.calls.find(
-			(call) => call[0].recipientEmail === 'r6_2@example.com'
-		);
 		expect(callLpa).toBeDefined();
-		expect(callR6_1).toBeDefined();
-		expect(callR6_2).toBeDefined();
+		expect(callLpa[0].templateName).toBe('not-received-proof-of-evidence-and-witnesses');
 		expect(callLpa[0].personalisation.inquiry_subject_line).toContain('appellant');
-		expect(callR6_1[0].personalisation.inquiry_subject_line).toContain('appellant');
-		expect(callR6_2[0].personalisation.inquiry_subject_line).toContain('appellant');
 	});
 
 	it('should handle multiple Rule 6 parties missing PoE (Cross-notification logic)', async () => {
@@ -688,16 +687,19 @@ describe('publishProofOfEvidence', () => {
 			notifySend.mock.calls.find((call) => call[0].recipientEmail === email);
 
 		const callLpa = findCall('lpa@example.com');
+		expect(callLpa[0].templateName).toBe('not-received-proof-of-evidence-and-witnesses');
 		expect(callLpa[0].personalisation.inquiry_subject_line).toContain('Rule 6 Org 1');
 		expect(callLpa[0].personalisation.inquiry_subject_line).toContain('Rule 6 Org 2');
 
 		const callR6_1 = findCall('r6_1@example.com');
-		expect(callR6_1[0].personalisation.inquiry_subject_line).not.toContain('Rule 6 Org 1');
-		expect(callR6_1[0].personalisation.inquiry_subject_line).toContain('Rule 6 Org 2');
+		expect(callR6_1[0].templateName).toBe('proof-of-evidence-and-witnesses-shared');
+		expect(callR6_1[0].personalisation.inquiry_subject_line).toContain('local planning authority');
+		expect(callR6_1[0].personalisation.inquiry_subject_line).toContain('appellant');
 
 		const callR6_2 = findCall('r6_2@example.com');
-		expect(callR6_2[0].personalisation.inquiry_subject_line).toContain('Rule 6 Org 1');
-		expect(callR6_2[0].personalisation.inquiry_subject_line).not.toContain('Rule 6 Org 2');
+		expect(callR6_2[0].templateName).toBe('proof-of-evidence-and-witnesses-shared');
+		expect(callR6_2[0].personalisation.inquiry_subject_line).toContain('local planning authority');
+		expect(callR6_2[0].personalisation.inquiry_subject_line).toContain('appellant');
 	});
 });
 
