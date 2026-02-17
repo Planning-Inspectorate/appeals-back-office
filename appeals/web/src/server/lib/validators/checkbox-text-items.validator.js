@@ -79,7 +79,8 @@ export const textItemCustomValidator = (textItem, characterLimit, customError = 
 		const prefix = `${customError === 'reason' ? 'Reason' : capitalizeFirstLetter(customError)}`;
 		throw new Error(`${prefix} must be ${characterLimit} characters or less`);
 	}
-	if (!textItem.match(/^[A-Za-z0-9 .,'!&-()]+$/)) {
+	/* eslint-disable-next-line */
+	if (!textItem.match(/^[A-Za-z0-9 .,'!&\-\(\)]+$/)) {
 		const prefix = `${customError === 'reason' ? 'Reason' : capitalizeFirstLetter(customError)}`;
 		throw new Error(
 			`${prefix} must only include letters a to z, numbers 0 to 9, and special characters such as hyphens, spaces and apostrophes`
