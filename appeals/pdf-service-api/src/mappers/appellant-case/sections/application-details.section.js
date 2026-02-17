@@ -21,8 +21,15 @@ function appealShortReference(reference) {
 }
 
 export function applicationDetailsSection(templateData) {
-	const { applicationDate, developmentDescription, otherAppeals, developmentType, appealType } =
-		templateData;
+	const {
+		applicationDate,
+		developmentDescription,
+		otherAppeals,
+		developmentType,
+		appealType,
+		siteUseAtTimeOfApplication,
+		applicationMadeUnderActSection
+	} = templateData;
 	const { applicationDecisionLetter, changedDescription } = templateData.documents || {};
 
 	const isHASAppeal = appealType === APPEAL_TYPE.HOUSEHOLDER;
@@ -34,6 +41,18 @@ export function applicationDetailsSection(templateData) {
 		heading: 'Application details',
 		items: [
 			{ key: 'What date did you submit your application?', text: formatDate(applicationDate) },
+			...([APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE].includes(appealType)
+				? [
+						{
+							key: 'What did you use the appeal site for when you made the application?',
+							html: formatSentenceCase(siteUseAtTimeOfApplication)
+						},
+						{
+							key: 'What type of lawful development certificate is the appeal about?',
+							html: formatSentenceCase(applicationMadeUnderActSection)
+						}
+					]
+				: []),
 			{
 				key: [APPEAL_TYPE.CAS_ADVERTISEMENT, APPEAL_TYPE.ADVERTISEMENT].includes(appealType)
 					? 'Enter the description of the advertisement'
