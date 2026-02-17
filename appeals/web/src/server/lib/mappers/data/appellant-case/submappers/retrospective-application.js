@@ -7,7 +7,7 @@ export const mapRetrospectiveApplication = ({
 	userHasUpdateCase
 }) => {
 	const retrospectiveApplication =
-		appellantCaseData.enforcementNotice?.retrospectiveApplication || null;
+		appellantCaseData.enforcementNotice?.retrospectiveApplication ?? null;
 
 	return booleanSummaryListItem({
 		id: 'retrospective-application',
