@@ -958,7 +958,7 @@ describe('/appeals/representation-submission', () => {
 					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith(
 						expect.objectContaining({
 							data: expect.objectContaining({
-								details: 'Test Organisation statement added'
+								details: 'Test Organisation statement was received'
 							})
 						})
 					);
