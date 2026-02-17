@@ -512,13 +512,21 @@ export const updateAppellantCaseValidationOutcome = async (
 					throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 				}
 
+				const GROUND_A_BARRED_REASON_ID = 7;
+
 				const personalisation = {
 					appeal_reference_number: appeal.reference,
 					enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
 					site_address: siteAddress,
 					reasons: invalidReasonsList,
-					other_info: otherInformation || '',
-					team_email_address: teamEmail
+					team_email_address: teamEmail,
+					ground_a_barred: reasonsToFormat.some(
+						(reason) => reason.appellantCaseInvalidReasonId === GROUND_A_BARRED_REASON_ID
+					),
+					other_live_appeals: !!(otherLiveAppeals === 'yes'),
+					effective_date: updatedAppeal.appellantCase?.enforcementEffectiveDate
+						? formatDate(new Date(updatedAppeal.appellantCase.enforcementEffectiveDate), false)
+						: undefined
 				};
 
 				await notifySend({
