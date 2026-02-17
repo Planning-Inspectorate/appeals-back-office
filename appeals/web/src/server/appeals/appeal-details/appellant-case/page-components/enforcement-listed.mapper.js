@@ -83,7 +83,7 @@ export function generateEnforcementListedComponents(
 	const uploadDocumentsComponentsIndex = pageComponents.findIndex(
 		(component) =>
 			component.type === 'summary-list' &&
-			component.parameters.attributes?.id === 'grounds-and-facts'
+			component.parameters.attributes?.id === 'uploaded-documents'
 	);
 	if (uploadDocumentsComponentsIndex !== -1) {
 		/**
