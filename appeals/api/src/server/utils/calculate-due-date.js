@@ -66,7 +66,7 @@ export const calculateDueDate = async (appeal, costsDecision) => {
 				days: approxStageCompletion.STATE_TARGET_ASSIGN_CASE_OFFICER
 			});
 		case APPEAL_CASE_STATUS.VALIDATION:
-			return new Date(appeal.caseCreatedDate);
+			return new Date(appeal.caseExtensionDate ? appeal.caseExtensionDate : appeal.caseCreatedDate);
 		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION: {
 			if (appeal.siteVisit) {
 				return await calculateIssueDecisionDeadline(
