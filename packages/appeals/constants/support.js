@@ -46,7 +46,7 @@ export const AUDIT_TRAIL_REP_APPELLANT_STATEMENT_STATUS_INCOMPLETE_EXTENDED =
 export const AUDIT_TRAIL_REP_APPELLANT_STATEMENT_ADDED = 'The appellant statement was received';
 
 //Rule 6 statement rep logs
-export const AUDIT_TRAIL_RULE_6_STATEMENT_ADDED = '{replacement0} statement added';
+export const AUDIT_TRAIL_RULE_6_STATEMENT_ADDED = '{replacement0} statement was received';
 export const AUDIT_TRAIL_REP_RULE_6_PARTY_STATEMENT_STATUS_VALID =
 	'{replacement0} statement accepted';
 export const AUDIT_TRAIL_REP_RULE_6_PARTY_STATEMENT_STATUS_REDACTED_AND_ACCEPTED =
@@ -58,7 +58,7 @@ export const AUDIT_TRAIL_REP_RULE_6_PARTY_STATEMENT_STATUS_INCOMPLETE =
 
 //Rule 6 proof of evidence and witnesses rep logs
 export const AUDIT_TRAIL_RULE_6_PARTY_PROOFS_EVIDENCE_ADDED =
-	'{replacement0} proof of evidence and witnesses added';
+	'{replacement0} proof of evidence and witnesses was received';
 export const AUDIT_TRAIL_REP_RULE_6_PARTY_PROOFS_EVIDENCE_STATUS_VALID =
 	'{replacement0} proof of evidence and witnesses accepted';
 export const AUDIT_TRAIL_REP_RULE_6_PARTY_PROOFS_EVIDENCE_STATUS_REDACTED_AND_ACCEPTED =

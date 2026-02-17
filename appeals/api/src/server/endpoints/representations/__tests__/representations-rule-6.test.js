@@ -66,7 +66,7 @@ describe('Rule 6 Representations', () => {
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith(
 				expect.objectContaining({
 					data: expect.objectContaining({
-						details: `Rule 6 party statement added`,
+						details: `Rule 6 party statement was received`,
 						appealId: 1
 					})
 				})
@@ -114,7 +114,7 @@ describe('Rule 6 Representations', () => {
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith(
 				expect.objectContaining({
 					data: expect.objectContaining({
-						details: `Rule 6 party proof of evidence and witnesses added`,
+						details: `Rule 6 party proof of evidence and witnesses was received`,
 						appealId: 1
 					})
 				})
