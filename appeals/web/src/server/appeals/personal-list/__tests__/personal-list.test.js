@@ -566,6 +566,13 @@ describe('personal-list', () => {
 				}
 			},
 			{
+				name: 'Set up inquiry',
+				requiredAction: 'setupInquiry',
+				expectedHtml: {
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/inquiry/setup/date?backUrl=%2Fappeals-service%2Fpersonal-list">Set up inquiry</a>`
+				}
+			},
+			{
 				name: 'Add inquiry address',
 				requiredAction: 'addInquiryAddress',
 				expectedHtml: {
