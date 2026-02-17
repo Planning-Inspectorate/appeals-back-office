@@ -359,7 +359,7 @@ export function proofOfEvidenceSharePage(appeal, request, backUrl) {
 					return `<a href="${addBackLinkQueryToUrl(
 						request,
 						urlPath
-					)}" class="govuk-link">1 ${proof.organisationName} proof of evidence</a>`;
+					)}" class="govuk-link">${proof.organisationName} proof of evidence</a>`;
 				})
 		: [];
 

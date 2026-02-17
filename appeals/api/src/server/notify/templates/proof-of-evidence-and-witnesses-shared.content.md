@@ -1,4 +1,7 @@
-We have received proof of evidence and witnesses from the {{inquiry_subject_line}} and any other parties.
+We have received proof of evidence and witnesses from:
+{% for party in inquiry_subject_line -%}
+- {{party}}
+{% endfor %}
 
 {% include 'parts/appeal-details.md' %}
 

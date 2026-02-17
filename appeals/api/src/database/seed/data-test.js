@@ -85,7 +85,9 @@ function allocationBandLookup(level) {
  *  validAt?: Date | null,
  *  siteAddressList?: AppealSite[],
  *  assignCaseOfficer: boolean,
- *  agent?: boolean }} param0
+ *  agent?: boolean,
+ *  procedureType?: string | null
+ * }} param0
  * @returns {import('#db-client/models.ts').AppealCreateInput}
  */
 const appealFactory = ({
@@ -96,7 +98,8 @@ const appealFactory = ({
 	validAt = null,
 	siteAddressList = addressesList,
 	assignCaseOfficer = false,
-	agent = true
+	agent = true,
+	procedureType = null
 }) => {
 	const appellantInput = appellantsList[pickRandom(appellantsList)];
 	const agentInput = agentsList[pickRandom(agentsList)];
@@ -114,20 +117,22 @@ const appealFactory = ({
 	const allocation = randomEnumValue(APPEAL_ALLOCATION_LEVEL);
 	const appealTypeKey = typeShorthand || randomEnumValue(APPEAL_CASE_TYPE, false);
 
-	let procedureKey;
+	let procedureKey = procedureType;
 
-	if (appealTypeKey === APPEAL_CASE_TYPE.W) {
-		procedureKey = randomEnumValue(APPEAL_APPELLANT_PROCEDURE_PREFERENCE, false);
-	} else if (appealTypeKey === APPEAL_CASE_TYPE.Y) {
-		procedureKey = randomEnumValue(
-			{
-				HEARING: APPEAL_APPELLANT_PROCEDURE_PREFERENCE.HEARING,
-				WRITTEN: APPEAL_APPELLANT_PROCEDURE_PREFERENCE.WRITTEN
-			},
-			false
-		);
-	} else {
-		procedureKey = APPEAL_APPELLANT_PROCEDURE_PREFERENCE.WRITTEN;
+	if (!procedureKey) {
+		if (appealTypeKey === APPEAL_CASE_TYPE.W) {
+			procedureKey = randomEnumValue(APPEAL_APPELLANT_PROCEDURE_PREFERENCE, false);
+		} else if (appealTypeKey === APPEAL_CASE_TYPE.Y) {
+			procedureKey = randomEnumValue(
+				{
+					HEARING: APPEAL_APPELLANT_PROCEDURE_PREFERENCE.HEARING,
+					WRITTEN: APPEAL_APPELLANT_PROCEDURE_PREFERENCE.WRITTEN
+				},
+				false
+			);
+		} else {
+			procedureKey = APPEAL_APPELLANT_PROCEDURE_PREFERENCE.WRITTEN;
+		}
 	}
 
 	const appeal = {
@@ -552,6 +557,56 @@ const newS78Appeals = [
 		validAt: getPastDate({ months: 10 }),
 		assignCaseOfficer: false,
 		agent: true
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_CASE_TYPE.W,
+		status: { status: APPEAL_CASE_STATUS.EVIDENCE, createdAt: getPastDate({ months: 1 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 3 }),
+		validAt: getPastDate({ months: 4 }),
+		assignCaseOfficer: true,
+		agent: false,
+		procedureType: APPEAL_APPELLANT_PROCEDURE_PREFERENCE.INQUIRY
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_CASE_TYPE.W,
+		status: { status: APPEAL_CASE_STATUS.EVIDENCE, createdAt: getPastDate({ weeks: 2 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 2 }),
+		validAt: getPastDate({ months: 3 }),
+		assignCaseOfficer: true,
+		agent: true,
+		procedureType: APPEAL_APPELLANT_PROCEDURE_PREFERENCE.INQUIRY
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_CASE_TYPE.W,
+		status: { status: APPEAL_CASE_STATUS.EVIDENCE, createdAt: getPastDate({ months: 1 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 3 }),
+		validAt: getPastDate({ months: 4 }),
+		assignCaseOfficer: true,
+		agent: false,
+		procedureType: APPEAL_APPELLANT_PROCEDURE_PREFERENCE.INQUIRY
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_CASE_TYPE.W,
+		status: { status: APPEAL_CASE_STATUS.EVIDENCE, createdAt: getPastDate({ weeks: 3 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 2 }),
+		validAt: getPastDate({ months: 3 }),
+		assignCaseOfficer: true,
+		agent: true,
+		procedureType: APPEAL_APPELLANT_PROCEDURE_PREFERENCE.INQUIRY
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_CASE_TYPE.W,
+		status: { status: APPEAL_CASE_STATUS.EVIDENCE, createdAt: getPastDate({ months: 2 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 4 }),
+		validAt: getPastDate({ months: 5 }),
+		assignCaseOfficer: true,
+		agent: false,
+		procedureType: APPEAL_APPELLANT_PROCEDURE_PREFERENCE.INQUIRY
 	})
 ];
 
@@ -1360,6 +1415,16 @@ export async function seedTestData(databaseConnector) {
 		proofOfEvidence: 0
 	};
 
+	// Create a reusable Rule 6 service user
+	const rule6PartyUser = await databaseConnector.serviceUser.create({
+		data: {
+			firstName: 'Rule',
+			lastName: 'Six',
+			email: 'rule6@example.com',
+			organisationName: 'Rule 6 Org'
+		}
+	});
+
 	for (const { appealTypeId, id, caseStartedDate, lpaId, appellantId } of appeals) {
 		const appealType =
 			appealTypes.filter(({ id }) => id === appealTypeId)[0].key || APPEAL_CASE_TYPE.D;
@@ -1394,6 +1459,18 @@ export async function seedTestData(databaseConnector) {
 					represented: true
 				}
 			});
+
+			// If appeal is in evidence stage, add Rule 6 party and their evidence
+			if (appealStatus.find((s) => s.status === 'evidence')) {
+				await databaseConnector.appealRule6Party.create({
+					data: {
+						appealId: id,
+						serviceUserId: rule6PartyUser.id
+					}
+				});
+
+				await addProofsEvidence(databaseConnector, id, 'rule6', rule6PartyUser.id);
+			}
 
 			await addStatements(databaseConnector, id, lpaId, counters);
 			await addFinalComments(databaseConnector, id, appellantId || 0, lpaId, counters);
@@ -1748,8 +1825,20 @@ async function addFinalComment(databaseConnector, id, source, sourceId) {
  * @param {number} appellantId
  * @param {number} lpaId
  * @param {Object<string, number>} counters
+ * @param {number} [rule6PartyId]
  */
-async function addProofOfEvidence(databaseConnector, id, appellantId, lpaId, counters) {
+async function addProofOfEvidence(
+	databaseConnector,
+	id,
+	appellantId,
+	lpaId,
+	counters,
+	rule6PartyId
+) {
+	if (rule6PartyId) {
+		await addProofsEvidence(databaseConnector, id, 'rule6', rule6PartyId);
+	}
+
 	switch (counters.proofOfEvidence) {
 		case 1:
 			await addProofsEvidence(databaseConnector, id, 'appellant', appellantId);
@@ -1775,12 +1864,13 @@ async function addProofOfEvidence(databaseConnector, id, appellantId, lpaId, cou
 /**
  * @param {import('#db-client/client.ts').PrismaClient} databaseConnector
  * @param {number} id
- * @param {'appellant'|'LPA'} source
+ * @param {'appellant'|'LPA'|'rule6'} source
  * @param {number} sourceId
  */
 async function addProofsEvidence(databaseConnector, id, source, sourceId) {
 	const folder = await databaseConnector.folder.findFirstOrThrow({
 		where: {
+			caseId: id,
 			path: 'representation/representationAttachments'
 		}
 	});
@@ -1795,19 +1885,29 @@ async function addProofsEvidence(databaseConnector, id, source, sourceId) {
 			latestDocumentVersion: true
 		}
 	});
+
+	let documentType;
+	if (source === 'appellant') {
+		documentType = 'appellantProofOfEvidence';
+	} else if (source === 'LPA') {
+		documentType = 'lpaProofOfEvidence';
+	} else {
+		documentType = 'rule6ProofOfEvidence';
+	}
+
 	const documentVersion = await databaseConnector.documentVersion.create({
 		data: {
 			blobStorageContainer: 'document-service-uploads',
 			dateCreated: '2024-03-01T13:48:35.847Z',
 			description: 'Document img2.jpg (001) imported',
 			documentGuid: doc.guid,
-			documentType: 'lpaProofOfEvidence',
+			documentType,
 			draft: false,
 			fileName: 'oimg.jpg',
 			mime: 'image/jpeg',
 			originalFilename: 'oimg.jpg',
 			size: 10293,
-			stage: 'lpa-questionnaire',
+			stage: 'evidence',
 			version: 1
 		},
 		include: {
@@ -1822,6 +1922,16 @@ async function addProofsEvidence(databaseConnector, id, source, sourceId) {
 			latestVersionId: documentVersion.version
 		}
 	});
+
+	let representationType;
+	if (source === 'appellant') {
+		representationType = APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE;
+	} else if (source === 'LPA') {
+		representationType = APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE;
+	} else {
+		representationType = APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE;
+	}
+
 	const representation = await databaseConnector.representation.create({
 		data: {
 			appeal: {
@@ -1829,28 +1939,22 @@ async function addProofsEvidence(databaseConnector, id, source, sourceId) {
 					id
 				}
 			},
-			representationType:
-				source === 'appellant'
-					? APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
-					: APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
+			representationType,
 			originalRepresentation: ``,
-			...(source === 'appellant'
+			...(source === 'appellant' || source === 'rule6'
 				? {
 						represented: {
-							connect: {
-								// @ts-ignore
-								id: sourceId
-							}
+							connect: { id: sourceId }
 						}
 					}
-				: {
+				: {}),
+			...(source === 'LPA'
+				? {
 						lpa: {
-							connect: {
-								// @ts-ignore
-								id: sourceId
-							}
+							connect: { id: sourceId }
 						}
-					})
+					}
+				: {})
 		},
 		include: {
 			represented: true

@@ -658,9 +658,6 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 			return { party, isValid };
 		});
 
-		const areAllRule6Valid = rule6PartiesStatus.every((p) => p.isValid);
-		const allValid = isLpaValid && isAppellantValid && areAllRule6Valid;
-
 		const inquiryDetailWarningText =
 			'The details of the inquiry are subject to change. We will contact you by email if we make any changes.';
 		const inquiryWitnessesText =
@@ -688,81 +685,83 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 			? `You need to attend the inquiry on ${inquiryDate}.`
 			: 'We will contact you by email when we set up the inquiry';
 
-		if (allValid) {
-			const validParties = [];
-			validParties.push({
-				name: 'local planning authority',
-				id: 'lpa'
+		const allParties = [];
+		allParties.push({
+			name: 'local planning authority',
+			id: 'lpa',
+			email: appeal.lpa?.email,
+			isValid: isLpaValid
+		});
+		allParties.push({
+			name: 'appellant',
+			id: 'appellant',
+			email: appeal.agent?.email || appeal.appellant?.email,
+			isValid: isAppellantValid
+		});
+
+		for (const r6 of rule6PartiesStatus) {
+			allParties.push({
+				name: r6.party.serviceUser?.organisationName || 'Rule 6 party',
+				id: r6.party.id,
+				email: r6.party.serviceUser?.email,
+				isValid: r6.isValid,
+				isRule6: true
 			});
-			validParties.push({
-				name: 'appellant',
-				id: 'appellant'
-			});
+		}
 
-			for (const r6 of rule6PartiesStatus) {
-				validParties.push({
-					name: r6.party.serviceUser?.organisationName,
-					id: r6.party.id,
-					isRule6: true
-				});
-			}
+		const submittedParties = allParties.filter((p) => p.isValid);
+		const missingParties = allParties.filter((p) => !p.isValid);
+		const recipients = allParties.filter((p) => p.email);
 
-			const recipients = [];
+		for (const recipient of recipients) {
+			let templateName;
+			let partiesToNotifyAbout;
+			let subjectLine;
+			let templateWhatHappensNext;
+			const othersSubmitted = submittedParties.filter((p) => p.id !== recipient.id);
+			const othersMissing = missingParties.filter((p) => p.id !== recipient.id);
 
-			if (appeal.lpa?.email) {
-				recipients.push({
-					email: appeal.lpa.email,
-					type: 'lpa'
-				});
-			}
+			const isRecipientSubmitted = recipient.isValid;
 
-			const appellantEmail = appeal.agent?.email || appeal.appellant?.email;
-			if (appellantEmail) {
-				recipients.push({
-					email: appellantEmail,
-					type: 'appellant'
-				});
-			}
-
-			for (const { party } of rule6PartiesStatus) {
-				if (party.serviceUser?.email) {
-					recipients.push({
-						email: party.serviceUser.email,
-						type: 'rule6',
-						id: party.id
-					});
+			if (isRecipientSubmitted) {
+				if (othersMissing.length > 0) {
+					templateName = 'not-received-proof-of-evidence-and-witnesses';
+					partiesToNotifyAbout = othersMissing;
+				} else {
+					templateName = 'proof-of-evidence-and-witnesses-shared';
+					partiesToNotifyAbout = othersSubmitted;
+				}
+			} else {
+				if (othersSubmitted.length > 0) {
+					templateName = 'proof-of-evidence-and-witnesses-shared';
+					partiesToNotifyAbout = othersSubmitted;
+				} else {
+					templateName = 'not-received-proof-of-evidence-and-witnesses';
+					partiesToNotifyAbout = othersMissing;
 				}
 			}
 
-			for (const recipient of recipients) {
-				const partiesToNotifyAbout = validParties.filter((party) => {
-					if (recipient.type === 'lpa' && party.id === 'lpa') return false;
-					if (recipient.type === 'appellant' && party.id === 'appellant') return false;
-					if (recipient.type === 'rule6' && party.id === recipient.id) return false;
-					return true;
-				});
+			if (templateName === 'proof-of-evidence-and-witnesses-shared') {
+				subjectLine = partiesToNotifyAbout.map((p) => p.name);
+				templateWhatHappensNext =
+					recipient.id === 'lpa' ? 'manage-appeals' : recipient.isRule6 ? 'rule-6' : 'appeals';
+			} else {
+				const formatter = new Intl.ListFormat('en', { style: 'long', type: 'disjunction' });
+				templateWhatHappensNext = whatHappensNext;
+				const namesList = formatter.format(
+					partiesToNotifyAbout.map((p) => p.name).filter((n) => typeof n === 'string')
+				);
+				subjectLine = `We did not receive any proof of evidence and witnesses from the ${namesList}`;
+			}
 
-				const formatter = new Intl.ListFormat('en', {
-					style: 'long',
-					type: 'conjunction'
-				});
-				const partyNames = partiesToNotifyAbout
-					.map((p) => p.name)
-					.filter(/** @type {(name: any) => name is string} */ (name) => !!name);
-				const partyNamesList = formatter.format(partyNames);
-
+			if (partiesToNotifyAbout.length > 0) {
 				await notifyPublished({
 					appeal,
 					notifyClient,
 					isInquiryProcedure: true,
-					templateName: 'proof-of-evidence-and-witnesses-shared',
+					templateName,
 					recipientEmail: recipient.email,
-					whatHappensNext:
-						recipient.type === 'lpa'
-							? 'manage-appeals'
-							: recipient.type === 'rule6'
-								? 'rule-6'
-								: 'appeals',
+					whatHappensNext: templateWhatHappensNext,
 					azureAdUserId,
 					inquiryDetailWarningText,
 					inquiryWitnessesText,
@@ -770,95 +769,8 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 					inquiryTime,
 					inquiryExpectedDays,
 					inquiryAddress,
-					inquirySubjectLine: partyNamesList
+					inquirySubjectLine: subjectLine
 				});
-			}
-		} else {
-			const missingParties = [];
-			if (!isLpaValid) {
-				missingParties.push({
-					name: 'local planning authority',
-					id: 'lpa'
-				});
-			}
-			if (!isAppellantValid) {
-				missingParties.push({
-					name: 'appellant',
-					id: 'appellant'
-				});
-			}
-
-			for (const failedR6 of rule6PartiesStatus.filter((r) => !r.isValid)) {
-				missingParties.push({
-					name: failedR6.party.serviceUser?.organisationName,
-					id: failedR6.party.id,
-					isRule6: true
-				});
-			}
-
-			const recipients = [];
-
-			if (appeal.lpa?.email) {
-				recipients.push({
-					email: appeal.lpa.email,
-					type: 'lpa'
-				});
-			}
-
-			const appellantEmail = appeal.agent?.email || appeal.appellant?.email;
-			if (appellantEmail) {
-				recipients.push({
-					email: appellantEmail,
-					type: 'appellant'
-				});
-			}
-
-			for (const { party } of rule6PartiesStatus) {
-				if (party.serviceUser?.email) {
-					recipients.push({
-						email: party.serviceUser.email,
-						type: 'rule6',
-						id: party.id
-					});
-				}
-			}
-
-			for (const recipient of recipients) {
-				const partiesToNotifyAbout = missingParties.filter((party) => {
-					if (recipient.type === 'lpa' && party.id === 'lpa') return false;
-					if (recipient.type === 'appellant' && party.id === 'appellant') return false;
-					if (recipient.type === 'rule6' && party.id === recipient.id) return false;
-					return true;
-				});
-
-				if (partiesToNotifyAbout.length > 0) {
-					const formatter = new Intl.ListFormat('en', {
-						style: 'long',
-						type: 'disjunction'
-					});
-					const partyNames = partiesToNotifyAbout
-						.map((p) => p.name)
-						.filter(/** @type {(name: any) => name is string} */ (name) => !!name);
-					const partyNamesList = formatter.format(partyNames);
-					const subject = `We did not receive any proof of evidence and witnesses from the ${partyNamesList}`;
-
-					await notifyPublished({
-						appeal,
-						notifyClient,
-						isInquiryProcedure: true,
-						templateName: 'not-received-proof-of-evidence-and-witnesses',
-						recipientEmail: recipient.email,
-						whatHappensNext,
-						azureAdUserId,
-						inquiryDetailWarningText,
-						inquiryWitnessesText,
-						inquiryDate,
-						inquiryTime,
-						inquiryExpectedDays,
-						inquiryAddress,
-						inquirySubjectLine: subject
-					});
-				}
 			}
 		}
 	} catch (error) {
@@ -883,7 +795,7 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
  * @property {boolean} [isHearingProcedure]
  * @property {boolean} [isInquiryProcedure]
  * @property {string} [statementUrl]
- * @property {string} [inquirySubjectLine]
+ * @property {string | string[]} [inquirySubjectLine]
  * @property {string} [userTypeNoCommentSubmitted]
  * @property {string} azureAdUserId
  * @property {string} [inquiryDetailWarningText]
