@@ -5,7 +5,6 @@ import { dateInput } from '#lib/mappers/components/page-components/date.js';
 import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
 import { timeInput } from '#lib/mappers/components/page-components/time.js';
 import { addressInputs } from '#lib/mappers/index.js';
-import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addQueryParamsToUrl, preserveQueryString } from '#lib/url-utilities.js';
 import { capitalize } from 'lodash-es';
 
@@ -57,75 +56,6 @@ export function hearingDatePage(appealData, values, backLinkUrl, options = {}) {
 	};
 
 	return pageContent;
-}
-
-/**
- * @param {Appeal} appealData
- * @param {'change' | 'setup'} action
- * @param {string} backLinkUrl
- * @param {import("@pins/express").ValidationErrors | undefined} errors
- * @param {Record<string, string>} [values]
- * @returns {PageContent}
- */
-export function hearingEstimationPage(appealData, action, backLinkUrl, errors, values) {
-	const shortAppealReference = appealShortReference(appealData.appealReference);
-
-	/** @type {PageComponent} */
-	const hearingEstimationComponent = {
-		type: 'radios',
-		parameters: {
-			idPrefix: 'hearing-estimation-yes-no',
-			name: 'hearingEstimationYesNo',
-			fieldset: {
-				legend: {
-					text: 'Do you know the expected number of days to carry out the hearing?',
-					isPageHeading: true,
-					classes: 'govuk-fieldset__legend--l'
-				}
-			},
-			items: [
-				{
-					value: 'yes',
-					text: 'Yes',
-					checked: values?.hearingEstimationYesNo === 'yes',
-					conditional: {
-						html: renderPageComponentsToHtml([
-							{
-								type: 'input',
-								parameters: {
-									id: 'hearing-estimation-days',
-									name: 'hearingEstimationDays',
-									value: values?.hearingEstimationDays,
-									...(errors && { errorMessage: { text: errors.msg } }),
-									label: {
-										text: 'Expected number of days to carry out the hearing',
-										classes: 'govuk-label--s'
-									},
-									suffix: {
-										text: 'Days'
-									},
-									classes: 'govuk-input--width-3'
-								}
-							}
-						])
-					}
-				},
-				{
-					value: 'no',
-					text: 'No',
-					checked: values?.hearingEstimationYesNo === 'no'
-				}
-			]
-		}
-	};
-
-	return {
-		title: `Appeal - ${shortAppealReference} ${action === 'setup' ? 'start' : 'update'} case`,
-		backLinkUrl,
-		preHeading: `Appeal ${shortAppealReference} - ${action === 'setup' ? 'set up' : 'change'} hearing`,
-		// @ts-ignore
-		pageComponents: [hearingEstimationComponent, errors]
-	};
 }
 
 /**
@@ -184,7 +114,7 @@ export function addressDetailsPage(appealData, values, errors, backLinkUrl) {
 
 /**
  * @param {Appeal} appealData
- * @param {{ hearingDateTime?: string, hearingEstimationYesNo?: string, hearingEstimationDays?: string, addressKnown?: string, address?: Address }} values
+ * @param {{ hearingDateTime?: string, addressKnown?: string, address?: Address }} values
  * @param {string} action
  * @param {import('@pins/express').Request} request
  * @returns {PageContent}
@@ -237,7 +167,7 @@ export function checkDetailsPage(appealData, values, action, request) {
 		},
 		{
 			key: { text: 'Do you know the address of where the hearing will take place?' },
-			value: { text: capitalize(values.addressKnown || '') },
+			value: { text: capitalize(values.addressKnown) },
 			actions: {
 				items: [
 					{
@@ -252,44 +182,6 @@ export function checkDetailsPage(appealData, values, action, request) {
 			}
 		}
 	];
-
-	if (values.hearingEstimationYesNo !== undefined) {
-		rows.splice(2, 0, {
-			key: { text: 'Do you know the expected number of days to carry out the hearing?' },
-			value: { text: capitalize(values.hearingEstimationYesNo || '') },
-			actions: {
-				items: [
-					{
-						text: 'Change',
-						href: editLink('estimation'),
-						visuallyHiddenText: 'Whether the expected number of days is known or not',
-						attributes: {
-							'data-cy': 'change-hearing-expected-number-of-days'
-						}
-					}
-				]
-			}
-		});
-	}
-
-	if (values.hearingEstimationYesNo === 'yes') {
-		rows.splice(3, 0, {
-			key: { text: 'Expected number of days to carry out the hearing' },
-			value: { text: `${values.hearingEstimationDays} days` },
-			actions: {
-				items: [
-					{
-						text: 'Change',
-						href: editLink('estimation'),
-						visuallyHiddenText: 'Expected number of days',
-						attributes: {
-							'data-cy': 'change-hearing-estimation-days'
-						}
-					}
-				]
-			}
-		});
-	}
 
 	if (values.addressKnown === 'yes' && values.address) {
 		rows.push({

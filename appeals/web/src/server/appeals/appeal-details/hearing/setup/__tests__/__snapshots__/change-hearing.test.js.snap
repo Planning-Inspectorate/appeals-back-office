@@ -35,9 +35,8 @@ exports[`change hearing GET /hearing/change/address should match the snapshot 1`
                     <span                     class="govuk-phase-banner__text">This is a new service. Help us improve it and <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzNVQjdaV0U0TDdTOE1LNktBT0w5NEQ1Vy4u"
                         class="govuk-link" target="_blank" rel="noopener noreferrer">give your feedback (opens in a new tab)</a>.</span>
                 </p>
-            </div><a href="/appeals-service/appeal-details/2/hearing/change/estimation"
-            class="govuk-back-link">Back</a>
-            <main class="govuk-main-wrapper" id="main-content">
+            </div><a href="/appeals-service/appeal-details/2/hearing/change/date" class="govuk-back-link">Back</a>
+            <main             class="govuk-main-wrapper" id="main-content">
                 <div class="govuk-grid-row">
                     <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - set up hearing</span>
                     </div>
@@ -73,7 +72,7 @@ exports[`change hearing GET /hearing/change/address should match the snapshot 1`
                         </div>
                     </div>
                 </div>
-            </main>
+                </main>
         </div>
         <footer class="govuk-footer" role="contentinfo">
             <div class="govuk-width-container ">
