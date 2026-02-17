@@ -64,7 +64,7 @@ export const appealsApiClient = {
 				id: responseBody.id
 			};
 		} catch (error) {
-			console.error('Error making API call:', error);
+			cy.writeLog('Error making case submission:', error);
 			throw error;
 		}
 	},
@@ -95,8 +95,8 @@ export const appealsApiClient = {
 
 			return responseBody.reference;
 		} catch (error) {
-			console.error('Error making API call:', error);
-			throw error;
+			cy.writeLog(`Error submitting LPAQ for ${reference}:`, error);
+			return false;
 		}
 	},
 	async appellantStatementSubmission(reference) {
@@ -124,7 +124,8 @@ export const appealsApiClient = {
 			});
 
 			return await response.json();
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error submitting appellant statement for ${reference}:`, error);
 			return false;
 		}
 	},
@@ -153,7 +154,8 @@ export const appealsApiClient = {
 			expect(responseBody.representationType).to.contain(submission.representationType);
 
 			return responseBody;
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error adding representation for ${reference}:`, error);
 			return false;
 		}
 	},
@@ -174,7 +176,8 @@ export const appealsApiClient = {
 			expect(responseBody).to.be.true;
 
 			return responseBody;
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error simulating site visit elapsed for ${reference}:`, error);
 			return false;
 		}
 	},
@@ -196,7 +199,8 @@ export const appealsApiClient = {
 			expect(responseBody).to.be.true;
 
 			return responseBody;
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error simulating hearing elapsed for ${reference}:`, error);
 			return false;
 		}
 	},
@@ -217,7 +221,8 @@ export const appealsApiClient = {
 			expect(responseBody).to.be.true;
 
 			return responseBody;
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error simulating proof of evidence elapsed for ${reference}:`, error);
 			return false;
 		}
 	},
@@ -239,7 +244,8 @@ export const appealsApiClient = {
 			expect(responseBody).to.be.true;
 
 			return responseBody;
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error simulating inquiry elapsed for ${reference}:`, error);
 			return false;
 		}
 	},
@@ -259,7 +265,8 @@ export const appealsApiClient = {
 			expect(responseBody).to.be.true;
 
 			return responseBody;
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error simulating statements elapsed for ${reference}:`, error);
 			return false;
 		}
 	},
@@ -278,7 +285,8 @@ export const appealsApiClient = {
 			expect(responseBody).to.be.true;
 
 			return responseBody;
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error simulating final comments elapsed for ${reference}:`, error);
 			return false;
 		}
 	},
@@ -295,7 +303,8 @@ export const appealsApiClient = {
 
 			expect(response.status).eq(200);
 			return true;
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error simulating document scan complete for ${reference}:`, error);
 			return false;
 		}
 	},
@@ -320,7 +329,7 @@ export const appealsApiClient = {
 
 			return responseBody;
 		} catch (error) {
-			console.error(`Failed to load case details for ${reference}:`, error);
+			cy.writeLog(`Failed to load case details for ${reference}:`, error);
 			return false;
 		}
 	},
@@ -346,7 +355,8 @@ export const appealsApiClient = {
 			expect(dateObj.toISOString()).to.equal(responseBody);
 
 			return responseBody;
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error getting business date for ${date}:`, error);
 			return false;
 		}
 	},
@@ -367,7 +377,8 @@ export const appealsApiClient = {
 			expect(responseBody).to.be.an('array').with.length.greaterThan(0);
 
 			return responseBody;
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error getting specialisms:`, error);
 			return false;
 		}
 	},
@@ -399,7 +410,8 @@ export const appealsApiClient = {
 				.that.includes.all.keys('selectedLevel', 'specialisms');
 
 			return responseBody;
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error updating allocation for appeal ${appealId}:`, error);
 			return false;
 		}
 	},
@@ -437,7 +449,8 @@ export const appealsApiClient = {
 			});
 
 			return await response.json();
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error adding hearing for appeal ${appealId}:`, error);
 			return false;
 		}
 	},
@@ -462,7 +475,8 @@ export const appealsApiClient = {
 			});
 
 			return await response.json();
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error deleting hearing for appeal ${appealId}:`, error);
 			return false;
 		}
 	},
@@ -489,7 +503,8 @@ export const appealsApiClient = {
 			cy.writeLog(`** response from notify-emails-sent  ${JSON.stringify(sentNotifies)}`);
 
 			return responsejson;
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error getting notify emails for appeal ${reference}:`, error);
 			return false;
 		}
 	},
@@ -507,7 +522,11 @@ export const appealsApiClient = {
 			});
 			expect(response.status).eq(200);
 			return await response.json();
-		} catch {
+		} catch (error) {
+			cy.writeLog(
+				`Error updating appeal cases for appeal ${appealId}, appellant case ${appellantCaseId}:`,
+				error
+			);
 			return false;
 		}
 	},
@@ -525,7 +544,11 @@ export const appealsApiClient = {
 			});
 			expect(response.status).eq(200);
 			return await response.json();
-		} catch {
+		} catch (error) {
+			cy.writeLog(
+				`Error updating timetable for appeal ${appealId}, timetable ${timeTableId}:`,
+				error
+			);
 			return false;
 		}
 	},
@@ -564,7 +587,8 @@ export const appealsApiClient = {
 
 			expect(response.status).eq(201);
 			return await response.json();
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error adding inquiry for appeal ${appealId}:`, error);
 			return false;
 		}
 	},
@@ -586,7 +610,8 @@ export const appealsApiClient = {
 			expect(responseBody.origin).to.equal('lpa');
 			expect(responseBody.status).to.equal('valid');
 			expect(responseBody.representationType).to.equal('lpa_statement');
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error reviewing LPA statement for appeal ${reference}:`, error);
 			return false;
 		}
 	},
@@ -608,7 +633,8 @@ export const appealsApiClient = {
 			expect(responseBody.origin).to.equal('citizen');
 			expect(responseBody.status).to.equal('valid');
 			expect(responseBody.representationType).to.equal('comment');
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error reviewing IP comments for appeal ${reference}:`, error);
 			return false;
 		}
 	},
@@ -623,7 +649,8 @@ export const appealsApiClient = {
 				}
 			});
 			expect(response.status).eq(200);
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error sharing comments and statements for appeal ${reference}:`, error);
 			return false;
 		}
 	},
@@ -639,7 +666,8 @@ export const appealsApiClient = {
 				}
 			});
 			expect(response.status).eq(200);
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error reviewing appellant final comments for appeal ${reference}:`, error);
 			return false;
 		}
 	},
@@ -655,7 +683,8 @@ export const appealsApiClient = {
 				}
 			});
 			expect(response.status).eq(200);
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error reviewing LPA final comments for appeal ${reference}:`, error);
 			return false;
 		}
 	},
@@ -681,7 +710,8 @@ export const appealsApiClient = {
 				'visitEndTime',
 				'visitType'
 			]);
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error setting up site visit for appeal ${reference}:`, error);
 			return false;
 		}
 	},
@@ -697,7 +727,8 @@ export const appealsApiClient = {
 				}
 			});
 			expect(response.status).eq(201);
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error issuing decision for appeal ${reference}:`, error);
 			return false;
 		}
 	},
@@ -718,7 +749,8 @@ export const appealsApiClient = {
 
 			expect(responseBody).to.be.an('object');
 			expect(responseBody).to.have.keys(['appealId', 'hearingStartTime', 'hearingEndTime']);
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error setting up hearing for appeal ${reference}:`, error);
 			return false;
 		}
 	},
@@ -748,7 +780,8 @@ export const appealsApiClient = {
 			expect(responseBody).to.have.keys(['preparationTime', 'sittingTime', 'reportingTime']);
 
 			return await response.json();
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error adding estimate for appeal ${appealId}:`, error);
 			return false;
 		}
 	},
@@ -765,7 +798,11 @@ export const appealsApiClient = {
 			});
 			expect(response.status).eq(200);
 			return await response.json();
-		} catch {
+		} catch (error) {
+			cy.writeLog(
+				`Error deleting estimate for appeal ${appealId}, procedure type ${procedureType}:`,
+				error
+			);
 			return false;
 		}
 	},
@@ -793,12 +830,13 @@ export const appealsApiClient = {
 			});
 
 			return await response.json();
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error assigning case officer for appeal ${appealId}:`, error);
 			return false;
 		}
 	},
 
-	async deleteAppeals(appealId) {
+	async deleteAppeals(appealIds) {
 		try {
 			const url = `${baseUrl}appeals/delete-appeals`;
 			const response = await fetch(url, {
@@ -808,11 +846,12 @@ export const appealsApiClient = {
 					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 				},
 				body: JSON.stringify({
-					appealIds: appealId
+					appealIds
 				})
 			});
 			expect(response.status).eq(200);
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error deleting appeals with IDs ${appealIds.toString()}:`, error);
 			return false;
 		}
 	},
@@ -828,7 +867,8 @@ export const appealsApiClient = {
 				}
 			});
 			expect(response.status).eq(201);
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error starting appeal ${appealReference}:`, error);
 			return false;
 		}
 	},
@@ -848,7 +888,8 @@ export const appealsApiClient = {
 				})
 			});
 			expect(response.status).eq(201);
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error linking appeals ${leadAppeaId} and ${childAppealId}:`, error);
 			return false;
 		}
 	},
@@ -866,7 +907,8 @@ export const appealsApiClient = {
 			expect(response.status).eq(200);
 			const body = await response.json();
 			expect(body.validationOutcome.name).eq('Complete');
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error reviewing LPAQ for appeal ${appealReference}:`, error);
 			return false;
 		}
 	},
@@ -897,7 +939,8 @@ export const appealsApiClient = {
 			expect(responseBody.appealId).to.deep.equal(appealId);
 
 			return responseBody;
-		} catch {
+		} catch (error) {
+			cy.writeLog(`Error adding rule 6 party for appeal ${appealId}:`, error);
 			return false;
 		}
 	}

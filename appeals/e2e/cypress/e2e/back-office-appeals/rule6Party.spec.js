@@ -478,7 +478,7 @@ it('add a rule 6 POE', () => {
 
 	caseDetailsPage.validateBannerMessage(
 		'Success',
-		'Rule 6 party proof of evidence and witnesses added'
+		`${organisationName} proof of evidence and witnesses added`
 	);
 });
 
@@ -507,7 +507,7 @@ it('should mark rule 6 POE complete', () => {
 		// Todo: Bug - Rule 6 POE success banner shows generic 'Rule 6 party' text instead of the party name (A2-6823)
 		caseDetailsPage.validateBannerMessage(
 			'Success',
-			`Rule 6 party proof of evidence and witnesses accepted`
+			`${rule6Party.serviceUser.organisationName} proof of evidence and witnesses accepted`
 		);
 	});
 
