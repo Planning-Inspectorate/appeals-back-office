@@ -17,7 +17,8 @@ import {
 	addressDetailsPage,
 	addressKnownPage,
 	checkDetailsPage,
-	hearingDatePage
+	hearingDatePage,
+	hearingEstimationPage
 } from './set-up-hearing.mapper.js';
 
 /**
@@ -140,7 +141,7 @@ export const postHearingDate = async (request, response) => {
 	return response.redirect(
 		preserveQueryString(
 			request,
-			`/appeals-service/appeal-details/${appealId}/hearing/setup/address`
+			`/appeals-service/appeal-details/${appealId}/hearing/setup/estimation`
 		)
 	);
 };
@@ -156,6 +157,111 @@ export const postChangeHearingDate = async (request, response) => {
 			? sessionValuesToDateTime(sessionValues)
 			: request.currentAppeal.hearing;
 		return renderHearingDate(request, response, values, 'change');
+	}
+
+	const { appealId } = request.currentAppeal;
+
+	return response.redirect(
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/hearing/change/estimation`
+		)
+	);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getHearingEstimation = async (request, response) => {
+	const sessionValues = getSessionValues(request, 'setUpHearing');
+	return renderHearingEstimation(request, response, 'setup', sessionValues || {});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getChangeHearingEstimation = async (request, response) => {
+	const sessionValues = getSessionValues(request, 'changeHearing');
+	const values = has(sessionValues, 'hearingEstimationYesNo')
+		? sessionValues
+		: {
+				hearingEstimationYesNo: request.currentAppeal.hearing?.estimatedDays ? 'yes' : 'no',
+				...(request.currentAppeal.hearing?.estimatedDays && {
+					hearingEstimationDays: String(request.currentAppeal.hearing?.estimatedDays)
+				})
+			};
+	return renderHearingEstimation(request, response, 'change', values);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {'change' | 'setup'} action
+ * @param {Record<string, string>} [values]
+ */
+export const renderHearingEstimation = async (request, response, action, values) => {
+	const { errors } = request;
+
+	const appealDetails = request.currentAppeal;
+	const { appealId } = appealDetails;
+	const backLinkUrl = getBackLinkUrl(
+		request,
+		`/appeals-service/appeal-details/${appealId}/hearing/${action}/date`,
+		`/appeals-service/appeal-details/${appealId}/hearing/${action}/check-details`
+	);
+
+	const mappedPageContent = hearingEstimationPage(
+		appealDetails,
+		action,
+		backLinkUrl,
+		errors,
+		values
+	);
+
+	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postHearingEstimation = async (request, response) => {
+	if (request.errors) {
+		return renderHearingEstimation(
+			request,
+			response,
+			'setup',
+			getSessionValues(request, 'setUpHearing')
+		);
+	}
+
+	const { appealId } = request.currentAppeal;
+
+	return response.redirect(
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/hearing/setup/address`
+		)
+	);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postChangeHearingEstimation = async (request, response) => {
+	if (request.errors) {
+		return renderHearingEstimation(
+			request,
+			response,
+			'change',
+			getSessionValues(request, 'changeHearing')
+		);
 	}
 
 	const { appealId } = request.currentAppeal;
@@ -209,7 +315,7 @@ export const renderHearingAddress = (request, response, action, values) => {
 	const { appealId } = appealDetails;
 	const backLinkUrl = getBackLinkUrl(
 		request,
-		`/appeals-service/appeal-details/${appealId}/hearing/${action}/date`,
+		`/appeals-service/appeal-details/${appealId}/hearing/${action}/estimation`,
 		`/appeals-service/appeal-details/${appealId}/hearing/${action}/check-details`
 	);
 
@@ -407,6 +513,8 @@ export const getHearingCheckDetails = async (request, response) => {
 				hour: values['hearing-time-hour'],
 				minute: values['hearing-time-minute']
 			}),
+			hearingEstimationYesNo: values.hearingEstimationYesNo,
+			hearingEstimationDays: values.hearingEstimationDays,
 			addressKnown: values.addressKnown,
 			address: pick(values, ['addressLine1', 'addressLine2', 'town', 'county', 'postCode'])
 		},
@@ -465,6 +573,14 @@ export const getChangeHearingCheckDetails = async (request, response) => {
 				values,
 				request.currentAppeal.hearing?.hearingStartTime
 			),
+			hearingEstimationYesNo:
+				values.hearingEstimationYesNo ??
+				(request.currentAppeal.hearing?.estimatedDays ? 'yes' : undefined),
+			hearingEstimationDays:
+				values.hearingEstimationDays ??
+				(request.currentAppeal.hearing?.estimatedDays
+					? String(request.currentAppeal.hearing?.estimatedDays)
+					: undefined),
 			addressKnown: values.addressKnown ?? 'yes', // if unset then we went straight to the address details page which implies 'yes'
 			address: pick(values, ['addressLine1', 'addressLine2', 'town', 'county', 'postCode'])
 		},
@@ -503,6 +619,9 @@ export const postHearingCheckDetails = async (request, response) => {
 				year: hearing['hearing-date-year'],
 				hour: hearing['hearing-time-hour'],
 				minute: hearing['hearing-time-minute']
+			}),
+			...(hearing.hearingEstimationYesNo === 'yes' && {
+				estimatedDays: hearing.hearingEstimationDays
 			}),
 			...(hearing.addressKnown === 'yes' && submittedAddress)
 		});
@@ -549,6 +668,9 @@ export const postChangeHearingCheckDetails = async (request, response) => {
 	try {
 		await updateHearing(request, request.currentAppeal.hearing.hearingId, {
 			hearingStartTime: hearingStartTimeForUpdate(sessionData, hearing.hearingStartTime),
+			...(sessionData.hearingEstimationYesNo === 'yes' && {
+				estimatedDays: sessionData.hearingEstimationDays
+			}),
 			address
 		});
 

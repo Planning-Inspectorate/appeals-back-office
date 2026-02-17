@@ -20,8 +20,9 @@ import { detailsComponent } from '#lib/mappers/components/page-components/detail
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
+import { capitalize } from 'lodash-es';
 import { getStartCaseNotifyPreviews, setStartDate } from '../start-case.service.js';
-import { dateKnownPage } from './hearing.mapper.js';
+import { dateKnownPage, estimationPage } from './hearing.mapper.js';
 
 /** @typedef {import('@pins/express').ValidationErrors} ValidationErrors */
 
@@ -84,9 +85,8 @@ export const postHearingDateKnown = async (request, response) => {
 		return response.redirect(preserveQueryString(request, `${baseUrl}/date`));
 	}
 
-	// Answer was no so we apply any edits and proceed to CYA page
-	applyEdits(request, 'startCaseAppealProcedure');
-	return response.redirect(`${baseUrl}/confirm`);
+	// Answer was no so we skip date and proceed to estimation
+	return response.redirect(preserveQueryString(request, `${baseUrl}/estimation`));
 };
 
 /**
@@ -138,6 +138,58 @@ export const postHearingDate = async (request, response) => {
 
 	const { appealId } = request.currentAppeal;
 
+	return response.redirect(
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/start-case/hearing/estimation`
+		)
+	);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getHearingEstimation = async (request, response) => {
+	return renderHearingEstimation(request, response);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const renderHearingEstimation = async (request, response) => {
+	const { errors } = request;
+	const appealDetails = request.currentAppeal;
+	const sessionValues = getSessionValuesForAppeal(
+		request,
+		'startCaseAppealProcedure',
+		appealDetails.appealId
+	);
+	const backLinkUrl = getBackLinkUrl(
+		request,
+		sessionValues?.dateKnown === 'yes' ? 'hearing/date' : 'hearing'
+	);
+
+	const mappedPageContent = estimationPage(appealDetails, backLinkUrl, errors, sessionValues || {});
+
+	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postHearingEstimation = async (request, response) => {
+	if (request.errors) {
+		return renderHearingEstimation(request, response);
+	}
+
+	const { appealId } = request.currentAppeal;
+
 	applyEdits(request, 'startCaseAppealProcedure');
 
 	return response.redirect(
@@ -170,9 +222,12 @@ export const getHearingConfirm = async (request, response) => {
 		currentAppeal.appealId
 	);
 	const dateKnown = sessionValues?.dateKnown === 'yes';
+	const hearingEstimationYesNo = sessionValues?.hearingEstimationYesNo;
+	const hearingEstimationDays = sessionValues?.hearingEstimationDays;
 	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/start-case`;
-	const backLinkUrl = dateKnown ? `${baseUrl}/hearing/date` : `${baseUrl}/hearing`;
+	const backLinkUrl = `${baseUrl}/hearing/estimation`;
 	const hearingStartTime = hearingStartTimeFromSession(sessionValues);
+	const hearingEstimatedDays = hearingEstimationYesNo === 'yes' ? hearingEstimationDays : undefined;
 
 	const errorMessage = 'Failed to generate email preview';
 
@@ -186,7 +241,8 @@ export const getHearingConfirm = async (request, response) => {
 			currentAppeal.appealId,
 			undefined,
 			sessionValues?.appealProcedure,
-			dateKnown ? hearingStartTime : undefined
+			dateKnown ? hearingStartTime : undefined,
+			hearingEstimatedDays
 		);
 		appellantPreview = result.appellant || '';
 		lpaPreview = result.lpa || '';
@@ -253,6 +309,35 @@ export const getHearingConfirm = async (request, response) => {
 								}
 							}
 						}
+					: {}),
+				'Do you know the expected number of days to carry out the hearing?': {
+					value: capitalize(hearingEstimationYesNo || ''),
+					actions: {
+						Change: {
+							href: editLink(baseUrl, 'hearing/estimation'),
+							visuallyHiddenText:
+								'Do you know the expected number of days to carry out the hearing?',
+							attributes: {
+								'data-cy': 'change-hearing-estimation-known'
+							}
+						}
+					}
+				},
+				...(hearingEstimationYesNo === 'yes'
+					? {
+							'Expected number of days to carry out the hearing': {
+								value: hearingEstimationDays || '',
+								actions: {
+									Change: {
+										href: editLink(baseUrl, 'hearing/estimation'),
+										visuallyHiddenText: 'Expected number of days to carry out the hearing',
+										attributes: {
+											'data-cy': 'change-hearing-estimation-days'
+										}
+									}
+								}
+							}
+						}
 					: {})
 			},
 			after: [
@@ -294,6 +379,11 @@ export const postHearingConfirm = async (request, response) => {
 			return response.status(500).render('app/500.njk');
 		}
 
+		const hearingEstimatedDays =
+			sessionValues?.hearingEstimationYesNo === 'yes'
+				? sessionValues?.hearingEstimationDays
+				: undefined;
+
 		const hearingStartTime =
 			sessionValues?.dateKnown === 'yes' ? hearingStartTimeFromSession(sessionValues) : undefined;
 
@@ -302,7 +392,8 @@ export const postHearingConfirm = async (request, response) => {
 			appealId,
 			getTodaysISOString(),
 			sessionValues?.appealProcedure,
-			hearingStartTime
+			hearingStartTime,
+			hearingEstimatedDays
 		);
 
 		addNotificationBannerToSession({
