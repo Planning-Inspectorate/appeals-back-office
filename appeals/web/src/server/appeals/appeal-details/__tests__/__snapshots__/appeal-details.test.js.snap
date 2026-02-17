@@ -456,6 +456,12 @@ exports[`appeal-details GET /:appealId Hearing should render no change links for
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
             <dd class="govuk-summary-list__value">1:00pm</dd>
         </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the estimated number of days needed to carry out the hearing?</dt>
+            <dd             class="govuk-summary-list__value">Yes</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Estimated number of days needed to carry out hearing</dt>
+            <dd             class="govuk-summary-list__value">6 Days</dd>
+        </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the hearing will take place?</dt>
             <dd             class="govuk-summary-list__value">Yes</dd>
         </div>
@@ -539,6 +545,12 @@ exports[`appeal-details GET /:appealId Hearing should render the cancel hearing 
                 data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
             </dd>
         </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the estimated number of days needed to carry out the hearing?</dt>
+            <dd             class="govuk-summary-list__value">No</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/change/estimation?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
+                    data-cy="change-whether-the-estimated-number-of-days-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the estimated number of days is known or not</span></a>
+                </dd>
+        </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the hearing will take place?</dt>
             <dd             class="govuk-summary-list__value">No</dd>
                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/change/address?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
@@ -568,6 +580,18 @@ exports[`appeal-details GET /:appealId Hearing should render the hearing details
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/change/date?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                 data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
             </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the estimated number of days needed to carry out the hearing?</dt>
+            <dd             class="govuk-summary-list__value">Yes</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/change/estimation?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
+                    data-cy="change-whether-the-estimated-number-of-days-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the estimated number of days is known or not</span></a>
+                </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Estimated number of days needed to carry out hearing</dt>
+            <dd             class="govuk-summary-list__value">6 Days</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/change/estimation?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
+                    data-cy="change-estimated-days">Change<span class="govuk-visually-hidden"> Estimated Days</span></a>
+                </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the hearing will take place?</dt>
             <dd             class="govuk-summary-list__value">Yes</dd>
@@ -608,6 +632,12 @@ exports[`appeal-details GET /:appealId Hearing should render the hearing details
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/change/date?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                 data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
             </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the estimated number of days needed to carry out the hearing?</dt>
+            <dd             class="govuk-summary-list__value">No</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/change/estimation?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
+                    data-cy="change-whether-the-estimated-number-of-days-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the estimated number of days is known or not</span></a>
+                </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the hearing will take place?</dt>
             <dd             class="govuk-summary-list__value">No</dd>

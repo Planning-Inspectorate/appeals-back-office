@@ -31,7 +31,9 @@ Due by {{planning_obligation_deadline}}.
 
 ^Date: {{hearing_date}}
 Time: {{hearing_time}}
-
+{% if hearing_expected_days -%}
+Expected days: {{hearing_expected_days}}
+{% endif %}
 We will contact you if we make any changes to the hearing.
 
 # What happens next

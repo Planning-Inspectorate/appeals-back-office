@@ -1510,6 +1510,11 @@ export const spec = {
 					description: 'Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
 					example: '2014-11-14T00:00:00+00:00'
 				},
+				estimatedDays: {
+					type: 'number',
+					description: 'Estimated number of days',
+					example: 5
+				},
 				addressId: {
 					type: 'number',
 					example: 1

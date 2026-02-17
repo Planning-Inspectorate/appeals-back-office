@@ -2984,6 +2984,11 @@ export interface HearingResponse {
 	 * @example "2014-11-14T00:00:00+00:00"
 	 */
 	hearingEndTime?: string;
+	/**
+	 * Estimated number of days
+	 * @example 5
+	 */
+	estimatedDays?: number;
 	/** @example 1 */
 	addressId?: number;
 	address?: {
