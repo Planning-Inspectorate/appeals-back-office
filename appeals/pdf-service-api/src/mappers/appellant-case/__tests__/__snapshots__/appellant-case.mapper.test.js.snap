@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`mapAppellantCaseData should map advert LPA questionnaire data correctly 1`] = `
+exports[`mapAppellantCaseData appellantCase should map appellant case data for a advert appeal 1`] = `
 {
   "details": {
     "appealReference": "6000111",
@@ -213,7 +213,199 @@ exports[`mapAppellantCaseData should map advert LPA questionnaire data correctly
 }
 `;
 
-exports[`mapAppellantCaseData should map appellant case data for a householder appeal 1`] = `
+exports[`mapAppellantCaseData appellantCase should map appellant case data for a cas advert appeal 1`] = `
+{
+  "details": {
+    "appealReference": "6000101",
+    "appealSite": {
+      "addressId": 101,
+      "addressLine1": "72 Clapham High St",
+      "county": "Wandsworth",
+      "postCode": "SW4 7UL",
+    },
+    "localPlanningDepartment": "Barnsley Metropolitan Borough Council",
+  },
+  "sections": [
+    {
+      "heading": "Before you start",
+      "items": [
+        {
+          "html": "Barnsley Metropolitan Borough Council",
+          "key": "Local planning authority",
+        },
+        {
+          "key": "What type of application is your appeal about?",
+          "text": "Displaying an advertisement",
+        },
+        {
+          "key": "Was your application granted or refused?",
+          "text": "Refused",
+        },
+        {
+          "key": "What’s the date on the decision letter from the local planning authority?",
+          "text": "11 October 2025",
+        },
+        {
+          "key": "What is the application reference number?",
+          "text": "66185/APP/3/536099",
+        },
+      ],
+    },
+    {
+      "heading": "Appellant details",
+      "items": [
+        {
+          "html": "Bob Ross<br />test8@example.com",
+          "key": "Appellant details",
+        },
+        {
+          "html": "Bob Ross<br />test8@example.com",
+          "key": "Agent details",
+        },
+      ],
+    },
+    {
+      "heading": "Site details",
+      "items": [
+        {
+          "html": "72 Clapham High St, Wandsworth, SW4 7UL",
+          "key": "What is the address of the appeal site?",
+        },
+        {
+          "key": "What is the area of the appeal site?",
+          "text": "30.9 m²",
+        },
+        {
+          "key": "Is the appeal site on highway land?",
+          "text": "Yes",
+        },
+        {
+          "key": "Is the advertisement in position?",
+          "text": "No",
+        },
+        {
+          "key": "Is the appeal site in a green belt?",
+          "text": "Yes",
+        },
+        {
+          "key": "Does the appellant own all of the land involved in the appeal?",
+          "text": "Fully owned",
+        },
+        {
+          "key": "Does the appellant know who owns the land involved in the appeal?",
+          "text": "Some",
+        },
+        {
+          "html": "No",
+          "key": "Will an inspector need to access your land or property?",
+        },
+        {
+          "html": "Yes",
+          "key": "Do you have the landowner's permission?",
+        },
+        {
+          "html": "No",
+          "key": "Are there any health and safety issues on the appeal site?",
+        },
+      ],
+    },
+    {
+      "heading": "Application details",
+      "items": [
+        {
+          "key": "What date did you submit your application?",
+          "text": "30 September 2025",
+        },
+        {
+          "key": "Enter the description of the advertisement",
+          "text": "Lorem ipsum",
+        },
+        {
+          "key": "Agreement to change the description of the advertisement",
+          "text": "No documents",
+        },
+        {
+          "html": "No",
+          "key": "Are there other appeals linked to your development?",
+        },
+        {
+          "key": "Development type",
+          "text": "Not provided",
+        },
+      ],
+    },
+    undefined,
+    {
+      "heading": "Upload documents",
+      "items": [
+        {
+          "html": "No documents",
+          "key": "Application form",
+        },
+        {
+          "html": "No documents",
+          "key": "Agreement to change the description of development",
+        },
+        {
+          "html": "No documents",
+          "key": "Decision letter from the local planning authority",
+        },
+        {
+          "html": "No documents",
+          "key": "Appellant statement",
+        },
+        {
+          "key": "What is the status of your planning obligation?",
+          "text": "Not answered",
+        },
+        {
+          "html": "No documents",
+          "key": "Planning obligation",
+        },
+        {
+          "html": "No documents",
+          "key": "Draft statement of common ground",
+        },
+        {
+          "html": "No documents",
+          "key": "Separate ownership certificate and agricultural land declaration",
+        },
+        {
+          "html": "No documents",
+          "key": "Application for an award of appeal costs",
+        },
+        {
+          "html": "No documents",
+          "key": "Design and access statement",
+        },
+        {
+          "html": "No documents",
+          "key": "Plans, drawings and list of plans",
+        },
+        {
+          "html": "No documents",
+          "key": "New plans or drawings",
+        },
+        {
+          "html": "No documents",
+          "key": "Other new supporting documents",
+        },
+      ],
+    },
+    {
+      "heading": "Additional documents",
+      "items": [
+        {
+          "html": "No documents",
+          "key": "",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`mapAppellantCaseData appellantCase should map appellant case data for a householder appeal 1`] = `
 {
   "details": {
     "appealReference": "6000073",
@@ -358,7 +550,211 @@ exports[`mapAppellantCaseData should map appellant case data for a householder a
 }
 `;
 
-exports[`mapAppellantCaseData should map appellant case data for a s20 appeal 1`] = `
+exports[`mapAppellantCaseData appellantCase should map appellant case data for a ldc appeal 1`] = `
+{
+  "details": {
+    "appealReference": "6000122",
+    "appealSite": {
+      "addressId": 121,
+      "addressLine1": "55 Butcher Street",
+      "postCode": "S63 0RB",
+      "town": "Thurnscoe",
+    },
+    "localPlanningDepartment": "Basingstoke and Deane Borough Council",
+  },
+  "sections": [
+    {
+      "heading": "Before you start",
+      "items": [
+        {
+          "html": "Basingstoke and Deane Borough Council",
+          "key": "Local planning authority",
+        },
+        {
+          "key": "What type of application is your appeal about?",
+          "text": "Lawful development certificate",
+        },
+        {
+          "key": "Was your application granted or refused?",
+          "text": "Refused",
+        },
+        {
+          "key": "What’s the date on the decision letter from the local planning authority?",
+          "text": "17 January 2026",
+        },
+        {
+          "key": "What is the application reference number?",
+          "text": "65950/APP/3/3690",
+        },
+      ],
+    },
+    {
+      "heading": "Appellant details",
+      "items": [
+        {
+          "html": "Bob Ross<br />test8@example.com",
+          "key": "Appellant details",
+        },
+        {
+          "html": "Fiona Burgess<br />test6@example.com",
+          "key": "Agent details",
+        },
+      ],
+    },
+    {
+      "heading": "Site details",
+      "items": [
+        {
+          "html": "55 Butcher Street, Thurnscoe, S63 0RB",
+          "key": "What is the address of the appeal site?",
+        },
+        {
+          "key": "What is the area of the appeal site?",
+          "text": "30.9 m²",
+        },
+        {
+          "key": "Is the appeal site in a green belt?",
+          "text": "No",
+        },
+        {
+          "key": "Does the appellant own all of the land involved in the appeal?",
+          "text": "No",
+        },
+        {
+          "key": "Does the appellant know who owns the land involved in the appeal?",
+          "text": "Some",
+        },
+        {
+          "html": "No",
+          "key": "Will an inspector need to access your land or property?",
+        },
+        {
+          "html": "No",
+          "key": "Are there any health and safety issues on the appeal site?",
+        },
+      ],
+    },
+    {
+      "heading": "Application details",
+      "items": [
+        {
+          "key": "What date did you submit your application?",
+          "text": "6 January 2026",
+        },
+        {
+          "html": "Used to run",
+          "key": "What did you use the appeal site for when you made the application?",
+        },
+        {
+          "html": "Existing development",
+          "key": "What type of lawful development certificate is the appeal about?",
+        },
+        {
+          "key": "Enter the description of development that you submitted in your application",
+          "text": "Lorem ipsum",
+        },
+        {
+          "html": "No",
+          "key": "Are there other appeals linked to your development?",
+        },
+        {
+          "key": "Development type",
+          "text": "Not provided",
+        },
+      ],
+    },
+    {
+      "heading": "Appeal details",
+      "items": [
+        {
+          "key": "How would you prefer us to decide your appeal?",
+          "text": "Not answered",
+        },
+        {
+          "key": "Why would you prefer this appeal procedure?",
+          "text": "Not provided",
+        },
+        {
+          "key": "How many days would you expect the inquiry to last?",
+          "text": "2",
+        },
+        {
+          "key": "How many witnesses would you expect to give evidence at the inquiry?",
+          "text": "1",
+        },
+      ],
+    },
+    {
+      "heading": "Upload documents",
+      "items": [
+        {
+          "html": "No documents",
+          "key": "Application form",
+        },
+        {
+          "html": "No documents",
+          "key": "Agreement to change the description of development",
+        },
+        {
+          "html": "No documents",
+          "key": "Decision letter from the local planning authority",
+        },
+        {
+          "html": "No documents",
+          "key": "Appellant statement",
+        },
+        {
+          "key": "What is the status of your planning obligation?",
+          "text": "Not started",
+        },
+        {
+          "html": "No documents",
+          "key": "Planning obligation",
+        },
+        {
+          "html": "No documents",
+          "key": "Draft statement of common ground",
+        },
+        {
+          "html": "No documents",
+          "key": "Separate ownership certificate and agricultural land declaration",
+        },
+        {
+          "html": "No documents",
+          "key": "Application for an award of appeal costs",
+        },
+        {
+          "html": "No documents",
+          "key": "Design and access statement",
+        },
+        {
+          "html": "No documents",
+          "key": "Plans, drawings and list of plans",
+        },
+        {
+          "html": "No documents",
+          "key": "New plans or drawings",
+        },
+        {
+          "html": "No documents",
+          "key": "Other new supporting documents",
+        },
+      ],
+    },
+    {
+      "heading": "Additional documents",
+      "items": [
+        {
+          "html": "No documents",
+          "key": "",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`mapAppellantCaseData appellantCase should map appellant case data for a s20 appeal 1`] = `
 {
   "details": {
     "appealReference": "6000073",
@@ -555,7 +951,7 @@ exports[`mapAppellantCaseData should map appellant case data for a s20 appeal 1`
 }
 `;
 
-exports[`mapAppellantCaseData should map appellant case data for a s78 appeal 1`] = `
+exports[`mapAppellantCaseData appellantCase should map appellant case data for a s78 appeal 1`] = `
 {
   "details": {
     "appealReference": "6000073",
@@ -716,198 +1112,6 @@ exports[`mapAppellantCaseData should map appellant case data for a s78 appeal 1`
         {
           "key": "What is the status of your planning obligation?",
           "text": "Not started",
-        },
-        {
-          "html": "No documents",
-          "key": "Planning obligation",
-        },
-        {
-          "html": "No documents",
-          "key": "Draft statement of common ground",
-        },
-        {
-          "html": "No documents",
-          "key": "Separate ownership certificate and agricultural land declaration",
-        },
-        {
-          "html": "No documents",
-          "key": "Application for an award of appeal costs",
-        },
-        {
-          "html": "No documents",
-          "key": "Design and access statement",
-        },
-        {
-          "html": "No documents",
-          "key": "Plans, drawings and list of plans",
-        },
-        {
-          "html": "No documents",
-          "key": "New plans or drawings",
-        },
-        {
-          "html": "No documents",
-          "key": "Other new supporting documents",
-        },
-      ],
-    },
-    {
-      "heading": "Additional documents",
-      "items": [
-        {
-          "html": "No documents",
-          "key": "",
-        },
-      ],
-    },
-  ],
-}
-`;
-
-exports[`mapAppellantCaseData should map cas advert LPA questionnaire data correctly 1`] = `
-{
-  "details": {
-    "appealReference": "6000101",
-    "appealSite": {
-      "addressId": 101,
-      "addressLine1": "72 Clapham High St",
-      "county": "Wandsworth",
-      "postCode": "SW4 7UL",
-    },
-    "localPlanningDepartment": "Barnsley Metropolitan Borough Council",
-  },
-  "sections": [
-    {
-      "heading": "Before you start",
-      "items": [
-        {
-          "html": "Barnsley Metropolitan Borough Council",
-          "key": "Local planning authority",
-        },
-        {
-          "key": "What type of application is your appeal about?",
-          "text": "Displaying an advertisement",
-        },
-        {
-          "key": "Was your application granted or refused?",
-          "text": "Refused",
-        },
-        {
-          "key": "What’s the date on the decision letter from the local planning authority?",
-          "text": "11 October 2025",
-        },
-        {
-          "key": "What is the application reference number?",
-          "text": "66185/APP/3/536099",
-        },
-      ],
-    },
-    {
-      "heading": "Appellant details",
-      "items": [
-        {
-          "html": "Bob Ross<br />test8@example.com",
-          "key": "Appellant details",
-        },
-        {
-          "html": "Bob Ross<br />test8@example.com",
-          "key": "Agent details",
-        },
-      ],
-    },
-    {
-      "heading": "Site details",
-      "items": [
-        {
-          "html": "72 Clapham High St, Wandsworth, SW4 7UL",
-          "key": "What is the address of the appeal site?",
-        },
-        {
-          "key": "What is the area of the appeal site?",
-          "text": "30.9 m²",
-        },
-        {
-          "key": "Is the appeal site on highway land?",
-          "text": "Yes",
-        },
-        {
-          "key": "Is the advertisement in position?",
-          "text": "No",
-        },
-        {
-          "key": "Is the appeal site in a green belt?",
-          "text": "Yes",
-        },
-        {
-          "key": "Does the appellant own all of the land involved in the appeal?",
-          "text": "Fully owned",
-        },
-        {
-          "key": "Does the appellant know who owns the land involved in the appeal?",
-          "text": "Some",
-        },
-        {
-          "html": "No",
-          "key": "Will an inspector need to access your land or property?",
-        },
-        {
-          "html": "Yes",
-          "key": "Do you have the landowner's permission?",
-        },
-        {
-          "html": "No",
-          "key": "Are there any health and safety issues on the appeal site?",
-        },
-      ],
-    },
-    {
-      "heading": "Application details",
-      "items": [
-        {
-          "key": "What date did you submit your application?",
-          "text": "30 September 2025",
-        },
-        {
-          "key": "Enter the description of the advertisement",
-          "text": "Lorem ipsum",
-        },
-        {
-          "key": "Agreement to change the description of the advertisement",
-          "text": "No documents",
-        },
-        {
-          "html": "No",
-          "key": "Are there other appeals linked to your development?",
-        },
-        {
-          "key": "Development type",
-          "text": "Not provided",
-        },
-      ],
-    },
-    undefined,
-    {
-      "heading": "Upload documents",
-      "items": [
-        {
-          "html": "No documents",
-          "key": "Application form",
-        },
-        {
-          "html": "No documents",
-          "key": "Agreement to change the description of development",
-        },
-        {
-          "html": "No documents",
-          "key": "Decision letter from the local planning authority",
-        },
-        {
-          "html": "No documents",
-          "key": "Appellant statement",
-        },
-        {
-          "key": "What is the status of your planning obligation?",
-          "text": "Not answered",
         },
         {
           "html": "No documents",
