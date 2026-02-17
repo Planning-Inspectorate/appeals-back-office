@@ -49,35 +49,18 @@ export default {
 		caseSubmissionDueDate: null,
 		siteAccessDetails: null,
 		siteSafetyDetails: null,
-		siteAreaSquareMetres: 20.2,
-		floorSpaceSquareMetres: 20,
-		ownsAllLand: true,
-		ownsSomeLand: false,
-		knowsOtherOwnersId: 1,
-		knowsAllOwnersId: null,
-		hasAdvertisedAppeal: true,
 		appellantCostsAppliedFor: null,
-		originalDevelopmentDescription: 'lorem ipsum',
 		changedDevelopmentDescription: false,
 		ownersInformed: null,
 		enforcementNotice: true,
-		enforcementNoticeListedBuilding: false,
+		enforcementNoticeListedBuilding: true,
 		interestInLand: 'owner',
-		writtenOrVerbalPermission: 'yes',
 		enforcementEffectiveDate: new Date('2024-10-17T14:08:50.409Z'),
 		enforcementIssueDate: new Date('2024-10-16T14:08:50.409Z'),
-		applicationDevelopmentAllOrPart: 'all-of-the-development',
-		isGreenBelt: true,
-		agriculturalHolding: null,
-		tenantAgriculturalHolding: null,
-		otherTenantsAgriculturalHolding: null,
-		informedTenantsAgriculturalHolding: null,
 		appellantProcedurePreference: null,
 		appellantProcedurePreferenceDetails: null,
 		appellantProcedurePreferenceDuration: null,
 		appellantProcedurePreferenceWitnessCount: null,
-		planningObligation: true,
-		statusPlanningObligation: 'not_started',
 		siteViewableFromRoad: null,
 		caseworkReason: null,
 		developmentType: null,
@@ -90,13 +73,7 @@ export default {
 		appellantCaseValidationOutcome: {
 			id: 1,
 			name: 'Valid'
-		},
-		knowsOtherOwners: {
-			id: 1,
-			key: 'some',
-			name: 'Some'
-		},
-		knowsAllOwners: null
+		}
 	},
 	appellant: {
 		id: 1,
@@ -211,9 +188,9 @@ export default {
 		issueDeterminationDate: null
 	},
 	appealType: {
-		id: 1,
-		type: 'Enforcement Notice',
-		key: 'C',
+		id: 13,
+		type: 'Enforcement listed building and conservation area appeal',
+		key: 'F',
 		processCode: null,
 		enabled: true
 	},

@@ -88,6 +88,10 @@ function createDataMap(mappingRequest) {
 			const ldc = createMap(apiMappers.apiLdcMappers, mappingRequest);
 			return mergeMaps(caseData, ldc);
 		}
+		case APPEAL_CASE_TYPE.F: {
+			const enforcementListed = createMap(apiMappers.apiEnforcementListedMappers, mappingRequest);
+			return mergeMaps(caseData, enforcementListed);
+		}
 		default:
 			return caseData;
 	}

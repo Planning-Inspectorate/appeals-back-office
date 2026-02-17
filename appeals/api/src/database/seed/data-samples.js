@@ -569,6 +569,25 @@ export const appellantCaseList = {
 		]),
 		appellantProcedurePreferenceDuration: randomArrayValue(procedureDurationPossibleValues),
 		appellantProcedurePreferenceWitnessCount: 1
+	},
+	[APPEAL_CASE_TYPE.F]: {
+		appellantProcedurePreference: randomEnumValue(APPEAL_APPELLANT_PROCEDURE_PREFERENCE),
+		appellantProcedurePreferenceDetails: randomArrayValue([
+			'Need for a detailed examination',
+			null
+		]),
+		appellantProcedurePreferenceDuration: randomArrayValue(procedureDurationPossibleValues),
+		appellantProcedurePreferenceWitnessCount: 1,
+		applicationDecisionDate: sub(new Date(), { months: 1 }),
+		applicationDate: sub(new Date(), { weeks: 6 }),
+		enforcementNotice: true,
+		enforcementNoticeListedBuilding: true,
+		enforcementIssueDate: sub(new Date(), { days: 10 }),
+		enforcementEffectiveDate: new Date(),
+		contactPlanningInspectorateDate: sub(new Date(), { days: 10 }),
+		enforcementReference: 'enf/Ref',
+		interestInLand: 'Land owner',
+		descriptionOfAllegedBreach: 'Breach description'
 	}
 };
 
@@ -591,7 +610,6 @@ export const getRandomisedAppellantCaseCreateInput = (appealTypeShorthand) => {
 			appellantCaseCreateInput.informedTenantsAgriculturalHolding = true;
 			break;
 		case APPEAL_CASE_TYPE.C:
-			appellantCaseCreateInput.enforcementNotice = true;
 			break;
 		default:
 			break;

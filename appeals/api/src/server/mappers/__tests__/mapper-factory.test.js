@@ -108,6 +108,11 @@ describe('appeals api mappers', () => {
 			folders: []
 		};
 
+		const appealEnforcementListed = {
+			...mocks.enforcementListedAppeal,
+			folders: []
+		};
+
 		// @ts-ignore
 		const hasAppCaseOutput = mapCase({ appeal: appealHAS, context: contextEnum.appellantCase });
 
@@ -157,6 +162,15 @@ describe('appeals api mappers', () => {
 
 		expect(enforcementAppCaseOutput).toHaveProperty('appealGrounds');
 		expect(enforcementAppCaseOutput).toHaveProperty('enforcementNotice');
+
+		const enforcementListedAppCaseOutput = mapCase({
+			// @ts-ignore
+			appeal: appealEnforcementListed,
+			context: contextEnum.appellantCase
+		});
+
+		expect(enforcementListedAppCaseOutput).toHaveProperty('appealGrounds');
+		expect(enforcementListedAppCaseOutput).toHaveProperty('enforcementNotice');
 	});
 
 	test('should only map the data model fields specific to the case type', async () => {
