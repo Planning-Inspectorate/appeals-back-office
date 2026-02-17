@@ -519,7 +519,8 @@ export function nationalListPage(
 										shortReference || ''
 									)}" data-cy="${shortReference}" >${shortReference}</a>`
 								},
-								...(appeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
+								...(appeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
+								appeal.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
 									? [
 											{
 												html: `<span class="govuk-!-width-one-third">${appeal.enforcementReference ?? ''}</span>`
