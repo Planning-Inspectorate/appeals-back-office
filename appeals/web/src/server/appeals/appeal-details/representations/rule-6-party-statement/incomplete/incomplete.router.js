@@ -20,7 +20,7 @@ router
 	.route('/reasons')
 	.get(renderReasons)
 	.post(
-		validateRejectReason(),
+		validateRejectReason('Select why the statement is incomplete'),
 		validateRejectionReasonTextItems,
 		saveBodyToSession('rule6PartyStatement', { scopeToAppeal: true }),
 		postReasons

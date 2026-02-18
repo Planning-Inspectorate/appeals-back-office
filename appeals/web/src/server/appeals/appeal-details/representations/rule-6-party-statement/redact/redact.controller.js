@@ -10,10 +10,13 @@ import {
 	allocationSpecialismsPage
 } from '../allocation/allocation.mapper.js';
 import { redactConfirmPage, redactRule6PartyStatementPage } from './redact.mapper.js';
+/** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
+/** @typedef {import('#appeals/appeal-details/appeal-details.types.js').AppealRule6Party} AppealRule6Party */
+/** @typedef {import('../../types.js').Representation} Representation */
 
 /**
  *
- * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').Request & { currentAppeal: WebAppeal, currentRepresentation: Representation }} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderRedact(request, response) {
@@ -40,7 +43,7 @@ export async function renderRedact(request, response) {
 
 /**
  *
- * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').Request & { currentAppeal: WebAppeal, currentRepresentation: Representation }} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderConfirm(request, response) {
@@ -254,15 +257,16 @@ export function postAllocationSpecialisms(request, response) {
 }
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').Request & { currentAppeal: WebAppeal, currentRepresentation: Representation }} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * */
 export async function postConfirm(request, response) {
 	const {
-		params: { appealId },
+		params: { appealId, rule6PartyId },
 		session,
 		apiClient,
-		currentRepresentation
+		currentRepresentation,
+		currentAppeal
 	} = request;
 
 	if (session.redactRule6PartyStatement.allocationSpecialisms) {
@@ -288,18 +292,32 @@ export async function postConfirm(request, response) {
 	delete session.redactRule6PartyStatement;
 
 	if (!isRedacted) {
+		const rule6Party = currentAppeal.appealRule6Parties?.find(
+			(/** @type {AppealRule6Party} */ p) => p.id === Number(rule6PartyId)
+		);
+		const bannerText = rule6Party?.serviceUser?.organisationName
+			? `${rule6Party.serviceUser.organisationName} statement accepted`
+			: `${currentRepresentation.author} statement accepted`;
+
 		addNotificationBannerToSession({
 			session,
 			bannerDefinitionKey: 'rule6PartyStatementAccepted',
 			appealId,
-			text: `${currentRepresentation.author} statement accepted`
+			text: bannerText
 		});
 	} else {
+		const rule6Party = currentAppeal.appealRule6Parties?.find(
+			(/** @type {AppealRule6Party} */ p) => p.id === Number(rule6PartyId)
+		);
+		const bannerText = rule6Party?.serviceUser?.organisationName
+			? `${rule6Party.serviceUser.organisationName} statement redacted and accepted`
+			: `${currentRepresentation.author} statement redacted and accepted`;
+
 		addNotificationBannerToSession({
 			session,
 			bannerDefinitionKey: 'rule6PartyStatementRedactedAndAccepted',
 			appealId,
-			text: `${currentRepresentation.author} statement redacted and accepted`
+			text: bannerText
 		});
 	}
 
