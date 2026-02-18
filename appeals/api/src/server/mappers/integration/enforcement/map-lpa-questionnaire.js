@@ -17,8 +17,13 @@ export const mapLpaQuestionnaire = (data) => {
 		siteAreaSquareMetres: lpaQuestionnaire?.siteAreaSquareMetres
 			? Number(lpaQuestionnaire.siteAreaSquareMetres)
 			: null,
-		hasAllegedBreachArea: lpaQuestionnaire?.hasAllegedBreachArea ?? null,
-		doesAllegedBreachCreateFloorSpace: lpaQuestionnaire?.doesAllegedBreachCreateFloorSpace ?? null,
+		areaOfAllegedBreachInSquareMetres: lpaQuestionnaire?.areaOfAllegedBreachInSquareMetres
+			? Number(lpaQuestionnaire.areaOfAllegedBreachInSquareMetres)
+			: null,
+		floorSpaceCreatedByBreachInSquareMetres:
+			lpaQuestionnaire?.floorSpaceCreatedByBreachInSquareMetres
+				? Number(lpaQuestionnaire.floorSpaceCreatedByBreachInSquareMetres)
+				: null,
 		changeOfUseRefuseOrWaste: lpaQuestionnaire?.changeOfUseRefuseOrWaste ?? null,
 		changeOfUseMineralExtraction: lpaQuestionnaire?.changeOfUseMineralExtraction ?? null,
 		changeOfUseMineralStorage: lpaQuestionnaire?.changeOfUseMineralStorage ?? null,

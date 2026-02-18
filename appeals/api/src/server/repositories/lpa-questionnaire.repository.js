@@ -64,8 +64,8 @@ const updateLPAQuestionnaireById = (id, data) => {
 				noticeRelatesToBuildingEngineeringMiningOther:
 					data.noticeRelatesToBuildingEngineeringMiningOther,
 				siteAreaSquareMetres: data.siteAreaSquareMetres,
-				hasAllegedBreachArea: data.hasAllegedBreachArea,
-				doesAllegedBreachCreateFloorSpace: data.doesAllegedBreachCreateFloorSpace,
+				areaOfAllegedBreachInSquareMetres: data.areaOfAllegedBreachInSquareMetres,
+				floorSpaceCreatedByBreachInSquareMetres: data.floorSpaceCreatedByBreachInSquareMetres,
 				changeOfUseRefuseOrWaste: data.changeOfUseRefuseOrWaste,
 				changeOfUseMineralExtraction: data.changeOfUseMineralExtraction,
 				changeOfUseMineralStorage: data.changeOfUseMineralStorage,

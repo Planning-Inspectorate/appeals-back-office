@@ -7,10 +7,10 @@ const router = createRouter({ mergeParams: true });
 
 router
 	.route('/change')
-	.get(asyncHandler(controllers.getChangeAllegedBreachCreatesFloorSpace))
+	.get(asyncHandler(controllers.getChangeFloorSpaceCreatedByBreachInSquareMetres))
 	.post(
 		validateAllegedBreachCreatesFloorSpace,
-		asyncHandler(controllers.postChangeAllegedBreachCreatesFloorSpace)
+		asyncHandler(controllers.postChangeFloorSpaceCreatedByBreachInSquareMetres)
 	);
 
 export default router;
