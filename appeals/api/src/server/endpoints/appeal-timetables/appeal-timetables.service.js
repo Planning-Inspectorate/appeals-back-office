@@ -718,6 +718,7 @@ const shouldSendNotify = (appealTypeShorthand, procedureType) => {
 const getTimetableUpdatedTemplateName = (appealTypeKey) => {
 	switch (appealTypeKey) {
 		case APPEAL_CASE_TYPE.H:
+		case APPEAL_CASE_TYPE.X:
 			return 'advertisement-appeal-timetable-updated';
 
 		case APPEAL_CASE_TYPE.D:

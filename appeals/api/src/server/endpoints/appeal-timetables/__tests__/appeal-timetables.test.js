@@ -5,6 +5,7 @@ import {
 	enforcementNoticeAppeal,
 	fullPlanningAppeal,
 	householdAppeal,
+	ldcAppeal,
 	listedBuildingAppealAppellantCaseValid
 } from '#tests/appeals/mocks.js';
 import {
@@ -13,6 +14,7 @@ import {
 	casPlanningAppealWithTimetable,
 	fullPlanningAppealWithTimetable,
 	houseAppealWithTimetable,
+	ldcAppealWithTimetable,
 	listedBuildingAppealWithTimetable
 } from '#tests/appeals/timetableMocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
@@ -659,6 +661,18 @@ describe('appeal timetables routes', () => {
 					{}
 				],
 				[
+					'ldcAppeal',
+					ldcAppealWithTimetable,
+					{
+						finalCommentsDueDate: '2024-08-07T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-17T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-17T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-17T22:59:00.000Z'
+					},
+					{}
+				],
+				[
 					'fullPlanningAppeal',
 					fullPlanningAppealWithTimetable,
 					{
@@ -915,6 +929,18 @@ describe('appeal timetables routes', () => {
 					{}
 				],
 				[
+					'ldcAppeal',
+					ldcAppealWithTimetable,
+					{
+						finalCommentsDueDate: '2024-08-05T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-15T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-17T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-15T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-15T22:59:00.000Z'
+					},
+					{}
+				],
+				[
 					'fullPlanningAppeal',
 					fullPlanningAppealWithTimetable,
 					{
@@ -1054,6 +1080,19 @@ describe('appeal timetables routes', () => {
 				[
 					'advertisementAppeal',
 					advertisementAppeal,
+					'appeal-valid-start-case-advertisement-appellant',
+					'appeal-valid-start-case-advertisement-lpa',
+					{
+						lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-17T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-17T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-17T22:59:00.000Z',
+						finalCommentsDueDate: '2024-08-07T22:59:00.000Z'
+					}
+				],
+				[
+					'lcdAppeal',
+					ldcAppeal,
 					'appeal-valid-start-case-advertisement-appellant',
 					'appeal-valid-start-case-advertisement-lpa',
 					{
@@ -1272,6 +1311,23 @@ describe('appeal timetables routes', () => {
 				[
 					'advertisementAppeal',
 					{ ...advertisementAppeal, procedureType: { key: 'hearing' } },
+					{
+						finalCommentsDueDate: '2024-08-07T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-17T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-17T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-17T22:59:00.000Z',
+						statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
+					},
+					{},
+					'appeal-valid-start-case-advertisement-appellant',
+					'appeal-valid-start-case-advertisement-lpa',
+					'appeal-valid-start-case-advertisement-appellant-hearing',
+					'appeal-valid-start-case-advertisement-lpa-hearing'
+				],
+				[
+					'ldcAppeal',
+					{ ...ldcAppeal, procedureType: { key: 'hearing' } },
 					{
 						finalCommentsDueDate: '2024-08-07T22:59:00.000Z',
 						ipCommentsDueDate: '2024-07-17T22:59:00.000Z',

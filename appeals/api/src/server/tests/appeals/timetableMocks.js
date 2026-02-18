@@ -5,6 +5,7 @@ import {
 	casPlanningAppeal,
 	fullPlanningAppeal,
 	householdAppeal,
+	ldcAppeal,
 	listedBuildingAppeal
 } from '#tests/appeals/mocks.js';
 
@@ -22,6 +23,18 @@ const houseAppealWithTimetable = {
 
 const advertisementAppealWithTimetable = {
 	...advertisementAppeal,
+	caseStartedDate: new Date(2022, 4, 18),
+	caseValidationDate: new Date(2022, 4, 20),
+	caseValidDate: new Date(2022, 4, 20),
+	appealTimetable: {
+		appealId: 1,
+		id: 101,
+		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z')
+	}
+};
+
+const ldcAppealWithTimetable = {
+	...ldcAppeal,
 	caseStartedDate: new Date(2022, 4, 18),
 	caseValidationDate: new Date(2022, 4, 20),
 	caseValidDate: new Date(2022, 4, 20),
@@ -88,5 +101,6 @@ export {
 	casPlanningAppealWithTimetable,
 	fullPlanningAppealWithTimetable,
 	houseAppealWithTimetable,
+	ldcAppealWithTimetable,
 	listedBuildingAppealWithTimetable
 };

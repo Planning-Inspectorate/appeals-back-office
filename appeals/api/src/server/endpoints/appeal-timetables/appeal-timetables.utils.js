@@ -12,6 +12,7 @@ export const appealTypeMap = (appealType) => {
 		case APPEAL_CASE_TYPE.Y:
 			return '-s78-';
 		case APPEAL_CASE_TYPE.H:
+		case APPEAL_CASE_TYPE.X:
 			return '-advertisement-';
 		case APPEAL_CASE_TYPE.C:
 			return '-enforcement-';
