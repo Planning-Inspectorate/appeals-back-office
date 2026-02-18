@@ -1,3 +1,5 @@
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { appealDetailService } from '#endpoints/appeal-details/appeal-details.service.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
@@ -407,6 +409,8 @@ export const updateLinkedAppeals = async (req, res) => {
 	try {
 		const currentLead = getLeadAppeal(appeal);
 
+		const childAppeals = getChildAppeals(appeal);
+
 		const appealToReplaceLead =
 			appealRefToReplaceLead &&
 			getChildAppeals(appeal).find((childAppeal) => {
@@ -438,21 +442,27 @@ export const updateLinkedAppeals = async (req, res) => {
 				break;
 			}
 			case LINK_APPEALS_UNLINK_OPERATION: {
-				if (isChildAppeal(appeal)) {
+				const appealToUnlink =
+					isParentAppeal(appeal) && childAppeals.length === 1 ? await childAppeals[0] : appeal;
+
+				if (isChildAppeal(appealToUnlink) || appealToUnlink.id !== appeal.id) {
 					// @ts-ignore
-					await duplicateAllFiles(currentLead, appeal, options);
+					await duplicateAllFiles(currentLead, appealToUnlink, options);
 				} else {
 					if (!appealToReplaceLead) {
 						return res
 							.status(400)
 							.send('Appeal to replace lead is required for unlinking a parent appeal');
 					}
-					await duplicateAllFiles(appeal, appealToReplaceLead, options);
 					// @ts-ignore
-					await replaceLeadAppeal(appeal, appealToReplaceLead);
+					await duplicateAllFiles(appealToUnlink, appealToReplaceLead, options);
+					// @ts-ignore
+					await replaceLeadAppeal(appealToUnlink, appealToReplaceLead);
 				}
-				await unlinkChildAppeal(appeal);
-				await updatePersonalList(appeal.id);
+				// @ts-ignore
+				await unlinkChildAppeal(appealToUnlink);
+				// @ts-ignore
+				await updatePersonalList(appealToUnlink.id);
 				break;
 			}
 		}

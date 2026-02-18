@@ -56,7 +56,7 @@ const copyBlobsUsingAzure = async (copyList) => {
 const copyBlobsUsingEmulator = async (copyList) => {
 	const storageContainer = config.BO_BLOB_CONTAINER;
 	const storageClient = new BlobStorageClient(new BlobServiceClient(config.blobEmulatorSasUrl));
-	return Promise.all(
+	return Promise.allSettled(
 		// @ts-ignore
 		copyList.map(async (copyDetails) => {
 			const { sourceBlobName, destinationBlobName } = copyDetails;

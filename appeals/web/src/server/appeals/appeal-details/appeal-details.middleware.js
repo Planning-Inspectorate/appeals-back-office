@@ -15,7 +15,7 @@ export const validateAppeal = async (req, res, next) => {
 	}
 
 	try {
-		const appeal = await getAppealDetailsFromId(req.apiClient, appealId || caseId, undefined);
+		const appeal = await getAppealDetailsFromId(req.apiClient, appealId || caseId);
 		if (!appeal) {
 			return res.status(404).render('app/404.njk');
 		}

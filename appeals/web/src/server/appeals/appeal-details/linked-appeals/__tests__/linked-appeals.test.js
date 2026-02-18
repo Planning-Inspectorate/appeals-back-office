@@ -1,8 +1,6 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
 	appealData,
-	documentFileInfo,
-	inspectorDecisionData,
 	linkableAppealSummaryBackOffice,
 	linkableAppealSummaryHorizon
 } from '#testing/appeals/appeals.js';
@@ -44,21 +42,6 @@ const leadAppealDataWithLinkedAppeals = {
 		}
 	]
 };
-const childAppealDataWithLinkedAppeals = {
-	...appealData,
-	isParentAppeal: false,
-	isChildAppeal: true,
-	linkedAppeals: [
-		{
-			appealId: 3,
-			appealReference: 'APP/Q9999/D/21/725284',
-			isParentAppeal: true,
-			linkingDate: new Date('2024-02-09T09:41:13.611Z'),
-			appealType: 'Householder',
-			relationshipId: 3048
-		}
-	]
-};
 const testValidLinkableAppealReference = '1234567';
 const testInvalidLinkableAppealReference = '7654321';
 
@@ -69,7 +52,7 @@ describe('linked-appeals', () => {
 	afterEach(teardown);
 
 	describe('GET /linked-appeals/manage', () => {
-		it('should render the manage linked appeals page with the expected content when the appeal is a lead', async () => {
+		it('should render the manage linked appeals page with the expected content', async () => {
 			nock('http://test/')
 				.get('/appeals/1?include=all')
 				.reply(200, leadAppealDataWithLinkedAppeals);
@@ -77,26 +60,11 @@ describe('linked-appeals', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage linked appeals</h1>');
-			expect(element.innerHTML).toContain('Child appeals of');
-			expect(element.innerHTML).not.toContain('Lead appeal of');
-			expect(element.innerHTML).not.toContain('Other child appeals of');
-		});
-		it('should render the manage linked appeals page with the expected content when the appeal is a child', async () => {
-			nock('http://test/')
-				.get('/appeals/2?include=all')
-				.reply(200, childAppealDataWithLinkedAppeals);
-			nock('http://test/')
-				.get('/appeals/3?include=all')
-				.reply(200, leadAppealDataWithLinkedAppeals);
-			const response = await request.get(`${baseUrl}/2${linkedAppealsPath}${managePath}`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage linked appeals</h1>');
-			expect(element.innerHTML).toContain('Lead appeal of');
-			expect(element.innerHTML).toContain('Other child appeals of');
-			expect(element.innerHTML).not.toContain('Child appeals of');
+			expect(element.innerHTML).toContain('Linked appeals</h1>');
+			expect(element.innerHTML).toContain('>Change lead appeal</a>');
+			expect(element.innerHTML).toContain(
+				`>${appealShortReference(leadAppealDataWithLinkedAppeals.appealReference)}</a> (lead)`
+			);
 		});
 	});
 
@@ -892,89 +860,46 @@ describe('linked-appeals', () => {
 		});
 	});
 
-	describe('GET /change-appeal-type/unlink-appeal', () => {
+	describe('GET /linked-appeals/unlink-appeal', () => {
 		it('should render the unlink-appeal page', async () => {
 			nock('http://test/')
 				.get('/appeals/1?include=all')
 				.reply(200, leadAppealDataWithLinkedAppeals)
 				.persist();
-			const response = await request.get(
-				`${baseUrl}/1${linkedAppealsPath}${unlinkAppealPath}/1/1/1`
-			);
+			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}${unlinkAppealPath}/2`);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain(`Appeal 351062 (lead)</span>`);
 			expect(element.innerHTML).toContain(
-				'Do you want to unlink the appeal 725284 from appeal 351062?</h1>'
+				`Confirm that you want to unlink linked appeal 725284</h1>`
 			);
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="unlinkAppeal" type="radio" value="yes">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="unlinkAppeal" type="radio" value="no">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
 	});
 
-	describe('POST /change-appeal-type/unlink-appeal', () => {
+	describe('POST /linked-appeals/unlink-appeal', () => {
 		beforeEach(() => {
 			nock('http://test/')
 				.get('/appeals/1?include=all')
-				.reply(200, inspectorDecisionData)
+				.reply(200, leadAppealDataWithLinkedAppeals)
 				.persist();
-			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(teardown);
 
-		it('should redirect to the unlink appeal page if the selected confirmation value is "no"', async () => {
-			const response = await request
-				.post(`${baseUrl}/1${linkedAppealsPath}${unlinkAppealPath}/1/2/1`)
-				.send({
-					unlinkAppeal: 'no'
-				});
+		it('should redirect to appeal details page when confirmed', async () => {
+			nock('http://test/')
+				.post('/appeals/2/update-linked-appeals')
+				.reply(200, { operation: 'unlink' });
+			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}${unlinkAppealPath}/2`);
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/manage'
+				`Found. Redirecting to ${baseUrl}/1${linkedAppealsPath}/manage`
 			);
-		});
-
-		it('should redirect to appeal details page when confirmation value is "yes"', async () => {
-			nock('http://test/').delete('/appeals/1/unlink-appeal').reply(200, { success: true });
-			const response = await request
-				.post(`${baseUrl}/1${linkedAppealsPath}${unlinkAppealPath}/2/1/1`)
-				.send({
-					unlinkAppeal: 'yes'
-				});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
-		});
-
-		it('should re-render the unlink appeal page with the expected error message if yes or no are not selected', async () => {
-			const response = await request
-				.post(`${baseUrl}/1${linkedAppealsPath}${unlinkAppealPath}/2/1/1`)
-				.send({
-					unlinkAppeal: ''
-				});
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Do you want to unlink the appeal 725284 from appeal 351062?</h1>'
-			);
-
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Please choose an option</a>');
 		});
 	});
 });
