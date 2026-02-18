@@ -235,7 +235,8 @@ export const postConfirm = async (request, response) => {
 		apiClient,
 		params: { appealId, proofOfEvidenceType },
 		session,
-		currentRepresentation
+		currentRepresentation,
+		currentRule6Party
 	} = request;
 
 	const rejectionReasons = mapRejectionReasonPayload(session.proofOfEvidence[appealId]);
@@ -250,6 +251,10 @@ export const postConfirm = async (request, response) => {
 	await representationIncomplete(apiClient, parseInt(appealId), currentRepresentation.id, {
 		allowResubmit: session.proofOfEvidence[appealId].setNewDate
 	});
+	let bannerText;
+	if (proofOfEvidenceType === 'rule-6-party' && currentRule6Party?.serviceUser?.organisationName) {
+		bannerText = `${currentRule6Party.serviceUser.organisationName} proof of evidence incomplete`;
+	}
 
 	addNotificationBannerToSession({
 		session,
@@ -259,7 +264,8 @@ export const postConfirm = async (request, response) => {
 				: proofOfEvidenceType === 'appellant'
 					? 'appellantProofOfEvidenceIncomplete'
 					: 'rule6PartyProofOfEvidenceIncomplete',
-		appealId
+		appealId,
+		text: bannerText
 	});
 
 	delete request.session.reviewProofOfEvidence;

@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`rule 6 party statement - incomplete GET /incomplete/confirm should render the confirmation page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and confirm statement is incomplete</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statement</dt>
+                    <dd class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="Statement" data-mode="html">Test statement</div>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+                    <dd class="govuk-summary-list__value">No documents</dd>
+                    <dd class="govuk-summary-list__actions">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/1/manage-documents/null/?backUrl=/rule-6-party-statement/1/incomplete/confirm">Manage <span class="govuk-visually-hidden">supporting documents</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/1/add-document/?backUrl=/rule-6-party-statement/1/incomplete/confirm">Add <span class="govuk-visually-hidden">supporting documents</span></a>
+                            </li>
+                        </ul>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/1">Change <span class="govuk-visually-hidden">Review decision</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Why is the statement incomplete?</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">Received after deadline</div>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/1/incomplete/reasons">Change <span class="govuk-visually-hidden">Incomplete reasons</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you want to allow the rule 6 party to resubmit their statement?</dt>
+                    <dd                     class="govuk-summary-list__value">No</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/1/incomplete/date">Change <span class="govuk-visually-hidden">Incomplete reasons</span></a>
+                        </dd>
+                </div>
+            </dl>
+            <p class="govuk-body">We’ll send an email to the rule 6 party to explain why their statement
+                is incomplete.</p>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Confirm statement is incomplete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`rule 6 party statement - incomplete GET /incomplete/date should render the set new date page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" aria-describedby="set-new-date-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Do you want to allow the rule 6 party to resubmit their statement?</legend>
+                                <div                                 id="set-new-date-hint" class="govuk-hint">We will update the statement due date to 1 January 2023.</div>
+                        <div class="govuk-radios"
+                        data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="set-new-date" name="setNewDate"
+                                type="radio" value="yes">
+                                <label class="govuk-label govuk-radios__label" for="set-new-date">Yes</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="set-new-date-2" name="setNewDate"
+                                type="radio" value="no">
+                                <label class="govuk-label govuk-radios__label" for="set-new-date-2">No</label>
+                            </div>
+                        </div>
+                        </fieldset>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;
