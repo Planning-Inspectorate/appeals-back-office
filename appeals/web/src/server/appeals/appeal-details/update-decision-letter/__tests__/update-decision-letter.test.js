@@ -263,6 +263,66 @@ describe('update-decision-letter', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Preview');
 			expect(unprettifiedElement.innerHTML).toContain('Update decision letter');
 		});
+
+		it('should use the original decision letterDate in the email preview, not the upload date', async () => {
+			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
+			expect(correctionNoticeResponse.statusCode).toBe(302);
+
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, issueDecisionAppealData)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b')
+				.reply(200, {
+					id: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b',
+					name: 'test-document2.pdf',
+					latestDocumentVersion: {
+						documentId: '3861dfbd-4886-4c43-9e23-18c8134f9ba1',
+						version: 3,
+						fileName: 'test-document2.pdf'
+					}
+				});
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
+
+			let capturedPreviewBody;
+			nock('http://test/')
+				.post(`/appeals/notify-preview/correction-notice-decision.content.md`)
+				.reply(200, function (_, body) {
+					capturedPreviewBody = body;
+					return template;
+				});
+
+			await request.get(`${baseUrl}/1/update-decision-letter/check-details`);
+
+			expect(capturedPreviewBody.decision_date).toBe('25 December 2023');
+		});
+
+		it('should submit the original decision letterDate as receivedDate, not the upload date', async () => {
+			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
+			expect(correctionNoticeResponse.statusCode).toBe(302);
+
+			let capturedApiBody;
+			nock('http://test/')
+				.post('/appeals/1/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b')
+				.reply(200, function (_, body) {
+					capturedApiBody = body;
+					return { success: true };
+				});
+
+			const response = await request
+				.post(`${baseUrl}/1/update-decision-letter/check-details`)
+				.send({});
+
+			expect(response.statusCode).toBe(302);
+			expect(capturedApiBody.document.receivedDate).toBe('2023-12-25T00:00:00.000Z');
+		});
+
 		it('should render the view-decision page after submit', async () => {
 			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
 			expect(correctionNoticeResponse.statusCode).toBe(302);
