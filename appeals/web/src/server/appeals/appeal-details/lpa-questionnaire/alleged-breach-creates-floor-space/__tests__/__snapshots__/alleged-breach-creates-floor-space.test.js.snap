@@ -18,14 +18,23 @@ exports[`alleged-breach-creates-floor-space GET /change should render the allege
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="alleged-breach-creates-floor-space-radio"
-                                        name="allegedBreachCreatesFloorSpaceRadio" type="radio" value="yes" checked>
-                                        <label class="govuk-label govuk-radios__label" for="alleged-breach-creates-floor-space-radio">Yes</label>
+                                        <input class="govuk-radios__input" id="floor-space-created-by-breach-in-square-metres-radio"
+                                        name="floorSpaceCreatedByBreachInSquareMetresRadio" type="radio" value="yes"
+                                        checked data-aria-controls="conditional-floor-space-created-by-breach-in-square-metres-radio">
+                                        <label class="govuk-label govuk-radios__label" for="floor-space-created-by-breach-in-square-metres-radio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional" id="conditional-floor-space-created-by-breach-in-square-metres-radio">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="floor-space-created-details">Floor space created by the breach, in square metres</label>
+                                            <textarea class="govuk-textarea"
+                                            id="floor-space-created-details" name="floorSpaceCreatedByBreachInSquareMetres"
+                                            rows="3">20</textarea>
+                                        </div>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="alleged-breach-creates-floor-space-radio-2"
-                                        name="allegedBreachCreatesFloorSpaceRadio" type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="alleged-breach-creates-floor-space-radio-2">No</label>
+                                        <input class="govuk-radios__input" id="floor-space-created-by-breach-in-square-metres-radio-2"
+                                        name="floorSpaceCreatedByBreachInSquareMetresRadio" type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="floor-space-created-by-breach-in-square-metres-radio-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>

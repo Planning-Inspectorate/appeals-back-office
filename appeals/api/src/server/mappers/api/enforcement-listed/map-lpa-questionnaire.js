@@ -27,8 +27,13 @@ export const mapEnforcementLpaQuestionnaire = (data) => {
 			siteAreaSquareMetres: lpaQuestionnaire.siteAreaSquareMetres
 				? Number(lpaQuestionnaire.siteAreaSquareMetres)
 				: null,
-			hasAllegedBreachArea: lpaQuestionnaire.hasAllegedBreachArea,
-			doesAllegedBreachCreateFloorSpace: lpaQuestionnaire.doesAllegedBreachCreateFloorSpace,
+			areaOfAllegedBreachInSquareMetres: lpaQuestionnaire.areaOfAllegedBreachInSquareMetres
+				? Number(lpaQuestionnaire.areaOfAllegedBreachInSquareMetres)
+				: null,
+			floorSpaceCreatedByBreachInSquareMetres:
+				lpaQuestionnaire.floorSpaceCreatedByBreachInSquareMetres
+					? Number(lpaQuestionnaire.floorSpaceCreatedByBreachInSquareMetres)
+					: null,
 			changeOfUseRefuseOrWaste: lpaQuestionnaire.changeOfUseRefuseOrWaste,
 			changeOfUseMineralExtraction: lpaQuestionnaire.changeOfUseMineralExtraction,
 			changeOfUseMineralStorage: lpaQuestionnaire.changeOfUseMineralStorage,

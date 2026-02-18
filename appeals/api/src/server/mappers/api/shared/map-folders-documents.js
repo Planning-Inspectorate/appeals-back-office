@@ -48,7 +48,7 @@ const mapDocumentVersion = (version) => {
 			mime: version?.mime || undefined,
 			isLateEntry: version?.isLateEntry || false,
 			isDeleted: version?.isDeleted,
-			documentType,
+			documentType: /** @type {any} */ (documentType),
 			stage,
 			documentURI: version?.documentURI || ''
 		};
