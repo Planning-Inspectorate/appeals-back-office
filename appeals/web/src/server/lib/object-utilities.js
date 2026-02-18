@@ -25,3 +25,11 @@ export const objectContainsAllKeys = (object, keys) => {
 export const isObjectLiteral = (value) => {
 	return value !== null && typeof value === 'object' && !Array.isArray(value);
 };
+
+/**
+ *
+ * @param {Object} object
+ * @returns
+ */
+export const objectContainsAllValues = (object) =>
+	Object.values(object).every((value) => value !== undefined && value !== null && value !== '');
