@@ -484,6 +484,12 @@ function mapRequiredActionToPersonalListActionHtml(
 				`/appeals-service/appeal-details/${appealId}/hearing/setup/date`
 			)}">Set up hearing</a>`;
 		}
+		case 'setupInquiry': {
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/inquiry/setup/date`
+			)}">Set up inquiry</a>`;
+		}
 		case 'addHearingAddress': {
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 				request,

@@ -28,14 +28,9 @@ export const mapAppellantCase = (data) => {
 		interestInLand,
 		enforcementEffectiveDate,
 		enforcementIssueDate,
-		agriculturalHolding,
-		tenantAgriculturalHolding,
-		otherTenantsAgriculturalHolding,
-		informedTenantsAgriculturalHolding,
 		enforcementReference,
 		contactPlanningInspectorateDate,
-		descriptionOfAllegedBreach,
-		applicationMadeAndFeePaid
+		descriptionOfAllegedBreach
 	} = appellantCase || {};
 	return {
 		...mapAppellantCaseSharedFields(data),
@@ -43,17 +38,10 @@ export const mapAppellantCase = (data) => {
 		applicationElbAppealGroundDetails: appealGrounds?.length
 			? appealGrounds.filter(({ isDeleted }) => !isDeleted).map(mapAppealGround)
 			: null,
-		previousPlanningPermissionGranted: null,
 		issueDateOfEnforcementNotice: enforcementIssueDate?.toISOString() ?? null,
 		effectiveDateOfEnforcementNotice: enforcementEffectiveDate?.toISOString() ?? null,
-		dateLpaDecisionDue: null,
-		agriculturalHolding: agriculturalHolding ?? null,
-		tenantAgriculturalHolding: tenantAgriculturalHolding ?? null,
-		otherTenantsAgriculturalHolding: otherTenantsAgriculturalHolding ?? null,
-		informedTenantsAgriculturalHolding: informedTenantsAgriculturalHolding ?? null,
 		enforcementNoticeReference: enforcementReference ?? null,
 		dateAppellantContactedPins: contactPlanningInspectorateDate?.toISOString() ?? null,
-		descriptionOfAllegedBreach: descriptionOfAllegedBreach ?? null,
-		applicationMadeAndFeePaid: applicationMadeAndFeePaid ?? null
+		descriptionOfAllegedBreach: descriptionOfAllegedBreach ?? null
 	};
 };
