@@ -3,7 +3,7 @@ import pino from '@pins/appeals.web/src/server/lib/logger.js';
 
 /**
  *
- * @param {string | null} featureFlagName?
+ * @param {string | null} [featureFlagName]
  * @returns {boolean}
  */
 

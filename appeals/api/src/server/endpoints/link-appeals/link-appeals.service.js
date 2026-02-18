@@ -121,7 +121,7 @@ export const unlinkChildAppeal = async (appeal) => {
  * @returns {Promise<*>}
  */
 export const duplicateAllFiles = async (sourceAppeal, destinationAppeal, options) => {
-	return Promise.all(
+	return Promise.allSettled(
 		Object.values(APPEAL_CASE_STAGE).map((stage) =>
 			duplicateFiles(sourceAppeal, destinationAppeal, stage, options)
 		)

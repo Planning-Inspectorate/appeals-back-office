@@ -7550,9 +7550,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
             <dd class="govuk-summary-list__value"><span>No linked appeals</span>
             </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"
-                data-cy="add-linked-appeal">Add<span class="govuk-visually-hidden"> Linked appeals</span></a>
-            </dd>
         </div>
         <div class="govuk-summary-list__row appeal-other-appeals"><dt class="govuk-summary-list__key"> Related appeals</dt>
             <dd class="govuk-summary-list__value"><span>No</span>
@@ -7898,9 +7895,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
         </div>
         <div class="govuk-summary-list__row appeal-linked-appeals"><dt class="govuk-summary-list__key"> Linked appeals</dt>
             <dd class="govuk-summary-list__value"><span>No linked appeals</span>
-            </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"
-                data-cy="add-linked-appeal">Add<span class="govuk-visually-hidden"> Linked appeals</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row appeal-other-appeals"><dt class="govuk-summary-list__key"> Related appeals</dt>
