@@ -34,5 +34,6 @@ export const teamsToCreate = [
 	{ id: 15, name: 'North1', email: 'north1@planninginspectorate.gov.uk' },
 	{ id: 16, name: 'North2', email: 'north2@planninginspectorate.gov.uk' },
 	{ id: 17, name: 'North3', email: 'north3@planninginspectorate.gov.uk' },
-	{ id: 18, name: 'North4', email: 'north4@planninginspectorate.gov.uk' }
+	{ id: 18, name: 'North4', email: 'north4@planninginspectorate.gov.uk' },
+	{ id: 19, name: 'PADS team', email: 'PADSplanning@planninginspectorate.gov.uk' }
 ];
