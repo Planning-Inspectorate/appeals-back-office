@@ -24,12 +24,11 @@ export const mapChangedListedBuildingDetails = ({
 							) || []
 						)
 					}
-				: {
-						text: 'No'
-					},
+				: { text: 'No' },
 			actions: {
 				items: [
-					...(lpaQuestionnaireData.listedBuildingDetails?.length
+					...(lpaQuestionnaireData.listedBuildingDetails?.filter((lb) => !lb.affectsListedBuilding)
+						.length
 						? [
 								mapActionComponent(permissionNames.updateCase, session, {
 									text: 'Change',
