@@ -1,3 +1,5 @@
+import config from '#environment/config.js';
+import isAppellantStatementAppealType from '@pins/appeals/utils/is-appellant-statement-appeal-type.js';
 import {
 	getAllRepresentationsByType,
 	getSingularRepresentationByType
@@ -46,6 +48,20 @@ export const withSingularRepresentation = (type) => async (req, res, next) => {
 		}
 	} catch (/** @type {any} */ error) {
 		return res.status(500).render('app/500.njk');
+	}
+
+	next();
+};
+
+/**
+ * @type {import('express').RequestHandler}
+ */
+export const validateAppellantStatementAccess = (req, res, next) => {
+	if (
+		!config.featureFlags.featureFlagAppellantStatement ||
+		!isAppellantStatementAppealType(req.currentAppeal?.appealType)
+	) {
+		return res.status(404).render('app/404.njk');
 	}
 
 	next();

@@ -1,6 +1,6 @@
 import {
 	allocationDetailsData,
-	appealDataFullPlanning,
+	appealDataEnforcementNotice,
 	appellantStatementAwaitingReview,
 	appellantStatementPublished,
 	getAppealRepsResponse
@@ -51,7 +51,7 @@ describe('redact', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -83,7 +83,7 @@ describe('redact', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -118,7 +118,7 @@ describe('redact', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements',
 					allocationDetails: null
@@ -142,7 +142,7 @@ describe('redact', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					allocationDetails: null,
 					appealId,
 					appealStatus: 'statements'
@@ -169,7 +169,7 @@ describe('redact', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -196,7 +196,7 @@ describe('redact', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					allocationDetails: null,
 					appealId,
 					appealStatus: 'statements'
@@ -224,7 +224,7 @@ describe('redact', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					allocationDetails: null,
 					appealId,
 					appealStatus: 'statements'
@@ -241,7 +241,7 @@ describe('redact', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					allocationDetails: null,
 					appealId,
 					appealStatus: 'statements'
@@ -258,7 +258,7 @@ describe('redact', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					allocationDetails: null,
 					appealId,
 					appealStatus: 'statements'
@@ -284,7 +284,7 @@ describe('redact', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -300,7 +300,7 @@ describe('redact', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -316,7 +316,7 @@ describe('redact', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -343,7 +343,7 @@ describe('redact', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -374,7 +374,7 @@ describe('redact', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -400,7 +400,7 @@ describe('redact', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -430,7 +430,7 @@ describe('redact', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'final_comments'
 				});

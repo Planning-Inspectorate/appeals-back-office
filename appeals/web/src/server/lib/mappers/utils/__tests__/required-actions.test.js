@@ -1,6 +1,7 @@
 // @ts-nocheck
 /* eslint-disable jest/expect-expect */
 import { appealData } from '#testing/app/fixtures/referencedata.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { addDays } from 'date-fns';
 import { getRequiredActionsForAppeal } from '../required-actions.js';
@@ -271,6 +272,7 @@ describe('required actions', () => {
 		describe('when appeal status is "STATEMENTS"', () => {
 			const appealDataWithStatementsStatus = {
 				...appealData,
+				appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
 				appealStatus: APPEAL_CASE_STATUS.STATEMENTS
 			};
 
@@ -1163,6 +1165,30 @@ describe('required actions', () => {
 							'reviewLpaStatement'
 						])
 					);
+				});
+
+				it('should not return appellant statement actions for unsupported appeal types', () => {
+					expect(
+						getRequiredActionsForAppeal(
+							{
+								...appealDataWithStatementsStatus,
+								appealType: APPEAL_TYPE.S78,
+								appealTimetable: {
+									...appealDataWithStatementsStatus.appealTimetable,
+									ipCommentsDueDate: futureDate,
+									lpaStatementDueDate: futureDate
+								},
+								documentationSummary: {
+									...appealDataWithStatementsStatus.documentationSummary,
+									appellantStatement: {
+										status: 'received',
+										representationStatus: 'awaiting_review'
+									}
+								}
+							},
+							'detail'
+						)
+					).not.toContain('appellantStatementAwaitingReview');
 				});
 			});
 		});

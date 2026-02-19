@@ -2,7 +2,7 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import {
 	activeDirectoryUsersData,
 	allocationDetailsData,
-	appealDataFullPlanning,
+	appealDataEnforcementNotice,
 	appellantStatementAwaitingReview,
 	costsFolderInfoAppellantApplication,
 	documentFileInfo,
@@ -30,7 +30,7 @@ describe('appellant-statements', () => {
 		nock('http://test/')
 			.get('/appeals/2?include=all')
 			.reply(200, {
-				...appealDataFullPlanning,
+				...appealDataEnforcementNotice,
 				appealId: 2,
 				appealStatus: 'statements'
 			});
@@ -59,10 +59,27 @@ describe('appellant-statements', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
+		});
+
+		it('should render 404 for unsupported appeal types', async () => {
+			nock.cleanAll();
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, {
+					...appealDataEnforcementNotice,
+					appealId,
+					appealType: 'Planning appeal',
+					appealStatus: 'statements'
+				});
+
+			const response = await request.get(`${baseUrl}/${appealId}/appellant-statement`);
+
+			expect(response.statusCode).toBe(404);
 		});
 
 		it('should render the review Appellant statement page with the expected content if the statement is awaiting review', async () => {
@@ -216,7 +233,7 @@ describe('appellant-statements', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -239,11 +256,11 @@ describe('appellant-statements', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements',
 					allocationDetails: {
-						...appealDataFullPlanning.allocationDetails,
+						...appealDataEnforcementNotice.allocationDetails,
 						level: null
 					}
 				});
@@ -262,11 +279,11 @@ describe('appellant-statements', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements',
 					allocationDetails: {
-						...appealDataFullPlanning.allocationDetails,
+						...appealDataEnforcementNotice.allocationDetails,
 						specialisms: []
 					}
 				});
@@ -285,7 +302,7 @@ describe('appellant-statements', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -304,7 +321,7 @@ describe('appellant-statements', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -323,7 +340,7 @@ describe('appellant-statements', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -363,7 +380,7 @@ describe('appellant-statements', () => {
 				nock('http://test/')
 					.get(`/appeals/${appealId}?include=all`)
 					.reply(200, {
-						...appealDataFullPlanning,
+						...appealDataEnforcementNotice,
 						appealId,
 						appealStatus: 'statements',
 						allocationDetails: {
@@ -401,7 +418,7 @@ describe('appellant-statements', () => {
 				nock('http://test/')
 					.get(`/appeals/${appealId}?include=all`)
 					.reply(200, {
-						...appealDataFullPlanning,
+						...appealDataEnforcementNotice,
 						appealId,
 						appealStatus: 'statements',
 						allocationDetails: null
@@ -435,7 +452,7 @@ describe('appellant-statements', () => {
 				nock('http://test/')
 					.get(`/appeals/${appealId}?include=all`)
 					.reply(200, {
-						...appealDataFullPlanning,
+						...appealDataEnforcementNotice,
 						appealId,
 						appealStatus: 'statements',
 						allocationDetails: {
@@ -604,7 +621,7 @@ describe('appellant-statements', () => {
 			nock('http://test/')
 				.get('/appeals/2?include=all')
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId: 2,
 					appealStatus: 'statements'
 				});
@@ -642,7 +659,7 @@ describe('appellant-statements', () => {
 			nock('http://test/')
 				.get('/appeals/2?include=all')
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId: 2,
 					appealStatus: 'statements'
 				});
