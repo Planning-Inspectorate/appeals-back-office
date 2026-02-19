@@ -1331,6 +1331,7 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain(
 				'What type of lawful development certificate is the appeal about?'
 			);
+			expect(element.innerHTML).toContain('Do you think the appeal is invalid?');
 
 			expect(element.innerHTML).toContain('4. Appeal process</h2>');
 			expect(element.innerHTML).toContain(

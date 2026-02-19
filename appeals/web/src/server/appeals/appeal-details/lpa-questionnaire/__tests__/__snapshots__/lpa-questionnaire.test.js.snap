@@ -1458,6 +1458,12 @@ exports[`LPA Questionnaire review GET / should render the Ldc LPA Questionnaire 
                                     data-cy="change-appeal-under-act-section">Change<span class="govuk-visually-hidden"> What type of lawful development certificate is the appeal about? (1. Constraints, designations and other issues)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you think the appeal is invalid?</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/is-appeal-invalid/change"
+                                    data-cy="change-is-appeal-invalid">Change<span class="govuk-visually-hidden"> Do you think the appeal is invalid? (1. Constraints, designations and other issues)</span></a>
+                                </dd>
+                        </div>
                     </dl>
                 </div>
             </div>

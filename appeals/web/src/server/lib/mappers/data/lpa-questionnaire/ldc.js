@@ -5,6 +5,7 @@ import { mapCommunityInfrastructureLevy } from './submappers/map-community-infra
 import { mapHasCommunityInfrastructureLevy } from './submappers/map-has-community-infrastructure-levy.js';
 import { mapInfrastructureLevyAdoptedDate } from './submappers/map-infrastructure-levy-adopted-date.js';
 import { mapInfrastructureLevyExpectedDate } from './submappers/map-infrastructure-levy-expected-date.js';
+import { mapIsAppealInvalid } from './submappers/map-is-appeal-invalid.js';
 import { mapIsInfrastructureLevyFormallyAdopted } from './submappers/map-is-infrastructure-levy-formally-adopted.js';
 import { mapOtherAppeals } from './submappers/map-other-appeals.js';
 import { mapProcedurePreferenceDetails } from './submappers/map-procedure-preference-details.js';
@@ -30,5 +31,6 @@ export const submaps = {
 	procedurePreferenceDuration: mapProcedurePreferenceDuration,
 	otherAppeals: mapOtherAppeals,
 
-	appealUnderActSection: mapAppealUnderActSection
+	appealUnderActSection: mapAppealUnderActSection,
+	lpaConsiderAppealInvalid: mapIsAppealInvalid
 };

@@ -465,6 +465,7 @@ interface SingleLPAQuestionnaireResponse {
 	areaOfAllegedBreachInSquareMetres?: number | null;
 	floorSpaceCreatedByBreachInSquareMetres?: number | null;
 	appealUnderActSection?: string | null;
+	lpaConsiderAppealInvalid?: boolean;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -503,6 +504,7 @@ interface UpdateLPAQuestionnaireRequest {
 	wasApplicationRefusedDueToHighwayOrTraffic?: boolean;
 	didAppellantSubmitCompletePhotosAndPlans?: boolean;
 	appealUnderActSection?: string | null;
+	lpaConsiderAppealInvalid?: boolean;
 
 	// Enforcement
 	noticeRelatesToBuildingEngineeringMiningOther?: boolean | null;

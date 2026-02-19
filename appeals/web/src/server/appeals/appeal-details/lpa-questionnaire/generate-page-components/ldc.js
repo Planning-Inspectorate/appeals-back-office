@@ -28,7 +28,8 @@ export const generateLdcLpaQuestionnaireComponents = (mappedLPAQData, mappedAppe
 			},
 			rows: [
 				mappedLPAQData.lpaq?.isCorrectAppealType?.display.summaryListItem,
-				mappedLPAQData.lpaq?.appealUnderActSection?.display.summaryListItem
+				mappedLPAQData.lpaq?.appealUnderActSection?.display.summaryListItem,
+				mappedLPAQData.lpaq?.lpaConsiderAppealInvalid?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});
