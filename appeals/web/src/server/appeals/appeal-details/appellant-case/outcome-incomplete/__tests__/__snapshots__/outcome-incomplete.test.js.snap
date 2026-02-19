@@ -385,7 +385,6 @@ exports[`incomplete-appeal enforcement notice appeal GET /receipt-due-date shoul
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Ground (a) fee receipt due date</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -393,35 +392,40 @@ exports[`incomplete-appeal enforcement notice appeal GET /receipt-due-date shoul
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group">
-            <div id="fee-receipt-due-date-hint" class="govuk-hint">
-                <div class="govuk-hint">For example, 31 3 2025</div>
-            </div>
-            <div class="govuk-date-input" id="fee-receipt-due-date">
-                <div class="govuk-date-input__item">
-                    <div class="govuk-form-group">
-                        <label class="govuk-label govuk-date-input__label" for="fee-receipt-due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                        id="fee-receipt-due-date-day" name="fee-receipt-due-date-day" type="text"
-                        inputmode="numeric">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="fee-receipt-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                    <h1 class="govuk-fieldset__heading"> Ground (a) fee receipt due date</h1>
+                </legend>
+                <div id="fee-receipt-due-date-hint" class="govuk-hint">
+                    <div class="govuk-hint">For example, 28 1 2025</div>
+                </div>
+                <div class="govuk-date-input" id="fee-receipt-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="fee-receipt-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="fee-receipt-due-date-day" name="fee-receipt-due-date-day" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="fee-receipt-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="fee-receipt-due-date-month" name="fee-receipt-due-date-month" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="fee-receipt-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="fee-receipt-due-date-year" name="fee-receipt-due-date-year" type="text"
+                            inputmode="numeric">
+                        </div>
                     </div>
                 </div>
-                <div class="govuk-date-input__item">
-                    <div class="govuk-form-group">
-                        <label class="govuk-label govuk-date-input__label" for="fee-receipt-due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                        id="fee-receipt-due-date-month" name="fee-receipt-due-date-month" type="text"
-                        inputmode="numeric">
-                    </div>
-                </div>
-                <div class="govuk-date-input__item">
-                    <div class="govuk-form-group">
-                        <label class="govuk-label govuk-date-input__label" for="fee-receipt-due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
-                        id="fee-receipt-due-date-year" name="fee-receipt-due-date-year" type="text"
-                        inputmode="numeric">
-                    </div>
-                </div>
-            </div>
+            </fieldset>
         </div>
         <div class="govuk-button-group">
             <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
