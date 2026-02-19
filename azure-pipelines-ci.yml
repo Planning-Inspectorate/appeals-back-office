@@ -207,7 +207,7 @@ extends:
               nodeVersion: 22
               script: |
                 cd appeals/e2e
-                npx cypress run --env grepTags=$(E2E-TEST-FLAG)
+                npx cypress run --env grepTags="$(E2E-TEST-FLAG)"
               environmentVariables:
                 BASE_URL: https://localhost:8080/
                 API_BASE_URL: http://localhost:3000/
