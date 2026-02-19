@@ -36,6 +36,11 @@ extends:
             value: npm run test
           ${{ else }}:
             value: npm run test:cov
+        - name: TURBO_FILTER
+          ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+            value: --since=origin/$(System.PullRequest.TargetBranch)
+          ${{ else }}:
+            value: ""
         steps:
           - task: Cache@2
             inputs:
@@ -57,7 +62,7 @@ extends:
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
-              script: npm run tscheck
+              script: npm run tscheck -- $(TURBO_FILTER)
               environmentVariables:
                 TURBO_TEAM: $(TURBO_TEAM)
                 TURBO_API: $(TURBO_API)
@@ -65,14 +70,14 @@ extends:
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
-              script: npm run lint:js
+              script: npm run lint:js -- $(TURBO_FILTER)
           - template: ../steps/node_script.yml
             parameters:
                 nodeVersion: 22
                 script: npm run format-check
           - template: ../steps/node_script.yml
             parameters:
-              script: $(test-script)
+              script: $(test-script) -- $(TURBO_FILTER)
               nodeVersion: 22
               environmentVariables:
                 TURBO_TEAM: $(TURBO_TEAM)
@@ -81,7 +86,7 @@ extends:
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
-              script: npm run build:release
+              script: npm run build:release -- $(TURBO_FILTER)
               environmentVariables:
                 TURBO_TEAM: $(TURBO_TEAM)
                 TURBO_API: $(TURBO_API)
