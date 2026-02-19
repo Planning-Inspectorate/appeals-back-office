@@ -21,6 +21,7 @@ export const calculatePermissions = (currentUserGroups) => {
 	const isCaseOfficer = currentUserGroups.includes(config.referenceData.appeals.caseOfficerGroupId);
 	const isInspector = currentUserGroups.includes(config.referenceData.appeals.inspectorGroupId);
 	const isPads = currentUserGroups.includes(config.referenceData.appeals.padsGroupId);
+	const isCqtTeam = currentUserGroups.includes(config.referenceData.appeals.customerServiceGroupId);
 
 	const perms = {
 		viewCaseList: !isPads,
@@ -30,7 +31,8 @@ export const calculatePermissions = (currentUserGroups) => {
 		updateCase: isCaseOfficer,
 		setStageOutcome: isCaseOfficer,
 		setCaseOutcome: isCaseOfficer || isInspector,
-		setEvents: isCaseOfficer || isInspector
+		setEvents: isCaseOfficer || isInspector,
+		reIssueDecisionLetter: isCaseOfficer || isCqtTeam
 	};
 
 	return perms;
@@ -44,5 +46,6 @@ export const permissionNames = {
 	updateCase: 'updateCase',
 	setStageOutcome: 'setStageOutcome',
 	setCaseOutcome: 'setCaseOutcome',
-	setEvents: 'setEvents'
+	setEvents: 'setEvents',
+	reIssueDecisionLetter: 'reIssueDecisionLetter'
 };
