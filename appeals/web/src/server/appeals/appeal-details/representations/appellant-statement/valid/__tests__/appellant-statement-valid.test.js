@@ -1,6 +1,6 @@
 import {
 	allocationDetailsData,
-	appealDataFullPlanning,
+	appealDataEnforcementNotice,
 	appellantStatementAwaitingReview,
 	getAppealRepsResponse
 } from '#testing/app/fixtures/referencedata.js';
@@ -50,7 +50,7 @@ describe('appellant statement valid', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					allocationDetails: null,
 					appealId,
 					appealStatus: 'statements'
@@ -77,7 +77,7 @@ describe('appellant statement valid', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -104,7 +104,7 @@ describe('appellant statement valid', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					allocationDetails: null,
 					appealId,
 					appealStatus: 'statements'
@@ -132,7 +132,7 @@ describe('appellant statement valid', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					allocationDetails: null,
 					appealId,
 					appealStatus: 'statements'
@@ -149,7 +149,7 @@ describe('appellant statement valid', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					allocationDetails: null,
 					appealId,
 					appealStatus: 'statements'
@@ -175,7 +175,7 @@ describe('appellant statement valid', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -191,7 +191,7 @@ describe('appellant statement valid', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -218,7 +218,7 @@ describe('appellant statement valid', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -249,7 +249,7 @@ describe('appellant statement valid', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});

@@ -1165,6 +1165,7 @@ describe('appeal-details', () => {
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId: 2,
+							appealType: 'Enforcement notice appeal',
 							appealStatus: 'statements',
 							appealTimetable: {
 								...appealDataFullPlanning.appealTimetable,
@@ -1228,6 +1229,7 @@ describe('appeal-details', () => {
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId: 2,
+							appealType: 'Enforcement notice appeal',
 							appealStatus: 'statements',
 							appealTimetable: {
 								...appealDataFullPlanning.appealTimetable,
@@ -1291,6 +1293,7 @@ describe('appeal-details', () => {
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId: 2,
+							appealType: 'Enforcement notice appeal',
 							appealStatus: 'statements',
 							appealTimetable: {
 								...appealDataFullPlanning.appealTimetable,
