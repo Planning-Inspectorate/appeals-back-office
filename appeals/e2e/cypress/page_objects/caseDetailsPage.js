@@ -64,8 +64,15 @@ export class CaseDetailsPage extends Page {
 		changeInquiryDate: 'change-inquiry-date',
 		changeInquiryNumberOfDays: 'change-inquiry-expected-number-of-days',
 		addAppellantWithdrawal: 'add-costs-appellant-withdrawal',
+		addLpaStatement: 'add-lpa-statement',
+		addIpComments: 'review-ip-comments',
+		addLpaFinalComments: 'add-lpa-final-comments',
+		addAppellantComments: 'add-appellant-comments',
 		addLpaWithdrawal: 'add-costs-lpa-withdrawal',
-		addNetResidence: 'add-net-residence-change'
+		addNetResidence: 'add-net-residence-change',
+		documentationTable: '#case-documentation-table',
+		documentationRowHeader: '#case-documentation-table th',
+		documentationCells: '#case-documentation-table td'
 	};
 
 	fixturesPath = 'cypress/fixtures/';
@@ -243,6 +250,10 @@ export class CaseDetailsPage extends Page {
 		caseDetailsInquiryEstimateLink: () => cy.get('#addInquiryEstimates'),
 		caseOfficerValue: () => cy.get('.appeal-case-officer .govuk-summary-list__value'),
 		addAppellantWithdrawal: () => cy.getByData(this._cyDataSelectors.addAppellantWithdrawal),
+		addLpaStatement: () => cy.getByData(this._cyDataSelectors.addLpaStatement),
+		addIpComments: () => cy.getByData(this._cyDataSelectors.addIpComments),
+		addLpaFinalComments: () => cy.getByData(this._cyDataSelectors.addLpaFinalComments),
+		addAppellantComments: () => cy.getByData(this._cyDataSelectors.addAppellantComments),
 		addLpaWithdrawal: () => cy.getByData(this._cyDataSelectors.addLpaWithdrawal),
 		addNetResidence: () => cy.getByData(this._cyDataSelectors.addNetResidence),
 		contactSection: () => cy.get('.govuk-summary-list__key'),
@@ -439,8 +450,20 @@ export class CaseDetailsPage extends Page {
 		this.elements.addAppellantWithdrawal().click();
 	}
 
-	clickAddLpaWithdrawal() {
-		this.elements.addLpaWithdrawal().click();
+	clickAddLpaStatement() {
+		this.elements.addLpaStatement().click();
+	}
+
+	clickAddIpComments() {
+		this.elements.addIpComments().click();
+	}
+
+	clickAddLpaFinalComments() {
+		this.elements.addLpaFinalComments().click();
+	}
+
+	clickAddAppellantComments() {
+		this.elements.addAppellantComments().click();
 	}
 
 	clickChangeSiteOwnership() {
