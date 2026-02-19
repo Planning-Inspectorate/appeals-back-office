@@ -5,5 +5,4 @@ if grep -q "optOutE2eSmoke" $filePath; then
 else
 	echo "Run e2e smoke tests"
 	echo "##vso[task.setvariable variable=runE2E]true"
-  echo "##vso[task.setvariable variable=e2eSmoke]true"
 fi
