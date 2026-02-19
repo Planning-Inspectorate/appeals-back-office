@@ -151,11 +151,13 @@ const assignUser = async (
 			details = stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [padsInspector]);
 		} else if (inspector == null && prevUserName) {
 			if (caseData.inspector?.azureAdUserId) {
-				azureAdUserId = caseData.inspector.azureAdUserId;
-				details = stringTokenReplacement(AUDIT_TRAIL_UNASSIGNED_INSPECTOR, [azureAdUserId]);
+				details = stringTokenReplacement(AUDIT_TRAIL_UNASSIGNED_INSPECTOR, [
+					caseData.inspector?.azureAdUserId
+				]);
 			} else if (caseData.padsInspectorUserId) {
-				azureAdUserId = caseData.padsInspectorUserId;
-				details = stringTokenReplacement(AUDIT_TRAIL_UNASSIGNED_INSPECTOR, [azureAdUserId]);
+				details = stringTokenReplacement(AUDIT_TRAIL_UNASSIGNED_INSPECTOR, [
+					caseData.padsInspectorUserId
+				]);
 			}
 		}
 
