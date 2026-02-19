@@ -7,6 +7,7 @@ import {
 	missingDocumentOptions
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -732,6 +733,8 @@ describe('incomplete-appeal', () => {
 
 		describe('GET /receipt-due-date', () => {
 			beforeEach(() => {
+				jest.spyOn(Date, 'now').mockReturnValue(1735732800000); // set date for Hint text
+
 				nock('http://test/')
 					.get(`/appeals/${appealId}?include=all`)
 					.reply(200, appealDataEnforcementNotice)
@@ -746,6 +749,7 @@ describe('incomplete-appeal', () => {
 
 			afterEach(() => {
 				nock.cleanAll();
+				jest.restoreAllMocks();
 			});
 
 			it('should render the receipt due date page and content', async () => {
@@ -763,6 +767,8 @@ describe('incomplete-appeal', () => {
 
 		describe('POST /receipt-due-date', () => {
 			beforeEach(async () => {
+				jest.spyOn(Date, 'now').mockReturnValue(1735732800000); // set date for Hint text
+
 				nock('http://test/')
 					.get(`/appeals/${appealId}?include=all`)
 					.reply(200, appealDataEnforcementNotice)
@@ -780,6 +786,7 @@ describe('incomplete-appeal', () => {
 
 			afterEach(() => {
 				nock.cleanAll();
+				jest.restoreAllMocks();
 			});
 
 			const invalidDateTestCases = [

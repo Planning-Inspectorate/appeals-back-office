@@ -1,4 +1,5 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { getExampleDateHint } from '#lib/dates.js';
 import { enhanceCheckboxOptionWithAddAnotherReasonConditionalHtml } from '#lib/enhance-html.js';
 import { dateInput } from '#lib/mappers/index.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
@@ -205,7 +206,6 @@ export function updateFeeReceiptDueDatePage(
 		title: 'Ground (a) fee receipt due date',
 		backLinkUrl,
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
-		heading: 'Ground (a) fee receipt due date',
 		submitButtonProperties: {
 			text: 'Continue',
 			type: 'submit'
@@ -215,13 +215,14 @@ export function updateFeeReceiptDueDatePage(
 				name: 'fee-receipt-due-date',
 				id: 'fee-receipt-due-date',
 				namePrefix: 'fee-receipt-due-date',
-				hint: 'For example, 31 3 2025',
+				hint: `For example, ${getExampleDateHint(27)}`,
 				value: {
 					day: existingDueDate.day,
 					month: existingDueDate.month,
 					year: existingDueDate.year
 				},
-				legendText: '',
+				legendText: 'Ground (a) fee receipt due date',
+				legendIsPageHeading: true,
 				errors: errors
 			})
 		]
