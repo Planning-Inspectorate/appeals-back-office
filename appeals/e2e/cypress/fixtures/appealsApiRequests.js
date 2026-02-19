@@ -113,7 +113,7 @@ const appealsApiRequests = {
             otherTenantsAgriculturalHolding: null,
             informedTenantsAgriculturalHolding: null,
             planningObligation: false,
-            statusPlanningObligation: null
+            statusPlanningObligation: 'not_started'
         },
 		users: [
 			{
