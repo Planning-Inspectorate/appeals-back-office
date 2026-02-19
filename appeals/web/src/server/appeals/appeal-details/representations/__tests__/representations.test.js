@@ -245,6 +245,7 @@ describe('representations', () => {
 		it('should display correctly when LPA, Appellant, and Rule 6 statements all exist', async () => {
 			const appealWithAll = {
 				...appealData,
+				appealType: 'Enforcement notice appeal',
 				appealStatus: 'statements',
 				documentationSummary: {
 					lpaStatement: {
@@ -282,6 +283,7 @@ describe('representations', () => {
 		it('should display correctly when matching comments and statements exist', async () => {
 			const appealWithAll = {
 				...appealData,
+				appealType: 'Enforcement notice appeal',
 				appealStatus: 'statements',
 				documentationSummary: {
 					ipComments: {
@@ -314,6 +316,28 @@ describe('representations', () => {
 			expect(textResponse.innerHTML).toContain(
 				'and <a href="/appeals-service/appeal-details/1/rule-6-party-statement/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare" class="govuk-link">1 Org One statement</a>'
 			);
+		});
+
+		it('should not include appellant statement for unsupported appeal types', async () => {
+			const unsupportedAppeal = {
+				...appealData,
+				appealType: 'Planning appeal',
+				appealStatus: 'statements',
+				documentationSummary: {
+					lpaStatement: {
+						representationStatus: 'valid'
+					},
+					appellantStatement: {
+						representationStatus: 'valid'
+					}
+				}
+			};
+			nock('http://test/').get('/appeals/1?include=all').reply(200, unsupportedAppeal);
+			const response = await request.get(`${baseUrl}/1/share`);
+			const textResponse = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(textResponse.innerHTML).toContain('1 LPA statement');
+			expect(textResponse.innerHTML).not.toContain('1 appellant statement');
 		});
 
 		it('should NOT display Rule 6 statements if they are not valid or incomplete', async () => {
