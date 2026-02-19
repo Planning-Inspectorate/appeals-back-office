@@ -7,7 +7,8 @@ import {
 	dateISOStringToDayMonthYearHourMinute,
 	dateISOStringToDisplayDate,
 	dayMonthYearHourMinuteToDisplayDate,
-	dayMonthYearHourMinuteToISOString
+	dayMonthYearHourMinuteToISOString,
+	getExampleDateHint
 } from '#lib/dates.js';
 import { initialiseAndMapData } from '#lib/mappers/data/appellant-case/mapper.js';
 import {
@@ -349,7 +350,6 @@ export function updateDueDatePage(
 		title: 'Check answers',
 		backLinkUrl,
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
-		heading: 'Update appeal due date',
 		submitButtonProperties: {
 			text:
 				appealData.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ? 'Continue' : 'Save and continue',
@@ -360,13 +360,14 @@ export function updateDueDatePage(
 				name: 'due-date',
 				id: 'due-date',
 				namePrefix: 'due-date',
-				hint: 'For example, 27 3 2007',
+				hint: `For example, ${getExampleDateHint(27)}`,
 				value: {
 					day: existingDueDateDayMonthYear.day,
 					month: existingDueDateDayMonthYear.month,
 					year: existingDueDateDayMonthYear.year
 				},
-				legendText: '',
+				legendText: 'Update appeal due date',
+				legendIsPageHeading: true,
 				errors: errors
 			})
 		]

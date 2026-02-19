@@ -12,7 +12,7 @@ import {
 	dayMonthYearHourMinuteToISOString
 } from '../dates.js';
 
-const messageFieldNameExceptions = ['ground (a) fee receipt due date'];
+const messageFieldNameExceptions = ['ground (a) fee receipt due date', 'appeal due date'];
 
 export const createDateInputFieldsValidator = (
 	fieldNamePrefix = 'date',

@@ -19,14 +19,14 @@ export const validateIncompleteReason = createValidator(
 
 export const validateIncompleteReasonTextItems =
 	createCheckboxTextItemsValidator('incompleteReason');
-export const validateDueDateFields = createDateInputFieldsValidator('due-date', 'Appeal due date');
+export const validateDueDateFields = createDateInputFieldsValidator('due-date', 'appeal due date');
 export const validateDueDateValid = createDateInputDateValidityValidator(
 	'due-date',
-	'Appeal due date'
+	'appeal due date'
 );
 export const validateDueDateInFuture = createDateInputDateInFutureValidator(
 	'due-date',
-	'Appeal due date'
+	'appeal due date'
 );
 
 export const validateMissingDocumentReason = createValidator(
