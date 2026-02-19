@@ -17,20 +17,15 @@ import StreamArray from 'stream-json/streamers/StreamArray.js';
  */
 export const importListedBuildingsDataset = async (url) => {
 	const databaseConnector = createPrismaClient();
-	const existingListdBuildingsCount = await databaseConnector.listedBuilding.count();
 
-	if (existingListdBuildingsCount > 0) {
-		console.log('ListedBuilding table not empty. Please delete all records to refresh.');
-	} else {
-		console.log('Starting download of listed buildings dataset...\n\n');
-		const response = await fetch(url);
-		if (response.body) {
-			const totalRecords = await importListedBuildings(
-				Readable.from(response.body),
-				databaseConnector
-			);
-			console.log(`\n\nComplete! ${totalRecords} records imported.`);
-		}
+	console.log('Starting download of listed buildings dataset...\n\n');
+	const response = await fetch(url);
+	if (response.body) {
+		const result = await importListedBuildings(Readable.from(response.body), databaseConnector);
+		console.log('\n\nComplete!');
+		console.log(`Total records processed: ${result.processed}`);
+		console.log(`Total inserted: ${result.inserted}`);
+		console.log(`Total updated: ${result.updated}`);
 	}
 };
 
@@ -55,7 +50,65 @@ const importListedBuildings = async (fileStream, databaseConnector) => {
 
 	const batchSize = 50;
 	let batch = [];
-	let totalRecords = 0;
+	let processed = 0;
+	let inserted = 0;
+	let updated = 0;
+
+	/**
+	 * @param {{ reference: string, name: string, grade: string }[]} records
+	 */
+	const processBatch = async (records) => {
+		if (records.length === 0) {
+			return { inserted: 0, updated: 0 };
+		}
+
+		const references = records.map((record) => record.reference);
+		const existingRecords = await databaseConnector.listedBuilding.findMany({
+			where: { reference: { in: references } },
+			select: { reference: true, name: true, grade: true }
+		});
+		const existingByReference = new Map(
+			existingRecords.map((existingRecord) => [existingRecord.reference, existingRecord])
+		);
+
+		const toCreate = [];
+		const toUpdate = [];
+
+		for (const record of records) {
+			const existingRecord = existingByReference.get(record.reference);
+
+			if (!existingRecord) {
+				toCreate.push(record);
+				continue;
+			}
+
+			if (existingRecord.name !== record.name || existingRecord.grade !== record.grade) {
+				toUpdate.push(record);
+			}
+		}
+
+		if (toCreate.length > 0) {
+			await databaseConnector.listedBuilding.createMany({
+				data: toCreate
+			});
+		}
+
+		if (toUpdate.length > 0) {
+			await databaseConnector.$transaction(
+				toUpdate.map((record) =>
+					databaseConnector.listedBuilding.update({
+						where: { reference: record.reference },
+						data: {
+							name: record.name,
+							grade: record.grade
+						}
+					})
+				)
+			);
+		}
+
+		return { inserted: toCreate.length, updated: toUpdate.length };
+	};
 
 	for await (const { value } of pipeline) {
 		const record = {
@@ -67,14 +120,20 @@ const importListedBuildings = async (fileStream, databaseConnector) => {
 		batch.push(record);
 
 		if (batch.length === batchSize) {
-			await databaseConnector.listedBuilding.createMany({
-				data: batch
-			});
-
-			totalRecords += batch.length;
+			const batchResult = await processBatch(batch);
+			processed += batch.length;
+			inserted += batchResult.inserted;
+			updated += batchResult.updated;
 			batch = [];
 		}
 	}
 
-	return totalRecords;
+	if (batch.length > 0) {
+		const batchResult = await processBatch(batch);
+		processed += batch.length;
+		inserted += batchResult.inserted;
+		updated += batchResult.updated;
+	}
+
+	return { processed, inserted, updated };
 };
