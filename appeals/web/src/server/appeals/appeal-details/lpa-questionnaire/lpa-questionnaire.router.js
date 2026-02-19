@@ -42,6 +42,7 @@ import hasAllegedBreachAreaRouter from './has-alleged-breach-area/has-alleged-br
 import hasProtectedSpeciesRouter from './has-protected-species/has-protected-species.router.js';
 import highwayTrafficPublicSafetyRouter from './highway-traffic-public-safety/highway-traffic-public-safety.router.js';
 import isAonbNationalLandscapeRouter from './is-aonb-national-landscape/is-aonb-national-landscape.router.js';
+import isAppealInvalidRouter from './is-appeal-invalid/is-appeal-invalid.router.js';
 import isGypsyOrTravellerSiteRouter from './is-gypsy-or-traveller-site/is-gypsy-or-traveller-site.router.js';
 import isOnCrownLandRouter from './is-on-crown-land/is-on-crown-land.router.js';
 import appealUnderActSectionRouter from './ldc-type/ldc-type.router.js';
@@ -580,6 +581,13 @@ router.use(
 	validateAppealWithInclude(['lpaQuestionnaire']),
 	assertUserHasPermission(permissionNames.updateCase),
 	appealUnderActSectionRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/is-appeal-invalid',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	isAppealInvalidRouter
 );
 
 export default router;
