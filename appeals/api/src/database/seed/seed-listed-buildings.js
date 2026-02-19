@@ -18,6 +18,12 @@ import StreamArray from 'stream-json/streamers/StreamArray.js';
 export const importListedBuildingsDataset = async (url) => {
 	const databaseConnector = createPrismaClient();
 	const existingListdBuildingsCount = await databaseConnector.listedBuilding.count();
+	const existingListedBuildingReferences = await databaseConnector.listedBuilding.findMany({
+		select: { reference: true }
+	});
+	const exisitingReferenceArray = existingListedBuildingReferences.map(
+		(listedBuilding) => listedBuilding.reference
+	);
 
 	if (existingListdBuildingsCount > 0) {
 		console.log('ListedBuilding table not empty. Please delete all records to refresh.');
@@ -27,7 +33,8 @@ export const importListedBuildingsDataset = async (url) => {
 		if (response.body) {
 			const totalRecords = await importListedBuildings(
 				Readable.from(response.body),
-				databaseConnector
+				databaseConnector,
+				exisitingReferenceArray
 			);
 			console.log(`\n\nComplete! ${totalRecords} records imported.`);
 		}
@@ -39,9 +46,10 @@ export const importListedBuildingsDataset = async (url) => {
  *
  * @param {Readable} fileStream
  * @param {import('#db-client/client.ts').PrismaClient} databaseConnector
+ * @param {string[]} existingReferences
  * @returns
  */
-const importListedBuildings = async (fileStream, databaseConnector) => {
+const importListedBuildings = async (fileStream, databaseConnector, existingReferences) => {
 	const pipeline = chain([
 		fileStream,
 		Parser(),
@@ -58,6 +66,7 @@ const importListedBuildings = async (fileStream, databaseConnector) => {
 	let totalRecords = 0;
 
 	for await (const { value } of pipeline) {
+		if (existingReferences.includes(value.reference)) return;
 		const record = {
 			reference: value.reference,
 			name: value.name,
