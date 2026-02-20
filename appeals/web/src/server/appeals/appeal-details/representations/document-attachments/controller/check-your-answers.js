@@ -16,6 +16,7 @@ import {
 	APPEAL_REPRESENTATION_TYPE,
 	REPRESENTATION_ADDED_AS_DOCUMENT
 } from '@pins/appeals/constants/common.js';
+import { APPEAL_REPRESENTATION_STATUS } from '@planning-inspectorate/data-model';
 import { patchRepresentationAttachments } from '../../document-attachments/attachments-service.js';
 import { postRepresentation } from '../../representations.service.js';
 
@@ -109,13 +110,20 @@ export const postCheckYourAnswers = async (request, response) => {
 	} = request;
 	const { appealId } = currentAppeal;
 
-	const rule6Party = currentAppeal.appealRule6Parties?.find(
-		(/** @type {AppealRule6Party} */ { id }) => id === Number(rule6PartyId)
-	);
-
 	const representationType =
 		currentRepresentation?.representationType ?? getRepresentationType(request.baseUrl);
 	const id = currentRepresentation?.id;
+
+	if (
+		session.createNewRepresentation &&
+		onlySingularRepresentationAllowed(representationType, currentRepresentation?.status)
+	) {
+		return response.status(409).render('app/409.njk');
+	}
+
+	const rule6Party = currentAppeal.appealRule6Parties?.find(
+		(/** @type {AppealRule6Party} */ { id }) => id === Number(rule6PartyId)
+	);
 
 	const {
 		fileUploadInfo: {
@@ -312,4 +320,22 @@ const getRepresentationType = (url) => {
 	}
 
 	return immediateParent.replace(/-/g, '_');
+};
+
+/**
+ * @param {string} representationType
+ * @param {string} repStatus
+ * @return {boolean}
+ */
+const onlySingularRepresentationAllowed = (representationType, repStatus) => {
+	return (
+		[
+			APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
+			APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT,
+			APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT,
+			APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
+		].includes(representationType) &&
+		repStatus !== undefined &&
+		repStatus !== APPEAL_REPRESENTATION_STATUS.INVALID
+	);
 };
