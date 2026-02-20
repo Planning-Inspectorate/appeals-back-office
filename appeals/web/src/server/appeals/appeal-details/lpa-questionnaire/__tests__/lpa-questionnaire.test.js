@@ -1304,6 +1304,7 @@ describe('LPA Questionnaire review', () => {
 			);
 			expect(element.innerHTML).toContain('Do you think the appeal is invalid?</dt>');
 			expect(element.innerHTML).toContain('Planning permission</dt>');
+			expect(element.innerHTML).toContain('Enforcement notice</dt>');
 
 			expect(element.innerHTML).toContain(
 				'2. Planning officer’s report and supplementary documents</h2>'
