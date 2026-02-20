@@ -13,6 +13,7 @@ import { mapProcedurePreferenceDetails } from './submappers/map-procedure-prefer
 import { mapProcedurePreferenceDuration } from './submappers/map-procedure-preference-duration.js';
 import { mapProcedurePreference } from './submappers/map-procedure-preference.js';
 import { mapReasonForNeighbourVisits } from './submappers/map-reason-for-neighbour-visits.js';
+import { mapRelatedApplications } from './submappers/map-related-applications.js';
 import { mapSiteAccess } from './submappers/map-site-access.js';
 
 export const submaps = {
@@ -20,6 +21,7 @@ export const submaps = {
 	//Section 1
 	appealUnderActSection: mapAppealUnderActSection,
 	planningPermission: mapPlanningPermission,
+	relatedApplications: mapRelatedApplications,
 	lpaConsiderAppealInvalid: mapIsAppealInvalid,
 
 	//Section 2

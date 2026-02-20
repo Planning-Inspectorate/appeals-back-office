@@ -286,6 +286,7 @@ const lpaQuestionnaire = {
 				historicEnglandConsultation: { ...Folder },
 				stopNotice: { ...Folder },
 				article4Direction: { ...Folder },
+				relatedApplications: { ...Folder },
 				enforcementList: { ...Folder },
 				localDevelopmentOrder: { ...Folder },
 				planningPermission: { ...Folder },

@@ -395,6 +395,7 @@ interface SingleLPAQuestionnaireResponse {
 		otherRelevantPolicies?: FolderInfo | null;
 		appealNotification?: FolderInfo | null;
 		historicEnglandConsultation?: FolderInfo | null;
+		relatedApplications: FolderInfo | null;
 		// Enforcement
 		enforcementList?: FolderInfo | null;
 		stopNotice?: FolderInfo | null;
