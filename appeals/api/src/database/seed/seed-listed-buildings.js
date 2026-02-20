@@ -87,7 +87,7 @@ const importListedBuildings = async (fileStream, databaseConnector) => {
 			grade: value['listed-building-grade']
 		};
 
-		batch.push(record);
+		if (record.grade && record.name) batch.push(record);
 
 		if (batch.length === batchSize) {
 			const batchResult = await processBatch(batch, databaseConnector);
