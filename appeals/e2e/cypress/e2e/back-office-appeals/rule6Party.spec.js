@@ -6,6 +6,7 @@ import { users } from '../../fixtures/users';
 import { ContactsSectionPage } from '../../page_objects/caseDetails/contactsSectionPage.js';
 import { CostsSectionPage } from '../../page_objects/caseDetails/costsSectionPage';
 import { DocumentationSectionPage } from '../../page_objects/caseDetails/documentationSectionPage';
+import { PersonalListPage } from '../../page_objects/caseDetails/personalListPage';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
 import { ContactDetailsPage } from '../../page_objects/contactDetailsPage.js';
@@ -30,6 +31,7 @@ const fileUploaderSection = new FileUploaderSection();
 const redactionStatusPage = new RedactionStatusPage();
 const dateTimeSection = new DateTimeSection();
 const caseHistoryPage = new CaseHistoryPage();
+const personalListPage = new PersonalListPage();
 
 const rule6Details = {
 	partyName: 'TestRuleSixParty',
@@ -762,3 +764,57 @@ const setupCaseForRule6StatementReview = () => {
 
 	cy.addRule6Party(caseObj, rule6Party);
 };
+
+it.only('Display Statement and POE on personal list page', () => {
+	cy.addLpaqSubmissionToCase(caseObj);
+	cy.reviewLpaqSubmission(caseObj);
+	cy.addRule6Party(caseObj, rule6Party);
+	cy.addRepresentation(caseObj, 'lpaStatement', null);
+	cy.reviewStatementViaApi(caseObj);
+	cy.getRule6ServiceUserId(caseObj, rule6Party.serviceUser.email).then((serviceUserId) => {
+		cy.log(`Service User ID: ${serviceUserId}`);
+		cy.addRepresentation(caseObj, 'rule6PartyStatement', serviceUserId);
+		cy.reload();
+	});
+	cy.visit(urlPaths.personalListFilteredStatement);
+	personalListPage.verifyActionRequiredLink(
+		caseObj.reference,
+		`Review ${rule6Party.serviceUser.organisationName} statement`
+	);
+
+	caseDetailsPage.navigateToAppealsService();
+	listCasesPage.clickAppealByRef(caseObj);
+	documentationSectionPage.navigateToAddProofOfEvidenceReview('rule-6-statement');
+	caseDetailsPage.selectRadioButtonByValue('Accept statement');
+	caseDetailsPage.clickButtonByText('Continue');
+	caseDetailsPage.selectRadioButtonByValue('A');
+	caseDetailsPage.clickButtonByText('Continue');
+	caseDetailsPage.chooseCheckboxByText('General allocation');
+	caseDetailsPage.clickButtonByText('Continue');
+	caseDetailsPage.clickButtonByText('Accept statement');
+	// cy.reviewRule6StatementViaApi(caseObj); Todo - 7055 create the api request for reviewing rule6 statement and remove lines 787-794
+	cy.shareCommentsAndStatementsViaApi(caseObj);
+	cy.simulateStatementsDeadlineElapsed(caseObj);
+
+	cy.visit(urlPaths.personalListFilteredEvidence);
+	personalListPage.verifyActionRequiredText(
+		caseObj.reference,
+		`Awaiting ${rule6Party.serviceUser.organisationName} proof of evidence and witnesses`
+	);
+	cy.getRule6ServiceUserId(caseObj, rule6Party.serviceUser.email).then((serviceUserId) => {
+		cy.log(`Service User ID: ${serviceUserId}`);
+		cy.addRepresentation(caseObj, 'rule6ProofOfEvidence', serviceUserId);
+		cy.reload();
+	});
+	caseDetailsPage.navigateToAppealsService();
+	listCasesPage.clickAppealByRef(caseObj);
+	documentationSectionPage.navigateToAddProofOfEvidenceReview('rule-6-proof-of-evidence');
+	caseDetailsPage.selectRadioButtonByValue('Complete');
+	caseDetailsPage.clickButtonByText('Continue');
+
+	cy.visit(urlPaths.personalListFilteredEvidence);
+	personalListPage.verifyActionRequiredLink(
+		caseObj.reference,
+		`Review ${rule6Party.serviceUser.organisationName} proof of evidence and witnesses`
+	);
+});
