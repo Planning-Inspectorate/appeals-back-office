@@ -7176,6 +7176,56 @@
 				}
 			}
 		},
+		"/appeals/{appealReference}/link-appeals": {
+			"post": {
+				"tags": ["Test Utilities"],
+				"description": "A test endpoint to simulate the completion of linking appeals",
+				"parameters": [
+					{
+						"name": "appealReference",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Created"
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Linked Appeal Request",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SimulateLinkedAppealRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/SimulateLinkedAppealRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/linkable-appeal/{appealReference}/{linkableType}": {
 			"get": {
 				"tags": ["Linkable appeals"],
@@ -14881,6 +14931,15 @@
 								"nullable": true
 							}
 						}
+					}
+				}
+			},
+			"SimulateLinkedAppealRequest": {
+				"type": "object",
+				"properties": {
+					"childAppealReference": {
+						"type": "string",
+						"example": "6000118"
 					}
 				}
 			},
