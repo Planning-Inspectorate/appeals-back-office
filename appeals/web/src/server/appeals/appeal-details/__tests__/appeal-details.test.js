@@ -5477,6 +5477,7 @@ describe('appeal-details', () => {
 						hearing: {
 							hearingId: '123',
 							hearingStartTime: '2025-05-15T12:00:00.000Z',
+							estimatedDays: 6,
 							address: {
 								addressLine1: '123 Main St',
 								addressLine2: 'Apt 1',
@@ -5491,6 +5492,13 @@ describe('appeal-details', () => {
 							reportingTime: 3
 						}
 					});
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+				nock('http://test/')
+					.get(new RegExp(`/appeals/${appealId}/reps\\?type=.*`))
+					.reply(200, { items: [], itemCount: 0 });
+				nock('http://test/')
+					.get(`/appeals/${appealId}/appellant-cases/0`)
+					.reply(200, { planningObligation: { hasObligation: false } });
 
 				const response = await readOnlyRequest.get(`${baseUrl}/${appealId}?include=all`);
 
@@ -5520,7 +5528,7 @@ describe('appeal-details', () => {
 
 				expect(
 					unprettifiedHearingSection.querySelectorAll('dd.govuk-summary-list__value')
-				).toHaveLength(7);
+				).toHaveLength(9);
 				expect(
 					unprettifiedHearingSection
 						.querySelectorAll('dd.govuk-summary-list__value')[0]
@@ -5539,26 +5547,44 @@ describe('appeal-details', () => {
 				expect(
 					unprettifiedHearingSection
 						.querySelectorAll('dd.govuk-summary-list__value')[3]
-						.innerHTML.trim()
-				).toBe('123 Main St<br>Apt 1<br>Anytown<br>Anycounty<br>AA1 1AA');
+						.textContent.trim()
+				).toBe('6 Days');
 				expect(
 					unprettifiedHearingSection
 						.querySelectorAll('dd.govuk-summary-list__value')[4]
 						.textContent.trim()
-				).toBe('1 day');
+				).toBe('Yes');
 				expect(
 					unprettifiedHearingSection
 						.querySelectorAll('dd.govuk-summary-list__value')[5]
+						.innerHTML.trim()
+				).toBe('123 Main St<br>Apt 1<br>Anytown<br>Anycounty<br>AA1 1AA');
+				expect(
+					unprettifiedHearingSection
+						.querySelectorAll('dd.govuk-summary-list__value')[6]
+						.textContent.trim()
+				).toBe('1 day');
+				expect(
+					unprettifiedHearingSection
+						.querySelectorAll('dd.govuk-summary-list__value')[7]
 						.textContent.trim()
 				).toBe('2.5 days');
 				expect(
 					unprettifiedHearingSection
-						.querySelectorAll('dd.govuk-summary-list__value')[6]
+						.querySelectorAll('dd.govuk-summary-list__value')[8]
 						.textContent.trim()
 				).toBe('3 days');
 
 				expect(unprettifiedHearingSection.querySelector('a[data-cy="change-date"]')).toBeFalsy();
 				expect(unprettifiedHearingSection.querySelector('a[data-cy="change-time"]')).toBeFalsy();
+				expect(
+					unprettifiedHearingSection.querySelector(
+						'a[data-cy="change-whether-the-estimated-number-of-days-is-known-or-not"]'
+					)
+				).toBeFalsy();
+				expect(
+					unprettifiedHearingSection.querySelector('a[data-cy="change-estimated-days"]')
+				).toBeFalsy();
 				expect(
 					unprettifiedHearingSection.querySelector(
 						'a[data-cy="change-whether-the-address-is-known-or-not"]'
@@ -5585,6 +5611,7 @@ describe('appeal-details', () => {
 						hearing: {
 							hearingId: '123',
 							hearingStartTime: '2025-05-15T12:00:00.000Z',
+							estimatedDays: 6,
 							address: {
 								addressLine1: '123 Main St',
 								addressLine2: 'Apt 1',
@@ -5634,6 +5661,16 @@ describe('appeal-details', () => {
 				expect(
 					unprettifiedHearingSectionHtml
 						.querySelectorAll('dd.govuk-summary-list__value')?.[3]
+						?.innerHTML.trim()
+				).toEqual('6 Days');
+				expect(
+					unprettifiedHearingSectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[4]
+						?.innerHTML.trim()
+				).toEqual('Yes');
+				expect(
+					unprettifiedHearingSectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[5]
 						?.innerHTML.split('<br>')
 						.map((line) => line.trim())
 				).toEqual(['123 Main St', 'Apt 1', 'Anytown', 'Anycounty', 'AA1 1AA']);
@@ -5646,6 +5683,19 @@ describe('appeal-details', () => {
 					unprettifiedHearingSectionHtml.querySelector('a[data-cy="change-time"]')?.attributes?.href
 				).toEqual(
 					`${baseUrl}/${appealId}/hearing/change/date?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}`
+				);
+				expect(
+					unprettifiedHearingSectionHtml.querySelector(
+						'a[data-cy="change-whether-the-estimated-number-of-days-is-known-or-not"]'
+					)?.attributes?.href
+				).toEqual(
+					`${baseUrl}/${appealId}/hearing/change/estimation?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}`
+				);
+				expect(
+					unprettifiedHearingSectionHtml.querySelector('a[data-cy="change-estimated-days"]')
+						?.attributes?.href
+				).toEqual(
+					`${baseUrl}/${appealId}/hearing/change/estimation?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}`
 				);
 				expect(
 					unprettifiedHearingSectionHtml.querySelector(
@@ -5712,7 +5762,12 @@ describe('appeal-details', () => {
 						?.innerHTML.trim()
 				).toEqual('No');
 				expect(
-					unprettifiedHearingSectionHtml.querySelectorAll('dd.govuk-summary-list__value')?.[3]
+					unprettifiedHearingSectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[3]
+						?.innerHTML.trim()
+				).toEqual('No');
+				expect(
+					unprettifiedHearingSectionHtml.querySelectorAll('dd.govuk-summary-list__value')?.[4]
 				).toBeFalsy();
 			});
 

@@ -468,7 +468,8 @@ const updateAppealById = (
 		agent,
 		applicationReference,
 		procedureTypeId,
-		hearingStartTime
+		hearingStartTime,
+		hearingEstimatedDays
 	}
 ) =>
 	databaseConnector.appeal.update({
@@ -487,8 +488,14 @@ const updateAppealById = (
 			...(hearingStartTime && {
 				hearing: {
 					upsert: {
-						create: { hearingStartTime },
-						update: { hearingStartTime },
+						create: {
+							hearingStartTime,
+							...(hearingEstimatedDays && { estimatedDays: hearingEstimatedDays })
+						},
+						update: {
+							hearingStartTime,
+							...(hearingEstimatedDays && { estimatedDays: hearingEstimatedDays })
+						},
 						where: { appealId: id }
 					}
 				}
