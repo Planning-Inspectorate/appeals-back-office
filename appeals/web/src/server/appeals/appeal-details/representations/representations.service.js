@@ -179,7 +179,7 @@ export async function postRepresentation(apiClient, appealId, payload, represent
 			.json();
 		return response.body;
 	} catch (error) {
-		console.error('Error posting representation:', error);
+		logger.error('Error posting representation:', error);
 		throw new Error('Failed to post representation');
 	}
 }
