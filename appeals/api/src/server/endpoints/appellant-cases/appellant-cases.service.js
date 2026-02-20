@@ -85,11 +85,14 @@ export const checkAppellantCaseExists = (req, res, next) => {
  */
 export const updateAppellantCaseData = async (appellantCaseId, data, appeal) => {
 	await appellantCaseRepository.updateAppellantCaseById(appellantCaseId, data);
-	// Only sync the child appellant case with the parent when the appeal type is enforcement notice
-	if (!isParentAppeal(appeal) || appeal.appealType?.type !== APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+	// Only sync the child appellant case with the parent when the appeal type is enforcement notice or enforcement listed building
+	if (
+		!isParentAppeal(appeal) ||
+		appeal.appealType?.type !== APPEAL_TYPE.ENFORCEMENT_NOTICE ||
+		appeal.appealType?.type !== APPEAL_TYPE.ENFORCEMENT_NOTICE
+	) {
 		return;
 	}
-	// Strip out any fields that are independent of the parent appeal
 	// eslint-disable-next-line no-unused-vars
 	const { interestInLand, writtenOrVerbalPermission, ...childData } = data;
 
