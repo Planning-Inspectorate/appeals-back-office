@@ -1301,7 +1301,7 @@ export async function seedTestData(databaseConnector) {
 
 	for (const lpaQuestionnaire of lpaQuestionnaires) {
 		await databaseConnector.listedBuildingSelected.createMany({
-			data: ['1021469', '1021470', '1021472', '1021473'].map((listEntry, index) => ({
+			data: ['1010101', '1010102', '1010103'].map((listEntry, index) => ({
 				lpaQuestionnaireId: lpaQuestionnaire.id,
 				listEntry,
 				affectsListedBuilding: index > 1
