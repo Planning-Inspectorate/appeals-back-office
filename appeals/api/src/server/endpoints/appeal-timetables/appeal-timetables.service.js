@@ -112,13 +112,17 @@ const getStartCaseNotifyParams = async (
 	const appealType = trimAppealType(type);
 
 	const appellantTemplate = appeal.caseStartedDate
-		? 'appeal-start-date-change-appellant'
+		? inquirySuffix
+			? 'appeal-start-date-change-inquiry'
+			: 'appeal-start-date-change-appellant'
 		: `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}${
 				hearingSuffix ? `appellant${hearingSuffix}` : inquirySuffix ? inquirySuffix : 'appellant'
 			}`;
 
 	const lpaTemplate = appeal.caseStartedDate
-		? 'appeal-start-date-change-lpa'
+		? inquirySuffix
+			? 'appeal-start-date-change-inquiry'
+			: 'appeal-start-date-change-lpa'
 		: `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}${
 				hearingSuffix ? `lpa${hearingSuffix}` : inquirySuffix ? inquirySuffix : 'lpa'
 			}`;
