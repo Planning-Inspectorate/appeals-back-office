@@ -2,6 +2,7 @@ import { mapLpaNeighbouringSites } from '../appeal/submappers/lpa-neighbouring-s
 import { submaps as hasSubmaps } from './has.js';
 import { mapAppealUnderActSection } from './submappers/map-appeal-under-act-section.js';
 import { mapCommunityInfrastructureLevy } from './submappers/map-community-infrastructure-levy.js';
+import { mapEnforcementNotice } from './submappers/map-enforcement-notice.js';
 import { mapHasCommunityInfrastructureLevy } from './submappers/map-has-community-infrastructure-levy.js';
 import { mapInfrastructureLevyAdoptedDate } from './submappers/map-infrastructure-levy-adopted-date.js';
 import { mapInfrastructureLevyExpectedDate } from './submappers/map-infrastructure-levy-expected-date.js';
@@ -20,6 +21,7 @@ export const submaps = {
 	//Section 1
 	appealUnderActSection: mapAppealUnderActSection,
 	planningPermission: mapPlanningPermission,
+	enforcementNotice: mapEnforcementNotice,
 	lpaConsiderAppealInvalid: mapIsAppealInvalid,
 
 	//Section 2

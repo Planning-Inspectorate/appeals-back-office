@@ -301,14 +301,20 @@ function mapAddDocumentDetailsPageHeading(folderPath, documentId, appealType = '
 	const isChangedDescription = folderPath.endsWith(APPEAL_DOCUMENT_TYPE.CHANGED_DESCRIPTION);
 	const isAdverts =
 		appealType === APPEAL_TYPE.ADVERTISEMENT || appealType === APPEAL_TYPE.CAS_ADVERTISEMENT;
+	const isLpaEnforcementNotice = folderPath.endsWith(APPEAL_DOCUMENT_TYPE.LPA_ENFORCEMENT_NOTICE);
+
+	if (appealType === APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE && isLpaEnforcementNotice)
+		return 'Enforcement notice document';
 
 	if (folderIsAdditionalDocuments(folderPath)) {
 		return isExistingDocument ? 'Updated additional document' : 'Additional documents';
-	} else if (isChangedDescription) {
+	}
+	if (isChangedDescription) {
 		return isAdverts
 			? 'Agreement to change the description of the advertisement'
 			: 'Agreement to change the description of development';
-	} else if (isExistingDocument) {
+	}
+	if (isExistingDocument) {
 		return `Updated ${folderPathToFolderNameText(folderPath, false)} document`;
 	}
 
@@ -324,14 +330,20 @@ function mapManageFolderPageHeading(folderPath, appealType = '') {
 	const isChangedDescription = folderPath.endsWith(APPEAL_DOCUMENT_TYPE.CHANGED_DESCRIPTION);
 	const isAdverts =
 		appealType === APPEAL_TYPE.ADVERTISEMENT || appealType === APPEAL_TYPE.CAS_ADVERTISEMENT;
+	const isLpaEnforcementNotice = folderPath.endsWith(APPEAL_DOCUMENT_TYPE.LPA_ENFORCEMENT_NOTICE);
 
 	if (folderIsAdditionalDocuments(folderPath)) {
 		return 'Additional documents';
-	} else if (isChangedDescription) {
+	}
+
+	if (isChangedDescription) {
 		return isAdverts
 			? 'Agreement to change the description of the advertisement'
 			: 'Agreement to change the description of development';
 	}
+
+	if (appealType === APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE && isLpaEnforcementNotice)
+		return 'Enforcement notice documents';
 
 	return `${folderPathToFolderNameText(folderPath)} documents`;
 }
