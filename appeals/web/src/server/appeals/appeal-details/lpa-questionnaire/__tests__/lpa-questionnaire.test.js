@@ -1303,6 +1303,7 @@ describe('LPA Questionnaire review', () => {
 				'Is lawful development certificate appeal the correct type of appeal?</dt>'
 			);
 			expect(element.innerHTML).toContain('Planning permission</dt>');
+			expect(element.innerHTML).toContain('Enforcement notice</dt>');
 			expect(element.innerHTML).toContain('Related applications</dt>');
 			expect(element.innerHTML).toContain('Do you think the appeal is invalid?</dt>');
 

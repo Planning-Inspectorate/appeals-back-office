@@ -1463,6 +1463,11 @@ exports[`LPA Questionnaire review GET / should render the Ldc LPA Questionnaire 
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-planning-permission">Add<span class="govuk-visually-hidden"> Planning permission (1. Constraints, designations and other issues)</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Enforcement notice</dt>
+                            <dd class="govuk-summary-list__value">No documents</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-enforcement-notice">Add<span class="govuk-visually-hidden"> Enforcement notice (1. Constraints, designations and other issues)</span></a>
+                            </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Related applications</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-related-applications">Add<span class="govuk-visually-hidden"> Related applications (1. Constraints, designations and other issues)</span></a>
