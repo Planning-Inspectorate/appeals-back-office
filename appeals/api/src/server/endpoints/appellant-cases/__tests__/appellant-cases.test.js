@@ -1961,7 +1961,7 @@ describe('appellant cases routes', () => {
 					where: { appealId: id }
 				});
 
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
 					data: {
 						appealId: id,

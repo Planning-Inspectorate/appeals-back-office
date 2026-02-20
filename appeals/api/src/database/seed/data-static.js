@@ -20,6 +20,7 @@ import { importListedBuildingsDataset } from './seed-listed-buildings.js';
  * @typedef {import('@pins/appeals.api').Schema.AppellantCaseInvalidReason} AppellantCaseInvalidReason
  * @typedef {import('@pins/appeals.api').Schema.AppellantCaseEnforcementInvalidReason} AppellantCaseEnforcementInvalidReason
  * @typedef {import('@pins/appeals.api').Schema.AppellantCaseEnforcementMissingDocument} AppellantCaseEnforcementMissingDocument
+ * @typedef {import('@pins/appeals.api').Schema.AppellantCaseEnforcementGroundsMismatchFacts} AppellantCaseEnforcementGroundsMismatchFacts
  * @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaireValidationOutcome} LPAQuestionnaireValidationOutcome
  * @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaireIncompleteReason} LPAQuestionnaireIncompleteReason
  * @typedef {import('@pins/appeals.api').Schema.LPANotificationMethods} LPANotificationMethods
@@ -464,7 +465,68 @@ export const appellantCaseEnforcementMissingDocuments = [
 		hasText: true
 	}
 ];
-
+/**
+ * An array of appellant case enforcement Ground mismatches.
+ *
+ * @type {Pick<AppellantCaseEnforcementGroundsMismatchFacts, 'id' |'name' | 'hasText'>[]}
+ */
+export const appellantCaseEnforcementGroundsMismatchFacts = [
+	{
+		id: 1,
+		name: 'a',
+		hasText: true
+	},
+	{
+		id: 2,
+		name: 'b',
+		hasText: true
+	},
+	{
+		id: 3,
+		name: 'c',
+		hasText: true
+	},
+	{
+		id: 4,
+		name: 'd',
+		hasText: true
+	},
+	{
+		id: 5,
+		name: 'e',
+		hasText: true
+	},
+	{
+		id: 6,
+		name: 'f',
+		hasText: true
+	},
+	{
+		id: 7,
+		name: 'g',
+		hasText: true
+	},
+	{
+		id: 8,
+		name: 'h',
+		hasText: true
+	},
+	{
+		id: 9,
+		name: 'i',
+		hasText: true
+	},
+	{
+		id: 10,
+		name: 'j',
+		hasText: true
+	},
+	{
+		id: 11,
+		name: 'k',
+		hasText: true
+	}
+];
 /**
  * An array of LPA questionnaire validation outcomes.
  *
@@ -952,6 +1014,15 @@ export async function seedStaticData(databaseConnector) {
 			where: { id: appellantCaseEnforcementMissingDocument.id },
 			update: {
 				name: appellantCaseEnforcementMissingDocument.name
+			}
+		});
+	}
+	for (const appellantCaseEnforcementGroundsMismatchFact of appellantCaseEnforcementGroundsMismatchFacts) {
+		await databaseConnector.appellantCaseEnforcementGroundsMismatchFacts.upsert({
+			create: appellantCaseEnforcementGroundsMismatchFact,
+			where: { id: appellantCaseEnforcementGroundsMismatchFact.id },
+			update: {
+				name: appellantCaseEnforcementGroundsMismatchFact.name
 			}
 		});
 	}

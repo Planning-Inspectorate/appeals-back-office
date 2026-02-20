@@ -143,6 +143,7 @@ const updateAppellantCaseValidationOutcome = ({
 	otherLiveAppeals,
 	enforcementInvalidReasons,
 	enforcementMissingDocuments,
+	enforcementGroundsMismatchFacts,
 	groundAFeeReceiptDueDate
 }) => {
 	const transaction = [
@@ -260,7 +261,18 @@ const updateAppellantCaseValidationOutcome = ({
 			})
 		);
 	}
-
+	if (enforcementGroundsMismatchFacts) {
+		transaction.push(
+			...commonRepository.createIncompleteInvalidReasons({
+				id: appellantCaseId,
+				relationOne: 'appellantCaseId',
+				relationTwo: 'appellantCaseEnforcementGroundsMismatchFactsId',
+				manyToManyRelationTable: 'appellantCaseEnforcementGroundsMismatchFactsSelected',
+				incompleteInvalidReasonTextTable: 'appellantCaseEnforcementGroundsMismatchFactsText',
+				data: enforcementGroundsMismatchFacts
+			})
+		);
+	}
 	// @ts-ignore
 	const tx = databaseConnector.$transaction(transaction);
 	return tx;

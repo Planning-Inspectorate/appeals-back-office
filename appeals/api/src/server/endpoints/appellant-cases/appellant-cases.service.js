@@ -136,12 +136,12 @@ export const updateAppellantCaseValidationOutcome = async (
 		otherLiveAppeals,
 		enforcementInvalidReasons,
 		enforcementMissingDocuments,
+		enforcementGroundsMismatchFacts,
 		feeReceiptDueDate
 	} = data;
 	const teamEmail = await getTeamEmailFromAppealId(appealId);
 	const incompleteAppealDueDate =
 		appealDueDate || enforcementNoticeInvalid ? add(new Date(), { days: 7 }) : undefined;
-
 	const validationOutcomeData = {
 		appealId,
 		appellantCaseId,
@@ -153,6 +153,7 @@ export const updateAppellantCaseValidationOutcome = async (
 			...(enforcementNoticeInvalid && { enforcementNoticeInvalid }),
 			...(enforcementInvalidReasons && { enforcementInvalidReasons }),
 			...(enforcementMissingDocuments && { enforcementMissingDocuments }),
+			...(enforcementGroundsMismatchFacts && { enforcementGroundsMismatchFacts }),
 			...(feeReceiptDueDate && { groundAFeeReceiptDueDate: feeReceiptDueDate })
 		}),
 		...(isOutcomeInvalid(validationOutcome.name) && {
@@ -312,11 +313,13 @@ export const updateAppellantCaseValidationOutcome = async (
 				if (appellantCase?.appellantCaseEnforcementMissingDocumentsSelected?.length) {
 					reasonsToFormat.push('Missing information');
 				}
+				if (appellantCase?.appellantCaseEnforcementGroundsMismatchSelected?.length) {
+					reasonsToFormat.push('Grounds mismatch');
+				}
 
 				if (enforcementNoticeAppealOutcome.groundAFeeReceiptDueDate) {
 					reasonsToFormat.push('Ground (a) fee receipt due date');
 				}
-
 				const details = `${
 					stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['Appeal']) + '\n'
 				}${formatReasonsToHtmlList(reasonsToFormat)}`;
@@ -331,6 +334,9 @@ export const updateAppellantCaseValidationOutcome = async (
 					const missingDocumentOptions = await commonRepository.getLookupList(
 						'appellantCaseEnforcementMissingDocument'
 					);
+					const groundsMismatchOptions = await commonRepository.getLookupList(
+						'appellantCaseEnforcementGroundsMismatchFacts'
+					);
 					const personalisation = {
 						appeal_reference_number: appeal.reference,
 						site_address: siteAddress,
@@ -339,6 +345,12 @@ export const updateAppellantCaseValidationOutcome = async (
 							missing_documents: enforcementMissingDocuments.map(
 								(document) =>
 									`${missingDocumentOptions.find((option) => option.id === document.id)?.name}: ${document.text?.[0] || ''}`
+							)
+						}),
+						...(enforcementGroundsMismatchFacts && {
+							grounds_mismatch: enforcementGroundsMismatchFacts.map(
+								(ground) =>
+									`${groundsMismatchOptions.find((option) => option.id === ground.id)?.name}: ${ground.text?.[0] || ''}`
 							)
 						}),
 						...(updatedAppeal?.enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate && {

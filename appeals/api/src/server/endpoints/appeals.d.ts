@@ -323,6 +323,7 @@ interface UpdateAppellantCaseValidationOutcome {
 	otherLiveAppeals?: string;
 	enforcementInvalidReasons?: IncompleteInvalidReasons;
 	enforcementMissingDocuments?: IncompleteInvalidReasons;
+	enforcementGroundsMismatchFacts?: IncompleteInvalidReasons;
 	groundAFeeReceiptDueDate?: Date;
 }
 
@@ -350,6 +351,7 @@ interface UpdateAppellantCaseValidationOutcomeParams {
 		otherLiveAppeals?: string;
 		enforcementInvalidReasons?: IncompleteInvalidReasons;
 		enforcementMissingDocuments?: IncompleteInvalidReasons;
+		enforcementGroundsMismatchFacts?: IncompleteInvalidReasons;
 		feeReceiptDueDate?: Date;
 	};
 	validationOutcome: ValidationOutcome;

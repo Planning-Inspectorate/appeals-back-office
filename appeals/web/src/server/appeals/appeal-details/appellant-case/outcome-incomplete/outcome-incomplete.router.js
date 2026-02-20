@@ -16,19 +16,16 @@ import {
 	validateEnforcementNoticeReason,
 	validateEnforcementNoticeReasonTextItems
 } from '../../invalid-appeal/invalid-appeal.validators.js';
-import {
-	getEnforcementOtherInformation,
-	postEnforcementOtherInformation
-} from '../outcome-valid/outcome-valid.controller.js';
-import {
-	validateOtherInformation,
-	validateOtherInterestInLand
-} from '../outcome-valid/outcome-valid.validators.js';
+import groundsAndFactsRouter from '../grounds-facts-check/grounds-facts-check.router.js';
 import {
 	dateFieldNamePrefix,
 	feeReceiptDateFieldNamePrefix
 } from './outcome-incomplete.constants.js';
 import * as controller from './outcome-incomplete.controller.js';
+import {
+	getCheckDetailsAndMarkEnforcementAsIncomplete,
+	postCheckDetailsAndMarkEnforcementAsIncomplete
+} from './outcome-incomplete.controller.js';
 import * as validators from './outcome-incomplete.validators.js';
 
 const router = createRouter({ mergeParams: true });
@@ -41,6 +38,12 @@ router
 		validators.validateIncompleteReasonTextItems,
 		controller.postIncompleteReason
 	);
+
+router.use(
+	'/grounds-facts-check',
+	assertUserHasPermission(permissionNames.updateCase),
+	groundsAndFactsRouter
+);
 
 router
 	.route('/date')
@@ -69,14 +72,14 @@ router
 		postEnforcementNoticeReason
 	);
 
-router
-	.route('/enforcement-other-information')
-	.get(getEnforcementOtherInformation)
-	.post(
-		validateOtherInformation,
-		validateOtherInterestInLand,
-		asyncHandler(postEnforcementOtherInformation)
-	);
+// router
+// 	.route('/enforcement-other-information')
+// 	.get(getEnforcementOtherInformation)
+// 	.post(
+// 		validateOtherInformation,
+// 		validateOtherInterestInLand,
+// 		asyncHandler(postEnforcementOtherInformation)
+// 	);
 
 router
 	.route('/check-details-and-mark-enforcement-as-incomplete')
@@ -85,7 +88,13 @@ router
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(postCheckDetailsAndMarkEnforcementAsInvalid)
 	);
-
+router
+	.route('/check-details')
+	.get(getCheckDetailsAndMarkEnforcementAsIncomplete)
+	.post(
+		assertUserHasPermission(permissionNames.setCaseOutcome),
+		asyncHandler(postCheckDetailsAndMarkEnforcementAsIncomplete)
+	);
 router
 	.route('/missing-documents')
 	.get(controller.getMissingDocuments)

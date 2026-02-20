@@ -103,6 +103,7 @@ const patchAppellantCaseValidator = composeMiddleware(
 	validateStringParameter('enforcementNoticeInvalid'),
 	validateStringParameter('otherLiveAppeals'),
 	validateIncompleteInvalidReasonParameter('enforcementMissingDocuments'),
+	validateIncompleteInvalidReasonParameter('enforcementGroundsMismatch'),
 	validateDateParameter({
 		parameterName: 'feeReceiptDueDate',
 		mustBeFutureDate: true,
