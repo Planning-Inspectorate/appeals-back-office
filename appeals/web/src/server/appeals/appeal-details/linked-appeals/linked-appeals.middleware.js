@@ -1,6 +1,6 @@
 /** @type {import('express').RequestHandler} */
 export function initialiseLinkedAppealsSession(request, _, next) {
 	request.session.linkableAppeal ??= {};
-	next();
-	return;
+	delete request.session.leadAppeal;
+	return next();
 }
