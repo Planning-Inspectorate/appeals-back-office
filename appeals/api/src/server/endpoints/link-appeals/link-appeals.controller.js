@@ -25,13 +25,11 @@ import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED,
 	ERROR_LINKING_APPEALS,
-	ERROR_UNLINKING_APPEALS
+	ERROR_UNLINKING_APPEALS,
+	LINK_APPEALS_CHANGE_LEAD_OPERATION,
+	LINK_APPEALS_UNLINK_OPERATION
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
-import {
-	LINK_APPEALS_SWITCH_OPERATION,
-	LINK_APPEALS_UNLINK_OPERATION
-} from './link-appeals.constants.js';
 import {
 	canLinkAppeals,
 	checkAppealsStatusBeforeLPAQ,
@@ -382,7 +380,7 @@ export const updateLinkedAppeals = async (req, res) => {
 	}
 
 	switch (operation) {
-		case LINK_APPEALS_SWITCH_OPERATION: {
+		case LINK_APPEALS_CHANGE_LEAD_OPERATION: {
 			if (!isParentAppeal(appeal)) {
 				return res.status(400).send('Switching the lead is only valid for parent appeals');
 			}
@@ -390,7 +388,7 @@ export const updateLinkedAppeals = async (req, res) => {
 				return res
 					.status(400)
 					.send(
-						`Appeal to replace lead is required for "${LINK_APPEALS_SWITCH_OPERATION}" operation`
+						`Appeal to replace lead is required for "${LINK_APPEALS_CHANGE_LEAD_OPERATION}" operation`
 					);
 			}
 			break;
@@ -434,7 +432,7 @@ export const updateLinkedAppeals = async (req, res) => {
 		const options = { omitFolders };
 
 		switch (operation) {
-			case LINK_APPEALS_SWITCH_OPERATION: {
+			case LINK_APPEALS_CHANGE_LEAD_OPERATION: {
 				// @ts-ignore
 				await duplicateAllFiles(currentLead, appealToReplaceLead, options);
 				// @ts-ignore

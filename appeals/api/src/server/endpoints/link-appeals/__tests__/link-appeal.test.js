@@ -1,11 +1,12 @@
 // @ts-nocheck
 import { jest } from '@jest/globals';
-import { ERROR_NOT_FOUND, ERROR_UNLINKING_APPEALS } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
 import {
-	LINK_APPEALS_SWITCH_OPERATION,
+	ERROR_NOT_FOUND,
+	ERROR_UNLINKING_APPEALS,
+	LINK_APPEALS_CHANGE_LEAD_OPERATION,
 	LINK_APPEALS_UNLINK_OPERATION
-} from '../link-appeals.constants.js';
+} from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
 
 jest.resetModules();
 
@@ -337,7 +338,7 @@ describe('appeal linked appeals routes', () => {
 					expect(response.text).toEqual('Missing operation field');
 				});
 
-				test(`returns 400 when the operation is not "${LINK_APPEALS_SWITCH_OPERATION}" or "${LINK_APPEALS_UNLINK_OPERATION}"`, async () => {
+				test(`returns 400 when the operation is not "${LINK_APPEALS_CHANGE_LEAD_OPERATION}" or "${LINK_APPEALS_UNLINK_OPERATION}"`, async () => {
 					// @ts-ignore
 					databaseConnector.appeal.findUnique.mockResolvedValue({
 						...householdAppeal,
@@ -353,14 +354,14 @@ describe('appeal linked appeals routes', () => {
 					expect(response.text).toEqual('Invalid operation');
 				});
 
-				describe(`operation is "${LINK_APPEALS_SWITCH_OPERATION}"`, () => {
+				describe(`operation is "${LINK_APPEALS_CHANGE_LEAD_OPERATION}"`, () => {
 					test('returns 400 when the appeal is not linked', async () => {
 						// @ts-ignore
 						databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 						const response = await request
 							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
-							.send({ operation: LINK_APPEALS_SWITCH_OPERATION })
+							.send({ operation: LINK_APPEALS_CHANGE_LEAD_OPERATION })
 							.set('azureAdUserId', azureAdUserId);
 
 						expect(response.status).toEqual(400);
@@ -376,12 +377,12 @@ describe('appeal linked appeals routes', () => {
 
 						const response = await request
 							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
-							.send({ operation: LINK_APPEALS_SWITCH_OPERATION })
+							.send({ operation: LINK_APPEALS_CHANGE_LEAD_OPERATION })
 							.set('azureAdUserId', azureAdUserId);
 
 						expect(response.status).toEqual(400);
 						expect(response.text).toEqual(
-							'Appeal to replace lead is required for "switch" operation'
+							`Appeal to replace lead is required for "${LINK_APPEALS_CHANGE_LEAD_OPERATION}" operation`
 						);
 					});
 
@@ -398,7 +399,10 @@ describe('appeal linked appeals routes', () => {
 
 						const response = await request
 							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
-							.send({ operation: LINK_APPEALS_SWITCH_OPERATION, appealRefToReplaceLead: '456123' })
+							.send({
+								operation: LINK_APPEALS_CHANGE_LEAD_OPERATION,
+								appealRefToReplaceLead: '456123'
+							})
 							.set('azureAdUserId', azureAdUserId);
 
 						expect(response.status).toEqual(400);
@@ -419,7 +423,10 @@ describe('appeal linked appeals routes', () => {
 
 						const response = await request
 							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
-							.send({ operation: LINK_APPEALS_SWITCH_OPERATION, appealRefToReplaceLead: '456123' })
+							.send({
+								operation: LINK_APPEALS_CHANGE_LEAD_OPERATION,
+								appealRefToReplaceLead: '456123'
+							})
 							.set('azureAdUserId', azureAdUserId);
 
 						expect(response.status).toEqual(400);
@@ -445,7 +452,10 @@ describe('appeal linked appeals routes', () => {
 
 						const response = await request
 							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
-							.send({ operation: LINK_APPEALS_SWITCH_OPERATION, appealRefToReplaceLead: '456123' })
+							.send({
+								operation: LINK_APPEALS_CHANGE_LEAD_OPERATION,
+								appealRefToReplaceLead: '456123'
+							})
 							.set('azureAdUserId', azureAdUserId);
 
 						expect(databaseConnector.folder.findMany).toHaveBeenCalledTimes(
