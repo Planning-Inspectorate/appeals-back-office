@@ -17,12 +17,13 @@ export const mapQuestionnaireIn = (command, designatedSites) => {
 	const isAdverts = casedata.caseType === APPEAL_CASE_TYPE.H;
 	const isLDC = casedata.caseType === APPEAL_CASE_TYPE.X;
 	const isEnforcement = casedata.caseType === APPEAL_CASE_TYPE.C;
+	const isELB = casedata.caseType === APPEAL_CASE_TYPE.F;
 
 	//@ts-ignore
 	const listedBuildingsData = mapListedBuildings(
 		// @ts-ignore
 		casedata,
-		isS78 || isS20 || isAdverts || isLDC || isEnforcement
+		isS78 || isS20 || isAdverts || isLDC || isEnforcement || isELB
 	);
 
 	switch (casedata.caseType) {
@@ -63,7 +64,19 @@ export const mapQuestionnaireIn = (command, designatedSites) => {
 				...generateHasSchemaFields(casedata, listedBuildingsData),
 				//@ts-ignore
 				...generateS78SchemaFields(casedata, designatedSites),
-				...generateEnforcementSchemaFields(casedata)
+				...generateEnforcementCommonSchemaFields(casedata),
+				...generateEnforcementSpecificSchemaFields(casedata)
+				//@ts-ignore
+			};
+		case APPEAL_CASE_TYPE.F: // ENFORCEMENT LISTED BUILDING
+			return {
+				...generateCommonSchemaFields(casedata),
+				...generateHasSchemaFields(casedata, listedBuildingsData),
+				//@ts-ignore
+				...generateS78SchemaFields(casedata, designatedSites),
+				...generateEnforcementCommonSchemaFields(casedata),
+				preserveGrantLoan: casedata.preserveGrantLoan,
+				historicEnglandConsultation: casedata.consultHistoricEngland
 				//@ts-ignore
 			};
 		case APPEAL_CASE_TYPE.X: // LDC - schema includes common, HAS, S78 and LDC fields
@@ -212,27 +225,36 @@ const generateCasAdvertSchemaFields = (casedata, designatedSites) => {
 };
 
 /**
- *
- * @param {import('@planning-inspectorate/data-model').Schemas.LPAQEnforcementSubmissionProperties} casedata
+ * Common Enforcement properties shared between standard Enforcement (C) and ELB (F)
+ * @param {import('@planning-inspectorate/data-model').Schemas.LPAQEnforcementCommonSubmissionProperties} casedata
  * @returns
  */
-const generateEnforcementSchemaFields = (casedata) => {
+const generateEnforcementCommonSchemaFields = (casedata) => {
 	return {
-		// Add enforcement specific fields here when they are defined
 		noticeRelatesToBuildingEngineeringMiningOther:
 			casedata.noticeRelatesToBuildingEngineeringMiningOther,
 		siteAreaSquareMetres: casedata.siteAreaSquareMetres,
 		areaOfAllegedBreachInSquareMetres: casedata.areaOfAllegedBreachInSquareMetres,
 		floorSpaceCreatedByBreachInSquareMetres: casedata.floorSpaceCreatedByBreachInSquareMetres,
-		changeOfUseRefuseOrWaste: casedata.changeOfUseRefuseOrWaste,
-		changeOfUseMineralExtraction: casedata.changeOfUseMineralExtraction,
-		changeOfUseMineralStorage: casedata.changeOfUseMineralStorage,
 		relatesToErectionOfBuildingOrBuildings: casedata.relatesToErectionOfBuildingOrBuildings,
 		relatesToBuildingWithAgriculturalPurpose: casedata.relatesToBuildingWithAgriculturalPurpose,
-		relatesToBuildingSingleDwellingHouse: casedata.relatesToBuildingSingleDwellingHouse,
+		relatesToBuildingSingleDwellingHouse: casedata.relatesToBuildingSingleDwellingHouse
+	};
+};
+
+/**
+ * Properties specific to standard Enforcement (C)
+ * @param {import('@planning-inspectorate/data-model').Schemas.LPAQEnforcementSubmissionProperties} casedata
+ * @returns
+ */
+const generateEnforcementSpecificSchemaFields = (casedata) => {
+	return {
 		affectedTrunkRoadName: casedata.affectedTrunkRoadName,
 		isSiteOnCrownLand: casedata.isSiteOnCrownLand,
-		article4AffectedDevelopmentRights: casedata.article4AffectedDevelopmentRights
+		article4AffectedDevelopmentRights: casedata.article4AffectedDevelopmentRights,
+		changeOfUseRefuseOrWaste: casedata.changeOfUseRefuseOrWaste,
+		changeOfUseMineralExtraction: casedata.changeOfUseMineralExtraction,
+		changeOfUseMineralStorage: casedata.changeOfUseMineralStorage
 	};
 };
 

@@ -1,6 +1,7 @@
 import { contextEnum } from '#mappers/context-enum.js';
 import { mapCase } from '#mappers/mapper-factory.js';
 import { mocks } from '#tests/appeals/index.js';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 describe('appeals api mappers', () => {
 	test('should return undefined if no data', async () => {
@@ -287,5 +288,35 @@ describe('appeals integration mappers', () => {
 			'issueDateOfEnforcementNotice',
 			'2024-10-16T14:08:50.409Z'
 		);
+	});
+	test('should only map the lpaq fields for Enforcement Listed Building (ELB)', async () => {
+		const appealELB = {
+			...mocks.s78Appeal,
+			appealType: {
+				key: APPEAL_CASE_TYPE.F,
+				type: 'Enforcement listed building'
+			},
+			lpaQuestionnaire: {
+				preserveGrantLoan: true,
+				noticeRelatesToBuildingEngineeringMiningOther: true,
+				siteAreaSquareMetres: 100,
+				isSiteOnCrownLand: true
+			},
+			folders: []
+		};
+
+		// @ts-ignore
+		const elbLpaqOutput = mapCase({ appeal: appealELB, context: contextEnum.lpaQuestionnaire });
+
+		// ELB
+		expect(elbLpaqOutput).toHaveProperty('preserveGrantLoan', true);
+
+		// Common Enforcement
+		expect(elbLpaqOutput).toHaveProperty('noticeRelatesToBuildingEngineeringMiningOther', true);
+		expect(elbLpaqOutput).toHaveProperty('siteAreaSquareMetres', 100);
+
+		// Enforcement specific
+		expect(elbLpaqOutput).not.toHaveProperty('isSiteOnCrownLand');
+		expect(elbLpaqOutput).not.toHaveProperty('changeOfUseRefuseOrWaste');
 	});
 });

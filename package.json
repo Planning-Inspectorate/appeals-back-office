@@ -34,14 +34,14 @@
 	},
 	"dependencies": {
 		"@badeball/cypress-cucumber-preprocessor": "23.2.0",
-		"@planning-inspectorate/data-model": "^2.24.0",
+		"@planning-inspectorate/data-model": "^2.26.0",
 		"cypress": "15.3.0",
 		"got": "^12.5.2",
 		"joi": "^17.7.0",
 		"node-cache": "^5.1.2",
 		"nodemon": "3.0.3",
-    "turbo": "1.2.14"
-  },
+		"turbo": "1.2.14"
+	},
 	"devDependencies": {
 		"@commitlint/cli": "20.3.1",
 		"@commitlint/config-conventional": "20.3.1",
