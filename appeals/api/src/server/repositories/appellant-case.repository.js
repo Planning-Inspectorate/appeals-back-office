@@ -193,10 +193,10 @@ const updateAppellantCaseValidationOutcome = ({
 					appeal: {
 						connect: { id: appealId }
 					},
-					otherInformation,
-					enforcementNoticeInvalid,
-					otherLiveAppeals,
-					groundAFeeReceiptDueDate
+					otherInformation: otherInformation ?? null,
+					enforcementNoticeInvalid: enforcementNoticeInvalid ?? null,
+					otherLiveAppeals: otherLiveAppeals ?? null,
+					groundAFeeReceiptDueDate: groundAFeeReceiptDueDate ?? null
 				}
 			)
 		);
