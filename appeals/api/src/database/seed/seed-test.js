@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import { createPrismaClient } from '../create-client.js';
+import { seedStaticData } from './data-static.js';
 import { localPlanningDepartmentList } from './LPAs/dev.js';
 import { padsInspectorList } from './PADs/dev.js';
 import { seedLPAs } from './seed-lpas.js';
@@ -23,6 +24,7 @@ const seedTest = async () => {
 		await seedTeams(databaseConnector, teamsToCreate);
 		await seedLPAs(databaseConnector, localPlanningDepartmentList);
 		await seedPADSInspectors(databaseConnector, padsInspectorList);
+		await seedStaticData(databaseConnector, false);
 	} catch (error) {
 		console.error(error);
 		throw error;
