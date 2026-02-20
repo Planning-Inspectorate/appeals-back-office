@@ -265,7 +265,7 @@ export const addDocumentsToAppeal = async (upload, appeal, skipBlobValidation = 
 	}
 
 	const documentsCreated = documentsToSendToDatabase?.length
-		? await addDocumentAndVersion(appeal, documentsToSendToDatabase)
+		? await addDocumentAndVersion(appeal, documentsToSendToDatabase, skipBlobValidation)
 		: [];
 
 	for (const document of documentsCreated) {
@@ -286,14 +286,17 @@ export const addDocumentsToAppeal = async (upload, appeal, skipBlobValidation = 
 /**
  * @param {Appeal} appeal
  * @param {*[]} documents
+ * @param {boolean} [allowErrors]
  * @returns {Promise<(DocumentVersion | null)[]>}
  */
-const addDocumentAndVersion = async (appeal, documents) => {
+const addDocumentAndVersion = async (appeal, documents, allowErrors = false) => {
 	const { results } = await PromisePool.withConcurrency(5)
 		.for(documents)
 		.handleError((error, document) => {
 			logger.error(`Error while upserting document name "${document.name}" to database: ${error}`);
-			throw error;
+			if (!allowErrors) {
+				throw error;
+			}
 		})
 		.process(async (d) => {
 			const document = await addDocument(

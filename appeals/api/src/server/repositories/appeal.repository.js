@@ -31,6 +31,7 @@ const linkedAppealsInclude = isLinkedAppealsActive()
 			lpaQuestionnaire: { include: { lpaQuestionnaireValidationOutcome: true } },
 			appellantCase: { include: { appellantCaseValidationOutcome: true } },
 			inspectorDecision: true,
+			address: true,
 			appellant: { include: { address: true } },
 			agent: { include: { address: true } }
 		}

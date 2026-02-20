@@ -324,6 +324,108 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
 
 exports[`linked-appeals GET /linked-appeals/add/lead-appeal should render the change lead appeal page 1`] = `"<body class="govuk-template__body"><script nonce="EdcOUaJ8lczj9tIPO0lPow==">document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a><header class="govuk-header govuk-!-margin-bottom-0" id="pins-applications-header" role="banner" data-module="govuk-header"><div class="govuk-width-container"><div class="pins-row"><div class="pins-column--left"><div class="pins-header__logo"><i class="pins-header__logo-crown"></i></div><span>Planning Inspectorate</span></div><div class="pins-column--central"><h1 class="pins-header-domainname govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0"> Manage appeals</h1><nav class="govuk-header__navigation pins-header-navigation" aria-label="Menu"><ul class="govuk-header__navigation-list"><li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a></li><li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a></li><li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a></li></ul></nav></div></div></div></header><div class="govuk-width-container govuk-width-container"><div class="govuk-phase-banner"><p class="govuk-phase-banner__content"><strong class="govuk-tag govuk-phase-banner__content__tag"> Beta</strong><span class="govuk-phase-banner__text"> This is a new service. Help us improve it and <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzNVQjdaV0U0TDdTOE1LNktBT0w5NEQ1Vy4u" class="govuk-link" target="_blank" rel="noopener noreferrer">give your feedback (opens in a new tab)</a>.</span></p></div><a href="/appeals-service/appeal-details/1/linked-appeals/add" class="govuk-back-link">Back</a><main class="govuk-main-wrapper" id="main-content"><div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - add linked appeal</span></div></div><div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds"><div class="govuk-grid-row"><div class="govuk-grid-column-full"><form method="POST" novalidate="novalidate"><div class="govuk-form-group"><fieldset class="govuk-fieldset"><legend class="govuk-fieldset__legend govuk-fieldset__legend--l"><h1 class="govuk-fieldset__heading"> Which is the lead appeal?</h1></legend><div class="govuk-radios" data-module="govuk-radios"><div class="govuk-radios__item"><input class="govuk-radios__input" id="lead-appeal" name="lead-appeal" type="radio" value="APP/Q9999/D/21/351062"><label class="govuk-label govuk-radios__label" for="lead-appeal"><span>APP/Q9999/D/21/351062</span><br><span class="govuk-hint">21 The Pavement</span><br><span class="govuk-hint">Householder</span></label></div><div class="govuk-radios__item"><input class="govuk-radios__input" id="lead-appeal-2" name="lead-appeal" type="radio" value="TEST-12345"><label class="govuk-label govuk-radios__label" for="lead-appeal-2"><span>TEST-12345</span><br><span class="govuk-hint">96 The Avenue</span><br><span class="govuk-hint">Householder</span></label></div></div></fieldset></div><button type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button"> Continue</button></form></div></div></div></div></main></div><footer class="govuk-footer" role="contentinfo"><div class="govuk-width-container "><div class="govuk-footer__meta"><div class="govuk-footer__meta-item govuk-footer__meta-item"></div></div></div></footer></body>"`;
 
+exports[`linked-appeals GET /linked-appeals/change-lead-appeal should render the change lead appeal page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 (lead) - update lead appeal</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Which is the new lead appeal?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="lead-appeal" name="leadAppeal"
+                                        type="radio" value="2" aria-describedby="lead-appeal-item-hint" data-cy="725284">
+                                        <label class="govuk-label govuk-radios__label" for="lead-appeal">725284</label>
+                                        <div id="lead-appeal-item-hint" class="govuk-hint govuk-radios__hint"><span>10 Sunny Lane</span><span>Householder</span>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="lead-appeal-2" name="leadAppeal"
+                                        type="radio" value="3" aria-describedby="lead-appeal-2-item-hint" data-cy="76215416">
+                                        <label class="govuk-label govuk-radios__label" for="lead-appeal-2">76215416</label>
+                                        <div id="lead-appeal-2-item-hint" class="govuk-hint govuk-radios__hint"><span>12 Evening Road</span><span>Unknown</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`linked-appeals GET /linked-appeals/confirm-change-lead-appeal should render the confirm change lead appeal page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 (lead) - update lead appeal</span>
+            <h1             class="govuk-heading-l">Check details and update lead appeal</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which is the new lead appeal?</dt>
+                    <dd                     class="govuk-summary-list__value"><span>725284</span><span>10 Sunny Lane</span><span>Householder</span>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/change-lead-appeal">Change<span class="govuk-visually-hidden"> lead appeal</span></a>
+                        </dd>
+                </div>
+            </dl>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Update lead appeal</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`linked-appeals GET /linked-appeals/confirm-unlink-lead-appeal should render the confirm unlink lead appeal page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 (lead) - unlink lead appeal</span>
+            <h1             class="govuk-heading-l">Check details and unlink lead appeal</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which is the new lead appeal?</dt>
+                    <dd                     class="govuk-summary-list__value"><span>725284</span><span>10 Sunny Lane</span><span>Householder</span>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/unlink-lead-appeal">Change<span class="govuk-visually-hidden"> lead appeal</span></a>
+                        </dd>
+                </div>
+            </dl>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Unlink lead appeal</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`linked-appeals GET /linked-appeals/manage should render the manage linked appeals page with the expected content 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -344,7 +446,7 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
                 <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 3 5 1 0 6 2"
                     data-cy="APP/Q9999/D/21/351062">351062</a> (lead)
                     <br>Householder</td>
-                <td class="govuk-table__cell govuk-!-text-align-right"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="select-lead-appeal">Unlink<span class="govuk-visually-hidden"> appeal 3 5 1 0 6 2</span></a>
+                <td class="govuk-table__cell govuk-!-text-align-right"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="unlink-lead-appeal">Unlink<span class="govuk-visually-hidden"> appeal 3 5 1 0 6 2</span></a>
                 </td>
             </tr>
             <tr class="govuk-table__row">
@@ -380,6 +482,50 @@ exports[`linked-appeals GET /linked-appeals/unlink-appeal should render the unli
                     <form method="post" novalidate="novalidate">
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`linked-appeals GET /linked-appeals/unlink-lead-appeal should render the unlink lead appeal page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 (lead) - unlink lead appeal</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Which is the new lead appeal?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="lead-appeal" name="leadAppeal"
+                                        type="radio" value="2" aria-describedby="lead-appeal-item-hint" data-cy="725284">
+                                        <label class="govuk-label govuk-radios__label" for="lead-appeal">725284</label>
+                                        <div id="lead-appeal-item-hint" class="govuk-hint govuk-radios__hint"><span>10 Sunny Lane</span><span>Householder</span>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="lead-appeal-2" name="leadAppeal"
+                                        type="radio" value="3" aria-describedby="lead-appeal-2-item-hint" data-cy="76215416">
+                                        <label class="govuk-label govuk-radios__label" for="lead-appeal-2">76215416</label>
+                                        <div id="lead-appeal-2-item-hint" class="govuk-hint govuk-radios__hint"><span>12 Evening Road</span><span>Unknown</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
                     </form>
                 </div>
             </div>
