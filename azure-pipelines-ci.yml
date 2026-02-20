@@ -183,7 +183,7 @@ extends:
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
-              script: npm --prefix ./appeals/api run db:seed
+              script: npm --prefix ./appeals/api run db:seed:test
               environmentVariables:
                 NODE_ENV: development
                 DATABASE_URL: "sqlserver://127.0.0.1:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true"
