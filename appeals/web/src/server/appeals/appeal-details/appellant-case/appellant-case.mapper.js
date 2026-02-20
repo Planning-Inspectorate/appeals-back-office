@@ -21,6 +21,7 @@ import {
 } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { objectContainsAllValues } from '#lib/object-utilities.js';
 import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
 import { mapReasonOptionsToCheckboxItemParameters } from '#lib/validation-outcome-reasons-formatter.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
@@ -330,7 +331,11 @@ export function updateDueDatePage(
 		year: dueDateYear
 	};
 
-	if (!errorsOnPage && appealData.documentationSummary.appellantCase?.dueDate) {
+	if (
+		!errorsOnPage &&
+		!objectContainsAllValues(existingDueDateDayMonthYear) &&
+		appealData.documentationSummary.appellantCase?.dueDate
+	) {
 		const existingDueDate = dateISOStringToDayMonthYearHourMinute(
 			appealData.documentationSummary.appellantCase?.dueDate
 		);

@@ -5,8 +5,10 @@ import { mapCommunityInfrastructureLevy } from './submappers/map-community-infra
 import { mapHasCommunityInfrastructureLevy } from './submappers/map-has-community-infrastructure-levy.js';
 import { mapInfrastructureLevyAdoptedDate } from './submappers/map-infrastructure-levy-adopted-date.js';
 import { mapInfrastructureLevyExpectedDate } from './submappers/map-infrastructure-levy-expected-date.js';
+import { mapIsAppealInvalid } from './submappers/map-is-appeal-invalid.js';
 import { mapIsInfrastructureLevyFormallyAdopted } from './submappers/map-is-infrastructure-levy-formally-adopted.js';
 import { mapOtherAppeals } from './submappers/map-other-appeals.js';
+import { mapPlanningPermission } from './submappers/map-planning-permission-ldc.js';
 import { mapProcedurePreferenceDetails } from './submappers/map-procedure-preference-details.js';
 import { mapProcedurePreferenceDuration } from './submappers/map-procedure-preference-duration.js';
 import { mapProcedurePreference } from './submappers/map-procedure-preference.js';
@@ -15,20 +17,26 @@ import { mapSiteAccess } from './submappers/map-site-access.js';
 
 export const submaps = {
 	...hasSubmaps,
+	//Section 1
+	appealUnderActSection: mapAppealUnderActSection,
+	planningPermission: mapPlanningPermission,
+	lpaConsiderAppealInvalid: mapIsAppealInvalid,
+
+	//Section 2
 	hasCommunityInfrastructureLevy: mapHasCommunityInfrastructureLevy,
 	communityInfrastructureLevy: mapCommunityInfrastructureLevy,
 	isInfrastructureLevyFormallyAdopted: mapIsInfrastructureLevyFormallyAdopted,
 	infrastructureLevyAdoptedDate: mapInfrastructureLevyAdoptedDate,
 	infrastructureLevyExpectedDate: mapInfrastructureLevyExpectedDate,
 
+	//Section 3
 	siteAccess: mapSiteAccess,
 	reasonForNeighbourVisits: mapReasonForNeighbourVisits,
 	lpaNeighbouringSites: mapLpaNeighbouringSites,
 
+	//Section 4
 	procedurePreference: mapProcedurePreference,
 	procedurePreferenceDetails: mapProcedurePreferenceDetails,
 	procedurePreferenceDuration: mapProcedurePreferenceDuration,
-	otherAppeals: mapOtherAppeals,
-
-	appealUnderActSection: mapAppealUnderActSection
+	otherAppeals: mapOtherAppeals
 };

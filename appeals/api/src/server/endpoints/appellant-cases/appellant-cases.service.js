@@ -85,11 +85,14 @@ export const checkAppellantCaseExists = (req, res, next) => {
  */
 export const updateAppellantCaseData = async (appellantCaseId, data, appeal) => {
 	await appellantCaseRepository.updateAppellantCaseById(appellantCaseId, data);
-	// Only sync the child appellant case with the parent when the appeal type is enforcement notice
-	if (!isParentAppeal(appeal) || appeal.appealType?.type !== APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+	// Only sync the child appellant case with the parent when the appeal type is enforcement notice or enforcement listed building
+	if (
+		!isParentAppeal(appeal) ||
+		appeal.appealType?.type !== APPEAL_TYPE.ENFORCEMENT_NOTICE ||
+		appeal.appealType?.type !== APPEAL_TYPE.ENFORCEMENT_NOTICE
+	) {
 		return;
 	}
-	// Strip out any fields that are independent of the parent appeal
 	// eslint-disable-next-line no-unused-vars
 	const { interestInLand, writtenOrVerbalPermission, ...childData } = data;
 
@@ -512,13 +515,21 @@ export const updateAppellantCaseValidationOutcome = async (
 					throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 				}
 
+				const GROUND_A_BARRED_REASON_ID = 7;
+
 				const personalisation = {
 					appeal_reference_number: appeal.reference,
 					enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
 					site_address: siteAddress,
 					reasons: invalidReasonsList,
-					other_info: otherInformation || '',
-					team_email_address: teamEmail
+					team_email_address: teamEmail,
+					ground_a_barred: reasonsToFormat.some(
+						(reason) => reason.appellantCaseInvalidReasonId === GROUND_A_BARRED_REASON_ID
+					),
+					other_live_appeals: !!(otherLiveAppeals === 'yes'),
+					effective_date: updatedAppeal.appellantCase?.enforcementEffectiveDate
+						? formatDate(new Date(updatedAppeal.appellantCase.enforcementEffectiveDate), false)
+						: undefined
 				};
 
 				await notifySend({

@@ -23,16 +23,6 @@ router
 	);
 
 router
-	.route('/estimation')
-	.get(asyncHandler(controller.getChangeHearingEstimation))
-	.post(
-		validators.validateYesNoInput,
-		validators.validateEstimationInput,
-		saveBodyToSession('changeHearing'),
-		asyncHandler(controller.postChangeHearingEstimation)
-	);
-
-router
 	.route('/address')
 	.get(asyncHandler(controller.getChangeHearingAddress))
 	.post(

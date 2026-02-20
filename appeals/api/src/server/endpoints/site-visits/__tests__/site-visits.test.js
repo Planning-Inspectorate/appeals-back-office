@@ -27,6 +27,7 @@ import {
 	casPlanningAppeal as casPlanningAppealData,
 	fullPlanningAppeal as fullPlanningAppealData,
 	householdAppeal as householdAppealData,
+	ldcAppeal,
 	listedBuildingAppeal as listedBuildingAppealData
 } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
@@ -395,7 +396,8 @@ describe('site visit routes', () => {
 				['casPlanningAppeal', casPlanningAppealData],
 				['casAdvertAppeal', casAdvertAppealData],
 				['fullPlanningAppeal', fullPlanningAppealData],
-				['listedBuildingAppeal', listedBuildingAppealData]
+				['listedBuildingAppeal', listedBuildingAppealData],
+				['ldcAppeal', ldcAppeal]
 			])('create site visit for appeal type %s', (_, appeal) => {
 				test('creates an Unaccompanied site visit and sends notify email to appellant/agent', async () => {
 					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
@@ -1587,7 +1589,8 @@ describe('site visit routes', () => {
 				['casPlanningAppeal', casPlanningAppealData],
 				['casAdvertAppeal', casAdvertAppealData],
 				['fullPlanningAppeal', fullPlanningAppealData],
-				['listedBuildingAppeal', listedBuildingAppealData]
+				['listedBuildingAppeal', listedBuildingAppealData],
+				['ldcAppeal', ldcAppeal]
 			])('site visit updates for appeal type: %s', (_, appeal) => {
 				test('updates a site visit from Unaccompanied to Access Required with visit-type change, sends notify emails', async () => {
 					const { siteVisit } = JSON.parse(JSON.stringify(appeal));

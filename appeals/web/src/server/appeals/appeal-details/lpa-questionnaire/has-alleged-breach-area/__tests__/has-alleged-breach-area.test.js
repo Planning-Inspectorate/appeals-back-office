@@ -33,7 +33,7 @@ describe('has-alleged-breach-area', () => {
 	describe('POST /change', () => {
 		it('should re-direct to LPA questionnaire if "yes"', async () => {
 			const validData = {
-				hasAllegedBreachAreaRadio: 'yes'
+				areaOfAllegedBreachInSquareMetresRadio: 'yes'
 			};
 
 			nock('http://test/')
@@ -52,7 +52,8 @@ describe('has-alleged-breach-area', () => {
 
 		it('should re-direct to LPA questionnaire if "no"', async () => {
 			const validData = {
-				hasAllegedBreachAreaRadio: 'no'
+				areaOfAllegedBreachInSquareMetresRadio: 'no',
+				areaOfAllegedBreachInSquareMetres: '25'
 			};
 
 			nock('http://test/')

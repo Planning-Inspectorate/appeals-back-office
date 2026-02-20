@@ -298,13 +298,19 @@ export const importLpaqSubmission = async (req, res) => {
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
  * @param {string} templateName
+ * @param {boolean} sendToAppellant
+ * @param {boolean} sendToLPA
+ * @param {boolean} sendToRule6Parties
  * @returns {Promise<void>}
  */
 export const sendRepresentationReceivedNotifications = async (
 	appeal,
 	notifyClient,
 	azureAdUserId,
-	templateName
+	templateName,
+	sendToAppellant = true,
+	sendToLPA = true,
+	sendToRule6Parties = true
 ) => {
 	const basePersonalisation = {
 		appeal_reference_number: appeal.reference,
@@ -317,23 +323,33 @@ export const sendRepresentationReceivedNotifications = async (
 			: 'Not yet scheduled'
 	};
 
-	const recipients = [
-		{
+	const recipients = [];
+
+	if (sendToAppellant) {
+		recipients.push({
 			email: appeal.agent?.email || appeal.appellant?.email,
 			path: `appeals/${appeal.reference}`,
 			role: 'appellant'
-		},
-		{
+		});
+	}
+
+	if (sendToLPA) {
+		recipients.push({
 			email: appeal.lpa?.email,
 			path: `manage-appeals/${appeal.reference}`,
 			role: 'LPA'
-		},
-		...(appeal.appealRule6Parties || []).map((party) => ({
-			email: party.serviceUser?.email,
-			path: `rule-6/${appeal.reference}`,
-			role: 'Rule 6 party'
-		}))
-	];
+		});
+	}
+
+	if (sendToRule6Parties) {
+		recipients.push(
+			...(appeal.appealRule6Parties || []).map((party) => ({
+				email: party.serviceUser?.email,
+				path: `rule-6/${appeal.reference}`,
+				role: 'Rule 6 party'
+			}))
+		);
+	}
 
 	await Promise.all(
 		recipients
@@ -466,6 +482,15 @@ export const importRepresentation = async (req, res) => {
 			req.notifyClient,
 			azureAdUserId,
 			'rule-6-party-proof-of-evidence-received'
+		);
+	}
+
+	if (repType === 'appellant_statement') {
+		await sendRepresentationReceivedNotifications(
+			req.appeal,
+			req.notifyClient,
+			azureAdUserId,
+			'appellant-statement-received'
 		);
 	}
 

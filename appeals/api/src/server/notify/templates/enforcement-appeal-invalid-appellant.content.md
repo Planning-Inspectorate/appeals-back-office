@@ -8,7 +8,7 @@ Enforcement notice reference: {{enforcement_reference}}
 
 # Why the appeal is invalid
 {{reasons}}
-{%- if groundAbarred %}
+{%- if ground_a_barred %}
 
 # Ground (a) barred
 We cannot consider ground (a) because the enforcement notice was issued:
@@ -21,11 +21,11 @@ Your appeal does not meet the requirements for this ground from section 174(2A t
 # What happens next
 Your appeal is now closed.  We have told the local planning authority.
 
-{%- if otherLiveAppeals %}
+{%- if other_live_appeals %}
 The enforcement notice will not take effect unless we dismiss the other appeal or someone withdraws it.
 {%- else %}
 The compliance period for the enforcement notice starts from {{effective_date}}.
 {%- endif %}
 
 Planning Inspectorate
-{{case_team_email_address}}
+{{team_email_address}}

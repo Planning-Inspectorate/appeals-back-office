@@ -157,7 +157,6 @@ interface UpdateAppealRequest {
 	agent?: number | null;
 	procedureTypeId?: number | null;
 	hearingStartTime?: string;
-	hearingEstimatedDays?: number;
 }
 
 interface SingleAppellantCaseResponse {
@@ -463,9 +462,10 @@ interface SingleLPAQuestionnaireResponse {
 	isSiteOnCrownLand?: boolean | null;
 	article4AffectedDevelopmentRights?: string | null;
 	siteAreaSquareMetres?: number | null;
-	hasAllegedBreachArea?: boolean | null;
-	doesAllegedBreachCreateFloorSpace?: boolean | null;
+	areaOfAllegedBreachInSquareMetres?: number | null;
+	floorSpaceCreatedByBreachInSquareMetres?: number | null;
 	appealUnderActSection?: string | null;
+	lpaConsiderAppealInvalid?: boolean;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -504,12 +504,13 @@ interface UpdateLPAQuestionnaireRequest {
 	wasApplicationRefusedDueToHighwayOrTraffic?: boolean;
 	didAppellantSubmitCompletePhotosAndPlans?: boolean;
 	appealUnderActSection?: string | null;
+	lpaConsiderAppealInvalid?: boolean;
 
 	// Enforcement
 	noticeRelatesToBuildingEngineeringMiningOther?: boolean | null;
 	siteAreaSquareMetres?: number | null;
-	hasAllegedBreachArea?: boolean | null;
-	doesAllegedBreachCreateFloorSpace?: boolean | null;
+	areaOfAllegedBreachInSquareMetres?: number | null;
+	floorSpaceCreatedByBreachInSquareMetres?: number | null;
 	changeOfUseRefuseOrWaste?: boolean | null;
 	changeOfUseMineralExtraction?: boolean | null;
 	changeOfUseMineralStorage?: boolean | null;
@@ -606,7 +607,6 @@ interface Hearing {
 	hearingId: number;
 	hearingStartTime: string;
 	hearingEndTime?: string;
-	estimatedDays?: number;
 	addressId?: number;
 	address: Schema.Address;
 }
@@ -1073,7 +1073,6 @@ type CreateHearing = {
 	appealId: number;
 	hearingStartTime: Date | string;
 	hearingEndTime: Date | string | undefined;
-	estimatedDays: string | undefined;
 	address: Omit<Schema.Address, 'id'> | undefined;
 };
 
@@ -1109,7 +1108,6 @@ type UpdateHearing = {
 	hearingId: number;
 	hearingStartTime: Date | string;
 	hearingEndTime: Date | string | undefined;
-	estimatedDays: number | undefined;
 	addressId?: number;
 	address?: Omit<Schema.Address, 'id'> | null;
 };
@@ -1126,7 +1124,6 @@ type HearingResponse = {
 	hearingEndTime: Date | null;
 	address: Schema.Address | null;
 	addressId: number | null;
-	estimatedDays: number | undefined | null;
 };
 
 type InquiryResponse = {

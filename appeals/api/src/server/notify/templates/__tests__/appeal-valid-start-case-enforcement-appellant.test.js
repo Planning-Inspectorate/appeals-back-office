@@ -24,7 +24,8 @@ describe('appeal-valid-start-case-enforcement-appellant.md', () => {
 				final_comments_deadline: '30 January 2025',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
 				enforcement_reference: '12345/ENF/1234/1234',
-				appeal_grounds: ['a']
+				appeal_grounds: ['a'],
+				front_office_url: '/mock-front-office-url'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',
@@ -70,7 +71,7 @@ describe('appeal-valid-start-case-enforcement-appellant.md', () => {
 			'',
 			'# What happens next',
 			'',
-			'Email a copy of your appeal statement to caseofficers@planninginspectorate.gov.uk by 10 January 2025. You will be able to view this in your appeal details.',
+			'You need to [submit your statement](/mock-front-office-url) by 10 January 2025.',
 			'',
 			'We will send you an email when you can view information from other parties in the appeals service.',
 			'',
@@ -125,7 +126,8 @@ describe('appeal-valid-start-case-enforcement-appellant.md', () => {
 				final_comments_deadline: '30 January 2025',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
 				enforcement_reference: '12345/ENF/1234/1234',
-				appeal_grounds: ['a', 'b']
+				appeal_grounds: ['a', 'b'],
+				front_office_url: '/mock-front-office-url'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',
@@ -172,7 +174,7 @@ describe('appeal-valid-start-case-enforcement-appellant.md', () => {
 			'',
 			'# What happens next',
 			'',
-			'Email a copy of your appeal statement to caseofficers@planninginspectorate.gov.uk by 10 January 2025. You will be able to view this in your appeal details.',
+			'You need to [submit your statement](/mock-front-office-url) by 10 January 2025.',
 			'',
 			'We will send you an email when you can view information from other parties in the appeals service.',
 			'',
@@ -228,7 +230,8 @@ describe('appeal-valid-start-case-enforcement-appellant.md', () => {
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
 				enforcement_reference: '12345/ENF/1234/1234',
 				appeal_grounds: ['a'],
-				planning_obligation_deadline: '25 January 2025'
+				planning_obligation_deadline: '25 January 2025',
+				front_office_url: '/mock-front-office-url'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',
@@ -278,7 +281,7 @@ describe('appeal-valid-start-case-enforcement-appellant.md', () => {
 			'',
 			'# What happens next',
 			'',
-			'Email a copy of your appeal statement to caseofficers@planninginspectorate.gov.uk by 10 January 2025. You will be able to view this in your appeal details.',
+			'You need to [submit your statement](/mock-front-office-url) by 10 January 2025.',
 			'',
 			'We will send you an email when you can view information from other parties in the appeals service.',
 			'',
@@ -335,7 +338,8 @@ describe('appeal-valid-start-case-enforcement-appellant.md', () => {
 				we_will_email_when: 'as this is a test',
 				enforcement_reference: '12345/ENF/1234/1234',
 				appeal_grounds: ['a'],
-				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+				front_office_url: '/mock-front-office-url'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',
@@ -383,7 +387,7 @@ describe('appeal-valid-start-case-enforcement-appellant.md', () => {
 			'',
 			'# What happens next',
 			'',
-			'Email a copy of your appeal statement to caseofficers@planninginspectorate.gov.uk by 10 January 2025. You will be able to view this in your appeal details.',
+			'You need to [submit your statement](/mock-front-office-url) by 10 January 2025.',
 			'',
 			'We will send you an email when you can view information from other parties in the appeals service.',
 			'',
@@ -439,7 +443,8 @@ describe('appeal-valid-start-case-enforcement-appellant.md', () => {
 				child_appeals: ['111111', '222222', '333333', '444444', '555555'],
 				appeal_grounds: ['a'],
 				enforcement_reference: '12345/ENF/1234/1234',
-				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+				front_office_url: '/mock-front-office-url'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',
@@ -492,7 +497,7 @@ describe('appeal-valid-start-case-enforcement-appellant.md', () => {
 			'',
 			'# What happens next',
 			'',
-			'Email a copy of your appeal statement to caseofficers@planninginspectorate.gov.uk by 10 January 2025. You will be able to view this in your appeal details.',
+			'You need to [submit your statement](/mock-front-office-url) by 10 January 2025.',
 			'',
 			'We will send you an email when you can view information from other parties in the appeals service.',
 			'',

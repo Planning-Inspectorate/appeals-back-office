@@ -1458,6 +1458,17 @@ exports[`LPA Questionnaire review GET / should render the Ldc LPA Questionnaire 
                                     data-cy="change-appeal-under-act-section">Change<span class="govuk-visually-hidden"> What type of lawful development certificate is the appeal about? (1. Constraints, designations and other issues)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning permission</dt>
+                            <dd class="govuk-summary-list__value">No documents</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-planning-permission">Add<span class="govuk-visually-hidden"> Planning permission (1. Constraints, designations and other issues)</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you think the appeal is invalid?</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/is-appeal-invalid/change"
+                                    data-cy="change-is-appeal-invalid">Change<span class="govuk-visually-hidden"> Do you think the appeal is invalid? (1. Constraints, designations and other issues)</span></a>
+                                </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -1676,15 +1687,8 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Does the development change a listed building?</dt>
                             <dd                             class="govuk-summary-list__value">No</dd>
-                                <dd class="govuk-summary-list__actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/changed-listed-buildings/manage"
-                                            lpaQuestionnaireData-cy="manage--listed-building">Change<span class="govuk-visually-hidden"> changed listed building (1. Constraints, designations and other issues)</span></a>
-                                        </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/changed-listed-buildings/add"
-                                            lpaQuestionnaireData-cy="add-changed-listed-building">Add<span class="govuk-visually-hidden"> changed listed building (1. Constraints, designations and other issues)</span></a>
-                                        </li>
-                                    </ul>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/changed-listed-buildings/add"
+                                    lpaQuestionnaireData-cy="add-changed-listed-building">Add<span class="govuk-visually-hidden"> changed listed building (1. Constraints, designations and other issues)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Does the development affect the setting of listed buildings?</dt>
@@ -2190,15 +2194,8 @@ exports[`LPA Questionnaire review GET / should render the advert LPA Questionnai
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Does the development change a listed building?</dt>
                             <dd                             class="govuk-summary-list__value">No</dd>
-                                <dd class="govuk-summary-list__actions">
-                                    <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/changed-listed-buildings/manage"
-                                            lpaQuestionnaireData-cy="manage--listed-building">Change<span class="govuk-visually-hidden"> changed listed building (1. Constraints, designations and other issues)</span></a>
-                                        </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/changed-listed-buildings/add"
-                                            lpaQuestionnaireData-cy="add-changed-listed-building">Add<span class="govuk-visually-hidden"> changed listed building (1. Constraints, designations and other issues)</span></a>
-                                        </li>
-                                    </ul>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/changed-listed-buildings/add"
+                                    lpaQuestionnaireData-cy="add-changed-listed-building">Add<span class="govuk-visually-hidden"> changed listed building (1. Constraints, designations and other issues)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Does the development affect the setting of listed buildings?</dt>

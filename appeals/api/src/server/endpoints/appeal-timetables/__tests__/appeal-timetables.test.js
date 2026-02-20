@@ -5,6 +5,7 @@ import {
 	enforcementNoticeAppeal,
 	fullPlanningAppeal,
 	householdAppeal,
+	ldcAppeal,
 	listedBuildingAppealAppellantCaseValid
 } from '#tests/appeals/mocks.js';
 import {
@@ -13,6 +14,7 @@ import {
 	casPlanningAppealWithTimetable,
 	fullPlanningAppealWithTimetable,
 	houseAppealWithTimetable,
+	ldcAppealWithTimetable,
 	listedBuildingAppealWithTimetable
 } from '#tests/appeals/timetableMocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
@@ -659,6 +661,18 @@ describe('appeal timetables routes', () => {
 					{}
 				],
 				[
+					'ldcAppeal',
+					ldcAppealWithTimetable,
+					{
+						finalCommentsDueDate: '2024-08-07T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-17T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-17T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-17T22:59:00.000Z'
+					},
+					{}
+				],
+				[
 					'fullPlanningAppeal',
 					fullPlanningAppealWithTimetable,
 					{
@@ -915,6 +929,18 @@ describe('appeal timetables routes', () => {
 					{}
 				],
 				[
+					'ldcAppeal',
+					ldcAppealWithTimetable,
+					{
+						finalCommentsDueDate: '2024-08-05T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-15T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-17T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-15T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-15T22:59:00.000Z'
+					},
+					{}
+				],
+				[
 					'fullPlanningAppeal',
 					fullPlanningAppealWithTimetable,
 					{
@@ -1054,6 +1080,19 @@ describe('appeal timetables routes', () => {
 				[
 					'advertisementAppeal',
 					advertisementAppeal,
+					'appeal-valid-start-case-advertisement-appellant',
+					'appeal-valid-start-case-advertisement-lpa',
+					{
+						lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-17T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-17T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-17T22:59:00.000Z',
+						finalCommentsDueDate: '2024-08-07T22:59:00.000Z'
+					}
+				],
+				[
+					'lcdAppeal',
+					ldcAppeal,
 					'appeal-valid-start-case-advertisement-appellant',
 					'appeal-valid-start-case-advertisement-lpa',
 					{
@@ -1285,6 +1324,23 @@ describe('appeal timetables routes', () => {
 					'appeal-valid-start-case-advertisement-lpa',
 					'appeal-valid-start-case-advertisement-appellant-hearing',
 					'appeal-valid-start-case-advertisement-lpa-hearing'
+				],
+				[
+					'ldcAppeal',
+					{ ...ldcAppeal, procedureType: { key: 'hearing' } },
+					{
+						finalCommentsDueDate: '2024-08-07T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-17T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-17T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-17T22:59:00.000Z',
+						statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
+					},
+					{},
+					'appeal-valid-start-case-advertisement-appellant',
+					'appeal-valid-start-case-advertisement-lpa',
+					'appeal-valid-start-case-advertisement-appellant-hearing',
+					'appeal-valid-start-case-advertisement-lpa-hearing'
 				]
 			])(
 				'for a %s appeal',
@@ -1434,11 +1490,7 @@ describe('appeal timetables routes', () => {
 						const { id } = appeal;
 						const response = await request
 							.post(`/appeals/${id}/appeal-timetables/`)
-							.send({
-								procedureType: 'hearing',
-								hearingStartTime: '2024-07-10T13:45:00.000Z',
-								hearingEstimatedDays: 8
-							})
+							.send({ procedureType: 'hearing', hearingStartTime: '2024-07-10T13:45:00.000Z' })
 							.set('azureAdUserId', azureAdUserId);
 
 						expect(response.status).toEqual(201);
@@ -1458,11 +1510,9 @@ describe('appeal timetables routes', () => {
 								hearing: {
 									upsert: {
 										create: {
-											estimatedDays: 8,
 											hearingStartTime: '2024-07-10T13:45:00.000Z'
 										},
 										update: {
-											estimatedDays: 8,
 											hearingStartTime: '2024-07-10T13:45:00.000Z'
 										},
 										where: {
@@ -1530,7 +1580,6 @@ describe('appeal timetables routes', () => {
 								),
 								hearing_date: '10 July 2024',
 								hearing_time: '2:45pm',
-								hearing_expected_days: 8,
 								team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 							},
 							recipientEmail: appeal.appellant.email,
@@ -1569,7 +1618,6 @@ describe('appeal timetables routes', () => {
 								),
 								hearing_date: '10 July 2024',
 								hearing_time: '2:45pm',
-								hearing_expected_days: 8,
 								...personalisation,
 								team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 							},
@@ -2243,8 +2291,7 @@ describe('appeal timetables routes', () => {
 				.send({
 					startDate: '2024-06-12T22:59:00.000Z',
 					procedureType: 'hearing',
-					hearingStartTime: '2024-06-12T12:00:00.000Z',
-					hearingEstimatedDays: '5'
+					hearingStartTime: '2024-06-12T12:00:00.000Z'
 				});
 
 			expect(response.status).toEqual(200);
@@ -2256,31 +2303,6 @@ describe('appeal timetables routes', () => {
 			expect(lpaPreview).toContain(
 				'You have a new planning appeal against the application 48269/APP/2021/1482.'
 			);
-			expect(appellantPreview).toContain('Expected days: 5');
-			expect(lpaPreview).toContain('Expected days: 5');
-		});
-
-		test('hides expected days in the rendered HTML when hearingEstimatedDays is not provided', async () => {
-			const appeal = {
-				...fullPlanningAppeal
-			};
-			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
-
-			const { id } = fullPlanningAppeal;
-			const response = await request
-				.post(`/appeals/${id}/appeal-timetables/notify-preview`)
-				.set('azureAdUserId', azureAdUserId)
-				.send({
-					startDate: '2024-06-12T22:59:00.000Z',
-					procedureType: 'hearing',
-					hearingStartTime: '2024-06-12T12:00:00.000Z'
-				});
-
-			expect(response.status).toEqual(200);
-			const appellantPreview = response.body.appellant;
-			const lpaPreview = response.body.lpa;
-			expect(appellantPreview).not.toContain('Expected days:');
-			expect(lpaPreview).not.toContain('Expected days:');
 		});
 
 		test('returns an error if the appeal is a child appeal', async () => {
@@ -2424,6 +2446,58 @@ describe('appeal timetables routes', () => {
 			expect(response.body).toMatchObject({
 				errors: { appealId: 'Not found' }
 			});
+		});
+
+		test('returns the inquiry start date change template when the appeal has already started', async () => {
+			const appeal = {
+				...fullPlanningAppeal,
+				caseStartedDate: '2024-06-01T22:59:00.000Z'
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+
+			const { id } = fullPlanningAppeal;
+			const response = await request
+				.post(`/appeals/${id}/appeal-timetables/notify-preview`)
+				.set('azureAdUserId', azureAdUserId)
+				.send({
+					startDate: '2024-06-12T22:59:00.000Z',
+					procedureType: 'inquiry',
+					inquiry: {
+						inquiryStartTime: '2024-06-12T12:00:00.000Z',
+						inquiryAddress: '123 my home, London',
+						inquiryEstimationDays: '5',
+						timetable: {
+							lpaQuestionnaireDueDate: '2024-05-09T00:00:00.000Z',
+							statementDueDate: '2024-05-10T00:00:00.000Z',
+							ipCommentsDueDate: '2024-05-11T00:00:00.000Z',
+							statementOfCommonGroundDueDate: '2024-05-12T00:00:00.000Z',
+							proofOfEvidenceAndWitnessesDueDate: '2024-05-13T00:00:00.000Z',
+							planningObligationDueDate: '2024-05-14T00:00:00.000Z',
+							caseManagementConferenceDueDate: '2024-05-15T00:00:00.000Z'
+						}
+					}
+				});
+
+			expect(response.status).toEqual(200);
+
+			const appellantPreview = response.body.appellant;
+			const lpaPreview = response.body.lpa;
+
+			expect(appellantPreview).toContain('New start date for your appeal');
+			expect(appellantPreview).toContain(
+				'The start date of your appeal has changed. Your new start date is'
+			);
+			expect(appellantPreview).toContain('Next steps');
+			expect(appellantPreview).not.toContain('We have set up your timetable');
+
+			expect(lpaPreview).toContain('New start date for your appeal');
+			expect(lpaPreview).toContain(
+				'The start date of your appeal has changed. Your new start date is'
+			);
+			expect(lpaPreview).toContain('Next steps');
+			expect(lpaPreview).not.toContain(
+				'You have a new planning appeal against the application 48269/APP/2021/1482.'
+			);
 		});
 	});
 });

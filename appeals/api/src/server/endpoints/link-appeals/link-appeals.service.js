@@ -5,6 +5,9 @@ import {
 	getFoldersForAppeal
 } from '#endpoints/documents/documents.service.js';
 import { copyBlobs } from '#utils/blob-copy.js';
+import { databaseConnector } from '#utils/database-connector.js';
+import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
 import rhea from 'rhea';
 
 const { generate_uuid } = rhea;
@@ -63,21 +66,89 @@ export const checkAppealsStatusBeforeLPAQ = (appeal, linkedAppeal, isCurrentAppe
 };
 
 /**
+ *
+ * @param {Appeal} currentLead
+ * @param {Appeal} appealToReplaceLead
+ * @returns {Promise<*>}
+ */
+export const replaceLeadAppeal = async (currentLead, appealToReplaceLead) => {
+	const { childAppeals } = currentLead;
+	const relationships =
+		childAppeals
+			?.filter((childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED)
+			.map((childAppeal) => {
+				const { childId, childRef, type } = childAppeal;
+				const { id: parentId, reference: parentRef } = appealToReplaceLead;
+				if (parentId === childId) {
+					return {
+						parentId,
+						parentRef,
+						childId: currentLead.id,
+						childRef: currentLead.reference,
+						type
+					};
+				} else {
+					return { parentId, parentRef, childId, childRef, type };
+				}
+			}) || [];
+
+	await databaseConnector.$transaction(async (tx) => {
+		await tx.appealRelationship.deleteMany({ where: { parentId: currentLead.id } });
+		await Promise.all(
+			relationships.map(async (relationship) => {
+				await tx.appealRelationship.create({
+					data: relationship
+				});
+			})
+		);
+	});
+};
+
+/**
+ * Unlinks the child appeal.
+ * @param {Appeal} appeal
+ * @returns {Promise<*>}
+ */
+export const unlinkChildAppeal = async (appeal) => {
+	await databaseConnector.appealRelationship.deleteMany({ where: { childId: appeal.id } });
+};
+
+/**
+ * Duplicates the files from the source appeal to the destination appeal for all stages.
+ * @param {Appeal} sourceAppeal
+ * @param {Appeal} destinationAppeal
+ * @param {{omitFolders: string[]}} [options]
+ * @returns {Promise<*>}
+ */
+export const duplicateAllFiles = async (sourceAppeal, destinationAppeal, options) => {
+	return Promise.allSettled(
+		Object.values(APPEAL_CASE_STAGE).map((stage) =>
+			duplicateFiles(sourceAppeal, destinationAppeal, stage, options)
+		)
+	);
+};
+
+/**
  * Duplicates the files from the source appeal to the destination appeal for a particular stage.
  * @param {Appeal} sourceAppeal
  * @param {Appeal} destinationAppeal
  * @param {string} stage
- * @returns {Promise<*>}
+ * @param {{omitFolders?: string[]}} [options]
+ * @returns {Promise<{sourceAppealRef: string, destinationAppealRef: string, stage: string}>}
  */
-export const duplicateFiles = async (sourceAppeal, destinationAppeal, stage) => {
+export const duplicateFiles = async (sourceAppeal, destinationAppeal, stage, options) => {
+	const { omitFolders = [] } = options || {};
 	const sourceFolders = await getFoldersForAppeal(sourceAppeal.id, stage);
 	const destinationFolders = await getFoldersForAppeal(destinationAppeal.id, stage);
 	const copyList = sourceFolders
+		.filter((sourceFolder) => !omitFolders.includes(sourceFolder.path))
 		.map((sourceFolder) => {
-			const { id: destinationFolderId = null } =
+			const { id: destinationFolderId = null, documents: destinationDocuments = [] } =
 				destinationFolders.find(
 					(destinationFolder) => destinationFolder.path === sourceFolder.path
 				) || {};
+			const existingDocuments = destinationDocuments.map((documents) => documents.name);
+
 			return sourceFolder.documents
 				.filter((document) => {
 					return !document.isDeleted && document.latestDocumentVersion?.blobStoragePath;
@@ -85,10 +156,12 @@ export const duplicateFiles = async (sourceAppeal, destinationAppeal, stage) => 
 				.map((sourceDocument) => {
 					const destinationGuid = generate_uuid();
 					const fileExtension = '.' + sourceDocument.name.split('.').pop();
-					const destinationFileName = sourceDocument.name.replace(
-						fileExtension,
-						`-${sourceAppeal.reference}${fileExtension}`
-					);
+					const destinationFileName = existingDocuments.includes(sourceDocument.name)
+						? sourceDocument.name.replace(
+								fileExtension,
+								`-${sourceAppeal.reference}${fileExtension}`
+							)
+						: sourceDocument.name;
 
 					const sourceBlobName = sourceDocument.latestDocumentVersion?.blobStoragePath;
 					const destinationBlobName = `appeal/${destinationAppeal.reference}/${destinationGuid}/v1/${destinationFileName}`;
@@ -129,4 +202,9 @@ export const duplicateFiles = async (sourceAppeal, destinationAppeal, stage) => 
 		destinationAppeal,
 		true
 	);
+	return {
+		sourceAppealRef: sourceAppeal.reference,
+		destinationAppealRef: destinationAppeal.reference,
+		stage
+	};
 };

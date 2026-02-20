@@ -18,14 +18,23 @@ exports[`has-alleged-breach-area GET /change should render the hasAllegedBreachA
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="has-alleged-breach-area-radio"
-                                        name="hasAllegedBreachAreaRadio" type="radio" value="yes" checked>
-                                        <label class="govuk-label govuk-radios__label" for="has-alleged-breach-area-radio">Yes</label>
+                                        <input class="govuk-radios__input" id="area-of-alleged-breach-in-square-metres-radio"
+                                        name="areaOfAllegedBreachInSquareMetresRadio" type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="area-of-alleged-breach-in-square-metres-radio">Yes</label>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="has-alleged-breach-area-radio-2"
-                                        name="hasAllegedBreachAreaRadio" type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="has-alleged-breach-area-radio-2">No</label>
+                                        <input class="govuk-radios__input" id="area-of-alleged-breach-in-square-metres-radio-2"
+                                        name="areaOfAllegedBreachInSquareMetresRadio" type="radio" value="no" checked
+                                        data-aria-controls="conditional-area-of-alleged-breach-in-square-metres-radio-2">
+                                        <label class="govuk-label govuk-radios__label" for="area-of-alleged-breach-in-square-metres-radio-2">No</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional" id="conditional-area-of-alleged-breach-in-square-metres-radio-2">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="area-of-alleged-breach-details">Area of the alleged breach, in square metres</label>
+                                            <textarea class="govuk-textarea"
+                                            id="area-of-alleged-breach-details" name="areaOfAllegedBreachInSquareMetres"
+                                            rows="3">25</textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </fieldset>

@@ -21,10 +21,11 @@ router
 		asyncHandler(updateDecisionLetterController.getCorrectionNotice)
 	)
 	.post(
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.reIssueDecisionLetter),
 		updateCorrectionNoticeValidator,
 		asyncHandler(updateDecisionLetterController.postCorrectionNotice)
 	);
+
 router
 	.route('/check-details')
 	.get(
@@ -35,18 +36,21 @@ router
 		asyncHandler(updateDecisionLetterController.getUpdateDocumentCheckDetails)
 	)
 	.post(
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.reIssueDecisionLetter),
 		asyncHandler(updateDecisionLetterController.postUpdateDocumentCheckDetails)
 	);
 
 router
 	.route('/upload-decision-letter')
 	.get(
-		assertUserHasPermission(permissionNames.setCaseOutcome),
+		assertUserHasPermission(
+			permissionNames.viewCaseDetails,
+			permissionNames.viewAssignedCaseDetails
+		),
 		asyncHandler(renderDecisionLetterUpload)
 	)
 	.post(
-		assertUserHasPermission(permissionNames.setCaseOutcome),
+		assertUserHasPermission(permissionNames.reIssueDecisionLetter),
 		asyncHandler(postDecisionLetterUpload)
 	);
 

@@ -1,4 +1,4 @@
-import { booleanSummaryListItem } from '#lib/mappers/index.js';
+import { booleanWithDetailsSummaryListItem } from '#lib/mappers/index.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapAllegedBreachCreatesFloorSpace = ({
@@ -6,12 +6,15 @@ export const mapAllegedBreachCreatesFloorSpace = ({
 	currentRoute,
 	userHasUpdateCase
 }) =>
-	booleanSummaryListItem({
+	booleanWithDetailsSummaryListItem({
 		id: 'alleged-breach-creates-floor-space',
 		text: 'Does the alleged breach create any floor space?',
-		value: lpaQuestionnaireData.doesAllegedBreachCreateFloorSpace,
-		link: `${currentRoute}/alleged-breach-creates-floor-space/change`,
+		value: !!lpaQuestionnaireData?.floorSpaceCreatedByBreachInSquareMetres,
+		valueDetails: `${lpaQuestionnaireData.floorSpaceCreatedByBreachInSquareMetres}m²`,
 		defaultText: 'No data',
-		addCyAttribute: true,
-		editable: userHasUpdateCase
+		link: `${currentRoute}/alleged-breach-creates-floor-space/change`,
+		editable: userHasUpdateCase,
+		withShowMore: true,
+		showMoreLabelText:
+			'Enter the area of floor space created by the alleged breach in square metres'
 	});

@@ -2,21 +2,21 @@ import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { areIdParamsValid } from '#lib/validators/id-param.validator.js';
 import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
-import { changeAllegedBreachCreatesFloorSpacePage } from './alleged-breach-creates-floor-space.mapper.js';
-import { changeAllegedBreachCreatesFloorSpace } from './alleged-breach-creates-floor-space.service.js';
+import { changeFloorSpaceCreatedByBreachInSquareMetresPage } from './alleged-breach-creates-floor-space.mapper.js';
+import { changeFloorSpaceCreatedByBreachInSquareMetres } from './alleged-breach-creates-floor-space.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const getChangeAllegedBreachCreatesFloorSpace = async (request, response) => {
-	return renderChangeAllegedBreachCreatesFloorSpace(request, response);
+export const getChangeFloorSpaceCreatedByBreachInSquareMetres = async (request, response) => {
+	return renderChangeFloorSpaceCreatedByBreachInSquareMetres(request, response);
 };
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-const renderChangeAllegedBreachCreatesFloorSpace = async (request, response) => {
+const renderChangeFloorSpaceCreatedByBreachInSquareMetres = async (request, response) => {
 	try {
 		const { errors, currentAppeal, apiClient } = request;
 
@@ -26,13 +26,13 @@ const renderChangeAllegedBreachCreatesFloorSpace = async (request, response) => 
 			currentAppeal.lpaQuestionnaireId
 		);
 
-		const mappedPageContents = changeAllegedBreachCreatesFloorSpacePage(
+		const mappedPageContents = changeFloorSpaceCreatedByBreachInSquareMetresPage(
 			currentAppeal,
 			lpaQuestionnaireData,
-			request.session.allegedBreachCreatesFloorSpace
+			request.session.floorSpaceCreatedByBreachInSquareMetres
 		);
 
-		delete request.session.allegedBreachCreatesFloorSpace;
+		delete request.session.floorSpaceCreatedByBreachInSquareMetres;
 
 		return response.status(200).render('patterns/change-page.pattern.njk', {
 			pageContent: mappedPageContents,
@@ -40,7 +40,7 @@ const renderChangeAllegedBreachCreatesFloorSpace = async (request, response) => 
 		});
 	} catch (error) {
 		logger.error(error);
-		delete request.session.AllegedBreachCreatesFloorSpace;
+		delete request.session.floorSpaceCreatedByBreachInSquareMetres;
 		return response.status(500).render('app/500.njk');
 	}
 };
@@ -49,12 +49,14 @@ const renderChangeAllegedBreachCreatesFloorSpace = async (request, response) => 
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const postChangeAllegedBreachCreatesFloorSpace = async (request, response) => {
-	request.session.allegedBreachCreatesFloorSpace =
-		request.body['allegedBreachCreatesFloorSpaceRadio'];
+export const postChangeFloorSpaceCreatedByBreachInSquareMetres = async (request, response) => {
+	request.session.floorSpaceCreatedByBreachInSquareMetres = {
+		radio: request.body['floorSpaceCreatedByBreachInSquareMetresRadio'],
+		details: request.body['floorSpaceCreatedByBreachInSquareMetres']
+	};
 
 	if (request.errors) {
-		return renderChangeAllegedBreachCreatesFloorSpace(request, response);
+		return renderChangeFloorSpaceCreatedByBreachInSquareMetres(request, response);
 	}
 
 	const {
@@ -67,11 +69,11 @@ export const postChangeAllegedBreachCreatesFloorSpace = async (request, response
 	}
 
 	try {
-		await changeAllegedBreachCreatesFloorSpace(
+		await changeFloorSpaceCreatedByBreachInSquareMetres(
 			apiClient,
 			appealId,
 			lpaQuestionnaireId,
-			request.session.allegedBreachCreatesFloorSpace
+			request.session.floorSpaceCreatedByBreachInSquareMetres
 		);
 
 		addNotificationBannerToSession({
@@ -81,7 +83,7 @@ export const postChangeAllegedBreachCreatesFloorSpace = async (request, response
 			text: 'Does the alleged breach create any floor space has been updated'
 		});
 
-		delete request.session.allegedBreachCreatesFloorSpace;
+		delete request.session.floorSpaceCreatedByBreachInSquareMetres;
 
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`

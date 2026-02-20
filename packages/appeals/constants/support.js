@@ -46,7 +46,7 @@ export const AUDIT_TRAIL_REP_APPELLANT_STATEMENT_STATUS_INCOMPLETE_EXTENDED =
 export const AUDIT_TRAIL_REP_APPELLANT_STATEMENT_ADDED = 'The appellant statement was received';
 
 //Rule 6 statement rep logs
-export const AUDIT_TRAIL_RULE_6_STATEMENT_ADDED = '{replacement0} statement added';
+export const AUDIT_TRAIL_RULE_6_STATEMENT_ADDED = '{replacement0} statement was received';
 export const AUDIT_TRAIL_REP_RULE_6_PARTY_STATEMENT_STATUS_VALID =
 	'{replacement0} statement accepted';
 export const AUDIT_TRAIL_REP_RULE_6_PARTY_STATEMENT_STATUS_REDACTED_AND_ACCEPTED =
@@ -58,7 +58,7 @@ export const AUDIT_TRAIL_REP_RULE_6_PARTY_STATEMENT_STATUS_INCOMPLETE =
 
 //Rule 6 proof of evidence and witnesses rep logs
 export const AUDIT_TRAIL_RULE_6_PARTY_PROOFS_EVIDENCE_ADDED =
-	'{replacement0} proof of evidence and witnesses added';
+	'{replacement0} proof of evidence and witnesses was received';
 export const AUDIT_TRAIL_REP_RULE_6_PARTY_PROOFS_EVIDENCE_STATUS_VALID =
 	'{replacement0} proof of evidence and witnesses accepted';
 export const AUDIT_TRAIL_REP_RULE_6_PARTY_PROOFS_EVIDENCE_STATUS_REDACTED_AND_ACCEPTED =
@@ -328,6 +328,8 @@ export const AUDIT_TRAIL_APPLICATION_MADE_UNDER_ACT_SECTION_UPDATED =
 	"'What type of lawful development certificate is the appeal about?' updated to {replacement0}";
 export const AUDIT_TRAIL_LPAQ_APPEAL_UNDER_ACT_SECTION_UPDATED =
 	"'What type of lawful development certificate is the appeal about?' updated to {replacement0}";
+export const AUDIT_TRAIL_LPAQ_LPA_CONSIDER_APPEAL_INVALID_UPDATED =
+	"'Do you consider the appeal invalid?' updated to {replacement0}";
 
 export const DATABASE_ORDER_BY_ASC = 'asc';
 export const DATABASE_ORDER_BY_DESC = 'desc';
@@ -438,12 +440,14 @@ export const ERROR_REP_PUBLISH_BLOCKED =
 	'Publishing of Statements and IP comments or Proofs of Evidence is blocked';
 export const ERROR_LINKING_APPEALS =
 	'The appeals cannot be linked as the lead or child are already linked to other appeals.';
+export const ERROR_UNLINKING_APPEALS = 'Failed to unlink appeals';
 export const ERROR_INVALID_EMAIL = 'must be a valid email';
 export const ERROR_INVALID_FILENAME = 'must be a valid filename';
 export const ERROR_INVALID_PROOF_OF_EVIDENCE_TYPE = 'must be either appellant or lpa';
 export const ERROR_ATTACHMENTS_REQUIRED = 'Attachments field is required';
 export const ERROR_ATTACHMENTS_EMPTY = 'Attachments must be a non-empty array';
 export const ERROR_INVALID_PROCEDURE_TYPE = 'Invalid appeal procedure type';
+export const ERROR_FEATURE_NOT_ACTIVE = 'Feature not active';
 
 export const ERROR_INVALID_POSTCODE = 'needs to be a valid and include spaces';
 export const UK_POSTCODE_REGEX = /^([A-Za-z]{1,2}\d[A-Za-z\d]? ?\d[A-Za-z]{2}|GIR ?0A{2})$/gm;

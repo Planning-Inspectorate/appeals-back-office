@@ -490,5 +490,39 @@ describe('national-list', () => {
 				unprettifiedElement.querySelectorAll('.govuk-table__cell')[1].innerHTML.trim()
 			).toContain('ENF/123456789');
 		});
+
+		it('should show enforcement reference instead of planning application reference if appeal type is enforcement listed building', async () => {
+			nock('http://test/')
+				.get('/appeals?pageNumber=1&pageSize=30')
+				.reply(200, {
+					itemCount: 1,
+					items: [
+						{
+							...appealsNationalList.items[0],
+							appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+							enforcementReference: 'ENF/123456789'
+						}
+					],
+					statuses,
+					lpas,
+					inspectors,
+					caseOfficers,
+					padsInspectors,
+					page: 1,
+					pageCount: 0,
+					pageSize: 30
+				});
+			const response = await request.get(baseUrl);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Search all cases</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(
+				unprettifiedElement.querySelectorAll('.govuk-table__cell')[1].innerHTML.trim()
+			).toContain('ENF/123456789');
+		});
 	});
 });

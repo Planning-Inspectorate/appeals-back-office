@@ -207,7 +207,7 @@ extends:
               nodeVersion: 22
               script: |
                 cd appeals/e2e
-                npm run cy:run-smoke
+                npx cypress run --env grepTags="$(E2E-TEST-FLAG)"
               environmentVariables:
                 BASE_URL: https://localhost:8080/
                 API_BASE_URL: http://localhost:3000/
@@ -220,7 +220,7 @@ extends:
                 APP: appeals
                 AZURE_TENANT_ID: $(AZURE_TENANT_ID)
                 NODE_EXTRA_CA_CERTS: $(Build.SourcesDirectory)/certificate.pem
-              condition: eq(variables['e2eSmoke'], 'true')
+              condition: eq(variables['runE2E'], 'true')
           - script: docker logs api
             condition: eq(variables['runE2E'], 'true')
             displayName: View api logs

@@ -60,12 +60,13 @@ const updateLPAQuestionnaireById = (id, data) => {
 				wasApplicationRefusedDueToHighwayOrTraffic: data.wasApplicationRefusedDueToHighwayOrTraffic,
 				didAppellantSubmitCompletePhotosAndPlans: data.didAppellantSubmitCompletePhotosAndPlans,
 				appealUnderActSection: data.appealUnderActSection,
+				lpaConsiderAppealInvalid: data.lpaConsiderAppealInvalid,
 				// Enforcement
 				noticeRelatesToBuildingEngineeringMiningOther:
 					data.noticeRelatesToBuildingEngineeringMiningOther,
 				siteAreaSquareMetres: data.siteAreaSquareMetres,
-				hasAllegedBreachArea: data.hasAllegedBreachArea,
-				doesAllegedBreachCreateFloorSpace: data.doesAllegedBreachCreateFloorSpace,
+				areaOfAllegedBreachInSquareMetres: data.areaOfAllegedBreachInSquareMetres,
+				floorSpaceCreatedByBreachInSquareMetres: data.floorSpaceCreatedByBreachInSquareMetres,
 				changeOfUseRefuseOrWaste: data.changeOfUseRefuseOrWaste,
 				changeOfUseMineralExtraction: data.changeOfUseMineralExtraction,
 				changeOfUseMineralStorage: data.changeOfUseMineralStorage,

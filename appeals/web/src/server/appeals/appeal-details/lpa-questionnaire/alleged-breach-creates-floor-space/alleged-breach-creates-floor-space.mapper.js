@@ -1,4 +1,5 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { convertFromYesNoToBoolean } from '#lib/boolean-formatter.js';
 import { yesNoInput } from '#lib/mappers/index.js';
 
 /**
@@ -11,15 +12,21 @@ import { yesNoInput } from '#lib/mappers/index.js';
  * @param {{radio: string, details: string}} storedSessionData
  * @returns {PageContent}
  */
-export const changeAllegedBreachCreatesFloorSpacePage = (
+export const changeFloorSpaceCreatedByBreachInSquareMetresPage = (
 	appealData,
 	lpaQuestionnaireData,
 	storedSessionData
 ) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
-	const currentRadioValue =
-		storedSessionData?.radio ?? lpaQuestionnaireData.doesAllegedBreachCreateFloorSpace;
+	const currentRadioValue = storedSessionData?.radio
+		? convertFromYesNoToBoolean(storedSessionData?.radio)
+		: !!lpaQuestionnaireData.floorSpaceCreatedByBreachInSquareMetres;
+
+	const currentDetailsValue =
+		storedSessionData?.details ??
+		lpaQuestionnaireData.floorSpaceCreatedByBreachInSquareMetres ??
+		'';
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -28,10 +35,16 @@ export const changeAllegedBreachCreatesFloorSpacePage = (
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			yesNoInput({
-				name: 'allegedBreachCreatesFloorSpaceRadio',
+				name: 'floorSpaceCreatedByBreachInSquareMetresRadio',
 				value: currentRadioValue,
 				legendText: `Does the alleged breach create any floor space?`,
-				legendIsPageHeading: true
+				legendIsPageHeading: true,
+				yesConditional: {
+					id: 'floor-space-created-details',
+					name: 'floorSpaceCreatedByBreachInSquareMetres',
+					hint: 'Floor space created by the breach, in square metres',
+					details: currentDetailsValue
+				}
 			})
 		]
 	};

@@ -67,6 +67,7 @@ export function booleanSummaryListItem({
  * @param {string} [options.classes]
  * @param {boolean} [options.withShowMore]
  * @param {string} [options.showMoreLabelText]
+ * @param {boolean} [options.showDetailsWhenAnswerIsNo]
  * @returns {Instructions}
  */
 export function booleanWithDetailsSummaryListItem({
@@ -80,7 +81,8 @@ export function booleanWithDetailsSummaryListItem({
 	editable,
 	classes,
 	withShowMore,
-	showMoreLabelText
+	showMoreLabelText,
+	showDetailsWhenAnswerIsNo
 }) {
 	/** @type {ActionItemProperties[]} */
 	const actions = [];
@@ -102,7 +104,8 @@ export function booleanWithDetailsSummaryListItem({
 					convertFromBooleanToYesNo(value, defaultText),
 					valueDetails,
 					withShowMore,
-					showMoreLabelText || text
+					showMoreLabelText || text,
+					showDetailsWhenAnswerIsNo
 				),
 				actions: { items: actions },
 				classes
@@ -116,12 +119,19 @@ export function booleanWithDetailsSummaryListItem({
  * @param {string|null|undefined} details
  * @param {boolean} [withShowMore]
  * @param {string} [showMoreLabelText]
+ * @param {boolean|null|undefined} [showDetailsWhenAnswerIsNo]
  * @returns {HtmlProperty}
  */
-const formatAnswerAndDetails = (answer, details, withShowMore, showMoreLabelText) => {
+const formatAnswerAndDetails = (
+	answer,
+	details,
+	withShowMore,
+	showMoreLabelText,
+	showDetailsWhenAnswerIsNo
+) => {
 	const formattedAnswer = buildHtmSpan(answer || '');
 
-	if (answer === 'Yes') {
+	if (answer === 'Yes' || (answer === 'No' && showDetailsWhenAnswerIsNo)) {
 		if (
 			withShowMore &&
 			typeof details === 'string' &&

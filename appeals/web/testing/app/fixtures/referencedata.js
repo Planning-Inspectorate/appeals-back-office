@@ -1206,8 +1206,8 @@ export const lpaQuestionnaireData = {
 	validation: null,
 	noticeRelatesToBuildingEngineeringMiningOther: true,
 	siteAreaSquareMetres: 25,
-	hasAllegedBreachArea: true,
-	doesAllegedBreachCreateFloorSpace: true,
+	areaOfAllegedBreachInSquareMetres: 25,
+	floorSpaceCreatedByBreachInSquareMetres: 20,
 	changeOfUseRefuseOrWaste: true,
 	changeOfUseMineralExtraction: true,
 	changeOfUseMineralStorage: true,
@@ -1622,8 +1622,8 @@ export const lpaQuestionnaireDataNotValidated = {
 	validation: null,
 	noticeRelatesToBuildingEngineeringMiningOther: true,
 	siteAreaSquareMetres: 25,
-	hasAllegedBreachArea: true,
-	doesAllegedBreachCreateFloorSpace: true,
+	areaOfAllegedBreachInSquareMetres: 25,
+	floorSpaceCreatedByBreachInSquareMetres: 20,
 	changeOfUseRefuseOrWaste: true,
 	changeOfUseMineralExtraction: true,
 	changeOfUseMineralStorage: true,
@@ -4871,6 +4871,7 @@ export const appealDataToGetRequiredActions = {
 		documentationSummary: {
 			appellantCase: { dueDate: '3000-01-06T23:59:00.000Z', status: 'Incomplete' }
 		},
+		enforcementNoticeInvalid: 'yes',
 		enforcementNotice: {
 			appealOutcome: {
 				enforcementNoticeInvalid: 'yes'

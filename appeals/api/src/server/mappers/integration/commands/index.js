@@ -81,7 +81,7 @@ const mapAppealSubmission = (data) => {
 		lpa: {
 			connect: { lpaCode: casedata?.lpaCode }
 		},
-		applicationReference: casedata?.applicationReference,
+		applicationReference: /** @type {string | null | undefined} */ (casedata?.applicationReference),
 		appellantCase: { create: mapAppellantCaseIn({ casedata }) },
 		neighbouringSites: neighbouringSitesInput,
 		folders: {

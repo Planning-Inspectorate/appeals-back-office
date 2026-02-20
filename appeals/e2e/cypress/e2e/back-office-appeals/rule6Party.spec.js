@@ -46,6 +46,7 @@ const rule6Party = {
 };
 
 let caseObj;
+let appeal;
 
 const setupTestCase = () => {
 	cy.login(users.appeals.caseAdmin);
@@ -72,8 +73,6 @@ const setupTestCase = () => {
 beforeEach(() => {
 	setupTestCase();
 });
-
-let appeal;
 
 afterEach(() => {
 	cy.deleteAppeals(appeal);
@@ -478,7 +477,7 @@ it('add a rule 6 POE', () => {
 
 	caseDetailsPage.validateBannerMessage(
 		'Success',
-		'Rule 6 party proof of evidence and witnesses added'
+		`${organisationName} proof of evidence and witnesses added`
 	);
 });
 
@@ -507,7 +506,7 @@ it('should mark rule 6 POE complete', () => {
 		// Todo: Bug - Rule 6 POE success banner shows generic 'Rule 6 party' text instead of the party name (A2-6823)
 		caseDetailsPage.validateBannerMessage(
 			'Success',
-			`Rule 6 party proof of evidence and witnesses accepted`
+			`${rule6Party.serviceUser.organisationName} proof of evidence and witnesses accepted`
 		);
 	});
 
@@ -550,8 +549,10 @@ it('should mark rule 6 POE incomplete', () => {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm statement is incomplete');
 
-		// Todo: Bug - Rule 6 POE success banner shows generic 'Rule 6 party' text instead of the party name (A2-6823)
-		caseDetailsPage.validateBannerMessage('Success', `Rule 6 party proof of evidence incomplete`);
+		caseDetailsPage.validateBannerMessage(
+			'Success',
+			`${rule6Party.serviceUser.organisationName} proof of evidence incomplete`
+		);
 	});
 
 	// Check Rule 6 POE status (incomplete) - Documentation section

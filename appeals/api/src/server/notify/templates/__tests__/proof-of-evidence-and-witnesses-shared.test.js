@@ -17,13 +17,16 @@ describe('proof-of-evidence-and-witnesses-shared.md', () => {
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
 				inquiry_address: '10, Test Street, London, AH6 9KL',
 				inquiry_date: '13 December 2025',
-				inquiry_subject_line: 'local planning authority',
+				inquiry_subject_line: ['local planning authority', 'appellant'],
 				what_happens_next: 'appeals'
 			}
 		};
 
 		const expectedContent = [
-			'We have received proof of evidence and witnesses from the local planning authority and any other parties.',
+			'We have received proof of evidence and witnesses from:',
+			'- local planning authority',
+			'- appellant',
+			'',
 			'',
 			'# Appeal details',
 			'',
@@ -50,7 +53,7 @@ describe('proof-of-evidence-and-witnesses-shared.md', () => {
 			'test@136s7.com',
 			{
 				content: expectedContent,
-				subject: 'We have received all proof of evidence and witnesses: ABC45678'
+				subject: 'We have received proof of evidence and witnesses: ABC45678'
 			}
 		);
 	});
@@ -70,13 +73,16 @@ describe('proof-of-evidence-and-witnesses-shared.md', () => {
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
 				inquiry_address: '10, Test Street, London, AH6 9KL',
 				inquiry_date: '13 December 2025',
-				inquiry_subject_line: 'appellant',
+				inquiry_subject_line: ['appellant', 'local planning authority'],
 				what_happens_next: 'manage-appeals'
 			}
 		};
 
 		const expectedContent = [
-			'We have received proof of evidence and witnesses from the appellant and any other parties.',
+			'We have received proof of evidence and witnesses from:',
+			'- appellant',
+			'- local planning authority',
+			'',
 			'',
 			'# Appeal details',
 			'',
@@ -103,7 +109,7 @@ describe('proof-of-evidence-and-witnesses-shared.md', () => {
 			'test@136s7.com',
 			{
 				content: expectedContent,
-				subject: 'We have received all proof of evidence and witnesses: ABC45678'
+				subject: 'We have received proof of evidence and witnesses: ABC45678'
 			}
 		);
 	});

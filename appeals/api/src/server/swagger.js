@@ -19,7 +19,8 @@ import {
 	linkedAppealRequest,
 	relatedAppealLegacyRequest,
 	relatedAppealRequest,
-	unlinkAppealRequest
+	unlinkAppealRequest,
+	updateLinkedAppealsRequest
 } from '#tests/linked-appeals/mocks.js';
 import { createRepRequest, repResponse, repUpdateRequest } from '#tests/representations/mocks.js';
 import {
@@ -76,6 +77,9 @@ export const spec = {
 		},
 		UnlinkAppealRequest: {
 			...unlinkAppealRequest
+		},
+		UpdateLinkedAppealsRequest: {
+			...updateLinkedAppealsRequest
 		},
 		RepUpdateRequest: {
 			...repUpdateRequest
@@ -663,8 +667,8 @@ export const spec = {
 			isTheSiteWithinAnAONB: true,
 			noticeRelatesToBuildingEngineeringMiningOther: true,
 			siteAreaSquareMetres: 25,
-			hasAllegedBreachArea: true,
-			doesAllegedBreachCreateFloorSpace: true,
+			areaOfAllegedBreachInSquareMetres: 30,
+			floorSpaceCreatedByBreachInSquareMetres: 24,
 			changeOfUseRefuseOrWaste: true,
 			changeOfUseMineralExtraction: true,
 			changeOfUseMineralStorage: true,
@@ -778,8 +782,8 @@ export const spec = {
 			preserveGrantLoan: true,
 			noticeRelatesToBuildingEngineeringMiningOther: true,
 			siteAreaSquareMetres: 25,
-			hasAllegedBreachArea: true,
-			doesAllegedBreachCreateFloorSpace: true,
+			areaOfAllegedBreachInSquareMetres: 30,
+			floorSpaceCreatedByBreachInSquareMetres: 24,
 			changeOfUseRefuseOrWaste: true,
 			changeOfUseMineralExtraction: true,
 			changeOfUseMineralStorage: true,
@@ -1505,11 +1509,6 @@ export const spec = {
 					type: 'string',
 					description: 'Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
 					example: '2014-11-14T00:00:00+00:00'
-				},
-				estimatedDays: {
-					type: 'number',
-					description: 'Estimated number of days',
-					example: 5
 				},
 				addressId: {
 					type: 'number',

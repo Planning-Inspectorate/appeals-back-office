@@ -3,7 +3,7 @@ import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 import { HTTPError } from 'got';
-import { postUnlinkRequest } from '../linked-appeals/linked-appeals.service.js';
+import { postUnrelateRequest } from '../linked-appeals/linked-appeals.service.js';
 import {
 	addOtherAppealsPage,
 	confirmOtherAppealsPage,
@@ -327,7 +327,7 @@ export const postRemoveOtherAppeals = async (request, response) => {
 		} else if (removeAppealRelationship === 'yes') {
 			const appealRelationshipId = parseInt(relationshipId, 10);
 
-			await postUnlinkRequest(request.apiClient, appealId, appealRelationshipId);
+			await postUnrelateRequest(request.apiClient, appealId, appealRelationshipId);
 
 			addNotificationBannerToSession({
 				session: request.session,

@@ -91,7 +91,6 @@ const checkAppealTimetableExists = async (req, res, next) => {
  * @param {TimetableDeadlineDate} timetable
  * @param {string} [procedureType]
  * @param {string} [hearingStartTime]
- * @param {string | number} [hearingEstimatedDays]
  * @param {any} [inquiry]
  * @returns
  */
@@ -104,7 +103,6 @@ const getStartCaseNotifyParams = async (
 	timetable,
 	procedureType,
 	hearingStartTime,
-	hearingEstimatedDays,
 	inquiry
 ) => {
 	const hearingSuffix = hearingStartTime ? '-hearing' : '';
@@ -114,13 +112,17 @@ const getStartCaseNotifyParams = async (
 	const appealType = trimAppealType(type);
 
 	const appellantTemplate = appeal.caseStartedDate
-		? 'appeal-start-date-change-appellant'
+		? inquirySuffix
+			? 'appeal-start-date-change-inquiry'
+			: 'appeal-start-date-change-appellant'
 		: `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}${
 				hearingSuffix ? `appellant${hearingSuffix}` : inquirySuffix ? inquirySuffix : 'appellant'
 			}`;
 
 	const lpaTemplate = appeal.caseStartedDate
-		? 'appeal-start-date-change-lpa'
+		? inquirySuffix
+			? 'appeal-start-date-change-inquiry'
+			: 'appeal-start-date-change-lpa'
 		: `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}${
 				hearingSuffix ? `lpa${hearingSuffix}` : inquirySuffix ? inquirySuffix : 'lpa'
 			}`;
@@ -179,9 +181,6 @@ const getStartCaseNotifyParams = async (
 		...(hearingStartTime && {
 			hearing_date: formatDate(new Date(hearingStartTime), false),
 			hearing_time: formatTime12h(hearingStartTime)
-		}),
-		...(hearingEstimatedDays && {
-			hearing_expected_days: hearingEstimatedDays
 		}),
 		...(inquiry && {
 			inquiry_date: formatDate(new Date(inquiry.inquiryStartTime), false),
@@ -258,7 +257,6 @@ const getStartCaseNotifyParams = async (
  * @param {TimetableDeadlineDate} timetable
  * @param {string} [procedureType]
  * @param {string} [hearingStartTime]
- * @param {string | number} [hearingEstimatedDays]
  * @returns
  */
 const sendStartCaseNotifies = async (
@@ -269,8 +267,7 @@ const sendStartCaseNotifies = async (
 	azureAdUserId,
 	timetable,
 	procedureType,
-	hearingStartTime,
-	hearingEstimatedDays
+	hearingStartTime
 ) => {
 	const { appellant, lpa } = await getStartCaseNotifyParams(
 		appeal,
@@ -280,8 +277,7 @@ const sendStartCaseNotifies = async (
 		azureAdUserId,
 		timetable,
 		procedureType,
-		hearingStartTime,
-		hearingEstimatedDays
+		hearingStartTime
 	);
 
 	if (appellant) {
@@ -303,7 +299,6 @@ const sendStartCaseNotifies = async (
  * @param {TimetableDeadlineDate} timetable
  * @param {string} [procedureType]
  * @param {string} [hearingStartTime]
- * @param {string | number} [hearingEstimatedDays]
  * @param {string} [inquiry]
  * @returns {Promise<{appellant?: string, lpa?: string}>}
  */
@@ -316,7 +311,6 @@ const generateStartCaseNotifyPreviews = async (
 	timetable,
 	procedureType,
 	hearingStartTime,
-	hearingEstimatedDays,
 	inquiry
 ) => {
 	const { appellant, lpa } = await getStartCaseNotifyParams(
@@ -328,7 +322,6 @@ const generateStartCaseNotifyPreviews = async (
 		timetable,
 		procedureType,
 		hearingStartTime,
-		hearingEstimatedDays,
 		inquiry
 	);
 
@@ -362,7 +355,6 @@ const generateStartCaseNotifyPreviews = async (
  * @param {string} azureAdUserId
  * @param {string} [procedureType]
  * @param {string} [hearingStartTime]
- * @param {string} [hearingEstimatedDays]
  * @returns
  */
 const startCase = async (
@@ -371,8 +363,7 @@ const startCase = async (
 	notifyClient,
 	azureAdUserId,
 	procedureType,
-	hearingStartTime,
-	hearingEstimatedDays
+	hearingStartTime
 ) => {
 	try {
 		const isChildAppeal = isLinkedAppealsActive(appeal) && Boolean(appeal?.parentAppeals?.length);
@@ -395,8 +386,7 @@ const startCase = async (
 				appealRepository.updateAppealById(appeal.id, {
 					caseStartedDate: startDateWithTimeCorrection.toISOString(),
 					...(procedureTypeId && { procedureTypeId }),
-					...(hearingStartTime && { hearingStartTime }),
-					...(hearingEstimatedDays && { hearingEstimatedDays })
+					...(hearingStartTime && { hearingStartTime })
 				})
 			]);
 
@@ -443,8 +433,7 @@ const startCase = async (
 					azureAdUserId,
 					timetable,
 					procedureType,
-					hearingStartTime,
-					hearingEstimatedDays
+					hearingStartTime
 				);
 			}
 
@@ -466,7 +455,6 @@ const startCase = async (
  * @param {string} azureAdUserId
  * @param {string} [procedureType]
  * @param {string} [hearingStartTime]
- * @param {string | number} [hearingEstimatedDays]
  * @param {any} [inquiry]
  * @returns {Promise<{appellant?: string, lpa?: string}>}
  */
@@ -477,7 +465,6 @@ const getStartCaseNotifyPreviews = async (
 	azureAdUserId,
 	procedureType,
 	hearingStartTime,
-	hearingEstimatedDays,
 	inquiry
 ) => {
 	try {
@@ -518,7 +505,6 @@ const getStartCaseNotifyPreviews = async (
 			timetable,
 			procedureType,
 			hearingStartTime,
-			hearingEstimatedDays,
 			inquiry
 		);
 	} catch (/** @type {any} */ error) {
@@ -736,6 +722,7 @@ const shouldSendNotify = (appealTypeShorthand, procedureType) => {
 const getTimetableUpdatedTemplateName = (appealTypeKey) => {
 	switch (appealTypeKey) {
 		case APPEAL_CASE_TYPE.H:
+		case APPEAL_CASE_TYPE.X:
 			return 'advertisement-appeal-timetable-updated';
 
 		case APPEAL_CASE_TYPE.D:

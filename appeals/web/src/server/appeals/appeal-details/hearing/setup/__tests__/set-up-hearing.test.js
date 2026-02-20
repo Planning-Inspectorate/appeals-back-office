@@ -174,7 +174,7 @@ describe('set up hearing', () => {
 				.reply(200, { ...appealData, appealId });
 		});
 
-		it('should redirect to /hearing/setup/estimation with valid inputs', async () => {
+		it('should redirect to /hearing/setup/address with valid inputs', async () => {
 			const response = await request.post(`${baseUrl}/${appealId}/hearing/setup/date`).send({
 				'hearing-date-day': '01',
 				'hearing-date-month': '02',
@@ -184,7 +184,7 @@ describe('set up hearing', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.headers.location).toBe(`${baseUrl}/${appealId}/hearing/setup/estimation`);
+			expect(response.headers.location).toBe(`${baseUrl}/${appealId}/hearing/setup/address`);
 		});
 
 		it('should return 400 on invalid date with appropriate error message', async () => {
@@ -327,9 +327,9 @@ describe('set up hearing', () => {
 			).toBeDefined();
 		});
 
-		it('should have a back link to the estimation page', () => {
+		it('should have a back link to the date page', () => {
 			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
-				`${baseUrl}/${appealId}/hearing/setup/estimation`
+				`${baseUrl}/${appealId}/hearing/setup/date`
 			);
 		});
 
@@ -359,7 +359,7 @@ describe('set up hearing', () => {
 			);
 		});
 
-		it('should have a back link to the estimation page if editing began on a previous page', async () => {
+		it('should have a back link to the date page if editing began on a previous page', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.twice()
@@ -381,7 +381,7 @@ describe('set up hearing', () => {
 			const html = parseHtml(response.text, { rootElement: 'body' });
 
 			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
-				`${baseUrl}/${appealId}/hearing/setup/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fsetup%2Fdate`
+				`${baseUrl}/${appealId}/hearing/setup/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fsetup%2Fdate`
 			);
 		});
 

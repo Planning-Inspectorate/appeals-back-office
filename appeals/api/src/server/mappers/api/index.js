@@ -1,5 +1,6 @@
 import { apiAdvertMappers } from './advert/index.js';
 import { apiCasAdvertMappers } from './cas-advert/index.js';
+import { apiEnforcementListedMappers } from './enforcement-listed/index.js';
 import { apiEnforcementMappers } from './enforcement/index.js';
 import { apiLdcMappers } from './ldc/index.js';
 import { apiS20Mappers } from './s20/index.js';
@@ -13,5 +14,6 @@ export const apiMappers = {
 	apiCasAdvertMappers,
 	apiAdvertMappers,
 	apiEnforcementMappers,
-	apiLdcMappers
+	apiLdcMappers,
+	apiEnforcementListedMappers
 };

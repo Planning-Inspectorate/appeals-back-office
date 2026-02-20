@@ -19,3 +19,8 @@ export const relatedAppealLegacyRequest = {
 export const unlinkAppealRequest = {
 	relationshipId: 1002
 };
+
+export const updateLinkedAppealsRequest = {
+	appealRefToReplaceLead: '51243165',
+	operation: 'unlink'
+};

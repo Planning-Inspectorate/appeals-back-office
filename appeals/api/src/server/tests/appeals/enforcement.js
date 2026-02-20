@@ -61,7 +61,7 @@ export default {
 		changedDevelopmentDescription: false,
 		ownersInformed: null,
 		enforcementNotice: true,
-		enforcementNoticeListedBuilding: true,
+		enforcementNoticeListedBuilding: false,
 		interestInLand: 'owner',
 		writtenOrVerbalPermission: 'yes',
 		enforcementEffectiveDate: new Date('2024-10-17T14:08:50.409Z'),

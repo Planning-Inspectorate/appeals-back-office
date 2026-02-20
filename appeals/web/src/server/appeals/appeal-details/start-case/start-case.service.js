@@ -21,7 +21,6 @@
  * @param {string} dateISOString
  * @param {string} [procedureType]
  * @param {string} [hearingStartTime]
- * @param {string} [hearingEstimatedDays]
  * @returns {Promise<Appeal>}
  */
 export async function setStartDate(
@@ -29,16 +28,14 @@ export async function setStartDate(
 	appealId,
 	dateISOString,
 	procedureType,
-	hearingStartTime,
-	hearingEstimatedDays
+	hearingStartTime
 ) {
 	return await apiClient
 		.post(`appeals/${appealId}/appeal-timetables`, {
 			json: {
 				startDate: dateISOString,
 				...(procedureType && { procedureType }),
-				...(hearingStartTime && { hearingStartTime }),
-				...(hearingEstimatedDays && { hearingEstimatedDays })
+				...(hearingStartTime && { hearingStartTime })
 			}
 		})
 		.json();
@@ -51,7 +48,6 @@ export async function setStartDate(
  * @param {string} [startDate]
  * @param {string} [procedureType]
  * @param {string} [hearingStartTime]
- * @param {string} [hearingEstimatedDays]
  * @param {any} [inquiry]
  * @returns {Promise<{appellant?: string, lpa?: string}>}
  */
@@ -61,7 +57,6 @@ export async function getStartCaseNotifyPreviews(
 	startDate,
 	procedureType,
 	hearingStartTime,
-	hearingEstimatedDays,
 	inquiry
 ) {
 	const result = await apiClient
@@ -70,7 +65,6 @@ export async function getStartCaseNotifyPreviews(
 				...(startDate && { startDate }),
 				...(procedureType && { procedureType }),
 				...(hearingStartTime && { hearingStartTime }),
-				...(hearingEstimatedDays && { hearingEstimatedDays }),
 				...(inquiry && { inquiry })
 			}
 		})

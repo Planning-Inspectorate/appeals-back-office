@@ -1,3 +1,4 @@
+import enforcementListed from './enforcement-listed.js';
 import enforcement from './enforcement.js';
 import has from './has.js';
 import ldc from './ldc.js';
@@ -9,5 +10,6 @@ export const mocks = {
 	s78Appeal: s78,
 	s20Appeal: s20,
 	enforcementAppeal: enforcement,
-	ldcAppeal: ldc
+	ldcAppeal: ldc,
+	enforcementListedAppeal: enforcementListed
 };

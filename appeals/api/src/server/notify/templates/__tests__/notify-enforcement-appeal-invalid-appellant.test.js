@@ -2,7 +2,7 @@ import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
 describe('enforcement-appeal-invalid-appellant.content.md', () => {
-	test('should call notify sendEmail with the correct content (groundAbarred + otherLiveAppeals: true)', async () => {
+	test('should call notify sendEmail with the correct content (ground_a_barred + other_live_appeals: true)', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
 			templateName: 'enforcement-appeal-invalid-appellant',
@@ -15,10 +15,10 @@ describe('enforcement-appeal-invalid-appellant.content.md', () => {
 				site_address: '10, Test Street',
 				enforcement_reference: 'ENF-12345',
 				reasons: 'You submitted the appeal outside the allowed time period.',
-				groundAbarred: true,
-				otherLiveAppeals: true,
+				ground_a_barred: true,
+				other_live_appeals: true,
 				effective_date: '1 January 2026',
-				case_team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 
@@ -63,7 +63,7 @@ describe('enforcement-appeal-invalid-appellant.content.md', () => {
 		);
 	});
 
-	test('should call notify sendEmail with the correct content (groundAbarred + otherLiveAppeals: false)', async () => {
+	test('should call notify sendEmail with the correct content (ground_a_barred + other_live_appeals: false)', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
 			templateName: 'enforcement-appeal-invalid-appellant',
@@ -76,10 +76,10 @@ describe('enforcement-appeal-invalid-appellant.content.md', () => {
 				site_address: '25, Example Road',
 				enforcement_reference: 'ENF-67890',
 				reasons: 'The appellant does not have sufficient legal interest in the land.',
-				groundAbarred: true,
-				otherLiveAppeals: false,
+				ground_a_barred: true,
+				other_live_appeals: false,
 				effective_date: '15 February 2026',
-				case_team_email_address: 'enforcement@planninginspectorate.gov.uk'
+				team_email_address: 'enforcement@planninginspectorate.gov.uk'
 			}
 		};
 
@@ -124,7 +124,7 @@ describe('enforcement-appeal-invalid-appellant.content.md', () => {
 		);
 	});
 
-	test('should call notify sendEmail with the correct content (no groundAbarred + otherLiveAppeals: true)', async () => {
+	test('should call notify sendEmail with the correct content (no ground_a_barred + other_live_appeals: true)', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
 			templateName: 'enforcement-appeal-invalid-appellant',
@@ -137,10 +137,10 @@ describe('enforcement-appeal-invalid-appellant.content.md', () => {
 				site_address: '42, Sample Avenue',
 				enforcement_reference: 'ENF-11111',
 				reasons: 'The appeal was submitted by someone who is not the appellant.',
-				groundAbarred: false,
-				otherLiveAppeals: true,
+				ground_a_barred: false,
+				other_live_appeals: true,
 				effective_date: '20 March 2026',
-				case_team_email_address: 'appeals@planninginspectorate.gov.uk'
+				team_email_address: 'appeals@planninginspectorate.gov.uk'
 			}
 		};
 
@@ -178,7 +178,7 @@ describe('enforcement-appeal-invalid-appellant.content.md', () => {
 		);
 	});
 
-	test('should call notify sendEmail with the correct content (no groundAbarred + otherLiveAppeals)', async () => {
+	test('should call notify sendEmail with the correct content (no ground_a_barred + other_live_appeals)', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
 			templateName: 'enforcement-appeal-invalid-appellant',
@@ -191,10 +191,10 @@ describe('enforcement-appeal-invalid-appellant.content.md', () => {
 				site_address: '88, Main Street',
 				enforcement_reference: 'ENF-22222',
 				reasons: 'Required documents were not provided.',
-				groundAbarred: false,
-				otherLiveAppeals: false,
+				ground_a_barred: false,
+				other_live_appeals: false,
 				effective_date: '5 April 2026',
-				case_team_email_address: 'support@planninginspectorate.gov.uk'
+				team_email_address: 'support@planninginspectorate.gov.uk'
 			}
 		};
 
