@@ -12,7 +12,7 @@ import {
 	dayMonthYearHourMinuteToISOString
 } from '../dates.js';
 
-const messageFieldNameExceptions = ['ground (a) fee receipt due date'];
+const messageFieldNameExceptions = ['ground (a) fee receipt due date', 'appeal due date'];
 
 export const createDateInputFieldsValidator = (
 	fieldNamePrefix = 'date',
@@ -68,6 +68,7 @@ export const createDateInputFieldsValidator = (
 				cause.push('year');
 			}
 
+			const prefix = messageFieldNameExceptions.includes(messageFieldNamePrefix) ? 'The ' : '';
 			if (missingParts.length > 0) {
 				const joinedCause = cause.join('-');
 				const messageSuffix = missingParts.reduce((acc, part, index) => {
@@ -75,7 +76,6 @@ export const createDateInputFieldsValidator = (
 					if (index === missingParts.length - 2) return `${acc}${part} and `;
 					return `${acc}${part}, `;
 				}, '');
-				const prefix = messageFieldNameExceptions.includes(messageFieldNamePrefix) ? 'The ' : '';
 
 				throw new Error(
 					`${joinedCause}::${prefix}${messageFieldNamePrefix} must include ${messageSuffix}`
@@ -83,35 +83,37 @@ export const createDateInputFieldsValidator = (
 			}
 
 			if (!/^\d+$/.test(day)) {
-				throw new Error(`day::${messageFieldNamePrefix} day must be a number`);
+				throw new Error(`day::${prefix}${messageFieldNamePrefix} day must be a number`);
 			}
 
 			if (!/^\d{1,2}$/.test(day)) {
-				throw new Error(`day::${messageFieldNamePrefix} day must be 1 or 2 digits`);
+				throw new Error(`day::${prefix}${messageFieldNamePrefix} day must be 1 or 2 digits`);
 			}
 			if (!/^0?[1-9]$|^1\d$|^2\d$|^3[01]$/.test(day)) {
-				throw new Error(`day::${messageFieldNamePrefix} day must be between 1 and 31`);
+				throw new Error(`day::${prefix}${messageFieldNamePrefix} day must be between 1 and 31`);
 			}
 			if (!/^\d+$/.test(month)) {
 				const monthNum = MONTH_SET[month.toLowerCase()];
 				if (!monthNum) {
-					throw new Error(`month::${messageFieldNamePrefix} must be a real date`);
+					throw new Error(`month::${prefix}${messageFieldNamePrefix} must be a real date`);
 				} else {
 					req.body[`${fieldNamePrefix}${monthFieldName}`] = monthNum;
 				}
 			} else {
 				if (!/^\d{1,2}$/.test(month)) {
-					throw new Error(`month::${messageFieldNamePrefix} month must be 1 or 2 digits`);
+					throw new Error(`month::${prefix}${messageFieldNamePrefix} month must be 1 or 2 digits`);
 				}
 				if (!/^0?[1-9]$|^1[0-2]$/.test(month)) {
-					throw new Error(`month::${messageFieldNamePrefix} month must be between 1 and 12`);
+					throw new Error(
+						`month::${prefix}${messageFieldNamePrefix} month must be between 1 and 12`
+					);
 				}
 			}
 			if (!/^\d+$/.test(year)) {
-				throw new Error(`year::${messageFieldNamePrefix} year must be a number`);
+				throw new Error(`year::${prefix}${messageFieldNamePrefix} year must be a number`);
 			}
 			if (!/^\d{4}$/.test(year)) {
-				throw new Error(`year::${messageFieldNamePrefix} year must be 4 digits`);
+				throw new Error(`year::${prefix}${messageFieldNamePrefix} year must be 4 digits`);
 			}
 			return true;
 		})
@@ -143,9 +145,7 @@ export const createDateInputDateValidityValidator = (
 				return dateIsValid({ day: dayNumber, month: monthNumber, year: yearNumber });
 			})
 			.withMessage(
-				`all-fields::${
-					(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''
-				}must be a real date`
+				`all-fields::${(messageFieldNameExceptions.includes(messageFieldNamePrefix) && 'The ') || ''}${(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''}must be a real date`
 			)
 	);
 /**
