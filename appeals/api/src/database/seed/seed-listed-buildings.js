@@ -43,7 +43,7 @@ export const importListedBuildingsDataset = async (url) => {
 			result = await importListedBuildings(Readable.from(response.body), databaseConnector);
 		}
 	} else {
-		console.log('Using local listed buildings dataset (10 records)...\n\n');
+		console.log('Insert reduced listed buildings dataset (10 records)...\n\n');
 		result = await seedListedBuildings(LOCAL_LISTED_BUILDINGS, databaseConnector);
 	}
 
