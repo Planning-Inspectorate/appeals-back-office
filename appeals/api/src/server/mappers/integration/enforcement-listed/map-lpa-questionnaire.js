@@ -25,17 +25,13 @@ export const mapLpaQuestionnaire = (data) => {
 			lpaQuestionnaire?.floorSpaceCreatedByBreachInSquareMetres
 				? Number(lpaQuestionnaire.floorSpaceCreatedByBreachInSquareMetres)
 				: null,
-		changeOfUseRefuseOrWaste: lpaQuestionnaire?.changeOfUseRefuseOrWaste ?? null,
-		changeOfUseMineralExtraction: lpaQuestionnaire?.changeOfUseMineralExtraction ?? null,
-		changeOfUseMineralStorage: lpaQuestionnaire?.changeOfUseMineralStorage ?? null,
 		relatesToErectionOfBuildingOrBuildings:
 			lpaQuestionnaire?.relatesToErectionOfBuildingOrBuildings ?? null,
 		relatesToBuildingWithAgriculturalPurpose:
 			lpaQuestionnaire?.relatesToBuildingWithAgriculturalPurpose ?? null,
 		relatesToBuildingSingleDwellingHouse:
 			lpaQuestionnaire?.relatesToBuildingSingleDwellingHouse ?? null,
-		affectedTrunkRoadName: lpaQuestionnaire?.affectedTrunkRoadName ?? null,
-		isSiteOnCrownLand: lpaQuestionnaire?.isSiteOnCrownLand ?? null,
-		article4AffectedDevelopmentRights: lpaQuestionnaire?.article4AffectedDevelopmentRights ?? null
+		preserveGrantLoan: lpaQuestionnaire?.preserveGrantLoan ?? null,
+		consultHistoricEngland: lpaQuestionnaire?.historicEnglandConsultation ?? null
 	};
 };

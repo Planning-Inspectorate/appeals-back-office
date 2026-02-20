@@ -8,7 +8,7 @@ import { mapS78LpaQuestionnaire } from '../s78/map-lpa-questionnaire.js';
  * @param {MappingRequest} data
  * @returns {LpaQuestionnaire|undefined}
  */
-export const mapEnforcementLpaQuestionnaire = (data) => {
+export const mapEnforcementListedLpaQuestionnaire = (data) => {
 	const {
 		appeal: { lpaQuestionnaire }
 	} = data;
@@ -21,7 +21,10 @@ export const mapEnforcementLpaQuestionnaire = (data) => {
 	if (lpaQuestionnaire) {
 		return {
 			...sharedS78Mappers,
-			// Enforcement
+			// ELB
+			preserveGrantLoan: lpaQuestionnaire.preserveGrantLoan,
+
+			// Enforcement Common Fields
 			noticeRelatesToBuildingEngineeringMiningOther:
 				lpaQuestionnaire.noticeRelatesToBuildingEngineeringMiningOther,
 			siteAreaSquareMetres: lpaQuestionnaire.siteAreaSquareMetres
@@ -34,17 +37,11 @@ export const mapEnforcementLpaQuestionnaire = (data) => {
 				lpaQuestionnaire.floorSpaceCreatedByBreachInSquareMetres
 					? Number(lpaQuestionnaire.floorSpaceCreatedByBreachInSquareMetres)
 					: null,
-			changeOfUseRefuseOrWaste: lpaQuestionnaire.changeOfUseRefuseOrWaste,
-			changeOfUseMineralExtraction: lpaQuestionnaire.changeOfUseMineralExtraction,
-			changeOfUseMineralStorage: lpaQuestionnaire.changeOfUseMineralStorage,
 			relatesToErectionOfBuildingOrBuildings:
 				lpaQuestionnaire.relatesToErectionOfBuildingOrBuildings,
 			relatesToBuildingWithAgriculturalPurpose:
 				lpaQuestionnaire.relatesToBuildingWithAgriculturalPurpose,
-			relatesToBuildingSingleDwellingHouse: lpaQuestionnaire.relatesToBuildingSingleDwellingHouse,
-			affectedTrunkRoadName: lpaQuestionnaire.affectedTrunkRoadName,
-			isSiteOnCrownLand: lpaQuestionnaire.isSiteOnCrownLand,
-			article4AffectedDevelopmentRights: lpaQuestionnaire.article4AffectedDevelopmentRights
+			relatesToBuildingSingleDwellingHouse: lpaQuestionnaire.relatesToBuildingSingleDwellingHouse
 		};
 	}
 };
