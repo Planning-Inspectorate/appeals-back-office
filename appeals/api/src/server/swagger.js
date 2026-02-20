@@ -2069,6 +2069,15 @@ export const spec = {
 				}
 			}
 		},
+		SimulateLinkedAppealRequest: {
+			type: 'object',
+			properties: {
+				childAppealReference: {
+					type: 'string',
+					example: '6000118'
+				}
+			}
+		},
 		...ApiDefinitions
 	},
 	components: {}

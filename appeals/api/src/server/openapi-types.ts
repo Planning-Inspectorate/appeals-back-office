@@ -3349,6 +3349,11 @@ export interface Rule6PartyResponse {
 	};
 }
 
+export interface SimulateLinkedAppealRequest {
+	/** @example "6000118" */
+	childAppealReference?: string;
+}
+
 export interface Address {
 	addressId?: number;
 	addressLine1: string;

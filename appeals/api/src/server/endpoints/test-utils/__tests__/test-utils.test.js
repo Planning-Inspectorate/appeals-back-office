@@ -1,7 +1,9 @@
 // @ts-nocheck
+import config from '#config/config.js';
 import {
 	simulateDocumentScan,
 	simulateIssueDecision,
+	simulateLinkAppeals,
 	simulateReviewAppellantFinalComments,
 	simulateReviewIpComment,
 	simulateReviewLpaFinalComments,
@@ -13,19 +15,23 @@ import {
 	simulateStartAppeal
 } from '#endpoints/test-utils/test-utils.controller.js';
 import { fullPlanningAppeal, householdAppeal } from '#tests/appeals/mocks.js';
-import { documentCreated } from '#tests/documents/mocks.js';
+import { documentCreated, documentVersionCreated, savedFolder } from '#tests/documents/mocks.js';
+import { horizonGetCaseSuccessResponse } from '#tests/horizon/mocks.js';
 import { azureAdUserId, lpaQuestionnaireValidationOutcomes } from '#tests/shared/mocks.js';
+import { parseHorizonGetCaseResponse } from '#utils/mapping/map-horizon.js';
 import { jest } from '@jest/globals';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import bodyParser from 'body-parser';
 import express from 'express';
 import supertest from 'supertest';
 import { request } from '../../../app-test.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
-
+const { default: got } = await import('got');
 const baseDate = '2025-10-23T00:00:00.000Z';
 jest.useFakeTimers({ doNotFake: ['performance'] }).setSystemTime(new Date(baseDate));
 
 const app = express();
+app.use(bodyParser.json({ limit: config.requestSizeLimit }));
 app.post('/:appealReference/start-appeal', simulateStartAppeal);
 app.post('/:appealReference/review-ip-comment', simulateReviewIpComment);
 app.post('/:appealReference/review-lpaq', simulateReviewLPAQ);
@@ -37,6 +43,7 @@ app.post('/:appealReference/issue-decision', simulateIssueDecision);
 app.post('/:appealReference/set-up-site-visit', simulateSetUpSiteVisit);
 app.post('/:appealReference/set-up-hearing', simulateSetUpHearing);
 app.post('/:appealReference/document-scan-complete', simulateDocumentScan);
+app.post('/:appealReference/link-appeals', simulateLinkAppeals);
 const testApiRequest = supertest(app);
 
 describe('test utils routes', () => {
@@ -818,6 +825,75 @@ describe('test utils routes', () => {
 			databaseConnector.document.findMany.mockResolvedValue([]);
 
 			const response = await testApiRequest.post('/1/document-scan-complete');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+	});
+
+	describe('POST /:appealReference/link-appeals', () => {
+		test('returns 201 for valid parent and child appeal references', async () => {
+			const mockSavedFolderWithValidDates = {
+				...savedFolder,
+				documents: [
+					{
+						...savedFolder.documents[0],
+						latestDocumentVersion: {
+							...savedFolder.documents[0].latestDocumentVersion,
+							dateReceived: new Date(),
+							fileName: 'mydoc.pdf'
+						}
+					}
+				]
+			};
+
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+			databaseConnector.folder.findMany.mockResolvedValue([mockSavedFolderWithValidDates]);
+			databaseConnector.document.create.mockReturnValue(documentCreated);
+			databaseConnector.documentVersion.create.mockResolvedValue(documentVersionCreated);
+
+			got.post.mockReturnValueOnce({
+				json: jest
+					.fn()
+					.mockResolvedValueOnce(parseHorizonGetCaseResponse(horizonGetCaseSuccessResponse))
+			});
+
+			const response = await testApiRequest
+				.post('/1/link-appeals')
+				.send({
+					childAppealReference: '2'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(response.body).toEqual({});
+		});
+
+		test('returns 400 for invalid parent appeal references', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+			const response = await testApiRequest
+				.post('/1/link-appeals')
+				.send({
+					childAppealReference: '2'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+
+		test('returns 400 for invalid parent child references', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValueOnce(householdAppeal);
+			databaseConnector.appeal.findUnique.mockResolvedValueOnce(null);
+
+			const response = await testApiRequest
+				.post('/1/link-appeals')
+				.send({
+					childAppealReference: '2'
+				})
+				.set('azureAdUserId', '732652365');
+
 			expect(response.status).toEqual(400);
 			expect(response.body).toEqual(false);
 		});
