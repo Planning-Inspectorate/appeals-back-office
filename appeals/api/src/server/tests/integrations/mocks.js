@@ -571,6 +571,24 @@ export const validLpaQuestionnaireCasAdverts = {
 	]
 };
 
+export const validLpaQuestionnaireEnforcementListedBuilding = {
+	casedata: {
+		...validLpaQuestionnaireCommon.casedata,
+		...validLpaQuestionnaireHas.casedata,
+		caseType: APPEAL_CASE_TYPE.F,
+		preserveGrantLoan: true,
+		consultHistoricEngland: true,
+		noticeRelatesToBuildingEngineeringMiningOther: true,
+		siteAreaSquareMetres: 150,
+		areaOfAllegedBreachInSquareMetres: 50,
+		floorSpaceCreatedByBreachInSquareMetres: 25,
+		relatesToErectionOfBuildingOrBuildings: true,
+		relatesToBuildingWithAgriculturalPurpose: false,
+		relatesToBuildingSingleDwellingHouse: false
+	},
+	documents: validLpaQuestionnaireCommon.documents
+};
+
 export const validLpaQuestionnaireLdc = {
 	casedata: {
 		...validLpaQuestionnaireCommon.casedata,

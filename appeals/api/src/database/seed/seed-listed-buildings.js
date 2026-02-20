@@ -60,8 +60,8 @@ const importListedBuildings = async (fileStream, databaseConnector) => {
 	for await (const { value } of pipeline) {
 		const record = {
 			reference: value.reference,
-			name: value.name,
-			grade: value['listed-building-grade']
+			name: value.name || '',
+			grade: value['listed-building-grade'] || ''
 		};
 
 		batch.push(record);

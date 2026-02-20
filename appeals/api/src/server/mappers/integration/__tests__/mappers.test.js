@@ -836,6 +836,54 @@ describe('mapQuestionnaireIn', () => {
 				lpaConsiderAppealInvalid: true,
 				lpaAppealInvalidReasons: 'test'
 			})
+		},
+		{
+			desc: 'Enforcement case (C)',
+			input: {
+				casedata: {
+					caseType: APPEAL_CASE_TYPE.C,
+					lpaQuestionnaireSubmittedDate: '2025-10-22',
+					siteAccessDetails: ['access1'],
+					affectedListedBuildingNumbers: ['LB1'],
+					noticeRelatesToBuildingEngineeringMiningOther: true,
+					siteAreaSquareMetres: 150,
+					changeOfUseRefuseOrWaste: true,
+					isSiteOnCrownLand: false
+				}
+			},
+			expected: expect.objectContaining({
+				lpaQuestionnaireSubmittedDate: '2025-10-22',
+				siteAccessDetails: 'access1',
+				listedBuildingDetails: { create: [{ listEntry: 'LB1', affectsListedBuilding: true }] },
+				noticeRelatesToBuildingEngineeringMiningOther: true,
+				siteAreaSquareMetres: 150,
+				changeOfUseRefuseOrWaste: true,
+				isSiteOnCrownLand: false
+			})
+		},
+		{
+			desc: 'Enforcement listed building case (F)',
+			input: {
+				casedata: {
+					caseType: APPEAL_CASE_TYPE.F,
+					lpaQuestionnaireSubmittedDate: '2025-10-22',
+					siteAccessDetails: ['access1'],
+					affectedListedBuildingNumbers: ['LB1'],
+					noticeRelatesToBuildingEngineeringMiningOther: true,
+					areaOfAllegedBreachInSquareMetres: 50,
+					preserveGrantLoan: true,
+					consultHistoricEngland: true
+				}
+			},
+			expected: expect.objectContaining({
+				lpaQuestionnaireSubmittedDate: '2025-10-22',
+				siteAccessDetails: 'access1',
+				listedBuildingDetails: { create: [{ listEntry: 'LB1', affectsListedBuilding: true }] },
+				noticeRelatesToBuildingEngineeringMiningOther: true,
+				areaOfAllegedBreachInSquareMetres: 50,
+				preserveGrantLoan: true,
+				historicEnglandConsultation: true
+			})
 		}
 	])('mapQuestionnaireIn: $desc', ({ input, expected }) => {
 		const result = mapQuestionnaireIn(input, designatedSites);
