@@ -30,6 +30,7 @@ export const generateLdcLpaQuestionnaireComponents = (mappedLPAQData, mappedAppe
 				mappedLPAQData.lpaq?.isCorrectAppealType?.display.summaryListItem,
 				mappedLPAQData.lpaq?.appealUnderActSection?.display.summaryListItem,
 				mappedLPAQData.lpaq?.planningPermission.display.summaryListItem,
+				mappedLPAQData.lpaq?.relatedApplications?.display.summaryListItem,
 				mappedLPAQData.lpaq?.lpaConsiderAppealInvalid?.display.summaryListItem
 			].filter(isDefined)
 		}
