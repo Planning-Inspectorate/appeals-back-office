@@ -18,7 +18,7 @@ import { lpaTeamAssignments, teamsToCreate } from './teams/prod.js';
 const seedProduction = async () => {
 	const databaseConnector = createPrismaClient();
 	try {
-		await seedStaticData(databaseConnector);
+		await seedStaticData(databaseConnector, true);
 		await seedTeams(databaseConnector, teamsToCreate);
 		const mappedLPAs = mapLpasToTeams(localPlanningDepartmentList, lpaTeamAssignments);
 		await seedLPAs(databaseConnector, mappedLPAs);

@@ -812,10 +812,12 @@ export const representationRejectionReasons = [
  * Seed static data into the database. Does not disconnect from the database or handle errors.
  *
  * @param {import('../../server/utils/db-client/client.ts').PrismaClient} databaseConnector
+ * @param {boolean} useRealListedBuildingsDataset
  */
-export async function seedStaticData(databaseConnector) {
+export async function seedStaticData(databaseConnector, useRealListedBuildingsDataset = false) {
 	await importListedBuildingsDataset(
-		'https://files.planning.data.gov.uk/dataset/listed-building.json'
+		'https://files.planning.data.gov.uk/dataset/listed-building.json',
+		useRealListedBuildingsDataset
 	);
 
 	const systemUserId = '00000000-0000-0000-0000-000000000000';
