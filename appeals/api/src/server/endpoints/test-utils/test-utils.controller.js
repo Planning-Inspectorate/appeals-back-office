@@ -3,6 +3,7 @@ import { updateCompletedEvents } from '#endpoints/appeals/appeals.service.js';
 import { postInspectorDecision } from '#endpoints/decision/decision.controller.js';
 import { updateDocumentsAvCheckStatus } from '#endpoints/documents/documents.controller.js';
 import { postHearing } from '#endpoints/hearings/hearing.controller.js';
+import { linkAppeal } from '#endpoints/link-appeals/link-appeals.controller.js';
 import { updateLPAQuestionnaireById } from '#endpoints/lpa-questionnaires/lpa-questionnaires.controller.js';
 import {
 	publish,
@@ -653,4 +654,46 @@ export const simulateDocumentScan = async (req, res) => {
 	req.body = { documents: documentsBody };
 
 	return await updateDocumentsAvCheckStatus(req, res);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * */
+export const simulateLinkAppeals = async (req, res) => {
+	const { appealReference } = req.params;
+	const parentAppeal = await databaseConnector.appeal.findUnique({
+		where: { reference: appealReference },
+		include: {
+			childAppeals: true,
+			parentAppeals: true,
+			caseOfficer: true,
+			inspector: true,
+			appellantCase: true,
+			address: true,
+			appellant: true,
+			lpa: true,
+			agent: true,
+			appealStatus: true
+		}
+	});
+
+	if (!parentAppeal) return res.status(400).send(false);
+
+	const { childAppealReference } = req.body;
+
+	const childAppeal = await databaseConnector.appeal.findUnique({
+		where: { reference: childAppealReference }
+	});
+
+	if (!childAppeal) return res.status(400).send(false);
+
+	// @ts-ignore
+	req.appeal = parentAppeal;
+	req.body = {
+		linkedAppealId: childAppeal.id,
+		isCurrentAppealParent: true
+	};
+
+	return await linkAppeal(req, res);
 };

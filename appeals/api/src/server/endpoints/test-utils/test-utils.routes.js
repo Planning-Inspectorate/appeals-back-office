@@ -8,6 +8,7 @@ import {
 	simulateHearingElapsed,
 	simulateInquiryElapsed,
 	simulateIssueDecision,
+	simulateLinkAppeals,
 	simulateProofOfEvidenceElapsed,
 	simulateReviewAppellantFinalComments,
 	simulateReviewIpComment,
@@ -383,6 +384,29 @@ router.post(
 		#swagger.responses[400] = {}
 	 */
 	asyncHandler(simulateDocumentScan)
+);
+
+router.post(
+	'/:appealReference/link-appeals',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/link-appeals'
+		#swagger.description = 'A test endpoint to simulate the completion of linking appeals'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.requestBody = {
+			in: 'body',
+			description: 'Linked Appeal Request',
+			schema: { $ref: '#/components/schemas/SimulateLinkedAppealRequest' },
+			required: true
+		}
+		#swagger.responses[201] = {}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(simulateLinkAppeals)
 );
 
 export { router as testUtilsRoutes };
