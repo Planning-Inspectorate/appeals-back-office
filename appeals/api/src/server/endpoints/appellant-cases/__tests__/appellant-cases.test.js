@@ -1590,8 +1590,8 @@ describe('appellant cases routes', () => {
 					update: {
 						appeal: { connect: { id } },
 						otherLiveAppeals: 'no',
-						groundAFeeReceiptDueDate: undefined,
-						otherInformation: undefined,
+						groundAFeeReceiptDueDate: null,
+						otherInformation: null,
 						enforcementNoticeInvalid: 'no'
 					},
 					where: { appealId: id }
@@ -1702,8 +1702,8 @@ describe('appellant cases routes', () => {
 						appeal: { connect: { id } },
 						otherInformation: 'Enforcement other information',
 						enforcementNoticeInvalid: 'yes',
-						groundAFeeReceiptDueDate: undefined,
-						otherLiveAppeals: undefined
+						groundAFeeReceiptDueDate: null,
+						otherLiveAppeals: null
 					},
 					where: { appealId: id }
 				});
@@ -1815,9 +1815,9 @@ describe('appellant cases routes', () => {
 					update: {
 						appeal: { connect: { id } },
 						otherInformation: 'Enforcement other information',
-						otherLiveAppeals: undefined,
+						otherLiveAppeals: null,
 						enforcementNoticeInvalid: 'yes',
-						groundAFeeReceiptDueDate: undefined
+						groundAFeeReceiptDueDate: null
 					},
 					where: { appealId: id }
 				});
@@ -1953,10 +1953,10 @@ describe('appellant cases routes', () => {
 					create: expect.any(Object),
 					update: {
 						appeal: { connect: { id } },
-						otherInformation: undefined,
+						otherInformation: null,
 						enforcementNoticeInvalid: 'no',
 						groundAFeeReceiptDueDate: '2035-08-14T00:00:00.000Z',
-						otherLiveAppeals: undefined
+						otherLiveAppeals: null
 					},
 					where: { appealId: id }
 				});
@@ -1986,7 +1986,7 @@ describe('appellant cases routes', () => {
 					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
 					local_planning_authority: 'Maidstone Borough Council',
-					due_date: '14 July 2035',
+					due_date: '14 July 2099',
 					fee_due_date: '14 Aug 2035',
 					missing_documents: ['Grounds of appeal supporting documents: Missing doc'],
 					other_info: 'Other reason',
