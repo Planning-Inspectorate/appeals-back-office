@@ -478,6 +478,9 @@ export const USER_TYPE_PADS_INSPECTOR = 'padsInspector';
 export const CASE_RELATIONSHIP_LINKED = 'linked';
 export const CASE_RELATIONSHIP_RELATED = 'related';
 
+export const LINK_APPEALS_CHANGE_LEAD_OPERATION = 'change-lead';
+export const LINK_APPEALS_UNLINK_OPERATION = 'unlink';
+
 // Static config
 export const CONFIG_BANKHOLIDAYS_FEED_URL = 'https://www.gov.uk/bank-holidays.json';
 

@@ -554,6 +554,7 @@ interface LinkedAppeal {
 	appealReference: string;
 	isParentAppeal: boolean;
 	linkingDate: Date;
+	address: AppealSite;
 	appealType?: string | null;
 	relationshipId: number;
 	externalSource: boolean;

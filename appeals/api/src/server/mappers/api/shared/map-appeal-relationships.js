@@ -1,6 +1,7 @@
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Api.AppealRelationship} AppealRelationship */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
+/** @typedef {import('@pins/appeals').Address} Address */
 
 import { isAwaitingLinkedAppeal } from '#utils/is-awaiting-linked-appeal.js';
 import { hasChildAppeals, isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
@@ -85,7 +86,7 @@ export const mapAppealRelationships = (data) => {
  *
  * @param {{id: number | undefined, parent?: Appeal | null | undefined, child?: Appeal | null | undefined, linkingDate: Date, externalSource: boolean | null, externalAppealType: string | null, externalId: string | null}} relationship
  * @param {Boolean} isParentAppeal
- * @returns {Partial<AppealRelationship & {currentStatus: string, completedStateList: string[], inspectorDecision: string}>}
+ * @returns {Partial<AppealRelationship & {currentStatus: string, completedStateList: string[], inspectorDecision: string, address: Address | null}>}
  */
 const mapLinkedAppeal = (relationship, isParentAppeal) => {
 	const {
@@ -102,6 +103,7 @@ const mapLinkedAppeal = (relationship, isParentAppeal) => {
 		appealStatus,
 		reference: appealReference,
 		appealType,
+		address,
 		inspectorDecision
 	} = (isParentAppeal ? parent : child) || {};
 
@@ -115,6 +117,8 @@ const mapLinkedAppeal = (relationship, isParentAppeal) => {
 		appealId,
 		appealReference,
 		relationshipId,
+		// @ts-ignore
+		address,
 		externalSource: externalSource === true,
 		linkingDate: linkingDate.toISOString(),
 		appealType: appealType?.type,
