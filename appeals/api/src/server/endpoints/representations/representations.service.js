@@ -42,6 +42,7 @@ import {
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAddressRequest} UpdateAddressRequest */
 /** @typedef {import('#db-client/models.ts').RepresentationUpdateInput} RepresentationUpdateInput */
+/** @typedef {import('#db-client/models.ts').RepresentationUncheckedCreateInput} RepresentationCreateInput */
 
 /**
  * @param {number} appealId
@@ -239,14 +240,17 @@ export const createRepresentation = async (appealId, input) => {
  * @param {Appeal} appeal
  * @param {string} proofOfEvidenceType
  * @param {string[]} attachments
+ * @param {number} representedId
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
  * */
 export const createRepresentationProofOfEvidence = async (
 	appeal,
 	proofOfEvidenceType,
-	attachments
+	attachments,
+	representedId
 ) => {
-	const representation = await representationRepository.createRepresentation({
+	/** @type {RepresentationCreateInput} */
+	const representationData = {
 		appealId: appeal.id,
 		representationType:
 			proofOfEvidenceType === 'lpa'
@@ -255,9 +259,18 @@ export const createRepresentationProofOfEvidence = async (
 					? APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
 					: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
 		source: proofOfEvidenceType === 'lpa' ? 'lpa' : 'citizen',
-		dateCreated: new Date(),
-		representedId: appeal.appellantId
-	});
+		dateCreated: new Date()
+	};
+
+	if (proofOfEvidenceType === 'rule-6-party') {
+		representationData.representedId = Number(representedId);
+	} else if (proofOfEvidenceType === 'lpa') {
+		representationData.lpaCode = appeal.lpa?.lpaCode;
+	} else {
+		representationData.representedId = appeal.appellantId;
+	}
+
+	const representation = await representationRepository.createRepresentation(representationData);
 
 	if (attachments.length > 0) {
 		const documents = await documentRepository.getDocumentsByIds(attachments);

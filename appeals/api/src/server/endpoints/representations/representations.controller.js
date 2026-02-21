@@ -335,12 +335,13 @@ export async function createRepresentationProofOfEvidence(req, res) {
 	const {
 		appeal,
 		params: { proofOfEvidenceType },
-		body: { attachments }
+		body: { attachments, representedId }
 	} = req;
 	const rep = await representationService.createRepresentationProofOfEvidence(
 		appeal,
 		proofOfEvidenceType,
-		attachments
+		attachments,
+		representedId
 	);
 	return res.status(201).send(rep);
 }
