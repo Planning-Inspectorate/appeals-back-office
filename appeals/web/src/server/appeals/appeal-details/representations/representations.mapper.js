@@ -3,6 +3,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { ensureArray } from '#lib/array-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { APPEAL_REPRESENTATION_STATUS, COMMENT_STATUS } from '@pins/appeals/constants/common.js';
+import isAppellantStatementAppealType from '@pins/appeals/utils/is-appellant-statement-appeal-type.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} Appeal */
@@ -151,7 +152,10 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 				)}" class="govuk-link">1 LPA statement</a>`
 			: null;
 	let appellantStatementText = null;
-	if (config.featureFlags.featureFlagAppellantStatement) {
+	if (
+		config.featureFlags.featureFlagAppellantStatement &&
+		isAppellantStatementAppealType(appeal.appealType)
+	) {
 		appellantStatementText =
 			appeal.documentationSummary?.appellantStatement?.representationStatus ===
 				APPEAL_REPRESENTATION_STATUS.VALID ||

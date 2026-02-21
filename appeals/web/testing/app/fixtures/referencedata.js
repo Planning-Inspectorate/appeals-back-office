@@ -4749,6 +4749,7 @@ export const appealDataToGetRequiredActions = {
 	awaitingAppellantStatement: {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealType: 'Enforcement notice appeal',
 		appealTimetable: {
 			ipCommentsDueDate: pastDate,
 			lpaStatementDueDate: futureDate
@@ -4775,6 +4776,7 @@ export const appealDataToGetRequiredActions = {
 	appellantStatementAwaitingReview: {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealType: 'Enforcement notice appeal',
 		appealTimetable: {
 			ipCommentsDueDate: pastDate,
 			lpaStatementDueDate: pastDate
