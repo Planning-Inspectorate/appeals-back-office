@@ -50,7 +50,53 @@ exports[`start-case GET /start-case/select-procedure should render the select pr
 </main>"
 `;
 
-exports[`start-case GET /start-case/select-procedure/check-and-confirm should render email previews if it is an enforcement appeal 1`] = `
+exports[`start-case GET /start-case/select-procedure/check-and-confirm should render email previews if it is an Enforcement listed building appeal 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and start case</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+                                <dd class="govuk-summary-list__value">Written representations</dd>
+                            </div>
+                        </dl>
+                        <p class="govuk-body">We’ll start the timetable now and send emails to the relevant parties.</p>
+                        <div                         class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <details class="govuk-details" data-cy="preview-email-to-appellant">
+                                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                                    </summary>
+                                    <div class="govuk-details__text">Rendered HTML for appellant preview</div>
+                                </details>
+                            </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
+                        <details class="govuk-details" data-cy="preview-email-to-lpa">
+                            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
+                            </summary>
+                            <div class="govuk-details__text">Rendered HTML for LPA preview</div>
+                        </details>
+                    </div>
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Start case</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;
+
+exports[`start-case GET /start-case/select-procedure/check-and-confirm should render email previews if it is an Enforcement notice appeal 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>

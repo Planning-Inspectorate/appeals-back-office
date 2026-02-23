@@ -162,6 +162,12 @@ describe('start-case', () => {
 					APPEAL_TYPE.ENFORCEMENT_NOTICE,
 					[],
 					[]
+				],
+				[
+					'for enforcement listed building appeals regardless of enabled types (empty arrays)',
+					APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+					[],
+					[]
 				]
 			])('%s', async (_, appealType, hearingTypes, inquiryTypes) => {
 				// @ts-ignore
@@ -728,28 +734,34 @@ describe('start-case', () => {
 				);
 			});
 
-			it('should redirect to check and confirm page when appeal type is enforcement and enforcement hearing and inquiry are not enabled', async () => {
-				// @ts-ignore
-				getEnabledHearingAppealTypes.mockReturnValue([]);
-				// @ts-ignore
-				getEnabledInquiryAppealTypes.mockReturnValue([]);
+			it.each([
+				['enforcement', APPEAL_TYPE.ENFORCEMENT_NOTICE],
+				['enforcement listed building', APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING] // Add this back
+			])(
+				'should redirect to check and confirm page when appeal type is %s and hearing and inquiry are not enabled',
+				async (_, appealType) => {
+					// @ts-ignore
+					getEnabledHearingAppealTypes.mockReturnValue([]);
+					// @ts-ignore
+					getEnabledInquiryAppealTypes.mockReturnValue([]);
 
-				nock('http://test/')
-					.get('/appeals/1?include=all')
-					.reply(200, {
-						...appealDataWithoutStartDate,
-						appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE
-					});
+					nock('http://test/')
+						.get('/appeals/1?include=all')
+						.reply(200, {
+							...appealDataWithoutStartDate,
+							appealType: appealType
+						});
 
-				const response = await request.get(
-					'/appeals-service/appeal-details/1/start-case/select-procedure'
-				);
+					const response = await request.get(
+						'/appeals-service/appeal-details/1/start-case/select-procedure'
+					);
 
-				expect(response.statusCode).toBe(302);
-				expect(response.text).toBe(
-					'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
-				);
-			});
+					expect(response.statusCode).toBe(302);
+					expect(response.text).toBe(
+						'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
+					);
+				}
+			);
 		});
 	});
 
@@ -883,13 +895,16 @@ describe('start-case', () => {
 			expect(unprettifiedHtml).toContain('Start case</button>');
 		});
 
-		it('should render email previews if it is an enforcement appeal', async () => {
+		it.each([
+			['Enforcement notice', APPEAL_TYPE.ENFORCEMENT_NOTICE],
+			['Enforcement listed building', APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING]
+		])('should render email previews if it is an %s appeal', async (_, appealType) => {
 			nock('http://test/')
 				.get('/appeals/1?include=all')
 				.twice()
 				.reply(200, {
 					...appealDataWithoutStartDate,
-					appealType: 'Enforcement notice appeal'
+					appealType: appealType
 				});
 			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
 				id: 1,

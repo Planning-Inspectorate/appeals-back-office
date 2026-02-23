@@ -193,9 +193,10 @@ export function confirmProcedurePage(
 			]
 		: [];
 
-	const isEditable =
-		appealType !== APPEAL_TYPE.ENFORCEMENT_NOTICE ||
-		!featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE);
+	const isEditable = ![
+		APPEAL_TYPE.ENFORCEMENT_NOTICE,
+		APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+	].includes(appealType);
 
 	/** @type {PageContent} */
 	const pageContent = {

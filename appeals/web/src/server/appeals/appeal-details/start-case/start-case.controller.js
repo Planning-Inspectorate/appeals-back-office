@@ -45,8 +45,12 @@ export const getStartDate = async (request, response) => {
 		getEnabledInquiryAppealTypes().includes(appealType);
 
 	if (
-		// S78 and enforcement should always go to select procedure, other appeal types should only go to select procedure if hearing or inquiry is enabled for that appeal type
-		[APPEAL_TYPE.S78, APPEAL_TYPE.ENFORCEMENT_NOTICE].includes(appealType) ||
+		// S78 and enforcement and ELB should always go to select procedure, other appeal types should only go to select procedure if hearing or inquiry is enabled for that appeal type
+		[
+			APPEAL_TYPE.S78,
+			APPEAL_TYPE.ENFORCEMENT_NOTICE,
+			APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+		].includes(appealType) ||
 		hearingOrInquiryEnabled
 	) {
 		return response.redirect(
@@ -180,9 +184,14 @@ export const getSelectProcedure = async (request, response) => {
 		getEnabledHearingAppealTypes().includes(appealType) ||
 		getEnabledInquiryAppealTypes().includes(appealType);
 
+	const isEnforcementType = [
+		APPEAL_TYPE.ENFORCEMENT_NOTICE,
+		APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+	].includes(appealType);
+
 	// enforcement should redirect to check your answers if hearing or inquiry is not enabled, as there is only one procedure option available
 	if (
-		appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
+		isEnforcementType &&
 		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE) &&
 		!hearingOrInquiryEnabled
 	) {
@@ -327,7 +336,10 @@ const renderConfirmProcedure = async (request, response) => {
 
 	clearEditsForAppeal(request, 'startCaseAppealProcedure', appealId);
 
-	const showEmailPreviews = appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE;
+	const showEmailPreviews =
+		appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
+		appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING;
+
 	/** @type {{appellant: string, lpa: string} | undefined} */
 	let emailPreviews;
 
