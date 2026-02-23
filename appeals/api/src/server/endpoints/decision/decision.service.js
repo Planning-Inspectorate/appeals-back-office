@@ -424,7 +424,7 @@ export const sendNewDecisionLetter = async (
 			? formatAddressSingleLine(appeal.address)
 			: 'Address not available',
 		correction_notice_reason: correctionNotice,
-		decision_date: formatDate(decisionDate, false),
+		decision_date: formatDate(new Date(decisionDate), false),
 		front_office_url: environment.FRONT_OFFICE_URL || '',
 		team_email_address: await getTeamEmailFromAppealId(appeal.id),
 		feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || '')
