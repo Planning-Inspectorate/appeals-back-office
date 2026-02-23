@@ -4,12 +4,14 @@
 import { users } from '../../fixtures/users';
 import { HearingSectionPage } from '../../page_objects/caseDetails/hearingSectionPage';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+import { EstimatedDaysSection } from '../../page_objects/estimatedDaysSection';
 import { happyPathHelper } from '../../support/happyPathHelper';
 import { urlPaths } from '../../support/urlPaths';
 import { formatDateAndTime } from '../../support/utils/format';
 
 const caseDetailsPage = new CaseDetailsPage();
 const hearingSectionPage = new HearingSectionPage();
+const estimatedDaysSection = new EstimatedDaysSection();
 const currentDate = new Date();
 
 describe('Setup hearing and add hearing estimates', () => {
@@ -34,6 +36,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		},
 		hearing: {
 			checkDetails: 'Check details and set up hearing',
+			estimationQuestion: 'Do you know the expected number of days to carry out the hearing?',
 			addressQuestion: 'Do you know the address of where the hearing will take place?',
 			addressForm: 'Address',
 			dateTime: 'Date and time',
@@ -188,6 +191,8 @@ describe('Setup hearing and add hearing estimates', () => {
 		cy.getBusinessActualDate(new Date(), 2).then((date) => {
 			hearingSectionPage.setUpHearing(date, '10', '30');
 		});
+		estimatedDaysSection.selectEstimatedDaysOption('No');
+		caseDetailsPage.clickButtonByText('Continue');
 
 		// Handle missing yes/no selection
 		caseDetailsPage.clickButtonByText('Continue');
@@ -239,6 +244,8 @@ describe('Setup hearing and add hearing estimates', () => {
 
 			// Test back navigation from initial setup (no address)
 			hearingSectionPage.setUpHearing(date, date.getHours(), date.getMinutes());
+			estimatedDaysSection.selectEstimatedDaysOption('No');
+			caseDetailsPage.clickButtonByText('Continue');
 			hearingSectionPage.selectRadioButtonByValue('No');
 			caseDetailsPage.clickButtonByText('Continue');
 
@@ -263,6 +270,8 @@ describe('Setup hearing and add hearing estimates', () => {
 			hearingSectionPage.verifyHearingHeader(headers.hearing.addressForm);
 			caseDetailsPage.clickBackLink();
 			hearingSectionPage.verifyHearingHeader(headers.hearing.addressQuestion);
+			caseDetailsPage.clickBackLink();
+			hearingSectionPage.verifyHearingHeader(headers.hearing.estimationQuestion);
 			caseDetailsPage.clickBackLink();
 			hearingSectionPage.verifyHearingHeader(headers.hearing.dateTime);
 			caseDetailsPage.clickBackLink();
@@ -304,10 +313,15 @@ describe('Setup hearing and add hearing estimates', () => {
 
 			// Set Up Initial Hearing (No Address)
 			hearingSectionPage.setUpHearing(date, date.getHours(), date.getMinutes());
+			estimatedDaysSection.selectEstimatedDaysOption('Yes');
+			estimatedDaysSection.enterEstimatedHearingDays(6);
+			caseDetailsPage.clickButtonByText('Continue');
 			hearingSectionPage.selectRadioButtonByValue('No');
 			caseDetailsPage.clickButtonByText('Continue');
 			hearingSectionPage.verifyHearingValues('date', expectedDateTime.date);
 			hearingSectionPage.verifyHearingValues('time', expectedDateTime.time);
+			hearingSectionPage.verifyHearingValues('hearing-expected-number-of-days', 'Yes');
+			hearingSectionPage.verifyHearingValues('hearing-estimation-days', '6 days');
 			hearingSectionPage.verifyHearingValues('address-known', 'No');
 
 			// Add Initial Address
@@ -390,6 +404,7 @@ describe('Setup hearing and add hearing estimates', () => {
 			caseDetailsPage.clickRowChangeLink('date');
 			const newHearingDate = new Date(date.getFullYear() + 1, 0, 1);
 			hearingSectionPage.setUpHearing(newHearingDate, date.getHours(), date.getMinutes());
+			estimatedDaysSection.selectEstimatedDaysOption('No');
 			caseDetailsPage.clickButtonByText('Continue');
 
 			// Update Address and Date
@@ -506,7 +521,8 @@ describe('Setup hearing and add hearing estimates', () => {
 				hearingDate.getHours(),
 				hearingDate.getMinutes()
 			);
-
+			estimatedDaysSection.selectEstimatedDaysOption('No');
+			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('Yes');
 			caseDetailsPage.clickButtonByText('Continue');
 			hearingSectionPage.addHearingLocationAddress(originalAddress);
@@ -568,7 +584,8 @@ describe('Setup hearing and add hearing estimates', () => {
 				hearingDate.getHours(),
 				hearingDate.getMinutes()
 			);
-
+			estimatedDaysSection.selectEstimatedDaysOption('No');
+			caseDetailsPage.clickButtonByText('Continue');
 			// Do not add address
 			hearingSectionPage.selectRadioButtonByValue('No');
 			caseDetailsPage.clickButtonByText('Continue');
@@ -714,7 +731,8 @@ describe('Setup hearing and add hearing estimates', () => {
 					hearingDate.getHours(),
 					hearingDate.getMinutes()
 				);
-
+				estimatedDaysSection.selectEstimatedDaysOption('No');
+				caseDetailsPage.clickButtonByText('Continue');
 				// Add address
 				hearingSectionPage.selectRadioButtonByValue('Yes');
 				caseDetailsPage.clickButtonByText('Continue');
