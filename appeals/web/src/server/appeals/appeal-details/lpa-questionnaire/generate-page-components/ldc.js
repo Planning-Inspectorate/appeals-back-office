@@ -56,7 +56,8 @@ export const generateLdcLpaQuestionnaireComponents = (mappedLPAQData, mappedAppe
 				mappedLPAQData.lpaq?.communityInfrastructureLevy?.display.summaryListItem,
 				mappedLPAQData.lpaq?.isInfrastructureLevyFormallyAdopted?.display.summaryListItem,
 				mappedLPAQData.lpaq?.infrastructureLevyAdoptedDate?.display.summaryListItem,
-				mappedLPAQData.lpaq?.infrastructureLevyExpectedDate?.display.summaryListItem
+				mappedLPAQData.lpaq?.infrastructureLevyExpectedDate?.display.summaryListItem,
+				mappedLPAQData.lpaq?.otherRelevantMatters?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});

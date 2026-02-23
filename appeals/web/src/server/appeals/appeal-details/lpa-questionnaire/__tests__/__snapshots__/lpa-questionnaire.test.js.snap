@@ -1539,6 +1539,11 @@ exports[`LPA Questionnaire review GET / should render the Ldc LPA Questionnaire 
                                     data-cy="change-infrastructure-levy-expected-date">Change<span class="govuk-visually-hidden"> When do you expect to formally adopt the community infrastructure levy? (2. Planning officer’s report and supplementary documents)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Other relevant matters</dt>
+                            <dd class="govuk-summary-list__value">No documents</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-other-relevant-matters">Add<span class="govuk-visually-hidden"> Other relevant matters (2. Planning officer’s report and supplementary documents)</span></a>
+                            </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
