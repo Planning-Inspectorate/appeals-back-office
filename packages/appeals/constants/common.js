@@ -10,7 +10,6 @@ export const EVENT_TYPE = Object.freeze({
 export const FEATURE_FLAG_NAMES = Object.freeze({
 	SECTION_78: 'featureFlagS78Written',
 	SECTION_78_INQUIRY: 'featureFlagS78Inquiry',
-	NET_RESIDENCE: 'featureFlagNetResidence',
 	NET_RESIDENCE_S20: 'featureFlagNetResidenceS20',
 	LINKED_APPEALS: 'featureFlagLinkedAppeals',
 	LINKED_APPEALS_UNLINK: 'featureFlagLinkedAppealsUnlink',

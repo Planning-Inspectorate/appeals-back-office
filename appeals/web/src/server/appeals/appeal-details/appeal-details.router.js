@@ -13,11 +13,6 @@ import * as controller from './appeal-details.controller.js';
 import { validateAppeal, validateAppealWithInclude } from './appeal-details.middleware.js';
 import siteAddressRouter from './appellant-case/address/address.router.js';
 import appellantCaseRouter from './appellant-case/appellant-case.router.js';
-import {
-	assignNewUserRouter,
-	assignUserRouterOld,
-	unassignUserRouter
-} from './assign-user-old/assign-user.router.js';
 import assignUserRouter from './assign-user/assign-user.router.js';
 import { auditRouter } from './audit/audit.router.js';
 import cancelAppealRouter from './cancel/cancel.router.js';
@@ -86,24 +81,6 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.viewCaseDetails),
 	siteVisitRouter
-);
-router.use(
-	'/:appealId/assign-user',
-	validateAppeal,
-	assertUserHasPermission(permissionNames.updateCase),
-	assignUserRouterOld
-);
-router.use(
-	'/:appealId/unassign-user',
-	validateAppeal,
-	assertUserHasPermission(permissionNames.updateCase),
-	unassignUserRouter
-);
-router.use(
-	'/:appealId/assign-new-user',
-	validateAppeal,
-	assertUserHasPermission(permissionNames.updateCase),
-	assignNewUserRouter
 );
 router.use(
 	'/:appealId/issue-decision',
