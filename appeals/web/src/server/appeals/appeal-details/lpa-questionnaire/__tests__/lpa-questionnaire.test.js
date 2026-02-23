@@ -1321,6 +1321,7 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain(
 				'When do you expect to formally adopt the community infrastructure levy?</dt>'
 			);
+			expect(element.innerHTML).toContain('Other relevant matters</dt>');
 
 			expect(element.innerHTML).toContain('3. Site access</h2>');
 			expect(element.innerHTML).toContain(

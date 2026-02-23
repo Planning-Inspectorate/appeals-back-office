@@ -8,6 +8,7 @@ import { mapInfrastructureLevyExpectedDate } from './submappers/map-infrastructu
 import { mapIsAppealInvalid } from './submappers/map-is-appeal-invalid.js';
 import { mapIsInfrastructureLevyFormallyAdopted } from './submappers/map-is-infrastructure-levy-formally-adopted.js';
 import { mapOtherAppeals } from './submappers/map-other-appeals.js';
+import { mapOtherRelevantMatters } from './submappers/map-other-relevant-matter.js';
 import { mapPlanningPermission } from './submappers/map-planning-permission-ldc.js';
 import { mapProcedurePreferenceDetails } from './submappers/map-procedure-preference-details.js';
 import { mapProcedurePreferenceDuration } from './submappers/map-procedure-preference-duration.js';
@@ -30,6 +31,7 @@ export const submaps = {
 	isInfrastructureLevyFormallyAdopted: mapIsInfrastructureLevyFormallyAdopted,
 	infrastructureLevyAdoptedDate: mapInfrastructureLevyAdoptedDate,
 	infrastructureLevyExpectedDate: mapInfrastructureLevyExpectedDate,
+	otherRelevantMatters: mapOtherRelevantMatters,
 
 	//Section 3
 	siteAccess: mapSiteAccess,

@@ -173,6 +173,7 @@ export const DOCUMENT_FOLDER_DISPLAY_LABELS = Object.freeze({
 	[APPEAL_DOCUMENT_TYPE.GROUND_F_SUPPORTING]: 'Ground (f) supporting documents',
 	[APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING]: 'Ground (g) supporting documents',
 	[APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT]: 'Ground (a) fee receipt',
+	[APPEAL_DOCUMENT_TYPE.OTHER_RELEVANT_MATTERS]: 'Other relevant matters documents',
 	// Enforcement
 	[APPEAL_DOCUMENT_TYPE.STOP_NOTICE]: 'Stop notice',
 	[APPEAL_DOCUMENT_TYPE.ARTICLE_4_DIRECTION]: 'Article 4 direction',
