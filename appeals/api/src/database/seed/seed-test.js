@@ -24,7 +24,7 @@ const seedTest = async () => {
 		await seedTeams(databaseConnector, teamsToCreate);
 		await seedLPAs(databaseConnector, localPlanningDepartmentList);
 		await seedPADSInspectors(databaseConnector, padsInspectorList);
-		await seedStaticData(databaseConnector, false);
+		await seedStaticData(databaseConnector);
 	} catch (error) {
 		console.error(error);
 		throw error;
