@@ -11,10 +11,15 @@ import {
 	simulateLinkAppeals,
 	simulateProofOfEvidenceElapsed,
 	simulateReviewAppellantFinalComments,
+	simulateReviewAppellantProofOfEvidence,
+	simulateReviewAppellantStatement,
 	simulateReviewIpComment,
 	simulateReviewLpaFinalComments,
+	simulateReviewLpaProofOfEvidence,
 	simulateReviewLPAQ,
 	simulateReviewLpaStatement,
+	simulateReviewRuleSixProofOfEvidence,
+	simulateReviewRuleSixStatement,
 	simulateSetUpHearing,
 	simulateSetUpSiteVisit,
 	simulateShareIpCommentsAndLpaStatement,
@@ -407,6 +412,106 @@ router.post(
 		#swagger.responses[400] = {}
 	 */
 	asyncHandler(simulateLinkAppeals)
+);
+
+router.post(
+	'/:appealReference/review-appellant-statement',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/review-appellant-statement'
+		#swagger.description = 'A test endpoint to simulate the completion of a review appellant statement event'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {
+			description: 'Get a single representation for an appeal',
+			schema: { $ref: '#/components/schemas/RepResponse' }
+		}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(simulateReviewAppellantStatement)
+);
+
+router.post(
+	'/:appealReference/review-rule-6-statement',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/review-rule-6-statement'
+		#swagger.description = 'A test endpoint to simulate the completion of a review rule 6 statement event'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {
+			description: 'Get a single representation for an appeal',
+			schema: { $ref: '#/components/schemas/RepResponse' }
+		}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(simulateReviewRuleSixStatement)
+);
+
+router.post(
+	'/:appealReference/review-rule-6-proof-of-evidence',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/review-rule-6-proof-of-evidence'
+		#swagger.description = 'A test endpoint to simulate the completion of a review rule 6 proof of evidence event'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {
+			description: 'Get a single representation for an appeal',
+			schema: { $ref: '#/components/schemas/RepResponse' }
+		}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(simulateReviewRuleSixProofOfEvidence)
+);
+
+router.post(
+	'/:appealReference/review-lpa-proof-of-evidence',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/review-lpa-proof-of-evidence'
+		#swagger.description = 'A test endpoint to simulate the completion of a review lpa proof of evidence event'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {
+			description: 'Get a single representation for an appeal',
+			schema: { $ref: '#/components/schemas/RepResponse' }
+		}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(simulateReviewLpaProofOfEvidence)
+);
+
+router.post(
+	'/:appealReference/review-appellant-proof-of-evidence',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/review-appellant-proof-of-evidence'
+		#swagger.description = 'A test endpoint to simulate the completion of a review appellant proof of evidence event'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {
+			description: 'Get a single representation for an appeal',
+			schema: { $ref: '#/components/schemas/RepResponse' }
+		}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(simulateReviewAppellantProofOfEvidence)
 );
 
 export { router as testUtilsRoutes };
