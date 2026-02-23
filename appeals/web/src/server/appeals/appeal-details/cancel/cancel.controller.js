@@ -1,4 +1,5 @@
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import featureFlags from '#common/feature-flags.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { mapCancelAppealPage } from './cancel.mapper.js';
 
 /**
@@ -51,7 +52,8 @@ export const postCancelAppeal = async (request, response) => {
 
 	const baseUrl = `/appeals-service/appeal-details/${request.currentAppeal.appealId}`;
 	const invalidFlowEntrypoint =
-		currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
+		currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
+		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_CANCEL)
 			? `${baseUrl}/cancel/enforcement/invalid`
 			: `${baseUrl}/invalid/new`;
 
