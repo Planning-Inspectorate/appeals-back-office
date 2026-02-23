@@ -8,7 +8,7 @@ import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
  */
 export const isNetResidencesAppealType = (appealType) => {
 	if (
-		(config.featureFlags.featureFlagNetResidence && appealType === APPEAL_TYPE.S78) ||
+		appealType === APPEAL_TYPE.S78 ||
 		(config.featureFlags.featureFlagNetResidenceS20 &&
 			appealType === APPEAL_TYPE.PLANNED_LISTED_BUILDING)
 	) {
