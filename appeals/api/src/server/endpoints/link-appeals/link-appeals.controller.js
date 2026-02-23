@@ -19,7 +19,9 @@ import { updatePersonalList } from '#utils/update-personal-list.js';
 import { logger } from '@azure/identity';
 import {
 	AUDIT_TRAIL_APPEAL_LINK_ADDED,
-	AUDIT_TRAIL_APPEAL_LINK_REMOVED,
+	AUDIT_TRAIL_APPEAL_LINK_UNLINKED,
+	AUDIT_TRAIL_APPEAL_LINK_UNLINKED_ALL,
+	AUDIT_TRAIL_APPEAL_LINK_UPDATED_AS_LEAD,
 	AUDIT_TRAIL_APPEAL_RELATION_ADDED,
 	AUDIT_TRAIL_APPEAL_RELATION_REMOVED,
 	CASE_RELATIONSHIP_LINKED,
@@ -354,12 +356,38 @@ export const unlinkAppeal = async (req, res) => {
 		azureAdUserId: req.get('azureAdUserId'),
 		details:
 			linkDetails.type === CASE_RELATIONSHIP_LINKED
-				? stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_REMOVED, [otherRef])
+				? stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UNLINKED, [otherRef])
 				: stringTokenReplacement(AUDIT_TRAIL_APPEAL_RELATION_REMOVED, [otherRef])
 	});
 
 	await broadcasters.broadcastAppeal(currentAppeal.id);
 	return res.status(200).send(true);
+};
+
+/**
+ *
+ * @param {string} azureAdUserId
+ * @param {number} appealId
+ * @param {string} unlinkedAppealRef
+ * @param {boolean} [allUnlinked]
+ * @returns {Promise<void>}
+ */
+const auditUnlinkingAppeal = async (
+	azureAdUserId,
+	appealId,
+	unlinkedAppealRef = '',
+	allUnlinked = false
+) => {
+	const details = stringTokenReplacement(
+		allUnlinked ? AUDIT_TRAIL_APPEAL_LINK_UNLINKED_ALL : AUDIT_TRAIL_APPEAL_LINK_UNLINKED,
+		[unlinkedAppealRef]
+	);
+
+	await createAuditTrail({
+		appealId,
+		details,
+		azureAdUserId
+	});
 };
 
 /**
@@ -370,6 +398,7 @@ export const unlinkAppeal = async (req, res) => {
 export const updateLinkedAppeals = async (req, res) => {
 	const { appeal } = req;
 	const { appealRefToReplaceLead, operation } = req.body;
+	const azureAdUserId = req.get('azureAdUserId') || '';
 
 	if (!operation) {
 		return res.status(400).send('Missing operation field');
@@ -411,7 +440,7 @@ export const updateLinkedAppeals = async (req, res) => {
 
 		const appealToReplaceLead =
 			appealRefToReplaceLead &&
-			getChildAppeals(appeal).find((childAppeal) => {
+			childAppeals.find((childAppeal) => {
 				return childAppeal.reference === appealRefToReplaceLead;
 			});
 
@@ -431,19 +460,27 @@ export const updateLinkedAppeals = async (req, res) => {
 
 		const options = { omitFolders };
 
+		let appealToUnlink;
+
 		switch (operation) {
 			case LINK_APPEALS_CHANGE_LEAD_OPERATION: {
-				// @ts-ignore
-				await duplicateAllFiles(currentLead, appealToReplaceLead, options);
-				// @ts-ignore
-				await replaceLeadAppeal(currentLead, appealToReplaceLead);
+				await Promise.allSettled([
+					// @ts-ignore
+					duplicateAllFiles(currentLead, appealToReplaceLead, options),
+					// @ts-ignore
+					replaceLeadAppeal(currentLead, appealToReplaceLead)
+				]);
 				break;
 			}
 			case LINK_APPEALS_UNLINK_OPERATION: {
-				const appealToUnlink =
-					isParentAppeal(appeal) && childAppeals.length === 1 ? await childAppeals[0] : appeal;
+				appealToUnlink =
+					// Just unlink the child if it's a parent of only one child
+					isParentAppeal(appeal) && childAppeals.length === 1
+						? // Give child appeal parent relationship to allow isChildAppeal check to work below
+							{ ...childAppeals[0], parentAppeals: [{ type: CASE_RELATIONSHIP_LINKED }] }
+						: appeal;
 
-				if (isChildAppeal(appealToUnlink) || appealToUnlink.id !== appeal.id) {
+				if (isChildAppeal(appealToUnlink)) {
 					// @ts-ignore
 					await duplicateAllFiles(currentLead, appealToUnlink, options);
 				} else {
@@ -452,21 +489,54 @@ export const updateLinkedAppeals = async (req, res) => {
 							.status(400)
 							.send('Appeal to replace lead is required for unlinking a parent appeal');
 					}
-					// @ts-ignore
-					await duplicateAllFiles(appealToUnlink, appealToReplaceLead, options);
-					// @ts-ignore
-					await replaceLeadAppeal(appealToUnlink, appealToReplaceLead);
+					await Promise.allSettled([
+						// @ts-ignore
+						duplicateAllFiles(appealToUnlink, appealToReplaceLead, options),
+						// @ts-ignore
+						replaceLeadAppeal(appealToUnlink, appealToReplaceLead)
+					]);
 				}
-				// @ts-ignore
-				await unlinkChildAppeal(appealToUnlink);
-				// @ts-ignore
-				await updatePersonalList(appealToUnlink.id);
+				await Promise.allSettled([
+					// @ts-ignore
+					unlinkChildAppeal(appealToUnlink),
+					// @ts-ignore
+					updatePersonalList(appealToUnlink.id)
+				]);
+
+				if (currentLead?.id && appealToUnlink?.id) {
+					const allUnlinked = childAppeals.length === 1;
+
+					await auditUnlinkingAppeal(
+						azureAdUserId,
+						appealToUnlink.id,
+						currentLead.reference,
+						allUnlinked
+					);
+					await auditUnlinkingAppeal(
+						azureAdUserId,
+						currentLead.id,
+						appealToUnlink.reference,
+						allUnlinked
+					);
+				}
+
 				break;
 			}
 		}
 
 		// Refresh the personal list for the lead
 		await updatePersonalList(appealToReplaceLead?.id || currentLead?.id);
+
+		if (currentLead?.id && appealToReplaceLead?.reference) {
+			await createAuditTrail({
+				appealId: currentLead.id,
+				details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UPDATED_AS_LEAD, [
+					appealToReplaceLead.reference
+				]),
+				azureAdUserId
+			});
+			await updatePersonalList(appealToReplaceLead.id);
+		}
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).send({ errors: { body: ERROR_UNLINKING_APPEALS } });

@@ -62,6 +62,13 @@ describe('linked-appeals', () => {
 	afterEach(teardown);
 
 	describe('GET /linked-appeals/manage', () => {
+		it('should redirect to appeal details page if appeal is not linked', async () => {
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
+			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}${managePath}`);
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toEqual(`Found. Redirecting to ${baseUrl}/1`);
+		});
+
 		it('should render the manage linked appeals page with the expected content', async () => {
 			nock('http://test/')
 				.get('/appeals/1?include=all')
@@ -847,6 +854,12 @@ describe('linked-appeals', () => {
 	});
 
 	describe('GET /linked-appeals/unlink-appeal', () => {
+		it('should redirect to appeal details page if appeal is not linked', async () => {
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
+			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}${unlinkAppealPath}/2`);
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toEqual(`Found. Redirecting to ${baseUrl}/1`);
+		});
 		it('should render the unlink-appeal page', async () => {
 			nock('http://test/')
 				.get('/appeals/1?include=all')
@@ -887,9 +900,7 @@ describe('linked-appeals', () => {
 			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}${unlinkAppealPath}/2`);
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual(
-				`Found. Redirecting to ${baseUrl}/1${linkedAppealsPath}/manage`
-			);
+			expect(response.text).toEqual(`Found. Redirecting to ${baseUrl}/1`);
 		});
 
 		it('should redirect to appeal details page when there is only one child', async () => {
@@ -913,6 +924,13 @@ describe('linked-appeals', () => {
 	});
 
 	describe('GET /linked-appeals/unlink-lead-appeal', () => {
+		it('should redirect to appeal details page if appeal is not linked', async () => {
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
+			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}${unlinkLeadAppealPath}`);
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toEqual(`Found. Redirecting to ${baseUrl}/1`);
+		});
+
 		it('should render the unlink lead appeal page', async () => {
 			nock('http://test/')
 				.get('/appeals/1?include=all')
@@ -957,6 +975,14 @@ describe('linked-appeals', () => {
 	});
 
 	describe('GET /linked-appeals/confirm-unlink-lead-appeal', () => {
+		it('should redirect to appeal details page if appeal is not linked', async () => {
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
+			const response = await request.get(
+				`${baseUrl}/1${linkedAppealsPath}${confirmUnlinkLeadAppealPath}`
+			);
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toEqual(`Found. Redirecting to ${baseUrl}/1`);
+		});
 		it('should render the confirm unlink lead appeal page', async () => {
 			nock('http://test/')
 				.get('/appeals/1?include=all')
@@ -1011,13 +1037,17 @@ describe('linked-appeals', () => {
 			);
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual(
-				`Found. Redirecting to ${baseUrl}/2${linkedAppealsPath}/manage`
-			);
+			expect(response.text).toEqual(`Found. Redirecting to ${baseUrl}/1`);
 		});
 	});
 
 	describe('GET /linked-appeals/change-lead-appeal', () => {
+		it('should redirect to appeal details page if appeal is not linked', async () => {
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
+			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}${changeLeadAppealPath}`);
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toEqual(`Found. Redirecting to ${baseUrl}/1`);
+		});
 		it('should render the change lead appeal page', async () => {
 			nock('http://test/')
 				.get('/appeals/1?include=all')
@@ -1062,6 +1092,15 @@ describe('linked-appeals', () => {
 	});
 
 	describe('GET /linked-appeals/confirm-change-lead-appeal', () => {
+		it('should redirect to appeal details page if appeal is not linked', async () => {
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
+			const response = await request.get(
+				`${baseUrl}/1${linkedAppealsPath}${confirmChangeLeadAppealPath}`
+			);
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toEqual(`Found. Redirecting to ${baseUrl}/1`);
+		});
+
 		it('should render the confirm change lead appeal page', async () => {
 			nock('http://test/')
 				.get('/appeals/1?include=all')
@@ -1116,9 +1155,7 @@ describe('linked-appeals', () => {
 			);
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual(
-				`Found. Redirecting to ${baseUrl}/2${linkedAppealsPath}/manage`
-			);
+			expect(response.text).toEqual(`Found. Redirecting to ${baseUrl}/1`);
 		});
 	});
 });

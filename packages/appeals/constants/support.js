@@ -134,7 +134,11 @@ export const AUDIT_TRAIL_REMOVED_INSPECTOR =
 export const AUDIT_TRAIL_SITE_VISIT_ARRANGED = 'The site visit was arranged for {replacement0}';
 export const AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED = 'The site visit type was selected';
 export const AUDIT_TRAIL_APPEAL_LINK_ADDED = 'Linked appeal {replacement0} added';
-export const AUDIT_TRAIL_APPEAL_LINK_REMOVED = 'Linked appeal {replacement0} removed';
+export const AUDIT_TRAIL_APPEAL_LINK_UNLINKED = 'Linked appeal {replacement0} unlinked';
+export const AUDIT_TRAIL_APPEAL_LINK_UNLINKED_ALL =
+	'Linked appeal {replacement0} unlinked and there are no other linked appeals';
+export const AUDIT_TRAIL_APPEAL_LINK_UPDATED_AS_LEAD =
+	'Linked appeal {replacement0} updated to lead appeal';
 export const AUDIT_TRAIL_APPEAL_RELATION_ADDED = 'Related appeal {replacement0} added';
 export const AUDIT_TRAIL_APPEAL_RELATION_REMOVED = 'Related appeal {replacement0} removed';
 export const AUDIT_TRAIL_APPLICATION_REFERENCE_UPDATED = 'Planning application reference updated';
