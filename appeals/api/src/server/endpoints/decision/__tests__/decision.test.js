@@ -1336,6 +1336,78 @@ describe('decision routes', () => {
 			expect(recipients.filter((e) => e === 'dup@test.com')).toHaveLength(1);
 		});
 
+		test('formats decision_date correctly when decisionDate is a string ISO date', async () => {
+			const correctAppealState = {
+				...householdAppeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				]
+			};
+
+			databaseConnector.representation.count.mockResolvedValue(0);
+			databaseConnector.appeal.findUnique.mockResolvedValue(correctAppealState);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.representation.findMany.mockResolvedValue([]);
+
+			const correctionNotice = 'Test correction notice';
+			const decisionDateString = '2023-12-25T00:00:00.000Z';
+
+			await sendNewDecisionLetter(
+				correctAppealState,
+				correctionNotice,
+				azureAdUserId,
+				mockNotifyClient,
+				decisionDateString
+			);
+
+			expect(mockNotifySend).toHaveBeenCalledWith(
+				expect.objectContaining({
+					personalisation: expect.objectContaining({
+						decision_date: '25 December 2023'
+					})
+				})
+			);
+		});
+
+		test('formats decision_date correctly when decisionDate is a Date instance', async () => {
+			const correctAppealState = {
+				...householdAppeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				]
+			};
+
+			databaseConnector.representation.count.mockResolvedValue(0);
+			databaseConnector.appeal.findUnique.mockResolvedValue(correctAppealState);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.representation.findMany.mockResolvedValue([]);
+
+			const correctionNotice = 'Test correction notice';
+			const decisionDate = new Date('2023-12-25T00:00:00.000Z');
+
+			await sendNewDecisionLetter(
+				correctAppealState,
+				correctionNotice,
+				azureAdUserId,
+				mockNotifyClient,
+				decisionDate
+			);
+
+			expect(mockNotifySend).toHaveBeenCalledWith(
+				expect.objectContaining({
+					personalisation: expect.objectContaining({
+						decision_date: '25 December 2023'
+					})
+				})
+			);
+		});
+
 		test('handles missing emails correctly', async () => {
 			const appealWithMissingEmails = {
 				...householdAppeal,

@@ -16,6 +16,16 @@ describe('date-formatter', () => {
 		it.each(tests)('formats date $date in Europe/London', ({ date, shortened, expected }) => {
 			expect(formatDate(date, shortened)).toEqual(expected);
 		});
+
+		it('returns empty string when given an ISO date string instead of a Date instance', () => {
+			const isoString = '2023-12-25T00:00:00.000Z';
+			expect(formatDate(isoString, false)).toEqual('');
+		});
+
+		it('returns formatted date when given a Date instance created from the same ISO string', () => {
+			const isoString = '2023-12-25T00:00:00.000Z';
+			expect(formatDate(new Date(isoString), false)).toEqual('25 December 2023');
+		});
 	});
 
 	describe('formatTime', () => {
