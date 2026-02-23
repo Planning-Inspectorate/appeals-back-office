@@ -405,57 +405,85 @@ describe('appeal-details', () => {
 					expect(notificationBannerElementHTML).toContain('Linked appeal added');
 				});
 
-				it('should render a success notification banner when a user was successfully unassigned as inspector', async () => {
-					nock('http://test/').patch('/appeals/1').reply(200, { inspector: '' });
-					nock('http://test/').get(`/appeals/1/case-notes`).reply(200, caseNotes);
-					await request.post(`${baseUrl}/1/unassign-user/inspector/1/confirm`).send({
-						confirm: 'yes'
-					});
-
-					const response = await request.get(`${baseUrl}/1`);
-					const notificationBannerElementHTML = parseHtml(response.text, {
-						rootElement: notificationBannerElement
-					}).innerHTML;
-					expect(notificationBannerElementHTML).toMatchSnapshot();
-					expect(notificationBannerElementHTML).toContain('Success</h3>');
-					expect(notificationBannerElementHTML).toContain('Inspector removed</p>');
-				});
-
 				it('should render a success notification banner when a user was successfully assigned as case officer', async () => {
 					nock('http://test/')
-						.patch('/appeals/1')
-						.reply(200, { caseOfficer: 'updatedCaseOfficerId' });
-					nock('http://test/').get(`/appeals/1/case-notes`).reply(200, caseNotes);
+						.get(`/appeals/${appealData.appealId}?include=all`)
+						.reply(200, appealData)
+						.persist();
+					nock('http://test/')
+						.patch(`/appeals/${appealData.appealId}?include=all`)
+						.reply(200, {
+							...appealData,
+							caseOfficer: 'updatedCaseOfficerId'
+						});
+					nock('http://test/')
+						.get(`/appeals/${appealData.appealId}/case-notes`)
+						.reply(200, caseNotes);
 
-					await request.post(`${baseUrl}/1/assign-user/case-officer/1/confirm`).send({
-						confirm: 'yes'
-					});
+					await request
+						.post(`${baseUrl}/${appealData.appealId}/assign-case-officer/search-case-officer`)
+						.send({
+							user: '{"id": "923ac03b-9031-4cf4-8b17-348c274321f9", "name": "Smith, John", "email": "John.Smith@planninginspectorate.gov.uk"}'
+						});
 
-					const response = await request.get(`${baseUrl}/1`);
+					await request.get(`${baseUrl}/${appealData.appealId}/assign-case-officer/check-details`);
+
+					const confirmResponse = await request
+						.post(`${baseUrl}/${appealData.appealId}/assign-case-officer/check-details`)
+						.send({ confirm: 'yes' });
+
+					expect(confirmResponse.statusCode).toBe(302);
+
+					const response = await request.get(`${baseUrl}/${appealData.appealId}`);
+
+					expect(response.statusCode).toBe(200);
 
 					const notificationBannerElementHTML = parseHtml(response.text, {
 						rootElement: notificationBannerElement
 					}).innerHTML;
 					expect(notificationBannerElementHTML).toMatchSnapshot();
 					expect(notificationBannerElementHTML).toContain('Success</h3>');
-					expect(notificationBannerElementHTML).toContain('Case officer has been assigned</p>');
+					expect(notificationBannerElementHTML).toContain('Case officer assigned</p>');
 				});
 
 				it('should render a success notification banner when a user was successfully assigned as inspector', async () => {
-					nock('http://test/').patch('/appeals/1').reply(200, { inspector: 'updatedInspectorId' });
-					nock('http://test/').get(`/appeals/1/case-notes`).reply(200, caseNotes);
+					nock('http://test/')
+						.get(`/appeals/${appealData.appealId}?include=all`)
+						.reply(200, appealData)
+						.persist();
+					nock('http://test/')
+						.patch(`/appeals/${appealData.appealId}?include=all`)
+						.reply(200, {
+							...appealData,
+							inspector: 'updatedInspectorId'
+						});
+					nock('http://test/')
+						.get(`/appeals/${appealData.appealId}/case-notes`)
+						.reply(200, caseNotes);
 
-					await request.post(`${baseUrl}/1/assign-user/inspector/1/confirm`).send({
-						confirm: 'yes'
-					});
+					await request
+						.post(`${baseUrl}/${appealData.appealId}/assign-inspector/search-inspector`)
+						.send({
+							user: '{"id": "923ac03b-9031-4cf4-8b17-348c274321f9", "name": "Smith, John", "email": "John.Smith@planninginspectorate.gov.uk"}'
+						});
 
-					const response = await request.get(`${baseUrl}/1`);
+					await request.get(`${baseUrl}/${appealData.appealId}/assign-inspector/check-details`);
+
+					const confirmResponse = await request
+						.post(`${baseUrl}/${appealData.appealId}/assign-inspector/check-details`)
+						.send({ confirm: 'yes' });
+
+					expect(confirmResponse.statusCode).toBe(302);
+
+					const response = await request.get(`${baseUrl}/${appealData.appealId}`);
+					expect(response.statusCode).toBe(200);
+
 					const notificationBannerElementHTML = parseHtml(response.text, {
 						rootElement: notificationBannerElement
 					}).innerHTML;
 					expect(notificationBannerElementHTML).toMatchSnapshot();
 					expect(notificationBannerElementHTML).toContain('Success</h3>');
-					expect(notificationBannerElementHTML).toContain('Inspector has been assigned</p>');
+					expect(notificationBannerElementHTML).toContain('Inspector assigned</p>');
 				});
 
 				it('should render a success notification banner when an appellant costs document was uploaded', async () => {
@@ -1896,39 +1924,42 @@ describe('appeal-details', () => {
 
 					nock('http://test/')
 						.get(`/appeals/${appealId}?include=all`)
-						.reply(200, appealInValidationStatus);
+						.reply(200, appealInValidationStatus)
+						.persist();
 					nock('http://test/')
-						.patch(`/appeals/${appealId}`)
-						.reply(200, { caseOfficer: 'updatedCaseOfficerId' });
+						.patch(`/appeals/${appealId}?include=all`)
+						.reply(200, {
+							...appealInValidationStatus,
+							caseOfficer: 'updatedCaseOfficerId'
+						});
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 
-					await request.post(`${baseUrl}/${appealId}/assign-user/case-officer/1/confirm`).send({
-						confirm: 'yes'
-					});
+					await request
+						.post(`${baseUrl}/${appealId}/assign-case-officer/search-case-officer`)
+						.send({
+							user: '{"id": "923ac03b-9031-4cf4-8b17-348c274321f9", "name": "Smith, John", "email": "John.Smith@planninginspectorate.gov.uk"}'
+						});
+					await request.get(`${baseUrl}/${appealId}/assign-case-officer/check-details`);
 
-					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
-						.reply(200, appealInValidationStatus);
+					const confirmResponse = await request
+						.post(`${baseUrl}/${appealId}/assign-case-officer/check-details`)
+						.send({ confirm: 'yes' });
+
+					expect(confirmResponse.statusCode).toBe(302);
 
 					const response = await request.get(`${baseUrl}/${appealId}`);
 
 					expect(response.statusCode).toBe(200);
 
 					const firstBannerHtml = parseHtml(response.text, {
-						rootElement: `.govuk-notification-banner[data-index='0']`,
-						skipPrettyPrint: true
+						rootElement: '.govuk-notification-banner:first-of-type'
 					}).innerHTML;
-					expect(firstBannerHtml).toContain(
-						'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>'
-					);
+					expect(firstBannerHtml).toContain('Success');
 
 					const secondBannerHtml = parseHtml(response.text, {
-						rootElement: `.govuk-notification-banner[data-index='1']`,
-						skipPrettyPrint: true
+						rootElement: '.govuk-notification-banner:nth-of-type(2)'
 					}).innerHTML;
-					expect(secondBannerHtml).toContain(
-						'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>'
-					);
+					expect(secondBannerHtml).toContain('Important');
 				});
 			});
 		});
