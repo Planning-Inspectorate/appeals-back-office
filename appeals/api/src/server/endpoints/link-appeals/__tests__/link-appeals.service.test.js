@@ -7,7 +7,7 @@ import { checkAppealsStatusBeforeLPAQ } from '../link-appeals.service.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	AUDIT_TRAIL_APPEAL_LINK_ADDED,
-	AUDIT_TRAIL_APPEAL_LINK_REMOVED,
+	AUDIT_TRAIL_APPEAL_LINK_UNLINKED,
 	AUDIT_TRAIL_APPEAL_RELATION_ADDED,
 	AUDIT_TRAIL_APPEAL_RELATION_REMOVED
 } from '@pins/appeals/constants/support.js';
@@ -102,9 +102,9 @@ describe('Audit Trail Content Verification', () => {
 		expect(result).toBe(`Linked appeal ${mockAppealReference} added`);
 	});
 
-	test('should correctly format "Linked appeal removed" with reference', () => {
-		const result = stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_REMOVED, [mockAppealReference]);
-		expect(result).toBe(`Linked appeal ${mockAppealReference} removed`);
+	test('should correctly format "Linked appeal unlinked" with reference', () => {
+		const result = stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UNLINKED, [mockAppealReference]);
+		expect(result).toBe(`Linked appeal ${mockAppealReference} unlinked`);
 	});
 
 	test('should correctly format "Related appeal added" with reference', () => {

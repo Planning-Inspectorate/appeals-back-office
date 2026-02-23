@@ -1,6 +1,6 @@
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { radiosInput } from '#lib/mappers/index.js';
+import { mapNotificationBannersFromSession, radiosInput } from '#lib/mappers/index.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { LINK_APPEALS_UNLINK_OPERATION } from '@pins/appeals/constants/support.js';
 
@@ -13,9 +13,10 @@ import { LINK_APPEALS_UNLINK_OPERATION } from '@pins/appeals/constants/support.j
 /**
  *
  * @param {Appeal} appealData
+ * @param {import('express-session').Session} session
  * @returns {PageContent}
  */
-export function manageLinkedAppealsPage(appealData) {
+export function manageLinkedAppealsPage(appealData, session) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	const linkedAppeals = [appealData, ...appealData.linkedAppeals];
@@ -77,7 +78,10 @@ export function manageLinkedAppealsPage(appealData) {
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}`,
 		preHeading: `Appeal ${shortAppealReference} (lead)`,
 		heading: 'Linked appeals',
-		pageComponents: [childAppealsTable]
+		pageComponents: [
+			...mapNotificationBannersFromSession(session, 'manageLinkedAppeals', appealData.appealId),
+			childAppealsTable
+		]
 	};
 
 	return pageContent;
@@ -96,10 +100,9 @@ function operationText(operation) {
  *
  * @param {Appeal} appealData
  * @param {string} childRef
- * @param {string} appealId
  * @returns {PageContent}
  */
-export function unlinkAppealPage(appealData, childRef, appealId) {
+export function unlinkAppealPage(appealData, childRef) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const shortChildAppealReference = appealShortReference(childRef);
 	const titleAndHeading = `Confirm that you want to unlink linked appeal ${shortChildAppealReference}`;
@@ -107,7 +110,7 @@ export function unlinkAppealPage(appealData, childRef, appealId) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: titleAndHeading,
-		backLinkUrl: `/appeals-service/appeal-details/${appealId}/linked-appeals/manage`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/manage`,
 		preHeading: `Appeal ${shortAppealReference} (lead)`,
 		heading: titleAndHeading,
 		pageComponents: []

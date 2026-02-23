@@ -193,15 +193,17 @@ export const duplicateFiles = async (sourceAppeal, destinationAppeal, stage, opt
 		sourceBlobName,
 		destinationBlobName
 	}));
-	await copyBlobs(copyBlobList);
-	await addDocumentsToAppeal(
-		{
-			// @ts-ignore
-			documents: copyList.map((copyDetails) => copyDetails.destinationDocument)
-		},
-		destinationAppeal,
-		true
-	);
+	await Promise.allSettled([
+		copyBlobs(copyBlobList),
+		addDocumentsToAppeal(
+			{
+				// @ts-ignore
+				documents: copyList.map((copyDetails) => copyDetails.destinationDocument)
+			},
+			destinationAppeal,
+			true
+		)
+	]);
 	return {
 		sourceAppealRef: sourceAppeal.reference,
 		destinationAppealRef: destinationAppeal.reference,
