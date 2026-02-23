@@ -2,12 +2,7 @@ import { textSummaryListItem } from '#lib/mappers/components/index.js';
 import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapAppellant = ({
-	appealDetails,
-	appellantCaseData,
-	currentRoute,
-	userHasUpdateCase
-}) => {
+export const mapAppellant = ({ appealDetails, currentRoute, userHasUpdateCase }) => {
 	return textSummaryListItem({
 		id: 'appellant',
 		text: 'Appellant’s contact details',
@@ -17,7 +12,7 @@ export const mapAppellant = ({
 				: 'No data'
 		},
 		link: `${currentRoute}/service-user/change/appellant`,
-		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild,
+		editable: userHasUpdateCase,
 		classes: 'appeal-appellant',
 		cypressDataName: 'appellant'
 	});
