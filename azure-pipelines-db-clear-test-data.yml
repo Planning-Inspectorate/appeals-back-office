@@ -9,16 +9,6 @@ parameters:
       - Staging
       - Training
       - Prod
-  - name: dryRunOnly
-    displayName: Dry run only
-    type: string
-    values:
-      - true
-      - false
-  - name: maxExpectedCasesToDelete
-    displayName: Max expected test cases to delete
-    type: string
-    default: '40'
 
 pool: pins-odt-agent-pool
 
@@ -78,8 +68,6 @@ jobs:
               parameters:
                 environmentVariables:
                   DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
-                  DRY_RUN_ONLY: ${{parameters.dryRunOnly}}
-                  MAX_EXPECTED_CASES_TO_DELETE: ${{parameters.maxExpectedCasesToDelete}}
                 script: npm run db:seed:clear-test-data
                 workingDirectory: $(Build.Repository.LocalPath)/appeals/api
     workspace:

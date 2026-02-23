@@ -5,13 +5,18 @@ import { databaseConnector } from '#utils/database-connector.js';
  */
 export async function deleteAppealsInBatches(appeals) {
 	const BATCH_SIZE = 500;
-	const totBatches = appeals.length === 0 ? 0 : Math.ceil(appeals.length / BATCH_SIZE);
+	const noIterations = appeals.length / BATCH_SIZE;
 
 	try {
-		for (let eachIteration = 0; totBatches !== 0 && eachIteration < totBatches; eachIteration++) {
-			console.log(`Deleting appeals - running batch: ${eachIteration + 1} of ${totBatches}`);
+		for (
+			let eachIteration = 0;
+			noIterations !== 0 && eachIteration < noIterations;
+			eachIteration++
+		) {
+			console.log(`Running batch - ${eachIteration + 1} of ${noIterations}`);
 
 			const batchedAppeals = appeals.splice(0, BATCH_SIZE);
+
 			const appealIDs = batchedAppeals.map((a) => a.id);
 			const appeaRefs = batchedAppeals.map((a) => a.reference);
 			const representationIDs = await getReps(appealIDs);
@@ -407,11 +412,8 @@ const deleteAppealData = async (
 		}
 	});
 
-	// fix Appeal and Document tables to remove foreign key constraints before deleting records in related tables
 	await updateAppeals;
 	await updateDocumentVersions;
-
-	// start to delete the data in related tables, in order of dependencies
 	await deleteDocAvScans;
 	await deleteDecisions;
 	await deleteDocumentAudits;
