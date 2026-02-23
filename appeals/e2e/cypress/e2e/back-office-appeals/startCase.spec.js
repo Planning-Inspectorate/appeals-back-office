@@ -159,6 +159,16 @@ describe('Start case', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('no');
 			caseDetailsPage.clickButtonByText('Continue');
+			estimatedDaysSection.selectEstimatedDaysOption('No');
+			caseDetailsPage.clickButtonByText('Continue');
+			cyaSection.verifyCheckYourAnswers(
+				'Do you know the expected number of days to carry out the hearing?',
+				'No'
+			);
+			cy.contains(
+				'dt.govuk-summary-list__key',
+				'Expected number of days to carry out the hearing'
+			).should('not.exist');
 			cyaSection.verifyPreviewEmail('appellant');
 			cyaSection.verifyPreviewEmail('lpa');
 			caseDetailsPage.clickButtonByText('Start case');
@@ -193,9 +203,17 @@ describe('Start case', () => {
 				dateTimeSection.enterHearingDate(date);
 				dateTimeSection.enterHearingTime(date.getHours(), date.getMinutes());
 				caseDetailsPage.clickButtonByText('Continue');
+				estimatedDaysSection.selectEstimatedDaysOption('Yes');
+				estimatedDaysSection.enterEstimatedHearingDays(6);
+				caseDetailsPage.clickButtonByText('Continue');
 
 				// Set exact time and date format for assertions
 				const expectedDateTime = formatDateAndTime(date);
+				cyaSection.verifyCheckYourAnswers(
+					'Do you know the expected number of days to carry out the hearing?',
+					'Yes'
+				);
+				cyaSection.verifyCheckYourAnswers('Expected number of days to carry out the hearing', '6');
 				cyaSection.verifyPreviewEmail('appellant', true, { date: expectedDateTime.date });
 				cyaSection.verifyPreviewEmail('lpa', true, { date: expectedDateTime.date });
 				caseDetailsPage.clickButtonByText('Start case');
