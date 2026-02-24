@@ -13,6 +13,21 @@ import { getTeamIdFromLpaCode, getTeamIdFromName } from './team.repository.js';
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 
 /**
+ * Splits an array into batches of specified size
+ * @template T
+ * @param {T[]} arr
+ * @param {number} size
+ * @returns {T[][]}
+ */
+const batchArray = (arr, size) => {
+	const batches = [];
+	for (let i = 0; i < arr.length; i += size) {
+		batches.push(arr.slice(i, i + size));
+	}
+	return batches;
+};
+
+/**
  *
  * @param {import('#db-client/models.ts').AppealCreateInput} data
  * @param {import('#db-client/models.ts').DocumentVersionCreateInput[]} documents
@@ -76,7 +91,7 @@ export const createAppeal = async (
 			};
 		},
 		{
-			timeout: 10000 // default: 5000
+			timeout: 60000 // default: 5000 or set on prismaConfig.transactionOptions
 		}
 	);
 
@@ -141,7 +156,7 @@ export const createOrUpdateLpaQuestionnaire = async (
 			};
 		},
 		{
-			timeout: 10000 // default: 5000
+			timeout: 60000 // default: 5000 or set on prismaConfig.transactionOptions
 		}
 	);
 
@@ -156,34 +171,29 @@ export const createOrUpdateLpaQuestionnaire = async (
  * @returns {Promise<{rep: Representation, documentVersions: DocumentVersion[]}>}
  */
 export const createRepresentation = async (appeal, data, attachments) => {
-	const transaction = await databaseConnector.$transaction(
-		async (tx) => {
-			const rep = await tx.representation.create({
-				data: {
-					...data,
-					appeal: {
-						connect: { id: appeal.id }
-					}
+	const transaction = await databaseConnector.$transaction(async (tx) => {
+		const rep = await tx.representation.create({
+			data: {
+				...data,
+				appeal: {
+					connect: { id: appeal.id }
 				}
-			});
+			}
+		});
 
-			const documentVersions = await setDocumentVersions(
-				tx,
-				appeal.id,
-				appeal.reference,
-				attachments
-			);
-			await attachToRepresentation(tx, rep.id, documentVersions);
+		const documentVersions = await setDocumentVersions(
+			tx,
+			appeal.id,
+			appeal.reference,
+			attachments
+		);
+		await attachToRepresentation(tx, rep.id, documentVersions);
 
-			return {
-				rep,
-				documentVersions
-			};
-		},
-		{
-			timeout: 10000 // default: 5000
-		}
-	);
+		return {
+			rep,
+			documentVersions
+		};
+	});
 
 	return transaction;
 };
@@ -252,12 +262,15 @@ const setAppealRelationships = async (tx, appealId, caseReference, relatedRefere
  * @returns {Promise<import('#db-client/client.ts').DocumentVersion[]>}
  */
 const setDocumentVersions = async (tx, appealId, caseReference, documents) => {
-	if (documents) {
-		const caseFolders = await tx.folder.findMany({ where: { caseId: appealId } });
+	const BATCH_SIZE = 100;
 
-		await tx.document.createMany({
-			// @ts-ignore
-			data: documents.map((document) => {
+	if (documents && documents.length > 0) {
+		const caseFolders = await tx.folder.findMany({ where: { caseId: appealId } });
+		const allDocumentVersions = [];
+
+		const documentBatches = batchArray(documents, BATCH_SIZE);
+		for (const batch of documentBatches) {
+			const documentData = batch.map((document) => {
 				// @ts-ignore
 				const { documentGuid, documentType, stage, fileName } = document;
 
@@ -275,12 +288,9 @@ const setDocumentVersions = async (tx, appealId, caseReference, documents) => {
 					name: fileName,
 					guid: documentGuid
 				};
-			})
-		});
+			});
 
-		await tx.documentVersion.createMany({
-			// @ts-ignore
-			data: documents.map((document) => {
+			const documentVersionData = batch.map((document) => {
 				// @ts-ignore
 				const { documentGuid, fileName } = document;
 				// @ts-ignore
@@ -296,25 +306,37 @@ const setDocumentVersions = async (tx, appealId, caseReference, documents) => {
 					dateReceived: new Date().toISOString(),
 					draft: false
 				};
-			})
-		});
-
-		for (const doc of documents) {
-			await tx.document.update({
-				data: { latestVersionId: 1 },
-				// @ts-ignore
-				where: { guid: doc.documentGuid }
 			});
+
+			const documentGuids = documentData.map((d) => d.guid);
+
+			await tx.document.createMany({
+				// @ts-ignore
+				data: documentData
+			});
+			await tx.documentVersion.createMany({
+				// @ts-ignore
+				data: documentVersionData
+			});
+			await tx.document.updateMany({
+				data: { latestVersionId: 1 },
+				where: {
+					guid: {
+						in: documentGuids
+					}
+				}
+			});
+			const batchResults = await tx.documentVersion.findMany({
+				where: {
+					documentGuid: {
+						in: documentGuids
+					}
+				}
+			});
+			allDocumentVersions.push(...batchResults);
 		}
 
-		return await tx.documentVersion.findMany({
-			where: {
-				documentGuid: {
-					// @ts-ignore
-					in: documents.map((d) => d.documentGuid)
-				}
-			}
-		});
+		return allDocumentVersions;
 	}
 	return [];
 };
