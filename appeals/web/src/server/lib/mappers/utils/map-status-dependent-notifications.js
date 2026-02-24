@@ -382,6 +382,48 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 			});
 
 			return createNotificationBanner({
+				titleText: `Appeal is incompletess`,
+				bannerDefinitionKey,
+				pageComponents: bannerContentPageComponents
+			});
+		}
+		case 'enforcementListedAppealIncomplete': {
+			const dueDate = formatDate(
+				// @ts-ignore
+				new Date(appealDetails.documentationSummary.appellantCase?.dueDate)
+			);
+			const listItems = [
+				{ key: 'Due dates', value: dueDate },
+				{ key: 'Incomplete reasons', value: 'Appeal incomplete' }
+			];
+			/** @type {PageComponent[]} */
+			const bannerContentPageComponents = listItems.map((item) => ({
+				type: 'summary-list',
+				parameters: {
+					classes: 'govuk-summary-list--no-border govuk-!-margin-bottom-4',
+					rows: [
+						{
+							key: {
+								text: item.key
+							},
+							value: {
+								text: item.value
+							}
+						}
+					]
+				}
+			}));
+			bannerContentPageComponents.push({
+				type: 'html',
+				parameters: {
+					html: `<a class="govuk-notification-banner__link" data-cy="" href="${addBackLinkQueryToUrl(
+						request,
+						`/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case`
+					)}">Update appeal</a></p>`
+				}
+			});
+
+			return createNotificationBanner({
 				titleText: `Appeal is incomplete`,
 				bannerDefinitionKey,
 				pageComponents: bannerContentPageComponents

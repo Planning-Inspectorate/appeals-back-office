@@ -406,20 +406,17 @@ export const postEnforcementNoticeInvalid = async (request, response) => {
 	if (errors) {
 		return renderEnforcementNoticeInvalidPage(request, response);
 	}
-
+	const { enforcementNoticeInvalid, validationOutcome } = session.webAppellantCaseReviewOutcome;
 	try {
 		session.webAppellantCaseReviewOutcome = {
-			...(body.enforcementNoticeInvalid ===
-				session.webAppellantCaseReviewOutcome?.enforcementNoticeInvalid &&
+			...(body.enforcementNoticeInvalid === enforcementNoticeInvalid &&
 				session.webAppellantCaseReviewOutcome),
-			validationOutcome: session.webAppellantCaseReviewOutcome?.validationOutcome,
+			validationOutcome: validationOutcome,
 			appealId: currentAppeal.appealId,
 			enforcementNoticeInvalid: body.enforcementNoticeInvalid
 		};
 
-		const { enforcementNoticeInvalid, validationOutcome } = session.webAppellantCaseReviewOutcome;
-
-		if (enforcementNoticeInvalid === 'no') {
+		if (body.enforcementNoticeInvalid === 'no') {
 			return response.redirect(
 				`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/${validationOutcome}`
 			);

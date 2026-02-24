@@ -4,6 +4,7 @@ import {
 } from '#lib/dates.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { isBefore } from 'date-fns';
 import {
 	checkAndConfirmEnforcementPage,
@@ -223,6 +224,7 @@ export const postEnforcementOtherInformation = async (request, response) => {
 		errors,
 		body,
 		currentAppeal: { appealId },
+		currentAppeal,
 		session
 	} = request;
 
@@ -242,9 +244,15 @@ export const postEnforcementOtherInformation = async (request, response) => {
 
 		if (request.route.path === '/enforcement-other-information') {
 			const validationOutcome = session.webAppellantCaseReviewOutcome.validationOutcome;
-			return response.redirect(
-				`/appeals-service/appeal-details/${appealId}/appellant-case/${validationOutcome}/check-details-and-mark-enforcement-as-${validationOutcome}`
-			);
+			if (currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING) {
+				return response.redirect(
+					`/appeals-service/appeal-details/${appealId}/appellant-case/incomplete/check-details`
+				);
+			} else {
+				return response.redirect(
+					`/appeals-service/appeal-details/${appealId}/appellant-case/${validationOutcome}/check-details-and-mark-enforcement-as-${validationOutcome}`
+				);
+			}
 		}
 
 		return response.redirect(

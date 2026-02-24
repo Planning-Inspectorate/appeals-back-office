@@ -674,7 +674,7 @@ async function getAppellantCaseDetails(request, response, appealDetails) {
 }
 
 /**
- * @param {string} appealType
+ * @param {string|null|undefined} appealType
  * @returns {boolean}
  */
 export const isAnyEnforcementAppealType = (appealType) => {
