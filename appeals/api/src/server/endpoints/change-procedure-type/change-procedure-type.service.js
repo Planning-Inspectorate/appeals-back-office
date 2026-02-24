@@ -8,6 +8,7 @@ import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import { databaseConnector } from '#utils/database-connector.js';
+import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import logger from '#utils/logger.js';
 import { APPEAL_REPRESENTATION_TYPE, EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
@@ -447,6 +448,7 @@ const sendNotifications = async (
 			appeal.reference
 		}`;
 
+		const enforcementReference = await getEnforcementReference(appeal);
 		await notifySend({
 			notifyClient,
 			templateName,
@@ -454,6 +456,7 @@ const sendNotifications = async (
 				appeal_reference_number: appeal.reference,
 				site_address: appeal.address ? formatAddressSingleLine(appeal.address) : '',
 				lpa_reference: appeal.applicationReference ?? '',
+				...(enforcementReference && { enforcement_reference: enforcementReference }),
 				is_lpa: item.isLpa,
 				lpa_statement_exists: lpaStatement ? true : false,
 				subject,

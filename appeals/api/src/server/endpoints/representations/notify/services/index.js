@@ -8,6 +8,7 @@
 
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { notifySend } from '#notify/notify-send.js';
+import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { getDetailsForCommentResubmission } from '@pins/appeals/utils/notify.js';
 import { formatExtendedDeadline, formatReasons, formatSiteAddress } from './utils.js';
@@ -46,9 +47,11 @@ export const ipCommentRejection = async ({
 			? 'ip-comment-rejected-deadline-extended'
 			: 'ip-comment-rejected';
 
+		const enforcementReference = await getEnforcementReference(appeal);
 		const personalisation = {
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
+			...(enforcementReference && { enforcement_reference: enforcementReference }),
 			site_address: siteAddress,
 			reasons,
 			deadline_date: resubmissionDueDate,
@@ -81,6 +84,7 @@ export const appellantFinalCommentRejection = async ({
 		throw new Error(`no recipient email address found for Appeal: ${appeal.reference}`);
 	}
 
+	const enforcementReference = await getEnforcementReference(appeal);
 	await notifySend({
 		azureAdUserId,
 		templateName: 'final-comment-rejected-appellant',
@@ -89,6 +93,7 @@ export const appellantFinalCommentRejection = async ({
 		personalisation: {
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
+			...(enforcementReference && { enforcement_reference: enforcementReference }),
 			site_address: siteAddress,
 			reasons,
 			team_email_address: await getTeamEmailFromAppealId(appeal.id)
@@ -111,6 +116,7 @@ export const lpaFinalCommentRejection = async ({
 		throw new Error(`no recipient email address found for Appeal: ${appeal.reference}`);
 	}
 
+	const enforcementReference = await getEnforcementReference(appeal);
 	await notifySend({
 		azureAdUserId,
 		templateName: 'final-comment-rejected-lpa',
@@ -119,6 +125,7 @@ export const lpaFinalCommentRejection = async ({
 		personalisation: {
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
+			...(enforcementReference && { enforcement_reference: enforcementReference }),
 			site_address: siteAddress,
 			reasons,
 			team_email_address: await getTeamEmailFromAppealId(appeal.id)
@@ -144,6 +151,7 @@ export const lpaStatementIncomplete = async ({
 		throw new Error(`no recipient email address found for Appeal: ${appeal.reference}`);
 	}
 
+	const enforcementReference = await getEnforcementReference(appeal);
 	await notifySend({
 		azureAdUserId,
 		templateName: 'lpa-statement-incomplete',
@@ -152,6 +160,7 @@ export const lpaStatementIncomplete = async ({
 		personalisation: {
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
+			...(enforcementReference && { enforcement_reference: enforcementReference }),
 			site_address: siteAddress,
 			deadline_date: extendedDeadline,
 			reasons,
@@ -229,6 +238,7 @@ const proofOfEvidenceNotifySend = async (
 		3
 	);
 
+	const enforcementReference = await getEnforcementReference(appeal);
 	await notifySend({
 		azureAdUserId,
 		templateName: 'proof-of-evidence-incomplete',
@@ -237,6 +247,7 @@ const proofOfEvidenceNotifySend = async (
 		personalisation: {
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
+			...(enforcementReference && { enforcement_reference: enforcementReference }),
 			site_address: siteAddress,
 			deadline_date: extendedDeadline,
 			reasons,
@@ -264,6 +275,7 @@ export const rule6PartyStatementIncomplete = async ({
 		throw new Error(`No email found for Rule 6 party on Appeal: ${appeal.reference}`);
 	}
 
+	const enforcementReference = await getEnforcementReference(appeal);
 	await notifySend({
 		azureAdUserId,
 		templateName: 'rule-6-statement-incomplete',
@@ -273,6 +285,7 @@ export const rule6PartyStatementIncomplete = async ({
 			appeal_reference_number: appeal.reference,
 			site_address: siteAddress,
 			lpa_reference: appeal.applicationReference || '',
+			...(enforcementReference && { enforcement_reference: enforcementReference }),
 			statement_deadline: lpaQuestionnaireDueDate
 				? formatDate(new Date(lpaQuestionnaireDueDate))
 				: '',

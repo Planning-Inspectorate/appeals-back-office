@@ -4,6 +4,7 @@ import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
 import { getFeedbackLinkFromAppealTypeKey } from '#utils/feedback-form-link.js';
+import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { getEventType } from '@pins/appeals/utils/event-type.js';
@@ -36,9 +37,11 @@ export const publishWithdrawal = async (
 	const lpaEmail = appeal.lpa?.email || '';
 
 	const eventType = getEventType(appeal);
+	const enforcementReference = await getEnforcementReference(appeal);
 	const personalisation = {
 		appeal_reference_number: appeal.reference,
 		lpa_reference: appeal.applicationReference || '',
+		...(enforcementReference && { enforcement_reference: enforcementReference }),
 		site_address: siteAddress,
 		withdrawal_date: formatDate(new Date(withdrawalRequestDate || ''), false),
 		event_type: eventType,

@@ -1010,6 +1010,7 @@ export interface CreateSiteVisitData {
 	lpaReference: string;
 	siteAddress: string;
 	inspectorName?: string;
+	enforcementReference?: string;
 }
 
 export interface UpdateSiteVisitData {
@@ -1027,6 +1028,7 @@ export interface UpdateSiteVisitData {
 	siteAddress: string;
 	inspectorName?: string;
 	siteVisitChangeType: string;
+	enforcementReference?: string;
 }
 
 export interface RepresentationRejectionReason {

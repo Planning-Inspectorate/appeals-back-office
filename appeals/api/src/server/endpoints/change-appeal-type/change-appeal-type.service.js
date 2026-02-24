@@ -10,6 +10,7 @@ import commonRepository from '#repositories/common.repository.js';
 import * as documentMetadataRepository from '#repositories/document-metadata.repository.js';
 import transitionState from '#state/transition-state.js';
 import { databaseConnector } from '#utils/database-connector.js';
+import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { APPEAL_TYPE_CHANGE_APPEALS } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
@@ -75,10 +76,12 @@ const changeAppealType = async (
 	]);
 
 	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+	const enforcementReference = await getEnforcementReference(appeal);
 	const personalisation = {
 		existing_appeal_type: appeal.appealType?.type || '',
 		appeal_reference_number: appeal.reference,
 		lpa_reference: appeal.applicationReference || '',
+		...(enforcementReference && { enforcement_reference: enforcementReference }),
 		site_address: siteAddress,
 		due_date: formatDate(new Date(dueDate || ''), false),
 		appeal_type: newAppealType || '',
@@ -160,11 +163,13 @@ const resubmitAndMarkInvalid = async (
 	});
 
 	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
+	const enforcementReference = await getEnforcementReference(appeal);
 	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 	const personalisation = {
 		existing_appeal_type: formatAppealTypeForNotify(appeal.appealType?.changeAppealType),
 		appeal_reference_number: appeal.reference,
 		lpa_reference: appeal.applicationReference || '',
+		...(enforcementReference && { enforcement_reference: enforcementReference }),
 		site_address: siteAddress,
 		due_date: formatDate(new Date(dueDate || ''), false),
 		appeal_type: formatAppealTypeForNotify(newAppealType),
@@ -249,6 +254,7 @@ const updateAppealType = async (
 		: 'Address not available';
 
 	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
+	const enforcementReference = await getEnforcementReference(appeal);
 	const agentOrAppellantEmail = appeal.agent?.email || appeal.appellant?.email;
 	const lpaEmail = appeal.lpa?.email;
 
@@ -256,6 +262,7 @@ const updateAppealType = async (
 		appeal_reference_number: appeal.reference,
 		site_address: siteAddress,
 		lpa_reference: appeal.applicationReference || '',
+		...(enforcementReference && { enforcement_reference: enforcementReference }),
 		team_email_address: teamEmail,
 		existing_appeal_type: formatAppealTypeForNotify(appeal.appealType?.changeAppealType),
 		new_appeal_type: formatAppealTypeForNotify(newAppealType)

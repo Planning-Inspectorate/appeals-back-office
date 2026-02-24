@@ -4,6 +4,7 @@ import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import appealRule6PartyRepository from '#repositories/appeal-rule-6-party.repository.js';
+import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import * as SUPPORT_CONSTANTS from '@pins/appeals/constants/support.js';
@@ -58,6 +59,7 @@ const addRule6Party = async (appeal, serviceUser, azureAdUserId, notifyClient) =
 			? formatAddressSingleLine(appeal.address)
 			: 'Address not available';
 		const teamEmail = await getTeamEmailFromAppealId(appealId);
+		const enforcementReference = await getEnforcementReference(appeal);
 
 		if (serviceUser.email) {
 			const statementsDueDate = appeal.appealTimetable?.lpaStatementDueDate;
@@ -71,6 +73,7 @@ const addRule6Party = async (appeal, serviceUser, azureAdUserId, notifyClient) =
 				personalisation: {
 					appeal_reference_number: appealReference,
 					lpa_reference: appeal.applicationReference || '',
+					...(enforcementReference && { enforcement_reference: enforcementReference }),
 					site_address: siteAddress,
 					statements_due_date: statementsDueDate
 						? formatDate(new Date(statementsDueDate), false)
@@ -95,6 +98,7 @@ const addRule6Party = async (appeal, serviceUser, azureAdUserId, notifyClient) =
 				personalisation: {
 					appeal_reference_number: appealReference,
 					lpa_reference: appeal.applicationReference || '',
+					...(enforcementReference && { enforcement_reference: enforcementReference }),
 					site_address: siteAddress,
 					rule_6_organisation: serviceUser.organisationName || '',
 					team_email_address: teamEmail
@@ -143,6 +147,7 @@ const updateRule6Party = async (appeal, rule6PartyId, serviceUser, azureAdUserId
 				? formatAddressSingleLine(appeal.address)
 				: 'Address not available';
 			const teamEmail = await getTeamEmailFromAppealId(appeal.id);
+			const enforcementReference = await getEnforcementReference(appeal);
 
 			await notifySend({
 				azureAdUserId,
@@ -152,6 +157,7 @@ const updateRule6Party = async (appeal, rule6PartyId, serviceUser, azureAdUserId
 				personalisation: {
 					appeal_reference_number: appeal.reference,
 					lpa_reference: appeal.applicationReference || '',
+					...(enforcementReference && { enforcement_reference: enforcementReference }),
 					site_address: siteAddress,
 					rule_6_organisation: serviceUser.organisationName || '',
 					team_email_address: teamEmail
