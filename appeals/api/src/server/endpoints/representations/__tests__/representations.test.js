@@ -1662,7 +1662,7 @@ describe('/appeals/:id/reps', () => {
 			);
 		});
 
-		test('200 and does auto-publish for lpa_statement rep_type when appeal is CURRENTLY in statements state', async () => {
+		test('200 and does not auto-publish for lpa_statement rep_type when appeal is CURRENTLY in statements state', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
 				appealStatus: [{ valid: true, status: 'statements' }]
@@ -1684,7 +1684,7 @@ describe('/appeals/:id/reps', () => {
 
 			expect(response.status).toEqual(201);
 			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
-				expect.objectContaining({
+				expect.not.objectContaining({
 					data: expect.objectContaining({
 						status: 'published'
 					})
@@ -1803,7 +1803,7 @@ describe('/appeals/:id/reps', () => {
 			);
 		});
 
-		test('200 and does auto-publish for lpa_final_comment rep_type when appeal is CURRENTLY in final_comments state', async () => {
+		test('200 and does not auto-publish for lpa_final_comment rep_type when appeal is CURRENTLY in final_comments state', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
 				appealStatus: [{ valid: true, status: 'final_comments' }]
@@ -1826,7 +1826,7 @@ describe('/appeals/:id/reps', () => {
 			expect(response.status).toEqual(201);
 			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
 				expect.objectContaining({
-					data: expect.objectContaining({
+					data: expect.not.objectContaining({
 						status: 'published'
 					})
 				})
@@ -1837,7 +1837,7 @@ describe('/appeals/:id/reps', () => {
 			);
 		});
 
-		test('200 and auto-publishes for lpa_final_comment rep_type when appeal is in final_comments state', async () => {
+		test('200 and should not auto-publishe for lpa_final_comment rep_type when appeal is in final_comments state', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
 				appealStatus: [
@@ -1847,7 +1847,7 @@ describe('/appeals/:id/reps', () => {
 			});
 			databaseConnector.representation.create.mockResolvedValue({
 				id: 1,
-				status: 'published'
+				status: 'awaiting_review'
 			});
 
 			const response = await request
@@ -1863,7 +1863,7 @@ describe('/appeals/:id/reps', () => {
 			expect(response.status).toEqual(201);
 			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
 				expect.objectContaining({
-					data: expect.objectContaining({
+					data: expect.not.objectContaining({
 						status: 'published'
 					})
 				})

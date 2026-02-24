@@ -267,13 +267,16 @@ export const createRepresentation = () => async (req, res) => {
 		updatePayload.representedId = req.appeal.agentId || req.appeal.appellantId;
 	}
 
-	const rep = await representationService.createRepresentation(parseInt(appealId), {
-		representationType,
-		...updatePayload
-	});
-
-	await broadcasters.broadcastRepresentation(rep.id, EventType.Create);
-	await broadcasters.broadcastAppeal(Number(appealId));
+	const rep = await representationService.createRepresentation(
+		parseInt(appealId),
+		String(req.get('azureAdUserId')),
+		shouldAutoPublish,
+		req.appeal.appealStatus.find((item) => item.valid === true)?.status ?? '',
+		{
+			representationType,
+			...updatePayload
+		}
+	);
 
 	if (representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE) {
 		await sendRepresentationReceivedNotifications(
@@ -497,18 +500,11 @@ export async function publishAfterStatePassed(repId) {
 const shouldAutoPublishRep = (appeal, representationType) => {
 	switch (representationType) {
 		case APPEAL_REPRESENTATION_TYPE.COMMENT:
-			return isStatePassed(appeal, APPEAL_CASE_STATUS.STATEMENTS);
 		case APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT:
-			return (
-				isStatePassed(appeal, APPEAL_CASE_STATUS.STATEMENTS) ||
-				appeal.appealStatus.some((status) => status.status === APPEAL_CASE_STATUS.STATEMENTS)
-			);
+			return isStatePassed(appeal, APPEAL_CASE_STATUS.STATEMENTS);
 		case APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT:
 		case APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT:
-			return (
-				isStatePassed(appeal, APPEAL_CASE_STATUS.FINAL_COMMENTS) ||
-				appeal.appealStatus.some((status) => status.status === APPEAL_CASE_STATUS.FINAL_COMMENTS)
-			);
+			return isStatePassed(appeal, APPEAL_CASE_STATUS.FINAL_COMMENTS);
 		case APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT:
 			return isStatePassed(appeal, APPEAL_CASE_STATUS.STATEMENTS);
 		case APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE:

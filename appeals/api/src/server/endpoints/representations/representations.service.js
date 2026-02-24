@@ -1,5 +1,6 @@
 import config from '#config/config.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
@@ -24,6 +25,8 @@ import {
 } from '@pins/appeals/constants/common.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
+	AUDIT_TRAIL_REP_MANUALLY_ADDED,
+	AUDIT_TRAIL_REP_MANUALLY_ADDED_AND_SHARED,
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
@@ -43,6 +46,7 @@ import {
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAddressRequest} UpdateAddressRequest */
 /** @typedef {import('#db-client/models.ts').RepresentationUpdateInput} RepresentationUpdateInput */
 /** @typedef {import('#db-client/models.ts').RepresentationUncheckedCreateInput} RepresentationCreateInput */
+/** @typedef {Awaited<ReturnType<getRepresentation>>} DBRepresentation */
 
 /**
  * @param {number} appealId
@@ -149,8 +153,6 @@ export const getRepStatusAuditLogDetails = (
 	return CONSTANTS[auditText];
 };
 
-/** @typedef {Awaited<ReturnType<getRepresentation>>} DBRepresentation */
-
 /**
  * @typedef {Object} CreateRepresentationInput
  * @property {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment' | 'lpa_proofs_evidence' | 'appellant_proofs_evidence'} representationType
@@ -165,12 +167,23 @@ export const getRepStatusAuditLogDetails = (
  * @property {string} [appellantId]
  * @property {string} [representationText]
  * @property {number} [representedId]
- *
+ **/
+
+/**
  * @param {number} appealId
+ * @param {string} azureAdUserId
+ * @param {boolean} shouldAutoPublish
+ * @param {string} appealStatus
  * @param {CreateRepresentationInput} input
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
- * */
-export const createRepresentation = async (appealId, input) => {
+ **/
+export const createRepresentation = async (
+	appealId,
+	azureAdUserId,
+	shouldAutoPublish,
+	appealStatus,
+	input
+) => {
 	let representedId;
 	if (input.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT) {
 		const { ipDetails, ipAddress } = input;
@@ -207,7 +220,9 @@ export const createRepresentation = async (appealId, input) => {
 		representationType: input.representationType,
 		source: input.source,
 		dateCreated: input.dateCreated,
-		status: input.status,
+		status: shouldAutoPublish
+			? APPEAL_REPRESENTATION_STATUS.PUBLISHED
+			: APPEAL_REPRESENTATION_STATUS.VALID,
 		lpaCode: input.lpaCode,
 		originalRepresentation: input.representationText
 	});
@@ -232,6 +247,26 @@ export const createRepresentation = async (appealId, input) => {
 			}
 		}
 	}
+
+	await broadcasters.broadcastRepresentation(representation.id, EventType.Create);
+	await broadcasters.broadcastAppeal(Number(appealId));
+
+	const auditTrailType = shouldAutoPublish
+		? AUDIT_TRAIL_REP_MANUALLY_ADDED_AND_SHARED
+		: AUDIT_TRAIL_REP_MANUALLY_ADDED;
+
+	// Convert snake_case appealStatus to normal case (e.g., final_comments -> final comments)
+	const formattedAppealStatus =
+		typeof appealStatus === 'string' ? appealStatus.replace(/_/g, ' ') : '';
+
+	await createAuditTrail({
+		appealId,
+		azureAdUserId,
+		details: stringTokenReplacement(auditTrailType, [
+			getRepresentationLabel(input.representationType),
+			formattedAppealStatus
+		])
+	});
 
 	return representation;
 };
@@ -960,3 +995,26 @@ function notifyNoFinalComments(appeal, notifyClient, azureAdUserId, userTypeNoCo
 		userTypeNoCommentSubmitted
 	});
 }
+
+/**
+ * @param {string} type
+ * @returns {string}
+ */
+export const getRepresentationLabel = (type) => {
+	return APPEAL_REPRESENTATION_LABEL_MAP[type] || 'Unknown representation';
+};
+
+/**
+ * @type {Record<string, string>}
+ */
+export const APPEAL_REPRESENTATION_LABEL_MAP = Object.freeze({
+	[APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT]: 'LPA statement',
+	[APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT]: 'Appellant statement',
+	[APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT]: 'Rule 6 party statement',
+	[APPEAL_REPRESENTATION_TYPE.COMMENT]: 'Interested party comment',
+	[APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT]: 'LPA final comment',
+	[APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT]: 'Appellant final comment',
+	[APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE]: 'LPA proof of evidence',
+	[APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE]: 'Appellant proof of evidence',
+	[APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE]: 'Rule 6 party proof of evidence'
+});
