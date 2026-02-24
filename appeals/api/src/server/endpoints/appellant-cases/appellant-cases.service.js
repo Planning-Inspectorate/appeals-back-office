@@ -249,50 +249,52 @@ export const updateAppellantCaseValidationOutcome = async (
 			);
 		}
 
-		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-		if (!recipientEmail) {
-			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
-		}
-		const isEnforcement = appeal.appealType.key === APPEAL_CASE_TYPE.C;
-		const personalisation = {
-			appeal_reference_number: appeal.reference,
-			lpa_reference: appeal.applicationReference || '',
-			site_address: siteAddress,
-			team_email_address: teamEmail,
-			...(isEnforcement && {
-				local_planning_authority: updatedAppeal?.lpa?.name || '',
-				appeal_type: trimAppealType(appeal.appealType.type),
-				enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
-				appeal_grounds:
-					updatedAppeal?.appealGrounds?.map((ground) => ground.ground?.groundRef || '').sort() ||
-					[],
-				ground_a_barred: groundABarred || false,
-				other_info: otherInformation || ''
-			})
-		};
-		await notifySend({
-			azureAdUserId,
-			templateName: isEnforcement ? 'appeal-confirmed-enforcement-appellant' : 'appeal-confirmed',
-			notifyClient,
-			recipientEmail,
-			personalisation: {
-				...personalisation,
-				feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key)
+		if (!isChildEnforcement) {
+			const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+			if (!recipientEmail) {
+				throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 			}
-		});
-		if (isEnforcement) {
-			const { agent, appellant } = updatedAppeal || {};
+			const isEnforcement = appeal.appealType.key === APPEAL_CASE_TYPE.C;
+			const personalisation = {
+				appeal_reference_number: appeal.reference,
+				lpa_reference: appeal.applicationReference || '',
+				site_address: siteAddress,
+				team_email_address: teamEmail,
+				...(isEnforcement && {
+					local_planning_authority: updatedAppeal?.lpa?.name || '',
+					appeal_type: trimAppealType(appeal.appealType.type),
+					enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
+					appeal_grounds:
+						updatedAppeal?.appealGrounds?.map((ground) => ground.ground?.groundRef || '').sort() ||
+						[],
+					ground_a_barred: groundABarred || false,
+					other_info: otherInformation || ''
+				})
+			};
 			await notifySend({
 				azureAdUserId,
-				templateName: 'appeal-confirmed-enforcement-lpa',
+				templateName: isEnforcement ? 'appeal-confirmed-enforcement-appellant' : 'appeal-confirmed',
 				notifyClient,
-				recipientEmail: updatedAppeal?.lpa?.email,
+				recipientEmail,
 				personalisation: {
 					...personalisation,
-					agent_contact_details: agent ? formatContactDetails(agent) : '',
-					appellant_contact_details: appellant ? formatContactDetails(appellant) : ''
+					feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key)
 				}
 			});
+			if (isEnforcement) {
+				const { agent, appellant } = updatedAppeal || {};
+				await notifySend({
+					azureAdUserId,
+					templateName: 'appeal-confirmed-enforcement-lpa',
+					notifyClient,
+					recipientEmail: updatedAppeal?.lpa?.email,
+					personalisation: {
+						...personalisation,
+						agent_contact_details: agent ? formatContactDetails(agent) : '',
+						appellant_contact_details: appellant ? formatContactDetails(appellant) : ''
+					}
+				});
+			}
 		}
 	}
 
@@ -331,48 +333,51 @@ export const updateAppellantCaseValidationOutcome = async (
 				});
 
 				if (incompleteAppealDueDate) {
-					const missingDocumentOptions = await commonRepository.getLookupList(
-						'appellantCaseEnforcementMissingDocument'
-					);
-					const personalisation = {
-						appeal_reference_number: appeal.reference,
-						site_address: siteAddress,
-						enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
-						missing_documents: enforcementMissingDocuments
-							? enforcementMissingDocuments.map(
-									(document) =>
-										`${missingDocumentOptions.find((option) => option.id === document.id)?.name}: ${document.text?.[0] || ''}`
-								)
-							: [],
-						fee_due_date: updatedAppeal?.enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate
-							? formatDate(
-									new Date(updatedAppeal.enforcementNoticeAppealOutcome.groundAFeeReceiptDueDate)
-								)
-							: '',
-						local_planning_authority: updatedAppeal?.lpa?.name || '',
-						other_info: incompleteReasons?.find((reason) => reason.id === 10)?.['text']?.[0] || '',
-						team_email_address: teamEmail,
-						due_date: formatDate(new Date(incompleteAppealDueDate), false),
-						appeal_grounds:
-							updatedAppeal?.appealGrounds
-								?.map((ground) => ground.ground?.groundRef || '')
-								.sort() || []
-					};
-					await notifySend({
-						azureAdUserId,
-						templateName: 'enforcement-appeal-incomplete-appellant',
-						notifyClient,
-						recipientEmail,
-						personalisation
-					});
-					if (updatedAppeal.lpa?.email) {
+					if (!isChildEnforcement) {
+						const missingDocumentOptions = await commonRepository.getLookupList(
+							'appellantCaseEnforcementMissingDocument'
+						);
+						const personalisation = {
+							appeal_reference_number: appeal.reference,
+							site_address: siteAddress,
+							enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
+							missing_documents: enforcementMissingDocuments
+								? enforcementMissingDocuments.map(
+										(document) =>
+											`${missingDocumentOptions.find((option) => option.id === document.id)?.name}: ${document.text?.[0] || ''}`
+									)
+								: [],
+							fee_due_date: updatedAppeal?.enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate
+								? formatDate(
+										new Date(updatedAppeal.enforcementNoticeAppealOutcome.groundAFeeReceiptDueDate)
+									)
+								: '',
+							local_planning_authority: updatedAppeal?.lpa?.name || '',
+							other_info:
+								incompleteReasons?.find((reason) => reason.id === 10)?.['text']?.[0] || '',
+							team_email_address: teamEmail,
+							due_date: formatDate(new Date(incompleteAppealDueDate), false),
+							appeal_grounds:
+								updatedAppeal?.appealGrounds
+									?.map((ground) => ground.ground?.groundRef || '')
+									.sort() || []
+						};
 						await notifySend({
 							azureAdUserId,
-							templateName: 'enforcement-appeal-incomplete-lpa',
+							templateName: 'enforcement-appeal-incomplete-appellant',
 							notifyClient,
-							recipientEmail: updatedAppeal?.lpa?.email,
+							recipientEmail,
 							personalisation
 						});
+						if (updatedAppeal.lpa?.email) {
+							await notifySend({
+								azureAdUserId,
+								templateName: 'enforcement-appeal-incomplete-lpa',
+								notifyClient,
+								recipientEmail: updatedAppeal?.lpa?.email,
+								personalisation
+							});
+						}
 					}
 				}
 			} else {
@@ -397,43 +402,44 @@ export const updateAppellantCaseValidationOutcome = async (
 					azureAdUserId,
 					details
 				});
+				if (!isChildEnforcement) {
+					if (updatedDueDate) {
+						if (!enforcementNoticeInvalid) {
+							const personalisation = {
+								appeal_reference_number: appeal.reference,
+								lpa_reference: appeal.applicationReference,
+								site_address: siteAddress,
+								due_date: formatDate(new Date(updatedDueDate), false),
+								reasons: incompleteReasonsList,
+								team_email_address: teamEmail
+							};
 
-				if (updatedDueDate) {
-					if (!enforcementNoticeInvalid) {
-						const personalisation = {
-							appeal_reference_number: appeal.reference,
-							lpa_reference: appeal.applicationReference,
-							site_address: siteAddress,
-							due_date: formatDate(new Date(updatedDueDate), false),
-							reasons: incompleteReasonsList,
-							team_email_address: teamEmail
-						};
-
-						await notifySend({
-							azureAdUserId,
-							templateName: 'appeal-incomplete',
-							notifyClient,
-							recipientEmail,
-							personalisation
-						});
-					} else if (enforcementNoticeInvalid === 'yes') {
-						const personalisation = {
-							appeal_reference_number: appeal.reference,
-							enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
-							site_address: siteAddress,
-							...getEnforcementInvalidReasonsParams(enforcementInvalidReasons),
-							other_info: otherInformation || '',
-							team_email_address: teamEmail,
-							due_date: formatDate(new Date(updatedDueDate), false)
-						};
-						if (updatedAppeal.lpa?.email) {
 							await notifySend({
 								azureAdUserId,
-								templateName: 'enforcement-notice-incomplete-lpa',
+								templateName: 'appeal-incomplete',
 								notifyClient,
-								recipientEmail: updatedAppeal?.lpa?.email,
+								recipientEmail,
 								personalisation
 							});
+						} else if (enforcementNoticeInvalid === 'yes') {
+							const personalisation = {
+								appeal_reference_number: appeal.reference,
+								enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
+								site_address: siteAddress,
+								...getEnforcementInvalidReasonsParams(enforcementInvalidReasons),
+								other_info: otherInformation || '',
+								team_email_address: teamEmail,
+								due_date: formatDate(new Date(updatedDueDate), false)
+							};
+							if (updatedAppeal.lpa?.email) {
+								await notifySend({
+									azureAdUserId,
+									templateName: 'enforcement-notice-incomplete-lpa',
+									notifyClient,
+									recipientEmail: updatedAppeal?.lpa?.email,
+									personalisation
+								});
+							}
 						}
 					}
 				}
@@ -448,106 +454,109 @@ export const updateAppellantCaseValidationOutcome = async (
 					: [];
 
 			const invalidReasonsList = getFormattedReasons(reasonsToFormat);
-			const applicantEmail = appeal.agent?.email || appeal.appellant?.email;
 
-			if (!enforcementNoticeInvalid) {
-				if (!applicantEmail) {
-					throw new Error(ERROR_NO_RECIPIENT_EMAIL);
-				}
+			if (!isChildEnforcement) {
+				const applicantEmail = appeal.agent?.email || appeal.appellant?.email;
 
-				const personalisation = {
-					appeal_reference_number: appeal.reference,
-					lpa_reference: appeal.applicationReference,
-					site_address: siteAddress,
-					reasons: invalidReasonsList,
-					team_email_address: teamEmail
-				};
-				await notifySend({
-					azureAdUserId,
-					templateName: 'appeal-invalid',
-					notifyClient,
-					recipientEmail: applicantEmail,
-					personalisation: {
-						...personalisation,
-						feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key)
+				if (!enforcementNoticeInvalid) {
+					if (!applicantEmail) {
+						throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 					}
-				});
 
-				if (updatedAppeal.lpa?.email) {
+					const personalisation = {
+						appeal_reference_number: appeal.reference,
+						lpa_reference: appeal.applicationReference,
+						site_address: siteAddress,
+						reasons: invalidReasonsList,
+						team_email_address: teamEmail
+					};
 					await notifySend({
 						azureAdUserId,
-						templateName: 'appeal-invalid-lpa',
+						templateName: 'appeal-invalid',
 						notifyClient,
-						recipientEmail: updatedAppeal.lpa.email,
+						recipientEmail: applicantEmail,
 						personalisation: {
 							...personalisation,
-							feedback_link: FEEDBACK_FORM_LINKS.LPA
+							feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key)
 						}
 					});
-				}
-			} else if (enforcementNoticeInvalid === 'yes') {
-				const personalisation = {
-					appeal_reference_number: appeal.reference,
-					enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
-					site_address: siteAddress,
-					...getEnforcementInvalidReasonsParams(enforcementInvalidReasons),
-					other_info: otherInformation || '',
-					team_email_address: teamEmail
-				};
-				await notifySend({
-					azureAdUserId,
-					templateName: 'enforcement-notice-invalid-appellant',
-					notifyClient,
-					recipientEmail: applicantEmail,
-					personalisation
-				});
-				if (updatedAppeal.lpa?.email) {
+
+					if (updatedAppeal.lpa?.email) {
+						await notifySend({
+							azureAdUserId,
+							templateName: 'appeal-invalid-lpa',
+							notifyClient,
+							recipientEmail: updatedAppeal.lpa.email,
+							personalisation: {
+								...personalisation,
+								feedback_link: FEEDBACK_FORM_LINKS.LPA
+							}
+						});
+					}
+				} else if (enforcementNoticeInvalid === 'yes') {
+					const personalisation = {
+						appeal_reference_number: appeal.reference,
+						enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
+						site_address: siteAddress,
+						...getEnforcementInvalidReasonsParams(enforcementInvalidReasons),
+						other_info: otherInformation || '',
+						team_email_address: teamEmail
+					};
 					await notifySend({
 						azureAdUserId,
-						templateName: 'enforcement-notice-invalid-lpa',
+						templateName: 'enforcement-notice-invalid-appellant',
 						notifyClient,
-						recipientEmail: updatedAppeal.lpa.email,
+						recipientEmail: applicantEmail,
 						personalisation
 					});
-				}
-			} else if (enforcementNoticeInvalid === 'no' && isEnforcementAppealType) {
-				if (!applicantEmail) {
-					throw new Error(ERROR_NO_RECIPIENT_EMAIL);
-				}
+					if (updatedAppeal.lpa?.email) {
+						await notifySend({
+							azureAdUserId,
+							templateName: 'enforcement-notice-invalid-lpa',
+							notifyClient,
+							recipientEmail: updatedAppeal.lpa.email,
+							personalisation
+						});
+					}
+				} else if (enforcementNoticeInvalid === 'no' && isEnforcementAppealType) {
+					if (!applicantEmail) {
+						throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+					}
 
-				const GROUND_A_BARRED_REASON_ID = 7;
+					const GROUND_A_BARRED_REASON_ID = 7;
 
-				const personalisation = {
-					appeal_reference_number: appeal.reference,
-					enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
-					site_address: siteAddress,
-					reasons: invalidReasonsList,
-					team_email_address: teamEmail,
-					ground_a_barred: reasonsToFormat.some(
-						(reason) => reason.appellantCaseInvalidReasonId === GROUND_A_BARRED_REASON_ID
-					),
-					other_live_appeals: !!(otherLiveAppeals === 'yes'),
-					effective_date: updatedAppeal.appellantCase?.enforcementEffectiveDate
-						? formatDate(new Date(updatedAppeal.appellantCase.enforcementEffectiveDate), false)
-						: undefined
-				};
+					const personalisation = {
+						appeal_reference_number: appeal.reference,
+						enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
+						site_address: siteAddress,
+						reasons: invalidReasonsList,
+						team_email_address: teamEmail,
+						ground_a_barred: reasonsToFormat.some(
+							(reason) => reason.appellantCaseInvalidReasonId === GROUND_A_BARRED_REASON_ID
+						),
+						other_live_appeals: otherLiveAppeals === 'yes',
+						effective_date: updatedAppeal.appellantCase?.enforcementEffectiveDate
+							? formatDate(new Date(updatedAppeal.appellantCase.enforcementEffectiveDate), false)
+							: undefined
+					};
 
-				await notifySend({
-					azureAdUserId,
-					templateName: 'enforcement-appeal-invalid-appellant',
-					notifyClient,
-					recipientEmail: applicantEmail,
-					personalisation
-				});
-
-				if (updatedAppeal.lpa?.email) {
 					await notifySend({
 						azureAdUserId,
-						templateName: 'enforcement-appeal-invalid-lpa',
+						templateName: 'enforcement-appeal-invalid-appellant',
 						notifyClient,
-						recipientEmail: updatedAppeal.lpa.email,
+						recipientEmail: applicantEmail,
 						personalisation
 					});
+
+					if (updatedAppeal.lpa?.email) {
+						await notifySend({
+							azureAdUserId,
+							templateName: 'enforcement-appeal-invalid-lpa',
+							notifyClient,
+							recipientEmail: updatedAppeal.lpa.email,
+							personalisation
+						});
+					}
 				}
 			}
 
