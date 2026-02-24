@@ -217,11 +217,15 @@ export const postCheckYourAnswers = async (request, response) => {
 				: 'lpaStatementDocumentAddedSuccess';
 			break;
 		case APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE:
-			nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+			if (!session.createNewRepresentation) {
+				nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+			}
 			bannerDefinitionKey = 'lpaProofOfEvidenceDocumentAddedSuccess';
 			break;
 		case APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE:
-			nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+			if (!session.createNewRepresentation) {
+				nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+			}
 			bannerDefinitionKey = 'appellantProofOfEvidenceDocumentAddedSuccess';
 			break;
 		case APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT:
@@ -243,7 +247,9 @@ export const postCheckYourAnswers = async (request, response) => {
 			}
 			break;
 		case APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE:
-			nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+			if (!session.createNewRepresentation) {
+				nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+			}
 			bannerDefinitionKey = session.createNewRepresentation
 				? 'rule6PartyProofOfEvidenceAddedSuccess'
 				: 'rule6PartyProofOfEvidenceDocumentAddedSuccess';
@@ -268,6 +274,11 @@ export const postCheckYourAnswers = async (request, response) => {
 		appealId,
 		text: bannerText
 	});
+
+	if (session.createNewRepresentation) {
+		delete session.createNewRepresentation;
+	}
+
 	return response.redirect(nextPageUrl);
 };
 
@@ -296,12 +307,18 @@ export const buildPayload = (
 		? 'citizen'
 		: 'lpa';
 
+	const isProofOfEvidence = [
+		APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
+		APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
+		APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
+	].includes(representationType);
+
 	return {
 		attachments: [documentGuid],
 		redactionStatus,
 		source,
 		dateCreated: createdDate,
-		representationText: REPRESENTATION_ADDED_AS_DOCUMENT,
+		representationText: isProofOfEvidence ? null : REPRESENTATION_ADDED_AS_DOCUMENT,
 		...(representedId ? { representedId } : {})
 	};
 };
