@@ -18,28 +18,58 @@ describe('check-your-answers controller utilities', () => {
 		const representedId = 123;
 
 		const testCases = [
-			{ type: APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT, source: 'citizen' },
-			{ type: APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT, source: 'citizen' },
-			{ type: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE, source: 'citizen' },
+			{
+				type: APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT,
+				source: 'citizen',
+				expectedRepresentationText: REPRESENTATION_ADDED_AS_DOCUMENT
+			},
+			{
+				type: APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT,
+				source: 'citizen',
+				expectedRepresentationText: REPRESENTATION_ADDED_AS_DOCUMENT
+			},
+			{
+				type: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
+				source: 'citizen',
+				expectedRepresentationText: null
+			},
 			{
 				type: APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT,
 				source: 'citizen',
-				hasRepresentedId: true
+				hasRepresentedId: true,
+				expectedRepresentationText: REPRESENTATION_ADDED_AS_DOCUMENT
 			},
 			{
 				type: APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE,
 				source: 'citizen',
-				hasRepresentedId: true
+				hasRepresentedId: true,
+				expectedRepresentationText: null
 			},
-			{ type: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT, source: 'lpa' },
-			{ type: APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT, source: 'lpa' },
-			{ type: APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE, source: 'lpa' },
-			{ type: APPEAL_REPRESENTATION_TYPE.COMMENT, source: 'lpa' }
+			{
+				type: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
+				source: 'lpa',
+				expectedRepresentationText: REPRESENTATION_ADDED_AS_DOCUMENT
+			},
+			{
+				type: APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT,
+				source: 'lpa',
+				expectedRepresentationText: REPRESENTATION_ADDED_AS_DOCUMENT
+			},
+			{
+				type: APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
+				source: 'lpa',
+				expectedRepresentationText: null
+			},
+			{
+				type: APPEAL_REPRESENTATION_TYPE.COMMENT,
+				source: 'lpa',
+				expectedRepresentationText: REPRESENTATION_ADDED_AS_DOCUMENT
+			}
 		];
 
 		test.each(testCases)(
 			'should build payload with source "$source" for $type',
-			({ type, source, hasRepresentedId }) => {
+			({ type, source, hasRepresentedId, expectedRepresentationText }) => {
 				const result = buildPayload(
 					type,
 					documentGuid,
@@ -53,7 +83,7 @@ describe('check-your-answers controller utilities', () => {
 					redactionStatus,
 					source,
 					dateCreated: createdDate,
-					representationText: REPRESENTATION_ADDED_AS_DOCUMENT,
+					representationText: expectedRepresentationText,
 					...(hasRepresentedId ? { representedId } : {})
 				});
 			}
