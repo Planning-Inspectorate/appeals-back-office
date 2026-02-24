@@ -1,6 +1,29 @@
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
+/**
+ * Generates an array of mock documents with unique values.
+ * @param {number} count - Number of documents to generate.
+ * @param {number} documentType - Number of documents to generate.
+ * @returns {Array<Object>} Array of mock documents.
+ */
+export function generateMockDocuments(count, documentType) {
+	const docs = [];
+	for (let i = 0; i < count; i++) {
+		docs.push({
+			dateCreated: '2024-03-01T13:48:35.847Z',
+			documentId: `${String(i + 1).padStart(3, '0')}`,
+			documentType,
+			documentURI: `https://pinsstdocsdevukw001.blob.core.windows.net/uploads/mock-container/mock-folder/mock-doc-${i + 1}.jpeg`,
+			filename: `img${i + 1}.jpg`,
+			mime: 'image/jpeg',
+			originalFilename: `oimg${i + 1}.jpg`,
+			size: 10293 + i
+		});
+	}
+	return docs;
+}
+
 export const validAppellantCase = {
 	casedata: {
 		submissionId: '14960baa-3d0f-4db9-9e84-0c75be891560',
