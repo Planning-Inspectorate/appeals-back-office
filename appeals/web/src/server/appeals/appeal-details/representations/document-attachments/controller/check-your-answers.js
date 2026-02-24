@@ -217,11 +217,16 @@ export const postCheckYourAnswers = async (request, response) => {
 				: 'lpaStatementDocumentAddedSuccess';
 			break;
 		case 'lpa_proofs_evidence':
-			nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+			if (!session.createNewRepresentation) {
+				nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+			}
 			bannerDefinitionKey = 'lpaProofOfEvidenceDocumentAddedSuccess';
 			break;
+
 		case 'appellant_proofs_evidence':
-			nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+			if (!session.createNewRepresentation) {
+				nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+			}
 			bannerDefinitionKey = 'appellantProofOfEvidenceDocumentAddedSuccess';
 			break;
 		case 'lpa_final_comment':
@@ -243,7 +248,9 @@ export const postCheckYourAnswers = async (request, response) => {
 			}
 			break;
 		case 'rule_6_party_proofs_evidence':
-			nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+			if (!session.createNewRepresentation) {
+				nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+			}
 			bannerDefinitionKey = session.createNewRepresentation
 				? 'rule6PartyProofOfEvidenceAddedSuccess'
 				: 'rule6PartyProofOfEvidenceDocumentAddedSuccess';
@@ -262,6 +269,11 @@ export const postCheckYourAnswers = async (request, response) => {
 		appealId,
 		text: bannerText
 	});
+
+	if (session.createNewRepresentation) {
+		delete session.createNewRepresentation;
+	}
+
 	return response.redirect(nextPageUrl);
 };
 
@@ -293,7 +305,10 @@ const buildPayload = (
 		redactionStatus,
 		source,
 		dateCreated: createdDate,
-		representationText: REPRESENTATION_ADDED_AS_DOCUMENT,
+		representationText:
+			representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
+				? null
+				: REPRESENTATION_ADDED_AS_DOCUMENT,
 		...(representedId ? { representedId } : {})
 	};
 };

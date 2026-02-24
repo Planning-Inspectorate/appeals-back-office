@@ -257,79 +257,119 @@ describe('map-document-entity', () => {
 			desc: 'representationAttachments - APPELLANT_FINAL_COMMENT',
 			documentType: internalRepDocType,
 			representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT,
-			expected: APPEAL_DOCUMENT_TYPE.APPELLANT_FINAL_COMMENT
+			expectedDocumentType: APPEAL_DOCUMENT_TYPE.APPELLANT_FINAL_COMMENT,
+			expectedCaseStage: APPEAL_CASE_STAGE.FINAL_COMMENTS
 		},
 		{
 			desc: 'representationAttachments - LPA_FINAL_COMMENT',
 			documentType: internalRepDocType,
 			representationType: APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT,
-			expected: APPEAL_DOCUMENT_TYPE.LPA_FINAL_COMMENT
+			expectedDocumentType: APPEAL_DOCUMENT_TYPE.LPA_FINAL_COMMENT,
+			expectedCaseStage: APPEAL_CASE_STAGE.FINAL_COMMENTS
 		},
 		{
 			desc: 'representationAttachments - APPELLANT_STATEMENT',
 			documentType: internalRepDocType,
 			representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT,
-			expected: APPEAL_DOCUMENT_TYPE.APPELLANT_STATEMENT
+			expectedDocumentType: APPEAL_DOCUMENT_TYPE.APPELLANT_STATEMENT,
+			expectedCaseStage: APPEAL_CASE_STAGE.STATEMENTS
 		},
 		{
 			desc: 'representationAttachments - LPA_STATEMENT',
 			documentType: internalRepDocType,
 			representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
-			expected: APPEAL_DOCUMENT_TYPE.LPA_STATEMENT
+			expectedDocumentType: APPEAL_DOCUMENT_TYPE.LPA_STATEMENT,
+			expectedCaseStage: APPEAL_CASE_STAGE.STATEMENTS
+		},
+		{
+			desc: 'representationAttachments - RULE_6_PARTY_STATEMENT',
+			documentType: internalRepDocType,
+			representationType: APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT,
+			expectedDocumentType: APPEAL_DOCUMENT_TYPE.RULE_6_STATEMENT,
+			expectedCaseStage: APPEAL_CASE_STAGE.STATEMENTS
+		},
+		{
+			desc: 'representationAttachments - APPELLANT_PROOFS_EVIDENCE',
+			documentType: internalRepDocType,
+			representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
+			expectedDocumentType: APPEAL_DOCUMENT_TYPE.APPELLANT_PROOF_OF_EVIDENCE,
+			expectedCaseStage: APPEAL_CASE_STAGE.EVIDENCE
+		},
+		{
+			desc: 'representationAttachments - LPA_PROOFS_EVIDENCE',
+			documentType: internalRepDocType,
+			representationType: APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
+			expectedDocumentType: APPEAL_DOCUMENT_TYPE.LPA_PROOF_OF_EVIDENCE,
+			expectedCaseStage: APPEAL_CASE_STAGE.EVIDENCE
+		},
+		{
+			desc: 'representationAttachments - RULE_6_PARTY_PROOFS_EVIDENCE',
+			documentType: internalRepDocType,
+			representationType: APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE,
+			expectedDocumentType: APPEAL_DOCUMENT_TYPE.RULE_6_PROOF_OF_EVIDENCE,
+			expectedCaseStage: APPEAL_CASE_STAGE.EVIDENCE
 		},
 		{
 			desc: 'representationAttachments - COMMENT',
 			documentType: internalRepDocType,
 			representationType: APPEAL_REPRESENTATION_TYPE.COMMENT,
-			expected: APPEAL_DOCUMENT_TYPE.INTERESTED_PARTY_COMMENT
+			expectedDocumentType: APPEAL_DOCUMENT_TYPE.INTERESTED_PARTY_COMMENT,
+			expectedCaseStage: APPEAL_CASE_STAGE.THIRD_PARTY_COMMENTS
 		},
 		{
 			desc: 'representationAttachments - unknown type',
 			documentType: internalRepDocType,
 			representationType: 'SOMETHING_UNKNOWN',
-			expected: APPEAL_DOCUMENT_TYPE.UNCATEGORISED
+			expectedDocumentType: APPEAL_DOCUMENT_TYPE.UNCATEGORISED,
+			expectedCaseStage: APPEAL_CASE_STAGE.THIRD_PARTY_COMMENTS
 		},
 		{
 			desc: 'other documentType',
 			documentType: 'someOtherType',
 			representationType: null,
-			expected: 'someOtherType'
+			expectedDocumentType: 'someOtherType',
+			expectedCaseStage: APPEAL_CASE_STAGE.APPEAL_DECISION
 		},
 		{
 			desc: 'documentType undefined',
 			documentType: undefined,
 			representationType: null,
-			expected: APPEAL_DOCUMENT_TYPE.UNCATEGORISED
+			expectedDocumentType: APPEAL_DOCUMENT_TYPE.UNCATEGORISED,
+			expectedCaseStage: APPEAL_CASE_STAGE.APPEAL_DECISION
 		}
-	])('handles document type: $desc', ({ documentType, representationType, expected }) => {
-		const doc = {
-			guid: 'doc-123',
-			caseId: 'case-456',
-			name: '123e4567-e89b-12d3-a456-426614174000_test.pdf',
-			case: { reference: 'REF-1', appealType: { key: APPEAL_CASE_TYPE.D } },
-			versions: [
-				{
-					version: 1,
-					originalFilename: 'test.pdf',
-					size: 1000,
-					mime: 'application/pdf',
-					documentURI: 'http://doc.uri',
-					fileMD5: 'md5hash',
-					dateCreated: new Date('2025-01-01T10:00:00.000Z'),
-					dateReceived: new Date('2025-01-01T11:00:00.000Z'),
-					lastModified: new Date('2025-01-01T12:00:00.000Z'),
-					documentType,
-					stage: APPEAL_CASE_STAGE.APPEAL_DECISION,
-					redactionStatus: { key: 'NOT_REDACTED' },
-					representation: representationType
-						? { representation: { representationType } }
-						: undefined
-				}
-			]
-		};
-		const result = mapDocumentEntity(doc);
-		expect(result.documentType).toBe(expected);
-	});
+	])(
+		'handles document type: $desc',
+		({ documentType, representationType, expectedDocumentType, expectedCaseStage }) => {
+			const doc = {
+				guid: 'doc-123',
+				caseId: 'case-456',
+				name: '123e4567-e89b-12d3-a456-426614174000_test.pdf',
+				case: { reference: 'REF-1', appealType: { key: APPEAL_CASE_TYPE.D } },
+				versions: [
+					{
+						version: 1,
+						originalFilename: 'test.pdf',
+						size: 1000,
+						mime: 'application/pdf',
+						documentURI: 'http://doc.uri',
+						fileMD5: 'md5hash',
+						dateCreated: new Date('2025-01-01T10:00:00.000Z'),
+						dateReceived: new Date('2025-01-01T11:00:00.000Z'),
+						lastModified: new Date('2025-01-01T12:00:00.000Z'),
+						documentType,
+						stage: APPEAL_CASE_STAGE.APPEAL_DECISION,
+						redactionStatus: { key: 'NOT_REDACTED' },
+						representation: representationType
+							? { representation: { representationType } }
+							: undefined
+					}
+				]
+			};
+			const result = mapDocumentEntity(doc);
+			expect(result.documentType).toBe(expectedDocumentType);
+			expect(result.caseStage).toBe(expectedCaseStage);
+		}
+	);
 });
 
 describe('mapAppellantCaseIn', () => {
