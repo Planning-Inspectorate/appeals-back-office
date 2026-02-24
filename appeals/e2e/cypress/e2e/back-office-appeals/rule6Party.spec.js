@@ -481,7 +481,7 @@ it('add a rule 6 POE', () => {
 	);
 });
 
-it('should mark rule 6 POE complete', () => {
+it.only('should mark rule 6 POE complete', () => {
 	setupCaseForRule6StatementReview();
 	cy.simulateStatementsDeadlineElapsed(caseObj);
 	cy.shareCommentsAndStatementsViaApi(caseObj);
@@ -499,6 +499,23 @@ it('should mark rule 6 POE complete', () => {
 		documentationSectionPage.navigateToAddProofOfEvidenceReview('rule-6-proof-of-evidence');
 		caseDetailsPage.selectRadioButtonByValue('Complete');
 		caseDetailsPage.clickButtonByText('Continue');
+
+		// change procedure
+		caseDetailsPage.clickChangeLinkByLabel('Proof of evidence and witnesses');
+		caseDetailsPage.clickBackLink();
+		caseDetailsPage.clickChangeLinkByLabel('Review decision');
+		caseDetailsPage.selectRadioButtonByValue('Mark as incomplete');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.chooseCheckboxByText('Supporting documents missing');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickChangeLinkByLabel('Review decision');
+		caseDetailsPage.selectRadioButtonByValue('Complete');
+		caseDetailsPage.clickButtonByText('Continue');
+		cyaSection.verifyAnswerUpdated({
+			field: 'Review decisions',
+			value: 'Accept proof of evidence and witnesses'
+		});
+
 		caseDetailsPage.clickButtonByText(
 			`${rule6Party.serviceUser.organisationName} proof of evidence and witnesses`
 		);
