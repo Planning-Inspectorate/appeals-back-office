@@ -19,6 +19,7 @@ import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
+import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import logger from '#utils/logger.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
@@ -86,6 +87,7 @@ export const createSiteVisit = async (
 		const emailVariables = {
 			appeal_reference_number: siteVisitData.appealReferenceNumber,
 			lpa_reference: siteVisitData.lpaReference,
+			...(siteVisitData.enforcementReference && { enforcement_reference: siteVisitData.enforcementReference }),
 			site_address: siteVisitData.siteAddress,
 			start_time: formatTime(siteVisitData.visitStartTime),
 			end_time: formatTime(siteVisitData.visitEndTime),
@@ -229,6 +231,7 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 		const emailVariables = {
 			appeal_reference_number: updateSiteVisitData.appealReferenceNumber,
 			lpa_reference: updateSiteVisitData.lpaReference,
+			...(updateSiteVisitData.enforcementReference && { enforcement_reference: updateSiteVisitData.enforcementReference }),
 			site_address: updateSiteVisitData.siteAddress,
 			start_time: formatTime(updateSiteVisitData.visitStartTime),
 			end_time: formatTime(updateSiteVisitData.visitEndTime),
@@ -323,6 +326,7 @@ const updateWhenSiteVisitMissed = async (azureAdUserId, updateSiteVisitData, not
 		const emailVariables = {
 			appeal_reference_number: updateSiteVisitData.appealReferenceNumber,
 			lpa_reference: updateSiteVisitData.lpaReference,
+			...(updateSiteVisitData.enforcementReference && { enforcement_reference: updateSiteVisitData.enforcementReference }),
 			site_address: updateSiteVisitData.siteAddress,
 			start_time: formatTime(updateSiteVisitData.visitStartTime),
 			visit_date: formatDate(new Date(updateSiteVisitData.visitDate || ''), false),
@@ -553,9 +557,11 @@ const recordMissedSiteVisit = async (
 
 	const currentDate = new Date();
 	const deadlineDate = dateISOStringToDisplayDate(await addDays(currentDate, 5));
+	const enforcementReference = await getEnforcementReference(appeal);
 	const personalisation = {
 		appeal_reference_number: appeal.reference,
 		lpa_reference: appeal.applicationReference || '',
+		...(enforcementReference && { enforcement_reference: enforcementReference }),
 		site_address: siteAddress,
 		visit_date: dateISOStringToDisplayDate(appeal.siteVisit?.visitDate),
 		'5_day_deadline': deadlineDate,
@@ -619,10 +625,12 @@ const sendCancelledSiteVisitNotification = async ({ appeal, azureAdUserId, notif
 	const isNotUnaccompaniedVisit = appeal.siteVisit?.siteVisitType.name !== 'Unaccompanied';
 
 	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
+	const enforcementReference = await getEnforcementReference(appeal);
 
 	const personalisation = {
 		appeal_reference_number: appeal.reference,
 		lpa_reference: appeal.applicationReference || '',
+		...(enforcementReference && { enforcement_reference: enforcementReference }),
 		site_address: siteAddress,
 		team_email_address: teamEmail
 	};

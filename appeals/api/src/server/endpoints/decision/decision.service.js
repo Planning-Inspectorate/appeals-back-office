@@ -8,6 +8,7 @@ import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import transitionState from '#state/transition-state.js';
+import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import { getFeedbackLinkFromAppealTypeKey } from '#utils/feedback-form-link.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
@@ -417,14 +418,16 @@ export const sendNewDecisionLetter = async (
 
 	const uniqueEmails = [...new Set(relevantEmails)].filter(Boolean);
 
+	const enforcementReference = await getEnforcementReference(appeal);
 	const personalisation = {
 		appeal_reference_number: appeal.reference,
 		lpa_reference: appeal.applicationReference || '',
+		...(enforcementReference && { enforcement_reference: enforcementReference }),
 		site_address: appeal.address
 			? formatAddressSingleLine(appeal.address)
 			: 'Address not available',
 		correction_notice_reason: correctionNotice,
-		decision_date: formatDate(decisionDate, false),
+		decision_date: formatDate(new Date(decisionDate), false),
 		front_office_url: environment.FRONT_OFFICE_URL || '',
 		team_email_address: await getTeamEmailFromAppealId(appeal.id),
 		feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || '')

@@ -6,6 +6,7 @@ import inquiryRepository from '#repositories/inquiry.repository.js';
 import transitionState from '#state/transition-state.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import logger from '#utils/logger.js';
+import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import { trimAppealType } from '#utils/string-utils.js';
 import { EVENT_TYPE, PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/common.js';
 import {
@@ -176,6 +177,7 @@ const sendInquiryNotifications = async (
 		});
 	}
 
+	const enforcementReference = await getEnforcementReference(appeal);
 	recipients.forEach(async (item) => {
 		await notifySend({
 			notifyClient,
@@ -184,6 +186,7 @@ const sendInquiryNotifications = async (
 				appeal_reference_number: appeal.reference,
 				site_address: appeal.address ? formatAddressSingleLine(appeal.address) : '',
 				lpa_reference: appeal.applicationReference ?? '',
+				...(enforcementReference && { enforcement_reference: enforcementReference }),
 				is_lpa: item.isLpa,
 				...personalisation
 			},

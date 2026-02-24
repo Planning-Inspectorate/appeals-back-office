@@ -1,6 +1,7 @@
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
 import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
+import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import {
@@ -68,6 +69,7 @@ const postSiteVisit = async (req, res) => {
 	const appellantEmail = String(appeal.agent?.email || appeal.appellant?.email || '');
 	const lpaEmail = appeal.lpa?.email || '';
 	const visitTypeName = visitType.name;
+	const enforcementReference = await getEnforcementReference(appeal);
 
 	/** @type { CreateSiteVisitData } */
 	const siteVisitData = {
@@ -82,6 +84,7 @@ const postSiteVisit = async (req, res) => {
 		lpaEmail,
 		appealReferenceNumber: appeal.reference,
 		lpaReference: appeal.applicationReference || '',
+		enforcementReference,
 		inspectorName,
 		siteAddress
 	};
@@ -141,6 +144,7 @@ const rearrangeSiteVisit = async (req, res) => {
 	const appellantEmail = String(appeal.agent?.email || appeal.appellant?.email || '');
 	const lpaEmail = appeal.lpa?.email || '';
 	const visitTypeName = visitType.name;
+	const enforcementReference = await getEnforcementReference(appeal);
 
 	/** @type { UpdateSiteVisitData } */
 	const updateSiteVisitData = {
@@ -158,6 +162,7 @@ const rearrangeSiteVisit = async (req, res) => {
 		lpaEmail,
 		appealReferenceNumber: appeal.reference,
 		lpaReference: appeal.applicationReference || '',
+		enforcementReference,
 		inspectorName,
 		siteAddress
 	};
@@ -202,6 +207,7 @@ const rearrangeMissedSiteVisit = async (req, res) => {
 	const appellantEmail = String(appeal.agent?.email || appeal.appellant?.email || '');
 	const lpaEmail = appeal.lpa?.email || '';
 	const visitTypeName = visitType.name;
+	const enforcementReference = await getEnforcementReference(appeal);
 
 	/** @type {*} */
 	const updateSiteVisitData = {
@@ -217,6 +223,7 @@ const rearrangeMissedSiteVisit = async (req, res) => {
 		lpaEmail,
 		appealReferenceNumber: appeal.reference,
 		lpaReference: appeal.applicationReference || '',
+		enforcementReference,
 		inspectorName,
 		siteAddress
 	};

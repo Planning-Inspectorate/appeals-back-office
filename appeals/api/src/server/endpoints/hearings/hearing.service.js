@@ -10,6 +10,7 @@ import {
 	ERROR_NO_RECIPIENT_EMAIL,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
+import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import { dateISOStringToDisplayDate, formatTime12h } from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
 
@@ -100,6 +101,7 @@ const sendHearingNotifications = async (
 		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 	}
 
+	const enforcementReference = await getEnforcementReference(appeal);
 	[appellantEmail, lpaEmail].forEach(async (email) => {
 		await notifySend({
 			azureAdUserId,
@@ -109,6 +111,7 @@ const sendHearingNotifications = async (
 				appeal_reference_number: appeal.reference,
 				site_address: appeal.address ? formatAddressSingleLine(appeal.address) : '',
 				lpa_reference: appeal.applicationReference ?? '',
+				...(enforcementReference && { enforcement_reference: enforcementReference }),
 				...personalisation,
 				team_email_address: await getTeamEmailFromAppealId(appeal.id)
 			},
