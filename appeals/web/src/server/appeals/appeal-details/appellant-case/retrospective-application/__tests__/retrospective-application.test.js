@@ -52,6 +52,40 @@ describe('retrospective-application', () => {
 	});
 
 	describe('POST /change', () => {
+		it('should render the retrospective application change page in error', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+				.reply(200, {
+					...appellantCaseDataIncompleteOutcome,
+					enforcementNotice: { retrospectiveApplication: true }
+				});
+
+			const response = await request
+				.post(`${appellantCaseUrl}/retrospective-application/change`)
+				.send({});
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary'
+			}).innerHTML;
+			expect(errorSummaryHtml).toMatchSnapshot();
+
+			const expectedErrorMessage =
+				'Select yes if anyone submitted a retrospective planning application';
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain(`${expectedErrorMessage}</a>`);
+
+			const unprettifiedErrorMessageHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-message',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(unprettifiedErrorMessageHtml).toContain(`${expectedErrorMessage}</p>`);
+		});
+
 		it('should update via the api and re-direct to Appellant Case if "yes"', async () => {
 			const validData = {
 				retrospectiveApplication: 'yes'

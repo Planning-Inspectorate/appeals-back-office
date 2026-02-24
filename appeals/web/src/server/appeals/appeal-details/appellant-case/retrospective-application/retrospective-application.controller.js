@@ -30,7 +30,8 @@ const renderChangeRetrospectiveApplication = async (request, response) => {
 		const mappedPageContents = changeRetrospectiveApplicationPage(
 			currentAppeal,
 			appellantCaseData,
-			request.session.retrospectiveApplication
+			request.session.retrospectiveApplication,
+			errors
 		);
 
 		delete request.session.retrospectiveApplication;
