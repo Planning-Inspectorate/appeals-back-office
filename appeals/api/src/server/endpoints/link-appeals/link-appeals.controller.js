@@ -461,6 +461,7 @@ export const updateLinkedAppeals = async (req, res) => {
 		const options = { omitFolders };
 
 		let appealToUnlink;
+		let appealsToBroadcast;
 
 		switch (operation) {
 			case LINK_APPEALS_CHANGE_LEAD_OPERATION: {
@@ -483,6 +484,9 @@ export const updateLinkedAppeals = async (req, res) => {
 				if (isChildAppeal(appealToUnlink)) {
 					// @ts-ignore
 					await duplicateAllFiles(currentLead, appealToUnlink, options);
+
+					// only need to broadcast to the child and lead involved in the unlink action
+					appealsToBroadcast = [currentLead?.id, appealToUnlink?.id];
 				} else {
 					if (!appealToReplaceLead) {
 						return res
@@ -535,7 +539,16 @@ export const updateLinkedAppeals = async (req, res) => {
 				]),
 				azureAdUserId
 			});
-			await updatePersonalList(appealToReplaceLead.id);
+
+			// need to broadcast all the appeals in the originally linked group
+			appealsToBroadcast = [currentLead.id, ...childAppeals.map((appeal) => appeal.id)];
+		}
+		if (appealsToBroadcast) {
+			await Promise.allSettled(
+				appealsToBroadcast
+					.filter((id) => id !== undefined)
+					.map((appealId) => broadcasters.broadcastAppeal(appealId))
+			);
 		}
 	} catch (error) {
 		logger.error(error);
