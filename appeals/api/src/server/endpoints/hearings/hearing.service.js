@@ -3,6 +3,7 @@ import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import hearingRepository from '#repositories/hearing.repository.js';
+import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import logger from '#utils/logger.js';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import {
@@ -10,7 +11,6 @@ import {
 	ERROR_NO_RECIPIENT_EMAIL,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import { dateISOStringToDisplayDate, formatTime12h } from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
 

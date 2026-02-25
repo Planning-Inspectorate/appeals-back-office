@@ -87,7 +87,9 @@ export const createSiteVisit = async (
 		const emailVariables = {
 			appeal_reference_number: siteVisitData.appealReferenceNumber,
 			lpa_reference: siteVisitData.lpaReference,
-			...(siteVisitData.enforcementReference && { enforcement_reference: siteVisitData.enforcementReference }),
+			...(siteVisitData.enforcementReference && {
+				enforcement_reference: siteVisitData.enforcementReference
+			}),
 			site_address: siteVisitData.siteAddress,
 			start_time: formatTime(siteVisitData.visitStartTime),
 			end_time: formatTime(siteVisitData.visitEndTime),
@@ -231,7 +233,9 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 		const emailVariables = {
 			appeal_reference_number: updateSiteVisitData.appealReferenceNumber,
 			lpa_reference: updateSiteVisitData.lpaReference,
-			...(updateSiteVisitData.enforcementReference && { enforcement_reference: updateSiteVisitData.enforcementReference }),
+			...(updateSiteVisitData.enforcementReference && {
+				enforcement_reference: updateSiteVisitData.enforcementReference
+			}),
 			site_address: updateSiteVisitData.siteAddress,
 			start_time: formatTime(updateSiteVisitData.visitStartTime),
 			end_time: formatTime(updateSiteVisitData.visitEndTime),
@@ -326,7 +330,9 @@ const updateWhenSiteVisitMissed = async (azureAdUserId, updateSiteVisitData, not
 		const emailVariables = {
 			appeal_reference_number: updateSiteVisitData.appealReferenceNumber,
 			lpa_reference: updateSiteVisitData.lpaReference,
-			...(updateSiteVisitData.enforcementReference && { enforcement_reference: updateSiteVisitData.enforcementReference }),
+			...(updateSiteVisitData.enforcementReference && {
+				enforcement_reference: updateSiteVisitData.enforcementReference
+			}),
 			site_address: updateSiteVisitData.siteAddress,
 			start_time: formatTime(updateSiteVisitData.visitStartTime),
 			visit_date: formatDate(new Date(updateSiteVisitData.visitDate || ''), false),

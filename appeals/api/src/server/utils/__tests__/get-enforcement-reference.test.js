@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { jest } from '@jest/globals';
 import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
+import { jest } from '@jest/globals';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
