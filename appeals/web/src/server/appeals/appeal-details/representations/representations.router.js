@@ -7,7 +7,10 @@ import {
 	postShareRepresentations,
 	renderShareRepresentations
 } from './representations.controller.js';
-import { withSingularRepresentation } from './representations.middleware.js';
+import {
+	validateAppellantStatementAccess,
+	withSingularRepresentation
+} from './representations.middleware.js';
 import { validateReadyToShare } from './representations.validators.js';
 import rule6PartyStatementRouter from './rule-6-party-statement/rule-6-party-statement.router.js';
 
@@ -21,6 +24,7 @@ router.use(
 
 router.use(
 	'/appellant-statement',
+	validateAppellantStatementAccess,
 	withSingularRepresentation(APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT),
 	appellantStatementRouter
 );

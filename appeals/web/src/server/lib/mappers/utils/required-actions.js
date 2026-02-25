@@ -13,6 +13,7 @@ import {
 	DOCUMENT_STATUS_RECEIVED,
 	VALIDATION_OUTCOME_INCOMPLETE
 } from '@pins/appeals/constants/support.js';
+import isAppellantStatementAppealType from '@pins/appeals/utils/is-appellant-statement-appeal-type.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {'addHorizonReference'|'awaitingEvent'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'|'progressToProofOfEvidenceAndWitnesses'|'awaitingProofOfEvidenceAndWitnesses'|'progressToInquiry'|'setupInquiry'|'addInquiryAddress'|'awaitingLpaProofOfEvidenceAndWitnesses'|'awaitingAppellantProofOfEvidenceAndWitnesses'|'awaitingAppellantStatement'|'appellantStatementAwaitingReview'|'awaitingRule6PartyStatement'|'reviewRule6PartyStatement'|'awaitingRule6PartyProofOfEvidence'|'reviewRule6PartyProofOfEvidence'|'enforcementNoticeAppealIncomplete'} AppealRequiredAction */
@@ -246,7 +247,9 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				appellantStatementRepresentationStatus &&
 				appellantStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW;
 
-			const appellantStatementEnabled = config.featureFlags.featureFlagAppellantStatement;
+			const appellantStatementEnabled =
+				config.featureFlags.featureFlagAppellantStatement &&
+				isAppellantStatementAppealType(appealDetails.appealType);
 			const rule6StatementEnabled = config.featureFlags.featureFlagRule6Statement;
 
 			const rule6PartyStatements = appealDetails.documentationSummary.rule6PartyStatements || {};

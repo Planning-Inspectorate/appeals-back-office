@@ -43,7 +43,7 @@ describe('Review LPAQ', () => {
 		});
 	});
 
-	it('incomplete LPAQ', () => {
+	it('incomplete LPAQ', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -65,7 +65,7 @@ describe('Review LPAQ', () => {
 		});
 	});
 
-	it('incomplete LPAQ add another', () => {
+	it('incomplete LPAQ add another', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);

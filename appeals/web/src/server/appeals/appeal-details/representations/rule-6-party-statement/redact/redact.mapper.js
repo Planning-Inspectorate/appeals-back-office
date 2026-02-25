@@ -210,14 +210,14 @@ export function redactConfirmPage(
 												? [
 														{
 															text: 'Manage',
-															href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/manage-documents/${folderId}?backUrl=/rule-6-party-statement/redact/confirm`,
+															href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/manage-documents/${folderId}?backUrl=/rule-6-party-statement/${rule6PartyId}/redact/confirm`,
 															visuallyHiddenText: 'supporting documents'
 														}
 													]
 												: []),
 											{
 												text: 'Add',
-												href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/add-document?backUrl=/rule-6-party-statement/redact/confirm`,
+												href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/add-document?backUrl=/rule-6-party-statement/${rule6PartyId}/redact/confirm`,
 												visuallyHiddenText: 'supporting documents'
 											}
 										]

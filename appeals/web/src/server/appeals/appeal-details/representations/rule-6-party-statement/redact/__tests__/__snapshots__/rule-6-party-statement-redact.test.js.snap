@@ -227,7 +227,7 @@ exports[`rule 6 party statement redact GET /confirm should render the CYA redact
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
                     <dd class="govuk-summary-list__value">Not provided</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/99/add-document?backUrl=/rule-6-party-statement/redact/confirm">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/99/add-document?backUrl=/rule-6-party-statement/99/redact/confirm">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>

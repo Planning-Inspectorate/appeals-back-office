@@ -455,6 +455,18 @@ describe('rule 6 party statement redact', () => {
 			expect(innerHTML).toContain('Redacted statement</dt>');
 			expect(innerHTML).toContain('Supporting documents</dt>');
 			expect(innerHTML).toContain('Review decision</dt>');
+			expect(innerHTML).toContain(
+				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/redact"`
+			);
+			expect(innerHTML).toContain(
+				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/add-document?backUrl=/rule-6-party-statement/${rule6PartyId}/redact/confirm"`
+			);
+			expect(innerHTML).toContain(
+				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}"`
+			);
+			expect(innerHTML).toContain(
+				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/redact/allocation-check"`
+			);
 			expect(innerHTML).toContain('Redact and accept statement');
 		});
 
