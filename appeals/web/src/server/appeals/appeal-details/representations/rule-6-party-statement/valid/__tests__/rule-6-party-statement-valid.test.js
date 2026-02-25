@@ -328,7 +328,7 @@ describe('rule 6 party statement valid', () => {
 				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}"`
 			);
 			expect(innerHTML).toContain(
-				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-check"`
+				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-check?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F${appealId}%2Frule-6-party-statement%2F${rule6PartyId}%2Fvalid%2Fallocation-check"`
 			);
 			expect(innerHTML).toContain('Accept statement</button>');
 		});

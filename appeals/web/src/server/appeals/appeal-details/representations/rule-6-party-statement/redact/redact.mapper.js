@@ -1,5 +1,6 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { ensureArray } from '#lib/array-utilities.js';
+import { editLink } from '#lib/edit-utilities.js';
 import { buttonComponent, simpleHtmlComponent, wrapComponents } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { newLine2LineBreak } from '#lib/string-utilities.js';
@@ -162,7 +163,9 @@ export function redactConfirmPage(
 							actions: {
 								items: [
 									{
-										href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/redact`,
+										href: editLink(
+											`/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/redact`
+										),
 										text: 'Redact',
 										visuallyHiddenText: 'Redact statement'
 									}
@@ -188,7 +191,9 @@ export function redactConfirmPage(
 									actions: {
 										items: [
 											{
-												href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/redact`,
+												href: editLink(
+													`/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/redact`
+												),
 												text: 'Change',
 												visuallyHiddenText: 'redacted statement'
 											}
@@ -250,7 +255,9 @@ export function redactConfirmPage(
 													items: [
 														{
 															text: 'Change',
-															href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/redact/allocation-check`,
+															href: editLink(
+																`/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/redact/allocation-check`
+															),
 															visuallyHiddenText: 'allocation level and specialisms'
 														}
 													]
@@ -266,7 +273,9 @@ export function redactConfirmPage(
 													items: [
 														{
 															text: 'Change',
-															href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/redact/allocation-level`,
+															href: editLink(
+																`/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/redact/allocation-level`
+															),
 															visuallyHiddenText: 'allocation level'
 														}
 													]
@@ -286,7 +295,9 @@ export function redactConfirmPage(
 													items: [
 														{
 															text: 'Change',
-															href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/redact/allocation-specialisms`,
+															href: editLink(
+																`/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/redact/allocation-specialisms`
+															),
 															visuallyHiddenText: 'allocation specialisms'
 														}
 													]
@@ -302,9 +313,13 @@ export function redactConfirmPage(
 
 	preRenderPageComponents(pageComponents);
 
+	const backLinkUrl = updatingAllocation
+		? `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/redact/allocation-specialisms`
+		: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/redact/allocation-check`;
+
 	return {
 		title: shouldShowRedactedRow ? 'Check details and accept statement' : 'Accept statement',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/redact`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortReference}`,
 		heading: shouldShowRedactedRow ? 'Check details and accept statement' : 'Accept statement',
 		forceRenderSubmitButton: true,

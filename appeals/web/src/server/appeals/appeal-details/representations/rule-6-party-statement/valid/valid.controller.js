@@ -1,6 +1,8 @@
 import * as api from '#lib/api/allocation-details.api.js';
 import { ensureArray } from '#lib/array-utilities.js';
+import { applyEditsForAppeal, clearEditsForAppeal } from '#lib/edit-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { preserveQueryString } from '#lib/url-utilities.js';
 import { acceptRepresentation } from '../../representations.service.js';
 import {
 	allocationCheckPage,
@@ -27,7 +29,10 @@ export function renderAllocationCheck(request, response) {
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		errors,
-		pageContent
+		pageContent: {
+			...pageContent,
+			backLinkUrl: preserveQueryString(request, pageContent.backLinkUrl || '')
+		}
 	});
 }
 
@@ -49,18 +54,27 @@ export function postAllocationCheck(request, response) {
 		return renderAllocationCheck(request, response);
 	}
 
+	const sessionKey = request.query.editEntrypoint
+		? 'acceptRule6PartyStatement/edit'
+		: 'acceptRule6PartyStatement';
+
 	if (
-		session.acceptRule6PartyStatement[currentAppeal.appealId] &&
+		session[sessionKey]?.[currentAppeal.appealId] &&
 		body.allocationLevelAndSpecialisms === 'no'
 	) {
-		delete session.acceptRule6PartyStatement[currentAppeal.appealId].allocationLevel;
-		delete session.acceptRule6PartyStatement[currentAppeal.appealId].allocationSpecialisms;
+		delete session[sessionKey][currentAppeal.appealId].allocationLevel;
+		delete session[sessionKey][currentAppeal.appealId].allocationSpecialisms;
+
+		applyEditsForAppeal(request, 'acceptRule6PartyStatement', currentAppeal.appealId);
 	}
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/${
-			body.allocationLevelAndSpecialisms === 'yes' ? 'allocation-level' : 'confirm'
-		}`
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/${
+				body.allocationLevelAndSpecialisms === 'yes' ? 'allocation-level' : 'confirm'
+			}`
+		)
 	);
 }
 
@@ -88,7 +102,10 @@ export async function renderAllocationLevel(request, response) {
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		errors,
-		pageContent
+		pageContent: {
+			...pageContent,
+			backLinkUrl: preserveQueryString(request, pageContent.backLinkUrl || '')
+		}
 	});
 }
 
@@ -108,7 +125,10 @@ export function postAllocationLevel(request, response) {
 	}
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-specialisms`
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-specialisms`
+		)
 	);
 }
 
@@ -132,7 +152,10 @@ export async function renderAllocationSpecialisms(request, response) {
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		errors,
-		pageContent
+		pageContent: {
+			...pageContent,
+			backLinkUrl: preserveQueryString(request, pageContent.backLinkUrl || '')
+		}
 	});
 }
 
@@ -144,15 +167,21 @@ export async function renderAllocationSpecialisms(request, response) {
 export function postAllocationSpecialisms(request, response) {
 	const {
 		errors,
-		params: { appealId, rule6PartyId }
+		params: { appealId, rule6PartyId },
+		currentAppeal
 	} = request;
 
 	if (errors) {
 		return renderAllocationSpecialisms(request, response);
 	}
 
+	applyEditsForAppeal(request, 'acceptRule6PartyStatement', currentAppeal.appealId);
+
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/confirm`
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/confirm`
+		)
 	);
 }
 
@@ -175,9 +204,14 @@ export async function renderConfirm(request, response) {
 		rule6PartyId
 	);
 
+	clearEditsForAppeal(request, 'acceptRule6PartyStatement', currentAppeal.appealId);
+
 	return response.status(200).render('patterns/check-and-confirm-page-full-width.pattern.njk', {
 		errors,
-		pageContent
+		pageContent: {
+			...pageContent,
+			backLinkUrl: preserveQueryString(request, pageContent.backLinkUrl || '')
+		}
 	});
 }
 
