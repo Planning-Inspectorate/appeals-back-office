@@ -142,22 +142,22 @@ exports[`rule 6 party statement valid GET /confirm should render the confirm pag
                     touch of yellow. Anyone can paint. Each highlight must have it&#39;s own
                     private shadow. Don&#39;t fiddle with it all day.</div>
             </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/66816/redact">Redact<span class="govuk-visually-hidden"> Redact statement</span></a>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/99/redact">Redact<span class="govuk-visually-hidden"> Redact statement</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
             <dd class="govuk-summary-list__value">No documents</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/66816/add-document?backUrl=/rule-6-party-statement/66816/valid/confirm">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/99/add-document?backUrl=/rule-6-party-statement/99/valid/confirm">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>
             <dd class="govuk-summary-list__value">Accept statement</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/66816">Change<span class="govuk-visually-hidden"> review decision</span></a>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/99">Change<span class="govuk-visually-hidden"> review decision</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you need to update the allocation level and specialisms?</dt>
             <dd             class="govuk-summary-list__value">No</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule6Party-statement/valid/allocation-check">Change<span class="govuk-visually-hidden"> allocation level and specialisms</span></a>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/99/valid/allocation-check">Change<span class="govuk-visually-hidden"> allocation level and specialisms</span></a>
                 </dd>
         </div>
     </dl>

@@ -14,9 +14,16 @@ import { newLine2LineBreak } from '#lib/string-utilities.js';
  * @param {Representation} rule6PartyStatement
  * @param {import('#lib/api/allocation-details.api.js').AllocationDetailsSpecialism[]} specialismData
  * @param {SessionWithAuth & { acceptRule6PartyStatement?: { [key: number]: { allocationLevelAndSpecialisms: string, allocationLevel: string, allocationSpecialisms: string[], forcedAllocation: boolean } } }} session
+ * @param {string} rule6PartyId
  * @returns {PageContent}
  * */
-export const confirmPage = (appealDetails, rule6PartyStatement, specialismData, session) => {
+export const confirmPage = (
+	appealDetails,
+	rule6PartyStatement,
+	specialismData,
+	session,
+	rule6PartyId
+) => {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 	const sessionData = session.acceptRule6PartyStatement?.[appealDetails.appealId];
 	const updatingAllocation = sessionData?.allocationLevelAndSpecialisms === 'yes';
@@ -77,7 +84,7 @@ export const confirmPage = (appealDetails, rule6PartyStatement, specialismData, 
 						actions: {
 							items: [
 								{
-									href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyStatement.id}/redact`,
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/redact`,
 									text: 'Redact',
 									visuallyHiddenText: 'Redact statement'
 								}
@@ -93,14 +100,14 @@ export const confirmPage = (appealDetails, rule6PartyStatement, specialismData, 
 									? [
 											{
 												text: 'Manage',
-												href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyStatement.id}/manage-documents/${folderId}?backUrl=/rule-6-party-statement/${rule6PartyStatement.id}/valid/confirm`,
+												href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/manage-documents/${folderId}?backUrl=/rule-6-party-statement/${rule6PartyId}/valid/confirm`,
 												visuallyHiddenText: 'supporting documents'
 											}
 										]
 									: []),
 								{
 									text: 'Add',
-									href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyStatement.id}/add-document?backUrl=/rule-6-party-statement/${rule6PartyStatement.id}/valid/confirm`,
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/add-document?backUrl=/rule-6-party-statement/${rule6PartyId}/valid/confirm`,
 									visuallyHiddenText: 'supporting documents'
 								}
 							]
@@ -113,7 +120,7 @@ export const confirmPage = (appealDetails, rule6PartyStatement, specialismData, 
 							items: [
 								{
 									text: 'Change',
-									href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyStatement.id}`,
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}`,
 									visuallyHiddenText: 'review decision'
 								}
 							]
@@ -129,7 +136,7 @@ export const confirmPage = (appealDetails, rule6PartyStatement, specialismData, 
 										items: [
 											{
 												text: 'Change',
-												href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule6Party-statement/valid/allocation-check`,
+												href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-check`,
 												visuallyHiddenText: 'allocation level and specialisms'
 											}
 										]
@@ -145,7 +152,7 @@ export const confirmPage = (appealDetails, rule6PartyStatement, specialismData, 
 										items: [
 											{
 												text: 'Change',
-												href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule6Party-statement/valid/allocation-level`,
+												href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-level`,
 												visuallyHiddenText: 'allocation level'
 											}
 										]
@@ -165,7 +172,7 @@ export const confirmPage = (appealDetails, rule6PartyStatement, specialismData, 
 										items: [
 											{
 												text: 'Change',
-												href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule6Party-statement/valid/allocation-specialisms`,
+												href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-specialisms`,
 												visuallyHiddenText: 'allocation specialisms'
 											}
 										]
@@ -182,7 +189,7 @@ export const confirmPage = (appealDetails, rule6PartyStatement, specialismData, 
 
 	return {
 		title: `Check details and accept ${rule6PartyStatement.author} statement`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyStatement.id}/valid/allocation-specialisms`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-specialisms`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: `Check details and accept ${rule6PartyStatement.author} statement`,
 		submitButtonProperties: {
