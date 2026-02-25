@@ -4,10 +4,12 @@ import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.
 
 /**
  * @param {import('../appeal-details.types.js').WebAppeal} appealData
+ * @param {string} backLinkUrl
  * @param {string|undefined} errorMessage
+ * @param {Record<string, string>} [values]
  * @returns {PageContent}
  */
-export function mapCancelAppealPage(appealData, errorMessage) {
+export function mapCancelAppealPage(appealData, backLinkUrl, errorMessage, values) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const showEnforcementOptions =
 		appealData.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
@@ -16,7 +18,7 @@ export function mapCancelAppealPage(appealData, errorMessage) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Why are you cancelling the appeal?`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference} - cancel appeal`,
 		pageComponents: [
 			{
@@ -31,6 +33,7 @@ export function mapCancelAppealPage(appealData, errorMessage) {
 							classes: 'govuk-fieldset__legend--l'
 						}
 					},
+					value: values?.cancelReasonRadio,
 					items: [
 						{
 							value: 'invalid',

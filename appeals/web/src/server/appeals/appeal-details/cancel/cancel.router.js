@@ -3,7 +3,7 @@ import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controller from './cancel.controller.js';
 import { validateCancelReason } from './cancel.validators.js';
-import enforcementRouter from './enforcement/cancel-enforcement.router.js';
+import invalidRouter from './invalid/cancel-invalid.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -16,6 +16,6 @@ router
 		asyncHandler(controller.postCancelAppeal)
 	);
 
-router.use('/enforcement', enforcementRouter);
+router.use('/invalid', invalidRouter);
 
 export default router;
