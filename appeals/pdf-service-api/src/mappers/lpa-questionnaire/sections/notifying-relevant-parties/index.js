@@ -1,6 +1,9 @@
-import { formatDocumentData, formatList } from '../../../lib/nunjucks-filters/index.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { formatDocumentData, formatList } from '../../../../lib/nunjucks-filters/index.js';
 
 export function notifyingRelevantPartiesSection(templateData) {
+	if (templateData.appealType === APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE) return;
+
 	const { lpaNotificationMethods } = templateData;
 
 	const {

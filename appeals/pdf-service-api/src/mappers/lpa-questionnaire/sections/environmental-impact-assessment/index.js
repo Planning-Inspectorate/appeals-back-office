@@ -4,7 +4,7 @@ import {
 	formatSentenceCase,
 	formatYesNo,
 	formatYesNoDetails
-} from '../../../lib/nunjucks-filters/index.js';
+} from '../../../../lib/nunjucks-filters/index.js';
 
 export function environmentalImpactAssessmentSection(templateData) {
 	const {
