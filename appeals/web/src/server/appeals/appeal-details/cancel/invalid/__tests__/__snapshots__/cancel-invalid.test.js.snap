@@ -1,6 +1,69 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`cancel enforcement GET /invalid should pre-select previously submitted values 1`] = `
+exports[`cancel invalid GET /check-details should render the check details page with the correct content 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and mark appeal as invalid</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Why are you cancelling the appeal?</dt>
+                    <dd                     class="govuk-summary-list__value">Appeal invalid</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/cancel?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F5623%2Fcancel">Change <span class="govuk-visually-hidden">Why are you cancelling the appeal?</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Why is the appeal invalid?</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">
+                            <ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet">
+                                <li>Appeal has not been submitted on time</li>
+                                <li>Other reason: Eminently legitimate reason</li>
+                            </ul>
+                        </div>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/cancel/invalid/reason?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F5623%2Fcancel%2Finvalid%2Freason">Change <span class="govuk-visually-hidden">Why is the appeal invalid?</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Are there any other live appeals against the enforcement notice?</dt>
+                    <dd                     class="govuk-summary-list__value">Yes</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/cancel/invalid/other-live-appeals?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F5623%2Fcancel%2Finvalid%2Fother-live-appeals">Change <span class="govuk-visually-hidden">Are there any other live appeals against the enforcement notice?</span></a>
+                        </dd>
+                </div>
+            </dl>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <details class="govuk-details">
+                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                        </summary>
+                        <div class="govuk-details__text"></div>
+                    </details>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <details class="govuk-details">
+                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
+                        </summary>
+                        <div class="govuk-details__text"></div>
+                    </details>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Mark appeal as invalid</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`cancel invalid GET /invalid/reason should pre-select previously submitted values 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
@@ -59,7 +122,7 @@ exports[`cancel enforcement GET /invalid should pre-select previously submitted 
 </main>"
 `;
 
-exports[`cancel enforcement GET /invalid should render the invalid reasons page with the correct radio components 1`] = `
+exports[`cancel invalid GET /invalid/reason should render the invalid reasons page with the correct radio components 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
@@ -119,10 +182,11 @@ exports[`cancel enforcement GET /invalid should render the invalid reasons page 
 </main>"
 `;
 
-exports[`cancel enforcement GET /legal-interest should pre-select previously submitted values 1`] = `
+exports[`cancel invalid GET /other-live-appeals should pre-select the previously submitted value 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Are there any other live appeals against the enforcement notice?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -131,23 +195,18 @@ exports[`cancel enforcement GET /legal-interest should pre-select previously sub
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Did the appellant send any information about their legal interest in the land?</h1>
-                                </legend>
-                                <div class="govuk-radios" id="legal-interest" data-module="govuk-radios">
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="legal-interest" name="legalInterest"
-                                        type="radio" value="yes" checked>
-                                        <label class="govuk-label govuk-radios__label" for="legal-interest">Yes</label>
-                                    </div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="legal-interest-2" name="legalInterest"
-                                        type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="legal-interest-2">No</label>
-                                    </div>
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="otherLiveAppeals" name="otherLiveAppeals"
+                                    type="radio" value="yes" checked>
+                                    <label class="govuk-label govuk-radios__label" for="otherLiveAppeals">Yes</label>
                                 </div>
-                            </fieldset>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="otherLiveAppeals-2" name="otherLiveAppeals"
+                                    type="radio" value="no">
+                                    <label class="govuk-label govuk-radios__label" for="otherLiveAppeals-2">No</label>
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -159,10 +218,11 @@ exports[`cancel enforcement GET /legal-interest should pre-select previously sub
 </main>"
 `;
 
-exports[`cancel enforcement GET /legal-interest should render the legal interest page with the correct radio components 1`] = `
+exports[`cancel invalid GET /other-live-appeals should render the other live appeals page with the correct radio components 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Are there any other live appeals against the enforcement notice?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -171,23 +231,18 @@ exports[`cancel enforcement GET /legal-interest should render the legal interest
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Did the appellant send any information about their legal interest in the land?</h1>
-                                </legend>
-                                <div class="govuk-radios" id="legal-interest" data-module="govuk-radios">
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="legal-interest" name="legalInterest"
-                                        type="radio" value="yes">
-                                        <label class="govuk-label govuk-radios__label" for="legal-interest">Yes</label>
-                                    </div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="legal-interest-2" name="legalInterest"
-                                        type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="legal-interest-2">No</label>
-                                    </div>
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="otherLiveAppeals" name="otherLiveAppeals"
+                                    type="radio" value="yes">
+                                    <label class="govuk-label govuk-radios__label" for="otherLiveAppeals">Yes</label>
                                 </div>
-                            </fieldset>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="otherLiveAppeals-2" name="otherLiveAppeals"
+                                    type="radio" value="no">
+                                    <label class="govuk-label govuk-radios__label" for="otherLiveAppeals-2">No</label>
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -199,7 +254,7 @@ exports[`cancel enforcement GET /legal-interest should render the legal interest
 </main>"
 `;
 
-exports[`cancel enforcement POST /invalid should re-render the page with errors if no reason selected 1`] = `
+exports[`cancel invalid POST /invalid/reason should re-render the page with errors if no reason selected 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -278,7 +333,7 @@ exports[`cancel enforcement POST /invalid should re-render the page with errors 
 </main>"
 `;
 
-exports[`cancel enforcement POST /invalid should re-render the page with errors if no text provided for other 1`] = `
+exports[`cancel invalid POST /invalid/reason should re-render the page with errors if no text provided for other 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -354,7 +409,7 @@ exports[`cancel enforcement POST /invalid should re-render the page with errors 
 </main>"
 `;
 
-exports[`cancel enforcement POST /legal-interest should re-render the page with errors if no option selected 1`] = `
+exports[`cancel invalid POST /other-live-appeals should re-render the page with errors if no value selected 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -363,7 +418,7 @@ exports[`cancel enforcement POST /legal-interest should re-render the page with 
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#legal-interest">Select yes if the appellant sent any information about their legal interest in the land</a>
+                            <li><a href="#other-live-appeals">Select yes if there are any other live appeals against the enforcement notice</a>
                             </li>
                         </ul>
                     </div>
@@ -373,6 +428,7 @@ exports[`cancel enforcement POST /legal-interest should re-render the page with 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Are there any other live appeals against the enforcement notice?</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -381,26 +437,21 @@ exports[`cancel enforcement POST /legal-interest should re-render the page with 
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
-                            <fieldset class="govuk-fieldset" aria-describedby="legal-interest-error">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Did the appellant send any information about their legal interest in the land?</h1>
-                                </legend>
-                                <p id="legal-interest-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select yes if the appellant
-                                    sent any information about their legal interest in the land</p>
-                                <div class="govuk-radios"
-                                id="legal-interest" data-module="govuk-radios">
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="legal-interest" name="legalInterest"
-                                        type="radio" value="yes">
-                                        <label class="govuk-label govuk-radios__label" for="legal-interest">Yes</label>
-                                    </div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="legal-interest-2" name="legalInterest"
-                                        type="radio" value="no">
-                                        <label class="govuk-label govuk-radios__label" for="legal-interest-2">No</label>
-                                    </div>
+                            <p id="otherLiveAppeals-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select yes if there are
+                                any other live appeals against the enforcement notice</p>
+                            <div class="govuk-radios"
+                            data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="otherLiveAppeals" name="otherLiveAppeals"
+                                    type="radio" value="yes">
+                                    <label class="govuk-label govuk-radios__label" for="otherLiveAppeals">Yes</label>
                                 </div>
-                            </fieldset>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="otherLiveAppeals-2" name="otherLiveAppeals"
+                                    type="radio" value="no">
+                                    <label class="govuk-label govuk-radios__label" for="otherLiveAppeals-2">No</label>
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>

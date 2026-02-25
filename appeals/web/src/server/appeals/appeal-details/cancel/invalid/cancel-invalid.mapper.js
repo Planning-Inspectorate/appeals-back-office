@@ -69,34 +69,23 @@ export const invalidReasonPage = (appeal, reasonOptions, backLinkUrl, values = {
 };
 
 /**
- * @param {Appeal} appeal
+ * @param {Appeal} appealDetails
  * @param {string} backLinkUrl
  * @param {Record<string, string>} [values]
  * @param {import('@pins/express').ValidationErrors} [errors]
  * @returns {PageContent}
- */
-export const legalInterestPage = (appeal, backLinkUrl, values = {}, errors) => {
-	const shortAppealReference = appealShortReference(appeal.appealReference);
-
-	/** @type {PageContent} */
-	const pageContent = {
-		title: 'Did the appellant send any information about their legal interest in the land?',
-		backLinkUrl,
-		preHeading: `Appeal ${shortAppealReference}`,
-		pageComponents: [
-			yesNoInput({
-				name: 'legalInterest',
-				value: values['legalInterest'],
-				legendText:
-					'Did the appellant send any information about their legal interest in the land?',
-				legendIsPageHeading: true,
-				errorMessage: errors?.legalInterest?.msg,
-				attributes: {
-					id: 'legal-interest'
-				}
-			})
-		]
-	};
-
-	return pageContent;
-};
+ * */
+export const otherLiveAppealsPage = (appealDetails, backLinkUrl, values, errors) => ({
+	title: 'Are there any other live appeals against the enforcement notice',
+	backLinkUrl,
+	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
+	heading: 'Are there any other live appeals against the enforcement notice?',
+	pageComponents: [
+		yesNoInput({
+			name: 'otherLiveAppeals',
+			id: 'otherLiveAppeals',
+			value: values?.otherLiveAppeals,
+			errorMessage: errors?.otherLiveAppeals?.msg
+		})
+	]
+});
