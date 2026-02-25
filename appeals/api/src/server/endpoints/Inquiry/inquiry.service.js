@@ -5,8 +5,8 @@ import { notifySend } from '#notify/notify-send.js';
 import inquiryRepository from '#repositories/inquiry.repository.js';
 import transitionState from '#state/transition-state.js';
 import { databaseConnector } from '#utils/database-connector.js';
-import logger from '#utils/logger.js';
 import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
+import logger from '#utils/logger.js';
 import { trimAppealType } from '#utils/string-utils.js';
 import { EVENT_TYPE, PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/common.js';
 import {
