@@ -22,9 +22,9 @@ describe('Manually Add a rep', () => {
 
 	let appeal;
 
-	afterEach(() => {
-		cy.deleteAppeals(appeal);
-	});
+	// afterEach(() => {
+	// 	cy.deleteAppeals(appeal);
+	// });
 
 	let sampleFiles = caseDetailsPage.sampleFiles;
 	it('Manually Add LPA Statement', () => {
@@ -41,7 +41,7 @@ describe('Manually Add a rep', () => {
 			);
 			//Elapse Deadline and Manually add rep
 			cy.simulateStatementsDeadlineElapsed(caseObj);
-			documentationSectionPage.selectAddDocument();
+			documentationSectionPage.addDocumentFromRow('LPA statement');
 			uploadMannuallyAddRep();
 			caseDetailsPage.validateBannerMessage('Success', 'LPA statement added');
 			caseDetailsPage.clickBackLink();
@@ -49,13 +49,14 @@ describe('Manually Add a rep', () => {
 				'documentation',
 				'Status',
 				'LPA statement',
-				'Shared'
+				'Accepted'
 			);
+			caseDetailsPage.shareIpAndLpaComments();
 			caseDetailsPage.verifyDocumentationValue(
 				'documentation',
-				'Action',
+				'Status',
 				'LPA statement',
-				'View LPA statement'
+				'Shared'
 			);
 		});
 	});
@@ -74,7 +75,7 @@ describe('Manually Add a rep', () => {
 			);
 			//Elapse Deadline and Manually add rep
 			cy.simulateStatementsDeadlineElapsed(caseObj);
-			caseDetailsPage.clickAddIpComments();
+			documentationSectionPage.addDocumentFromRow('Interested party comments');
 			caseDetailsPage.fillInput('Test', 0);
 			caseDetailsPage.fillInput('Test', 1);
 			caseDetailsPage.clickButtonByText('Continue');
@@ -118,7 +119,7 @@ describe('Manually Add a rep', () => {
 			);
 			//Elapse Deadline and Manually add rep
 			cy.simulateFinalCommentsDeadlineElapsed(caseObj);
-			caseDetailsPage.clickAddLpaFinalComments();
+			documentationSectionPage.addDocumentFromRow('LPA final comments');
 			uploadMannuallyAddRep();
 			caseDetailsPage.validateBannerMessage('Success', 'LPA final comments added');
 			caseDetailsPage.clickBackLink();
@@ -126,13 +127,20 @@ describe('Manually Add a rep', () => {
 				'documentation',
 				'Status',
 				'LPA final comments',
-				'Shared'
+				'Accepted'
 			);
 			caseDetailsPage.verifyDocumentationValue(
 				'documentation',
 				'Action',
 				'LPA final comments',
 				'View LPA final comments'
+			);
+			caseDetailsPage.shareFinalComments();
+			caseDetailsPage.verifyDocumentationValue(
+				'documentation',
+				'Status',
+				'LPA final comments',
+				'Shared'
 			);
 		});
 	});
@@ -151,22 +159,29 @@ describe('Manually Add a rep', () => {
 			);
 			//Elapse Deadline and Manually add rep
 			cy.simulateFinalCommentsDeadlineElapsed(caseObj);
-			caseDetailsPage.clickAddLpaFinalComments();
+			documentationSectionPage.addDocumentFromRow('Appellant final comments');
 			fileUploader.uploadFiles(sampleFiles.document2);
 			uploadMannuallyAddRep();
-			caseDetailsPage.validateBannerMessage('Success', 'LPA final comments added');
+			caseDetailsPage.validateBannerMessage('Success', 'Appellant final comments added');
 			caseDetailsPage.clickBackLink();
 			caseDetailsPage.verifyDocumentationValue(
 				'documentation',
 				'Status',
-				'LPA final comments',
-				'Shared'
+				'Appellant final comments',
+				'Accepted'
 			);
 			caseDetailsPage.verifyDocumentationValue(
 				'documentation',
 				'Action',
-				'LPA final comments',
-				'View LPA final comments'
+				'Appellant final comments',
+				'View Appellant final comments'
+			);
+			caseDetailsPage.shareFinalComments();
+			caseDetailsPage.verifyDocumentationValue(
+				'documentation',
+				'Status',
+				'Appellant final comments',
+				'Shared'
 			);
 		});
 	});

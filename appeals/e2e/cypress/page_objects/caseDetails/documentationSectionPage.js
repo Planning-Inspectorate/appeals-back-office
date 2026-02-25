@@ -23,4 +23,14 @@ export class DocumentationSectionPage extends CaseDetailsPage {
 		this.verifyExpectedFieldDocumentSection(`${rule6PartyName} statement`);
 		this.verifyExpectedFieldDocumentSection(`${rule6PartyName} proof of evidence and witness`);
 	}
+
+	addDocumentFromRow(documentName) {
+		cy.get('#case-documentation-table')
+			.find('tr')
+			.filter((_, tr) => tr.innerText.includes(documentName))
+			.first()
+			.within(() => {
+				cy.contains('a', 'Add').click();
+			});
+	}
 }

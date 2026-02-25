@@ -140,7 +140,8 @@ describe('related appeals', () => {
 					caseObjToLink,
 					'ASSIGN_CASE_OFFICER',
 					'EVENT_READY_TO_SETUP',
-					'S78'
+					'S78',
+					'HEARING'
 				);
 				caseDetailsPage.checkStatusOfCase('Hearing ready to set up', 0);
 				//related appeal in validation status
