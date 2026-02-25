@@ -9,6 +9,7 @@ describe('valid-at.mapper', () => {
 			appealDetails: {
 				caseOfficer: 'case-officer'
 			},
+			appellantCase: {},
 			userHasUpdateCasePermission: true
 		};
 	});
@@ -105,11 +106,8 @@ describe('valid-at.mapper', () => {
 		});
 	});
 
-	it('should contain a valid date and no action link', () => {
-		data.appealDetails.validAt = '2025-01-01';
-		data.appealDetails.startedAt = '2025-01-01';
-		const mappedData = mapValidAt(data);
-		expect(mappedData).toEqual({
+	describe('should contain a valid date and no action link', () => {
+		const expectedMappedData = {
 			display: {
 				summaryListItem: {
 					actions: {
@@ -134,6 +132,20 @@ describe('valid-at.mapper', () => {
 				}
 			},
 			id: 'valid-date'
+		};
+
+		it('when appeal is started', () => {
+			data.appealDetails.validAt = '2025-01-01';
+			data.appealDetails.startedAt = '2025-01-01';
+			const mappedData = mapValidAt(data);
+			expect(mappedData).toEqual(expectedMappedData);
+		});
+
+		it('when appeal has not started, but appeal is an enforcement child', () => {
+			data.appealDetails.validAt = '2025-01-01';
+			data.appellantCase.isEnforcementChild = true;
+			const mappedData = mapValidAt(data);
+			expect(mappedData).toEqual(expectedMappedData);
 		});
 	});
 });
