@@ -318,6 +318,18 @@ describe('rule 6 party statement valid', () => {
 			expect(innerHTML).toMatchSnapshot();
 
 			expect(innerHTML).toContain('Check details and accept Test Organisation statement</h1>');
+			expect(innerHTML).toContain(
+				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/redact"`
+			);
+			expect(innerHTML).toContain(
+				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/add-document?backUrl=/rule-6-party-statement/${rule6PartyId}/valid/confirm"`
+			);
+			expect(innerHTML).toContain(
+				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}"`
+			);
+			expect(innerHTML).toContain(
+				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-check"`
+			);
 			expect(innerHTML).toContain('Accept statement</button>');
 		});
 	});

@@ -166,7 +166,14 @@ export async function renderConfirm(request, response) {
 
 	const specialisms = await api.getAllocationDetailsSpecialisms(request.apiClient);
 
-	const pageContent = confirmPage(currentAppeal, currentRepresentation, specialisms, session);
+	const { rule6PartyId } = request.params;
+	const pageContent = confirmPage(
+		currentAppeal,
+		currentRepresentation,
+		specialisms,
+		session,
+		rule6PartyId
+	);
 
 	return response.status(200).render('patterns/check-and-confirm-page-full-width.pattern.njk', {
 		errors,
