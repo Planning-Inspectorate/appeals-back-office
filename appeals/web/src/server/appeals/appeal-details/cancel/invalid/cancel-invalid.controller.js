@@ -11,8 +11,10 @@ import {
 	editLink,
 	getSessionValuesForAppeal
 } from '#lib/edit-utilities.js';
+import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
@@ -262,7 +264,57 @@ export const getCheckDetails = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postCheckDetails = async (request, response) => {
-	// TODO: Implement postCheckDetails
+	try {
+		const {
+			currentAppeal,
+			params: { appealId }
+		} = request;
 
-	return response.status(500).render('app/500.njk');
+		const sessionValues = /** @type {Record<string, any>} */ (
+			getSessionValuesForAppeal(request, 'cancelAppeal', currentAppeal.appealId)
+		);
+		const invalidReasonIds = /** @type {string[]} */ (sessionValues.invalidReason);
+
+		const invalidReasons = invalidReasonIds.map((reason) => {
+			const reasonText = sessionValues[`invalidReason-${reason}`];
+			return {
+				id: Number(reason),
+				...(reasonText && { text: [String(reasonText)] })
+			};
+		});
+
+		/** @type {import('#appeals/appeal-details/appellant-case/appellant-case.types.js').AppellantCaseValidationOutcomeRequest} */
+		const reviewOutcome = {
+			validationOutcome: 'invalid',
+			invalidReasons,
+			otherLiveAppeals: String(sessionValues.otherLiveAppeals)
+		};
+
+		await appellantCaseService.setReviewOutcomeForAppellantCase(
+			request.apiClient,
+			appealId,
+			currentAppeal.appellantCaseId,
+			reviewOutcome
+		);
+
+		delete request.session.cancelAppeal;
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'appellantCaseInvalidOrIncomplete',
+			appealId: currentAppeal.appealId,
+			text: `Appeal marked as invalid`
+		});
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when completing appellant case review'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
 };
