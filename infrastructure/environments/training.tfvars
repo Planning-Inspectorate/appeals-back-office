@@ -50,6 +50,7 @@ apps_config = {
     featureFlagSearchCaseOfficer        = true
     featureFlagEnforcementNotice        = true
     featureFlagEnforcementLinked        = false
+    featureFlagEnforcementLeadCanStart  = false
     featureFlagEnforcementCancel        = false
     featureFlagInvalidDecisionLetter    = false
     featureFlagRule6Mvp                 = true

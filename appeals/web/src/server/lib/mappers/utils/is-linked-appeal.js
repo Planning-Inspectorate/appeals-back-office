@@ -55,3 +55,22 @@ export function isAwaitingLinkedAppeal(appeal) {
 		appeal.awaitingLinkedAppeal && isLinkedAppealsActive({ ...rest, type: type || appealType })
 	);
 }
+
+/**
+ * This helper function is primarily here to prevent enforcement notice linked appeals from being able to start in the initial release
+ * @param {*} appeal
+ * @returns {boolean}
+ */
+export function canStartAppeal(appeal) {
+	if (config.featureFlags.featureFlagEnforcementLeadCanStart) {
+		return true;
+	}
+
+	// If it's not a parent appeal (or linked appeals aren't active), we can start.
+	if (!isParentAppeal(appeal)) {
+		return true;
+	}
+
+	// Only block start for Enforcement Notice parent appeals.
+	return appeal?.appealType !== APPEAL_TYPE.ENFORCEMENT_NOTICE;
+}
