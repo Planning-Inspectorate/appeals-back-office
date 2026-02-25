@@ -332,4 +332,33 @@ describe('cancel invalid', () => {
 			// TODO: test for the notify previews
 		});
 	});
+
+	describe('POST /check-details', () => {
+		beforeEach(async () => {
+			nock('http://test/')
+				.get(`/appeals/${mockAppealId}?include=all`)
+				.reply(200, appealDataEnforcementNotice)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/appellant-case-invalid-reasons')
+				.reply(200, appellantCaseInvalidReasonsRealIds)
+				.persist();
+			nock('http://test/').patch(`/appeals/${mockAppealId}/appellant-cases/0`).reply(200);
+		});
+
+		it('should redirect to the appeal details page on success', async () => {
+			await request.post(`${baseUrl}/${mockAppealId}/cancel/invalid/reason`).send({
+				invalidReason: ['1', '4'],
+				'invalidReason-4': 'Eminently legitimate reason'
+			});
+			await request.post(`${baseUrl}/${mockAppealId}/cancel/invalid/other-live-appeals`).send({
+				otherLiveAppeals: 'yes'
+			});
+			const response = await request.post(
+				`${baseUrl}/${mockAppealId}/cancel/invalid/check-details`
+			);
+			expect(response.status).toBe(302);
+			expect(response.headers.location).toBe(`${baseUrl}/${mockAppealId}`);
+		});
+	});
 });
