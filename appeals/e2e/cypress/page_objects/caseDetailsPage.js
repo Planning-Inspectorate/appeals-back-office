@@ -454,6 +454,10 @@ export class CaseDetailsPage extends Page {
 		this.elements.addLpaStatement().click();
 	}
 
+	clickAddLpaWithdrawal() {
+		this.elements.addLpaWithdrawal().click();
+	}
+
 	clickAddIpComments() {
 		this.elements.addIpComments().click();
 	}
@@ -948,6 +952,11 @@ export class CaseDetailsPage extends Page {
 	shareIpAndLpaComments() {
 		this.basePageElements.bannerLink().click();
 		this.clickButtonByText('Confirm');
+	}
+
+	shareFinalComments() {
+		this.basePageElements.bannerLink().click();
+		this.clickButtonByText('Share final comments');
 	}
 
 	verifyTimeTableRows = (expectedRows) => {
