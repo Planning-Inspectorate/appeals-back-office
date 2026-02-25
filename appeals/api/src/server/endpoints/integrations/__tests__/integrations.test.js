@@ -12,6 +12,7 @@ import {
 	appealIngestionInputS78,
 	appealIngestionInputS78Written,
 	docIngestionInput,
+	generateMockDocuments,
 	validAppellantCase,
 	validAppellantCaseAdverts,
 	validAppellantCaseCasAdverts,
@@ -480,24 +481,17 @@ describe('/appeals/lpaq-submission', () => {
 						}
 					]
 				});
-				expect(databaseConnector.document.update).toHaveBeenCalledTimes(2);
-				expect(databaseConnector.document.update).toHaveBeenNthCalledWith(1, {
+				expect(databaseConnector.document.updateMany).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.document.updateMany).toHaveBeenNthCalledWith(1, {
 					data: {
 						latestVersionId: 1
 					},
 					where: {
-						guid: expect.any(String)
+						guid: {
+							in: [expect.any(String), expect.any(String)]
+						}
 					}
 				});
-				expect(databaseConnector.document.update).toHaveBeenNthCalledWith(2, {
-					data: {
-						latestVersionId: 1
-					},
-					where: {
-						guid: expect.any(String)
-					}
-				});
-
 				expect(databaseConnector.documentVersion.findMany).toHaveBeenCalledWith({
 					where: {
 						documentGuid: {
@@ -535,6 +529,37 @@ describe('/appeals/lpaq-submission', () => {
 				expect(response.body).toEqual({ id: 100, reference: '6000100' });
 			}
 		);
+
+		test('large document list gets split into batches', async () => {
+			const ingestion = validLpaQuestionnaireIngestionHas;
+			const questionnaire = {
+				...validLpaQuestionnaireHas,
+				documents: generateMockDocuments(101, 'lpaCostsApplication')
+			};
+
+			databaseConnector.appeal.update.mockResolvedValue(ingestion);
+			// @ts-ignore-next-line
+
+			createIntegrationMocks({
+				folders: {
+					create: FOLDERS.map((/** @type {{ path: string; }} */ f) => {
+						return { path: f };
+					})
+				}
+			});
+
+			const payload = questionnaire;
+			const response = await request.post('/appeals/lpaq-submission').send(payload);
+
+			expect(databaseConnector.folder.findMany).toHaveBeenCalledWith({ where: { caseId: 100 } });
+			expect(databaseConnector.document.createMany).toHaveBeenCalledTimes(2);
+			expect(databaseConnector.documentVersion.createMany).toHaveBeenCalledTimes(2);
+			expect(databaseConnector.document.updateMany).toHaveBeenCalledTimes(2);
+			expect(databaseConnector.documentVersion.findMany).toHaveBeenCalledTimes(2);
+
+			expect(response.status).toEqual(201);
+			expect(response.body).toEqual({ id: 100, reference: '6000100' });
+		});
 	});
 });
 

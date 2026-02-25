@@ -14,12 +14,6 @@ jest.resetModules();
 const mockCreateAuditTrail = jest.fn().mockResolvedValue(undefined);
 const mockNotifySend = jest.fn().mockResolvedValue(true);
 
-jest.unstable_mockModule('#endpoints/integrations/integrations.broadcasters.js', () => ({
-	broadcasters: {
-		broadcastAppeal: jest.fn().mockResolvedValue(true)
-	}
-}));
-
 jest.unstable_mockModule('#endpoints/audit-trails/audit-trails.service.js', () => ({
 	createAuditTrail: mockCreateAuditTrail
 }));
@@ -462,6 +456,12 @@ describe('appeal linked appeals routes', () => {
 									childId: mockAppealA.id,
 									childRef: mockAppealA.reference,
 									child: { ...mockAppealA, appellantCase: {} }
+								},
+								{
+									type: CASE_RELATIONSHIP_LINKED,
+									childId: mockAppealB.id,
+									childRef: mockAppealB.reference,
+									child: { ...mockAppealB, appellantCase: {} }
 								}
 							]
 						});
@@ -485,7 +485,7 @@ describe('appeal linked appeals routes', () => {
 							}
 						});
 
-						expect(databaseConnector.appealRelationship.create).toHaveBeenCalledTimes(1);
+						expect(databaseConnector.appealRelationship.create).toHaveBeenCalledTimes(2);
 						expect(databaseConnector.appealRelationship.create).toHaveBeenCalledWith({
 							data: {
 								childId: householdAppeal.id,
@@ -495,6 +495,20 @@ describe('appeal linked appeals routes', () => {
 								type: CASE_RELATIONSHIP_LINKED
 							}
 						});
+						expect(databaseConnector.appealRelationship.create).toHaveBeenCalledWith({
+							data: {
+								childId: mockAppealB.id,
+								childRef: mockAppealB.reference,
+								parentId: mockAppealA.id,
+								parentRef: mockAppealA.reference,
+								type: CASE_RELATIONSHIP_LINKED
+							}
+						});
+
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(3);
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(householdAppeal.id);
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealA.id);
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealB.id);
 
 						expect(mockCreateAuditTrail).toHaveBeenCalledWith(
 							expect.objectContaining({
@@ -610,6 +624,11 @@ describe('appeal linked appeals routes', () => {
 							}
 						});
 
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(2);
+
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(householdAppeal.id);
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealA.id);
+
 						expect(mockCreateAuditTrail).toHaveBeenCalledTimes(2);
 						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
 							1,
@@ -695,6 +714,11 @@ describe('appeal linked appeals routes', () => {
 								type: CASE_RELATIONSHIP_LINKED
 							}
 						});
+
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(3);
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(householdAppeal.id);
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealA.id);
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealB.id);
 
 						expect(mockCreateAuditTrail).toHaveBeenCalledTimes(3);
 						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
