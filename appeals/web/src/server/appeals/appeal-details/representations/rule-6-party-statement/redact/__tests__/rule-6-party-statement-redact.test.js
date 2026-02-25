@@ -456,7 +456,7 @@ describe('rule 6 party statement redact', () => {
 			expect(innerHTML).toContain('Supporting documents</dt>');
 			expect(innerHTML).toContain('Review decision</dt>');
 			expect(innerHTML).toContain(
-				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/redact"`
+				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/redact?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F${appealId}%2Frule-6-party-statement%2F${rule6PartyId}%2Fredact"`
 			);
 			expect(innerHTML).toContain(
 				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/add-document?backUrl=/rule-6-party-statement/${rule6PartyId}/redact/confirm"`
@@ -465,7 +465,7 @@ describe('rule 6 party statement redact', () => {
 				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}"`
 			);
 			expect(innerHTML).toContain(
-				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/redact/allocation-check"`
+				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/redact/allocation-check?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F${appealId}%2Frule-6-party-statement%2F${rule6PartyId}%2Fredact%2Fallocation-check"`
 			);
 			expect(innerHTML).toContain('Redact and accept statement');
 		});

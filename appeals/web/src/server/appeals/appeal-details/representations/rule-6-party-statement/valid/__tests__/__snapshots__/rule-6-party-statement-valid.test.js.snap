@@ -157,7 +157,7 @@ exports[`rule 6 party statement valid GET /confirm should render the confirm pag
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you need to update the allocation level and specialisms?</dt>
             <dd             class="govuk-summary-list__value">No</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/99/valid/allocation-check">Change<span class="govuk-visually-hidden"> allocation level and specialisms</span></a>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/99/valid/allocation-check?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Frule-6-party-statement%2F99%2Fvalid%2Fallocation-check">Change<span class="govuk-visually-hidden"> allocation level and specialisms</span></a>
                 </dd>
         </div>
     </dl>

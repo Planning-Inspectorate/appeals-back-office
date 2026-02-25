@@ -1,6 +1,7 @@
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { ensureArray } from '#lib/array-utilities.js';
+import { editLink } from '#lib/edit-utilities.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { newLine2LineBreak } from '#lib/string-utilities.js';
@@ -136,7 +137,9 @@ export const confirmPage = (
 										items: [
 											{
 												text: 'Change',
-												href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-check`,
+												href: editLink(
+													`/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-check`
+												),
 												visuallyHiddenText: 'allocation level and specialisms'
 											}
 										]
@@ -152,7 +155,9 @@ export const confirmPage = (
 										items: [
 											{
 												text: 'Change',
-												href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-level`,
+												href: editLink(
+													`/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-level`
+												),
 												visuallyHiddenText: 'allocation level'
 											}
 										]
@@ -172,7 +177,9 @@ export const confirmPage = (
 										items: [
 											{
 												text: 'Change',
-												href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-specialisms`,
+												href: editLink(
+													`/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-specialisms`
+												),
 												visuallyHiddenText: 'allocation specialisms'
 											}
 										]
@@ -189,7 +196,9 @@ export const confirmPage = (
 
 	return {
 		title: `Check details and accept ${rule6PartyStatement.author} statement`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-specialisms`,
+		backLinkUrl: updatingAllocation
+			? `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-specialisms`
+			: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-check`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: `Check details and accept ${rule6PartyStatement.author} statement`,
 		submitButtonProperties: {
