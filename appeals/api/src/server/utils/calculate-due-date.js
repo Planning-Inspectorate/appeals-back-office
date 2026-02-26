@@ -28,7 +28,7 @@ const approxStageCompletion = {
  */
 const isNetResidencesAppealType = (appealType) => {
 	return (
-		(isFeatureActive(FEATURE_FLAG_NAMES.NET_RESIDENCE) && appealType === APPEAL_TYPE.S78) ||
+		appealType === APPEAL_TYPE.S78 ||
 		(isFeatureActive(FEATURE_FLAG_NAMES.NET_RESIDENCE_S20) &&
 			appealType === APPEAL_TYPE.PLANNED_LISTED_BUILDING)
 	);
