@@ -25,6 +25,7 @@ import {
 	AUDIT_TRIAL_APPELLANT_UUID,
 	AUDIT_TRIAL_RULE_6_PARTY_ID
 } from '@pins/appeals/constants/support.js';
+import { isEnforcementCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
 import {
@@ -514,14 +515,6 @@ const writeDocumentAuditTrail = async (appealId, document, azureAdUserId) => {
 		await addDocumentAudit(document.documentGuid, 1, auditTrail, EventType.Create);
 	}
 };
-
-/**
- *
- * @param {string|undefined} caseType
- * @returns {boolean}
- */
-const isEnforcementCaseType = (caseType) =>
-	caseType === APPEAL_CASE_TYPE.C || caseType === APPEAL_CASE_TYPE.F;
 
 /**
  *

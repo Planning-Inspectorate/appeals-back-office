@@ -30,16 +30,13 @@ import {
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
+import { isEnforcementCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import formatDate, {
 	dateISOStringToDisplayDate,
 	formatTime12h
 } from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
-import {
-	APPEAL_CASE_PROCEDURE,
-	APPEAL_CASE_STATUS,
-	APPEAL_CASE_TYPE
-} from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
@@ -455,7 +452,6 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 	if (isLinkedAppealsActive(appeal)) {
 		await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 	}
-	await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 
 	const finalCommentsDueDate = formatDate(
 		new Date(appeal.appealTimetable?.finalCommentsDueDate || ''),
@@ -564,6 +560,7 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 				azureAdUserId
 			});
 		});
+		await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 	} catch (error) {
 		logger.error(error);
 	}
@@ -884,7 +881,7 @@ async function notifyPublished({
 }) {
 	const lpaReference = appeal.applicationReference;
 	const enforcementReference =
-		appeal.appealType?.key === APPEAL_CASE_TYPE.C && appeal.appellantCase?.enforcementReference;
+		isEnforcementCaseType(appeal.appealType?.key) && appeal.appellantCase?.enforcementReference;
 	if (!lpaReference && !enforcementReference) {
 		throw new Error(
 			`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no applicationReference or enforcementReference in appeal`

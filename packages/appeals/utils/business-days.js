@@ -14,8 +14,8 @@ import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { addBusinessDays, isAfter, isBefore, isSameDay, isWeekend, parseISO } from 'date-fns';
 import { formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
 import fetch from 'node-fetch';
+import { isExpeditedAppealType } from './appeal-type-checks.js';
 import { getCache, setCache } from './cache-data.js';
-import isExpeditedAppealType from './is-expedited-appeal-type.js';
 
 /** @typedef {import('../types/appeal.js').BankHolidayFeedEvents } BankHolidayFeedEvents */
 /** @typedef {import('../types/appeal.js').BankHolidayFeedDivisions } BankHolidayFeedDivisions */
