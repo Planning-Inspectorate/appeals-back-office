@@ -1520,9 +1520,33 @@ describe('appellant cases routes', () => {
 			});
 
 			test('updates the appellant case for invalid enforcement appeal with valid enforcement notice', async () => {
-				databaseConnector.appeal.findUnique.mockResolvedValue(
-					enforcementNoticeAppealAppellantCaseInvalid
-				);
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...enforcementNoticeAppealAppellantCaseInvalid,
+					appellantCase: {
+						...enforcementNoticeAppealAppellantCaseInvalid.appellantCase,
+						appellantCaseInvalidReasonsSelected: [
+							{
+								appellantCaseInvalidReason: {
+									name: 'Other'
+								},
+								appellantCaseInvalidReasonText: [
+									{
+										text: 'The appeal site address does not match'
+									}
+								]
+							},
+							{
+								appellantCaseInvalidReason: {
+									name: 'Appeal has not been submitted on time'
+								},
+								appellantCaseInvalidReasonText: []
+							}
+						],
+						appellantCaseValidationOutcome: {
+							name: 'Invalid'
+						}
+					}
+				});
 				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
 					appellantCaseValidationOutcomes[1]
 				);

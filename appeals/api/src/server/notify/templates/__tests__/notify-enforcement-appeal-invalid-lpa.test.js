@@ -14,7 +14,7 @@ describe('enforcement-appeal-invalid-lpa.content.md', () => {
 				appeal_reference_number: 'ABC45678',
 				site_address: '10, Test Street',
 				enforcement_reference: 'ENF-12345',
-				reasons: 'You submitted the appeal outside the allowed time period.',
+				reasons: ['You submitted the appeal outside the allowed time period.'],
 				ground_a_barred: true,
 				other_live_appeals: true,
 				effective_date: '1 January 2026',
@@ -73,7 +73,7 @@ describe('enforcement-appeal-invalid-lpa.content.md', () => {
 				appeal_reference_number: 'XYZ12345',
 				site_address: '25, Example Road',
 				enforcement_reference: 'ENF-67890',
-				reasons: 'The appellant does not have sufficient legal interest in the land.',
+				reasons: ['The appellant does not have sufficient legal interest in the land.'],
 				ground_a_barred: true,
 				other_live_appeals: false,
 				effective_date: '15 February 2026',
@@ -132,7 +132,7 @@ describe('enforcement-appeal-invalid-lpa.content.md', () => {
 				appeal_reference_number: 'DEF99999',
 				site_address: '42, Sample Avenue',
 				enforcement_reference: 'ENF-11111',
-				reasons: 'The appeal was submitted by someone who is not the appellant.',
+				reasons: ['The appeal was submitted by someone who is not the appellant.'],
 				ground_a_barred: false,
 				other_live_appeals: true,
 				effective_date: '20 March 2026',
@@ -184,7 +184,7 @@ describe('enforcement-appeal-invalid-lpa.content.md', () => {
 				appeal_reference_number: 'GHI55555',
 				site_address: '88, Main Street',
 				enforcement_reference: 'ENF-22222',
-				reasons: 'Required documents were not provided.',
+				reasons: ['Required documents were not provided.'],
 				ground_a_barred: false,
 				other_live_appeals: false,
 				effective_date: '5 April 2026',
@@ -203,6 +203,59 @@ describe('enforcement-appeal-invalid-lpa.content.md', () => {
 			'',
 			'# Why the appeal is invalid',
 			'Required documents were not provided.',
+			'',
+			'# What happens next',
+			'The appeal is now closed.',
+			'The compliance period for the enforcement notice starts from 5 April 2026.',
+			'',
+			'Planning Inspectorate',
+			'support@planninginspectorate.gov.uk'
+		].join('\n');
+
+		await notifySend(notifySendData);
+
+		expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+			{ id: 'mock-appeal-generic-id' },
+			'test@136s7.com',
+			{
+				content: expectedContent,
+				subject: 'Appeal invalid: GHI55555'
+			}
+		);
+	});
+
+	test('should call notify sendEmail with the correct content with multiple invalid reasons', async () => {
+		const notifySendData = {
+			doNotMockNotifySend: true,
+			templateName: 'enforcement-appeal-invalid-lpa',
+			notifyClient: {
+				sendEmail: jest.fn()
+			},
+			recipientEmail: 'test@136s7.com',
+			personalisation: {
+				appeal_reference_number: 'GHI55555',
+				site_address: '88, Main Street',
+				enforcement_reference: 'ENF-22222',
+				reasons: ['Required documents were not provided.', 'Other: blah'],
+				ground_a_barred: false,
+				other_live_appeals: false,
+				effective_date: '5 April 2026',
+				team_email_address: 'support@planninginspectorate.gov.uk'
+			}
+		};
+
+		const expectedContent = [
+			'We have reviewed the appeal and it is not valid.',
+			'',
+			'# Appeal details',
+			'',
+			'^Appeal reference number: GHI55555',
+			'Address: 88, Main Street',
+			'Enforcement notice reference: ENF-22222',
+			'',
+			'# Why the appeal is invalid',
+			'- Required documents were not provided.',
+			'- Other: blah',
 			'',
 			'# What happens next',
 			'The appeal is now closed.',
