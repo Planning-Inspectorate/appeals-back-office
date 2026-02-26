@@ -4,7 +4,8 @@ import { userHasPermission } from '../../utils/permissions.mapper.js';
 import { submaps as advertSubmaps } from './advert.js';
 import { submaps as casAdvertSubmaps } from './cas-advert.js';
 import { submaps as casPlanningSubmaps } from './cas-planning.js';
-import { submaps as enforcementNoticeSubmaps } from './enforcement-notice.js';
+import { submaps as enforcementListedSubmaps } from './enforcement-listed.js';
+import { submaps as enforcementSubmaps } from './enforcement.js';
 import { submaps as hasSubmaps } from './has.js';
 import { submaps as ldcSubmaps } from './ldc.js';
 import { submaps as s20Submaps } from './s20.js';
@@ -35,9 +36,9 @@ const submaps = {
 	[APPEAL_TYPE.CAS_PLANNING]: casPlanningSubmaps,
 	[APPEAL_TYPE.CAS_ADVERTISEMENT]: casAdvertSubmaps,
 	[APPEAL_TYPE.ADVERTISEMENT]: advertSubmaps,
-	[APPEAL_TYPE.ENFORCEMENT_NOTICE]: enforcementNoticeSubmaps,
+	[APPEAL_TYPE.ENFORCEMENT_NOTICE]: enforcementSubmaps,
 	[APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE]: ldcSubmaps,
-	[APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING]: enforcementNoticeSubmaps
+	[APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING]: enforcementListedSubmaps
 };
 
 /**
