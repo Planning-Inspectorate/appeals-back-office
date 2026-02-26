@@ -1,10 +1,12 @@
 // @ts-nocheck
 import {
+	advertisementAppeal,
 	casAdvertAppeal,
 	casPlanningAppeal,
 	enforcementNoticeAppeal,
 	fullPlanningAppeal,
 	householdAppeal,
+	ldcAppeal,
 	listedBuildingAppeal
 } from '#tests/appeals/mocks.js';
 import { documentCreated, documentVersionCreated, savedFolder } from '#tests/documents/mocks.js';
@@ -251,6 +253,41 @@ describe('decision routes', () => {
 				FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE,
 				'Enforcement notice',
 				'invalid'
+			],
+			[
+				'ldcAppeal',
+				'allowed',
+				'',
+				ldcAppeal,
+				FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE,
+				'Lawful development certificate'
+			],
+
+			[
+				'ldcAppeal',
+				'invalid',
+				'Because it is.',
+				ldcAppeal,
+				FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE,
+				'Lawful development certificate',
+				'invalid'
+			],
+			[
+				'advertisementAppeal',
+				'allowed',
+				'',
+				advertisementAppeal,
+				FEEDBACK_FORM_LINKS.FULL_ADVERTS,
+				'Advertisement'
+			],
+			[
+				'advertisementAppeal',
+				'invalid',
+				'Because it is.',
+				advertisementAppeal,
+				FEEDBACK_FORM_LINKS.FULL_ADVERTS,
+				'Advertisement',
+				'invalid'
 			]
 		])(
 			'returns 200 when all good, appeal type: %s, outcome: %s, reason: %s',
@@ -420,7 +457,9 @@ describe('decision routes', () => {
 			['casAdvertAppeal', casAdvertAppeal, FEEDBACK_FORM_LINKS.CAS_ADVERTS],
 			['fullPlanningAppeal', fullPlanningAppeal, FEEDBACK_FORM_LINKS.S78],
 			['listedBuildingAppeal', listedBuildingAppeal, FEEDBACK_FORM_LINKS.S20],
-			['enforcementNoticeAppeal', enforcementNoticeAppeal, FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE]
+			['enforcementNoticeAppeal', enforcementNoticeAppeal, FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE],
+			['advertisementAppeal', advertisementAppeal, FEEDBACK_FORM_LINKS.FULL_ADVERTS],
+			['ldcAppeal', ldcAppeal, FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE]
 		])(
 			'returns 200 when only issuing appellant costs decisions (%s)',
 			async (_, appeal, expectedFeedbackLink) => {
