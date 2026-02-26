@@ -23,12 +23,26 @@ const addressSection = new AddressSection();
 const cyaSection = new CYASection();
 const dateTimeQuestionPage = new DateTimeQuestionPage();
 const currentDate = new Date();
+const appealTypeVariants = [
+	{
+		name: 'S78',
+		caseType: 'W',
+		appealFlowType: 'S78',
+		overviewAppealType: 'Planning appeal'
+	},
+	{
+		name: 'S20',
+		caseType: 'Y',
+		appealFlowType: 'S20',
+		overviewAppealType: 'Planning listed building and conservation area appeal'
+	}
+];
 
-describe('change appeal procedure types', () => {
+describe.each(appealTypeVariants)('change appeal procedure types - $name', (appealVariant) => {
 	let caseObj;
 
 	const overviewDetails = {
-		appealType: 'Planning appeal',
+		appealType: appealVariant.overviewAppealType,
 		applicationReference: '123',
 		allocationLevel: 'No allocation level for this appeal',
 		linkedAppeals: 'No linked appeals',
@@ -335,10 +349,16 @@ describe('change appeal procedure types', () => {
 
 	const setupTestCase = () => {
 		cy.login(users.appeals.caseAdmin);
-		cy.createCase({ caseType: 'W' }).then((ref) => {
+		cy.createCase({ caseType: appealVariant.caseType }).then((ref) => {
 			caseObj = ref;
 			appeal = caseObj;
-			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'READY_TO_START', 'S78', 'WRITTEN');
+			happyPathHelper.advanceTo(
+				caseObj,
+				'ASSIGN_CASE_OFFICER',
+				'READY_TO_START',
+				appealVariant.appealFlowType,
+				'WRITTEN'
+			);
 			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 			cy.addLpaqSubmissionToCase(caseObj);
 		});

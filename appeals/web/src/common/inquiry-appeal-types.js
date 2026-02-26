@@ -8,7 +8,10 @@ import { isAppealTypeEnabled } from './feature-flags-appeal-types.js';
  */
 export const getEnabledInquiryAppealTypes = () => {
 	let enabledInquiryAppealTypes = [];
-	if (isAppealTypeEnabled(APPEAL_TYPE.S78)) {
+	if (
+		isAppealTypeEnabled(APPEAL_TYPE.S78) &&
+		isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_INQUIRY)
+	) {
 		enabledInquiryAppealTypes.push(APPEAL_TYPE.S78);
 	}
 

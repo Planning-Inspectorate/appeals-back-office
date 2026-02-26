@@ -1,8 +1,7 @@
-import featureFlags from '#common/feature-flags.js';
+import { getAvailableProcedureTypesForAppealType } from '#appeals/appeal-details/change-procedure-type/change-procedure-type.utils.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { radiosInput } from '#lib/mappers/index.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /**
@@ -12,6 +11,7 @@ import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /**
  * @param {string} appealReference
+ * @param {string} appealType
  * @param {string} backLinkUrl
  * @param {{appealProcedure: string}} [sessionValues]
  * @param {string|undefined} errorMessage
@@ -19,36 +19,28 @@ import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
  */
 export const selectProcedurePage = (
 	appealReference,
+	appealType,
 	backLinkUrl,
 	sessionValues,
 	errorMessage = undefined
 ) => {
-	const dataMappers = [
-		{
-			case: APPEAL_CASE_PROCEDURE.WRITTEN,
-			featureFlag: FEATURE_FLAG_NAMES.SECTION_78
-		},
-		{
-			case: APPEAL_CASE_PROCEDURE.HEARING
-		},
-		{
-			case: APPEAL_CASE_PROCEDURE.INQUIRY,
-			featureFlag: FEATURE_FLAG_NAMES.SECTION_78_INQUIRY
-		}
-	];
+	const availableProcedureTypes = getAvailableProcedureTypesForAppealType(appealType);
+	const sortedAvailableProcedureTypes = [
+		APPEAL_CASE_PROCEDURE.WRITTEN,
+		APPEAL_CASE_PROCEDURE.HEARING,
+		APPEAL_CASE_PROCEDURE.INQUIRY
+	].filter((procedureType) => availableProcedureTypes.includes(procedureType));
+
+	const dataMappers = sortedAvailableProcedureTypes.map((procedureType) => ({
+		case: procedureType
+	}));
 
 	/** @type {RadioItem[]} */
-	const radioItems = [];
-
-	dataMappers.map((item) => {
-		if (!item.featureFlag || featureFlags.isFeatureActive(item.featureFlag)) {
-			radioItems.push({
-				value: item.case,
-				text: appealProcedureToLabelText(item.case),
-				checked: sessionValues?.appealProcedure && sessionValues?.appealProcedure === item.case
-			});
-		}
-	});
+	const radioItems = dataMappers.map((item) => ({
+		value: item.case,
+		text: appealProcedureToLabelText(item.case),
+		checked: sessionValues?.appealProcedure && sessionValues?.appealProcedure === item.case
+	}));
 
 	/** @type {PageContent} */
 	const pageContent = {

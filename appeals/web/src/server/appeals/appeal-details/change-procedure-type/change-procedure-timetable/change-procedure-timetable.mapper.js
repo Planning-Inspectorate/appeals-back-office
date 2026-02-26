@@ -115,6 +115,7 @@ export const getTimetableTypes = (appealType, hasObligation, newProcedureType) =
 
 	switch (appealType) {
 		case APPEAL_TYPE.S78:
+		case APPEAL_TYPE.PLANNED_LISTED_BUILDING:
 			validAppealTimetableType = [
 				'lpaQuestionnaireDueDate',
 				'lpaStatementDueDate',

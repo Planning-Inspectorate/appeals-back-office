@@ -1,6 +1,7 @@
 import { appealData } from '#testing/appeals/appeals.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -20,6 +21,10 @@ const appealDataWithoutStartDate = {
 		planningObligationDueDate: '2023-10-16T01:00:00.000Z'
 	}
 };
+const procedureTypeAppealVariants = [
+	{ name: 'S78', appealType: APPEAL_TYPE.S78 },
+	{ name: 'S20', appealType: APPEAL_TYPE.PLANNED_LISTED_BUILDING }
+];
 
 describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 	afterAll(() => {
@@ -30,6 +35,40 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 	afterEach(teardown);
 
 	describe('GET /change-appeal-procedure-type/written/check-and-confirm', () => {
+		describe.each(procedureTypeAppealVariants)('S78 and S20 parity - $name', ({ appealType }) => {
+			it('should render the written check details page', async () => {
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, {
+						...appealDataWithoutStartDate,
+						appealStatus: 'lpa_questionnaire',
+						appealType,
+						documentationSummary: {
+							lpaQuestionnaire: {
+								status: 'not received'
+							}
+						}
+					});
+
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, { planningObligation: { hasObligation: false } });
+
+				const response = await request.get(
+					'/appeals-service/appeal-details/1/change-appeal-procedure-type/written/check-and-confirm'
+				);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHtml = parseHtml(response.text, {
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedHtml).toContain('Check details and update appeal procedure</h1>');
+				expect(unprettifiedHtml).toContain('Written representations</dd>');
+			});
+		});
+
 		it('should render the check details page with the expected content for written procedure type if an appeal procedure is found in the session', async () => {
 			nock('http://test/')
 				.get('/appeals/1?include=all')
@@ -112,6 +151,44 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 	});
 
 	describe('GET /change-appeal-procedure-type/hearing/check-and-confirm', () => {
+		describe.each(procedureTypeAppealVariants)('S78 and S20 parity - $name', ({ appealType }) => {
+			it('should render the hearing check details page', async () => {
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, {
+						...appealDataWithoutStartDate,
+						appealStatus: 'lpa_questionnaire',
+						appealType,
+						procedureType: 'hearing',
+						documentationSummary: {
+							lpaQuestionnaire: {
+								status: 'not received'
+							}
+						}
+					});
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, {
+						planningObligation: { hasObligation: false },
+						procedureType: 'hearing',
+						dateKnown: 'yes'
+					});
+
+				const response = await request.get(
+					'/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/check-and-confirm'
+				);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHtml = parseHtml(response.text, {
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedHtml).toContain('Check details and update appeal procedure</h1>');
+				expect(unprettifiedHtml).toContain('Hearing</dd>');
+			});
+		});
+
 		it('should render the check details page with the expected content for hearing procedure type with planning obligation if an appeal procedure is found in the session', async () => {
 			nock('http://test/')
 				.get('/appeals/1?include=all')
@@ -336,6 +413,52 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 	});
 
 	describe('GET /change-appeal-procedure-type/inquiry/check-and-confirm', () => {
+		describe.each(procedureTypeAppealVariants)('S78 and S20 parity - $name', ({ appealType }) => {
+			it('should render the inquiry check details page', async () => {
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, {
+						...appealDataWithoutStartDate,
+						appealStatus: 'lpa_questionnaire',
+						appealType,
+						procedureType: 'inquiry',
+						inquiry: {
+							estimatedDays: 8,
+							address: {
+								addressId: 1,
+								addressLine1: '21 The Pavement',
+								county: 'Wandsworth',
+								postCode: 'SW4 0HY'
+							}
+						},
+						documentationSummary: {
+							lpaQuestionnaire: {
+								status: 'not received'
+							}
+						}
+					});
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, { planningObligation: { hasObligation: false } });
+
+				const response = await request.get(
+					'/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/check-and-confirm'
+				);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHtml = parseHtml(response.text, {
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedHtml).toContain('Check details and update appeal procedure</h1>');
+				expect(unprettifiedHtml).toContain('Inquiry</dd>');
+				expect(unprettifiedHtml).toContain(
+					'Do you know the expected number of days to carry out the inquiry?</dt>'
+				);
+			});
+		});
+
 		it('should render the check details page with the expected content for inquiry procedure type', async () => {
 			nock('http://test/')
 				.get('/appeals/1?include=all')

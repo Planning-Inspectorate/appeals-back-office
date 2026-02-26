@@ -1,3 +1,4 @@
+import { getAvailableProcedureTypesForAppealType } from '#appeals/appeal-details/change-procedure-type/change-procedure-type.utils.js';
 import featureFlags from '#common/feature-flags.js';
 import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { removeSummaryListActions } from '#lib/mappers/index.js';
@@ -68,13 +69,19 @@ const displayProcedureChangeLink = (appealDetails) => {
 				dateISOStringToDayMonthYearHourMinute(appealDetails.appealTimetable.ipCommentsDueDate)
 			)
 		: false;
+	const availableProcedureTypes = getAvailableProcedureTypesForAppealType(appealDetails.appealType);
+	const hasAlternativeProcedureType = availableProcedureTypes.some(
+		(procedureType) => procedureType !== appealDetails.procedureType?.toLowerCase()
+	);
 
 	if (
 		![
 			APPEAL_TYPE.S78,
+			APPEAL_TYPE.PLANNED_LISTED_BUILDING,
 			APPEAL_TYPE.ENFORCEMENT_NOTICE,
 			APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
 		].includes(appealDetails.appealType) ||
+		!hasAlternativeProcedureType ||
 		lpaStatementrepresentationStatus === APPEAL_REPRESENTATION_STATUS.PUBLISHED ||
 		ipCommentsrepresentationStatus === APPEAL_REPRESENTATION_STATUS.PUBLISHED ||
 		lpaStatementDueDateElapsed ||

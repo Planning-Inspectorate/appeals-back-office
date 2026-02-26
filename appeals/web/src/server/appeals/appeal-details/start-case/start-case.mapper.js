@@ -123,7 +123,6 @@ export function selectProcedurePage(
 		},
 		{
 			case: APPEAL_CASE_PROCEDURE.INQUIRY,
-			featureFlag: FEATURE_FLAG_NAMES.SECTION_78_INQUIRY,
 			appeals: getEnabledInquiryAppealTypes()
 		}
 	];
