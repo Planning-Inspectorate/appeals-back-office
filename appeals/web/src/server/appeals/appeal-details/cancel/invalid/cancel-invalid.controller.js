@@ -4,6 +4,9 @@ import {
 	buildRejectionReasons,
 	rejectionReasonHtml
 } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
+import { getTeamFromAppealId } from '#appeals/appeal-details/update-case-team/update-case-team.service.js';
+import { appealSiteToAddressString } from '#lib/address-formatter.js';
+import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
 	applyEdits,
@@ -11,6 +14,7 @@ import {
 	editLink,
 	getSessionValuesForAppeal
 } from '#lib/edit-utilities.js';
+import { getFeedbackLinkFromAppealTypeName } from '#lib/feedback-form-link.js';
 import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
@@ -18,6 +22,8 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
+import { APPEAL_TYPE, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
+import { format } from 'date-fns';
 import { invalidReasonPage, otherLiveAppealsPage } from './cancel-invalid.mapper.js';
 
 /** @typedef {import('#appeals/appeal-details/appellant-case/appellant-case.types.js').AppellantCaseValidationOutcome} ValidationOutcome */
@@ -177,6 +183,53 @@ export const getCheckDetails = async (request, response) => {
 		[4]: [sessionValues['invalidReason-4']]
 	});
 
+	const { email: assignedTeamEmail } = await getTeamFromAppealId(
+		request.apiClient,
+		currentAppeal.appealId
+	);
+
+	const enforcementNotice = currentAppeal.enforcementNotice;
+
+	const personalisation = {
+		appeal_reference_number: currentAppeal.appealReference,
+		lpa_reference: currentAppeal.planningApplicationReference || '',
+		site_address: appealSiteToAddressString(currentAppeal.appealSite),
+		reasons: invalidReasons,
+		team_email_address: assignedTeamEmail,
+		enforcement_reference: enforcementNotice?.appellantCase?.reference || '',
+		effective_date: enforcementNotice?.appellantCase?.effectiveDate
+			? format(new Date(enforcementNotice?.appellantCase?.effectiveDate), 'dd MMMM yyyy')
+			: '',
+		other_live_appeals: sessionValues?.otherLiveAppeals === 'yes' ? 'yes' : '',
+		ground_a_barred: enforcementNotice?.appealOutcome?.groundABarred || ''
+	};
+
+	// Note: this route is only enabled for enforcement appeals at the time of writing,
+	// so the standard template is untested.
+	const templateNames =
+		currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
+			? {
+					appellant: 'enforcement-appeal-invalid-appellant.content.md',
+					lpa: 'enforcement-appeal-invalid-lpa.content.md'
+				}
+			: {
+					appellant: 'appeal-invalid.content.md',
+					lpa: 'appeal-invalid-lpa.content.md'
+				};
+
+	const appellantTemplate = await generateNotifyPreview(
+		request.apiClient,
+		templateNames.appellant,
+		{
+			...personalisation,
+			feedback_link: getFeedbackLinkFromAppealTypeName(currentAppeal.appealType)
+		}
+	);
+	const lpaTemplate = await generateNotifyPreview(request.apiClient, templateNames.lpa, {
+		...personalisation,
+		feedback_link: FEEDBACK_FORM_LINKS.LPA
+	});
+
 	const cancelUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/cancel`;
 
 	return renderCheckYourAnswersComponent(
@@ -238,7 +291,8 @@ export const getCheckDetails = async (request, response) => {
 					},
 					parameters: {
 						summaryText: `Preview email to appellant`,
-						html: '' // TODO: Implement preview email to appellant
+						html: appellantTemplate.renderedHtml,
+						id: 'appellant-preview'
 					}
 				},
 				{
@@ -249,7 +303,8 @@ export const getCheckDetails = async (request, response) => {
 					},
 					parameters: {
 						summaryText: `Preview email to LPA`,
-						html: '' // TODO: Implement preview email to LPA
+						html: lpaTemplate.renderedHtml,
+						id: 'lpa-preview'
 					}
 				}
 			]
@@ -287,7 +342,8 @@ export const postCheckDetails = async (request, response) => {
 		const reviewOutcome = {
 			validationOutcome: 'invalid',
 			invalidReasons,
-			otherLiveAppeals: String(sessionValues.otherLiveAppeals)
+			otherLiveAppeals: String(sessionValues.otherLiveAppeals),
+			enforcementNoticeInvalid: 'no'
 		};
 
 		await appellantCaseService.setReviewOutcomeForAppellantCase(

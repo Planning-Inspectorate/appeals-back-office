@@ -13,6 +13,7 @@ export interface AppellantCaseValidationOutcomeRequest {
 	incompleteReasons?: AppellantCaseNotValidReasonRequest[];
 	appealDueDate?: string;
 	otherLiveAppeals?: string;
+	enforcementNoticeInvalid?: string;
 }
 
 export interface AppellantCaseValidationOutcomeResponse {
