@@ -469,7 +469,7 @@ describe('incomplete-appeal', () => {
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<dt class="govuk-summary-list__key"> Grounds and facts do not match</dt>'
 				);
-				expect(unprettifiedElement.innerHTML).toContain('<li>a: invalid ground 1</li>');
+				expect(unprettifiedElement.innerHTML).toContain('<li>Ground (a): invalid ground 1</li>');
 				expect(unprettifiedElement.innerHTML).toContain('Mark appeal as incomplete</button>');
 			});
 		});

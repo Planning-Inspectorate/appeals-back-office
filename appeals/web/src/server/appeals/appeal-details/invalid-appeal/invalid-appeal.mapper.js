@@ -501,6 +501,13 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (
 
 	// Grounds and facts mismatch
 	if (session?.webAppellantCaseReviewOutcome.groundsFacts) {
+		const htmlList = mapReasonsToReasonsListHtml(
+			groundsAndFactsMismatch,
+			session?.webAppellantCaseReviewOutcome.groundsFacts,
+			session?.webAppellantCaseReviewOutcome.groundsFactsText
+		);
+		const html = htmlList.replace(/([a-z]):/g, 'Ground ($1):');
+
 		summaryListComponent.parameters.rows.push({
 			key: {
 				text: 'Grounds and facts do not match'
@@ -510,11 +517,7 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (
 					component: {
 						type: 'show-more',
 						parameters: {
-							html: mapReasonsToReasonsListHtml(
-								groundsAndFactsMismatch,
-								session?.webAppellantCaseReviewOutcome.groundsFacts,
-								session?.webAppellantCaseReviewOutcome.groundsFactsText
-							)
+							html
 						}
 					}
 				})

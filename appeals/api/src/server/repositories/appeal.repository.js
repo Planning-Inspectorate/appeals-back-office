@@ -96,6 +96,12 @@ export const appealDetailsInclude = /** @type {Object} */ {
 					appellantCaseEnforcementMissingDocumentText: true
 				}
 			},
+			appellantCaseEnforcementGroundsMismatchFactsSelected: {
+				include: {
+					appellantCaseEnforcementGroundsMismatchFacts: true,
+					appellantCaseEnforcementGroundsMismatchFactsText: true
+				}
+			},
 			appellantCaseValidationOutcome: true,
 			knowsOtherOwners: true,
 			knowsAllOwners: true,
@@ -243,6 +249,12 @@ export const appealDetailsIncludeMap = /** @type {Object} */ {
 				include: {
 					appellantCaseEnforcementMissingDocument: true,
 					appellantCaseEnforcementMissingDocumentText: true
+				}
+			},
+			appellantCaseEnforcementGroundsMismatchFactsSelected: {
+				include: {
+					appellantCaseEnforcementGroundsMismatchFacts: true,
+					appellantCaseEnforcementGroundsMismatchFactsText: true
 				}
 			},
 			appellantCaseValidationOutcome: true,
