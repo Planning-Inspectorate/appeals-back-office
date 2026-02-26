@@ -2408,6 +2408,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                     <li>test2@example.com</li>
                                 </ul>
                             </dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/service-user/change/agent"
+                                data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent’s contact details (1. Appellant details)</span></a>
+                            </dd>
                         </div>
                         <div class="govuk-summary-list__row appeal-other-appellants"><dt class="govuk-summary-list__key"> Other appellants</dt>
                             <dd class="govuk-summary-list__value">

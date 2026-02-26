@@ -8,6 +8,7 @@ import { copyBlobs } from '#utils/blob-copy.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
+import { omit } from 'lodash-es';
 import rhea from 'rhea';
 
 const { generate_uuid } = rhea;
@@ -101,6 +102,17 @@ export const replaceLeadAppeal = async (currentLead, appealToReplaceLead) => {
 				});
 			})
 		);
+
+		// The current lead is now the child of the new lead. If it has no agent, it needs to be the agent of the new lead.
+		if (!currentLead.agent) {
+			// eslint-disable-next-line no-unused-vars
+			const data = omit(appealToReplaceLead.agent, 'id', 'addressId', 'address');
+			const { id: agentId } = await tx.serviceUser.create({ data });
+			await tx.appeal.update({
+				where: { id: currentLead.id },
+				data: { agentId }
+			});
+		}
 	});
 };
 

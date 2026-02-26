@@ -980,9 +980,6 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                     <li>test2@example.com</li>
                 </ul>
             </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/service-user/change/agent"
-                data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent</span></a>
-            </dd>
         </div>
         <div class="govuk-summary-list__row appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
             <dd class="govuk-summary-list__value">
@@ -1617,9 +1614,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                     <li>Fiona Shell</li>
                     <li>test2@example.com</li>
                 </ul>
-            </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/service-user/change/agent"
-                data-cy="change-agent">Change<span class="govuk-visually-hidden"> Agent</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row appeal-lpa-contact-details"><dt class="govuk-summary-list__key"> LPA</dt>
