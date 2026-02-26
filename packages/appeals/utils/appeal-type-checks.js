@@ -22,7 +22,7 @@ const baseCaseType = {
  * @param {string | null} appealType
  * @returns {boolean}
  */
-const isExpeditedAppealType = (appealType) => {
+export const isExpeditedAppealType = (appealType) => {
 	if (appealType === '') return false;
 
 	if (!appealType || !baseCaseType[appealType]) {
@@ -33,4 +33,10 @@ const isExpeditedAppealType = (appealType) => {
 	return Boolean(baseCaseType[appealType] === APPEAL_CASE_TYPE.D);
 };
 
-export default isExpeditedAppealType;
+/**
+ *
+ * @param {string|undefined} caseType
+ * @returns {boolean}
+ */
+export const isEnforcementCaseType = (caseType) =>
+	caseType === APPEAL_CASE_TYPE.C || caseType === APPEAL_CASE_TYPE.F;

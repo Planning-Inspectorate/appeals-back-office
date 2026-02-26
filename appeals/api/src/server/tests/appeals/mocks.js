@@ -1,4 +1,5 @@
 import advert from './advert.js';
+import enforcementListed from './enforcement-listed.js';
 import has from './has.js';
 import s20 from './s20.js';
 import s78 from './s78.js';
@@ -299,6 +300,10 @@ export const advertisementAppeal = {
 		hasDesignAndAccessStatement: true,
 		hasNewPlansOrDrawings: true
 	}
+};
+
+export const appealEnforcementListed = {
+	...enforcementListed
 };
 
 export const advertisementAppealAppellantCaseIncomplete = {

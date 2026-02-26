@@ -1,4 +1,4 @@
-import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
+import { isExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Api.Timetable} Timetable */

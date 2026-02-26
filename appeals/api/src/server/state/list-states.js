@@ -1,5 +1,5 @@
 import logger from '#utils/logger.js';
-import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
+import { isExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import createStateMachine from './create-state-machine.js';
 

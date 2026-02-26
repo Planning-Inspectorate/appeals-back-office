@@ -11,7 +11,7 @@ import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
-import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
+import { isExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { getSingularRepresentation } from '@pins/appeals/utils/representations.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { countBy } from 'lodash-es';
