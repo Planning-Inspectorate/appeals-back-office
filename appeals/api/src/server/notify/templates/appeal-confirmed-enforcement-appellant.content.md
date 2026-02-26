@@ -1,6 +1,10 @@
 We have confirmed your appeal and you have submitted all of the information we need.
 
+{% if other_appeals_grounds_group.length -%}
+{{ appeal_reference_number }} will continue on the following grounds:
+{%- else -%}
 The appeal will continue on the following grounds:
+{%- endif %}
 
 {% if appeal_grounds.length -%}
 {% if appeal_grounds.length > 1 -%}
@@ -11,6 +15,28 @@ The appeal will continue on the following grounds:
 Ground ({{ appeal_grounds[0] }})
 {% endif %}
 {% endif -%}
+
+
+{% if other_appeals_grounds_group.length -%}
+{% if other_appeals_grounds_group.length > 1 -%}
+
+{% for appeal_with_grounds in other_appeals_grounds_group -%}
+
+{{ appeal_with_grounds.reference }} will continue on the following grounds:
+
+{% if appeal_with_grounds.grounds.length -%}
+{% if appeal_with_grounds.grounds.length > 1 -%}
+{%- for ground in appeal_with_grounds.grounds -%}
+- Ground ({{ ground }})
+{% endfor %}
+{%- else -%}
+Ground ({{ appeal_with_grounds.grounds[0] }})
+{% endif %}
+{% endif -%}
+{% endfor -%}
+{% endif -%}
+{% endif -%}
+
 # Appeal details
 
 ^Appeal reference number: {{appeal_reference_number}}

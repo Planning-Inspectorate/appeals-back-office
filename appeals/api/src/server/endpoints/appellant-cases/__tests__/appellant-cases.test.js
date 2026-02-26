@@ -44,6 +44,7 @@ import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED,
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
+	CASE_RELATIONSHIP_LINKED,
 	ERROR_MUST_BE_NUMBER,
 	ERROR_NOT_FOUND,
 	LENGTH_8
@@ -1117,6 +1118,7 @@ describe('appellant cases routes', () => {
 						enforcement_reference: enforcementNoticeAppeal.appellantCase.enforcementReference,
 						appeal_grounds: ['a', 'b'],
 						ground_a_barred: false,
+						other_appeals_grounds_group: [],
 						other_info: 'Accio horcrux'
 					},
 					recipientEmail: enforcementNoticeAppeal.agent.email,
@@ -1135,6 +1137,135 @@ describe('appellant cases routes', () => {
 						enforcement_reference: enforcementNoticeAppeal.appellantCase.enforcementReference,
 						appeal_grounds: ['a', 'b'],
 						ground_a_barred: false,
+						other_appeals_grounds_group: [],
+						other_info: 'Accio horcrux',
+						appellant_contact_details: 'Lee Thornton, test@1367.com, 01234 567 890',
+						agent_contact_details: 'John Smith, test@136s7.com, 09876 543 210'
+					},
+					recipientEmail: enforcementNoticeAppeal.lpa.email,
+					templateName: 'appeal-confirmed-enforcement-lpa'
+				});
+			});
+
+			test('updates appellant case and sends notify emails for valid enforcement notice appeal with multiple appellants (e.g. child appeals)', async () => {
+				const childAppeals = [
+					{
+						child: {
+							id: 101,
+							reference: 6000101,
+							appealType: {
+								key: 'C',
+								type: 'Enforcement Notice appeal'
+							}
+						},
+						childId: 101,
+						type: CASE_RELATIONSHIP_LINKED
+					},
+					{
+						child: {
+							id: 100,
+							reference: 6000100,
+							appealType: {
+								key: 'C',
+								type: 'Enforcement Notice appeal'
+							}
+						},
+						childId: 100,
+						type: CASE_RELATIONSHIP_LINKED
+					}
+				];
+
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...enforcementNoticeAppeal,
+					appealType: {
+						key: 'C',
+						type: 'Enforcement Notice appeal'
+					},
+					appealGrounds: [
+						{
+							ground: {
+								groundRef: 'b',
+								groundDescription: 'Ground B'
+							}
+						},
+						{
+							ground: {
+								groundRef: 'a',
+								groundDescription: 'Ground A'
+							}
+						}
+					],
+					childAppeals
+				});
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[2]
+				);
+				databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+				databaseConnector.documentVersion.update.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ id: 1, key: 'no_redaction_required' }
+				]);
+				databaseConnector.document.findUnique.mockResolvedValue(null);
+
+				const patchBody = {
+					validationOutcome: 'valid',
+					groundABarred: false,
+					otherInformation: 'Accio horcrux'
+				};
+				const { appellantCase, id } = enforcementNoticeAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: { appellantCaseValidationOutcomeId: 3 }
+				});
+
+				expect(response.status).toEqual(200);
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: enforcementNoticeAppeal.reference,
+						lpa_reference: enforcementNoticeAppeal.applicationReference,
+						site_address: `${enforcementNoticeAppeal.address.addressLine1}, ${enforcementNoticeAppeal.address.addressLine2}, ${enforcementNoticeAppeal.address.addressTown}, ${enforcementNoticeAppeal.address.addressCounty}, ${enforcementNoticeAppeal.address.postcode}, ${enforcementNoticeAppeal.address.addressCountry}`,
+						feedback_link: FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						local_planning_authority: enforcementNoticeAppeal.lpa.name,
+						appeal_type: 'Enforcement Notice',
+						enforcement_reference: enforcementNoticeAppeal.appellantCase.enforcementReference,
+						appeal_grounds: ['a', 'b'],
+						other_appeals_grounds_group: [
+							{ reference: 6000100, grounds: ['a', 'b'] },
+							{ reference: 6000101, grounds: ['a', 'b'] }
+						],
+						ground_a_barred: false,
+						other_info: 'Accio horcrux'
+					},
+					recipientEmail: enforcementNoticeAppeal.agent.email,
+					templateName: 'appeal-confirmed-enforcement-appellant'
+				});
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: enforcementNoticeAppeal.reference,
+						lpa_reference: enforcementNoticeAppeal.applicationReference,
+						site_address: `${enforcementNoticeAppeal.address.addressLine1}, ${enforcementNoticeAppeal.address.addressLine2}, ${enforcementNoticeAppeal.address.addressTown}, ${enforcementNoticeAppeal.address.addressCounty}, ${enforcementNoticeAppeal.address.postcode}, ${enforcementNoticeAppeal.address.addressCountry}`,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						local_planning_authority: enforcementNoticeAppeal.lpa.name,
+						appeal_type: 'Enforcement Notice',
+						enforcement_reference: enforcementNoticeAppeal.appellantCase.enforcementReference,
+						appeal_grounds: ['a', 'b'],
+						ground_a_barred: false,
+						other_appeals_grounds_group: [
+							{ reference: 6000100, grounds: ['a', 'b'] },
+							{ reference: 6000101, grounds: ['a', 'b'] }
+						],
 						other_info: 'Accio horcrux',
 						appellant_contact_details: 'Lee Thornton, test@1367.com, 01234 567 890',
 						agent_contact_details: 'John Smith, test@136s7.com, 09876 543 210'
