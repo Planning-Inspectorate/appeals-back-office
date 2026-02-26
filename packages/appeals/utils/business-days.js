@@ -183,8 +183,9 @@ const setTimeInTimeZone = (date, hours, minutes) => {
 export const getFullAppealBaseTimetableKey = (appealType) => {
 	switch (appealType) {
 		case APPEAL_CASE_TYPE.H:
-		case APPEAL_CASE_TYPE.X:
 			return APPEAL_CASE_TYPE.H;
+		case APPEAL_CASE_TYPE.X:
+			return APPEAL_CASE_TYPE.X;
 		case APPEAL_CASE_TYPE.C:
 			return APPEAL_CASE_TYPE.C;
 		default:

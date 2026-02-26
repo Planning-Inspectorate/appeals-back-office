@@ -527,6 +527,24 @@ const advertTimetable = {
 	}
 };
 
+const ldcTimetable = {
+	lpaQuestionnaireDueDate: {
+		daysFromStartDate: 14
+	},
+	ipCommentsDueDate: {
+		daysFromStartDate: 42
+	},
+	lpaStatementDueDate: {
+		daysFromStartDate: 42
+	},
+	finalCommentsDueDate: {
+		daysFromStartDate: 63
+	},
+	s106ObligationDueDate: {
+		daysFromStartDate: 42
+	}
+};
+
 const enforcementNoticeTimetable = {
 	...advertTimetable,
 	planningObligationDueDate: {
@@ -564,6 +582,23 @@ export const CONFIG_APPEAL_TIMETABLE = {
 		[APPEAL_CASE_PROCEDURE.INQUIRY]: {
 			...advertTimetable,
 			//Needs updating when inquiries with adverts is supported
+			statementOfCommonGroundDueDate: {
+				daysFromStartDate: 25
+			}
+		}
+	},
+	[APPEAL_CASE_TYPE.X]: {
+		[APPEAL_CASE_PROCEDURE.WRITTEN]: { ...ldcTimetable },
+		[APPEAL_CASE_PROCEDURE.HEARING]: {
+			...ldcTimetable,
+			//Needs updating when inquiries with ldc is supported
+			statementOfCommonGroundDueDate: {
+				daysFromStartDate: 25
+			}
+		},
+		[APPEAL_CASE_PROCEDURE.INQUIRY]: {
+			...ldcTimetable,
+			//Needs updating when inquiries with ldc is supported
 			statementOfCommonGroundDueDate: {
 				daysFromStartDate: 25
 			}

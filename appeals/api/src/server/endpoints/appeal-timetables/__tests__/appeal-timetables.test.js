@@ -664,11 +664,11 @@ describe('appeal timetables routes', () => {
 					'ldcAppeal',
 					ldcAppealWithTimetable,
 					{
-						finalCommentsDueDate: '2024-08-07T22:59:00.000Z',
-						ipCommentsDueDate: '2024-07-17T22:59:00.000Z',
-						lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
-						lpaStatementDueDate: '2024-07-17T22:59:00.000Z',
-						s106ObligationDueDate: '2024-07-17T22:59:00.000Z'
+						finalCommentsDueDate: '2024-09-02T22:59:00.000Z',
+						ipCommentsDueDate: '2024-08-02T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-25T22:59:00.000Z',
+						lpaStatementDueDate: '2024-08-02T22:59:00.000Z',
+						s106ObligationDueDate: '2024-08-02T22:59:00.000Z'
 					},
 					{}
 				],
@@ -932,11 +932,11 @@ describe('appeal timetables routes', () => {
 					'ldcAppeal',
 					ldcAppealWithTimetable,
 					{
-						finalCommentsDueDate: '2024-08-05T22:59:00.000Z',
-						ipCommentsDueDate: '2024-07-15T22:59:00.000Z',
-						lpaQuestionnaireDueDate: '2024-06-17T22:59:00.000Z',
-						lpaStatementDueDate: '2024-07-15T22:59:00.000Z',
-						s106ObligationDueDate: '2024-07-15T22:59:00.000Z'
+						finalCommentsDueDate: '2024-08-29T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-31T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-21T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-31T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-31T22:59:00.000Z'
 					},
 					{}
 				],
@@ -1096,11 +1096,11 @@ describe('appeal timetables routes', () => {
 					'appeal-valid-start-case-advertisement-appellant',
 					'appeal-valid-start-case-advertisement-lpa',
 					{
-						lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
-						lpaStatementDueDate: '2024-07-17T22:59:00.000Z',
-						s106ObligationDueDate: '2024-07-17T22:59:00.000Z',
-						ipCommentsDueDate: '2024-07-17T22:59:00.000Z',
-						finalCommentsDueDate: '2024-08-07T22:59:00.000Z'
+						finalCommentsDueDate: '2024-09-02T22:59:00.000Z',
+						ipCommentsDueDate: '2024-08-02T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-25T22:59:00.000Z',
+						lpaStatementDueDate: '2024-08-02T22:59:00.000Z',
+						s106ObligationDueDate: '2024-08-02T22:59:00.000Z'
 					}
 				]
 			])(
@@ -1329,11 +1329,11 @@ describe('appeal timetables routes', () => {
 					'ldcAppeal',
 					{ ...ldcAppeal, procedureType: { key: 'hearing' } },
 					{
-						finalCommentsDueDate: '2024-08-07T22:59:00.000Z',
-						ipCommentsDueDate: '2024-07-17T22:59:00.000Z',
-						lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
-						lpaStatementDueDate: '2024-07-17T22:59:00.000Z',
-						s106ObligationDueDate: '2024-07-17T22:59:00.000Z',
+						finalCommentsDueDate: '2024-09-02T22:59:00.000Z',
+						ipCommentsDueDate: '2024-08-02T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-25T22:59:00.000Z',
+						lpaStatementDueDate: '2024-08-02T22:59:00.000Z',
+						s106ObligationDueDate: '2024-08-02T22:59:00.000Z',
 						statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
 					},
 					{},

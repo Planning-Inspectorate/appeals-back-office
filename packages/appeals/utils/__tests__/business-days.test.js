@@ -70,7 +70,7 @@ describe('business-days', () => {
 	describe('getFullAppealBaseTimetableKey', () => {
 		const tests = [
 			{ appealType: APPEAL_CASE_TYPE.H, expected: APPEAL_CASE_TYPE.H },
-			{ appealType: APPEAL_CASE_TYPE.X, expected: APPEAL_CASE_TYPE.H },
+			{ appealType: APPEAL_CASE_TYPE.X, expected: APPEAL_CASE_TYPE.X },
 			{ appealType: APPEAL_CASE_TYPE.C, expected: APPEAL_CASE_TYPE.C },
 			{ appealType: APPEAL_CASE_TYPE.W, expected: APPEAL_CASE_TYPE.W },
 			{ appealType: 'unknown-type', expected: APPEAL_CASE_TYPE.W }
