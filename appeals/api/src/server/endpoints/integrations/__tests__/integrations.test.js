@@ -49,7 +49,7 @@ import {
 	ERROR_INVALID_APPEAL_TYPE_REP,
 	ERROR_INVALID_APPELLANT_CASE_DATA
 } from '@pins/appeals/constants/support.js';
-import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
+import { isExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE,

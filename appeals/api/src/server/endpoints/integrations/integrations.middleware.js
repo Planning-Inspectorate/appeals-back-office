@@ -13,7 +13,7 @@ import {
 	ERROR_INVALID_REP_DATA,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
+import { isExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@planning-inspectorate/data-model';
 import { schemas, validateFromSchema } from './integrations.validators.js';
 

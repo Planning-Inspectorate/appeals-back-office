@@ -30,7 +30,7 @@ import {
 } from '@planning-inspectorate/data-model';
 import { sub } from 'date-fns';
 
-import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
+import { isExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { randomBool, randomEnumValue } from './data-utilities.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AppealSite} AppealSite */
