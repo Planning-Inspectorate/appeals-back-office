@@ -2078,6 +2078,15 @@ export const spec = {
 				}
 			}
 		},
+		SimulateStartAppealRequest: {
+			type: 'object',
+			properties: {
+				procedureType: {
+					type: 'string',
+					example: 'hearing'
+				}
+			}
+		},
 		...ApiDefinitions
 	},
 	components: {}

@@ -3354,6 +3354,11 @@ export interface SimulateLinkedAppealRequest {
 	childAppealReference?: string;
 }
 
+export interface SimulateStartAppealRequest {
+	/** @example "hearing" */
+	procedureType?: string;
+}
+
 export interface Address {
 	addressId?: number;
 	addressLine1: string;
