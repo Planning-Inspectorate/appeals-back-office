@@ -82,6 +82,7 @@ export interface AppellantCase extends schema.AppellantCase {
 	appellantCaseAdvertDetails?: AppellantCaseAdvertDetails[];
 	contactAddress?: Address | null;
 	appellantCaseEnforcementMissingDocumentsSelected?: AppellantCaseEnforcementMissingDocumentsSelected[];
+	appellantCaseEnforcementGroundsMismatchSelected?: AppellantCaseEnforcementGroundsMismatchSelected[];
 }
 export interface AppellantCaseValidationOutcome extends schema.AppellantCaseValidationOutcome {}
 export interface AppellantCaseIncompleteReason extends schema.AppellantCaseIncompleteReason {}
@@ -95,6 +96,14 @@ export interface AppellantCaseEnforcementMissingDocumentsSelected
 }
 export interface AppellantCaseEnforcementMissingDocument
 	extends schema.AppellantCaseEnforcementMissingDocument {}
+
+export interface AppellantCaseEnforcementGroundsMismatchFactsSelected
+	extends schema.AppellantCaseEnforcementGroundsMismatchFactsSelected {
+	appellantCaseEnforcementGroundsMismatchFacts: AppellantCaseEnforcementGroundsMismatchFacts;
+	appellantCaseEnforcementGroundsMismatchFactsText: AppellantCaseEnforcementGroundsMismatchFactsText[];
+}
+export interface AppellantCaseEnforcementGroundsMismatchFacts
+	extends schema.AppellantCaseEnforcementGroundsMismatchFacts {}
 export interface AppellantCaseIncompleteReasonsSelected
 	extends schema.AppellantCaseIncompleteReasonsSelected {
 	appellantCaseIncompleteReason: AppellantCaseIncompleteReasons;

@@ -43,7 +43,6 @@ export default {
 		appealId: 1,
 		appellantCaseValidationOutcomeId: 1,
 		applicationDate: new Date('2024-10-16T14:08:50.409Z'),
-		applicationDecision: 'refused',
 		applicationDecisionDate: new Date('2024-10-27T15:08:50.409Z'),
 		caseSubmittedDate: new Date('2024-11-27T15:08:53.375Z'),
 		caseSubmissionDueDate: null,

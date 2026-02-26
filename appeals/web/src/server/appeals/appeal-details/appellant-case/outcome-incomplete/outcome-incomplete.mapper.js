@@ -1,4 +1,6 @@
+import { rejectionReasonHtml } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { getExampleDateHint } from '#lib/dates.js';
 import { enhanceCheckboxOptionWithAddAnotherReasonConditionalHtml } from '#lib/enhance-html.js';
 import { dateInput } from '#lib/mappers/index.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
@@ -205,7 +207,6 @@ export function updateFeeReceiptDueDatePage(
 		title: 'Ground (a) fee receipt due date',
 		backLinkUrl,
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
-		heading: 'Ground (a) fee receipt due date',
 		submitButtonProperties: {
 			text: 'Continue',
 			type: 'submit'
@@ -215,13 +216,14 @@ export function updateFeeReceiptDueDatePage(
 				name: 'fee-receipt-due-date',
 				id: 'fee-receipt-due-date',
 				namePrefix: 'fee-receipt-due-date',
-				hint: 'For example, 31 3 2025',
+				hint: `For example, ${getExampleDateHint(27)}`,
 				value: {
 					day: existingDueDate.day,
 					month: existingDueDate.month,
 					year: existingDueDate.year
 				},
-				legendText: '',
+				legendText: 'Ground (a) fee receipt due date',
+				legendIsPageHeading: true,
 				errors: errors
 			})
 		]
@@ -229,3 +231,82 @@ export function updateFeeReceiptDueDatePage(
 
 	return pageContent;
 }
+
+/**
+ * @param {any[]} groundsAndFacts
+ */
+export function mapGroundsAndFactsListHtml(groundsAndFacts) {
+	if (!groundsAndFacts || groundsAndFacts.length === 0) {
+		return '';
+	}
+	const items = groundsAndFacts.map(
+		(/** @type {{ name: any; text: any; }} */ ground) => `Ground ${ground.name}: ${ground.text}`
+	);
+	return rejectionReasonHtml(items);
+}
+
+/**
+ * @param {string} appealReference
+ * @param {(any & { selected: boolean, text: string })[]} appealGrounds
+ * @param {string} backLinkUrl
+ * @param {import("@pins/express").ValidationErrors | undefined} [errors]
+ * @returns {PageContent}
+ */
+export const groundsFactsCheckPage = (appealReference, appealGrounds, backLinkUrl, errors) => {
+	const mappedGroundOptions = appealGrounds.map((grounds) => {
+		const groundsId = `grounds-facts-${grounds.id}-1`;
+		const groundsName = `groundsFacts-${grounds.id}`;
+		const groundsError = errors?.[`${groundsName}-1`];
+		return {
+			value: grounds.id,
+			text: grounds.name,
+			checked: grounds.selected || !!grounds.text,
+			conditional: grounds.hasText
+				? {
+						html: renderPageComponentsToHtml([
+							{
+								type: 'input',
+								parameters: {
+									id: groundsId,
+									name: groundsName,
+									value: grounds.text ?? '',
+									...(groundsError && { errorMessage: { text: groundsError.msg } }),
+									label: {
+										text: 'Enter a reason',
+										classes: 'govuk-label--s'
+									}
+								}
+							}
+						])
+					}
+				: undefined
+		};
+	});
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: 'Which grounds do not match the facts?',
+		backLinkUrl,
+		preHeading: `Appeal ${appealShortReference(appealReference)}`,
+		pageComponents: [
+			{
+				type: 'checkboxes',
+				parameters: {
+					idPrefix: 'grounds-facts',
+					name: 'groundsFacts',
+					fieldset: {
+						legend: {
+							text: 'Which grounds do not match the facts?',
+							isPageHeading: true,
+							classes: 'govuk-fieldset__legend--l'
+						}
+					},
+					items: mappedGroundOptions,
+					...(errors?.missingDocuments && { errorMessage: { text: errors.missingDocuments.msg } })
+				}
+			}
+		]
+	};
+
+	return pageContent;
+};

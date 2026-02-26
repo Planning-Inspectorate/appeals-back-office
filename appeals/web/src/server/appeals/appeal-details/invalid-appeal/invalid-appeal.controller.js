@@ -671,23 +671,35 @@ const renderCheckDetailsAndMarkEnforcementAsInvalid = async (request, response) 
 			return response.status(500).render('app/500.njk');
 		}
 
-		const enforcementInvalidReasonOptions =
-			await appellantCaseService.getAppellantCaseEnforcementInvalidReasonOptions(request.apiClient);
+		const outcome = request.session?.webAppellantCaseReviewOutcome;
+		const isIncomplete = outcome?.validationOutcome === 'incomplete';
 
-		const incompleteReasonOptions =
-			request.session?.webAppellantCaseReviewOutcome?.validationOutcome === 'incomplete'
-				? await appellantCaseService.getAppellantCaseNotValidReasonOptionsForOutcome(
+		const tasks = {
+			enforcementOptions: appellantCaseService.getAppellantCaseEnforcementInvalidReasonOptions(
+				request.apiClient
+			),
+			incompleteOptions: isIncomplete
+				? appellantCaseService.getAppellantCaseNotValidReasonOptionsForOutcome(
 						request.apiClient,
 						'incomplete'
 					)
-				: [];
+				: Promise.resolve([]),
+			missingDocs: isIncomplete
+				? outcomeIncompleteService.getAppellantCaseEnforcementMissingDocuments(request.apiClient)
+				: Promise.resolve([]),
+			groundsMismatch:
+				isIncomplete && outcome.groundsFacts
+					? outcomeIncompleteService.getAppellantCaseEnforcementGroundsMismatch(request.apiClient)
+					: Promise.resolve([])
+		};
 
-		const missingDocuments =
-			request.session?.webAppellantCaseReviewOutcome?.validationOutcome === 'incomplete'
-				? await outcomeIncompleteService.getAppellantCaseEnforcementMissingDocuments(
-						request.apiClient
-					)
-				: [];
+		const results = await Promise.all(Object.values(tasks));
+		const [
+			enforcementInvalidReasonOptions,
+			incompleteReasonOptions,
+			missingDocuments,
+			groundsAndFactsMismatch
+		] = results;
 
 		if (!enforcementInvalidReasonOptions) {
 			throw new Error('error retrieving invalid enforcement reason options');
@@ -698,6 +710,7 @@ const renderCheckDetailsAndMarkEnforcementAsInvalid = async (request, response) 
 			enforcementInvalidReasonOptions,
 			incompleteReasonOptions,
 			missingDocuments,
+			groundsAndFactsMismatch,
 			request.session
 		);
 

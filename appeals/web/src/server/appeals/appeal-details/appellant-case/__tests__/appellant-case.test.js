@@ -2682,6 +2682,8 @@ describe('appellant-case', () => {
 
 	describe('GET /appellant-case/incomplete/date', () => {
 		beforeEach(() => {
+			jest.spyOn(Date, 'now').mockReturnValue(1735732800000); // set date for Hint text
+
 			nock('http://test/')
 				.get(`/appeals/1?include=all`)
 				.reply(200, {
@@ -2691,6 +2693,7 @@ describe('appellant-case', () => {
 		});
 
 		afterEach(() => {
+			jest.restoreAllMocks();
 			nock.cleanAll();
 		});
 
@@ -2827,6 +2830,8 @@ describe('appellant-case', () => {
 
 	describe('POST /appellant-case/incomplete/date', () => {
 		beforeEach(async () => {
+			jest.spyOn(Date, 'now').mockReturnValue(1735732800000); // set date for Hint text
+
 			nock('http://test/')
 				.get(`/appeals/1`)
 				.reply(200, {
@@ -2839,6 +2844,7 @@ describe('appellant-case', () => {
 		});
 
 		afterEach(() => {
+			jest.restoreAllMocks();
 			nock.cleanAll();
 		});
 
@@ -2974,7 +2980,7 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('class="govuk-error-summary"');
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Appeal due date day must be between 1 and 31</a>');
+			expect(element.innerHTML).toContain('The appeal due date day must be between 1 and 31</a>');
 
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
@@ -2997,7 +3003,7 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('class="govuk-error-summary"');
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Appeal due date day must be between 1 and 31</a>');
+			expect(element.innerHTML).toContain('The appeal due date day must be between 1 and 31</a>');
 
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
@@ -3024,7 +3030,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Appeal due date day must be a number</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'The appeal due date day must be a number</a>'
+			);
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid month was provided', async () => {
@@ -3059,7 +3067,7 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('class="govuk-error-summary"');
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Appeal due date month must be between 1 and 12</a>');
+			expect(element.innerHTML).toContain('The appeal due date month must be between 1 and 12</a>');
 
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
@@ -3082,7 +3090,7 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('class="govuk-error-summary"');
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Appeal due date month must be between 1 and 12</a>');
+			expect(element.innerHTML).toContain('The appeal due date month must be between 1 and 12</a>');
 
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
@@ -3109,7 +3117,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Appeal due date must be a real date</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('The appeal due date must be a real date</a>');
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid year was provided', async () => {
@@ -3144,7 +3152,7 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('class="govuk-error-summary"');
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Appeal due date year must be 4 digits</a>');
+			expect(element.innerHTML).toContain('The appeal due date year must be 4 digits</a>');
 
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
@@ -3167,14 +3175,16 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('class="govuk-error-summary"');
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Appeal due date year must be a number</a>');
+			expect(element.innerHTML).toContain('The appeal due date year must be a number</a>');
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Appeal due date year must be a number</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'The appeal due date year must be a number</a>'
+			);
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid date was provided', async () => {
@@ -3213,7 +3223,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Appeal due date must be a real date</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('The appeal due date must be a real date</a>');
 		});
 
 		it('should redirect to the check and confirm page if a valid date was provided', async () => {

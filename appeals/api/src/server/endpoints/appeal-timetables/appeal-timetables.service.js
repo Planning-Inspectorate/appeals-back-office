@@ -704,7 +704,7 @@ const shouldSendNotify = (appealTypeShorthand, procedureType) => {
 		appealTypeShorthand === APPEAL_CASE_TYPE.ZP ||
 		appealTypeShorthand === APPEAL_CASE_TYPE.ZA ||
 		appealTypeShorthand === APPEAL_CASE_TYPE.H ||
-		//appealTypeShorthand === APPEAL_CASE_TYPE.X ||
+		appealTypeShorthand === APPEAL_CASE_TYPE.X ||
 		(appealTypeShorthand === APPEAL_CASE_TYPE.W &&
 			(procedureType === APPEAL_CASE_PROCEDURE.WRITTEN ||
 				procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1)) ||

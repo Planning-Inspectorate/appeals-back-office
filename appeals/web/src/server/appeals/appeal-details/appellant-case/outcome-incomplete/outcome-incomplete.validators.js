@@ -19,14 +19,14 @@ export const validateIncompleteReason = createValidator(
 
 export const validateIncompleteReasonTextItems =
 	createCheckboxTextItemsValidator('incompleteReason');
-export const validateDueDateFields = createDateInputFieldsValidator('due-date', 'Appeal due date');
+export const validateDueDateFields = createDateInputFieldsValidator('due-date', 'appeal due date');
 export const validateDueDateValid = createDateInputDateValidityValidator(
 	'due-date',
-	'Appeal due date'
+	'appeal due date'
 );
 export const validateDueDateInFuture = createDateInputDateInFutureValidator(
 	'due-date',
-	'Appeal due date'
+	'appeal due date'
 );
 
 export const validateMissingDocumentReason = createValidator(
@@ -55,4 +55,19 @@ export const validateFeeRecieptDueDateValid = createDateInputDateValidityValidat
 export const validateFeeRecieptDueDateInFuture = createDateInputDateInFutureValidator(
 	'fee-receipt-due-date',
 	'ground (a) fee receipt due date'
+);
+
+export const validateGroundsAndFactsCheck = createValidator(
+	body('groundsFacts')
+		.exists()
+		.withMessage('Select which grounds do not match the facts')
+		.bail()
+		.notEmpty()
+		.withMessage('Select which grounds do not match the facts')
+);
+
+export const validateGroundsAndFactsCheckTextItems = createCheckboxTextItemsValidator(
+	'groundsFacts',
+	LENGTH_250,
+	'a reason'
 );
