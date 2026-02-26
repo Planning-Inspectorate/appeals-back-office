@@ -337,6 +337,99 @@ describe('lpa-statements', () => {
 				'Found. Redirecting to /appeals-service/appeal-details/3/lpa-statement/redact'
 			);
 		});
+		describe('allocation pages', () => {
+			const appealId = 3;
+
+			beforeEach(() => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						appealStatus: 'statements'
+					})
+					.persist();
+				nock('http://test/')
+					.get('/appeals/appeal-allocation-levels')
+					.reply(200, allocationDetailsData.levels)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/appeal-allocation-specialisms')
+					.reply(200, allocationDetailsData.specialisms)
+					.persist();
+			});
+
+			describe('GET /allocation-check', () => {
+				it('should render allocation-check page', async () => {
+					const response = await request.get(
+						`${baseUrl}/${appealId}/lpa-statement/valid/allocation-check`
+					);
+					expect(response.statusCode).toBe(200);
+					expect(response.text).toContain(
+						'Do you need to update the allocation level and specialisms?'
+					);
+				});
+			});
+
+			describe('POST /allocation-check', () => {
+				it('should redirect to allocation-level if answer is yes', async () => {
+					const response = await request
+						.post(`${baseUrl}/${appealId}/lpa-statement/valid/allocation-check`)
+						.send({ allocationLevelAndSpecialisms: 'yes' });
+					expect(response.statusCode).toBe(302);
+					expect(response.text).toContain('allocation-level');
+				});
+
+				it('should redirect to confirm if answer is no', async () => {
+					const response = await request
+						.post(`${baseUrl}/${appealId}/lpa-statement/valid/allocation-check`)
+						.send({ allocationLevelAndSpecialisms: 'no' });
+					expect(response.statusCode).toBe(302);
+					expect(response.text).toContain('valid/confirm');
+				});
+			});
+
+			describe('GET /allocation-level', () => {
+				it('should render allocation-level page', async () => {
+					const response = await request.get(
+						`${baseUrl}/${appealId}/lpa-statement/valid/allocation-level`
+					);
+					expect(response.statusCode).toBe(200);
+					expect(response.text).toContain('Allocation level');
+				});
+			});
+
+			describe('POST /allocation-level', () => {
+				it('should redirect to allocation-specialisms', async () => {
+					const response = await request
+						.post(`${baseUrl}/${appealId}/lpa-statement/valid/allocation-level`)
+						.send({ allocationLevel: 'A' });
+					expect(response.statusCode).toBe(302);
+					expect(response.text).toContain('allocation-specialisms');
+				});
+			});
+
+			describe('GET /allocation-specialisms', () => {
+				it('should render allocation-specialisms page', async () => {
+					const response = await request.get(
+						`${baseUrl}/${appealId}/lpa-statement/valid/allocation-specialisms`
+					);
+					expect(response.statusCode).toBe(200);
+					expect(response.text).toContain('Allocation specialisms');
+				});
+			});
+
+			describe('POST /allocation-specialisms', () => {
+				it('should redirect to confirm', async () => {
+					const response = await request
+						.post(`${baseUrl}/${appealId}/lpa-statement/valid/allocation-specialisms`)
+						.send({ allocationSpecialisms: ['1'] });
+					expect(response.statusCode).toBe(302);
+					expect(response.text).toContain('valid/confirm');
+				});
+			});
+		});
+
 		describe('check your answers page', () => {
 			const appealId = 3;
 

@@ -1,7 +1,9 @@
 import {
+	allocationDetailsData,
 	appealDataFullPlanning,
 	documentRedactionStatuses,
-	fileUploadInfo
+	fileUploadInfo,
+	getAppealRepsResponse
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
@@ -292,6 +294,141 @@ describe('rule 6 party statement - add document', () => {
 			expect(response.text).toBe(
 				`Found. Redirecting to /appeals-service/appeal-details/2/rule-6-party-statement/1/add-document/date-submitted?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Frule-6-party-statement%2F1%2Fadd-document%2Fredaction-status`
 			);
+		});
+	});
+});
+
+describe('rule 6 party statement review - allocation', () => {
+	const appealId = 2;
+	const rule6PartyId = 1;
+	const flowRoute = 'valid';
+
+	beforeEach(() => {
+		installMockApi();
+
+		nock('http://test/')
+			.get(`/appeals/${appealId}?include=all`)
+			.reply(200, {
+				...appealDataFullPlanning,
+				appealId,
+				procedureType: 'inquiry',
+				appealStatus: 'statements',
+				appealRule6Parties: [
+					{
+						id: rule6PartyId,
+						serviceUserId: 100,
+						partyName: 'Test Rule 6 Party'
+					}
+				]
+			})
+			.persist();
+
+		nock('http://test/')
+			.get(`/appeals/${appealId}/reps?type=rule_6_party_statement`)
+			.reply(200, {
+				...getAppealRepsResponse,
+				itemCount: 1,
+				items: [
+					{
+						id: 3670,
+						status: 'awaiting_review',
+						author: 'Test Rule 6 Party',
+						represented: { id: 100 }
+					}
+				]
+			})
+			.persist();
+
+		nock('http://test/')
+			.get('/appeals/appeal-allocation-levels')
+			.reply(200, allocationDetailsData.levels)
+			.persist();
+
+		nock('http://test/')
+			.get('/appeals/appeal-allocation-specialisms')
+			.reply(200, allocationDetailsData.specialisms)
+			.persist();
+	});
+
+	afterEach(teardown);
+
+	describe('allocation pages', () => {
+		describe('GET /allocation-check', () => {
+			it('should render allocation-check page', async () => {
+				const response = await request.get(
+					`${baseUrl}/${appealId}/rule-6-party-statement/${rule6PartyId}/${flowRoute}/allocation-check`
+				);
+				expect(response.statusCode).toBe(200);
+				expect(response.text).toContain(
+					'Do you need to update the allocation level and specialisms?'
+				);
+			});
+		});
+
+		describe('POST /allocation-check', () => {
+			it('should redirect to allocation-level if answer is yes', async () => {
+				const response = await request
+					.post(
+						`${baseUrl}/${appealId}/rule-6-party-statement/${rule6PartyId}/${flowRoute}/allocation-check`
+					)
+					.send({ allocationLevelAndSpecialisms: 'yes' });
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toContain('allocation-level');
+			});
+
+			it('should redirect to confirm if answer is no', async () => {
+				const response = await request
+					.post(
+						`${baseUrl}/${appealId}/rule-6-party-statement/${rule6PartyId}/${flowRoute}/allocation-check`
+					)
+					.send({ allocationLevelAndSpecialisms: 'no' });
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toContain(`${flowRoute}/confirm`);
+			});
+		});
+
+		describe('GET /allocation-level', () => {
+			it('should render allocation-level page', async () => {
+				const response = await request.get(
+					`${baseUrl}/${appealId}/rule-6-party-statement/${rule6PartyId}/${flowRoute}/allocation-level`
+				);
+				expect(response.statusCode).toBe(200);
+				expect(response.text).toContain('Allocation level');
+			});
+		});
+
+		describe('POST /allocation-level', () => {
+			it('should redirect to allocation-specialisms', async () => {
+				const response = await request
+					.post(
+						`${baseUrl}/${appealId}/rule-6-party-statement/${rule6PartyId}/${flowRoute}/allocation-level`
+					)
+					.send({ allocationLevel: 'A' });
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toContain('allocation-specialisms');
+			});
+		});
+
+		describe('GET /allocation-specialisms', () => {
+			it('should render allocation-specialisms page', async () => {
+				const response = await request.get(
+					`${baseUrl}/${appealId}/rule-6-party-statement/${rule6PartyId}/${flowRoute}/allocation-specialisms`
+				);
+				expect(response.statusCode).toBe(200);
+				expect(response.text).toContain('Allocation specialisms');
+			});
+		});
+
+		describe('POST /allocation-specialisms', () => {
+			it('should redirect to confirm', async () => {
+				const response = await request
+					.post(
+						`${baseUrl}/${appealId}/rule-6-party-statement/${rule6PartyId}/${flowRoute}/allocation-specialisms`
+					)
+					.send({ allocationSpecialisms: ['1'] });
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toContain(`${flowRoute}/confirm`);
+			});
 		});
 	});
 });
