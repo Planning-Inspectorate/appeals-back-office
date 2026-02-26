@@ -2127,7 +2127,7 @@ describe('appellant cases routes', () => {
 					missing_documents: [],
 					other_info: '',
 					appeal_grounds: [],
-					grounds_and_facts: ['a: Grounds mismatch']
+					grounds_and_facts: ['Ground (a): Grounds mismatch']
 				};
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {

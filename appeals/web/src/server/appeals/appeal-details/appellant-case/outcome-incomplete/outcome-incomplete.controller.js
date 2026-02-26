@@ -634,7 +634,6 @@ export const postGroundsFactsCheck = async (request, response) => {
 	const reasonsArray = Array.isArray(reasons) ? reasons : [reasons];
 	const redirectId = reasonsArray.find((/** @type { string } */ reason) => reason in redirectMap);
 	if (redirectId) {
-		console.log('grounds facts post', reasons, redirectId);
 		return response.redirect(
 			// @ts-ignore
 			`/appeals-service/appeal-details/${appealId}/appellant-case/incomplete/${redirectMap[redirectId]}`

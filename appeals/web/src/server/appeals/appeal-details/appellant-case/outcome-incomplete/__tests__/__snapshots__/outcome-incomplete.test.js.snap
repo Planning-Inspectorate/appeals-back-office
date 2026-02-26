@@ -189,8 +189,8 @@ exports[`incomplete-appeal enforcement notice appeal GET /check-details-and-mark
                     <dd                     class="govuk-summary-list__value">
                         <div class="pins-show-more" data-label="" data-mode="html">
                             <ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet">
-                                <li>a: invalid ground 1</li>
-                                <li>b: invalid ground 2</li>
+                                <li>Ground (a): invalid ground 1</li>
+                                <li>Ground (b): invalid ground 2</li>
                             </ul>
                         </div>
                         </dd>

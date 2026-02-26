@@ -317,11 +317,11 @@ export const updateAppellantCaseValidationOutcome = async (
 			) {
 				const reasonsToFormat = [];
 				const { appellantCase, enforcementNoticeAppealOutcome } = updatedAppeal;
-				if (appellantCase?.appellantCaseEnforcementMissingDocumentsSelected?.length) {
+				if (
+					appellantCase?.appellantCaseEnforcementMissingDocumentsSelected?.length ||
+					appellantCase?.appellantCaseEnforcementGroundsMismatchSelected?.length
+				) {
 					reasonsToFormat.push('Missing information');
-				}
-				if (appellantCase?.appellantCaseEnforcementGroundsMismatchSelected?.length) {
-					reasonsToFormat.push('Grounds mismatch');
 				}
 				if (enforcementNoticeAppealOutcome.groundAFeeReceiptDueDate) {
 					reasonsToFormat.push('Ground (a) fee receipt due date');
@@ -363,7 +363,7 @@ export const updateAppellantCaseValidationOutcome = async (
 							grounds_and_facts: enforcementGroundsMismatchFacts
 								? enforcementGroundsMismatchFacts.map(
 										(ground) =>
-											`${groundsMismatchOptions.find((option) => option.id === ground.id)?.name}: ${ground.text?.[0] || ''}`
+											`Ground (${groundsMismatchOptions.find((option) => option.id === ground.id)?.name}): ${ground.text?.[0] || ''}`
 									)
 								: [],
 							local_planning_authority: updatedAppeal?.lpa?.name || '',
