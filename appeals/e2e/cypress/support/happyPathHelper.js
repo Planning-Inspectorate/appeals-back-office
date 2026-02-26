@@ -77,7 +77,13 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Start case');
 	},
 
-	startS78HearingCase(caseObj, procedureType, dateKnown = false) {
+	startS78HearingCase(
+		caseObj,
+		procedureType,
+		dateKnown = false,
+		hearingEstimationYesNo = 'no',
+		hearingEstimationDays = 1
+	) {
 		happyPathHelper.viewCaseDetails(caseObj);
 		caseDetailsPage.clickReadyToStartCase();
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
@@ -89,6 +95,11 @@ export const happyPathHelper = {
 			dateTimeSection.enterHearingTime('13', '45');
 			caseDetailsPage.clickButtonByText('Continue');
 		}
+		caseDetailsPage.selectRadioButtonByValue(hearingEstimationYesNo);
+		if (hearingEstimationYesNo === 'yes') {
+			cy.get('#hearing-estimation-days').clear().type(hearingEstimationDays.toString());
+		}
+		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Start case');
 	},
 

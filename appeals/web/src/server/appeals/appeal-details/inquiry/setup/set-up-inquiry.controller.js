@@ -658,6 +658,7 @@ export const getInquiryCheckDetails = async (request, response) => {
 				undefined,
 				session.startCaseAppealProcedure?.[appealId].appealProcedure,
 				undefined,
+				undefined,
 				{
 					inquiryStartTime: dayMonthYearHourMinuteToISOString({
 						day: session.setUpInquiry?.[appealId]['inquiry-date-day'],

@@ -132,12 +132,14 @@ const createHearing = async (createHearingData, appeal, notifyClient, azureAdUse
 		const appealId = createHearingData.appealId;
 		const hearingStartTime = createHearingData.hearingStartTime;
 		const hearingEndTime = createHearingData.hearingEndTime;
+		const estimatedDays = createHearingData.estimatedDays;
 		const address = createHearingData.address;
 
 		const hearing = await hearingRepository.createHearingById({
 			appealId,
 			hearingStartTime,
 			hearingEndTime,
+			estimatedDays,
 			address
 		});
 
@@ -177,6 +179,7 @@ const updateHearing = async (
 		const hearingId = Number(updateHearingData.hearingId);
 		const hearingStartTime = updateHearingData.hearingStartTime;
 		const hearingEndTime = updateHearingData.hearingEndTime;
+		const estimatedDays = updateHearingData.estimatedDays;
 		const address = updateHearingData.address;
 		const addressId = updateHearingData.addressId;
 
@@ -185,6 +188,7 @@ const updateHearing = async (
 			hearingId,
 			hearingStartTime: hearingStartTime,
 			hearingEndTime: hearingEndTime || undefined,
+			estimatedDays,
 			addressId: addressId,
 			address: address
 		};
