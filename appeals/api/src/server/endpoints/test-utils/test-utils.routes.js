@@ -185,6 +185,12 @@ router.post(
 			required: true,
 			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 		}
+		#swagger.requestBody = {
+			in: 'body',
+			description: 'Appeal IDs to delete',
+			schema: { $ref: '#/components/schemas/SimulateStartAppealRequest' },
+			required: true
+		}
 		#swagger.responses[201] = {
 			description: 'Creates an appeal timetable and start the appeal',
 			schema: { $ref: '#/components/schemas/StartCaseResponse' }

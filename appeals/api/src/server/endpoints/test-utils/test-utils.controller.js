@@ -268,10 +268,11 @@ export const simulateStartAppeal = async (req, res) => {
 
 	if (!appeal) return res.status(400).send(false);
 
-	req.body = {
-		startDate: new Date().toISOString(),
-		procedureType: appeal.procedureType?.key || 'written'
-	};
+	if (!req.body.procedureType) {
+		req.body.procedureType = appeal.procedureType?.key || 'written';
+	}
+
+	req.body.startDate = new Date().toISOString();
 
 	req.appeal = appeal;
 

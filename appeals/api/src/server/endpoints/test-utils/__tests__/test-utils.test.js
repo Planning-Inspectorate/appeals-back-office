@@ -352,6 +352,24 @@ describe('test utils routes', () => {
 			});
 		});
 
+		test('returns 201 for valid appeal reference with procedureType', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+			const response = await testApiRequest
+				.post('/1/start-appeal')
+				.send({ procedureType: 'hearing' });
+
+			expect(response.status).toEqual(201);
+			expect(response.body).toEqual({
+				finalCommentsDueDate: '2025-12-11T23:59:00.000Z',
+				ipCommentsDueDate: '2025-11-27T23:59:00.000Z',
+				lpaQuestionnaireDueDate: '2025-10-30T23:59:00.000Z',
+				lpaStatementDueDate: '2025-11-27T23:59:00.000Z',
+				s106ObligationDueDate: '2025-12-11T23:59:00.000Z',
+				statementOfCommonGroundDueDate: '2025-11-27T23:59:00.000Z'
+			});
+		});
+
 		test('returns 400 for invalid appeal reference', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(null);
 

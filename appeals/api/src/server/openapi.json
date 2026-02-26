@@ -6772,6 +6772,23 @@
 					"500": {
 						"description": "Internal Server Error"
 					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Appeal IDs to delete",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SimulateStartAppealRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/SimulateStartAppealRequest"
+							}
+						}
+					}
 				}
 			}
 		},
@@ -15202,6 +15219,15 @@
 					"childAppealReference": {
 						"type": "string",
 						"example": "6000118"
+					}
+				}
+			},
+			"SimulateStartAppealRequest": {
+				"type": "object",
+				"properties": {
+					"procedureType": {
+						"type": "string",
+						"example": "hearing"
 					}
 				}
 			},
