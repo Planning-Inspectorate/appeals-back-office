@@ -35,19 +35,19 @@ exports[`cancel invalid GET /check-details should render the check details page 
             </dl>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
-                    <details class="govuk-details">
+                    <details id="appellant-preview" class="govuk-details">
                         <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
                         </summary>
-                        <div class="govuk-details__text"></div>
+                        <div class="govuk-details__text">Appellant preview HTML</div>
                     </details>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
-                    <details class="govuk-details">
+                    <details id="lpa-preview" class="govuk-details">
                         <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
                         </summary>
-                        <div class="govuk-details__text"></div>
+                        <div class="govuk-details__text">LPA preview HTML</div>
                     </details>
                 </div>
             </div>

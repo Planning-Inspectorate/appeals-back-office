@@ -4,6 +4,7 @@ import {
 	appellantCaseInvalidReasonsRealIds
 } from '#testing/appeals/appeals.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -284,7 +285,18 @@ describe('cancel invalid', () => {
 		beforeEach(async () => {
 			nock('http://test/')
 				.get(`/appeals/${mockAppealId}?include=all`)
-				.reply(200, appealDataEnforcementNotice)
+				.reply(200, {
+					...appealDataEnforcementNotice,
+					enforcementNotice: {
+						appealOutcome: {
+							groundABarred: true
+						},
+						appellantCase: {
+							reference: 'Reference',
+							effectiveDate: '2026-01-01'
+						}
+					}
+				})
 				.persist();
 			nock('http://test/')
 				.get('/appeals/appellant-case-invalid-reasons')
@@ -293,6 +305,31 @@ describe('cancel invalid', () => {
 		});
 
 		it('should render the check details page with the correct content', async () => {
+			let appellantPreviewRequestBody, lpaPreviewRequestBody;
+
+			const mockAppellantPreview = nock('http://test/')
+				.post('/appeals/notify-preview/enforcement-appeal-invalid-appellant.content.md', (body) => {
+					appellantPreviewRequestBody = body;
+					return true;
+				})
+				.reply(200, { renderedHtml: 'Appellant preview HTML' });
+
+			const mockLpaPreview = nock('http://test/')
+				.post('/appeals/notify-preview/enforcement-appeal-invalid-lpa.content.md', (body) => {
+					lpaPreviewRequestBody = body;
+					return true;
+				})
+				.reply(200, { renderedHtml: 'LPA preview HTML' });
+
+			nock('http://test/')
+				.get(`/appeals/${mockAppealId}/case-team-email`)
+				.reply(200, {
+					id: 1,
+					email: 'caseofficers@planninginspectorate.gov.uk',
+					name: 'Test Team'
+				})
+				.persist();
+
 			await request.post(`${baseUrl}/${mockAppealId}/cancel/invalid/reason`).send({
 				invalidReason: ['1', '4'],
 				'invalidReason-4': 'Eminently legitimate reason'
@@ -329,7 +366,35 @@ describe('cancel invalid', () => {
 
 			expect(element.querySelector('button')?.innerHTML.trim()).toBe('Mark appeal as invalid');
 
-			// TODO: test for the notify previews
+			expect(mockAppellantPreview.isDone()).toBe(true);
+			const personalisation = {
+				appeal_reference_number: appealDataEnforcementNotice.appealReference,
+				other_live_appeals: 'yes',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+				enforcement_reference: 'Reference',
+				effective_date: '01 January 2026',
+				reasons: [
+					'Appeal has not been submitted on time',
+					'Other reason: Eminently legitimate reason'
+				],
+				ground_a_barred: true
+			};
+			expect(appellantPreviewRequestBody).toMatchObject({
+				...personalisation,
+				feedback_link: FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE
+			});
+			expect(mockLpaPreview.isDone()).toBe(true);
+			expect(lpaPreviewRequestBody).toMatchObject({
+				...personalisation,
+				feedback_link: FEEDBACK_FORM_LINKS.LPA
+			});
+
+			expect(
+				element.querySelector('#appellant-preview .govuk-details__text')?.innerHTML.trim()
+			).toBe('Appellant preview HTML');
+			expect(element.querySelector('#lpa-preview .govuk-details__text')?.innerHTML.trim()).toBe(
+				'LPA preview HTML'
+			);
 		});
 	});
 
@@ -343,10 +408,17 @@ describe('cancel invalid', () => {
 				.get('/appeals/appellant-case-invalid-reasons')
 				.reply(200, appellantCaseInvalidReasonsRealIds)
 				.persist();
-			nock('http://test/').patch(`/appeals/${mockAppealId}/appellant-cases/0`).reply(200);
 		});
 
 		it('should redirect to the appeal details page on success', async () => {
+			let appellantCasesRequestBody;
+			const mockAppellantCasesEndpoint = nock('http://test/')
+				.patch(`/appeals/${mockAppealId}/appellant-cases/0`, (body) => {
+					appellantCasesRequestBody = body;
+					return true;
+				})
+				.reply(200);
+
 			await request.post(`${baseUrl}/${mockAppealId}/cancel/invalid/reason`).send({
 				invalidReason: ['1', '4'],
 				'invalidReason-4': 'Eminently legitimate reason'
@@ -357,6 +429,13 @@ describe('cancel invalid', () => {
 			const response = await request.post(
 				`${baseUrl}/${mockAppealId}/cancel/invalid/check-details`
 			);
+			expect(mockAppellantCasesEndpoint.isDone()).toBe(true);
+			expect(appellantCasesRequestBody).toEqual({
+				validationOutcome: 'invalid',
+				invalidReasons: [{ id: 1 }, { id: 4, text: ['Eminently legitimate reason'] }],
+				otherLiveAppeals: 'yes',
+				enforcementNoticeInvalid: 'no'
+			});
 			expect(response.status).toBe(302);
 			expect(response.headers.location).toBe(`${baseUrl}/${mockAppealId}`);
 		});
