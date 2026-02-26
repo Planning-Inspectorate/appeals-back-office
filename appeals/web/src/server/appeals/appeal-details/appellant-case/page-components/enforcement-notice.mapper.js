@@ -46,7 +46,7 @@ export function generateEnforcementNoticeComponents(
 		].filter((row) => row);
 	}
 
-	if (mappedAppellantCaseData.otherAppellants.display.summaryListItem) {
+	if (mappedAppellantCaseData.otherAppellants?.display?.summaryListItem) {
 		getComponentParameters('appellant-details', pageComponents)?.parameters.rows.push(
 			mappedAppellantCaseData.otherAppellants.display.summaryListItem
 		);
@@ -59,7 +59,7 @@ export function generateEnforcementNoticeComponents(
 			mappedAppellantCaseData.siteAddress.display.summaryListItem,
 			mappedAppellantCaseData.contactAddress.display.summaryListItem,
 			mappedAppellantCaseData.interestInLand.display.summaryListItem,
-			mappedAppellantCaseData.writtenOrVerbalPermission.display.summaryListItem,
+			mappedAppellantCaseData.writtenOrVerbalPermission?.display?.summaryListItem,
 			mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
 			mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem
 		].filter((row) => row);
@@ -125,15 +125,15 @@ export function generateEnforcementNoticeComponents(
 				...getSummaryListItems(mappedAppellantCaseData.factsForGrounds),
 				// @ts-ignore
 				...getSummaryListItems(mappedAppellantCaseData.supportingDocumentsForGrounds),
-				mappedAppellantCaseData.retrospectiveApplication.display.summaryListItem,
-				mappedAppellantCaseData.groundAFeeReceipt.display.summaryListItem,
-				mappedAppellantCaseData.applicationDevelopmentAllOrPart.display.summaryListItem,
+				mappedAppellantCaseData.retrospectiveApplication?.display?.summaryListItem,
+				mappedAppellantCaseData.groundAFeeReceipt?.display?.summaryListItem,
+				mappedAppellantCaseData.applicationDevelopmentAllOrPart?.display?.summaryListItem,
 				mappedAppellantCaseData.applicationReference.display.summaryListItem,
 				mappedAppellantCaseData.applicationDate.display.summaryListItem,
 				mappedAppellantCaseData.developmentDescription.display.summaryListItem,
 				mappedAppellantCaseData.applicationDecision.display.summaryListItem,
 				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
-				mappedAppellantCaseData.appealDecisionDate.display.summaryListItem
+				mappedAppellantCaseData.appealDecisionDate?.display?.summaryListItem
 			].filter((row) => row)
 		}
 	};
