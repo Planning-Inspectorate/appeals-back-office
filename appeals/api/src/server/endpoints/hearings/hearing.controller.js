@@ -37,8 +37,6 @@ export const getHearingById = async (req, res) => {
 	const { appeal } = req;
 	const formattedAppeal = formatHearing(appeal);
 
-	console.log('formattedAppeal', formattedAppeal);
-
 	return res.send(formattedAppeal);
 };
 
