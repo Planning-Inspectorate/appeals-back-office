@@ -31,6 +31,7 @@ import {
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
+import config from '@pins/appeals.web/environment/config.js';
 import { APPEAL_REPRESENTATION_STATUS, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
@@ -3283,32 +3284,183 @@ describe('appeal-details', () => {
 			});
 
 			it('Should display procedure type change link because type is ELB and lpastatement status is not received', async () => {
-				const appealId = 2;
-				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
-					.reply(200, {
-						...appealData,
-						appealId,
-						appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
-						procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
-						documentationSummary: {
-							lpaStatement: {
-								status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+				const flagsBackup = {
+					featureFlagElbHearing: config.featureFlags.featureFlagElbHearing,
+					featureFlagElbInquiry: config.featureFlags.featureFlagElbInquiry
+				};
+				Object.assign(config.featureFlags, {
+					featureFlagElbHearing: true,
+					featureFlagElbInquiry: true
+				});
+
+				try {
+					const appealId = 2;
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+							procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+							documentationSummary: {
+								lpaStatement: {
+									status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+								}
 							}
-						}
-					});
-				nock('http://test/')
-					.get(/appeals\/\d+\/appellant-cases\/\d+/)
-					.reply(200, {
-						planningObligation: { hasObligation: false },
-						numberOfResidencesNetChange: null
-					});
+						});
+					nock('http://test/')
+						.get(/appeals\/\d+\/appellant-cases\/\d+/)
+						.reply(200, {
+							planningObligation: { hasObligation: false },
+							numberOfResidencesNetChange: null
+						});
 
-				const response = await request.get(`${baseUrl}/${appealId}`);
+					const response = await request.get(`${baseUrl}/${appealId}`);
 
-				expect(response.text).toContain(
-					'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
-				);
+					expect(response.text).toContain(
+						'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+					);
+				} finally {
+					Object.assign(config.featureFlags, flagsBackup);
+				}
+			});
+
+			it('Should display procedure type change link because type is S20 and lpastatement status is not received', async () => {
+				const flagsBackup = {
+					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
+					featureFlagS78Inquiry: config.featureFlags.featureFlagS78Inquiry,
+					featureFlagS20Hearing: config.featureFlags.featureFlagS20Hearing,
+					featureFlagS20Inquiry: config.featureFlags.featureFlagS20Inquiry
+				};
+				Object.assign(config.featureFlags, {
+					featureFlagS78Written: true,
+					featureFlagS78Inquiry: true,
+					featureFlagS20Hearing: true,
+					featureFlagS20Inquiry: true
+				});
+
+				try {
+					const appealId = 2;
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealType: APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+							procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+							documentationSummary: {
+								lpaStatement: {
+									status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+								}
+							}
+						});
+					nock('http://test/')
+						.get(/appeals\/\d+\/appellant-cases\/\d+/)
+						.reply(200, {
+							planningObligation: { hasObligation: false },
+							numberOfResidencesNetChange: null
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.text).toContain(
+						'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+					);
+				} finally {
+					Object.assign(config.featureFlags, flagsBackup);
+				}
+			});
+
+			it('Should hide procedure type change link for S20 if no alternative procedure type is available', async () => {
+				const flagsBackup = {
+					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
+					featureFlagS78Inquiry: config.featureFlags.featureFlagS78Inquiry,
+					featureFlagS20Hearing: config.featureFlags.featureFlagS20Hearing,
+					featureFlagS20Inquiry: config.featureFlags.featureFlagS20Inquiry
+				};
+				Object.assign(config.featureFlags, {
+					featureFlagS78Written: false,
+					featureFlagS78Inquiry: true,
+					featureFlagS20Hearing: false,
+					featureFlagS20Inquiry: true
+				});
+
+				try {
+					const appealId = 2;
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealType: APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+							procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+							documentationSummary: {
+								lpaStatement: {
+									status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+								}
+							}
+						});
+					nock('http://test/')
+						.get(/appeals\/\d+\/appellant-cases\/\d+/)
+						.reply(200, {
+							planningObligation: { hasObligation: false },
+							numberOfResidencesNetChange: null
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.text).not.toContain(
+						'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+					);
+				} finally {
+					Object.assign(config.featureFlags, flagsBackup);
+				}
+			});
+
+			it('Should display procedure type change link for S20 if at least one alternative procedure type is available', async () => {
+				const flagsBackup = {
+					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
+					featureFlagS78Inquiry: config.featureFlags.featureFlagS78Inquiry,
+					featureFlagS20Hearing: config.featureFlags.featureFlagS20Hearing,
+					featureFlagS20Inquiry: config.featureFlags.featureFlagS20Inquiry
+				};
+				Object.assign(config.featureFlags, {
+					featureFlagS78Written: true,
+					featureFlagS78Inquiry: true,
+					featureFlagS20Hearing: false,
+					featureFlagS20Inquiry: true
+				});
+
+				try {
+					const appealId = 2;
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealType: APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+							procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+							documentationSummary: {
+								lpaStatement: {
+									status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+								}
+							}
+						});
+					nock('http://test/')
+						.get(/appeals\/\d+\/appellant-cases\/\d+/)
+						.reply(200, {
+							planningObligation: { hasObligation: false },
+							numberOfResidencesNetChange: null
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.text).toContain(
+						'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+					);
+				} finally {
+					Object.assign(config.featureFlags, flagsBackup);
+				}
 			});
 
 			it('Should not display procedure type change link if type is enforcement notice', async () => {

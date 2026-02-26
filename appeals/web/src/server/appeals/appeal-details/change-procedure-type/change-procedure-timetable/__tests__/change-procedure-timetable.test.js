@@ -92,136 +92,141 @@ describe('Change procedure timetable', () => {
 	};
 
 	describe('GET /change-timetable', () => {
-		describe.each([
-			APPEAL_CASE_PROCEDURE.WRITTEN,
-			APPEAL_CASE_PROCEDURE.HEARING,
-			APPEAL_CASE_PROCEDURE.INQUIRY
-		])('Written, Hearing and Inquiry', (appealProcedure) => {
-			it(`should render correct "Timetable due dates" page for ${appealProcedure} with no planning obligation`, async () => {
-				const appealData = {
-					...baseAppealData,
-					procedureType: appealProcedure,
-					appealTimetable: {
-						appealTimetableId: 1
-					}
-				};
-				appealData.appealType = APPEAL_TYPE.S78;
-				appealData.appealStatus = 'lpa_questionnaire';
+		describe.each([APPEAL_TYPE.S78, APPEAL_TYPE.PLANNED_LISTED_BUILDING])(
+			'S78 and S20 - %s',
+			(appealType) => {
+				describe.each([
+					APPEAL_CASE_PROCEDURE.WRITTEN,
+					APPEAL_CASE_PROCEDURE.HEARING,
+					APPEAL_CASE_PROCEDURE.INQUIRY
+				])('Written, Hearing and Inquiry', (appealProcedure) => {
+					it(`should render correct "Timetable due dates" page for ${appealProcedure} with no planning obligation`, async () => {
+						const appealData = {
+							...baseAppealData,
+							procedureType: appealProcedure,
+							appealTimetable: {
+								appealTimetableId: 1
+							}
+						};
+						appealData.appealType = appealType;
+						appealData.appealStatus = 'lpa_questionnaire';
 
-				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
-				nock('http://test/')
-					.get('/appeals/1/appellant-cases/0')
-					.reply(200, { planningObligation: { hasObligation: false } })
-					.persist();
+						nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+						nock('http://test/')
+							.get('/appeals/1/appellant-cases/0')
+							.reply(200, { planningObligation: { hasObligation: false } })
+							.persist();
 
-				const response = await request.get(`${baseUrl}/${appealProcedure}/change-timetable`);
-				const element = parseHtml(response.text);
+						const response = await request.get(`${baseUrl}/${appealProcedure}/change-timetable`);
+						const element = parseHtml(response.text);
 
-				expect(element.innerHTML).toMatchSnapshot();
-				expect(element.innerHTML).toContain('Timetable due dates</h1>');
+						expect(element.innerHTML).toMatchSnapshot();
+						expect(element.innerHTML).toContain('Timetable due dates</h1>');
 
-				const keyType =
-					appealProcedure === APPEAL_CASE_PROCEDURE.HEARING
-						? 'hearingWithoutPlanningObligation'
-						: appealProcedure;
-				/** @type {string[]} */
-				// @ts-ignore
-				const matchingItems = matchingTimetables[keyType];
-				matchingItems.forEach((item) => {
-					expect(element.innerHTML).toContain(`name="${item}"`);
+						const keyType =
+							appealProcedure === APPEAL_CASE_PROCEDURE.HEARING
+								? 'hearingWithoutPlanningObligation'
+								: appealProcedure;
+						/** @type {string[]} */
+						// @ts-ignore
+						const matchingItems = matchingTimetables[keyType];
+						matchingItems.forEach((item) => {
+							expect(element.innerHTML).toContain(`name="${item}"`);
+						});
+						expect(element.innerHTML).toContain('Continue</button>');
+					});
+
+					it(`should render correct "Timetable due dates" page for ${appealProcedure} with planning obligation`, async () => {
+						const appealData = {
+							...baseAppealData,
+							procedureType: appealProcedure,
+							appealTimetable: {
+								appealTimetableId: 1
+							}
+						};
+						appealData.appealType = appealType;
+						appealData.appealStatus = 'lpa_questionnaire';
+
+						nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+						nock('http://test/')
+							.get('/appeals/1/appellant-cases/0')
+							.reply(200, { planningObligation: { hasObligation: true } })
+							.persist();
+
+						const response = await request.get(`${baseUrl}/${appealProcedure}/change-timetable`);
+						const element = parseHtml(response.text);
+
+						expect(element.innerHTML).toMatchSnapshot();
+						expect(element.innerHTML).toContain('Timetable due dates</h1>');
+
+						const keyType =
+							appealProcedure === APPEAL_CASE_PROCEDURE.HEARING
+								? 'hearingWithPlanningObligation'
+								: appealProcedure;
+						/** @type {string[]} */
+						// @ts-ignore
+						const matchingItems = matchingTimetables[keyType];
+						matchingItems.forEach((item) => {
+							expect(element.innerHTML).toContain(`name="${item}"`);
+						});
+						expect(element.innerHTML).toContain('Continue</button>');
+					});
+
+					it('should have a back link to the previous page', async () => {
+						const appealData = {
+							...baseAppealData,
+							procedureType: appealProcedure,
+							appealTimetable: {
+								appealTimetableId: 1
+							}
+						};
+						appealData.appealType = appealType;
+						appealData.appealStatus = 'lpa_questionnaire';
+
+						nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+						nock('http://test/')
+							.get('/appeals/1/appellant-cases/0')
+							.reply(200, { planningObligation: { hasObligation: true } })
+							.persist();
+
+						const response = await request.get(`${baseUrl}/${appealProcedure}/change-timetable`);
+						const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+						expect(bodyHtml.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+							appealProcedure === APPEAL_CASE_PROCEDURE.WRITTEN
+								? `${baseUrl}/change-selected-procedure-type`
+								: `${baseUrl}/${appealProcedure}/address-details`
+						);
+					});
+
+					it('should have a back link to the CYA page if editing', async () => {
+						const appealData = {
+							...baseAppealData,
+							procedureType: appealProcedure,
+							appealTimetable: {
+								appealTimetableId: 1
+							}
+						};
+						appealData.appealType = appealType;
+						appealData.appealStatus = 'lpa_questionnaire';
+
+						nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+						nock('http://test/')
+							.get('/appeals/1/appellant-cases/0')
+							.reply(200, { planningObligation: { hasObligation: true } })
+							.persist();
+
+						const response = await request.get(
+							`${baseUrl}/${appealProcedure}/change-timetable?editEntrypoint=` +
+								`%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2F${appealProcedure}%2Fchange-timetable`
+						);
+						const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
+						expect(bodyHtml.querySelector('.govuk-back-link')?.getAttribute('href')).toContain(
+							`${baseUrl}/${appealProcedure}/check-and-confirm`
+						);
+					});
 				});
-				expect(element.innerHTML).toContain('Continue</button>');
-			});
-
-			it(`should render correct "Timetable due dates" page for ${appealProcedure} with planning obligation`, async () => {
-				const appealData = {
-					...baseAppealData,
-					procedureType: appealProcedure,
-					appealTimetable: {
-						appealTimetableId: 1
-					}
-				};
-				appealData.appealType = APPEAL_TYPE.S78;
-				appealData.appealStatus = 'lpa_questionnaire';
-
-				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
-				nock('http://test/')
-					.get('/appeals/1/appellant-cases/0')
-					.reply(200, { planningObligation: { hasObligation: true } })
-					.persist();
-
-				const response = await request.get(`${baseUrl}/${appealProcedure}/change-timetable`);
-				const element = parseHtml(response.text);
-
-				expect(element.innerHTML).toMatchSnapshot();
-				expect(element.innerHTML).toContain('Timetable due dates</h1>');
-
-				const keyType =
-					appealProcedure === APPEAL_CASE_PROCEDURE.HEARING
-						? 'hearingWithPlanningObligation'
-						: appealProcedure;
-				/** @type {string[]} */
-				// @ts-ignore
-				const matchingItems = matchingTimetables[keyType];
-				matchingItems.forEach((item) => {
-					expect(element.innerHTML).toContain(`name="${item}"`);
-				});
-				expect(element.innerHTML).toContain('Continue</button>');
-			});
-
-			it('should have a back link to the previous page', async () => {
-				const appealData = {
-					...baseAppealData,
-					procedureType: appealProcedure,
-					appealTimetable: {
-						appealTimetableId: 1
-					}
-				};
-				appealData.appealType = APPEAL_TYPE.S78;
-				appealData.appealStatus = 'lpa_questionnaire';
-
-				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
-				nock('http://test/')
-					.get('/appeals/1/appellant-cases/0')
-					.reply(200, { planningObligation: { hasObligation: true } })
-					.persist();
-
-				const response = await request.get(`${baseUrl}/${appealProcedure}/change-timetable`);
-				const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
-				expect(bodyHtml.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
-					appealProcedure === APPEAL_CASE_PROCEDURE.WRITTEN
-						? `${baseUrl}/change-selected-procedure-type`
-						: `${baseUrl}/${appealProcedure}/address-details`
-				);
-			});
-
-			it('should have a back link to the CYA page if editing', async () => {
-				const appealData = {
-					...baseAppealData,
-					procedureType: appealProcedure,
-					appealTimetable: {
-						appealTimetableId: 1
-					}
-				};
-				appealData.appealType = APPEAL_TYPE.S78;
-				appealData.appealStatus = 'lpa_questionnaire';
-
-				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
-				nock('http://test/')
-					.get('/appeals/1/appellant-cases/0')
-					.reply(200, { planningObligation: { hasObligation: true } })
-					.persist();
-
-				const response = await request.get(
-					`${baseUrl}/${appealProcedure}/change-timetable?editEntrypoint=` +
-						`%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-procedure-type%2F${appealProcedure}%2Fchange-timetable`
-				);
-				const bodyHtml = parseHtml(response.text, { rootElement: 'body' });
-				expect(bodyHtml.querySelector('.govuk-back-link')?.getAttribute('href')).toContain(
-					`${baseUrl}/${appealProcedure}/check-and-confirm`
-				);
-			});
-		});
+			}
+		);
 	});
 
 	describe('POST /change-timetable', () => {

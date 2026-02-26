@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`Change procedure type GET /change-appeal-procedure-type/change-selected-procedure-type Written should render the select procedure page with the expected content 1`] = `
+exports[`Change procedure type GET /change-appeal-procedure-type/change-selected-procedure-type - S20 should render the select procedure page with the expected content 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
@@ -45,7 +45,52 @@ exports[`Change procedure type GET /change-appeal-procedure-type/change-selected
 </main>"
 `;
 
-exports[`Change procedure type POST /change-appeal-procedure-type/change-selected-procedure-type Written to Hearing should re-render the select procedure page with the expected error message if no radio option was selected 1`] = `
+exports[`Change procedure type GET /change-appeal-procedure-type/change-selected-procedure-type - S78 should render the select procedure page with the expected content 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Appeal procedure</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-procedure" name="appealProcedure"
+                                        type="radio" value="written" checked>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-procedure-2" name="appealProcedure"
+                                        type="radio" value="hearing">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure-2">Hearing</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-procedure-3" name="appealProcedure"
+                                        type="radio" value="inquiry">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure-3">Inquiry</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`Change procedure type POST /change-appeal-procedure-type/change-selected-procedure-type Written to Hearing - S20 should re-render the select procedure page with the expected error message if no radio option was selected 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -106,7 +151,129 @@ exports[`Change procedure type POST /change-appeal-procedure-type/change-selecte
 </main>"
 `;
 
-exports[`Change procedure type POST /change-appeal-procedure-type/change-selected-procedure-type Written to Written should re-render the select procedure page with the expected error message if no radio option was selected 1`] = `
+exports[`Change procedure type POST /change-appeal-procedure-type/change-selected-procedure-type Written to Hearing - S78 should re-render the select procedure page with the expected error message if no radio option was selected 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#appeal-procedure">Select the appeal procedure</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" aria-describedby="appeal-procedure-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Appeal procedure</h1>
+                                </legend>
+                                <p id="appeal-procedure-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select the appeal procedure</p>
+                                <div                                 class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-procedure" name="appealProcedure"
+                                        type="radio" value="written" checked>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-procedure-2" name="appealProcedure"
+                                        type="radio" value="hearing">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure-2">Hearing</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-procedure-3" name="appealProcedure"
+                                        type="radio" value="inquiry">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure-3">Inquiry</label>
+                                    </div>
+                        </div>
+                        </fieldset>
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;
+
+exports[`Change procedure type POST /change-appeal-procedure-type/change-selected-procedure-type Written to Written - S20 should re-render the select procedure page with the expected error message if no radio option was selected 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#appeal-procedure">Select the appeal procedure</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" aria-describedby="appeal-procedure-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Appeal procedure</h1>
+                                </legend>
+                                <p id="appeal-procedure-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select the appeal procedure</p>
+                                <div                                 class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-procedure" name="appealProcedure"
+                                        type="radio" value="written" checked>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-procedure-2" name="appealProcedure"
+                                        type="radio" value="hearing">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure-2">Hearing</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-procedure-3" name="appealProcedure"
+                                        type="radio" value="inquiry">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure-3">Inquiry</label>
+                                    </div>
+                        </div>
+                        </fieldset>
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;
+
+exports[`Change procedure type POST /change-appeal-procedure-type/change-selected-procedure-type Written to Written - S78 should re-render the select procedure page with the expected error message if no radio option was selected 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">

@@ -1,5 +1,6 @@
 import { getEnabledAppealCaseTypes } from '#common/feature-flags-appeal-types.js';
 import { isFeatureActive } from '#common/feature-flags.js';
+import { getEnabledInquiryAppealTypes } from '#common/inquiry-appeal-types.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { addressToString } from '#lib/address-formatter.js';
 import { mapStatusFilterLabel, mapStatusText } from '#lib/appeal-status.js';
@@ -129,7 +130,7 @@ export function nationalListPage(
 		enabledAppealProcedures.push(APPEAL_CASE_PROCEDURE.WRITTEN);
 	}
 	enabledAppealProcedures.push(APPEAL_CASE_PROCEDURE.HEARING);
-	if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_INQUIRY)) {
+	if (getEnabledInquiryAppealTypes().length > 0) {
 		enabledAppealProcedures.push(APPEAL_CASE_PROCEDURE.INQUIRY);
 	}
 	if (isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS)) {
