@@ -273,7 +273,7 @@ export const postCheckYourAnswers = async (request, response) => {
  * @param {number} [representedId]
  * @return {RepresentationRequest}
  */
-const buildPayload = (
+export const buildPayload = (
 	representationType,
 	documentGuid,
 	redactionStatus,
@@ -281,7 +281,9 @@ const buildPayload = (
 	representedId
 ) => {
 	const source = [
+		APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT,
 		APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT,
+		APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
 		APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT,
 		APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
 	].includes(representationType)
@@ -302,7 +304,7 @@ const buildPayload = (
  * @param {string} url
  * @return {string}
  */
-const getRepresentationType = (url) => {
+export const getRepresentationType = (url) => {
 	const parts = url.split('/');
 
 	const immediateParent = parts[parts.length - 2];
@@ -327,7 +329,7 @@ const getRepresentationType = (url) => {
  * @param {string} repStatus
  * @return {boolean}
  */
-const onlySingularRepresentationAllowed = (representationType, repStatus) => {
+export const onlySingularRepresentationAllowed = (representationType, repStatus) => {
 	return (
 		[
 			APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
