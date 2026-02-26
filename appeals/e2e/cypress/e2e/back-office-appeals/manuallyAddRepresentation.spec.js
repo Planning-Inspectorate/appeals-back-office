@@ -22,9 +22,9 @@ describe('Manually Add a rep', () => {
 
 	let appeal;
 
-	// afterEach(() => {
-	// 	cy.deleteAppeals(appeal);
-	// });
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
 
 	let sampleFiles = caseDetailsPage.sampleFiles;
 	it('Manually Add LPA Statement', () => {
