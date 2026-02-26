@@ -129,7 +129,7 @@ export const lpaTeamAssignments = {
 	E5330: 10, // Greenwich
 	F0114: 10, // Bath and North East Somerset Council
 	F1610: 10, // Cotswold District Council
-	G5180: 10, // Bromley
+	G5180: 11, // Bromley
 	H3700: 10, // Warwickshire County Council
 	H5390: 10, // London Borough of Hammersmith and Fulham
 	J1860: 10, // Malvern Hills District Council
@@ -229,26 +229,26 @@ export const lpaTeamAssignments = {
 	D3505: 14, // Babergh District Council
 	D5120: 14, // London Borough of Bexley
 	E5900: 14, // London Borough of Tower Hamlets
-	E9505: 14, // Broads Authority
-	F2605: 14, // Breckland District Council
+	E9505: 13, // Broads Authority
+	F2605: 13, // Breckland District Council
 	F3545: 14, // West Suffolk
-	G2625: 14, // Norwich City Council
+	G2625: 13, // Norwich City Council
 	G5750: 14, // London Borough of Newham
-	K2610: 14, // Broadland District Council
-	L2630: 14, // South Norfolk District Council
-	L5240: 14, // London Borough of Croydon
+	K2610: 13, // Broadland District Council
+	L2630: 13, // South Norfolk District Council
+	L5240: 12, // London Borough of Croydon
 	P5870: 14, // London Borough of Sutton
 	R3515: 14, // Ipswich Borough Council
 	R5510: 14, // London Borough of Hillingdon
 	T5720: 14, // London Borough of Merton
-	U2615: 14, // Great Yarmouth Borough Council
+	U2615: 13, // Great Yarmouth Borough Council
 	U5930: 14, // Waltham Forest London Borough Council
-	V2635: 14, // King's Lynn and West Norfolk Borough Council
+	V2635: 13, // King's Lynn and West Norfolk Borough Council
 	V3500: 14, // Suffolk County Council
 	W3520: 14, // Mid Suffolk District Council
 	W5780: 14, // London Borough of Redbridge
-	X2600: 14, // Norfolk County Council
-	Y2620: 14, // North Norfolk District Council
+	X2600: 13, // Norfolk County Council
+	Y2620: 13, // North Norfolk District Council
 	Z5060: 14, // London Borough of Barking and Dagenham Council
 	Z5630: 14, // Royal Borough of Kingston Upon Thames
 
@@ -327,7 +327,7 @@ export const lpaTeamAssignments = {
 	// North3
 	A1015: 17, // Chesterfield Borough Council
 	A2470: 17, // Rutland County Council
-	A2525: 17, // South Holland District Council
+	A2525: 14, // South Holland District Council
 	A3010: 17, // Bassetlaw District Council
 	B3030: 17, // Newark & Sherwood District Council
 	C1055: 17, // Derby City Council
@@ -367,21 +367,21 @@ export const lpaTeamAssignments = {
 	X2410: 17, // Charnwood Borough Council
 	X3025: 17, // Mansfield District Council
 	Y2430: 17, // Melton Borough Council
-	Z2505: 17, // Boston Borough Council
+	Z2505: 14, // Boston Borough Council
 
 	// North4
 	A4710: 18, // Calderdale Metropolitan Borough Council
 	A5270: 18, // London Borough of Ealing
-	D0515: 18, // Fenland District Council
-	E0535: 18, // Cambridgeshire County Council
-	H0520: 18, // Huntingdonshire District Council
-	J0540: 18, // Peterborough City Council
+	D0515: 14, // Fenland District Council
+	E0535: 14, // Cambridgeshire County Council
+	H0520: 14, // Huntingdonshire District Council
+	J0540: 14, // Peterborough City Council
 	M5450: 18, // London Borough of Harrow
 	N4720: 18, // Leeds City Council
-	Q0505: 18, // Cambridge City Council
+	Q0505: 14, // Cambridge City Council
 	T5150: 18, // London Borough of Brent
-	V0510: 18, // East Cambridgeshire District Council
-	W0530: 18, // South Cambridgeshire District Council
+	V0510: 14, // East Cambridgeshire District Council
+	W0530: 14, // South Cambridgeshire District Council
 	W4705: 18, // City of Bradford Metropolitan District Council
 	X4725: 18, // Wakefield Metropolitan District Council
 	X5210: 18, // London Borough of Camden
