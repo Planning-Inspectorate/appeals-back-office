@@ -6,9 +6,17 @@ We have reviewed the appeal and it is not valid.
 Address: {{site_address}}
 Enforcement notice reference: {{enforcement_reference}}
 
+{% if reasons.length -%}
 # Why the appeal is invalid
-{{reasons}}
-{%- if ground_a_barred %}
+{% if reasons.length > 1 -%}
+{%- for reason in reasons -%}
+- {{ reason }}
+{% endfor %}
+{%- else -%}
+{{ reasons[0] }}
+{% endif %}
+{% endif -%}
+{% if ground_a_barred -%}
 
 # Ground (a) barred
 We cannot consider ground (a) because the enforcement notice was issued:
@@ -16,7 +24,8 @@ We cannot consider ground (a) because the enforcement notice was issued:
 * within 2 years from the date the application or appeal made stopped being considered
 
 The appeal does not meet the requirements for this ground from section 174(2A to 2B) of the Town and Country Planning Act 1990.
-{%- endif %}
+
+{% endif -%}
 
 # What happens next
 The appeal is now closed.

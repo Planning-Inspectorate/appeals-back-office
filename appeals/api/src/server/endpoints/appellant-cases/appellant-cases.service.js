@@ -467,7 +467,9 @@ export const updateAppellantCaseValidationOutcome = async (
 					? updatedAppellantCase?.appellantCaseEnforcementInvalidReasonsSelected
 					: [];
 
-			const invalidReasonsList = getFormattedReasons(reasonsToFormat);
+			const invalidReasonsList = getFormattedReasons(reasonsToFormat).sort((a, b) =>
+				a.startsWith('Other') ? 1 : b.startsWith('Other') ? -1 : 0
+			);
 
 			if (!isChildEnforcement) {
 				const applicantEmail = appeal.agent?.email || appeal.appellant?.email;
