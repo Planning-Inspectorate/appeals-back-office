@@ -3,6 +3,7 @@ import { request } from '#server/app-test.js';
 import { householdAppeal, serviceUser } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
+import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 const validServiceUser = {
@@ -125,6 +126,57 @@ describe('appeal service user routes', () => {
 			});
 			expect(response.status).toEqual(200);
 		});
+
+		test('returns 200 when updating a service user with correct data for a lead appeal and sync to child appeal', async () => {
+			const parentLinkedAppeal = {
+				...householdAppeal,
+				childAppeals: [
+					{
+						type: CASE_RELATIONSHIP_LINKED,
+						child: { id: 99, reference: '1234599', agent: { id: 111 } }
+					}
+				]
+			};
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(parentLinkedAppeal);
+			// @ts-ignore
+			databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+			// @ts-ignore
+			databaseConnector.serviceUser.findUnique.mockResolvedValue(serviceUser);
+			// @ts-ignore
+			databaseConnector.serviceUser.update.mockResolvedValue({
+				...serviceUser,
+				firstName: 'Jessica',
+				lastName: 'Jones'
+			});
+
+			const response = await request
+				.patch(`/appeals/${householdAppeal.id}/service-user`)
+				.send({ serviceUser: validServiceUser })
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.serviceUser.update).toHaveBeenCalledTimes(2);
+			expect(databaseConnector.serviceUser.update).toHaveBeenNthCalledWith(1, {
+				data: {
+					firstName: 'Jessica',
+					lastName: 'Jones'
+				},
+				where: {
+					id: 1
+				}
+			});
+			expect(databaseConnector.serviceUser.update).toHaveBeenNthCalledWith(2, {
+				data: {
+					firstName: 'Jessica',
+					lastName: 'Jones'
+				},
+				where: {
+					id: 111
+				}
+			});
+			expect(response.status).toEqual(200);
+		});
+
 		test('returns 200 when updating an appellant service user and agent assigned to appeal missed phone number and email data', async () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValueOnce(householdAppeal);
@@ -165,6 +217,7 @@ describe('appeal service user routes', () => {
 			});
 			expect(response.status).toEqual(200);
 		});
+
 		test('returns 200 when updating an appellant service user with no agent present - including phone number and email', async () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValueOnce({
