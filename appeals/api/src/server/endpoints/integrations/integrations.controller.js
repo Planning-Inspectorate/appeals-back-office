@@ -11,7 +11,7 @@ import { isFeatureActive } from '#utils/feature-flags.js';
 import { linkAppeals } from '#utils/link-appeals.js';
 import { markAwaitingTransfer } from '#utils/mark-for-transfer.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { APPEAL_REPRESENTATION_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_APPELLANT_IMPORT_MSG,
 	AUDIT_TRAIL_DOCUMENT_IMPORTED,
@@ -19,6 +19,7 @@ import {
 	AUDIT_TRAIL_LPA_UUID,
 	AUDIT_TRAIL_LPAQ_IMPORT_MSG,
 	AUDIT_TRAIL_REP_IMPORT_MSG,
+	AUDIT_TRAIL_RULE_6_PARTY_PROOFS_EVIDENCE_ADDED,
 	AUDIT_TRAIL_RULE_6_STATEMENT_ADDED,
 	AUDIT_TRAIL_SYSTEM_UUID,
 	AUDIT_TRAIL_TEAM_ASSIGNED,
@@ -31,7 +32,6 @@ import { EventType } from '@pins/event-client';
 import {
 	APPEAL_APPELLANT_PROCEDURE_PREFERENCE,
 	APPEAL_CASE_TYPE,
-	APPEAL_REPRESENTATION_TYPE,
 	SERVICE_USER_TYPE
 } from '@planning-inspectorate/data-model';
 import { broadcasters } from './integrations.broadcasters.js';
@@ -421,8 +421,8 @@ export const importRepresentation = async (req, res) => {
 		case 'lpa_statement':
 			azureAdUserId = AUDIT_TRAIL_LPA_UUID;
 			break;
-		case 'rule_6_party_statement':
-		case 'rule_6_party_proofs_evidence':
+		case APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT:
+		case APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE:
 			azureAdUserId = AUDIT_TRIAL_RULE_6_PARTY_ID;
 			break;
 		default:
@@ -430,13 +430,21 @@ export const importRepresentation = async (req, res) => {
 	}
 	let details = stringTokenReplacement(AUDIT_TRAIL_REP_IMPORT_MSG, [repType]);
 
-	if (repType === 'rule_6_party_statement') {
+	if (
+		repType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT ||
+		repType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
+	) {
 		const party = req.appeal.appealRule6Parties?.find(
 			(party) => party.serviceUserId === serviceUserId
 		);
 
 		if (party) {
-			details = stringTokenReplacement(AUDIT_TRAIL_RULE_6_STATEMENT_ADDED, [
+			const template =
+				repType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT
+					? AUDIT_TRAIL_RULE_6_STATEMENT_ADDED
+					: AUDIT_TRAIL_RULE_6_PARTY_PROOFS_EVIDENCE_ADDED;
+
+			details = stringTokenReplacement(template, [
 				party.serviceUser?.organisationName || 'Rule 6 party'
 			]);
 		}
@@ -468,7 +476,7 @@ export const importRepresentation = async (req, res) => {
 		})
 	);
 
-	if (repType === 'rule_6_party_statement') {
+	if (repType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT) {
 		await sendRepresentationReceivedNotifications(
 			req.appeal,
 			req.notifyClient,
@@ -477,7 +485,7 @@ export const importRepresentation = async (req, res) => {
 		);
 	}
 
-	if (repType === 'rule_6_party_proofs_evidence') {
+	if (repType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE) {
 		await sendRepresentationReceivedNotifications(
 			req.appeal,
 			req.notifyClient,
