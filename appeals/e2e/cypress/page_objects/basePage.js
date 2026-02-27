@@ -188,6 +188,10 @@ export class Page {
 		this.basePageElements.backLink().click();
 	}
 
+	checkBackLink() {
+		this.basePageElements.backLink().should('be.visible');
+	}
+
 	clickButtonByText(buttonText) {
 		this.basePageElements
 			.buttonByLabelText(buttonText)
