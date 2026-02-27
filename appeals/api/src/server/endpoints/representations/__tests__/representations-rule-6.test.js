@@ -383,11 +383,6 @@ describe('Rule 6 Representations', () => {
 				}
 			});
 
-			expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledWith(
-				'39ad6cd8-60ab-43f0-a995-4854db8f12c6',
-				1,
-				'Create'
-			);
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith(
 				expect.objectContaining({
 					data: expect.objectContaining({

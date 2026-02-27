@@ -268,12 +268,6 @@ export const addDocumentsToAppeal = async (upload, appeal, skipBlobValidation = 
 		? await addDocumentAndVersion(appeal, documentsToSendToDatabase, skipBlobValidation)
 		: [];
 
-	for (const document of documentsCreated) {
-		if (document?.documentGuid) {
-			await broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create);
-		}
-	}
-
 	const documentsToAddToAuditTrail = mapDocumentsForAuditTrail(documentsCreated).filter(
 		(d) => d !== null
 	);
