@@ -95,7 +95,6 @@ module "app_web" {
     FEATURE_FLAG_CANCEL_CASE                = var.apps_config.featureFlags.featureFlagCancelCase
     FEATURE_FLAG_CHANGE_PROCEDURE_TYPE      = var.apps_config.featureFlags.featureFlagChangeProcedureType
     FEATURE_FLAG_HEARING_POST_MVP           = var.apps_config.featureFlags.featureFlagHearingPostMvp
-    FEATURE_FLAG_AUTO_ASSIGN_TEAM           = var.apps_config.featureFlags.featureFlagAutoAssignTeam
     FEATURE_FLAG_CANCEL_SITE_VISIT          = var.apps_config.featureFlags.featureFlagCancelSiteVisit
     FEATURE_FLAG_SEARCH_CASE_OFFICER        = var.apps_config.featureFlags.featureFlagSearchCaseOfficer
     FEATURE_FLAG_ENFORCEMENT_NOTICE         = var.apps_config.featureFlags.featureFlagEnforcementNotice
