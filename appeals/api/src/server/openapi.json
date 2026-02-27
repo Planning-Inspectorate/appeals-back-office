@@ -1635,6 +1635,16 @@
 						"schema": {
 							"type": "string"
 						}
+					},
+					{
+						"name": "docCount",
+						"in": "query",
+						"required": false,
+						"example": 25,
+						"description": "Number of additional documents to generate per appeal (default 25)",
+						"schema": {
+							"type": "string"
+						}
 					}
 				],
 				"responses": {

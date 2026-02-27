@@ -39,6 +39,13 @@ export const createRepresentationAttachments = async (attachmentData) =>
 	databaseConnector.representationAttachment.createMany({ data: attachmentData });
 
 /**
+ * @param {number} caseId
+ * @param {string} path
+ */
+export const findFolderByCaseAndPath = async (caseId, path) =>
+	databaseConnector.folder.findFirst({ where: { caseId, path } });
+
+/**
  * @param {string} guid
  * @param {number} versionId
  */
