@@ -173,7 +173,9 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				if (
 					appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
 					// @ts-ignore
-					appealDetails.enforcementNoticeInvalid === 'yes'
+					(appealDetails.enforcementNoticeInvalid === 'yes' ||
+						// @ts-ignore
+						appealDetails.enforcementNotice?.appealOutcome?.enforcementNoticeInvalid === 'yes')
 				) {
 					actions.push('enforcementNoticeAppealIncomplete');
 				} else {

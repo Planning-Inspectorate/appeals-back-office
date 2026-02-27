@@ -1,6 +1,6 @@
 // @ts-nocheck
 /* eslint-disable jest/expect-expect */
-import { appealData } from '#testing/app/fixtures/referencedata.js';
+import { appealData, appealDataEnforcementNotice } from '#testing/app/fixtures/referencedata.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { addDays } from 'date-fns';
@@ -164,6 +164,29 @@ describe('required actions', () => {
 						'detail'
 					)
 				).toEqual(['reviewAppellantCase']);
+			});
+
+			it('should return "enforcementNoticeAppealIncomplete" if: the appeal is an Enforcement Notice, the enforcement notice is invalid, appellant case due date has not passed, and the appellant case is marked as incomplete', async () => {
+				expect(
+					getRequiredActionsForAppeal(
+						{
+							...{
+								...appealDataEnforcementNotice,
+								enforcementNoticeInvalid: 'yes',
+								appealStatus: APPEAL_CASE_STATUS.VALIDATION
+							},
+							documentationSummary: {
+								...appealDataWithValidationStatus.documentationSummary,
+								appellantCase: {
+									...appealDataWithValidationStatus.documentationSummary.appellantCase,
+									dueDate: futureDate,
+									status: 'Incomplete'
+								}
+							}
+						},
+						'detail'
+					)
+				).toEqual(['enforcementNoticeAppealIncomplete']);
 			});
 		});
 
