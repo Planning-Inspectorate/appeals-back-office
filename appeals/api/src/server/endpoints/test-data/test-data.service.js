@@ -1,9 +1,12 @@
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { databaseConnector } from '#utils/database-connector.js';
+import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { AUDIT_TRAIL_SYSTEM_UUID } from '@pins/appeals/constants/support.js';
 import {
+	APPEAL_CASE_STAGE,
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE,
+	APPEAL_DOCUMENT_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
 import { sub } from 'date-fns';
@@ -15,6 +18,7 @@ import {
 	createDocumentVersions,
 	createRepresentation,
 	createRepresentationAttachments,
+	findFolderByCaseAndPath,
 	findFolderByPath,
 	updateDocumentLatestVersion
 } from './test-data.repository.js';
@@ -25,8 +29,9 @@ import {
  * @param {'has' | 's78'} appealType
  * @param {number} count
  * @param {string[]} userEmails
+ * @param {number} docCount
  */
-const generateAppeals = async (appealType, count, userEmails) => {
+const generateAppeals = async (appealType, count, userEmails, docCount = 25) => {
 	const BATCH_SIZE = 10;
 	const folder = await findFolderByPath('representation/representationAttachments');
 
@@ -38,8 +43,9 @@ const generateAppeals = async (appealType, count, userEmails) => {
 			promises.push(
 				createAppeal(appealInput)
 					.then(async (appeal) => {
+						await createCaseDocuments(appeal.id, docCount);
 						await createRepresentationWithAttachments(databaseConnector, appeal.id, folder.id, {
-							count: 25
+							count: docCount
 						});
 						await broadcasters.broadcastAppeal(appeal.id);
 					})
@@ -105,7 +111,8 @@ export const createRepresentationWithAttachments = async (tx, appealId, folderId
 			originalFilename: fileName,
 			size: 1024,
 			stage: options.stage || 'appeal-submission',
-			version: 1
+			version: 1,
+			virusCheckStatus: 'scanned'
 		});
 
 		attachmentData.push({
@@ -124,6 +131,83 @@ export const createRepresentationWithAttachments = async (tx, appealId, folderId
 	}
 
 	return { rep, docs: documentData, versions: versionData, attachments: attachmentData };
+};
+
+const CASE_DOCUMENT_DEFS = [
+	{
+		folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.ORIGINAL_APPLICATION_FORM}`,
+		documentType: APPEAL_DOCUMENT_TYPE.ORIGINAL_APPLICATION_FORM,
+		fileName: 'application-form.pdf'
+	},
+	{
+		folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPLICATION_DECISION_LETTER}`,
+		documentType: APPEAL_DOCUMENT_TYPE.APPLICATION_DECISION_LETTER,
+		fileName: 'decision-letter.pdf'
+	},
+	{
+		folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS}`,
+		documentType: APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS,
+		fileName: 'plans-drawings.pdf'
+	},
+	{
+		folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_CORRESPONDENCE}`,
+		documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_CORRESPONDENCE,
+		fileName: 'additional-document',
+		useDocCount: true
+	}
+];
+
+/**
+ * @param {number} appealId
+ * @param {number} docCount
+ */
+const createCaseDocuments = async (appealId, docCount = 25) => {
+	const documentData = [];
+	const versionData = [];
+
+	for (const def of CASE_DOCUMENT_DEFS) {
+		const folder = await findFolderByCaseAndPath(appealId, def.folderPath);
+		if (!folder) continue;
+
+		const count = def.useDocCount ? docCount : 1;
+		for (let i = 0; i < count; i++) {
+			const guid = randomUUID();
+			const fileName = count > 1 ? `${def.fileName}-${i + 1}-${guid}.pdf` : def.fileName;
+
+			documentData.push({
+				name: fileName,
+				guid,
+				folderId: folder.id,
+				isDeleted: false,
+				caseId: appealId
+			});
+
+			versionData.push({
+				blobStorageContainer: 'document-service-uploads',
+				dateCreated: new Date().toISOString(),
+				description: `${fileName} imported`,
+				documentGuid: guid,
+				documentType: def.documentType,
+				draft: false,
+				fileName,
+				mime: 'application/pdf',
+				originalFilename: fileName,
+				size: 1024,
+				virusCheckStatus: 'scanned',
+				stage: APPEAL_CASE_STAGE.APPELLANT_CASE,
+				version: 1
+			});
+		}
+	}
+
+	if (documentData.length === 0) return;
+
+	await createDocuments(documentData);
+	await createDocumentVersions(versionData);
+
+	for (const doc of documentData) {
+		await updateDocumentLatestVersion(doc.guid, 1);
+	}
 };
 
 /**
@@ -212,7 +296,7 @@ export function createMockAppeal(type = 'has', userEmails = []) {
 
 		siteVisit: undefined,
 		inspectorDecision: undefined,
-		folders: { create: [] },
+		folders: { create: FOLDERS.map((/** @type {string} */ path) => ({ path })) },
 		documents: { create: [] },
 		auditTrail: { create: [] },
 		parentAppeals: { create: [] },
