@@ -54,7 +54,6 @@ variable "apps_config" {
       featureFlagCancelCase               = bool
       featureFlagChangeProcedureType      = bool
       featureFlagHearingPostMvp           = bool
-      featureFlagAutoAssignTeam           = bool
       featureFlagCancelSiteVisit          = bool
       featureFlagSearchCaseOfficer        = bool
       featureFlagEnforcementNotice        = bool
