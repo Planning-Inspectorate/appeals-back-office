@@ -42,7 +42,6 @@ apps_config = {
     featureFlagPdfDownload              = true
     featureFlagNetResidence             = true
     featureFlagNetResidenceS20          = true
-    featureFlagCancelCase               = true
     featureFlagChangeProcedureType      = true
     featureFlagHearingPostMvp           = true
     featureFlagAutoAssignTeam           = true
