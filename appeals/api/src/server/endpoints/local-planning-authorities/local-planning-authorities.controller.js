@@ -1,3 +1,5 @@
+import { isParentAppeal } from '#utils/is-linked-appeal.js';
+import { getChildAppeals } from '#utils/link-appeals.js';
 import { lpaService } from './local-planning-authorities.service.js';
 
 /** @typedef {import('express').Request} Request */
@@ -13,7 +15,18 @@ const changeLpa = async (req, res) => {
 	const { newLpaId } = req.body;
 	const azureAdUserId = req.get('azureAdUserId');
 
-	await lpaService.changeLpa(appeal, Number(newLpaId), azureAdUserId);
+	await lpaService.changeLpa(appeal.id, Number(newLpaId), azureAdUserId);
+
+	if (isParentAppeal(appeal)) {
+		const childAppeals = getChildAppeals(appeal);
+		await Promise.allSettled(
+			childAppeals.map((childAppeal) => {
+				if (childAppeal?.id) {
+					lpaService.changeLpa(childAppeal.id, Number(newLpaId), azureAdUserId);
+				}
+			})
+		);
+	}
 
 	return res.send(true);
 };

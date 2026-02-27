@@ -17,6 +17,7 @@ export const mapLpaContactDetails = ({
 					: 'Awaiting questionnaire'
 		},
 		link: `${currentRoute}/change-appeal-details/local-planning-authority`,
-		editable: userHasUpdateCasePermission && !isLpaqReceived(appealDetails),
+		editable:
+			userHasUpdateCasePermission && !appealDetails.isChildAppeal && !isLpaqReceived(appealDetails),
 		classes: 'appeal-lpa-contact-details'
 	});

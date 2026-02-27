@@ -18,13 +18,13 @@ const getLpaById = (id) => {
 
 /**
  * Updates LPA code by appeal ID
- * @param {Appeal} appeal
+ * @param {number} appealId
  * @param {number} newLpaId
  * @returns {PrismaPromise<*>}
  */
-const updateLpaByAppealId = (appeal, newLpaId) => {
+const updateLpaByAppealId = (appealId, newLpaId) => {
 	return databaseConnector.appeal.update({
-		where: { id: appeal.id },
+		where: { id: appealId },
 		data: {
 			lpaId: newLpaId,
 			caseUpdatedDate: new Date()
