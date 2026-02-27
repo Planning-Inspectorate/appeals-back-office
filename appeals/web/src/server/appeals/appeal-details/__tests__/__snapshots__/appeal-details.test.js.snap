@@ -824,9 +824,6 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
-                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
-                    </dd>
                 </div>
             </dl>
         </div>
@@ -990,9 +987,6 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                     <li>Wiltshire Council</li>
                     <li>wilt@lpa-email.gov.uk</li>
                 </ul>
-            </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/local-planning-authority"
-                data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
             </dd>
         </div>
     </dl>
@@ -1462,9 +1456,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
-                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
-                    </dd>
                 </div>
             </dl>
         </div>
@@ -1628,9 +1619,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                     <li>Wiltshire Council</li>
                     <li>wilt@lpa-email.gov.uk</li>
                 </ul>
-            </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
-                data-cy="change-lpa-contact-details">Change<span class="govuk-visually-hidden"> Local planning authority (LPA)</span></a>
             </dd>
         </div>
     </dl>

@@ -19,7 +19,7 @@ import {
 export const getChildAppeals = (appeal) =>
 	// @ts-ignore
 	appeal?.childAppeals
-		?.filter(({ type, child }) => type === CASE_RELATIONSHIP_LINKED && child?.appellantCase)
+		?.filter(({ type, child }) => type === CASE_RELATIONSHIP_LINKED && child)
 		.map(({ child }) => child) || [];
 
 /**

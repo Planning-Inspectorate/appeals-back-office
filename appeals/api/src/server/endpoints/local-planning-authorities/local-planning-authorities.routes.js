@@ -1,7 +1,7 @@
+import { getLookupData } from '#common/controllers/lookup-data.controller.js';
 import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
-import { getLookupData } from '../../common/controllers/lookup-data.controller.js';
 import { controller } from './local-planning-authorities.controller.js';
 import { checkLpaIdExists } from './local-planning-authorities.middleware.js';
 import { postLpaValidator } from './local-planning-authorities.validators.js';
@@ -48,7 +48,7 @@ router.post(
         #swagger.responses[400] = {}
 	*/
 	postLpaValidator,
-	asyncHandler(checkAppealExistsByIdAndAddPartialToRequest([])),
+	asyncHandler(checkAppealExistsByIdAndAddPartialToRequest(['childAppeals'])),
 	checkLpaIdExists,
 	asyncHandler(controller.changeLpa)
 );
