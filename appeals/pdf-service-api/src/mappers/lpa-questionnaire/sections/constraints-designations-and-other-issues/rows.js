@@ -104,17 +104,17 @@ export const rowBuilders = {
 
 	planningPermission: (data) => ({
 		key: 'Planning permission',
-		text: formatDocumentData(data.documents.planningPermission)
+		html: formatDocumentData(data.documents.planningPermission)
 	}),
 
 	lpaEnforcementNotice: (data) => ({
 		key: 'Enforcement notice',
-		text: formatDocumentData(data.documents.lpaEnforcementNotice)
+		html: formatDocumentData(data.documents.lpaEnforcementNotice)
 	}),
 
 	relatedApplications: (data) => ({
 		key: 'Related applications',
-		text: formatDocumentData(data.documents.relatedApplications)
+		html: formatDocumentData(data.documents.relatedApplications)
 	}),
 
 	lpaConsiderAppealInvalid: (data) => ({
