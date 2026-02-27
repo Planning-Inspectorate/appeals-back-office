@@ -23,7 +23,7 @@ We cannot consider ground (a) because the enforcement notice was issued:
 - after you made a related planning application
 - within 2 years from the date the application or appeal made stopped being considered
 
-Your appeal does not meet the requirements for this ground from section 174(2A to 2B) of the Town and Country Planning Act 1990.
+Your appeal does not meet the requirements for this ground from [section 174(2A to 2B) of the Town and Country Planning Act 1990](https://www.legislation.gov.uk/ukpga/1990/8/section/174).
 
 {% endif -%}
 
