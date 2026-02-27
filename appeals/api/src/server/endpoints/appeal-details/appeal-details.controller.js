@@ -1,9 +1,12 @@
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { updateServiceUser } from '#endpoints/service-user/service-user.service.js';
 import { contextEnum } from '#mappers/context-enum.js';
-import { hasChildAppeals } from '#utils/is-linked-appeal.js';
+import { isParentAppeal } from '#utils/is-linked-appeal.js';
+import { getChildAppeals } from '#utils/link-appeals.js';
 import logger from '#utils/logger.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
 import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
+import { SERVICE_USER_TYPE } from '@planning-inspectorate/data-model';
 import { appealDetailService } from './appeal-details.service.js';
 
 /** @typedef {import('express').Request} Request */
@@ -73,7 +76,8 @@ const updateAppealById = async (req, res) => {
 				azureAdUserId,
 				notifyClient
 			);
-			if (hasChildAppeals(appeal)) {
+
+			if (isParentAppeal(appeal)) {
 				await appealDetailService.assignUserForLinkedAppeals(
 					appeal,
 					{ caseOfficer: caseOfficerId, inspector: inspectorId, padsInspector: padsInspectorId },
@@ -97,11 +101,43 @@ const updateAppealById = async (req, res) => {
 				},
 				azureAdUserId
 			);
+
+			await updatePersonalList(appealId);
+
+			await broadcasters.broadcastAppeal(appeal.id);
+
+			if (agent && isParentAppeal(appeal)) {
+				const childAppeals = getChildAppeals(appeal);
+				await Promise.allSettled(
+					childAppeals.map(async (childAppeal) => {
+						if (childAppeal?.id) {
+							if (childAppeal?.agent) {
+								await updateServiceUser(
+									azureAdUserId,
+									childAppeal.agent.id,
+									SERVICE_USER_TYPE.AGENT,
+									childAppeal,
+									agent
+								);
+							} else {
+								await appealDetailService.updateAppealDetails(
+									{
+										appealId: childAppeal.id,
+										startedAt,
+										validAt,
+										planningApplicationReference,
+										agent
+									},
+									azureAdUserId
+								);
+
+								return broadcasters.broadcastAppeal(childAppeal.id);
+							}
+						}
+					})
+				);
+			}
 		}
-
-		await updatePersonalList(appealId);
-
-		await broadcasters.broadcastAppeal(appeal.id);
 	} catch (error) {
 		if (error) {
 			logger.error(error);
