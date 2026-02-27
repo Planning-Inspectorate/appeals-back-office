@@ -45,7 +45,6 @@ apps_config = {
     featureFlagCancelCase               = true
     featureFlagChangeProcedureType      = true
     featureFlagHearingPostMvp           = true
-    featureFlagAutoAssignTeam           = true
     featureFlagCancelSiteVisit          = true
     featureFlagSearchCaseOfficer        = true
     featureFlagEnforcementNotice        = true
