@@ -258,6 +258,30 @@ export const updateAppellantCaseValidationOutcome = async (
 				throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 			}
 			const isEnforcement = appeal.appealType.key === APPEAL_CASE_TYPE.C;
+			let childEnforcementWithGrounds = [];
+
+			if (isEnforcement) {
+				for (const childAppeal of getChildAppeals(appeal)) {
+					if (childAppeal.appealType?.key === APPEAL_CASE_TYPE.C) {
+						const childWithInfo = await appealRepository.getAppealById(
+							Number(childAppeal.id),
+							true,
+							['appealGrounds']
+						);
+						childEnforcementWithGrounds.push({
+							reference: childAppeal.reference,
+							grounds:
+								childWithInfo?.appealGrounds
+									?.map((ground) => ground.ground?.groundRef || '')
+									.sort() || []
+						});
+					}
+				}
+				childEnforcementWithGrounds?.sort(
+					(a, b) => parseInt(a.reference ?? '0') - parseInt(b.reference ?? '0')
+				);
+			}
+
 			const personalisation = {
 				appeal_reference_number: appeal.reference,
 				lpa_reference: appeal.applicationReference || '',
@@ -270,6 +294,9 @@ export const updateAppellantCaseValidationOutcome = async (
 					appeal_grounds:
 						updatedAppeal?.appealGrounds?.map((ground) => ground.ground?.groundRef || '').sort() ||
 						[],
+					...(childEnforcementWithGrounds && {
+						other_appeals_grounds_group: childEnforcementWithGrounds
+					}),
 					ground_a_barred: groundABarred || false,
 					other_info: otherInformation || ''
 				})
