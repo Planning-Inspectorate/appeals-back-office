@@ -645,6 +645,12 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit" data-cy="view-case-history">View<span class="govuk-visually-hidden"> Case history</span></a>
             </dd>
         </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
+            <dd class="govuk-summary-list__value"></dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"
+                data-cy="start-appeal-withdrawal">Start<span class="govuk-visually-hidden"> Appeal withdrawal</span></a>
+            </dd>
+        </div>
     </dl>
     <div id="case-details-cancel-section">
         <h3 class="govuk-heading-m">Cancel appeal</h3>

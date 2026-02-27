@@ -1,4 +1,3 @@
-import config from '#environment/config.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
@@ -9,9 +8,6 @@ export const mapAppealWithdrawal = ({
 	userHasUpdateCasePermission
 }) => {
 	const id = 'appeal-withdrawal';
-	if (config.featureFlags.featureFlagCancelCase) {
-		return { id, display: {} };
-	}
 
 	const appealHasWithdrawalDocuments =
 		appealDetails?.withdrawal?.withdrawalFolder?.documents?.filter(
