@@ -498,7 +498,7 @@ export const updateDocumentsAvCheckStatus = async (req, res) => {
 			const versionList = latestDocument?.versions?.map((v) => v.version);
 			if (versionList && versionList.indexOf(document.version) > -1) {
 				await documentRepository.updateDocumentAvStatus(document);
-				await broadcasters.broadcastDocument(document.id, document.version, EventType.Update);
+				await broadcasters.broadcastDocument(document.id, document.version, EventType.Create);
 			}
 
 			responseDocuments.push({
