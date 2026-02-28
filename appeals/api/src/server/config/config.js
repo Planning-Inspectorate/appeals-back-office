@@ -95,7 +95,10 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_EXPEDITED_APPEALS === 'true',
 		featureFlagRule6Costs:
 			environment.FEATURE_FLAG_RULE_6_COSTS && environment.FEATURE_FLAG_RULE_6_COSTS === 'true',
-		featureFlagLDC: environment.FEATURE_FLAG_LDC && environment.FEATURE_FLAG_LDC === 'true'
+		featureFlagLDC: environment.FEATURE_FLAG_LDC && environment.FEATURE_FLAG_LDC === 'true',
+		featureFlagAppellantStatement:
+			environment.FEATURE_FLAG_APPELLANT_STATEMENT &&
+			environment.FEATURE_FLAG_APPELLANT_STATEMENT === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	enableTestEndpoints:
