@@ -2526,6 +2526,46 @@ describe('/appeals/:id/reps', () => {
 				});
 			});
 
+			test('send notify comments and statements (written) S78 and includes appellant statement', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([
+					{ id: 1, representationType: 'lpa_statement' },
+					{ id: 2, representationType: 'comment' },
+					{ id: 3, representationType: 'appellant_statement' }
+				]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'statements' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(databaseConnector.representation.findMany).toHaveBeenCalledWith(
+					expect.objectContaining({
+						where: expect.objectContaining({
+							OR: expect.arrayContaining([
+								expect.objectContaining({
+									representationType: {
+										in: expect.arrayContaining(['lpa_statement', 'appellant_statement'])
+									}
+								})
+							]),
+							appealId: mockS78Appeal.id
+						})
+					})
+				);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+			});
+
 			test('send notify comments and statements with Rule 6 parties', async () => {
 				const expectedSiteAddress = [
 					'addressLine1',
