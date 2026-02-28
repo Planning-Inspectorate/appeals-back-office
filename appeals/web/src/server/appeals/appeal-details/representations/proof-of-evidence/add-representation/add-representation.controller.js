@@ -11,17 +11,42 @@ import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-co
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import config from '@pins/appeals.web/environment/config.js';
-import { APPEAL_DOCUMENT_TYPE, APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_STAGE,
+	APPEAL_DOCUMENT_TYPE,
+	APPEAL_REDACTED_STATUS
+} from '@planning-inspectorate/data-model';
 import { formatProofOfEvidenceTypeText } from '../view-and-review/view-and-review.mapper.js';
 import { postRepresentationProofOfEvidence } from './add-representation.service.js';
 
+/**
+ * @param {import('@pins/express').Request} request
+ * @returns {string}
+ */
+const getProofOfEvidenceType = (request) => {
+	const {
+		params: { proofOfEvidenceType },
+		baseUrl
+	} = request;
+
+	if (proofOfEvidenceType) {
+		return proofOfEvidenceType;
+	}
+
+	if (baseUrl.includes('/rule-6-party/')) {
+		return 'rule-6-party';
+	}
+	if (baseUrl.includes('/lpa/')) {
+		return 'lpa';
+	}
+	return 'appellant';
+};
+
 /** @type {import('@pins/express').RequestHandler<{}>}  */
 export const renderDocumentUpload = async (request, response) => {
-	const {
-		currentAppeal,
-		params: { proofOfEvidenceType },
-		query
-	} = request;
+	const { currentAppeal, query } = request;
+
+	const proofOfEvidenceType = getProofOfEvidenceType(request);
 
 	const baseUrl = request.baseUrl;
 
@@ -79,9 +104,10 @@ export const renderCheckYourAnswers = (request, response) => {
 			fileUploadInfo: {
 				files: [{ name, blobStoreUrl }]
 			}
-		},
-		params: { proofOfEvidenceType }
+		}
 	} = request;
+
+	const proofOfEvidenceType = getProofOfEvidenceType(request);
 	const baseUrl = request.baseUrl;
 
 	clearEdits(request, 'addDocument');
@@ -132,9 +158,10 @@ export const postCheckYourAnswers = async (request, response) => {
 	const {
 		apiClient,
 		session,
-		currentAppeal: { appealId },
-		params: { proofOfEvidenceType, rule6PartyId }
+		currentAppeal: { appealId }
 	} = request;
+
+	const proofOfEvidenceType = getProofOfEvidenceType(request);
 
 	const {
 		fileUploadInfo: {
@@ -172,7 +199,7 @@ export const postCheckYourAnswers = async (request, response) => {
 						documentType: document.documentType,
 						mimeType: document.mimeType,
 						documentSize: document.size,
-						stage: document.stage,
+						stage: APPEAL_CASE_STAGE.STATEMENTS,
 						folderId: folderId,
 						GUID: document.GUID,
 						receivedDate: new Date().toISOString(),
@@ -196,13 +223,19 @@ export const postCheckYourAnswers = async (request, response) => {
 				}
 			}
 
-			await postRepresentationProofOfEvidence(
-				apiClient,
-				appealId,
-				[document.GUID],
-				proofOfEvidenceType,
-				rule6PartyId
-			);
+			const source = proofOfEvidenceType === 'lpa' ? 'lpa' : 'citizen';
+			const payload = {
+				attachments: [document.GUID],
+				redactionStatus: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED,
+				source,
+				dateCreated: new Date().toISOString(),
+				representationText: null,
+				...(proofOfEvidenceType === 'rule-6-party' && request.currentRule6Party
+					? { representedId: request.currentRule6Party.serviceUserId }
+					: {})
+			};
+
+			await postRepresentationProofOfEvidence(apiClient, appealId, payload, proofOfEvidenceType);
 		} catch (error) {
 			logger.error(
 				error,
@@ -224,6 +257,8 @@ export const postCheckYourAnswers = async (request, response) => {
 
 	let nextPageUrl = request.baseUrl.split('/').slice(0, -1).join('/');
 
+	const orgName = request.currentRule6Party?.serviceUser?.organisationName || undefined;
+
 	addNotificationBannerToSession({
 		session,
 		bannerDefinitionKey:
@@ -232,7 +267,11 @@ export const postCheckYourAnswers = async (request, response) => {
 				: proofOfEvidenceType === 'rule-6-party'
 					? 'rule6PartyProofOfEvidenceAddedSuccess'
 					: 'appellantProofOfEvidenceDocumentAddedSuccess',
-		appealId
+		appealId,
+		text:
+			proofOfEvidenceType === 'rule-6-party' && orgName
+				? `${orgName} proof of evidence and witnesses added`
+				: undefined
 	});
 	return response.redirect(nextPageUrl);
 };
